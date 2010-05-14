@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage ____sub_package____
+ * @subpackage Model
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -396,15 +396,15 @@ class XLite_Model_Order extends XLite_Model_Abstract
     function calcAllTaxes() 
     {
         $taxRates = new XLite_Model_TaxRates();
-        $taxRates->set("order", $this);
+        $taxRates->set('order', $this);
         $result = array();
         $items = $this->getItems();
         foreach ($items as $item) {
             $product = $item->get('product');
             if ($this->config->Taxes->prices_include_tax && isset($product)) {
-                $item->set("price", $item->getComplex('product.price'));
+                $item->set('price', $item->getComplex('product.price'));
             }
-            $taxRates->set("orderItem", $item);
+            $taxRates->set('orderItem', $item);
             $taxRates->calculateTaxes();
             $result = $this->_addTaxes($result, $taxRates->get('allTaxes'));
         }
@@ -421,7 +421,7 @@ class XLite_Model_Order extends XLite_Model_Abstract
             foreach ($shippingTaxes as $name => $value) {
                 $shippingTaxes[$name] = $this->formatCurrency($shippingTaxes[$name]);
             }
-            $this->set("shippingTaxes", $shippingTaxes);
+            $this->set('shippingTaxes', $shippingTaxes);
         }
 
         // round all tax values
@@ -429,7 +429,7 @@ class XLite_Model_Order extends XLite_Model_Abstract
             $result[$name] = $this->formatCurrency($result[$name]);
         }
 
-        $this->set("allTaxes", $result);
+        $this->set('allTaxes', $result);
 
         return $result;
     }
@@ -454,7 +454,7 @@ class XLite_Model_Order extends XLite_Model_Abstract
         $this->calcAllTaxes();
         $taxes = $this->get('allTaxes');
         $tax = isset($taxes['Tax']) ? $taxes['Tax'] : 0;    // total tax for all tax systems
-        $this->set("tax", $tax);
+        $this->set('tax', $tax);
 
         $shippingTax = 0;
 
@@ -477,7 +477,7 @@ class XLite_Model_Order extends XLite_Model_Abstract
             }
         }
 
-        $this->set("shippingTax", $shippingTax);
+        $this->set('shippingTax', $shippingTax);
 
         return $tax;
     }
@@ -498,10 +498,10 @@ class XLite_Model_Order extends XLite_Model_Abstract
         }
 
         if (!$shippedOnly) {
-            $this->set("subtotal", $this->formatCurrency($subtotal));
+            $this->set('subtotal', $this->formatCurrency($subtotal));
 
         } else {
-            $this->set("subtotalShippedOnly", $this->formatCurrency($subtotal));
+            $this->set('subtotalShippedOnly', $this->formatCurrency($subtotal));
         }
 
         return $subtotal;
@@ -532,7 +532,7 @@ class XLite_Model_Order extends XLite_Model_Abstract
             $total += $this->get('shippingTax');
         }
 
-        $this->set("total", $this->formatCurrency($total));
+        $this->set('total', $this->formatCurrency($total));
     }
 
     function getShippingCost() 
@@ -542,7 +542,7 @@ class XLite_Model_Order extends XLite_Model_Abstract
 
     function setShippingCost($cost)  
     {
-        $this->set("shipping_cost", $cost);
+        $this->set('shipping_cost', $cost);
     }
 
     /** 
@@ -601,7 +601,7 @@ class XLite_Model_Order extends XLite_Model_Abstract
     {
         $cost = 0;
         if (!$this->get('shipped')) {
-            $this->set("shipping_cost", $cost);
+            $this->set('shipping_cost', $cost);
             return $cost;
         }
 
@@ -623,7 +623,7 @@ class XLite_Model_Order extends XLite_Model_Abstract
             }
         }
 
-        $this->set("shipping_cost", $this->formatCurrency($cost));
+        $this->set('shipping_cost', $this->formatCurrency($cost));
 
         return $cost;
     }
@@ -770,11 +770,11 @@ class XLite_Model_Order extends XLite_Model_Abstract
     {
         if (!is_null($shippingMethod) && $shippingMethod instanceof XLite_Model_Shipping) {
             $this->_shippingMethod = $shippingMethod;
-            $this->set("shipping_id", $shippingMethod->get('shipping_id'));
+            $this->set('shipping_id', $shippingMethod->get('shipping_id'));
 
         } else {
             $this->_shippingMethod = false;
-            $this->set("shipping_id", 0);
+            $this->set('shipping_id', 0);
         }
     }
 
@@ -831,7 +831,7 @@ class XLite_Model_Order extends XLite_Model_Abstract
     function setProfile($profile) 
     {
         $this->_profile = $profile;
-        $this->set("profile_id", is_null($profile) ? 0 : $profile->get('profile_id'));
+        $this->set('profile_id', is_null($profile) ? 0 : $profile->get('profile_id'));
     }
     
     function getOrigProfile() 
@@ -851,18 +851,18 @@ class XLite_Model_Order extends XLite_Model_Abstract
     function setOrigProfile($profile) 
     {
         $this->_origProfile = $profile;
-        $this->set("orig_profile_id", is_null($profile) ? 0 : $profile->get('profile_id'));
+        $this->set('orig_profile_id', is_null($profile) ? 0 : $profile->get('profile_id'));
     }
 
     function setProfileCopy($prof) 
     {
-        $this->set("origProfile", $prof);
+        $this->set('origProfile', $prof);
 
         $p = $prof->cloneObject();
-        $p->set("order_id", $this->get('order_id'));
+        $p->set('order_id', $this->get('order_id'));
         $p->update();
 
-        $this->set("profile", $p);
+        $this->set('profile', $p);
     }
 
     /**
@@ -880,7 +880,7 @@ class XLite_Model_Order extends XLite_Model_Abstract
     function setAllTaxes($taxes) 
     {
         $this->_taxes = $taxes;
-        $this->set("taxes", serialize($taxes));
+        $this->set('taxes', serialize($taxes));
     }
 
     /**
@@ -900,16 +900,27 @@ class XLite_Model_Order extends XLite_Model_Abstract
         return $tax->getRegistration($name);
     }
 
-    function isTaxRegistered()
+    /**
+     * Check - any tax is registered  or not
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isTaxRegistered()
     {
+        $result = false;
         foreach ($this->get('allTaxes') as $name => $value) {
             if ($this->getRegistration($name) != '') {
-                return true;
+                $result = true;
+                break;
             }
         }
 
-        return false;
+        return $result;
     }
+
     /**
     * Selects taxes to be shown in cart totals.
     */
@@ -942,27 +953,46 @@ class XLite_Model_Order extends XLite_Model_Abstract
         return $taxes;
     }
 
-    function getItemsFingerprint() 
+    /**
+     * Get items list fingerprint 
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getItemsFingerprint() 
     {
-        if ($this->isEmpty()) {
-            return false;
+        $result = false;
+
+        if (!$this->isEmpty()) {
+
+            $result = array();
+            foreach ($this->getItems() as $item_idx => $item) {
+                $result[] = array(
+                    $item_idx,
+                    $item->getKey(),
+                    $item->get('amount')
+                );
+            }
+
+            $result = serialize($result);
         }
 
-        $result = array();
-        $items = $this->get('items');
-        foreach ($items as $item_idx => $item) {
-            $result[] = array
-            (
-                $item_idx,
-                $item->get('key'),
-                $item->get('amount')
-            );
-        }
-
-        return serialize($result);
+        return $result;
     }
 
-    function deleteItem($item) 
+    /**
+     * Delete order item 
+     * 
+     * @param XLite_Model_OrderItem $item Item
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function deleteItem(XLite_Model_OrderItem $item) 
     {
         $item->delete();
         $this->refresh('items');
@@ -978,7 +1008,7 @@ class XLite_Model_Order extends XLite_Model_Abstract
     {
         if (!is_null($this->_items)) {
             $len = count($this->_items);
-            for($i = 0; $i < $len; $i++) {
+            for ($i = 0; $i < $len; $i++) {
                 if ($this->_items[$i]->_uniqueKey == $item->_uniqueKey) {
                     $this->_items[$i] = $item;
                 }
@@ -1000,12 +1030,11 @@ class XLite_Model_Order extends XLite_Model_Abstract
     {
         $result = false;
 
-        if ($item->is('valid')) {
-            $key = $item->get('key');
-            $items = $this->get('items');
+        if ($item->isValid()) {
+            $key = $item->getKey();
 
-            foreach ($items as $i) {
-                if ($i->get('key') == $key) {
+            foreach ($this->getItems() as $i) {
+                if ($i->getKey() == $key) {
                     $result = true;
                     break;
                 }
@@ -1030,19 +1059,22 @@ class XLite_Model_Order extends XLite_Model_Abstract
     }
 
     /**
-    * Generate a string representation of the order
-    * to send to a payment service.
-    */
-    function getDescription() 
+     * Generate a string representation of the order
+     * to send to a payment service
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getDescription() 
     {
         $result = array();
 
-        foreach ($this->get('items') as $item) {
-            if (method_exists($item, "getDescription")) {
-                $result[] = $item->getDescription();
-            } else {
-                $result[] = $item->get('description');
-            }
+        foreach ($this->getItems() as $item) {
+            $result[] = method_exists($item, 'getDescription')
+                ? $item->getDescription()
+                : $item->get('description');
         }
 
         $result[] = '';
@@ -1140,16 +1172,36 @@ class XLite_Model_Order extends XLite_Model_Abstract
         return $this->_detailLabels;
     }
 
-    function getDetailLabel($name) 
+    /**
+     * Get detail cell label 
+     * 
+     * @param string $name Cell name
+     *  
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getDetailLabel($name) 
     {
         $d = $this->getDetailLabels();
 
-        return $d[$name];
+        return isset($d[$name]) ? $d[$name] : null;
     }
 
-    function setDetailLabels($value) 
+    /**
+     * Set detail labels 
+     * 
+     * @param array $value Labels list
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setDetailLabels(array $value) 
     {
-        parent::set("detail_labels", serialize($value));
+        parent::set('detail_labels', serialize($value));
 
         $this->_detailLabels = $value;
     }
@@ -1390,7 +1442,7 @@ class XLite_Model_Order extends XLite_Model_Abstract
         // send email notification about initially placed order
         $status = $this->get('status');
         if (
-            !in_array($status, array("P", "C", "I"))
+            !in_array($status, array('P', "C", "I"))
             && ($this->config->Email->enable_init_order_notif || $this->config->Email->enable_init_order_notif_customer)
         ) {
             $mail = new XLite_Model_Mailer();
@@ -1494,7 +1546,7 @@ class XLite_Model_Order extends XLite_Model_Abstract
 
         $mail->adminMail = false;
         $mail->selectCustomerLayout();
-        $mail->set("charset", $this->getProfile()->getComplex('billingCountry.charset'));
+        $mail->set('charset', $this->getProfile()->getComplex('billingCountry.charset'));
         $mail->compose(
             $this->config->Company->orders_department,
             $this->getProfile()->get('login'),
@@ -1526,7 +1578,7 @@ class XLite_Model_Order extends XLite_Model_Abstract
 
         if ($this->get('order_id') < $orderStartID) {
             $order_id = $this->get('order_id');
-            $this->set("order_id", $orderStartID);
+            $this->set('order_id', $orderStartID);
             $table = $this->db->getTableByAlias($this->get('alias'));
             $this->db->query("UPDATE $table SET order_id = $orderStartID WHERE order_id = $order_id");
         }
@@ -1536,7 +1588,7 @@ class XLite_Model_Order extends XLite_Model_Abstract
     {
         $status = $this->get('status');
         if ($status == "Q" || $status == "I") {
-            $this->set("status", "D"); // decline an order before deleting it
+            $this->set('status', "D"); // decline an order before deleting it
             $this->statusChanged($status, "D");
         }
         $this->delete();
@@ -1564,7 +1616,7 @@ class XLite_Model_Order extends XLite_Model_Abstract
         $order = new XLite_Model_Order();
         $order->_range = "status = 'T'";
         $orders = $order->findAll("date < ".(time()-ORDER_EXPIRATION_TIME), 'date', null, $limit);
-        foreach($orders as $o) {
+        foreach ($orders as $o) {
             $o->delete();
         }
     }
