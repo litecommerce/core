@@ -422,13 +422,18 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
     public function run($adminZone = false)
     {
         // Set current area
-        self::$adminZone = $adminZone;
+        self::$adminZone = (bool)$adminZone;
 
         // Initialize logger
-        $this->logger;
+        XLite_Logger::getInstance();
 
         // Initialize modules
         $this->initModules();
+
+        // Set skin for admin area
+        if (true === self::$adminZone) {
+            XLite_Model_Layout::getInstance()->skin = 'admin';
+        }
 
         return $this;
     }
