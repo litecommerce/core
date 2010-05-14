@@ -127,9 +127,10 @@ echo -e "ok\n"
 
 echo -e "Site database installing...\n"
 
-# Generate it automatically from all existing modules
-for i in `find ./classes/XLite/Module -type d -not -name ".*" -depth 1`; do
-	[ -f $i/install.sql ] && SITE_MODULES_SQL_FILES=$SITE_MODULES_SQL_FILES" "$i"/install.sql"
+# Generate modules list automatically from all existing modules
+MODULES_DIR=${DEPLOYMENT_DIR}"/modules/lc_connector/litecommerce/classes/XLite/Module"
+for i in `ls ${MODULES_DIR}`; do
+	[ -f ${MODULES_DIR}/$i/install.sql ] && SITE_MODULES_SQL_FILES=$SITE_MODULES_SQL_FILES" "${MODULES_DIR}/$i/install.sql
 done
 
 # List of SQL files for site
