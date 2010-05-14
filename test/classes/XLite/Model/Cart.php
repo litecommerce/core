@@ -147,21 +147,30 @@ class XLite_Model_Cart extends XLite_Model_Order implements XLite_Base_ISingleto
         }
     }
 
-    function calcShippingRates()
+    /**
+     * Calculate shipping rates 
+     * 
+     * @return array of XLite_Moel_ShippingRate
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function calcShippingRates()
     {
         $rates = parent::calcShippingRates();
 
-        if ($this->get('shipping_id') && !isset($rates[$this->get('shipping_id')])) {
+        if (
+            ($this->get('shipping_id') && !isset($rates[$this->get('shipping_id')]))
+            || ($rates && !$this->get('shipping_id'))
+        ) {
+            $shipping = null;
             if (0 < count($rates)) {
-                list($k, $v) = each($rates);
-                $this->setShippingMethod($v);
-                $this->calcTotals();
-                $this->update();
-                reset($rates);
-
-            } else {
-                $this->setShippingMethod(null);
+                $rate = array_shift($rates);
+                $shipping = $rate->get('shipping');
             }
+            $this->setShippingMethod($shipping);
+            $this->calcTotals();
+            $this->update();
         }
 
         return $rates;

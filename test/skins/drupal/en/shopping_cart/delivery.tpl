@@ -16,10 +16,10 @@
   <widget module="UPSOnlineTools" template="modules/UPSOnlineTools/delivery.tpl">
 
   <ul IF="!xlite.UPSOnlineToolsEnabled" class="deliveries">
-    {foreach:cart.getShippingRates(),key,rate}
-    <li {if:cart.shipping_id=key} class="selected"{end:}>
-      <input type="radio" id="shipping_{rate.shipping.shipping_id}" name="shipping" value="{rate.shipping.shipping_id}" checked="{cart.isSelected(#shipping_id#,key)}" />
-      <label for="shipping_{rate.shipping.shipping_id}"{if:cart.isSelected(#shipping_id#,key)} class="selected"{end:}>{rate.shipping.name:h}</label>
+    {foreach:cart.getShippingRates(),rate}
+    <li {if:cart.shipping_id=rate.shipping.shipping_id} class="selected"{end:}>
+      <input type="radio" id="shipping_{rate.shipping.shipping_id}" name="shipping" value="{rate.shipping.shipping_id}" checked="{cart.isSelected(#shipping_id#,rate.shipping.shipping_id)}" />
+      <label for="shipping_{rate.shipping.shipping_id}">{rate.shipping.name:h}</label>
       <span>{price_format(rate,#rate#):h}</span>
     </li>
     {end:}

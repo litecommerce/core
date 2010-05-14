@@ -56,22 +56,42 @@ implements XLite_Base_IDecorator
         ) {
 
             // Update carrier
-            $newrates = $this->getCart()->getCarrierRates(XLite_Core_Request::getInstance()->carrier);
+            $rates = $this->getCart()->getCarrierRates(XLite_Core_Request::getInstance()->carrier);
+            if (!$rates) {
+                XLite_Core_Request::getInstance()->shipping = 0;
 
-            $shipping = null;
-            if (count($newrates) > 0) {
-                $newShippingRate = array_shift($newrates);
-                $shipping = $newShippingRate->getComplex('shipping.shipping_id');
+            } elseif (!isset($rates[$this->getCart()->get('shipping_id')])) {
+                $rate = array_shift($rates);
+                $shipping = $rate->get('shipping');
+                XLite_Core_Request::getInstance()->shipping = $shipping ? $shipping->get('shipping_id') : 0;
+
             }
-            
-            XLite_Core_Request::getInstance()->shipping = $shipping;
-
-            $this->set(
-                'returnUrl',
-                $this->buildUrl('checkout', '', array('mode' => 'paymentMethod'))
-            );
         }
 
         parent::doActionShipping();
+    }
+
+    /**
+     * Check if we are ready to select shipping method
+     * (CHECKOUT_MODE_PAYMENT_METHOD step check) 
+     * 
+     * @return bool
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function isShippingNeeded()
+    {
+        $result = parent::isShippingNeeded();
+
+        if (!$result) {
+            $cart = $this->getCart();
+            if ($cart->isShippingAvailable() && $cart->getShippingMethod()) {
+                $shippingId = $cart->getShippingMethod()->get('shipping_id');
+                $rates = $cart->getCarrierRates();
+                $result = !isset($rates[$shippingId]);
+            }
+        }
+
+        return $result;
     }
 }

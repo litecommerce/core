@@ -26,10 +26,10 @@ Please contact the <a href="mailto:{config.Company.site_administrator:h}">store 
 </div>
 
 <ul IF="cart.shippingAvailable&cart.shipped&cart.getCarrierRates()" class="deliveries">
-  {foreach:cart.getCarrierRates(),key,rate}
-  <li {if:cart.shipping_id=key} class="selected"{end:}>
-    <input type="radio" id="shipping_{rate.shipping.shipping_id}" name="shipping" value="{rate.shipping.shipping_id}" checked="{cart.isSelected(#shipping_id#,key)}" />
-    <label for="shipping_{rate.shipping.shipping_id}"{if:cart.isSelected(#shipping_id#,key)} class="selected"{end:}>{rate.shipping.name:h}</label>
+  {foreach:cart.getCarrierRates(),rate}
+  <li {if:cart.shipping_id=rate.shipping.shipping_id} class="selected"{end:}>
+    <input type="radio" id="shipping_{rate.shipping.shipping_id}" name="shipping" value="{rate.shipping.shipping_id}" checked="{cart.isSelected(#shipping_id#,rate.shipping.shipping_id)}" />
+    <label for="shipping_{rate.shipping.shipping_id}">{rate.shipping.name:h}</label>
     <span>{price_format(rate,#rate#):h}</span>
   </li>
   {end:}

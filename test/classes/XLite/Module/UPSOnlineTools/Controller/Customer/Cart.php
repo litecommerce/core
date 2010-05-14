@@ -50,21 +50,22 @@ implements XLite_Base_IDecorator
 
         if (
             0 < count($this->getCart()->getCarriers())  
-            && $carrier
             && isset(XLite_Core_Request::getInstance()->carrier)
+            && $carrier
             && XLite_Core_Request::getInstance()->carrier != $carrier
         ) {
 
             // Update carrier
-            $newrates = $this->getCart()->getCarrierRates(XLite_Core_Request::getInstance()->carrier);
+            $rates = $this->getCart()->getCarrierRates(XLite_Core_Request::getInstance()->carrier);
+            if (!$rates) { 
+                XLite_Core_Request::getInstance()->shipping = 0;
 
-            $shipping = null;
-            if (count($newrates) > 0) {
-                $newShippingRate = array_shift($newrates);
-                $shipping = $newShippingRate->getComplex('shipping.shipping_id');
+            } elseif (!isset($rates[$this->getCart()->get('shipping_id')])) {
+                $rate = array_shift($rates);
+                $shipping = $rate->get('shipping');
+                XLite_Core_Request::getInstance()->shipping = $shipping ? $shipping->get('shipping_id') : 0;
+
             }
-            
-            XLite_Core_Request::getInstance()->shipping = $shipping;
         }
 
         parent::doActionUpdate();

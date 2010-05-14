@@ -182,6 +182,22 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
     }
 
     /**
+     * Check if we are ready to select shipping method
+     * (CHECKOUT_MODE_PAYMENT_METHOD step check) 
+     * 
+     * @return bool
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function isShippingNeeded()
+    {
+        $cart = $this->getCart();
+
+        return $cart->isShippingAvailable()
+            && (!$cart->getShippingMethod() || !$cart->getShippingMethod()->isExists());
+    }
+
+    /**
      * Check if we are on the last step
      * (CHECKOUT_MODE_DETAILS step check) 
      * 
@@ -230,7 +246,7 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
             ),
             self::CHECKOUT_MODE_PAYMENT_METHOD => array(
                 self::STEP_WIDGET_CLASS  => 'XLite_View_CheckoutStep_Regular_PaymentMethod',
-                self::STEP_IS_NOT_PASSED => $this->isPaymentNeeded(),
+                self::STEP_IS_NOT_PASSED => $this->isPaymentNeeded() || $this->isShippingNeeded(),
             ),
             self::CHECKOUT_MODE_DETAILS => array(
                 self::STEP_WIDGET_CLASS  => 'XLite_View_CheckoutStep_Regular_Details',

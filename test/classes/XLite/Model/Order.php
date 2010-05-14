@@ -278,15 +278,36 @@ class XLite_Model_Order extends XLite_Model_Abstract
     }
 
     /**
-     * isShippingAvailable 
+     * Check - shipping is available for this order or not
      * 
-     * @return bool
+     * @return boolean
      * @access public
      * @since  3.0.0
      */
     public function isShippingAvailable()
     {
         return 0 < count($this->getShippingRates());
+    }
+
+    /**
+     * Assign first shipping rate 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function assignFirstShippingRate()
+    {
+        $rates = $this->getShippingRates();
+
+        $shipping = null;
+        if (0 < count($rates)) {
+            $rate = array_shift($rates);
+            $shipping = $rate->get('shipping');
+        }
+
+        $this->setShippingMethod($shipping);
     }
 
     /**
@@ -584,85 +605,75 @@ class XLite_Model_Order extends XLite_Model_Abstract
             return $cost;
         }
 
-        $shippingMethod = $this->get('shippingMethod');
-        $cost = is_null($shippingMethod) ? false : $shippingMethod->calculate($this);
+        $shippingMethod = $this->getShippingMethod();
+        $cost = is_object($shippingMethod) ? $shippingMethod->calculate($this) : false;
 
-        if ($cost === false) {
+        if (false === $cost) {
             $rates = $this->calcShippingRates();
             // find the first available shipping method
-            if (!is_null($rates) && count($rates)>0) {
+            if (!is_null($rates) && count($rates) > 0) {
                 foreach ($rates as $key => $val) {
                     $shippingID = $key;
                     break;
                 }
 
                 $shippingMethod = new XLite_Model_Shipping($shippingID);
-                $this->set("shippingMethod", $shippingMethod);
+                $this->setShippingMethod($shippingMethod);
                 $cost = $shippingMethod->calculate($this);
             }
         }
+
         $this->set("shipping_cost", $this->formatCurrency($cost));
 
         return $cost;
     }
 
     /**
-    * Returns the Shipping rates available. 
-    * Note: rates are cached after the first calculation.
-    */
-    function calcShippingRates() 
+     * Calculate shipping rates 
+     * 
+     * @return array of XLite_Moel_ShippingRate
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function calcShippingRates() 
     {
         if (is_null($this->_shippingRates)) {
 
-            $this->_shippingRates = array();
+            // For UPS Online Tools compatibility
+            $data = array();
             
             foreach (XLite_Model_Shipping::getModules() as $module) {
-                foreach ($module->getRates($this) as $key => $value) {
-                    $this->_shippingRates[$key] = $value;
-                }
+                $data += $module->getRates($this);
             }
 
-            $this->_sortRates($this->_shippingRates);
+            uasort($data, array($this, 'getShippingRatesOrderCallback'));
+
+            $this->_shippingRates = $data;
         }
 
         return $this->_shippingRates;
     }
 
     /**
-    * Sorts the Shipping rates array by the Position specified in admin zone
-    */
-    function _sortRates(&$rates) {
-        $sorted = array();
-        $i = count($rates);
-        while ($i--) {
-            // find the minimum orderby
-            $minOrderby = 1000000000;
-            $minRate = "";
-            foreach ($rates as $k => $v) {
-                if (is_object($v)) {
-                    $orderby = $v->shipping->get('order_by');
+     * Shipping rates sorting callback 
+     * 
+     * @param XLite_Model_ShippingRate $a First shipping rate
+     * @param XLite_Model_ShippingRate $b Second shipping rate
+     *  
+     * @return integer
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getShippingRatesOrderCallback(XLite_Model_ShippingRate $a, XLite_Model_ShippingRate $b)
+    {
+        $sa = $a->getShipping();
+        $sb = $b->getShipping();
 
-                    if ($orderby < $minOrderby) {
-                        $minRate = $k;
-                        $minOrderby = $orderby;
-                    }
-
-                } else {
-                    $this->logger->log("->Order::_sortRates");
-                    $this->logger->log("$k index points to an invalid object");
-                    $this->logger->log("<-Order::_sortRates");
-                }
-            }
-            if ($minRate !== "") {
-                // minimum is found
-                $sorted[$minRate] = $rates[$minRate];
-                if (isset($rates[$minRate])) {
-                    unset($rates[$minRate]);
-                }
-            }
-        }
-
-        $rates = $sorted;
+        return ($sa && $sb)
+            ? strcmp($sa->get('order_by'), $sb->get('order_by'))
+            : 0;
     }
    
     /////////////// Order validation functions /////////////////
@@ -728,7 +739,15 @@ class XLite_Model_Order extends XLite_Model_Abstract
         return $result;
     }
 
-    function getShippingMethod() 
+    /**
+     * Get shipping method 
+     * 
+     * @return XLite_Model_Shipping
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getShippingMethod() 
     {
         if (is_null($this->_shippingMethod) && $this->get('shipping_id')) {
             $this->_shippingMethod = new XLite_Model_Shipping($this->get('shipping_id'));
@@ -737,9 +756,19 @@ class XLite_Model_Order extends XLite_Model_Abstract
         return $this->_shippingMethod;
     }
 
-    function setShippingMethod($shippingMethod) 
+    /**
+     * Set shipping method 
+     * 
+     * @param XLite_Model_Shipping $shippingMethod Shipping method
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setShippingMethod($shippingMethod) 
     {
-        if (!is_null($shippingMethod)) {
+        if (!is_null($shippingMethod) && $shippingMethod instanceof XLite_Model_Shipping) {
             $this->_shippingMethod = $shippingMethod;
             $this->set("shipping_id", $shippingMethod->get('shipping_id'));
 

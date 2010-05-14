@@ -71,60 +71,109 @@ class XLite_Module_UPSOnlineTools_Model_Order extends XLite_Model_Order implemen
         $this->fields['ups_containers'] = base64_encode(serialize(array()));
     }
 
-    function assignFirstShippingRate()
+    /**
+     * Assign first shipping rate 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function assignFirstShippingRate()
     {
-        $rates = $this->get('shippingRates');
-        $new_rate = array_shift($rates);
-        $this->set("shippingMethod", $new_rate->get('shipping'));
+        $rates = $this->getCarrierRates();
+
+        $shipping = null;
+        if (0 < count($rates)) {
+            $rate = array_shift($rates);
+            $shipping = $rate->get('shipping');
+        }
+
+        $this->setShippingMethod($shipping);
     }
 
-    function getCarrier()
+    /**
+     * Get current carrier 
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCarrier()
     {
-        if (!isset($this->_carrier)) {
+        if (is_null($this->_carrier)) {
+
             $carriers = $this->getCarriers();
 
             if ($this->get('shipping_id')) {
                 $sm = new XLite_Model_Shipping();
 
                 // return NULL if shipping method not available
-                if (!$sm->find("shipping_id='".$this->get('shipping_id')."' AND enabled='1'")) {
-                    $this->assignFirstShippingRate();
+                if (!$sm->find("shipping_id = '" . $this->get('shipping_id') . "' AND enabled = '1'")) {
                     $this->_carrier = null;
-                    return "";
+                    parent::assignFirstShippingRate();
+
+                } else {
+
+                    $sm = XLite_Model_Shipping::getInstanceByName($sm->get('class'), $this->get('shipping_id'));
+
+                    $this->_carrier = $sm->get('class');
                 }
 
-                $sm = XLite_Model_Shipping::getInstanceByName($sm->get('class'), $this->get('shipping_id'));
+            } else {
 
-                return $this->_carrier = $sm->get('class');
+                $this->_carrier = 1 < count($carriers)
+                    ? $this->getComplex('shippingMethod.class')
+                    : '';
             }
-
-            $this->_carrier = 1 < count($carriers)
-                ? $this->getComplex('shippingMethod.class')
-                : '';
         }
 
-        return $this->_carrier;
+        return is_null($this->_carrier) ? '' : $this->_carrier;
     }
 
-    function getCarriers()
+    /**
+     * Get carriers 
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCarriers()
     {
         if (!isset($this->_carriers)) {
+
             $return = array();
             $rates = $this->getShippingRates();
-            foreach($rates as $rate) {
+            foreach ($rates as $rate) {
                 $class = $rate->getComplex('shipping.class');
-                if(!isset($return[$class]))
+                if (!isset($return[$class])) {
                     $return[$class] = $rate->getComplex('shipping.carrier');
+                }
             }
+
             $this->_carriers = array();
-            if (count($return) > 1) {
+            if (1 < count($return)) {
                 $this->_carriers = $return;
             }
+
         }
+
         return $this->_carriers;
     }
 
-    function getCarrierRates($carrier = null)
+    /**
+     * Get shipping rates by carrier 
+     * 
+     * @param string $carrier Carrier
+     *  
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCarrierRates($carrier = null)
     {
         $rates = $this->getShippingRates();
 
@@ -132,44 +181,44 @@ class XLite_Module_UPSOnlineTools_Model_Order extends XLite_Model_Order implemen
             $carrier = $this->getCarrier();
         }
 
-        if (!$carrier || !is_array($rates)) {
-            return $rates;
-        }
-
-        foreach ($rates as $k => $rate) {
-            if ($carrier != $rate->getComplex('shipping.class')) {
-                unset($rates[$k]);
+        if ($carrier && is_array($rates)) {
+            foreach ($rates as $k => $rate) {
+                if ($carrier != $rate->getComplex('shipping.class')) {
+                    unset($rates[$k]);
+                }
             }
         }
 
         return $rates;
     }
 
-    function calcShippingRates()
-    {
-        $return = parent::calcShippingRates();
-
-        uasort($return, array($this, 'getShippingRatesOrderCallback'));
-
-        $this->_shippingRates = $return;
-
-        return $this->_shippingRates;
-    }
-
-    public function getShippingRatesOrderCallback($a, $b)
+    /**
+     * Shipping rates sorting callback 
+     * 
+     * @param XLite_Model_ShippingRate $a First shipping rate
+     * @param XLite_Model_ShippingRate $b Second shipping rate
+     *  
+     * @return integer
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getShippingRatesOrderCallback(XLite_Model_ShippingRate $a, XLite_Model_ShippingRate $b)
     {
         $class_a = $a->getComplex('shipping.class');
         $class_b = $b->getComplex('shipping.class');
 
         if ($class_a == 'ups' && $class_b != 'ups') {
-            return false;
+            $result = -1;
+
+        } elseif ($class_b == 'ups' && $class_a != 'ups') {
+            $result = 1;
+
+        } else {
+            $result = parent::getShippingRatesOrderCallback($a, $b);
         }
 
-        if ($class_b == 'ups' && $class_a != 'ups') {
-            return true;
-        }
-
-        return $a->getComplex('shipping.order_by') > $b->getComplex('shipping.order_by');
+        return $result;
     }
 
     /**
