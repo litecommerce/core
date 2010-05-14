@@ -56,24 +56,24 @@ class XLite_Module_Affiliate_Model_BannerStats extends XLite_Model_Abstract
     */
     function logView() 
     {
-        $this->set("stat_type", "V");
-        $this->set("partner_id", $_GET['partner']);
-        $this->set("product_id", $_GET['product_id']);
-        $this->set("banner_id",  $_GET['banner_id']);
-        $this->set("referrer",   $_SERVER['HTTP_REFERER']);
-        $this->set("date",       time());
+        $this->set('stat_type', "V");
+        $this->set('partner_id', $_GET['partner']);
+        $this->set('product_id', $_GET['product_id']);
+        $this->set('banner_id',  $_GET['banner_id']);
+        $this->set('referrer',   $_SERVER['HTTP_REFERER']);
+        $this->set('date',       time());
         $this->create();
     }
 
     function logClick() 
     {
-        $this->set("stat_type", "C");
-        $this->set("partner_id", $_GET['partner']);
-        $this->set("product_id", $_GET['product_id']);
-        $this->set("banner_id",  $_GET['banner_id']);
+        $this->set('stat_type', "C");
+        $this->set('partner_id', $_GET['partner']);
+        $this->set('product_id', $_GET['product_id']);
+        $this->set('banner_id',  $_GET['banner_id']);
         $referrer = isset($_GET['referrer']) ? $_GET['referrer'] : $_SERVER['HTTP_REFERER'];
-        $this->set("referrer", $referrer);
-        $this->set("date", time());
+        $this->set('referrer', $referrer);
+        $this->set('date', time());
         $this->create();
     }
 
@@ -187,7 +187,7 @@ class XLite_Module_Affiliate_Model_BannerStats extends XLite_Model_Abstract
         $cw[] = "stat_type='V'";
         $sql = "SELECT COUNT(*) as views, banner_id, product_id ".
                "FROM $table ".
-               "WHERE ". implode(" AND ", $cw) . " ".
+               "WHERE ". implode(' AND ', $cw) . " ".
                "GROUP BY banner_id, product_id";
         $views = $this->db->getAll($sql);
         // select all clicks
@@ -195,7 +195,7 @@ class XLite_Module_Affiliate_Model_BannerStats extends XLite_Model_Abstract
         $cc[] = "stat_type='C'";
         $sql = "SELECT COUNT(*) as clicks, banner_id, product_id ".
                "FROM $table ".
-               "WHERE ". implode(" AND ", $cc) . " ".
+               "WHERE ". implode(' AND ', $cc) . " ".
                "GROUP BY banner_id, product_id";
         $clicks = $this->db->getAll($sql);
         // summarize
@@ -237,13 +237,13 @@ class XLite_Module_Affiliate_Model_BannerStats extends XLite_Model_Abstract
             }
             if (isset($result[$i]['banner_id'])) {
                 $banner = new XLite_Module_Affiliate_Model_Banner();
-                $banner->set("deleted", !$banner->find("banner_id=".$result[$i]['banner_id']));
+                $banner->set('deleted', !$banner->find("banner_id=".$result[$i]['banner_id']));
                 $result[$i]['banner'] = $banner;
             }
             // create product instance
             else if (isset($result[$i]['product_id'])) {
                 $product = new XLite_Model_Product();
-                $product->set("deleted", !$product->find("product_id=".$result[$i]['product_id']));
+                $product->set('deleted', !$product->find("product_id=".$result[$i]['product_id']));
                 $result[$i]['product'] = $product;
             }
             // direct link

@@ -123,7 +123,7 @@ class XLite_Module_WholesaleTrading_Controller_Admin_Profile extends XLite_Contr
 
                 $history = $profile->get('membership_history');
 
-                foreach($history as $hn_idx => $hn) {
+                foreach ($history as $hn_idx => $hn) {
         			if (isset($hn['current']) && $hn['current']) {
         				unset($history[$hn_idx]);
         				break;

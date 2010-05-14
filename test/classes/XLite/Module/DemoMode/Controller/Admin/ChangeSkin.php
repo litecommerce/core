@@ -85,6 +85,6 @@ class XLite_Module_DemoMode_Controller_Admin_ChangeSkin extends XLite_Controller
             break;
         }
 
-        $this->session->set("customSkin", $skin_code);
+        $this->session->set('customSkin', $skin_code);
     }
 }

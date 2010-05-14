@@ -758,13 +758,13 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
     function startImage()
     {
         header("Content-type: image/gif");
-        $this->set("silent", true);
+        $this->set('silent', true);
     }
 
     function startDump()
     {
         @set_time_limit(0);
-        $this->set("silent", true);
+        $this->set('silent', true);
         if (!isset($_REQUEST['mode']) || $_REQUEST['mode']!="cp") {
             func_refresh_start();
             $this->dumpStarted = true;

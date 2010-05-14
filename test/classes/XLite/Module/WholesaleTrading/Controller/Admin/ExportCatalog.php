@@ -68,7 +68,7 @@ class XLite_Module_WholesaleTrading_Controller_Admin_ExportCatalog extends XLite
 
     function isArrayUnique($arr, &$firstValue, $skipValue="")
     {
-    	if(function_exists('func_is_array_unique')) {
+    	if (function_exists('func_is_array_unique')) {
     		return func_is_array_unique($arr, $firstValue, $skipValue);
     	}
 

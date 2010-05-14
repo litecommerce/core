@@ -106,17 +106,17 @@ class XLite_View_Tabber extends XLite_View_Abstract
             foreach ($dialogPages as $page => $title) {
                 $p = new XLite_Base();
                 $pageURL = preg_replace("/".$switch."=(\w+)/", $switch."=".$page, $url);
-                $p->set("url", $pageURL);
-                $p->set("title", $title);
+                $p->set('url', $pageURL);
+                $p->set('title', $title);
                 $page_switch = sprintf("$switch=$page");
-                $p->set("selected", (preg_match("/" . preg_quote($page_switch) . "(\Z|&)/Ss", $url)));
+                $p->set('selected', (preg_match("/" . preg_quote($page_switch) . "(\Z|&)/Ss", $url)));
                 $pages[] = $p;
             }
         }
 
         // if there is only one tab page, set it as a seleted with the default URL
         if (count($pages) == 1) {
-            $pages[0]->set("selected", $url);
+            $pages[0]->set('selected', $url);
         }
 
         return $pages;
@@ -137,7 +137,7 @@ class XLite_View_Tabber extends XLite_View_Abstract
         $pages = $this->getTabberPages();
         $pagesTitlesTotalLength = 0;
 
-    	foreach($pages as $page) {
+    	foreach ($pages as $page) {
             $pagesTitlesTotalLength += strlen($page->title);
     	}
 
@@ -148,7 +148,7 @@ class XLite_View_Tabber extends XLite_View_Abstract
    		$pagesCurrentLength = 0;
         $pagesNumber = 0;
 
-        foreach($pages as $page) {
+        foreach ($pages as $page) {
 
             $pagesCurrentLength += strlen($page->title);
 
@@ -166,11 +166,11 @@ class XLite_View_Tabber extends XLite_View_Abstract
 
         $pagesTitlesLengthMax = 0;
 
-        foreach($pages as $page_idx => $pagesArray) {
+        foreach ($pages as $page_idx => $pagesArray) {
 
             $pagesTitlesLength = 0;
 
-            foreach($pagesArray as $page) {
+            foreach ($pagesArray as $page) {
 
                 $pagesTitlesLength += (is_null($page) ? 0 : strlen($page->title));
 
@@ -182,7 +182,7 @@ class XLite_View_Tabber extends XLite_View_Abstract
     		$this->tabPagesInfo[$page_idx] = array("titlesLength" => $pagesTitlesLength, "titlesLengthMax" => 0, "titlesFullness" => 0);
         }
 
-        foreach($this->tabPagesInfo as $page_idx => $pagesInfo) {
+        foreach ($this->tabPagesInfo as $page_idx => $pagesInfo) {
 
     		$this->tabPagesInfo[$page_idx]['titlesLengthMax'] = $pagesTitlesLengthMax;
             $this->tabPagesInfo[$page_idx]['titlesFullness'] = ceil($this->tabPagesInfo[$page_idx]['titlesLength'] * 100 / $this->tabPagesInfo[$page_idx]['titlesLengthMax']);

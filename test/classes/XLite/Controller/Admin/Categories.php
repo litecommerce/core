@@ -50,7 +50,7 @@ class XLite_Controller_Admin_Categories extends XLite_Controller_Admin_Abstract
 
         foreach ($order_by as $category_id => $category_order) {
             $category = new XLite_Model_Category($category_id);
-            $category->set("order_by", $category_order);
+            $category->set('order_by', $category_order);
             $category->update();
         }
     }

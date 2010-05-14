@@ -45,7 +45,7 @@ class XLite_Controller_Admin_ChangeSkin extends XLite_Controller_Admin_Abstract
 
     function getDirectoriesToCreate()
     {
-        $dirs = array("var", $this->_templatesDirectory, "catalog","images");
+        $dirs = array('var', $this->_templatesDirectory, "catalog","images");
         $dirs[] = "var/backup";
         $dirs[] = "var/log";
         $dirs[] = "var/html";
@@ -62,7 +62,7 @@ class XLite_Controller_Admin_ChangeSkin extends XLite_Controller_Admin_Abstract
         }
         
         $this->currentSkinName = $this->config->getComplex('Skin.skin');
-        $this->_currentSkin = str_replace("_", " ", $this->currentSkinName);
+        $this->_currentSkin = str_replace('_', " ", $this->currentSkinName);
 
         return $this->_currentSkin;
     }
@@ -115,31 +115,31 @@ class XLite_Controller_Admin_ChangeSkin extends XLite_Controller_Admin_Abstract
     	    	$reverse_sorting = false;
         		$files = array();
         		$preferential = array();
-            	foreach($orig_files as $key => $file) {
+            	foreach ($orig_files as $key => $file) {
     	    		if (strpos($file, "_modern") !== false) {
         				$preferential[] = $file;
         				unset($orig_files[$key]);
             		}
     	    	}
         		if (!$reverse_sorting) {
-            		foreach($preferential as $file) {
+            		foreach ($preferential as $file) {
                 		$files[$file] = array("name" => $file);
     	        	}
         	    }
-        		foreach($orig_files as $file) {
+        		foreach ($orig_files as $file) {
         			$files[$file] = array("name" => $file);
             	}
     	    	if ($reverse_sorting) {
-        	    	foreach($preferential as $file) {
+        	    	foreach ($preferential as $file) {
             			$files[$file] = array("name" => $file);
             		}
                 }
-    			foreach($files as $key => $value) {
+    			foreach ($files as $key => $value) {
         			$preview = $schema['path'] . "/templates/".$value['name']."/preview.gif";
     				if (is_readable($preview)) {
     					$files[$key]['preview'] = $preview;
     				}
-        			$files[$key]['name'] = str_replace("_", " ", $value['name']);
+        			$files[$key]['name'] = str_replace('_', " ", $value['name']);
         		}
 
                 $this->_skins = array_merge($this->_skins, $files);
@@ -219,7 +219,7 @@ class XLite_Controller_Admin_ChangeSkin extends XLite_Controller_Admin_Abstract
                     $log['write'][] = "$destination_dir$parent_dir/$file";
                 }
             } else if ( is_dir($source_dir."/".$file) && $file != "." && $file != ".." ) {
-                if( !file_exists("$destination_dir$parent_dir/$file") ) {
+                if ( !file_exists("$destination_dir$parent_dir/$file") ) {
                     if ( !is_writeable("$destination_dir$parent_dir") )
                         $log['write'][] = "$destination_dir$parent_dir";
                         continue;
@@ -260,8 +260,8 @@ class XLite_Controller_Admin_ChangeSkin extends XLite_Controller_Admin_Abstract
             } else if ( is_dir($source_dir."/".$file) && $file != "." && $file != ".." ) {
                 echo "Creating directory $destination_dir$parent_dir/$file ... ";
 
-                if( !file_exists("$destination_dir$parent_dir/$file") ) {
-                    if( !@mkdir("$destination_dir$parent_dir/$file", get_filesystem_permissions(0777)) ) {
+                if ( !file_exists("$destination_dir$parent_dir/$file") ) {
+                    if ( !@mkdir("$destination_dir$parent_dir/$file", get_filesystem_permissions(0777)) ) {
                         echo $this->showStatus(false);
                         $status &= false;
                     } else {
@@ -321,7 +321,7 @@ To install the selected skin, please correct the problem and start the installat
 
     function action_update()
     {
-        $this->set("silent", true);
+        $this->set('silent', true);
 
         $this->startDump();
         echo "<H1>Installing skin: " . $this->layout . "</H1>";
@@ -362,10 +362,10 @@ To install the selected skin, please correct the problem and start the installat
         $teDialog->action_reupdate_pages();
 
         echo "<br><br><b>Cleanup cache...</b><br>";
-        func_cleanup_cache("skins", true);
+        func_cleanup_cache('skins', true);
 
         $config = new XLite_Model_Config();
-        $config->createOption("Skin", "skin", $this->layout);
+        $config->createOption('Skin', "skin", $this->layout);
         
         echo "<br><b>Task completed.</b><br>";
 

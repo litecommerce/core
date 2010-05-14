@@ -47,9 +47,9 @@ class XLite_Module_DemoMode_Controller_Customer_Login extends XLite_Controller_C
         if ($this->auth->is('logged')) {
             $forward = $this->xlite->session->get('forwardUrl');
             if (isset($forward)) {
-                $this->xlite->session->set("forwardUrl", null);
+                $this->xlite->session->set('forwardUrl', null);
                 $this->xlite->session->writeClose();
-                $this->set("returnUrl", $forward);
+                $this->set('returnUrl', $forward);
             }
         }
     }

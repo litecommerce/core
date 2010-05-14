@@ -77,7 +77,7 @@ class XLite_Model_Country extends XLite_Model_Abstract
     {
         parent::__construct();
         if (!empty($code)) {
-            $this->set("code", $code);
+            $this->set('code', $code);
         }
     }
 

@@ -99,7 +99,7 @@ class XLite_Module_SagePay_Model_PaymentMethod_SagepayformCc extends XLite_Model
 
     function getPaymentType()
     {
-        if (in_array($this->getComplex('params.trans_type'), array("PAYMENT", "DEFERRED", "AUTHENTICATE")))
+        if (in_array($this->getComplex('params.trans_type'), array('PAYMENT', "DEFERRED", "AUTHENTICATE")))
             return $this->getComplex('params.trans_type');
 
         return "AUTHENTICATE";

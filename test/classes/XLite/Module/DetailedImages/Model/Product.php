@@ -77,10 +77,10 @@ class XLite_Module_DetailedImages_Model_Product extends XLite_Model_Product impl
         foreach ($this->getDetailedImages() as $image) {
 
             $newImage = new XLite_Module_DetailedImages_Model_DetailedImage();
-            $newImage->set("alt", $image->get('alt'));
-            $newImage->set("enabled", $image->get('enabled'));
-            $newImage->set("order_by", $image->get('order_by'));
-            $newImage->set("product_id", $product->get('product_id'));
+            $newImage->set('alt', $image->get('alt'));
+            $newImage->set('enabled', $image->get('enabled'));
+            $newImage->set('order_by', $image->get('order_by'));
+            $newImage->set('product_id', $product->get('product_id'));
             $newImage->create();
 
             $obj = $this->get('image');

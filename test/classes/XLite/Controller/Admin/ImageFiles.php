@@ -87,12 +87,12 @@ class XLite_Controller_Admin_ImageFiles extends XLite_Controller_Admin_Abstract
 
         $cfg = new XLite_Model_Config();
         if ($cfg->find("name='images_directory'")) {
-            $cfg->set("value", $images_directory);
+            $cfg->set('value', $images_directory);
             $cfg->update();
         } else {
-            $cfg->set("name", "images_directory");
-            $cfg->set("category", "Images");
-            $cfg->set("value", $images_directory);
+            $cfg->set('name', "images_directory");
+            $cfg->set('category', "Images");
+            $cfg->set('value', $images_directory);
             $cfg->create();
         }
         

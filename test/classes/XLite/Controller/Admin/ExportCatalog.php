@@ -61,9 +61,9 @@ class XLite_Controller_Admin_ExportCatalog extends XLite_Controller_Admin_Abstra
                 !func_is_array_unique($this->fields_layout, $name, "NULL")
             )
         ) {
-            $this->set("valid", false);
-            $this->set("invalid_field_order", true);
-            $this->set("invalid_field_name", $name);	// $name was filled in func_is_array_unique()
+            $this->set('valid', false);
+            $this->set('invalid_field_order', true);
+            $this->set('invalid_field_name', $name);	// $name was filled in func_is_array_unique()
         }
         
         parent::handleRequest();
@@ -71,7 +71,7 @@ class XLite_Controller_Admin_ExportCatalog extends XLite_Controller_Admin_Abstra
 
     function action_export_products()
     {
-        $this->set("silent", true);
+        $this->set('silent', true);
 
         global $DATA_DELIMITERS;
 
@@ -89,7 +89,7 @@ class XLite_Controller_Admin_ExportCatalog extends XLite_Controller_Admin_Abstra
 
     function action_export_fields()
     {
-        $this->set("silent", true);
+        $this->set('silent', true);
 
         global $DATA_DELIMITERS;
 
@@ -102,13 +102,13 @@ class XLite_Controller_Admin_ExportCatalog extends XLite_Controller_Admin_Abstra
         }
 
         $global_extra_field = new XLite_Model_ExtraField();
-        foreach($global_extra_field->findAll("product_id = 0") as $gef) {
+        foreach ($global_extra_field->findAll("product_id = 0") as $gef) {
              print func_construct_csv($gef->_export($this->fields_layout, $DATA_DELIMITERS[$this->delimiter]), $DATA_DELIMITERS[$this->delimiter], '"');
              print "\n";
         }
 
         foreach ($products as $product_idx => $product) {
-            foreach($products[$product_idx]->getExtraFields(false) as $ef) {
+            foreach ($products[$product_idx]->getExtraFields(false) as $ef) {
                 print func_construct_csv($ef->_export($this->fields_layout, $DATA_DELIMITERS[$this->delimiter]), $DATA_DELIMITERS[$this->delimiter], '"');
                 print "\n";
             }
@@ -122,12 +122,12 @@ class XLite_Controller_Admin_ExportCatalog extends XLite_Controller_Admin_Abstra
         $layout = implode(',', XLite_Core_Request::getInstance()->$layout_name);
         $config = new XLite_Model_Config();
         if ($config->find("name='$layout_name'")) {
-            $config->set("value", $layout);
+            $config->set('value', $layout);
             $config->update();
         } else {
-            $config->set("name", $layout_name);
-            $config->set("category", "ImportExport");
-            $config->set("value", $layout);
+            $config->set('name', $layout_name);
+            $config->set('category', "ImportExport");
+            $config->set('value', $layout);
             $config->create();
         }
     }

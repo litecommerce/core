@@ -42,7 +42,7 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Product extends XLite_Co
         if (is_object($this->product)) {
             if ($this->product->get('product_id') <= 0) {
                 // recover product_id if unset by read() method
-                $this->product->set("product_id", $_REQUEST['product_id']);
+                $this->product->set('product_id', $_REQUEST['product_id']);
             }
             if (!isset($_REQUEST['action']) || 'buynow' != $_REQUEST['action']) {
                 // don't show the product if it is available for direct sale only
@@ -66,9 +66,9 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Product extends XLite_Co
         $product = $this->get('product');
         if (!is_object($product)) return false;
 
-        $product->set("product_id", $this->product_id);
+        $product->set('product_id', $this->product_id);
         if (!$product->is('directSaleAvailable')) {
-        	$this->set("returnUrl", "cart.php?mode=add_error");
+        	$this->set('returnUrl', "cart.php?mode=add_error");
             return false;
         }
 
@@ -78,7 +78,7 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Product extends XLite_Co
             $category_id = $this->get('category_id');
             if (!isset($category_id)) {
                 $category_id = $product->getComplex('Category.category_id');
-                $this->set("category_id", $category_id);
+                $this->set('category_id', $category_id);
             }
             return false;
         }

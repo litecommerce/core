@@ -117,9 +117,9 @@ class XLite_Module_Egoods_Model_PinCode extends XLite_Model_Abstract
         $pin = new XLite_Module_Egoods_Model_PinCode();
         $found = $pin->find("pin = '".$properties['pin']."' AND product_id =". $product->get('product_id'));
 
-        $pin->set("pin", $properties['pin']);
-        $pin->set("enabled", $properties['enabled']);
-        $pin->set("product_id", $product->get('product_id'));
+        $pin->set('pin', $properties['pin']);
+        $pin->set('enabled', $properties['enabled']);
+        $pin->set('product_id', $product->get('product_id'));
 
         if ($found) {
         	if ($options['update_existing']) {

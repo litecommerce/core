@@ -63,7 +63,7 @@ class XLite_Model_Membership extends XLite_Model_Abstract
             if (is_array($oldMemberships) && count($oldMemberships) > 0) {
                 $id = 1;
                 $new_memberships = array();
-                foreach($oldMemberships as $membership) {
+                foreach ($oldMemberships as $membership) {
                     if (!is_array($membership)) {
     					$new_memberships[$id] = array
     					(
@@ -79,12 +79,12 @@ class XLite_Model_Membership extends XLite_Model_Abstract
                 $this->memberships = $new_memberships;
 
                 $config = new XLite_Model_Config();
-        		$config->createOption("Memberships","membershipsCollection", serialize($this->memberships), "serialized");
+        		$config->createOption('Memberships',"membershipsCollection", serialize($this->memberships), "serialized");
             } else {
                 $this->memberships = array();
 
                 $config = new XLite_Model_Config();
-        		$config->createOption("Memberships","membershipsCollection", serialize($this->memberships), "serialized");
+        		$config->createOption('Memberships',"membershipsCollection", serialize($this->memberships), "serialized");
             }
         }
         
@@ -98,7 +98,7 @@ class XLite_Model_Membership extends XLite_Model_Abstract
         $args = func_get_args();
         if (count($args)) {
             if (!is_null($args[0])) {
-                $this->set("properties", $memberships[$args[0]]);
+                $this->set('properties', $memberships[$args[0]]);
             }
         }
     }
@@ -108,13 +108,13 @@ class XLite_Model_Membership extends XLite_Model_Abstract
         $max = 1;
         $memberships = $this->get('memberships');
         if ($memberships) {
-            foreach($memberships as $membership) {
+            foreach ($memberships as $membership) {
                 if ($membership['membership_id'] >= $max) {
                     $max = $membership['membership_id'] + 1;
                 }
             }
         }
-        $this->set("membership_id",$max);
+        $this->set('membership_id',$max);
         $membershipData = $this->get('properties');
         $membershipData['membership'] = $this->stripInvalidData($membershipData['membership']);
         if (strlen($membershipData['membership']) > 32) {
@@ -123,7 +123,7 @@ class XLite_Model_Membership extends XLite_Model_Abstract
         $memberships[$max] = $membershipData;
         $memberships = (array) $this->sortMemberships($memberships);
         $config = new XLite_Model_Config();
-        $config->createOption("Memberships","membershipsCollection", serialize($memberships));
+        $config->createOption('Memberships',"membershipsCollection", serialize($memberships));
     }
 
     function update() 
@@ -137,7 +137,7 @@ class XLite_Model_Membership extends XLite_Model_Abstract
         }
         $memberships[$this->get('membership_id')] = $membershipData;
         $memberships = (array) $this->sortMemberships($memberships);
-        $config->createOption("Memberships","membershipsCollection", serialize($memberships));
+        $config->createOption('Memberships',"membershipsCollection", serialize($memberships));
     }
 
     function delete() 
@@ -146,14 +146,14 @@ class XLite_Model_Membership extends XLite_Model_Abstract
         $memberships = $this->get('memberships');
         unset($memberships[$this->get('membership_id')]);
         $memberships = (array) $this->sortMemberships($memberships);
-        $config->createOption("Memberships","membershipsCollection", serialize($memberships));
+        $config->createOption('Memberships',"membershipsCollection", serialize($memberships));
     }
 
  	function findAll($where = null, $orderby = null, $groupby = null, $limit = null) 
     {
         $result = array();
         $memberships = (array) $this->sortMemberships();
-        foreach($memberships as $membership_id => $membership_) {
+        foreach ($memberships as $membership_id => $membership_) {
             $membership = new XLite_Model_Membership($membership_id);
             $result[$membership_id] = $membership;
         }

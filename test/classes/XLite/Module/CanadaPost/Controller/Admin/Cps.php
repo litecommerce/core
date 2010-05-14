@@ -35,7 +35,7 @@
  */
 class XLite_Module_CanadaPost_Controller_Admin_Cps extends XLite_Controller_Admin_ShippingSettings
 {
-    public $params = array("target", "updated");
+    public $params = array('target', "updated");
     public $page		="cps";
     public $updated 	= false;
     public $testResult = false;
@@ -56,8 +56,8 @@ class XLite_Module_CanadaPost_Controller_Admin_Cps extends XLite_Controller_Admi
         if (!isset($_POST['test_server'])) {
             $_POST['test_server'] = 0;
         }
-        $cps->set("options",(object)$_POST);
-        $this->set("updated", true);
+        $cps->set('options',(object)$_POST);
+        $this->set('updated', true);
 
     }
     

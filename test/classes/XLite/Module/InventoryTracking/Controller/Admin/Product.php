@@ -50,9 +50,9 @@ class XLite_Module_InventoryTracking_Controller_Admin_Product extends XLite_Cont
     {
         if (isset($_REQUEST['product_id']) && intval($_REQUEST['product_id']) > 0) {
             $product = new XLite_Model_Product($_REQUEST['product_id']);
-        	if(!$this->xlite->get('ProductOptionsEnabled') || ($this->xlite->get('ProductOptionsEnabled') && !$product->hasOptions())) {
+        	if (!$this->xlite->get('ProductOptionsEnabled') || ($this->xlite->get('ProductOptionsEnabled') && !$product->hasOptions())) {
             	if ($product->get('tracking') != 0 ) {
-                	$product->set("tracking", 0);
+                	$product->set('tracking', 0);
                     $product->update();
                 }
         	}
@@ -64,7 +64,7 @@ class XLite_Module_InventoryTracking_Controller_Admin_Product extends XLite_Cont
     {
         if (is_null($this->orderItem)) {
             $this->orderItem = new XLite_Model_OrderItem();
-            $this->orderItem->set("product", $this->get('product'));
+            $this->orderItem->set('product', $this->get('product'));
         }
         return $this->orderItem;
     }
@@ -74,13 +74,13 @@ class XLite_Module_InventoryTracking_Controller_Admin_Product extends XLite_Cont
         if (is_null($this->inventory)) {
             $this->inventory = new XLite_Module_InventoryTracking_Model_Inventory();
             $found = $this->inventory->find("inventory_id='" . addslashes($this->getOrderItem()->get('key')) . "'");
-            $this->set("cardFound", $found);
+            $this->set('cardFound', $found);
             // set card status to DISABLED in ADD mode
             if (!$found) {
-                $this->inventory->set("enabled", 0);
+                $this->inventory->set('enabled', 0);
             }
             if (isset($this->inventory_data)) {
-                $this->inventory->set("properties", $this->inventory_data);
+                $this->inventory->set('properties', $this->inventory_data);
             }
         }
         return $this->inventory;
@@ -91,7 +91,7 @@ class XLite_Module_InventoryTracking_Controller_Admin_Product extends XLite_Cont
         if (!isset($this->tracking)) return;
         $product = new XLite_Model_Product($this->product_id);
         $product->find("product_id = '".$this->product_id."'");
-        $product->set("tracking",$this->tracking);
+        $product->set('tracking',$this->tracking);
         $product->update();
     }
 
@@ -115,7 +115,7 @@ class XLite_Module_InventoryTracking_Controller_Admin_Product extends XLite_Cont
         $inventories = $inventory->findAll("inventory_id LIKE '".$this->product_id."|%'");
         for ($k = 0; $k < count($inventories); $k++) {
             $inventory_id = $inventories[$k]->get('inventory_id');
-            $this->set("maxOrderBy", max($this->get('maxOrderBy'), $inventories[$k]->get('order_by')));
+            $this->set('maxOrderBy', max($this->get('maxOrderBy'), $inventories[$k]->get('order_by')));
             $options = explode("|", $inventory_id);
             $id  = $options[0];
             $opt = array();
@@ -159,7 +159,7 @@ class XLite_Module_InventoryTracking_Controller_Admin_Product extends XLite_Cont
     {
         $i = new XLite_Module_InventoryTracking_Model_Inventory($this->inventory_id);
         $this->optdata['inventory_sku'] = preg_replace("/\|/", "-", $this->optdata['inventory_sku']);
-        $i->set("properties", $this->optdata);
+        $i->set('properties', $this->optdata);
         $i->update();
         $this->updateProductInventorySku();
     }
@@ -180,16 +180,16 @@ class XLite_Module_InventoryTracking_Controller_Admin_Product extends XLite_Cont
         {
             $this->inventory_sku = preg_replace("/\|/", "-", $this->inventory_sku);
 //			$this->changeProductInventorySku(null, $this->sku);
-            $inventory->set("inventory_id", implode("|", $options));
-            $inventory->set("inventory_sku", $this->inventory_sku);
-            $inventory->set("amount", $this->amount);
-       	    $inventory->set("low_avail_limit", $this->low_avail_limit);
-            $inventory->set("enabled", $this->enabled);
-            $inventory->set("order_by", $this->order_by);
+            $inventory->set('inventory_id', implode("|", $options));
+            $inventory->set('inventory_sku', $this->inventory_sku);
+            $inventory->set('amount', $this->amount);
+       	    $inventory->set('low_avail_limit', $this->low_avail_limit);
+            $inventory->set('enabled', $this->enabled);
+            $inventory->set('order_by', $this->order_by);
             $inventory->create();
             $this->updateProductInventorySku();
         } else
             $this->params[] = "error";
-            $this->set("error", true);
+            $this->set('error', true);
     }
 }

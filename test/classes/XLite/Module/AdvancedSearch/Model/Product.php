@@ -54,7 +54,7 @@ class XLite_Module_AdvancedSearch_Model_Product extends XLite_Model_Product impl
         $start_weight         = null, 
         $end_weight         = null)     
     {
-        $this->xlite->set("GlobalQuickCategoriesNumber", false);
+        $this->xlite->set('GlobalQuickCategoriesNumber', false);
     }
     
     function _advancedSearch 
@@ -126,19 +126,19 @@ class XLite_Module_AdvancedSearch_Model_Product extends XLite_Model_Product impl
             
             $extraField = new XLite_Model_ExtraField();
             if (true == ($globalExtraFields = $extraField->findAll("product_id = 0 AND (" . $search_query.")"))) {
-                foreach($globalExtraFields as $gef) 
+                foreach ($globalExtraFields as $gef) 
                     if (!is_null($gef->get('categories'))) {
                         $categories = explode("|", $gef->get('categories'));
-                        foreach($categories as $cat_id) {
+                        foreach ($categories as $cat_id) {
                             $category = new XLite_Model_Category($cat_id);
                             $field_ids = array_merge($field_ids, $this->getIds($category->get('products')));
                         }
                     }
             }
-            $productMethods = array_map("strtolower", get_class_methods($extraField->get('product')));
-            $isNewEF = in_array("isglobal", $productMethods);
+            $productMethods = array_map('strtolower', get_class_methods($extraField->get('product')));
+            $isNewEF = in_array('isglobal', $productMethods);
             if (true == ($extraFields = $extraField->findAll("product_id <> 0 AND (" . $search_query.")"))) {
-                foreach($extraFields as $ef) {
+                foreach ($extraFields as $ef) {
                     if ($isNewEF) {
                         $field_ids = array_merge($field_ids, array($ef->get('product_id')));
                     } else {
@@ -156,7 +156,7 @@ class XLite_Module_AdvancedSearch_Model_Product extends XLite_Model_Product impl
             $search_query = $this->getSearchQuery($field_values, $keywords, $logic);
             $fieldValue = new XLite_Model_FieldValue();
             if (true == ($fieldValues = $fieldValue->findAll($search_query))) {
-                foreach($fieldValues as $fv) {
+                foreach ($fieldValues as $fv) {
                     if ($isNewEF) {
                         $field_ids = array_merge($field_ids, array($fv->get('product_id')));
                     } else {
@@ -195,7 +195,7 @@ class XLite_Module_AdvancedSearch_Model_Product extends XLite_Model_Product impl
         $ids = array_unique(array_merge($this->getIds($products), $ef_po_products));
 
         $search = $this->_constructSearchArray($start_price, $end_price, $start_weight, $end_weight, $sku);
-        $search_query = implode(" AND ", (array)$search);
+        $search_query = implode(' AND ', (array)$search);
         
         $product_limit = array();
         if (!empty($search_query)) {
@@ -232,7 +232,7 @@ class XLite_Module_AdvancedSearch_Model_Product extends XLite_Model_Product impl
     {
         $ids = array();
         if (is_array($items)) {
-            foreach($items as $item) {
+            foreach ($items as $item) {
                 $ids[] = $item->get('product_id');
             }
         }
@@ -242,7 +242,7 @@ class XLite_Module_AdvancedSearch_Model_Product extends XLite_Model_Product impl
     function getSearchQuery($field_values, $keywords, $logic)  
     {
         $search = array();
-        foreach($field_values as $field_value => $condition) {
+        foreach ($field_values as $field_value => $condition) {
             if ($condition) {
                 $query = array();
                 foreach ($keywords as $keyword)
@@ -250,7 +250,7 @@ class XLite_Module_AdvancedSearch_Model_Product extends XLite_Model_Product impl
                 $search[] = (count($keywords) > 1 ? "(" . implode(" $logic ", $query) . ")" :  implode("", $query));
             }
         }
-        $search_query = implode(" OR ", $search);
+        $search_query = implode(' OR ', $search);
         return $search_query;
     }
 

@@ -176,14 +176,14 @@ if (is_object($this)) {
 //	COPY SKIN-DEPENDENT TEMPLATES
 //////////////////////////////////////
 
-copy_schema_template("RelatedProducts/icons.tpl", $schema, $MODULE_NAME);
-copy_schema_template("RelatedProducts/list.tpl", $schema, $MODULE_NAME);
-copy_schema_template("RelatedProducts/table.tpl", $schema, $MODULE_NAME);
-copy_schema_template("ProductsAlsoBuy/icons.tpl", $schema, $MODULE_NAME);
-copy_schema_template("ProductsAlsoBuy/list.tpl", $schema, $MODULE_NAME);
-copy_schema_template("ProductsAlsoBuy/table.tpl", $schema, $MODULE_NAME);
-copy_schema_template("notify_me.tpl", $schema, $MODULE_NAME);
-copy_schema_template("new_arrivals.tpl", $schema, $MODULE_NAME);
+copy_schema_template('RelatedProducts/icons.tpl', $schema, $MODULE_NAME);
+copy_schema_template('RelatedProducts/list.tpl', $schema, $MODULE_NAME);
+copy_schema_template('RelatedProducts/table.tpl', $schema, $MODULE_NAME);
+copy_schema_template('ProductsAlsoBuy/icons.tpl', $schema, $MODULE_NAME);
+copy_schema_template('ProductsAlsoBuy/list.tpl', $schema, $MODULE_NAME);
+copy_schema_template('ProductsAlsoBuy/table.tpl', $schema, $MODULE_NAME);
+copy_schema_template('notify_me.tpl', $schema, $MODULE_NAME);
+copy_schema_template('new_arrivals.tpl', $schema, $MODULE_NAME);
 
 //////////////////////////////////////
 //	ADMIN ZONE
@@ -379,7 +379,7 @@ $skin2_find_str = <<<EOT
 <widget module="Bestsellers" target="main,category" mode="" class="CBestsellers" template="common/dialog.tpl" body="modules/Bestsellers/bestsellers.tpl" head="Bestsellers" visible="{!config.Bestsellers.bestsellers_menu}" name="bestsellerswidget">
 EOT;
 // is that 2 columns skin ?
-if (is_template_patched("skins/default/en/main.tpl", $skin2_find_str)) {
+if (is_template_patched('skins/default/en/main.tpl', $skin2_find_str)) {
 //////////////////////////////////////
 //	2 columns skin
 //////////////////////////////////////

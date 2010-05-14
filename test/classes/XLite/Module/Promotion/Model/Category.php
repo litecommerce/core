@@ -40,7 +40,7 @@ class XLite_Module_Promotion_Model_Category extends XLite_Model_Category impleme
         $so = new XLite_Module_Promotion_Model_SpecialOffer();
         $soDeletedCategories = $so->findAll("category_id='" . $this->get('category_id') . "'");
         if (is_array($soDeletedCategories) && count($soDeletedCategories) > 0) {
-            foreach($soDeletedCategories as $sodp) {
+            foreach ($soDeletedCategories as $sodp) {
                 $sodp->markInvalid();
             }
         }
@@ -48,7 +48,7 @@ class XLite_Module_Promotion_Model_Category extends XLite_Model_Category impleme
         $bp = new XLite_Module_Promotion_Model_BonusPrice();
         $bpDeletedCategories = $bp->findAll("category_id='" . $this->get('category_id') . "'");
         if (is_array($bpDeletedCategories) && count($bpDeletedCategories) > 0) {
-            foreach($bpDeletedCategories as $bpdp) {
+            foreach ($bpDeletedCategories as $bpdp) {
                 $sodp = new XLite_Module_Promotion_Model_SpecialOffer($bpdp->get('offer_id'));
                 $sodp->markInvalid();
             }

@@ -106,6 +106,6 @@ class XLite_Module_AdvancedSearch_Main extends XLite_Module_Abstract
     {
         parent::init();
 
-        $this->xlite->set("AdvancedSearchEnabled", true);
+        $this->xlite->set('AdvancedSearchEnabled', true);
     }
 }

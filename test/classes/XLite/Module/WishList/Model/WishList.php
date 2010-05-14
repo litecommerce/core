@@ -147,7 +147,7 @@ class XLite_Module_WishList_Model_WishList extends XLite_Model_Abstract
         $wishlists = $wishlist->findAll();
 
         if (is_array($wishlists)) {
-            foreach($wishlists as $wishlist_) {
+            foreach ($wishlists as $wishlist_) {
                 if (!$wishlist_->get('products')) {
                     $wishlist_->delete();
                 }
@@ -226,7 +226,7 @@ class XLite_Module_WishList_Model_WishList extends XLite_Model_Abstract
                 }
             }
 
-            foreach($wishlists as $key => $wishlist) {
+            foreach ($wishlists as $key => $wishlist) {
                 if (!in_array($wishlist->get('wishlist_id'), $wishlist_ids)) {
                     unset($wishlists[$key]);
                 }

@@ -438,7 +438,7 @@ $mod = @file_get_contents('skins/default/en/modules/GoogleCheckout/button_alt_ch
 if ($button && $mod && preg_match("/\{\* ORIGINAL BUTTON TEMPLATE \*\}.*\{\* \/ORIGINAL BUTTON TEMPLATE \*\}/s", $mod)) {
     $out = preg_replace("/(\{\* ORIGINAL BUTTON TEMPLATE \*\}).*(\{\* \/ORIGINAL BUTTON TEMPLATE \*\})/s", '\1'.$button.'\2', $mod);
 
-    if ($handle = fopen("skins/default/en/modules/GoogleCheckout/button_alt_checkout.tpl", "w")) {
+    if ($handle = fopen('skins/default/en/modules/GoogleCheckout/button_alt_checkout.tpl', "w")) {
         fwrite($handle, $out);
         fclose($handle);
     }

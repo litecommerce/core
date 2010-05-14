@@ -69,7 +69,7 @@ class XLite_Module_Promotion_Model_DiscountCoupon extends XLite_Model_Abstract
 
             case "product":
                 $cart = XLite_Model_Cart::getInstance();
-                foreach($cart->get('items') as $item) {
+                foreach ($cart->get('items') as $item) {
                     if ($item->get('product_id') == $this->get('product_id')) {
                         return true;
                     }
@@ -82,7 +82,7 @@ class XLite_Module_Promotion_Model_DiscountCoupon extends XLite_Model_Abstract
 
                 $category = $this->get('category');
                 $cart = XLite_Model_Cart::getInstance();
-                foreach($cart->get('items') as $item) {
+                foreach ($cart->get('items') as $item) {
                     if (func_in_category_recursive($item->get('product'), $category)) {
                         return true;
                     }
@@ -189,7 +189,7 @@ class XLite_Module_Promotion_Model_DiscountCoupon extends XLite_Model_Abstract
                 $condition = "parent_id='".$this->get('coupon_id')."'";
             }
             $this->_children = (array) $this->findAll("order_id<>'0' AND $condition", "order_id");
-            foreach($this->_children as $child_key => $child) {
+            foreach ($this->_children as $child_key => $child) {
                 if (is_null($child->get('order')) || $child->getComplex('order.status') == "T") {
                     unset($this->_children[$child_key]);
                 }
@@ -239,7 +239,7 @@ EOT;
             ($this->_oldCouponCode != $this->get('coupon')) &&
             (!is_null($this->_oldCouponCode))) {
             $this->reattachChildren($this->_oldCouponCode);
-            $this->set("new_link_mode", 1);
+            $this->set('new_link_mode', 1);
         }
         parent::update();
     }
@@ -247,7 +247,7 @@ EOT;
     function create() 
     {
         // all new coupons must be in the new link mode by default
-        $this->set("new_link_mode", 1);
+        $this->set('new_link_mode', 1);
         parent::create();
     }
 
@@ -258,8 +258,8 @@ EOT;
     {
         $children = $this->getChildren($coupon);
         foreach ((array)$children as $child) {
-            $child->set("new_link_mode", 1); // in order to avoid recursive calls
-            $child->set("parent_id", $this->get('coupon_id'));
+            $child->set('new_link_mode', 1); // in order to avoid recursive calls
+            $child->set('parent_id', $this->get('coupon_id'));
             $child->update();
         }
     }

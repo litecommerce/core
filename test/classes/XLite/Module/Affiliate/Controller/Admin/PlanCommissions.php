@@ -35,7 +35,7 @@
  */
 class XLite_Module_Affiliate_Controller_Admin_PlanCommissions extends XLite_Controller_Admin_Abstract
 {
-    public $params = array("target", "plan_id");
+    public $params = array('target', "plan_id");
     
     function action_update_commission()
     {
@@ -47,8 +47,8 @@ class XLite_Module_Affiliate_Controller_Admin_PlanCommissions extends XLite_Cont
             }
             foreach ($this->get('commission') as $itemID => $commission) {
                 $pc = new XLite_Module_Affiliate_Model_PlanCommission($this->get('plan_id'), $itemID, $this->get('item_type'));
-                $pc->set("commission", $commissions[$itemID]);
-                $pc->set("commission_type", $types[$itemID]);
+                $pc->set('commission', $commissions[$itemID]);
+                $pc->set('commission_type', $types[$itemID]);
                 $pc->update();
             }
         } elseif ($this->get('delete')) {
@@ -65,14 +65,14 @@ class XLite_Module_Affiliate_Controller_Admin_PlanCommissions extends XLite_Cont
     function action_add_commission()
     {
         $pc = $this->get('planCommission');
-        $pc->set("properties", $_POST);
+        $pc->set('properties', $_POST);
         $pc->create();
     }
     
     function action_basic_commission()
     {
         $pc = $this->get('basicCommission');
-        $pc->set("properties", $_POST);
+        $pc->set('properties', $_POST);
         if ($this->foundBasicCommission) {
             $pc->update();
         } else {
@@ -83,7 +83,7 @@ class XLite_Module_Affiliate_Controller_Admin_PlanCommissions extends XLite_Cont
     function getAffiliatePlan()
     {
         $ap = new XLite_Module_Affiliate_Model_AffiliatePlan(isset($_REQUEST['plan_id']) ? $_REQUEST['plan_id'] : null);
-        $ap->set("properties", $_REQUEST);
+        $ap->set('properties', $_REQUEST);
         return $ap;
     }
 

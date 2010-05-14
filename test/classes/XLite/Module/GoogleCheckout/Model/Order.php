@@ -161,7 +161,7 @@ EOT;
 
         foreach ($shippings as $shipping) {
             $shippingRate = new XLite_Model_ShippingRate();
-            $shippingRate->set("shipping", $shipping);
+            $shippingRate->set('shipping', $shipping);
             $shippingsXML[] = $shippingRate->getGoogleCheckoutXML();
         }
 
@@ -235,13 +235,13 @@ EOT;
                 $clone = $dc->clone();
             }
 
-            $clone->set("order_id", $this->get('order_id'));
+            $clone->set('order_id', $this->get('order_id'));
             $clone->update();
-            $this->set("discountCoupon", $dc->get('coupon_id'));
+            $this->set('discountCoupon', $dc->get('coupon_id'));
             $this->DC = $clone;
 
         } else {
-            $this->set("discountCoupon", "");
+            $this->set('discountCoupon', "");
             return false;
         }
 
@@ -301,11 +301,11 @@ EOT;
         if (!isset($disableCustomerNotif)) {
             $pmGC = XLite_Model_PaymentMethod::factory('google_checkout');
             $disableCustomerNotif = $pmGC->getComplex('params.disable_customer_notif');
-            $this->xlite->set("GoogleCheckoutDCN", $disableCustomerNotif);
+            $this->xlite->set('GoogleCheckoutDCN', $disableCustomerNotif);
         }
 
         if ($disableCustomerNotif) {
-            $this->xlite->set("GoogleCheckoutDCNMailer", $status);
+            $this->xlite->set('GoogleCheckoutDCNMailer', $status);
         }
     }
 
@@ -343,7 +343,7 @@ EOT;
 
     function setGoogleDetails($value)
     {
-        parent::set("google_details", serialize((array)$value));
+        parent::set('google_details', serialize((array)$value));
     }
 
     function getGoogleDetails()

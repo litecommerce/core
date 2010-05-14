@@ -72,8 +72,8 @@ class XLite_Model_Htaccess extends XLite_Model_Abstract
 
     function makeImage()
     {
-        foreach($this->htaccess_list as $file){
-            if(!($fp = @fopen($file, "r")))
+        foreach ($this->htaccess_list as $file){
+            if (!($fp = @fopen($file, "r")))
                 continue;
             $fs = intval(@filesize($file));
             if ($fs > 0 )
@@ -83,20 +83,20 @@ class XLite_Model_Htaccess extends XLite_Model_Abstract
             @fclose($fp);
             $hash = $this->makeHash($content);
             $htaccess = new XLite_Model_Htaccess();
-            $htaccess->set("filename", $file);
-            $htaccess->set("content", $content);
-            $htaccess->set("hash", $hash);
+            $htaccess->set('filename', $file);
+            $htaccess->set('content', $content);
+            $htaccess->set('hash', $hash);
             $htaccess->create();
         }
 
         $config = new XLite_Model_Config();
-        if($config->find("name = 'last_date' AND category = 'Htaccess'")){
+        if ($config->find("name = 'last_date' AND category = 'Htaccess'")){
             $now = time();
 
-            $config->set("value", "0");
+            $config->set('value', "0");
             $config->update();
         } else {
-        	$config->createOption("Htaccess", "last_date", "0");
+        	$config->createOption('Htaccess', "last_date", "0");
         }
     }
 
@@ -108,7 +108,7 @@ class XLite_Model_Htaccess extends XLite_Model_Abstract
     function reImage()
     {
         $file = $this->get('filename');
-        if(!($fp = @fopen($file, "r")))
+        if (!($fp = @fopen($file, "r")))
                         return;
         $fs = intval(@filesize($file));
         if ($fs > 0 )
@@ -117,15 +117,15 @@ class XLite_Model_Htaccess extends XLite_Model_Abstract
             $content = "";
         @fclose($fp);
         $hash = $this->makeHash($content);
-        $this->set("hash", $hash);
-        $this->set("content", $content);
+        $this->set('hash', $hash);
+        $this->set('content', $content);
         $this->update();
     }
 
     function restoreFile()
     {
         $file = $this->get('filename');
-        if(!($fp = @fopen($file, "w")))
+        if (!($fp = @fopen($file, "w")))
             return;
 
         $content = $this->get('content');
@@ -137,27 +137,27 @@ class XLite_Model_Htaccess extends XLite_Model_Abstract
     {
         $last_date = $this->getComplex('xlite.config.Htaccess.last_date');
         $now = time();
-        if(($now - $last_date) < CHECK_INTERVAL)
+        if (($now - $last_date) < CHECK_INTERVAL)
             return;
 
         $config = new XLite_Model_Config();
-        if($config->find("name = 'last_date' AND category = 'Htaccess'")){
-            $config->set("value", $now);
+        if ($config->find("name = 'last_date' AND category = 'Htaccess'")){
+            $config->set('value', $now);
             $config->update();
         } else {
-        	$config->createOption("Htaccess", "last_date", "0");
+        	$config->createOption('Htaccess', "last_date", "0");
         }
 
         $error_results = array();
-        foreach((array) $this->findAll("", "filename") as $htaccess){
+        foreach ((array) $this->findAll("", "filename") as $htaccess){
                 $error = $htaccess->verify();
-                if($error != ""){
+                if ($error != ""){
                     $error_result = array("file" => $htaccess->get('filename'), "error" => $error);
                     $error_results[] = $error_result;
                 }
         }
 
-        if(count($error_results) >= 1){
+        if (count($error_results) >= 1){
             $this->notifyAdmin($error_results);
         }
     }
@@ -166,7 +166,7 @@ class XLite_Model_Htaccess extends XLite_Model_Abstract
     {
         $results = array();
 
-        foreach((array) $this->findAll("", "filename") as $htaccess){
+        foreach ((array) $this->findAll("", "filename") as $htaccess){
             $result = array(
                         "id" => $htaccess->get('id'),
                         "filename" => $htaccess->get('filename'),
@@ -185,10 +185,10 @@ class XLite_Model_Htaccess extends XLite_Model_Abstract
         $error = "";
 
         $filename = $this->get('filename');
-        if(!file_exists($filename))
+        if (!file_exists($filename))
             return HTACCESS_NOT_EXISTS;
 
-        if($fp = @fopen($filename, "r")){
+        if ($fp = @fopen($filename, "r")){
             $fs = intval(@filesize($filename));
             if ($fs > 0 )
                     $content = @fread($fp, $fs);
@@ -196,7 +196,7 @@ class XLite_Model_Htaccess extends XLite_Model_Abstract
                     $content = "";
             $file_hash = $this->makeHash($content);
             $db_hash = $this->get('hash');
-            if($file_hash != $db_hash){
+            if ($file_hash != $db_hash){
                 return HTACCESS_WRONG;
             }
         }
@@ -228,7 +228,7 @@ class XLite_Model_Htaccess extends XLite_Model_Abstract
         $mail = new XLite_Model_Mailer();
         $mail->errors = $errors;
         $mail->adminMail = true;
-        $mail->set("charset", $this->xlite->config->Company->locationCountry->get('charset'));
+        $mail->set('charset', $this->xlite->config->Company->locationCountry->get('charset'));
         $mail->compose(
                 $this->config->getComplex('Company.site_administrator'),
                 $this->config->getComplex('Company.site_administrator'),

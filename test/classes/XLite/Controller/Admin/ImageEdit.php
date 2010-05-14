@@ -78,7 +78,7 @@ class XLite_Controller_Admin_ImageEdit extends XLite_Controller_Admin_Abstract
         $image_field_name = 'new_image_' . $this->current_image;
         $editor = $this->get('editor');
         $code = $editor->uploadImage($image_field_name, $this->current_image);
-        if($code !== LC_UPLOAD_OK) {
+        if ($code !== LC_UPLOAD_OK) {
             $this->set('valid', false);
         }
     }

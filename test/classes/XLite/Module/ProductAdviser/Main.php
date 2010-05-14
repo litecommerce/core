@@ -104,10 +104,10 @@ class XLite_Module_ProductAdviser_Main extends XLite_Module_Abstract
         // FIXME - trying to instantiate abstract class
         // TODO - check if this code is really needed
         /*$w = new XLite_View_Abstract();
-        $widgetMethods = array_map("strtolower", get_class_methods($w));
-        if (!in_array("isarraypointernth", $widgetMethods)) {
+        $widgetMethods = array_map('strtolower', get_class_methods($w));
+        if (!in_array('isarraypointernth', $widgetMethods)) {
         } else {
-            $this->xlite->set("PAPartialWidget", true);
+            $this->xlite->set('PAPartialWidget', true);
         }
         if ($this->xlite->is('adminZone')) {
         }*/
@@ -138,7 +138,7 @@ class XLite_Module_ProductAdviser_Main extends XLite_Module_Abstract
         if ($this->xlite->is('adminZone')) {
             if ($this->config->getComplex('ProductAdviser.admin_products_also_buy_enabled') != "Y") {
                 $cfg = new XLite_Model_Config();
-                $cfg->createOption("ProductAdviser", "products_also_buy_enabled", "N");
+                $cfg->createOption('ProductAdviser', "products_also_buy_enabled", "N");
             }
         }
         /////////////////////////////////////
@@ -146,22 +146,22 @@ class XLite_Module_ProductAdviser_Main extends XLite_Module_Abstract
         /////////////////////////////////////
         // "Customer Notifications" section
         if ($this->xlite->is('adminZone')) {
-            $this->validateConfig("number_notifications", 1);
+            $this->validateConfig('number_notifications', 1);
             $customer_notifications_enabled = ($this->config->getComplex('ProductAdviser.customer_notifications_mode') == "0") ? "N" : "Y";
             $cfg = new XLite_Model_Config();
-            $cfg->createOption("ProductAdviser", "customer_notifications_enabled", $customer_notifications_enabled);
+            $cfg->createOption('ProductAdviser', "customer_notifications_enabled", $customer_notifications_enabled);
         }
         /////////////////////////////////////
 
         $inventorySupport = @class_exists('XLite_Module_InventoryTracking_Model_Inventory');
-        $this->xlite->set("PA_InventorySupport", $inventorySupport);
+        $this->xlite->set('PA_InventorySupport', $inventorySupport);
         if ($inventorySupport) {
             if (!$this->xlite->is('adminZone')) {
             }
         }
         if ($this->xlite->is('adminZone')) {
         }
-        $this->xlite->set("ProductAdviserEnabled", true);
+        $this->xlite->set('ProductAdviserEnabled', true);
     }
 
     function validateConfig($option, $limit=0)
@@ -179,7 +179,7 @@ class XLite_Module_ProductAdviser_Main extends XLite_Module_Abstract
         }
         if ($number_updated) {
             $cfg = new XLite_Model_Config();
-            $cfg->createOption("ProductAdviser", $option, $number);
+            $cfg->createOption('ProductAdviser', $option, $number);
         }
     }
 }

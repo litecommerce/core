@@ -47,7 +47,7 @@ class XLite_Model_Upgrade extends XLite_Model_Abstract
         "to_ver" => "",
         "date" => "0");
     public $alias = "upgrades";
-    public $primaryKey = array("from_ver", "to_ver");
+    public $primaryKey = array('from_ver', "to_ver");
     public $_interactive = true; // interactive upgrade; show upgrade messages	
     public $failed = false;
 
@@ -64,17 +64,17 @@ class XLite_Model_Upgrade extends XLite_Model_Abstract
     /**
     * Syntax:
     * $upgrade = new XLite_Model_Upgrade();
-    * $upgrade->set("from_ver", "1.2.3");
-    * $upgrade->set("to_ver", "2.3.4");
+    * $upgrade->set('from_ver', "1.2.3");
+    * $upgrade->set('to_ver', "2.3.4");
     * $upgrade->doUpgrade();
     */
     function doUpgrade() 
     {
         $from_ver = $this->get('from_ver');
         $to_ver = $this->get('to_ver');
-        $from_ver = str_replace(" build ", ".", $from_ver);
+        $from_ver = str_replace(' build ', ".", $from_ver);
         $configVersion = $this->config->Version->version;
-        $configVersion = str_replace(" build ", ".", $configVersion);
+        $configVersion = str_replace(' build ', ".", $configVersion);
 
         echo "<pre>Continuing $from_ver to $to_ver LiteCommerce upgrade:<br><br>\n";
 
@@ -110,14 +110,14 @@ Please correct errors above and click reload or click the button below to force 
     function success()
     {
         $from_ver = $this->get('from_ver');
-        $from_ver = str_replace(" build ", ".", $from_ver);
+        $from_ver = str_replace(' build ', ".", $from_ver);
         $configVersion = $this->config->Version->version;
-        $configVersion = str_replace(" build ", ".", $configVersion);
+        $configVersion = str_replace(' build ', ".", $configVersion);
 
         echo "\n\n<br><br><font color=blue><b>LiteCommerce has been successfully upgraded to version " . $this->get('to_ver') . "</b></font>";
         
         if ($from_ver == $configVersion) {
-            $this->set("date", time());
+            $this->set('date', time());
             if ($this->find("from_ver='" . $this->get('from_ver') . "' AND to_ver='" . $this->get('to_ver') . "'")) {
                 $this->update();
             } else {
@@ -125,9 +125,9 @@ Please correct errors above and click reload or click the button below to force 
             }
             // set current version in config->Version->version
             $c = new XLite_Model_Config();
-            $c->set("category", "Version");
-            $c->set("name", "version");
-            $c->set("value", $this->get('to_ver'));
+            $c->set('category', "Version");
+            $c->set('name', "version");
+            $c->set('value', $this->get('to_ver'));
             $c->update();
         }
     }

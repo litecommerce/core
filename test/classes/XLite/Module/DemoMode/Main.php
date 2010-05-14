@@ -87,7 +87,7 @@ class XLite_Module_DemoMode_Main extends XLite_Module_Abstract
 
         $mm = new XLite_Model_Module();
         if ($this->xlite->is('adminZone')) {
-            $this->addLayout("welcome.tpl", "modules/DemoMode/welcome.tpl");
+            $this->addLayout('welcome.tpl', "modules/DemoMode/welcome.tpl");
         } else {
         }
         $cfg = new XLite_Model_Config();
@@ -101,7 +101,7 @@ class XLite_Module_DemoMode_Main extends XLite_Module_Abstract
     function update()
     {
         $module = new XLite_Model_Module();
-        $module->set("properties", $this->get('properties'));
+        $module->set('properties', $this->get('properties'));
         $module->update();
     }
     

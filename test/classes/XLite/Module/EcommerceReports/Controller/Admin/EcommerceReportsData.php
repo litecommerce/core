@@ -66,7 +66,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_EcommerceReportsData extend
     function genOrders() 
     {
         set_time_limit(0);
-        ini_set("memory_limit", "64M");
+        ini_set('memory_limit', "64M");
 
         func_refresh_start();
 
@@ -109,15 +109,15 @@ class XLite_Module_EcommerceReports_Controller_Admin_EcommerceReportsData extend
             srand((float) $sec + ((float) $usec * 100000));
             $numOrders = mt_rand(0, $maxOrders);
 
-            echo "Building $numOrders orders for date <b>". date("r", $date) ."</b><br>";
+            echo "Building $numOrders orders for date <b>". date('r', $date) ."</b><br>";
             for ($i = 0; $i < $numOrders; $i++) {
             
                 echo "Order #$i ";
 
                 // create order
                 $order = new XLite_Model_Order();
-                $order->set("date", $date);
-                $order->set("status", "P");
+                $order->set('date', $date);
+                $order->set('status', "P");
 
                 $numItems = mt_rand(1, $maxItems);
                 echo " ($numItems items in order) .. ";
@@ -148,8 +148,8 @@ class XLite_Module_EcommerceReports_Controller_Admin_EcommerceReportsData extend
                     }
                     // create order item
                     $item = new XLite_Model_OrderItem();
-                    $item->set("product", $product);
-                    $item->set("amount", $amount);
+                    $item->set('product', $product);
+                    $item->set('amount', $amount);
 
                     // add item to order
                     $order->addItem($item);
@@ -167,13 +167,13 @@ class XLite_Module_EcommerceReports_Controller_Admin_EcommerceReportsData extend
                 if (isset($properties['profile_id'])) {
                 	unset($properties['profile_id']);
                 }
-                $op->set("properties", $properties);
-                $op->set("order_id", $order->get('order_id'));
+                $op->set('properties', $properties);
+                $op->set('order_id', $order->get('order_id'));
                 $op->create();
 
                 // link order to profile
-                $order->set("profile_id", $op->get('profile_id'));
-                $order->set("orig_profile_id", $profile->get('profile_id'));
+                $order->set('profile_id', $op->get('profile_id'));
+                $order->set('orig_profile_id', $profile->get('profile_id'));
                 $order->update();
 
                 echo " finished<br>";

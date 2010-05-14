@@ -81,7 +81,7 @@ class XLite_Controller_Admin_Product extends XLite_Controller_Admin_Abstract
     function action_add_field()
     {
         $ef = new XLite_Model_ExtraField();
-        $ef->set("properties", XLite_Core_Request::getInstance()->getData());
+        $ef->set('properties', XLite_Core_Request::getInstance()->getData());
         $ef->create();
     }
 
@@ -96,7 +96,7 @@ class XLite_Controller_Admin_Product extends XLite_Controller_Admin_Abstract
         } elseif (!is_null($this->get('update'))) {
             foreach ((array)$this->get('extra_fields') as $id => $data) {
                 $ef = new XLite_Model_ExtraField($id);
-                $ef->set("properties", $data);
+                $ef->set('properties', $data);
                 $ef->update();
             }
         }
@@ -119,7 +119,7 @@ class XLite_Controller_Admin_Product extends XLite_Controller_Admin_Abstract
             }
         }
 
-        $product->set("properties", $properties);
+        $product->set('properties', $properties);
         $product->update();
         
         // update product image and thumbnail
@@ -128,7 +128,7 @@ class XLite_Controller_Admin_Product extends XLite_Controller_Admin_Abstract
         // link product category(ies)
         if (isset($this->category_id)) {
             $category = new XLite_Model_Category($this->category_id);
-            $product->set("category", $category);
+            $product->set('category', $category);
         }
 
         // update/create extra fields
@@ -137,12 +137,12 @@ class XLite_Controller_Admin_Product extends XLite_Controller_Admin_Abstract
             foreach ($extraFields as $id => $value) {
                 $fv = new XLite_Model_FieldValue();
                 $found = $fv->find("field_id=$id AND product_id=$this->product_id");
-                $fv->set("value", $value);
+                $fv->set('value', $value);
                 if ($found) {
                     $fv->update();
                 } else {
-                    $fv->set("field_id", $id);
-                    $fv->set("product_id", $this->product_id);
+                    $fv->set('field_id', $id);
+                    $fv->set('product_id', $this->product_id);
                     $fv->create();
                 }
             }
@@ -153,14 +153,14 @@ class XLite_Controller_Admin_Product extends XLite_Controller_Admin_Abstract
     {
         $tn = $this->getComplex('product.thumbnail');
         if ($tn->handleRequest() != XLite_Model_Image::IMAGE_OK && $tn->_shouldProcessUpload) {
-        	$this->set("valid", false);
-        	$this->set("thumbnail_read_only", true);
+        	$this->set('valid', false);
+        	$this->set('thumbnail_read_only', true);
         }
 
         $img = $this->getComplex('product.image');
         if ($img->handleRequest() != XLite_Model_Image::IMAGE_OK && $img->_shouldProcessUpload) {
-        	$this->set("valid", false);
-        	$this->set("image_read_only", true);
+        	$this->set('valid', false);
+        	$this->set('image_read_only', true);
         }
     }
 
@@ -168,7 +168,7 @@ class XLite_Controller_Admin_Product extends XLite_Controller_Admin_Abstract
     {
         $p_product = new XLite_Model_Product($this->product_id);
         $product = $p_product->cloneObject();
-        foreach($p_product->get('categories') as $category) {
+        foreach ($p_product->get('categories') as $category) {
             $product->addCategory($category);
         }
         $product->set('name', $product->get('name') . " (CLONE)");

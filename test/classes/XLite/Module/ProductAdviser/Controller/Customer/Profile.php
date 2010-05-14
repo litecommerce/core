@@ -42,7 +42,7 @@ class XLite_Module_ProductAdviser_Controller_Customer_Profile extends XLite_Cont
     	parent::init();
 
     	if (empty($this->action) && $this->from == "notify_me") {
-    		$this->session->set("NotifyMePended", true);
+    		$this->session->set('NotifyMePended', true);
     	}
     }
 
@@ -51,9 +51,9 @@ class XLite_Module_ProductAdviser_Controller_Customer_Profile extends XLite_Cont
         parent::action_register();
 
         if ($this->auth->is('logged') && $this->session->isRegistered('NotifyMePended') && $this->session->isRegistered('NotifyMeInfo')) {
-    		$this->session->set("NotifyMePended", null);
-    		$this->session->set("NotifyMeReturn", true);
-            $this->set("returnUrl", "cart.php?target=notify_me");
+    		$this->session->set('NotifyMePended', null);
+    		$this->session->set('NotifyMeReturn', true);
+            $this->set('returnUrl', "cart.php?target=notify_me");
         }
     }
 }

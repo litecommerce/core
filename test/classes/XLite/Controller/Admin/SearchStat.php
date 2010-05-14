@@ -35,7 +35,7 @@
  */
 class XLite_Controller_Admin_SearchStat extends XLite_Controller_Admin_Stats
 {
-    public $params = array("target", "listOrder");
+    public $params = array('target', "listOrder");
     public $order = "query";
     public $orders = array(
             "query" => "query",

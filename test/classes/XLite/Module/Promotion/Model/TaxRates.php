@@ -64,10 +64,10 @@ class XLite_Module_Promotion_Model_TaxRates extends XLite_Model_TaxRates impleme
                 $schemas = unserialize($c->get('value'));
                 if ($schema === "") {
                     $schemas[$name]['discounts_after_taxes'] = ($this->getComplex('config.Taxes.discounts_after_taxes'))?"Y":"N";
-                } elseif (!in_array($schemas[$name]['discounts_after_taxes'], array("Y","N"))) {
+                } elseif (!in_array($schemas[$name]['discounts_after_taxes'], array('Y',"N"))) {
                     $schemas[$name]['discounts_after_taxes'] = "N";
                 }
-                $c->set("value", serialize($schemas));
+                $c->set('value', serialize($schemas));
                 $c->update();
             }
         }

@@ -229,7 +229,7 @@ class XLite_Module_UPSOnlineTools_Model_ContainerLevel extends XLite_Base
         $vars['height'] = $this->height;
 
 /*
-        foreach((array)$this->subspaces as $subspace) {
+        foreach ((array)$this->subspaces as $subspace) {
             $vars['subspaces'][] = $subspace->export();
         }
 //*/

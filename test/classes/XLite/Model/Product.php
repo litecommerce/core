@@ -275,17 +275,17 @@ class XLite_Model_Product extends XLite_Model_Abstract
         $image->copyTo($id);
         $ef = new XLite_Model_ExtraField();
         $it = $ef->findAll("product_id='". $this->get('product_id')."'");
-        foreach($it as $extra_field) {
+        foreach ($it as $extra_field) {
             $ef = $extra_field->cloneObject();
-            $ef->set("product_id", $id);
+            $ef->set('product_id', $id);
             $ef->update();
 
             $fv = new XLite_Model_FieldValue();
             if ($fv->find("field_id='".$extra_field->get('field_id')."' AND product_id='".$this->get('product_id')."'")) {
                 $fv->read();
                 $fv_new = $fv;
-                $fv_new->set("product_id", $id);
-                $fv_new->set("field_id", $ef->get('field_id'));
+                $fv_new->set('product_id', $id);
+                $fv_new->set('field_id', $ef->get('field_id'));
                 $fv_new->create();
             }
         }
@@ -294,7 +294,7 @@ class XLite_Model_Product extends XLite_Model_Abstract
 
     function _beforeAdvancedSearch($substring, $sku = null, $category_id = null, $subcategory_search = false, $fulltext = false, $onlyindexes = false)
     {
-        $this->xlite->set("GlobalQuickCategoriesNumber", false);
+        $this->xlite->set('GlobalQuickCategoriesNumber', false);
     }
     
     /**
@@ -522,13 +522,13 @@ class XLite_Model_Product extends XLite_Model_Abstract
             }
         } else {
             $profile = new XLite_Model_Profile();
-            $profile->set("shipping_country", $this->config->getComplex('General.default_country'));
-            $profile->set("billing_country", $this->config->getComplex('General.default_country'));
+            $profile->set('shipping_country', $this->config->getComplex('General.default_country'));
+            $profile->set('billing_country', $this->config->getComplex('General.default_country'));
         }
         // setup customer's info
         $order = new XLite_Model_Order();
-        $order->set("profile", $profile);
-        $this->_taxRates->set("order", $order);
+        $order->set('profile', $profile);
+        $this->_taxRates->set('order', $order);
         $this->_taxRates->_conditionValues['product class'] = $this->get('tax_class');
         // categories
         $categories = array();
@@ -578,7 +578,7 @@ class XLite_Model_Product extends XLite_Model_Abstract
                 if (count($extraFields_categories) > 0)
                 {
                     $found = false;
-                    foreach($product_categories as $cat)
+                    foreach ($product_categories as $cat)
                     {
                         if (in_array($cat->get('category_id'), $extraFields_categories))
                         {
@@ -601,7 +601,7 @@ class XLite_Model_Product extends XLite_Model_Abstract
                     if (!$ef_child->find("product_id='".$this->get('product_id')."' AND parent_field_id='".$extraField->get('field_id')."'"))
                     {
                         $obj_fields = array_keys($extraField->properties);
-                        foreach($obj_fields as $obj_field)
+                        foreach ($obj_fields as $obj_field)
                         {
                             $obj_field_updated = false;
                             $obj_field_value = $extraField->get($obj_field);
@@ -620,8 +620,8 @@ class XLite_Model_Product extends XLite_Model_Abstract
                                 $ef_child->setComplex($obj_field, $obj_field_value);
                             }
                         }
-                        $ef_child->set("product_id", $this->get('product_id'));
-                        $ef_child->set("parent_field_id", $extraField->get('field_id'));
+                        $ef_child->set('product_id', $this->get('product_id'));
+                        $ef_child->set('parent_field_id', $extraField->get('field_id'));
                         $ef_child->create();
                     }
                 }
@@ -659,7 +659,7 @@ class XLite_Model_Product extends XLite_Model_Abstract
             if ($extraField->get('product_id') == 0) {
                 $categories = $this->getCategories();
                 if (is_array($categories)) {
-                    foreach($categories as $cat) {
+                    foreach ($categories as $cat) {
                         if (!$extraField->isCategorySelected($cat->get('category_id'))) {
                             $extraFieldsWrongGlobal[$extraField->get('field_id')] = $idx;
                         }
@@ -676,9 +676,9 @@ class XLite_Model_Product extends XLite_Model_Abstract
         foreach ($extraFields as $idx => $extraField) {
             $fv = new XLite_Model_FieldValue();
             if ($fv->find("field_id=".$extraField->get('field_id')." AND product_id=".$this->get('product_id'))) {
-                $extraFields[$idx]->set("value", $fv->get('value'));
+                $extraFields[$idx]->set('value', $fv->get('value'));
             } else {
-                $extraFields[$idx]->set("value", $extraField->get('default_value'));
+                $extraFields[$idx]->set('value', $extraField->get('default_value'));
             }
         }
         return $extraFields;
@@ -871,7 +871,7 @@ class XLite_Model_Product extends XLite_Model_Abstract
                 $link_table = $this->db->getTableByAlias('categories');
                 $where = "$link_table.category_id in (".implode(',',$categoryIds).")";
                 $p = new XLite_Model_Product();
-                foreach($p->findAll($fname."='$slashedName'") as $product) {
+                foreach ($p->findAll($fname."='$slashedName'") as $product) {
                     if (count($product->getCategories($where))) {
                         return $product;
                     }
@@ -925,7 +925,7 @@ class XLite_Model_Product extends XLite_Model_Abstract
         echo "<b>Importing CSV file line# $line_no: </b>";
 
         // Update product properties / create product
-        $product->set("properties", $properties);
+        $product->set('properties', $properties);
         if ($product->isPersistent) {
             echo "Update product: ";
             $product->update();
@@ -940,12 +940,12 @@ class XLite_Model_Product extends XLite_Model_Abstract
             // update images base directory
             $cfg = new XLite_Model_Config();
             if ($cfg->find("name='images_directory'")) {
-                $cfg->set("value", $images_directory);
+                $cfg->set('value', $images_directory);
                 $cfg->update();
             } else {
-                $cfg->set("name", "images_directory");
-                $cfg->set("category", "Images");
-                $cfg->set("value", $images_directory);
+                $cfg->set('name', "images_directory");
+                $cfg->set('category', "Images");
+                $cfg->set('value', $images_directory);
                 $cfg->create();
             }
             // re-read config data
@@ -985,9 +985,9 @@ class XLite_Model_Product extends XLite_Model_Abstract
             $image->import($image_path);
         } else {
             // update image info
-            $image->set("data", $name);
-            $image->set("source", "F");
-            $image->set("type", $image->getImageType($image_path));
+            $image->set('data', $name);
+            $image->set('source', "F");
+            $image->set('type', $image->getImageType($image_path));
             $image->update();
         }
     }
@@ -1026,7 +1026,7 @@ class XLite_Model_Product extends XLite_Model_Abstract
     {
         $flag = $this->xlite->get('ProductGarbageCleaned');
         if (!$flag) {
-            $this->xlite->set("ProductGarbageCleaned", true);
+            $this->xlite->set('ProductGarbageCleaned', true);
             $this->collectGarbage();
         }
 

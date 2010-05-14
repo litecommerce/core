@@ -56,14 +56,14 @@ class XLite_Module_GoogleCheckout_Controller_Admin_Order extends XLite_Controlle
                 );
         }
 
-        if (!in_array("page", $this->params)) {
+        if (!in_array('page', $this->params)) {
             $this->params[] = "page";
         }
 
         parent::init();
 
         if (!$this->xlite->get('AOMEnabled')) {
-            foreach($this->pages as $key => $page) {
+            foreach ($this->pages as $key => $page) {
                 $this->pages[$key] = sprintf($page,$this->order_id);
             }
         }
@@ -104,7 +104,7 @@ class XLite_Module_GoogleCheckout_Controller_Admin_Order extends XLite_Controlle
 
     function isGoogleAllowCharge()
     {
-        return ((in_array($this->getComplex('order.google_details.financial_state'), array("REVIEWING", "CHARGEABLE", "CHARGED")) && $this->getComplex('order.googleRemainCharge') > 0) ? true : false);
+        return ((in_array($this->getComplex('order.google_details.financial_state'), array('REVIEWING', "CHARGEABLE", "CHARGED")) && $this->getComplex('order.googleRemainCharge') > 0) ? true : false);
     }
 
     function isGoogleAllowRefund()
@@ -126,12 +126,12 @@ class XLite_Module_GoogleCheckout_Controller_Admin_Order extends XLite_Controlle
             return false;
         }
 
-        return ((in_array($this->getComplex('order.google_details.financial_state'), array("CHARGEABLE", "PAYMENT_DECLINED")) || $this->getComplex('order.google_status') == "R") ? true : false);
+        return ((in_array($this->getComplex('order.google_details.financial_state'), array('CHARGEABLE', "PAYMENT_DECLINED")) || $this->getComplex('order.google_status') == "R") ? true : false);
     }
 
     function isGoogleAllowDeliver()
     {
-        return ((in_array($this->getComplex('order.google_details.fulfillment_state'), array("NEW", "PROCESSING"))) ? true : false);
+        return ((in_array($this->getComplex('order.google_details.fulfillment_state'), array('NEW', "PROCESSING"))) ? true : false);
     }
 
     function isGoogleAllowProcess()
@@ -141,7 +141,7 @@ class XLite_Module_GoogleCheckout_Controller_Admin_Order extends XLite_Controlle
 
     function isGoogleAllowAcrhive()
     {
-        return ((in_array($this->getComplex('order.google_details.fulfillment_state'), array("DELIVERED", "WILL_NOT_DELIVER")) || in_array($this->getComplex('order.google_details.financial_state'), array("PAYMENT_DECLINED", "CANCELLED", "CANCELLED_BY_GOOGLE"))) ? true : false);
+        return ((in_array($this->getComplex('order.google_details.fulfillment_state'), array('DELIVERED', "WILL_NOT_DELIVER")) || in_array($this->getComplex('order.google_details.financial_state'), array('PAYMENT_DECLINED', "CANCELLED", "CANCELLED_BY_GOOGLE"))) ? true : false);
     }
 
     function isGoogleOrderCanceled()
@@ -153,7 +153,7 @@ class XLite_Module_GoogleCheckout_Controller_Admin_Order extends XLite_Controlle
     // Success handling
     function setGoogleSuccess($var_code)
     {
-        if (!in_array("success", $this->params)) {
+        if (!in_array('success', $this->params)) {
             $this->params[] = "success";
         }
 
@@ -168,11 +168,11 @@ class XLite_Module_GoogleCheckout_Controller_Admin_Order extends XLite_Controlle
         $this->error = "message_send_failed";
         $this->errorMessage = $result;
 
-        if (!in_array("error", $this->params)) {
+        if (!in_array('error', $this->params)) {
             $this->params[] = "error";
         }
 
-        if (!in_array("errorMessage", $this->params)) {
+        if (!in_array('errorMessage', $this->params)) {
             $this->params[] = "errorMessage";
         }
     }
@@ -184,7 +184,7 @@ class XLite_Module_GoogleCheckout_Controller_Admin_Order extends XLite_Controlle
         if ($result === true) {
             $this->setGoogleSuccess('order_charge');
         } else {
-            $this->setGoogleError("order_charge_failed", $result);
+            $this->setGoogleError('order_charge_failed', $result);
         }
     }
 
@@ -194,7 +194,7 @@ class XLite_Module_GoogleCheckout_Controller_Admin_Order extends XLite_Controlle
         if ($result === true) {
             $this->setGoogleSuccess('order_refund');
         } else {
-            $this->setGoogleError("order_refund_failed", $result);
+            $this->setGoogleError('order_refund_failed', $result);
         }
     }
 
@@ -204,7 +204,7 @@ class XLite_Module_GoogleCheckout_Controller_Admin_Order extends XLite_Controlle
         if ($result === true) {
             $this->setGoogleSuccess('order_cancel');
         } else {
-            $this->setGoogleError("order_cancel_failed", $result);
+            $this->setGoogleError('order_cancel_failed', $result);
         }
     }
 
@@ -214,7 +214,7 @@ class XLite_Module_GoogleCheckout_Controller_Admin_Order extends XLite_Controlle
         if ($result === true) {
             $this->setGoogleSuccess('order_processed');
         } else {
-            $this->setGoogleError("order_process_failed", $result);
+            $this->setGoogleError('order_process_failed', $result);
         }
     }
 
@@ -228,13 +228,13 @@ class XLite_Module_GoogleCheckout_Controller_Admin_Order extends XLite_Controlle
             $order = $this->get('order');
 
             $message_code  = ($order->get('tracking') ? "order_update_tracking" : "order_add_tracking");
-            $order->set("tracking", $tracking);
-            $order->set("google_carrier", $carrier);
+            $order->set('tracking', $tracking);
+            $order->set('google_carrier', $carrier);
             $order->update();
 
             $this->setGoogleSuccess("$message_code");
         } else {
-            $this->setGoogleError("order_tracking_failed", $result);
+            $this->setGoogleError('order_tracking_failed', $result);
         }
     }
 
@@ -245,7 +245,7 @@ class XLite_Module_GoogleCheckout_Controller_Admin_Order extends XLite_Controlle
         if ($result === true) {
             $this->setGoogleSuccess('order_deliver');
         } else {
-            $this->setGoogleError("order_deliver_failed", $result);
+            $this->setGoogleError('order_deliver_failed', $result);
         }
     }
 
@@ -257,7 +257,7 @@ class XLite_Module_GoogleCheckout_Controller_Admin_Order extends XLite_Controlle
         if ($result === true) {
             $this->setGoogleSuccess('message_sent');
         } else {
-            $this->setGoogleError("message_send_failed", $result);
+            $this->setGoogleError('message_send_failed', $result);
         }
     }
 
@@ -267,12 +267,12 @@ class XLite_Module_GoogleCheckout_Controller_Admin_Order extends XLite_Controlle
 
         if ($result === true) {
             $order = $this->get('order');
-            $order->setComplex("google_details.google_archived", 1);
+            $order->setComplex('google_details.google_archived', 1);
             $order->update();
 
             $this->setGoogleSuccess('order_archived');
         } else {
-            $this->setGoogleError("order_archive_failed", $result);
+            $this->setGoogleError('order_archive_failed', $result);
         }
     }
 
@@ -282,12 +282,12 @@ class XLite_Module_GoogleCheckout_Controller_Admin_Order extends XLite_Controlle
 
         if ($result === true) {
             $order = $this->get('order');
-            $order->setComplex("google_details.google_archived", 0);
+            $order->setComplex('google_details.google_archived', 0);
             $order->update();
 
             $this->setGoogleSuccess('order_unarchived');
         } else {
-            $this->setGoogleError("order_unarchive_failed", $result);
+            $this->setGoogleError('order_unarchive_failed', $result);
         }
     }
 
@@ -315,6 +315,6 @@ class XLite_Module_GoogleCheckout_Controller_Admin_Order extends XLite_Controlle
 
     function getGoogleCarriersList()
     {
-        return array("DHL", "FedEx", "UPS", "USPS", "Other");
+        return array('DHL', "FedEx", "UPS", "USPS", "Other");
     }
 }

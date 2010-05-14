@@ -95,9 +95,9 @@ class XLite_Module_WholesaleTrading_Model_PurchaseLimit extends XLite_Model_Abst
         $product = $product->findImportedProduct($properties['sku'], '',$properties['product'], false, $options['unique_identifier']);
         if (!is_null($product)) {
             $found = $wp->find("product_id = " . $product->get('product_id'));
-            $wp->set("product_id", $product->get('product_id'));
-            $wp->set("min",$properties['min']);
-            $wp->set("max",$properties['max']);
+            $wp->set('product_id', $product->get('product_id'));
+            $wp->set('min',$properties['min']);
+            $wp->set('max',$properties['max']);
     
             echo "<b>Importing CSV file line# $line_no: </b>";
     

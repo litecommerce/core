@@ -68,7 +68,7 @@ class XLite_Model_ProductFromCategory extends XLite_Model_Product
         foreach ($this->primaryKey as $field) {
             $condition[] = "$field='".addslashes($this->properties[$field])."'";
         }
-        $condition = implode(" AND ", $condition);
+        $condition = implode(' AND ', $condition);
         
         $this->fetchKeysOnly = false;
         $sql = parent::_buildSelect($condition);

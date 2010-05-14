@@ -64,10 +64,10 @@ class XLite_Module_Affiliate_Model_PartnerPayment extends XLite_Model_Abstract
     function set($name, $value) 
     {
         if ($name == "order_id") {
-            $this->set("add_date", time());
+            $this->set('add_date', time());
         }
         if ($name == "paid" && (boolean)$value == true) {
-            $this->set("paid_date", time());
+            $this->set('paid_date', time());
         }
         parent::set($name, $value);
     }
@@ -159,7 +159,7 @@ class XLite_Module_Affiliate_Model_PartnerPayment extends XLite_Model_Abstract
         if (!$searchAffiliates) {
             $where[] = "affiliate=0";
         }
-        $result = $this->findAll(implode(" AND ", $where));
+        $result = $this->findAll(implode(' AND ', $where));
         // filter payments by order status
         $result1 = array();
         foreach ($result as $pp) {
@@ -190,7 +190,7 @@ class XLite_Module_Affiliate_Model_PartnerPayment extends XLite_Model_Abstract
                 foreach ((array)$payment->findAll("order_id=".$payment->getComplex('order.order_id')) as $pp)
                 {
                     if (!$pp->get('paid') && $pp->get('partner_id') == $partnerID) {
-                    	$pp->set("paid", 1);
+                    	$pp->set('paid', 1);
                     	$pp->update();
                     }
                 }
@@ -215,7 +215,7 @@ class XLite_Module_Affiliate_Model_PartnerPayment extends XLite_Model_Abstract
             echo "<table border=0 cellpadding=5>";
             foreach ((array)$this->findAll("order_id=".$orderId, "commissions") as $p) {
                 $paid = ($data['paid'] == "Y" || $data['paid'] == "y");
-                $p->set("paid", $paid);
+                $p->set('paid', $paid);
                 $p->update();
                 echo "<tr><td>Partner: ".$p->getComplex('partner.billing_firstname')." ".$p->getComplex('partner.billing_lastname')." &lt;".$p->getComplex('partner.login')."&gt;</td><td>Commissions: ".$w->price_format($p->get('commissions'))."</td><td>Status: " . ($paid ? "PAID" : "CANCELLED")."</td></tr>";
             }

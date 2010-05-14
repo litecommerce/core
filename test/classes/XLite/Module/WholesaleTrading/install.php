@@ -175,9 +175,9 @@ if (is_object($this)) {
 //	COPY SKIN-DEPENDENT TEMPLATES
 //////////////////////////////////////
 
-copy_schema_template("membership/payed_membership_added.tpl", $schema, $MODULE_NAME);
-copy_schema_template("membership/register.tpl", $schema, $MODULE_NAME);
-copy_schema_template("add_error.tpl", $schema, $MODULE_NAME);
+copy_schema_template('membership/payed_membership_added.tpl', $schema, $MODULE_NAME);
+copy_schema_template('membership/register.tpl', $schema, $MODULE_NAME);
+copy_schema_template('add_error.tpl', $schema, $MODULE_NAME);
 
 //////////////////////////////////////
 //	CUSTOMER ZONE
@@ -684,7 +684,7 @@ EOT;
 </html>
 EOT;
 
-$skins = array("profile_admin_deleted", "profile_admin_modified", "profile_modified", "signin_admin_notification", "signin_notification");
+$skins = array('profile_admin_deleted', "profile_admin_modified", "profile_modified", "signin_admin_notification", "signin_notification");
 foreach ($skins as $skin_name) {
     $location = "skins/mail/en/$skin_name/body.tpl";
     if (!is_template_patched($location, "WholesaleTrading"))

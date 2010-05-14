@@ -49,13 +49,13 @@ class XLite_Model_SearchStat extends XLite_Model_Abstract
     	if (strlen($query) > QUERY_SEARCH_STAT_LENGTH) {
     		$query = substr($query, 0, QUERY_SEARCH_STAT_LENGTH);
     	}
-        $this->set("query", $query);
-        $this->set("product_count", $foundCount);
+        $this->set('query', $query);
+        $this->set('product_count', $foundCount);
         if ($this->is('exists')) {
-            $this->set("count", $this->get('count')+1);
+            $this->set('count', $this->get('count')+1);
             $this->update();
         } else {
-            $this->set("count", 1);
+            $this->set('count', 1);
             $this->create();
         }
     }

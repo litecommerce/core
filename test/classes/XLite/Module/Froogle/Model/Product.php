@@ -37,8 +37,8 @@ class XLite_Module_Froogle_Model_Product extends XLite_Model_Product implements 
 {
     function getFroogleHeadLine()
     {
-        $head = array("link", "title", "description", "image_link", "product_type", "price", "brand", "condition", "expiration_date", "id");
-// OLD VARIANT: $head = array("product_url","name","description","image_url","category","price");
+        $head = array('link', "title", "description", "image_link", "product_type", "price", "brand", "condition", "expiration_date", "id");
+// OLD VARIANT: $head = array('product_url',"name","description","image_url","category","price");
         return $head;
     }
 
@@ -129,7 +129,7 @@ class XLite_Module_Froogle_Model_Product extends XLite_Model_Product implements 
     function getFroogleDescription()
     {
         $description = trim($this->_stripSpecials($this->get('description')), '"');
-        if(strlen($description) > 1000) {
+        if (strlen($description) > 1000) {
             $description = substr($description, 0, 995) . "...";
         }
 
@@ -172,7 +172,7 @@ class XLite_Module_Froogle_Model_Product extends XLite_Model_Product implements 
                 }
                 $this->_CategoriesFromProducts->prodId = $this->get('product_id');
                 if ($this->_CategoriesFromProducts->find("")) {
-                    $label = str_replace("/", " > ", trim($this->_stripSpecials($this->_CategoriesFromProducts->get('stringPath')), '"'));
+                    $label = str_replace('/', " > ", trim($this->_stripSpecials($this->_CategoriesFromProducts->get('stringPath')), '"'));
                 } else {
                     $label = "";
                 }
@@ -236,9 +236,9 @@ class XLite_Module_Froogle_Model_Product extends XLite_Model_Product implements 
     {
     	$isNewFC = $this->xlite->get('FroogleNewFC');
     	if (!isset($isNewFC)) {
-            $classMethods = array_map("strtolower", get_class_methods(get_parent_class(get_class($this))));
-            $isNewFC = in_array("formatcurrency", $classMethods);
-            $this->xlite->set("FroogleNewFC", $isNewFC);
+            $classMethods = array_map('strtolower', get_class_methods(get_parent_class(get_class($this))));
+            $isNewFC = in_array('formatcurrency', $classMethods);
+            $this->xlite->set('FroogleNewFC', $isNewFC);
         }
 
         if ($isNewFC) {

@@ -155,14 +155,14 @@ class XLite_Module_ProductOptions_Model_Product extends XLite_Model_Product impl
     function hasOptionValidator()
     {
         $pv = new XLite_Module_ProductOptions_Model_OptionValidator();
-        $pv->set("product_id", $this->get('product_id'));
+        $pv->set('product_id', $this->get('product_id'));
         return strlen(trim($pv->get('javascript_code')));
     }
 
     function getOptionValidator()
     {
         $pv = new XLite_Module_ProductOptions_Model_OptionValidator();
-        $pv->set("product_id", $this->get('product_id'));
+        $pv->set('product_id', $this->get('product_id'));
 
         return $pv->get('javascript_code');
     }
@@ -181,7 +181,7 @@ class XLite_Module_ProductOptions_Model_Product extends XLite_Model_Product impl
             $product_id = $this->get('product_id');
             $inventories = $inventory->findAll("inventory_id='$product_id' OR inventory_id LIKE '$product_id" . "|%'");
             if (is_array($inventories)) {
-                foreach($inventories as $inventory_) {
+                foreach ($inventories as $inventory_) {
                     $inventory_->delete();
                 }
             }
@@ -209,12 +209,12 @@ class XLite_Module_ProductOptions_Model_Product extends XLite_Model_Product impl
             $clone_option = new XLite_Module_ProductOptions_Model_ProductOption();
             $options = $clone_option->findAll("product_id='".$this->get('product_id')."'");
         
-            if(empty($options))    return $p;
-            foreach($options as $option) {
+            if (empty($options))    return $p;
+            foreach ($options as $option) {
                 $clone_option = new XLite_Module_ProductOptions_Model_ProductOption();
-                $clone_option->set("properties",$option->get('properties'));
-                $clone_option->set("option_id","");
-                $clone_option->set("product_id",$id);
+                $clone_option->set('properties',$option->get('properties'));
+                $clone_option->set('option_id',"");
+                $clone_option->set('product_id',$id);
                 $clone_option->create();
             }
  
@@ -222,8 +222,8 @@ class XLite_Module_ProductOptions_Model_Product extends XLite_Model_Product impl
             $validator = new XLite_Module_ProductOptions_Model_OptionValidator($this->get('product_id'));
             $js_code = $validator->get('javascript_code');
             if ( strlen(trim($js_code)) > 0 ) {
-                $validator->set("product_id", $id);
-                $validator->set("javascript_code", $js_code);
+                $validator->set('product_id', $id);
+                $validator->set('javascript_code', $js_code);
                 $validator->create();
             }
             
@@ -232,8 +232,8 @@ class XLite_Module_ProductOptions_Model_Product extends XLite_Model_Product impl
             $exceptions = $foo->findAll("product_id = '" . $this->get('product_id') . "'");
             foreach ($exceptions as $exception) {
                 $optionException = new XLite_Module_ProductOptions_Model_OptionException();
-                $optionException->set("product_id", $id);
-                $optionException->set("exception", $exception->get('exception'));
+                $optionException->set('product_id', $id);
+                $optionException->set('exception', $exception->get('exception'));
                 $optionException->create();
             }
             
@@ -304,7 +304,7 @@ class XLite_Module_ProductOptions_Model_Product extends XLite_Model_Product impl
         $oldCategories = array();
         $categories = $product->get('categories');
         if (is_array($categories)) {
-            foreach($categories as $cat) {
+            foreach ($categories as $cat) {
                 $oldCategories[] = $cat->get('category_id');
             }
         }
@@ -322,7 +322,7 @@ class XLite_Module_ProductOptions_Model_Product extends XLite_Model_Product impl
         $categories = $product->get('categories');
 
         if (is_array($categories)) {
-            foreach($categories as $cat) {
+            foreach ($categories as $cat) {
                 $newCategories[] = $cat->get('category_id');
             }
         }
@@ -333,7 +333,7 @@ class XLite_Module_ProductOptions_Model_Product extends XLite_Model_Product impl
         if (count($deleteOnly) > 0) {
             $productOptions = $product->getProductOptions();
             $globalProductOptions = array();
-            foreach($productOptions as $po) {
+            foreach ($productOptions as $po) {
                 if ($po->get('parent_option_id') > 0) {
                     $gpo = new XLite_Module_ProductOptions_Model_ProductOption($po->get('parent_option_id'));
                     $categories = $gpo->getCategories();
@@ -349,24 +349,24 @@ class XLite_Module_ProductOptions_Model_Product extends XLite_Model_Product impl
             $gpo = new XLite_Module_ProductOptions_Model_ProductOption();
             $gpos = $gpo->findAll("product_id='0' AND parent_option_id='0'");
             if (is_array($gpos)) {
-                foreach($gpos as $gp) {
+                foreach ($gpos as $gp) {
                     $categories = $gp->getCategories();
                     $result = array_intersect($categories, $addOnly);
 
                     if (count($result) > 0 || (is_array($categories) && count($categories) == 0)) {
                         $productOptions = $product->getProductOptions();
                         $need_update = true;
-                        foreach($productOptions as $po) {
+                        foreach ($productOptions as $po) {
                             if ($po->get('parent_option_id') == $gp->get('option_id')) {
                             $need_update = false;
                             }
                         }
                         if ($need_update) {
                             $po = new XLite_Module_ProductOptions_Model_ProductOption();
-                            $po->set("properties", $gp->get('properties'));
-                            $po->set("option_id", null);
-                            $po->set("product_id", $this->get('product_id'));
-                            $po->set("parent_option_id", $gp->get('option_id'));
+                            $po->set('properties', $gp->get('properties'));
+                            $po->set('option_id', null);
+                            $po->set('product_id', $this->get('product_id'));
+                            $po->set('parent_option_id', $gp->get('option_id'));
                             $po->create();
                         }
                     }

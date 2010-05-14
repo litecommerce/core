@@ -230,7 +230,7 @@ class XLite_Module_WishList_Controller_Admin_Wishlists extends XLite_Controller_
                 $wishlist = new XLite_Module_WishList_Model_WishList($id);
                 $wishlistProducts = $wishlist->get('products');
 
-                foreach($wishlistProducts as $product) {
+                foreach ($wishlistProducts as $product) {
                     $product->delete();
                 }
 

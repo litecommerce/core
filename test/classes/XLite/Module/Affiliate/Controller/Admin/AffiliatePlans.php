@@ -40,7 +40,7 @@ class XLite_Module_Affiliate_Controller_Admin_AffiliatePlans extends XLite_Contr
         $ap = $this->get('affiliatePlan');
         if ($ap->get('plan_id') == $this->config->getComplex('Affiliate.default_plan')) {
             $cfg = new XLite_Model_Config();
-            $cfg->createOption("Affiliate", "default_plan", "");
+            $cfg->createOption('Affiliate', "default_plan", "");
         }
         $ap->delete();
     }
@@ -51,7 +51,7 @@ class XLite_Module_Affiliate_Controller_Admin_AffiliatePlans extends XLite_Contr
         $ap->update();
         if ($ap->get('plan_id') == $this->config->getComplex('Affiliate.default_plan') && !$ap->get('enabled')) {
             $cfg = new XLite_Model_Config();
-            $cfg->createOption("Affiliate", "default_plan", "");
+            $cfg->createOption('Affiliate', "default_plan", "");
         }
     }
     
@@ -60,14 +60,14 @@ class XLite_Module_Affiliate_Controller_Admin_AffiliatePlans extends XLite_Contr
         $ap = $this->get('affiliatePlan');
         $ap->create();
         if (!is_null($this->get('returnUrl'))) {
-            $this->set("returnUrl", $this->get('returnUrl') . $ap->get('plan_id'));
+            $this->set('returnUrl', $this->get('returnUrl') . $ap->get('plan_id'));
         }
     }
 
     function getAffiliatePlan()
     {
         $ap = new XLite_Module_Affiliate_Model_AffiliatePlan(isset($_REQUEST['plan_id']) ? $_REQUEST['plan_id'] : null);
-        $ap->set("properties", $_REQUEST);
+        $ap->set('properties', $_REQUEST);
         return $ap;
     }
 

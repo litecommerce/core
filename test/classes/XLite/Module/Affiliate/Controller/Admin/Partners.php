@@ -35,13 +35,13 @@
  */
 class XLite_Module_Affiliate_Controller_Admin_Partners extends XLite_Controller_Admin_Abstract
 {
-    public $params = array("target", "search", "filter", "partnerStatus", "plan_id", "plan", "startDateMonth", "startDateDay", "startDateYear", "endDateMonth", "endDateDay", "endDateYear", "itemsPerPage");
+    public $params = array('target', "search", "filter", "partnerStatus", "plan_id", "plan", "startDateMonth", "startDateDay", "startDateYear", "endDateMonth", "endDateDay", "endDateYear", "itemsPerPage");
 
     function fillForm()
     {
         if (!isset($this->startDate)) {
             $date = getdate(time());
-            $this->set("startDate", mktime(0,0,0,$date['mon'],1,$date['year']));
+            $this->set('startDate', mktime(0,0,0,$date['mon'],1,$date['year']));
         }
         parent::fillForm();
     }
@@ -64,7 +64,7 @@ class XLite_Module_Affiliate_Controller_Admin_Partners extends XLite_Controller_
                         }
                     }
                     if (!empty($plan)) {
-                        $partner->set("plan", $plan);
+                        $partner->set('plan', $plan);
                     }
                     if (!empty($plan) || !empty($status)) {
                         $partner->update();

@@ -389,7 +389,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
             $properties['shipping_title'] = "";
         }
         foreach ($properties as $key => $value) {
-            $keywords = preg_split("/_/", $key);
+            $keywords = preg_split('/_/', $key);
             if (isset($keywords[0]) && $keywords[0] == "billing") {
                 $k = "shipping_" . $keywords[1];
                 if ($this->isEmptySippingInfoField($properties, $k)) {
@@ -418,12 +418,12 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
             $profile->enable();
         }
         if (strlen($profile->get('password')) > 0) {
-            $profile->set("password", 
+            $profile->set('password', 
             self::encryptPassword($profile->get('password')));
             $anonymous = false;
         } else {
-            $this->setComplex("session.anonymous", true);
-            $profile->set("isAnonymous", true);
+            $this->setComplex('session.anonymous', true);
+            $profile->set('isAnonymous', true);
             $anonymous = true;
         }
         $this->copyBillingInfo($profile);
@@ -432,12 +432,12 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
         if (isset($_SERVER['HTTP_REFERER'])) {
             if (!isset($_COOKIE['LCReferrerCookie'])) {
                 $referer = $_SERVER['HTTP_REFERER'];
-                setcookie("LCReferrerCookie", $referer, time() + 3600 * 24 * 180, "/", XLite::getInstance()->getOptions(array('host_details', 'http_host')));
+                setcookie('LCReferrerCookie', $referer, time() + 3600 * 24 * 180, "/", XLite::getInstance()->getOptions(array('host_details', 'http_host')));
             } else {
                 $referer = $_COOKIE['LCReferrerCookie'];
             }
             // save referer
-            $profile->set("referer", $referer);
+            $profile->set('referer', $referer);
         }
         // create profile
         $profile->create();
@@ -446,7 +446,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
             $mailer = new XLite_Model_Mailer();
             // pass this data to the mailer
             $mailer->profile = $profile;
-            $mailer->set("charset", $this->xlite->config->Company->locationCountry->get('charset'));
+            $mailer->set('charset', $this->xlite->config->Company->locationCountry->get('charset'));
             $mailer->compose($this->getComplex('config.Company.site_administrator'),
                              $profile->get('login'),
                              "signin_notification"
@@ -488,7 +488,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
             }
         }
         if (strlen($profile->get('password')) > 0) {
-            $profile->set("password", 
+            $profile->set('password', 
             self::encryptPassword($profile->get('password')));
         } else {
             $this->clearAnonymousPassword($profile);
@@ -513,8 +513,8 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
 
         // send mail notification to customer
         $mailer = new XLite_Model_Mailer();
-        $mailer->set("profile", $profile);
-        $mailer->set("charset", $this->xlite->config->Company->locationCountry->get('charset'));
+        $mailer->set('profile', $profile);
+        $mailer->set('charset', $this->xlite->config->Company->locationCountry->get('charset'));
         $mailer->compose(
                 $this->getComplex('config.Company.users_department'),
                 $profile->get('login'),
@@ -534,7 +534,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
 
     function clearAnonymousPassword($profile)
     {
-        $profile->set("password", null);
+        $profile->set('password', null);
         if (isset($_REQUEST['password'])) {
             unset($_REQUEST['password']);
         }
@@ -584,8 +584,8 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
         }
         // send mail notification about deleted profile to customer
         $mailer = new XLite_Model_Mailer();
-        $mailer->set("profile", $profile);
-        $mailer->set("charset", $this->xlite->config->Company->locationCountry->get('charset'));
+        $mailer->set('profile', $profile);
+        $mailer->set('charset', $this->xlite->config->Company->locationCountry->get('charset'));
         $mailer->compose(
                 $this->getComplex('config.Company.users_department'),
                 $profile->get('login'),
@@ -652,7 +652,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
     function initHtaccessFiles()
     {
         $htaccess = new XLite_Model_Htaccess();
-        if(!$htaccess->hasImage()){
+        if (!$htaccess->hasImage()){
             $htaccess->makeImage();
         }
     }
@@ -666,10 +666,10 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
     {
         // send mail notification about failed login to administrator
         $mailer = new XLite_Model_Mailer();
-        $mailer->set("login", isset($_POST['login']) ? $_POST['login'] : "unknown");
-        $mailer->set("REMOTE_ADDR", isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : "unknown");
-        $mailer->set("HTTP_X_FORWARDED_FOR", isset($_SERVER['HTTP_X_FORWARDED_FOR']) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : "unknown");
-        $mailer->set("charset", $this->xlite->config->Company->locationCountry->get('charset'));
+        $mailer->set('login', isset($_POST['login']) ? $_POST['login'] : "unknown");
+        $mailer->set('REMOTE_ADDR', isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : "unknown");
+        $mailer->set('HTTP_X_FORWARDED_FOR', isset($_SERVER['HTTP_X_FORWARDED_FOR']) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : "unknown");
+        $mailer->set('charset', $this->xlite->config->Company->locationCountry->get('charset'));
         $mailer->compose(
                             $this->getComplex('config.Company.site_administrator'),
                             $this->getComplex('config.Company.site_administrator'),
@@ -712,7 +712,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
         $ip_v4_regexp = '/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/';
 
         $admin_ip = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '';
-        if(!preg_match($ip_v4_regexp, $admin_ip, $admin_ip_bytes)) {
+        if (!preg_match($ip_v4_regexp, $admin_ip, $admin_ip_bytes)) {
             return self::IP_INVALID;
         }
 
@@ -801,7 +801,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
         }
         $mailer = new XLite_Model_Mailer();
         $mailer->url = $this->xlite->getShopUrl("cart.php?target=recover_password&action=confirm&email=".urlencode($profile->get('login'))."&request_id=".$profile->get('password'));
-        $mailer->set("charset", $this->xlite->config->Company->locationCountry->get('charset'));
+        $mailer->set('charset', $this->xlite->config->Company->locationCountry->get('charset'));
         $mailer->compose($this->config->getComplex('Company.users_department'),
                          $profile->get('login'),
                          "recover_request"
@@ -819,12 +819,12 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
 
         $pass = generate_code();
         $mailer = new XLite_Model_Mailer();
-        $mailer->set("email", $email);
-        $mailer->set("new_password", $pass);
-        $profile->set("password", md5($pass));
+        $mailer->set('email', $email);
+        $mailer->set('new_password', $pass);
+        $profile->set('password', md5($pass));
         $profile->update();
-        $mailer->set("profile", $profile);
-        $mailer->set("charset", $profile->getComplex('billingCountry.charset'));
+        $mailer->set('profile', $profile);
+        $mailer->set('charset', $profile->getComplex('billingCountry.charset'));
         $mailer->compose(
                 $this->getComplex('config.Company.users_department'),
                 $profile->get('login'),

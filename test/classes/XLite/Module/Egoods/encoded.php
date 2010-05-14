@@ -18,7 +18,7 @@ function func_moduleEgoods_send_files($order)
             $product = $items[$i]->get('product');
             if (isset($product) && is_object($product)) {
                 $egoods = $product->getEgoods();
-    			for($j=0; $j<count($egoods); $j++) {
+    			for ($j=0; $j<count($egoods); $j++) {
     				if ($egoods[$j]->get('delivery') == "L") {
     					$linksAvailable = true;
     					break;
@@ -54,7 +54,7 @@ function func_moduleEgoods_getPinCodes($item)
     if ($item->getComplex('product.pin_type') == 'D') {
         $pin = new XLite_Module_Egoods_Model_PinCode();
         $pin_objects = $pin->findAll("item_id = '" . $item->get('item_id') . "' and order_id=" . $item->get('order_id'));
-        foreach($pin_objects as $pin_obj) {
+        foreach ($pin_objects as $pin_obj) {
             $result []= $pin_obj->get('pin');
         }
     } else if ($item->getComplex('product.pin_type') == 'E') {

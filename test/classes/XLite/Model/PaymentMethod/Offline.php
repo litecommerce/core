@@ -39,7 +39,7 @@ class XLite_Model_PaymentMethod_Offline extends XLite_Model_PaymentMethod
 
     function process($cart)
     {
-        $cart->set("status", "Q");
+        $cart->set('status', "Q");
         $cart->update();
     }
 

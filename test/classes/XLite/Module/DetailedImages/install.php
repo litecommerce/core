@@ -116,7 +116,7 @@ if (is_object($this)) {
 //	COPY SKIN-DEPENDENT TEMPLATES
 //////////////////////////////////////
 
-copy_schema_template("body.tpl", $schema, $MODULE_NAME);
+copy_schema_template('body.tpl', $schema, $MODULE_NAME);
 
 end_patching();
 

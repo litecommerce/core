@@ -41,7 +41,7 @@ class XLite_Module_ProductAdviser_Controller_Admin_Module extends XLite_Controll
 
         if ($this->page == "ProductAdviser") {
         	$lay = XLite_Model_Layout::getInstance();
-        	$lay->addLayout("general_settings.tpl", "modules/ProductAdviser/config.tpl");
+        	$lay->addLayout('general_settings.tpl', "modules/ProductAdviser/config.tpl");
         }
     }
 }

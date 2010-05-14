@@ -44,7 +44,7 @@ class XLite_Module_Affiliate_Model_PlanCommission extends XLite_Model_Abstract
             );
 
     public $alias = "partner_plan_commissions";
-    public $primaryKey = array("plan_id", "item_id", "item_type");
+    public $primaryKey = array('plan_id', "item_id", "item_type");
 
     function getProduct()
     {

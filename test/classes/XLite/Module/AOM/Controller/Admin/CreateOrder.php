@@ -47,7 +47,7 @@ class XLite_Module_AOM_Controller_Admin_CreateOrder extends XLite_Controller_Adm
     {
         $ordersUpdated = $this->session->get('ordersUpdated') ? $this->session->get('ordersUpdated') : array();
         parent::init();
-        if(isset($ordersUpdated[$this->get('order_id')])) {
+        if (isset($ordersUpdated[$this->get('order_id')])) {
             $order = $this->get('cloneOrder');
             if (!$order->isEmpty()) {
                 $this->pages['order_preview'] = "Review and Save Order";
@@ -75,26 +75,26 @@ class XLite_Module_AOM_Controller_Admin_CreateOrder extends XLite_Controller_Adm
     function action_create_order() 
     {
         $order = new XLite_Model_Order();
-        $order->set("date",time());
-        $order->set("status","T");
-        $order->set("shipping_id","-1");
+        $order->set('date',time());
+        $order->set('status',"T");
+        $order->set('shipping_id',"-1");
         $order->create();
         $orderHistory = new XLite_Module_AOM_Model_OrderHistory();
         $orderHistory->log($order, null, null,"create_order");
                         
-        $this->set("returnUrl","admin.php?target=create_order&page=order_edit&mode=products&order_id=".$order->get('order_id'));
+        $this->set('returnUrl',"admin.php?target=create_order&page=order_edit&mode=products&order_id=".$order->get('order_id'));
     }
 
     function action_save_changes() 
     {
         $order = new XLite_Model_Order($this->get('order_id'));
-        $order->set("orderStatus",$_POST['substatus']);
+        $order->set('orderStatus',$_POST['substatus']);
         if ($order->get('payment_method') == "CreditCard") {
             $this->addDetails($order);
         }
         $order->update();
         $this->cloneUpdated(true);
-        $this->set("returnUrl","admin.php?target=order&order_id=".$this->get('order_id')."&page=order_info");
+        $this->set('returnUrl',"admin.php?target=order&order_id=".$this->get('order_id')."&page=order_info");
     }
     
 
@@ -108,12 +108,12 @@ class XLite_Module_AOM_Controller_Admin_CreateOrder extends XLite_Controller_Adm
     {
         if ($this->originalShippingId == -1) {
  	    	$order = $this->get('cloneOrder');
-            $order->set("shipping_id", -1);
-            $order->set("shipping_cost", 0);
-            $order->set("tax", 0);
-            $order->set("taxes", "");
-            $order->set("subtotal", 0);
-            $order->set("total", 0);
+            $order->set('shipping_id', -1);
+            $order->set('shipping_cost', 0);
+            $order->set('tax', 0);
+            $order->set('taxes', "");
+            $order->set('subtotal', 0);
+            $order->set('total', 0);
             $order->update();
         }
     }

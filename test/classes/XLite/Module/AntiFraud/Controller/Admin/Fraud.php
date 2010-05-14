@@ -35,13 +35,13 @@
  */
 class XLite_Module_AntiFraud_Controller_Admin_Fraud extends XLite_Controller_Admin_Abstract
 {
-    public $params = array("target", "mode", "order_id");
+    public $params = array('target', "mode", "order_id");
     public $order = null;
     public $response = null;
 
     function getTemplate() 
     {
-        if($this->get('mode') == "track") 
+        if ($this->get('mode') == "track") 
             return "modules/AntiFraud/track.tpl";
         else
             return "main.tpl";

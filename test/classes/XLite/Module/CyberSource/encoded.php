@@ -176,18 +176,18 @@ $fp = popen($execline, "w");
 fputs($fp,join("\n",$post)); pclose($fp);
 $return = file($tmpfile);
 
-if($return)
-foreach($return as $v)
+if ($return)
+foreach ($return as $v)
 { list($a,$b) = split("=",$v,2); $ret[$a] = trim($b); }
 
-if($ret[ics_rcode] == "1")
+if ($ret[ics_rcode] == "1")
 {
         $bill_output[code] = 1;
 
         $bill_output[billmes] = $ret[ics_rmsg];
-        if($ret[auth_auth_code])
+        if ($ret[auth_auth_code])
                 $bill_output[billmes].= " (AuthCode: ".$ret[auth_auth_code].")";
-        if($ret[bill_trans_ref_no])
+        if ($ret[bill_trans_ref_no])
                 $bill_output[billmes].= " (RefNo: ".$ret[bill_trans_ref_no].")";
 }
 else
@@ -196,7 +196,7 @@ else
         $bill_output[billmes] = $ret[ics_rmsg];
 }
 
-if($ret[auth_avs_raw])$bill_output[avsmes] = "Auth AVS raw: ".$ret[auth_avs_raw];
+if ($ret[auth_avs_raw])$bill_output[avsmes] = "Auth AVS raw: ".$ret[auth_avs_raw];
 
 ?><?php
 
@@ -229,7 +229,7 @@ exit;
         
         $lite_cart->set('details', $cart_details);
         $lite_cart->set('detailLabels', $cart_labels);
-        $lite_cart->set("status", $status);
+        $lite_cart->set('status', $status);
         $lite_cart->update();
     }
 ?>

@@ -55,7 +55,7 @@ class XLite_Module_Froogle_Controller_Admin_ExportCatalog extends XLite_Controll
         $this->goCustomer();
 
         if ($this->getComplex('config.Froogle.direct_product_url')) {
-            $this->xlite->set("GlobalQuickCategoriesNumber", ($this->getComplex('config.Froogle.direct_product_url') == "always") ? true : false);
+            $this->xlite->set('GlobalQuickCategoriesNumber', ($this->getComplex('config.Froogle.direct_product_url') == "always") ? true : false);
         }
 
         $uname = $this->getComplex('config.Froogle.froogle_username') ?
@@ -73,7 +73,7 @@ class XLite_Module_Froogle_Controller_Admin_ExportCatalog extends XLite_Controll
             ob_start(array($this, 'outputHandler'));
         }
         $p = new XLite_Model_Product();
-        $p->export("froogle", $delimiter = "\t", $where = 'price > 0', $orderby = "product_id", null);
+        $p->export('froogle', $delimiter = "\t", $where = 'price > 0', $orderby = "product_id", null);
         $this->goAdmin();
 
         if ($this->get('mod') == "download") {
@@ -138,7 +138,7 @@ class XLite_Module_Froogle_Controller_Admin_ExportCatalog extends XLite_Controll
 
     function goCustomer() 
     {
-        $this->xlite->set("adminZone", false);
+        $this->xlite->set('adminZone', false);
 
         // save current (admin) environment and build new (customer)
         $this->_REQUEST = $_REQUEST;
@@ -166,7 +166,7 @@ class XLite_Module_Froogle_Controller_Admin_ExportCatalog extends XLite_Controll
 
         // switch layout to customer's zone
         $layout = XLite_Model_Layout::getInstance();
-        $layout->set("skin", "default");
+        $layout->set('skin', "default");
 
         // empty cart
         $cart = XLite_Model_Cart::getInstance();
@@ -176,7 +176,7 @@ class XLite_Module_Froogle_Controller_Admin_ExportCatalog extends XLite_Controll
     function goAdmin() 
     {
         // switch XLite back to admin's zone
-        $this->xlite->set("adminZone", true);
+        $this->xlite->set('adminZone', true);
         $this->session->_data = $this->_sessionData;
     }
 }

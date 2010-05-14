@@ -73,7 +73,7 @@ class XLite_Module_Egoods_Controller_Customer_Download extends XLite_Controller_
             }
             
             // download the file
-            $this->set("silent", true);
+            $this->set('silent', true);
             $this->startDownload(basename($df->get('data')));
             $this->readFile($df->get('data'));
 
@@ -117,7 +117,7 @@ class XLite_Module_Egoods_Controller_Customer_Download extends XLite_Controller_
         }
         
         // download the file
-        $this->set("silent", true);
+        $this->set('silent', true);
         $this->startDownload(basename($df->get('data')));
         $this->readFile($df->get('data'));
 

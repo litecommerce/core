@@ -108,6 +108,6 @@ class XLite_Module_CanadaPost_Main extends XLite_Module_Abstract
 
         $this->registerShippingModule('cps');
 
-        $this->xlite->set("CanadaPostEnabled",true);
+        $this->xlite->set('CanadaPostEnabled',true);
     }
 }

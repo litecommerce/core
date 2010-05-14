@@ -85,7 +85,7 @@ class XLite_Model_RSA {
         $n = $this->random($bits, $randomText);
         gmp_setbit ($n, 0);
         $two = gmp_init(2);
-        while(!gmp_prob_prime($n)) {
+        while (!gmp_prob_prime($n)) {
             $n = gmp_add($n, $two);
         }
         return $n;
@@ -111,9 +111,9 @@ class XLite_Model_RSA {
                 $gcd = $result['g'];
                 $e = $result['s'];
             }
-        } while(gmp_cmp($gcd, $one));
+        } while (gmp_cmp($gcd, $one));
         //print "p=".gmp_strval($p).",q=".gmp_strval($q).",phi=".gmp_strval($phi)."\n";
-        if(extension_loaded('gmp')) {
+        if (extension_loaded('gmp')) {
             // may be negative
             if (gmp_sign($e)<0) {
                 $e = gmp_add($e, $phi);

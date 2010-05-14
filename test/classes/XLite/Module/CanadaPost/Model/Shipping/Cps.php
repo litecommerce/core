@@ -37,7 +37,7 @@ class XLite_Module_CanadaPost_Model_Shipping_Cps extends XLite_Model_Shipping_On
 {
 
     public $configCategory = "CanadaPost";
-    public $optionsFields	= array("merchant_id","length","width","height","packed","insured","currency_rate","test_server");
+    public $optionsFields	= array('merchant_id',"length","width","height","packed","insured","currency_rate","test_server");
     public $error = "";
     public $xmlError = false;
 

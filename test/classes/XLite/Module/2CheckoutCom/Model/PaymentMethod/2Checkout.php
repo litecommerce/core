@@ -84,7 +84,7 @@ class XLite_Module_2CheckoutCom_Model_PaymentMethod_2Checkout extends XLite_Mode
             }
 
     		if (isset($_SERVER['HTTP_REFERER'])) {
-    			$referers = array("www.2checkout.com", "2checkout.com", "www2.2checkout.com");
+    			$referers = array('www.2checkout.com', "2checkout.com", "www2.2checkout.com");
     			$referer_check = false;
     			foreach ($referers as $referer) {
     				if (!(preg_match("/https?:\/\/([^\/]*)$referer/i", $_SERVER['HTTP_REFERER']) == false)) {
@@ -106,7 +106,7 @@ class XLite_Module_2CheckoutCom_Model_PaymentMethod_2Checkout extends XLite_Mode
     {
         if (!$order->getComplex('details.secureNumber')) {
             $num = generate_code();
-            $order->setComplex("details.secureNumber", $num);
+            $order->setComplex('details.secureNumber', $num);
             $order->update();
             return $num;
         }

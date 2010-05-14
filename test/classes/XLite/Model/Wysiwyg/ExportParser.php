@@ -88,21 +88,21 @@ class XLite_Model_Wysiwyg_ExportParser extends XLite_Core_FlexyCompiler
 ////                    $w = $namedWidgets[$attributes['name']];
 ////                } else {
                     $w = new $this->widgetClass;
-                    $w->set("attributes", $attributes);
-                    $w->set("attributesEvaled", $attributesEvaled);
+                    $w->set('attributes', $attributes);
+                    $w->set('attributesEvaled', $attributesEvaled);
                     if (isset($attributes['name'])) {
                         if (!$w->get('template')) {
                             $tw = $namedWidgets[$attributes['name']];
                             if ($tw) {
-                                $w->set("template", $tw->get('template'));
+                                $w->set('template', $tw->get('template'));
                             }
                         }
 
                         $namedWidgets[$attributes['name']] = $w;
                     }
 ////                }
-                $w->set("startOffset", $this->tokens[$widgetInd]['start']);
-                $w->set("endOffset", $this->tokens[$widgetInd]['end']);
+                $w->set('startOffset', $this->tokens[$widgetInd]['start']);
+                $w->set('endOffset', $this->tokens[$widgetInd]['end']);
                 $this->addWidget($w);
             }
             if ($token['type'] != "attribute" && $token['type'] != "attribute-value") {

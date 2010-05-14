@@ -53,9 +53,9 @@ class XLite_Module_EcommerceReports_Controller_Admin_SpStats extends XLite_Modul
     {
         $sm = new XLite_Model_Shipping();
         if (!$sm->find("shipping_id=$sid")) {
-            $sm->set("shipping_id", $sid);
+            $sm->set('shipping_id', $sid);
             $name = ($sid == 0)?"Free shipping":"Unknown (id:$sid)";
-            $sm->set("name", $name);
+            $sm->set('name', $name);
         }
         return $sm;
     }
@@ -78,8 +78,8 @@ class XLite_Module_EcommerceReports_Controller_Admin_SpStats extends XLite_Modul
     {
         
         if (!$pm->find("payment_method='$pn'")) {
-            $pm->set("payment_method", $pn);
-            $pm->set("name", $pn);
+            $pm->set('payment_method', $pn);
+            $pm->set('name', $pn);
         }
         return $pm;
     }
@@ -135,7 +135,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_SpStats extends XLite_Modul
     function countOrders($od) 
     {
         $total = 0;
-        foreach($od as $o) {
+        foreach ($od as $o) {
             $total += $o['orders'];
         }
         return $total;

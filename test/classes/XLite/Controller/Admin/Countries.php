@@ -37,10 +37,10 @@ class XLite_Controller_Admin_Countries extends XLite_Controller_Admin_Abstract
 {
     function obligatorySetStatus($status)
     {
-        if (!in_array("status", $this->params)) {
+        if (!in_array('status', $this->params)) {
             $this->params[] = "status";
         }
-        $this->set("status", $status);
+        $this->set('status', $status);
     }
 
     function action_update()
@@ -55,7 +55,7 @@ class XLite_Controller_Admin_Countries extends XLite_Controller_Admin_Abstract
                     $data = $_tmp[$code];
                     $data['eu_member'] = isset($data['eu_member']) ? 'Y' : 'N';
                     $data['enabled'] = isset($data['enabled']) ? 1 : 0;
-                    $country->set("properties", $data);
+                    $country->set('properties', $data);
                     $country->update();
                 }
             }
@@ -67,33 +67,33 @@ class XLite_Controller_Admin_Countries extends XLite_Controller_Admin_Abstract
     function action_add()
     {
         if ( empty(XLite_Core_Request::getInstance()->code) ) {
-            $this->set("valid", false);
+            $this->set('valid', false);
             $this->obligatorySetStatus('code');
             return;
         }
 
         $country = new XLite_Model_Country();
         if ( $country->find("code='" . XLite_Core_Request::getInstance()->code . "'") ) {
-            $this->set("valid", false);
+            $this->set('valid', false);
             $this->obligatorySetStatus('exists');
             return;
         }
 
         if ( empty(XLite_Core_Request::getInstance()->country) ) {
-            $this->set("valid", false);
+            $this->set('valid', false);
             $this->obligatorySetStatus('country');
             return;
         }
 
         if ( empty(XLite_Core_Request::getInstance()->charset) ) {
-            $this->set("valid", false);
+            $this->set('valid', false);
             $this->obligatorySetStatus('charset');
             return;
         }
 
-        $country->set("properties", XLite_Core_Request::getInstance()->getData());
-        $country->set("eu_member", isset(XLite_Core_Request::getInstance()->eu_member) ? 'Y' : 'N');
-        $country->set("enabled", isset(XLite_Core_Request::getInstance()->enabled) ? 1 : 0);
+        $country->set('properties', XLite_Core_Request::getInstance()->getData());
+        $country->set('eu_member', isset(XLite_Core_Request::getInstance()->eu_member) ? 'Y' : 'N');
+        $country->set('enabled', isset(XLite_Core_Request::getInstance()->enabled) ? 1 : 0);
         $country->create();
 
         $this->obligatorySetStatus('added');

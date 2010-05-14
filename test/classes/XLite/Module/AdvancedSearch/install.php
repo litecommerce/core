@@ -175,8 +175,8 @@ if (is_object($this)) {
 //	COPY SKIN-DEPENDENT TEMPLATES
 //////////////////////////////////////
 
-copy_schema_template("select_category.tpl", $schema, $MODULE_NAME);
-copy_schema_template("advanced_search.tpl", $schema, $MODULE_NAME);
+copy_schema_template('select_category.tpl', $schema, $MODULE_NAME);
+copy_schema_template('advanced_search.tpl', $schema, $MODULE_NAME);
 
 
 //////////////////////////////////////
@@ -218,7 +218,7 @@ $location = "skins/default/en/search_products.tpl";
 
 if (!is_template_patched($location, "AdvancedSearchEnabled"))
 {
-    if (is_template_patched("skins/default/en/main.tpl", "<!-- [tabs] }}} -->")) {
+    if (is_template_patched('skins/default/en/main.tpl', "<!-- [tabs] }}} -->")) {
     	$find_str = <<<EOT
 <TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0>
 EOT;
@@ -236,7 +236,7 @@ EOT;
         patch_template($location, null, $find_str, $replace_str);
     }
 
-    if (is_template_patched("skins/default/en/main.tpl", "<!-- [tabs] }}} -->")) {
+    if (is_template_patched('skins/default/en/main.tpl', "<!-- [tabs] }}} -->")) {
     	$find_str = <<<EOT
 </form>
 </TABLE>

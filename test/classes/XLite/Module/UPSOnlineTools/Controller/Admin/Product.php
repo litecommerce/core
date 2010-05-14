@@ -53,7 +53,7 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_Product extends XLite_Control
                 "handle_care" => $product->get('ups_handle_care')
             );
             $item = new XLite_Module_UPSOnlineTools_Model_PackItem();
-            $item->set("properties", $properties);
+            $item->set('properties', $properties);
             $fake_items[] = $item;
 
             $packaging = $this->get('currentPackaging');
@@ -89,12 +89,12 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_Product extends XLite_Control
 
         $properties = array();
 
-        $fields = array("weight", "ups_declared_value");
+        $fields = array('weight', "ups_declared_value");
         foreach ($fields as $field) {
             $properties[$field] = abs($this->get($field));
         }
 
-        $fields = array("ups_width", "ups_height", "ups_length");
+        $fields = array('ups_width', "ups_height", "ups_length");
         foreach ($fields as $field) {
             $properties[$field] = max(XLite_Module_UPSOnlineTools_Model_PackItem::MIN_DIM_SIZE, $this->get($field));
         }
@@ -105,7 +105,7 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_Product extends XLite_Control
         $properties['ups_declared_value_set'] = (($this->get('ups_declared_value_price')) ? 0 : 1);
 
         $product = $this->get('product');
-        $product->set("properties", $properties);
+        $product->set('properties', $properties);
         $product->update();
     }
 

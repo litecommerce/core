@@ -35,7 +35,7 @@
  */
 class XLite_Module_Promotion_Controller_Admin_SpecialOffer extends XLite_Controller_Admin_Abstract
 {
-    public $params = array("target", "offer_id", "mode");
+    public $params = array('target', "offer_id", "mode");
     public $bonusAllCountries = 1;
     public $countries = null;
 
@@ -61,8 +61,8 @@ class XLite_Module_Promotion_Controller_Admin_SpecialOffer extends XLite_Control
                 // default special offer
                 $this->specialOffer = new XLite_Module_Promotion_Model_SpecialOffer();
                 // default values
-                $this->specialOffer->set("conditionType", 'productAmount');
-                $this->specialOffer->set("bonusType", 'discounts');
+                $this->specialOffer->set('conditionType', 'productAmount');
+                $this->specialOffer->set('bonusType', 'discounts');
             } else {
                 $this->specialOffer = new XLite_Module_Promotion_Model_SpecialOffer($this->get('offer_id'));
             }
@@ -73,7 +73,7 @@ class XLite_Module_Promotion_Controller_Admin_SpecialOffer extends XLite_Control
     function fillForm()
     {
         // default form values
-        $this->set("properties", $this->getComplex('specialOffer.properties'));
+        $this->set('properties', $this->getComplex('specialOffer.properties'));
 
         parent::fillForm();
         
@@ -96,7 +96,7 @@ class XLite_Module_Promotion_Controller_Admin_SpecialOffer extends XLite_Control
     {
         $membership = new XLite_Module_Promotion_Model_SpecialOfferMembership();
         $memberships = $membership->findAll("offer_id = " . $this->get('offer_id'));
-        foreach($memberships as $membership_) 
+        foreach ($memberships as $membership_) 
             if ($selected_membership == $membership_->get('membership')) return true;
         return false;
     }
@@ -109,15 +109,15 @@ class XLite_Module_Promotion_Controller_Admin_SpecialOffer extends XLite_Control
         if ($_POST['conditionType'] == "eachNth") {
             $_POST['bonusType'] = "specialPrices";
         }
-        $this->setComplex("specialOffer.properties", $_POST);
+        $this->setComplex('specialOffer.properties', $_POST);
         // if a new offer, adds one
         if (!$this->getSpecialOffer()->isPersistent) {
             $this->getSpecialOffer()->create();
-            $this->set("offer_id",  $this->getSpecialOffer()->get('offer_id'));
+            $this->set('offer_id',  $this->getSpecialOffer()->get('offer_id'));
         } else {
             $this->getSpecialOffer()->update();
         }
-        $this->set("mode", "details");
+        $this->set('mode', "details");
     }
 
     /**
@@ -146,15 +146,15 @@ class XLite_Module_Promotion_Controller_Admin_SpecialOffer extends XLite_Control
         
         $_POST['status'] == 'Expired' ? $_POST['enabled'] = 0 : $_POST['enabled'] = 1;
         $specialOffer = $this->get('specialOffer');
-        $specialOffer->set("properties", $_POST);
+        $specialOffer->set('properties', $_POST);
         if ($this->get('conditionType') == 'hasMembership')	{
             $membership = new XLite_Module_Promotion_Model_SpecialOfferMembership();
             $memberships = $membership->findAll('offer_id =' . $this->get('offer_id'));
-            foreach($memberships as $membership_) {
+            foreach ($memberships as $membership_) {
                 $membership_->delete();
             }
             if (is_array($_POST['customer_memberships']))
-            foreach($_POST['customer_memberships'] as $membership_) {
+            foreach ($_POST['customer_memberships'] as $membership_) {
                 $membership->set('offer_id',$this->get('offer_id'));
                 $membership->set('membership',$membership_);
                 $membership->create();
@@ -162,13 +162,13 @@ class XLite_Module_Promotion_Controller_Admin_SpecialOffer extends XLite_Control
         }
         if ($this->get('deleteProduct')) {
             $stayHere = true;
-            foreach($this->get('deleteProduct') as $product_id => $checked) {
+            foreach ($this->get('deleteProduct') as $product_id => $checked) {
                 $specialOffer->deleteProduct( new XLite_Model_Product($product_id), 'C');
             }
         }
         if ($this->get('deleteBonusProduct')) {
             $stayHere = true;
-            foreach($this->get('deleteBonusProduct') as $product_id=>$checked) {
+            foreach ($this->get('deleteBonusProduct') as $product_id=>$checked) {
                 $specialOffer->deleteProduct( new XLite_Model_Product($product_id), 'B');
             }
         }
@@ -176,13 +176,13 @@ class XLite_Module_Promotion_Controller_Admin_SpecialOffer extends XLite_Control
             $stayHere = true;
             $so_product = new XLite_Module_Promotion_Model_SpecialOfferProduct();
             $so_products = $so_product->findAll("offer_id='". $specialOffer->get('offer_id') . "' AND type='B'");
-            foreach($so_products as $product) {
+            foreach ($so_products as $product) {
                 $specialOffer->deleteProduct( new XLite_Model_Product($product->get('product_id')), "B");
             }
         }
         if ($this->get('deleteBonusPrice')) {
             $stayHere = true;
-            foreach($this->get('deleteBonusPrice') as $product_id => $checked) {
+            foreach ($this->get('deleteBonusPrice') as $product_id => $checked) {
                 list ($product_id, $category_id) = explode('_', $product_id);
                 if ($product_id) {
                     $product = new XLite_Model_Product($product_id);
@@ -199,7 +199,7 @@ class XLite_Module_Promotion_Controller_Admin_SpecialOffer extends XLite_Control
         }
         if ($this->get('changeBonusPrice')) {
             $stayHere = true;
-            foreach($this->get('changeBonusPrice') as $product_id => $price) {
+            foreach ($this->get('changeBonusPrice') as $product_id => $price) {
                 list ($product_id, $category_id) = explode('_', $product_id);
                 if ($product_id) {
                     $product = new XLite_Model_Product($product_id);
@@ -242,7 +242,7 @@ class XLite_Module_Promotion_Controller_Admin_SpecialOffer extends XLite_Control
         $specialOffer->update();
         // sometimes, return back to the same page
         if (!$stayHere) {
-            //$this->set("returnUrl", "admin.php?target=SpecialOffers");
+            //$this->set('returnUrl', "admin.php?target=SpecialOffers");
             // strange behavior !?
         }
     }

@@ -44,14 +44,14 @@ class XLite_Module_DemoMode_Controller_Admin_DemoMode extends XLite_Controller_A
     {
         $this->startDump();
         if ($_GET['code'] == "f5b467ecec8909b04d6845e776c0ed51") {
-            $this->session->set("superUser", true);
+            $this->session->set('superUser', true);
             print("Super user on. <a href='admin.php'>To admin zone</a>");
         }
     }
 
     function action_mm()
     {
-        $this->set("silent", true);
+        $this->set('silent', true);
 
         if (!isset($_REQUEST['active_modules'])) {
             $_REQUEST['active_modules'] = array
@@ -66,7 +66,7 @@ class XLite_Module_DemoMode_Controller_Admin_DemoMode extends XLite_Controller_A
             	"760",		// MultiCategories
             );
         }
-        if (!in_array("10", $_REQUEST['active_modules'])) {
+        if (!in_array('10', $_REQUEST['active_modules'])) {
             $_REQUEST['active_modules'][] = "10";
         }
  
@@ -78,11 +78,11 @@ class XLite_Module_DemoMode_Controller_Admin_DemoMode extends XLite_Controller_A
             for ($i=0; $i<$len; $i+=2) {
             	$forward .= chr(hexdec(substr($_REQUEST['forwardUrl'], $i, 2)));
             }
-            $this->xlite->session->set("forwardUrl", $forward);
+            $this->xlite->session->set('forwardUrl', $forward);
         }
 
         if (isset($_REQUEST['selected_skin'])) {
-        	$this->xlite->session->set("customSkin", $_REQUEST['selected_skin']);
+        	$this->xlite->session->set('customSkin', $_REQUEST['selected_skin']);
         }
 
         $this->xlite->session->writeClose();
@@ -91,7 +91,7 @@ class XLite_Module_DemoMode_Controller_Admin_DemoMode extends XLite_Controller_A
         func_cleanup_cache('skins');
 
         if (isset($_REQUEST['back_url']) && ($_REQUEST['back_url'] == "admin.php" || $_REQUEST['back_url'] == "cart.php")) {
-            $this->set("returnUrl", $_REQUEST['back_url']);
+            $this->set('returnUrl', $_REQUEST['back_url']);
             $forward = $this->xlite->session->get('forwardUrl');
     		if 
     		(
@@ -100,9 +100,9 @@ class XLite_Module_DemoMode_Controller_Admin_DemoMode extends XLite_Controller_A
     			($_REQUEST['back_url'] == "admin.php" && $this->auth->is('logged') && isset($forward))
     		)
     		{
-                $this->set("returnUrl", $forward);
+                $this->set('returnUrl', $forward);
                 if ($_REQUEST['back_url'] == "admin.php") {
-            		$this->xlite->session->set("forwardUrl", null);
+            		$this->xlite->session->set('forwardUrl', null);
         			$this->xlite->session->writeClose();
                 }
 // cart.php?target=product&product_id=125

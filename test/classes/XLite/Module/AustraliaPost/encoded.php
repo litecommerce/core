@@ -30,11 +30,11 @@ function Shipping_aupost_getRates($_this, $order)
         "length"			=> $options->length
     );
 
-    if (($cached = $_this->_checkCache("aupost_cache", $fields)) != false) {
+    if (($cached = $_this->_checkCache('aupost_cache', $fields)) != false) {
         return $cached;
     }
     $rates = $_this->filterEnabled($_this->queryRates($options, $originalZipcode, $destinationZipcode, $destinationCountry, $order));
-    $_this->_cacheResult("aupost_cache", $fields, $rates);
+    $_this->_cacheResult('aupost_cache', $fields, $rates);
     // add shipping markups
     $rates = $_this->serializeCacheRates($rates);
     $rates = $_this->unserializeCacheRates($rates);
@@ -68,7 +68,7 @@ function Shipping_aupost_queryRates($_this, $options, $originalZipcode, $destina
     require_once LC_EXT_LIB_DIR . 'PEAR.php';
     require_once LC_EXT_LIB_DIR . 'HTTP' . LC_DS . 'Request2.php';
 
-    foreach($stypes as $stype => $stype_name) {
+    foreach ($stypes as $stype => $stype_name) {
         $_this->error = "";
 
         try {
@@ -97,7 +97,7 @@ function Shipping_aupost_queryRates($_this, $options, $originalZipcode, $destina
         $return = array();
 
         if (preg_match_all("/^([^=]+)=(.*)$/m", $result, $preg)) {
-            foreach($preg[1] as $k => $v) {
+            foreach ($preg[1] as $k => $v) {
                 $return[$v] = trim($preg[2][$k]);
             }
         }
@@ -130,8 +130,8 @@ function Shipping_aupost_parseResponse($_this, $response, $destination)
     $currency_rate = ($options->currency_rate) ? $options->currency_rate : 1;
 
     if (is_array($response)) {
-    	foreach($response as $_rate) {
-    		$shipping = $_this->getService("aupost", $_rate['name'], $destination);
+    	foreach ($response as $_rate) {
+    		$shipping = $_this->getService('aupost', $_rate['name'], $destination);
             $shipping->shipping_time = $_rate['shipping_time'];
             $id = $shipping->get('shipping_id');
             $rates[$id] = new XLite_Model_ShippingRate();

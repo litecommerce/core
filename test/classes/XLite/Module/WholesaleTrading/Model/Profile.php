@@ -58,7 +58,7 @@ class XLite_Module_WholesaleTrading_Model_Profile extends XLite_Model_Profile im
             $history = ( is_array($history) ) ? $history : array();
         }
         if (is_array($history)) {
-            foreach($history as $mh_idx => $mh) {
+            foreach ($history as $mh_idx => $mh) {
                 if (isset($mh['membership_exp_date']) && intval($mh['membership_exp_date']) <= 0) {
                     $history[$mh_idx]['membership_exp_date'] = 0;
                 }
@@ -110,13 +110,13 @@ class XLite_Module_WholesaleTrading_Model_Profile extends XLite_Model_Profile im
                     if ( $exp_date > 0 && time() > $exp_date )
                         continue;
 
-                    $this->set("membership", $value['membership']);
-                    $this->set("membership_exp_date", $exp_date);
+                    $this->set('membership', $value['membership']);
+                    $this->set('membership_exp_date', $exp_date);
                     $this->update();
                     break;
                 }
 
-                $this->set("membership_history", $history);
+                $this->set('membership_history', $history);
                 $this->update();
             }
         }

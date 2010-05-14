@@ -40,6 +40,6 @@ class XLite_Module_Promotion_Model_SpecialOfferProduct extends XLite_Model_Abstr
         'product_id' 	=> 0,
         'type'			=> '' 
     );
-    public $primaryKey = array("offer_id","product_id","type");
+    public $primaryKey = array('offer_id',"product_id","type");
     public $alias = "special_offer_products";
 }

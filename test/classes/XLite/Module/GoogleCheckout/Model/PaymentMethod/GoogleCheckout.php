@@ -81,7 +81,7 @@ class XLite_Module_GoogleCheckout_Model_PaymentMethod_GoogleCheckout extends XLi
             return null;
         }
 
-        $path = explode("/", $path);
+        $path = explode('/', $path);
         $elem = $xmlData;
         foreach ($path as $pathElm) {
     		if (isset($elem[$pathElm])) {
@@ -191,7 +191,7 @@ class XLite_Module_GoogleCheckout_Model_PaymentMethod_GoogleCheckout extends XLi
                 }
 
                 $order = $this->getOrderFromCallback($xmlData, "MERCHANT-CALCULATION-CALLBACK");
-                $xmlResponse = $order->getGoogleCheckoutXML("Calculation", $addresses, $shippings, $discounts);
+                $xmlResponse = $order->getGoogleCheckoutXML('Calculation', $addresses, $shippings, $discounts);
             break;
 
             case "NEW-ORDER-NOTIFICATION":
@@ -239,7 +239,7 @@ EOT;
 
         // logging execution time stamp
         global $gcheckout_timestamp;
-        list($usec, $sec) = explode(" ",microtime());
+        list($usec, $sec) = explode(' ',microtime());
         $dt = ((float)$usec + (float)$sec) - $gcheckout_timestamp;
         $this->xlite->logger->log("Callback execution time: ".sprintf("%.03f", $dt)." sec");
 
@@ -262,7 +262,7 @@ EOT;
             // when PHP5 is used with libxml 2.7.1, HTML entities are stripped from any XML content
             // this is a workaround for https://qa.mandriva.com/show_bug.cgi?id=43486
             if (strpos($url, "shoppingcartshoppingcart") !== false) {
-            	$url = str_replace("shoppingcartshoppingcart", "shoppingcart&shoppingcart", $url);
+            	$url = str_replace('shoppingcartshoppingcart', "shoppingcart&shoppingcart", $url);
             }
 
 ?>
@@ -279,8 +279,8 @@ If you are not redirected automatically, <a href="<?php echo $url; ?>">click on 
             return self::PAYMENT_SILENT;
         } else {
             $error = $response['ERROR']["ERROR-MESSAGE"];
-            $order->setComplex("details.error", (($error) ? $error : "Unknown"));
-            $order->setComplex("detailLabels.error", "Error");
+            $order->setComplex('details.error', (($error) ? $error : "Unknown"));
+            $order->setComplex('detailLabels.error', "Error");
             $order->update();
 
             return self::PAYMENT_FAILURE;
@@ -299,7 +299,7 @@ If you are not redirected automatically, <a href="<?php echo $url; ?>">click on 
         $params = $_POST['params'];
         $subparams = $this->get('params');
 
-        $statuses = array("chargeable", "charged", "failed");
+        $statuses = array('chargeable', "charged", "failed");
         foreach ($statuses as $name) {
             $field = "status_" . $name;
             $result = $params[$field];
@@ -316,12 +316,12 @@ If you are not redirected automatically, <a href="<?php echo $url; ?>">click on 
         }
 
         $pm = XLite_Model_PaymentMethod::factory('google_checkout');
-        $pm->set("params", $params);
+        $pm->set('params', $params);
         $pm->update();
 
         // dublicate "default_shipping_cost" in config
         $config = new XLite_Model_Config();
-        $config->createOption("GoogleCheckout", "default_shipping_cost", $params['default_shipping_cost']);
+        $config->createOption('GoogleCheckout', "default_shipping_cost", $params['default_shipping_cost']);
     }
 
     function isCheckAvs($value)
@@ -352,7 +352,7 @@ If you are not redirected automatically, <a href="<?php echo $url; ?>">click on 
 
         if ($origValue != $value) {
             $this->params['default_shipping_cost'] = $value;
-            $this->set("params", $this->params);
+            $this->set('params', $this->params);
             $this->update();
         }
 
@@ -393,7 +393,7 @@ If you are not redirected automatically, <a href="<?php echo $url; ?>">click on 
     }
 
     function google_encode($str) {
-        return str_replace(array("&", "<", ">"), array("&#x26;", "&#x3c;", "&#x3e;"), $str);
+        return str_replace(array('&', "<", ">"), array("&#x26;", "&#x3c;", "&#x3e;"), $str);
     }
 
     function getCallbackURL()
@@ -422,7 +422,7 @@ If you are not redirected automatically, <a href="<?php echo $url; ?>">click on 
     {
         // switch to customer area for correct order items fingerprint calc.
         $is_admin = $this->xlite->is('adminZone');
-        $this->xlite->set("adminZone", false);
+        $this->xlite->set('adminZone', false);
 
         $fingerprint = "";
         if (!method_exists($order, "getItemsFingerprint")) {
@@ -441,7 +441,7 @@ If you are not redirected automatically, <a href="<?php echo $url; ?>">click on 
         $idKey = strrev(md5(implode("|", $idKey)));
         $idText .= " ($idKey)";
 
-        $this->xlite->set("adminZone", $is_admin);
+        $this->xlite->set('adminZone', $is_admin);
 
         return $idText;
     }

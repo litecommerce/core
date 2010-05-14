@@ -35,7 +35,7 @@
  */
 class XLite_Module_AustraliaPost_Controller_Admin_Aupost extends XLite_Controller_Admin_ShippingSettings
 {
-    public $params = array("target", "updated");
+    public $params = array('target', "updated");
     public $page		="aupost";
     public $updated 	= false;
     public $testResult = false;
@@ -57,8 +57,8 @@ class XLite_Module_AustraliaPost_Controller_Admin_Aupost extends XLite_Controlle
         if (((double) $currency_rate) <= 0) {
             $_POST['currency_rate'] = 1;
         }
-        $aupost->set("options", (object)$_POST);
-        $this->set("updated", true);
+        $aupost->set('options', (object)$_POST);
+        $this->set('updated', true);
 
     }
     

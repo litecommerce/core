@@ -57,22 +57,22 @@ class XLite_Module_ProductOptions_Controller_Admin_Product extends XLite_Control
         if (is_null($this->option)) {
             $this->option = new XLite_Module_ProductOptions_Model_ProductOption();
             if (isset($this->option_id)) {
-                $this->option->set("option_id", $this->option_id);
+                $this->option->set('option_id', $this->option_id);
             }
             if (isset($this->product_id)) {
-                $this->option->set("product_id", $this->product_id);
+                $this->option->set('product_id', $this->product_id);
             }
             if (isset($this->optdata)) {
                 foreach ((array)$this->optdata as $key=>$value) {
                     $this->optdata[$key] = preg_replace("/\|/", "-", $value);
                 }
-                $this->option->set("properties", $this->optdata);
+                $this->option->set('properties', $this->optdata);
             }
             if (isset($this->opttype) && $this->opttype == "Text" && isset($this->text)) {
-                $this->option->set("properties", $this->text);
+                $this->option->set('properties', $this->text);
             }
             if (isset($this->opttype) && $this->opttype == "Textarea" && isset($this->textarea)) {
-                $this->option->set("properties", $this->textarea);
+                $this->option->set('properties', $this->textarea);
             }
         }
         return $this->option;
@@ -119,13 +119,13 @@ class XLite_Module_ProductOptions_Controller_Admin_Product extends XLite_Control
         if (is_null($this->optionException)) {
             $this->optionException = new XLite_Module_ProductOptions_Model_OptionException();
             if (isset($this->option_id)) {
-                $this->optionException->set("option_id", $this->option_id);
+                $this->optionException->set('option_id', $this->option_id);
             }
             if (isset($this->product_id)) {
-                $this->optionException->set("product_id", $this->product_id);
+                $this->optionException->set('product_id', $this->product_id);
             }
             if (isset($this->exception) && strlen(trim($this->exception))) {
-                $this->optionException->set("exception", $this->exception);
+                $this->optionException->set('exception', $this->exception);
             }
         }
         return $this->optionException;
@@ -162,9 +162,9 @@ class XLite_Module_ProductOptions_Controller_Admin_Product extends XLite_Control
     function action_product_option_validator()
     {
         $validator = new XLite_Module_ProductOptions_Model_OptionValidator();
-        $validator->set("product_id", $this->product_id);
+        $validator->set('product_id', $this->product_id);
         if (isset($this->javascript_code) && strlen(trim($this->javascript_code))) {
-            $validator->set("javascript_code", $this->javascript_code);
+            $validator->set('javascript_code', $this->javascript_code);
         }
 
         // add / update / delete
@@ -197,7 +197,7 @@ class XLite_Module_ProductOptions_Controller_Admin_Product extends XLite_Control
         $oldCategories = array();
         $categories = $product->get('categories');
         if (is_array($categories)) {
-        	foreach($categories as $cat) {
+        	foreach ($categories as $cat) {
         		$oldCategories[] = $cat->get('category_id');
         	}
         }

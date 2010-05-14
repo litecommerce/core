@@ -95,17 +95,17 @@ class XLite_Module_Froogle_Main extends XLite_Module_Abstract
     {
         parent::init();
         if ($this->xlite->is('adminZone')) {
-        	$this->xlite->set("BaseHasImprovedExport", $this->isImprovedExport());
+        	$this->xlite->set('BaseHasImprovedExport', $this->isImprovedExport());
         }
     }
 
     function isImprovedExport()
     {
     	$lcVersion = $this->config->getComplex('Version.version');
-    	$lcVersion = str_replace(" build ", ".", $lcVersion);
+    	$lcVersion = str_replace(' build ', ".", $lcVersion);
         if (version_compare($lcVersion, "2.2") < 0) {
-            $classMethods = array_map("strtolower", get_class_methods(get_parent_class(get_class($this))));
-            $isNewBase = in_array("_aggregate", $classMethods);
+            $classMethods = array_map('strtolower', get_class_methods(get_parent_class(get_class($this))));
+            $isNewBase = in_array('_aggregate', $classMethods);
 
         	return $isNewBase;
         } else {

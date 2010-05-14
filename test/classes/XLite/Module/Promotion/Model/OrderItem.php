@@ -59,7 +59,7 @@ class XLite_Module_Promotion_Model_OrderItem extends XLite_Model_OrderItem imple
             if ($this->getComplex('config.Taxes.prices_include_tax') && !$this->getComplex('config.Taxes.discounts_after_taxes') && !$calcAllTaxesInside) {
                 // calculate original item price without taxes...
                 $p = new XLite_Model_Product($this->get('product_id'));
-                $p->set("price", 100.00); // use a 100 dollar product
+                $p->set('price', 100.00); // use a 100 dollar product
                 $taxed100 = $p->getTaxedPrice(); // tax increment
                 $orig_price = $price * 100 / $taxed100;
                 $price = $orig_price;
@@ -74,7 +74,7 @@ class XLite_Module_Promotion_Model_OrderItem extends XLite_Model_OrderItem imple
             }
             if ($this->getComplex('config.Taxes.prices_include_tax') && !$this->getComplex('config.Taxes.discounts_after_taxes') && !$calcAllTaxesInside) {
                 $p = new XLite_Model_Product($this->get('product_id'));
-                $p->set("price", $price);
+                $p->set('price', $price);
                 $price = $p->getTaxedPrice();
             }
         }
@@ -169,9 +169,9 @@ class XLite_Module_Promotion_Model_OrderItem extends XLite_Model_OrderItem imple
     {
     	$isNewFC = $this->xlite->get('PromotionNewFC');
     	if (!isset($isNewFC)) {
-            $classMethods = array_map("strtolower", get_class_methods(get_parent_class(get_class($this))));
-            $isNewFC = in_array("formatcurrency", $classMethods);
-            $this->xlite->set("PromotionNewFC", $isNewFC);
+            $classMethods = array_map('strtolower', get_class_methods(get_parent_class(get_class($this))));
+            $isNewFC = in_array('formatcurrency', $classMethods);
+            $this->xlite->set('PromotionNewFC', $isNewFC);
         }
 
         if ($isNewFC) {
@@ -200,7 +200,7 @@ class XLite_Module_Promotion_Model_OrderItem extends XLite_Model_OrderItem imple
             }
             if ($offer->get('bonusType') == "discounts") {
                 $offer->getProducts();
-                foreach($this->bonusProducts as $bp) {
+                foreach ($this->bonusProducts as $bp) {
                     if ($bp->get('product_id') == $product->get('product_id')) {
                         return true;
                     }

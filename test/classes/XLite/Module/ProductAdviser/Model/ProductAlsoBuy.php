@@ -43,7 +43,7 @@ class XLite_Module_ProductAdviser_Model_ProductAlsoBuy extends XLite_Model_Abstr
         "product_id_also_buy"	=> 0,
         "counter"				=> 0,
     );
-    public $primaryKey = array("product_id", "product_id_also_buy");
+    public $primaryKey = array('product_id', "product_id_also_buy");
     public $alias = "products_also_buy";
     public $defaultOrder = "product_id, product_id_also_buy, counter DESC";
 

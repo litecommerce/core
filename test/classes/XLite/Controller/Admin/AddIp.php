@@ -41,12 +41,12 @@ class XLite_Controller_Admin_AddIp extends XLite_Controller_Admin_Abstract
     {
         parent::init();
 
-        if($this->getComplex('xlite.config.Security.admin_ip_protection') == "Y" && $this->get('mode') == "add" && $this->get('unique_key') != ""){
+        if ($this->getComplex('xlite.config.Security.admin_ip_protection') == "Y" && $this->get('mode') == "add" && $this->get('unique_key') != ""){
             $key = $this->get('unique_key');
             $key_pattern = "/^([a-f]|\d){32,32}$/";
 
             $waiting_list = new XLite_Model_WaitingIP();
-            if(preg_match($key_pattern, $key) && $waiting_list->find("unique_key = '$key'")){
+            if (preg_match($key_pattern, $key) && $waiting_list->find("unique_key = '$key'")){
                 $this->waiting_ip = $waiting_list;
                 $waiting_list->approveIP();
                 $waiting_list->delete();

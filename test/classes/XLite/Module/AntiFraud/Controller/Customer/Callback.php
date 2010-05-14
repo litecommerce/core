@@ -37,8 +37,8 @@ class XLite_Module_AntiFraud_Controller_Customer_Callback extends XLite_Controll
 {
     function action_callback()
     {
-    	$this->xlite->set("AFcallbackProcessing", true);
+    	$this->xlite->set('AFcallbackProcessing', true);
     	parent::action_callback();
-    	$this->xlite->set("AFcallbackProcessing", false);
+    	$this->xlite->set('AFcallbackProcessing', false);
     }
 }

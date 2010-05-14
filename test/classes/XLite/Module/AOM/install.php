@@ -183,13 +183,13 @@ if (is_object($this)) {
 //	COPY SKIN-DEPENDENT TEMPLATES
 //////////////////////////////////////
 
-copy_schema_template("common/statuses.tpl", $schema, $MODULE_NAME);
-copy_schema_template("order_info.tpl", $schema, $MODULE_NAME);
-copy_schema_template("invoice_wsale.tpl", $schema, $MODULE_NAME);
-copy_schema_template("invoice_so.tpl", $schema, $MODULE_NAME);
-copy_schema_template("invoice_promotion.tpl", $schema, $MODULE_NAME);
-copy_schema_template("invoice_gc.tpl", $schema, $MODULE_NAME);
-copy_schema_template("invoice_bonus_points.tpl", $schema, $MODULE_NAME);
+copy_schema_template('common/statuses.tpl', $schema, $MODULE_NAME);
+copy_schema_template('order_info.tpl', $schema, $MODULE_NAME);
+copy_schema_template('invoice_wsale.tpl', $schema, $MODULE_NAME);
+copy_schema_template('invoice_so.tpl', $schema, $MODULE_NAME);
+copy_schema_template('invoice_promotion.tpl', $schema, $MODULE_NAME);
+copy_schema_template('invoice_gc.tpl', $schema, $MODULE_NAME);
+copy_schema_template('invoice_bonus_points.tpl', $schema, $MODULE_NAME);
 
 //////////////////////////////////////
 //	ADMIN ZONE

@@ -39,16 +39,16 @@ class XLite_Module_AdvancedSecurity_Controller_Admin_Order extends XLite_Control
     {
         $gpg = new XLite_Module_AdvancedSecurity_Model_GPG();
         if ($gpg->isPasswordValid($this->get('master_password'))) {
-            $this->session->set("masterPassword", $this->get('master_password'));
+            $this->session->set('masterPassword', $this->get('master_password'));
         } else {
-            $this->set("valid", false);
-            $this->set("invalidMasterPassword", true);
+            $this->set('valid', false);
+            $this->set('invalidMasterPassword', true);
         }
     }
 
     function action_clear_password()
     {
-        $this->session->set("masterPassword", null);
+        $this->session->set('masterPassword', null);
     }
 
     function getGPG()

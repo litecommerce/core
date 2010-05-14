@@ -96,7 +96,7 @@ class XLite_Module_WishList_Controller_Admin_Wishlist extends XLite_Controller_A
 
         $wishlistProducts = $wishlist->get('products');
 
-        foreach($wishlistProducts as $product) {
+        foreach ($wishlistProducts as $product) {
             $product->delete();
         }
 

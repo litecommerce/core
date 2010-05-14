@@ -61,14 +61,14 @@ class XLite_Model_Shipping_Online extends XLite_Model_Shipping
         
         $c = new XLite_Model_Config();
         $category = $this->configCategory;
-        $c->set("category", $category);
+        $c->set('category', $category);
         $this->config->$category = new XLite_Base();
         foreach ($this->optionsFields as $field) {
             if (!isset($options->$field)) {
                 continue;
             }
-            $c->set("name", $field);
-            $c->set("value", $options->$field);
+            $c->set('name', $field);
+            $c->set('value', $options->$field);
             $this->config->$category->$field = $options->$field;
             if ($c->is('exists')) {
                 $c->update();
@@ -153,7 +153,7 @@ class XLite_Model_Shipping_Online extends XLite_Model_Shipping
         foreach ($fields as $key => $value) {
             $condition[] = "$key='".addslashes($value)."'";
         }
-        $condition = join(" AND ", $condition);
+        $condition = join(' AND ', $condition);
         $cacheRow = $this->db->getRow("SELECT rates FROM $cacheTable WHERE $condition");
         if (!is_null($cacheRow)) {
             return $this->unserializeCacheRates($cacheRow['rates']);

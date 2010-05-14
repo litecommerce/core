@@ -50,7 +50,7 @@ class XLite_Module_WishList_Model_WishListProduct extends XLite_Model_Abstract
         
     public $alias        = "wishlist_products";
     public $defaultOrder = "order_by";
-    public $primaryKey   = array("item_id","wishlist_id");
+    public $primaryKey   = array('item_id',"wishlist_id");
 
 
     /**
@@ -106,7 +106,7 @@ class XLite_Module_WishList_Model_WishListProduct extends XLite_Model_Abstract
     {
         if (!isset($this->orderItem)) {
             $this->orderItem = new XLite_Model_OrderItem();
-            $this->orderItem->set("product", $this->getProduct());
+            $this->orderItem->set('product', $this->getProduct());
         }
         
         return $this->orderItem;
@@ -116,12 +116,12 @@ class XLite_Module_WishList_Model_WishListProduct extends XLite_Model_Abstract
     {
         $isChanged = false;
         if ($this->xlite->get('WholesaleTradingEnabled')) {
-            $orderItem->set("amount", $this->get('amount'));
+            $orderItem->set('amount', $this->get('amount'));
             $isChanged = true;
         }
 
         if ($this->hasOptions()) {
-            $orderItem->set("options", serialize($this->getProductOptions()));
+            $orderItem->set('options', serialize($this->getProductOptions()));
             $isChanged = true;
         }
 
@@ -285,7 +285,7 @@ class XLite_Module_WishList_Model_WishListProduct extends XLite_Model_Abstract
     {
         $orderItem = $this->get('orderItem');
         $orderItem->setProductOptions($options);
-        $this->set("options", $orderItem->get('options'));
+        $this->set('options', $orderItem->get('options'));
     }
 
 }

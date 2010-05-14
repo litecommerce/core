@@ -56,7 +56,7 @@ class XLite_Module_AccountingPackage_Controller_Admin_OrderList extends XLite_Co
     {
         parent::initView();
         if ($this->get('mode') == "export_myob" || $this->get('mode') == "export_pt") {
-            $this->setComplex("searchOrdersForm.visible", false);
+            $this->setComplex('searchOrdersForm.visible', false);
         }
     }
     
@@ -67,12 +67,12 @@ class XLite_Module_AccountingPackage_Controller_Admin_OrderList extends XLite_Co
                 $value = $this->$name;
                 $config = new XLite_Model_Config();
                 if ($config->find("category='ImportExport' AND name='$name'")) {
-                    $config->set("value", $value);
+                    $config->set('value', $value);
                     $config->update();
                 } else {
-                    $config->set("name", $name);
-                    $config->set("category", "ImportExport");
-                    $config->set("value", $value);
+                    $config->set('name', $name);
+                    $config->set('category', "ImportExport");
+                    $config->set('value', $value);
                     $config->create();
                 }
             }
@@ -98,10 +98,10 @@ class XLite_Module_AccountingPackage_Controller_Admin_OrderList extends XLite_Co
     {
         if (is_null($this->get('export_result'))) {
             // redirect to export dialog
-            $this->set("mode", "export_myob");
+            $this->set('mode', "export_myob");
         } else {
             // export data
-            $this->updateConfig("income_account", "deposit_account");
+            $this->updateConfig('income_account', "deposit_account");
             $this->export('myob');
         }
     }
@@ -110,10 +110,10 @@ class XLite_Module_AccountingPackage_Controller_Admin_OrderList extends XLite_Co
     {
         if (is_null($this->get('export_result'))) {
             // redirect to export dialog
-            $this->set("mode", "export_pt");
+            $this->set('mode', "export_pt");
         } else {
             // export data
-            $this->updateConfig("receivable_account", "sales_account", "cash_account");
+            $this->updateConfig('receivable_account', "sales_account", "cash_account");
             $this->export('pt');
         }
     }
@@ -160,10 +160,10 @@ class XLite_Module_AccountingPackage_Controller_Admin_OrderList extends XLite_Co
     function export($format) 
     {
         $price_format = $this->config->getComplex('General.price_format');
-        $this->config->setComplex("General.price_format", "%s");
+        $this->config->setComplex('General.price_format', "%s");
         require_once LC_MODULES_DIR . 'AccountingPackage' . LC_DS . 'encoded.php';
         AccountingPackage_export($this, $format);
-        $this->config->setComplex("General.price_format", $price_format);
+        $this->config->setComplex('General.price_format', $price_format);
     }
 
     function found($order, $name) 

@@ -175,10 +175,10 @@ if (is_object($this)) {
 //	COPY SKIN-DEPENDENT TEMPLATES
 //////////////////////////////////////
 
-copy_schema_template("file_access_denied.tpl", $schema, $MODULE_NAME);
-copy_schema_template("file_not_found.tpl", $schema, $MODULE_NAME);
-copy_schema_template("free_downloads.tpl", $schema, $MODULE_NAME);
-copy_schema_template("main.tpl", $schema, $MODULE_NAME);
+copy_schema_template('file_access_denied.tpl', $schema, $MODULE_NAME);
+copy_schema_template('file_not_found.tpl', $schema, $MODULE_NAME);
+copy_schema_template('free_downloads.tpl', $schema, $MODULE_NAME);
+copy_schema_template('main.tpl', $schema, $MODULE_NAME);
 
 
 //////////////////////////////////////

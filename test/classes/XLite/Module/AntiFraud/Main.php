@@ -93,7 +93,7 @@ class XLite_Module_AntiFraud_Main extends XLite_Module_Abstract
     {
         parent::init();
 
-        $this->xlite->set("AntiFraudEnabled",true);
+        $this->xlite->set('AntiFraudEnabled',true);
     }
 
 }

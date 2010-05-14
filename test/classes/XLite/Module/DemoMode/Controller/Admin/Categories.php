@@ -37,7 +37,7 @@ class XLite_Module_DemoMode_Controller_Admin_Categories extends XLite_Controller
 {
     function init()
     {
-        $forbiddenActions = array("fc_categories_actions", "build_categories");
+        $forbiddenActions = array('fc_categories_actions', "build_categories");
         if (isset($_REQUEST['action']) && in_array($_REQUEST['action'], $forbiddenActions)) {
             $dialog = new XLite_Module_DemoMode_Controller_Admin_DemoMode();
             $_REQUEST['target'] = "demo_mode";

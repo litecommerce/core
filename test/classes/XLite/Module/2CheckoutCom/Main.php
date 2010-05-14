@@ -112,7 +112,7 @@ class XLite_Module_2CheckoutCom_Main extends XLite_Module_Abstract
         $params = $pm->get('params');
         if (!isset($params['version'])) {
             $params['version'] = "2";
-            $pm->set("params", $params);
+            $pm->set('params', $params);
             $pm->update();
         }
     }

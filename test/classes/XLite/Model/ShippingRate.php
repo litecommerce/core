@@ -49,7 +49,7 @@ class XLite_Model_ShippingRate extends XLite_Model_Abstract
         "per_item" => 0,
         "percent" => 0,
         "per_lbs" => 0);
-    public $primaryKey = array("shipping_id","min_weight","min_total","min_items", "shipping_zone");
+    public $primaryKey = array('shipping_id',"min_weight","min_total","min_items", "shipping_zone");
     public $defaultOrder = "shipping_id, shipping_zone, min_weight, min_total, min_items";
 
     public $shipping = null;
@@ -66,7 +66,7 @@ class XLite_Model_ShippingRate extends XLite_Model_Abstract
     function setShipping($shipping)
     {
         $this->shipping = $shipping;
-        $this->set("shipping_id", $shipping->get('shipping_id'));
+        $this->set('shipping_id', $shipping->get('shipping_id'));
     }
 
 }

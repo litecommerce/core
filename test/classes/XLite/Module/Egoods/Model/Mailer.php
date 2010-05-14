@@ -48,14 +48,14 @@ class XLite_Module_Egoods_Model_Mailer extends XLite_Model_Mailer
     function compose($from, $to, $dir, $customHeaders = array()) 
     {
         // initialize internal properties
-        $this->set("from", $from);
-        $this->set("to",   $to);
-        $this->set("customHeaders", $customHeaders);
+        $this->set('from', $from);
+        $this->set('to',   $to);
+        $this->set('customHeaders', $customHeaders);
 
         $dir .= '/';
-        $this->set("subject", $this->compile($dir.$this->get('subjectTemplate')));
-        $this->set("signature", $this->compile($this->get('signatureTemplate')));
-        $this->set("body", $this->compile($dir.$this->get('bodyTemplate'), false));
+        $this->set('subject', $this->compile($dir.$this->get('subjectTemplate')));
+        $this->set('signature', $this->compile($this->get('signatureTemplate')));
+        $this->set('body', $this->compile($dir.$this->get('bodyTemplate'), false));
 
         // find all images and fetch them; replace with cid:...
         $imageParser = new XLite_Model_MailImageParser();
@@ -63,8 +63,8 @@ class XLite_Module_Egoods_Model_Mailer extends XLite_Model_Mailer
         $imageParser->webdir = $this->xlite->getShopUrl("");
         $imageParser->parse();
 
-        $this->set("body", $imageParser->result);
-        $this->set("images", $imageParser->images);
+        $this->set('body', $imageParser->result);
+        $this->set('images', $imageParser->images);
         
         if (is_null($this->mail)) {
             require_once LC_ROOT_DIR . 'lib' . LC_DS . 'PHPMailer' . LC_DS . 'class.phpmailer.php';

@@ -270,15 +270,15 @@ class XLite_Controller_Admin_OrderList extends XLite_Controller_Admin_Abstract
 
             if ($this->action == "export_xls") {
 
-                foreach($this->orders as $ord_idx => $order) {
+                foreach ($this->orders as $ord_idx => $order) {
 
                     $taxes = 0;
 
-            		foreach($order->getDisplayTaxes() as $tax_name => $tax) {
+            		foreach ($order->getDisplayTaxes() as $tax_name => $tax) {
             			$taxes += $tax;
                     }
 
-            		$this->orders[$ord_idx]->set("tax", $taxes);
+            		$this->orders[$ord_idx]->set('tax', $taxes);
             	}
             }
         }
@@ -369,7 +369,7 @@ class XLite_Controller_Admin_OrderList extends XLite_Controller_Admin_Abstract
         $w->display();
 
         // do not output anything
-        $this->set("silent", true);
+        $this->set('silent', true);
     }
 
     /**

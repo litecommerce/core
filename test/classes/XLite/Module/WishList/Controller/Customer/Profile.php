@@ -39,7 +39,7 @@ class XLite_Module_WishList_Controller_Customer_Profile extends XLite_Controller
     {
         parent::action_register();
         if (!is_null($this->session->get('wishlist_url')))
-            $this->set("returnUrl",$this->session->get('wishlist_url'));
+            $this->set('returnUrl',$this->session->get('wishlist_url'));
     }
 
 }

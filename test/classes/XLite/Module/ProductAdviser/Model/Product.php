@@ -59,7 +59,7 @@ class XLite_Module_ProductAdviser_Model_Product extends XLite_Model_Product impl
 
             if (is_array($relatedProducts)) {
 
-                foreach($relatedProducts as $p_key => $product) {
+                foreach ($relatedProducts as $p_key => $product) {
 
                     $rp = new XLite_Model_Product($product->get('related_product_id'));
                     $addSign = true;
@@ -112,7 +112,7 @@ class XLite_Module_ProductAdviser_Model_Product extends XLite_Model_Product impl
 
             if (is_array($pabAll)) {
 
-                foreach($pabAll as $p_key => $product) {
+                foreach ($pabAll as $p_key => $product) {
 
                     $pab = new XLite_Model_Product($product->get('product_id_also_buy'));
                     $addSign = true;
@@ -157,10 +157,10 @@ class XLite_Module_ProductAdviser_Model_Product extends XLite_Model_Product impl
     public function addRelatedProducts($products)
     {
         if (is_array($products)) {
-    		foreach($products as $p_key => $product) {
+    		foreach ($products as $p_key => $product) {
                 $relatedProduct = new XLite_Module_ProductAdviser_Model_RelatedProduct();
-                $relatedProduct->set("product_id", $this->get('product_id'));
-                $relatedProduct->set("related_product_id", $product->get('product_id'));
+                $relatedProduct->set('product_id', $this->get('product_id'));
+                $relatedProduct->set('related_product_id', $product->get('product_id'));
     			if (!$relatedProduct->isExists()) {
     				$relatedProduct->create();
     			}
@@ -181,10 +181,10 @@ class XLite_Module_ProductAdviser_Model_Product extends XLite_Model_Product impl
     public function deleteRelatedProducts($products)
     {
         if (is_array($products)) {
-    		foreach($products as $p_key => $product) {
+    		foreach ($products as $p_key => $product) {
                 $relatedProduct = new XLite_Module_ProductAdviser_Model_RelatedProduct();
-                $relatedProduct->set("product_id", $this->get('product_id'));
-                $relatedProduct->set("related_product_id", $product->get('product_id'));
+                $relatedProduct->set('product_id', $this->get('product_id'));
+                $relatedProduct->set('related_product_id', $product->get('product_id'));
     			if ($relatedProduct->isExists()) {
     				$relatedProduct->delete();
     			}
@@ -206,17 +206,17 @@ class XLite_Module_ProductAdviser_Model_Product extends XLite_Model_Product impl
 
     	if ($this->config->ProductAdviser->period_new_arrivals > 0) {
     		$added = time();
-            //$added = mktime(date("H", $added), 0, 0, date("m", $added), date("d", $added), date("Y", $added));
+            //$added = mktime(date('H', $added), 0, 0, date('m', $added), date('d', $added), date('Y', $added));
             $product_id = $this->get('product_id');
 
         	$statistic = new XLite_Module_ProductAdviser_Model_ProductNewArrivals();
-            $statistic->set("product_id", $product_id);
+            $statistic->set('product_id', $product_id);
         	if ($statistic->find("product_id='$product_id'")) {
-        		$statistic->set("updated", $added);
+        		$statistic->set('updated', $added);
                 $statistic->update();
         	} else {
-            	$statistic->set("added", $added);
-        		$statistic->set("updated", $added);
+            	$statistic->set('added', $added);
+        		$statistic->set('updated', $added);
                 $statistic->create();
         	}
     	}
@@ -309,7 +309,7 @@ class XLite_Module_ProductAdviser_Model_Product extends XLite_Model_Product impl
         		$price = $this->properties;
                 $price['oldPrice'] = $oldPrice;
             }
-            $this->xlite->set("productChangedPrice", $price);
+            $this->xlite->set('productChangedPrice', $price);
     	}
     }
 
@@ -334,15 +334,15 @@ class XLite_Module_ProductAdviser_Model_Product extends XLite_Model_Product impl
             	$check = array();
                 $check[] = "type='" . CUSTOMER_NOTIFICATION_PRICE . "'";
                 $check[] = "notify_key='" . $price['product_id'] . "'";
-                $check = implode(" AND ", $check);
+                $check = implode(' AND ', $check);
 
                 $notification = new XLite_Module_ProductAdviser_Model_Notification();
                 $notifications = $notification->findAll($check);
 
                 if (is_array($notifications) && count($notifications) > 0) {
 
-                    foreach($notifications as $notification) {
-                        $notification->set("status", CUSTOMER_REQUEST_UPDATED);
+                    foreach ($notifications as $notification) {
+                        $notification->set('status', CUSTOMER_REQUEST_UPDATED);
                         $notification->update();
                     }
                 }
@@ -408,11 +408,11 @@ class XLite_Module_ProductAdviser_Model_Product extends XLite_Model_Product impl
     	if (is_null($this->_ProductMainCategory) || $this->_checkSafetyMode()) {
     		if ($this->_checkSafetyMode()) {
     			$adminZone = $this->xlite->is('adminZone');
-    			$this->xlite->set("adminZone", true);
+    			$this->xlite->set('adminZone', true);
     		}
     		$categories = $this->getCategories(null, null, false);
     		if ($this->_checkSafetyMode()) {
-    			$this->xlite->set("adminZone", $adminZone);
+    			$this->xlite->set('adminZone', $adminZone);
             }
             if (isset($categories[0])) {
                 $this->_ProductMainCategory = $categories[0];
@@ -438,7 +438,7 @@ class XLite_Module_ProductAdviser_Model_Product extends XLite_Model_Product impl
         $check = array();
         $check[] = "type='" . CUSTOMER_NOTIFICATION_PRICE . "'";
         $check[] = "status='" . CUSTOMER_REQUEST_UPDATED . "'";
-        $check = implode(" AND ", $check);
+        $check = implode(' AND ', $check);
 
         $notification = new XLite_Module_ProductAdviser_Model_Notification();
         $pricingCAI = $notification->count($check);

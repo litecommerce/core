@@ -57,17 +57,17 @@ class XLite_Module_ProductAdviser_Controller_Customer_Cart extends XLite_Control
             	$rejectedItem = new XLite_Model_OrderItem();
             	$product = $this->get('product');
             	$rejectedItemInfo->product_id = $product->get('product_id');
-                $rejectedItem->set("product", $product);
+                $rejectedItem->set('product', $product);
 
             	if ($this->xlite->get('ProductOptionsEnabled') && $product->hasOptions() && isset($this->product_options)) {
-                	$rejectedItem->set("productOptions", $this->product_options);
+                	$rejectedItem->set('productOptions', $this->product_options);
             		$rejectedItemInfo->productOptions = $rejectedItem->get('productOptions');
                 }
 
-                $this->session->set("rejectedItem", $rejectedItemInfo);
+                $this->session->set('rejectedItem', $rejectedItemInfo);
 
     		} elseif (!$this->xlite->get('rejectedItemPresented')) {
-            		$this->session->set("rejectedItem", null);
+            		$this->session->set('rejectedItem', null);
     		}
     	}
     }
@@ -97,23 +97,23 @@ class XLite_Module_ProductAdviser_Controller_Customer_Cart extends XLite_Control
         if (is_null($this->rejectedItemInfo)) {
 
             $rejectedItemInfo = $this->session->get('rejectedItem');
-            $this->session->set("rejectedItem", null);
+            $this->session->set('rejectedItem', null);
             $this->rejectedItemInfo = new XLite_Base();
-            $this->rejectedItemInfo->set("product_id", $rejectedItemInfo->product_id);
-            $this->rejectedItemInfo->set("product", new XLite_Model_Product($this->rejectedItemInfo->product_id));
-            $this->rejectedItemInfo->set("amount", $rejectedItemInfo->availableAmount);
-            $this->rejectedItemInfo->set("key", $rejectedItemInfo->itemKey);
+            $this->rejectedItemInfo->set('product_id', $rejectedItemInfo->product_id);
+            $this->rejectedItemInfo->set('product', new XLite_Model_Product($this->rejectedItemInfo->product_id));
+            $this->rejectedItemInfo->set('amount', $rejectedItemInfo->availableAmount);
+            $this->rejectedItemInfo->set('key', $rejectedItemInfo->itemKey);
 
             if (isset($rejectedItemInfo->productOptions)) {
 
-                $this->rejectedItemInfo->set("productOptions", $rejectedItemInfo->productOptions);
+                $this->rejectedItemInfo->set('productOptions', $rejectedItemInfo->productOptions);
                 $poStr = array();
 
-                foreach($rejectedItemInfo->productOptions as $po) {
+                foreach ($rejectedItemInfo->productOptions as $po) {
                     $poStr[] = $po->class . ": " . $po->option;
                 }
 
-                $this->rejectedItemInfo->set("productOptionsStr", implode(", ", $poStr));
+                $this->rejectedItemInfo->set('productOptionsStr', implode(", ", $poStr));
 
             }
 
@@ -154,25 +154,25 @@ class XLite_Module_ProductAdviser_Controller_Customer_Cart extends XLite_Control
         $check[] = "email='$email'";
 
         $notification = new XLite_Module_ProductAdviser_Model_Notification();
-        $notification->set("type", CUSTOMER_NOTIFICATION_PRODUCT);
-        $notification->set("product_id", $rejectedItemInfo->product_id);
+        $notification->set('type', CUSTOMER_NOTIFICATION_PRODUCT);
+        $notification->set('product_id', $rejectedItemInfo->product_id);
         if (isset($rejectedItemInfo->productOptions)) {
             if (isset($rejectedItemInfo->productOptions[0]) && is_object($rejectedItemInfo->productOptions[0])) {
                 $poArray = array();
-                foreach($rejectedItemInfo->productOptions as $po) {
+                foreach ($rejectedItemInfo->productOptions as $po) {
                     $poArray[$po->class] = array("option_id" => $po->option_id, "option" => $po->option);
                 }
-                $notification->set("product_options", $poArray);
+                $notification->set('product_options', $poArray);
             } else {
-                $notification->set("product_options", $rejectedItemInfo->productOptions);
+                $notification->set('product_options', $rejectedItemInfo->productOptions);
             }
         }
         if (isset($rejectedItemInfo->amount)) {
-            $notification->set("quantity", $rejectedItemInfo->amount);
+            $notification->set('quantity', $rejectedItemInfo->amount);
         }
         $check[] = "notify_key='" . addslashes($notification->get('productKey')) . "'";
 
-        $check = implode(" AND ", $check);
+        $check = implode(' AND ', $check);
 
         return $notification->find($check);
     }

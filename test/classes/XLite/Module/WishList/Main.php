@@ -81,6 +81,6 @@ class XLite_Module_WishList_Main extends XLite_Module_Abstract
     public function init()
     {
         parent::init();
-        $this->xlite->set("WishListEnabled", true);
+        $this->xlite->set('WishListEnabled', true);
     }
 }

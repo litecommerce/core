@@ -74,26 +74,26 @@ class XLite_Module_ProductAdviser_Model_Order extends XLite_Model_Order implemen
                         $statistic = new XLite_Module_ProductAdviser_Model_ProductAlsoBuy();
 
                         if (!$statistic->find("product_id='".$product_id."' AND product_id_also_buy='".$products[$i]."'")) {
-                        	$statistic->set("product_id", $product_id);
-                        	$statistic->set("product_id_also_buy", $products[$i]);
-                        	$statistic->set("counter", 1);
+                        	$statistic->set('product_id', $product_id);
+                        	$statistic->set('product_id_also_buy', $products[$i]);
+                        	$statistic->set('counter', 1);
                             $statistic->create();
 
                         } else {
-            	        	$statistic->set("counter", $statistic->get('counter')+1);
+            	        	$statistic->set('counter', $statistic->get('counter')+1);
                             $statistic->update();
                         }
 
                         $statistic = new XLite_Module_ProductAdviser_Model_ProductAlsoBuy();
 
                         if (!$statistic->find("product_id='".$products[$i]."' AND product_id_also_buy='".$product_id."'")) {
-                        	$statistic->set("product_id", $products[$i]);
-                        	$statistic->set("product_id_also_buy", $product_id);
-                        	$statistic->set("counter", 1);
+                        	$statistic->set('product_id', $products[$i]);
+                        	$statistic->set('product_id_also_buy', $product_id);
+                        	$statistic->set('counter', 1);
                             $statistic->create();
 
                         } else {
-                        	$statistic->set("counter", $statistic->get('counter')+1);
+                        	$statistic->set('counter', $statistic->get('counter')+1);
                             $statistic->update();
             	        }
                     } // for
@@ -125,12 +125,12 @@ class XLite_Module_ProductAdviser_Model_Order extends XLite_Model_Order implemen
             	$rejectedItem = $item;
             	$product = $item->get('product');
             	$rejectedItemInfo->product_id = $product->get('product_id');
-                $rejectedItem->set("product", $product);
+                $rejectedItem->set('product', $product);
 
                 if ($this->xlite->get('ProductOptionsEnabled') && $product->hasOptions()) {
 
             	 	if (isset($this->product_options)) {
-                		$rejectedItem->set("productOptions", $this->product_options);
+                		$rejectedItem->set('productOptions', $this->product_options);
                     }
 
             		$rejectedItemInfo->productOptions = $rejectedItem->get('productOptions');
@@ -140,8 +140,8 @@ class XLite_Module_ProductAdviser_Model_Order extends XLite_Model_Order implemen
                 $rejectedItemInfo->requiredAmount = $requiredAmount;
                 $rejectedItemInfo->availableAmount = $rejectedItem->get('amount');
 
-            	$this->session->set("rejectedItem", $rejectedItemInfo);
-                $this->xlite->set("rejectedItemPresented", true);
+            	$this->session->set('rejectedItem', $rejectedItemInfo);
+                $this->xlite->set('rejectedItemPresented', true);
             }
         }
     }

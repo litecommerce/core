@@ -52,7 +52,7 @@ class XLite_Module_Intershipper_Model_Shipping_Intershipper extends XLite_Model_
         "USP" => "USPS");
 
     public $configCategory = "Intershipper";
-    public $optionsFields = array("userid","password","delivery","pickup","length","width","height","dunit","packaging","contents","insvalue");
+    public $optionsFields = array('userid',"password","delivery","pickup","length","width","height","dunit","packaging","contents","insvalue");
 
     function getModuleName()
     {

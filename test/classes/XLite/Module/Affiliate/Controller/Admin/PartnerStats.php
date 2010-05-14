@@ -47,10 +47,10 @@ class XLite_Module_Affiliate_Controller_Admin_PartnerStats extends XLite_Control
     {
         if (!isset($this->startDate)) {
             $date = getdate(time());
-            $this->set("startDate", mktime(0,0,0,$date['mon'],1,$date['year']));
+            $this->set('startDate', mktime(0,0,0,$date['mon'],1,$date['year']));
         }
         if (!isset($this->partner_id)) {
-            $this->set("partner_id", "");
+            $this->set('partner_id', "");
         }
         parent::fillForm();
     }

@@ -98,32 +98,32 @@ class XLite_Controller_Admin_CustomerNotifications extends XLite_Controller_Admi
             $preferences = $this->config->ProductAdviser->filters_preferences;
 
    			if (is_array($preferences)) {
-   				$this->_setParameter("email", $preferences, true);
-   			 	$this->_setParameter("pinfo", $preferences, true);
-   			 	$this->_setParameter("status", $preferences, true);
-   			 	$this->_setParameter("type", $preferences, true);
-                $this->_setParameter("prodname", $preferences, true);
+   				$this->_setParameter('email', $preferences, true);
+   			 	$this->_setParameter('pinfo', $preferences, true);
+   			 	$this->_setParameter('status', $preferences, true);
+   			 	$this->_setParameter('type', $preferences, true);
+                $this->_setParameter('prodname', $preferences, true);
 
-                if (intval($this->_setParameter("period", $preferences, true)) != 0) {
+                if (intval($this->_setParameter('period', $preferences, true)) != 0) {
 
                     $period = $preferences['period'];
 
                     if (6 == $period) {
                         
-                        $this->_setParameter("startDateDay", $preferences, true);
-                        $this->_setParameter("startDateMonth", $preferences, true);
-                        $this->_setParameter("startDateYear", $preferences, true);
-                        $this->_setParameter("endDateDay", $preferences, true);
-                        $this->_setParameter("endDateMonth", $preferences, true);
-                        $this->_setParameter("endDateYear", $preferences, true);
+                        $this->_setParameter('startDateDay', $preferences, true);
+                        $this->_setParameter('startDateMonth', $preferences, true);
+                        $this->_setParameter('startDateYear', $preferences, true);
+                        $this->_setParameter('endDateDay', $preferences, true);
+                        $this->_setParameter('endDateMonth', $preferences, true);
+                        $this->_setParameter('endDateYear', $preferences, true);
 
-                        $this->_setParameter("startDateRaw", mktime(0, 0, 0, $preferences['startDateMonth'], $preferences['startDateDay'], $preferences['startDateYear']));
-                        $this->_setParameter("endDateRaw", mktime(0, 0, 0, $preferences['endDateMonth'], $preferences['endDateDay'], $preferences['endDateYear']));
+                        $this->_setParameter('startDateRaw', mktime(0, 0, 0, $preferences['startDateMonth'], $preferences['startDateDay'], $preferences['startDateYear']));
+                        $this->_setParameter('endDateRaw', mktime(0, 0, 0, $preferences['endDateMonth'], $preferences['endDateDay'], $preferences['endDateYear']));
 
                     } else {
                 		list($startDateRaw, $endDateRaw) = $this->getDatesRaw($period);
-    			 		$this->_setParameter("startDateRaw", $startDateRaw);
-    			 		$this->_setParameter("endDateRaw", $endDateRaw);
+    			 		$this->_setParameter('startDateRaw', $startDateRaw);
+    			 		$this->_setParameter('endDateRaw', $endDateRaw);
                 	}
                 }
             }
@@ -132,7 +132,7 @@ class XLite_Controller_Admin_CustomerNotifications extends XLite_Controller_Admi
         parent::init();
 
         if (!$this->config->ProductAdviser->customer_notifications_enabled) {
-            $this->set("returnUrl", $this->buildUrl('module', '', array('page' => 'ProductAdviser')));
+            $this->set('returnUrl', $this->buildUrl('module', '', array('page' => 'ProductAdviser')));
             $this->redirect();
         }
 
@@ -161,7 +161,7 @@ class XLite_Controller_Admin_CustomerNotifications extends XLite_Controller_Admi
 
                 $params = array();
 
-                foreach($allParams as $p => $v) {
+                foreach ($allParams as $p => $v) {
     				if (!in_array($p, $exeptions)) {
     					$params[$p] = $v;
     				}
@@ -359,43 +359,43 @@ class XLite_Controller_Admin_CustomerNotifications extends XLite_Controller_Admi
             
             $condition = array();
             
-            if ($this->getParameter("email", $email)) {
+            if ($this->getParameter('email', $email)) {
                 $condition[] = "(email LIKE '%".addslashes($email)."%')";
             }
 
-            if ($this->getParameter("pinfo", $pinfo)) {
+            if ($this->getParameter('pinfo', $pinfo)) {
                 $condition[] = "(person_info LIKE '%".addslashes($pinfo)."%')";
             }
             
-            if (!$this->getParameter("status", $status)) {
-            	$this->set("status", CUSTOMER_REQUEST_QUEUED);
+            if (!$this->getParameter('status', $status)) {
+            	$this->set('status', CUSTOMER_REQUEST_QUEUED);
             }
 
-            if ($this->getParameter("status", $status)) {
+            if ($this->getParameter('status', $status)) {
             	if ($status != "A") {
                     $condition[] = "(status='$status')";
                 }
             }
 
-            if ($this->getParameter("type", $type)) {
+            if ($this->getParameter('type', $type)) {
             	if ($type != "A") {
                     $condition[] = "(type='$type')";
                 }
             }
 
-            if ($this->getParameter("prodname", $prodname)) {
-            	$this->xlite->set("NotificationProductNameFilter", $prodname);
+            if ($this->getParameter('prodname', $prodname)) {
+            	$this->xlite->set('NotificationProductNameFilter', $prodname);
             }
 
-            if ($this->getParameter("notify_key", $notify_key, true)) {
+            if ($this->getParameter('notify_key', $notify_key, true)) {
                 $condition[] = "(notify_key='$notify_key')";
             }
 
-            if (!$this->getParameter("period", $period)) {
-            	$this->set("period", "0");
+            if (!$this->getParameter('period', $period)) {
+            	$this->set('period', "0");
                 $date = getdate(time());
-                $this->set("startDateRaw", mktime(0,0,0,$date['mon'],$date['mday'],$date['year']));
-                $this->set("endDateRaw", $this->get('startDateRaw'));
+                $this->set('startDateRaw', mktime(0,0,0,$date['mon'],$date['mday'],$date['year']));
+                $this->set('endDateRaw', $this->get('startDateRaw'));
 
             } else {
 
@@ -405,8 +405,8 @@ class XLite_Controller_Admin_CustomerNotifications extends XLite_Controller_Admi
 
                 } else { // Fixed date range
         			list($startDateRaw, $endDateRaw) = $this->getDatesRaw($period);
-                    $this->set("startDateRaw", $startDateRaw);
-                    $this->set("endDateRaw", $endDateRaw);
+                    $this->set('startDateRaw', $startDateRaw);
+                    $this->set('endDateRaw', $endDateRaw);
 
                    	$date = getdate($this->get('startDateRaw'));
                     $startDate = mktime(0, 0, 0, $date['mon'], $date['mday'], $date['year']);
@@ -434,7 +434,7 @@ class XLite_Controller_Admin_CustomerNotifications extends XLite_Controller_Admi
                 $condition[] = "notify_id IN ($selected)";
             }
 
-            $condition = implode(" AND ", $condition);
+            $condition = implode(' AND ', $condition);
 
             $sortby = $this->get('sortby');
 
@@ -448,14 +448,14 @@ class XLite_Controller_Admin_CustomerNotifications extends XLite_Controller_Admi
             	$this->notificationsNumber = count($this->notifications);
 
             	if (isset($this->action) && $this->action == "prepare_notifications") {
-            		for($i=0; $i<$this->notificationsNumber; $i++) {
+            		for ($i=0; $i<$this->notificationsNumber; $i++) {
             			$mail = new XLite_Model_Mailer();
             			$mail->ntf = $this->notifications[$i];
                         $dir = "modules/ProductAdviser/notifications/".$this->notifications[$i]->get('type')."/";
-                        $mail->set("subject", $mail->compile($dir.$mail->get('subjectTemplate')));
-                        $mail->set("signature", $mail->compile($mail->get('signatureTemplate')));
-                        $mail->set("body", $mail->compile($dir.$mail->get('bodyTemplate'), false));
-                        $this->notifications[$i]->set("mail", $mail);
+                        $mail->set('subject', $mail->compile($dir.$mail->get('subjectTemplate')));
+                        $mail->set('signature', $mail->compile($mail->get('signatureTemplate')));
+                        $mail->set('body', $mail->compile($dir.$mail->get('bodyTemplate'), false));
+                        $this->notifications[$i]->set('mail', $mail);
             		}
                 }
 
@@ -486,16 +486,16 @@ class XLite_Controller_Admin_CustomerNotifications extends XLite_Controller_Admi
             $statuses[] = "'".CUSTOMER_REQUEST_UPDATED."'";
             $statuses = implode(", ", $statuses);
 
-    		foreach($this->selected as $notify_id) {
+    		foreach ($this->selected as $notify_id) {
                 $notification = new XLite_Module_ProductAdviser_Model_Notification();
 
         		$condition = array();
                 $condition[] = "status IN ($statuses)";
                 $condition[] = "notify_id='$notify_id'";
-                $condition = implode(" AND ", $condition);
+                $condition = implode(' AND ', $condition);
                 
                 if ($notification->find($condition)) {
-                    $notification->set("status", CUSTOMER_REQUEST_DECLINED);
+                    $notification->set('status', CUSTOMER_REQUEST_DECLINED);
                     $notification->update();
                 }
     		}
@@ -520,13 +520,13 @@ class XLite_Controller_Admin_CustomerNotifications extends XLite_Controller_Admi
             $statuses[] = "'".CUSTOMER_REQUEST_DECLINED."'";
             $statuses = implode(", ", $statuses);
 
-    		foreach($this->selected as $notify_id) {
+    		foreach ($this->selected as $notify_id) {
                 $notification = new XLite_Module_ProductAdviser_Model_Notification();
 
         		$condition = array();
                 $condition[] = "status IN ($statuses)";
                 $condition[] = "notify_id='$notify_id'";
-                $condition = implode(" AND ", $condition);
+                $condition = implode(' AND ', $condition);
 
                 if ($notification->find($condition)) {
                     $notification->delete();
@@ -545,8 +545,8 @@ class XLite_Controller_Admin_CustomerNotifications extends XLite_Controller_Admi
      */
     protected function doActionPrepareNotifications()
     {
-    	$this->set("mode", "process");
-    	$this->set("valid", false);
+    	$this->set('mode', "process");
+    	$this->set('valid', false);
     }
 
     /**
@@ -559,7 +559,7 @@ class XLite_Controller_Admin_CustomerNotifications extends XLite_Controller_Admi
      */
     protected function doActionSendNotifications()
     {
-    	$this->set("silent", true);
+    	$this->set('silent', true);
 
     	if (isset($this->ids) && is_array($this->ids)) {
 ?>
@@ -576,22 +576,22 @@ class XLite_Controller_Admin_CustomerNotifications extends XLite_Controller_Admi
     setTimeout('refresh()', 1000);
 </SCRIPT>
 <?php
-    		foreach($this->ids as $ntf_id) {
+    		foreach ($this->ids as $ntf_id) {
                 $notification = new XLite_Module_ProductAdviser_Model_Notification();
 
         		$condition = array();
                 $condition[] = "status='".CUSTOMER_REQUEST_UPDATED."'";
                 $condition[] = "notify_id='$ntf_id'";
-                $condition = implode(" AND ", $condition);
+                $condition = implode(' AND ', $condition);
 
                 if ($notification->find($condition)) {
-                    $notification->set("status", CUSTOMER_REQUEST_SENT);
+                    $notification->set('status', CUSTOMER_REQUEST_SENT);
                     $notification->update();
 
         			$mail = new XLite_Model_Mailer();
-                    $mail->set("subject", $this->subjects[$ntf_id]);
-                    $mail->set("body", $this->bodies[$ntf_id]);
-                    $mail->set("ignoreDefaultSubjectBody", true);
+                    $mail->set('subject', $this->subjects[$ntf_id]);
+                    $mail->set('body', $this->bodies[$ntf_id]);
+                    $mail->set('ignoreDefaultSubjectBody', true);
                     $dir = "modules/ProductAdviser/notifications/".$notification->get('type')."/";
                     $mail->compose(
                             $this->config->Company->site_administrator,
@@ -605,12 +605,12 @@ class XLite_Controller_Admin_CustomerNotifications extends XLite_Controller_Admi
 
             $url = array();
 
-            foreach($this->getAllParams('action') as $param => $value) {
+            foreach ($this->getAllParams('action') as $param => $value) {
                 $url[] = "$param=" . urlencode($value);
             }
 
-            $url = implode("&", $url);
-            $this->set("returnUrl", "admin.php?$url");
+            $url = implode('&', $url);
+            $this->set('returnUrl', "admin.php?$url");
 ?>
 <HR>Redirecting <a href="<?php echo $this->get('returnUrl'); ?>"><u>...</u></a>
 <SCRIPT language="javascript">
@@ -633,33 +633,33 @@ class XLite_Controller_Admin_CustomerNotifications extends XLite_Controller_Admi
     {
         $preferences = array();
 
-        if ($this->getParameter("email", $email)) {
+        if ($this->getParameter('email', $email)) {
             $preferences['email'] = $email;
         }
 
-        if ($this->getParameter("pinfo", $pinfo)) {
+        if ($this->getParameter('pinfo', $pinfo)) {
             $preferences['pinfo'] = $pinfo;
         }
 
-        if ($this->getParameter("status", $status)) {
+        if ($this->getParameter('status', $status)) {
             $preferences['status'] = $status;
 
         } else {
             $preferences['status'] = "A";
         }
 
-        if ($this->getParameter("type", $type)) {
+        if ($this->getParameter('type', $type)) {
             $preferences['type'] = $type;
 
         } else {
             $preferences['type'] = "A";
         }
 
-        if ($this->getParameter("prodname", $prodname)) {
+        if ($this->getParameter('prodname', $prodname)) {
             $preferences['prodname'] = $prodname;
         }
 
-        if ($this->getParameter("period", $period)) {
+        if ($this->getParameter('period', $period)) {
             $preferences['period'] = $period;
 
             if ('6' == $period) {
@@ -677,12 +677,12 @@ class XLite_Controller_Admin_CustomerNotifications extends XLite_Controller_Admi
 
         if (!$config->find("name='filters_preferences' AND category='ProductAdviser'")) {
         	$update_config = false;
-            $config->set("name", "filters_preferences");
-            $config->set("category", "ProductAdviser");
-            $config->set("type", "serialized");
+            $config->set('name', "filters_preferences");
+            $config->set('category', "ProductAdviser");
+            $config->set('type', "serialized");
         }
 
-        $config->set("value", serialize($preferences));
+        $config->set('value', serialize($preferences));
 
         if ($update_config) {
             $config->update();

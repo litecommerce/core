@@ -42,7 +42,7 @@ class XLite_Module_Promotion_Model_BonusPrice extends XLite_Model_Abstract
         "bonusType" => '$',
         "price" => 0);
     public $alias = "special_offer_bonusprices";
-    public $primaryKey = array("offer_id","product_id");
+    public $primaryKey = array('offer_id',"product_id");
 
     function getProduct()
     {

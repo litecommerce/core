@@ -356,7 +356,7 @@ class XLite_Model_Abstract extends XLite_Base
                 eval("\$new = clone \$this;");
             } else {
                 $new = new self;
-                $new->set("properties", $this->get('properties'));
+                $new->set('properties', $this->get('properties'));
             }*/
             $new->setComplex($this->autoIncrement, null);
             $new->create();
@@ -429,7 +429,7 @@ class XLite_Model_Abstract extends XLite_Base
         foreach ($this->primaryKey as $field) {
             $condition[] = "$field='".addslashes($this->properties[$field])."'";
         }
-        $condition = implode(" AND ", $condition);
+        $condition = implode(' AND ', $condition);
 
         $table = $this->getTable();
         return "DELETE FROM $table WHERE $condition";
@@ -450,7 +450,7 @@ class XLite_Model_Abstract extends XLite_Base
             // remove primary keys
             unset($properties[$field]);
         }
-        $condition = implode(" AND ", $condition);
+        $condition = implode(' AND ', $condition);
         $values = array(); // compile 'set' clause
         if (is_array($properties)) {
             foreach ($properties as $field => $val) {
@@ -473,7 +473,7 @@ class XLite_Model_Abstract extends XLite_Base
     */
     function enable() 
     {
-        $this->set("enabled", 1);
+        $this->set('enabled', 1);
     }
 
     /**
@@ -482,7 +482,7 @@ class XLite_Model_Abstract extends XLite_Base
     */
     function disable() 
     {
-        $this->set("enabled", 0);
+        $this->set('enabled', 0);
     }
 
     /**
@@ -734,7 +734,7 @@ class XLite_Model_Abstract extends XLite_Base
             }
             $processed += $limit;
             $items = array();
-        } while($processed < $count);
+        } while ($processed < $count);
         return true;
     }
 

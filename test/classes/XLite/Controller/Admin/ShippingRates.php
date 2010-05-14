@@ -57,7 +57,7 @@ class XLite_Controller_Admin_ShippingRates extends XLite_Controller_Admin_Shippi
             $this->shipping_id_range = XLite_Core_Request::getInstance()->shipping_id_range;
             $condition[] = "shipping_id='$this->shipping_id_range'";
         }
-        $condition = implode(" AND ", $condition);
+        $condition = implode(' AND ', $condition);
         $sr = new XLite_Model_ShippingRate();
         $shipping_rates = $sr->findAll($condition);
         $shipping = new XLite_Model_Shipping();
@@ -65,7 +65,7 @@ class XLite_Controller_Admin_ShippingRates extends XLite_Controller_Admin_Shippi
     	$modules = (is_array($modules)) ? array_keys($modules) : array();
         $shippings = $shipping->findAll();
         $validShippings = array("-1");
-        foreach($shippings as $shipping) {
+        foreach ($shippings as $shipping) {
             if (in_array($shipping->get('class'), $modules) && $shipping->get('enabled')) {
                 $validShippings[] = $shipping->get('shipping_id');
             }
@@ -91,28 +91,28 @@ class XLite_Controller_Admin_ShippingRates extends XLite_Controller_Admin_Shippi
     {
         $this->params[] = "message";
         $rate = new XLite_Model_ShippingRate();
-        $rate->set("properties", XLite_Core_Request::getInstance()->getData());
+        $rate->set('properties', XLite_Core_Request::getInstance()->getData());
         if (!$rate->isExists()) {
-        	$this->set("message", "added");
+        	$this->set('message', "added");
         	$rate->create();
         } else {
-        	$this->set("message", "add_failed");
+        	$this->set('message', "add_failed");
         }
     }
 
     function action_update()
     {
         $shippingRates = $this->get('shippingRates');
-        foreach(XLite_Core_Request::getInstance()->rate as $key => $rate_data) {
+        foreach (XLite_Core_Request::getInstance()->rate as $key => $rate_data) {
             if (array_key_exists($key, $shippingRates)) {
                 $rate = new XLite_Model_ShippingRate();
-                $rate->set("properties", $rate_data);
+                $rate->set('properties', $rate_data);
                 if ($rate->isExists()) {
                     $rate->update();
                 } else {
                     $rate = $shippingRates[$key];
     	            $rate->delete();
-        	        $rate->set("properties", $rate_data);
+        	        $rate->set('properties', $rate_data);
             	    $rate->create();
                 }
             }

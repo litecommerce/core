@@ -41,11 +41,11 @@ class XLite_Module_Affiliate_View_PartnerRegisterForm extends XLite_View_Registe
         $this->pending_plan = $this->config->getComplex('Affiliate.default_plan');
         if (!$this->xlite->is('adminZone') && $this->auth->is('logged')) {
             $this->_savedParent = (isset($this->parent)) ? $this->parent : null;
-            $this->set("properties", $this->auth->getComplex('profile.properties'));
+            $this->set('properties', $this->auth->getComplex('profile.properties'));
             if (isset($this->_savedParent)) {
-            	$this->set("parent", $this->_savedParent);
+            	$this->set('parent', $this->_savedParent);
             }
-            $this->setComplex("profile.parent", $this->parent);
+            $this->setComplex('profile.parent', $this->parent);
             // don't show passwords
             $this->password = $this->confirm_password = "";
         }
@@ -62,10 +62,10 @@ class XLite_Module_Affiliate_View_PartnerRegisterForm extends XLite_View_Registe
             // register partner
             $result = $this->auth->registerPartner($this->profile);
             if ($result == ACCESS_DENIED) {
-                $this->set("invalidPassword", true);
+                $this->set('invalidPassword', true);
             } else {
-                $this->set("valid", true);
-                $this->set("mode", $this->getComplex('config.Affiliate.moderated') ? "sent" : "success"); // go to success page
+                $this->set('valid', true);
+                $this->set('mode', $this->getComplex('config.Affiliate.moderated') ? "sent" : "success"); // go to success page
             }
         }
     }

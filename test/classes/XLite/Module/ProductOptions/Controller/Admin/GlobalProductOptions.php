@@ -60,12 +60,12 @@ class XLite_Module_ProductOptions_Controller_Admin_GlobalProductOptions extends 
     function action_add()
     {
         $option = new XLite_Module_ProductOptions_Model_ProductOption();
-        $option->set("properties", $this->optdata);
+        $option->set('properties', $this->optdata);
         if (isset($this->opttype) && $this->opttype == "Text" && isset($this->text)) {
-            $option->set("properties", $this->text);
+            $option->set('properties', $this->text);
         }
         if (isset($this->opttype) && $this->opttype == "Textarea" && isset($this->textarea)) {
-            $option->set("properties", $this->textarea);
+            $option->set('properties', $this->textarea);
         }
         $option->create();
 
@@ -96,11 +96,11 @@ class XLite_Module_ProductOptions_Controller_Admin_GlobalProductOptions extends 
             $po = new XLite_Module_ProductOptions_Model_ProductOption();
             $child_po = $po->findAll("parent_option_id='".$this->option_id."'");
             if ($child_po) {
-                foreach($child_po as $option_) {
+                foreach ($child_po as $option_) {
                     $option_->delete();
                 }
             }
-            $po->set("option_id", $this->option_id);
+            $po->set('option_id', $this->option_id);
             $po->delete();
 
             if (isset($this->option_id)) {
@@ -121,7 +121,7 @@ class XLite_Module_ProductOptions_Controller_Admin_GlobalProductOptions extends 
             if ($this->global_options['global_categories']) {
                 $categories = "";
             }
-            $po->set("properties", $this->global_options);
+            $po->set('properties', $this->global_options);
             $po->setCategoriesList($categories);
             $po->update();
         }

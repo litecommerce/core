@@ -116,8 +116,8 @@ if (is_object($this)) {
 //	COPY SKIN-DEPENDENT TEMPLATES
 //////////////////////////////////////
 
-copy_schema_template("menu/body.tpl", $schema, $MODULE_NAME);
-copy_schema_template("bestsellers.tpl", $schema, $MODULE_NAME);
+copy_schema_template('menu/body.tpl', $schema, $MODULE_NAME);
+copy_schema_template('bestsellers.tpl', $schema, $MODULE_NAME);
 
 end_patching();
 

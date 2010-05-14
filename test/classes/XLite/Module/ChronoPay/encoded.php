@@ -25,8 +25,8 @@ function PaymentMethod_chronopay_handleRequest($_this, $cart)
     // PaymentMethod::chronopay_handleRequest() code
     $transaction_id = $_REQUEST['transaction_id'];
     $transaction_type = $_REQUEST['transaction_type'];
-    if(!$_REQUEST['error'] && isset($_REQUEST['cs1']) && is_numeric($_REQUEST['cs1']) && $_REQUEST['cs1'] > 0 && isset($_REQUEST['cs2']) && $_REQUEST['cs2'] == "chronopay")  {
-        if($transaction_type == 'onetime' || $transaction_type == 'initial' || $transaction_type== 'rebill') {
+    if (!$_REQUEST['error'] && isset($_REQUEST['cs1']) && is_numeric($_REQUEST['cs1']) && $_REQUEST['cs1'] > 0 && isset($_REQUEST['cs2']) && $_REQUEST['cs2'] == "chronopay")  {
+        if ($transaction_type == 'onetime' || $transaction_type == 'initial' || $transaction_type== 'rebill') {
             $cart->setComplex('details.transaction_type', $_REQUEST['transaction_type']);
             $cart->set('detailLabels.transaction_type', 'Transaction Type');
             $cart->setComplex('details.transaction_id', $_REQUEST['transaction_id']);
@@ -63,9 +63,9 @@ function PaymentMethod_chronopay_callback()
             $_REQUEST['error'] = "1";
         }
 
-        if(isset($_REQUEST['amp;action']))
+        if (isset($_REQUEST['amp;action']))
             $_REQUEST['action'] = $_REQUEST['amp;action'];
-        if(isset($_REQUEST['amp;order_id']))
+        if (isset($_REQUEST['amp;order_id']))
             $_REQUEST['order_id'] = $_REQUEST['amp;order_id'];
     }
 }

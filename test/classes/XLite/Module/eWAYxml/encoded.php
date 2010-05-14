@@ -142,8 +142,8 @@ $post .= "<ewayOption3>".$pp_test."</ewayOption3>";
 $post .= "</ewaygateway>";
 
 // LiteCommerce code {{{
-//list($a,$return)=func_https_request("POST","https://www.eway.com.au:443/".$script,$post,"","","text/xml");
-list($a,$return)=ewx_func_https_request("POST", $pay_server, $post);
+//list($a,$return)=func_https_request('POST',"https://www.eway.com.au:443/".$script,$post,"","","text/xml");
+list($a,$return)=ewx_func_https_request('POST', $pay_server, $post);
 
 
 #<ewayResponse>
@@ -163,7 +163,7 @@ $bill_output[avsmes] = "Not support";
 
 preg_match("/<ewayTrxnStatus>(.*)<\/ewayTrxnStatus>/",$return,$out);
 
-if($out[1] == "True")
+if ($out[1] == "True")
 {	preg_match("/<ewayAuthCode>(.*)<\/ewayAuthCode>/",$return,$out);
     $bill_output[code] = 1; $bill_output[billmes] = $out[1]; }
 else
@@ -206,7 +206,7 @@ $bill_output[billmes].= " (TrnxNum=".$out[1].")";
             $cart_details['avsMessage'] = null;
 
         $cart_details['error'] = $error;
-        $lite_cart->set("status", $status);
+        $lite_cart->set('status', $status);
         $lite_cart->set('details', $cart_details);
         $lite_cart->set('detailLabels', $cart_labels);
         $lite_cart->update();

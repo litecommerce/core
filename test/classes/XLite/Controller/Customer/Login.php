@@ -96,7 +96,7 @@ class XLite_Controller_Customer_Login extends XLite_Controller_Customer_Abstract
 
 
 
-    public $params = array("target", "mode");
+    public $params = array('target', "mode");
 
     protected $profile = null;
 
@@ -105,11 +105,11 @@ class XLite_Controller_Customer_Login extends XLite_Controller_Customer_Abstract
         $this->profile = $this->auth->login(XLite_Core_Request::getInstance()->login, XLite_Core_Request::getInstance()->password);
 
         if ($this->profile === ACCESS_DENIED) {
-            $this->set("valid", false);
+            $this->set('valid', false);
             return;
         }
 
-        $this->set("returnUrl", XLite_Core_Request::getInstance()->returnUrl);
+        $this->set('returnUrl', XLite_Core_Request::getInstance()->returnUrl);
 
         if (!$this->get('returnUrl')) {
             $cart = XLite_Model_Cart::getInstance();
@@ -118,11 +118,11 @@ class XLite_Controller_Customer_Login extends XLite_Controller_Customer_Abstract
                 $url .= "?target=cart";
             }
 
-            $this->set("returnUrl", $url);
+            $this->set('returnUrl', $url);
         }
 
         $cart = XLite_Model_Cart::getInstance();
-        $cart->set("profile_id", $this->profile->get('profile_id'));
+        $cart->set('profile_id', $this->profile->get('profile_id'));
 
         $this->recalcCart();
     }

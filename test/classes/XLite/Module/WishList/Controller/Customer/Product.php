@@ -59,6 +59,6 @@ class XLite_Module_WishList_Controller_Customer_Product extends XLite_Controller
         $Mailer->send();
 
         $this->params[] = "mode";
-        $this->set("mode","MessageSent");
+        $this->set('mode',"MessageSent");
       }
 }

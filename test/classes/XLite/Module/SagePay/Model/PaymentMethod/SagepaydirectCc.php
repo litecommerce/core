@@ -128,7 +128,7 @@ class XLite_Module_SagePay_Model_PaymentMethod_SagepaydirectCc extends XLite_Mod
     {
         $params = $_POST['params'];
 
-        $statuses = array("auth", "reject", "success_no3d", "success_3dok", "success_3dfail");
+        $statuses = array('auth', "reject", "success_no3d", "success_3dok", "success_3dfail");
         foreach ($statuses as $name) {
             $field = "status_" . $name;
             $result = $params[$field];
@@ -145,7 +145,7 @@ class XLite_Module_SagePay_Model_PaymentMethod_SagepaydirectCc extends XLite_Mod
         }
 
         $pm = XLite_Model_PaymentMethod::factory('sagepaydirect_cc');
-        $pm->set("params", $params);
+        $pm->set('params', $params);
         $pm->update();
     }
 

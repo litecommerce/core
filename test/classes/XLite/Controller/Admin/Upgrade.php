@@ -57,7 +57,7 @@ class XLite_Controller_Admin_Upgrade extends XLite_Controller_Admin_Abstract
         $up = new XLite_Model_Upgrade();
         $up->setProperties(XLite_Core_Request::getInstance()->getData());
         $up->doUpgrade();
-        $this->set("silent", true);
+        $this->set('silent', true);
     }
 
     function action_upgrade_force()
@@ -65,7 +65,7 @@ class XLite_Controller_Admin_Upgrade extends XLite_Controller_Admin_Abstract
         $up = new XLite_Model_Upgrade();
         $up->setProperties(XLite_Core_Request::getInstance()->getData());
         $up->success();
-        $this->set("silent", true);
+        $this->set('silent', true);
     }
 
     function getAccessLevel()

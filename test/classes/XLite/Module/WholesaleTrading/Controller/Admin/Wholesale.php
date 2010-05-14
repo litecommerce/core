@@ -45,9 +45,9 @@ class XLite_Module_WholesaleTrading_Controller_Admin_Wholesale extends XLite_Con
             $name = $options[$i]->get('name');
             if ($name == "bulk_categories") {
                 if (count($_POST['bulk_categories']) > 0) {
-                    $options[$i]->set("value", implode(";", $_POST['bulk_categories']));
+                    $options[$i]->set('value', implode(";", $_POST['bulk_categories']));
                 } else {
-                    $options[$i]->set("value", "");
+                    $options[$i]->set('value', "");
                 }
             } else {
                 $type = $options[$i]->get('type');
@@ -61,7 +61,7 @@ class XLite_Module_WholesaleTrading_Controller_Admin_Wholesale extends XLite_Con
                     $val = trim($_POST[$name]);
                 }
 
-                $options[$i]->set("value", $val);
+                $options[$i]->set('value', $val);
             }
         }
 

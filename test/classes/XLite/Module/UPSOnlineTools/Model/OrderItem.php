@@ -54,7 +54,7 @@ class XLite_Module_UPSOnlineTools_Model_OrderItem extends XLite_Model_OrderItem 
 
         // dimension
         $this->packItem = new XLite_Module_UPSOnlineTools_Model_PackItem();
-        foreach (array("width", "height", "length") as $field) {
+        foreach (array('width', "height", "length") as $field) {
             $this->packItem->setComplex($field, $p->get("ups_".$field));
         }
 
@@ -63,17 +63,17 @@ class XLite_Module_UPSOnlineTools_Model_OrderItem extends XLite_Model_OrderItem 
         if ($weight === false) {
             $weight = $this->packItem->getComplex('product.weight');
         }
-        $this->packItem->set("weight", $weight);
+        $this->packItem->set('weight', $weight);
 
         // declared_value
         $declared_value = $p->get('declaredValue');
 
         // misc
-        $this->packItem->set("handle_care", $p->get('ups_handle_care'));
-        $this->packItem->set("OrderItemId", $this->get('item_id'));
-        $this->packItem->set("packaging", $p->get('ups_packaging'));
-        $this->packItem->set("declaredValue", $declared_value);
-        $this->packItem->set("additional_handling", $p->get('ups_add_handling'));
+        $this->packItem->set('handle_care', $p->get('ups_handle_care'));
+        $this->packItem->set('OrderItemId', $this->get('item_id'));
+        $this->packItem->set('packaging', $p->get('ups_packaging'));
+        $this->packItem->set('declaredValue', $declared_value);
+        $this->packItem->set('additional_handling', $p->get('ups_add_handling'));
 
         return $this->packItem;
     }

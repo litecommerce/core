@@ -38,9 +38,9 @@ class XLite_Module_EcommerceReports_Controller_Admin_SalesDynamics extends XLite
     function handleRequest()
     {
         if ($this->get('search')) {
-            $this->setComplex("session.salesDynamics", $_POST);
+            $this->setComplex('session.salesDynamics', $_POST);
         } else {
-            $this->setComplex("session.salesDynamics", null);
+            $this->setComplex('session.salesDynamics', null);
         }
         parent::handleRequest();
     }
@@ -50,14 +50,14 @@ class XLite_Module_EcommerceReports_Controller_Admin_SalesDynamics extends XLite
         switch ($this->get('stat_step')) {
             case "day":
             case "week":
-                $label = @date("M",$date) . " " . @date("j", $date);
+                $label = @date('M',$date) . " " . @date('j', $date);
                 break;
             case "month":
             case "quarter":
-                $label = @date("M",$date);
+                $label = @date('M',$date);
                 break;
             case "year":
-                $label = @date("Y",$date);
+                $label = @date('Y',$date);
                 break;
         }
         return $label;
@@ -133,7 +133,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_SalesDynamics extends XLite
         }
         $w = new XLite_View_Abstract();
         $w->component = $this;
-        $w->set("template", "modules/EcommerceReports/export_xls.tpl");
+        $w->set('template', "modules/EcommerceReports/export_xls.tpl");
         $this->startDownload('sales.xls');
         $this->ColumnCount = 2;
         $this->RowCount = count($this->salesData) + 2;
@@ -147,7 +147,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_SalesDynamics extends XLite
         $w->display();
 
         // do not output anything
-        $this->set("silent", true);
+        $this->set('silent', true);
     }
 
     function action_get_data() 

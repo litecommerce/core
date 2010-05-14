@@ -35,7 +35,7 @@
  */
 class XLite_Controller_Admin_ProductPopup extends XLite_Controller_Admin_Abstract
 {
-    public $params = array("target", "formName", "spanName", "formField", 'mode', 'search_productsku', 'substring', 'search_category', 'subcategory_search', 'pageID', 'status');
+    public $params = array('target', "formName", "spanName", "formField", 'mode', 'search_productsku', 'substring', 'search_category', 'subcategory_search', 'pageID', 'status');
     public $template = "product_popup.tpl";
     // search form parameters	
     public $extra_parameters = '<input type="hidden" name="mode" value="search">';

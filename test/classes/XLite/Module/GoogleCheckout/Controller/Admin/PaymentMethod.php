@@ -88,7 +88,7 @@ class XLite_Module_GoogleCheckout_Controller_Admin_PaymentMethod extends XLite_C
 
     function checkCallbackAuthorization()
     {
-        $this->set("silent", true);
+        $this->set('silent', true);
         $this->xlite->logger->log('Received callback from GoogleCheckout');
 
         $this->pm = new XLite_Model_PaymentMethod('google_checkout');

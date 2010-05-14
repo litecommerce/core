@@ -240,7 +240,7 @@ class XLite_Model_Category extends XLite_Model_Abstract
     
     function setParentCategory($v) 
     {
-        $this->set("parent", $v->get('category_id'));
+        $this->set('parent', $v->get('category_id'));
     }
 
     /**
@@ -391,10 +391,10 @@ class XLite_Model_Category extends XLite_Model_Abstract
             return implode("|", $paths);
         }
         $path = $categorySet->get('path');
-        for($i = 0; $i<count($path); $i++) {
-            $path[$i] = str_replace("/", "//", str_replace("|", "||", $path[$i]->get('name')));
+        for ($i = 0; $i<count($path); $i++) {
+            $path[$i] = str_replace('/', "//", str_replace("|", "||", $path[$i]->get('name')));
         }
-        return implode("/", $path);
+        return implode('/', $path);
     }
     
     function createRecursive($name) 
@@ -412,8 +412,8 @@ class XLite_Model_Category extends XLite_Model_Abstract
                 $category_id = $category->get('category_id');
                 continue;
             }
-            $category->set("name", $n);
-            $category->set("parent", $category_id);
+            $category->set('name', $n);
+            $category->set('parent', $category_id);
             $category->create();
             $category_id = $category->get('category_id');
         }

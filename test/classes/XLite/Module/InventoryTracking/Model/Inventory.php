@@ -105,14 +105,14 @@ class XLite_Module_InventoryTracking_Model_Inventory extends XLite_Model_Abstrac
             // product found
             $inventory_id = $product->get('product_id') . (!empty($properties['product_options']) ? "|".$properties['product_options'] : "");
             $inventory = new XLite_Module_InventoryTracking_Model_Inventory();
-            $inventory->set("properties", $properties);
+            $inventory->set('properties', $properties);
 
             if ($inventory->find("inventory_id='$inventory_id'")) {
                 echo "updating amount for product " . $product->get('name') . "<br>\n";
     	        $inventory->update();
             } else {
                 echo "creating amount for product " . $product->get('name') . "<br>\n";
-                $inventory->set("inventory_id",!empty($properties['product_options']) ? $product->get('product_id')."|".$properties['product_options'] :  $product->get('product_id'));
+                $inventory->set('inventory_id',!empty($properties['product_options']) ? $product->get('product_id')."|".$properties['product_options'] :  $product->get('product_id'));
                 $inventory->create();
             }
             $product->updateInventorySku();
@@ -129,7 +129,7 @@ class XLite_Module_InventoryTracking_Model_Inventory extends XLite_Model_Abstrac
         $data = array();
         $inventory_id = $this->get('inventory_id');
         $pos = strpos($inventory_id, '|');
-        if ($pos&&(!$this->xlite->get('ProductOptionsEnabled')||($this->xlite->get('ProductOptionsEnabled')&&!in_array("product_options",$layout))))
+        if ($pos&&(!$this->xlite->get('ProductOptionsEnabled')||($this->xlite->get('ProductOptionsEnabled')&&!in_array('product_options',$layout))))
             return array();
         $product_id = $pos === false ? $inventory_id : substr($inventory_id, 0, $pos);
         $product = new XLite_Model_Product($product_id);
@@ -186,9 +186,9 @@ class XLite_Module_InventoryTracking_Model_Inventory extends XLite_Model_Abstrac
 
             // send low limit notification
             $mailer = new XLite_Model_Mailer();
-            $mailer->set("product", new XLite_Model_Product($product_id));
-            $mailer->set("item", $item);
-            $mailer->set("amount", $this->get('amount'));
+            $mailer->set('product', new XLite_Model_Product($product_id));
+            $mailer->set('item', $item);
+            $mailer->set('amount', $this->get('amount'));
             $mailer->compose(
                     $this->config->getComplex('Company.site_administrator'),
                     $this->config->getComplex('Company.site_administrator'),

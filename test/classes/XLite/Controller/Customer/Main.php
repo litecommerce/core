@@ -43,7 +43,7 @@ class XLite_Controller_Customer_Main extends XLite_Controller_Customer_Abstract
      * @see    ____var_see____
      * @since  3.0.0
      */
-    public $params = array("target", "page");
+    public $params = array('target', "page");
 
     /**
      * handleRequest 
@@ -85,7 +85,7 @@ class XLite_Controller_Customer_Main extends XLite_Controller_Customer_Abstract
         parent::init($params);
 
         if (!isset(XLite_Core_Request::getInstance()->action)) {
-            $this->session->set("productListURL", $this->get('url'));
+            $this->session->set('productListURL', $this->get('url'));
         }
     }
 

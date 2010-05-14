@@ -45,7 +45,7 @@ class XLite_Module_AOM_Model_OrderItem extends XLite_Model_OrderItem implements 
 
     function get($name)  
     {
-        if($this->xlite->is('adminZone')) {
+        if ($this->xlite->is('adminZone')) {
             $value = parent::get($name);
             if (($name == "product_name" || $name == "product_sku") && empty($value)) {
                 preg_match("/^product_(.+)$/",$name, $matches);
@@ -85,7 +85,7 @@ class XLite_Module_AOM_Model_OrderItem extends XLite_Model_OrderItem implements 
 
     function set($name, $value)
     {
-        if($this->xlite->is('adminZone')) {
+        if ($this->xlite->is('adminZone')) {
             if ($name == "aom_extra") {
                 $val = (is_array($value)) ? $value : array();
                 $value = serialize($val);
@@ -115,7 +115,7 @@ class XLite_Module_AOM_Model_OrderItem extends XLite_Model_OrderItem implements 
     {
         $val = $this->get('aom_extra');
         $val['original_price'] = ( empty($value) ) ? 0 : $value;
-        $this->set("aom_extra", $val);
+        $this->set('aom_extra', $val);
     }
 
     function getKey() 
@@ -140,9 +140,9 @@ class XLite_Module_AOM_Model_OrderItem extends XLite_Model_OrderItem implements 
         parent::setProduct($product);
 
         if (!is_null($product)) {
-            $this->set("product_name", $product->get('name'));
-            $this->set("product_sku", $product->get('sku'));
-            $this->set("originalPrice", $product->get('price'));
+            $this->set('product_name', $product->get('name'));
+            $this->set('product_sku', $product->get('sku'));
+            $this->set('originalPrice', $product->get('price'));
         }
         
  	}

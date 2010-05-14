@@ -63,11 +63,11 @@ class XLite_Model_WaitingIP extends XLite_Model_Abstract
     function addNew($ip)
     {
         $now = time();
-        $this->set("ip", $ip);
-        $this->set("first_date", $now);
-        $this->set("last_date", $now);
-        $this->set("count", "1");
-        $this->set("unique_key", $this->generateUniqueKey());
+        $this->set('ip', $ip);
+        $this->set('first_date', $now);
+        $this->set('last_date', $now);
+        $this->set('count', "1");
+        $this->set('unique_key', $this->generateUniqueKey());
         $this->create();
     }
 
@@ -76,7 +76,7 @@ class XLite_Model_WaitingIP extends XLite_Model_Abstract
         $mail = new XLite_Model_Mailer();
         $mail->waiting_ip = $this;
         $mail->adminMail = true;
-        $mail->set("charset", $this->xlite->config->Company->locationCountry->get('charset'));
+        $mail->set('charset', $this->xlite->config->Company->locationCountry->get('charset'));
         $mail->compose(
                 $this->config->getComplex('Company.site_administrator'),
                 $this->config->getComplex('Company.site_administrator'),
@@ -97,22 +97,22 @@ class XLite_Model_WaitingIP extends XLite_Model_Abstract
         $ip = $this->get('ip');
         $valid_ips_object = new XLite_Model_Config();
 
-        if(!$valid_ips_object->find("category = 'SecurityIP' AND name = 'allow_admin_ip'")) {
+        if (!$valid_ips_object->find("category = 'SecurityIP' AND name = 'allow_admin_ip'")) {
         	$admin_ip = serialize(array());
-            $valid_ips_object->createOption("SecurityIP", "allow_admin_ip", $admin_ip, "serialized");
+            $valid_ips_object->createOption('SecurityIP', "allow_admin_ip", $admin_ip, "serialized");
             return;
         }
 
         $list = unserialize($valid_ips_object->get('value'));
-        foreach($list as $ip_array) {
-            if($ip_array['ip'] == $ip) {
+        foreach ($list as $ip_array) {
+            if ($ip_array['ip'] == $ip) {
             	return;
             }
         }
 
         $list[] = array("ip" => $ip, "comment" => "");
 
-        $valid_ips_object->set("value", serialize($list));
+        $valid_ips_object->set('value', serialize($list));
         $valid_ips_object->update();
     }
 }

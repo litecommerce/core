@@ -42,7 +42,7 @@ class XLite_Model_XliteForm extends XLite_Model_Abstract
     */	
     public $alias = "forms";
 
-    public $primaryKey = array("form_id", "session_id");
+    public $primaryKey = array('form_id', "session_id");
 
     /**
     * default payment method orider field

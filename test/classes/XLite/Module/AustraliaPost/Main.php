@@ -108,7 +108,7 @@ class XLite_Module_AustraliaPost_Main extends XLite_Module_Abstract
 
         $this->registerShippingModule('aupost');
 
-        $this->xlite->set("AustraliaPostEnabled", true);
+        $this->xlite->set('AustraliaPostEnabled', true);
 
     }
 }

@@ -44,7 +44,7 @@ class XLite_Controller_Admin_PaymentMethods extends XLite_Controller_Admin_Abstr
             $this->configurableMethods = false;
             $pm = new XLite_Model_PaymentMethod();
             
-            foreach($pm->readAll() as $pm) {
+            foreach ($pm->readAll() as $pm) {
                 if (!is_null($pm->configurationTemplate)) {
                     $this->configurableMethods = true;
                     break;
@@ -60,7 +60,7 @@ class XLite_Controller_Admin_PaymentMethods extends XLite_Controller_Admin_Abstr
     	$default_offline_payment = $this->config->getComplex('Payments.default_offline_payment');
 
         foreach ($this->data as $id => $data) {
-            if (array_key_exists("enabled", $data)) {
+            if (array_key_exists('enabled', $data)) {
                 $data['enabled'] = 1;
             } else {
                 $data['enabled'] = 0;
@@ -68,7 +68,7 @@ class XLite_Controller_Admin_PaymentMethods extends XLite_Controller_Admin_Abstr
 
             if ($data['payment_method'] == $default_offline_payment && !$data['enabled']) {
         		$cfg = new XLite_Model_Config();
-                $cfg->createOption("Payments", "default_offline_payment", "");
+                $cfg->createOption('Payments', "default_offline_payment", "");
             }
 
             $payment_method = new XLite_Model_PaymentMethod();
@@ -81,7 +81,7 @@ class XLite_Controller_Admin_PaymentMethods extends XLite_Controller_Admin_Abstr
     function action_default_payment()
     {
         $cfg = new XLite_Model_Config();
-        $cfg->createOption("Payments", "default_offline_payment", $this->default_payment);
-        $cfg->createOption("Payments", "default_select_payment", $this->default_select_payment);
+        $cfg->createOption('Payments', "default_offline_payment", $this->default_payment);
+        $cfg->createOption('Payments', "default_select_payment", $this->default_select_payment);
     }
 }

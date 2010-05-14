@@ -136,7 +136,7 @@ class XLite_Controller_Admin_Users extends XLite_Controller_Admin_Abstract
         $search = array();
         $logic = ' ' . trim($logic) . ' ';
 
-        foreach($field_values as $field_value => $condition) {
+        foreach ($field_values as $field_value => $condition) {
 
             if ($condition) {
 

@@ -136,13 +136,13 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
         if ($this->get('deleted')) {
             $taxes = unserialize($this->config->getComplex('Taxes.taxes'));
             $deleted = $this->get('deleted');
-            foreach($deleted as $key => $value) {
+            foreach ($deleted as $key => $value) {
                 unset($taxes[$key]);
             }
     	    $c = new XLite_Model_Config();
-            $c->set("category", "Taxes");
-            $c->set("name", "taxes");
-    	    $c->set("value", serialize($taxes));
+            $c->set('category', "Taxes");
+            $c->set('name', "taxes");
+    	    $c->set('value', serialize($taxes));
         	$c->update();
         }
     }
@@ -179,7 +179,7 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
             $this->error = "Tax value must be a number or contain '=' at its start: '$value'";
             unset($this->invalidExpressions[$ind_rate]);
             $this->invalidFormula[$ind_rate] = $value;
-            $this->set("valid", false);
+            $this->set('valid', false);
             return;
         } else {
             unset($this->invalidFormula[$ind_rate]);
@@ -334,14 +334,14 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
         if ($taxName !== '' && $taxValue !== '') {
             if (is_numeric($taxValue)) {
                 $action = "$taxName:=$taxValue";
-                if(is_array($this->tax)){
+                if (is_array($this->tax)){
                     $currentName = substr($this->tax['action'], 0, strpos($this->tax['action'], ":="));
                 } else {
                     $currentName = substr($this->tax, 0, strpos($this->tax, ":="));
                 }
                 
                 $tax = new XLite_Model_TaxRates();
-                if($currentName != '' && $currentName <> $taxName && $tax->isUsedInExpressions($currentName, $taxName)){
+                if ($currentName != '' && $currentName <> $taxName && $tax->isUsedInExpressions($currentName, $taxName)){
                     $this->set('error', 'Tax name "' . $currentName . '" is used in another formula.');
                     return null;
                 }
@@ -359,13 +359,13 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
                 }
                 $currentName = '';
 
-                if(is_array($this->tax)){
+                if (is_array($this->tax)){
                     $currentName = substr($this->tax['action'], 0, strpos($this->tax['action'], ":="));
                 } else {
                     $currentName = substr($this->tax, 0, strpos($this->tax, ":="));
                 }
 
-                if($currentName != '' && $currentName <> $taxName && $tax->isUsedInExpressions($currentName, $taxName)){
+                if ($currentName != '' && $currentName <> $taxName && $tax->isUsedInExpressions($currentName, $taxName)){
                     $this->set('error', 'Tax name "' . $currentName . '" is used in another formula.');
                     return null;
                 }
@@ -406,9 +406,9 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
             $this->taxes->setSchema(array("tax_rates" => $this->taxes->_rates));
             if (XLite_Core_Request::getInstance()->add_another) {
                 $this->set('returnUrl', 'admin.php?target=taxes&page=add_rate&mode=add');
-                $this->set("mode", "add");
+                $this->set('mode', "add");
             } else {
-                $this->set("mode", "");
+                $this->set('mode', "");
             }
         }
     }
@@ -428,7 +428,7 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
                 $subTree['action'] = $action;
             // store
             $this->taxes->setSchema(array("tax_rates" => $this->taxes->_rates));
-            $this->set("mode", "");
+            $this->set('mode', "");
         }
     }
 
@@ -447,7 +447,7 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
         // store
         $this->taxes->setSchema(array("tax_rates" => $this->taxes->_rates));
 
-        $this->set("mode", "");
+        $this->set('mode', "");
 
         $this->setReturnUrl($this->buildUrl('taxes', '', array('page' => 'rates')));
     }
@@ -825,15 +825,15 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
             unset($postData['billing_country']);
             $postData['state'] = $postData['billing_state'];
             unset($postData['billing_state']);
-            $this->set("properties", $postData);
+            $this->set('properties', $postData);
 
             $tax = new XLite_Model_TaxRates();
             // setup tax rate calculator
             if (!is_array($tax->_conditionValues)) {
             	$tax->_conditionValues = array();
             }
-            foreach($postData as $name => $value) {
-                $name1 = str_replace("_", " ", $name);
+            foreach ($postData as $name => $value) {
+                $name1 = str_replace('_', " ", $name);
                 $tax->_conditionValues[$name1] = $this->$name;
             }
             if (isset($this->country)) {
@@ -866,11 +866,11 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
         // show tax calculator
         $w = new XLite_View_Abstract();
         $w->component = $this;
-        $w->set("template", "tax/calculator.tpl");
+        $w->set('template', "tax/calculator.tpl");
         $w->init();
         $w->display();
         // do not output anything
-        $this->set("silent", true);
+        $this->set('silent', true);
     }
 
     function isDoubleValue($value)
@@ -899,7 +899,7 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
         $tax = new XLite_Model_TaxRates();
         $schema = $tax->get("predefinedSchemas.$name");
         if (!is_null($schema)) {
-            $this->set("silent", true);
+            $this->set('silent', true);
             $this->startDownload("$name.tax");
             print serialize($schema);
         }
@@ -908,8 +908,8 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
     function action_import()
     {
         if (!$this->checkUploadedFile()) {
-        	$this->set("valid", false);
-        	$this->set("invalid_file", true);
+        	$this->set('valid', false);
+        	$this->set('invalid_file', true);
         	return;
         }
 

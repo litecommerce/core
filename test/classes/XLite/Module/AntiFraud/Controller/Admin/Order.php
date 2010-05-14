@@ -57,7 +57,7 @@ class XLite_Module_AntiFraud_Controller_Admin_Order extends XLite_Controller_Adm
         $request->url = $this->config->getComplex('AntiFraud.antifraud_url')."/add_fraudulent_ip.php";
         $request->request();
 
-        $request->response ? $this->set("mode","sent") : $this->set("mode","failed");
+        $request->response ? $this->set('mode',"sent") : $this->set('mode',"failed");
     }
 
     function getOrder()
@@ -81,7 +81,7 @@ class XLite_Module_AntiFraud_Controller_Admin_Order extends XLite_Controller_Adm
 
         $order = $this->get('order');
         $this->country = new XLite_Model_Country($order->getComplex('profile.billing_country'));
-        $this->country->set("order", $order);
+        $this->country->set('order', $order);
         return $this->country;
     }
 

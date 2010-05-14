@@ -95,19 +95,19 @@ class XLite_Module_MultiCurrency_Main extends XLite_Module_Abstract
     public function init()  
     {
         parent::init();
-        $this->xlite->set("MultiCurrencyEnabled",true);
+        $this->xlite->set('MultiCurrencyEnabled',true);
 
         $this->defaultCurrency = new XLite_Module_MultiCurrency_Model_CurrencyCountries();
    		$found = $this->defaultCurrency->find("base = 1");
         if (!$found) {
             $this->defaultCurrency = new XLite_Module_MultiCurrency_Model_CurrencyCountries();
-            $this->defaultCurrency->set("code","USD");
-            $this->defaultCurrency->set("name","US dollar");
-            $this->defaultCurrency->set("exchange_rate",1);
-            $this->defaultCurrency->set("price_format",$this->config->getComplex('General.price_format'));
-            $this->defaultCurrency->set("base",1);
-            $this->defaultCurrency->set("enabled",1);
-            $this->defaultCurrency->set("countries",serialize(array()));
+            $this->defaultCurrency->set('code',"USD");
+            $this->defaultCurrency->set('name',"US dollar");
+            $this->defaultCurrency->set('exchange_rate',1);
+            $this->defaultCurrency->set('price_format',$this->config->getComplex('General.price_format'));
+            $this->defaultCurrency->set('base',1);
+            $this->defaultCurrency->set('enabled',1);
+            $this->defaultCurrency->set('countries',serialize(array()));
             $this->defaultCurrency->create();
         }
     }

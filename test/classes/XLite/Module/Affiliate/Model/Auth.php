@@ -49,7 +49,7 @@ class XLite_Module_Affiliate_Model_Auth extends XLite_Model_Auth implements XLit
             return ACCESS_DENIED;
         } elseif ($result == USER_EXISTS) {
             // unset existing profile password before update
-            $profile->set("password", null);
+            $profile->set('password', null);
         }
         $this->loginProfile($profile);
         if (!$this->getComplex('config.Affiliate.moderated')) {
@@ -85,7 +85,7 @@ class XLite_Module_Affiliate_Model_Auth extends XLite_Model_Auth implements XLit
 
     function declinePartner($profile)
     {
-        $profile->set("access_level", $this->get('declinedPartnerAccessLevel'));
+        $profile->set('access_level', $this->get('declinedPartnerAccessLevel'));
         $profile->update();
         // sent notification to customer
         $mailer = new XLite_Model_Mailer();
@@ -101,7 +101,7 @@ class XLite_Module_Affiliate_Model_Auth extends XLite_Model_Auth implements XLit
     function pendPartner($profile)
     {
         if ($profile->get('access_level') < $this->get('pendingPartnerAccessLevel')) {
-            $profile->set("access_level", $this->get('pendingPartnerAccessLevel'));
+            $profile->set('access_level', $this->get('pendingPartnerAccessLevel'));
         }
         // mailto customer with a new signup notification
         $mailer = new XLite_Model_Mailer();
@@ -117,9 +117,9 @@ class XLite_Module_Affiliate_Model_Auth extends XLite_Model_Auth implements XLit
     function approvePartner($profile)
     {
         if ($profile->get('access_level') < $this->getPartnerAccessLevel()) {
-            $profile->set("access_level", $this->getPartnerAccessLevel());
+            $profile->set('access_level', $this->getPartnerAccessLevel());
         }
-        $profile->set("plan", $profile->get('pending_plan'));
+        $profile->set('plan', $profile->get('pending_plan'));
         // mailto customer with a new signup notification
         $mailer = new XLite_Model_Mailer();
         $mailer->profile = $profile;

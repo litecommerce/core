@@ -156,7 +156,7 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
         }
         $options = $this->get('productOptions');
         $dst = array();
-        foreach($options as $option) {
+        foreach ($options as $option) {
             $type = strtolower($option->get('opttype'));
             if ($type == "radio button" || $type == "selectbox") {
                 $dst []= $option->get('productOptions');
@@ -229,7 +229,7 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
             $wholesale_prices = $wp->getProductPrices($this->get('product_id'), $amount, $membership);
             if (count($wholesale_prices) != 0) {
                 $wholesale_price = $wholesale_prices[count($wholesale_prices) - 1]->get('price');
-                $this->set("price", $wholesale_price);
+                $this->set('price', $wholesale_price);
             }
         }
         $price = $this->get('listPrice');
@@ -240,7 +240,7 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
             $opts = $this->get('expandedItems');
             foreach ($opts[$optionIndex] as $option) {
                 $po = new XLite_Module_ProductOptions_Model_ProductOption();
-                $po->set("product_id", $this->get('product_id'));
+                $po->set('product_id', $this->get('product_id'));
 
                 $modifiedPrice = ($wholesale_price === false)?($po->_modifiedPrice($option)):($po->_modifiedPrice($option, false, $wholesale_price));
                 $surcharge += $modifiedPrice - $originalPrice;
@@ -334,7 +334,7 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
             $access = array();
         }
         $access[$this->get('product_id')] = $assign;
-        $this->session->set("DirectSaleAvailable", $access);
+        $this->session->set('DirectSaleAvailable', $access);
     }
 
     function checkDirectSaleAvailable()
@@ -435,11 +435,11 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
             $oldPrice = $this->get('price');
 
             foreach ($this->wholesale_pricing as $wp_idx => $wp) {
-                $this->set("price", $wp->get('price'));
-                $this->wholesale_pricing[$wp_idx]->set("price", $this->get('listPrice'));
+                $this->set('price', $wp->get('price'));
+                $this->wholesale_pricing[$wp_idx]->set('price', $this->get('listPrice'));
             }
 
-            $this->set("price", $oldPrice);
+            $this->set('price', $oldPrice);
         }
 
         return $this->wholesale_pricing;
@@ -479,7 +479,7 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
         parent::collectGarbage();
 
         $products_table = $this->db->getTableByAlias('products');
-        $classes = array("ProductAccess", "PurchaseLimit", "WholesalePricing");
+        $classes = array('ProductAccess', "PurchaseLimit", "WholesalePricing");
         foreach ($classes as $class) {
 
             $className = 'XLite_Module_WholesaleTrading_Model_' . $class;
@@ -508,10 +508,10 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
             $productAccess = new XLite_Module_WholesaleTrading_Model_ProductAccess();
             foreach ($productAccess->findAll("product_id=$originalId") as $access) {
                 $foo = new XLite_Module_WholesaleTrading_Model_ProductAccess();
-                $foo->set("product_id", $newId);
-                $foo->set("show_group", $access->get('show_group'));
-                $foo->set("show_price_group", $access->get('show_price_group'));
-                $foo->set("sell_group", $access->get('sell_group'));
+                $foo->set('product_id', $newId);
+                $foo->set('show_group', $access->get('show_group'));
+                $foo->set('show_price_group', $access->get('show_price_group'));
+                $foo->set('sell_group', $access->get('sell_group'));
                 $foo->create();
             }
         }
@@ -520,9 +520,9 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
             $purchaseLimit = new XLite_Module_WholesaleTrading_Model_PurchaseLimit();
             foreach ($purchaseLimit->findAll("product_id=$originalId") as $limit) {
                 $foo = new XLite_Module_WholesaleTrading_Model_PurchaseLimit();
-                $foo->set("product_id", $newId);
-                $foo->set("min", $limit->get('min'));
-                $foo->set("max", $limit->get('max'));
+                $foo->set('product_id', $newId);
+                $foo->set('min', $limit->get('min'));
+                $foo->set('max', $limit->get('max'));
                 $foo->create();
             }
         }
@@ -531,10 +531,10 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
             $wholesalePricing = new XLite_Module_WholesaleTrading_Model_WholesalePricing();
             foreach ($wholesalePricing->findAll("product_id=$originalId") as $pricing) {
                 $foo = new XLite_Module_WholesaleTrading_Model_WholesalePricing();
-                $foo->set("product_id", $newId);
-                $foo->set("amount", $pricing->get('amount'));
-                $foo->set("price", $pricing->get('price'));
-                $foo->set("membership", $pricing->get('membership'));
+                $foo->set('product_id', $newId);
+                $foo->set('amount', $pricing->get('amount'));
+                $foo->set('price', $pricing->get('price'));
+                $foo->set('membership', $pricing->get('membership'));
                 $foo->create();
             }
         }

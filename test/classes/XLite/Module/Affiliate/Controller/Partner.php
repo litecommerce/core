@@ -69,18 +69,18 @@ class XLite_Module_Affiliate_Controller_Partner extends XLite_Controller_Abstrac
                 // store for "lifetime" days
                 $expire = time() + $this->getComplex('config.Affiliate.partner_cookie_lifetime') * 3600 * 24;
                 $domain = func_parse_host(XLite::getInstance()->getOptions(array('host_details', 'http_host')));
-                setcookie("PartnerID", $_GET['partner'], $expire, "/", $domain);
-                setcookie("PartnerClick", $stats->get('stat_id'), $expire, "/", $domain);
+                setcookie('PartnerID', $_GET['partner'], $expire, "/", $domain);
+                setcookie('PartnerClick', $stats->get('stat_id'), $expire, "/", $domain);
             }
-            $this->session->set("PartnerID", $_GET['partner']);
-            $this->session->set("PartnerClick", $stats->get('stat_id'));
+            $this->session->set('PartnerID', $_GET['partner']);
+            $this->session->set('PartnerClick', $stats->get('stat_id'));
         }
     }
 
     protected function redirect($url = null)
     {
         if ($this->get('mode') == "access_denied") {
-            $this->set("mode", "accessDenied");
+            $this->set('mode', "accessDenied");
         }
 
         parent::redirect($url);
@@ -96,8 +96,8 @@ class XLite_Module_Affiliate_Controller_Partner extends XLite_Controller_Abstrac
 
     function getRowClass($idx, $class1, $class2 = null)
     {
-        $classMethods = array_map("strtolower", get_class_methods($this));
-        $isNewRC = in_array("isoddrow", $classMethods);
+        $classMethods = array_map('strtolower', get_class_methods($this));
+        $isNewRC = in_array('isoddrow', $classMethods);
         if ($isNewRC) {
             return parent::getRowClass($idx, $class1, $class2);
         } else {
@@ -128,7 +128,7 @@ class XLite_Module_Affiliate_Controller_Partner extends XLite_Controller_Abstrac
     {
         if (!isset($this->startDate)) {
             $date = getdate(time());
-            $this->set("startDate", mktime(0,0,0,$date['mon'],1,$date['year']));
+            $this->set('startDate', mktime(0,0,0,$date['mon'],1,$date['year']));
         }
         parent::fillForm();
     }

@@ -85,7 +85,7 @@ class XLite_Model_MailImageParser extends XLite_Core_FlexyCompiler
             // fetch image
             if (($fd = @fopen($img, "rb"))) {
                 $image = '';
-                while(!feof($fd)) {
+                while (!feof($fd)) {
                     $image .= fgets($fd, 10000);
                 }
                 fclose($fd);

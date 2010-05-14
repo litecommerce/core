@@ -86,7 +86,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_FocusedAudience extends XLi
         } else {
             echo "no recipients found, select one or more orders!<br><br>";
         }
-        $this->set("silent", true); // do not redirect
+        $this->set('silent', true); // do not redirect
         $url = $this->get('url');
         echo "<a href=\"$url\">New search..</a>";
     }
@@ -95,11 +95,11 @@ class XLite_Module_EcommerceReports_Controller_Admin_FocusedAudience extends XLi
     {
         $w = new XLite_View_Abstract();
         $w->component = $this;
-        $w->set("template", "modules/EcommerceReports/export_csv.tpl");
+        $w->set('template', "modules/EcommerceReports/export_csv.tpl");
         $this->startDownload('users.csv');
         $w->init();
         $w->display();
-        $this->set("silent", true);
+        $this->set('silent', true);
     }
 
     function getTargetProfiles() 
@@ -430,7 +430,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_FocusedAudience extends XLi
                 
         $product_ids = (array)$product->db->getAll($sql);
         $products = array();
-        foreach($product_ids as $found_pid) {
+        foreach ($product_ids as $found_pid) {
             $products[] = $found_pid['product_id'];
         }
         
@@ -457,7 +457,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_FocusedAudience extends XLi
                 
         $categories = (array)$product->db->getAll($sql);
         $category_ids = array();
-        foreach($categories as $category_info) {
+        foreach ($categories as $category_info) {
             $category_ids[] = $category_info['category_id'];
         }
         $categories = array_unique($category_ids);
@@ -467,7 +467,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_FocusedAudience extends XLi
 
     function hasProducts($u_id, $product_ids) 
     {
-        foreach($product_ids as $pid) {
+        foreach ($product_ids as $pid) {
             if (!$this->hasProduct($u_id, $pid)) {
                 return false;
             }
@@ -480,7 +480,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_FocusedAudience extends XLi
         if (!is_array($category_ids)) {
             return true;
         }
-        foreach($category_ids as $cid) {
+        foreach ($category_ids as $cid) {
             if (!$this->hasCategory($u_id, $cid)) {
                 return false;
             }

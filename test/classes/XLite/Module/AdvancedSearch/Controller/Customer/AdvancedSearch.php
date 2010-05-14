@@ -158,7 +158,7 @@ class XLite_Module_AdvancedSearch_Controller_Customer_AdvancedSearch extends XLi
             ) {
                 $p = new XLite_Model_Product();
 
-                foreach($properties as $key => $value) {
+                foreach ($properties as $key => $value) {
                     if (empty($properties[$key])) {
                         $properties[$key] = null;
 

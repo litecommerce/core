@@ -42,8 +42,8 @@ class XLite_Module_AntiFraud_Controller_Customer_Profile extends XLite_Controlle
         if ($this->registerForm->is('valid')) {
             $cart = XLite_Model_Cart::getInstance();
             if (!$cart->isEmpty()) {
-                $cart->set("profile_id", $this->profileForm->profile->get('profile_id'));
-                $this->setComplex("details.af_result", null);
+                $cart->set('profile_id', $this->profileForm->profile->get('profile_id'));
+                $this->setComplex('details.af_result', null);
                 $cart->checkFraud();
                 $cart->update();
             }

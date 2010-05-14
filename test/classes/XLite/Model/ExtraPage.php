@@ -130,7 +130,7 @@ class XLite_Model_ExtraPage extends XLite_Base
 
     function getPageLinkAttributes()
     {
-    	return array("page_link", "page_title");
+    	return array('page_link', "page_title");
     }
 
     function getPageLinkContent($tpl = null)
@@ -148,11 +148,11 @@ class XLite_Model_ExtraPage extends XLite_Base
             case "menu":
                 $this->getCustomerLayout();
                 $template = new XLite_Base();
-                $template->set("templateFile", $this->menuTemplateDef);
-                $template->set("template", $this->getRelativeTemplatePath($this->menuTemplateDef));
-                $template->set("skinPath", $this->customerLayout->getPath());
-                $template->set("page_link", "cart.php?page=" . $this->page);
-                $template->set("page_title", $this->title);
+                $template->set('templateFile', $this->menuTemplateDef);
+                $template->set('template', $this->getRelativeTemplatePath($this->menuTemplateDef));
+                $template->set('skinPath', $this->customerLayout->getPath());
+                $template->set('page_link', "cart.php?page=" . $this->page);
+                $template->set('page_title', $this->title);
                 $line = $this->compile($template);
                 $line = preg_replace("/{/S", "&#123;", $line);
                 $line = preg_replace("/}/S", "&#125;", $line);
@@ -308,9 +308,9 @@ class XLite_Model_ExtraPage extends XLite_Base
         $this->customerLayout = new XLite_Model_Layout();
 
         // FIXME - to delete
-        /*$this->xlite->set("adminZone", false);
+        /*$this->xlite->set('adminZone', false);
         $this->customerLayout->initFromGlobals();
-        $this->xlite->set("adminZone", true);*/
+        $this->xlite->set('adminZone', true);*/
 
         return $this->customerLayout;
     }
@@ -321,7 +321,7 @@ class XLite_Model_ExtraPage extends XLite_Base
         // replace layout with customer layout
      	/*$layout = XLite_Model_Layout::getInstance();
         $skin = $layout->get('skin');
-        $layout->set("skin", $this->customerLayout->get('skin'));*/
+        $layout->set('skin', $this->customerLayout->get('skin'));*/
 
         $component = new XLite_View_ExtraPage(
             array(
@@ -339,7 +339,7 @@ class XLite_Model_ExtraPage extends XLite_Base
         $text = $component->getContent();
 
         // restore old skin
-        // $layout->set("skin", $skin);
+        // $layout->set('skin', $skin);
             
         return $text;
     }

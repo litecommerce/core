@@ -56,7 +56,7 @@ class XLite_Module_PayFlowLink_Controller_Customer_Pflcheckout extends XLite_Con
 
     function redirect_PayFlowLink()
     {
-        $this->cart->set("status", "Q");
+        $this->cart->set('status', "Q");
         $this->cart->update();
 
         $pm = $this->cart->get('PaymentMethod');

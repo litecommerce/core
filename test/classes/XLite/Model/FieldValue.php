@@ -41,6 +41,6 @@ class XLite_Model_FieldValue extends XLite_Model_Abstract
             "value"      => "",
             );
 
-    public $primaryKey = array("product_id", "field_id");
+    public $primaryKey = array('product_id', "field_id");
     public $alias      = "extra_field_values";
 }

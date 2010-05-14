@@ -46,14 +46,14 @@ class XLite_Module_ProductAdviser_Model_Inventory extends XLite_Module_Inventory
     	if ($property == "properties") {
     		$inventory = $this->properties;
             $inventory['oldAmount'] = $oldAmount;
-    		$this->xlite->set("inventoryChangedAmount", $inventory);
+    		$this->xlite->set('inventoryChangedAmount', $inventory);
     	}
     }
 
     public function import(array $options)
     {
-        $this->xlite->set("inventoryChangedAfterImport", 0);
-        $this->xlite->set("checkInventoryChangedAfterImport", true);
+        $this->xlite->set('inventoryChangedAfterImport', 0);
+        $this->xlite->set('checkInventoryChangedAfterImport', true);
 
     	parent::import($options);
 
@@ -79,7 +79,7 @@ There <?php echo ($inventoryCAI == 1) ? "is" : "are"; ?> <b><font color=blue><?p
 
     		$notification = new XLite_Module_ProductAdviser_Model_Notification();
     		if ($notification->createInventoryChangedNotification($inventoryChangedAmount)) {
-        		$this->xlite->set("inventoryChangedAfterImport", $this->xlite->get('inventoryChangedAfterImport') + 1);
+        		$this->xlite->set('inventoryChangedAfterImport', $this->xlite->get('inventoryChangedAfterImport') + 1);
     		}
     	}
 

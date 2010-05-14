@@ -185,7 +185,7 @@ class XLite_Core_FlexyCompiler extends XLite_Base implements XLite_Base_ISinglet
             } else {
                 $this->tokens[] = array("type" => "tag", "start" => $this->startOffset());
                 if (!$this->tagname()) return $this->rollback();
-                while($this->space() && $this->attribute_definition()) {
+                while ($this->space() && $this->attribute_definition()) {
                 }
                 if ($this->char('/')) {
                     $this->tokens[$n]['type'] = "open-close-tag";
@@ -381,7 +381,7 @@ class XLite_Core_FlexyCompiler extends XLite_Base implements XLite_Base_ISinglet
 
                 } elseif ($this->findAttr($i+1, "iff", $pos)) {
                     $expr = $this->flexyCondition($this->getTokenText($pos + 1));
-                    $this->subst($token['start'], 0, self::PHP_OPEN . " if($expr){" . self::PHP_CLOSE);
+                    $this->subst($token['start'], 0, self::PHP_OPEN . " if ($expr){" . self::PHP_CLOSE);
                     $this->subst($this->tokens[$pos]['start'], $this->tokens[$pos]['end'], '');
                     $this->subst($this->tokens[$i]['end']-1, $this->tokens[$i]['end'], '>' . self::PHP_OPEN . ' }' . self::PHP_CLOSE);
 
@@ -390,7 +390,7 @@ class XLite_Core_FlexyCompiler extends XLite_Base implements XLite_Base_ISinglet
                         list($expr,$k,$forvar) = $this->flexyForeach($this->getTokenText($pos+1));
                         $exprNumber = $forvar . 'ArraySize';
                         $exprCounter = $forvar . 'ArrayPointer';
-                        $this->subst($token['start'], 0, self::PHP_OPEN . " \$$forvar = isset(\$this->$forvar) ? \$this->$forvar : null; \$_foreach_var = $expr; if (isset(\$_foreach_var)) { \$this->$exprNumber=count(\$_foreach_var); \$this->$exprCounter=0; } if (isset(\$_foreach_var)) foreach(\$_foreach_var as $k){ \$this->$exprCounter++; " . self::PHP_CLOSE);
+                        $this->subst($token['start'], 0, self::PHP_OPEN . " \$$forvar = isset(\$this->$forvar) ? \$this->$forvar : null; \$_foreach_var = $expr; if (isset(\$_foreach_var)) { \$this->$exprNumber=count(\$_foreach_var); \$this->$exprCounter=0; } if (isset(\$_foreach_var)) foreach (\$_foreach_var as $k){ \$this->$exprCounter++; " . self::PHP_CLOSE);
                         $this->subst($this->tokens[$pos]['start'], $this->tokens[$pos]['end'], '');
                         $this->subst($this->tokens[$pos1]['end']-1, $this->tokens[$pos1]['end'], ">\n" . self::PHP_OPEN . " } \$this->$forvar = \$$forvar; " . self::PHP_CLOSE);
 
@@ -405,20 +405,20 @@ class XLite_Core_FlexyCompiler extends XLite_Base implements XLite_Base_ISinglet
                         $this->subst(
                             $this->tokens[$pos]['start'], 
                             $this->tokens[$pos]['end'], 
-                            self::PHP_OPEN . " if($expr) echo 'selected';" . self::PHP_CLOSE);
+                            self::PHP_OPEN . " if ($expr) echo 'selected';" . self::PHP_CLOSE);
                     }
                 }
                 if ($this->findAttr($i+1, "checked", $pos)) {
                     if (isset($this->tokens[$pos+1]['type']) && $this->tokens[$pos+1]['type'] == "attribute-value") {
                         $expr = $this->flexyCondition($this->getTokenText($pos+1));
-                        $this->subst($this->tokens[$pos]['start'], $this->tokens[$pos]['end'], self::PHP_OPEN . " if($expr) echo 'checked';" . self::PHP_CLOSE);
+                        $this->subst($this->tokens[$pos]['start'], $this->tokens[$pos]['end'], self::PHP_OPEN . " if ($expr) echo 'checked';" . self::PHP_CLOSE);
                     }
                 }
 
                 if (!strcasecmp($token['name'], "widget")) {
                     $attrs = array();
                     // widget display code
-                    while(++$i<count($this->tokens)) {
+                    while (++$i<count($this->tokens)) {
                         $token1 = $this->tokens[$i];
                         if ($token1['type'] == "attribute") {
                             $attr = $token1['name'];
@@ -595,7 +595,7 @@ class XLite_Core_FlexyCompiler extends XLite_Base implements XLite_Base_ISinglet
     function findAttr($offset, $attr, &$pos)
     {
         $pos = $offset;
-        while($pos<count($this->tokens) && ($this->tokens[$pos]['type'] == "attribute" ||$this->tokens[$pos]['type'] == "attribute-value")) {
+        while ($pos<count($this->tokens) && ($this->tokens[$pos]['type'] == "attribute" ||$this->tokens[$pos]['type'] == "attribute-value")) {
             if ($this->tokens[$pos]['type'] == "attribute"  && !strcasecmp($this->tokens[$pos]['name'], $attr)) {
                 return true;
             }
@@ -659,11 +659,11 @@ class XLite_Core_FlexyCompiler extends XLite_Base implements XLite_Base_ISinglet
             list($expr,$k,$forvar) = $this->flexyForeach(substr($str, 9));
             $exprNumber = "$forvar"."ArraySize";
             $exprCounter = "$forvar"."ArrayPointer";
-            return self::PHP_OPEN . " \$_foreach_var = $expr; if (isset(\$_foreach_var)) { \$this->$exprNumber=count(\$_foreach_var); \$this->$exprCounter=0; } if (isset(\$_foreach_var)) foreach(\$_foreach_var as $k){ \$this->$exprCounter++; " . self::PHP_CLOSE;
+            return self::PHP_OPEN . " \$_foreach_var = $expr; if (isset(\$_foreach_var)) { \$this->$exprNumber=count(\$_foreach_var); \$this->$exprCounter=0; } if (isset(\$_foreach_var)) foreach (\$_foreach_var as $k){ \$this->$exprCounter++; " . self::PHP_CLOSE;
         }
         if (substr($str, 0, 4) == '{if:') {
             $expr = $this->flexyCondition(substr($str, 4));
-            return self::PHP_OPEN . " if($expr){" . self::PHP_CLOSE;
+            return self::PHP_OPEN . " if ($expr){" . self::PHP_CLOSE;
         }
         if ($str == '{end:}') {
             return self::PHP_OPEN . " }" . self::PHP_CLOSE;
@@ -697,7 +697,7 @@ class XLite_Core_FlexyCompiler extends XLite_Base implements XLite_Base_ISinglet
             break;
         }
 
-        if ($this->condition) return self::PHP_OPEN . " if($this->condition) echo $expr;" . self::PHP_CLOSE;
+        if ($this->condition) return self::PHP_OPEN . " if ($this->condition) echo $expr;" . self::PHP_CLOSE;
         return self::PHP_OPEN . " echo $expr;" . self::PHP_CLOSE;
     }
     function flexyExpression(&$str)
@@ -794,7 +794,7 @@ class XLite_Core_FlexyCompiler extends XLite_Base implements XLite_Base_ISinglet
         $result = "";
         $find = array("'", '&quot;');
         $replace = array("\'", '"');
-        while(strlen($str)) {
+        while (strlen($str)) {
             if (substr($str, 0, 1) == "{") {
                 $pos = strpos($str, "}");
                 if ($pos === false) {

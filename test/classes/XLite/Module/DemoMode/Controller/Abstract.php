@@ -82,7 +82,7 @@ class XLite_Module_DemoMode_Controller_Abstract extends XLite_Controller_Abstrac
             if (isset($forward)) {
         		$currentUrl = $this->getUrl();
         		if (strpos($currentUrl, $forward) === false) {
-                    $this->xlite->session->set("forwardUrl", null);
+                    $this->xlite->session->set('forwardUrl', null);
                     $this->xlite->session->writeClose();
         		}
         	}

@@ -89,17 +89,17 @@ class XLite_Controller_Admin_OrdersStats extends XLite_Controller_Admin_Stats
         switch ($order->get('status')) {
             case "P":
             case "C":
-                $this->save("processed", $order, true);
+                $this->save('processed', $order, true);
                 break;
             case "Q":
-                $this->save("queued", $order);
+                $this->save('queued', $order);
                 break;
             case "I":
-                $this->save("not_finished", $order);
+                $this->save('not_finished', $order);
                 break;
             case "F":
             case "D":
-                $this->save("failed", $order);
+                $this->save('failed', $order);
                 break;
         }
     }

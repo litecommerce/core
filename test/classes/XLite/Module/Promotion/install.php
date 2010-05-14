@@ -181,9 +181,9 @@ if (is_object($this)) {
 //	COPY SKIN-DEPENDENT TEMPLATES
 //////////////////////////////////////
 
-copy_schema_template("totals.tpl", $schema, $MODULE_NAME);
-copy_schema_template("item.tpl", $schema, $MODULE_NAME);
-copy_schema_template("bonus_list.tpl", $schema, $MODULE_NAME);
+copy_schema_template('totals.tpl', $schema, $MODULE_NAME);
+copy_schema_template('item.tpl', $schema, $MODULE_NAME);
+copy_schema_template('bonus_list.tpl', $schema, $MODULE_NAME);
 
 //////////////////////////////////////
 //	ADMIN ZONE

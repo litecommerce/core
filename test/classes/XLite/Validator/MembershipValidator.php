@@ -65,16 +65,16 @@ class XLite_Validator_MembershipValidator extends XLite_Validator_Abstract
     		}
             $membership = new XLite_Model_Membership();
             if ($membershipData != $membership->stripInvalidData($membershipData)) {
-                $this->set("dataInvalid", true);
+                $this->set('dataInvalid', true);
                 return false;
             }
 
     		if (strlen($membershipData) > 32) {
-                $this->set("dataInvalid", true);
+                $this->set('dataInvalid', true);
     			return false;
     		}
     		$memberships = $membership->findAll();
-    		foreach($memberships as $membership_)
+    		foreach ($memberships as $membership_)
     		if ($membership_->get('membership') == $membershipData) {
     			return false;
     		}

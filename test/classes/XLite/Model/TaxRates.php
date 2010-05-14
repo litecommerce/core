@@ -438,13 +438,13 @@ array("condition" => "country=Australia", "action" => array("Tax:==GST", "GST:=1
     {
         if (is_array($schema)) {
             $conf = new XLite_Model_Config();
-            $conf->set("category", "Taxes");
+            $conf->set('category', "Taxes");
             foreach ($schema as $name => $value) {
-                $conf->set("name", $name);
+                $conf->set('name', $name);
                 if (!is_scalar($value)) {
                     $value = serialize($value);
                 }
-                $conf->set("value", $value);
+                $conf->set('value', $value);
                 $this->config->setComplex("Taxes.$name", $value);
                 $conf->update();
             }
@@ -456,7 +456,7 @@ array("condition" => "country=Australia", "action" => array("Tax:==GST", "GST:=1
     {
         $profile = $order->get('profile');
         if (!is_null($profile)) {
-            $this->set("profile", $profile);
+            $this->set('profile', $profile);
         } else {
             if ($this->config->getComplex('General.def_calc_shippings_taxes')) {
                 $default_country = new XLite_Model_Country($this->config->getComplex('General.default_country'));
@@ -699,7 +699,7 @@ array("condition" => "country=Australia", "action" => array("Tax:==GST", "GST:=1
     function getShippingDefined()
     {
         $productClasses = $this->getProductClasses();
-        $isShippingDefined = array_search("shipping service", $productClasses);
+        $isShippingDefined = array_search('shipping service', $productClasses);
         if (!($isShippingDefined === false || is_null($isShippingDefined))) {
             return true;
         } else {
@@ -785,7 +785,7 @@ array("condition" => "country=Australia", "action" => array("Tax:==GST", "GST:=1
             }
             list($name, $value) = explode(':=', $action);
             $value = trim($value);
-            if($value{0} != '='){
+            if ($value{0} != '='){
                 $value = "=" . $value;
             }
             $actions[] =  trim($value);
@@ -885,12 +885,12 @@ array("condition" => "country=Australia", "action" => array("Tax:==GST", "GST:=1
         }
 
         $c = new XLite_Model_Config();
-        $c->set("category", "Taxes");
-        $c->set("name", "schemas");
+        $c->set('category', "Taxes");
+        $c->set('name', "schemas");
 
         if (is_null($this->getComplex('config.Taxes.schemas'))) {
             // create schemas repositary
-            $c->set("value", serialize(array($name => $schema)));
+            $c->set('value', serialize(array($name => $schema)));
             $c->create();
         } else {
             // update existing schemas repositary
@@ -902,7 +902,7 @@ array("condition" => "country=Australia", "action" => array("Tax:==GST", "GST:=1
             } else {
                 $schemas[$name] = $schema;
            }
-            $c->set("value", serialize($schemas));
+            $c->set('value', serialize($schemas));
             $c->update();
         }
     }
@@ -956,19 +956,19 @@ array("condition" => "country=Australia", "action" => array("Tax:==GST", "GST:=1
     {
         $count = 0;
         $names = $this->getAllTaxNames();
-        foreach($names as $name){
-            if($name == $oldName){
+        foreach ($names as $name){
+            if ($name == $oldName){
                 $count++;
             }
 
-            if($count > 1)
+            if ($count > 1)
                 return false;
         }
 
         $errors = array();
         $actions = $this->getActions();
-        foreach($actions as $action){
-            if(!$this->checkExpressionSyntax($action, $errors, $oldName)){
+        foreach ($actions as $action){
+            if (!$this->checkExpressionSyntax($action, $errors, $oldName)){
                 return true;
             }
         }

@@ -253,7 +253,7 @@ class XLite_Model_Profile extends XLite_Model_Abstract
     {
         $state = new XLite_Model_State($this->get('billing_state'));
         if ($state->get('state_id') == -1)
-            $state->set("state", $this->get('billing_custom_state'));
+            $state->set('state', $this->get('billing_custom_state'));
 
         return $state;
     }
@@ -261,7 +261,7 @@ class XLite_Model_Profile extends XLite_Model_Abstract
     {
         $state = new XLite_Model_State($this->get('shipping_state'));
         if ($state->get('state_id') == -1)
-            $state->set("state", $this->get('shipping_custom_state'));
+            $state->set('state', $this->get('shipping_custom_state'));
 
         return $state;
     }
@@ -276,12 +276,12 @@ class XLite_Model_Profile extends XLite_Model_Abstract
 
     function enable() 
     {
-        $this->set("status", "E");
+        $this->set('status', "E");
     }
 
     function disable() 
     {
-        $this->set("status", "D");
+        $this->set('status', "D");
     }
 
     function isExists($login = '') 
@@ -314,9 +314,9 @@ class XLite_Model_Profile extends XLite_Model_Abstract
         // save memberships
         
         $c = new XLite_Model_Config();
-        $c->set("category", "Memberships");
-        $c->set("name", "memberships");
-        $c->set("value", serialize($this->config->getComplex('Memberships.memberships')));
+        $c->set('category', "Memberships");
+        $c->set('name', "memberships");
+        $c->set('value', serialize($this->config->getComplex('Memberships.memberships')));
         $c->update();
     }
 
@@ -342,11 +342,11 @@ class XLite_Model_Profile extends XLite_Model_Abstract
             return;
         }
         if ($profile->find("login='" . addslashes($login) . "'")) {
-            $profile->set("properties", $properties);
+            $profile->set('properties', $properties);
             echo "Updating user: ";
             $profile->update();
         } else {
-            $profile->set("properties", $properties);
+            $profile->set('properties', $properties);
             echo "Creating user: ";
             $profile->create();
         }
@@ -357,7 +357,7 @@ class XLite_Model_Profile extends XLite_Model_Abstract
             if ($found === false || $found === null) {
                 $memberships = $this->config->getComplex('Memberships.memberships');
                 $memberships[] = $properties['membership'];
-                $this->config->setComplex("Memberships.memberships", $memberships);
+                $this->config->setComplex('Memberships.memberships', $memberships);
             }
         }
     }
@@ -373,7 +373,7 @@ class XLite_Model_Profile extends XLite_Model_Abstract
             }
         }
         if (isset($p['password'])) {
-            if($md5_import == "yes")
+            if ($md5_import == "yes")
                 $p['password'] = $p['password'];
             else
                 $p['password'] = md5($p['password']);

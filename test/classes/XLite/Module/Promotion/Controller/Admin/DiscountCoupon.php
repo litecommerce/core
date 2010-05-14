@@ -35,7 +35,7 @@
  */
 class XLite_Module_Promotion_Controller_Admin_DiscountCoupon extends XLite_Controller_Admin_Abstract
 {
-    public $params = array("target", "coupon_id");
+    public $params = array('target', "coupon_id");
 
     function getDC() 
     {
@@ -49,7 +49,7 @@ class XLite_Module_Promotion_Controller_Admin_DiscountCoupon extends XLite_Contr
     {
         $dc = new XLite_Module_Promotion_Model_DiscountCoupon();
         if ($dc->find("coupon='" . addslashes($_POST['coupon']) . "' AND order_id='0' AND coupon_id<>'".addslashes($this->get('coupon_id'))."'")) {
-            $this->set("valid", false);
+            $this->set('valid', false);
             $this->couponCodeDuplicate = true;
             return;
         }
@@ -57,9 +57,9 @@ class XLite_Module_Promotion_Controller_Admin_DiscountCoupon extends XLite_Contr
         if ($dc->find("coupon_id='".addslashes($this->get('coupon_id'))."'")) {
             $_POST['discount'] = abs($_POST['discount']);
             $_POST['expire'] = $this->get('expire');
-            $dc->set("properties", $_POST);
+            $dc->set('properties', $_POST);
             $dc->update();
-            $this->set("returnUrl", $this->get('url')."&couponUpdated=1");
+            $this->set('returnUrl', $this->get('url')."&couponUpdated=1");
         }
     }
 }

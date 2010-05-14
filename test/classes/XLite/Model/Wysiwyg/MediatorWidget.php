@@ -53,13 +53,13 @@ class XLite_Model_Wysiwyg_MediatorWidget extends XLite_View_Abstract
         $this->attributesEvaled = $params;
         // read widget's template
         if (isset($params['template'])) {
-            $this->set("template", $params['template']);
+            $this->set('template', $params['template']);
         } else {
             if (isset($params['class'])) {
                 $class = $params['class'];
                 if (func_class_exists($class)) {
                     $component = new $class();
-                    $this->set("template", $component->get('template'));
+                    $this->set('template', $component->get('template'));
                 }
             }
         }

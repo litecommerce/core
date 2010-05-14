@@ -14,8 +14,8 @@ define('COMBINE_ITERATION_LIMIT', 10);
 //*/
 
 // Tune params
-define("PACKING_SIMPLIFY_AFTER", 24);
-define("PACKING_EXECUTION_TIME", 3600);
+define('PACKING_SIMPLIFY_AFTER', 24);
+define('PACKING_EXECUTION_TIME', 3600);
 
 ///////////////////////////////////////////////////////////////////////////////////////////
 ////////////// Bin-packing algorithm methods
@@ -23,8 +23,8 @@ define("PACKING_EXECUTION_TIME", 3600);
 function UPSOnlineTools_rotateItem($item)
 {
     $temp = $item->get('width');
-    $item->set("width", $item->get('length'));
-    $item->set("length", $temp);
+    $item->set('width', $item->get('length'));
+    $item->set('length', $temp);
 
     return $item;
 }
@@ -36,8 +36,8 @@ function UPSOnlineTools_dropItems(&$items)
             continue;
 
         $temp = $item->get('height');
-        $items[$k]->set("height", $item->get('length'));
-        $items[$k]->set("length", $temp);
+        $items[$k]->set('height', $item->get('length'));
+        $items[$k]->set('length', $temp);
     }
 }
 
@@ -128,14 +128,14 @@ function UPSOnlineTools_orientItems($width, $length, $height, &$items)
         switch ($plane) {
             case 2:    // by width
                 $temp = $item->get('length');
-                $item->set("length", $item->get('height'));
-                $item->set("height", $temp);
+                $item->set('length', $item->get('height'));
+                $item->set('height', $temp);
             break;
 
             case 3:    // by height
                 $temp = $item->get('width');
-                $item->set("width", $item->get('height'));
-                $item->set("height", $temp);
+                $item->set('width', $item->get('height'));
+                $item->set('height', $temp);
             break;
 
             default:
@@ -151,8 +151,8 @@ function UPSOnlineTools_orientItems($width, $length, $height, &$items)
     foreach ($items as $k=>$item) {
         if ($items[$k]->get('length') > $items[$k]->get('width')) {
             $temp = $items[$k]->get('width');
-            $items[$k]->set("width", $items[$k]->get('length'));
-            $items[$k]->set("length", $temp);
+            $items[$k]->set('width', $items[$k]->get('length'));
+            $items[$k]->set('length', $temp);
         }
 
         if ($items[$k]->get('width') > $max_width)
@@ -732,7 +732,7 @@ function UPSOnlineTools_solve_binpack($width, $length, $height, $weight, &$items
     $back_items = $items;
 
     $_max_execution_time = ini_get('max_execution_time');
-    ini_set("max_execution_time", PACKING_EXECUTION_TIME);
+    ini_set('max_execution_time', PACKING_EXECUTION_TIME);
 
     if (count($items) > PACKING_SIMPLIFY_AFTER) {
         $presets = array(XLite_Module_UPSOnlineTools_Model_Container::OPTIMIZE_PRESET_3);
@@ -761,7 +761,7 @@ function UPSOnlineTools_solve_binpack($width, $length, $height, $weight, &$items
 
     $items = (($found) ? $oversize_items : $back_items);
 
-    ini_set("max_execution_time", $_max_execution_time);
+    ini_set('max_execution_time', $_max_execution_time);
 
     return (($found) ? $best_result : false);
 }
@@ -837,7 +837,7 @@ function UPSOnlineTools_progressive_solve($_this, &$items)
 
         // Add level to container
         $_this->addLevel($level);
-    } while(count($items) > 0);
+    } while (count($items) > 0);
 
     return true;
 }
@@ -1038,7 +1038,7 @@ function UPSOnlineTools_getNextLevel($_this, $overlaped=true)
 
 function UPSOnlineTools_getColorByIndex($index)
 {
-    static $colors = array("SeaGreen", "Yellow", "Orange", "DeepSkyBlue ", "MediumSlateBlue", "Silver", "Violet", "Chartreuse", "Magenta", "Coral", "DarkKhaki ", "Cyan");
+    static $colors = array('SeaGreen', "Yellow", "Orange", "DeepSkyBlue ", "MediumSlateBlue", "Silver", "Violet", "Chartreuse", "Magenta", "Coral", "DarkKhaki ", "Cyan");
     $count = count($colors);
 
     $id = $index - $count * floor($index / count($colors));

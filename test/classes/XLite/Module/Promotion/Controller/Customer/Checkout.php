@@ -82,10 +82,10 @@ class XLite_Module_Promotion_Controller_Customer_Checkout extends XLite_Controll
                 $dc = new XLite_Module_Promotion_Model_DiscountCoupon();
                 $found = $dc->find("coupon='".$this->session->get('couponFailed')."'");
                 if ($found) {
-                    $this->set("discountCoupon", $dc);
+                    $this->set('discountCoupon', $dc);
                 }
         	} else {
-        		$this->session->set("couponFailed", null);
+        		$this->session->set('couponFailed', null);
         	}
         }
     }
@@ -93,10 +93,10 @@ class XLite_Module_Promotion_Controller_Customer_Checkout extends XLite_Controll
     function handleRequest()
     {
         if ($this->cart->validateDiscountCoupon() == 'used' && !$this->get('skipValidateDiscountCoupon') && (!isset($_REQUEST['action']) || $_REQUEST['action'] != "return")) {
-            //$this->session->set("couponFailed", $this->cart->get('DC'));
+            //$this->session->set('couponFailed', $this->cart->get('DC'));
             $dc = $this->cart->get('DC');
-        	$this->session->set("couponFailed", $dc->get('coupon'));
-            $this->cart->set("DC", null); // remove coupon
+        	$this->session->set('couponFailed', $dc->get('coupon'));
+            $this->cart->set('DC', null); // remove coupon
             $this->updateCart();
             $this->redirect("cart.php?target=checkout&mode=couponFailed");
             return;
@@ -139,7 +139,7 @@ class XLite_Module_Promotion_Controller_Customer_Checkout extends XLite_Controll
     {
         // collect products & prices
         $this->bonusList = $this->cart->getBonusList();
-        $this->session->set("bonusListDisplayed", 1);
+        $this->session->set('bonusListDisplayed', 1);
         return $this->bonusList;
     }
 

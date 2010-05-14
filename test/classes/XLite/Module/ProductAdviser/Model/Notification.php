@@ -64,7 +64,7 @@ class XLite_Module_ProductAdviser_Model_Notification extends XLite_Model_Abstrac
     	parent::_beforeSave();
     	$po = $this->get('product_options');
     	if (!empty($po)) {
-    		$this->set("product_options", serialize($this->get('product_options')));
+    		$this->set('product_options', serialize($this->get('product_options')));
     	}
     }
 
@@ -73,7 +73,7 @@ class XLite_Module_ProductAdviser_Model_Notification extends XLite_Model_Abstrac
     	parent::_updateProperties($properties);
     	$po = $this->get('product_options');
     	if (!empty($po)) {
-    		$this->set("product_options", unserialize($this->get('product_options')));
+    		$this->set('product_options', unserialize($this->get('product_options')));
     	}
     }
 
@@ -83,7 +83,7 @@ class XLite_Module_ProductAdviser_Model_Notification extends XLite_Model_Abstrac
     		case "listPrice":
                 $result = parent::get('price');
                 $product = new XLite_Model_Product($this->get('product_id'));
-                $product->set("price", $result);
+                $product->set('price', $result);
                 $result = sprintf("%.02f", $product->get('listPrice'));
             break;
     		case "price":
@@ -108,7 +108,7 @@ class XLite_Module_ProductAdviser_Model_Notification extends XLite_Model_Abstrac
                 $po = $this->get('product_options');
     			if (!empty($po) && is_array($po)) {
         			$poStr = array();
-        			foreach($po as $class => $v) {
+        			foreach ($po as $class => $v) {
         				$poStr[] = $class . ":" . $v['option'];
         			}
         			$keyValue[] = implode("|", $poStr);
@@ -144,19 +144,19 @@ class XLite_Module_ProductAdviser_Model_Notification extends XLite_Model_Abstrac
                 }
                 if (is_array($po)) {
         			$poStr = array();
-        			foreach($po as $class => $option) {
+        			foreach ($po as $class => $option) {
         				$poStr[] = $class . ": " . $option['option'];
         			}
-        			$p->set("productOptionsStr", implode(", ", $poStr));
+        			$p->set('productOptionsStr', implode(", ", $poStr));
         		}
     		}
 
             $quantity = $this->get('quantity');
-            $p->set("quantity", 0);
+            $p->set('quantity', 0);
         	if ($this->xlite->get('PA_InventorySupport')) {
     			$inventory = new XLite_Module_InventoryTracking_Model_Inventory();
     			if ($inventory->find("inventory_id='".addslashes($this->getProductKey())."'")) {
-        			$p->set("quantity", $inventory->get('amount'));
+        			$p->set('quantity', $inventory->get('amount'));
     			}
             }
             $this->ntfProduct = $p;
@@ -191,12 +191,12 @@ class XLite_Module_ProductAdviser_Model_Notification extends XLite_Model_Abstrac
         		$check[] = "notify_key='" . addslashes($inventoryChangedAmount['inventory_id']) . "'";
         		$check[] = "quantity='" . $inventoryChangedAmount['oldAmount'] . "'";
         		$check[] = "status='" . CUSTOMER_REQUEST_QUEUED . "'";
-        		$check = implode(" AND ", $check);
+        		$check = implode(' AND ', $check);
 
     			$notifications = $this->findAll($check);
     			if (is_array($notifications) && count($notifications) > 0) {
-    				foreach($notifications as $notification) {
-        				$notification->set("status", CUSTOMER_REQUEST_UPDATED);
+    				foreach ($notifications as $notification) {
+        				$notification->set('status', CUSTOMER_REQUEST_UPDATED);
                         $notification->update();
                         $result = true;
     				}

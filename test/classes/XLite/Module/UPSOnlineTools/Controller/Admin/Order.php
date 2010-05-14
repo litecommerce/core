@@ -139,7 +139,7 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_Order extends XLite_Controlle
 
         ksort($items_list);
 
-        $export_fields = array("name", "weight", "ups_width", "ups_length", "ups_height", "ups_handle_care");
+        $export_fields = array('name', "weight", "ups_width", "ups_length", "ups_height", "ups_handle_care");
         foreach ($items_list as $k=>$item) {
             $oi = new XLite_Model_OrderItem();
 

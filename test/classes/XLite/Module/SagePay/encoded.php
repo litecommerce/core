@@ -32,7 +32,7 @@ function func_SagePayDirect_process($_this, $order)
     $profile = $order->get('profile');
 
     $TxType = $_this->getComplex('params.trans_type');
-    if (!in_array($TxType, array("AUTHENTICATE", "PAYMENT", "PAYMENT"))) {
+    if (!in_array($TxType, array('AUTHENTICATE', "PAYMENT", "PAYMENT"))) {
         $TxType = "AUTHENTICATE";
     }
 
@@ -77,10 +77,10 @@ function func_SagePayDirect_process($_this, $order)
 
     if ($response['Status'] == "3DAUTH") {
         // goto Visa/MasterCard
-        $_this->session->set("SagePayDirectQueued", $order->get('order_id'));
+        $_this->session->set('SagePayDirectQueued', $order->get('order_id'));
 
-        $order->set("details.3DSecureStatus", "NOT CHECKED");
-        $order->set("detailLabels.3DSecureStatus", "3D Secure Status");
+        $order->set('details.3DSecureStatus', "NOT CHECKED");
+        $order->set('detailLabels.3DSecureStatus', "3D Secure Status");
         $order->update();
 
         $response['termUrl'] = $_this->get('returnUrl');
@@ -117,13 +117,13 @@ function func_SagePay_response_handling($response, $order, &$payment)
     switch ($response['Status']) {
         case "OK":
             // success
-            $order->setComplex("details.status", $response['Status']);
-            $order->setComplex("details.statusDetail", $response['StatusDetail']);
-            $order->setComplex("details.VPSTxId", $response['VPSTxId']);
-            $order->setComplex("details.avscv2", $response['AVSCV2']);
-            $order->setComplex("details.addressResult", $response['AddressResult']);
-            $order->setComplex("details.posCodeResult", $response['PostCodeResult']);
-            $order->setComplex("details.cv2Result", $response['CV2Result']);
+            $order->setComplex('details.status', $response['Status']);
+            $order->setComplex('details.statusDetail', $response['StatusDetail']);
+            $order->setComplex('details.VPSTxId', $response['VPSTxId']);
+            $order->setComplex('details.avscv2', $response['AVSCV2']);
+            $order->setComplex('details.addressResult', $response['AddressResult']);
+            $order->setComplex('details.posCodeResult', $response['PostCodeResult']);
+            $order->setComplex('details.cv2Result', $response['CV2Result']);
 
             $detailLabels = array(
                 "status"		=> "Status",
@@ -136,28 +136,28 @@ function func_SagePay_response_handling($response, $order, &$payment)
             );
 
             if (isset($response['SecurityKey'])) {
-                $order->setComplex("details.securityKey", $response['SecurityKey']);
+                $order->setComplex('details.securityKey', $response['SecurityKey']);
                 $detailLabels['securityKey'] = "Security Key";
             }
 
             if (isset($response['TxAuthNo'])) {
-                $order->setComplex("details.TxAuthNo", $response['TxAuthNo']);
+                $order->setComplex('details.TxAuthNo', $response['TxAuthNo']);
                 $detailLabels['TxAuthNo'] = "TxAuthNo";
             }
 
             if (isset($response['CAVV'])) {
-                $order->setComplex("details.cavv", $response['CAVV']);
+                $order->setComplex('details.cavv', $response['CAVV']);
                 $detailLabels['cavv'] = "CAVV";
             }
 
             if (isset($response['Amount'])) {
-                $order->setComplex("details.amount", $response['Amount']);
+                $order->setComplex('details.amount', $response['Amount']);
                 $detailLabels['amount'] = "Amount";
             }
 
             $status = $order->get('status');
             if (isset($response['3DSecureStatus'])) {
-                $order->setComplex("details.3DSecureStatus", $response['3DSecureStatus']);
+                $order->setComplex('details.3DSecureStatus', $response['3DSecureStatus']);
                 $detailLabels['3DSecureStatus'] = "3DSecureStatus";
 
                 if ($response['3DSecureStatus'] == "OK") {
@@ -171,17 +171,17 @@ function func_SagePay_response_handling($response, $order, &$payment)
                 $status = $payment->get('orderSuccessNo3dStatus');
             }
             if ($order->xlite->AOMEnabled) {
-                $order->set("orderStatus", $status);
+                $order->set('orderStatus', $status);
             } else {
-                $order->set("status", $status);
+                $order->set('status', $status);
             }
         break;
 
         case "AUTHENTICATED":
         case "REGISTERED":
-            $order->setComplex("details.status", $response['Status']);
-            $order->setComplex("details.statusDetail", $response['StatusDetail']);
-            $order->setComplex("details.VPSTxId", $response['VPSTxId']);
+            $order->setComplex('details.status', $response['Status']);
+            $order->setComplex('details.statusDetail', $response['StatusDetail']);
+            $order->setComplex('details.VPSTxId', $response['VPSTxId']);
 
             $detailLabels = array(
                 "status"		=> "Status",
@@ -190,39 +190,39 @@ function func_SagePay_response_handling($response, $order, &$payment)
             );
 
             if (isset($response['3DSecureStatus'])) {
-                $order->setComplex("details.3DSecureStatus", $response['3DSecureStatus']);
+                $order->setComplex('details.3DSecureStatus', $response['3DSecureStatus']);
                 $detailLabels['3DSecureStatus'] = "3DSecureStatus";
             }
 
             if (isset($response['SecurityKey'])) {
-                $order->setComplex("details.securityKey", $response['SecurityKey']);
+                $order->setComplex('details.securityKey', $response['SecurityKey']);
                 $detailLabels['securityKey'] = "Security Key";
             }
 
             if (isset($response['TxAuthNo'])) {
-                $order->setComplex("details.TxAuthNo", $response['TxAuthNo']);
+                $order->setComplex('details.TxAuthNo', $response['TxAuthNo']);
                 $detailLabels['TxAuthNo'] = "TxAuthNo";
             }
 
             if (isset($response['Amount'])) {
-                $order->setComplex("details.amount", $response['Amount']);
+                $order->setComplex('details.amount', $response['Amount']);
                 $detailLabels['amount'] = "Amount";
             }
 
             if ($order->xlite->AOMEnabled) {
-                $order->set("orderStatus", $payment->get('orderAuthStatus'));
+                $order->set('orderStatus', $payment->get('orderAuthStatus'));
             } else {
-                $order->set("status", $payment->get('orderAuthStatus'));
+                $order->set('status', $payment->get('orderAuthStatus'));
             }
         break;
 
         default:
         case "NOTAUTHED":
         case "REJECTED":
-            $order->setComplex("details.status", $response['Status']);
-            $order->setComplex("details.statusDetail", $response['StatusDetail']);
-            $order->setComplex("details.VPSTxId", $response['VPSTxId']);
-            $order->setComplex("details.securityKey", $response['SecurityKey']);
+            $order->setComplex('details.status', $response['Status']);
+            $order->setComplex('details.statusDetail', $response['StatusDetail']);
+            $order->setComplex('details.VPSTxId', $response['VPSTxId']);
+            $order->setComplex('details.securityKey', $response['SecurityKey']);
 
             $detailLabels = array(
                 "status"		=> "Status",
@@ -230,17 +230,17 @@ function func_SagePay_response_handling($response, $order, &$payment)
                 "VPSTxId"		=> "VPSTxId",
                 "securityKey"	=> "Security Key"
             );
-            $order->setComplex("details.error", "(".$response['Status'].") ".$response['StatusDetail']);
+            $order->setComplex('details.error', "(".$response['Status'].") ".$response['StatusDetail']);
             if ($order->xlite->AOMEnabled) {
-                $order->set("orderStatus", $payment->get('orderRejectStatus'));
+                $order->set('orderStatus', $payment->get('orderRejectStatus'));
             } else {
-                $order->set("status", $payment->get('orderRejectStatus'));
+                $order->set('status', $payment->get('orderRejectStatus'));
             }
         break;
 
     }
     
-    $order->set("detailLabels", $detailLabels);
+    $order->set('detailLabels', $detailLabels);
     $order->update();
 }
 
@@ -311,11 +311,11 @@ function func_SagePayForm_action_return($_this, $paymentMethod)
     if (!$crypt)
         return false;
 
-    $crypt = preg_replace("/ /", "+", $crypt);
+    $crypt = preg_replace('/ /', "+", $crypt);
     $response = func_SagePayForm_simpleXor(base64_decode($crypt), $paymentMethod->getComplex('params.xor_password'));
 
     $responseArray = array();
-    $nodes = explode("&", $response);
+    $nodes = explode('&', $response);
     foreach ((array)$nodes as $val) {
         $pos = strpos($val, "=");
         if ($pos !== false) {
@@ -410,10 +410,10 @@ $payment->xlite->logger->log("RESPONSE ARRAY: ".var_export($responseArray, true)
 /////////////////////////////////////////// Helper //////////////////////////////////
 function func_SagePay_getState($profile, $field, $customField)
 {
-    if (preg_match("/billing/", $field)) {
+    if (preg_match('/billing/', $field)) {
         if ($profile->get('billing_country') != "US")
             return "";
-    } elseif(preg_match("/shipping/", $field)) {
+    } elseif(preg_match('/shipping/', $field)) {
         if ($profile->get('shipping_country') != "US")
             return "";
     }
@@ -454,7 +454,7 @@ function func_SagePay_encodeTrxValue($value, $is_form=false)
 
 function func_SagePayDirect_prepareTrxData($trxData)
 {
-    $ignore = array("Basket", "MD");
+    $ignore = array('Basket', "MD");
 
     foreach ($trxData as $key=>$val) {
         if (in_array($key, $ignore)) {
@@ -468,7 +468,7 @@ function func_SagePayDirect_prepareTrxData($trxData)
 
 function func_SagePayForm_prepareTrxData($trxData)
 {
-    $ignore = array("Basket", "SuccessURL", "FailureURL", "VendorTxCode");
+    $ignore = array('Basket', "SuccessURL", "FailureURL", "VendorTxCode");
 
     $data = array();
     foreach ($trxData as $key=>$value) {
@@ -479,7 +479,7 @@ function func_SagePayForm_prepareTrxData($trxData)
         $data[] = "$key=$value";
     }
 
-    return implode("&", $data);
+    return implode('&', $data);
 }
 
 function func_SagePayForm_simpleXor($InString, $Key)
@@ -487,11 +487,11 @@ function func_SagePayForm_simpleXor($InString, $Key)
     $KeyList = array();
     $output = "";
 
-    for($i = 0; $i < strlen($Key); $i++){
+    for ($i = 0; $i < strlen($Key); $i++){
         $KeyList[$i] = ord(substr($Key, $i, 1));
     }
 
-    for($i = 0; $i < strlen($InString); $i++) {
+    for ($i = 0; $i < strlen($InString); $i++) {
         $output.= chr(ord(substr($InString, $i, 1)) ^ ($KeyList[$i % strlen($Key)]));
     }
 
@@ -669,16 +669,16 @@ function func_SagePay_get_allowed_fields()
             "filter" => "Text"
         ),
         "AllowGiftAid" => array(
-            "allowed_values" => array("0","1")
+            "allowed_values" => array('0',"1")
         ),
         "ApplyAVSCV2" => array(
-            "allowed_values" => array("0","1","2","3")
+            "allowed_values" => array('0',"1","2","3")
         ),
         "Apply3DSecure" => array(
-            "allowed_values" => array("0","1","2","3")
+            "allowed_values" => array('0',"1","2","3")
         ),
         "TxType" => array(
-            "allowed_values" => array("PAYMENT","DEFERRED","AUTHENTICATE","RELEASE","AUTHORISE","CANCEL","ABORT","MANUAL","REFUND","REPEAT","REPEATDEFERRED","VOID","PREAUTH","COMPLETE")
+            "allowed_values" => array('PAYMENT',"DEFERRED","AUTHENTICATE","RELEASE","AUTHORISE","CANCEL","ABORT","MANUAL","REFUND","REPEAT","REPEATDEFERRED","VOID","PREAUTH","COMPLETE")
         ),
         "NotificationURL" => array(
             "max" => 255,
@@ -689,7 +689,7 @@ function func_SagePay_get_allowed_fields()
             "filter" => "Text"
         ),
         "Profile" => array(
-            "allowed_values" => array("LOW","NORMAL")
+            "allowed_values" => array('LOW',"NORMAL")
         ),
         "CardHolder" => array(
             "max" => 50,
@@ -716,14 +716,14 @@ function func_SagePay_get_allowed_fields()
             "filter" => "Digits"
         ),
         "CardType" => array(
-            "allowed_values" => array("VISA","MC","DELTA","SOLO","MAESTRO","UKE","AMEX","DC","JCB","LASER","PAYPAL")
+            "allowed_values" => array('VISA',"MC","DELTA","SOLO","MAESTRO","UKE","AMEX","DC","JCB","LASER","PAYPAL")
         ),
         "PayPalCallbackURL" => array(
             "max" => 255,
             "filter" => "Text"
         ),
         "GiftAidPayment" => array(
-            "allowed_values" => array("0","1")
+            "allowed_values" => array('0',"1")
         ),
         "ClientIPAddress" => array(
             "max" => 15,
@@ -742,14 +742,14 @@ function func_SagePay_get_allowed_fields()
             "filter" => "Text"
         ),
         "Accept" => array(
-            "allowed_values" => array("Yes","No")
+            "allowed_values" => array('Yes',"No")
         ),
         "Crypt" => array(
             "max" => 16384,
             "filter" => "Text"
         ),
         "AccountType" => array(
-            "allowed_values" => array("E","M","C")
+            "allowed_values" => array('E',"M","C")
         )
     );
 

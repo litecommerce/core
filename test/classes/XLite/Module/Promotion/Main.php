@@ -95,11 +95,11 @@ class XLite_Module_Promotion_Main extends XLite_Module_Abstract
         parent::init();
 
         // replace cart item and totals templates
-        $this->addLayout("shopping_cart/item.tpl", "modules/Promotion/item.tpl");
-        $this->addLayout("shopping_cart/totals.tpl", "modules/Promotion/totals.tpl");
-        $this->addLayout("shopping_cart/delivery.tpl", "modules/Promotion/delivery.tpl");
+        $this->addLayout('shopping_cart/item.tpl', "modules/Promotion/item.tpl");
+        $this->addLayout('shopping_cart/totals.tpl', "modules/Promotion/totals.tpl");
+        $this->addLayout('shopping_cart/delivery.tpl', "modules/Promotion/delivery.tpl");
         
         $this->registerPaymentMethod('bonus_points');
-        $this->xlite->set("PromotionEnabled",true);
+        $this->xlite->set('PromotionEnabled',true);
     }
 }

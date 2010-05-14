@@ -52,8 +52,8 @@ class XLite_Controller_Admin_UpdateInventory extends XLite_Controller_Admin_Abst
         $this->$handler();
 
         if ($this->action == "import" && !$this->checkUploadedFile()) {
-        	$this->set("valid", false);
-        	$this->set("invalid_file", true);
+        	$this->set('valid', false);
+        	$this->set('invalid_file', true);
         }
 
         parent::handleRequest();

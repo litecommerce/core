@@ -378,7 +378,7 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
             }
         }
         // do not cache backup queries
-        $this->set("cacheEnabled", false);
+        $this->set('cacheEnabled', false);
         // write backup file heading comments
         $this->_write($handle, "-- WARNING: Do not change this line <?php die(); ?>\n");
         foreach ($this->getTables() as $table) {
@@ -417,7 +417,7 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
     {
         // do not cache queries
         $cacheEnabled = $this->get('cacheEnabled');
-        $this->set("cacheEnabled", false);
+        $this->set('cacheEnabled', false);
 
         $schema  = "DROP TABLE IF EXISTS $table;\n";
         $schema .= "CREATE TABLE $table (\n";
@@ -452,7 +452,7 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
             if ($comment == "FULLTEXT" || $index_type == "FULLTEXT") {
                 $kname = "FULLTEXT|$kname";
             }
-            if(!isset($index[$kname])) {
+            if (!isset($index[$kname])) {
                 $index[$kname] = array();
             }
             $index[$kname][] = $key['Column_name'];
@@ -472,7 +472,7 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
         }
         $schema .= "\n) TYPE=MyISAM;\n\n";
 
-        $this->set("cacheEnabled", $cacheEnabled);
+        $this->set('cacheEnabled', $cacheEnabled);
         return $schema;
     }
 

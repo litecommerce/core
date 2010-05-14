@@ -743,7 +743,7 @@ class XLite_Model_Image extends XLite_Model_Abstract implements XLite_Base_ISing
 
         echo "<font color=red>Invalid image file or file not found: $image_file</font>";
 
-        if($_REQUEST['target'] == "import_catalog"){
+        if ($_REQUEST['target'] == "import_catalog"){
             echo '<bt /><br /><a href="admin.php?target=import_catalog"><u>Click here to return to admin interface</u></a>';
         }
 
@@ -986,8 +986,8 @@ class XLite_Model_Image extends XLite_Model_Abstract implements XLite_Base_ISing
                         fwrite($fd, $image->get('data'));
                         fclose($fd);
                         @chmod($filePath, get_filesystem_permissions(0644));
-                        $image->set("data", $fn);
-                        $image->set("source", "F");
+                        $image->set('data', $fn);
+                        $image->set('source', "F");
                         $image->update();
                         $m ++;
                     } else {
@@ -1014,7 +1014,7 @@ class XLite_Model_Image extends XLite_Model_Abstract implements XLite_Base_ISing
             }
             func_flush();
         }
-        $this->xlite->set("realyMovedImages", $m);
+        $this->xlite->set('realyMovedImages', $m);
         return $n;
     }
 

@@ -40,14 +40,14 @@ class XLite_Model_PaymentMethod_Echeck extends XLite_Model_PaymentMethod
 
     function process($cart)
     {
-        $cart->set("detailLabels", array(
+        $cart->set('detailLabels', array(
                     "ch_routing_number" => "ABA routing number",
                     "ch_acct_number" => "Bank Account Number",
                     "ch_type" => "Type of Account",
                     "ch_bank_name" => "Bank name",
                     "ch_acct_name" => "Account name",
                     "ch_number" => "Check number"));
-        $cart->set("status", "Q");
+        $cart->set('status', "Q");
         $cart->update();
     }
 

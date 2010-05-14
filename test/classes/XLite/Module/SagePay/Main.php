@@ -119,6 +119,6 @@ class XLite_Module_SagePay_Main extends XLite_Module_Abstract
             break;
         }
 
-        $this->xlite->set("SagePayEnabled", true);
+        $this->xlite->set('SagePayEnabled', true);
     }
 }

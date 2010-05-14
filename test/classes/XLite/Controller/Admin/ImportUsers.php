@@ -47,8 +47,8 @@ class XLite_Controller_Admin_ImportUsers extends XLite_Controller_Admin_Abstract
     function handleRequest()
     {
         if (substr($this->action, 0, 6) == "import" && !$this->checkUploadedFile()) {
-        	$this->set("valid", false);
-        	$this->set("invalid_file", true);
+        	$this->set('valid', false);
+        	$this->set('invalid_file', true);
         }
 
         parent::handleRequest();
@@ -76,12 +76,12 @@ class XLite_Controller_Admin_ImportUsers extends XLite_Controller_Admin_Abstract
         $layout = implode(',', XLite_Core_Request::getInstance()->$layout_name);
         $this->config = new XLite_Model_Config();
         if ($this->config->find("name='$layout_name'")) {
-            $this->config->set("value", $layout);
+            $this->config->set('value', $layout);
             $this->config->update();
         } else {
-            $this->config->set("name", $layout_name);
-            $this->config->set("category", "ImportExport");
-            $this->config->set("value", $layout);
+            $this->config->set('name', $layout_name);
+            $this->config->set('category', "ImportExport");
+            $this->config->set('value', $layout);
             $this->config->create();
         }
     }

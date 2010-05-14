@@ -74,7 +74,7 @@ class XLite_Module_WholesaleTrading_Model_ProductAccess extends XLite_Model_Abst
         $result = false;
         if (
             true === $expand_all
-            && (in_array("all", $acc_list) || ($this->auth->is('logged') && in_array("registered", $acc_list)))
+            && (in_array('all', $acc_list) || ($this->auth->is('logged') && in_array('registered', $acc_list)))
         ) {
             $result = true;
     
@@ -116,7 +116,7 @@ class XLite_Module_WholesaleTrading_Model_ProductAccess extends XLite_Model_Abst
         $product = new XLite_Model_Product();
 
         $product = $product->findImportedProduct($properties['sku'], '', $properties['product'], false, $options['unique_identifier']);
-        if(!is_null($product)) {
+        if (!is_null($product)) {
             $found = $pa->find("product_id = '".$product->get('product_id')."'");
             $pa->set('product_id',       $product->get('product_id'));
             $pa->set('show_group',       $properties['show_group']);

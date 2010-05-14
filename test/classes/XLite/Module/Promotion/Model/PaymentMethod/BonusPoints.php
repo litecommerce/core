@@ -44,27 +44,27 @@ class XLite_Module_Promotion_Model_PaymentMethod_BonusPoints extends XLite_Model
         $details = $cart->get('details');
         if ($cart->getComplex('origProfile.bonusPoints') < $payedByPoints) {
             $details['error'] = "No enought points";
-            $cart->set("details", $details);
+            $cart->set('details', $details);
             $cart->update();
             return self::PAYMENT_FAILURE;
         }
         $totalBonusPoints = $cart->getTotalBonusPoints();
         if ($totalBonusPoints < $payedByPoints) { // too much
             $details['error'] = "Too much bonus points for this order";
-            $cart->set("details", $details);
+            $cart->set('details', $details);
             $cart->update();
             return self::PAYMENT_FAILURE;
         }
 
-        $cart->set("payedByPoints", min($payedByPoints * $this->config->getComplex('Promotion.bonusPointsCost'), $cart->getMaxPayByPoints()));
+        $cart->set('payedByPoints', min($payedByPoints * $this->config->getComplex('Promotion.bonusPointsCost'), $cart->getMaxPayByPoints()));
         $cart->calcTotals();
         if ($cart->get('total') > 0) {
-            $cart->set("payment_method", ""); // choose payment method once again
+            $cart->set('payment_method', ""); // choose payment method once again
         	$cart->update();
             header("Location: cart.php?target=checkout&mode=paymentMethod");
             return self::PAYMENT_SILENT;
         } else {
-        	$cart->set("status", "P");
+        	$cart->set('status', "P");
         	$cart->update();
             return self::PAYMENT_SUCCESS;
         }

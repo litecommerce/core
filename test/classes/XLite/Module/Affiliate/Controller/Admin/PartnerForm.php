@@ -49,7 +49,7 @@ class XLite_Module_Affiliate_Controller_Admin_PartnerForm extends XLite_Controll
         if (!is_null($this->get('delete'))) {
             $pf->delete();
         } else {
-            $pf->set("properties", $_POST);
+            $pf->set('properties', $_POST);
             $pf->update();
         }
     }
@@ -57,7 +57,7 @@ class XLite_Module_Affiliate_Controller_Admin_PartnerForm extends XLite_Controll
     function action_add_field()
     {
         $pf = new XLite_Module_Affiliate_Model_PartnerField();
-        $pf->set("properties", $_POST);
+        $pf->set('properties', $_POST);
         $pf->create();
     }
 
@@ -67,12 +67,12 @@ class XLite_Module_Affiliate_Controller_Admin_PartnerForm extends XLite_Controll
         if (is_array($fields)) {
             $config = new XLite_Model_Config();
             if ($config->find("category='Miscellaneous' AND name='partner_profile'")) {
-                $config->set("value", serialize($fields));
+                $config->set('value', serialize($fields));
                 $config->update();
             } else {
-                $config->set("name", "partner_profile");
-                $config->set("category", "Miscellaneous");
-                $config->set("value", serialize($fields));
+                $config->set('name', "partner_profile");
+                $config->set('category', "Miscellaneous");
+                $config->set('value', serialize($fields));
                 $config->create();
             }
         }

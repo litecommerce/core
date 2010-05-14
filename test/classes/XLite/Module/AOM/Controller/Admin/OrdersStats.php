@@ -47,7 +47,7 @@ class XLite_Module_AOM_Controller_Admin_OrdersStats extends XLite_Controller_Adm
         $orderStatus = new XLite_Module_AOM_Model_OrderStatus();
         $orderStatuses = $orderStatus->findAll();
         $orderStatusesHash = array();
-        foreach($orderStatuses as $orderStatus_) {
+        foreach ($orderStatuses as $orderStatus_) {
             $orderStatusesHash[] = $orderStatus_->get('status');	// order by Pos.
             $this->stats['orders'][$orderStatus_->get('status')]['statistics'] = $statRec;
             $this->stats['orders'][$orderStatus_->get('status')]['name'] = $orderStatus_->get('name');
@@ -63,7 +63,7 @@ class XLite_Module_AOM_Controller_Admin_OrdersStats extends XLite_Controller_Adm
         // sort summarized results by order status Pos.
         $orders = $this->stats['orders'];
         $this->stats['orders'] = array();
-        foreach($orderStatusesHash as $orderStatus_) {
+        foreach ($orderStatusesHash as $orderStatus_) {
             $this->stats['orders'][$orderStatus_] = $orders[$orderStatus_];
         }
 

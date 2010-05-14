@@ -57,9 +57,9 @@ class XLite_Module_eSelect_Controller_Customer_eSelect extends XLite_Controller_
             $this->order = null;
             $_REQUEST['order_id'] = $oid;
 
-            $this->session->set("eSelectQueued", null);
-            $this->session->set("last_order_id", $oid);
-            $this->session->set("order_id", $oid);
+            $this->session->set('eSelectQueued', null);
+            $this->session->set('last_order_id', $oid);
+            $this->session->set('order_id', $oid);
             $this->session->writeClose();
 
             $order = $this->get('order');
@@ -74,8 +74,8 @@ class XLite_Module_eSelect_Controller_Customer_eSelect extends XLite_Controller_
         parent::action_return();
 
         if ($oid) {
-            $this->session->set("last_order_id", $oid);
-            $this->session->set("order_id", $oid);
+            $this->session->set('last_order_id', $oid);
+            $this->session->set('order_id', $oid);
             $this->session->writeClose();
         }
 

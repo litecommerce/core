@@ -53,10 +53,10 @@ class XLite_Module_Affiliate_Controller_Customer_PartnerBannerStats extends XLit
     {
         parent::fillForm();
         if (!isset($this->sort_by)) {
-            $this->set("sort_by", "views");
+            $this->set('sort_by', "views");
         }
         if (!isset($this->default_banner) && !isset($this->search)) {
-            $this->set("default_banner", "1");
+            $this->set('default_banner', "1");
         }
     }
 

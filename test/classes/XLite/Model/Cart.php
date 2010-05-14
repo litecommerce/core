@@ -64,15 +64,15 @@ class XLite_Model_Cart extends XLite_Model_Order implements XLite_Base_ISingleto
 
         $this->fields['status'] = "T";
         if ($this->session->isRegistered('order_id')) {
-            $this->set("order_id", $this->session->get('order_id'));
+            $this->set('order_id', $this->session->get('order_id'));
             if (!$this->is('exists')) {
-                $this->set("order_id", null);
+                $this->set('order_id', null);
             }
         }
         if ($this->get('status') == "T") {
             if ($this->auth->get('logged')) {
                 if ($this->auth->getComplex('profile.profile_id') != $this->get('profile_id')) {
-                    $this->set("profile", $this->auth->get('profile'));
+                    $this->set('profile', $this->auth->get('profile'));
                     $this->calcTotals();
                     if ($this->isPersistent) {
                         $this->update();
@@ -80,7 +80,7 @@ class XLite_Model_Cart extends XLite_Model_Order implements XLite_Base_ISingleto
                 }
 
             } elseif ($this->get('profile_id')) {
-                $this->set("profile",  null);
+                $this->set('profile',  null);
                 $this->calcTotals();
             }
         }
@@ -93,15 +93,15 @@ class XLite_Model_Cart extends XLite_Model_Order implements XLite_Base_ISingleto
     */
     function create()
     {
-        $this->set("date", time());
-        $this->set("status", "T");
+        $this->set('date', time());
+        $this->set('status', "T");
         parent::create();
-        $this->session->set("order_id", $this->get('order_id'));
+        $this->session->set('order_id', $this->get('order_id'));
     }
 
     function update()
     {
-        $this->set("date", time());
+        $this->set('date', time());
         parent::update();
     }
 
@@ -112,15 +112,15 @@ class XLite_Model_Cart extends XLite_Model_Order implements XLite_Base_ISingleto
     */
     function clear()
     {
-        $this->session->set("order_id", null);
+        $this->session->set('order_id', null);
         $this->_items = array();
     }
 
     function delete()
     {
-        $this->set("profile", null);
+        $this->set('profile', null);
         parent::delete();
-        $this->session->set("order_id", null);
+        $this->session->set('order_id', null);
     }
 
     /**
@@ -132,16 +132,16 @@ class XLite_Model_Cart extends XLite_Model_Order implements XLite_Base_ISingleto
     function checkout() 
     {
         if ($this->get('status') == "T") {
-            $this->set("date", time());
+            $this->set('date', time());
 
             if ($this->auth->getComplex('profile.order_id')) {
                 // anonymous checkout:
                 // use the current profile as order profile
-                $this->set("profile_id", $this->getComplex('profile.profile_id'));
+                $this->set('profile_id', $this->getComplex('profile.profile_id'));
             } else {
-                $this->set("profileCopy", $this->auth->get('profile'));
+                $this->set('profileCopy', $this->auth->get('profile'));
             }
-            $this->set("status", "I");
+            $this->set('status', "I");
 
             $this->update();
         }

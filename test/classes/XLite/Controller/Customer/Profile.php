@@ -35,7 +35,7 @@
  */
 class XLite_Controller_Customer_Profile extends XLite_Controller_Customer_Abstract
 {
-    public $params = array("target", "mode", "submode", "returnUrl"); // mode ::= register | modify | success | delete	 
+    public $params = array('target', "mode", "submode", "returnUrl"); // mode ::= register | modify | success | delete	 
     public $mode = "register"; // default mode	
     public $submode = "warning"; // delete profile status: warning | confirmed | cancelled
 
@@ -101,7 +101,7 @@ class XLite_Controller_Customer_Profile extends XLite_Controller_Customer_Abstra
 
         $login = $this->get('login');
         if ( $this->get('mode') == "login" && empty($login) ) {
-            $this->set("login", $this->auth->remindLogin());
+            $this->set('login', $this->auth->remindLogin());
         }
     }
 
@@ -133,7 +133,7 @@ class XLite_Controller_Customer_Profile extends XLite_Controller_Customer_Abstra
         if (($this->get('mode') == "modify" || $this->get('mode') == "account") && !$this->auth->is('logged'))
         {
             // can't modify profile if not logged - create one
-            $this->set("mode", "register");
+            $this->set('mode', "register");
             $this->redirect();
         } else {
             parent::handleRequest();
@@ -162,7 +162,7 @@ class XLite_Controller_Customer_Profile extends XLite_Controller_Customer_Abstra
     function action_register()
     {
         $this->registerForm->action_register();
-        $this->set("mode", $this->registerForm->get('mode'));
+        $this->set('mode', $this->registerForm->get('mode'));
         if ($this->registerForm->is('valid')) {
             $this->auth->loginProfile($this->registerForm->get('profile'));
             $this->recalcCart();
@@ -172,12 +172,12 @@ class XLite_Controller_Customer_Profile extends XLite_Controller_Customer_Abstra
     function action_modify()
     {
         $this->profileForm->action_modify();
-        $this->set("mode", $this->profileForm->get('mode'));
+        $this->set('mode', $this->profileForm->get('mode'));
 
         if ($this->registerForm->is('valid')) {
             $cart = XLite_Model_Cart::getInstance();
             if (!$cart->isEmpty()) {
-                $cart->set("profile_id", $this->profileForm->profile->get('profile_id'));
+                $cart->set('profile_id', $this->profileForm->profile->get('profile_id'));
                 $cart->setProfile($this->profileForm->profile);
                 $cart->update();
         		$this->recalcCart();
@@ -190,15 +190,15 @@ class XLite_Controller_Customer_Profile extends XLite_Controller_Customer_Abstra
         if ($this->auth->is('logged')) {
             $this->profile = $this->auth->get('profile');
             if ($this->profile->isAdmin()) {
-                $this->set("mode", "delete");
-                $this->set("submode", "cancelled");
+                $this->set('mode', "delete");
+                $this->set('submode', "cancelled");
                 return;
             }
 
             $this->auth->unregister($this->profile);
         	$this->recalcCart();
-            $this->set("mode", "delete");
-            $this->set("submode", "confirmed");
+            $this->set('mode', "delete");
+            $this->set('submode', "confirmed");
         }
     }
 }

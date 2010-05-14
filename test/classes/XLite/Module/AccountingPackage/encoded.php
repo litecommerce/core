@@ -41,11 +41,11 @@ function AccountingPackage_export_qb(&$dialog)
 {
     $qb = new XLite_View_Abstract();
     $qb->component = $dialog;
-    $qb->set("template", "modules/AccountingPackage/export_qb.tpl");
+    $qb->set('template', "modules/AccountingPackage/export_qb.tpl");
     $dialog->startDownload('orders.iif');
     $qb->init();
     $qb->display();
-    $dialog->set("silent", true); // suppress output
+    $dialog->set('silent', true); // suppress output
 }
 
 function AccountingPackage_export(&$dialog, $format) 
@@ -54,11 +54,11 @@ function AccountingPackage_export(&$dialog, $format)
     $qb->component = $dialog;
     $template = $format . "_" . $dialog->get('export_result') . ".tpl";
     $csv = $dialog->get('export_result') . ".csv";
-    $qb->set("template", "modules/AccountingPackage/" . $template);
+    $qb->set('template', "modules/AccountingPackage/" . $template);
     $dialog->startDownload($csv);
     $qb->init();
     $qb->display();
-    $dialog->set("silent", true); // suppress output
+    $dialog->set('silent', true); // suppress output
 
 }
 

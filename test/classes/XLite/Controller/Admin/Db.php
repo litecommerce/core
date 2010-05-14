@@ -73,16 +73,16 @@ class XLite_Controller_Admin_Db extends XLite_Controller_Admin_Abstract
             	(isset($this->local_file) && !$this->isFileExists())
         	)
         ) {
-        	$this->set("valid", false);
-        	$this->set("invalid_file", true);
+        	$this->set('valid', false);
+        	$this->set('invalid_file', true);
         }
         if (
         	$this->action == "backup" 
         	&& 
             (intval(strval($this->write_to_file)) != 0 && !$this->isFileWritable())
         ) {
-        	$this->set("valid", false);
-        	$this->set("invalid_file", true);
+        	$this->set('valid', false);
+        	$this->set('invalid_file', true);
         }
 
         parent::handleRequest();
@@ -124,7 +124,7 @@ class XLite_Controller_Admin_Db extends XLite_Controller_Admin_Abstract
         		if (XLite_Core_Request::getInstance()->write_to_file) {
             		echo "<br><b>Database backup created successfully</b><br>";
             	}
-                $this->set("silent", true);
+                $this->set('silent', true);
             }
         } else {
     		exit;

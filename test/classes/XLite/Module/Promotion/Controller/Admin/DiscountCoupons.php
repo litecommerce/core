@@ -65,7 +65,7 @@ class XLite_Module_Promotion_Controller_Admin_DiscountCoupons extends XLite_Cont
         }
         
         // default coupon properties for add form
-        $this->set("properties", array(
+        $this->set('properties', array(
             "coupon" => $this->generateCouponCode(),
             "times"  => 1,
             "status" => "A",
@@ -76,7 +76,7 @@ class XLite_Module_Promotion_Controller_Admin_DiscountCoupons extends XLite_Cont
             "minamount"=> "0.00"));
         parent::fillForm();
         // save current filter
-        $this->session->set("coupon_search_mode", $this->sort_mode);
+        $this->session->set('coupon_search_mode', $this->sort_mode);
     }
 
     function isSortSelected($sortMode)
@@ -99,7 +99,7 @@ class XLite_Module_Promotion_Controller_Admin_DiscountCoupons extends XLite_Cont
                 DIALOG_SORT_MODE_DISABLED	=> "status='D'",
                 DIALOG_SORT_MODE_USED		=> "status='U'",
             );
-            foreach($sortConditionsRules as $rule => $ruleCond) {
+            foreach ($sortConditionsRules as $rule => $ruleCond) {
                 if ($this->isSortSelected($rule)) {
                     $sortConditions[] = $ruleCond;
                 }
@@ -131,11 +131,11 @@ class XLite_Module_Promotion_Controller_Admin_DiscountCoupons extends XLite_Cont
         $condition = array("order_id='0'");
         $sortConditions = $this->prepareSortConditions();
         if (count($sortConditions) > 0) {
-            $sortConditions = "(" . implode(" OR ", $sortConditions) . ")";
+            $sortConditions = "(" . implode(' OR ', $sortConditions) . ")";
             $condition[] = $sortConditions;
         }
 
-        $condition = implode(" AND ", $condition);
+        $condition = implode(' AND ', $condition);
 
         $dc->fetchKeysOnly = true;
         $dc->fetchObjIdxOnly = true;
@@ -159,7 +159,7 @@ class XLite_Module_Promotion_Controller_Admin_DiscountCoupons extends XLite_Cont
                 DIALOG_SORT_MODE_DISABLED	=> "sort_mode%5B2%5D",
                 DIALOG_SORT_MODE_USED		=> "sort_mode%5B3%5D",
             );
-            foreach($sortConditionsRules as $rule => $ruleCond) {
+            foreach ($sortConditionsRules as $rule => $ruleCond) {
                 if ($this->isSortSelected($rule)) {
                     $this->params[] = $ruleCond;
                     $this->setComplex($ruleCond, $rule);
@@ -176,8 +176,8 @@ class XLite_Module_Promotion_Controller_Admin_DiscountCoupons extends XLite_Cont
             $this->couponExists = true;
         } else {
             $_POST['discount'] = abs($_POST['discount']);
-            $dc->set("properties", $_POST);
-            $dc->set("expire", $this->get('expire'));
+            $dc->set('properties', $_POST);
+            $dc->set('expire', $this->get('expire'));
             $dc->create();
         }
 
@@ -189,7 +189,7 @@ class XLite_Module_Promotion_Controller_Admin_DiscountCoupons extends XLite_Cont
         if (isset($_POST['status'])) {
             foreach ($_POST['status'] as $coupon_id => $status) {
                 $dc = new XLite_Module_Promotion_Model_DiscountCoupon($coupon_id);
-                $dc->set("status", $status);
+                $dc->set('status', $status);
                 $dc->update();
             }
         }

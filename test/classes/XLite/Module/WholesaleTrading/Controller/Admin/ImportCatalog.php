@@ -70,7 +70,7 @@ class XLite_Module_WholesaleTrading_Controller_Admin_ImportCatalog extends XLite
 
     function isArrayUnique($arr, &$firstValue, $skipValue="")
     {
-    	if(function_exists('func_is_array_unique')) {
+    	if (function_exists('func_is_array_unique')) {
     		return func_is_array_unique($arr, $firstValue, $skipValue);
     	}
 
@@ -139,7 +139,7 @@ class XLite_Module_WholesaleTrading_Controller_Admin_ImportCatalog extends XLite
         if ($this->delete_prices) {
             $wps = $wp->findAll();
             if ($wps) 
-                foreach($wps as $wp_) 
+                foreach ($wps as $wp_) 
                     $wp_->delete();
         }
         $wp->import($options);

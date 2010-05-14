@@ -85,7 +85,7 @@ class XLite_Controller_Admin_Profile extends XLite_Controller_Admin_Abstract
 
         $country = new XLite_Model_Country();
         $countries = $country->findAll("enabled='1'");
-        foreach($countries as $country) {
+        foreach ($countries as $country) {
             $countriesArray[$country->get('code')]['number'] = 0;
             $countriesArray[$country->get('code')]['data'] = array();
 
@@ -93,7 +93,7 @@ class XLite_Controller_Admin_Profile extends XLite_Controller_Admin_Abstract
             $states = $state->findAll("country_code='".$country->get('code')."'");
             if (is_array($states) && count($states) > 0) {
                 $countriesArray[$country->get('code')]['number'] = count($states);
-                foreach($states as $state) {
+                foreach ($states as $state) {
                     $countriesArray[$country->get('code')]['data'][$state->get('state_id')] = $state->get('state');
                 }
             }
@@ -111,7 +111,7 @@ class XLite_Controller_Admin_Profile extends XLite_Controller_Admin_Abstract
      * @see    ____var_see____
      * @since  3.0.0
      */
-/*    public $params = array("target", "mode", "profile_id", "backUrl");
+/*    public $params = array('target', "mode", "profile_id", "backUrl");
 
     /**
      * Default mode value (register | modify | success | delete)
@@ -250,7 +250,7 @@ class XLite_Controller_Admin_Profile extends XLite_Controller_Admin_Abstract
 
         $country = new XLite_Model_Country();
         $countries = $country->findAll("enabled='1'");
-        foreach($countries as $country) {
+        foreach ($countries as $country) {
             $countriesArray[$country->get('code')]['number'] = 0;
             $countriesArray[$country->get('code')]['data'] = array();
 
@@ -258,7 +258,7 @@ class XLite_Controller_Admin_Profile extends XLite_Controller_Admin_Abstract
             $states = $state->findAll("country_code='".$country->get('code')."'");
             if (is_array($states) && count($states) > 0) {
                 $countriesArray[$country->get('code')]['number'] = count($states);
-                foreach($states as $state) {
+                foreach ($states as $state) {
                     $countriesArray[$country->get('code')]['data'][$state->get('state_id')] = $state->get('state');
                 }
             }
@@ -384,7 +384,7 @@ class XLite_Controller_Admin_Profile extends XLite_Controller_Admin_Abstract
         // unregister and delete profile
         $this->auth->unregister($this->get('profile'));
         // switch back to search for user
-        $this->set("returnUrl", $this->get('backUrl'));
+        $this->set('returnUrl', $this->get('backUrl'));
     }
 
     // TODO: remove this from admin controller

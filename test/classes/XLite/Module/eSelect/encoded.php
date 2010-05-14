@@ -68,14 +68,14 @@ function func_eSelect_process($cart, $_this)
     $response_msg = strtoupper($mpi_response['MESSAGE']);
 
     // payment not configured or error
-    if (!in_array($response_msg, array("Y", "U", "N"))) {
-        $cart->setComplex("details.error", _replace_security_info($mpi_response['MESSAGE']));
-        $cart->setComplex("detailLabels.error", "Error");
+    if (!in_array($response_msg, array('Y', "U", "N"))) {
+        $cart->setComplex('details.error', _replace_security_info($mpi_response['MESSAGE']));
+        $cart->setComplex('detailLabels.error', "Error");
         $status = $_this->get('orderFailStatus');
         if ($cart->xlite->AOMEnabled) {
-            $cart->set("orderStatus", $status);
+            $cart->set('orderStatus', $status);
         } else {
-            $cart->set("status", $status);
+            $cart->set('status', $status);
         }
         $cart->update();
         
@@ -85,7 +85,7 @@ function func_eSelect_process($cart, $_this)
     // parse response
     if ($response_msg == "Y") {
         // VBV
-        $_this->session->set("eSelectQueued", $cart->get('order_id'));
+        $_this->session->set('eSelectQueued', $cart->get('order_id'));
         $_this->session->writeClose();
 
         $redirectForm = func_eSelect_getMpiInLineForm($mpi_response);
@@ -136,13 +136,13 @@ function func_eSelect_action_return($_this, $order, &$payment)
     if (strtolower($mpi_response['SUCCESS']) == "true") {
         func_eSelect_performAuthPurchase($order, $cc_info, $payment, $purchase_amount, null, $mpi_response['CAVV']);
     } else {
-        $order->setComplex("details.error", _replace_security_info($mpi_response['MESSAGE']));
-        $order->setComplex("detailLabels.error", "Error");
+        $order->setComplex('details.error', _replace_security_info($mpi_response['MESSAGE']));
+        $order->setComplex('detailLabels.error', "Error");
         $status = $payment->get('orderFailStatus');
         if ($order->xlite->AOMEnabled) {
-            $order->set("orderStatus", $status);
+            $order->set('orderStatus', $status);
         } else {
-            $order->set("status", $status);
+            $order->set('status', $status);
         }
         $order->update();
     }
@@ -174,7 +174,7 @@ function func_eSelect_performAuthPurchase($order, $cc_info, &$payment, $amount, 
         $transaction_type[] = "cavv";
     }
     $transaction_type[] = (($params['trans_type'] == "purch") ? "purchase" : "preauth");
-    $transaction_type = implode("_", $transaction_type);
+    $transaction_type = implode('_', $transaction_type);
 
     // reverse MM/YY to YY/MM format
     $expiry = substr($expiry, 2, 2) . substr($expiry, 0, 2);
@@ -290,17 +290,17 @@ function func_eSelect_performAuthPurchase($order, $cc_info, &$payment, $amount, 
         // approved
         $status = $payment->get('orderSuccessStatus');
         if ($order->xlite->AOMEnabled) {
-            $order->set("orderStatus", $status);
+            $order->set('orderStatus', $status);
         } else {
-            $order->set("status", $status);
+            $order->set('status', $status);
         }
 
-        $order->setComplex("details.referenceNum", $receipt['REFERENCENUM']);
-        $order->setComplex("details.responseCode", $receipt['RESPONSECODE']);
-        $order->setComplex("details.authCode", $receipt['AUTHCODE']);
-        $order->setComplex("details.message", $receipt['MESSAGE']);
-        $order->setComplex("details.avs", $payment->getAVSMessageText($receipt['AVSRESULTCODE']));
-        $order->setComplex("details.cvd", $payment->getCVDMessageText($receipt['CVDRESULTCODE']));
+        $order->setComplex('details.referenceNum', $receipt['REFERENCENUM']);
+        $order->setComplex('details.responseCode', $receipt['RESPONSECODE']);
+        $order->setComplex('details.authCode', $receipt['AUTHCODE']);
+        $order->setComplex('details.message', $receipt['MESSAGE']);
+        $order->setComplex('details.avs', $payment->getAVSMessageText($receipt['AVSRESULTCODE']));
+        $order->setComplex('details.cvd', $payment->getCVDMessageText($receipt['CVDRESULTCODE']));
 
         $orderLabels = array(
             "referenceNum"	=> "Reference Num",
@@ -317,13 +317,13 @@ function func_eSelect_performAuthPurchase($order, $cc_info, &$payment, $amount, 
         // declined
         $status = $payment->get('orderFailStatus');
         if ($order->xlite->AOMEnabled) {
-            $order->set("orderStatus", $status);
+            $order->set('orderStatus', $status);
         } else {
-            $order->set("status", $status);
+            $order->set('status', $status);
         }
 
-        $order->setComplex("details.error", _replace_security_info($receipt['MESSAGE']));
-        $order->setComplex("detailLabels.error", "Error");
+        $order->setComplex('details.error', _replace_security_info($receipt['MESSAGE']));
+        $order->setComplex('detailLabels.error', "Error");
 
         $order->update();
     }
@@ -369,7 +369,7 @@ function _replace_security_info($message)
 
 function _stripTagsXML($data, $name="")
 {
-    $ignore = array("merchantUrl", "type", "PaRes", "MD");
+    $ignore = array('merchantUrl', "type", "PaRes", "MD");
     if (in_array($name, $ignore)) {
         return $data;
     }
@@ -525,7 +525,7 @@ function func_eSelect_mpgRecurringInfo($params)
     $recurTemplate = array('recur_unit','start_now','start_date','num_recurs','period','recur_amount');
 
     $xmlString = "";
-    foreach($recurTemplate as $tag) {
+    foreach ($recurTemplate as $tag) {
         $xmlString .= "<$tag>"._stripTagsXML($params[$tag], $tag)."</$tag>";
     }
 

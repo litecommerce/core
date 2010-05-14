@@ -44,10 +44,10 @@ class XLite_Module_Affiliate_Controller_Admin_TopPerformers extends XLite_Module
     {
         parent::fillForm();
         if (!isset($this->sort_by)) {
-            $this->set("sort_by", "clicks");
+            $this->set('sort_by', "clicks");
         }
         if (!isset($this->report_by)) {
-            $this->set("report_by", "affiliate");
+            $this->set('report_by', "affiliate");
         }
     }
     
@@ -66,7 +66,7 @@ class XLite_Module_Affiliate_Controller_Admin_TopPerformers extends XLite_Module
                 if (isset($stat['partner_id'])) {
                     $partner = new XLite_Model_Profile();
                     if (!$partner->find("profile_id=".$stat['partner_id'])) {
-                        $partner->set("login", "Unknown");
+                        $partner->set('login', "Unknown");
                     }
                     $this->stats[$sid]['partner'] = $partner;
                 }

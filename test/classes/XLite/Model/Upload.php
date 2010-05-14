@@ -81,7 +81,7 @@ class XLite_Model_Upload extends XLite_Base
     */
     function move($file)
     {
-        if($this->code === LC_UPLOAD_NO_FILE) {
+        if ($this->code === LC_UPLOAD_NO_FILE) {
             return false;
 		}
         $this->code = LC_UPLOAD_OK;

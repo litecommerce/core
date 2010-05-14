@@ -135,7 +135,7 @@ abstract class XLite_Controller_Admin_Abstract extends XLite_Controller_Abstract
         // auto-login request
 /*
         if (!$this->auth->is('logged') && isset(XLite_Core_Request::getInstance()->login) && isset(XLite_Core_Request::getInstance()->password)) {
-            if($this->auth->adminLogin(XLite_Core_Request::getInstance()->login, XLite_Core_Request::getInstance()->password) === ACCESS_DENIED) {
+            if ($this->auth->adminLogin(XLite_Core_Request::getInstance()->login, XLite_Core_Request::getInstance()->password) === ACCESS_DENIED) {
                 die('ACCESS DENIED');
             }
         }
@@ -312,7 +312,7 @@ EOT;
         (
             "image" => array("*"),
             "callback" => array("*"),
-            "upgrade" => array("version", "upgrade")
+            "upgrade" => array('version', "upgrade")
         );
 
         
@@ -329,12 +329,12 @@ EOT;
 
         $specialIgnoreTargets = array
         (
-            "db" => array("backup", "delete"),
-            "files" => array("tar", "tar_skins", "untar_skins"),
-            "wysiwyg" => array("export", "import")
+            "db" => array('backup', "delete"),
+            "files" => array('tar', "tar_skins", "untar_skins"),
+            "wysiwyg" => array('export', "import")
         );
 
-        if(
+        if (
             isset($specialIgnoreTargets[XLite_Core_Request::getInstance()->target]) 
             && (
                 in_array("*", $specialIgnoreTargets[XLite_Core_Request::getInstance()->target]) 
@@ -348,10 +348,10 @@ EOT;
             $post_login = XLite_Core_Request::getInstance()->login;
             $post_password = XLite_Core_Request::getInstance()->password;
 
-            if($login != $post_login)
+            if ($login != $post_login)
                 return false;
 
-            if(!empty($post_login) && !empty($post_password)){
+            if (!empty($post_login) && !empty($post_password)){
                 $post_password = $this->xlite->auth->encryptPassword($post_password);
                 $profile = new XLite_Model_Profile();
                 if ($profile->find("login='".addslashes($post_login)."' AND ". "password='".addslashes($post_password)."'")) {

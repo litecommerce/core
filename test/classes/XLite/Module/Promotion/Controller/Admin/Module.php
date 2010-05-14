@@ -41,7 +41,7 @@ class XLite_Module_Promotion_Controller_Admin_Module extends XLite_Controller_Ad
 
         if ($this->page == "Promotion") {
         	$lay = XLite_Model_Layout::getInstance();
-        	$lay->addLayout("general_settings.tpl", "modules/Promotion/config.tpl");
+        	$lay->addLayout('general_settings.tpl', "modules/Promotion/config.tpl");
         }
     }
 }

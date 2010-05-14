@@ -93,6 +93,6 @@ class XLite_Module_Egoods_Main extends XLite_Module_Abstract
     {
         parent::init();
 
-        $this->xlite->set("EgoodsEnabled",true);
+        $this->xlite->set('EgoodsEnabled',true);
     }
 }

@@ -106,10 +106,10 @@ class XLite_Module_WholesaleTrading_Model_WholesalePricing extends XLite_Model_A
         $product = $product->findImportedProduct($properties['sku'], '',$properties['product'], false, $options['unique_identifier']);
         if (!is_null($product)) {
             $found = $wp->find("product_id = " . $product->get('product_id') . " AND amount=" . $properties['amount'] . " AND membership = '" . $properties['membership']. "'");
-            $wp->set("product_id", $product->get('product_id'));
-            $wp->set("amount",$properties['amount']);
-            $wp->set("price",$properties['price']);
-            $wp->set("membership",$properties['membership']);
+            $wp->set('product_id', $product->get('product_id'));
+            $wp->set('amount',$properties['amount']);
+            $wp->set('price',$properties['price']);
+            $wp->set('membership',$properties['membership']);
     
             echo "<b>Importing CSV file line# $line_no: </b>";
     

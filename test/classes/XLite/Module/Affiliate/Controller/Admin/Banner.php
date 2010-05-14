@@ -40,28 +40,28 @@ class XLite_Module_Affiliate_Controller_Admin_Banner extends XLite_Controller_Ad
     function initView()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-            $this->set("properties", $this->getComplex('banner.properties'));
+            $this->set('properties', $this->getComplex('banner.properties'));
         }
     }
 
     function action_save_banner()
     {
         $banner = new XLite_Module_Affiliate_Model_Banner();
-        $banner->set("properties", $_POST);
+        $banner->set('properties', $_POST);
         $banner->create();
         
         $img = $banner->get('image');
         $img->handleRequest();
 
         // switch to modify banner mode
-        $this->set("banner_id", $banner->get('banner_id'));
-        $this->set("mode", "modify");
+        $this->set('banner_id', $banner->get('banner_id'));
+        $this->set('mode', "modify");
     }
 
     function action_update_banner()
     {
         $banner = $this->get('banner');
-        $banner->set("properties", $_POST);
+        $banner->set('properties', $_POST);
         $banner->update();
         $img = $banner->get('image');
         $img->handleRequest();

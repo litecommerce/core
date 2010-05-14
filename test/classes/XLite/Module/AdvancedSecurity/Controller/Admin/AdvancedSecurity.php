@@ -35,7 +35,7 @@
  */
 class XLite_Module_AdvancedSecurity_Controller_Admin_AdvancedSecurity extends XLite_Controller_Admin_Abstract
 {
-    public $params = array("target", "mode");
+    public $params = array('target', "mode");
     public $sample = "The quick brown fox jumps over the lazy dog.";
     
     function action_orders() 
@@ -43,17 +43,17 @@ class XLite_Module_AdvancedSecurity_Controller_Admin_AdvancedSecurity extends XL
         $gpg = $this->get('gpg');
         $pubkey = $gpg->getPublicKey();
         $seckey = $gpg->getSecretKey();
-        $this->set("valid", !empty($pubkey) && $gpg->isKeyValid($pubkey, "PUBLIC") && !empty($seckey) && $gpg->isKeyValid($seckey, "PRIVATE"));
+        $this->set('valid', !empty($pubkey) && $gpg->isKeyValid($pubkey, "PUBLIC") && !empty($seckey) && $gpg->isKeyValid($seckey, "PRIVATE"));
         if (!$this->is('valid')) {
-            $this->set("invalidKeyring", true);
+            $this->set('invalidKeyring', true);
             return;
         }
         if ($this->get('decrypt_orders') && !$gpg->isPasswordValid($this->get('passphrase'))) {
-            $this->set("valid", false);
-            $this->set("invalidOrderPassword", true);
+            $this->set('valid', false);
+            $this->set('invalidOrderPassword', true);
             return;
         }
-        $this->session->set("masterPassword", null); // to avoid update conflict
+        $this->session->set('masterPassword', null); // to avoid update conflict
         $order = new XLite_Model_Order();
         $orders = $order->findAll("payment_method='CreditCard'");
         $this->startDump();
@@ -88,7 +88,7 @@ class XLite_Module_AdvancedSecurity_Controller_Admin_AdvancedSecurity extends XL
     function action_test() 
     {
         // see template for testing details
-        $this->set("valid", false); // no NOT redirect after test
+        $this->set('valid', false); // no NOT redirect after test
     }
 
     function action_download_secret_key() 
@@ -96,12 +96,12 @@ class XLite_Module_AdvancedSecurity_Controller_Admin_AdvancedSecurity extends XL
         $gpg = $this->get('gpg');
         $downloadPass = $this->get('download_password');
         if (!is_null($downloadPass) && $gpg->isPasswordValid($downloadPass)) {
-            $this->set("silent", true);
+            $this->set('silent', true);
             $this->startDownload('secring.asc');
             print $gpg->get('secretKey');
         } else {
-            $this->set("invalidPassword", true);
-            $this->set("valid", false);
+            $this->set('invalidPassword', true);
+            $this->set('valid', false);
         }
     }
 
@@ -133,7 +133,7 @@ class XLite_Module_AdvancedSecurity_Controller_Admin_AdvancedSecurity extends XL
                 }
             }
 
-            $options[$i]->set("value", $val);
+            $options[$i]->set('value', $val);
             $options[$i]->update();
         }
     }
@@ -147,7 +147,7 @@ class XLite_Module_AdvancedSecurity_Controller_Admin_AdvancedSecurity extends XL
     function action_upload_keys()
     {
         $gpg = new XLite_Module_AdvancedSecurity_Model_GPG();
-        $this->set("valid", $gpg->uploadKeys());
+        $this->set('valid', $gpg->uploadKeys());
     }
 
     function getGPG() 

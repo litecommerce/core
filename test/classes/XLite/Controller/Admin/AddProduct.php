@@ -35,7 +35,7 @@
  */
 class XLite_Controller_Admin_AddProduct extends XLite_Controller_Admin_Abstract
 {
-    public $params = array("target", "mode", "product_id");
+    public $params = array('target', "mode", "product_id");
     public $product = null;
 
     function init()
@@ -63,7 +63,7 @@ class XLite_Controller_Admin_AddProduct extends XLite_Controller_Admin_Abstract
             }
         }
 
-        $product->set("properties", $properties);
+        $product->set('properties', $properties);
         $product->create();
 
         $this->action_images();
@@ -74,7 +74,7 @@ class XLite_Controller_Admin_AddProduct extends XLite_Controller_Admin_Abstract
 
         if (isset($this->category_id)) {
             $category = new XLite_Model_Category($this->category_id);
-            $product->set("category", $category);
+            $product->set('category', $category);
         }
 
         // update/create extra fields
@@ -84,34 +84,34 @@ class XLite_Controller_Admin_AddProduct extends XLite_Controller_Admin_Abstract
                 if (strlen($value)) {
                     $fv = new XLite_Model_FieldValue();
                     $found = $fv->find("field_id=$id AND product_id=".$product->get('product_id'));
-                    $fv->set("value", $value);
+                    $fv->set('value', $value);
                     if ($found) {
                         $fv->update();
                     } else {
-                        $fv->set("field_id", $id);
-                        $fv->set("product_id", $product->get('product_id'));
+                        $fv->set('field_id', $id);
+                        $fv->set('product_id', $product->get('product_id'));
                         $fv->create();
                     }
                 }
             }
         }
 
-        $this->set("mode", "notification");
-        $this->set("product_id", $product->get('product_id'));
+        $this->set('mode', "notification");
+        $this->set('product_id', $product->get('product_id'));
     }
 
     function action_images()
     {
         $tn = $this->getComplex('product.thumbnail');
         if ($tn->handleRequest() != XLite_Model_Image::IMAGE_OK && $tn->_shouldProcessUpload) {
-        	$this->set("valid", false);
-        	$this->set("thumbnail_read_only", true);
+        	$this->set('valid', false);
+        	$this->set('thumbnail_read_only', true);
         }
 
         $img = $this->getComplex('product.image');
         if ($img->handleRequest() != XLite_Model_Image::IMAGE_OK && $img->_shouldProcessUpload) {
-        	$this->set("valid", false);
-        	$this->set("image_read_only", true);
+        	$this->set('valid', false);
+        	$this->set('image_read_only', true);
         }
     }
 

@@ -35,7 +35,7 @@
  */
 class XLite_Controller_Admin_Order extends XLite_Controller_Admin_Abstract
 {
-    public $params = array("target", "order_id");
+    public $params = array('target', "order_id");
 
     /**
      * getRegularTemplate 

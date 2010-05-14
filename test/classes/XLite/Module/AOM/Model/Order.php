@@ -41,7 +41,7 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order implements XLite_Ba
     public $_oldSubstatus = '';
     
     public $_save_totals = array();
-    public $_save_fields = array("shipping_cost", "tax", "taxes", "total");
+    public $_save_fields = array('shipping_cost', "tax", "taxes", "total");
 
     public $doNotCheckInventory = false;
     public $doNotChangeShippingCost = false;
@@ -281,7 +281,7 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order implements XLite_Ba
             $mail->order = $this;
          
             if ($orderStatus->get('email')) {
-                $mail->set("adminMail", true);
+                $mail->set('adminMail', true);
                 $mail->compose(
     		            $this->config->getComplex('Company.site_administrator'),
         		        $this->config->getComplex('Company.orders_department'),
@@ -292,8 +292,8 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order implements XLite_Ba
                 // Switch layout to castomer area
                 $layout = XLite_Model_Layout::getInstance();
                 $active_skin = $layout->get('skin');
-                $layout->set("skin", XLite::getInstance()->getOptions(array('skin_details', 'skin')));
-                $mail->set("adminMail", false);
+                $layout->set('skin', XLite::getInstance()->getOptions(array('skin_details', 'skin')));
+                $mail->set('adminMail', false);
     		    $mail->compose(
         		        $this->config->getComplex('Company.orders_department'),
            			    $this->getComplex('profile.login'),
@@ -301,7 +301,7 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order implements XLite_Ba
                 $mail->send();
 
                 // Restore layout
-                $layout->set("skin", $active_skin);
+                $layout->set('skin', $active_skin);
             }
         }
     }
@@ -335,7 +335,7 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order implements XLite_Ba
     {
         $orderItem = new XLite_Model_OrderItem();
         $this->_productItems = $orderItem->findAll("order_id='" .$this->get('order_id'). "' AND product_id <> 0");
-        foreach($this->_productItems as $key => $item) {
+        foreach ($this->_productItems as $key => $item) {
             $this->_productItems[$key]->order = $this;
         }
         return $this->_productItems;
@@ -353,20 +353,20 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order implements XLite_Ba
     
  	function getItems() 
     {
-        if($this->xlite->is('adminZone')) {
+        if ($this->xlite->is('adminZone')) {
             $checkTaxesInside = $this->xlite->get('AOMcalcAllTaxesInside');
             if (!isset($checkTaxesInside)) {
     			if (!$this->config->getComplex('Taxes.prices_include_tax')) {
-    				$this->xlite->set("AOMcalcAllTaxesInside", true);
+    				$this->xlite->set('AOMcalcAllTaxesInside', true);
     			} else {
                 	$taxRates = new XLite_Model_TaxRates();
                 	$profile = $this->get('profile');
                 	if (isset($profile) && is_object($profile)) {
                     	$taxRates->setProfile($this->get('profile'));
                     	if (strpos($taxRates->_conditionValues['country'], ",EU country") === false) {
-        					$this->xlite->set("AOMcalcAllTaxesInside", true);
+        					$this->xlite->set('AOMcalcAllTaxesInside', true);
                     	} else {
-        					$this->xlite->set("AOMcalcAllTaxesInside", false);
+        					$this->xlite->set('AOMcalcAllTaxesInside', false);
                     	}
                     }
     			}
@@ -398,7 +398,7 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order implements XLite_Ba
  	function getOrderGC()  
     {
         $items = parent::getItems();
-        foreach($items as $key => $item) {
+        foreach ($items as $key => $item) {
             $gcid = $item->get('gcid');
             if (empty($gcid)) 
                 unset($items[$key]);
@@ -443,7 +443,7 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order implements XLite_Ba
         $subtotal -= $global_discount;
         if ($subtotal < 0) $subtotal = 0;
 
-        $this->set("subtotal", $this->formatCurrency($subtotal));
+        $this->set('subtotal', $this->formatCurrency($subtotal));
         return $subtotal;
     }
 
@@ -462,7 +462,7 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order implements XLite_Ba
             $subtotal = $this->_getDiscountableSubtotal();
             $orig_discount = $this->formatCurrency($subtotal * $gd->get('discount') / 100);
             if ($orig_discount != $global_discount) {
-                $gd->set("discount_type", "a");
+                $gd->set('discount_type', "a");
             }
         }
 
@@ -493,7 +493,7 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order implements XLite_Ba
         if ($this->xlite->get('PromotionEnabled')) {
             $total = max(0,$total - $this->get('payedByPoints'));
         }
-        $this->set("total", $this->formatCurrency($total));
+        $this->set('total', $this->formatCurrency($total));
         $this->_restoreTotals();
     }
 
@@ -516,7 +516,7 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order implements XLite_Ba
                 foreach ($this->get('items') as $i) {
                     $price = $i->get('price');
                     $p = new XLite_Model_Product($i->get('product_id'));
-                    $p->set("price", $price);
+                    $p->set('price', $price);
                     $price = $p->getTaxedPrice();
                     $subtotal += $price * $i->get('amount');
                 }
@@ -526,7 +526,7 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order implements XLite_Ba
             }
             $orig_discount = $this->formatCurrency($subtotal * $dc->get('discount') / 100);
             if ($orig_discount != $applied_discount) {
-                $dc->set("type", "absolute");
+                $dc->set('type', "absolute");
             }
         }
 
@@ -546,9 +546,9 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order implements XLite_Ba
 
         $this->_saveTotals();
 
-    	$this->xlite->set("preserveOriginalPrices", (bool) $this->xlite->is('adminZone'));
+    	$this->xlite->set('preserveOriginalPrices', (bool) $this->xlite->is('adminZone'));
         parent::calcTotal();
-    	$this->xlite->set("preserveOriginalPrices", false);
+    	$this->xlite->set('preserveOriginalPrices', false);
 
         $this->_restoreTotals();
     }
@@ -576,14 +576,14 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order implements XLite_Ba
         $substatus->find("status = '$value'");
         if ($substatus->get('parent') == '') {
             $_POST['status'] = $value;
-            $this->set("status",$value);
+            $this->set('status',$value);
             if (!$this->xlite->config->getComplex('AOM.status_inheritance')) {
                 $_POST['substatus'] = "";
-                $this->set("substatus","");
+                $this->set('substatus',"");
             }
         } else {
-            $this->set("status", $substatus->get('parent'));
-            $this->set("substatus", $substatus->get('status'));
+            $this->set('status', $substatus->get('parent'));
+            $this->set('substatus', $substatus->get('status'));
             $_POST['status'] = $substatus->get('parent');
             $_POST['substatus'] = $substatus->get('status');
         }
@@ -648,7 +648,7 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order implements XLite_Ba
         if ($endDate) {
             $where[] = "date<=$endDate";
         }
-        return $this->findAll(implode(" AND ", $where), "date DESC");
+        return $this->findAll(implode(' AND ', $where), "date DESC");
     }
 
     function isShipped()  
@@ -665,7 +665,7 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order implements XLite_Ba
         if ( !$this->config->getComplex('Taxes.prices_include_tax') )
             return;
         $taxRates = new XLite_Model_TaxRates();
-        $taxRates->set("order", $this);
+        $taxRates->set('order', $this);
         foreach ($this->get('items') as $item) {
             $calcAllTaxesAOM = $this->xlite->get('AOMcalcAllTaxesInside');
             $calcAllTaxesInside = (isset($calcAllTaxesAOM)) ? $calcAllTaxesAOM : true;
@@ -674,8 +674,8 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order implements XLite_Ba
     			$item->properties['options'] = null;
     		}
             $price = $item->get('originalPrice');
-            $item->set("price", $price);
-            $taxRates->set("orderItem", $item);
+            $item->set('price', $price);
+            $taxRates->set('orderItem', $item);
             // don't include any price modifications into the price
             $taxRates->_conditionValues['cost'] = $price;
             $taxRates->calculateTaxes();
@@ -688,7 +688,7 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order implements XLite_Ba
                 $tax = $tax / $item->get('amount');
 
             $taxedPrice = $price + $this->formatCurrency($tax);
-            $item->set("price", $taxedPrice);
+            $item->set('price', $taxedPrice);
             if ($this->xlite->get('ProductOptionsEnabled') && !$calcAllTaxesInside) {
                 $item->properties['options'] = $options;
             }

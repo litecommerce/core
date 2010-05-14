@@ -86,7 +86,7 @@ class XLite_Module_Affiliate_Model_Order extends XLite_Model_Order implements XL
                 $stat = new XLite_Module_Affiliate_Model_BannerStats($partnerClick);
                 $partner = $stat->get('partner');
                 if (!is_null($stat->get('partner'))) {
-                    $this->set("partnerClick", $partnerClick);
+                    $this->set('partnerClick', $partnerClick);
                 }
             }
         }
@@ -110,7 +110,7 @@ class XLite_Module_Affiliate_Model_Order extends XLite_Model_Order implements XL
             $stat = new XLite_Module_Affiliate_Model_BannerStats($this->get('partnerClick'));
             $partner = $stat->get('partner');
             if (!is_null($partner)) {
-                $this->set("partner", $partner);
+                $this->set('partner', $partner);
                 $pp = new XLite_Module_Affiliate_Model_PartnerPayment();
                 $pp->charge($this);
             }

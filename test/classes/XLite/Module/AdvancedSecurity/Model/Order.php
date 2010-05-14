@@ -99,9 +99,9 @@ class XLite_Module_AdvancedSecurity_Model_Order extends XLite_Model_Order implem
     {
         $this->_secureDetails = $value;
         // encrypt details with a public key
-        parent::set("secureDetails", $this->gpg->encrypt(serialize($value)));
+        parent::set('secureDetails', $this->gpg->encrypt(serialize($value)));
         $this->_secureDetailsText = $this->prepareSecureDetailsText($value);
-        parent::set("secureDetailsText", $this->gpg->encrypt($this->_secureDetailsText));
+        parent::set('secureDetailsText', $this->gpg->encrypt($this->_secureDetailsText));
     }
 
     function prepareSecureDetailsText($details)
@@ -110,7 +110,7 @@ class XLite_Module_AdvancedSecurity_Model_Order extends XLite_Model_Order implem
         $text = "Secure Order Details:\n";
         $text.= "---------------------\n";
         foreach ((array)$details as $name=>$value) {
-            $title = ucwords(str_replace("cc", "credit card", str_replace("_", " ", $name)));
+            $title = ucwords(str_replace('cc', "credit card", str_replace('_', " ", $name)));
             $text .= sprintf("%-25s %s\n", "$title:", $value);
         }
         return $text;
@@ -136,21 +136,21 @@ class XLite_Module_AdvancedSecurity_Model_Order extends XLite_Model_Order implem
                 // check if GnuPG failed to encrypt data (invalid pubkey?)
                 $check = parent::get('secureDetails');
                 if (empty($check)) {
-                    $this->set("status", "F");
+                    $this->set('status', "F");
                     return;
                 }
                 $labels = $this->getDetailLabels();
                 foreach ($labels as $label => $value) {
                     $details[$label] = ORDER_CRYPTED_MESSAGE;
                 }
-                $this->set("details", $details);
+                $this->set('details', $details);
             } elseif (!is_null($this->session->get('masterPassword'))) {
                 $this->setSecureDetails($details);
                 $labels = $this->getDetailLabels();
                 foreach ($labels as $label => $value) {
                     $details[$label] = ORDER_CRYPTED_MESSAGE;
                 }
-                $this->set("details", $details);
+                $this->set('details', $details);
             }
         }
         parent::update();
@@ -181,7 +181,7 @@ class XLite_Module_AdvancedSecurity_Model_Order extends XLite_Model_Order implem
             return;
         }
         parent::setDetails(unserialize($this->gpg->decrypt($secureDetails, $passphrase)));
-        parent::set("secureDetails", "");
+        parent::set('secureDetails', "");
         parent::update();
     }
 }

@@ -92,7 +92,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_GeographicSales extends XLi
         $orderItem = new XLite_Model_OrderItem();
         $orderItem->find("order_id=".$item['order_id']." AND item_id='".addslashes($item['item_id'])."'");
         $order = new XLite_Model_Order($item['order_id']);
-        $orderItem->set("order", $order);
+        $orderItem->set('order', $order);
         $item['price'] = $orderItem->get('price');
         if (!isset($productSales[$id])) {
             $productSales[$id] = $item;

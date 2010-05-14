@@ -41,7 +41,7 @@ class XLite_Module_AOM_Controller_Admin_Module extends XLite_Controller_Admin_Mo
 
         if ($this->page == "AOM") {
         	$lay = XLite_Model_Layout::getInstance();
-        	$lay->addLayout("general_settings.tpl", "modules/AOM/config.tpl");
+        	$lay->addLayout('general_settings.tpl', "modules/AOM/config.tpl");
         }
     }
 
@@ -58,7 +58,7 @@ class XLite_Module_AOM_Controller_Admin_Module extends XLite_Controller_Admin_Mo
             $value = (is_array($_REQUEST['order_update_notification'])) ? $_REQUEST['order_update_notification'] : array();
 
             $config = new XLite_Model_Config();
-            $config->createOption("AOM", "order_update_notification", serialize($value));
+            $config->createOption('AOM', "order_update_notification", serialize($value));
         }
 
         parent::action_update();

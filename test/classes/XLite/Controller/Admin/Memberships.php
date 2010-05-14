@@ -35,7 +35,7 @@
  */
 class XLite_Controller_Admin_Memberships extends XLite_Controller_Admin_Abstract
 {
-    public $params = array("target", "mode");
+    public $params = array('target', "mode");
     
     function action_update() 
     {
@@ -46,13 +46,13 @@ class XLite_Controller_Admin_Memberships extends XLite_Controller_Admin_Abstract
             );
             $membership = new XLite_Model_Membership();
             $memberships = $membership->findAll();
-            foreach($memberships as $id => $membership_) {
+            foreach ($memberships as $id => $membership_) {
                 $profile = new XLite_Model_Profile();
                 $profilesData['profiles'][$id] = $this->getMembershipProfiles($membership_->get('membership'));
                 $profilesData['membership'][$id] = $membership_->get('membership');
             }
             $memberships = $this->get('update_memberships');
-            foreach($memberships as $id => $membership_) {
+            foreach ($memberships as $id => $membership_) {
                 $membership = new XLite_Model_Membership($id);
                 $membership_['membership'] = $membership->stripInvalidData($membership_['membership']);
                 if (strlen($membership_['membership']) <= 0) {
@@ -67,7 +67,7 @@ class XLite_Controller_Admin_Memberships extends XLite_Controller_Admin_Abstract
                 if (strlen($membership_['membership']) > 32) {
                     $membership_['membership'] = substr($membership_['membership'], 0, 32);
                 }
-                $membership->set("properties", $membership_);
+                $membership->set('properties', $membership_);
                 $membership->update();
                 if (isset($profilesData['profiles'][$id])) {
                     $this->updateProfilesMembership($profilesData['profiles'][$id], $profilesData['membership'][$id], $membership->get('membership'));
@@ -81,7 +81,7 @@ class XLite_Controller_Admin_Memberships extends XLite_Controller_Admin_Abstract
         if ($this->get('deleted_memberships')) {
             @set_time_limit(0);
             $memberships = $this->get('deleted_memberships');
-            foreach($memberships as $membership_id) {
+            foreach ($memberships as $membership_id) {
                 $membership = new XLite_Model_Membership($membership_id);
                 $m = $membership->get('membership');
                 $this->updateProfilesMembership($this->getMembershipProfiles($m), $m, '', true);
@@ -102,21 +102,21 @@ class XLite_Controller_Admin_Memberships extends XLite_Controller_Admin_Abstract
                 return;
             }
 
-            $membership->set("properties",$new_membership);
+            $membership->set('properties',$new_membership);
             if (strlen($membership->get('orderby')) == 0) {
                 $newPos = 0;
     			$memberships = $membership->findAll();
-    			foreach($memberships as $id => $membership_) {
+    			foreach ($memberships as $id => $membership_) {
     				if ($membership_->get('orderby') > $newPos) {
     					$newPos = $membership_->get('orderby');
     				}
     			}
     			$newPos += 10;
     			$newPos = floor($newPos/10)*10;
-    			$membership->set("orderby", $newPos);
+    			$membership->set('orderby', $newPos);
             }
             $membership->create();
-            $this->set("actionProcessed", true);
+            $this->set('actionProcessed', true);
         }
     }
     
@@ -140,7 +140,7 @@ class XLite_Controller_Admin_Memberships extends XLite_Controller_Admin_Abstract
         if (!is_array($profiles) || count($profiles) === 0 || $old === $new) {
             return;
         }
-        foreach($profiles as $profile) {
+        foreach ($profiles as $profile) {
             if (strcmp($profile->get('membership'), $old) === 0) {
                 $profile->set('membership', $new);
             }

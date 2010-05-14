@@ -108,14 +108,14 @@ class XLite_Module_ProductOptions_Model_ProductOption extends XLite_Model_Abstra
         if (!is_null($found)) {
             $product_option = new XLite_Module_ProductOptions_Model_ProductOption();
             $option_found = $product_option->find("product_id = " .$found->get('product_id'). " AND optclass='".addslashes($properties['optclass'])."'");
-            $product_option->set("properties",$properties);
-            $product_option->set("categories",null);
+            $product_option->set('properties',$properties);
+            $product_option->set('categories',null);
             if ($option_found) {
                 print "Updating product option for '<a href=\"admin.php?target=product&product_id=".$found->get('product_id'). "\">" .$found->get('name'). "</a>' product";
                 $product_option->update();
             } else {
                 print "Creating product option for '<a href=\"admin.php?target=product&product_id=".$found->get('product_id'). "\">" .$found->get('name'). "</a>' product";
-                $product_option->set("product_id", $found->get('product_id'));
+                $product_option->set('product_id', $found->get('product_id'));
                 $product_option->create();
             }
         } else if (empty($properties['sku']) && empty($properties['name'])) {
@@ -123,7 +123,7 @@ class XLite_Module_ProductOptions_Model_ProductOption extends XLite_Model_Abstra
             $global_found = $global_option->find("optclass='".addslashes($properties['optclass'])."' AND product_id=0");
             if (!empty($properties['categories'])) {
                 $cat = new XLite_Model_Category();
-                foreach($cat->parseCategoryField($properties['categories'],true) as $path)
+                foreach ($cat->parseCategoryField($properties['categories'],true) as $path)
                 {
                     $category = $cat->findCategory($path);
                     $categories[] = $category->get('category_id');
@@ -132,7 +132,7 @@ class XLite_Module_ProductOptions_Model_ProductOption extends XLite_Model_Abstra
             }
 
             $properties['categories'] = implode("|",!empty($categories) ? $categories : array());
-            $global_option->set("properties",$properties);
+            $global_option->set('properties',$properties);
             
             if ($global_found) {
                 print "Updating '".$properties['optclass']."' global product option";
@@ -143,7 +143,7 @@ class XLite_Module_ProductOptions_Model_ProductOption extends XLite_Model_Abstra
             }
             $product_id = array();
             if (!empty($categories)) {
-                foreach($categories as $category_id) {
+                foreach ($categories as $category_id) {
                     $category = new XLite_Model_Category($category_id);
                     $products = $category->get('products');
                 }
@@ -151,14 +151,14 @@ class XLite_Module_ProductOptions_Model_ProductOption extends XLite_Model_Abstra
                 $product = new XLite_Model_Product();
                 $products = $product->findAll();
             }
-            foreach($products as $product) {
+            foreach ($products as $product) {
                 $product_option = new XLite_Module_ProductOptions_Model_ProductOption();
                 $option_found = $product_option->find("product_id = " .$product->get('product_id'). " AND optclass='".addslashes($properties['optclass'])."'");
 
-                $product_option->set("properties",$properties);
-                $product_option->set("product_id",$product->get('product_id'));
-                $product_option->set("categories",null);
-                $product_option->set("parent_option_id",$global_option->get('option_id'));
+                $product_option->set('properties',$properties);
+                $product_option->set('product_id',$product->get('product_id'));
+                $product_option->set('categories',null);
+                $product_option->set('parent_option_id',$global_option->get('option_id'));
                 $option_found ? $product_option->update() : $product_option->create();
             }
         } else {
@@ -189,7 +189,7 @@ class XLite_Module_ProductOptions_Model_ProductOption extends XLite_Model_Abstra
             } elseif ($field == "categories") {
                 $this->getCategories();
                 if (!empty($this->categories)) {
-                    foreach($this->categories as $category_id) {
+                    foreach ($this->categories as $category_id) {
                         $category = new XLite_Model_Category($category_id);
                         $categories[] = $category->get('stringPath');
                     }
@@ -208,7 +208,7 @@ class XLite_Module_ProductOptions_Model_ProductOption extends XLite_Model_Abstra
         if (!$ignoreProductPrice) {
             if (!is_null($newProductPrice)) {
                 if ($product->get('price') != $newProductPrice) { // get() is required for reading the product from DB
-                    $product->set("price", $newProductPrice);
+                    $product->set('price', $newProductPrice);
                 }
             }
             if (!$this->config->getComplex('Taxes.prices_include_tax')) {
@@ -229,7 +229,7 @@ class XLite_Module_ProductOptions_Model_ProductOption extends XLite_Model_Abstra
         $price = $productPrice + $price;
 
         if ($this->config->Taxes->prices_include_tax) {
-        	$product->set("price", $this->formatCurrency($price));
+        	$product->set('price', $this->formatCurrency($price));
         	$price = $product->get('listPrice');
         }
 
@@ -285,7 +285,7 @@ class XLite_Module_ProductOptions_Model_ProductOption extends XLite_Model_Abstra
             $categories = "";
         }
 
-        $this->set("categories", $categories);
+        $this->set('categories', $categories);
 
         // for ALL --> for SELECTED
         if (count($oldCategories) == 0 && $categories != "" && count($addOnly) > 0) {
@@ -304,10 +304,10 @@ class XLite_Module_ProductOptions_Model_ProductOption extends XLite_Model_Abstra
     			$po = new XLite_Module_ProductOptions_Model_ProductOption();
     			$child_po = $po->count("parent_option_id='".$this->get('option_id')."' AND product_id='".$product_id."'");
     			if ($child_po == 0) {
-        			$po->set("properties", $this->get('properties'));
-        			$po->set("option_id", null);
-        			$po->set("product_id", $product_id);
-        			$po->set("parent_option_id", $this->get('option_id'));
+        			$po->set('properties', $this->get('properties'));
+        			$po->set('option_id', null);
+        			$po->set('product_id', $product_id);
+        			$po->set('parent_option_id', $this->get('option_id'));
         			$po->create();
         		}
     		}
@@ -383,11 +383,11 @@ class XLite_Module_ProductOptions_Model_ProductOption extends XLite_Model_Abstra
                 $productCategories = array();
                 $product_categories = $product->get('categories');
                 if (is_array($product_categories)) {
-                	foreach($product_categories as $cat) {
+                	foreach ($product_categories as $cat) {
                 		$productCategories[] = $cat->get('category_id');
                 	}
                 }
-                foreach($child_po as $option_) {
+                foreach ($child_po as $option_) {
         			if (count(array_intersect($categories, $productCategories)) == 0) {
                         $option_->delete();
                     }

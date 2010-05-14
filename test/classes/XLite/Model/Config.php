@@ -54,12 +54,12 @@ class XLite_Model_Config extends XLite_Model_Abstract implements XLite_Base_ISin
     // GET methods {{{
     function getCategories()
     {
-        return array("General", "Company", "Email", "Security","AdminIP", "Captcha", "Environment");
+        return array('General', "Company", "Email", "Security","AdminIP", "Captcha", "Environment");
     }
 
     function getCategoryNames()
     {
-        return array("General", "Company", "Email", "Security","Admin IP protection", "Captcha protection", "Environment");
+        return array('General', "Company", "Email", "Security","Admin IP protection", "Captcha protection", "Environment");
     }
     
     function getByCategory($category)
@@ -101,7 +101,7 @@ class XLite_Model_Config extends XLite_Model_Abstract implements XLite_Base_ISin
     
     function isSelected($property, $value = null, $prop = null)
     {
-        return parent::isSelected("value", $property);
+        return parent::isSelected('value', $property);
     }
 
     function isName($name)
@@ -156,7 +156,7 @@ class XLite_Model_Config extends XLite_Model_Abstract implements XLite_Base_ISin
         $config->Memberships->memberships = array();
         if (isset($config->Memberships->membershipsCollection)) {
             if (is_array($config->Memberships->membershipsCollection)) {
-    			foreach($config->Memberships->membershipsCollection as $membership) {
+    			foreach ($config->Memberships->membershipsCollection as $membership) {
     				$config->Memberships->memberships[] = $membership['membership'];
     			}
     		} else {
@@ -173,29 +173,29 @@ class XLite_Model_Config extends XLite_Model_Abstract implements XLite_Base_ISin
     {
         $config = new $this->configClass;
         if ($config->find("name='$name' AND category='$category'")) {
-            $config->set("value", $value);
+            $config->set('value', $value);
             if (!is_null($type)) {
-                $config->set("type", $type);
+                $config->set('type', $type);
             }
             if (!is_null($comment)) {
-                $config->set("comment", $comment);
+                $config->set('comment', $comment);
             }
             if (!is_null($orderby)) {
-                $config->set("orderby", $orderby);
+                $config->set('orderby', $orderby);
             }
             $config->update();
         } else {
-            $config->set("name", $name);
-            $config->set("category", $category);
-            $config->set("value", $value);
+            $config->set('name', $name);
+            $config->set('category', $category);
+            $config->set('value', $value);
             if (!is_null($type)) {
-                $config->set("type", $type);
+                $config->set('type', $type);
             }
             if (!is_null($comment)) {
-                $config->set("comment", $comment);
+                $config->set('comment', $comment);
             }
             if (!is_null($orderby)) {
-                $config->set("orderby", $orderby);
+                $config->set('orderby', $orderby);
             }
             $config->create();
         }

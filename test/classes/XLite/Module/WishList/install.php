@@ -181,18 +181,18 @@ if (is_object($this)) {
 //	COPY SKIN-DEPENDENT TEMPLATES
 //////////////////////////////////////
 
-copy_schema_template("mini_cart/body.tpl", $schema, $MODULE_NAME);
-copy_schema_template("common/button.tpl", $schema, $MODULE_NAME);
-copy_schema_template("wishlist.tpl", $schema, $MODULE_NAME);
-copy_schema_template("send_to_friend.tpl", $schema, $MODULE_NAME);
-copy_schema_template("message.tpl", $schema, $MODULE_NAME);
-copy_schema_template("item.tpl", $schema, $MODULE_NAME);
+copy_schema_template('mini_cart/body.tpl', $schema, $MODULE_NAME);
+copy_schema_template('common/button.tpl', $schema, $MODULE_NAME);
+copy_schema_template('wishlist.tpl', $schema, $MODULE_NAME);
+copy_schema_template('send_to_friend.tpl', $schema, $MODULE_NAME);
+copy_schema_template('message.tpl', $schema, $MODULE_NAME);
+copy_schema_template('item.tpl', $schema, $MODULE_NAME);
 
 //////////////////////////////////////
 //	CUSTOMER ZONE
 //////////////////////////////////////
 
-if (is_template_patched("skins/default/en/main.tpl","<!-- [tabs] {{{ -->")) {
+if (is_template_patched('skins/default/en/main.tpl',"<!-- [tabs] {{{ -->")) {
     // 2-columns
     $location = "skins/default/en/main.tpl";
 
@@ -315,7 +315,7 @@ else
     already_patched($location);
 }
 
-if (!is_template_patched("skins/default/en/main.tpl","<!-- [tabs] {{{ -->")) {
+if (!is_template_patched('skins/default/en/main.tpl',"<!-- [tabs] {{{ -->")) {
     // 3-columns
     $location = "skins/default/en/main.tpl";
 
@@ -414,7 +414,7 @@ else
     already_patched($location);
 }
 
-if (is_template_patched("skins/default/en/main.tpl","<!-- [tabs] {{{ -->")) {
+if (is_template_patched('skins/default/en/main.tpl',"<!-- [tabs] {{{ -->")) {
     // 2-columns
     $location = "skins/default/en/main.tpl";
 

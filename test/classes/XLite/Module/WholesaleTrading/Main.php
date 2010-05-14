@@ -107,10 +107,10 @@ class XLite_Module_WholesaleTrading_Main extends XLite_Module_Abstract
 
         // common class decorations
         if ($this->xlite->is('adminZone')) {
-            $this->addLayout("common/select_membership.tpl", "modules/WholesaleTrading/common/select_membership.tpl");
+            $this->addLayout('common/select_membership.tpl', "modules/WholesaleTrading/common/select_membership.tpl");
         }
 
 
-        $this->xlite->set("WholesaleTradingEnabled", true);
+        $this->xlite->set('WholesaleTradingEnabled', true);
     }
 }

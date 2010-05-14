@@ -42,13 +42,13 @@ class XLite_Module_Affiliate_Controller_Admin_PartnerOrders extends XLite_Contro
     {
         $w = new XLite_View_Abstract();
         $w->component = $this;
-        $w->set("template", "modules/Affiliate/orders.tpl");
+        $w->set('template', "modules/Affiliate/orders.tpl");
         $this->startDownload('orders.csv');
         $w->init();
         $w->display();
 
         // do not output anything
-        $this->set("silent", true);
+        $this->set('silent', true);
     }
     
     function getDelimiter() 
@@ -91,10 +91,10 @@ class XLite_Module_Affiliate_Controller_Admin_PartnerOrders extends XLite_Contro
     {
         if (!isset($this->startDate)) {
             $date = getdate(time());
-            $this->set("startDate", mktime(0,0,0,$date['mon'],1,$date['year']));
+            $this->set('startDate', mktime(0,0,0,$date['mon'],1,$date['year']));
         }
         if (!isset($this->partner_id)) {
-            $this->set("partner_id", "");
+            $this->set('partner_id', "");
         }
         parent::fillForm();
     }

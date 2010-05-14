@@ -88,7 +88,7 @@ class XLite_Module_Promotion_Model_Cart extends XLite_Model_Cart implements XLit
         $status = $this->get('status');
         if ($status == "P" || $status == "Q" || $status == "C") {
             if ($this->get('payedByPoints') > $op->get('bonusPoints')*$this->config->getComplex('Promotion.bonusPointsCost')) {
-                $this->set("payedByPoints", $op->get('bonusPoints')*$this->config->getComplex('Promotion.bonusPointsCost'));
+                $this->set('payedByPoints', $op->get('bonusPoints')*$this->config->getComplex('Promotion.bonusPointsCost'));
             }
         }
         $this->calcTotals();
@@ -123,7 +123,7 @@ class XLite_Module_Promotion_Model_Cart extends XLite_Model_Cart implements XLit
                 } else {
                     $newOffer = $offer->clone();
                 }
-                $newOffer->set("order_id", $this->get('order_id'));
+                $newOffer->set('order_id', $this->get('order_id'));
                 $newOffer->update();
             }
             $this->_appliedBonuses = null;
@@ -135,17 +135,17 @@ class XLite_Module_Promotion_Model_Cart extends XLite_Model_Cart implements XLit
         parent::getItems();
         $items = $this->_items;
         $this->_items = array();
-        foreach($items as $item) {
+        foreach ($items as $item) {
             if (!$item->get('bonusItem')) {
                 $this->_items[] = $item;
             }
         }
-        foreach($items as $item) {
+        foreach ($items as $item) {
             if ($item->get('bonusItem')) {
                 $foundPair = false;
-        		foreach($this->_items as $itemIdx => $tItem) {
+        		foreach ($this->_items as $itemIdx => $tItem) {
         			if ($item->get('key') == $tItem->get('key')) {
-        				$this->_items[$itemIdx]->set("amount", $tItem->get('amount') + $item->get('amount'));
+        				$this->_items[$itemIdx]->set('amount', $tItem->get('amount') + $item->get('amount'));
         				$this->_items[$itemIdx]->update();
         				$item->delete();
         				$foundPair = true;
@@ -269,18 +269,18 @@ class XLite_Module_Promotion_Model_Cart extends XLite_Model_Cart implements XLit
                 if (is_object($regularItem)) {
                     $reg_props = $regularItem->get('properties');
                     $regularItem1 = new XLite_Model_OrderItem();
-                    $regularItem1->set("properties", $reg_props);
+                    $regularItem1->set('properties', $reg_props);
                     $regularItem2 = new XLite_Model_OrderItem();
-                    $regularItem2->set("properties", $reg_props);
+                    $regularItem2->set('properties', $reg_props);
                 } else {
                     $regularItem1 = $regularItem2 = null;
                 }
                 if (is_object($bonusItem)) {
                     $reg_props = $bonusItem->get('properties');
                     $bonusItem1 = new XLite_Model_OrderItem();
-                    $bonusItem1->set("properties", $reg_props);
+                    $bonusItem1->set('properties', $reg_props);
                     $bonusItem2 = new XLite_Model_OrderItem();
-                    $bonusItem2->set("properties", $reg_props);
+                    $bonusItem2->set('properties', $reg_props);
                 } else {
                     $bonusItem1 = $bonusItem2 = null;
                 }
@@ -299,10 +299,10 @@ class XLite_Module_Promotion_Model_Cart extends XLite_Model_Cart implements XLit
     		$items = parent::getItems(); // re-read items if changed
     		reset($items);
             $this->_items = $items;
-            foreach($items as $item_idx => $item) {
+            foreach ($items as $item_idx => $item) {
             	if ($item->isBonusApplies() && !$item->isPromotionItem()) {
             		$item_key = $item->getKey();
-            		foreach($items as $item_idx_2 => $item_2) {
+            		foreach ($items as $item_idx_2 => $item_2) {
             			if ($item_idx != $item_idx_2 && $item_2->getKey() == $item_key && (!$item_2->isBonusApplies() && !$item_2->isPromotionItem())) {
             			    $amount = $item->get('amount');
             			    $this->deleteItem($item);
@@ -336,14 +336,14 @@ class XLite_Module_Promotion_Model_Cart extends XLite_Model_Cart implements XLit
         if ($amount) {
             if (!is_null($item)) {
                 if ($item->get('amount') != $amount) {
-                    $item->set("amount", $amount);
+                    $item->set('amount', $amount);
                     $item->update();
                     $this->refresh('items');
                 }
             } else {
                 $item = $peer;
-                $item->set("bonusItem", $bonusItem);
-                $item->set("amount", $amount);
+                $item->set('bonusItem', $bonusItem);
+                $item->set('amount', $amount);
                 $item->_createPeerItem = true; // change behaviour of item ordering
                 $item->create();
                 $item->read();
@@ -452,13 +452,13 @@ class XLite_Module_Promotion_Model_Cart extends XLite_Model_Cart implements XLit
             } else {
                 $clone = $dc->clone();
             }
-            $clone->set("order_id", $this->get('order_id'));
-            $clone->set("parent_id", $dc->get('coupon_id'));
+            $clone->set('order_id', $this->get('order_id'));
+            $clone->set('parent_id', $dc->get('coupon_id'));
             $clone->update();
-            $this->set("discountCoupon", $dc->get('coupon_id'));
+            $this->set('discountCoupon', $dc->get('coupon_id'));
             $this->DC = $clone;
         } else {
-            $this->set("discountCoupon", "");
+            $this->set('discountCoupon', "");
         }
         return "";
     }

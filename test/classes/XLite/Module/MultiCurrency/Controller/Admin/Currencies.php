@@ -48,13 +48,13 @@ class XLite_Module_MultiCurrency_Controller_Admin_Currencies extends XLite_Contr
        		$found = $this->defaultCurrency->find("base = 1");
             if (!$found) {
                 $this->defaultCurrency = new XLite_Module_MultiCurrency_Model_CurrencyCountries();
-                $this->defaultCurrency->set("code","USD");
-                $this->defaultCurrency->set("name","US dollar");
-                $this->defaultCurrency->set("exchange_rate",1);
-                $this->defaultCurrency->set("price_format",$this->config->getComplex('General.price_format'));
-                $this->defaultCurrency->set("base",1);
-                $this->defaultCurrency->set("enabled",1);
-                $this->defaultCurrency->set("countries",serialize(array()));
+                $this->defaultCurrency->set('code',"USD");
+                $this->defaultCurrency->set('name',"US dollar");
+                $this->defaultCurrency->set('exchange_rate',1);
+                $this->defaultCurrency->set('price_format',$this->config->getComplex('General.price_format'));
+                $this->defaultCurrency->set('base',1);
+                $this->defaultCurrency->set('enabled',1);
+                $this->defaultCurrency->set('countries',serialize(array()));
                 $this->defaultCurrency->create();
             }
         }
@@ -74,9 +74,9 @@ class XLite_Module_MultiCurrency_Controller_Admin_Currencies extends XLite_Contr
     {
         $currency = $this->get('defaultCurrency');
         $properties = $this->currency;
-        $currency->set("code",$properties['code']);
-        $currency->set("name",$properties['name']);
-    	$currency->set("price_format",$properties['price_format']);
+        $currency->set('code',$properties['code']);
+        $currency->set('name',$properties['name']);
+    	$currency->set('price_format',$properties['price_format']);
         $currency->update();
 
     }
@@ -96,18 +96,18 @@ class XLite_Module_MultiCurrency_Controller_Admin_Currencies extends XLite_Contr
         $properties = $this->currency;
         $properties['countries'] = serialize(isset($properties['countries']) ? $properties['countries'] : array());
         $properties['enabled'] = "1";
-        $currency->set("properties",$properties);
+        $currency->set('properties',$properties);
         $currency->create();
 
     }
     
     function action_update()  
     {
-        foreach($this->currencies as $currency_) {
+        foreach ($this->currencies as $currency_) {
             $currency = new XLite_Module_MultiCurrency_Model_CurrencyCountries($currency_['currency_id']);
             $currency_['countries'] = serialize(isset($currency_['countries']) ? $currency_['countries'] : array());
         	$currency_['enabled'] = isset($currency_['enabled']) ? "1" : "0";
-            $currency->set("properties",$currency_);
+            $currency->set('properties',$currency_);
             $currency->update();
         }
 
@@ -116,7 +116,7 @@ class XLite_Module_MultiCurrency_Controller_Admin_Currencies extends XLite_Contr
     function action_delete() 
     {
         if (isset($this->deleted)) {
-            foreach($this->deleted as $currency_id) {
+            foreach ($this->deleted as $currency_id) {
                 $currency = new XLite_Module_MultiCurrency_Model_CurrencyCountries($currency_id);
                 $currency->delete();
             }

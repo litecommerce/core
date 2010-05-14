@@ -118,7 +118,7 @@ class XLite_Model_CaptchaGenerator extends XLite_Base
                     $color_xy = imagecolorat($img, $sx+1, $sy+1) & 0xFF;
                 }
 
-                if($color == 0 && $color_x == 0 && $color_y == 0 && $color_xy == 0){
+                if ($color == 0 && $color_x == 0 && $color_y == 0 && $color_xy == 0){
                     $newred = $foreground_color[0];
                     $newgreen = $foreground_color[1];
                     $newblue = $foreground_color[2];
@@ -225,7 +225,7 @@ class XLite_Model_CaptchaGenerator extends XLite_Base
     {
     	$str_num = "";
         $mode = $this->getComplex('config.Captcha.captcha_type');
-        if($mode == "numbers"){
+        if ($mode == "numbers"){
             $fisrt = 48;
             $last  = 57;
         } elseif($mode == "letters") {

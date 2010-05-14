@@ -38,8 +38,8 @@ class XLite_Module_GreetVisitor_Controller_Customer_Main extends XLite_Controlle
     function isGreetVisitor()
     {
         if (isset($_COOKIE['GreetingCookie'])) {
-            $this->set("disable_head", true); // disable welcome message head
-            $this->set("visitor", $_COOKIE['GreetingCookie']);
+            $this->set('disable_head', true); // disable welcome message head
+            $this->set('visitor', $_COOKIE['GreetingCookie']);
             return true;
         }
         return false;
@@ -54,8 +54,8 @@ class XLite_Module_GreetVisitor_Controller_Customer_Main extends XLite_Controlle
 
         if ($auth->isLogged()) {
             $first_last = $auth->getComplex('profile.billing_firstname') . ' ' . $auth->getComplex('profile.billing_lastname');
-            setcookie("GreetingCookie", $first_last, time() + 3600 * 24 * 180, "/", func_parse_host($options['http_host']));
-            setcookie("GreetingCookie", $first_last, time() + 3600 * 24 * 180, "/", func_parse_host($options['https_host']));
+            setcookie('GreetingCookie', $first_last, time() + 3600 * 24 * 180, "/", func_parse_host($options['http_host']));
+            setcookie('GreetingCookie', $first_last, time() + 3600 * 24 * 180, "/", func_parse_host($options['https_host']));
         }
     }
     
@@ -63,8 +63,8 @@ class XLite_Module_GreetVisitor_Controller_Customer_Main extends XLite_Controlle
     {
         $options = XLite::getInstance()->getOptions('host_details');
 
-        setcookie("GreetingCookie", "", time() - 3600 * 24 * 180, "/", func_parse_host($options['http_host']));
-        setcookie("GreetingCookie", "", time() - 3600 * 24 * 180, "/", func_parse_host($options['https_host']));
+        setcookie('GreetingCookie', "", time() - 3600 * 24 * 180, "/", func_parse_host($options['http_host']));
+        setcookie('GreetingCookie', "", time() - 3600 * 24 * 180, "/", func_parse_host($options['https_host']));
     }
 
 }

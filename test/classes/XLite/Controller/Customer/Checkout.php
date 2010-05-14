@@ -582,7 +582,7 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
 
                 case XLite_Model_PaymentMethod::PAYMENT_SILENT:
                     // don't call output()
-                    $this->set("silent", true);
+                    $this->set('silent', true);
                     break;
 
                 case XLite_Model_PaymentMethod::PAYMENT_SUCCESS:
@@ -665,7 +665,7 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
     function _initCHInfo()
     {
         if (isset($_REQUEST['ch_info']))
-            $this->getCart()->set("details", $_REQUEST['ch_info']);
+            $this->getCart()->set('details', $_REQUEST['ch_info']);
     }
 
     /**

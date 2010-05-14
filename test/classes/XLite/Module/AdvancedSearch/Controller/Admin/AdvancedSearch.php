@@ -66,7 +66,7 @@ class XLite_Module_AdvancedSearch_Controller_Admin_AdvancedSearch extends XLite_
     {
         if (isset($this->deleted_prices)) {
             $prices = unserialize($this->config->getComplex('AdvancedSearch.prices'));
-            foreach($this->deleted_prices as $key => $value) {
+            foreach ($this->deleted_prices as $key => $value) {
                 unset($prices[$value]);
             }
             $config = new XLite_Model_Config();
@@ -77,7 +77,7 @@ class XLite_Module_AdvancedSearch_Controller_Admin_AdvancedSearch extends XLite_
         }
         if (isset($this->deleted_weights)) {
             $weights = unserialize($this->config->getComplex('AdvancedSearch.weights'));
-            foreach($this->deleted_weights as $key => $value) {
+            foreach ($this->deleted_weights as $key => $value) {
                 unset($weights[$value]);
             }
             $config = new XLite_Model_Config();

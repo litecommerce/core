@@ -37,7 +37,7 @@ class XLite_Module_AustraliaPost_Model_Shipping_Aupost extends XLite_Model_Shipp
 {
 
     public $configCategory = "AustraliaPost";
-    public $optionsFields	= array("length","width","height","currency_rate");
+    public $optionsFields	= array('length',"width","height","currency_rate");
     public $error = "";
     public $xmlError = false;
 
@@ -106,7 +106,7 @@ class XLite_Module_AustraliaPost_Model_Shipping_Aupost extends XLite_Model_Shipp
         foreach ($fields as $field => $value) {
             $values[] = "$field='".addslashes($value)."'";
         }
-        $values = implode(" AND ", $values);
+        $values = implode(' AND ', $values);
 
         $serialized = array();
         foreach ($rates as $rate) {
@@ -126,13 +126,13 @@ class XLite_Module_AustraliaPost_Model_Shipping_Aupost extends XLite_Model_Shipp
             foreach ($fields as $key => $value) {
                 $condition[] = "$key='".addslashes($value)."'";
             }
-            $condition = join(" AND ", $condition);
+            $condition = join(' AND ', $condition);
             $cacheRow = $this->db->getRow("SELECT shipping_dates FROM $cacheTable WHERE $condition");
             if (!is_null($cacheRow)) {
             	$shipping_dates = explode(",", $cacheRow['shipping_dates']);
-            	foreach($result as $shr_key => $shr) {
+            	foreach ($result as $shr_key => $shr) {
             		$id = $shr->shipping->get('shipping_id');
-            		foreach($shipping_dates as $shd) {
+            		foreach ($shipping_dates as $shd) {
             			$shd = explode(":", $shd);
             			if ($id == $shd[0]) {
             				$result[$shr_key]->shipping->shipping_time = $shd[1];

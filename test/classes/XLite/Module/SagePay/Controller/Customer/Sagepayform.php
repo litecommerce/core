@@ -61,7 +61,7 @@ class XLite_Module_SagePay_Controller_Customer_Sagepayform extends XLite_Control
             $this->order = null;
             parent::action_return();
         } else {
-            $this->set("returnUrl", "cart.php?target=cart");
+            $this->set('returnUrl', "cart.php?target=cart");
         }
     }
 

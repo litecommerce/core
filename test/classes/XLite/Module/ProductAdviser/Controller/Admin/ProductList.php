@@ -73,7 +73,7 @@ class XLite_Module_ProductAdviser_Controller_Admin_ProductList extends XLite_Con
             $check[] = "type='" . CUSTOMER_NOTIFICATION_PRICE . "'";
     		$check[] = "notify_key='" . addslashes($product_id) . "'";
     		$check[] = "status='" . CUSTOMER_REQUEST_UPDATED . "'";
-    		$check = implode(" AND ", $check);
+    		$check = implode(' AND ', $check);
 
     		$notification = new XLite_Module_ProductAdviser_Model_Notification();
     		$this->notifyPresentedHash[$product_id] = $notification->count($check);
@@ -90,7 +90,7 @@ class XLite_Module_ProductAdviser_Controller_Admin_ProductList extends XLite_Con
     	$this->productsList = parent::getProducts();
     	if (is_array($this->productsList) && $this->new_arrivals_search) {
     		$removedItems = array();
-    		for($i=0; $i<count($this->productsList); $i++) {
+    		for ($i=0; $i<count($this->productsList); $i++) {
         		if (is_array($this->productsList[$i]) && isset($this->productsList[$i]['class']) && isset($this->productsList[$i]['data'])) {
             		$object = new $this->productsList[$i]['class'];
                     $object->isPersistent = true;
@@ -106,7 +106,7 @@ class XLite_Module_ProductAdviser_Controller_Admin_ProductList extends XLite_Con
         		}
     		}
     		if (count($removedItems) > 0) {
-        		foreach($removedItems as $i) {
+        		foreach ($removedItems as $i) {
     				unset($this->productsList[$i]);
         		}
             	$this->productsFound = count($this->productsList);

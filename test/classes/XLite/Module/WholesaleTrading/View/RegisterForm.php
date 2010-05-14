@@ -40,10 +40,10 @@ class XLite_Module_WholesaleTrading_View_RegisterForm extends XLite_View_Registe
         $p = $this->get('profile');
         if ($this->xlite->is('adminZone') && is_object($p)) {
             if ($p->get('membership_exp_date') > 0) {
-                $this->set("membership_exp_type", "custom");
+                $this->set('membership_exp_type', "custom");
             } else {
-                $this->set("membership_exp_type", "never");
-                $p->set("membership_exp_date", time());
+                $this->set('membership_exp_type', "never");
+                $p->set('membership_exp_date', time());
             }
         }
         parent::fillForm();

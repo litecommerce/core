@@ -44,7 +44,7 @@ class XLite_Model_CssEditor extends XLite_Base
 
     public function __construct($cssFile = null)
     {
-        $this->set("cssFile", $cssFile);
+        $this->set('cssFile', $cssFile);
     }
 
     function getItems()
@@ -141,8 +141,8 @@ class XLite_Model_CssEditor extends XLite_Base
 
     function removeSpaces($source)
     {
-        while(preg_match("/  /", $source)) {
-            $source = preg_replace("/  /", " ", $source);
+        while (preg_match('/  /', $source)) {
+            $source = preg_replace('/  /', " ", $source);
         }
         return $source;
     }

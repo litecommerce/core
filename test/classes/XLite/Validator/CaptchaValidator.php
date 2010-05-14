@@ -47,18 +47,18 @@ class XLite_Validator_CaptchaValidator extends XLite_Validator_Abstract
     {
         $id = $this->get('id');
 
-        if(!$this->isActiveCaptchaPage($id))
+        if (!$this->isActiveCaptchaPage($id))
             return true;
 
         if (!parent::isValid()) {
             return false;
         }
 
-        if(!isset($_POST['action']))
+        if (!isset($_POST['action']))
             return true;
 
         $code = $this->session->get("captcha_".$this->get('id'));
-        if(!isset($code) && $this->xlite->get('captchaValidated')) {
+        if (!isset($code) && $this->xlite->get('captchaValidated')) {
             return true;
         }
         $code_submitted = strtoupper(trim($_POST[$this->get('field')]));
@@ -66,7 +66,7 @@ class XLite_Validator_CaptchaValidator extends XLite_Validator_Abstract
         $result = (isset($_POST[$this->get('field')]) && !empty($_POST[$this->get('field')]) && $code == $code_submitted);
         if ($result) {
         	$this->session->set("captcha_".$this->get('id'), null);
-        	$this->xlite->set("captchaValidated", true);
+        	$this->xlite->set('captchaValidated', true);
         }
         return $result;
     }

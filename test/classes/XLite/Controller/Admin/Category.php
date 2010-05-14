@@ -65,7 +65,7 @@ class XLite_Controller_Admin_Category extends XLite_Controller_Admin_Abstract
 
     function fillForm()
     {
-        $this->set("properties", $this->getComplex('category.properties'));
+        $this->set('properties', $this->getComplex('category.properties'));
     }
 
     function getCategories()
@@ -95,7 +95,7 @@ class XLite_Controller_Admin_Category extends XLite_Controller_Admin_Abstract
         {
             $ef = new XLite_Model_ExtraField();
             $extraFields = $ef->findAll("product_id=0");  // global fields
-            foreach($extraFields as $extraField_key => $extraField)
+            foreach ($extraFields as $extraField_key => $extraField)
             {
                 if (!$extraField->isCategorySelected($this->category_id))
                 {
@@ -161,7 +161,7 @@ class XLite_Controller_Admin_Category extends XLite_Controller_Admin_Abstract
         $valid = (bool) isset($this->name) && strlen(trim($this->name));
 
         if (!$valid) {
-            $this->set("valid", $valid);
+            $this->set('valid', $valid);
             return;
         }
 
@@ -189,7 +189,7 @@ class XLite_Controller_Admin_Category extends XLite_Controller_Admin_Abstract
         $image = $category->get('image');
         $image->handleRequest();
         
-        $this->set("message", "updated");
+        $this->set('message', "updated");
     }
 
     function action_add()
@@ -197,7 +197,7 @@ class XLite_Controller_Admin_Category extends XLite_Controller_Admin_Abstract
         $valid = (bool) isset($this->name) && strlen(trim($this->name));
 
         if (!$valid) {
-            $this->set("valid", $valid);
+            $this->set('valid', $valid);
             return;
         }
 
@@ -216,10 +216,10 @@ class XLite_Controller_Admin_Category extends XLite_Controller_Admin_Abstract
             }
         }
 
-        $category->set("properties", $properties);
-        $category->set("category_id", null);
+        $category->set('properties', $properties);
+        $category->set('category_id', null);
         if (empty(XLite_Core_Request::getInstance()->parent)) XLite_Core_Request::getInstance()->parent = 0;
-        $category->set("parent", XLite_Core_Request::getInstance()->parent);
+        $category->set('parent', XLite_Core_Request::getInstance()->parent);
         $category->create();
 
         // upload category image
@@ -227,17 +227,17 @@ class XLite_Controller_Admin_Category extends XLite_Controller_Admin_Abstract
         $image->handleRequest();
 
         // switch to modify page
-        $this->set("category_id", $category->get('category_id'));
-        $this->set("mode", "modify");
-        $this->set("message", "added");
+        $this->set('category_id', $category->get('category_id'));
+        $this->set('mode', "modify");
+        $this->set('message', "added");
     }
 
     function action_delete()
     {
         $category = $this->get('category');
         // return to categories listing
-        $this->set("target", "categories");
-        $this->set("category_id", $category->get('parent'));
+        $this->set('target', "categories");
+        $this->set('category_id', $category->get('parent'));
         $category->delete();
     }
 
@@ -252,7 +252,7 @@ class XLite_Controller_Admin_Category extends XLite_Controller_Admin_Abstract
     function action_add_field()
     {
         $_postData = XLite_Core_Request::getInstance()->getData();
-        foreach($_postData as $post_key => $post_value)
+        foreach ($_postData as $post_key => $post_value)
         {
             if (strcmp(substr($post_key, 0, 7), "add_ef_") == 0)
             {
@@ -267,7 +267,7 @@ class XLite_Controller_Admin_Category extends XLite_Controller_Admin_Abstract
             if (!empty($categories)) 
             {
                 $ef = new XLite_Model_ExtraField();
-                $ef->set("properties", $_postData);
+                $ef->set('properties', $_postData);
                 $ef->setCategoriesList($categories);
                 $ef->create();
             }
@@ -280,14 +280,14 @@ class XLite_Controller_Admin_Category extends XLite_Controller_Admin_Abstract
                         $category = new XLite_Model_Category($categoryID);
                         foreach ((array)$category->get('products') as $product) {
                             $ef = new XLite_Model_ExtraField();
-                            $ef->set("properties", $_postData);
-                            $ef->set("product_id", $product->get('product_id'));
+                            $ef->set('properties', $_postData);
+                            $ef->set('product_id', $product->get('product_id'));
                             $ef->create();
                         }
                     }
                 } else {
                     $ef = new XLite_Model_ExtraField();
-                    $ef->set("properties", $_postData);
+                    $ef->set('properties', $_postData);
                     $ef->create();
                 }
             }
@@ -329,7 +329,7 @@ class XLite_Controller_Admin_Category extends XLite_Controller_Admin_Abstract
                     return;
                 }
 
-                $ef->set("categories", $data);
+                $ef->set('categories', $data);
                 $ef->update();
             }
         }
@@ -338,8 +338,8 @@ class XLite_Controller_Admin_Category extends XLite_Controller_Admin_Abstract
             foreach ((array)$this->get('extra_fields') as $id => $data) 
             {
                 $ef = new XLite_Model_ExtraField($id);
-                $ef->set("categories_old", $ef->get('categories'));
-                $ef->set("properties", $data);
+                $ef->set('categories_old', $ef->get('categories'));
+                $ef->set('properties', $data);
                 $ef->update();
             }
         }

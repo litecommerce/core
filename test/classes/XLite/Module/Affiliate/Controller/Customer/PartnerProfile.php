@@ -35,7 +35,7 @@
  */
 class XLite_Module_Affiliate_Controller_Customer_PartnerProfile extends XLite_Module_Affiliate_Controller_Partner
 {
-    public $params = array("target", "mode", "submode", "returnUrl","parent"); // mode ::= register | modify | success | delete	
+    public $params = array('target', "mode", "submode", "returnUrl","parent"); // mode ::= register | modify | success | delete	
     public $mode = "register";
     public $submode = "warning"; // delete profile status: warning | confirmed | cancelled
 
@@ -96,17 +96,17 @@ class XLite_Module_Affiliate_Controller_Customer_PartnerProfile extends XLite_Mo
     function action_register()
     {
         if (!$this->getComplex('config.Affiliate.registration_enabled')) {
-            $this->set("returnUrl", "cart.php?target=partner_profile&mode=register");
+            $this->set('returnUrl', "cart.php?target=partner_profile&mode=register");
         } else {
             $this->registerForm->action_register();
-            $this->set("mode", $this->registerForm->get('mode'));
+            $this->set('mode', $this->registerForm->get('mode'));
         }
     }
 
     function action_modify()
     {
         $this->profileForm->action_modify();
-        $this->set("mode", $this->profileForm->get('mode'));
+        $this->set('mode', $this->profileForm->get('mode'));
     }
 
     function action_delete()
@@ -114,8 +114,8 @@ class XLite_Module_Affiliate_Controller_Customer_PartnerProfile extends XLite_Mo
         if ($this->auth->is('logged')) {
             $this->profile = $this->auth->get('profile');
             $this->auth->deletePartner($this->profile);
-            $this->set("mode", "delete");
-            $this->set("submode", "confirmed");
+            $this->set('mode', "delete");
+            $this->set('submode', "confirmed");
         }
     }
 }

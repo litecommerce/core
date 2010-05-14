@@ -152,7 +152,7 @@ class XLite_Module_AdvancedSecurity_Model_GPG extends XLite_Base
 
         if ($cmd_file) {
             $valid_names[$key] = $cmd_file;
-            $cfg->createOption("AdvancedSecurity", "executable_cache", serialize($valid_names), "serialized");
+            $cfg->createOption('AdvancedSecurity', "executable_cache", serialize($valid_names), "serialized");
         }
         return $cmd_file;
     }

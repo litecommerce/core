@@ -94,6 +94,6 @@ class XLite_Module_ProductOptions_Main extends XLite_Module_Abstract
     {
         parent::init();
 
-        $this->xlite->set("ProductOptionsEnabled", true);
+        $this->xlite->set('ProductOptionsEnabled', true);
     }
 }

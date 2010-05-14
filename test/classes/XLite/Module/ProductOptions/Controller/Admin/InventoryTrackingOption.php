@@ -39,7 +39,7 @@ class XLite_Module_ProductOptions_Controller_Admin_InventoryTrackingOption exten
 
     function handleRequest()
     {
-        $this->set("properties", $_POST);
+        $this->set('properties', $_POST);
         parent::handleRequest();
         $url = "admin.php?target=product&product_id=" . $_REQUEST['product_id'] . "&page=inventory_tracking";
         return Header::location($url);
@@ -57,9 +57,9 @@ class XLite_Module_ProductOptions_Controller_Admin_InventoryTrackingOption exten
             }
         }
         $inventory = new XLite_Module_InventoryTracking_Model_Inventory();
-        $inventory->set("inventory_id", implode("|", $options));
-        $inventory->set("amount", $this->amount);
-        $inventory->set("low_avail_limit", $this->low_avail_limit);
+        $inventory->set('inventory_id', implode("|", $options));
+        $inventory->set('amount', $this->amount);
+        $inventory->set('low_avail_limit', $this->low_avail_limit);
         $inventory->create();
     }
 

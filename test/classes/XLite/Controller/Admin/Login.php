@@ -58,7 +58,7 @@ class XLite_Controller_Admin_Login extends XLite_Controller_Admin_Abstract
         parent::fillForm();
         $login = $this->get('login');
         if ( empty($login) )
-            $this->set("login", $this->auth->remindLogin());
+            $this->set('login', $this->auth->remindLogin());
     }
 
     /**
@@ -121,7 +121,7 @@ class XLite_Controller_Admin_Login extends XLite_Controller_Admin_Abstract
     
     function clearSBStatuses()
     {
-        $this->session->set("sidebar_box_statuses", null);
+        $this->session->set('sidebar_box_statuses', null);
         $this->session->writeClose();
     }
     

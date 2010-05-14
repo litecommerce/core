@@ -35,7 +35,7 @@
  */
 class XLite_Controller_Customer_RecoverPassword extends XLite_Controller_Customer_Abstract
 {
-    public $params = array("target", "mode", "email", "link_mailed");
+    public $params = array('target', "mode", "email", "link_mailed");
 
 
     /**
@@ -68,11 +68,11 @@ class XLite_Controller_Customer_RecoverPassword extends XLite_Controller_Custome
     {
         // show recover message if email is valid
         if ($this->auth->requestRecoverPassword($this->get('email'))) {
-            $this->set("mode", "recoverMessage"); // redirect to passwordMessage mode
-            $this->set("link_mailed", true); // redirect to passwordMessage mode
+            $this->set('mode', "recoverMessage"); // redirect to passwordMessage mode
+            $this->set('link_mailed', true); // redirect to passwordMessage mode
         } else {
-            $this->set("valid", false);
-            $this->set("noSuchUser", true);
+            $this->set('valid', false);
+            $this->set('noSuchUser', true);
         }
     }
 
@@ -80,7 +80,7 @@ class XLite_Controller_Customer_RecoverPassword extends XLite_Controller_Custome
     {
         if (!is_null($this->get('email')) && isset($_GET['request_id'])) {
             if ($this->auth->recoverPassword($this->get('email'), $_GET['request_id'])) {
-                $this->set("mode", "recoverMessage");
+                $this->set('mode', "recoverMessage");
             }
         }
     }

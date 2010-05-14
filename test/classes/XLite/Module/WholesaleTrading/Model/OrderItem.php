@@ -60,7 +60,7 @@ class XLite_Module_WholesaleTrading_Model_OrderItem extends XLite_Model_OrderIte
 
     function _setWholesalePrice($price)
     {
-        $this->set("wholesale_price", $price);
+        $this->set('wholesale_price', $price);
         if ($this->_needSetWholesalePrice()) {
             $this->update();
         }
@@ -98,7 +98,7 @@ class XLite_Module_WholesaleTrading_Model_OrderItem extends XLite_Model_OrderIte
 
         $price = $this->wholesale_prices[count($this->wholesale_prices) - 1]->get('price');
         if ($this->config->getComplex('Taxes.prices_include_tax')) {
-            $product->set("price", $price);
+            $product->set('price', $price);
             if (!$this->_skipTaxingWholesalePrice) {
                 $price = $product->get('listPrice');
             }

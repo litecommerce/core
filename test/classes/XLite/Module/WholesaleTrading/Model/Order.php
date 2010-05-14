@@ -45,7 +45,7 @@ class XLite_Module_WholesaleTrading_Model_Order extends XLite_Model_Order implem
     {
         $subtotal = parent::calcSubTotal($shippedOnly);
         $global_discount = $this->calcGlobalDiscount($subtotal);
-        $this->set("global_discount", $global_discount);
+        $this->set('global_discount', $global_discount);
         $subtotal = $this->reduceSubTotal($subtotal);
         return $subtotal;
     }
@@ -69,7 +69,7 @@ class XLite_Module_WholesaleTrading_Model_Order extends XLite_Model_Order implem
                 $subtotal -= $global_discount;
             }
             if ($subtotal < 0) $subtotal = 0;
-    	    $this->set("subtotal", $this->formatCurrency($subtotal));
+    	    $this->set('subtotal', $this->formatCurrency($subtotal));
         }
         return $subtotal;
     }
@@ -97,14 +97,14 @@ class XLite_Module_WholesaleTrading_Model_Order extends XLite_Model_Order implem
     {
         if (is_null($this->_items_by_tax_value)) {
             $taxRates = new XLite_Model_TaxRates();
-            $taxRates->set("order", $this);
+            $taxRates->set('order', $this);
 
             $items = (array) $this->get('items');
             $tax_items = array();
             $tax_values = array();
             foreach ($items as $k=>$i) {
                 if ($this->config->getComplex('Taxes.prices_include_tax')) {
-                    $i->set("price", $i->getComplex('product.price'));
+                    $i->set('price', $i->getComplex('product.price'));
                 }
                 $skip_flag = $i->_skipTaxingWholesalePrice;
                 $i->_skipTaxingWholesalePrice = true;
@@ -131,7 +131,7 @@ class XLite_Module_WholesaleTrading_Model_Order extends XLite_Model_Order implem
         if ($discount <= 0) return $result;
 
         $taxRates = new XLite_Model_TaxRates();
-        $taxRates->set("order", $this);
+        $taxRates->set('order', $this);
 
         // apply discount to items maximally taxed 
         $tax_items = (array) $this->getItemsByTaxValue();
@@ -199,7 +199,7 @@ class XLite_Module_WholesaleTrading_Model_Order extends XLite_Model_Order implem
                     }
                     $result[$tax_name] = $this->formatCurrency(max(0, $result[$tax_name]));
                 }
-    	    	$this->set("allTaxes", $result);
+    	    	$this->set('allTaxes', $result);
             }
         }
         return $result;
@@ -256,10 +256,10 @@ class XLite_Module_WholesaleTrading_Model_Order extends XLite_Model_Order implem
                 );
 
                 $history[] = $history_node;
-                $profile->set("membership_history", $history);
+                $profile->set('membership_history', $history);
 
                 if ($membership != $product->get('selling_membership')) {
-                    $profile->set("membership", $product->get('selling_membership'));
+                    $profile->set('membership', $product->get('selling_membership'));
                     $c_time = time();
                     $period['d'] = date('d', $c_time);
                     $period['m'] = date('m', $c_time);
@@ -297,7 +297,7 @@ class XLite_Module_WholesaleTrading_Model_Order extends XLite_Model_Order implem
                     $exp_date = 0;
                 }
 
-                $profile->set("membership_exp_date", $exp_date);
+                $profile->set('membership_exp_date', $exp_date);
 
                 $history_node = array(
                     'membership'          => $profile->get('membership'),

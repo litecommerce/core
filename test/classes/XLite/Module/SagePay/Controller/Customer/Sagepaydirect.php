@@ -62,9 +62,9 @@ class XLite_Module_SagePay_Controller_Customer_Sagepaydirect extends XLite_Contr
             $this->order = null;
             $_REQUEST['order_id'] = $oid;
 
-            $this->session->set("SagePayDirectQueued", null);
-            $this->session->set("last_order_id", $oid);
-            $this->session->set("order_id", $oid);
+            $this->session->set('SagePayDirectQueued', null);
+            $this->session->set('last_order_id', $oid);
+            $this->session->set('order_id', $oid);
             $this->session->writeClose();
 
             $order = $this->get('order');
@@ -79,8 +79,8 @@ class XLite_Module_SagePay_Controller_Customer_Sagepaydirect extends XLite_Contr
         parent::action_return();
 
         if ($oid) {
-            $this->session->set("last_order_id", $oid);
-            $this->session->set("order_id", $oid);
+            $this->session->set('last_order_id', $oid);
+            $this->session->set('order_id', $oid);
             $this->session->writeClose();
         }
 

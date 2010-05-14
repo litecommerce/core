@@ -43,13 +43,13 @@ class XLite_Module_WishList_Controller_Customer_Checkout extends XLite_Controlle
             $wishlist_products = $wishlist->get('products');
         
             if (!empty($wishlist_products)) 
-                foreach($this->cart->get('items') as $item) {
-                    foreach($wishlist_products as $product) {
+                foreach ($this->cart->get('items') as $item) {
+                    foreach ($wishlist_products as $product) {
                         if ($item->get('item_id')==$product->get('item_id')) {
     
                             $amount = $item->get('amount');
                             if ($amount > $product->get('amount')) $amount = $product->get('amount');
-                            $product->set("amount",$product->get('amount')-$amount);
+                            $product->set('amount',$product->get('amount')-$amount);
                             $product->update();
                             
                         if ($product->get('amount')==0)

@@ -46,10 +46,10 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Category extends XLite_C
     {
         if (in_array($_REQUEST['category_id'], explode(";", $this->getComplex('config.WholesaleTrading.bulk_categories')))) {
             $layout = XLite_Model_Layout::getInstance();
-            $layout->addLayout("category_products.tpl", "modules/WholesaleTrading/bulk_category_products.tpl");
+            $layout->addLayout('category_products.tpl', "modules/WholesaleTrading/bulk_category_products.tpl");
         }
         if ($this->config->getComplex('WholesaleTrading.direct_addition')) {
-            $this->session->set("DirectSaleAvailable", null);
+            $this->session->set('DirectSaleAvailable', null);
         }
         parent::init();
     }*/ 
@@ -65,7 +65,7 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Category extends XLite_C
         }
 
         if (!empty($products)) {
-            foreach($products as $key=>$value) {
+            foreach ($products as $key=>$value) {
                 if (($err = $this->_check_product($key, $value, null)) != "") {
                     $this->errors[] = $err;
                 }
@@ -73,7 +73,7 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Category extends XLite_C
         }
         
         if (!empty($opt_products)) {
-            foreach($opt_products as $key=>$value) {
+            foreach ($opt_products as $key=>$value) {
                 $p = new XLite_Model_Product($key);
                 if (!$p->get('tracking')) {
                     foreach ($value as $idx=>$option_qty) {
@@ -96,7 +96,7 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Category extends XLite_C
             $this->add_products($opt_products);
 
             if ($this->config->getComplex('General.redirect_to_cart')) {
-                 $this->set("returnUrl", "cart.php?target=cart");
+                 $this->set('returnUrl', "cart.php?target=cart");
              }
         } else {
             $this->valid = false;
@@ -120,9 +120,9 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Category extends XLite_C
                         $_REQUEST['product_id'] = $key;
                         $cart = new XLite_Controller_Customer_Cart();
                         $cart->init();
-                        $this->xlite->set("dont_update_cart", true);
+                        $this->xlite->set('dont_update_cart', true);
                         $cart->action_add();
-                        $this->xlite->set("dont_update_cart", false);
+                        $this->xlite->set('dont_update_cart', false);
                         $add = false;
                     }
                 }
@@ -134,9 +134,9 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Category extends XLite_C
                 $_REQUEST['product_id'] = $key;
                 $cart = new XLite_Controller_Customer_Cart();
                 $cart->init();
-                $this->xlite->set("dont_update_cart", true);
+                $this->xlite->set('dont_update_cart', true);
                 $cart->action_add();
-                $this->xlite->set("dont_update_cart", false);
+                $this->xlite->set('dont_update_cart', false);
             }
         }
 
@@ -158,7 +158,7 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Category extends XLite_C
         
         $this->subtotal = 0;
         if (!empty($products)) {
-            foreach($products as $key=>$value) {
+            foreach ($products as $key=>$value) {
                 if ($value != "" && $value > 0) {
                     $p = new XLite_Model_Product($key);
                     $price = $p->getFullPrice($value);
@@ -170,7 +170,7 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Category extends XLite_C
         }
 
         if (!empty($opt_products)) {
-            foreach($opt_products as $key=>$value) {
+            foreach ($opt_products as $key=>$value) {
                 foreach ($value as $idx=>$qty) {
                     if ($qty != "" && $qty > 0) {
                         $p = new XLite_Model_Product($key);
@@ -263,7 +263,7 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Category extends XLite_C
                 }
                 if ($this->xlite->get('ProductOptionsEnabled') && $p->hasOptions()) {
                     $options_set = $p->get('expandedItems');
-                    foreach($options_set as $key => $_opt) {
+                    foreach ($options_set as $key => $_opt) {
                         $error['options'][$_opt[0]->class] = $_opt[]->option;
                     }
                 }*/
@@ -283,7 +283,7 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Category extends XLite_C
                     $error['type'] = 'max';
                     $error['amount'] = $p->getAmountByOptions($option_idx);
                     $options_set = $p->get('expandedItems');
-                    foreach($options_set[$option_idx] as $_opt) {
+                    foreach ($options_set[$option_idx] as $_opt) {
                         $error['options'][$_opt->class] = $_opt->option;
                     }
                     return (object)$error;
@@ -310,14 +310,14 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Category extends XLite_C
     function isProductError($product_id, $o_idx = null) 
     {
         if ($o_idx !== null) {
-            foreach($this->errors as $err) {
+            foreach ($this->errors as $err) {
                 if ($err->product_id == $product_id && $err->option_idx == $o_idx) {
                     return true;
                 }
             }
             return false;
         }
-        foreach($this->errors as $err) {
+        foreach ($this->errors as $err) {
             if ($err->product_id == $product_id) {
                 return true;
             }

@@ -54,7 +54,7 @@ class XLite_Module_Egoods_Model_OrderItem extends XLite_Model_OrderItem implemen
 
     function getPinCodes()
     {
-        if(!isset($this->pin_codes)) {
+        if (!isset($this->pin_codes)) {
             $this->pin_codes = explode(",", $this->get('pincodes'));
         }
         return $this->pin_codes;
@@ -119,7 +119,7 @@ class XLite_Module_Egoods_Model_OrderItem extends XLite_Model_OrderItem implemen
                 $egoods_link->delete();
             }
         }
-        $this->set("egoods", "");
+        $this->set('egoods', "");
         $this->update();
     }
 
@@ -132,7 +132,7 @@ class XLite_Module_Egoods_Model_OrderItem extends XLite_Model_OrderItem implemen
     {
         if (!isset($this->_egoods)) {
             $egoods_links = explode(',', $this->get('egoods'));
-            foreach($egoods_links as $link_id) {
+            foreach ($egoods_links as $link_id) {
                 $link = new XLite_Module_Egoods_Model_DownloadableLink($link_id);
                 $file = new XLite_Module_Egoods_Model_DownloadableFile($link->get('file_id'));
                 $record = array();

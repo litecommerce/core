@@ -63,11 +63,11 @@ class XLite_Module_ProductAdviser_Controller_Customer_Main extends XLite_Control
             $check[] = "email='$email'";
 
     		$notification = new XLite_Module_ProductAdviser_Model_Notification();
-    		$notification->set("type", CUSTOMER_NOTIFICATION_PRICE);
-        	$notification->set("product_id", $product_id);
+    		$notification->set('type', CUSTOMER_NOTIFICATION_PRICE);
+        	$notification->set('product_id', $product_id);
             $check[] = "notify_key='" . addslashes($notification->get('productKey')) . "'";
 
-            $check = implode(" AND ", $check);
+            $check = implode(' AND ', $check);
             $this->priceNotified[$product_id] = $notification->find($check);
         }
     	return $this->priceNotified[$product_id];

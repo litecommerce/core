@@ -52,12 +52,12 @@ function Shipping_cps_getRates($_this, $order)
             "width"				=> sprintf("%.02f", $options->width),
             "length"			=> sprintf("%.02f", $options->length));
 
-    if (($cached = $_this->_checkCache("cps_cache", $fields)) != false) {
+    if (($cached = $_this->_checkCache('cps_cache', $fields)) != false) {
     	//XLite_Model_Profiler::getInstance()->log('cps_cache');
         return $cached;
     }
     $rates = $_this->filterEnabled($_this->queryRates($options,$originalZipcode,$originalCountry,$itemsPrice,$weight,$description,$packed,$destinationCity,$destinationZipcode,$destinationState, $destinationCountry));
-    $_this->_cacheResult("cps_cache", $fields, $rates);
+    $_this->_cacheResult('cps_cache', $fields, $rates);
     // add shipping markups
     $rates = $_this->serializeCacheRates($rates);
     $rates = $_this->unserializeCacheRates($rates);
@@ -85,7 +85,7 @@ function Shipping_cps_parseResponse($_this,$response,$destination)
     $options = $_this->get('options');
     $options->currency_rate ? $currency_rate = $options->currency_rate : $currency_rate = 1;
 
-    foreach($response['PRODUCT'] as $_rate) {
+    foreach ($response['PRODUCT'] as $_rate) {
         $shipping = $_this->getService('cps','Canada Post ' . $_rate['NAME'],$destination);
         $id = $shipping->get('shipping_id');
         $rates[$id] = new XLite_Model_ShippingRate();

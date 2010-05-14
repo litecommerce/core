@@ -406,7 +406,7 @@ class XLite_Module_UPSOnlineTools_Model_Order extends XLite_Model_Order implemen
             $failed_items = $items;
         }
 
-        $this->set("ups_containers", $ups_containers);
+        $this->set('ups_containers', $ups_containers);
 
         if (!$this->xlite->get('PromotionEnabled')) {
             $this->update();
@@ -564,7 +564,7 @@ class XLite_Module_UPSOnlineTools_Model_Order extends XLite_Model_Order implemen
 
                         // increase incremental step on each iteration
                         $inc_width += $inc_width * 0.1;
-                    } while($ups_containers === false || count($ups_containers) > 1 || count($items) > 0);
+                    } while ($ups_containers === false || count($ups_containers) > 1 || count($items) > 0);
 
                     $packaging_type = self::PACKAGING_TYPE_PACKAGE;    // Package type 
                 }

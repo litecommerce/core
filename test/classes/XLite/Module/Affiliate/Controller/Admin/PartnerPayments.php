@@ -42,8 +42,8 @@ class XLite_Module_Affiliate_Controller_Admin_PartnerPayments extends XLite_Cont
     function handleRequest()
     {
         if (substr($this->action, 0, 14) == "payment_upload" && !$this->checkUploadedFile()) {
-        	$this->set("valid", false);
-        	$this->set("invalid_file", true);
+        	$this->set('valid', false);
+        	$this->set('invalid_file', true);
         }
 
         parent::handleRequest();
@@ -53,13 +53,13 @@ class XLite_Module_Affiliate_Controller_Admin_PartnerPayments extends XLite_Cont
     {
         $w = new XLite_View_Abstract();
         $w->component = $this;
-        $w->set("template", "modules/Affiliate/payments.tpl");
+        $w->set('template', "modules/Affiliate/payments.tpl");
         $this->startDownload('payments.csv');
         $w->init();
         $w->display();
 
         // do not output anything
-        $this->set("silent", true);
+        $this->set('silent', true);
     }
 
     function getDelimiter() 
@@ -73,7 +73,7 @@ class XLite_Module_Affiliate_Controller_Admin_PartnerPayments extends XLite_Cont
         $this->startDump();
         $options = array(
             "file"              => $this->getUploadedFile(),
-            "layout"            => array("order_id", "paid"),
+            "layout"            => array('order_id', "paid"),
             "delimiter"         => $this->delimiter,
             "return_error"		=> true,
             );

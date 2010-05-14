@@ -40,7 +40,7 @@ function func_get_product_options($_this)
         $weight_modifier = "";
         $changes_line = strstr($option_line, "=");
         $changes_line = str_replace("=", "", $changes_line);
-        $changes_line = str_replace(" ", "", $changes_line);
+        $changes_line = str_replace(' ', "", $changes_line);
         if ($changes_line != "") {
             $changes = explode(";", $changes_line);
             foreach ($changes as $line) {

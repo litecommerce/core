@@ -137,11 +137,11 @@ class XLite_Module_eSelect_Model_PaymentMethod_EselectCc extends XLite_Model_Pay
 
     function getOrderSuccessStatus()
     {
-        return $this->getOrderStatus("success", "P");
+        return $this->getOrderStatus('success', "P");
     }
 
     function getOrderFailStatus()
     {
-        return $this->getOrderStatus("fail", "F");
+        return $this->getOrderStatus('fail', "F");
     }
 }

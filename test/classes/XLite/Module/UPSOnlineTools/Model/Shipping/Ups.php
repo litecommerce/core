@@ -287,8 +287,8 @@ EOT;
     public function getRates(XLite_Model_Order $order)
     {
         // drop error semapfores
-        $this->session->set("ups_failed_items", false);
-        $this->session->set("ups_rates_error", false);
+        $this->session->set('ups_failed_items', false);
+        $this->session->set('ups_rates_error', false);
 
         if (
             (is_null($order->getProfile()) && !$this->config->General->def_calc_shippings_taxes)

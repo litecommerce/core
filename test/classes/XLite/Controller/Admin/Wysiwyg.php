@@ -36,7 +36,7 @@
 class XLite_Controller_Admin_Wysiwyg extends XLite_Controller_Admin_Abstract
 {
     public $builder = null;
-    public $exportTemplates = array("main.tpl", "common/print_invoice.tpl");
+    public $exportTemplates = array('main.tpl', "common/print_invoice.tpl");
     public $shortcuts = array(
             "var/html/main.html"=>"Storefront (aka Main page)", 
             "var/html/register_form.html"=>"User registration form",
@@ -122,8 +122,8 @@ class XLite_Controller_Admin_Wysiwyg extends XLite_Controller_Admin_Abstract
         global $options;
         // reset Layout settings to customer default
         $layout = XLite_Model_Layout::getInstance(); //::getInstance();
-        $layout->set("skin", $options['skin_details']["skin"]);
-        $layout->set("locale", $options['skin_details']["locale"]);
+        $layout->set('skin', $options['skin_details']["skin"]);
+        $layout->set('locale', $options['skin_details']["locale"]);
     }
 
     function _showBackLink()

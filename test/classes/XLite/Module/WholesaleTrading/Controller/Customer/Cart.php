@@ -117,7 +117,7 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Cart extends XLite_Contr
                 ) {
 
                     // TODO - add top message
-                    $this->set("returnUrl", $this->buildUrl('product', '', array('product_id' => $this->getCurrentItem()->getProduct()->get('product_id'))));
+                    $this->set('returnUrl', $this->buildUrl('product', '', array('product_id' => $this->getCurrentItem()->getProduct()->get('product_id'))));
                     return;
                 }
             }
@@ -136,7 +136,7 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Cart extends XLite_Contr
             return;
         }
 
-        $this->getCurrentItem()->set("amount", $amount);
+        $this->getCurrentItem()->set('amount', $amount);
  
         parent::action_add();
 

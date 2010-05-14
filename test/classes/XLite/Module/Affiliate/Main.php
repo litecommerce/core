@@ -94,7 +94,7 @@ class XLite_Module_Affiliate_Main extends XLite_Module_Abstract
     {
         parent::init();
 
-        XLite_Model_Image::getInstance()->registerImageClass("banner_image", "Banner images", "banners", "banner", "banner_id");
+        XLite_Model_Image::getInstance()->registerImageClass('banner_image', "Banner images", "banners", "banner", "banner_id");
 
         // common class decorations
         // admin backoffice - specific class decorations

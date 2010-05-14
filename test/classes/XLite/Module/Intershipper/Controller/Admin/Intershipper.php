@@ -35,7 +35,7 @@
  */
 class XLite_Module_Intershipper_Controller_Admin_Intershipper extends XLite_Controller_Admin_ShippingSettings
 {
-    public $params = array("target", "updated");
+    public $params = array('target', "updated");
     public $settings;
     public $error = '';
     public $updated = false;
@@ -78,8 +78,8 @@ class XLite_Module_Intershipper_Controller_Admin_Intershipper extends XLite_Cont
     function action_update()
     {
         $intershipper = new XLite_Module_Intershipper_Model_Shipping_Intershipper();
-        $intershipper->set("options", (object)$_POST);
-        $this->set("updated","1");
+        $intershipper->set('options', (object)$_POST);
+        $this->set('updated',"1");
     }
 
     /**
@@ -103,7 +103,7 @@ class XLite_Module_Intershipper_Controller_Admin_Intershipper extends XLite_Cont
     function action_test()
     {
         $this->intershipper = new XLite_Module_Intershipper_Model_Shipping_Intershipper();
-        $this->set("properties", $_GET);
+        $this->set('properties', $_GET);
         
         $this->rates = $this->intershipper->_queryRates($this->get('ounces'), $this->config->getComplex('Company.location_zipcode'), $this->config->getComplex('Company.location_country'), $this->get('destinationZipCode'), $this->get('destinationCountry'), $this->intershipper->get('options'), 0);
         $this->testResult = true;

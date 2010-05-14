@@ -54,10 +54,10 @@ class XLite_Module_WholesaleTrading_Controller_Admin_Product extends XLite_Contr
             $found = true;
         }
 
-        $pa->set("product_id", $this->product_id);
-        $pa->set("show_group", $this->parseAccess($_REQUEST['access_show']));
-        $pa->set("show_price_group", $this->parseAccess($_REQUEST['access_show_price']));
-        $pa->set("sell_group", $this->parseAccess($_REQUEST['access_sell']));
+        $pa->set('product_id', $this->product_id);
+        $pa->set('show_group', $this->parseAccess($_REQUEST['access_show']));
+        $pa->set('show_price_group', $this->parseAccess($_REQUEST['access_show_price']));
+        $pa->set('sell_group', $this->parseAccess($_REQUEST['access_sell']));
         
         if (true === $found) {
             $pa->update();
@@ -72,7 +72,7 @@ class XLite_Module_WholesaleTrading_Controller_Admin_Product extends XLite_Contr
         if (is_null($this->product_access)) {
             $pa = new XLite_Module_WholesaleTrading_Model_ProductAccess();
             if (!$pa->find("product_id='" . intval($this->product_id) . "'")) {
-                $pa->set("porduct_id", $this->product_id);
+                $pa->set('porduct_id', $this->product_id);
             }
             $this->product_access = $pa;
             $pa->collectGarbage();
@@ -93,10 +93,10 @@ class XLite_Module_WholesaleTrading_Controller_Admin_Product extends XLite_Contr
     function action_add_wholesale_pricing()
     {
         $wp = new XLite_Module_WholesaleTrading_Model_WholesalePricing();
-        $wp->set("product_id", $this->product_id);
-        $wp->set("price", $_REQUEST['wp_price']);
-        $wp->set("amount", $_REQUEST['wp_amount']);
-        $wp->set("membership", $_REQUEST['wp_membership']);
+        $wp->set('product_id', $this->product_id);
+        $wp->set('price', $_REQUEST['wp_price']);
+        $wp->set('amount', $_REQUEST['wp_amount']);
+        $wp->set('membership', $_REQUEST['wp_membership']);
         $wp->create();
     }
 
@@ -109,10 +109,10 @@ class XLite_Module_WholesaleTrading_Controller_Admin_Product extends XLite_Contr
     function action_update_wholesale_pricing()
     {
         $wp = new XLite_Module_WholesaleTrading_Model_WholesalePricing($_REQUEST['wprice_id']);
-        $wp->set("product_id", $this->product_id);
-        $wp->set("price", $_REQUEST['w_price']);
-        $wp->set("amount", $_REQUEST['w_amount']);
-        $wp->set("membership", $_REQUEST['w_membership']);
+        $wp->set('product_id', $this->product_id);
+        $wp->set('price', $_REQUEST['w_price']);
+        $wp->set('amount', $_REQUEST['w_amount']);
+        $wp->set('membership', $_REQUEST['w_membership']);
         $wp->update();
     }
 
@@ -123,9 +123,9 @@ class XLite_Module_WholesaleTrading_Controller_Admin_Product extends XLite_Contr
         if ($pl->find("product_id='" . intval($this->product_id) . "'")) {
             $action = "update";
         }
-        $pl->set("product_id", $this->product_id);
-        $pl->set("min", $_REQUEST['min_purchase']);
-        $pl->set("max", $_REQUEST['max_purchase']);
+        $pl->set('product_id', $this->product_id);
+        $pl->set('min', $_REQUEST['min_purchase']);
+        $pl->set('max', $_REQUEST['max_purchase']);
         $pl->$action();
     }
     
@@ -134,7 +134,7 @@ class XLite_Module_WholesaleTrading_Controller_Admin_Product extends XLite_Contr
         if (is_null($this->purchase_limit)) {
             $pl = new XLite_Module_WholesaleTrading_Model_PurchaseLimit();
             if (!$pl->find("product_id='" . intval($this->product_id) . "'")) {
-                $pl->set("product_id", $this->product_id);
+                $pl->set('product_id', $this->product_id);
             }
             $this->purchase_limit = $pl;
             $pl->collectGarbage();

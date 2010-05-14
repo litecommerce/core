@@ -35,7 +35,7 @@
  */
 class XLite_Controller_Customer_CheckoutSuccess extends XLite_Controller_Customer_Abstract
 {
-    public $params = array("target", "order_id");
+    public $params = array('target', "order_id");
     public $order = null;
 
 

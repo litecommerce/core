@@ -150,24 +150,24 @@ class XLite_Model_OrderItem extends XLite_Model_Abstract
         $this->product = $product;
 
         if (is_null($product)) {
-            $this->set("product_id", 0);
+            $this->set('product_id', 0);
 
         } else {
         	if ($this->config->Taxes->prices_include_tax) {
-        		$this->set("price", $this->formatCurrency($product->get('taxedPrice')));
+        		$this->set('price', $this->formatCurrency($product->get('taxedPrice')));
         	} else {
-            	$this->set("price", $product->get('price'));
+            	$this->set('price', $product->get('price'));
         	}
 
-            $this->set("product_id", $product->get('product_id'));
-            $this->set("product_name", $product->get('name'));
-            $this->set("product_sku", $product->get('sku'));
+            $this->set('product_id', $product->get('product_id'));
+            $this->set('product_name', $product->get('name'));
+            $this->set('product_sku', $product->get('sku'));
         }
     }
 
     function create()
     {
-        $this->set("item_id", $this->get('key'));
+        $this->set('item_id', $this->get('key'));
         parent::create();
     }
     
@@ -185,7 +185,7 @@ class XLite_Model_OrderItem extends XLite_Model_Abstract
         if ($amount <= 0) {
             $this->getOrder()->deleteItem($this);
         } else {
-            $this->set("amount", $amount);
+            $this->set('amount', $amount);
             $this->update();
         }
     }

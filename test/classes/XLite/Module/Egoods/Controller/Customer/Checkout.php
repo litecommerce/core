@@ -40,7 +40,7 @@ implements XLite_Base_IDecorator
     {
         $items = $this->cart->get('items');
         foreach ($items as $key => $i) {
-            if(!$i->isValid()) {
+            if (!$i->isValid()) {
                 $this->redirect("cart.php?target=checkout");
                 return;
             }

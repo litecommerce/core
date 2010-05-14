@@ -41,7 +41,7 @@ class XLite_Module_ProductAdviser_Model_RelatedProduct extends XLite_Model_Abstr
         "related_product_id" 		=> 0,
         "order_by" 					=> 0
     );
-    public $primaryKey = array("related_product_id", "product_id");
+    public $primaryKey = array('related_product_id', "product_id");
     public $defaultOrder = "order_by";
     public $alias = "related_products";
     public $product = null;

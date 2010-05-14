@@ -42,7 +42,7 @@ class XLite_Module_ProductAdviser_Model_ProductRecentlyViewed extends XLite_Mode
         "views_number"	=> 0,
         "last_viewed"	=> 0,
     );
-    public $primaryKey = array("sid", "product_id");
+    public $primaryKey = array('sid', "product_id");
     public $alias = "products_recently_viewed";
     public $defaultOrder = "views_number DESC, last_viewed DESC";
     public $product = null;
@@ -65,7 +65,7 @@ class XLite_Module_ProductAdviser_Model_ProductRecentlyViewed extends XLite_Mode
         $expired = $this->db->getAll($sql);
         if (is_array($expired) && count($expired) > 0) {
         	$hash = array();
-        	foreach($expired as $sid) {
+        	foreach ($expired as $sid) {
         		$sid = $sid['sid'];
         		if (!isset($hash[$sid])) {
         			$hash[$sid] = true;
@@ -75,7 +75,7 @@ class XLite_Module_ProductAdviser_Model_ProductRecentlyViewed extends XLite_Mode
         	}
         }
 
-        $this->xlite->set("RecentlyViewedCleaned", true);
+        $this->xlite->set('RecentlyViewedCleaned', true);
     }
 
     function cleanCurrentGarbage()
@@ -88,7 +88,7 @@ class XLite_Module_ProductAdviser_Model_ProductRecentlyViewed extends XLite_Mode
         $sql = "DELETE FROM $t1 WHERE sid='$sid'";
         $this->db->query($sql);
 
-        $this->xlite->set("CurrentRecentlyViewedCleaned", true);
+        $this->xlite->set('CurrentRecentlyViewedCleaned', true);
     }
 
     function getProduct()

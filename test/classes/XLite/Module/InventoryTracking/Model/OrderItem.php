@@ -53,7 +53,7 @@ class XLite_Module_InventoryTracking_Model_OrderItem extends XLite_Model_OrderIt
 
     function assignProductSku() 
     {
-        $this->set("product_sku", parent::get('sku'));
+        $this->set('product_sku', parent::get('sku'));
         if (!$this->xlite->get('ProductOptionsEnabled')) return false;
         if (!$this->getComplex('product.tracking')) return false;
 
@@ -67,7 +67,7 @@ class XLite_Module_InventoryTracking_Model_OrderItem extends XLite_Model_OrderIt
             if ($i->keyMatch($key)) {
                 $sku = $i->get('inventory_sku');
                 if (!empty($sku)) {
-                    $this->set("product_sku", $sku);
+                    $this->set('product_sku', $sku);
                     return true;
                 }
             }

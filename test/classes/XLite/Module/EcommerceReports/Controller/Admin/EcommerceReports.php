@@ -56,14 +56,14 @@ class XLite_Module_EcommerceReports_Controller_Admin_EcommerceReports extends XL
     {
         // form too big to GET data result, use POST
         // do not redirect after request
-        $this->set("valid", false);
+        $this->set('valid', false);
     }
     
     function fillForm() 
     {
         if (!isset($this->startDate)) {
             $date = getdate(time());
-            $this->set("startDate", mktime(0,0,0,$date['mon'],1,$date['year']));
+            $this->set('startDate', mktime(0,0,0,$date['mon'],1,$date['year']));
         }
         parent::fillForm();
     }
@@ -284,12 +284,12 @@ class XLite_Module_EcommerceReports_Controller_Admin_EcommerceReports extends XL
     function tsToDate($stamp)
     {
         $ts = array();
-        $ts['day'] = @date("j", $stamp);
-        $ts['weekday'] = @date("w", $stamp);
-        $ts['days'] = ($dt = @date("t", $stamp)) == 0 ? 7 : $dt;
-        $ts['month'] = @date("n", $stamp);
+        $ts['day'] = @date('j', $stamp);
+        $ts['weekday'] = @date('w', $stamp);
+        $ts['days'] = ($dt = @date('t', $stamp)) == 0 ? 7 : $dt;
+        $ts['month'] = @date('n', $stamp);
         $ts['quarter'] = ceil($ts['month'] / 3);
-        $ts['year'] = @date("Y", $stamp);
+        $ts['year'] = @date('Y', $stamp);
         return $ts;
     }
 

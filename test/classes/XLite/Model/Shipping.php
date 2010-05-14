@@ -164,7 +164,7 @@ class XLite_Model_Shipping extends XLite_Model_Abstract
 
         // unset the class, if it is not registerred within active shipping modules
         if ($id && ($class = $this->get('class')) && !isset(self::$registeredShippingModules[$class])) {
-            $this->set("class", null);
+            $this->set('class', null);
         }
     }
 

@@ -35,7 +35,7 @@
  */
 class XLite_Controller_Admin_ImportCatalog extends XLite_Controller_Admin_Abstract
 {
-    public $params = array("target", "page", "import_error");
+    public $params = array('target', "page", "import_error");
     public $page = "products"; // the default import page	
     public $pages = array('products' => 'Import products',
                        'extra_fields' => 'Import extra fields'
@@ -49,42 +49,42 @@ class XLite_Controller_Admin_ImportCatalog extends XLite_Controller_Admin_Abstra
     {
         if (substr($this->action, 0, 6) == "import" && !$this->checkUploadedFile()) {
             if ($_FILES['userfile']['tmp_name'] != "" && !is_uploaded_file($_FILES['userfile']['tmp_name'])) {
-                $this->set("invalid_userfile", true);
-                $this->set("invalid_userfile_state", "invalid_upload_file");
+                $this->set('invalid_userfile', true);
+                $this->set('invalid_userfile_state', "invalid_upload_file");
             }
 
             if (XLite_Core_Request::getInstance()->localfile != "" && !is_readable(XLite_Core_Request::getInstance()->localfile)) {
-                $this->set("invalid_localfile", true);
-                $this->set("invalid_localfile_state", "invalid_file");
+                $this->set('invalid_localfile', true);
+                $this->set('invalid_localfile_state', "invalid_file");
             }
             
             if ($_FILES['userfile']['tmp_name'] == "" && XLite_Core_Request::getInstance()->localfile == "") {
-                $this->set("invalid_userfile", true);
-                $this->set("invalid_userfile_state", "empty_file");
+                $this->set('invalid_userfile', true);
+                $this->set('invalid_userfile_state', "empty_file");
             }
 
-            $this->set("invalid_file", true);
-            $this->set("valid", false);
+            $this->set('invalid_file', true);
+            $this->set('valid', false);
         }
         
         $name = "";
         if ($this->action == "import_products" || $this->action == "layout") {
             if (!func_is_array_unique($this->product_layout, $name, "NULL")) {
-                $this->set("valid", false);
-                $this->set("invalid_field_order", true);
-                $this->set("invalid_field_name", $name);
+                $this->set('valid', false);
+                $this->set('invalid_field_order', true);
+                $this->set('invalid_field_name', $name);
             }
 
-            if ($this->action == "import_products" && !in_array("category", $this->product_layout) && $this->category_id == "") {
-                $this->set("valid", false);
-                $this->set("category_unspecified_error", true);
+            if ($this->action == "import_products" && !in_array('category', $this->product_layout) && $this->category_id == "") {
+                $this->set('valid', false);
+                $this->set('category_unspecified_error', true);
             }
         }
 
         if ( ($this->action == "import_fields" || $this->action == "fields_layout") && !func_is_array_unique($this->fields_layout, $name, "NULL") ) {
-            $this->set("valid", false);
-            $this->set("invalid_field_order", true);
-            $this->set("invalid_field_name", $name);
+            $this->set('valid', false);
+            $this->set('invalid_field_order', true);
+            $this->set('invalid_field_name', $name);
         }
         
         parent::handleRequest();
@@ -116,12 +116,12 @@ class XLite_Controller_Admin_ImportCatalog extends XLite_Controller_Admin_Abstra
         $layout = implode(',', XLite_Core_Request::getInstance()->$layout_name);
         $config = new XLite_Model_Config();
         if ($config->find("name='$layout_name'")) {
-            $config->set("value", $layout);
+            $config->set('value', $layout);
             $config->update();
         } else {
-            $config->set("name", $layout_name);
-            $config->set("category", "ImportExport");
-            $config->set("value", $layout);
+            $config->set('name', $layout_name);
+            $config->set('category', "ImportExport");
+            $config->set('value', $layout);
             $config->create();
         }
     }
@@ -148,12 +148,12 @@ class XLite_Controller_Admin_ImportCatalog extends XLite_Controller_Admin_Abstra
         $layout = implode(',', XLite_Core_Request::getInstance()->$layout_name);
         $config = new XLite_Model_Config();
         if ($config->find("name='$layout_name'")) {
-            $config->set("value", $layout);
+            $config->set('value', $layout);
             $config->update();
         } else {
-            $config->set("name", $layout_name);
-            $config->set("category", "ImportExport");
-            $config->set("value", $layout);
+            $config->set('name', $layout_name);
+            $config->set('category', "ImportExport");
+            $config->set('value', $layout);
             $config->create();
         }
     }

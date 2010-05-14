@@ -48,7 +48,7 @@ function Shipping_intershipper_parseResponse($_this, $response, $destination)
 
             $serviceName = "$carrier $service";
             // TODO - add 4 argument for getService()
-            $shipping = $_this->getService("intershipper", $serviceName, $destination);
+            $shipping = $_this->getService('intershipper', $serviceName, $destination);
             $id = $shipping->get('shipping_id');
             $rates[$id] = new XLite_Model_ShippingRate();
             $rates[$id]->shipping = $shipping;
@@ -105,7 +105,7 @@ function Shipping_intershipper_getRates($_this, $order)
         "codvalue"      => $cod,
         "insvalue"      => $options->insvalue);
 
-    $rates = $_this->_checkCache("ints_cache", $fields);
+    $rates = $_this->_checkCache('ints_cache', $fields);
     if ($rates === false) {
         $rates = $_this->_queryRates(
                     $weight, $ZipOrigination, $CountryOrigination, 
@@ -114,7 +114,7 @@ function Shipping_intershipper_getRates($_this, $order)
 
         if (!$_this->error) {
             // store the result in the cache
-            $_this->_cacheResult("ints_cache", $fields, $rates);
+            $_this->_cacheResult('ints_cache', $fields, $rates);
             // add shipping markups
             $rates = $_this->serializeCacheRates($rates);
             $rates = $_this->unserializeCacheRates($rates);

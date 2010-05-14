@@ -80,7 +80,7 @@ class XLite_Module_Affiliate_Controller_Customer_PartnerProduct extends XLite_Mo
                 foreach ($schema as $param => $value) {
                     $schema[$param] = $this->$param;
                 }
-                $config->set("value", serialize($schema));
+                $config->set('value', serialize($schema));
                 $config->update();
             }
         }

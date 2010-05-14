@@ -60,20 +60,20 @@ class XLite_Module_ProductAdviser_Controller_Customer_Product extends XLite_Cont
                 || (isset($referers[$product_id]) && $referers[$product_id] != $referer)
             ) {
             	$referers[$product_id] = $referer;
-            	$this->session->set("HTTP_REFERER", $referers);
+            	$this->session->set('HTTP_REFERER', $referers);
 
             	$statistic = new XLite_Module_ProductAdviser_Model_ProductRecentlyViewed();
             	$sid = $this->session->getID();
-                $statistic->set("sid", $sid);
-                $statistic->set("product_id", $product_id);
-                $statistic->set("last_viewed", time());
+                $statistic->set('sid', $sid);
+                $statistic->set('product_id', $product_id);
+                $statistic->set('last_viewed', time());
 
             	if ($statistic->find("sid='$sid' AND product_id='$product_id'")) {
-            		$statistic->set("views_number", intval($statistic->get('views_number'))+1);
+            		$statistic->set('views_number', intval($statistic->get('views_number'))+1);
                     $statistic->update();
 
             	} else {
-            		$statistic->set("views_number", 1);
+            		$statistic->set('views_number', 1);
                     $statistic->create();
             	}
     		}
@@ -87,8 +87,8 @@ class XLite_Module_ProductAdviser_Controller_Customer_Product extends XLite_Cont
 
                 // Product is out-of-stock
     			$this->rejectedItemInfo = new XLite_Base();
-    			$this->rejectedItemInfo->set("product_id", $this->getProduct()->get('product_id'));
-    			$this->rejectedItemInfo->set("product", new XLite_Model_Product($this->getProduct()->get('product_id')));
+    			$this->rejectedItemInfo->set('product_id', $this->getProduct()->get('product_id'));
+    			$this->rejectedItemInfo->set('product', new XLite_Model_Product($this->getProduct()->get('product_id')));
 
             	if ($this->isNotificationSaved($this->rejectedItemInfo)) {
         			$this->rejectedItemInfo = null;
@@ -102,26 +102,26 @@ class XLite_Module_ProductAdviser_Controller_Customer_Product extends XLite_Cont
 
                 	if ($rejectedItemInfo->product_id != $this->getProduct()->get('product_id')) {
                 		$this->rejectedItemInfo = null;
-                		$this->session->set("rejectedItem", null);
+                		$this->session->set('rejectedItem', null);
 
                 	} else {
             			$this->rejectedItemInfo = new XLite_Base();
-            			$this->rejectedItemInfo->set("product_id", $rejectedItemInfo->product_id);
-            			$this->rejectedItemInfo->set("product", new XLite_Model_Product($rejectedItemInfo->product_id));
+            			$this->rejectedItemInfo->set('product_id', $rejectedItemInfo->product_id);
+            			$this->rejectedItemInfo->set('product', new XLite_Model_Product($rejectedItemInfo->product_id));
 
             			if (isset($rejectedItemInfo->productOptions)) {
-                			$this->rejectedItemInfo->set("productOptions", $rejectedItemInfo->productOptions);
+                			$this->rejectedItemInfo->set('productOptions', $rejectedItemInfo->productOptions);
                 			$poStr = array();
 
-                			foreach($rejectedItemInfo->productOptions as $po) {
+                			foreach ($rejectedItemInfo->productOptions as $po) {
                 				$poStr[] = $po->class . ": " . $po->option;
                 			}
-                			$this->rejectedItemInfo->set("productOptionsStr", implode(", ", $poStr));
+                			$this->rejectedItemInfo->set('productOptionsStr', implode(", ", $poStr));
                 		}
 
                         if ($this->isNotificationSaved($rejectedItemInfo)) {
                         	$this->rejectedItemInfo = null;
-                			$this->session->set("rejectedItem", null);
+                			$this->session->set('rejectedItem', null);
                         }
                     }
                 }
@@ -162,24 +162,24 @@ class XLite_Module_ProductAdviser_Controller_Customer_Product extends XLite_Cont
             $check[] = "email = '$email'";
 
             $notification = new XLite_Module_ProductAdviser_Model_Notification();
-            $notification->set("type", CUSTOMER_NOTIFICATION_PRODUCT);
-    		$notification->set("product_id", $rejectedItemInfo->product_id);
+            $notification->set('type', CUSTOMER_NOTIFICATION_PRODUCT);
+    		$notification->set('product_id', $rejectedItemInfo->product_id);
 
             if (isset($rejectedItemInfo->productOptions)) {
                 if (isset($rejectedItemInfo->productOptions[0]) && is_object($rejectedItemInfo->productOptions[0])) {
     				$poArray = array();
-    				foreach($rejectedItemInfo->productOptions as $po) {
+    				foreach ($rejectedItemInfo->productOptions as $po) {
         				$poArray[$po->class] = array("option_id" => $po->option_id, "option" => $po->option);
     				}
-        			$notification->set("product_options", $poArray);
+        			$notification->set('product_options', $poArray);
 
                 } else {
-    				$notification->set("product_options", $rejectedItemInfo->productOptions);
+    				$notification->set('product_options', $rejectedItemInfo->productOptions);
     			}
         	}
 
     		if (isset($rejectedItemInfo->amount)) {
-    			$notification->set("quantity", $rejectedItemInfo->amount);
+    			$notification->set('quantity', $rejectedItemInfo->amount);
         	}
 
     	    $check[] = "notify_key = '" . addslashes($notification->get('productKey')) . "'";
@@ -217,11 +217,11 @@ class XLite_Module_ProductAdviser_Controller_Customer_Product extends XLite_Cont
             $check[] = "email='$email'";
 
     		$notification = new XLite_Module_ProductAdviser_Model_Notification();
-    		$notification->set("type", CUSTOMER_NOTIFICATION_PRICE);
-        	$notification->set("product_id", $this->get('product_id'));
+    		$notification->set('type', CUSTOMER_NOTIFICATION_PRICE);
+        	$notification->set('product_id', $this->get('product_id'));
             $check[] = "notify_key='" . addslashes($notification->get('productKey')) . "'";
 
-            $check = implode(" AND ", $check);
+            $check = implode(' AND ', $check);
             $this->priceNotified = $notification->find($check);
         }
 
@@ -241,7 +241,7 @@ class XLite_Module_ProductAdviser_Controller_Customer_Product extends XLite_Cont
     function action_rp_bulk()
     {
         if (isset($this->rp_bulk) && is_array($this->rp_bulk)) {
-            foreach($this->rp_bulk as $product_id => $pended) {
+            foreach ($this->rp_bulk as $product_id => $pended) {
                 if ($pended) {
                     $request = XLite_Core_Request::getInstance();
                     $request->product_id = $product_id;
@@ -252,7 +252,7 @@ class XLite_Module_ProductAdviser_Controller_Customer_Product extends XLite_Cont
             }
 
         	if ($this->config->General->redirect_to_cart) {
-            	$this->set("returnUrl", "cart.php?target=cart");
+            	$this->set('returnUrl', "cart.php?target=cart");
             }
         }
     }

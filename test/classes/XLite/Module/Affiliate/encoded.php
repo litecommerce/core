@@ -47,9 +47,9 @@ function func_Affiliate_charge(&$payment, $order)
         // check for existing partner payment
         $update = $payment->find("partner_id=".$order->getComplex('partner.profile_id')." AND order_id=".$order->get('order_id'));
         // save partner commissions
-        $payment->set("commissions", $commissions);
-        $payment->set("partner_id",  $order->getComplex('partner.profile_id'));
-        $payment->set("order_id",    $order->get('order_id'));
+        $payment->set('commissions', $commissions);
+        $payment->set('partner_id',  $order->getComplex('partner.profile_id'));
+        $payment->set('order_id',    $order->get('order_id'));
         // save payment
         if ($update) {
             $payment->update();
@@ -65,10 +65,10 @@ function func_Affiliate_charge(&$payment, $order)
                 $update = $pp->find("partner_id=".$parent->get('profile_id')." AND order_id=".$order->get('order_id')." AND affiliate=".$affiliate);
                 $pc =  round((double)($commissions / 100 * $rate + 0.00000000001), 2);
                 if ($pc >= 0.01) {
-                    $pp->set("commissions", $pc);
-                    $pp->set("partner_id",  $parent->get('profile_id'));
-                    $pp->set("order_id",    $order->get('order_id'));
-                    $pp->set("affiliate",   $affiliate);
+                    $pp->set('commissions', $pc);
+                    $pp->set('partner_id',  $parent->get('profile_id'));
+                    $pp->set('order_id',    $order->get('order_id'));
+                    $pp->set('affiliate',   $affiliate);
                     if ($update) {
                         $pp->update();
                     } else {
@@ -122,7 +122,7 @@ function func_Affiliate_calc_commission_rate($pc, $item)
     $result = round((double)$result + 0.00000000001, 2);
     if ($result > 0.01) {
         // save item commissions
-        $item->set("commissions", $result);
+        $item->set('commissions', $result);
         $item->update();
     }
     return $result;

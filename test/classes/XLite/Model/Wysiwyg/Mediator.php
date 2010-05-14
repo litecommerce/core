@@ -373,7 +373,7 @@ class XLite_Model_Wysiwyg_Mediator extends XLite_Base
         }
 
         if (isset($this->templateReferenceParams[$w->get('template')])) {
-            foreach($this->templateReferenceParams[$w->get('template')] as $name) {
+            foreach ($this->templateReferenceParams[$w->get('template')] as $name) {
                 $template .= '-'.strtr($w->attributesEvaled[$name], " /\\.", "____");
             }
         }
@@ -449,7 +449,7 @@ EOT
         $this->errors = 0;
         foreach ($templates as $template) {
             $tree = new $this->widgetClass;
-            $tree->set("template", $template);
+            $tree->set('template', $template);
             $this->buildFullTree($tree);
             if ($this->errors) {
                 return false;
@@ -513,7 +513,7 @@ EOT
     }
     function getTemplateLink($t)
     {
-        return strtr(str_replace(".tpl", ".html", $t), " /\\", "___");
+        return strtr(str_replace('.tpl', ".html", $t), " /\\", "___");
     }
     function _exportPage(&$root, &$page, $file)
     {
@@ -589,8 +589,8 @@ EOT;
     function importPage($page)
     {
         $wysiwygImporter = new XLite_Model_Wysiwyg_ImportParser();
-        $wysiwygImporter->set("source", $page);
-        $wysiwygImporter->set("imagesDir", $this->get('imagesDir'));
+        $wysiwygImporter->set('source', $page);
+        $wysiwygImporter->set('imagesDir', $this->get('imagesDir'));
         $wysiwygImporter->parse();
         $this->templateName = $wysiwygImporter->templateName;
         if (isset($this->layout->list[$this->templateName])) {
@@ -608,7 +608,7 @@ EOT;
         $templatesDir = $layout->getPath();
 
         $code = copyRecursive(HTML_BUILDER_PATH . 'images', $templatesDir . 'images');
-        if($code == 1 || !is_readable(HTML_BUILDER_PATH . 'images')){
+        if ($code == 1 || !is_readable(HTML_BUILDER_PATH . 'images')){
             print "<font color=red>WARNING: Directory " . HTML_BUILDER_PATH . 'images'  . " does not exist or is not readable.</font><br />";
         }
 
@@ -629,7 +629,7 @@ EOT;
                 $templateName = $this->templateName;
                 print "to $templateName...";
                 $template = new $this->templateClass;
-                $template->set("path", $templateName);
+                $template->set('path', $templateName);
                 if (!file_exists($template->get('file'))) {
                     print " <font color=red>[FAILURE: no such file " . $template->get('file') . "]</font>";
                     $this->errors++;
@@ -638,7 +638,7 @@ EOT;
                     $this->errors++;
                 } else {
                     $templateSource = $this->template;
-                    $template->set("content", $templateSource);
+                    $template->set('content', $templateSource);
                     print " <font color=green>[OK]</font>";
                     $template->save();
                 }
@@ -657,14 +657,14 @@ EOT;
     function increase_memory_limit($amount = 8)
     {
         //increase memory limit dynamically
-        if(!$this->getComplex('xlite.memoryLimitChangeable'))
+        if (!$this->getComplex('xlite.memoryLimitChangeable'))
             return;
 
         $amount = (int) $amount;
         $current_limit = @ini_get('memory_limit');
         $current_limit_byte = func_convert_to_byte($current_limit);
         if (function_exists('memory_get_usage') && ($current_limit_byte - memory_get_usage() < $amount * 1024 * 1024)) {
-            @ini_set("memory_limit", $current_limit_byte + (int) $amount * 1024 * 1024);
+            @ini_set('memory_limit', $current_limit_byte + (int) $amount * 1024 * 1024);
         }
     }
 }

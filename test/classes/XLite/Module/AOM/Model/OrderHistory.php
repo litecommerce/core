@@ -120,8 +120,8 @@ class XLite_Module_AOM_Model_OrderHistory extends XLite_Model_Abstract
             $secureChanges = $gpg->encrypt(serialize($secureChanges));
         }
 
-        parent::set("changes", serialize($value));
-        parent::set("secureChanges", $secureChanges);
+        parent::set('changes', serialize($value));
+        parent::set('secureChanges', $secureChanges);
     }
 
     function isSecureKey($key)
@@ -158,13 +158,13 @@ class XLite_Module_AOM_Model_OrderHistory extends XLite_Model_Abstract
         }
         
         if (!is_null($ordersItems))	{
-            foreach($ordersItems as $items) {
+            foreach ($ordersItems as $items) {
                 if (is_null($items['orderItem']) && !is_null($items['cloneItem'])) 
                     $history['items']['added'][] = $items['cloneItem']->get('product_name');
                 if (is_null($items['cloneItem']) && !is_null($items['orderItem'])) 
                     $history['items']['deleted'][] = $items['orderItem']->get('product_name');
             }
-            foreach($ordersItems as $items) {
+            foreach ($ordersItems as $items) {
                 if (!is_null($items['cloneItem']) && !is_null($items['orderItem'])) {
                     $cloneItem = $items['cloneItem']->get('properties');
                     $orderItem = $items['orderItem']->get('properties');
@@ -177,8 +177,8 @@ class XLite_Module_AOM_Model_OrderHistory extends XLite_Model_Abstract
             if (empty($history)) $history['items']["not_changed"] = true;
         }
         if (!is_null($order) && !is_null($cloneOrder) && $action == null) {
-                $fields = array("subtotal","shipping_cost","payment_method","discount", "global_discount", "payedByGC", "total", "payedByPoints");
-                foreach($fields as $field) 
+                $fields = array('subtotal',"shipping_cost","payment_method","discount", "global_discount", "payedByGC", "total", "payedByPoints");
+                foreach ($fields as $field) 
                     if ($order->get($field) != $cloneOrder->get($field)) {
                         $history['totals'][$field] = $order->get($field);
                         $history['changedTotals'][$field] = $cloneOrder->get($field);
@@ -222,8 +222,8 @@ class XLite_Module_AOM_Model_OrderHistory extends XLite_Model_Abstract
                 } else {
                     $temp_details = $order->get('details');
                 }
-                foreach($_POST['details'] as $ckey => $changedDetail) {
-                    foreach($temp_details as $key => $detail) {
+                foreach ($_POST['details'] as $ckey => $changedDetail) {
+                    foreach ($temp_details as $key => $detail) {
                         if ($key == $ckey && $detail != $changedDetail)
                         {
                             $details[$key] = $detail;
@@ -250,10 +250,10 @@ class XLite_Module_AOM_Model_OrderHistory extends XLite_Model_Abstract
 
         if (!empty($history)) {
             $orderHistory = new XLite_Module_AOM_Model_OrderHistory();
-            $orderHistory->set("order_id",$order->get('order_id'));
-            $orderHistory->set("login",$this->auth->getComplex('profile.login'));
-            $orderHistory->set("changes", $history);
-            $orderHistory->set("date",time());
+            $orderHistory->set('order_id',$order->get('order_id'));
+            $orderHistory->set('login',$this->auth->getComplex('profile.login'));
+            $orderHistory->set('changes', $history);
+            $orderHistory->set('date',time());
             $orderHistory->create();
         }
     }
