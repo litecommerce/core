@@ -117,17 +117,11 @@ echo "*** DEPLOYMENT_DIR: $DEPLOYMENT_DIR"
 echo "";
 
 
-# TODO: remove this later
-# Create directory for temporary files
-#[ -d $BASE_DIR/tmp ] && rm -rf $BASE_DIR/tmp
-#mkdir -p $BASE_DIR/tmp
-
-
 cd ${DEPLOYMENT_DIR}/modules/lc_connector/litecommerce/
 
 echo -n "Copying LiteCommerce files..."
 
-#cp -r skins_original/* skins/
+cp -r skins_original/* skins/
 
 echo -e "ok\n"
 
@@ -176,8 +170,7 @@ for i in $SQL_FILES; do
 	echo -e "ok"
 done
 
-
-echo -e "LC admin interface database installing...\n"
+echo -e "\nLC admin interface database installing...\n"
 
 #
 # Install SQL files to the LC admin demo database
