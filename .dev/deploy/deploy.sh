@@ -80,6 +80,9 @@ fi
 
 DEPLOYMENT_DIR=`realpath ${DEPLOYMENT_DIR}`
 
+#
+# Generate mysql command line to access site database
+#
 if [ "x$SITE_DBSOCK" = "x" ]; then
 	DBSOCK=""
 else
@@ -88,13 +91,23 @@ fi
 
 if [ "x$SITE_DBPORT" = "x" -o "x$DBSOCK" != "x" ]; then
 	DBPORT=""
+	DR_DBPORT=""
 else
 	DBPORT="-S $SITE_DBPORT"
+	DR_DBPORT=":$SITE_DBPORT"
 fi
 
 MYSQL_SITE_CMD="$MYSQL -h $SITE_DBHOST $DBSOCK $DBPORT -u $SITE_DBUSER --password=$SITE_DBPASS $SITE_DBNAME"
 
+#
+# Generate database URL and prefix for replacing in the drupal settings.php
+#
+DBURL="mysql://${SITE_DBUSER}:${SITE_DBPASS}@${SITE_DBHOST}${DR_DBPORT}/${SITE_DBNAME}"
+DBPREFIX="drupal_"
 
+#
+# Generate mysql command line to access LiteCommerce admin database
+#
 if [ "x$LC_DBSOCK" = "x" ]; then
 	DBSOCK=""
 else
@@ -197,8 +210,6 @@ cd ${DEPLOYMENT_DIR}/sites/default
 cp default.settings.php settings.php
 mkdir -p files
 
-DBURL="mysql://${SITE_DBUSER}:${SITE_DBPASS}@${SITE_DBHOST}/${SITE_DBNAME}"
-DBPREFIX="drupal_"
 
 FIND_1="^\\\$db_url =.*;$"
 REPLACE_1="\\\$db_url = \"${DBURL}\";"
@@ -245,7 +256,7 @@ REPLACE_11="web_dir = \"${LC_WEB_DIR}\""
 FILE_11="${DEPLOYMENT_DIR}/modules/lc_connector/litecommerce/etc/config.php"
 
 CURRENT_DATE=`date`
-LC_AUTH_CODE=`md5 -q -s "$CURRENT_DATE"`
+LC_AUTH_CODE=`$MD5 -q -s "$CURRENT_DATE"`
 
 FIND_12="^auth_code = \".*\"$"
 REPLACE_12="auth_code = \"${LC_AUTH_CODE}\""
