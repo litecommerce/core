@@ -62,7 +62,8 @@ sql/xlite_demo.sql
 sql/xlite_demo_user.sql
 "
 
-LC_MODULES=""
+# Setup writable permission (need if php is running under user www)
+SETUP_PERMISSIONS="1"
 
 # Miscellaneous settings
 PHP='/usr/local/php-530/bin/php'

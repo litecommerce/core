@@ -349,7 +349,6 @@ RESULT=`echo $SQL_QUERY | $MYSQL_LC_CMD 2>&1`
 echo -e "ok\n"
 
 
-
 #
 # Generate LC cache
 #
@@ -357,7 +356,28 @@ echo -n "LiteCommerce cache generating..."
 
 rm -rf ${DEPLOYMENT_DIR}/modules/lc_connector/litecommerce/var/run
 RESULT=`$PHP ${DEPLOYMENT_DIR}/modules/lc_connector/litecommerce/includes/prepend.php`
-echo -e "ok"
+[ "x${RESULT}" != "xRe-building cache, please wait..." ] && die "\n$RESULT"
+echo -e "ok\n"
+
+
+#
+# Setup permissions
+#
+if [ "x${SETUP_PERMISSIONS}" != "x" ]; then
+
+	echo -n "Permissions setting up..."
+
+	# Setup secure permissions on entire $DEPLOYMENT_DIR
+	find ${DEPLOYMENT_DIR} -type d -exec chmod 755 {} \;
+	find ${DEPLOYMENT_DIR} -type f -exec chmod 644 {} \;
+
+	# Setup writable permissions on somw directories/files
+	chmod 777 ${DEPLOYMENT_DIR}/modules/lc_connector/litecommerce/var
+	find ${DEPLOYMENT_DIR}/modules/lc_connector/litecommerce/var -type d -exec chmod 777 {} \;
+	find ${DEPLOYMENT_DIR}/modules/lc_connector/litecommerce/var -type f -not -name ".*" -exec chmod 666 {} \;
+
+fi
+
 
 #
 # Calculate and display elapsed time
