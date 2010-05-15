@@ -231,13 +231,14 @@ class Decorator
                 . '<td><img src="skins/progress_indicator.gif" /></td>'
                 . '<td>Re-building cache, please wait...</td>'
                 . '</tr></table>';
-            func_flush('<script type="text/javascript">document.write(\'' . $code . '\');</script>' . "\n");
+            $code = '<script type="text/javascript">document.write(\'' . $code . '\');</script>' . "\n";
 
         } else {
             $code = '<script type="text/javascript">self.location=\'' . $redirectUrl . '\';</script>'
                 . '<noscript><a href="' . $redirectUrl . '">Click here to redirect</a></noscript>';
-            func_flush($code);
         }
+
+        func_flush($code);
     }
 
     /**
@@ -457,7 +458,13 @@ class Decorator
             $this->configOptions = funcParseConfgFile();
         }
 
-        return empty($section) ? $this->configOptions : (isset($this->configOptions[$section]) ? $this->configOptions[$section] : null);
+        $options = $this->configOptions;
+        if ($section) {
+            $options = isset($options[$section]) ? $options[$section] : null;
+            
+        }
+
+        return $options;
     }
 
     /**
@@ -505,12 +512,17 @@ class Decorator
 
         // PDO flags using for connection
         $connectionParams = array(
-            PDO::ATTR_AUTOCOMMIT               => true,
-            PDO::ATTR_ERRMODE                  => PDO::ERRMODE_SILENT,
-            PDO::ATTR_PERSISTENT               => false,
+            PDO::ATTR_AUTOCOMMIT => true,
+            PDO::ATTR_ERRMODE    => PDO::ERRMODE_SILENT,
+            PDO::ATTR_PERSISTENT => false,
         );
 
-        return new PDO($this->getConnectionString($options), $user, $password, $connectionParams);
+        return new PDO(
+            $this->getConnectionString($options),
+            $user,
+            $password,
+            $connectionParams
+        );
     }
 
     /**
@@ -566,7 +578,9 @@ class Decorator
      */
     protected function isCacheDirExists()
     {
-        return file_exists(LC_CLASSES_CACHE_DIR) && is_dir(LC_CLASSES_CACHE_DIR) && is_readable(LC_CLASSES_CACHE_DIR);
+        return file_exists(LC_CLASSES_CACHE_DIR)
+            && is_dir(LC_CLASSES_CACHE_DIR)
+            && is_readable(LC_CLASSES_CACHE_DIR);
     }
 
     /**
@@ -580,7 +594,8 @@ class Decorator
     {
         $query = 'SELECT value FROM xlite_config WHERE category = \'General\' AND name = \'developer_mode\'';
 
-        return ('Y' === $this->fetchColumn($query)) && empty($_REQUEST['action']);
+        return ('Y' === $this->fetchColumn($query))
+            && empty($_REQUEST['action']);
     }
 
     /**
@@ -608,7 +623,8 @@ class Decorator
     {
         $pathInfo = pathinfo($filePath);
 
-        return !empty($pathInfo['extension']) && 'php' === strtolower($pathInfo['extension']); 
+        return !empty($pathInfo['extension'])
+            && 'php' === strtolower($pathInfo['extension']); 
     }
 
     /**
@@ -622,8 +638,9 @@ class Decorator
      */
     protected function getModuleNameByClassName($className)
     {
-        return preg_match('/XLite_Module_(\w+)(_|$)/U', $className, $matches) ?
-                        (('Abstract' === $matches[1]) ? null : $matches[1]) : null;
+        return (preg_match('/XLite_Module_(\w+)(_|$)/U', $className, $matches) && 'Abstract' !== $matches[1])
+            ? $matches[1]
+            : null;
     }
 
     /**
@@ -704,12 +721,14 @@ class Decorator
             if (!empty($modulesToDisable)) {
                 $modulesToDisable = array_unique($modulesToDisable);
                 $query = 'UPDATE xlite_modules SET enabled = \'0\' WHERE name IN '
-                         . '(' . implode(',', array_fill(0, count($modulesToDisable), '?')) . ')';
+                    . '(' . implode(',', array_fill(0, count($modulesToDisable), '?')) . ')';
                 $this->getDbHandler()->prepare($query)->execute($modulesToDisable);
             }
         }
 
-        return isset($moduleName) ? isset($this->activeModules[$moduleName]) : $this->activeModules;
+        return isset($moduleName)
+            ? isset($this->activeModules[$moduleName])
+            : $this->activeModules;
     }
 
     /**
@@ -745,7 +764,9 @@ class Decorator
                 $dependencies = $this->fetchColumn(
                     'SELECT dependencies FROM xlite_modules WHERE name = \'' . addslashes($module) . '\''
                 );
-                $this->moduleDependencies[$module] = empty($dependencies) ? array() : explode(',', $dependencies);
+                $this->moduleDependencies[$module] = empty($dependencies)
+                    ? array()
+                    : explode(',', $dependencies);
             }
         }
 
@@ -791,13 +812,16 @@ class Decorator
         }
 
         // There are unresolved dependencies
-        $isChanged || die ($this->getDependenciesErrorText($dependencies));
+        if (!$isChanged) {
+            die ($this->getDependenciesErrorText($dependencies));
+        }
+
+        $added = empty($dependencies)
+            ? array()
+            : $this->calculateModulePriorities($dependencies, $subLevelDependencies, ++$level);
 
         // Recursive call
-        return array_merge(
-            $priorities,
-            empty($dependencies) ? array() : $this->calculateModulePriorities($dependencies, $subLevelDependencies, ++$level)
-        );
+        return array_merge($priorities, $added);
     }
 
     /**
@@ -815,7 +839,9 @@ class Decorator
             $this->modulePriorities = $this->calculateModulePriorities($this->getModuleDependencies());
         }
 
-        return isset($this->modulePriorities[$moduleName]) ? $this->modulePriorities[$moduleName] : 0;
+        return isset($this->modulePriorities[$moduleName])
+            ? $this->modulePriorities[$moduleName]
+            : 0;
     }
 
     /**
@@ -832,38 +858,35 @@ class Decorator
 
         foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator(LC_CLASSES_DIR)) as $fileInfo) {
 
-            if ($fileInfo->isFile()) {
+            if ($fileInfo->isFile() && $this->checkFile($fileInfo->getPathname())) {
                 $filePath = $fileInfo->getPathname();
 
-                if ($this->checkFile($filePath)) {
+                // Parse file and get class info
+                list($class, $extends, $implements) = $this->getClassInfo($filePath);
 
-                    // Parse file and get class info
-                    list($class, $extends, $implements) = $this->getClassInfo($filePath);
+                // Check classes for active modules only
+                if (!empty($class) && $this->isActiveModule($this->getModuleNameByClassName($class))) {
 
-                    // Check classes for active modules only
-                    if (!empty($class) && $this->isActiveModule($this->getModuleNameByClassName($class))) {
+                    // Get path related to the "LC_CLASSES_DIR" directory
+                    $relativePath = preg_replace($fileNamePattern, '$1.php', $filePath);
 
-                        // Get path related to the "LC_CLASSES_DIR" directory
-                        $relativePath = preg_replace($fileNamePattern, '$1.php', $filePath);
+                     // Class defined in current PHP file has a wrong name (not corresponded to file name)
+                    if (isset($this->classesInfo[$class])) {
+                        die ('Class "' . $class . '" is already defined in file "' . $relativePath . '"');
+                    }
 
-                        // Class defined in current PHP file has a wrong name (not corresponded to file name)
-                        if (isset($this->classesInfo[$class])) {
-                            die ('Class "' . $class . '" is already defined in file "' . $relativePath . '"');
-                        }
+                    // Do not include class into cache if parent defined in currently disabled module
+                    if (empty($extends) || $this->isActiveModule($this->getModuleNameByClassName($extends))) {
 
-                        // Do not include class into cache if parent defined in currently disabled module
-                        if (empty($extends) || $this->isActiveModule($this->getModuleNameByClassName($extends))) {
-
-                            // Save data
-                            $this->classesInfo[$class] = array(
-                                self::INFO_FILE         => $relativePath,
-                                self::INFO_CLASS_ORIG   => $class,
-                                self::INFO_EXTENDS      => $extends,
-                                self::INFO_EXTENDS_ORIG => $extends,
-                                self::INFO_IS_DECORATOR => $this->isDecorator($implements),
-                                self::INFO_IS_SINGLETON => $this->isSingleton($implements),
-                            );
-                        }
+                        // Save data
+                        $this->classesInfo[$class] = array(
+                            self::INFO_FILE         => $relativePath,
+                            self::INFO_CLASS_ORIG   => $class,
+                            self::INFO_EXTENDS      => $extends,
+                            self::INFO_EXTENDS_ORIG => $extends,
+                            self::INFO_IS_DECORATOR => $this->isDecorator($implements),
+                            self::INFO_IS_SINGLETON => $this->isSingleton($implements),
+                        );
                     }
                 }
             }
@@ -1041,6 +1064,7 @@ class Decorator
             if (!defined('SILENT_CACHE_REBUILD')) {
                 if ('cli' == php_sapi_name()) {
                     $this->showPlainTextBlock();
+
                 } elseif (empty($_REQUEST['action'])) {
                     $this->showJavaScriptBlock();
                 }
@@ -1074,7 +1098,7 @@ class Decorator
             ) {
 
                 $isHttps = (isset($_SERVER['HTTPS']) && (strtolower($_SERVER['HTTPS'] == 'on') || $_SERVER['HTTPS'] == '1'))
-                            || (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == '443');
+                    || (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == '443');
                 $redirectUrl = ($isHttps ? 'https://' : 'http://') . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
                 if (@parse_url($redirectUrl) && empty($_REQUEST['action'])) {

@@ -1,47 +1,36 @@
 <?php
-/*
-+------------------------------------------------------------------------------+
-| LiteCommerce                                                                 |
-| Copyright (c) 2003-2009 Creative Development <info@creativedevelopment.biz>  |
-| All rights reserved.                                                         |
-+------------------------------------------------------------------------------+
-| PLEASE READ  THE FULL TEXT OF SOFTWARE LICENSE AGREEMENT IN THE  "COPYRIGHT" |
-| FILE PROVIDED WITH THIS DISTRIBUTION.  THE AGREEMENT TEXT  IS ALSO AVAILABLE |
-| AT THE FOLLOWING URL:                                                        |
-| http://www.litecommerce.com/software_license_agreement.html                  |
-|                                                                              |
-| THIS  AGREEMENT EXPRESSES THE TERMS AND CONDITIONS ON WHICH YOU MAY USE THIS |
-| SOFTWARE PROGRAM AND ASSOCIATED DOCUMENTATION THAT CREATIVE DEVELOPMENT, LLC |
-| REGISTERED IN ULYANOVSK, RUSSIAN FEDERATION (hereinafter referred to as "THE |
-| AUTHOR")  IS  FURNISHING  OR MAKING AVAILABLE TO  YOU  WITH  THIS  AGREEMENT |
-| (COLLECTIVELY,  THE "SOFTWARE"). PLEASE REVIEW THE TERMS AND  CONDITIONS  OF |
-| THIS LICENSE AGREEMENT CAREFULLY BEFORE INSTALLING OR USING THE SOFTWARE. BY |
-| INSTALLING,  COPYING OR OTHERWISE USING THE SOFTWARE, YOU AND  YOUR  COMPANY |
-| (COLLECTIVELY,  "YOU")  ARE ACCEPTING AND AGREEING  TO  THE  TERMS  OF  THIS |
-| LICENSE AGREEMENT. IF YOU ARE NOT WILLING TO BE BOUND BY THIS AGREEMENT,  DO |
-| NOT  INSTALL  OR USE THE SOFTWARE. VARIOUS COPYRIGHTS AND OTHER INTELLECTUAL |
-| PROPERTY  RIGHTS PROTECT THE SOFTWARE. THIS AGREEMENT IS A LICENSE AGREEMENT |
-| THAT  GIVES YOU LIMITED RIGHTS TO USE THE SOFTWARE AND NOT AN AGREEMENT  FOR |
-| SALE  OR  FOR TRANSFER OF TITLE. THE AUTHOR RETAINS ALL RIGHTS NOT EXPRESSLY |
-| GRANTED  BY  THIS AGREEMENT.                                                 |
-|                                                                              |
-| The Initial Developer of the Original Code is Ruslan R. Fazliev              |
-| Portions created by Ruslan R. Fazliev are Copyright (C) 2003 Creative        |
-| Development. All Rights Reserved.                                            |
-+------------------------------------------------------------------------------+
-*
-* LiteCommerce pre-requirements loader.
-*
-* $Id$
-*
-* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4:
-*/
+// vim: set ts=4 sw=4 sts=4 et:
 
-define('LC_DIR', realpath(dirname(dirname(__FILE__))));
+/**
+ * LiteCommerce
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to licensing@litecommerce.com so we can send you a copy immediately.
+ * 
+ * @category   LiteCommerce
+ * @package    XLite
+ * @subpackage Core
+ * @author     Creative Development LLC <info@cdev.ru> 
+ * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version    SVN: $Id$
+ * @link       http://www.litecommerce.com/
+ * @see        ____file_see____
+ * @since      3.0.0
+ */
 
 // It's the feature of PHP 5. We need to explicitly define current time zone.
 // See also http://bugs.php.net/bug.php?id=48914
 @date_default_timezone_set(@date_default_timezone_get());
+
+define('LC_DIR', realpath(dirname(__FILE__) . DIRECTORY_SEPARATOR . '..'));
 
 define('LC_DS', DIRECTORY_SEPARATOR);
 define('LC_ROOT_DIR', rtrim(LC_DIR, LC_DS) . LC_DS);
@@ -74,17 +63,20 @@ define('LC_OS_IS_WIN', LC_OS_CODE === 'win');
 // Session type
 define('LC_SESSION_TYPE', 'Sql');
 
+// Common end-of-line
+define('LC_EOL', 'cli' == php_sapi_name() ? "\n" : "<br />\n");
+
 set_include_path(
-	get_include_path()
-	. PATH_SEPARATOR . LC_EXT_LIB_DIR
+    get_include_path()
+    . PATH_SEPARATOR . LC_EXT_LIB_DIR
 );
 
 // Some common functions
-require_once LC_ROOT_DIR . 'includes' . LC_DS . 'functions.php';
+require_once (LC_ROOT_DIR . 'includes' . LC_DS . 'functions.php');
 
 if (!defined('XLITE_INSTALL_MODE')) {
-	// Check and (if needed) rebild classes cache
-	include_once LC_ROOT_DIR . 'includes' . LC_DS . 'decoration.php';
+    // Check and (if needed) rebild classes cache
+    require_once (LC_ROOT_DIR . 'includes' . LC_DS . 'decoration.php');
 }
 
 /**
@@ -98,18 +90,17 @@ if (!defined('XLITE_INSTALL_MODE')) {
  */
 function __lc_autoload($className)
 {
-	// FIXME - remove checks
-	if (0 === strpos($className, 'XLite')) {
-		if (defined('XLITE_INSTALL_MODE')) {
-			$fn = LC_CLASSES_DIR . str_replace('_', LC_DS, $className) . '.php';
-		} else {
-			$fn = LC_CLASSES_CACHE_DIR . str_replace('_', LC_DS, $className) . '.php';
-		}
+    if (0 === strncmp($className, 'XLite', 5)) {
+        $fn = defined('XLITE_INSTALL_MODE')
+            ? LC_CLASSES_DIR
+            : LC_CLASSES_CACHE_DIR;
 
-		if (file_exists($fn)) {
-			include_once $fn;
-		}
-	}
+        $fn .= str_replace('_', LC_DS, $className) . '.php';
+
+        if (file_exists($fn)) {
+            require_once ($fn);
+        }
+    }
 }
 
 spl_autoload_register('__lc_autoload');
