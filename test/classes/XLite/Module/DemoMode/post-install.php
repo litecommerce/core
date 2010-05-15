@@ -1,1 +1,0 @@
-<b>Note:</b> You can get super user previleges using the following link: <a href='admin.php?target=demo_mode&action=gain_access&code=0b9a8e53ee243ff1c1fc8a6df4723390'>admin.php?target=demo_mode&action=gain_access&code=0b9a8e53ee243ff1c1fc8a6df4723390</a>

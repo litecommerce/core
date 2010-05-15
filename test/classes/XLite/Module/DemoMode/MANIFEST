@@ -1,6 +1,0 @@
-module_id=10
-name=DemoMode
-description=Demo mode
-enabled=0
-version=2.0
-dependencies=

@@ -73,7 +73,6 @@
 {end:}
 <widget target="access_denied" template="access_denied.tpl">
 <widget class="XLite_View_AdvBlock" />
-<widget module="DemoMode" target="settings,payment_method,payment_methods,modules,memberships" template="common/dialog.tpl" body="modules/DemoMode/warning.tpl" head="Demo mode warning">
 <widget template="common/dialog.tpl" head="Customer zone warning" body="customer_zone_warning.tpl" IF="{getCustomerZoneWarning()}">
 <widget target="main" template="common/dialog.tpl" head="Welcome to the Administrator Zone" body="menu.tpl">
 <widget target="modules" template="common/dialog.tpl" head="Modules" body="modules.tpl">
@@ -183,7 +182,6 @@
 <widget module="AustraliaPost" template="modules/AustraliaPost/main.tpl">
 <widget module="CanadaPost" target="cps" class="XLite_View_Tabber" body="{pageTemplate}" switch="target">
 <widget module="CanadaPost" target="cps" template="common/dialog.tpl" body="modules/CanadaPost/test.tpl" head="Canada Post Live Test">
-<widget module="DemoMode" target="demo_mode"  template="common/dialog.tpl" body="modules/DemoMode/denied.tpl" head="Demo Mode Access Error">
 <widget module="XCartImport" target="xcart_import" template="common/dialog.tpl" body="modules/XCartImport/dialog.tpl" head="Import X-Cart data">
 <widget module="Affiliate" template="modules/Affiliate/main.tpl">
 <widget module="UPSOnlineTools" template="modules/UPSOnlineTools/main.tpl">
