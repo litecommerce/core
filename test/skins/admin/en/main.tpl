@@ -106,7 +106,7 @@
 <widget target="wysiwyg" template="common/dialog.tpl" head="HTML design import/export" body="wysiwyg.tpl" />
 *}
 
-<widget class="XLite_View_Model_Profile_Modify" />
+<widget class="{xlite.factory.XLite_View_Model_Profile_Trigger.getProfileFormClass()}" />
 
 {*<widget target="profile" class="XLite_View_RegisterForm" head="Modify profile" name="profileForm" IF="{getRequestParamValue(#mode#)=#modify#|getRequestParamValue(#mode#)=##}" />
 <widget target="profile" class="XLite_View_RegisterForm" head="Add new user" name="registerForm" IF="{getRequestParamValue(#mode#)=#register#}" />*}

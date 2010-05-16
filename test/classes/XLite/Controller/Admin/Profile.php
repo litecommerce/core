@@ -55,7 +55,7 @@ class XLite_Controller_Admin_Profile extends XLite_Controller_Admin_Abstract
      */
     protected function getModelFormClass()
     {
-        return 'XLite_View_Model_Profile_Modify';
+        return XLite_View_Model_Profile_Trigger::getInstance()->getProfileFormClass();
     }
 
     /**
@@ -65,9 +65,21 @@ class XLite_Controller_Admin_Profile extends XLite_Controller_Admin_Abstract
      * @access protected
      * @since  3.0.0
      */
-    protected function doActionModify()
+    protected function doActionUpdate()
     {
-        return $this->getModelForm()->performAction('modify');
+        return $this->getModelForm()->performAction('update');
+    }
+
+    /**
+     * Register user during checkout
+     *
+     * @return void
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function doActionRegister()
+    {
+        return $this->getModelForm()->performAction('create');
     }
 
 

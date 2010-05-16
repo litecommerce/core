@@ -50,6 +50,18 @@ class XLite_View_Model_Profile_Modify extends XLite_View_Model_Profile_Abstract
 
 
     /**
+     * Check if profile ID is passed in request
+     *
+     * @return bool
+     * @access public
+     * @since  3.0.0
+     */
+    public function checkRequestProfileId()
+    {
+        return !empty(XLite_Core_Request::getInstance()->profile_id);
+    }
+
+    /**
      * Return ID of current profile
      * 
      * @return int 
@@ -58,27 +70,26 @@ class XLite_View_Model_Profile_Modify extends XLite_View_Model_Profile_Abstract
      */
     public function getProfileId()
     {
-        $profileId = XLite_Core_Request::getInstance()->profile_id;
-
-        return empty($profileId) ? XLite_Model_Session::getInstance()->get('profile_id') : $profileId;
+        return $this->checkRequestProfileId() 
+            ? XLite_Core_Request::getInstance()->profile_id 
+            : XLite_Model_Session::getInstance()->get('profile_id');
     }
 
     /**
-     * Perform some action for the model object
-     * 
-     * @param string $action action to perform
-     * @param array  $data   form data
-     *  
+     * Perform certain action for the model object
+     *
+     * @param array $data model properties
+     *
      * @return bool
-     * @access public
+     * @access protected
      * @since  3.0.0
      */
-    public function performAction($action, array $data = array())
+    protected function performActionUpdate(array $data = array())
     {
-        $result = parent::performAction($action, $data);
+        if ($this->checkRequestProfileId()) {
+            $this->setReturnUrlParams(array('profile_id' => $this->getProfileId()));
+        }
 
-        $this->setReturnUrlParams(array('profile_id' => $this->getProfileId()));
-
-        return $result;
+        return parent::performActionUpdate($data);
     }
 }

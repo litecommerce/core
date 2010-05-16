@@ -100,6 +100,18 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
     }
 
     /**
+     * Default URL to redirect
+     * 
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultReturnURL()
+    {
+        return null;
+    }
+
+    /**
      * Perform redirect 
      * 
      * @param string $url redirect URL
@@ -221,7 +233,7 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
         );
 
         $this->widgetParams += array(
-            self::PARAM_RETURN_URL    => new XLite_Model_WidgetParam_String('Return URL', null),
+            self::PARAM_RETURN_URL    => new XLite_Model_WidgetParam_String('Return URL', $this->getDefaultReturnURL()),
             self::PARAM_REDIRECT_CODE => new XLite_Model_WidgetParam_Int('Redirect code', $this->getDefaultRedirectCode()),
         );
     }

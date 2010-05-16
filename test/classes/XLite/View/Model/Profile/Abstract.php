@@ -517,6 +517,5 @@ abstract class XLite_View_Model_Profile_Abstract extends XLite_View_Model_Abstra
             $this->sections = XLite_Core_Converter::filterArrayByKeys($this->sections, $sections);
         }
     }
-
 }
 

@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage View
+ * @subpackage ____sub_package____
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -27,54 +27,50 @@
  */
 
 /**
- * XLite_View_Form_Profile_Modify 
+ * XLite_View_Model_Profile_Trigger 
  * 
  * @package    XLite
  * @subpackage ____sub_package____
  * @since      3.0.0
  */
-class XLite_View_Form_Profile_Modify extends XLite_View_Form_Profile_Abstract
+class XLite_View_Model_Profile_Trigger extends XlIte_Base implements XLite_Base_ISingleton
 {
-    /**
-     * Return ID for current profile
-     * 
-     * @return int|null
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getProfileId()
-    {
-        return XLite_View_Model_Abstract::getCurrentForm()->getProfileId();
-    }
+	/**
+	 * Register mode
+	 * 
+	 * @return string
+	 * @access protected
+	 * @since  3.0.0
+	 */
+	protected function getRegisterMode()
+	{
+		return 'register';
+	}
+
+
+	/**
+	 * Return class name of the register form widget
+	 * 
+	 * @return string
+	 * @access public
+	 * @since  3.0.0
+	 */
+	public function getProfileFormClass()
+	{
+		return 'XLite_View_Model_Profile_' 
+			. ($this->getRegisterMode() === XLite_Core_Request::getInstance()->mode ? 'Register' : 'Modify');
+	}
+
 
     /**
-     * getDefaultAction 
-     * 
-     * @return string
-     * @access protected
+     * Use this function to get a reference to this class object
+     *
+     * @return XLite
+     * @access public
      * @since  3.0.0
      */
-    protected function getDefaultAction()
+    public static function getInstance()
     {
-        return 'update';
-    }
-
-    /**
-     * getDefaultParams 
-     * 
-     * @return array
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getDefaultParams()
-    {
-        $result = parent::getDefaultParams();
-
-        if (XLite_View_Model_Abstract::getCurrentForm()->checkRequestProfileId()) {
-            $result['profile_id'] = $this->getProfileId();
-        }
-
-        return $result;
+        return self::getInternalInstance(__CLASS__);
     }
 }
-

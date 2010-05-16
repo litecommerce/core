@@ -48,6 +48,43 @@ class XLite_View_Model_Profile_Register extends XLite_View_Model_Profile_Abstrac
         return 'XLite_View_Form_Profile_Register';
     }
 
+    /**
+     * Perform certain action for the model object
+     *
+     * @param array $data model properties
+     *
+     * @return bool
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function performActionCreate(array $data = array())
+    {
+        $result = parent::performActionCreate($data);
+
+        if ($result) {
+            $this->setReturnUrlParams(array('profile_id' => $this->getModelObject()->get('profile_id')));
+        }
+
+        return $result;
+    }
+
+
+    /**
+     * Perform some action for the model object
+     *
+     * @param string $action action to perform
+     * @param array  $data   form data
+     *
+     * @return bool
+     * @access public
+     * @since  3.0.0
+     */
+    public function performAction($action, array $data = array())
+    {
+        $this->setReturnUrlParams(array(self::PARAM_MODE => 'register'));
+
+        return parent::performAction($action, $data);
+    }
 
     /**
      * Return ID of current profile

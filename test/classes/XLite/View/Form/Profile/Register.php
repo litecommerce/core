@@ -46,5 +46,17 @@ class XLite_View_Form_Profile_Register extends XLite_View_Form_Profile_Abstract
     {
         return 'register';
     }
+
+    /**
+     * getDefaultParams
+     *
+     * @return array
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultParams()
+    {
+        return parent::getDefaultParams() + array(self::PARAM_MODE => 'register');
+    }
 }
 
