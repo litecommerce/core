@@ -141,7 +141,7 @@ class XLite_Module_WholesaleTrading_Model_ProductAccess extends XLite_Model_Abst
 
     function collectGarbage()
     {
-        $product_table_name = XLite_Model_Factory::createObjectInstance('XLite_Model_Product')->getTable();
+        $product_table_name = XLite_Model_Factory::create('XLite_Model_Product')->getTable();
         $table_name = $this->getTable();
 
         $sql =<<<EOSQL

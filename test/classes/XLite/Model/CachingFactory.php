@@ -106,7 +106,7 @@ class XLite_Model_CachingFactory extends XLite_Model_Factory implements XLite_Ba
      */
     public static function getObject($signature, $class, array $args = array())
     {
-        return self::getObjectFromCallback($signature, 'self', 'createObjectInstance', array($class, $args));
+        return self::getObjectFromCallback($signature, 'self', 'create', array($class, $args));
     }
 
     /**

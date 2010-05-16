@@ -144,6 +144,6 @@ class XLite_Model_ListNode_CheckoutStep extends XLite_Model_ListNode
      */
     public function getTopMessage()
     {
-        return XLite_Model_Factory::createObjectInstance($this->getWidgetClass())->getTopMessage($this->isPassed());
+        return XLite_Model_Factory::create($this->getWidgetClass())->getTopMessage($this->isPassed());
     }
 }
