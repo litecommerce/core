@@ -71,7 +71,7 @@ class XLite_Controller_Admin_ImageFiles extends XLite_Controller_Admin_Abstract
     */
     function getImageClasses()
     {
-        return XLite_Model_Image::getInstance()->get('imageClasses');
+        return XLite_Model_Image::getImageClasses();
     }
     
     function getPageReturnUrl()

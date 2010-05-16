@@ -122,6 +122,32 @@ class XLite_View_Image extends XLite_View_Abstract
     }
 
     /**
+     * checkImage 
+     * 
+     * @return bool
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function checkImage()
+    {
+        return $this->getParam(self::PARAM_IMAGE) 
+            && $this->getParam(self::PARAM_IMAGE)->isExists();
+    }
+
+    /**
+     * checkDefaultImage 
+     * 
+     * @return bool
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function checkDefaultImage()
+    {
+        return $this->getParam(self::PARAM_USE_DEFAULT_IMAGE) 
+            && XLite::getInstance()->getOptions(array('images', 'default_image'));
+    }
+
+    /**
      * Set widget parameters
      *
      * @param array $params Widget parameters
@@ -152,24 +178,18 @@ class XLite_View_Image extends XLite_View_Abstract
      */
     public function isVisible()
     {
-        $result = parent::isVisible()
-            && (
-                ($this->getParam(self::PARAM_IMAGE) && $this->getParam(self::PARAM_IMAGE)->isExists())
-                || (
-                    $this->getParam(self::PARAM_USE_DEFAULT_IMAGE)
-                    && XLite::getInstance()->getOptions(array('images', 'default_image'))
-                )
-            );
+        $result = parent::isVisible();
 
         if ($result) {
-            if ($this->getParam(self::PARAM_IMAGE) && $this->getParam(self::PARAM_IMAGE)->isExists()) {
 
+            if ($this->checkImage()) {
                 $this->processImage();
 
-            } else {
-
+            } elseif ($this->checkDefaultImage()) {
                 $this->processDefaultImage();
 
+            } else {
+                $result = false;
             }
         }
 

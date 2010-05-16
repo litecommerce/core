@@ -36,14 +36,46 @@
 class XLite_Model_Factory extends XLite_Base implements XLite_Base_ISingleton
 {
     /**
-     * It's not possible to instantiate this class using the "new" operator
-     *
+     * Check if class is a singleton 
+     * 
+     * @param ReflectionClass $handler class descriptor
+     *  
      * @return void
      * @access protected
      * @since  3.0.0
      */
-    protected function __construct()
+    protected static function isSingleton(ReflectionClass $handler)
     {
+        return $handler->implementsInterface('XLite_Base_ISingleton');
+    }
+
+    /**
+     * Return a singleton refernce
+     *
+     * @param string $class class name
+     *
+     * @return XLite_Base
+     * @access protected
+     * @since  3.0.0
+     */
+    protected static function getSingleton($class)
+    {
+        return call_user_func(array($class, 'getInstance'));
+    }
+
+    /**
+     * Create new object
+     * 
+     * @param ReflectionClass $handler class descriptor
+     * @param array           $args    constructor params
+     *  
+     * @return XLite_Base
+     * @access protected
+     * @since  3.0.0
+     */
+    protected static function createObject(ReflectionClass $handler, array $args = array())
+    {
+        return $handler->hasMethod('__construct') ? $handler->newInstanceArgs($args) : $handler->newInstance();
     }
 
 
@@ -87,20 +119,6 @@ class XLite_Model_Factory extends XLite_Base implements XLite_Base_ISingleton
     {
         $handler = new ReflectionClass($class);
 
-        return $handler->hasMethod('__construct') ? $handler->newInstanceArgs($args) : $handler->newInstance();
-    }
-
-    /**
-     * Return a singleton refernce
-     * 
-     * @param string $class class name
-     *  
-     * @return XLite_Base
-     * @access public
-     * @since  3.0.0
-     */
-    public static function getSingleton($class)
-    {
-        return call_user_func(array($class, 'getInstance'));
+        return self::isSingleton($handler) ? self::getSingleton($class) : self::createObject($handler, $args);
     }
 }

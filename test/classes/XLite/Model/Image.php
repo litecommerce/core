@@ -33,7 +33,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_Image extends XLite_Model_Abstract implements XLite_Base_ISingleton
+class XLite_Model_Image extends XLite_Model_Abstract
 {
     const IMAGES_DIR = 'images';
     const IMAGES_CACHE_DIR = 'cache';
@@ -112,18 +112,6 @@ class XLite_Model_Image extends XLite_Model_Abstract implements XLite_Base_ISing
      */
     protected static $registeredImageClasses = null;
 
-    /**
-     * Get class instance 
-     * 
-     * @return XLite_Model_Image
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function getInstance()
-    {
-        return self::getInternalInstance(__CLASS__);
-    }
 
     /**
      * Register image class 
@@ -139,10 +127,10 @@ class XLite_Model_Image extends XLite_Model_Abstract implements XLite_Base_ISing
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function registerImageClass($class, $comment, $tableName, $fieldPrefix, $idField)
+    public static function registerImageClass($class, $comment, $tableName, $fieldPrefix, $idField)
     {
-        if (is_null(self::$registeredImageClasses)) {
-            self::$registeredImageClasses = $this->getDefaultImageClasses();
+        if (!isset(self::$registeredImageClasses)) {
+            self::$registeredImageClasses = self::getDefaultImageClasses();
         }
 
         self::$registeredImageClasses[$class] = new XLite_Model_ImageClass();
@@ -166,10 +154,10 @@ class XLite_Model_Image extends XLite_Model_Abstract implements XLite_Base_ISing
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getImageClasses()
+    public static function getImageClasses()
     {
-        if (is_null(self::$registeredImageClasses)) {
-            self::$registeredImageClasses = $this->getDefaultImageClasses();
+        if (!isset(self::$registeredImageClasses)) {
+            self::$registeredImageClasses = self::getDefaultImageClasses();
         }
 
         return self::$registeredImageClasses;
@@ -183,7 +171,7 @@ class XLite_Model_Image extends XLite_Model_Abstract implements XLite_Base_ISing
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getDefaultImageClasses()
+    protected static function getDefaultImageClasses()
     {
         $list = array(
             'product_thumbnail' => array(
@@ -232,7 +220,7 @@ class XLite_Model_Image extends XLite_Model_Abstract implements XLite_Base_ISing
     {
         parent::__construct();
 
-        if (!is_null($class)) {
+        if (isset($class)) {
 
             $imageClasses = $this->get('imageClasses');
             $this->imageClass = $class;
@@ -832,8 +820,7 @@ class XLite_Model_Image extends XLite_Model_Abstract implements XLite_Base_ISing
      */
     public function isExists()
     {
-        return parent::isExists()
-            && $this->get('type') != '';
+        return parent::isExists() && $this->get('type') != '';
     }
     
     /**
@@ -1025,7 +1012,7 @@ class XLite_Model_Image extends XLite_Model_Abstract implements XLite_Base_ISing
 
     function createFileName($id = null)
     {
-        if (is_null($id)) {
+        if (!isset($id)) {
             $id = $this->get($this->autoIncrement);
         }
 

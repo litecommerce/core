@@ -82,7 +82,7 @@ class XLite_Module_DetailedImages_Main extends XLite_Module_Abstract
     {
         parent::init();
 
-        XLite_Model_Image::getInstance()->registerImageClass(
+        XLite_Model_Image::registerImageClass(
             'detailed_image',
             'Detailed images',
             'images',
