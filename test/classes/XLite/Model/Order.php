@@ -489,12 +489,12 @@ class XLite_Model_Order extends XLite_Model_Abstract
     {
         $subtotal = 0;
 
-        foreach ($this->get('items') as $item) {
-            if ($shippedOnly && !$item->get('shipped')) {
+        foreach ($this->getItems() as $item) {
+            if ($shippedOnly && !$item->isShipped()) {
                 continue;
             }
 
-            $subtotal += $item->get('total');
+            $subtotal += $item->getTotal();
         }
 
         if (!$shippedOnly) {
