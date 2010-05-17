@@ -976,3 +976,54 @@ function func_get_timezone() {
 function func_get_timezones() {
     return class_exists('DateTimeZone') ? DateTimeZone::listIdentifiers() : null;
 }
+
+/**
+ * Check if LiteCommerce installed
+ * 
+ * @return bool
+ * @since  3.0
+ */
+function isLiteCommerceInstalled()
+{
+    $checkResult = file_exists(LC_SKINS_DIR . 'admin/en/welcome.tpl')
+        && file_exists(LC_CONFIG_DIR . 'config.php');
+
+    if ($checkResult) {
+
+        $data = XLite::getInstance()->getOptions('database_details');
+
+        if (is_array($data)) {
+            $checkResult = !empty($data['hostspec'])
+                && !empty($data['database'])
+                && !empty($data['username']);
+
+            if ($checkResult) {
+
+                if (!empty($data['socket'])) {
+                    $host = $data['hostspec'] . ':' . $data['socket'];
+
+                } elseif (!empty($data['port'])) {
+                    $host = $data['hostspec'] . ':' . $data['port'];
+
+                } else {
+                    $host = $data['hostspec'];
+                }
+
+                $checkResult = @mysql_connect($host, $data['username'], $data['password']) 
+                    && @mysql_select_db($data['database']);
+
+                if ($checkResult) {
+                    if ($res = @mysql_query('SELECT login from xlite_profiles LIMIT 1')) {
+                        $data = mysql_fetch_row($res);
+                        $checkResult = !empty($data[0]);
+
+                    } else {
+                        $checkResult = false;
+                    }
+                }
+            }
+        }
+    }
+    
+    return $checkResult;
+}
