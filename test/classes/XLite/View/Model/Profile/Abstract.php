@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage ____sub_package____
+ * @subpackage View
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -27,11 +27,11 @@
  */
 
 /**
- * XLite_View_Model_Profile_Abstract 
+ * Profile model widget
  * 
- * @package    XLite
- * @subpackage ____sub_package____
- * @since      3.0.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
 abstract class XLite_View_Model_Profile_Abstract extends XLite_View_Model_Abstract
 {
@@ -267,6 +267,8 @@ abstract class XLite_View_Model_Profile_Abstract extends XLite_View_Model_Abstra
                 case self::SECTION_SHIPPING:
                     $this->formFields += $this->getShippingAddressFields();
                     break;
+
+                default:
             }
         }
     }
@@ -322,13 +324,17 @@ abstract class XLite_View_Model_Profile_Abstract extends XLite_View_Model_Abstra
     {
         $result = true;
 
-        if (isset($this->sections[self::SECTION_MAIN]) && (!empty($data['password']) || !empty($data['password_conf']))) {
+        if (
+            isset($this->sections[self::SECTION_MAIN])
+            && (!empty($data['password']) || !empty($data['password_conf']))
+        ) {
 
             $result = $data['password'] == $data['password_conf'];
 
             if (!$result) {
                 XLite_Core_TopMessage::getInstance()->addError('Password and its confirmation do not match');
             }
+
         } else {
 
             $this->getModelObject()->unsetProperty('password');
@@ -352,7 +358,8 @@ abstract class XLite_View_Model_Profile_Abstract extends XLite_View_Model_Abstra
         return $this->checkPassword($data) ? parent::performActionCreate($data) : false;
     }
 
-    /* Update profile 
+    /**
+     * Update profile 
      * 
      * @param array $data model properties
      *  
@@ -379,16 +386,15 @@ abstract class XLite_View_Model_Profile_Abstract extends XLite_View_Model_Abstra
         return $this->checkPassword($data) ? parent::performActionModify($data) : false;
     }
 
-
     /**
      * Return ID of current profile
      * 
-     * @return int 
-     * @access protected
+     * @return integer
+     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     abstract public function getProfileId();
-
 
     /**
      * Return fields list by the corresponding schema
@@ -501,12 +507,14 @@ abstract class XLite_View_Model_Profile_Abstract extends XLite_View_Model_Abstra
     }
 
     /**
-     * Save form sections list
-     *
-     * @param array $params widget params
-     *
+     * Constructor
+     * 
+     * @param array $params   Widget parameters
+     * @param array $sections Sections lsit
+     *  
      * @return void
      * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function __construct(array $params = array(), array $sections = array())

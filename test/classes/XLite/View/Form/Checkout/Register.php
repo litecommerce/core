@@ -27,11 +27,11 @@
  */
 
 /**
- * XLite_View_Form_Checkout_Register 
+ * Register form (Checkout page)
  * 
- * @package    XLite
- * @subpackage ____sub_package____
- * @since      3.0.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
 class XLite_View_Form_Checkout_Register extends XLite_View_Form_Checkout_Abstract
 {

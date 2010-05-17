@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage ____sub_package____
+ * @subpackage View
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -27,11 +27,11 @@
  */
 
 /**
- * XLite_View_Model 
+ * Abstract model widget
  * 
- * @package    XLite
- * @subpackage ____sub_package____
- * @since      3.0.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
 abstract class XLite_View_Model_Abstract extends XLite_View_Dialog
 {
@@ -483,7 +483,7 @@ abstract class XLite_View_Model_Abstract extends XLite_View_Dialog
      * @access protected
      * @since  3.0.0
      */
-    protected function success($setTopMessages = true)
+    protected function postprocessSuccessAction($setTopMessages = true)
     {
         if ($setTopMessages) {
             XLite_Core_TopMessage::getInstance()->add(
@@ -504,7 +504,7 @@ abstract class XLite_View_Model_Abstract extends XLite_View_Dialog
      * @access protected
      * @since  3.0.0
      */
-    protected function error($setTopMessages = true)
+    protected function postprocessErrorAction($setTopMessages = true)
     {
         if ($setTopMessages) {
             XLite_Core_TopMessage::getInstance()->addBatch(
@@ -617,6 +617,7 @@ abstract class XLite_View_Model_Abstract extends XLite_View_Dialog
     {
         $action = 'performAction' . ucfirst($action);
 
+        // Variable name = 'performAction' + ucfirst($action)
         return $this->$action($data);
     }
 
@@ -753,13 +754,13 @@ abstract class XLite_View_Model_Abstract extends XLite_View_Dialog
 
             $result = $this->callActionHandler($action, $properties);
             if ($result) {
-                $this->success();
+                $this->postprocessSuccessAction();
             }
 
         } else {
 
             $this->saveFormData($data);
-            $this->error();
+            $this->postprocessErrorAction();
         }
 
         return $result;

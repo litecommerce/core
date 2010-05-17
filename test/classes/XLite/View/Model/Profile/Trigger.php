@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage ____sub_package____
+ * @subpackage View
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -27,40 +27,38 @@
  */
 
 /**
- * XLite_View_Model_Profile_Trigger 
+ * Profile model switcher widget
  * 
- * @package    XLite
- * @subpackage ____sub_package____
- * @since      3.0.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
 class XLite_View_Model_Profile_Trigger extends XlIte_Base implements XLite_Base_ISingleton
 {
-	/**
-	 * Register mode
-	 * 
-	 * @return string
-	 * @access protected
-	 * @since  3.0.0
-	 */
-	protected function getRegisterMode()
-	{
-		return 'register';
-	}
+    /**
+     * Register mode
+     * 
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getRegisterMode()
+    {
+        return 'register';
+    }
 
-
-	/**
-	 * Return class name of the register form widget
-	 * 
-	 * @return string
-	 * @access public
-	 * @since  3.0.0
-	 */
-	public function getProfileFormClass()
-	{
-		return 'XLite_View_Model_Profile_' 
-			. ($this->getRegisterMode() === XLite_Core_Request::getInstance()->mode ? 'Register' : 'Modify');
-	}
-
+    /**
+     * Return class name of the register form widget
+     * 
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getProfileFormClass()
+    {
+        return 'XLite_View_Model_Profile_' 
+            . ($this->getRegisterMode() === XLite_Core_Request::getInstance()->mode ? 'Register' : 'Modify');
+    }
 
     /**
      * Use this function to get a reference to this class object
