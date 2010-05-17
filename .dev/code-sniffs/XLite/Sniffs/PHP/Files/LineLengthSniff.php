@@ -146,9 +146,11 @@ class XLite_Sniffs_PHP_Files_LineLengthSniff extends XLite_ReqCodesSniff
 
             $lineLength = strlen($lineContent);
             if ($this->absoluteLineLimit > 0 && $lineLength > $this->absoluteLineLimit) {
-
-                $error = 'Line exceeds maximum limit of '.$this->absoluteLineLimit." characters; contains $lineLength characters";
-                $phpcsFile->addError($this->getReqPrefix('REQ.PHP.2.2.1') . $error, $stackPtr);
+				$pos = $phpcsFile->findPrevious(T_STATIC, $stackPtr);
+				if (!$pos || $tokens[$stackPtr]['line'] != $tokens[$pos]['line']) {
+	                $error = 'Line exceeds maximum limit of ' . $this->absoluteLineLimit . " characters; contains $lineLength characters";
+    	            $phpcsFile->addError($this->getReqPrefix('REQ.PHP.2.2.1') . $error, $stackPtr);
+				}
 
             } else if ($lineLength > $this->lineLimit) {
 				// FIXME - this warning is temporary commented
