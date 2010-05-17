@@ -388,7 +388,7 @@ abstract class XLite_View_Model_Abstract extends XLite_View_Dialog
      */
     protected function prepareFormDataToSave(array $data)
     {
-        return XLite_Core_Converter::flatArray($data);
+        return XLite_Core_Converter::convertTreeToFlatArray($data);
     }
 
     /**

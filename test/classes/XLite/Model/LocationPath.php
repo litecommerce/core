@@ -27,7 +27,7 @@
  */
 
 /**
- * ____description____
+ * Current location path
  * 
  * @package XLite
  * @see     ____class_see____
@@ -44,7 +44,6 @@ class XLite_Model_LocationPath extends XLite_Base
      */
     protected $nodes = array();
 
-
     /**
      * Set the params 
      * 
@@ -57,7 +56,7 @@ class XLite_Model_LocationPath extends XLite_Base
     public function __construct(array $nodes = array())
     {
         if (!empty($nodes)) {
-    		$this->nodes = $nodes;
+            $this->nodes = $nodes;
         }
     }
 

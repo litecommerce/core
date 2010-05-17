@@ -643,19 +643,8 @@ class XLite_Model_HTTPS extends XLite_Base
             }
         }
 
-        if (!function_exists('xliteCURLHeaderCallback')) {
-            function xliteCURLHeaderCallback($curl, $header) {
-                global $xliteCURLObject;
-
-                return $xliteCURLObject->setHeadersCallback($header);
-            }
-        }
-
-        global $xliteCURLObject;
-
-        $xliteCURLObject = $this;
-
-        curl_setopt($c, CURLOPT_HEADERFUNCTION, 'xliteCURLHeaderCallback');
+        saveCURLHeader($this);
+        curl_setopt($c, CURLOPT_HEADERFUNCTION, 'saveCURLHeader');
 
         if ($this->user) {
             curl_setopt($c, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
@@ -768,22 +757,73 @@ class XLite_Model_HTTPS extends XLite_Base
      */
     protected function requestCURL()
     {
+        $result = self::HTTPS_SUCCESS;
+
         if ($this->detectCURL() == self::HTTPS_ERROR) {
-            return self::HTTPS_ERROR;
+            $result = self::HTTPS_ERROR;
+
+        } elseif (!$this->cert && !$this->supportsInsecure) {
+            $result = self::HTTPS_ERROR;
+            $this->error = 'curl version must be > 7.10 or you must use SSL certificates';
+
+        } else {
+
+            list($execline, $fname) = $this->getCURLCommandLine();
+
+            $this->response = array();
+            exec($execline, $this->response, $this->curlErrorCode);
+
+            $this->response = implode('', $this->response);
+            if (file_exists($fname)) {
+                $this->rawHeaders = file_get_contents($fname);
+                unlink($fname);
+            }
+
+            if ($this->curlErrorCode) {
+                $this->error = 'Curl error #' . $this->curlErrorCode;
+
+                if (isset($this->curlErrors[$this->curlErrorCode])) {
+                    $this->error .= ': ' . $this->curlErrors[$this->curlErrorCode];
+
+                    $url = new Net_URL2($this->url);
+
+                    $this->error = str_replace('PROTO', $url->protocol, $this->error);
+                    $this->error = str_replace('FULLURL', $this->url, $this->error);
+                    $this->error = str_replace('HOST', $url->host, $this->error);
+                }
+
+                // get detailed error message
+                $erromsg = array();
+                exec($execline . ' ' . $this->url . ' 2>&1', $erromsg, $this->curlErrorCode);
+                $erromsg = join('', $erromsg);
+                $this->error .= ' \'' . $erromsg . '\'';
+
+                $result = self::HTTPS_ERROR;
+
+            } elseif ($this->rawHeaders) {
+                $this->parseResponseHeaders($this->rawHeaders);
+            }
         }
 
-        $supportsInsecure = $this->supportsInsecure;
+        return $result;
+    }
+
+    /**
+     * Get CURL command line and headers file
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getCURLCommandLine()
+    {
 
         $execline = $this->curlBinary . ' -k'
             . ' -d "' . preg_replace('/"/', '\"', $this->getPost()) . '"';
 
         if ($this->cert) {
             $execline .= ' --cert "' . $this->cert . '"';
-
-        } elseif (!$supportsInsecure) {
-            $this->error = 'curl version must be > 7.10 or you must use SSL certificates';
-
-            return self::HTTPS_ERROR;
         }
 
         if ($this->kcert) {
@@ -835,44 +875,7 @@ class XLite_Model_HTTPS extends XLite_Base
         $fname = $this->getTempFilename('lc_curl_headers');
         $execline .= ' -D ' . $fname;
 
-        $this->response = array();
-        exec($execline . ' -s ' . $this->url, $this->response, $this->curlErrorCode);
-
-        $this->response = join('', $this->response);
-        if (file_exists($fname)) {
-            $this->rawHeaders = file_get_contents($fname);
-            unlink($fname);
-        }
-
-        if ($this->curlErrorCode) {
-            if (isset($this->curlErrors[$this->curlErrorCode])) {
-                $this->error = 'Curl error ' . $this->curlErrorCode . ': '
-                    . $this->curlErrors[$this->curlErrorCode];
-
-                $url = new Net_URL2($this->url);
-
-                $this->error = str_replace('PROTO', $url->protocol, $this->error);
-                $this->error = str_replace('FULLURL', $this->url, $this->error);
-                $this->error = str_replace('HOST', $url->host, $this->error);
-
-            } else {
-                $this->error = 'Curl error #' . $this->curlErrorCode;
-            }
-
-            // get detailed error message
-            $erromsg = array();
-            exec($execline . ' ' . $this->url . ' 2>&1', $erromsg, $this->curlErrorCode);
-            $erromsg = join('', $erromsg);
-            $this->error .= ' \'' . $erromsg . '\'';
-
-            return self::HTTPS_ERROR;
-        }
-
-        if ($this->rawHeaders) {
-            $this->parseResponseHeaders($this->rawHeaders);
-        }
-
-        return self::HTTPS_SUCCESS;
+        array($execline .= ' -s ' . $this->url, $fname);
     }
 
     /**
@@ -905,10 +908,50 @@ class XLite_Model_HTTPS extends XLite_Base
      */
     protected function requestOpenSSL()
     {
+        $result = self::HTTPS_SUCCESS;
+
         if (self::HTTPS_ERROR == $this->detectOpenSSL()) {
-            return self::HTTPS_ERROR;
+            $result = self::HTTPS_ERROR;
+
+        } else {
+
+            $cmdline = $this->getOpenSSLCommandLine();
+            $data = $this->getPost();
+
+            $errFile = $this->getTempFilename('lc_ossl_errors');
+
+            $descriptorspec = array(
+                array('pipe', 'r'),
+                array('pipe', 'w'),
+                array('file', $errFile, 'a')
+            );
+
+            $fp = proc_open($cmdline, $descriptorspec, $pipes);
+            if (!is_resource($fp)) {
+                $this->error = 'Can\'t execute command ' . $cmdline;
+                $result = self::HTTPS_ERROR;
+
+            } elseif (!$this->sendOpenSSLRequest($pipes)) {
+                $result = self::HTTPS_ERROR;
+
+            } elseif ($this->processOpenSSLRedirect()) {
+                $result = $this->requestOpenSSL();
+            }
         }
 
+        return $result;
+    }
+
+    /**
+     * Get OpenSSL command line 
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getOpenSSLCommandLine()
+    {
         $url = new Net_URL2($this->url);
         if ($url->port == 80) {
             $url->port = 443;
@@ -930,23 +973,24 @@ class XLite_Model_HTTPS extends XLite_Base
             $args[] = '-ssl3';
         }
 
-        $cmdline = func_find_executable('openssl') . ' s_client ' . implode(' ', $args) . ' -quiet 2>&1';
+        return func_find_executable('openssl') . ' s_client ' . implode(' ', $args) . ' -quiet 2>&1';
+    }
+
+    /**
+     * Send OpenSSL request 
+     * 
+     * @param array $pipes Process pipes array
+     *  
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function sendOpenSSLRequest(array $pipes)
+    {
+        $result = true;
+
         $data = $this->getPost();
-
-        $errFile = $this->getTempFilename('lc_ossl_errors');
-
-        $descriptorspec = array(
-            array('pipe', 'r'),
-            array('pipe', 'w'),
-            array('file', $errFile, 'a')
-        );
-
-        $fp = proc_open($cmdline, $descriptorspec, $pipes);
-        if (!is_resource($fp)) {
-            $this->error = 'Can\'t execute command ' . $cmdline;
-
-            return self::HTTPS_ERROR;
-        }
 
         fputs($pipes[0], $this->method . ' ' . $url->path . '?' . $url->getQueryString() . ' HTTP/1.0' . self::CRLF);
         fputs($pipes[0], 'Host: ' . $url->host . self::CRLF);
@@ -988,16 +1032,30 @@ class XLite_Model_HTTPS extends XLite_Base
 
         if (false === $pos) {
             $this->error = 'openssl error ' . $data;
+            $result = false;
 
-            return self::HTTPS_ERROR;
+        } else {
+
+            // parse headers
+            $this->parseResponseHeaders(substr($data, 0, $pos));
+            $this->response = trim(substr($data, $pos));
         }
 
-        // parse headers
-        $this->parseResponseHeaders(substr($data, 0, $pos));
-        $this->response = trim(substr($data, $pos));
+        return $result;
+    }
 
-        // handle redirect
-        $result = self::HTTPS_SUCCESS;
+    /**
+     * Check and preprocess data for redirect request
+     * 
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function processOpenSSLRedirect()
+    {
+        $result = false;
+
         if (
             isset($this->headers['location'])
             && $this->headers['location']
@@ -1008,7 +1066,7 @@ class XLite_Model_HTTPS extends XLite_Base
             $this->headers = array();
             $this->url     = $url->resolve($this->headers['location'])->getURL();
 
-            $result = $this->requestOpenSSL();
+            $result = true;
         }
 
         return $result;
@@ -1062,3 +1120,31 @@ class XLite_Model_HTTPS extends XLite_Base
         return tempnam($dir, $name);
     }
 }
+
+/**
+ * cURL header callback
+ * 
+ * @param mixed  $curl   cURL request resource or XLite_Model_HTTPS object
+ * @param string $header Headers string
+ *  
+ * @return integer
+ * @see    ____func_see____
+ * @since  3.0.0
+ */
+function saveCURLHeader($curl, $header = '')
+{
+    static $object = null;
+
+    $result = 0;
+
+    if ($curl instanceof XLite_Model_HTTPS) {
+        $object = $curl;
+    }
+
+    if ($header) {
+        $result = $object->setHeadersCallback($header);
+    }
+
+    return $result;
+}
+

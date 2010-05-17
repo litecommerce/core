@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage ____sub_package____
+ * @subpackage Model
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -27,11 +27,11 @@
  */
 
 /**
- * XLite_Model_CheckoutSteps 
+ * Checkout steps list
  * 
- * @package    XLite
- * @subpackage ____sub_package____
- * @since      3.0.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
 class XLite_Model_List_CheckoutSteps extends XLite_Model_List
 {
@@ -104,6 +104,7 @@ class XLite_Model_List_CheckoutSteps extends XLite_Model_List
             $this->$name = $this->findByCallbackResult('checkMode', array(XLite_Core_Request::getInstance()->mode));
 
             if (isset($method)) {
+                // $method is method argument. See getCurrentStep() method
                 $this->$method($this->$name);
             }
         }

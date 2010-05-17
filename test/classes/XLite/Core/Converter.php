@@ -178,13 +178,13 @@ class XLite_Core_Converter extends XLite_Base implements XLite_Base_ISingleton
      * @access public
      * @since  3.0.0
      */
-    public static function flatArray(array $data, $currKey = '')
+    public static function convertTreeToFlatArray(array $data, $currKey = '')
     {
         $result = array();
 
         foreach ($data as $key => $value) {
             $key = $currKey . (empty($currKey) ? $key : '[' . $key . ']');
-            $result += is_array($value) ? self::flatArray($value, $key) : array($key => $value);
+            $result += is_array($value) ? self::convertTreeToFlatArray($value, $key) : array($key => $value);
         }
 
         return $result;
