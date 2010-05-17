@@ -51,6 +51,16 @@ class XLite_Model_Profiler extends XLite_Base implements XLite_Base_ISingleton
     protected static $queries = array();
 
     /**
+     * List of memory measuring points 
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected static $memoryPoints = array();
+
+    /**
      * Enabled flag
      * 
      * @var    boolean
@@ -237,7 +247,8 @@ class XLite_Model_Profiler extends XLite_Base implements XLite_Base_ISingleton
     /**
      * Log same time range
      * 
-     * @param string $timePoint Time range name
+     * @param string  $timePoint  Time range name
+     * @param boolean $additional Additional metric flag
      *  
      * @return void
      * @access public
@@ -419,9 +430,38 @@ HTML;
             );
         }
 
+        echo ('</table>');
+
+        if (self::$memoryPoints) {
+            $html = <<<HTML
+<table cellspacing="0" cellpadding="3" border="1" style="width: auto;">
+    <caption>Memory points</caption>
+    <tr>
+        <th nowrap="nowrap">Memory, Mbytes</th>
+        <th nowrap="nowrap">Changes, Mbytes</th>
+        <th>Back trace</th>
+    </tr>
+HTML;
+            echo ($html);
+
+            $lastMem = 0;
+            foreach (self::$memoryPoints as $d) {
+                $diff = $d['memory'] - $lastMem;
+                echo (
+                    '<tr>'
+                    . '<td>' . number_format(round($d['memory'] / 1024 / 1024, 3), 3) . '</td>'
+                    . '<td>' . number_format(round($diff / 1024 / 1024, 3), 3) . '</td>'
+                    . '<td>' . implode(' << ', $d['trace']) . '</td>'
+                    . '</tr>'
+                );
+                $lastMem = $d['memory'];
+            }
+
+            echo ('</table>');
+        }
+
         if ($this->points) {
             $html = <<<HTML
-</table>
 <table cellspacing="0" cellpadding="3" border="1" style="width: auto;">
     <caption>Log points</caption>
     <tr>
@@ -441,9 +481,8 @@ HTML;
                 );
             }
 
+            echo ('</table>');
         }
-
-        echo ('</table>');
     }
 
     /**
@@ -483,16 +522,19 @@ HTML;
         $this->lastTime = microtime(true);
 
         // Uncomment if you want to truncate queries
-        /*if (strlen($query)>300) {
+        /*
+        if (strlen($query)>300) {
             $query = substr($query, 0, 300) . ' ...';
             
-        }*/
+        }
+        */
 
         if (!isset(self::$queries[$query])) {
             self::$queries[$query] = array(
                 'time' => array(),
                 'trace' => $this->getBackTrace(),
             );
+            $this->addMemoryPoint();
         }
     }
 
@@ -511,6 +553,22 @@ HTML;
         if (isset(self::$queries[$query])) {
             self::$queries[$query]['time'][] = microtime(true) - $this->lastTime;
         }
+    }
+
+    /**
+     * Add memory measure point 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function addMemoryPoint()
+    {
+        self::$memoryPoints[] = array(
+            'memory' => memory_get_usage(),
+            'trace' => $this->getBackTrace(),
+        );
     }
 
     /**

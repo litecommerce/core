@@ -79,6 +79,9 @@ if (!defined('XLITE_INSTALL_MODE')) {
     require_once (LC_ROOT_DIR . 'includes' . LC_DS . 'decoration.php');
 }
 
+// Set default memory limit
+func_set_memory_limit('32M');
+
 /**
  * Class autoload function
  * 

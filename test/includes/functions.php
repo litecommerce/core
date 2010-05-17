@@ -953,7 +953,7 @@ function func_check_memory_limit($current_limit, $required_limit) {
 
         @ini_set('memory_limit', $required_limit);
         $limit = @ini_get('memory_limit');
-        return (strcasecmp($limit, $required_limit) == 0);
+        return 0 === strcasecmp($limit, $required_limit);
     }
 
     return true; 
