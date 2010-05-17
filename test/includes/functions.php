@@ -171,14 +171,6 @@ function func_is_executable($file)
         : (is_file($file) && is_readable($file));
 }
 
-/**
-* shutdown function
-*/
-function shutdown()
-{
-    exit();
-}
-
 function func_define($name, $value) {
     if (!defined($name)) {
         define($name, $value);
@@ -627,95 +619,6 @@ function generate_code($length = 8)
     return $code;
 }
 
-function func_die($message)
-{
-    // FIXME
-    die ($message);
-
-    static $ignore;
-    static $trace_message;
-
-    $trace_message .= "<pre>\n";
-    if (function_exists("debug_backtrace")) {
-        foreach (debug_backtrace() as $trace) {
-
-            if (!is_array($trace)) continue;
-
-            if (!isset($trace["file"])) {
-                $trace["file"] = "?";
-            }
-            if (!isset($trace["line"])) {
-                $trace["line"] = "?";
-            }
-            if (!isset($trace["class"])) {
-                $trace["class"] = "?";
-            }
-
-            // FIXME
-            $trace_args = (!empty($trace["args"]) && is_array($trace["args"])) ? @implode(',', $trace["args"]) : "n/a";
-            $trace_message .= $trace["class"]."::".$trace["function"] . "(". basename($trace["file"]).":".$trace["line"].") <b>args:</b> $trace_args\n";
-        }
-    }
-    $trace_message .= $message . "</pre>\n" . $ignore . "\n";
-
-    if (!$ignore) {
-        $ignore ++;
-        // func_new can also cause func_die being called
-        $dialog = new XLite_Controller_Abstract();
-    }
-
-    $options = XLite::getInstance()->getOptions();
-
-    if ((isset($options["log_details"]["suppress_errors"]) && $options["log_details"]["suppress_errors"])) {
-        $log_name = $options["log_details"]["name"];
-        if (is_writable(dirname($log_name))) {
-            if (file_exists($log_name) && !is_writable($log_name)) {
-                if ((isset($options["log_details"]["suppress_logging_errors"]) && $options["log_details"]["suppress_logging_errors"])) {
-                    if (is_object($dialog)) {
-                        $dialog->redirect();
-                    } else {
-                        die;
-                    }
-                } else {
-                    $trace_message = str_replace("<pre>", "\n", $trace_message);
-                    $trace_message = str_replace("</pre>", "\n", $trace_message);
-                    $trace_message = "<pre>" . htmlspecialchars($trace_message) . "</pre>";
-                    die ($trace_message);
-                }
-            }
-            require_once "Log.php";
-            $logger = Log::singleton("file", $log_name, "XLite kernel panic");
-            $log_message = str_replace("<pre>", "\n" . str_repeat("-", 50), $trace_message);
-            $log_message = str_replace("</pre>", "\n" . str_repeat("-", 50) . "\n", $log_message);
-            $logger->log($log_message, "LOG_ERR");
-        } else {
-            if ((isset($options["log_details"]["suppress_logging_errors"]) && $options["log_details"]["suppress_logging_errors"])) {
-                if (is_object($dialog)) {
-                    $dialog->redirect();
-                } else {
-                    die;
-                }
-            } else {
-                $trace_message = str_replace("<pre>", "\n", $trace_message);
-                $trace_message = str_replace("</pre>", "\n", $trace_message);
-                $trace_message = "<pre>" . htmlspecialchars($trace_message) . "</pre>";
-                die ($trace_message);
-            }
-        }
-
-        if (is_object($dialog)) {
-            $dialog->redirect();
-        }
-
-        die;
-    }
-
-    $trace_message = str_replace("<pre>", "\n", $trace_message);
-    $trace_message = str_replace("</pre>", "\n", $trace_message);
-    $trace_message = "<pre>" . htmlspecialchars($trace_message) . "</pre>";
-    die ($trace_message);
-}
-
 /**
 * Strips slashes and trims the specified array values 
 * (strips from strings only)
@@ -738,11 +641,6 @@ function func_strip_slashes(&$array)
 function func_htmldecode($encoded)
 {
     return strtr($encoded, array_flip(get_html_translation_table(HTML_ENTITIES)));
-}
-
-function func_ends_with($str, $end)
-{
-    return substr($str, -1 * strlen($end)) == $end;
 }
 
 function func_starts_with($str, $start)
@@ -956,52 +854,12 @@ function func_is_locked($lockname, $ttl = 15) {
     return true;
 }
 
-function func_shop_closed($reason = null) {
-    @readfile('shop_closed.html');
-    if ($reason) {
-        echo "<!-- Reason: $reason -->";
-    }
-    die("<!-- shop closed -->");
-}
-
-// func_https_request($method, $url, $vars) {{{
-function func_https_request ($method, $url, $vars) {
-    $request = func_new('HTTPS');
-
-    $_vars = array ();
-    if (is_array($vars)) {
-        foreach ($vars as $k=>$v) {
-            list ($var_key, $var_value) = explode ("=", $v, 2);
-            if (!isset($var_value)) {
-                $var_value = "";
-            }
-
-            $_vars [$var_key] = $var_value;
-        }
-    }
-
-    $vars = $_vars;
-
-    $request->url = $url;
-    $request->data = $vars;
-
-    if ($GLOBALS["debug"]) {
-        echo "request->data:<pre>"; print_r($request->data); echo "</pre><br>";
-    }
-    $request->request ();
-
-    if ($GLOBALS["debug"]) {
-        echo "request->response:<pre>"; print_r($request->response); echo "</pre><br>";
-    }
-    return array ("", $request->response);
-}
-//}}}
-
 function func_parse_csv($line, $delimiter, $q, &$error) {
     $line = trim($line);
     if (empty($q)) {
         return explode($delimiter, $line);
     }
+
     $arr = array();
     $state = "outside";
     $field = "";
@@ -1053,63 +911,34 @@ function func_parse_csv($line, $delimiter, $q, &$error) {
 }
 
 function func_construct_csv($fields, $delimiter, $q) {
-    $test = "";
+    $test = '';
     $fs = array();
     foreach ($fields as $f) {
         if (empty($q)) {
             $fs[] = strtr($f, "\n\r", "  ");
+
         } else {
-            $fs[] = $q.strtr(str_replace("$q", "$q$q", $f), "\n\r", "  ").$q;
+            $fs[] = $q . strtr(str_replace($q, $q . $q, $f), "\n\r", "  ").$q;
         }
     }
     return implode($delimiter, $fs);
 }
 
-function func_version_compare($ver1, $ver2) {
-    if (function_exists("version_compare"))
-        return version_compare($ver1, $ver2);
-
-    $ver1 = str_replace("..", ".", preg_replace("/([^\d\.]+)/S", ".\\1.", str_replace(array("_", "-", "+"), array(".", ".", "."), $ver1)));
-    $ver2 = str_replace("..", ".", preg_replace("/([^\d\.]+)/S", ".\\1.", str_replace(array("_", "-", "+"), array(".", ".", "."), $ver2)));
-
-    $ver1 = (array)explode(".", $ver1);
-    $ver2 = (array)explode(".", $ver2);
-
-    $ratings = array(
-        "/^dev$/i" => -100,
-        "/^alpha$/i" => -90,
-        "/^a$/i" => -90,
-        "/^beta$/i" => -80,
-        "/^b$/i" => -80,
-        "/^RC$/i" => -70,
-        "/^pl$/i" => -60
-    );
-    foreach ($ver1 as $k => $v) {
-        if (!is_numeric($v))
-            $v = preg_replace(array_keys($ratings), array_values($ratings), $v);
-
-        if (!is_numeric($ver2[$k]))
-            $ver2[$k] = preg_replace(array_keys($ratings), array_values($ratings), $ver2[$k]);
-
-        $r = strcmp($v, $ver2[$k]);
-        if ($r != 0)
-            return $r;
-    }
-
-    return 0;
-}
- 
 function func_convert_to_byte($file_size) { 
     $val = trim($file_size);
-    $last = strtolower($val{strlen($val)-1});
-    switch($last) {
+    $last = strtolower(substr($val, -1));
+
+    switch ($last) {
         case 'g':
             $val *= 1024;
+
         case 'm':
             $val *= 1024;
+
         case 'k':
             $val *= 1024;
     }
+
     return $val;
 }
 
@@ -1118,8 +947,9 @@ function func_check_memory_limit($current_limit, $required_limit) {
     $required = func_convert_to_byte($required_limit);
     if ($limit < $required) {
         # workaround for http://bugs.php.net/bug.php?id=36568
-        if ((LC_OS_IS_WIN) && (func_version_compare(phpversion(),"5.1.0") < 0))
+        if (LC_OS_IS_WIN && version_compare(phpversion(), '5.1.0') < 0) {
             return true;
+        }
 
         @ini_set('memory_limit', $required_limit);
         $limit = @ini_get('memory_limit');
@@ -1130,102 +960,19 @@ function func_check_memory_limit($current_limit, $required_limit) {
 }
 
 function func_set_memory_limit($new_limit) { 
-    $current_limit = @ini_get("memory_limit");
+    $current_limit = @ini_get('memory_limit');
+
     return func_check_memory_limit($current_limit, $new_limit);
 }
 
-function func_array_merge() {
-    $args = func_get_args();
-    foreach ($args as $k => $arg) {
-    if (is_null($arg) || !is_array($arg) || count($arg)==0)
-        unset($args[$k]);
-    }
-    if (count($args)==0) return array();
-    return call_user_func_array('array_merge', $args);
-}
-
 function func_is_timezone_changable() {
-    return function_exists("date_default_timezone_set") && class_exists("DateTimeZone");
+    return function_exists('date_default_timezone_set') && class_exists('DateTimeZone');
 }
 
 function func_get_timezone() {
-    if (function_exists("date_default_timezone_get"))
-        return @date_default_timezone_get();
-    else
-        return null;
-}
-
-function func_set_timezone() {
-    $options = XLite::getInstance()->getOptions();
-    $link = mysql_connect($options["database_details"]["hostspec"], $options["database_details"]["username"], $options["database_details"]["password"]);
-    $query = "SELECT value FROM xlite_config WHERE name='time_zone'";
-    if ($link && mysql_select_db($options["database_details"]["database"], $link) && $result = mysql_query($query, $link)) {
-        $tz = mysql_fetch_assoc($result);
-        if (is_array($tz) && isset($tz["value"])) {
-            @date_default_timezone_set($tz["value"]);
-            if (func_get_timezone() == $tz["value"])
-                return true;
-        }
-    }
-    return false;
+    return function_exists('date_default_timezone_get') ? @date_default_timezone_get() : null;
 }
 
 function func_get_timezones() {
-    if (class_exists("DateTimeZone")) {
-        $timezone_identifiers = DateTimeZone::listIdentifiers();
-    } else {
-        $timezone_identifiers = null;
-    }
-    return $timezone_identifiers;
-}
-
-/**
- * Check if LiteCommerce installed
- * 
- * @return bool
- * @since  3.0
- */
-function isLiteCommerceInstalled()
-{
-    $checkResult = file_exists(LC_SKINS_DIR . 'admin/en/welcome.tpl')
-        && file_exists(LC_CONFIG_DIR . 'config.php');
-
-    if ($checkResult) {
-
-        $data = XLite::getInstance()->getOptions('database_details');
-
-        if (is_array($data)) {
-            $checkResult = !empty($data['hostspec'])
-                && !empty($data['database'])
-                && !empty($data['username']);
-
-            if ($checkResult) {
-
-                if (!empty($data['socket'])) {
-                    $host = $data['hostspec'] . ':' . $data['socket'];
-
-                } elseif (!empty($data['port'])) {
-                    $host = $data['hostspec'] . ':' . $data['port'];
-
-                } else {
-                    $host = $data['hostspec'];
-                }
-
-                $checkResult = @mysql_connect($host, $data['username'], $data['password']) 
-                    && @mysql_select_db($data['database']);
-
-                if ($checkResult) {
-                    if ($res = @mysql_query('SELECT login from xlite_profiles LIMIT 1')) {
-                        $data = mysql_fetch_row($res);
-                        $checkResult = !empty($data[0]);
-
-                    } else {
-                        $checkResult = false;
-                    }
-                }
-            }
-        }
-    }
-    
-    return $checkResult;
+    return class_exists('DateTimeZone') ? DateTimeZone::listIdentifiers() : null;
 }

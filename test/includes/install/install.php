@@ -39,7 +39,7 @@ if (!defined('XLITE_INSTALL_MODE')) {
     die('Incorrect call of the script. Stopping.');
 }
 
-if (!function_exists('version_compare') || version_compare(phpversion(), '5.0.0') < 0) {
+if (version_compare(phpversion(), '5.0.0') < 0) {
     die('LiteCommerce cannot start on PHP version earlier than 5.0.0 (' . phpversion(). ' is currently used)');
 }
 
@@ -303,12 +303,12 @@ function checkPhpVersion(&$errorMsg, &$value)
 
     $value = $currentPhpVersion = phpversion();
 
-    if (func_version_compare($currentPhpVersion, constant('LC_PHP_VERSION_MIN')) < 0) {
+    if (version_compare($currentPhpVersion, constant('LC_PHP_VERSION_MIN')) < 0) {
         $result = false;
         $errorMsg = 'PHP Version must be ' . constant('LC_PHP_VERSION_MIN') . ' as a minimum';
     }
 
-    if ($result && constant('LC_PHP_VERSION_MAX') != '' && func_version_compare($currentPhpVersion, constant('LC_PHP_VERSION_MAX')) > 0) {
+    if ($result && constant('LC_PHP_VERSION_MAX') != '' && version_compare($currentPhpVersion, constant('LC_PHP_VERSION_MAX')) > 0) {
         $result = false;
         $errorMsg = 'PHP Version must be not greater than ' . constant('LC_PHP_VERSION_MAX');
     }
@@ -317,11 +317,11 @@ function checkPhpVersion(&$errorMsg, &$value)
 
         foreach ($lcSettings['forbidden_php_versions'] as $fpv) {
 
-            if (func_version_compare($currentPhpVersion, $fpv['min']) >= 0) {
+            if (version_compare($currentPhpVersion, $fpv['min']) >= 0) {
         
                 $result = false;
     
-                if (isset($fpv['max']) && func_version_compare($currentPhpVersion, $fpv['max']) > 0) {
+                if (isset($fpv['max']) && version_compare($currentPhpVersion, $fpv['max']) > 0) {
                     $result = true;
 
                 } else {
@@ -354,7 +354,7 @@ function checkPhpSafeMode(&$errorMsg, &$value)
 
     // PHP Safe mode must be Off if PHP is earlier 5.3
 
-    if (func_version_compare(phpversion(), '5.3.0') < 0 && 'off' != strtolower($value)) {
+    if (version_compare(phpversion(), '5.3.0') < 0 && 'off' != strtolower($value)) {
         $result = false;
         $errorMsg = 'PHP safe_mode option value should be Off if PHP is earlier 5.3.0';
     }
@@ -381,7 +381,7 @@ function checkPhpMagicQuotesSybase(&$errorMsg, &$value)
 
     // PHP Safe mode must be Off if PHP is earlier 5.3
 
-    if (func_version_compare(phpversion(), '5.3.0') < 0 && 'off' != strtolower($value)) {
+    if (version_compare(phpversion(), '5.3.0') < 0 && 'off' != strtolower($value)) {
         $result = false;
         $errorMsg = 'PHP option magic_quotes_sybase value should be Off if PHP is earlier 5.3.0';
     }
@@ -770,11 +770,11 @@ function checkMysqlVersion(&$errorMsg, &$value, $connection = null)
             $value = $version = substr($version, 0, strpos($version, "-"));
         }
 
-        if (func_version_compare($version, constant('LC_MYSQL_VERSION_MIN')) < 0) {
+        if (version_compare($version, constant('LC_MYSQL_VERSION_MIN')) < 0) {
             $result = false;
             $errorMsg = 'MySQL version must be ' . constant('LC_MYSQL_VERSION_MIN') . ' as a minimum';
 
-        } elseif ((func_version_compare($version, "5.0.50") >= 0 && func_version_compare($version, "5.0.52") < 0)) {
+        } elseif ((version_compare($version, "5.0.50") >= 0 && version_compare($version, "5.0.52") < 0)) {
             $result = false;
             $errorMsg = 'The version of MySQL which is currently used (' . $version . ') contains known bugs, that is why LiteCommerce may operate incorrectly. It is recommended to update MySQL to a more stable version.';
         }
@@ -2036,7 +2036,7 @@ function is_disabled_memory_limit()
     $result = (($info['no_mem_limit'] &&
                 $info['commands_exists'] &&
                 !function_exists('memory_get_usage') &&
-                func_version_compare(phpversion(), '4.3.2') >= 0 &&
+                version_compare(phpversion(), '4.3.2') >= 0 &&
                 strlen(@ini_get('memory_limit')) == 0 ) || 
                 @ini_get('memory_limit') == '-1');
 
@@ -2064,7 +2064,7 @@ function check_memory_limit($current_limit, $required_limit)
     if ($limit < $required) {
 
 		// workaround for http://bugs.php.net/bug.php?id=36568
-        if (!(LC_OS_CODE == 'win' && func_version_compare(phpversion(), '5.1.0') < 0)) {
+        if (!(LC_OS_CODE == 'win' && version_compare(phpversion(), '5.1.0') < 0)) {
             @ini_set('memory_limit', $required_limit);
             $limit = ini_get('memory_limit');
         }
@@ -2085,7 +2085,7 @@ function check_memory_limit($current_limit, $required_limit)
  */
 function is_php5()
 {
-    return func_version_compare(@phpversion(), '5.0.0') >= 0;
+    return version_compare(@phpversion(), '5.0.0') >= 0;
 } 
 
 /**

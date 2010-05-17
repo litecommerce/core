@@ -153,7 +153,7 @@ class XLite_Model_Wysiwyg_Mediator extends XLite_Base
     function _replaceVal($src, $params, $openF = '', $closeF = '')
     {
         if (!is_array($params)) {
-            func_die("Wrong params type:" . gettype($params));
+            XLite::getInstance()->doGlobalDie("Wrong params type:" . gettype($params));
         }
         foreach ($params as $name => $value) {
             foreach (array('', ':r', ':h') as $modifier) {

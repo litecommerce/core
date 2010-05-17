@@ -447,7 +447,7 @@ You might want to remove X-Cart tables from your X-Cart database. To do this, tu
         } else if ($path == 'detailedimage') {
             $cond = "";
         } else {
-            func_die("Incorrect path $path");
+            XLite::getInstance()->doGlobalDie("Incorrect path $path");
         }
 
         if (is_object($obj)) {

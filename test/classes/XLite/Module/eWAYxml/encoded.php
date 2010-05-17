@@ -142,7 +142,6 @@ $post .= "<ewayOption3>".$pp_test."</ewayOption3>";
 $post .= "</ewaygateway>";
 
 // LiteCommerce code {{{
-//list($a,$return)=func_https_request('POST',"https://www.eway.com.au:443/".$script,$post,"","","text/xml");
 list($a,$return)=ewx_func_https_request('POST', $pay_server, $post);
 
 
