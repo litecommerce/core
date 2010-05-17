@@ -321,10 +321,26 @@ class XLite_Module_PayPalPro_Model_PaymentMethod_Paypalpro extends XLite_Model_P
                 $cart->setDetailsCell('txn_id', 'Transaction ID', $request->txn_id);
 
                 // Check original total and callback total
-                $this->checkTotal($cart, $request);
+                if (!$this->checkTotal($cart, $request->mc_gross)) {
+                    $cart->set('status', 'F');
+                    $cart->update();
+
+                    $this->doDie(
+                        'IPN validation error: PayPal payment total doesn\'t match.'
+                        . ' Please contact administrator.'
+                    );
+                }
 
                 // Check original currency code and callback currency code
-                $this->checkCurrency($cart, $request, $params);
+                if (!$this->checkCurrency($cart, $params['standard']['currency'], $request->mc_currency)) {
+                    $cart->set('status', 'F');
+                    $cart->update();
+
+                    $this->doDie(
+                        'IPN validation error: PayPal currency code doesn\'t match.'
+                        . ' Please contact administrator.'
+                    );
+                }
 
                 $this->updateCartData($cart, $request);
             }
@@ -389,72 +405,6 @@ class XLite_Module_PayPalPro_Model_PaymentMethod_Paypalpro extends XLite_Model_P
         }
 
         return $result;
-    }
-
-    /**
-     * Check initial callback total 
-     * 
-     * @param XLite_Model_Cart   $cart    Cart
-     * @param XLite_Core_Request $request Request
-     *  
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function checkTotal(XLite_Model_Cart $cart, XLite_Core_Request $request)
-    {
-        $total = sprintf('%.2f', $cart->get('total'));
-        $postTotal = sprintf('%.2f', $request->mc_gross);
-
-        if ($total != $postTotal) {
-            $cart->setDetailsCell('error', 'Error', 'Hacking attempt!');
-            $cart->setDetailsCell(
-                'errorDescription',
-                'Hacking attempt details',
-                'Total amount doesn\'t match: Order total = ' . $total
-                . ', PayPal amount = ' . $postTotal
-            );
-            $cart->set('status', 'F');
-            $cart->update();
-
-            $this->doDie(
-                'IPN validation error: PayPal amount doesn\'t match. Please contact administrator.'
-            );
-        }
-    }
-
-    /**
-     * Check currency 
-     * 
-     * @param XLite_Model_Cart   $cart    Cart
-     * @param XLite_Core_Request $request Request
-     * @param array              $params  Payment module parameters
-     *  
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function checkCurrency(XLite_Model_Cart $cart, XLite_Core_Request $request, array $params)
-    {
-        $currency = $params['standard']['currency'];
-        if ($currency != $request->mc_currency) {
-            $cart->setDetailsCell('error', 'Error', 'Hacking attempt!');
-            $cart->setDetailsCell(
-                'errorDescription',
-                'Hacking attempt details',
-                'Currency code doesn\'t match: Order currency = ' . $currency
-                . ', PayPal currency = ' . $request->mc_currency
-            );
-            $cart->set('status', 'F');
-            $cart->update();
-
-            $this->doDie(
-                'IPN validation error: PayPal currency code doesn\'t match.'
-                . ' Please contact administrator.'
-            );
-        }
     }
 
     /**

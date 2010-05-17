@@ -155,7 +155,7 @@ abstract class XLite_Model_PaymentMethod_CreditCardWebBased extends XLite_Model_
     {
         $result = true;
 
-        if ($total && $this->getComplex('params.check_total') && $cart->get('total') != $total) {
+        if ($total && $cart->get('total') != $total) {
             $cart->setDetailsCell('error', 'Error', 'Hacking attempt!');
             $cart->setDetailsCell(
                 'errorDescription',
@@ -172,21 +172,20 @@ abstract class XLite_Model_PaymentMethod_CreditCardWebBased extends XLite_Model_
     /**
      * Check currency (payment method curreny and transaction response currency)
      * 
-     * @param XLite_Model_Cart $cart     Cart
-     * @param string           $currency Transaction response currency code
+     * @param XLite_Model_Cart $cart            Cart
+     * @param string           $paymentCurrency Order currency code
+     * @param string           $currency        Transaction response currency code
      *  
      * @return boolean
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function checkCurrency(XLite_Model_Cart $cart, $currency)
+    protected function checkCurrency(XLite_Model_Cart $cart, $paymentCurrency, $currency)
     {
         $result = true;
 
-        $paymentCurrency = $this->getComplex('params.currency');
-
-        if ($currency && $this->getComplex('params.check_currency') && $paymentCurrency != $currency) {
+        if ($currency && $paymentCurrency != $currency) {
             $cart->setDetailsCell('error', 'Error', 'Hacking attempt!');
             $cart->setDetailsCell(
                 'errorDescription',

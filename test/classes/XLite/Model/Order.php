@@ -185,6 +185,7 @@ class XLite_Model_Order extends XLite_Model_Abstract
             if ($this->isPersistent) {
                 $item = new XLite_Model_OrderItem();
                 $this->_items = $item->findAll('order_id = \'' . $this->get('order_id') . '\'', 'orderby');
+
             } else {
                 $this->_items = array();
             }
@@ -319,11 +320,16 @@ class XLite_Model_Order extends XLite_Model_Abstract
      */
     public function isShipped()
     {
+        $result = false;
+
         foreach ($this->getItems() as $item) {
-            if ($item->isShipped()) return true;
+            if ($item->isShipped()) {
+                $result = true;
+                break;
+            }
         }
 
-        return false;
+        return $result;
     }
 
     /**
@@ -335,7 +341,7 @@ class XLite_Model_Order extends XLite_Model_Abstract
      */
     public function isProcessed()
     {
-        return 'P' == $this->get('status') || 'C' == $this->get('status');
+        return in_array($this->get('status'), array('P', 'C'));
     }
 
     /**
