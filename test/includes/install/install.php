@@ -755,7 +755,7 @@ function checkMysqlVersion(&$errorMsg, &$value, $connection = null)
         $url = parse_url(constant('DB_URL'));
 
         $host = urldecode($url['host']);
-        $port = isset($url['port']) ? urldecode($url['port']) : '';
+        $port = isset($url['port']) ? ':' . urldecode($url['port']) : '';
         $user = urldecode($url['user']);
         $pass = isset($url['pass']) ? urldecode($url['pass']) : NULL;
 
