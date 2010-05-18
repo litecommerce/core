@@ -295,7 +295,7 @@ class XLite_Model_Profiler extends XLite_Base implements XLite_Base_ISingleton
     protected function start($start)
     {
         $this->enabled = !empty($start);
-        $this->start_time = microtime(true);
+        $this->start_time = $_SERVER['REQUEST_TIME'];
     }
     
     /**

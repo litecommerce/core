@@ -1062,10 +1062,10 @@ class Decorator
         if ($this->isNeedRebuild() || $this->isDeveloperMode() || $force) {
 
             if (!defined('SILENT_CACHE_REBUILD')) {
-                if ('cli' == php_sapi_name()) {
+                if ('cli' == PHP_SAPI) {
                     $this->showPlainTextBlock();
 
-                } elseif (empty($_REQUEST['action'])) {
+                } elseif (isset($_REQUEST) && (!isset($_REQUEST['action']) || empty($_REQUEST['action']))) {
                     $this->showJavaScriptBlock();
                 }
             }

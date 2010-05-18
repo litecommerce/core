@@ -56,7 +56,7 @@ define('LC_CUSTOMER_AREA_SKIN', LC_SKINS_DIR . 'default' . LC_DS . 'en' . LC_DS)
 define('LC_ADMIN_AREA_SKIN', LC_SKINS_DIR . 'admin' . LC_DS . 'en' . LC_DS);
 
 // OS
-define('LC_OS_NAME', substr(php_uname(), 0, strpos(php_uname(),' ')));
+define('LC_OS_NAME', substr(PHP_OS, 0, strpos(PHP_OS,' ')));
 define('LC_OS_CODE', strtolower(substr(LC_OS_NAME, 0, 3)));
 define('LC_OS_IS_WIN', LC_OS_CODE === 'win');
 
@@ -64,7 +64,7 @@ define('LC_OS_IS_WIN', LC_OS_CODE === 'win');
 define('LC_SESSION_TYPE', 'Sql');
 
 // Common end-of-line
-define('LC_EOL', 'cli' == php_sapi_name() ? "\n" : "<br />\n");
+define('LC_EOL', 'cli' == PHP_SAPI ? "\n" : "<br />\n");
 
 set_include_path(
     get_include_path()

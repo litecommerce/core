@@ -266,7 +266,7 @@ class XLite_Core_Request extends XLite_Base implements XLite_Base_ISingleton
      */
     public function isCLI()
     {
-        return 'cli' == php_sapi_name();
+        return 'cli' == PHP_SAPI;
     }
 
     /**

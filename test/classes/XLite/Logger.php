@@ -202,7 +202,7 @@ class XLite_Logger extends XLite_Base implements XLite_Base_ISingleton
 
         // Add additional info
         $parts = array(
-            'Server API: ' . php_sapi_name(),
+            'Server API: ' . PHP_SAPI,
         );
 
         if (isset($_SERVER) && isset($_SERVER['REQUEST_METHOD'])) {
