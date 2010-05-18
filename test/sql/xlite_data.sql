@@ -466,6 +466,6 @@ INSERT INTO xlite_payment_methods VALUES ('COD','COD','Cash On Delivery','Offlin
 INSERT INTO xlite_shipping VALUES (2,'Offline','L','National shipping',1,10);
 INSERT INTO xlite_shipping VALUES (3,'Offline','I','International shipping',1,20);
 
-INSERT INTO `xlite_shipping_rates` VALUES (2,'0.00','999999.00','0.00','999999.00',-1,'2.00','0.00','0.00','0.00',0,999999);
-INSERT INTO `xlite_shipping_rates` VALUES (3,'0.00','999999.00','0.00','999999.00',-1,'5.00','0.00','0.00','0.00',0,999999);
+INSERT INTO `xlite_shipping_rates` VALUES (2,'0.00','999999.00','0.00','999999.00',0,'2.00','0.00','0.00','0.00',0,999999);
+INSERT INTO `xlite_shipping_rates` VALUES (3,'0.00','999999.00','0.00','999999.00',0,'5.00','0.00','0.00','0.00',0,999999);
 
