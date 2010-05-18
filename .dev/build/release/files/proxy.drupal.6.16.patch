@@ -1,0 +1,204 @@
+Index: includes/common.inc
+===================================================================
+--- includes/common.inc	(revision 15)
++++ includes/common.inc	(working copy)
+@@ -445,6 +445,10 @@
+ 
+   $result = new stdClass();
+ 
++  //PROXYHACK
++  $proxy_not_required = TRUE;
++  ///PROXYHACK
++
+   // Parse the URL and make sure we can handle the schema.
+   $uri = parse_url($url);
+ 
+@@ -464,7 +468,19 @@
+     case 'http':
+       $port = isset($uri['port']) ? $uri['port'] : 80;
+       $host = $uri['host'] . ($port != 80 ? ':'. $port : '');
++      //PROXYHACK
++      $proxy_not_required = is_in_no_proxy_list($uri['host']);
++      if ((variable_get('proxy_server', '') != '') && (FALSE == $proxy_not_required)) {
++        $proxy_server = variable_get('proxy_server', '');
++        $proxy_port = variable_get('proxy_port', 8080);
++        $fp = @fsockopen($proxy_server, $proxy_port, $errno, $errstr, 15);
++      }
++      else {
++      ///PROXYHACK
+       $fp = @fsockopen($uri['host'], $port, $errno, $errstr, 15);
++      //PROXYHACK 
++      }
++      ///PROXYHACK
+       break;
+     case 'https':
+       // Note: Only works for PHP 4.3 compiled with OpenSSL.
+@@ -495,10 +511,19 @@
+   }
+ 
+   // Construct the path to act on.
++  //PROXYHACK
++  if ((variable_get('proxy_server', '') != '') && (FALSE == $proxy_not_required)) {
++    $path = $url;
++  }
++  else {
++  ///PROXYHACK
+   $path = isset($uri['path']) ? $uri['path'] : '/';
+   if (isset($uri['query'])) {
+     $path .= '?'. $uri['query'];
+   }
++  //PROXYHACK
++  }
++  ///PROXYHACK
+ 
+   // Create HTTP request.
+   $defaults = array(
+@@ -533,6 +558,15 @@
+     $defaults['User-Agent'] = 'User-Agent: ' . $matches[0];
+   }
+ 
++  //PROXYHACK
++  if ((variable_get('proxy_username', '') != '') && (FALSE == $proxy_not_required)) {
++    $username = variable_get('proxy_username', '');
++    $password = variable_get('proxy_password', '');
++    $auth_string = base64_encode($username . ($password != '' ? ':'. $password : ''));
++    $defaults['Proxy-Authorization'] = 'Proxy-Authorization: Basic '. $auth_string ."\r\n";
++  }
++  ///PROXYHACK
++
+   foreach ($headers as $header => $value) {
+     $defaults[$header] = $header .': '. $value;
+   }
+@@ -609,6 +643,26 @@
+   $result->code = $code;
+   return $result;
+ }
++
++//PROXY_HACK
++function is_in_no_proxy_list($host) {
++  $rv = FALSE;
++  
++  $proxy_exceptions = variable_get('proxy_exceptions', '');
++  if (FALSE == empty($proxy_exceptions)) {
++    $patterns = explode(",",$proxy_exceptions);
++    foreach ($patterns as $pattern) {
++      $pattern = trim($pattern, " ");
++      if (strstr($host,$pattern)) {
++        $rv = TRUE;
++        break;
++      }
++    }
++  }
++  return $rv;
++}
++///PROXY_HACK
++
+ /**
+  * @} End of "HTTP handling".
+  */
+Index: modules/system/system.admin.inc
+===================================================================
+--- modules/system/system.admin.inc	(revision 15)
++++ modules/system/system.admin.inc	(working copy)
+@@ -1369,7 +1369,80 @@
+   drupal_set_message(t('Caches cleared.'));
+ }
+ 
++//PROXYHACK
+ /**
++ * Form builder; Configure the site proxy settings.
++ *
++ * @ingroup forms
++ * @see system_settings_form()
++ */
++function system_proxy_settings() {
++
++  $form['forward_proxy'] = array(
++    '#type' => 'fieldset',
++    '#title' => t('Forward Proxy Settings'),
++    '#description' => t('The proxy server used when Drupal needs to connect to other sites on the Internet.'),
++  );
++  $form['forward_proxy']['proxy_server'] = array(
++    '#type' => 'textfield',
++    '#title' => t('Proxy host name'),
++    '#default_value' => variable_get('proxy_server', ''),
++    '#description' => t('The host name of the proxy server, eg. localhost. If this is empty Drupal will connect directly to the internet.')
++  );
++  $form['forward_proxy']['proxy_port'] = array(
++    '#type' => 'textfield',
++    '#title' => t('Proxy port number'),
++    '#default_value' => variable_get('proxy_port', 8080),
++    '#description' => t('The port number of the proxy server, eg. 8080'),
++  );
++  $form['forward_proxy']['proxy_username'] = array(
++    '#type' => 'textfield',
++    '#title' => t('Proxy username'),
++    '#default_value' => variable_get('proxy_username', ''),
++    '#description' => t('The username used to authenticate with the proxy server.'),
++  );
++  $form['forward_proxy']['proxy_password'] = array(
++    '#type' => 'textfield',
++    '#title' => t('Proxy password'),
++    '#default_value' => variable_get('proxy_password', ''),
++    '#description' => t('The password used to connect to the proxy server. This is kept as plain text.', '')
++  );
++  $form['forward_proxy']['proxy_exceptions'] = array(
++    '#type' => 'textfield',
++    '#title' => t('No proxy for'),
++    '#default_value' => variable_get('proxy_exceptions', 'localhost'),
++    '#description' => t('Example: .example.com,localhost,192.168.1.2', '')
++  );
++  $form['forward_proxy']['proxy_skip_selftest'] = array(
++    '#type' => 'checkbox',
++    '#title' => t('Skip HTTP self test'),
++    '#description' => t('Skip HTTP request self test.'),
++    '#default_value' => variable_get('proxy_skip_selftest', '0'),
++  );
++  $form['#validate'][] = 'system_proxy_settings_validate';
++
++  return system_settings_form($form);
++}
++
++/**
++ * Validate the submitted proxy form.
++ */
++function system_proxy_settings_validate($form, &$form_state) {
++  // Validate the proxy settings
++  $form_state['values']['proxy_server'] = trim($form_state['values']['proxy_server']);
++  if ($form_state['values']['proxy_server'] != '') {
++    // TCP allows the port to be between 0 and 65536 inclusive
++    if (!is_numeric($form_state['values']['proxy_port'])) {
++      form_set_error('proxy_port', t('The proxy port is invalid. It must be a number between 0 and 65535.'));
++    }
++    elseif ($form_state['values']['proxy_port'] < 0 || $form_state['values']['proxy_port'] >= 65536) {
++      form_set_error('proxy_port', t('The proxy port is invalid. It must be between 0 and 65535.'));
++    }
++  }
++}
++///PROXY_HACK
++
++/**
+  * Form builder; Configure the site file handling.
+  *
+  * @ingroup forms
+Index: modules/system/system.module
+===================================================================
+--- modules/system/system.module	(revision 15)
++++ modules/system/system.module	(working copy)
+@@ -318,6 +318,16 @@
+     'access arguments' => array('administer site configuration'),
+     'file' => 'system.admin.inc',
+   );
++  //PROXYHACK
++  $items['admin/settings/proxy'] = array(
++    'title' => 'Proxy Server',
++    'description' => 'Configure settings when the site is behind a proxy server.',
++    'page callback' => 'drupal_get_form',
++    'page arguments' => array('system_proxy_settings'),
++    'access arguments' => array('administer site configuration'),
++    'file' => 'system.admin.inc',
++  );
++  ///PROXY_HACK
+   $items['admin/build/modules/list'] = array(
+     'title' => 'List',
+     'type' => MENU_DEFAULT_LOCAL_TASK,

@@ -83,10 +83,6 @@ START_TIME=`$PHP -qr 'echo mktime();'`
 
 echo -e "LiteCommerce distributives generator\n"
 
-# Directory names within distribution packages
-LITECOMMERCE_DIRNAME="litecommerce"
-DRUPAL_DIRNAME="drupal"
-
 # Read options
 while getopts "b:cd:f:sh" option; do
 	case $option in
@@ -430,6 +426,10 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a -d "${OUTPUT_DIR}/${DRUPAL_DI
 		cd ${OUTPUT_DIR}
 		tar -czf demo_tools.tgz demo_tools
 		rm -rf demo_tools
+
+		# Patch Drupal code for proxy support (see M:92464 for the details)
+		cd ${OUTPUT_DIR}/${DRUPAL_DIRNAME}
+		patch < ${OUTPUT_DIR}/xlite_dev/build/release/files/proxy.drupal.6.16.patch
 
 	fi
 	

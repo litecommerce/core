@@ -20,6 +20,10 @@ OUTPUT_DIR="output"
 # Flag: recreate output directory if it is exists (remove all data within)
 CLEAR_OUTPUT_DIR=1
 
+# Directory names within distribution packages
+LITECOMMERCE_DIRNAME="litecommerce"
+DRUPAL_DIRNAME="drupal"
+
 # LiteCommerce modules for including to the distributives
 XLITE_MODULES="
 AdvancedSearch

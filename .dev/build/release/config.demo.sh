@@ -8,6 +8,9 @@
 # Trigger to enable generation of demo version
 DEMO_VERSION="1"
 
+# Drupal directory name
+DRUPAL_DIRNAME="drupal_demo"
+
 # LiteCommerce modules for including to the distributives
 XLITE_MODULES=${XLITE_MODULES}"
 Demo
