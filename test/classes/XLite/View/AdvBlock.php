@@ -68,6 +68,9 @@ class XLite_View_AdvBlock extends XLite_View_Abstract
      */
     public function isVisible()
     {
+        // TODO - remove is stable version
+        return false;
+
         return parent::isVisible()
             && XLite::isAdminZone()
             && $this->auth->isLogged()
