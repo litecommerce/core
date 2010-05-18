@@ -75,11 +75,11 @@ class XLite_Module_UPSOnlineTools_Model_Order extends XLite_Model_Order implemen
      * Assign first shipping rate 
      * 
      * @return void
-     * @access protected
+     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function assignFirstShippingRate()
+    public function assignFirstShippingRate()
     {
         $rates = $this->getCarrierRates();
 

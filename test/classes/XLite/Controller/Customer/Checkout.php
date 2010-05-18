@@ -387,6 +387,12 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
     protected function doActionRegister()
     {
         $this->getModelForm()->performAction('modify');
+
+        // Renew shipping
+        if ($this->isShippingNeeded()) {
+            $this->getCart()->assignFirstShippingRate();
+            $this->updateCart();
+        }
     }
 
     /**

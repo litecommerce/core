@@ -294,11 +294,11 @@ class XLite_Model_Order extends XLite_Model_Abstract
      * Assign first shipping rate 
      * 
      * @return void
-     * @access protected
+     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function assignFirstShippingRate()
+    public function assignFirstShippingRate()
     {
         $rates = $this->getShippingRates();
 
