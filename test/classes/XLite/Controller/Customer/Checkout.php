@@ -587,8 +587,7 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
 
                 case XLite_Model_PaymentMethod::PAYMENT_SUCCESS:
                     $this->success();
-                    $this->set(
-                        'returnUrl',
+                    $this->setReturnUrl(
                         $this->buildURL(
                             'checkoutSuccess',
                             '',
@@ -598,8 +597,7 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
                     break;
 
                 case XLite_Model_PaymentMethod::PAYMENT_FAILURE:
-                    $this->set(
-                        'returnUrl',
+                    $this->setReturnUrl(
                         $this->buildURL(
                             'checkout',
                             '',

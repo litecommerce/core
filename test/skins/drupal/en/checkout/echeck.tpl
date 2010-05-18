@@ -17,13 +17,13 @@
     <tr>
       <td><label for="ch_routing_number">ABA routing number:</label></td>
       <td class="marker">*</td>
-      <td><input type="text" id="ch_routing_number" name="ch_info[ch_routing_number]" value="{cart.details.ch_routing_number:r}" /></td>
+      <td><input type="text" id="ch_routing_number" name="ch_info[ch_routing_number]" value="{cart.details.ch_routing_number:r}" class="field-required" /></td>
     </tr>
 
     <tr>
       <td><label for="ch_acct_number">Bank Account Number:</label></td>
       <td class="marker">*</td>
-      <td><input type="text" id="ch_acct_number" name="ch_info[ch_acct_number]" value="{cart.details.ch_acct_number:r}" /></td>
+      <td><input type="text" id="ch_acct_number" name="ch_info[ch_acct_number]" value="{cart.details.ch_acct_number:r}" class="field-required" /></td>
     </tr>
 
     <tr>
@@ -40,20 +40,19 @@
     <tr>
       <td><label for="ch_bank_name">Name of bank at which account is maintained:</label></td>
       <td class="marker">*</td>
-      <td><input type="text" id="ch_bank_name" name="ch_info[ch_bank_name]" value="{cart.details.ch_bank_name:r}" /></td>
+      <td><input type="text" id="ch_bank_name" name="ch_info[ch_bank_name]" value="{cart.details.ch_bank_name:r}" class="field-required" /></td>
     </tr>
 
     <tr>
       <td><label for="ch_acct_name">Name under which the account is maintained at the bank:</label></td>
       <td class="marker">*</td>
-      <td><input type="text" id="ch_acct_name" name="ch_info[ch_acct_name]" value="{cart.details.ch_acct_name:r}" /></td>
-      <td colspan="2"><widget class="XLite_Validator_ArrayFieldValidator" field="ch_info[ch_acct_name]"></td>
+      <td><input type="text" id="ch_acct_name" name="ch_info[ch_acct_name]" value="{cart.details.ch_acct_name:r}" class="field-required" /></td>
     </tr>
 
     <tr IF="displayNumber">
       <td><lanel for="ch_number">Check number:</label></td>
       <td class="marker">*</td>
-      <td><input type="text" id="ch_number" name="ch_info[ch_number]" value="{cart.details.ch_number:r}" /></td>
+      <td><input type="text" id="ch_number" name="ch_info[ch_number]" value="{cart.details.ch_number:r}" class="field-required" /></td>
     </tr>
 
   </table>

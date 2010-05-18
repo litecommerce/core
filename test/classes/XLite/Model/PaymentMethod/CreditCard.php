@@ -71,7 +71,7 @@ class XLite_Model_PaymentMethod_CreditCard extends XLite_Model_PaymentMethod
     public function process(XLite_Model_Cart $cart)
     {
         // save CC details to order
-        $cart->set('details', $this->cc_info);
+        $cart->setDetails($this->cc_info);
 
         $detailLabels = array(
             'cc_number' => 'Credit card number',
@@ -89,9 +89,8 @@ class XLite_Model_PaymentMethod_CreditCard extends XLite_Model_PaymentMethod
             $detailLabels['cc_issue'] = 'Issue no.';
         }
 
-        $cart->set('detailLabels', $detailLabels);
+        $cart->setDetailLabels($detailLabels);
         $cart->set('status', 'Q');
-
         $cart->update();
     }
 
@@ -133,9 +132,8 @@ class XLite_Model_PaymentMethod_CreditCard extends XLite_Model_PaymentMethod
     {
         $this->cc_info = $this->getPaymentInfo();
         $this->process($cart);
-        $status = $cart->get('status');
 
-        return ('Q' == $status || 'P' == $status)
+        return in_array($cart->get('status'), array('Q', 'P'))
             ? self::PAYMENT_SUCCESS
             : self::PAYMENT_FAILURE;
     }
