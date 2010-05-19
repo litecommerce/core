@@ -60,6 +60,7 @@
 /* List body and common styles */
 .list-body {
   padding: 0px;
+  clear: both;
 }
 
 .list-body .added-to-cart {

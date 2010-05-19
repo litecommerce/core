@@ -60,6 +60,7 @@
 <!-- [order] {{{ -->
 <widget class="XLite_View_OrderSearch" />
 <widget class="XLite_View_Order" />
+<widget class="XLite_View_Invoice" />
 <!-- [/order] }}} -->
 
 <!-- [modules] {{{ -->
