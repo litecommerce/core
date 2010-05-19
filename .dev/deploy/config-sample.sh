@@ -56,8 +56,7 @@ sql/xlite_demo_store.sql
 "
 
 SITE_DRUPAL_SQL_FILES="
-clean.sql
-diff.lcweb.sql
+lcweb.sql
 "
 
 LC_SQL_BASE_FILES="
