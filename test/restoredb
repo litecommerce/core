@@ -80,6 +80,7 @@ if (isset($argv[1]) && $argv[1] == "demo") {
 
     _do_query_upload("sql/xlite_demo_data.sql", $connection, true);
 	_do_query_upload("sql/xlite_demo_store.sql", $connection, true);
+	_do_query_upload("sql/xlite_test_accounts.sql", $connection, true);
 
 	if (isset($argv[2]) && $argv[2] == 'all') {
 		_do_query_upload("sql/xlite_all_modules.sql", $connection, true);
