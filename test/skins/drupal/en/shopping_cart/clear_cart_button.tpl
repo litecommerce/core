@@ -11,4 +11,4 @@
  * @since     3.0.0
  *}
 
-<button type="submit" class="{style}"><span>{getButtonLabel()}</span></button>
+<button type="submit" class="{style}" onclick="javascript: return confirm('Are you sure you want to clear the cart?');"><span>{getButtonLabel()}</span></button>
