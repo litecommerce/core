@@ -44,6 +44,23 @@ abstract class XLite_Module_DrupalConnector_View_Abstract extends XLite_View_Abs
      */
     protected static $drupalRelativePath = null;
 
+
+    /**
+     * prepareBasePath 
+     * 
+     * @param string $path path to prepare
+     *  
+     * @return array
+     * @access protected
+     * @since  3.0.0
+     */
+    protected static function prepareBasePath($path)
+    {
+        $path = trim($path, '/');
+
+        return ('' === $path) ? array() : explode('/', $path);
+    }
+
     /**
      * Return relative path from web directory path to the XLite web directory 
      * FIXME - it's the hack
@@ -58,8 +75,8 @@ abstract class XLite_Module_DrupalConnector_View_Abstract extends XLite_View_Abs
         if (!isset(self::$drupalRelativePath)) {
 
             // FIXME - "base_path()" is a Drupal function declared in global scope
-            $basePath  = explode('/', trim(base_path(), '/'));
-            $xlitePath = explode('/', trim(XLite::getInstance()->getOptions(array('host_details', 'web_dir')), '/'));
+            $basePath  = self::prepareBasePath(base_path());
+            $xlitePath = self::prepareBasePath(XLite::getInstance()->getOptions(array('host_details', 'web_dir')));
 
             $basePathSize = count($basePath);
             $minPathSize  = min($basePathSize, count($xlitePath));
