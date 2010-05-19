@@ -162,7 +162,7 @@ echo "*** OUTPUT_DIR: $OUTPUT_DIR"
 [ $SAFE_MODE ] && echo "*** SAFE_MODE enabled"
 
 echo "";
-echo "Generating LiteCommerce from SVN reporitory";
+echo "Generating LiteCommerce from SVN repository";
 echo "";
 
 # Prepare output directory
@@ -272,7 +272,7 @@ fi # / if [ ! $SAFE_MODE ]
 
 if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a -d "${OUTPUT_DIR}/${DRUPAL_DIRNAME}" ]; then
 
-	echo "Preparing the LiteCommerce standalone distributive...";
+	echo "Preparing the distributives...";
 
 	#
 	# LiteCommerce standalone distributive generating...
@@ -429,7 +429,9 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a -d "${OUTPUT_DIR}/${DRUPAL_DI
 
 		# Patch Drupal code for proxy support (see M:92464 for the details)
 		cd ${OUTPUT_DIR}/${DRUPAL_DIRNAME}
-		patch < ${OUTPUT_DIR}/xlite_dev/build/release/files/proxy.drupal.6.16.patch
+		RES=`patch < ${OUTPUT_DIR}/xlite_dev/build/release/files/proxy.drupal.6.16.patch 2>&1 | grep -E "(patch: **** malformed patch at line)|(Hunk #([0-9]+) .*(malformed patch)|(with fuzz)|(failed))"`
+		[ "x${RES}" != "x" ] && die "[ERROR] Patch applying failed: ${OUTPUT_DIR}/xlite_dev/build/release/files/proxy.drupal.6.16.patch"
+		
 
 	fi
 	

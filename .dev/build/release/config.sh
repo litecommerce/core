@@ -63,6 +63,7 @@ profiles/default
 profiles/litecommerce_site
 includes/install.pgsql.inc
 sites/all/modules/litecommerce_com
+sites/default/files
 "
 
 LC_SEO_PHRASES="
