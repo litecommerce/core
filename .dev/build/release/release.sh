@@ -417,8 +417,7 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a -d "${OUTPUT_DIR}/${DRUPAL_DI
 		mkdir -p ${OUTPUT_DIR}/demo_tools/drupal_sql
 
 		# Copy Drupal SQL-files
-		cp ${OUTPUT_DIR}/drupal_dev/sql/clean.sql ${OUTPUT_DIR}/demo_tools/drupal_sql/
-		cp ${OUTPUT_DIR}/drupal_dev/sql/diff.lcweb.sql ${OUTPUT_DIR}/demo_tools/drupal_sql/
+		cp ${OUTPUT_DIR}/drupal_dev/sql/* ${OUTPUT_DIR}/demo_tools/drupal_sql/
 
 		cp ${OUTPUT_DIR}/xlite_dev/deploy/*.sh ${OUTPUT_DIR}/demo_tools/
 		cp ${OUTPUT_DIR}/xlite_dev/deploy/*.php ${OUTPUT_DIR}/demo_tools/
