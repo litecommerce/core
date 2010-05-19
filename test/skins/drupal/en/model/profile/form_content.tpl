@@ -17,7 +17,9 @@
     <h2>Billing address</h2>
 
     <table class="user-address-form" cellspacing="0">
-      <tr FOREACH="getBillingAddressFields(),field">{field.display()}</tr>
+      {foreach:getBillingAddressFields(),field}
+      <tr{if:field.getName()=#postedData[billing_custom_state]#} style="display: none;"{end:}>{field.display()}</tr>
+      {end:}
     </table>
 
   </div>
@@ -29,7 +31,9 @@
     <div class="same-address"><input type="checkbox" id="ship_as_bill" name="postedData[ship_as_bill]" value="Y" checked="{isSameAddress()}" onclick="javascript: addressBlocksController();" /><label for="ship_as_bill">The same as billing</label></div>
 
     <table class="user-address-form" cellspacing="0" id="shipping_address_block">
-      <tr FOREACH="getShippingAddressFields(),field">{field.display()}</tr>
+      {foreach:getShippingAddressFields(),field}
+      <tr{if:field.getName()=#postedData[shipping_custom_state]#} style="display: none;"{end:}>{field.display()}</tr>
+      {end:}
     </table>
 
   </div>

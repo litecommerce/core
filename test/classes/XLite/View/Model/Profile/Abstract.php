@@ -171,6 +171,11 @@ abstract class XLite_View_Model_Profile_Abstract extends XLite_View_Model_Abstra
             self::SCHEMA_LABEL    => 'State',
             self::SCHEMA_REQUIRED => true,
         ),
+        'custom_state' => array(
+            self::SCHEMA_CLASS    => 'XLite_View_FormField_Input_Text',
+            self::SCHEMA_LABEL    => 'Other state',
+            self::SCHEMA_REQUIRED => false,
+        ),
         'country' => array(
             self::SCHEMA_CLASS    => 'XLite_View_FormField_Select_Country',
             self::SCHEMA_LABEL    => 'Country',

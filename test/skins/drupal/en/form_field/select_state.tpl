@@ -16,3 +16,25 @@
   <option value="-1" selected="{getValue()=-1}">Other</option>
   <option FOREACH="getOptions(),state" value="{state.state_id:r}" selected="{state.state_id=getValue()}">{state.state:h}</option>
 </select>
+<script IF="isDefineStates()" type="text/javascript">
+var CountriesStates = [];
+{foreach:getCountriesStates(),country_code,val}
+CountriesStates.{country_code} = [
+{foreach:val,state_code,v}
+{ state_code: "{state_code}", state: "{v}" },
+{end:}
+  false
+];
+{end:}
+</script>
+<script type="text/javascript">
+$(document).ready(
+  function() {
+    $('.field-state[name="{getName()}"]').each(
+      function () {
+        new StateSelectorController(this);
+      }
+    );
+  }
+);
+</script>

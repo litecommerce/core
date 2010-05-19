@@ -36,6 +36,16 @@
 class XLite_View_FormField_Select_State extends XLite_View_FormField_Select_Regular
 {
     /**
+     * States defined falg
+     * 
+     * @var    boolean
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected static $statesDefined = false;
+
+    /**
      * Return field template
      *
      * @return string
@@ -57,6 +67,62 @@ class XLite_View_FormField_Select_State extends XLite_View_FormField_Select_Regu
     protected function getDefaultOptions()
     {
         return XLite_Model_CachingFactory::getObjectFromCallback(__METHOD__, 'XLite_Model_State', 'findAll');
+    }
+
+    /**
+     * Check - states list are defined as javascript array or not
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isDefineStates()
+    {
+        return !self::$statesDefined;
+    }
+
+    /**
+     * Get countries states 
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCountriesStates()
+    {
+        self::$statesDefined = true;
+
+        $countriesArray = array();
+
+        foreach ($this->getOptions() as $state) {
+            $countryCode = $state->get('country_code');
+            if (!isset($countriesArray[$countryCode])) {
+                $countriesArray[$countryCode] = array();
+            }
+
+            $countriesArray[$countryCode][$state->get('state_id')] = $state->get('state');
+        }
+
+        return $countriesArray;
+    }
+
+    /**
+     * Register JS files
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getJSFiles()
+    {
+        $list = parent::getJSFiles();
+
+        $list[] = 'common/select_state.js';
+
+        return $list;
     }
 }
 
