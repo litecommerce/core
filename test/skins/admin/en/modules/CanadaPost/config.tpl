@@ -42,7 +42,7 @@ function setMIDColor(elm)
 	<input type="hidden" name="target" value="cps">
 	<input type="hidden" name="action" value="update">
     <tr>
-        <td colspan="2"> You should obtain Merchant ID from CanadaPost at <a href="https://obc.canadapost.ca/orc/init.do?regType=1"><b>www.canadapost.ca</b></a></td>
+        <td colspan="2"> You should obtain Merchant ID from CanadaPost at <a href="http://www.canadapost.ca/"><b>www.canadapost.ca</b></a></td>
     </tr>
 	<tr>
 		<td width="25%"><b>Canada Post Merchant ID:</b></td>
