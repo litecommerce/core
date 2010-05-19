@@ -18,28 +18,24 @@
 <td valign=top>
 
 <!-- [top] -->
-<TABLE WIDTH="100%" BORDER=0 CELLPADDING=0 CELLSPACING=0>
-<TR>
-   <TD class="Head" background="images/head_demo_01.gif" WIDTH=494 HEIGHT=73 style="background-color: #FFFFFF; background-repeat: no-repeat;" valign=top><IMG SRC="images/logo_demo.gif" WIDTH=275 HEIGHT=60 BORDER="0"><br><IMG SRC="images/spacer.gif" WIDTH=494 HEIGHT=1 BORDER="0"></TD>
-   <TD class="Head" background="images/head_demo_02.gif" WIDTH="100%">
-   <IMG SRC="images/spacer.gif" WIDTH=1 HEIGHT=1 BORDER="0"></TD>
-   <td align="right" valign="top" nowrap background="images/head_demo_02.gif">
-   	  <br>
+<table cellspacing="0" width="100%" style="background-color: #f4f4f4; border-bottom: 1px solid #e9ecf3;">
+<tr>
+   <td style="padding: 10px;"><img src="images/logo.png" alt="" /></td>
+    <td style="white-space: nowrap;">
+      <div style="font-size: 24px;"><span style="color: #2d69ab;">Lite</span><span style="color: #676767;">Commerce</span></div>
+      <div>Version: {config.Version.version:h}</div>
+    </td>
+   <td align="right" valign="top" nowrap="nowrap" width="100%">
+   	  <br />
       Welcome <span class="FormButton"><span IF="!auth.profile.billing_firstname=##">{auth.profile.billing_title} {auth.profile.billing_firstname} {auth.profile.billing_lastname}</span><span IF="auth.profile.billing_firstname=##">{auth.profile.login}</span></span>!<br>
       (<span class="FormButton">{auth.profile.login}</span> logged in)</span>
-      <span IF="recentAdmins">,&nbsp;<a href="admin.php?target=recent_login" onClick="this.blur()"><u>login history </u></a></span>
+      <span IF="recentAdmins">,&nbsp;<a href="admin.php?target=recent_login"><u>login history </u></a></span>
       </span>
-   	  <br>
-      <a href="admin.php?target=login&action=logoff" class="FormButton"><img src="images/go.gif" width="13" height="13" border="0" align="absmiddle"> Log Off</a>
+   	  <br />
+      <a href="admin.php?target=login&action=logoff" class="FormButton"><img src="images/go.gif" width="13" height="13" align="absmiddle" /> Log Off</a>
    </td>
-   <td>&nbsp;&nbsp;&nbsp;</td>
 </TR>
 </TABLE>
-<table width="100%" border=0 cellpadding=0 cellspacing=0>
-<tr>
-   <td width="100%" background="skins/admin/en/images/head_line.gif" height=12 align=right>Version: {config.Version.version}&nbsp;&nbsp;&nbsp;</td>
-</tr>
-</table>
 <BR>
 <!-- [/top] -->
 

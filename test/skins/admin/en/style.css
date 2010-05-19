@@ -30,6 +30,10 @@ FORM {
     MARGIN: 0px;
 }
 
+IMG {
+  border: 0px none;
+}
+
 BODY.PopUp { 
         MARGIN-TOP: 5 px; MARGIN-BOTTOM: 5 px; MARGIN-LEFT: 5 px; MARGIN-RIGHT: 5 px; 
         BACKGROUND-COLOR: #FFFFFF;
