@@ -55,8 +55,7 @@ class XLite_Controller_Customer_Profile extends XLite_Controller_Customer_Abstra
             $countryCode = $state->get('country_code');
 
             if (isset($statesInfo[$countryCode])) {
-                $statesInfo[$countryCode]['number']++;
-                $statesInfo[$countryCode]['data'][$state->get('state_id')] = $state->get('state');
+                $statesInfo[$countryCode][$state->get('state_id')] = $state->get('state');
             }
         }
 

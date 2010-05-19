@@ -441,7 +441,15 @@ abstract class XLite_View_Model_Profile_Abstract extends XLite_View_Model_Abstra
      */
     public function getBillingAddressFields()
     {
-        return $this->getFieldsBySchema($this->getAddressSchema('billing'));
+        $result = $this->getFieldsBySchema($this->getAddressSchema('billing'));
+
+        // For country <-> state syncronization
+        $result['billing_country']->setStateSelectorIds(
+            $result['billing_state']->getFieldId(),
+            $result['billing_custom_state']->getFieldId()
+        );
+
+        return $result;
     }
 
     /**
@@ -453,7 +461,15 @@ abstract class XLite_View_Model_Profile_Abstract extends XLite_View_Model_Abstra
      */
     public function getShippingAddressFields()
     {
-        return $this->getFieldsBySchema($this->getAddressSchema('shipping'));
+        $result = $this->getFieldsBySchema($this->getAddressSchema('shipping'));
+
+        // For country <-> state syncronization
+        $result['shipping_country']->setStateSelectorIds(
+            $result['shipping_state']->getFieldId(),
+            $result['shipping_custom_state']->getFieldId()
+        );
+
+        return $result;
     }
 
     /**

@@ -49,10 +49,7 @@ class XLite_Model_Country extends XLite_Model_Abstract
         $schema = array();
 
         foreach ($this->findAll($where) as $country) {
-            $schema[$country->get('code')] = array(
-                'number' => 0,
-                'data'   => array(),
-            );
+            $schema[$country->get('code')] = array();
         }
 
         return $schema;

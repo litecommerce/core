@@ -11,7 +11,7 @@
  * @since     3.0.0
  *}
 
-<select name="{getName()}"{getAttributesCode():h} onchange="{onChange}" id="{fieldId}" class="field-state">
+<select id="{getFieldId()}" name="{getName()}"{getAttributesCode():h}>
   <option value="0">Select one..</option>
   <option value="-1" selected="{getValue()=-1}">Other</option>
   <option FOREACH="getOptions(),state" value="{state.state_id:r}" selected="{state.state_id=getValue()}">{state.state:h}</option>

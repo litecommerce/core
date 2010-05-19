@@ -40,6 +40,7 @@ class XLite_View_FormField_Select_Country extends XLite_View_FormField_Select_Re
      */
 
     const PARAM_ALL = 'all';
+    const PARAM_STATE_SELECTOR = '';
 
 
     /**
@@ -50,6 +51,24 @@ class XLite_View_FormField_Select_Country extends XLite_View_FormField_Select_Re
      * @since  3.0.0
      */
     protected $searchCondition = null;
+
+    /**
+     * stateSelectorId 
+     * 
+     * @var    string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected $stateSelectorId = null;
+
+    /**
+     * stateInputId 
+     * 
+     * @var    string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected $stateInputId = null;
 
 
     /**
@@ -89,7 +108,58 @@ class XLite_View_FormField_Select_Country extends XLite_View_FormField_Select_Re
      */
     protected function getDefaultOptions()
     {
-        return XLite_Model_CachingFactory::getObjectFromCallback(__METHOD__, 'XLite_Model_Country', 'findAll', array($this->searchCondition));
+        return XLite_Model_CachingFactory::getObjectFromCallback(
+            __METHOD__,
+            'XLite_Model_Country',
+            'findAll',
+            array($this->searchCondition)
+        );
+    }
+
+    /**
+     * getCountriesStates 
+     * 
+     * @return array
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getCountriesStates()
+    {
+        $statesInfo = XLite_Model_Factory::create('XLite_Model_Country')->getCountryStatesListSchema('enabled = \'1\'');
+
+        foreach (XLite_Model_Factory::create('XLite_Model_State')->findAll() as $state) {
+            $countryCode = $state->get('country_code');
+
+            if (isset($statesInfo[$countryCode])) {
+                $statesInfo[$countryCode][$state->get('state_id')] = $state->get('state');
+            }
+        }
+
+        return $statesInfo;
+    }
+
+    /**
+     * getStateSelectorId
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getStateSelectorId()
+    {
+        return $this->stateSelectorId;
+    }
+
+    /**
+     * getStateInputId
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getStateInputId()
+    {
+        return $this->stateInputId;
     }
 
 
@@ -109,6 +179,39 @@ class XLite_View_FormField_Select_Country extends XLite_View_FormField_Select_Re
         }
 
         parent::__construct($params);
+    }
+
+    /**
+     * Register JS files
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getJSFiles()
+    {
+        $list = parent::getJSFiles();
+
+        $list[] = $this->getDir() . '/select_country.js';
+
+        return $list;
+    }
+
+    /**
+     * Pass the DOM Id fo the "States" selectbox
+     * NOTE: this function is public since it's called from the View_Model_Profile_Abstract class
+     * 
+     * @param string $selectorId DOM Id of the "States" selectbox
+     *  
+     * @return void
+     * @access public
+     * @since  3.0.0
+     */
+    public function setStateSelectorIds($selectorId, $inputId)
+    {
+        $this->stateSelectorId = $selectorId;
+        $this->stateInputId = $inputId;
     }
 }
 
