@@ -18,7 +18,7 @@ Your Antifraud Service License Key is expired.
 <p align="justify">
 To update the license, take the following steps:
 <ul>
-	<li>Log into your HelpDesk area at https://secure.qualiteam.biz/customer.php.</li>
+	<li>Log into your HelpDesk area at https://secure.qtmsoft.com/customer.php.</li>
 	<li>Click on the Buy products/services link.</li>
 	<li>Choose LiteCommerce Services section.</li>
 	<li>Select Antifraud Service subscription and follow the checkout procedures. </li>
