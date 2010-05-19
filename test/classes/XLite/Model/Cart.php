@@ -165,7 +165,8 @@ class XLite_Model_Cart extends XLite_Model_Order implements XLite_Base_ISingleto
         ) {
             $shipping = null;
             if (0 < count($rates)) {
-                $rate = array_shift($rates);
+                list($k, $rate) = each($rates);
+                reset($rates);
                 $shipping = $rate->get('shipping');
             }
             $this->setShippingMethod($shipping);

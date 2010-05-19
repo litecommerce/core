@@ -61,6 +61,7 @@ implements XLite_Base_IDecorator
                 XLite_Core_Request::getInstance()->shipping = 0;
 
             } elseif (!isset($rates[$this->getCart()->get('shipping_id')])) {
+                reset($rates);
                 $rate = array_shift($rates);
                 $shipping = $rate->get('shipping');
                 XLite_Core_Request::getInstance()->shipping = $shipping ? $shipping->get('shipping_id') : 0;

@@ -85,6 +85,7 @@ class XLite_Module_UPSOnlineTools_Model_Order extends XLite_Model_Order implemen
 
         $shipping = null;
         if (0 < count($rates)) {
+            reset($rates);
             $rate = array_shift($rates);
             $shipping = $rate->get('shipping');
         }

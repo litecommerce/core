@@ -160,16 +160,18 @@ class XLite_Model_Order extends XLite_Model_Abstract
 
 
     /**
-     * getShippingRates 
+     * Get shipping rates 
      * FIXME - see the "calcShippingRates()" method
      * 
-     * @return array
+     * @return array or XLite_Model_ShippingRate
      * @access public
      * @since  3.0.0
      */
     public function getShippingRates()
     {
-        return XLite_Model_CachingFactory::getObjectFromCallback(__METHOD__, $this, 'calcShippingRates');
+        // TODO - rework cache - cache do not work correctly with profile modification
+        //return XLite_Model_CachingFactory::getObjectFromCallback(__METHOD__, $this, 'calcShippingRates');
+        return $this->calcShippingRates();
     }
 
     /**

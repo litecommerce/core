@@ -387,12 +387,7 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
     protected function doActionRegister()
     {
         $this->getModelForm()->performAction('modify');
-
-        // Renew shipping
-        if ($this->isShippingNeeded()) {
-            $this->getCart()->assignFirstShippingRate();
-            $this->updateCart();
-        }
+        $this->renewShippingMethod();
     }
 
     /**
@@ -448,6 +443,20 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
         }
     }
 
+    /**
+     * Renew shipping method 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function renewShippingMethod()
+    {
+        $this->getCart()->refresh('shippingRates');
+        $this->getCart()->refresh('profile');
+        $this->getCart()->getShippingRates();
+    }
 
     /**
      * Return current checkout step
