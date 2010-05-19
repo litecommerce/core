@@ -21,6 +21,7 @@
   <meta name="ROBOTS" content="NOINDEX" />
   <meta name="ROBOTS" content="NOFOLLOW" />
   <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
 
   <link href="{getSkinURL(#style.css#)}" rel="stylesheet" type="text/css" />
   <link FOREACH="getCSSResources(),file" href="{file}" rel="stylesheet" type="text/css" />

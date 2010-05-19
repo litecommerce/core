@@ -25,6 +25,7 @@ if (document.getElementById('rebuild_cache_block')) {
 <meta IFF="!metaDescription" name="description" content="The powerful shopping cart software for web stores and e-commerce enabled stores is based on PHP / PHP4 with SQL database with highly configurable implementation based on templates." />
 <meta IFF="metaDescription" name="description" content="{metaDescription:r}" />
 <meta IFF="keywords" name="keywords" content="{keywords:r}" />
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
 
 <link href="{getSkinURL(#style.css#)}" rel="stylesheet" type="text/css" />
 <link FOREACH="getCSSResources(),file" href="{file}" rel="stylesheet" type="text/css" />
