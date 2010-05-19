@@ -28,7 +28,7 @@ function processClearCache()
 
 <table border="0" cellpadding="0" cellspacing="0">
   <tr>
-    <td colspan=2><h3>Account</h3> You should obtain this account from USPS at <a href="http://www.uspswebtools.com">www.uspswebtools.com</a></td>
+    <td colspan=2><h3>Account</h3> You should obtain this account from USPS at <a href="http://www.usps.com/webtools/">http://www.usps.com/webtools/</a></td>
   </tr>
   <tr>
     <td width="30%"><b>User ID:</b></td>
