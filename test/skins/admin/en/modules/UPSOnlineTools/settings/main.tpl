@@ -205,6 +205,7 @@ This option allows to select the method of calculating how the products added to
 	<td colspan="2">&nbsp;</td>
 </tr>
 
+{*
 <tr>
 	<td colspan="2"><widget template="modules/UPSOnlineTools/settings/separator.tpl" caption="UPS OnLine&reg; Tools Address Validation"></td>
 </tr>
@@ -240,6 +241,7 @@ This option allows to select the method of calculating how the products added to
 <tr>
 	<td colspan="2">&nbsp;</td>
 </tr>
+*}
 
 <tr>
 	<td colspan="2"><widget template="modules/UPSOnlineTools/settings/separator.tpl" caption="Cache settings"></td>
