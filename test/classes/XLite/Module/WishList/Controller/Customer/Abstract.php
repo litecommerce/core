@@ -59,9 +59,11 @@ class XLite_Module_WishList_Controller_Customer_Abstract extends XLite_Controlle
      */
     public function getWishList()
     {
-        if (!isset($this->wishlist) && XLite_Model_Auth::getInstance()->isLogged()) {
+        $profile = XLite_Model_Auth::getInstance()->getProfile(XLite_Core_Request::getInstance()->profile_id);
+
+        if (!isset($this->wishlist) && isset($profile)) {
             $this->wishlist = new XLite_Module_WishList_Model_WishList();
-            $profileId = XLite_Model_Auth::getInstance()->getProfile()->get('profile_id');
+            $profileId = $profile->get('profile_id');
 
             if (!$this->wishlist->find('profile_id = \'' . $profileId . '\'')) {
                 $this->wishlist->set('profile_id', $profileId);

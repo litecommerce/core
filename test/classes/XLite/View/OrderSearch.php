@@ -198,7 +198,7 @@ class XLite_View_OrderSearch extends XLite_View_Dialog
      */
     protected function getProfile()
     {
-        return $this->auth->getProfile();
+        return XLite_Model_Auth::getInstance()->getProfile(XLite_Core_Request::getInstance()->profile_id);
     }
 
     /**

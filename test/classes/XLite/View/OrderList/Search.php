@@ -94,7 +94,7 @@ class XLite_View_OrderList_Search extends XLite_View_OrderList_Abstract
      */
     protected function getProfile()
     {
-        return $this->auth->getProfile();
+        return XLite_Model_Auth::getInstance()->getProfile(XLite_Core_Request::getInstance()->profile_id);
     }
 
     /**
