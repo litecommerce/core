@@ -80,3 +80,4 @@ SETUP_PERMISSIONS="1"
 PHP='/usr/local/php-530/bin/php'
 MYSQL='/usr/local/bin/mysql'
 MD5='/sbin/md5'
+TR='/usr/bin/tr'

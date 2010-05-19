@@ -57,6 +57,10 @@ T=`dirname $0`
 BASE_DIR=`realpath $T`
 
 
+SED_PATCH="''"
+
+[ "x`uname`" = "xLinux" ] && SED_PATCH=''
+
 # Check and include the config file
 if [ "x${CONFIG}" = "x" ]; then
 	CONFIG="${BASE_DIR}/config.sh"
@@ -185,9 +189,9 @@ for i in $SQL_FILES; do
 	echo -n "   $i ..."
 
 	cp $i tmp.sql
-	sed -i '' "s/master/${SITE_ADMIN_USERNAME}/" tmp.sql
-	sed -i '' "s/eb0a191797624dd3a48fa681d3061212/${SITE_ADMIN_PASSWORD}/" tmp.sql
-	sed -i '' "s/rnd_tester@cdev\.ru/${SITE_ADMIN_EMAIL}/" tmp.sql
+	sed -i $SED_PATCH "s/master/${SITE_ADMIN_USERNAME}/" tmp.sql
+	sed -i $SED_PATCH "s/eb0a191797624dd3a48fa681d3061212/${SITE_ADMIN_PASSWORD}/" tmp.sql
+	sed -i $SED_PATCH "s/rnd_tester@cdev\.ru/${SITE_ADMIN_EMAIL}/" tmp.sql
 
 	RESULT=`$MYSQL_SITE_CMD < tmp.sql 2>&1`
 	[ "x${RESULT}" != "x" ] && die "\nMySQL error: $RESULT"
@@ -203,7 +207,7 @@ for i in $SQL_FILES_LC; do
 	echo -n "   $i ..."
 
 	cp $i tmp.sql
-	sed -i '' "s/rnd_tester@cdev\.ru/${LC_ADMIN_EMAIL}/" tmp.sql
+	sed -i $SED_PATCH "s/rnd_tester@cdev\.ru/${LC_ADMIN_EMAIL}/" tmp.sql
 
 	RESULT=`$MYSQL_LC_CMD < tmp.sql 2>&1`
 	[ "x${RESULT}" != "x" ] && die "\nMySQL error: $RESULT"
@@ -271,7 +275,7 @@ REPLACE_11="web_dir = \"${LC_WEB_DIR}\""
 FILE_11="${DEPLOYMENT_DIR}/modules/lc_connector/litecommerce/etc/config.php"
 
 CURRENT_DATE=`date`
-LC_AUTH_CODE=`$MD5 -q -s "$CURRENT_DATE"`
+LC_AUTH_CODE=`echo "$CURRENT_DATE" | $MD5 | $TR -d "\- [:blank:]"`
 
 FIND_12="^auth_code = \".*\"$"
 REPLACE_12="auth_code = \"${LC_AUTH_CODE}\""
@@ -332,7 +336,7 @@ while true; do
 	eval "REPLACE=\"\$REPLACE_$index\""
 	eval "FILE=\"\$FILE_$index\""
 
-	SED_CMD="sed -i '' 's|$FIND|$REPLACE|' $FILE 2>&1"
+	SED_CMD="sed -i $SED_PATCH 's|$FIND|$REPLACE|' $FILE 2>&1"
 
 	RESULT=`eval "$SED_CMD"`
 	[ "x${RESULT}" != "x" ] && die "\nSED error: $RESULT"
