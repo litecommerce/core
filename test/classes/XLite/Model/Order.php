@@ -163,15 +163,21 @@ class XLite_Model_Order extends XLite_Model_Abstract
      * Get shipping rates 
      * FIXME - see the "calcShippingRates()" method
      * 
-     * @return array or XLite_Model_ShippingRate
+     * @param boolean $clearCache Clear cache flag
+     * 
+     * @return array of XLite_Model_ShippingRate
      * @access public
      * @since  3.0.0
      */
-    public function getShippingRates()
+    public function getShippingRates($clearCache = false)
     {
-        // TODO - rework cache - cache do not work correctly with profile modification
-        //return XLite_Model_CachingFactory::getObjectFromCallback(__METHOD__, $this, 'calcShippingRates');
-        return $this->calcShippingRates();
+        return XLite_Model_CachingFactory::getObjectFromCallback(
+            __METHOD__,
+            $this,
+            'calcShippingRates',
+            array(),
+            $clearCache
+        );
     }
 
     /**
@@ -707,6 +713,11 @@ class XLite_Model_Order extends XLite_Model_Abstract
         }
 
         $this->$name = null;
+
+        if ('shippingRates' == $name) {
+            XLite_Model_CachingFactory::clearCacheCell('getShippingRates');
+        }
+
     }
 
     function set($name, $value) 

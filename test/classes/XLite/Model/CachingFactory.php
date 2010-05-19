@@ -74,24 +74,24 @@ class XLite_Model_CachingFactory extends XLite_Model_Factory implements XLite_Ba
     /**
      * Cache and return a result of object method call 
      * 
-     * @param string $signature result key in cache
-     * @param mixed  $handler   callback object
-     * @param string $method    method to call
-     * @param array  $args      callback arguments
+     * @param string  $signature result key in cache
+     * @param mixed   $handler   callback object
+     * @param string  $method    method to call
+     * @param array   $args      callback arguments
+     * @param boolean $earCache  Clear cache flag
      *  
      * @return mixed
      * @access public
      * @since  3.0.0
      */
-    public static function getObjectFromCallback($signature, $handler, $method, array $args = array())
+    public static function getObjectFromCallback($signature, $handler, $method, array $args = array(), $clearCache = false)
     {
-        if (!isset(self::$cache[$signature])) {
+        if (!isset(self::$cache[$signature]) || $clearCache) {
             self::$cache[$signature] = call_user_func_array(array(self::prepareHandler($handler), $method), $args);
         }
 
         return self::$cache[$signature];
     }
-
 
     /**
      * cache and return object instance 
@@ -107,6 +107,23 @@ class XLite_Model_CachingFactory extends XLite_Model_Factory implements XLite_Ba
     public static function getObject($signature, $class, array $args = array())
     {
         return self::getObjectFromCallback($signature, 'self', 'create', array($class, $args));
+    }
+
+    /**
+     * Clear cache cell 
+     * 
+     * @param string $signature Cache cell key
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function clearCacheCell($signature)
+    {
+        if (isset(self::$cache[$signature])) {
+            unset(self::$cache[$signature]);
+        }
     }
 
     /**

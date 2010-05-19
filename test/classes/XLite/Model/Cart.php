@@ -170,8 +170,10 @@ class XLite_Model_Cart extends XLite_Model_Order implements XLite_Base_ISingleto
                 $shipping = $rate->get('shipping');
             }
             $this->setShippingMethod($shipping);
-            $this->calcTotals();
-            $this->update();
+            if ($this->isPersistent) {
+                $this->calcTotals();
+                $this->update();
+            }
         }
 
         return $rates;
