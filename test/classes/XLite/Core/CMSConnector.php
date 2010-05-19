@@ -121,7 +121,7 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
     {
         return XLite_Core_Converter::getInstance()->buildQuery(
             $this->getProfileDBFields($cmsUserId), '=', ' AND ', '\''
-        ) . ' AND cms_profile_id > \'0\'';
+        ) . ' AND order_id = \'0\' AND cms_profile_id > \'0\'';
     }
 
 
