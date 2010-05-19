@@ -30,7 +30,17 @@ LC_HTTP_HOST="www.litecommerce.com"
 LC_HTTPS_HOST="www.litecommerce.com"
 LC_WEB_DIR="/modules/lc_connector/litecommerce"
 
+# Site administrator account data
+SITE_ADMIN_USERNAME="siteadmin"
+SITE_ADMIN_PASSWORD="890u7y9gjhw40gjw"
+SITE_ADMIN_EMAIL="admin@litecommerce.com"
 
+# LC admin demo: admin account email (must be different from site admin account)
+LC_ADMIN_EMAIL="bit-bucket@litecommerce.com"
+
+#
+# SQL files
+#
 SITE_LC_SQL_BASE_FILES="
 sql/xlite_tables.sql
 sql/xlite_data.sql

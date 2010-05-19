@@ -174,12 +174,22 @@ for i in $LC_SQL_FILES; do
 	SQL_FILES_LC=$SQL_FILES_LC" "`realpath $i`
 done
 
+cd ${DEPLOYMENT_DIR}
+
+SITE_ADMIN_PASSWORD=`$MD5 -qs "${SITE_ADMIN_PASSWORD}"`
+
 #
 # Installs SQL files to the site database
 #
 for i in $SQL_FILES; do
 	echo -n "   $i ..."
-	RESULT=`$MYSQL_SITE_CMD < $i 2>&1`
+
+	cp $i tmp.sql
+	sed -i '' "s/master/${SITE_ADMIN_USERNAME}/" tmp.sql
+	sed -i '' "s/eb0a191797624dd3a48fa681d3061212/${SITE_ADMIN_PASSWORD}/" tmp.sql
+	sed -i '' "s/rnd_tester@cdev\.ru/${SITE_ADMIN_EMAIL}/" tmp.sql
+
+	RESULT=`$MYSQL_SITE_CMD < tmp.sql 2>&1`
 	[ "x${RESULT}" != "x" ] && die "\nMySQL error: $RESULT"
 	echo -e "ok"
 done
@@ -191,11 +201,16 @@ echo -e "\nLC admin interface database installing...\n"
 #
 for i in $SQL_FILES_LC; do
 	echo -n "   $i ..."
-	RESULT=`$MYSQL_LC_CMD < $i 2>&1`
+
+	cp $i tmp.sql
+	sed -i '' "s/rnd_tester@cdev\.ru/${LC_ADMIN_EMAIL}/" tmp.sql
+
+	RESULT=`$MYSQL_LC_CMD < tmp.sql 2>&1`
 	[ "x${RESULT}" != "x" ] && die "\nMySQL error: $RESULT"
 	echo -e "ok"
 done
 
+rm -f tmp.sql
 
 #
 # Update drupal/sites/default/settings.php file
