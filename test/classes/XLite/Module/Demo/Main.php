@@ -88,17 +88,22 @@ class XLite_Module_Demo_Main extends XLite_Module_Abstract
      * Forbid action processing
      * 
      * @param string $message Action message
+     * @param string $url     Redirect URL
      *  
      * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function doForbidAction($message = null)
+    public static function doForbidAction($message = null, $url = null)
     {
         self::doForbidOperation($message);
 
-        header('Location: ' . XLite_Core_Converter::buildURL(XLite_Core_Request::getInstance()->target));
+        if (!$url) {
+            $url = XLite_Core_Converter::buildURL(XLite_Core_Request::getInstance()->target);
+        }
+
+        header('Location: ' . $url);
         exit(0);
     }
 

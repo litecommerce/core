@@ -40,7 +40,10 @@ implements XLite_Base_IDecorator
     public function checkAccess()
     {
         if (XLite_Core_Request::getInstance()->action) {
-            XLite_Module_Demo_Main::doForbidAction();
+            XLite_Module_Demo_Main::doForbidAction(
+                null,
+                XLite_Core_Converter::buildURL('main')
+            );
         }
 
         return parent::checkAccess();
