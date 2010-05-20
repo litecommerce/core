@@ -42,7 +42,7 @@ A:active  {
 <!-- [top] -->
 <TABLE WIDTH="100%" BORDER=0 CELLPADDING=0 CELLSPACING=0>
 <TR>
-   <TD class="Head" background="skins/default/en/images/head.gif" HEIGHT=74><IMG SRC="skins/default/en/images/logo.gif" WIDTH=275 HEIGHT=60 BORDER="0"></TD>
+   <TD class="Head" background="skins/default/en/images/head.gif" HEIGHT=74><IMG SRC="skins/default/en/images/logo.png" BORDER="0"></TD>
 </TR>
 </TABLE>
 <TABLE WIDTH="100%" BORDER=0 CELLPADDING=0 CELLSPACING=0>

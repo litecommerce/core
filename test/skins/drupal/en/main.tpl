@@ -31,10 +31,8 @@
 	<TD width="275" valign="top">
 		<TABLE border="0" cellpadding="0" cellspacing="0">
 		<TR>
-			<!--TD><IMG src="images/spacer.gif" width="40" height="122" border="0" hspace="0" vspace="0" alt=""></TD-->
 			<TD><IMG src="images/spacer.gif" width="40" height="96" border="0" hspace="0" vspace="0" alt=""></TD>
-			<!--TD valign="top"><A href="cart.php"><IMG src="images/logo_white.gif" width="207" height="53" border="0" hspace="0" vspace="28" border="0" alt=""></A></TD-->
-			<TD valign="top" style="padding-top: 26px;"><A href="cart.php"><IMG src="images/logo_white.gif" width="207" height="53" border="0" hspace="0" vspace="0" alt=""></A></TD>
+			<TD valign="top" style="padding-top: 26px;"><A href="cart.php"><IMG src="images/logo.png" border="0" hspace="0" vspace="0" alt=""></A></TD>
 		</TR>
 		</TABLE>
 	</TD>

@@ -28,7 +28,7 @@
 <!-- [top] -->
 <table width="100%" border=0 cellpadding=0 cellspacing=0>
 <tr>
-   <td class="Head" background="images/head_demo_01.gif" width=494 height=73><img src="images/logo_demo.gif" width=275 height=60 border="0"><br><img src="images/spacer.gif" width=494 height=1 border="0"></td>
+   <td class="Head" background="images/head_demo_01.gif" width=494 height=73><img src="images/logo.png" border="0"><br><img src="images/spacer.gif" width=494 height=1 border="0"></td>
    <td class="Head" background="images/head_demo_02.gif" width="100%">
    <img src="images/spacer.gif" width=1 height=1 border="0"></td>
 </tr>
