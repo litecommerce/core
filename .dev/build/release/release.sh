@@ -324,6 +324,16 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a -d "${OUTPUT_DIR}/${DRUPAL_DI
 	mkdir skins
 	cp skins_original/.htaccess skins/.htaccess
 
+	LOGO_IMAGE=${OUTPUT_DIR}/xlite_dev/build/release/files/images/lc_logo-${XLITE_VERSION}.png
+
+	if [ -f $LOGO_IMAGE ]; then
+		cp $LOGO_IMAGE ${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}/skins_original/default/en/logo.png
+		cp $LOGO_IMAGE ${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}/skins_original/drupal/en/logo.png
+
+	else
+		echo "Warning! Logo image file $LOGO_IMAGE not found"
+	fi
+
 	# Modify version of release
 	sed -i "" "s/'version','','[^']*'/'version','','${XLITE_VERSION}'/" sql/xlite_data.sql
 	sed -i "" "s/define('LC_VERSION', '[^']*'/define('LC_VERSION', '${XLITE_VERSION}'/" includes/install/install_settings.php
