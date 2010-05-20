@@ -21,6 +21,8 @@
 <body  onLoad="if (document.getElementById('login_form') != null) document.login_form.login.focus();" LEFTMARGIN=0 TOPMARGIN=0 RIGHTMARGIN=0 BOTTOMMARGIN=0 MARGINWIDTH=0 MARGINHEIGHT=0 background="skins/admin/en/images/zebra.gif">
 <!-- [/begin] -->
 
+{additional_header:h}
+
 <table border=0 width="100%" height="100%" cellpadding=0 cellspacing=0>
 <tr>
 <td valign=top>

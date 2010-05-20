@@ -47,29 +47,47 @@ implements XLite_Base_IDecorator
     protected function includeCompiledFile()
     {
         if (preg_match('/admin\/en\/main\.tpl$/Ss', $this->getTemplateFile())) {
-            echo ('<div class="demo-header">This LiteCommerce Admin zone demo has been created for illustrative purposes only. No changes made in the demo will be reflected in the Customer zone.</div>');
+            echo (self::getAdditionalHeader());
         }
 
         parent::includeCompiledFile();
     }
 
     /**
-     * Register CSS files
-     *
-     * @return array
+     * Get additional header 
+     * 
+     * @return string
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getCSSFiles()
+    public static function getAdditionalHeader()
     {
-        $list = parent::getCSSFiles();
-
-        if (preg_match('/admin\/en\/main\.tpl$/Ss', $this->getTemplateFile())) {
-            $list[] = 'modules/Demo/style.css';
-        }
-
-        return $list;
+        return <<<HTML
+<div class="demo-header">
+This LiteCommerce Admin zone demo has been created for illustrative purposes only. No changes made in the demo will be reflected in the Customer zone
+</div>
+<style type="text/css">
+<!--
+body {
+    padding-top: 34px;
+}
+.demo-header {
+    color: #802418;
+    background-color: #eaeae6;
+    padding: 10px 0px;
+    border-bottom: 1px solid #d2d2cf;
+    font-weight: bold;
+    width: 100%;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    text-align: center;
+    z-index: 90000;
+}
+-->
+</style>
+HTML;
     }
-
 }
