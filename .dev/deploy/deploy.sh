@@ -214,7 +214,7 @@ for i in $SQL_FILES_LC; do
 	echo -e "ok"
 done
 
-rm -f tmp.sql
+rm -f tmp.sql*
 
 #
 # Update drupal/sites/default/settings.php file
