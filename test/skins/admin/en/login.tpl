@@ -28,19 +28,19 @@
 <widget class="XLite_View_TopMessage" />
 
 <!-- [top] -->
-<table width="100%" border=0 cellpadding=0 cellspacing=0>
+<table width="100%" cellpadding="0" cellspacing="0" style="background-color: #f4f4f4; border-bottom: 1px solid #e9ecf3;">
 <tr>
-   <td class="Head" background="images/head_demo_01.gif" width=494 height=73><img src="images/logo_demo.gif" width=275 height=60 border="0"><br><img src="images/spacer.gif" width=494 height=1 border="0"></td>
-   <td class="Head" background="images/head_demo_02.gif" width="100%">
-   <img src="images/spacer.gif" width=1 height=1 border="0"></td>
+   <td style="padding: 10px;"><img src="images/logo.png" alt="" /></td>
+    <td style="white-space: nowrap;">
+      <div style="font-size: 24px;"><span style="color: #2d69ab;">Lite</span><span style="color: #676767;">Commerce</span></div>
+      <div>Version: {config.Version.version:h}</div>
+    </td>
+    <td align="right" valign="top" nowrap="nowrap" width="100%">
+      <img src="images/spacer.gif" width="100%" height="1" alt="" />
+    </td>
 </tr>
 </table>
-<table width="100%" border=0 cellpadding=0 cellspacing=0>
-<tr>
-   <td width="100%" background="skins/admin/en/images/head_line.gif" height=12 align=right>Version: {config.Version.version}</td>
-</tr>
-</table>
-<br>
+<br />
 <!-- [/top] -->
 
 <!-- [main_view] -->
