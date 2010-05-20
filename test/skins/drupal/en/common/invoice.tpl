@@ -12,7 +12,7 @@
  *}
 <table cellspacing="0" class="invoice-header">
   <tr>
-    <td class="left"><img src="images/logo.gif" alt="{config.Company.company_name}" /></td>
+    <td class="left"><img src="images/invoice_logo.png" alt="{config.Company.company_name}" class="logo" /></td>
     <td class="right">
       <strong>{config.Company.company_name}</strong>
       <p>
