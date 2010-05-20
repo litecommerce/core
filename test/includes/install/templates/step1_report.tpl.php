@@ -199,7 +199,7 @@ if (!$is_original) {
 ?>
 
 <TR>
-   <TD class="Head" background="skins_original/admin/en/images/head_demo_01.gif" WIDTH=494 HEIGHT=73><IMG SRC="skins_original/admin/en/images/logo_demo.gif" WIDTH=275 HEIGHT=60 BORDER="0"><br><IMG SRC="skins_original/admin/en/images/spacer.gif" WIDTH=494 HEIGHT=1 BORDER="0"></TD>
+   <TD class="Head" background="skins_original/admin/en/images/head_demo_01.gif" WIDTH=494 HEIGHT=73><IMG SRC="skins_original/admin/en/images/logo.png" BORDER="0"><br><IMG SRC="skins_original/admin/en/images/spacer.gif" WIDTH=494 HEIGHT=1 BORDER="0"></TD>
    <TD class="Head"  WIDTH="100%" background="skins_original/admin/en/images/head_demo_02.gif">
 <TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 align=right>
 <TR><TD align=right>
