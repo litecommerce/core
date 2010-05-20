@@ -268,8 +268,8 @@ class XLite_View_Image extends XLite_View_Abstract
      */
     protected function setImagePaddings()
     {
-        $vertical = round(($this->getParam(self::PARAM_MAX_HEIGHT) - $this->properties['height']) / 2, 0);
-        $horizontal = round(($this->getParam(self::PARAM_MAX_WIDTH) - $this->properties['width']) / 2, 0);
+        $vertical = ($this->getParam(self::PARAM_MAX_HEIGHT) - $this->properties['height']) / 2;
+        $horizontal = ($this->getParam(self::PARAM_MAX_WIDTH) - $this->properties['width']) / 2;
 
         $top = ceil($vertical);
         $bottom = floor($vertical);
