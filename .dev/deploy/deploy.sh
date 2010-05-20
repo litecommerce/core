@@ -180,7 +180,7 @@ done
 
 cd ${DEPLOYMENT_DIR}
 
-SITE_ADMIN_PASSWORD=`$MD5 -qs "${SITE_ADMIN_PASSWORD}"`
+SITE_ADMIN_PASSWORD=`echo $SITE_ADMIN_PASSWORD | $MD5 | $TR -d "\- [:blank:]"`
 
 #
 # Installs SQL files to the site database
