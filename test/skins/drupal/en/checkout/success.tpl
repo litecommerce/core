@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * ____file_title____
+ * Success checkout
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -11,10 +11,14 @@
  * @since     3.0.0
  *}
 
-<widget template="common/dialog.tpl" head="Order processed" body="checkout/success_message.tpl" />
-
+<widget template="checkout/success_message.tpl" />
+<br />
 <widget class="XLite_View_Button_Link" label="Continue shopping" location="{buildURL()}" />
+&nbsp;&nbsp;
 <widget class="XLite_View_Button_Link" label="Print invoice" location="{buildUrl(#invoice#,##,_ARRAY_(#order_id#^order.order_id,#printable#^#1#))}" />
+<br />
+<br />
+<hr class="tiny" />
+
 <widget template="common/invoice.tpl" />
-<widget class="XLite_View_Button_Link" label="Continue shopping" location="{buildURL()}" />
 
