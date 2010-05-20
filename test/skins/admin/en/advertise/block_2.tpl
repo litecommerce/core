@@ -11,5 +11,5 @@
  * @since     3.0.0
  *}
 <h2 class="hosting">Hosting</h2>
-<span>Do you know that Qualiteam Software not just develops LiteCommerce shopping cart but also provides <a href="http://www.litecommerce.com/web-hosting.html">hosting services</a> to LiteCommerce users? Our services are configured to achieve the maximal performance and compatibility with LiteCommerce software. Some hosting plans come with a free dedicated SSL certificate and free technical support for LiteCommerce software.</span>
+<span>Do you know that Qualiteam Software not just develops LiteCommerce shopping cart but also provides <a href="http://www.litecommerce.com/web-hosting.html">hosting services</a> to LiteCommerce users? Our services are configured to achieve the maximum performance and compatibility with LiteCommerce software. Some hosting plans come with a free dedicated SSL certificate and free technical support for LiteCommerce software.</span>
 <p>Sounds interesting? <a href="http://www.litecommerce.com/hosting-plans.html">See our hosting plans</a></p>
