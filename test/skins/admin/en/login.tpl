@@ -84,7 +84,10 @@
             <widget template="welcome.tpl" mode="">
             <widget template="access_denied.tpl" mode="access_denied">
 
-            <p align=center style="font-size: 11px" class="tabDefault"><b>Please identify yourself with a username and a password to access the Administrator Zone</b></p>
+            <p align=center style="font-size: 11px" class="tabDefault">
+              <strong>Please identify yourself with a username and a password to access the Administrator Zone</strong>
+            </p>
+              {additional_note:r}
               <form id="login_form" action="{buildUrl(#login#)}" method="POST" name="login_form">
               <input type="hidden" name="target" value="login">
               <input type="hidden" name="action" value="login">

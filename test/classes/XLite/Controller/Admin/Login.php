@@ -27,7 +27,7 @@
  */
 
 /**
- * ____description____
+ * Login
  * 
  * @package XLite
  * @see     ____class_see____
@@ -57,8 +57,9 @@ class XLite_Controller_Admin_Login extends XLite_Controller_Admin_Abstract
     {
         parent::fillForm();
         $login = $this->get('login');
-        if ( empty($login) )
+        if (empty($login)) {
             $this->set('login', $this->auth->remindLogin());
+        }
     }
 
     /**
@@ -127,9 +128,6 @@ class XLite_Controller_Admin_Login extends XLite_Controller_Admin_Abstract
     
     function getSecure()
     {
-        if ($this->session->get('no_https')) {
-            return false;
-        }
-        return $this->getComplex('config.Security.admin_security');
+        return $this->session->get('no_https') ? false : $this->config->Security->admin_security;
     }
 }
