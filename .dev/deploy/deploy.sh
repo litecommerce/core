@@ -181,7 +181,7 @@ done
 cd ${DEPLOYMENT_DIR}
 
 if [ "x${SITE_ADMIN_PASSWORD_MD5}" = "x" ]; then
-	SITE_ADMIN_PASSWORD=`echo $SITE_ADMIN_PASSWORD | $MD5 | $TR -d "\- [:blank:]"`
+	SITE_ADMIN_PASSWORD=`echo -n $SITE_ADMIN_PASSWORD | $MD5 | $TR -d "\- [:blank:]"`
 
 else
 	SITE_ADMIN_PASSWORD=$SITE_ADMIN_PASSWORD_MD5
@@ -280,7 +280,7 @@ REPLACE_11="web_dir = \"${LC_WEB_DIR}\""
 FILE_11="${DEPLOYMENT_DIR}/modules/lc_connector/litecommerce/etc/config.php"
 
 CURRENT_DATE=`date`
-LC_AUTH_CODE=`echo "$CURRENT_DATE" | $MD5 | $TR -d "\- [:blank:]"`
+LC_AUTH_CODE=`echo -n "$CURRENT_DATE" | $MD5 | $TR -d "\- [:blank:]"`
 
 FIND_12="^auth_code = \".*\"$"
 REPLACE_12="auth_code = \"${LC_AUTH_CODE}\""
