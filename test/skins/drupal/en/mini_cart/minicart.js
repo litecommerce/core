@@ -18,7 +18,6 @@ function xlite_minicart_toggle(id) {
       $(el).click(
         function (event) {
           event.stopPropagation();
-          return false;
         }
       );
       $(document).click(
