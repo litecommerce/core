@@ -198,7 +198,24 @@ class XLite_View_OrderSearch extends XLite_View_Dialog
      */
     protected function getProfile()
     {
-        return XLite_Model_Auth::getInstance()->getProfile(XLite_Core_Request::getInstance()->profile_id);
+        $result = null;
+
+        if (XLite::isAdminZone()) {
+            if (XLite_Core_Request::getInstance()->profile_id) {
+                $result = new XLite_Model_Profile(XLite_Core_Request::getInstance()->profile_id);
+                if (!$result->isExists()) {
+                    $result = null;
+                }
+            }
+
+        } else {
+            $result = XLite_Model_Auth::getInstance()->getProfile(XLite_Core_Request::getInstance()->profile_id);
+            if (!$result) {
+                $result = XLite_Model_Auth::getInstance()->getProfile();
+            }
+        }
+
+        return $result;
     }
 
     /**

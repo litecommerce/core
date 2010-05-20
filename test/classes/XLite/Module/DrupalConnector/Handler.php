@@ -388,9 +388,14 @@ class XLite_Module_DrupalConnector_Handler extends XLite_Core_CMSConnector
      */
     public function getOrdersArgPreprocess(array $args)
     {
-        return array(
-            'profile_id' => $args[1],
-        );
+        $result = array();
+
+        $profile = LC_Connector_Handler_Profile::getInstance()->getProfile($args[1]);
+        if ($profile && $profile->isRead) {
+            $result['profile_id'] = $profile->get('profile_id');
+        }
+
+        return $result;
     }
 
     /**
