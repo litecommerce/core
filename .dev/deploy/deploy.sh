@@ -180,8 +180,13 @@ done
 
 cd ${DEPLOYMENT_DIR}
 
-SITE_ADMIN_PASSWORD=`echo $SITE_ADMIN_PASSWORD | $MD5 | $TR -d "\- [:blank:]"`
+if [ "x${SITE_ADMIN_PASSWORD_MD5}" = "x" ]; then
+	SITE_ADMIN_PASSWORD=`echo $SITE_ADMIN_PASSWORD | $MD5 | $TR -d "\- [:blank:]"`
 
+else
+	SITE_ADMIN_PASSWORD=$SITE_ADMIN_PASSWORD_MD5
+fi
+		
 #
 # Installs SQL files to the site database
 #

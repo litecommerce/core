@@ -33,6 +33,8 @@ LC_WEB_DIR="/modules/lc_connector/litecommerce"
 # Site administrator account data
 SITE_ADMIN_USERNAME="siteadmin"
 SITE_ADMIN_PASSWORD="890u7y9gjhw40gjw"
+# If md5sum generates incorrect md5 sum, specify correct value below
+#SITE_ADMIN_PASSWORD_MD5=""
 SITE_ADMIN_EMAIL="admin@litecommerce.com"
 
 # LC admin demo: admin account email (must be different from site admin account)
