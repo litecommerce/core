@@ -48,13 +48,8 @@ WholesaleTrading
 # LiteCommerce files that must be removed from all distributives
 XLITE_FILES_TODELETE="
 restoredb
-sql/Makefile
-sql/xlite_all_modules.sql
-sql/xlite_demo_data.sql
-sql/xlite_demo_store.sql
-sql/xlite_demo_user.sql
-sql/xlite_modules_drupal.sql
-sql/xlite_modules_standalone.sql
+sql/local
+sql/demo
 "
 
 # Drupal files that must be removed from all distributives
