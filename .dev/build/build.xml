@@ -15,7 +15,7 @@
 		<property name="buildDir" location="${root}/build" />
 		<property name="sourceDir" location="${root}" />
 		<property name="jmeterDir" location="${sourceDir}/.dev/lib/jmeter" />
-		<property name="srcDir" location="${sourceDir}/test" />
+		<property name="srcDir" location="${sourceDir}/src" />
 		<property name="label" value="manual" />
 	</target>
 
@@ -25,7 +25,7 @@
         <property name="buildDir" location="${root}/build" />
         <property name="sourceDir" location="${root}/source" />
 		<property name="jmeterDir" location="/u/xcart/jakarta-jmeter-2.3.4" />
-        <property name="srcDir" location="${sourceDir}/test" />
+        <property name="srcDir" location="${sourceDir}/src" />
     </target>
 
     <target name="set-properties-common">
