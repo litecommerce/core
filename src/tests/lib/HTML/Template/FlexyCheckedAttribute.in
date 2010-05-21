@@ -1,3 +1,0 @@
-<input type="checkbox" name="xyz" checked="{isParam()}">
-<input type="checkbox" name="xyz" checked="{isParam(#param#)}">
-<input type="checkbox" name="xyz" checked="{isVar}">

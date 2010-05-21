@@ -1,7 +1,0 @@
-module_id=1011
-name=PayPalPro
-description="This module introduces support for several PayPal website payment solutions."
-enabled=1
-version=2.9
-dependencies=
-

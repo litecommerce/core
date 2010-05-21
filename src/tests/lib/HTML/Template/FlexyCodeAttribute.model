@@ -1,3 +1,0 @@
-<?php $t->name = "xyz"; $t->src = "asd/dsa.gif";  ?><?php if (isset($t) && method_exists($t,'getError')) echo htmlspecialchars($t->getError("param")); ?>
-<input type="text" name="xyz" <?php if (isset($t) && method_exists($t,'addValidator')) echo htmlspecialchars($t->addValidator("param")); ?> value="123">
-<?php $t->errorMessage = "This is error!";  ?><?php if (isset($t) && method_exists($t,'getError')) echo htmlspecialchars($t->getError($t->errorMessage)); ?>

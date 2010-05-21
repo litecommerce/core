@@ -1,4 +1,0 @@
-Version 2.1:
-- [!] 18 May 2005, Sheriff - Improvement: The ability to disable bulk sending functionality in "Newsletters" module was added.
-- [!] 22 Apr 2005, Sheriff - Improvement: The ability to enable modules "on the fly" in customer or administrator Demo sessions was added.
-- [!] 14 Feb 2005, Sheriff - Improvement: Now in DemoMode a customer stays under HTTP protocol in most dialogues.

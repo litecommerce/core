@@ -1,6 +1,0 @@
-module_id=1310
-name=VerisignLink
-description="Verisign PayFlow Link credit card payment processor"
-enabled=1
-version=2.2
-dependencies=

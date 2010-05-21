@@ -1,3 +1,0 @@
-Version 2.1:
-- [!] 17 Jun 2008, Jasper - Bug (0044511): The way PHP 4.x works with linked objects was not taken into account, as a result, orders were not always updated correctly if Egoods and UPSOnlineTools modules were enabled. Fixed.
-

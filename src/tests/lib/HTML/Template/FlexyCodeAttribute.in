@@ -1,3 +1,0 @@
-<img name="xyz" src="asd/dsa.gif" code="{getError(#param#)}">
-<input type="text" name="xyz" code="{addValidator(#param#)}" value="123">
-<img code="{getError(errorMessage)}" errorMessage="This is error!">

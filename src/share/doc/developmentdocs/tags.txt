@@ -1,4 +1,0 @@
-overview	overview.txt	/*overview.txt*
-layout	layout.txt	/*layout.txt*
-sarc	sarc.txt	/*sarc.txt*
-modules	modules.txt	/*modules.txt*

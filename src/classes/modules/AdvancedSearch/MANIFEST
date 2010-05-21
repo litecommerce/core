@@ -1,6 +1,0 @@
-module_id=300
-name=AdvancedSearch
-description="This module introduces advanced product search to the customer front end."
-enabled=1
-version=2.6.RC3
-dependencies=

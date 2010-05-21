@@ -1,2 +1,0 @@
-ALTER TABLE xlite_modules CHANGE version version varchar(12) NOT NULL DEFAULT '0';
-INSERT INTO xlite_payment_methods(payment_method,name,details,class,params,orderby,enabled) VALUES ('phpcybersource_cc','Credit Card','Visa, Mastercard, American Express','phpcybersource_cc','O:8:\"stdClass\":5:{s:10:\"merchantID\";s:0:\"\";s:13:\"keysDirectory\";s:0:\"\";s:8:\"currency\";s:3:\"USD\";s:6:\"prefix\";s:5:\"lite-\";s:10:\"testServer\";s:1:\"1\";s:15:"transactionType";s:7:"capture";}',50,0);

@@ -1,6 +1,0 @@
-module_id=2500
-name=USPS
-description=USPS real-time shipping calculation
-enabled=1
-version=2.6.RC1
-dependencies=

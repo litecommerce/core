@@ -1,1 +1,0 @@
-<b>{updatesNumber}</b> new update<span IF="!updatesNumber=#1#">s are</span><span IF="updatesNumber=#1#"> is</span> available for your LiteCommerce system.&nbsp;&nbsp;&nbsp;&nbsp;<a href="admin.php?target=LiveUpdating" onClick="this.blur()"><img src="images/go.gif" width="13" height="13" border="0" align="absmiddle"> View details</a>

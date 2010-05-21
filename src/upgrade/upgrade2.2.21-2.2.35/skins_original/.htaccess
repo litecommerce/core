@@ -1,8 +1,0 @@
-Options -Indexes
-<IfModule mod_access.c>
-<files "*.tpl">
-Deny from all  
-</files>
-
-Allow from all 
-</IfModule>

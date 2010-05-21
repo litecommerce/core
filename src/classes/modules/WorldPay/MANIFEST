@@ -1,7 +1,0 @@
-module_id=1335
-name=WorldPay
-description=RBS WorldPay payment gateway
-enabled=1
-version=2.4
-dependencies=
-

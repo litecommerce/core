@@ -1,2 +1,0 @@
-ALTER TABLE xlite_modules CHANGE version version varchar(12) NOT NULL DEFAULT '0';
-INSERT INTO xlite_payment_methods (payment_method, name, details, class, params, orderby, enabled) VALUES ('protxdirect_cc', 'ProtxDirect', 'Visa, Mastercard, American Express', 'protxdirect_cc', 'a:7:{s:11:"vendor_name";s:0:"";s:12:"order_prefix";s:0:"";s:8:"currency";s:3:"USD";s:8:"testmode";s:1:"Y";s:11:"ApplyAVSCV2";s:1:"0";s:13:"Apply3DSecure";s:1:"0";s:10:"trans_type";s:7:"PAYMENT";}', '15', '0');

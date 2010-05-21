@@ -1,9 +1,0 @@
-Version 2.8:
-- [+] 19 Oct 2007, Alien - Improvement (0023634): The hardcoded table prefix was removed.
-- [+] 05 Sep 2007, Alien - Improvement (0022000): The module is adapted to commercial design schemes.
-- [+] 17 Apr 2007, Sheriff - Improvement (0017395): Now module templates are compatible with HTML 4.01 Transitional.
-
-Version 2.7:
-- [!] 17 May 2006, Sheriff - Bug (0007670): Products were displayed in the "Featured products" list on the category details page without taking into account the "not available for sale" property of products. Fixed.
-- [!] 07 Mar 2005, Asd - Bug (0002148): The compiled code/templates cache was not cleaned up during the module uninstallation. Fixed.
-

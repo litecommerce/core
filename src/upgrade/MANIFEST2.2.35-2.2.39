@@ -1,7 +1,0 @@
-type=upgrade
-description=LiteCommerce version 2.2.35 to version 2.2.39 upgrade
-readme=UPGRADE.readme
-from_ver=2.2.35
-to_ver=2.2.39
-remove_files=
-

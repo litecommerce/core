@@ -1,6 +1,0 @@
-module_id=740
-name=Bestsellers
-description=This module enables bestsellers list
-enabled=1
-version=2.6
-dependencies=

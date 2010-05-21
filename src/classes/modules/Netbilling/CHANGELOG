@@ -1,9 +1,0 @@
-Version 2.4:
-- [+] 06 Jul 2007, Osipov - Improvement: The support of 3D Secure Verified by Visa / MasterCard using CardinalCommerce (a provider of authentication and payment services) has been added.
-- [+] 06 Jul 2007, Osipov - Improvement: The support of Direct Mode 3.1 Protocol has been added.
-
-Version 2.3:
-- [!] 07 Mar 2005, Asd - Bug: The compiled code/templates cache was not cleaned up during the module uninstallation. Fixed.
-
-Version 2.2:
-- [!] 02 Mar 2005, Asd - Bug: The incorrect paths to the module part caused incompatibility between the module and LiteCommerce ASP. Fixed.

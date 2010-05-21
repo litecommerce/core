@@ -1,3 +1,0 @@
-Version 2.1:
-- [+] Sheriff - Improvement (0001978): Unregistered customers now can see shipping rates for the 'default country' instead of the 'N/A' message (in LiteCommerce 2.2.X).
-- [!] 22 Nov 2005, Asd - Bug (0004975): When a shipping method was turned off by the admin, this method was still displayed on the customer checkout page. Fixed.

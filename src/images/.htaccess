@@ -1,8 +1,0 @@
-Options -Indexes
-<IfModule mod_access.c>
-<Files ~ "(\.jpg|\.gif|\.png|\.bmp|\.tiff|\.swf|\.jpeg)">
-Allow from all
-</Files>
-
-Deny from all
-</IfModule>

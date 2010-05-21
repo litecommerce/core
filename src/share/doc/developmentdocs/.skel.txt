@@ -1,9 +1,0 @@
-*FIXME*   Revision $Id: .skel.txt,v 1.1 2003/06/24 06:59:22 novik Exp $
-
-
-                        X-CART LITE PROJECT DOCUMENTATION
-
-
-/* vim: set tw=78 ft=help norl expandtab ts=4 softtabstop=4 foldmethod=marker shiftwidth=4: */
-
-

@@ -1,3 +1,0 @@
-<input type="checkbox" name="xyz" <?php if ($t->isParam()) echo "checked"; ?>>
-<input type="checkbox" name="xyz" <?php if ($t->isParam("param")) echo "checked"; ?>>
-<input type="checkbox" name="xyz" <?php if ($t->isVar) echo "checked"; ?>>

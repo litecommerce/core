@@ -1,6 +1,0 @@
-module_id=2100
-name=AccountingPackage
-description=Integration with QuickBooks, Peachtree and MYOB
-enabled=1
-version=2.8
-dependencies=

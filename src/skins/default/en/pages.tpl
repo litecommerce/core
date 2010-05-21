@@ -1,1 +1,0 @@
-{* Contains user-defined pages *}

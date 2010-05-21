@@ -1,2 +1,0 @@
-ALTER TABLE xlite_modules CHANGE version version varchar(12) NOT NULL DEFAULT '0';
-INSERT INTO xlite_payment_methods SET payment_method = 'eway_xml', name = 'Credit Card', details = 'Visa, Mastercard, American Express', orderby = '15', class = 'eway_xml',  enabled = 0, params = 'O:8:"stdClass":5:{s:7:"param01";s:0:"";s:8:"testmode";s:1:"Y";s:7:"param03";s:0:"";s:7:"param08";s:50:"https://www.eway.com.au:443/gateway/xmlpayment.asp";s:7:"param09";s:56:"https://www.eway.com.au:443/gateway/xmltest/TestPage.asp";}';

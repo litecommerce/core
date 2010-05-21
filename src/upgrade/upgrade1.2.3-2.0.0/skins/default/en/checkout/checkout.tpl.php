@@ -1,9 +1,0 @@
-<?php
-
-$source = strReplace('<form name="cart_form" action="cart.php" method="POST">', '<widget module="ProductOptions" template="modules/ProductOptions/selected_options_js.tpl">'."\n".'<form name="cart_form" action="cart.php" method="POST">', $source, __FILE__, __LINE__);
-$source = strReplace('<tr FOREACH="cart.items,key,item">'."\n".'<td class="ProductPriceSmall"><input type=text size=3 name="amount[{key}]" value="{item.amount}"></td>', '<tr FOREACH="cart.items,key,item" valign=top>'."\n".'<td><input type=text size=3 name="amount[{key}]" value="{item.amount}"></td>', $source, __FILE__, __LINE__);
-$source = strReplace('<td>{truncate(item,#name#,#30#):h}</td>', '<td id="close{key}" style="cursor: hand;" onClick="visibleBox(\'{key}\')"><b><a href="{item.url}">{truncate(item,#name#,#30#):h}</a></b><font IF="{item.hasOptions()}" class=SidebarItem><br>&nbsp;&nbsp;<img src="images/modules/ProductOptions/open.gif" width="13" height="13" border="0" align="absmiddle" alt="Click to view selected product options">&nbsp;Selected options</font></td>'."\n".'<td id="open{key}" style="display: none; cursor: hand;" onClick="visibleBox(\'{key}\')"><b><a href="cart.php?target=product&product_id={item.product.product_id}">{truncate(item,#name#,#30#):h}</a></b><span IF="{item.hasOptions()}"><table border=0 cellpadding=0 cellspacing=0><tr><td>&nbsp;&nbsp;<img src="images/modules/ProductOptions/close.gif" width="13" height="13" border="0" align="absmiddle" alt="hide options list"></td><td>&nbsp;</td></tr><tr><td>&nbsp;</td><td><widget module="ProductOptions" template="modules/ProductOptions/selected_options.tpl" visible="{item.hasOptions()}"></td></tr></table></span></td>', $source, __FILE__, __LINE__);
-$source = strReplace('{delivery.display()}', '<widget template="shopping_cart/delivery.tpl">', $source, __FILE__, __LINE__);
-$source = strReplace('{totals.display()}', '<widget template="shopping_cart/totals.tpl">', $source, __FILE__, __LINE__);
-
-?>

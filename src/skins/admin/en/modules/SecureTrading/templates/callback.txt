@@ -1,3 +1,0 @@
-method1	POST
-url1	http://www.yourdomain.com/your_web_dir/cart.php?target=callback&action=callback&order_id_name=orderinfo
-fields1	orderref, stresult, streference, stauthcode, orderinfo

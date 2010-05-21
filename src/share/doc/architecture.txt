@@ -1,6 +1,0 @@
-LiteCommerce is an object-oriented application with open API. It has a modular structure and consists of a single core with some external modules. Each module can change (or extend) each class'es behaviour whithout changing its source code. This enables third-party developers to implement their own modules.
-
-It is easy to install a new module into working LiteCommerce shop. Modules come in .tar files, which you upload in the module installator in your admin area.
-
-LiteCommerce has its own DB layer, which encapsulates all Database calls and frees the source code from tons of SQL statements. There is no longer need to remember all table fields in order to enumerate them in your select or update statement.
-

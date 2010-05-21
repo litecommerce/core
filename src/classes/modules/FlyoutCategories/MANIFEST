@@ -1,6 +1,0 @@
-module_id=4600
-name=FlyoutCategories
-description=Allows to change the layout of your categories pages instantly.
-enabled=1
-version=2.3.RC4
-dependencies=

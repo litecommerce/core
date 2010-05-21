@@ -1,6 +1,0 @@
-module_id=500
-name=Affiliate
-description="This module adds a feature rich affiliate marketing mechanism to your online store"
-enabled=1
-version=2.9.RC9
-dependencies=

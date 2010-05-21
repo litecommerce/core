@@ -1,1 +1,0 @@
-brcc32 -fo ../scripts.res scripts.rc > reslog.txt

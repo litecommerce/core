@@ -1,6 +1,0 @@
-module_id=1040
-name=XCartImport
-description=Import data from X-Cart Gold
-enabled=1
-version=2.6.RC1
-dependencies=

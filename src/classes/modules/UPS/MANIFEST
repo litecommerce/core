@@ -1,6 +1,0 @@
-module_id=2520
-name=UPS
-description=UPS real-time shipping calculation
-enabled=1
-version=2.3
-dependencies=

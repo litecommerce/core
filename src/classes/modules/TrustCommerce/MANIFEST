@@ -1,6 +1,0 @@
-module_id=1365
-name=TrustCommerce
-description=TrustCommerce credit card payment processor
-enabled=1
-version=2.3
-dependencies=

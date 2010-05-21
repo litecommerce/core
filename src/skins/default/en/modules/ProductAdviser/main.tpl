@@ -1,6 +1,0 @@
-<widget module="ProductAdviser" target="product" template="common/dialog.tpl" head="Related products" body="{config.ProductAdviser.rp_template}" visible="{config.ProductAdviser.related_products_enabled=#Y#&product.RelatedProducts&!page}">
-<widget module="ProductAdviser" target="product" template="common/dialog.tpl" head="People who buy this product also buy" body="{config.ProductAdviser.pab_template}" visible="{config.ProductAdviser.products_also_buy_enabled=#Y#&product.ProductsAlsoBuy&!page}">
-<widget module="ProductAdviser" target="notify_me" template="common/dialog.tpl" head="Notify me when ..." body="modules/ProductAdviser/notify_me.tpl">
-<widget module="ProductAdviser" target="RecentlyViewed" template="common/dialog.tpl" head="Recently Viewed" body="modules/ProductAdviser/recently_viewed.tpl">
-<widget module="ProductAdviser" target="main,category,product,cart,RecentlyViewed" class="CNewArrivalsProducts" template="common/dialog.tpl" head="New Arrivals" body="modules/ProductAdviser/new_arrivals.tpl" dialog="{dialog}">
-<widget module="ProductAdviser" target="NewArrivals" class="CNewArrivalsProducts" template="common/dialog.tpl" head="New Arrivals" body="modules/ProductAdviser/new_arrivals.tpl" dialog="{dialog}" target="{target}">

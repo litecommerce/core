@@ -1,2 +1,0 @@
-ALTER TABLE xlite_modules CHANGE version version varchar(12) NOT NULL DEFAULT '0';
-INSERT INTO xlite_payment_methods SET payment_method='pay_systems_web_cc', name='Credit Card', details='Visa, Mastercard, American Express', class='pay_systems_web_cc', orderby=10, enabled=0, params='O:8:"stdClass":3:{s:7:"param01";s:0:"";s:7:"param02";s:0:"";s:7:"param08";s:68:"https://secure.paysystems.com/cgi-v310/payment/onlinesale-tpppro.asp";}';

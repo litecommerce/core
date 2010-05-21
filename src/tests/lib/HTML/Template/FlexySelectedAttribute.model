@@ -1,5 +1,0 @@
-<select name="name">
-<option value="xyz" <?php if ($t->isSelected()) echo "selected"; ?>>
-<option value="xyz" <?php if ($t->isSelected("param")) echo "selected"; ?>>
-<option value="xyz" <?php if ($t->isSelected) echo "selected"; ?>>
-</select>

@@ -1,6 +1,0 @@
-type=upgrade
-description=LiteCommerce version 2.1.2 to version 2.2.17 upgrade
-readme=UPGRADE.readme
-from_ver=2.1.2
-to_ver=2.2.17
-remove_files=skins/admin/en/db.tpl; skins_original/admin/en/db.tpl; skins/admin/en/feedback.tpl; skins_original/admin/en/feedback.tpl; skins/admin/en/images/logo_asp.gif; skins_original/admin/en/images/logo_asp.gif

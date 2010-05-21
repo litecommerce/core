@@ -1,6 +1,0 @@
-paymentmethod_sagepaydirect_cc:modules/SagePay/kernel/PaymentMethod/sagepaydirect_cc.php:paymentmethod_credit_card
-paymentmethod_sagepayform_cc:modules/SagePay/kernel/PaymentMethod/sagepayform_cc.php:paymentmethod_credit_card
-dialog_sagepaydirect_checkout:modules/SagePay/dialog/sagepaydirect.php:dialog_checkout
-dialog_sagepayform_checkout:modules/SagePay/dialog/sagepayform.php:dialog_checkout
-module_sagepay_admin_dialog_payment_method:modules/SagePay/admin/dialog/payment_method.php:admin_dialog_payment_method
-module_sagepay:modules/SagePay/SagePay.php:module
