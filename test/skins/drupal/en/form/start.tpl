@@ -12,7 +12,5 @@
  *}
 
 <form action="{getFormAction()}" method="{getParam(#formMethod#)}" name="{getFormName()}" onsubmit="javascript: {getJSOnSubmitCode()}"{if:getParam(#className#)} class="{getParam(#className#)}"{end:}>
-<fieldset style="display: none;">
-  <input FOREACH="getFormParamsAsPlainList(),paramName,paramValue" type="hidden" name="{paramName}" value="{paramValue}" />
-</fieldset>
+<input FOREACH="getFormParamsAsPlainList(),paramName,paramValue" type="hidden" name="{paramName}" value="{paramValue}" />
 
