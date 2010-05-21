@@ -13,7 +13,7 @@
 <div id="lc-minicart-{displayMode}" class="lc-minicart-{displayMode} {collapsed}">
 
   <div class="cart-link">
-    <a href="{buildURL(#cart#)}"><img src="images/spacer.gif" width="16" height="16" /></a>
+    <a href="{buildURL(#cart#)}"><img src="images/spacer.gif" width="16" height="16" alt="" /></a>
   </div>
 
   <div class="cart-items" IF="cart.empty">

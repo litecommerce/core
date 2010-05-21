@@ -15,7 +15,7 @@
   <table width="100%">
 
     <tr IF="cart.empty">
-      <td><img src="images/cart_empty.gif" alt=""> Cart is empty</td>
+      <td><img src="images/cart_empty.gif" alt="" /> Cart is empty</td>
     </tr>
 
     <tr IF="!cart.empty">

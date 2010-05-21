@@ -399,20 +399,28 @@ class XLite_Core_FlexyCompiler extends XLite_Base implements XLite_Base_ISinglet
                     }
                 }
 
-                if ($this->findAttr($i + 1, "selected", $pos)) {
-                    if (isset($this->tokens[$pos+1]['type']) && $this->tokens[$pos+1]['type'] == "attribute-value") {
-                        $expr = $this->flexyCondition($this->getTokenText($pos+1));
-                        $this->subst(
-                            $this->tokens[$pos]['start'], 
-                            $this->tokens[$pos]['end'], 
-                            self::PHP_OPEN . " if ($expr) echo 'selected';" . self::PHP_CLOSE);
-                    }
+                // Boolean-based attribute process
+
+                $boolAttribute = false;
+
+                if ($this->findAttr($i + 1, 'selected', $pos)) {
+                    $boolAttribute = 'selected';
+
+                } elseif ($this->findAttr($i + 1, 'checked', $pos)) {
+                    $boolAttribute = 'checked';
                 }
-                if ($this->findAttr($i+1, "checked", $pos)) {
-                    if (isset($this->tokens[$pos+1]['type']) && $this->tokens[$pos+1]['type'] == "attribute-value") {
-                        $expr = $this->flexyCondition($this->getTokenText($pos+1));
-                        $this->subst($this->tokens[$pos]['start'], $this->tokens[$pos]['end'], self::PHP_OPEN . " if ($expr) echo 'checked';" . self::PHP_CLOSE);
-                    }
+
+                if (
+                    $boolAttribute
+                    && isset($this->tokens[$pos + 1]['type'])
+                    && 'attribute-value' == $this->tokens[$pos + 1]['type']
+                ) {
+                    $expr = $this->flexyCondition($this->getTokenText($pos + 1));
+                    $this->subst(
+                        $this->tokens[$pos]['start'],
+                        $this->tokens[$pos]['end'],
+                        self::PHP_OPEN . ' if (' . $expr . ') { echo \'' . $boolAttribute . '="' . $boolAttribute . '"\'; } ' . self::PHP_CLOSE
+                    );
                 }
 
                 if (!strcasecmp($token['name'], "widget")) {
