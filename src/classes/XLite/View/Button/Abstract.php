@@ -39,8 +39,9 @@ abstract class XLite_View_Button_Abstract extends XLite_View_Abstract
      * Widget parameter names
      */
 
-    const PARAM_LABEL = 'label';
-    const PARAM_STYLE = 'style';
+    const PARAM_LABEL    = 'label';
+    const PARAM_STYLE    = 'style';
+    const PARAM_DISABLED = 'disabled';
 
 
     /**
@@ -50,8 +51,9 @@ abstract class XLite_View_Button_Abstract extends XLite_View_Abstract
      * @access protected
      * @since  3.0.0
      */
-    protected $allowedJSEvents = array('onclick' => 'One click');
-
+    protected $allowedJSEvents = array(
+        'onclick' => 'One click',
+    );
 
     /**
      * getDefaultLabel
@@ -89,8 +91,9 @@ abstract class XLite_View_Button_Abstract extends XLite_View_Abstract
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_LABEL => new XLite_Model_WidgetParam_String('Label', $this->getDefaultLabel(), true),
-            self::PARAM_STYLE => new XLite_Model_WidgetParam_String('Button style', ''),
+            self::PARAM_LABEL    => new XLite_Model_WidgetParam_String('Label', $this->getDefaultLabel(), true),
+            self::PARAM_STYLE    => new XLite_Model_WidgetParam_String('Button style', ''),
+            self::PARAM_DISABLED => new XLite_Model_WidgetParam_Bool('Disabled', 0),
         );
     }
 

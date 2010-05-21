@@ -408,6 +408,9 @@ class XLite_Core_FlexyCompiler extends XLite_Base implements XLite_Base_ISinglet
 
                 } elseif ($this->findAttr($i + 1, 'checked', $pos)) {
                     $boolAttribute = 'checked';
+
+                } elseif ($this->findAttr($i + 1, 'disabled', $pos)) {
+                    $boolAttribute = 'disabled';
                 }
 
                 if (
