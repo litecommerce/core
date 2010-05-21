@@ -977,6 +977,20 @@ function func_get_timezones() {
     return class_exists('DateTimeZone') ? DateTimeZone::listIdentifiers() : null;
 }
 
+function func_htmlspecialchars($str) {
+    $str = preg_replace(
+        '/&(?!(?:amp|#\d+|#x\d+|euro|copy|pound|curren|cent|yen|reg|trade|lt|gt|lte|gte|quot);)/Ss',
+        '&amp;',
+        $str
+    );
+
+    return str_replace(
+        array('"', '\'', '<', '>'),
+        array('&quot;', '&#039;', '&lt;', '&gt;'),
+        $str
+    );
+}
+
 /**
  * Check if LiteCommerce installed
  * 

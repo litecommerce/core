@@ -690,19 +690,23 @@ class XLite_Core_FlexyCompiler extends XLite_Base implements XLite_Base_ISinglet
         $expr = $this->flexyExpression($str);
         switch ($str) {
             case ":h":	// will display variable "as is"
-            break;
-            case "":	// default display
-                $expr = "htmlspecialchars($expr)";
-            break;
+                break;
+    
+            case '':	// default display
+                $expr = 'func_htmlspecialchars(' . $expr . ')';
+                break;
+
             case ":r":
                 $expr = "str_replace('\"', '&quot;',$expr)";
-            break;
+                break;
+
             case ":u":
                 $expr = "urlencode($expr)";
-            break;
+                break;
+
             case ":t":
                 $expr = "htmlentities($expr)";
-            break;
+                break;
             default:
                 $this->error("Unknown modifier '$str'");
             break;
