@@ -50,7 +50,7 @@
     </tr>
 
     <tr IF="displayNumber">
-      <td><lanel for="ch_number">Check number:</label></td>
+      <td><label for="ch_number">Check number:</label></td>
       <td class="marker">*</td>
       <td><input type="text" id="ch_number" name="ch_info[ch_number]" value="{cart.details.ch_number:r}" class="field-required" /></td>
     </tr>

@@ -67,7 +67,7 @@
 
   <div class="notes">
     Customer notes:<br />
-    <textarea rows="3" name="notes"></textarea>
+    <textarea rows="3" name="notes" cols="40"></textarea>
   </div>
 
   <div class="agree">

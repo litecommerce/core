@@ -10,10 +10,10 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<select name="{field}" onchange="{onchange}" id="{fieldId}" class="field-state">
+<select name="{field}"{if:onchange} onchange="{onchange}"{end:}{if:fieldId} id="{fieldId}"{end:} class="field-state">
    <option value="0">Select one..</option>
    <option value="-1" selected="{state=-1}">Other</option>
-   <option FOREACH="getStates(),v" value="{v.state_id:r}" selected="{v.state_id=state}">{v.state:h}</option>
+   <option FOREACH="getStates(),v" value="{v.state_id:r}" selected="{v.state_id=state}">{v.state}</option>
 </select>
 <script IF="isDefineStates()" type="text/javascript">
 var CountriesStates = [];
