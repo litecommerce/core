@@ -29,4 +29,4 @@ standard=$path/code-sniffs/XLite
 
 echo Standard: $standard;
 
-$path/phpcs -s --report=full --standard=$standard --ignore=.dev,src,test/skins/admin,test/skins/default,test/etc,test/var $files_list
+$path/phpcs -s --report=full --standard=$standard --ignore=.dev,src/skins/admin,src/skins/default,src/etc,src/var $files_list

@@ -24,8 +24,8 @@ if (false === defined('PHPUnit_MAIN_METHOD')) {
 define('PATH_TESTS', realpath(dirname(__FILE__)));
 define('PATH_ROOT', realpath(dirname(__FILE__) . '/../..'));
 
-if (file_exists(PATH_ROOT . '/test')) {
-    define('PATH_SRC', realpath(PATH_ROOT . '/test'));
+if (file_exists(PATH_ROOT . '/src')) {
+    define('PATH_SRC', realpath(PATH_ROOT . '/src'));
 } else {
     define('PATH_SRC', realpath(PATH_ROOT . '/src'));
 }
