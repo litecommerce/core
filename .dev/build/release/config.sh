@@ -7,7 +7,7 @@
 XLITE_VERSION="3.0.0-alpha"
 
 # LiteCommerce SVN repository
-XLITE_SVN="svn://svn.crtdev.local/repo/xlite/main/test"
+XLITE_SVN="svn://svn.crtdev.local/repo/xlite/main/src"
 XLITE_DEV_SVN="svn://svn.crtdev.local/repo/xlite/main/.dev"
 
 # Drupal SVN repository
