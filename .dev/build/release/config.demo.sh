@@ -20,11 +20,7 @@ Demo
 XLITE_FILES_TODELETE="
 install.php
 restoredb
-sql/Makefile
-sql/dbclear.sql
-sql/xlite_all_modules.sql
-sql/xlite_modules_drupal.sql
-sql/xlite_modules_standalone.sql
+sql/local
 "
 
 # Drupal files that must be removed from all distributives
