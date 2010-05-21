@@ -40,7 +40,7 @@
 
     <tr class="search-weight">
       <td colspan="3">
-        <label for="search-weight-start">Wight, {config.General.weight_symbol} (range):</label>
+        <label for="search-weight-start">Weight, {config.General.weight_symbol} (range):</label>
       </td>
     </tr>
     <tr class="search-weight value-range form-field">
