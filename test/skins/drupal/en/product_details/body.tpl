@@ -20,19 +20,8 @@
 
   <div IF="product.hasImage()" class="product-thumbnail">
     <div IF="!product.getHasZoom()" class="product-thumbnail-box">
-      <widget class="XLite_View_Image" image="{product.getImage()}" className="photo product-thumbnail" id="product_image_{product.product_id}" maxWidth="100" />
+      <widget class="XLite_View_Image" image="{product.getImage()}" className="photo product-thumbnail" id="product_image_{product.product_id}" maxWidth="100" centerImage />
       <widget class="XLite_View_SaveMark" product="{product}" />
-<script type="text/javascript">
-<!--
-$(document).ready(
-  function() {
-    var e = $('.product-thumbnail-box');
-    var i = $('.product-thumbnail-box img');
-    e.width(i.width()).height(i.height());
-  }
-);
--->
-</script>
     </div>
 
     <widget module="DetailedImages" class="XLite_Module_DetailedImages_View_Zoom" product="{product}" />

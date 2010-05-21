@@ -271,14 +271,16 @@ class XLite_View_Image extends XLite_View_Abstract
         $vertical = ($this->getParam(self::PARAM_MAX_HEIGHT) - $this->properties['height']) / 2;
         $horizontal = ($this->getParam(self::PARAM_MAX_WIDTH) - $this->properties['width']) / 2;
 
-        $top = ceil($vertical);
-        $bottom = floor($vertical);
-        $left = ceil($horizontal);
-        $right = floor($horizontal);
+        $top    = max(0, ceil($vertical));
+        $bottom = max(0, floor($vertical));
+        $left   = max(0, ceil($horizontal));
+        $right  = max(0, floor($horizontal));
 
-        $this->addInlineStyle(
-            'padding: ' . $top . 'px ' . $right . 'px ' . $bottom . 'px ' . $left . 'px;'
-        );
+        if (0 < $top || 0 < $bottom || 0 < $left || 0 < $right) {
+            $this->addInlineStyle(
+                'padding: ' . $top . 'px ' . $right . 'px ' . $bottom . 'px ' . $left . 'px;'
+            );
+        }
     }
 
     /**
