@@ -43,6 +43,22 @@
   float: right;
 }
 
+#shopping-cart .update-icon {
+  background: transparent url(../images/update.png) no-repeat left -16px;
+  width: 16px;
+  height: 16px;
+}
+
+#shopping-cart .update-icon[disabled="disabled"],
+  #shopping-cart .update-icon-disabled
+{
+  background-position: left top;
+  cursor: default;
+}
+
+
+
+
 div.ups-notice {
   background: transparent url(../images/modules/UPSOnlineTools/ups_logo.gif) no-repeat 12px 7px;
   padding-left: 109px;

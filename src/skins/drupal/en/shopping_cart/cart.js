@@ -19,7 +19,13 @@ $(document).ready(
         result = !isNaN(amount) && 0 < amount;
 
         if (result) {
-          $(this.form).submit();
+          var btn = $('.update-icon', $(this).parents('.item-sums').eq(0));
+          if (amount == this.initialValue) {
+            btn.addClass('update-icon-disabled').attr('disabled', 'disabled');
+
+          } else {
+            btn.removeClass('update-icon-disabled').removeAttr('disabled');
+          }
 
         } else {
           this.value = this.initialValue;

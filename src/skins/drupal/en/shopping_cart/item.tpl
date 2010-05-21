@@ -40,6 +40,7 @@
       <span class="item-price">{price_format(item,#price#):h}</span>
       <span class="sums-multiply">x</span>
       <span class="item-quantity"><input type="text" name="amount" value="{item.amount}" class="wheel-ctrl field-integer field-positive field-non-zero" /></span>
+      <widget class="XLite_View_Button_Image" style="update-icon update-icon-disabled" label="Update" disabled />
       <span class="sums-equals">=</span>
       <span class="item-subtotal">{price_format(item,#total#):h}</span>
     </div>
