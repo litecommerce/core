@@ -1953,9 +1953,12 @@ function get_image_extension($type)
  * @see    ____func_see____
  * @since  3.0.0
  */
-function inst_http_request_install($action_str)
+function inst_http_request_install($action_str, $url = null)
 {
-    $url = getLiteCommerceUrl();
+    if (is_null($url)) {
+        $url = getLiteCommerceUrl();
+    }
+
     $url_request = $url . '/install.php?target=install' . (($action_str) ? '&' . $action_str : '');
 
     return inst_http_request($url_request);
@@ -2002,7 +2005,7 @@ function inst_http_request($url_request)
 
     $url = parse_url($url_request);
     $errno = null;
-    if ($fp = fsockopen($url['host'], (!empty($url['port']) ? $url['port'] : 80), $errno, $error, 3)) {
+    if ($fp = @fsockopen($url['host'], (!empty($url['port']) ? $url['port'] : 80), $errno, $error, 3)) {
         fputs($fp, "GET ".$url_request." HTTP/1.0\r\n");
         fputs($fp, "Host: ".$url['host']."\r\n");
         fputs($fp, "User-Agent: Mozilla/4.5 [en]\r\n");
@@ -2901,9 +2904,11 @@ OUT;
         $checkError = false;
 
         // Check if web server host and web_dir provided are valid
-        $url = 'http://' . $params['xlite_http_host'] . $params['xlite_web_dir'] . '/COPYRIGHT';
+        $url = 'http://' . $params['xlite_http_host'] . $params['xlite_web_dir'];
 
-        if (@file_get_contents('./COPYRIGHT') !== @file_get_contents($url)) {
+        $response = inst_http_request_install("action=http_host", $url);
+
+        if (strpos($response, $params['xlite_http_host']) === false) {
             fatal_error('The web server name and/or web drectory is invalid! Press \'BACK\' button and review web server settings you provided');
             $checkError = true;
 

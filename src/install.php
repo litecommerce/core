@@ -189,6 +189,10 @@ if (isset($HTTP_GET_VARS['target']) && $HTTP_GET_VARS['target'] == 'install') {
 		die('LOOPBACK-TEST-OK');
 	}
 
+    if (isset($HTTP_GET_VARS['action']) && $HTTP_GET_VARS['action'] == 'http_host') {
+        die($_SERVER['HTTP_HOST']);
+    }
+
 	// Memory test action
 	if (isset($HTTP_GET_VARS['action']) && $HTTP_GET_VARS['action'] == 'memory_test' && isset($HTTP_GET_VARS['size'])) {
         $size = intval($HTTP_GET_VARS['size']);
