@@ -114,7 +114,7 @@ class XLite_Core_Converter extends XLite_Base implements XLite_Base_ISingleton
      */
     public static function buildURL($target = '', $action = '', array $params = array(), $interface = null)
     {
-        $url = isset($interface) ? XLite::getInstance()->getScript() : $interface;
+        $url = isset($interface) ? $interface : XLite::getInstance()->getScript();
 
         $parts = array();
 
