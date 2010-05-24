@@ -61,12 +61,16 @@ class XLite_Model_FileNode extends XLite_Base
             }
         } else {
             $cnt = is_file($this->path) ? file_get_contents($this->path) : "";
-            if (substr($cnt, 0, 2) == "{*") {
-                // get comment from file
-                if (preg_match('/{\*([^*]+)\*}/', $cnt, $matches) && isset($matches[1])) {
-                    $this->comment = trim($matches[1]);
-                    return $this->comment;
-                }
+            if (preg_match('/\{\*\*(.+) \* @\w+/USs', $cnt, $match)) {
+                $this->comment = $match[1];
+                $this->comment = str_replace(
+                    array("\n", ' * ', '  '),
+                    array(' ', '', ' '),
+                    $this->comment
+                );
+                $this->comment = trim($this->comment);
+
+                return $this->comment;
             }
             $this->comment = "EMPTY";
             return "";
