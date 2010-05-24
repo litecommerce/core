@@ -2,7 +2,7 @@
 
 /**
  * Main styles
- *
+ * 
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http: //opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -57,46 +57,46 @@ Main template main.tpl wallpaper.
 
 A: link {
   COLOR: #4F5964;
-  TEXT-DECORATION: none
+  TEXT-DECORATION: none;
 }
 
 A: visited {
   COLOR: #4F5964;
-  TEXT-DECORATION: none
+  TEXT-DECORATION: none;
 }
 
 A: hover {
   COLOR: #4F5964;
-  TEXT-DECORATION: underline
+  TEXT-DECORATION: underline;
 }
 
 A: active {
   COLOR: #4F5964;
-  TEXT-DECORATION: none
+  TEXT-DECORATION: none;
 }
 
 H1 {
-  FONT-SIZE: 15px
+  FONT-SIZE: 15px;
 }
 
 H2 {
-  FONT-SIZE: 13px
+  FONT-SIZE: 13px;
 }
 
 H3 {
-  FONT-SIZE: 12px
+  FONT-SIZE: 12px;
 }
 
 HR {
   COLOR: #dddddd;
-  HEIGHT: 1px
+  HEIGHT: 1px;
 }
 
 /*
 Page header
 */
 .Head {
-  BACKGROUND-COLOR: #fff2c9
+  BACKGROUND-COLOR: #fff2c9;
 }
 
 .TollPhones {
@@ -133,7 +133,7 @@ Titles of sidebar menu boxes
 .SidebarTitle {
   FONT-WEIGHT: bold;
   COLOR: #000000;
-  BACKGROUND-COLOR: #e5ebef
+  BACKGROUND-COLOR: #e5ebef;
 }
 
 /*
@@ -141,7 +141,7 @@ Menu items located in sidebar boxes
 */
 .SidebarItems {
   COLOR: #75838D;
-  TEXT-DECORATION: none
+  TEXT-DECORATION: none;
 }
 
 /*
@@ -149,7 +149,7 @@ Menu items located in sidebar boxes: link
 */
 .SidebarItems: link {
   COLOR: #75838D;
-  TEXT-DECORATION: none
+  TEXT-DECORATION: none;
 }
 
 /*
@@ -157,7 +157,7 @@ Menu items located in sidebar boxes: visited
 */
 .SidebarItems: visited {
   COLOR: #75838D;
-  TEXT-DECORATION: none
+  TEXT-DECORATION: none;
 }
 
 /*
@@ -165,7 +165,7 @@ Menu items located in sidebar boxes: hover
 */
 .SidebarItems: hover {
   COLOR: #75838D;
-  TEXT-DECORATION: underline
+  TEXT-DECORATION: underline;
 }
 
 /*
@@ -173,14 +173,14 @@ Menu items located in sidebar boxes: active
 */
 .SidebarItems: active {
   COLOR: #75838D;
-  TEXT-DECORATION: none
+  TEXT-DECORATION: none;
 }
 
 /*
 Horizontal separator in sidebar boxes
 */
 .SidebarHr {
-  COLOR: #b2b2b3
+  COLOR: #b2b2b3;
 }
 
 /*
@@ -189,13 +189,13 @@ Tab
 .TopTabOn {
   COLOR: #000000;
   FONT-WEIGHT: bold;
-  FONT-SIZE: 12px
+  FONT-SIZE: 12px;
 }
 
 .TopTab {
   COLOR: #506176;
   FONT-WEIGHT: bold;
-  FONT-SIZE: 12px
+  FONT-SIZE: 12px;
 }
 
 /*
@@ -210,7 +210,7 @@ Text in the categories list
 Miscelanious text appearing in dialog boxes
 */
 .DialogBox {
-  BACKGROUND-COLOR: #ffffff
+  BACKGROUND-COLOR: #ffffff;
 }
 
 /*
@@ -243,14 +243,14 @@ Number of articles
 */
 .NumberOfArticles {
   FONT-WEIGHT: bold;
-  COLOR: #000000
+  COLOR: #000000;
 }
 
 /*
 Generic text
 */
 .Text {
-  COLOR: #000000
+  COLOR: #000000;
 }
 
 /*
@@ -284,7 +284,7 @@ Labels for product details
 Product details
 */
 .ProductDetails {
-  COLOR: #000000
+  COLOR: #000000;
 }
 
 /*
@@ -335,14 +335,14 @@ Smaller representation of product price
 */
 .ProductPriceSmall {
   FONT-WEIGHT: bold;
-  COLOR: #ff3300
+  COLOR: #ff3300;
 }
 
 /*
 See product details link
 */
 .SeeDetails {
-  TEXT-DECORATION: none
+  TEXT-DECORATION: none;
 }
 
 /*
@@ -381,7 +381,7 @@ Labels for form submit buttons
 */
 .FormButton {
   FONT-WEIGHT: bold;
-  COLOR: #00224c
+  COLOR: #00224c;
 }
 
 .Button {
@@ -428,35 +428,35 @@ Error message text
 */
 .ErrorMessage {
   FONT-WEIGHT: bold;
-  COLOR: #ff0000
+  COLOR: #ff0000;
 }
 
 /*
 Validate error message text
 */
 .ValidateErrorMessage {
-  COLOR: #ff0000
+  COLOR: #ff0000;
 }
 
 /*
 Success message
 */
 .SuccessMessage {
-  COLOR: green
+  COLOR: green;
 }
 
 /*
 Mandatory field asterisk
 */
 .Star {
-  COLOR: #ff0000
+  COLOR: #ff0000;
 }
 
 /*
 Header background
 */
 .TableHead {
-  BACKGROUND-COLOR: #E5EBEF
+  BACKGROUND-COLOR: #E5EBEF;
 }
 
 .AomTableHead {
@@ -466,39 +466,39 @@ Header background
 }
 
 .Input {
-  BORDER : solid;
-  BORDER-WIDTH : 1px;
-  BORDER-COLOR : #B2B2B3;
-  WIDTH : 100%;
+  BORDER: solid;
+  BORDER-WIDTH: 1px;
+  BORDER-COLOR: #B2B2B3;
+  WIDTH: 100%;
 }
 
 .OrderTitle {
-  COLOR : #516176;
+  COLOR: #516176;
   FONT-WEIGHT: bold;
 }
 
 A.AomMenu: link {
   color: #466479;
   TEXT-DECORATION: none;
-  font-size : 11px
+  font-size: 11px;
 }
 
 A.AomMenu: visited {
   color: #466479;
   TEXT-DECORATION: none;
-  font-size : 11px
+  font-size: 11px;
 }
 
 A.AomMenu: hover {
   color: #466479;
   TEXT-DECORATION: underline;
-  font-size : 11px
+  font-size: 11px;
 }
 
 A.AomMenu: active {
   color: #466479;
   TEXT-DECORATION: none;
-  font-size : 11px;
+  font-size: 11px;
 }
 
 .AomProductDetailsTitle {
@@ -522,18 +522,18 @@ Bottom text
 }
 
 .BottomBorder {
-  BACKGROUND-COLOR: #D2D2D2
+  BACKGROUND-COLOR: #D2D2D2;
 }
 
 .BottomBox {
-  BACKGROUND-COLOR: #E0E1E4
+  BACKGROUND-COLOR: #E0E1E4;
 }
 
 /*
 Width for some dropdown select boxes
 */
 .FixedSelect {
-  WIDTH: 170px
+  WIDTH: 170px;
 }
 
 /*
@@ -570,7 +570,7 @@ Out of stock message
 .OutOfStock {
   FONT-WEIGHT: bold;
   FONT-SIZE: 12px;
-  COLOR: #ff3300
+  COLOR: #ff3300;
 }
 
 /*
@@ -579,7 +579,7 @@ Style for promotion bonus condition list
 .Promotion {
   FONT-WEIGHT: bold;
   FONT-SIZE: 11px;
-  COLOR: #00224c
+  COLOR: #00224c;
 }
 
 /*
