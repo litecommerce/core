@@ -238,7 +238,7 @@ function setUnitSymbol(symbol) {
 
 <script type="text/javascript">
 <!--
-{* uncheck & disable checkboxes *}
+/* uncheck & disable checkboxes */
 var customer_security_value = document.options_form.customer_security.checked;
 var full_customer_security_value = document.options_form.full_customer_security.checked;
 var admin_security_value = document.options_form.admin_security.checked;

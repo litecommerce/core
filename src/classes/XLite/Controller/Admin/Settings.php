@@ -160,23 +160,51 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
     function get($name) 
     {
         switch($name) {
-            case 'phpversion'     : return phpversion(); break;
-            case 'timezone_changable' : return func_is_timezone_changable(); break;
-            case 'os_type'        : list($os_type, $tmp) = explode(' ', PHP_OS);
-                                  return $os_type;
-                                  break;
-            case 'mysql_server'    : return mysql_get_server_info(); break;
-            case 'mysql_client'    : return mysql_get_client_info(); break;
-            case 'root_folder'    : return getcwd(); break;
-            case 'web_server'    : if (isset($_SERVER['SERVER_SOFTWARE'])) return $_SERVER['SERVER_SOFTWARE']; else  return ""; break;
-            case 'xml_parser'    :     ob_start();
-                                    phpinfo(INFO_MODULES);
-                                    $php_info = ob_get_contents();
-                                    ob_end_clean();
-                                    if ( preg_match('/EXPAT.+>([\.\d]+)/mi', $php_info, $m) )
-                                        return $m[1];
-                                    return function_exists('xml_parser_create')?"found":"";
-                                    break;
+            case 'phpversion':
+                return PHP_VERSION;
+                break;
+
+            case 'timezone_changable':
+                return func_is_timezone_changable();
+                break;
+
+            case 'os_type':
+                list($os_type) = explode(' ', PHP_OS);
+                return $os_type;
+                break;
+
+            case 'mysql_server':
+                return mysql_get_server_info();
+                break;
+
+            case 'mysql_client':
+                return mysql_get_client_info();
+                break;
+
+            case 'root_folder':
+                return getcwd();
+                break;
+
+            case 'web_server':
+                if (isset($_SERVER['SERVER_SOFTWARE'])) {
+                    return $_SERVER['SERVER_SOFTWARE'];
+                } else {
+                    return "";
+                }
+                break;
+
+            case 'xml_parser':
+                ob_start();
+                phpinfo(INFO_MODULES);
+                $php_info = ob_get_contents();
+                ob_end_clean();
+                if (preg_match('/EXPAT.+>([\.\d]+)/mi', $php_info, $m)) {
+                    return $m[1];
+                }
+
+                return function_exists('xml_parser_create')?"found":"";
+                break;
+
             case 'gdlib'        :   
                                     if (!$this->is('GDLibLoaded')) {
                                         return "";
