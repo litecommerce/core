@@ -740,7 +740,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
             $is_valid = false;
 
             if (is_array($valid_ips)) {
-                foreach ($valid_list as $ip_array){
+                foreach ($valid_ips as $ip_array){
                     $ip = $ip_array['ip'];
                     if (!preg_match($ip_v4_regexp_wildcard, $ip, $ip_bytes)) {
                         break;
