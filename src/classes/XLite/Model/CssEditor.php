@@ -26,12 +26,8 @@
  * @since      3.0.0
  */
 
-define('COMMENT', 1);
-define('CLASS_NAME', 1);
-define('STYLE', 2);
-
 /**
- * ____description____
+ * CSS block
  * 
  * @package XLite
  * @see     ____class_see____
@@ -39,111 +35,267 @@ define('STYLE', 2);
  */
 class XLite_Model_CssEditor extends XLite_Base
 {
-    public $cssFile;
-    public $style = array();
+    /**
+     * RegExp result keys
+     */
+    const COMMENT = 1;
+    const CLASS_NAME = 1;
+    const STYLE = 2;
 
+    /**
+     * CSS file path
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $cssFile = null;
+
+    /**
+     * Styles
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $style = null;
+
+    /**
+     * Constructor
+     * 
+     * @param mixed $cssFile ____param_comment____
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     public function __construct($cssFile = null)
     {
         $this->set('cssFile', $cssFile);
     }
 
-    function getItems()
+    /**
+     * Get classes 
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getItems()
     {
         $items = array();
-        $style = $this->get('style');
+
+        $style = $this->getStyle();
         if (isset($style['style'])) {
             $items = array_keys($style['style']);
         }
+
         return $items;
     }
 
-    function getStyle()
+    /**
+     * Get CSS file style data
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getStyle()
     {
-        if (!empty($this->style)) {
-            return $this->style;
+        if (is_null($this->style)) {
+            $this->parseContent();
         }
-        $this->parseContent();
+
         return $this->style;
     }
 
-    function parseContent()
+    /**
+     * Set style 
+     * 
+     * @param integer $id    Class id
+     * @param string  $style Class style
+     *  
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setStyle($id, $style)
     {
-        $found = array();
-        $content = @file_get_contents($this->get('cssFile'));
-        $elements = explode("}", $content);
+        $result = false;
 
-        for ($i = 0; $i < count($elements); $i ++) {
-            $result = $this->_parseClass($elements[$i]);
-            if ($result !== null) {
-                $this->style['comment'][] = $result['comment'];
-                $this->style['element'][] = $result['element'];
-                $this->style['style'][] = $result['style'];
-            }
+        $styles = $this->getStyle();
+        if (isset($styles['style']) && isset($styles['style'][$id])) {
+            $styles['style'][$id] = $style;
+            $this->style = $styles;
+            $result = true;
         }
-    }
 
-    function save()
-    {
-        $style = "";
-        // update style
-        for ($i = 0; $i < count($this->style['element']); $i ++) {
-            if (!empty($this->style['comment'][$i])) {
-                $style .= "/*\n" . $this->style['comment'][$i] ."\n*/\n";
-            }
-            $style .= $this->style['element'][$i] .
-            " {\n\t" . $this->style['style'][$i] . "\n}\n\n";
-        }
-        // save CSS file
-        $file = $this->get('cssFile');
-        $fp = fopen($file, "wb") or die("Write failed for file $file".
-                                        ": permission denied");
-        fwrite($fp, $style);
-        fwrite($fp, "\n");
-        fclose($fp);
-        @chmod($file, get_filesystem_permissions(0666));
-
-    }
-
-    function _parseClass($class) 
-    {
-        $result = array();
-        $result['comment'] = "";
-        $result['element'] = "";
-        $result['style'] = "";
-        preg_match("/\/\*(.*)\*\//s", $class, $found);
-        
-        if (!empty($found)) {
-            $comment = trim($found[COMMENT]);
-            $comment = preg_replace("/\/\*/s", "", $comment);
-            $comment = preg_replace("/\*\//s", "", $comment);
-            $result['comment'] = $comment;
-            $class = preg_replace("/\/\*(.*)\*\//s", "", $class);
-        }
-        preg_match("/([^\{]+)\{([^\}]+)/i", $class, $found);
-        if (!isset($found[CLASS_NAME]) || !isset($found[STYLE])) {
-            return null;
-        }
-        $result['element'] = trim($found[CLASS_NAME]);
-        $result['style'] = $this->removeSpaces(trim(strtr($found[STYLE], "\n", " ")));
         return $result;
     }
 
-    function restoreDefault()
+    /**
+     * Parse content 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function parseContent()
     {
+        $found = array();
+        $content = @file_get_contents($this->get('cssFile'));
+        $elements = explode('}', $content);
+
+        foreach ($elements as $elm) {
+            list($comment, $element, $style) = $this->parseClass($elm);
+            if ($element) {
+                $this->style['comment'][] = $comment;
+                $this->style['element'][] = $element;
+                $this->style['style'][]   = $style;
+            }
+        }
+    }
+
+    /**
+     * Save
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function save()
+    {
+        $style = '';
+
+        // update style
+        $length = count($this->style['element']);
+        for ($i = 0; $i < $length; $i++) {
+            if (!empty($this->style['comment'][$i])) {
+                if (preg_match('/(vim:.+)/Sm', $this->style['comment'][$i], $match)) {
+                    $style .= '/* ' . $match[1] . '*/' . "\n\n";
+                    $this->style['comment'][$i] = trim(str_replace($match[1], '', $this->style['comment'][$i]));
+                }
+
+                $comments = array_map('trim', explode("\n", $this->style['comment'][$i]));
+
+                if (1 < count($comments)) {
+                    $style .= '/**' . "\n" . ' * ' . implode("\n" . ' * ', $comments) . "\n" . ' */' . "\n";
+
+                } else {
+                    $style .= '/* ' . $this->style['comment'][$i] . ' */' . "\n";
+                }
+            }
+
+            $classes = array_map('trim', explode(',', $this->style['element'][$i]));
+            $style .= implode(',' . "\n" . '  ', $classes);
+            $style .= 1 < count($classes) ? "\n" : ' ';
+            $style .= '{' . "\n";
+            $attributes = preg_grep('/^[a-zA-Z0-9\-]+:/Ss', array_map('trim', explode(';', $this->style['style'][$i])));
+            $style .= '  ' . implode(';' . "\n" . '  ', $attributes) . ';' . "\n";
+            $style .= '}' . "\n\n";
+        }
+
+        // save CSS file
         $file = $this->get('cssFile');
-        $orig = preg_replace("/^(skins)/", "schemas/templates/" . $this->config->getComplex('Skin.skin'), $file);
-        is_readable($orig) or die("$orig: file not found");
+        $fp = @fopen($file, 'wb');
+        if (!$fp) {
+            $this->doDie('Write failed for file ' . $file . ': permission denied');
+        }
+
+        fwrite($fp, $style . "\n");
+        fclose($fp);
+
+        @chmod($file, get_filesystem_permissions(0666));
+    }
+
+    /**
+     * Parse class 
+     * 
+     * @param string $class Class block
+     *  
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function parseClass($class) 
+    {
+        $result = array('', '', '');
+
+        if (preg_match('/\/\*(.+)\*\//Ss', $class, $found)) {
+            $comment = trim($found[self::COMMENT]);
+            $comment = preg_replace('/\/\*\*?/Ss', '', $comment);
+            $comment = preg_replace('/\*\//Ss', '', $comment);
+            $comment = trim(preg_replace('/^\s*\*[ ]*/Sm', '', $comment));
+            $result[0] = $comment;
+
+            $class = preg_replace('/\/\*(.*)\*\//Ss', '', $class);
+        }
+
+        if (
+            preg_match('/([^\{]+)\{([^\}]+)/i', $class, $found)
+            && isset($found[self::CLASS_NAME])
+            && isset($found[self::STYLE])
+        ) {
+
+            $result[1] = trim($found[self::CLASS_NAME]);
+            $result[2] = $this->removeSpaces(trim(strtr($found[self::STYLE], "\n", ' ')));
+        }
+
+        return $result;
+    }
+
+    /**
+     * Restore default CSS file
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function restoreDefault()
+    {
+
+        // TODO - rework
+        $file = $this->get('cssFile');
+        $orig = preg_replace('/^(skins)/', 'schemas/templates/' . $this->config->Skin->skin, $file);
+        if (!is_readable($orig)) {
+            $this->doDie($orig . ': file not found');
+        }
+
         if (is_writeable($file)) {
             unlink($file);
         }
-        copyFile($orig, $file) or die("unable to copy $orig to $file");
+
+        if (!copyFile($orig, $file)) {
+            $this->doDie('unable to copy ' . $orig . ' to ' . $file);
+        }
     }
 
-    function removeSpaces($source)
+    /**
+     * Remove spaces 
+     * 
+     * @param string $source String
+     *  
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function removeSpaces($source)
     {
-        while (preg_match('/  /', $source)) {
-            $source = preg_replace('/  /', " ", $source);
+        while (false !== strpos($source, '  ')) {
+            $source = str_replace('  ', ' ', $source);
         }
+
         return $source;
     }
 }
