@@ -27,7 +27,7 @@
  */
 
 /**
- * ____description____
+ * CSS editor
  * 
  * @package XLite
  * @see     ____class_see____
@@ -35,49 +35,120 @@
  */
 class XLite_Controller_Admin_CssEdit extends XLite_Controller_Admin_Abstract
 {
+    /**
+     * Editor 
+     * 
+     * @var    XLite_Modl_CssEditor
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $editor = null;
+
+    /**
+     * Locale code
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
     protected $locale = null;
 
+    /**
+     * Zone code
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
     protected $zone = null;
     
     public $params = array('target', 'mode', 'style_id', 'status');
 
+    /**
+     * Get style attribute 
+     * 
+     * @param string  $attr  Attribute type
+     * @param integer $index Element index
+     *  
+     * @return mixed
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     protected function getStyleAttribute($attr, $index)
     {
         $style = $this->getEditor()->getStyle();
 
-        return isset($style[$attr][$index]) ? $style[$attr][$index] : null;
+        return (isset($style[$attr]) && isset($style[$attr][$index]))
+            ? $style[$attr][$index]
+            : null;
     }
 
-    function getLocale() 
+    /**
+     * Get locale code
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getLocale() 
     {
         if (is_null($this->locale)) {
             $this->locale = XLite::getInstance()->getOptions(array('skin_details', 'locale'));
         }
+
         return $this->locale;
     }
 
-    function getZone() 
+    /**
+     * Get skin zone code
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getZone() 
     {
         if (is_null($this->zone)) {
             $this->zone = XLite::getInstance()->getOptions(array('skin_details', 'skin'));
         }
+
         return $this->zone;
     }
 
-    function getEditor()
+    /**
+     * Get editor 
+     * 
+     * @return XLite_Model_CssEditor
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getEditor()
     {
-        if (isset($this->editor)) {
-            return $this->editor;
+        if (!isset($this->editor)) {
+            $this->editor = new XLite_Model_CssEditor($this->getCssFile());
         }
-        $this->editor = new XLite_Model_CssEditor($this->get('cssFile'));
+
         return $this->editor;
     }
 
-    function getCssFile()
+    /**
+     * Get CSS file path
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCssFile()
     {
-        $skin   = $this->get('zone');
-        $locale = $this->get('locale');
-        return "skins/$skin/$locale/style.css";
+        return 'skins/' . $this->getZone() . '/' . $this->getLocale() . '/style.css';
     }
 
     /**
@@ -90,11 +161,17 @@ class XLite_Controller_Admin_CssEdit extends XLite_Controller_Admin_Abstract
      */
     protected function doActionSave()
     {
-        $editor = $this->get('editor');
-        $editor->setComplex("style.style.$this->style_id", $this->style);
+        $editor = $this->getEditor();
+        if ($editor->setStyle($this->style_id, $this->style)) {
+            $editor->save();
+            XLite_Core_TopMessage::getInstance()->add('CSS modifications saved');
 
-        $editor->save();
-        $this->set('status', "updated");
+        } else {
+            XLite_Core_TopMessage::getInstance()->add(
+                sprintf('Failed to save CSS modifications. Check %s file permissions.', $this->getCssFile()),
+                XLite_Core_TopMessage::ERROR
+            );
+        }
     }
     
     /**
@@ -107,8 +184,7 @@ class XLite_Controller_Admin_CssEdit extends XLite_Controller_Admin_Abstract
      */
     protected function doActionRestoreDefault()
     {
-        $editor = $this->get('editor');
-        $editor->restoreDefault();
+        $this->getEditor()->restoreDefault();
     }
 
     function css_style($index)
@@ -123,7 +199,12 @@ class XLite_Controller_Admin_CssEdit extends XLite_Controller_Admin_Abstract
 
     function css_comment($index)
     {
-        return $this->getStyleAttribute('comment', $index);
+        $comment = $this->getStyleAttribute('comment', $index);
+        if (preg_match('/@copyright/Ss', $comment)) {
+            $comment = '';
+        }
+
+        return $comment;
     }
 
 }
