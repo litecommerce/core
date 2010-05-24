@@ -45,15 +45,11 @@ function StateSelectorController(obj)
     this.otherStateInput = null;
 
   } else {
-    this.otherStateBox = this.otherStateInput.parents('tr');
+    this.otherStateBox = this.otherStateInput.parents('tr').eq(0);
     
     if (!this.otherStateBox.length) {
       this.otherStateBox = null;
       this.otherStateInput = null;
-
-    } else {
-      this.otherStateBox = this.otherStateBox.eq(this.otherStateBox.length - 1);
-
     }
   }
 
