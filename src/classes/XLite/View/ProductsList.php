@@ -88,9 +88,10 @@ abstract class XLite_View_ProductsList extends XLite_View_Container
      * Allowed sort criterions
      */
 
-    const SORT_BY_MODE_PRICE = 'price';
-    const SORT_BY_MODE_NAME  = 'name';
-    const SORT_BY_MODE_SKU   = 'sku';
+    const SORT_BY_MODE_DEFAULT = 'order_by';
+    const SORT_BY_MODE_PRICE   = 'price';
+    const SORT_BY_MODE_NAME    = 'name';
+    const SORT_BY_MODE_SKU     = 'sku';
 
     /**
      * SQL orederby directions
@@ -152,9 +153,10 @@ abstract class XLite_View_ProductsList extends XLite_View_Container
      * @since  3.0.0
      */
     protected $sortByModes = array(
-        self::SORT_BY_MODE_PRICE => 'Price',
-        self::SORT_BY_MODE_NAME  => 'Name',
-        self::SORT_BY_MODE_SKU   => 'SKU',
+        self::SORT_BY_MODE_DEFAULT => 'Default',
+        self::SORT_BY_MODE_PRICE   => 'Price',
+        self::SORT_BY_MODE_NAME    => 'Name',
+        self::SORT_BY_MODE_SKU     => 'SKU',
     );
 
     /**
@@ -488,7 +490,7 @@ abstract class XLite_View_ProductsList extends XLite_View_Container
                 'Maximal icon height', 90, true
             ),
             self::PARAM_SORT_BY => new XLite_Model_WidgetParam_List(
-                'Sort by', 'price', false, $this->sortByModes
+                'Sort by', self::SORT_BY_MODE_DEFAULT, false, $this->sortByModes
             ),
             self::PARAM_SORT_ORDER => new XLite_Model_WidgetParam_List(
                 'Sort order', 'asc', false, $this->sortOrderModes
