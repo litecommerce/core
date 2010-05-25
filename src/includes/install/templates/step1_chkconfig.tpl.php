@@ -345,7 +345,7 @@ Please contact our support team for further investigation.
     <br><br>
     change to:
     <br><br>
-    <font style="background-color: #E3EAEF;">disable_functions = </font>
+    <font style="background-color: #E3EAEF;">disable_functions = <?php echo getAllowedDisableFunctionsValue(); ?></font>
     <br><br>
     Save the file, then restart your web server application for the changes to take effect.
     <p><b>2. If you do not have access to php.ini file</b>
