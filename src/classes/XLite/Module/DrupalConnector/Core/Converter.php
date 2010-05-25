@@ -86,7 +86,7 @@ class XLite_Module_DrupalConnector_Core_Converter extends XLite_Core_Converter i
                 $result .= '/' . XLite_Core_Converter::buildQuery($params, '-', '/');
             }
 
-            $result = url($result);
+            $result = self::normalizeDrupalURL($result);
 
         } else {
 
@@ -141,6 +141,25 @@ class XLite_Module_DrupalConnector_Core_Converter extends XLite_Core_Converter i
      */
     public static function buildDrupalURL($target = '', $action = '', array $params = array())
     {
-        return url(self::buildDrupalPath($target, $action, $params));
+        return self::normalizeDrupalURL(self::buildDrupalPath($target, $action, $params));
+    }
+
+    /**
+     * Normalize Drupal URL to full path
+     * 
+     * @param string $url Short URL
+     *  
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function normalizeDrupalURL($url)
+    {
+        return preg_replace(
+            '/(\/)\%252F([^\/])/iSs',
+            '\1/\2',
+            url($url)
+        );
     }
 }
