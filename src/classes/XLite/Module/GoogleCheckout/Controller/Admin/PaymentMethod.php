@@ -135,12 +135,7 @@ class XLite_Module_GoogleCheckout_Controller_Admin_PaymentMethod extends XLite_C
             $this->xlite->logger->log("ERROR: Received data could not be identified correctly.");
             exit;
         }
-        ob_start();
-        var_dump($parsed);
-        $parsedData = ob_get_contents();
-        ob_end_clean();
-        $this->xlite->logger->log("Parsed XML callback data:\n" . $parsedData);
-        $this->xlite->logger->log("Callback from IP: ".$GLOBALS['REMOTE_ADDR']."\n");
+        $this->logger->log("Parsed XML callback data:\n" . var_export($parsed, true));
 
         // processing callback
         $this->pm->handleCallback($parsed);
