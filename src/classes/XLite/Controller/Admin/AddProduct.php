@@ -55,9 +55,15 @@ class XLite_Controller_Admin_AddProduct extends XLite_Controller_Admin_Abstract
         // Sanitize
         if (isset($properties['clean_url'])) {
             $properties['clean_url'] = $this->sanitizeCleanURL($properties['clean_url']);
-            if (!$this->checkCleanURLUnique($properties['clean_url'])) {
+            if (
+                0 < strlen($properties['clean_url'])
+                && !$this->checkCleanURLUnique($properties['clean_url'])
+            ) {
 
-                // TODO - add top message
+                XLite_Core_TopMessage::getInstance()->add(
+                    'The Clean URL you specified is already in use. Please specify another Clean URL',
+                    XLite_Core_TopMessage::ERROR
+                );
                 $this->set('valid', false);
                 return;
             }
