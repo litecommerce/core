@@ -44,7 +44,11 @@ class XLite_View_FormField_Select_Title extends XLite_View_FormField_Select_Regu
      */
     protected function getDefaultOptions()
     {
-        return array('Mr.' => 'Mr.', 'Ms.' => 'Ms.', 'Mrs.' => 'Mrs.');
+        return array(
+            'Mr.'  => 'Mr.',
+            'Ms.'  => 'Ms.',
+            'Mrs.' => 'Mrs.',
+        );
     }
 }
 

@@ -129,6 +129,11 @@ abstract class XLite_View_Model_Profile_Abstract extends XLite_View_Model_Abstra
      * @since  3.0.0
      */
     protected $addressSchema = array(
+        'type' => array(
+            self::SCHEMA_CLASS    => 'XLite_View_FormField_Select_AddressType',
+            self::SCHEMA_LABEL    => 'Address type',
+            self::SCHEMA_REQUIRED => true,
+        ),
         'title' => array(
             self::SCHEMA_CLASS    => 'XLite_View_FormField_Select_Title',
             self::SCHEMA_LABEL    => 'Title',
