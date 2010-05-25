@@ -45,5 +45,5 @@
 </div>
 
 <script type="text/javascript">
-new ProductsList('{getSessionCell()}', {getURLParamsJS()}, {getURLAJAXParamsJS()});
+new ProductsList('{getSessionCell()}', {getURLParamsJS():h}, {getURLAJAXParamsJS():h});
 </script>
