@@ -1006,33 +1006,35 @@ function doInstallDatabase($trigger, &$params, $silentMode = false)
         if (in_array($trigger, array('base', 'all'))) {
 
             $_sql = $lcSettings['sql_files']['base'];
-            $_modules_sql = array();
 
             $modulesDir = opendir(constant('LC_ROOT_DIR') . 'classes/XLite/Module');
+            $modulesFound = array();
 
             while (($dir = readdir($modulesDir)) !== false) {
 
                 if ($dir{0} != '.' && is_dir(constant('LC_ROOT_DIR') . 'classes/XLite/Module/' . $dir)) {
+                    $modulesFound[] = $dir;
+                }
+            }
 
-                    include_once constant('LC_ROOT_DIR') . 'classes/XLite/Module/' . $dir . '/Main.php';
+            closedir($modulesDir);
 
-                    $class = 'XLite_Module_' . $dir . '_Main';
-                    $_queries[] = 'REPLACE INTO xlite_modules SET name = \'' . $dir . '\', enabled = \'' . intval(in_array($dir, $lcSettings['enable_modules'])). '.\', mutual_modules = \'' . implode(',', call_user_func(array($class, 'getMutualModules'))) . '\', type = \'' . call_user_func(array($class, 'getType')). '\'';
-                    
-                    $_moduleSqlFile = 'classes/XLite/Module/' . $dir . '/install.sql';
+            sort($modulesFound, SORT_STRING);
 
-                    if (file_exists(constant('LC_ROOT_DIR') . $_moduleSqlFile)) {
-                        $_modules_sql[] = $_moduleSqlFile;
-                    }
+            foreach ($modulesFound as $dir) {
+
+                include_once constant('LC_ROOT_DIR') . 'classes/XLite/Module/' . $dir . '/Main.php';
+
+                $class = 'XLite_Module_' . $dir . '_Main';
+                $_queries[] = 'REPLACE INTO xlite_modules SET name = \'' . $dir . '\', enabled = \'' . intval(in_array($dir, $lcSettings['enable_modules'])). '.\', mutual_modules = \'' . implode(',', call_user_func(array($class, 'getMutualModules'))) . '\', type = \'' . call_user_func(array($class, 'getType')). '\'';
+
+                $_moduleSqlFile = 'classes/XLite/Module/' . $dir . '/install.sql';
+
+                if (file_exists(constant('LC_ROOT_DIR') . $_moduleSqlFile)) {
+                    $_sql[] = $_moduleSqlFile;
                 }
             }
         
-            closedir($modulesDir);
-
-            sort($_modules_sql, SORT_STRING);
-
-            $_sql += $_modules_sql;
-
             // Write parameters into the config file
             if (@is_writable(LC_CONFIG_DIR . constant('LC_CONFIG_FILE'))) {
 
