@@ -26,6 +26,20 @@ password = ""
 persistent = Off
 
 ;
+; ----------------------
+;  Cache settings
+; ----------------------
+;
+[cache]
+; Type of cache used. Can take memcache, apc, xcache values.
+type=
+; List of memcache servers. Semicolon is used as a delimiter.
+; Each server is specified with a host name and port number, divided
+; by a colon. If the port is not specified, the default
+; port 112211 is used.
+servers=
+
+;
 ; -----------------------------------------------------------------------
 ;  LiteCommerce HTTP & HTTPS host and web directory where cart installed
 ; -----------------------------------------------------------------------
