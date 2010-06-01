@@ -40,19 +40,36 @@ class Decorator
      */
     const INFO_FILE          = 'file';
     const INFO_CLASS         = 'class';
-    const INFO_CLASS_ORIG    = 'clas_orig';
+    const INFO_CLASS_ORIG    = 'class_orig';
     const INFO_EXTENDS       = 'extends';
     const INFO_EXTENDS_ORIG  = 'extends_orig';
     const INFO_IS_DECORATOR  = 'is_decorator';
     const INFO_IS_SINGLETON  = 'is_singleton';
     const INFO_IS_ROOT_CLASS = 'is_top_class';
     const INFO_CLASS_TYPE    = 'class_type';
+    const INFO_ENTITY        = 'entity';
+    const INFO_CLASS_COMMENT = 'class_comment';
 
 
     /**
      * Pattern to parse PHP files
      */
     const CLASS_PATTERN = '/\s*((?:abstract|final)\s+)?(class|interface)\s+([\w_]+)(\s+extends\s+([\w_]+))?(\s+implements\s+([\w_]+(?:\s*,\s*[\w_]+)*))?\s*(\/\*.*\*\/)?\s*{/USsi';
+
+    /**
+     * Pattern to get class DOC block
+     */
+    const CLASS_COMMENT_PATTERN = '/(\s+\*\/\s+)(?:abstract +)?class /USsi';
+
+    /**
+     * Pattern to detect entity-based class
+     */
+    const CLASS_ENTITY_PATTERN = '/@entity/USsi';
+
+    /**
+     * Pattern to parse DOC block
+     */
+    const DOCBLOCK_PATTERN = '/^\s+\*\s+@(\w+)(.*)$/Smi';
 
     /**
      * Suffix for the so called "root" decorator class names
@@ -64,6 +81,23 @@ class Decorator
      */
     const DECORATOR_IDENTIFIER = '____DECORATOR____';
 
+    /**
+     * Doctrine class attributes 
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $doctrineClassAttributes = array(
+        'Entity',
+        'Table',
+        'HasLifecycleCallbacks',
+        'InheritanceType',
+        'DiscriminatorColumn',
+        'DiscriminatorMap',
+        'ChangeTrackingPolicy',
+    );
 
     /**
      * Current value of the "max_execution_time" INI setting
@@ -322,31 +356,6 @@ class Decorator
     }
 
     /**
-     * Return comment text to insert into decorated class files 
-     * 
-     * @param array $info class info
-     *  
-     * @return string
-     * @access protected
-     * @since  3.0
-     */
-    protected function getClassComment(array $info)
-    {
-        // TODO - check if comment is needed
-        return '';
-
-        $comment = array(self::DECORATOR_IDENTIFIER);
-
-        foreach ($this->commentFields as $field => $tag) {
-            if (isset($info[$field])) {
-                $comment[] = '@' . $tag . ' ' . $info[$field];
-            }
-        }
-
-        return "\n\n" . '/**' . "\n" . ' * ' . implode("\n" . ' * ', $comment) . "\n" . ' */';
-    }
-
-    /**
      * Parse class file content 
      * 
      * @param array $info class info
@@ -368,19 +377,42 @@ class Decorator
             }
 
             // Top level class in decorator chain - has an empty body
-            $content = '<?php' . $this->getClassComment($info) . "\n" . $matches[1] . 'class ' 
+            $content = '<?php' . "\n" . trim($info[self::INFO_CLASS_COMMENT]) . "\n" . $matches[1] . 'class ' 
                        . (isset($info[self::INFO_CLASS]) ? $info[self::INFO_CLASS] : $matches[3])
                        . (isset($info[self::INFO_EXTENDS]) ? ' extends ' . $info[self::INFO_EXTENDS] : '')
                        . (isset($matches[6]) ? $matches[6] : '') . "\n" . '{' . $body . '}' . "\n";
         } else {
 
             // Replace class and name of class which extends the current one
-            $replace = $this->getClassComment($info) . "\n" 
+            $replace = "\n" 
                        . (isset($info[self::INFO_CLASS_TYPE]) ? $info[self::INFO_CLASS_TYPE] . ' ' : '$1') . '$2 ' 
                        . (isset($info[self::INFO_CLASS]) ? $info[self::INFO_CLASS] : '$3') 
                        . (isset($info[self::INFO_EXTENDS]) ? ' extends ' . $info[self::INFO_EXTENDS] : '$4') 
                        . '$6' . "\n" . '{';
             $content = preg_replace(self::CLASS_PATTERN, $replace, $content);
+
+            // Add MappedSuperclass attribute
+            $parent = null;
+            if ($this->classDecorators[$info[self::INFO_EXTENDS_ORIG]]) {
+                $parent = $info[self::INFO_EXTENDS_ORIG];
+
+            } elseif ($this->classDecorators[$info[self::INFO_CLASS_ORIG]]) {
+                $parent = $info[self::INFO_CLASS_ORIG];
+            }
+
+            if ($parent && $this->classesInfo[$parent][self::INFO_ENTITY]) {
+                $comment = $this->getClassComment($content);
+                if ($comment) {
+                    $new_comment = preg_replace('/^ \* @(?:' . implode('|', $this->doctrineClassAttributes) . ').*$/UiSm', '', $comment);
+                    $new_comment = preg_replace("/\n{2,999}/Ss", "\n", $new_comment);
+                    $new_comment = preg_replace('/ \*\//Ssi', ' * @MappedSuperclass' . "\n" . '$0', $new_comment);
+                    $content = str_replace($comment, $new_comment, $content);
+
+                } elseif (preg_match(self::CLASS_PATTERN, $content, $matches)) {
+                    $content = str_replace($matches[0], '/** @MappedSuperclass */' . "\n" . $matches[0], $content);
+                }
+            }
+
         }
 
         // Change name of normalized classes in PHP code
@@ -673,17 +705,44 @@ class Decorator
      */
     protected function getClassInfo($filePath)
     {
-        $result = array('', '', '');
+        $result = array('', '', '', false, '');
 
-        if (preg_match(self::CLASS_PATTERN, file_get_contents($filePath), $matches)) {
+        $data = file_get_contents($filePath);
+
+        if (preg_match(self::CLASS_PATTERN, $data, $matches)) {
 
             // Class name, extends clas name and the "implements A, B, C ..." part
             foreach (array(3, 5, 7) as $index => $key) {
                 $result[$index] = isset($matches[$key]) ? $matches[$key] : '';
             }
+            $result[4] = $this->getClassComment($data);
+            $result[3] = (bool)preg_match(self::CLASS_ENTITY_PATTERN, $result[4]);
         }
 
         return $result;
+    }
+
+    /**
+     * Get class comment 
+     * 
+     * @param string $data File content
+     *  
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getClassComment($data)
+    {
+        $comment = null;
+
+        if (preg_match(self::CLASS_COMMENT_PATTERN, $data, $matches)) {
+            $end = strpos($data, $matches[0]);
+            $begin = strrpos(substr($data, 0, $end), '/**');
+            $comment = substr($data, $begin, $end - $begin + strlen($matches[1]));
+        }
+
+        return $comment;
     }
 
     /**
@@ -881,7 +940,7 @@ class Decorator
                 $filePath = $fileInfo->getPathname();
 
                 // Parse file and get class info
-                list($class, $extends, $implements) = $this->getClassInfo($filePath);
+                list($class, $extends, $implements, $isEntity, $classComment) = $this->getClassInfo($filePath);
 
                 // Check classes for active modules only
                 if (!empty($class) && $this->isActiveModule($this->getModuleNameByClassName($class))) {
@@ -899,12 +958,14 @@ class Decorator
 
                         // Save data
                         $this->classesInfo[$class] = array(
-                            self::INFO_FILE         => $relativePath,
-                            self::INFO_CLASS_ORIG   => $class,
-                            self::INFO_EXTENDS      => $extends,
-                            self::INFO_EXTENDS_ORIG => $extends,
-                            self::INFO_IS_DECORATOR => $this->isDecorator($implements),
-                            self::INFO_IS_SINGLETON => $this->isSingleton($implements),
+                            self::INFO_FILE          => $relativePath,
+                            self::INFO_CLASS_ORIG    => $class,
+                            self::INFO_EXTENDS       => $extends,
+                            self::INFO_EXTENDS_ORIG  => $extends,
+                            self::INFO_IS_DECORATOR  => $this->isDecorator($implements),
+                            self::INFO_IS_SINGLETON  => $this->isSingleton($implements),
+                            self::INFO_ENTITY        => $isEntity,
+                            self::INFO_CLASS_COMMENT => $classComment,
                         );
                     }
                 }
