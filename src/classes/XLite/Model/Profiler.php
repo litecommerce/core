@@ -474,7 +474,7 @@ HTML;
             foreach ($this->points as $name => $d) {
                 echo (
                     '<tr><td>'
-                    . number_format($d['end'] - $d['start'], 4)
+                    . number_format($d['time'], 4)
                     . '</td><td>'
                     . $name
                     . '</td></tr>'
