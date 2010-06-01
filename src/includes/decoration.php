@@ -38,7 +38,6 @@ class Decorator
     /**
      * Indexes in "classesInfo" array
      */
-    
     const INFO_FILE          = 'file';
     const INFO_CLASS         = 'class';
     const INFO_CLASS_ORIG    = 'clas_orig';
@@ -48,6 +47,7 @@ class Decorator
     const INFO_IS_SINGLETON  = 'is_singleton';
     const INFO_IS_ROOT_CLASS = 'is_top_class';
     const INFO_CLASS_TYPE    = 'class_type';
+
 
     /**
      * Pattern to parse PHP files
@@ -168,6 +168,25 @@ class Decorator
      */
     protected $normalizedControllers = array();
 
+    /**
+     * Cache driver (cache)
+     * 
+     * @var    \Doctrine\Common\Cache\AbstractCache
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $cacheDriver = null;
+
+    /**
+     * Entity manager (cache) 
+     * 
+     * @var    \Doctrine\ORM\EntityManager
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $em = null;
 
     /**
      * Return current value of the "max_execution_time" INI setting 
@@ -228,7 +247,7 @@ class Decorator
     {
         if (is_null($redirectUrl)) {
             $code = '<table id="rebuild_cache_block"><tr>'
-                . '<td><img src="skins/progress_indicator.gif" /></td>'
+                . '<td><img src="skins/progress_indicator.gif" alt="" /></td>'
                 . '<td>Re-building cache, please wait...</td>'
                 . '</tr></table>';
             $code = '<script type="text/javascript">document.write(\'' . $code . '\');</script>' . "\n";
@@ -345,7 +364,7 @@ class Decorator
             $body = "\n";
             if (!empty($info[self::INFO_IS_SINGLETON])) {
                 $body .= "\t" . 'public static function getInstance()' . "\n"
-                         . "\t" . '{' . "\n\t\t" . 'return self::getInternalInstance(__CLASS__);' . "\n\t" . '}' . "\n";
+                    . "\t" . '{' . "\n\t\t" . 'return self::getInternalInstance(__CLASS__);' . "\n\t" . '}' . "\n";
             }
 
             // Top level class in decorator chain - has an empty body
@@ -1090,6 +1109,18 @@ class Decorator
 
             $this->restoreMaxExecutionTime();
 
+            $this->clearDoctrineCache();
+
+            spl_autoload_register('__lc_autoload');
+
+            // Generate models
+            // TODO - rework
+            //$this->generateModels();
+
+            // Generate model proxies
+            // TODO - rework
+            //$this->generateModelProxies();
+
             if (
                 !defined('SILENT_CACHE_REBUILD')
                 && 'cli' != php_sapi_name()
@@ -1103,16 +1134,231 @@ class Decorator
 
                 if (@parse_url($redirectUrl) && empty($_REQUEST['action'])) {
                     $this->showJavaScriptBlock($redirectUrl);
-                    die();
+                    die(0);
                 }
             }
         }
     }
 
-    // This db connection is not needed for other classes
+    /**
+     * Clear cache 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function clearDoctrineCache()
+    {
+        $driver = $this->getDoctrineCacheDriver();
+        if ($driver) {
+            $driver->deleteAll();
+        }
+    }
+
+    /**
+     * Get cache driver 
+     * 
+     * @return \Doctrine\Common\Cache\AbstractCache
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getDoctrineCacheDriver()
+    {
+        if (is_null($this->cacheDriver)) {
+    
+            $this->cacheDriver = false;
+
+            $options = $this->getConfigOptions('cache');
+            if (!$options || !is_array($options)) {
+                $options = array('type' => false);
+            }
+
+            if ('apc' == $options['type']) {
+    
+                // APC
+                $this->cacheDriver = new \Doctrine\Common\Cache\ApcCache;
+
+            } elseif ('memcache' == $options['type'] && isset($options['servers'])) {
+
+                // Memcache
+                $servers = explode(';', $options['servers']);
+                if ($servers) {
+                    $memcache = new Memcache();
+                    foreach ($servers as $row) {
+                        $row = trim($row);
+                        $tmp = explode(':', $row, 2);
+                        if ('unix' == $tmp[0]) {
+                            $memcache->addServer($row, 0);
+
+                        } elseif (isset($tmp[1])) {
+                            $memcache->addServer($tmp[0], $tmp[1]);
+
+                        } else {
+                            $memcache->addServer($tmp[0]);
+                        }
+                    }
+
+                    $cache = new \Doctrine\Common\Cache\MemcacheCache;
+                    $cache->setMemcache($memcache);
+                }
+            
+            } elseif ('xcache' == $options['type']) {
+    
+                // XCache
+                $this->cacheDriver = new \Doctrine\Common\Cache\XcacheCache;
+            }
+        }
+
+        return $this->cacheDriver;
+    }
+
+    /**
+     * Get entity manager 
+     * 
+     * @return Doctrine\ORM\EntityManager
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getEntityManager()
+    {
+        if (is_null($this->em)) {
+            $config = new \Doctrine\ORM\Configuration;
+
+            $config->setMetadataDriverImpl(
+                $config->newDefaultAnnotationDriver(LC_MODEL_CACHE_DIR)
+            );
+
+            // Set proxy settings
+            $config->setProxyDir(LC_PROXY_CACHE_DIR);
+            $config->setProxyNamespace(LC_MODEL_PROXY_NS);
+
+            $cache = new \Doctrine\Common\Cache\ArrayCache;
+            $config->setMetadataCacheImpl($cache);
+            $config->setQueryCacheImpl($cache);
+
+            $this->em = \Doctrine\ORM\EntityManager::create($this->getDSN(), $config);
+        }
+
+        return $this->em;
+    }
+
+    /**
+     * Get Doctrine style DSN 
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getDSN()
+    {
+        $options = $this->getConfigOptions('database_details');
+
+        $dsnFields = array(
+            'host'        => 'hostspec',
+            'port'        => 'port',
+            'unix_socket' => 'socket',
+            'dbname'      => 'database',
+        );
+        $dsnList = array(
+            'driver' => 'pdo_mysql',
+        );
+
+        foreach ($dsnFields as $pdoOption => $lcOption) {
+
+            if (!empty($options[$lcOption])) {
+                $dsnList[$pdoOption] = $options[$lcOption];
+            }
+        }
+
+        $dsnList['path'] = $this->getConnectionString($options);
+        $dsnList['user'] = $options['username'];
+        $dsnList['password'] = $options['password'];
+
+        return $dsnList;
+    }
+    
+    /**
+     * Get metadata list
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getMetadatas()
+    {
+        $em = $this->getEntityManager();
+
+        /*
+        $cmf = new \Doctrine\ORM\Tools\DisconnectedClassMetadataFactory($em);
+        $metadatas = $cmf->getAllMetadata();
+        */
+
+        $metadatas = $em->getMetadataFactory()->getAllMetadata();
+        // TODO - check - need or not?
+        //$metadatas = MetadataFilter::filter($metadatas, $input->getOption('filter'));
+
+        return $metadatas;
+    }
+
+    /**
+     * Generate model proxies 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function generateModelProxies()
+    {
+        mkdirRecursive(LC_PROXY_CACHE_DIR, 0755);
+        $this->getEntityManager()
+            ->getProxyFactory()
+            ->generateProxyClasses($this->getMetadatas(), LC_PROXY_CACHE_DIR);
+    }
+
+    /**
+     * Generate models 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function generateModels()
+    {
+        $entityGenerator = new \Doctrine\ORM\Tools\EntityGenerator();
+
+        $entityGenerator->setGenerateAnnotations(true);
+        $entityGenerator->setGenerateStubMethods(true);
+        $entityGenerator->setRegenerateEntityIfExists(true);
+        $entityGenerator->setUpdateEntityIfExists(true);
+        $entityGenerator->setNumSpaces(4);
+        $entityGenerator->setClassToExtend('XLite_Model_Doctrine_AbstractEntity');
+
+        $entityGenerator->generate($this->getMetadatas(), LC_MODEL_CACHE_DIR);
+    }
+
+    /**
+     * Destructor
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     public function __destruct()
     {
+        // This db connection is not needed for other classes
         $this->dbHandler = null;
+        if ($this->em) {
+            $this->em->getConnection()->close();
+            $this->em = null;
+        }
     }
 }
 
