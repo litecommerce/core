@@ -142,7 +142,7 @@ class XLite_Core_Database extends XLite_Base implements XLite_Base_ISingleton
      */
     public static function getEntityManager()
     {
-        if (is_null(self::em)) {
+        if (is_null(self::$em)) {
             XLite_Core_Database::getInstance();
         }
 
