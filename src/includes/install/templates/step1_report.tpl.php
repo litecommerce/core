@@ -239,7 +239,7 @@ if ($report) {
 
 <FORM method="POST" name="report_form" action="https://secure.qtmsoft.com/customer.php?target=customer_info&action=install_feedback_report">
 
-<input type="hidden" name="product_type" value="LC" />
+<input type="hidden" name="product_type" value="LC3" />
 
 <table border="0" cellpadding="1" cellspacing="2" align=center width=90%>
 	<tr>
