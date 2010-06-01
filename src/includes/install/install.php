@@ -1006,6 +1006,7 @@ function doInstallDatabase($trigger, &$params, $silentMode = false)
         if (in_array($trigger, array('base', 'all'))) {
 
             $_sql = $lcSettings['sql_files']['base'];
+            $_modules_sql = array();
 
             $modulesDir = opendir(constant('LC_ROOT_DIR') . 'classes/XLite/Module');
 
@@ -1021,12 +1022,16 @@ function doInstallDatabase($trigger, &$params, $silentMode = false)
                     $_moduleSqlFile = 'classes/XLite/Module/' . $dir . '/install.sql';
 
                     if (file_exists(constant('LC_ROOT_DIR') . $_moduleSqlFile)) {
-                        $_sql[] = $_moduleSqlFile;
+                        $_modules_sql[] = $_moduleSqlFile;
                     }
                 }
             }
         
             closedir($modulesDir);
+
+            sort($_modules_sql, SORT_STRING);
+
+            $_sql += $_modules_sql;
 
             // Write parameters into the config file
             if (@is_writable(LC_CONFIG_DIR . constant('LC_CONFIG_FILE'))) {
