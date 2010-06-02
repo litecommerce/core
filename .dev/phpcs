@@ -1,4 +1,4 @@
-#!/usr/local/bin/php
+#!/usr/local/php-530/bin/php
 <?php
 ini_set('memory_limit', '256M');
 error_reporting(E_ALL | E_STRICT);

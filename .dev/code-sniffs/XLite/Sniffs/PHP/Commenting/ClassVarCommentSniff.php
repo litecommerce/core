@@ -63,26 +63,37 @@ class XLite_Sniffs_PHP_Commenting_ClassVarCommentSniff extends XLite_TagsSniff
     protected $currentFile = null;
 
 	protected $tags = array(
-                       'var'    => array(
-                                        'required'       => true,
-                                        'allow_multiple' => false,
-                                        'order_text'     => 'precedes @access',
-                                       ),
-                       'access' => array(
-                                        'required'       => true,
-                                        'allow_multiple' => false,
-                                        'order_text'     => 'follows @var',
-                                        ),
-                       'see'      => array(
-                                        'required'       => false,
-                                        'allow_multiple' => false,
-                                        'order_text'     => 'follows @since',
-                                       ),
-                       'since'      => array(
-                                        'required'       => true,
-                                        'allow_multiple' => false,
-                                        'order_text'     => 'follows @access',
-                                       ),
+    	'var'    => array(
+        	'required'       => true,
+            'allow_multiple' => false,
+            'order_text'     => 'precedes @access',
+        ),
+        'access' => array(
+            'required'       => true,
+            'allow_multiple' => false,
+            'order_text'     => 'follows @var',
+        ),
+        'see'      => array(
+            'required'       => false,
+            'allow_multiple' => false,
+            'order_text'     => 'follows @since',
+        ),
+        'since'      => array(
+            'required'       => true,
+            'allow_multiple' => false,
+            'order_text'     => 'follows @access',
+        ),
+        'Column'      => array(
+            'required'       => false,
+            'allow_multiple' => false,
+            'order_text'     => 'follows @since',
+        ),
+        'OneToMany'      => array(
+            'required'       => false,
+            'allow_multiple' => false,
+            'order_text'     => 'follows @since',
+        ),
+
 
 	);
 
