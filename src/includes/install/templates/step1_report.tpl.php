@@ -82,14 +82,20 @@ A:active  {
 	BACKGROUND-COLOR: #E3EAEF;
 }
 .HeadTitle {
-        FONT-SIZE: 14px; COLOR: #000000; TEXT-DECORATION: none;
+    FONT-SIZE: 20px; COLOR: #2d69ab; TEXT-DECORATION: none;
 }
 .HeadSteps {
-        FONT-SIZE: 11px; COLOR: #373B3D; TEXT-DECORATION: none;
+    FONT-SIZE: 11px; TEXT-DECORATION: none;
 }
 .WelcomeTitle {
-        FONT-SIZE: 11px;
-        COLOR: #00224C; TEXT-DECORATION: none;
+    FONT-SIZE: 11px;
+    COLOR: #000000;
+    TEXT-DECORATION: none;
+}
+.PageTitle {
+    FONT-SIZE: 16px;
+    COLOR: #000000;
+    TEXT-DECORATION: none;
 }
 
 DIV.warning_div {
@@ -190,27 +196,23 @@ if (!$is_original) {
 
 ?>
 
-<TABLE WIDTH="100%" BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<!-- [top] -->
+<table cellspacing="0" width="100%" style="background-color: #f4f4f4; border-bottom: 1px solid #e9ecf3;">
+<tr>
+   <td style="padding: 10px;"><img src="skins_original/admin/en/images/logo.png" alt="" /></td>
+    <td style="white-space: nowrap;">
+      <div style="font-size: 24px;"><span style="color: #2d69ab;">Lite</span><span style="color: #676767;">Commerce</span></div>
+      <div>Version: <?php echo LC_VERSION; ?></div>
+    </td>
+   <td align="right" valign="middle" nowrap="nowrap" width="100%" style="padding-right: 20px;">
+    <span class="HeadTitle">Installation Wizard</span><br />
+    <span class="HeadSteps">Step 1: <?php echo $modules[1]['comment'] ?></span>
+   </td>
+</tr>
+</table>
 
-<?php
-
- /* common header */
-
-?>
-
-<TR>
-   <TD class="Head" background="skins_original/admin/en/images/head_demo_01.gif" WIDTH=494 HEIGHT=73><IMG SRC="skins_original/admin/en/images/logo_demo.gif" BORDER="0"><br><IMG SRC="skins_original/admin/en/images/spacer.gif" WIDTH=494 HEIGHT=1 BORDER="0"></TD>
-   <TD class="Head"  WIDTH="100%" background="skins_original/admin/en/images/head_demo_02.gif">
-<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 align=right>
-<TR><TD align=right>
-<FONT class=HeadTitle><B>LiteCommerce v.<?php echo LC_VERSION; ?> Installation Wizard</B></FONT>&nbsp;&nbsp;<BR>
-   <IMG SRC="skins_original/admin/en/images/spacer.gif" WIDTH=339 HEIGHT=1 ALT="" border=0>&nbsp;&nbsp;
-</TD>
-</TR>
-</TABLE>
-</TD>
-</TR>
-</TABLE>
+<br />
+<!-- [/top] -->
 
 <center>
 <?php
@@ -244,7 +246,7 @@ if ($report) {
 <table border="0" cellpadding="1" cellspacing="2" align=center width=90%>
 	<tr>
 		<td colspan=2><br>
-   		<FONT class=HeadTitle><B>Technical problems report</B></FONT><BR>
+   		<FONT class="PageTitle"><B>Technical problems report</B></FONT><BR>
 		<br>Our testing has identified some problems. Do you want to send a report about your server configuration and test results, <br>
 		so we could analyse it and fix the problems? Please fill in all the required fields below.<br>
 		<br>You can find more information about LiteCommerce software at <a href="http://litecommerce.com/faqs.html" target="_blank"><u>LiteCommerce FAQs</u></a> page.

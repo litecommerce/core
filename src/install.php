@@ -384,14 +384,15 @@ if ($current == 0) {
 	BACKGROUND-COLOR: #E3EAEF;
 }
 .HeadTitle {
-        FONT-SIZE: 14px; COLOR: #000000; TEXT-DECORATION: none;
+    FONT-SIZE: 20px; COLOR: #2d69ab; TEXT-DECORATION: none;
 }
 .HeadSteps {
-        FONT-SIZE: 11px; COLOR: #373B3D; TEXT-DECORATION: none;
+    FONT-SIZE: 11px; TEXT-DECORATION: none;
 }
 .WelcomeTitle {
-        FONT-SIZE: 11px;
-        COLOR: #00224C; TEXT-DECORATION: none;
+    FONT-SIZE: 11px;
+    COLOR: #000000;
+    TEXT-DECORATION: none;
 }
 
 .ErrorTitle {
@@ -493,38 +494,29 @@ function setNextButtonDisabled(flag)
 </TABLE>
 </DIV>
 
-<TABLE WIDTH="100%" BORDER=0 CELLPADDING=0 CELLSPACING=0>
-<?php /* common header */ ?>
-<TR>
-   <TD class="Head" background="skins_original/admin/en/images/head_demo_01.gif" WIDTH=494 HEIGHT=73><IMG SRC="skins_original/admin/en/images/logo_demo.gif" BORDER="0"><br><IMG SRC="skins_original/admin/en/images/spacer.gif" WIDTH=494 HEIGHT=1 BORDER="0"></TD>
-   <!--  TD class="Head" background="skins_original/admin/en/images/head_demo_02.gif" WIDTH="100%">
-   <IMG SRC="skins_original/admin/en/images/spacer.gif" WIDTH="100%" HEIGHT=74 BORDER="0"></TD -->
-   <TD class="Head"  WIDTH="100%" background="skins_original/admin/en/images/head_demo_02.gif">
-<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 align=right>
-<TR><TD align=right>
-<FONT class=HeadTitle><B>LiteCommerce v.<?php echo LC_VERSION; ?> Installation Wizard</B></FONT>&nbsp;&nbsp;<BR>
-   <IMG SRC="skins_original/admin/en/images/spacer.gif" WIDTH=339 HEIGHT=1 ALT="" border=0><br>
-   <FONT class=HeadSteps><B><FONT color="#000000">Step <?php echo $current ?>:</FONT> <?php echo $modules[$current]["comment"] ?></B></FONT>&nbsp;&nbsp;
-</TD>
-</TR>
-</TABLE>
-</TD>
-</TR>
-</TABLE>
+<!-- [top] -->
+<table cellspacing="0" width="100%" style="background-color: #f4f4f4; border-bottom: 1px solid #e9ecf3;">
+<tr>
+   <td style="padding: 10px;"><img src="skins_original/admin/en/images/logo.png" alt="" /></td>
+    <td style="white-space: nowrap;">
+      <div style="font-size: 24px;"><span style="color: #2d69ab;">Lite</span><span style="color: #676767;">Commerce</span></div>
+      <div>Version: <?php echo LC_VERSION; ?></div>
+    </td>
+   <td align="right" valign="middle" nowrap="nowrap" width="100%" style="padding-right: 20px;">
+    <span class="HeadTitle">Installation Wizard</span><br />
+   <span class="HeadSteps">Step <?php echo $current ?>: <?php echo $modules[$current]['comment'] ?></span>
+   </td>
+</tr>
+</table>
+
+<br />
+<!-- [/top] -->
 
 <?php
 
 /* common header */
 
 ?>
-
-<TABLE WIDTH="100%" BORDER=0 CELLPADDING=0 CELLSPACING=0>
-<TR>
-   <TD WIDTH=665><IMG SRC="skins_original/default/en/images/head_line.gif" WIDTH=665 HEIGHT=12 ALT=""></TD>
-   <TD WIDTH="100%" align=right><FONT style="font-size: 9px"><B><?php @readfile("VERSION"); ?></B></FONT>&nbsp;</TD>
-</TR>
-</TABLE>
-<BR>
 
 <NOSCRIPT>
     <br>
