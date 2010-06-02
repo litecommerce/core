@@ -75,54 +75,6 @@ abstract class XLite_Model_AbstractEntity
     protected static $mutators = array();
 
     /**
-     * Collections list (cache)
-     * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected static $collections = null;
-
-    /**
-     * Fields list
-     * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected $fields = array();
-
-    /**
-     * Constructor
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function __construct()
-    {
-        $class = get_called_class();
-
-        // Cache class collections
-        if (is_null($class::$collections)) {
-            $class::$collections = array();
-            foreach ($this->fields as $name => $type) {
-                if (self::FIELD_COLLECTION == $type) {
-                    $class::$collections[] = $name;
-                }
-            }
-        }
-
-        // Assign collections
-        foreach ($class::$collections as $name) {
-            $this->$name = new Doctrine\Common\Collections\ArrayCollection;
-        }
-    }
-
-    /**
      * Common getter
      * 
      * @param string $name Property name
@@ -134,12 +86,8 @@ abstract class XLite_Model_AbstractEntity
      */
     public function __get($name)
     {
-        if (!isset($this->fields[$name]) || self::FIELD_WRITE == $this->fields[$name]) {
-            // TODO - add throw exception
-            return null;
-        }
-
         $class = get_called_class();
+
         if (!isset($class::$accessors[$name])) {
             $class::$accessors[$name] = $this->getAccessor($name);
         }
@@ -148,7 +96,7 @@ abstract class XLite_Model_AbstractEntity
 
         return $accessor
             ? $this->$accessor()
-            : $this->$name;
+            : (isset($this->$name) ? $this->$name : null);
     }
 
     /**
@@ -164,12 +112,8 @@ abstract class XLite_Model_AbstractEntity
      */
     public function __set($name, $value)
     {
-        if (!isset($this->fields[$name]) || self::FIELD_READ == $this->fields[$name]) {
-            // TODO - add throw exception
-            return null;
-        }
-
         $class = get_called_class();
+
         if (!isset($class::$mutators[$name])) {
             $class::$mutators[$name] = $this->getMutator($name);
         }
