@@ -150,6 +150,19 @@ class XLite_Core_Database extends XLite_Base implements XLite_Base_ISingleton
     }
 
     /**
+     * Get entity manager (short method)
+     * 
+     * @return Doctrine\ORM\EntityManager
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getEM()
+    {
+        return self::getEntityManager();
+    }
+
+    /**
      * Setup doctrine cache 
      * 
      * @return void
