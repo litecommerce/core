@@ -124,9 +124,9 @@ if (!defined('XLITE_INSTALL_MODE')) {
     <TD valign=top>
 
     <div id="lc_loopback" style="display : none">
-    <font class="ErrorTitle">Installation cannot be continued<br>because the loopback test failed to host "<?php echo $HTTP_SERVER_VARS["HTTP_HOST"]; ?>".</font>
+    <font class="ErrorTitle">Installation cannot be continued<br>because the loopback test failed to host "<?php echo $_SERVER["HTTP_HOST"]; ?>".</font>
 	<br><br>
-	If a firewall is installed on your system, please open access to "<?php echo $HTTP_SERVER_VARS["HTTP_HOST"]; ?>".
+	If a firewall is installed on your system, please open access to "<?php echo $_SERVER["HTTP_HOST"]; ?>".
     </div>
 
     <div id="lc_php_version" style="display : none">
