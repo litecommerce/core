@@ -198,12 +198,14 @@ class XLite_Model_ModulesManager extends XLite_Base implements XLite_Base_ISingl
     {
         $decorator = new Decorator();
         $decorator->rebuildCache(true);
+        $decorator = null;
     }
 
     public function cleanupCache()
     {
         $decorator = new Decorator();
         $decorator->cleanupCache();
+        $decorator = null;
     }
 
     public function changeModuleStatus($module, $status, $cleanupCache = false)

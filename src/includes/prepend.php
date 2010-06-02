@@ -81,11 +81,9 @@ set_include_path(
     . PATH_SEPARATOR . LC_EXT_LIB_DIR
 );
 
-// Common error reporting settings
-ini_set('display_errors', 1);
-
 // Some common functions
 require_once (LC_ROOT_DIR . 'includes' . LC_DS . 'functions.php');
+
 
 // Doctrine 2 autoloading
 require_once (LC_EXT_LIB_DIR . 'Doctrine' . LC_DS . 'Common' . LC_DS . 'ClassLoader.php');
@@ -117,9 +115,27 @@ function __lc_autoload($className)
     }
 }
 
+// Common error reporting settings
+$path = LC_VAR_DIR . 'log' . LC_DS . 'php_errors.log.' . date('Y-m-d') . '.php';
+if (!file_exists(dirname($path))) {
+    mkdirRecursive(dirname($path));
+}
+
+if (!file_exists($path) || 16 > filesize($path)) {
+    file_put_contents($path, '<?php die(1); ?>' . "\n");
+}
+
+ini_set('error_log', $path);
+ini_set('log_errors', 1);
+
+unset($path);
+
 if (!defined('XLITE_INSTALL_MODE')) {
     // Check and (if needed) rebild classes cache
     require_once (LC_ROOT_DIR . 'includes' . LC_DS . 'decoration.php');
+    $decorator = new Decorator();
+    $decorator->rebuildCache();
+    $decorator = null;
 }
 
 // Set default memory limit

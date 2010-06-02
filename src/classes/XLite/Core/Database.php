@@ -166,6 +166,38 @@ class XLite_Core_Database extends XLite_Base implements XLite_Base_ISingleton
             $options = array('type' => false);
         }
 
+        $cache = self::getCacheDriverByOptions($options);
+
+        if ($cache) {
+            self::$cacheDriver = $cache;
+
+        } else {
+            $cache = new \Doctrine\Common\Cache\ArrayCache;
+        }
+
+        $this->config->setMetadataCacheImpl($cache);
+        $this->config->setQueryCacheImpl($cache);
+        $this->config->setResultCacheImpl($cache);
+    }
+
+    /**
+     * Get cache driver by options list
+     * 
+     * @param array $options Options from config.ini
+     *  
+     * @return \Doctrine\Common\Cache\Cache
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getCacheDriverByOptions(array $options)
+    {
+        $cache = false;
+
+        if (!$options || !is_array($options)) {
+            $options = array('type' => false);
+        }
+
         if ('apc' == $options['type']) {
 
             // APC
@@ -199,16 +231,7 @@ class XLite_Core_Database extends XLite_Base implements XLite_Base_ISingleton
             $cache = new \Doctrine\Common\Cache\XcacheCache;
         }
 
-        if ($cache) {
-            self::$cacheDriver = $cache;
-
-        } else {
-            $cache = new \Doctrine\Common\Cache\ArrayCache;
-        }
-
-        $this->config->setMetadataCacheImpl($cache);
-        $this->config->setQueryCacheImpl($cache);
-        $this->config->setResultCacheImpl($cache);
+        return $cache;
     }
 
     /**

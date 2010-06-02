@@ -82,6 +82,14 @@ class Decorator
     const DECORATOR_IDENTIFIER = '____DECORATOR____';
 
     /**
+     *  Messages
+     */
+    const CONTROLLER_ERR_MSG = 'Module "%s" has defined controller class "%s" which does not decorate any other one and has an ambigous name';
+    const UNDEFINED_CLASS_MSG = 'Decorator: undefined class - "%s"';
+    const CLASS_AREADY_DEFINED_MSG = 'Class "%s" is already defined in file "%s"';
+
+
+    /**
      * Doctrine class attributes 
      * 
      * @var    array
@@ -349,7 +357,7 @@ class Decorator
         $text = 'Class decorator is unable to resolve the following dependencies:<br /><br />' . "\n\n";
 
         foreach ($dependencies as $module => $dependedModules) {
-            $text .= '<strong>' . $module . '</strong>: ' . implode (', ', $dependedModules) . '<br />' . "\n";
+            $text .= '<strong>' . $module . '</strong>: ' . implode(', ', $dependedModules) . '<br />' . "\n";
         }
 
         return $text;
@@ -378,35 +386,40 @@ class Decorator
 
             // Top level class in decorator chain - has an empty body
             $content = '<?php' . "\n" . trim($info[self::INFO_CLASS_COMMENT]) . "\n" . $matches[1] . 'class ' 
-                       . (isset($info[self::INFO_CLASS]) ? $info[self::INFO_CLASS] : $matches[3])
-                       . (isset($info[self::INFO_EXTENDS]) ? ' extends ' . $info[self::INFO_EXTENDS] : '')
-                       . (isset($matches[6]) ? $matches[6] : '') . "\n" . '{' . $body . '}' . "\n";
+                . (isset($info[self::INFO_CLASS]) ? $info[self::INFO_CLASS] : $matches[3])
+                . (isset($info[self::INFO_EXTENDS]) ? ' extends ' . $info[self::INFO_EXTENDS] : '')
+                . (isset($matches[6]) ? $matches[6] : '') . "\n" . '{' . $body . '}' . "\n";
+
         } else {
 
             // Replace class and name of class which extends the current one
             $replace = "\n" 
-                       . (isset($info[self::INFO_CLASS_TYPE]) ? $info[self::INFO_CLASS_TYPE] . ' ' : '$1') . '$2 ' 
-                       . (isset($info[self::INFO_CLASS]) ? $info[self::INFO_CLASS] : '$3') 
-                       . (isset($info[self::INFO_EXTENDS]) ? ' extends ' . $info[self::INFO_EXTENDS] : '$4') 
-                       . '$6' . "\n" . '{';
+                . (isset($info[self::INFO_CLASS_TYPE]) ? $info[self::INFO_CLASS_TYPE] . ' ' : '$1') . '$2 ' 
+                . (isset($info[self::INFO_CLASS]) ? $info[self::INFO_CLASS] : '$3') 
+                . (isset($info[self::INFO_EXTENDS]) ? ' extends ' . $info[self::INFO_EXTENDS] : '$4') 
+                . '$6' . "\n" . '{';
             $content = preg_replace(self::CLASS_PATTERN, $replace, $content);
 
             // Add MappedSuperclass attribute
             $parent = null;
-            if ($this->classDecorators[$info[self::INFO_EXTENDS_ORIG]]) {
+            if (
+                isset($this->classDecorators[$info[self::INFO_EXTENDS_ORIG]])
+                && $this->classDecorators[$info[self::INFO_EXTENDS_ORIG]]
+            ) {
                 $parent = $info[self::INFO_EXTENDS_ORIG];
 
-            } elseif ($this->classDecorators[$info[self::INFO_CLASS_ORIG]]) {
+            } elseif (
+                isset($this->classDecorators[$info[self::INFO_CLASS_ORIG]])
+                && $this->classDecorators[$info[self::INFO_CLASS_ORIG]]
+            ) {
                 $parent = $info[self::INFO_CLASS_ORIG];
             }
 
             if ($parent && $this->classesInfo[$parent][self::INFO_ENTITY]) {
                 $comment = $this->getClassComment($content);
                 if ($comment) {
-                    $new_comment = preg_replace('/^ \* @(?:' . implode('|', $this->doctrineClassAttributes) . ').*$/UiSm', '', $comment);
-                    $new_comment = preg_replace("/\n{2,999}/Ss", "\n", $new_comment);
-                    $new_comment = preg_replace('/ \*\//Ssi', ' * @MappedSuperclass' . "\n" . '$0', $new_comment);
-                    $content = str_replace($comment, $new_comment, $content);
+                    $newComment = $this->modifyParentEntityClassComment($comment);
+                    $content = str_replace($comment, $newComment, $content);
 
                 } elseif (preg_match(self::CLASS_PATTERN, $content, $matches)) {
                     $content = str_replace($matches[0], '/** @MappedSuperclass */' . "\n" . $matches[0], $content);
@@ -421,6 +434,29 @@ class Decorator
         }
 
         return $content;
+    }
+
+    /**
+     * Modify class comment (if class - entity parent)
+     * 
+     * @param string $comment Comment
+     *  
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function modifyParentEntityClassComment($comment)
+    {
+        $newComment = preg_replace(
+            '/^ \* @(?:' . implode('|', $this->doctrineClassAttributes) . ').*$/UiSm',
+            '',
+            $comment
+        );
+        $newComment = preg_replace('/' . "\n" . '{2,999}/Ss', "\n", $newComment);
+        $newComment = preg_replace('/ \*\//Ssi', ' * @MappedSuperclass' . "\n" . '$0', $newComment);
+
+        return $newComment;
     }
 
     /**
@@ -595,7 +631,8 @@ class Decorator
     /**
      * Perform SQL query (return araay of records) 
      * 
-     * @param string $sql SQL query to execute
+     * @param string  $sql   SQL query to execute
+     * @param integer $flags PDO fetch option
      *  
      * @return array
      * @access protected
@@ -661,22 +698,6 @@ class Decorator
         return !$this->isCacheDirExists();
     }
 
-    /**
-     * Check for PHP files 
-     * 
-     * @param string $filePath file name and path
-     *  
-     * @return bool
-     * @access protected
-     * @since  3.0
-     */
-    protected function checkFile($filePath)
-    {
-        $pathInfo = pathinfo($filePath);
-
-        return !empty($pathInfo['extension'])
-            && 'php' === strtolower($pathInfo['extension']); 
-    }
 
     /**
      * Retrieve module name from class name 
@@ -789,10 +810,8 @@ class Decorator
 
             foreach ($this->getMutualModules() as $module => $dependencies) {
                 if (isset($this->activeModules[$module])) {
-                    foreach ($dependencies as $dependendModule) {
-                        unset($this->activeModules[$dependendModule]);
-                        $modulesToDisable[] = $dependendModule;
-                    }
+                    $this->activeModules = array_diff_key($this->activeModules, array_flip($dependencies));
+                    $modulesToDisable = array_merge($modulesToDisable, array_values($dependencies));
                 }
             }
 
@@ -891,12 +910,13 @@ class Decorator
 
         // There are unresolved dependencies
         if (!$isChanged) {
-            die ($this->getDependenciesErrorText($dependencies));
+            echo ($this->getDependenciesErrorText($dependencies));
+            die (3);
         }
 
         $added = empty($dependencies)
             ? array()
-            : $this->calculateModulePriorities($dependencies, $subLevelDependencies, ++$level);
+            : $this->calculateModulePriorities($dependencies, $subLevelDependencies, $level + 1);
 
         // Recursive call
         return array_merge($priorities, $added);
@@ -934,41 +954,47 @@ class Decorator
         // Only check PHP files
         $fileNamePattern = '/^' . preg_quote(LC_CLASSES_DIR, '/') . '(.*)\.php$/i';
 
-        foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator(LC_CLASSES_DIR)) as $fileInfo) {
+        require_once __DIR__ . LC_DS . 'decoration.filter.php';
 
-            if ($fileInfo->isFile() && $this->checkFile($fileInfo->getPathname())) {
-                $filePath = $fileInfo->getPathname();
+        $iterator = new DecoratorFilesFilter(
+            new RecursiveIteratorIterator(new RecursiveDirectoryIterator(LC_CLASSES_DIR))
+        );
 
-                // Parse file and get class info
-                list($class, $extends, $implements, $isEntity, $classComment) = $this->getClassInfo($filePath);
+        foreach ($iterator as $fileInfo) {
 
-                // Check classes for active modules only
-                if (!empty($class) && $this->isActiveModule($this->getModuleNameByClassName($class))) {
+            $filePath = $fileInfo->getPathname();
 
-                    // Get path related to the "LC_CLASSES_DIR" directory
-                    $relativePath = preg_replace($fileNamePattern, '$1.php', $filePath);
+            // Parse file and get class info
+            list($class, $extends, $implements, $isEntity, $classComment) = $this->getClassInfo($filePath);
 
-                     // Class defined in current PHP file has a wrong name (not corresponded to file name)
-                    if (isset($this->classesInfo[$class])) {
-                        die ('Class "' . $class . '" is already defined in file "' . $relativePath . '"');
-                    }
+            // Check classes for active modules only
+            // Do not include class into cache if parent defined in currently disabled module
+            if (
+                !empty($class)
+                && $this->isActiveModule($this->getModuleNameByClassName($class))
+                && (empty($extends) || $this->isActiveModule($this->getModuleNameByClassName($extends)))
+            ) {
 
-                    // Do not include class into cache if parent defined in currently disabled module
-                    if (empty($extends) || $this->isActiveModule($this->getModuleNameByClassName($extends))) {
+                // Get path related to the "LC_CLASSES_DIR" directory
+                $relativePath = preg_replace($fileNamePattern, '$1.php', $filePath);
 
-                        // Save data
-                        $this->classesInfo[$class] = array(
-                            self::INFO_FILE          => $relativePath,
-                            self::INFO_CLASS_ORIG    => $class,
-                            self::INFO_EXTENDS       => $extends,
-                            self::INFO_EXTENDS_ORIG  => $extends,
-                            self::INFO_IS_DECORATOR  => $this->isDecorator($implements),
-                            self::INFO_IS_SINGLETON  => $this->isSingleton($implements),
-                            self::INFO_ENTITY        => $isEntity,
-                            self::INFO_CLASS_COMMENT => $classComment,
-                        );
-                    }
+                // Class defined in current PHP file has a wrong name (not corresponded to file name)
+                if (isset($this->classesInfo[$class])) {
+                    echo (sprintf(self::CLASS_AREADY_DEFINED_MSG, $class, $relativePath));
+                    die (4);
                 }
+
+                // Save data
+                $this->classesInfo[$class] = array(
+                    self::INFO_FILE          => $relativePath,
+                    self::INFO_CLASS_ORIG    => $class,
+                    self::INFO_EXTENDS       => $extends,
+                    self::INFO_EXTENDS_ORIG  => $extends,
+                    self::INFO_IS_DECORATOR  => $this->isDecorator($implements),
+                    self::INFO_IS_SINGLETON  => $this->isSingleton($implements),
+                    self::INFO_ENTITY        => $isEntity,
+                    self::INFO_CLASS_COMMENT => $classComment,
+                );
             }
         }
     }
@@ -986,18 +1012,19 @@ class Decorator
         foreach ($this->classesInfo as $class => $info) {
 
             // Only rename classes which are not decorates controllers
-            if (!empty($class) && $this->isModuleController($class) && !$info[self::INFO_IS_DECORATOR]) {
+            if (
+                !empty($class)
+                && $this->isModuleController($class)
+                && !$info[self::INFO_IS_DECORATOR]
+            ) {
 
                 // Cut module-related part from class name
                 $newClass = $this->prepareModuleController($class);
 
                 // Error - such controller is already defined in LC core or in other module
                 if (isset($this->classesInfo[$newClass])) {
-                    die (
-                        'Module "' . $this->getModuleNameByClassName($class) 
-                        . '" has defined controller class "' . $class 
-                        . '" which does not decorate any other one and has an ambigous name'
-                    );
+                    echo (sprintf(self::CONTROLLER_ERR_MSG, $this->getModuleNameByClassName($class), $class));
+                    die (1);
                 }
 
                 // Rename and save data
@@ -1011,7 +1038,8 @@ class Decorator
         foreach ($this->classesInfo as $class => $info) {
 
             if (isset($this->normalizedControllers[$info[self::INFO_EXTENDS]])) {
-                $this->classesInfo[$class][self::INFO_EXTENDS] = $this->normalizedControllers[$info[self::INFO_EXTENDS]];
+                $this->classesInfo[$class][self::INFO_EXTENDS]
+                    = $this->normalizedControllers[$info[self::INFO_EXTENDS]];
             }
         }
     }
@@ -1035,8 +1063,9 @@ class Decorator
                 }
 
                 // Save class name and its priority (equals to module priority)
-                $this->classDecorators[$info[self::INFO_EXTENDS]][$class] = 
-                    $this->getModulePriority($this->getModuleNameByClassName($class));
+                $this->classDecorators[$info[self::INFO_EXTENDS]][$class] = $this->getModulePriority(
+                    $this->getModuleNameByClassName($class)
+                );
             }
 
             // These fields are not needed
@@ -1078,7 +1107,8 @@ class Decorator
 
             // Wrong class name
             if (!isset($this->classesInfo[$class][self::INFO_FILE])) {
-                die ('Decorator: undefined class - "' . $class . '"');
+                echo (sprintf(self::UNDEFINED_CLASS_MSG, $class));
+                die (2);
             }
 
             // Assign new (reserved) name to root class and save other info
@@ -1170,9 +1200,10 @@ class Decorator
 
             $this->restoreMaxExecutionTime();
 
-            $this->clearDoctrineCache();
-
             spl_autoload_register('__lc_autoload');
+
+            // Clear all cache
+            $this->clearDoctrineCache();
 
             // Generate models
             // TODO - rework
@@ -1184,18 +1215,18 @@ class Decorator
 
             if (
                 !defined('SILENT_CACHE_REBUILD')
-                && 'cli' != php_sapi_name()
+                && 'cli' != PHP_SAPI
                 && isset($_SERVER['HTTP_HOST'])
                 && isset($_SERVER['REQUEST_URI'])
             ) {
 
-                $isHttps = (isset($_SERVER['HTTPS']) && (strtolower($_SERVER['HTTPS'] == 'on') || $_SERVER['HTTPS'] == '1'))
+                $isHttps = (isset($_SERVER['HTTPS']) && in_array(strtolower($_SERVER['HTTPS']), array('on', '1')))
                     || (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == '443');
                 $redirectUrl = ($isHttps ? 'https://' : 'http://') . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
                 if (@parse_url($redirectUrl) && empty($_REQUEST['action'])) {
                     $this->showJavaScriptBlock($redirectUrl);
-                    die(0);
+                    die (0);
                 }
             }
         }
@@ -1228,48 +1259,13 @@ class Decorator
     protected function getDoctrineCacheDriver()
     {
         if (is_null($this->cacheDriver)) {
-    
-            $this->cacheDriver = false;
 
             $options = $this->getConfigOptions('cache');
             if (!$options || !is_array($options)) {
                 $options = array('type' => false);
             }
-
-            if ('apc' == $options['type']) {
-    
-                // APC
-                $this->cacheDriver = new \Doctrine\Common\Cache\ApcCache;
-
-            } elseif ('memcache' == $options['type'] && isset($options['servers'])) {
-
-                // Memcache
-                $servers = explode(';', $options['servers']);
-                if ($servers) {
-                    $memcache = new Memcache();
-                    foreach ($servers as $row) {
-                        $row = trim($row);
-                        $tmp = explode(':', $row, 2);
-                        if ('unix' == $tmp[0]) {
-                            $memcache->addServer($row, 0);
-
-                        } elseif (isset($tmp[1])) {
-                            $memcache->addServer($tmp[0], $tmp[1]);
-
-                        } else {
-                            $memcache->addServer($tmp[0]);
-                        }
-                    }
-
-                    $cache = new \Doctrine\Common\Cache\MemcacheCache;
-                    $cache->setMemcache($memcache);
-                }
             
-            } elseif ('xcache' == $options['type']) {
-    
-                // XCache
-                $this->cacheDriver = new \Doctrine\Common\Cache\XcacheCache;
-            }
+            $this->cacheDriver = XLite_Core_Database::getCacheDriverByOptions($options);
         }
 
         return $this->cacheDriver;
@@ -1422,8 +1418,3 @@ class Decorator
         }
     }
 }
-
-$decorator = new Decorator();
-$decorator->rebuildCache();
-$decorator = null;
-
