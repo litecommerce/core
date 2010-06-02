@@ -51,32 +51,42 @@ class XLite_Sniffs_PHP_Commenting_ClassCommentSniff extends XLite_Sniffs_PHP_Com
 {
 
     protected $tags = array(
-                       'package'    => array(
-                                        'required'       => true,
-                                        'allow_multiple' => false,
-                                        'order_text'     => 'precedes @subpackage',
-                                       ),
-                       'subpackage' => array(
-                                        'required'       => false,
-                                        'allow_multiple' => false,
-                                        'order_text'     => 'follows @package',
-										),
-                       'see'        => array(
-                                        'required'       => false,
-                                        'allow_multiple' => false,
-                                        'order_text'     => 'follows @link',
-                                       ),
-                       'since'      => array(
-                                        'required'       => false,
-                                        'allow_multiple' => false,
-                                        'order_text'     => 'follows @see (if used) or @link',
-                                       ),
-                       'deprecated' => array(
-                                        'required'       => false,
-                                        'allow_multiple' => false,
-                                        'order_text'     => 'follows @since (if used) or @see (if used) or @link',
-                                       ),
-				);
+    	'package'    => array(
+        	'required'       => true,
+            'allow_multiple' => false,
+            'order_text'     => 'precedes @subpackage',
+        ),
+        'subpackage' => array(
+        	'required'       => false,
+            'allow_multiple' => false,
+            'order_text'     => 'follows @package',
+		),
+		'see'        => array(
+        	'required'       => false,
+            'allow_multiple' => false,
+            'order_text'     => 'follows @link',
+        ),
+        'since'      => array(
+            'required'       => false,
+            'allow_multiple' => false,
+            'order_text'     => 'follows @see (if used) or @link',
+        ),
+        'deprecated' => array(
+            'required'       => false,
+            'allow_multiple' => false,
+            'order_text'     => 'follows @since (if used) or @see (if used) or @link',
+        ),
+        'Entity' => array(
+            'required'       => false,
+            'allow_multiple' => false,
+            'order_text'     => 'follows @since (if used) or @see (if used) or @link or @deprecated (if used)',
+        ),
+        'Table' => array(
+            'required'       => false,
+            'allow_multiple' => false,
+            'order_text'     => 'follows @Entity',
+        ),
+	);
 
     protected $reqCodeRequire = 'REQ.PHP.4.4.3';
     protected $reqCodePHPVersion = false;

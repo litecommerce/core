@@ -91,7 +91,27 @@ class XLite_Sniffs_PHP_Commenting_ClassVarCommentSniff extends XLite_TagsSniff
         'OneToMany'      => array(
             'required'       => false,
             'allow_multiple' => false,
-            'order_text'     => 'follows @since',
+            'order_text'     => 'follows @Column',
+        ),
+        'OneToOne'      => array(
+            'required'       => false,
+            'allow_multiple' => false,
+            'order_text'     => 'follows @Column',
+        ),
+        'ManyToMany'      => array(
+            'required'       => false,
+            'allow_multiple' => false,
+            'order_text'     => 'follows @Column',
+        ),
+        'Id'      => array(
+            'required'       => false,
+            'allow_multiple' => false,
+            'order_text'     => 'follows @Column',
+        ),
+        'GeneratedValue'      => array(
+            'required'       => false,
+            'allow_multiple' => false,
+            'order_text'     => 'follows @Column',
         ),
 
 
