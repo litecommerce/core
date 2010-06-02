@@ -107,6 +107,14 @@ class XLite_Sniffs_PHP_NamingConventions_UpperCaseConstantNameSniff extends XLit
                 return;
             }
 
+			if (
+				$tokens[$stackPtr - 1]['code'] == T_NS_SEPARATOR
+				|| $tokens[$stackPtr + 1]['code'] == T_NS_SEPARATOR
+			) {
+				// This is a namespace prefix
+				return;
+			}
+
             // Is this a class name?
             $nextPtr = $phpcsFile->findNext(array(T_WHITESPACE), ($stackPtr + 1), null, true);
             if ($tokens[$nextPtr]['code'] === T_DOUBLE_COLON) {
