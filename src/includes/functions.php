@@ -409,7 +409,7 @@ function mkdirRecursive($dir, $mode = 0777)
             @unlinkRecursive($newdir);
             $attempts --; 
             if (0 > $attempts) {
-                die('Can\'t create directory $newdir: permission denied');
+                die("Can't create directory $newdir: permission denied");
             }
         }
     }
