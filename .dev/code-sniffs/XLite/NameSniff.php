@@ -11,7 +11,7 @@ class XLite_NameSniff extends XLite_ReqCodesSniff
 		'AES', 'RSA', 'PGP', 'XSLT', 'IV', 'DN', 'URL', 'IP', 'MIME', 'CRC', 'CRC32', 'MD4', 'MD5', 'API',
 		'NVP', 'PHP', 'CURL', 'VS', 'PC', 'UTF8', 'TTL', 'SMTP', 'IP4', 'CC', 'CVV2', 'UK', 'FMF', 'CSSURL',
 		'HMACMD5', 'HMAC', 'URI', 'ID', 'JS', 'SSL', 'AVS', 'CVV', 'DB', 'HSBC', 'SOAP', 'GMT', 'HTTPS', 'CLI',
-		'CMS', 'GC', 'AJAX', 'URLAJAX', 'USPS', 'GD', 'PM', 'XPC', 'DSN',
+		'CMS', 'GC', 'AJAX', 'URLAJAX', 'USPS', 'GD', 'PM', 'XPC', 'DSN', 'EM', 'QB',
 	);
 
 	protected $twoWordsAbbrs = array('ECard', 'ECards');
@@ -42,6 +42,10 @@ class XLite_NameSniff extends XLite_ReqCodesSniff
 	protected $cssPseudoClasses = array(
 		'link', 'active', 'hover', 'visited', 'first-line', 'first-letter', 'first-child', 'last-child', 'last-line', 'last-letter',
 		'disabled'
+	);
+
+	protected $reservedMethodNames = array(
+		'postUpdate', 'postRemove',
 	);
 
     public function register()
@@ -206,4 +210,19 @@ class XLite_NameSniff extends XLite_ReqCodesSniff
     public function isCSSPseudoClass($property) {
         return in_array($property, $this->cssPseudoClasses);
     }
+
+	/**
+	 * Check - is reserver method name or not
+	 * 
+	 * @param string $methodName Method name
+	 *  
+	 * @return boolean
+	 * @access protected
+	 * @see    ____func_see____
+	 * @since  3.0.0
+	 */
+	protected function isReserverMethodName($methodName)
+	{
+		return in_array($methodName, $this->reservedMethodNames);
+	}
 }
