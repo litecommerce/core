@@ -103,6 +103,11 @@ class XLite_Sniffs_PHP_Commenting_ClassVarCommentSniff extends XLite_TagsSniff
             'allow_multiple' => false,
             'order_text'     => 'follows @Column',
         ),
+        'ManyToOne'      => array(
+            'required'       => false,
+            'allow_multiple' => false,
+            'order_text'     => 'follows @Column',
+        ),
         'Id'      => array(
             'required'       => false,
             'allow_multiple' => false,
@@ -113,8 +118,11 @@ class XLite_Sniffs_PHP_Commenting_ClassVarCommentSniff extends XLite_TagsSniff
             'allow_multiple' => false,
             'order_text'     => 'follows @Column',
         ),
-
-
+        'JoinColumn'      => array(
+            'required'       => false,
+            'allow_multiple' => false,
+            'order_text'     => 'follows @Column',
+        ),
 	);
 
     protected $reqCodeRequire = array('REQ.PHP.4.6.3');

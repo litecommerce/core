@@ -154,7 +154,7 @@ class XLite_Sniffs_PHP_NamingConventions_ValidFunctionNameSniff extends XLite_Ab
 			$phpcsFile->addError($this->getReqPrefix('REQ.PHP.1.4.1') . $error, $stackPtr);
 
 		}
-		if (!$this->checkVerb($fBit)) {
+		if (!$this->checkVerb($fBit) && !$this->isReserverMethodName($methodName)) {
 
 			$error = ucfirst($scope)." method name \"$className::$methodName\" is not in verb form";
 			$phpcsFile->addError($this->getReqPrefix('REQ.PHP.1.4.2') . $error, $stackPtr);
