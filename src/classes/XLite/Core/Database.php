@@ -163,6 +163,34 @@ class XLite_Core_Database extends XLite_Base implements XLite_Base_ISingleton
     }
 
     /**
+     * Get repository (short method)
+     *
+     * @param string $repository Entity class name
+     * 
+     * @return Doctrine\ORM\EntityRepository
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getRepo($repository)
+    {
+        return self::getEntityManager()->getRepository($repository);
+    }
+
+    /**
+     * Get repository (short method)
+     * 
+     * @return Doctrine\ORM\EntityRepository
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getQB()
+    {
+        return self::getEntityManager()->createQueryBuilder();
+    }
+
+    /**
      * Setup doctrine cache 
      * 
      * @return void
