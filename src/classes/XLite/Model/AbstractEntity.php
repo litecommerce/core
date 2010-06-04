@@ -75,6 +75,23 @@ abstract class XLite_Model_AbstractEntity
     protected static $mutators = array();
 
     /**
+     * Map data to entity columns
+     * 
+     * @param array $data Data
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function map(array $data)
+    {
+        foreach ($data as $key => $value) {
+            $this->__set($key, $value);
+        }
+    }
+
+    /**
      * Common getter
      * 
      * @param string $name Property name
@@ -171,7 +188,7 @@ abstract class XLite_Model_AbstractEntity
      */
     public function getRepository()
     {
-        return XLite_Model_Database::getEntityManager()
+        return XLite_Core_Database::getEntityManager()
             ->getRepository(get_called_class());
     }
 
