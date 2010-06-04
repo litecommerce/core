@@ -35,7 +35,7 @@ use Doctrine\ORM\EntityRepository;
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class XLite_Model_Doctrine_Repo_AbstractRepo extends EntityRepository
+abstract class XLite_Model_Repo_AbstractRepo extends EntityRepository
 {
     /**
      * Cache TTL predefined values 
@@ -129,12 +129,7 @@ abstract class XLite_Model_Doctrine_Repo_AbstractRepo extends EntityRepository
                     : false;
 
                 if (self::CACHE_ATTR_KEY == $this->cacheCells[$name][self::KEY_TYPE_CACHE_CELL]) {
-                    $method = $this->getCacheHashGeneratorName($name);
-                    if (!method_exists($this, $method)) {
-                        // TODO - add throw exception
-                    }
-
-                    $this->cacheCells[$name][self::GENERATOR_CACHE_CELL] = $method;
+                    $this->cacheCells[$name][self::GENERATOR_CACHE_CELL] = $this->getCacheHashGeneratorName($name);
                 }
 
             }
@@ -159,7 +154,7 @@ abstract class XLite_Model_Doctrine_Repo_AbstractRepo extends EntityRepository
      */
     protected function assignQueryCache(Doctrine\ORM\AbstractQuery $query, $name, array $params = array())
     {
-        if (XLite_Model_Database::isCacheEnabled()) {
+        if (XLite_Core_Database::isCacheEnabled()) {
             $cell = $this->getCacheCells($name);
             if ($cell) {
 
@@ -189,7 +184,7 @@ abstract class XLite_Model_Doctrine_Repo_AbstractRepo extends EntityRepository
     {
         $result = null;
 
-        if (XLite_Model_Database::isCacheEnabled()) {
+        if (XLite_Core_Database::isCacheEnabled()) {
             $cell = $this->getCacheCells($name);
             if ($cell) {
 
@@ -219,7 +214,7 @@ abstract class XLite_Model_Doctrine_Repo_AbstractRepo extends EntityRepository
      */
     protected function saveToCache($data, $name, array $params = array())
     {
-        if (XLite_Model_Database::isCacheEnabled()) {
+        if (XLite_Core_Database::isCacheEnabled()) {
             $cell = $this->getCacheCells($name);
             if ($cell) {
 
@@ -332,7 +327,7 @@ abstract class XLite_Model_Doctrine_Repo_AbstractRepo extends EntityRepository
      */
     public function hasCacheCells()
     {
-        return XLite_Model_Database::isCacheEnabled()
+        return XLite_Core_Database::isCacheEnabled()
             && $this->getCacheCells();
     }
 
@@ -352,9 +347,9 @@ abstract class XLite_Model_Doctrine_Repo_AbstractRepo extends EntityRepository
             if ($cell[self::CONVERTER_CACHE_CELL]) {
                    $params = $this->{$cell[self::CONVERTER_CACHE_CELL]}($entity);
 
-               } elseif (
+            } elseif (
                 is_array($cell[self::ATTRS_CACHE_CELL])
-                   && $cell[self::ATTRS_CACHE_CELL]
+                && $cell[self::ATTRS_CACHE_CELL]
             ) {
                 $params = array();
                 foreach ($cell[self::ATTRS_CACHE_CELL] as $key) {
@@ -367,7 +362,7 @@ abstract class XLite_Model_Doctrine_Repo_AbstractRepo extends EntityRepository
 
             $hash = $this->getCellHash($name, $cell, $params);
 
-            XLite_Model_Database::getCacheDriver()
+            XLite_Core_Database::getCacheDriver()
                 ->delete($hash);
         }
     }
@@ -384,8 +379,8 @@ abstract class XLite_Model_Doctrine_Repo_AbstractRepo extends EntityRepository
      */
     public function deleteCache($name = '')
     {
-        if (XLite_Model_Database::isCacheEnabled()) {
-            XLite_Model_Database::getCacheDriver()->deleteByPrefix($this->getTableHash($name) . '.');
+        if (XLite_Core_Database::isCacheEnabled()) {
+            XLite_Core_Database::getCacheDriver()->deleteByPrefix($this->getTableHash($name) . '.');
         }
     }
 }

@@ -249,6 +249,9 @@ class XLite_Base
                 if ($obj instanceof stdClass) {
                     $obj = isset($obj->$part) ? $obj->$part : null;
 
+                } elseif ($obj instanceof XLite_Model_AbstractEntity) {
+                    $obj = $obj->$part;
+
                 } else {
                     $obj = $obj->get($part);
                 }
