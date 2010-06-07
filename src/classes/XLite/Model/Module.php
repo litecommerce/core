@@ -60,6 +60,7 @@ class XLite_Model_Module extends XLite_Model_Abstract
         'enabled'        => 0,
         'dependencies'   => '', 
         'mutual_modules' => '',
+        'type'           => self::MODULE_GENERAL,
     );
     
     /**

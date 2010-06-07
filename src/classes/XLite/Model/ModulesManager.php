@@ -177,6 +177,67 @@ class XLite_Model_ModulesManager extends XLite_Base implements XLite_Base_ISingl
         return $this->getModule()->findAll(is_null($type) ? '' : 'type = \'' . $type . '\'');
     }
 
+    /**
+     * Update modules list 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function updateModulesList()
+    {
+        $names = array();
+        foreach ($this->getModule()->findAll() as $module) {
+            $names[] = $module->get('name');
+        }
+
+        foreach (glob(LC_MODULES_DIR . '*' . LC_DS . 'Main.php') as $f) {
+            $parts = explode(LC_DS, $f);
+            $name = $parts[count($parts) - 2];
+            if (!in_array($name, $names)) {
+                $this->registerModule($name);
+            }
+        }
+    }
+
+    /**
+     * Register new module 
+     * 
+     * @param string $name Module name
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function registerModule($name)
+    {
+
+        require_once LC_MODULES_DIR . $name . LC_DS . 'Main.php';
+
+        $className = 'XLite_Module_' . $name . '_Main';
+
+        $module = new XLite_Model_Module();
+
+        $module->set('name', $name);
+        $module->set('mutual_modules', implode(',', $className::getMutualModules()));
+        $module->set('type', $className::getType());
+
+        $module->create();
+
+        // Install SQL dump
+        $installSQLPath = LC_MODULES_DIR . $name . LC_DS . 'install.sql';
+
+        if (file_exists($installSQLPath)) {
+            $error = query_upload($installSQLPath, $this->db->connection, true, true);
+
+            if ($error) {
+                // TODO - display error
+            }
+        }
+    }
+
     public function getActiveModules($moduleName = null)
     {
         if (is_null($this->activeModules)) {

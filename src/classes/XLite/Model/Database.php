@@ -380,7 +380,7 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
         // do not cache backup queries
         $this->set('cacheEnabled', false);
         // write backup file heading comments
-        $this->_write($handle, "-- WARNING: Do not change this line <?php die(); ?>\n");
+        $this->_write($handle, '-- WARNING: Do not change this line <?' . 'php die(); ? ' . '>' . "\n");
         foreach ($this->getTables() as $table) {
             // dump table chema
             if ($verbose) {
@@ -399,7 +399,7 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
             }
         }
         // write backup file ending comments
-        $this->_write($handle, "-- WARNING: Do not change this line */ ?>\n");
+        $this->_write($handle, '-- WARNING: Do not change this line */ ?' . '>' . "\n");
         is_null($handle) or fclose($handle) && chmod($file, get_filesystem_permissions(0666));
     }
 
