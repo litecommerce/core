@@ -121,8 +121,7 @@ class XLite_Module_UPSOnlineTools_Model_Shipping_Ups extends XLite_Model_Shippin
         $version = $this->config->Version->version;
 
         if (is_numeric($userinfo['state'])) {
-            $obj = new XLite_Model_State($userinfo['state']);
-            $userinfo['state'] = $obj->get('code');
+            $userinfo['state'] = XLite_Core_Database::getRepo('XLite_Model_State')->getCodeById($userinfo['state']);
         }
 
         $request = <<<EOT
@@ -314,9 +313,7 @@ EOT;
         // Define company state
         $state_id = $this->config->Company->location_state;
         if ($state_id != -1) {
-            $state = new XLite_Model_State($state_id);
-            $originState = $state->get('code');
-            unset($state);
+            $originState = XLite_Core_Database::getRepo('XLite_Model_State')->getCodeById($state_id);
 
         } else {
             $originState = $this->config->Company->location_custom_state;
@@ -338,9 +335,7 @@ EOT;
             // Define destination state
             $state_id = $order->getProfile()->get('shipping_state');
             if ($state_id != -1) {
-                $state = $state = new XLite_Model_State($state_id);
-                $destinationState = $state->get('code');
-                unset($state);
+                $destinationState = XLite_Core_Database::getRepo('XLite_Model_State')->getCodeById($state_id);
 
             } else {
                 $destinationState = $order->getProfile()->get('shipping_custom_state');
@@ -1064,7 +1059,7 @@ EOT;
                 break;
 
             default:
-                $country = new XLite_Model_Country($originCountry);
+                $country = XLite_Core_Database::getEM()->find('XLite_Model_Country', $originCountry);
                 $origin = $country->isEUMember() ? 'EU' : 'OTHER_ORIGINS';
                 break;
         }
@@ -1098,8 +1093,7 @@ EOT;
         if ($options->get('av_status') == 'Y' && $shipping_country == 'US') {
 
             if ($shipping_state > 0) {
-                $state = new XLite_Model_State($shipping_state);
-                $state_code = $state->get('code');
+                $state_code = XLite_Core_Database::getRepo('XLite_Model_State')->getCodeById($shipping_state);
 
             } else {
                 $state_code = $shipping_custom_state;

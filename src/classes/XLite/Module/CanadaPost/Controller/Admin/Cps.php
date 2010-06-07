@@ -69,9 +69,8 @@ class XLite_Module_CanadaPost_Controller_Admin_Cps extends XLite_Controller_Admi
             $this->destinationZipcode = $this->config->getComplex('Company.location_zipcode');
         if (empty($this->destinationCountry)) 
             $this->destinationCountry = $this->config->getComplex('Company.location_country');
-        $state = new XLite_Model_State($this->destinationState);
-        $state = $state->get('code');
-        if (empty($state)) $state = "Other";
+        $state = XLite_Core_Database::getEM()->find('XLite_Model_State', $this->destinationState);
+        $state = $state ? $state->code : 'Other';
  
         $this->cps = new XLite_Module_CanadaPost_Model_Shipping_Cps();
         $options = $this->cps->get('options');

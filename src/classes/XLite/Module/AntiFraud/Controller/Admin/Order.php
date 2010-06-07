@@ -80,8 +80,11 @@ class XLite_Module_AntiFraud_Controller_Admin_Order extends XLite_Controller_Adm
         }
 
         $order = $this->get('order');
-        $this->country = new XLite_Model_Country($order->getComplex('profile.billing_country'));
-        $this->country->set('order', $order);
+        $this->country = XLite_Core_Database::getEM()->find('XLite_Model_Country', $order->getComplex('profile.billing_country'));
+
+        // TODO - WTF? Cuntry has not 'order' field. Rework it
+        //$this->country->set('order', $order);
+
         return $this->country;
     }
 

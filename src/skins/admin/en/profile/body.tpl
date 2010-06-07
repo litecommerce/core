@@ -267,7 +267,7 @@ Mandatory fields are marked with an asterisk (<font class="Star">*</font>).
       <td align="right">State</td>
       <td><font class="Star">*</font></td>
       <td>
-    		<widget class="XLite_View_StateSelect" field="billing_state" state="{billing_state}" fieldId="billing_state_select" isLinked=1 />
+    		<widget class="XLite_View_StateSelect" field="billing_state" state="{billing_state}" isLinked=1 />
       </td>
       <td>
         <widget class="XLite_Validator_RequiredValidator" field="billing_state" />
@@ -287,7 +287,7 @@ Mandatory fields are marked with an asterisk (<font class="Star">*</font>).
       <td align="right">Country</td>
       <td><font class="Star">*</font></td>
       <td>
-    		<widget class="XLite_View_CountrySelect" field="billing_country" country="{billing_country}" fieldId="billing_country_select" />
+    		<widget class="XLite_View_CountrySelect" field="billing_country" country="{billing_country}" />
       </td>
       <td>
         <widget class="XLite_Validator_RequiredValidator" field="billing_country" />
@@ -402,7 +402,7 @@ Mandatory fields are marked with an asterisk (<font class="Star">*</font>).
         <td align="right">State</td>
         <td><font class="Star">*</font></td>
         <td>
-      		<widget class="XLite_View_StateSelect" field="shipping_state" state="{shipping_state}" fieldId="shipping_state_select" isLinked=1 />
+      		<widget class="XLite_View_StateSelect" field="shipping_state" state="{shipping_state}" isLinked=1 />
         </td>
         <td>
           <widget class="XLite_Validator_StateValidator" field="shipping_state" countryField="shipping_country" />
@@ -420,7 +420,7 @@ Mandatory fields are marked with an asterisk (<font class="Star">*</font>).
         <td align="right">Country</td>
         <td><font class="Star">*</font></td>
         <td>
-      		<widget class="XLite_View_CountrySelect" field="shipping_country" country="{shipping_country}" fieldId="shipping_country_select" />
+      		<widget class="XLite_View_CountrySelect" field="shipping_country" country="{shipping_country}" />
         </td>
         <td>&nbsp;</td>
       </tr>

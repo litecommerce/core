@@ -169,9 +169,9 @@ class XLite_Module_AntiFraud_Model_Order extends XLite_Model_Order implements XL
     		
     		$result['total_trust_score'] = $result['total_trust_score'] * $risk_factor_multiplier;
 
-            $country = new XLite_Model_Country($profile->get('billing_country'));
-            if ($country->get('riskCountry')) {
-                $result['total_trust_score'] +=  $this->config->getComplex('AntiFraud.risk_country_multiplier');
+            $country = XLite_Core_Database::getEM()->find('XLite_Model_Country', $profile->get('billing_country'));
+            if ($country->isRiskCountry()) {
+                $result['total_trust_score'] +=  $this->config->AntiFraud->risk_country_multiplier;
             }
     		
             if ($result['available_request'] == $result['used_request']) {

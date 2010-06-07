@@ -32,13 +32,13 @@
         <td>IP State:</td>
         <td>{if:response.data.state}{response.data.state}{else:}n/a{end:}</td>
         <td>State:</td>
-        <td align="right"><widget class="XLite_View_StateSelect" field="state" value="{order.profile.billing_state:h}"></td>
+        <td align="right"><widget class="XLite_View_StateSelect" field="state" state="{order.profile.billing_state:h}" isLinked=1 /></td>
     </tr>   	
     <tr>
         <td>IP Country:</td>
         <td>{if:response.data.country}{response.data.country}{else:}n/a{end:}</td>
         <td>Country:</td>
-        <td align="right"><widget class="XLite_View_CountrySelect" field="country" value="{order.profile.billing_country:h}"></td>
+        <td align="right"><widget class="XLite_View_CountrySelect" field="country" country="{order.profile.billing_country:h}" /></td>
     </tr>   
     <tr>
         <td>IP Zipcode:</td>

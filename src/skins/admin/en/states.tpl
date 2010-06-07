@@ -10,7 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<script language="Javascript">
+<script type="text/javascript">
 <!-- 
 
 function setChecked(form, input, check)
@@ -45,7 +45,7 @@ function setHeaderChecked()
 <form name="select_country_form" method="GET">
 <p class="AdminHead">Select country<p>
 <input type="hidden" name="target" value="states">
-<widget class="XLite_View_CountrySelect" field="country_code" value="{country_code}" onChange="document.select_country_form.submit();" all nonFixed>
+<widget class="XLite_View_CountrySelect" field="country_code" country="{country_code}" onchange="javascript: document.select_country_form.submit();" all />
 </form>
 
 <span IF="!states">

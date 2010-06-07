@@ -27,7 +27,7 @@
  */
 
 /**
- * ____description____
+ * Country
  * 
  * @package XLite
  * @see     ____class_see____
@@ -35,44 +35,65 @@
  */
 class XLite_Module_AntiFraud_Model_Country extends XLite_Model_Country implements XLite_Base_IDecorator
 {
-    public $riskCountry = null;
+    /**
+     * Country risk rate
+     * 
+     * @var    integer
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Column (type="integer", length="11", nullable=false)
+     */
+    protected $risk_country;
 
-    public function __construct($id = null)  
+    /**
+     * Country risk rate with current order (cache)
+     * 
+     * @var    mixed
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $riskCountryCache;
+
+    /**
+     * Check - is risk country or not
+     * 
+     * @param integer $check Check value
+     *  
+     * @return integer or boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isRiskCountry($check = null) 
     {
-        $this->fields['risk_country'] = 0;
-        parent::__construct($id);
-    }
+        if (is_null($this->riskCountryCache)) {
 
-    function isRiskCountry($check=null) 
-    {
-        if (isset($this->riskCountry)) {
-            if (!isset($check)) {
-                return $this->riskCountry;
-            } else {
-                return (($this->riskCountry & $check) > 0) ? true : false;
-            }
-        }
+            $result = $this->risk_country;
 
-        $result = $this->get('risk_country');
-        $order = $this->get('order');
-        if (isset($order)) {
-            $af_data = $order->getComplex('details.af_data');
-            if (isset($af_data) && is_array($af_data)) {
-                if (isset($af_data['CHECK_IP_COUNTRY'])) {
-                    $result += ($af_data['CHECK_IP_COUNTRY'] != $this->get('code')) ? 2 : 0;
-                }
-                if (isset($af_data['CHECK_IP_DISTANCE'])) {
-                    $result += ($af_data['CHECK_IP_DISTANCE'] > $this->config->getComplex('AntiFraud.antifraud_safe_distance')) ? 4 : 0;
+            /* TODO - check & rework
+            $order = $this->get('order');
+            if (isset($order)) {
+                $af_data = $order->getComplex('details.af_data');
+                if (isset($af_data) && is_array($af_data)) {
+                    if (isset($af_data['CHECK_IP_COUNTRY'])) {
+                        $result += ($af_data['CHECK_IP_COUNTRY'] != $this->get('code')) ? 2 : 0;
+                    }
+                    if (isset($af_data['CHECK_IP_DISTANCE'])) {
+                        $result += ($af_data['CHECK_IP_DISTANCE'] > $this->config->AntiFraud->antifraud_safe_distance) ? 4 : 0;
+                    }
                 }
             }
+            */
+
+            $this->riskCountryCache = $result;
         }
 
-        $this->riskCountry = $result;
-        if (!isset($check)) {
-            return $this->riskCountry;
-        } else {
-            return (($this->riskCountry & $check) > 0) ? true : false;
-        }
+        return is_null($check)
+            ? $this->riskCountryCache
+            : 0 < ($this->riskCountryCache & $check);
+
     }
     
 }

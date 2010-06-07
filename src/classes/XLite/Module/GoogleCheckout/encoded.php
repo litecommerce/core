@@ -324,11 +324,8 @@ EOT;
         $_this->config->setComplex('General.default_country', $addr["COUNTRY-CODE"]);
 
         // state
-        $state_id = 0;
-        $state = new XLite_Model_State();
-        if ($state->find("code='".addslashes($addr['REGION'])."'")) {
-            $state_id = $state->get('state_id');
-        }
+		$state = XLite_Core_Dtabase::getRepo('XLite_Model_State')->finOneByCode($addr['REGION']);
+		$state_id = $state ? $state->state_id : 0;
 
         $profile->set('shipping_state', $state_id);
         $_this->GoogleCheckout_profile = $profile;
@@ -581,9 +578,10 @@ if ($is_new_profile) {
     $profile->set('billing_country', $billing_addr["COUNTRY-CODE"]);
     $profile->set('billing_zipcode', $billing_addr["POSTAL-CODE"]);
 
-    $state = new XLite_Model_State();
-    if ($state->find("code='".trim(addslashes($billing_addr['REGION']))."'")) {
-        $profile->set('billing_state', $state->get('state_id'));
+    $state = XLite_Core_Dtabase::getRepo('XLite_Model_State')->finOneByCode(trim($billing_addr['REGION']));
+    if ($state) {
+        $profile->set('billing_state', $state->state_id);
+
     } else {
         $profile->set('billing_custom_state', trim($billing_addr['REGION']));
     }
@@ -600,9 +598,9 @@ if ($is_new_profile) {
     $profile->set('shipping_country', $shipping_addr["COUNTRY-CODE"]);
     $profile->set('shipping_zipcode', $shipping_addr["POSTAL-CODE"]);
 
-    $state = new XLite_Model_State();
-    if ($state->find("code='".trim(addslashes($shipping_addr['REGION']))."'")) {
-        $profile->set('shipping_state', $state->get('state_id'));
+    $state = XLite_Core_Dtabase::getRepo('XLite_Model_State')->finOneByCode(trim($shipping_addr['REGION']));
+    if ($state) {
+        $profile->set('shipping_state', $state->state_id);
     } else {
         $profile->set('shipping_custom_state', trim($shipping_addr['REGION']));
     }

@@ -543,14 +543,6 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
         }
     }
 
-    function getCountriesStates()
-    {
-        if (!isset($this->_profileDialog)) {
-            $this->_profileDialog = new XLite_Controller_Admin_Profile();
-        }
-        return $this->_profileDialog->getCountriesStates();
-    }
-
     function getWaitingList()
     {
         if (is_null($this->_waiting_list)){

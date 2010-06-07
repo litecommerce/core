@@ -23,10 +23,10 @@
 <input type="hidden" name="target" value="taxes">
 <input type="hidden" name="action" value="calculator">
 <tr>
-	<td>Country:&nbsp;</td><td><widget class="XLite_View_CountrySelect" field="billing_country" country="{country}" fieldId="billing_country_select" /></td>
+	<td>Country:&nbsp;</td><td><widget class="XLite_View_CountrySelect" field="billing_country" country="{country}" /></td>
 </tr>
 <tr>
-	<td>State:&nbsp;</td><td><widget class="XLite_View_StateSelect" field="billing_state" state="{state}" fieldId="billing_state_select" isLinked=1 /></td>
+	<td>State:&nbsp;</td><td><widget class="XLite_View_StateSelect" field="billing_state" state="{state}" isLinked=1 /></td>
 </tr>
 <tr>
 	<td>City:&nbsp;</td><td><input type="text" name="city" value="{city}"></td>

@@ -735,15 +735,6 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
         return $this->config->Security->customer_security;
     }
 
-    function getCountriesStates()
-    {
-        if (!isset($this->_profileDialog)) {
-            $this->_profileDialog = new XLite_Controller_Customer_Profile();
-        }
-
-        return $this->_profileDialog->getCountriesStates();
-    }
-
     function isDisplayNumber()
     {
         return $this->config->General->display_check_number;

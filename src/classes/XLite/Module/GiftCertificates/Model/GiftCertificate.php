@@ -161,7 +161,7 @@ class XLite_Module_GiftCertificates_Model_GiftCertificate extends XLite_Model_Ab
     public function getRecipientState()
     {
         if (is_null($this->recipientState)) {
-            $this->recipientState = new XLite_Model_State($this->get('recipient_state'));
+            $this->recipientState = XLite_Core_Database::getEM()->find('XLite_Model_State', $this->get('recipient_state'));
         }
 
         return $this->recipientState;
@@ -178,7 +178,7 @@ class XLite_Module_GiftCertificates_Model_GiftCertificate extends XLite_Model_Ab
     public function getRecipientCountry()
     {
         if (is_null($this->recipientCountry)) {
-            $this->recipientCountry = new XLite_Model_Country($this->get('recipient_country'));
+            $this->recipientCountry = XLite_Core_Database::getEM()->find('XLite_Model_Country', $this->get('recipient_country'));
         }
 
         return $this->recipientCountry;

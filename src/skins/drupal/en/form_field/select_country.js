@@ -80,15 +80,15 @@ StateSelector.prototype.removeOptions = function()
 
     this.stateSavedValue = this.stateSelectBox.val();
 
-    for (index in s.options) {
-        s.options[index] = null;
+    for (var i = s.options.length - 1; i >= 0; i--) {
+        s.options[i] = null;
     }
 } 
 
 StateSelector.prototype.addDefaultOptions = function()
 {
-    this.stateSelectBox.get(0).options[0] = new Option('Select one...', 0);
-    this.stateSelectBox.get(0).options[1] = new Option('Other', -1);
+    this.stateSelectBox.get(0).options[0] = new Option('Select one...', '');
+    this.stateSelectBox.get(0).options[1] = new Option('Other', '-1');
 }
 
 StateSelector.prototype.addStates = function(states)
@@ -96,10 +96,12 @@ StateSelector.prototype.addStates = function(states)
     this.addDefaultOptions();
 
     var s = this.stateSelectBox.get(0);
-    var i = s.options.length;
+    var added = s.options.length;
 
-    for (code in states) {
-        s.options[i++] = new Option(states[code], code);
+    if (states) {
+        for (var i = 0; i < states.length; i++) {
+            s.options[i + added] = new Option(states[i].state, states[i].id);
+        }
     }
 
     this.stateSelectBox.val(this.stateSavedValue);

@@ -44,16 +44,17 @@ class XLite_View_FormField_Select_Country extends XLite_View_FormField_Select_Re
 
 
     /**
-     * searchCondition 
+     * Display only enabled countries
      * 
-     * @var    string
+     * @var    boolean
      * @access protected
+     * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $searchCondition = null;
+    protected $onlyEnabled = false;
 
     /**
-     * stateSelectorId 
+     * State selector id 
      * 
      * @var    string
      * @access protected
@@ -62,14 +63,13 @@ class XLite_View_FormField_Select_Country extends XLite_View_FormField_Select_Re
     protected $stateSelectorId = null;
 
     /**
-     * stateInputId 
+     * State input id 
      * 
      * @var    string
      * @access protected
      * @since  3.0.0
      */
     protected $stateInputId = null;
-
 
     /**
      * Return field template
@@ -100,7 +100,7 @@ class XLite_View_FormField_Select_Country extends XLite_View_FormField_Select_Re
     }
 
     /**
-     * getDefaultOptions
+     * Get selector default options list
      *
      * @return array
      * @access protected
@@ -108,16 +108,13 @@ class XLite_View_FormField_Select_Country extends XLite_View_FormField_Select_Re
      */
     protected function getDefaultOptions()
     {
-        return XLite_Model_CachingFactory::getObjectFromCallback(
-            __METHOD__,
-            'XLite_Model_Country',
-            'findAll',
-            array($this->searchCondition)
-        );
+        return $this->onlyEnabled
+            ? XLite_Core_Database::getRepo('XLite_Model_Country')->findByEnabled(true)
+            : XLite_Core_Database::getRepo('XLite_Model_Country')->findAll();
     }
 
     /**
-     * getCountriesStates 
+     * Get countries states array
      * 
      * @return array
      * @access protected
@@ -125,21 +122,12 @@ class XLite_View_FormField_Select_Country extends XLite_View_FormField_Select_Re
      */
     protected function getCountriesStates()
     {
-        $statesInfo = XLite_Model_Factory::create('XLite_Model_Country')->getCountryStatesListSchema('enabled = \'1\'');
-
-        foreach (XLite_Model_Factory::create('XLite_Model_State')->findAll() as $state) {
-            $countryCode = $state->get('country_code');
-
-            if (isset($statesInfo[$countryCode])) {
-                $statesInfo[$countryCode][$state->get('state_id')] = $state->get('state');
-            }
-        }
-
-        return $statesInfo;
+        return XLite_Core_Database::getRepo('XLite_Model_Country')
+            ->findCountriesStates();
     }
 
     /**
-     * getStateSelectorId
+     * Get state selector id
      *
      * @return string
      * @access protected
@@ -151,7 +139,7 @@ class XLite_View_FormField_Select_Country extends XLite_View_FormField_Select_Re
     }
 
     /**
-     * getStateInputId
+     * Get state input id
      *
      * @return string
      * @access protected
@@ -162,9 +150,8 @@ class XLite_View_FormField_Select_Country extends XLite_View_FormField_Select_Re
         return $this->stateInputId;
     }
 
-
     /**
-     * __construct 
+     * Constructor
      * 
      * @param array $params widget params
      *  
@@ -175,7 +162,7 @@ class XLite_View_FormField_Select_Country extends XLite_View_FormField_Select_Re
     public function __construct(array $params = array())
     {
         if (!empty($params[self::PARAM_ALL])) {
-            $this->searchCondition = 'enabled = \'1\'';
+            $this->onlyEnabled = true;
         }
 
         parent::__construct($params);

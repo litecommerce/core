@@ -1205,6 +1205,9 @@ class Decorator
             // Clear all cache
             $this->clearDoctrineCache();
 
+            // Create model proxies directory
+            mkdirRecursive(LC_PROXY_CACHE_DIR);
+
             // Generate models
             // TODO - rework
             //$this->generateModels();

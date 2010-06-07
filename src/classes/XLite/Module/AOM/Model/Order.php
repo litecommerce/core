@@ -108,7 +108,7 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order implements XLite_Ba
 
     function getLocationState() 
     {
-        $state = new XLite_Model_State($this->config->getComplex('Company.location_state'));
+        $state = XLite_Core_Database::getEM()->find('XLite_Model_State', $this->config->getComplex('Company.location_state'));
         return $state;
     }
     

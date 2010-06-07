@@ -416,13 +416,14 @@ You might want to remove X-Cart tables from your X-Cart database. To do this, tu
                             $row[$prefix."_custom_state"] = $val;
                         }
                     } else {
+
                         // for LC version lower than 2.2
-                        $state = new XLite_Model_State();
-                        if ($state->find("code='$val'") || $state->find("state='$val'")) {
-                            $state_code = $state->get('state_id');
-                        } else {
-                            $state_code = -1;
+                        $state = XLite_Core_Database::getRepo('XLite_Model_State')->findByCode($val);
+                        if (!$state) {
+                            $state = XLite_Core_Database::getRepo('XLite_Model_State')->findByState($val);
                         }
+        
+                        $state_code = $state ? $state->state_id : -1;
                     }
 
                     $row[$key] = $state_code;

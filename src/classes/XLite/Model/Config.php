@@ -147,12 +147,13 @@ class XLite_Model_Config extends XLite_Model_Abstract implements XLite_Base_ISin
                 $config->$category->$name = $row->get('value');
             }
         }
-        $config->Company->locationCountry = new XLite_Model_Country($config->Company->location_country);
-        $config->Company->locationState = new XLite_Model_State($config->Company->location_state);
-        if ($config->Company->locationState->get('state_id') == -1) {
-            $config->Company->locationState->set('state', $config->Company->location_custom_state);
-        }
-        $config->General->defaultCountry = new XLite_Model_Country($config->General->default_country);
+        $config->Company->locationCountry = XLite_Core_Database::getEM()
+            ->find('XLite_Model_Country', $config->Company->location_country);
+        $config->Company->locationState = XLite_Core_Database::getRepo('XLite_Model_State')
+            ->findById($config->Company->location_state, $config->Company->location_custom_state);
+        $config->General->defaultCountry = XLite_Core_Database::getEM()
+            ->find('XLite_Model_Country', $config->General->default_country);
+
         $config->Memberships->memberships = array();
         if (isset($config->Memberships->membershipsCollection)) {
             if (is_array($config->Memberships->membershipsCollection)) {

@@ -188,7 +188,7 @@ var bordersDir = '{gc.bordersDir}';
     <tr>
       <td class="label"><label for="recipient_custom_state">Other state:</label></td>
       <td>&nbsp;</td>
-      <td><input type="text" id="recipient_custom_state" name="recipient_custom_state" value="{gc.recipient_custom_state:r}" /></td>
+      <td><input type="text" name="recipient_custom_state" value="{gc.recipient_custom_state:r}" /></td>
     </tr>
 
     <tr>

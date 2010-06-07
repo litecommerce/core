@@ -118,13 +118,13 @@ class XLite_Controller_Customer_Help extends XLite_Controller_Customer_Abstract
 
     function getState()
     {
-        $s = new XLite_Model_State($this->get('state_id'));
+        $s = XLite_Core_Database::getEM()->find('XLite_Model_State', $this->get('state_id'));
         return $s->get('state');
     }
 
     function getCountry()
     {
-        $c = new XLite_Model_Country($this->get('country_id'));
+        $c = XLite_Core_Database::getEM()->find('XLite_Model_Country', $this->get('country_id'));
         return $c->get('country');
     }
     
@@ -132,24 +132,16 @@ class XLite_Controller_Customer_Help extends XLite_Controller_Customer_Abstract
     {
         $mailer = new XLite_Model_Mailer();
         $mailer->mapRequest();
-        $st = new XLite_Model_State($_REQUEST['contactus_state']);
+        $st = XLite_Core_Database::getEM()->find('XLite_Model_State', $_REQUEST['contactus_state']);
         if ($st->get('state_id') == -1) {
             $st->set('state', $_REQUEST['contactus_custom_state']);
         }
         $mailer->set('state', $st->get('state')); // fetch state name
-        $cn = new XLite_Model_Country($_REQUEST['contactus_country']);
+        $cn = XLite_Core_Database::getEM()->find('XLite_Model_Country', $_REQUEST['contactus_country']);
         $mailer->set('country', $cn->get('country')); // fetch country name
         $mailer->set('charset', $cn->get('charset'));
         $mailer->compose($this->get('email'), $this->config->getComplex('Company.support_department'), "contactus");
         $mailer->send();
         $this->set('mode', "contactusMessage");
-    }
-
-    function getCountriesStates()
-    {
-        if (!isset($this->_profileDialog)) {
-            $this->_profileDialog = new XLite_Controller_Customer_Profile();
-        }
-        return $this->_profileDialog->getCountriesStates();
     }
 }

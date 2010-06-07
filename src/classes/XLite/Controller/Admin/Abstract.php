@@ -209,7 +209,7 @@ abstract class XLite_Controller_Admin_Abstract extends XLite_Controller_Abstract
 
     function getCharset()
     {
-        return $this->xlite->config->Company->locationCountry->get('charset');
+        return $this->xlite->config->Company->locationCountry->charset;
     }
 
     function startDump()

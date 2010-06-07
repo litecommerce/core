@@ -265,19 +265,14 @@ Specify the amount in currency.<br><br>
 <tr>
 <td nowrap align=right>State</td>
 <td><font class="Star">*</font></td>
-    <td>
-        <widget class="XLite_View_StateSelect" field="recipient_state" fieldId="recipient_state_select" state="{recipient_state}" isLinked=1 />
-    </td>
-    <td>
-        <widget class="XLite_Validator_StateValidator" field="recipient_state" countryField="recipient_country" />
-    </td>
+    <td><widget class="XLite_View_StateSelect" field="recipient_state" state="{recipient_state}" isLinked=1 /></td>
+    <td><widget class="XLite_Validator_StateValidator" field="recipient_state" countryField="recipient_country" /></td>
 </tr>
 
 <tr>
 	<td align=right>Other state</td>
 	<td>&nbsp;</td>
-	<td><input type="text" name="recipient_custom_state" value="{recipient_custom_state:r}" size="32" maxlength="64">
-	</td>
+	<td><input type="text" name="recipient_custom_state" value="{recipient_custom_state:r}" size="32" maxlength="64" /></td>
 	<td>
 		&nbsp;
 	</td>
@@ -286,12 +281,8 @@ Specify the amount in currency.<br><br>
 <tr>
 <td nowrap align=right>Country</td>
 <td><font class="Star">*</font></td>
-<td>
-    <widget class="XLite_View_CountrySelect" field="recipient_country" fieldId="recipient_country_select" country="{recipient_country}" />
-</td>
-<td>
-    <widget class="XLite_Validator_RequiredValidator" field="recipient_country">
-</td>
+<td><widget class="XLite_View_CountrySelect" field="recipient_country" country="{recipient_country}" /></td>
+<td><widget class="XLite_Validator_RequiredValidator" field="recipient_country"></td>
 </tr>
 
 <tr>
