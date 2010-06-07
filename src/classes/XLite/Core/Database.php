@@ -386,4 +386,29 @@ class XLite_Core_Database extends XLite_Base implements XLite_Base_ISingleton
 
         return intval($length);
     }
+
+    /**
+     * Prepare array for IN () DQL function
+     * 
+     * @param array  $data   Hash array
+     * @param string $prefix Placeholder prefix
+     *  
+     * @return array (keys for IN () function & parameters hash array)
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function prepareArray(array $data, $prefix = 'arr')
+    {
+        $keys = array();
+        $parameters = array();
+
+        foreach ($data as $k => $v) {
+            $k = $prefix . $k;
+            $keys[] = ':' . $k;
+            $parameters[$k] = $v;
+        }
+
+        return array($keys, $parameters);
+    }
 }
