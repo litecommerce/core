@@ -82,6 +82,50 @@ abstract class XLite_Model_Repo_AbstractRepo extends EntityRepository
     protected $cacheCells = null;
 
     /**
+     * Finder method name translation patterns
+     *
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected static $from = array(
+        'Q', 'W', 'E', 'R', 'T',
+        'Y', 'U', 'I', 'O', 'P',
+        'A', 'S', 'D', 'F', 'G',
+        'H', 'J', 'K', 'L', 'Z',
+        'X', 'C', 'V', 'B', 'N',
+        'M',
+    );
+
+    /**
+     * Finder method name translation records
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected static $to = array(
+        '_q', '_w', '_e', '_r', '_t',
+        '_y', '_u', '_i', '_o', '_p',
+        '_a', '_s', '_d', '_f', '_g',
+        '_h', '_j', '_k', '_l', '_z',
+        '_x', '_c', '_v', '_b', '_n',
+        '_m',
+    );
+
+    /**
+     * Default 'order by' field name
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $defaultOrderBy = null;
+
+    /**
      * Define cache cells 
      * 
      * @return array
@@ -227,8 +271,6 @@ abstract class XLite_Model_Repo_AbstractRepo extends EntityRepository
                 );
             }
         }
-
-        return $result;
     }
 
 
@@ -383,4 +425,91 @@ abstract class XLite_Model_Repo_AbstractRepo extends EntityRepository
             XLite_Core_Database::getCacheDriver()->deleteByPrefix($this->getTableHash($name) . '.');
         }
     }
+
+    /**
+     * Assign default orderBy 
+     * 
+     * @param Doctrine\ORM\QueryBuilder $queryBuilder Query builder
+     * @param string                    $alias        Table short alias in query builder
+     *  
+     * @return Doctrine\ORM\QueryBuilder
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function assignDefaultOrderBy(Doctrine\ORM\QueryBuilder $queryBuilder, $alias)
+    {
+        if ($this->defaultOrderBy) {
+            if (is_string($this->defaultOrderBy)) {
+
+                // One field
+                $queryBuilder->orderBy($alias . '.' . $this->defaultOrderBy);
+
+            } elseif (is_array($this->defaultOrderBy)) {
+
+                // Many fields (field name => sort suffix)
+                foreach ($this->defaultOrderBy as $field => $asc) {
+                    if (!isset($exp)) {
+                        $exp = $queryBuilder->expr()->orderBy($alias . '.' . $field, $asc ? 'ASC' : 'DESC');
+
+                    } else {
+                        $exp->add($alias . '.' . $field, $asc ? 'ASC' : 'DESC');
+                    }
+                }
+
+                if (isset($exp)) {
+                    $queryBuilder->orderBy($exp);
+                }
+            }
+        }
+
+        return $queryBuilder;
+    }
+
+    /**
+     * Adds support for magic finders
+     * 
+     * @param string $method    Method name
+     * @param array  $arguments Arguments list
+     *  
+     * @return array|object The found entity/entities
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function __call($method, $arguments)
+    {
+        if (0 === strncmp($method, 'findBy', 6)) {
+            $by = substr($method, 6);
+            $method = 'findBy';
+
+        } elseif (0 === strncmp($method, 'findOneBy', 9)) {
+
+            $by = substr($method, 9);
+            $method = 'findOneBy';
+
+        } else {
+            throw new \BadMethodCallException(
+                'Undefined method \'' . $method . '\'. The method name must start with '.
+                'either findBy or findOneBy!'
+            );
+        }
+
+        if (!isset($arguments[0])) {
+            throw Doctrine\ORM\ORMException::findByRequiresParameter($method . $by);
+        }
+
+        $fieldName = str_replace(self::$from, self::$to, lcfirst($by));
+
+        if (!$this->_class->hasField($fieldName)) {
+            throw Doctrine\ORM\ORMException::invalidFindByCall(
+                $this->_entityName,
+                $fieldName, 
+                $method . $by
+            );
+        }
+
+        return $this->$method(array($fieldName => $arguments[0]));
+    }
+
 }
