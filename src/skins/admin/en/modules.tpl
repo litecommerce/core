@@ -10,7 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<script language="Javascript">
+<script type="text/javascript">
 <!-- 
 
 function visibleBox(id, status)

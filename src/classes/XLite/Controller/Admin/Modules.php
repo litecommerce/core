@@ -43,6 +43,7 @@ class XLite_Controller_Admin_Modules extends XLite_Controller_Admin_Abstract
     {
         if (is_null($this->modules) || $type !== $this->currentModuleType) {
             $this->currentModuleType = $type;
+            XLite_Model_ModulesManager::getInstance()->updateModulesList();
             $this->modules = XLite_Model_ModulesManager::getInstance()->getModules($type);
         }
 
