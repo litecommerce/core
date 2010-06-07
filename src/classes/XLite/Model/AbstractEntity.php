@@ -206,13 +206,13 @@ abstract class XLite_Model_AbstractEntity
 
         if (is_null($class::$cacheEnabled)) {
             $repo = $this->getRepository();
-            $class::$cacheEnabled = ($repo && $repo instanceof XLite_Model_Doctrine_Repo_AbstractRepo)
+            $class::$cacheEnabled = ($repo && $repo instanceof XLite_Model_Repo_AbstractRepo)
                 ? $repo->hasCacheCells()
                 : false;
         }
 
         if ($class::$cacheEnabled) {
-            $this->getRepository()->checkCache($this);
+            $this->getRepository()->deleteCacheByEntity($this);
         }
     }
 }
