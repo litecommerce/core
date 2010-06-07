@@ -169,8 +169,8 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_UpsConfig extends XLite_Contr
         // Get company state
         $state_id = $this->config->Company->location_state;
         if ($state_id != -1) {
-            $state = new XLite_Model_State($state_id);
-            $originState = $state->get('code');
+            $state = XLite_Core_Database::getEM()->find('XLite_Model_State', $state_id);
+            $originState = $state ? $state->code : '';
             unset($state);
 
         } else {
@@ -178,10 +178,10 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_UpsConfig extends XLite_Contr
         }
 
         // Get destination state
-        $state_id = XLite_Core_Request::getInstance()->destinationState;
+        $state_id = XLite_Core_Request::getInstance()->destination_state;
         if ($state_id != -1) {
-            $state = new XLite_Model_State($state_id);
-            $destinationState = $state->get('code');
+            $state = XLite_Core_Database::getEM()->find('XLite_Model_State', $state_id);
+            $destinationState = $state ? $state->code : '';
             unset($state);
 
         } else {
@@ -199,7 +199,7 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_UpsConfig extends XLite_Contr
             $destinationState,
             XLite_Core_Request::getInstance()->destinationCity,
             XLite_Core_Request::getInstance()->destinationZipCode,
-            XLite_Core_Request::getInstance()->destinationCountry,
+            XLite_Core_Request::getInstance()->destination_country,
             $this->ups->getOptions(),
             $ups_containers
         );
@@ -248,32 +248,4 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_UpsConfig extends XLite_Contr
         return $this->isGDlibEnabled() && $this->config->UPSOnlineTools->display_gdlib;
     }
 
-    function getCountriesStates()
-    {
-        $countriesArray = array();
-
-        $country = new XLite_Model_Country();
-        foreach ($country->findAll('enabled = \'1\'') as $country) {
-            $code = $country->get('code');
-            $countriesArray[$code]['number'] = 0;
-            $countriesArray[$code]['data'] = array();
-
-            $state = new XLite_Model_State();
-            $states = $state->findAll('country_code = \'' . $code . '\'');
-            if (is_array($states) && count($states) > 0) {
-                $countriesArray[$code]['number'] = count($states);
-                foreach ($states as $state) {
-                    $countriesArray[$code]['data'][$state->get('state_id')] = $state->get('state');
-                }
-            }
-        }
-
-        return $countriesArray;
-    }
-
-    function isUseDynamicStates()
-    {
-        // TODO - remove it
-        return true;
-    }
 }

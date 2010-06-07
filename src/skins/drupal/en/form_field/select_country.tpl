@@ -26,7 +26,7 @@ $(document).ready(
         {if:data}
           statesList['{countryCode}'] = [];
           {foreach:data,stateId,state}
-          statesList['{countryCode}']['{stateId}'] = '{state}';
+          statesList['{countryCode}'][statesList['{countryCode}'].length] = { id: '{stateId}', state: '{state}' }
           {end:}
         {end:}
       {end:}

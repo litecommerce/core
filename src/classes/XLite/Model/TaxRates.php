@@ -459,9 +459,9 @@ array("condition" => "country=Australia", "action" => array("Tax:==GST", "GST:=1
             $this->set('profile', $profile);
         } else {
             if ($this->config->getComplex('General.def_calc_shippings_taxes')) {
-                $default_country = new XLite_Model_Country($this->config->getComplex('General.default_country'));
-                $this->_conditionValues['country'] = $default_country->get('country');
-                if ($default_country->isEUMember()) {
+                $default_country = XLite_Core_Database::getEM()->find('XLite_Model_Country', $this->config->General->default_country);
+                $this->_conditionValues['country'] = $default_country->country;
+                if ($default_country->eu_memeber) {
                     $this->_conditionValues['country'] .= ",EU country";
                 }
             }
@@ -486,8 +486,8 @@ array("condition" => "country=Australia", "action" => array("Tax:==GST", "GST:=1
             $this->_conditionValues['city'] = $profile->get('shipping_city');
             $this->_conditionValues['zip'] = $profile->get('shipping_zipcode');
         }
-        $c = new XLite_Model_Country($countryCode);
-        if ($c->isEUMember()) {
+        $c = XLite_Core_Database::getEM()->find('XLite_Model_Country', $countryCode);
+        if ($c->eu_memeber) {
             $this->_conditionValues['country'] .= ",EU country";
         }
         $this->_conditionValues['membership'] = $profile->get('membership');

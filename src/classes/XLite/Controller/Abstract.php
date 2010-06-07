@@ -903,7 +903,7 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
             $charset = $profile->getComplex('billingCountry.charset');
 
         } else {
-            $obj = new XLite_Model_Country($this->config->General->default_country);
+            $obj = XLite_Core_Database::getEM()->find('XLite_Model_Country', $this->config->General->default_country);
             if ($obj->get('charset')) {
                 $charset = $obj->get('charset');
             }

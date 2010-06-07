@@ -253,27 +253,27 @@ class XLite_Model_Profile extends XLite_Model_Abstract
 
     function getBillingState() 
     {
-        $state = new XLite_Model_State($this->get('billing_state'));
-        if ($state->get('state_id') == -1)
-            $state->set('state', $this->get('billing_custom_state'));
-
-        return $state;
+        return XLite_Core_Database::getRepo('XLite_Model_State')->findById(
+            $this->get('billing_state'),
+            $this->get('billing_custom_state')
+        );
     }
+
     function getShippingState() 
     {
-        $state = new XLite_Model_State($this->get('shipping_state'));
-        if ($state->get('state_id') == -1)
-            $state->set('state', $this->get('shipping_custom_state'));
-
-        return $state;
+        return XLite_Core_Database::getRepo('XLite_Model_State')->findById(
+            $this->get('shipping_state'),
+            $this->get('shipping_custom_state')
+        );
     }
+
     function getBillingCountry() 
     {
-        return new XLite_Model_Country($this->get('billing_country'));
+        return XLite_Core_Database::getEM()->find('XLite_Model_Country', $this->get('billing_country'));
     }
     function getShippingCountry() 
     {
-        return new XLite_Model_Country($this->get('shipping_country'));
+        return XLite_Core_Database::getEM()->find('XLite_Model_Country', $this->get('shipping_country'));
     }
 
     function enable() 
@@ -396,22 +396,28 @@ class XLite_Model_Profile extends XLite_Model_Abstract
 
     function _convertState($value)
     {
-        $state = new XLite_Model_State();
-        $value = addslashes($value);
-        if ($state->find("code='$value'") || $state->find("state='$value'") || $state->find("state_id='$value'")) {
-            return $state->get('state_id');
+        $state = XLite_Core_Database::getRepo('XLite_Model_State')->findOneByCode($value);
+
+        if (!$state) {
+            $state = XLite_Core_Database::getRepo('XLite_Model_State')->findOneByState($value);
         }
-        return -1;
+
+        if (!$state) {
+            $state = XLite_Core_Database::getRepo('XLite_Model_State')->find(intval($value));
+        }
+
+
+        return $state ? $state->state_id : -1;
     }
 
     function _convertCountry($value)
     {
-        $country = new XLite_Model_Country();
-        $value = addslashes($value);
-        if ($country->find("code='$value'") || $country->find("country='$value'")) {
-            return $country->get('code');
+        $country = XLite_Core_Database::getRepo('XLite_Model_Country')->find($value);
+        if (!$country) {
+            $country = XLite_Core_Database::getRepo('XLite_Model_Country')->findOneByCountry($value);
         }
-        return "";
+
+        return $country ? $country->code : '';
     }
 
     function getImportFields($layout = null) 

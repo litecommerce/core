@@ -968,7 +968,7 @@ class XLite_Module_Promotion_Model_SpecialOffer extends XLite_Model_Abstract
 
     function checkCountry($code)
     {
-        $c = new XLite_Model_Country($code);
+        $c = XLite_Core_Database::getEM()->find('XLite_Model_Country', $code);
         $name = $c->get('country');
         $countries = explode(',', $this->get('bonusCountries'));
         foreach ($countries as $c) {

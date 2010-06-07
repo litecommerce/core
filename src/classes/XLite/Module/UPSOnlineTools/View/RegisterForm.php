@@ -73,12 +73,21 @@ class XLite_Module_UPSOnlineTools_View_RegisterForm extends XLite_View_RegisterF
             $value = $value[$suggest];
 
             XLite_Core_Request::getInstance()->shipping_country = 'US';
-            $obj = new XLite_Model_State();
-            if ($obj->find('country_code = \'US\' and code = \'' . $value['state'] . '\'')) {
-                XLite_Core_Request::getInstance()->shipping_state = $obj->get('state_id');
+
+            try {
+                $state = XLite_Core_Database::getQB()
+                    ->select('s')
+                    ->from('XLite_Model_State', 's')
+                    ->where('s.country_code = :country_code AND s.code = :code')
+                    ->setParameters(array('country_code' => 'US', 'code' => $value['state']))
+                    ->setMaxResults(1)
+                    ->getQuery()
+                    ->getSingleResult();
+
+                XLite_Core_Request::getInstance()->shipping_state = $state->state_id;
                 XLite_Core_Request::getInstance()->shipping_custom_state = '';
 
-            } else {
+            } catch (Doctrine\ORM\NoResultException $exception) {
                 XLite_Core_Request::getInstance()->shipping_state = -1;
                 XLite_Core_Request::getInstance()->shipping_custom_state = $value['state'];
             }

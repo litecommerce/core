@@ -471,31 +471,43 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
         $countries->var  = 'country';
         $countries->cond  = 'country';
         $countries->values = array('EU country');
-        $c = new XLite_Model_Country();
-        foreach ($c->findAll() as $country) {
-            $countries->values[] = $country->get('country');
+        $list = XLite_Core_Database::getRepo('XLite_Model_Country')->findAll();
+        foreach ($list as $country) {
+            $countries->values[] = $country->country;
         }
+        unset($list);
         $states = new XLite_Base();
         $states->name = 'States';
         $states->var  = 'state';
         $states->cond  = 'state';
         $states->values = array();
         $states->diplay_ex = 1;
-        $c = new XLite_Model_State();
+
+        $list = XLite_Core_Database::getQB()
+            ->select('s')
+            ->from('XLite_Model_State', 's')
+            ->orderBy('s.country_code, s.state')
+            ->getQuery()
+            ->getResult();
 
         $lit = true;
-        $last_ccode = "";
-        foreach ($c->findAll(null, "country_code, state") as $state) {
-            $country_code = $state->get('country_code');
-            $country = "";
-            if ( $country_code != $last_ccode ) {
+        $last_ccode = '';
+        foreach ($list as $state) {
+            $country_code = $state->country_code;
+            $country = '';
+            if ($country_code != $last_ccode) {
                 $lit = !$lit;
                 $last_ccode = $country_code;
-                $c = new XLite_Model_Country($country_code);
-                $country = $c->get('country');
+                $c = XLite_Core_Database::getEM()->find('XLite_Model_Country', $country_code);
+                $country = $c->country;
             }
 
-            $states->values[] = array("val"=>$state->get('state'), "code"=>$state->get('code'), "country"=>$country, "lit"=>( $lit ) ? 1 : 0);
+            $states->values[] = array(
+                'val'     => $state->state,
+                'code'    => $state->code,
+                'country' => $country,
+                'lit'     => $lit ? 1 : 0,
+            );
         }
 
         $cities = new XLite_Base();
@@ -837,15 +849,16 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
                 $tax->_conditionValues[$name1] = $this->$name;
             }
             if (isset($this->country)) {
-                $country = new XLite_Model_Country($this->country);
-                $tax->_conditionValues['country'] = $country->get('country');
-        	    if ($country->isEUMember()) {
+                $country = XLite_Core_Database::getEM()->find('XLite_Model_Country', $this->country);
+                $tax->_conditionValues['country'] = $country->country;
+        	    if ($country->eu_member) {
         		    $tax->_conditionValues['country'] .= ",EU country";
               	}
             }
             if (isset($this->state)) {
-                $state = new XLite_Model_State($this->state);
-                $tax->_conditionValues['state'] = $state->get('state');
+                $state = XLite_Core_Database::getEM()->find('XLite_Model_State', $this->state);
+                $tax->_conditionValues['state'] = $state->state;
+                unset($state);
     		}
 
         	// calculate taxes
@@ -932,14 +945,6 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
     {
         $schemas = unserialize($this->xlite->config->Taxes->schemas);
         return ($schemas ? $schemas : array());
-    }
-
-    function getCountriesStates()
-    {
-    	if (!isset($this->_profileDialog)) {
-    		$this->_profileDialog = new XLite_Controller_Admin_Profile();
-    	}
-        return $this->_profileDialog->getCountriesStates();
     }
 
     function isInvalidExp($ind)

@@ -348,14 +348,8 @@ function func_eSelect_xmlToArray($xmlData)
 function func_eSelect_getState($profile, $field, $customField)
 {
     $stateName = "";
-    $state = new XLite_Model_State();
-    if ($state->find("state_id='".$profile->get($field)."'")) {
-        $stateName = $state->get('code');
-    } else { // state not found
-        $stateName = $profile->get($customField);
-    }
-
-    return $stateName;
+	$state = XLite_Core_Database::getRepo('XLite_Model_State')->find($profile->get($field));
+    return $state ? $state->code : $profile->get($customField);
 }
 
 function _replace_security_info($message)

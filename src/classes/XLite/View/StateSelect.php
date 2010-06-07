@@ -99,11 +99,7 @@ class XLite_View_StateSelect extends XLite_View_FormField
      */
     protected function getStates()
     {
-        return XLite_Model_CachingFactory::getObjectFromCallback(
-            __METHOD__,
-            'XLite_Model_State',
-            'findAll'
-        );
+        return XLite_Core_Database::getRepo('XLite_Model_State')->findAllStates();
     }
 
     /**
@@ -131,22 +127,8 @@ class XLite_View_StateSelect extends XLite_View_FormField
     {
         self::$statesDefined = true;
 
-        $countriesArray = array();
-
-        $country = new XLite_Model_Country();
-        $countries = $country->findAll('enabled = \'1\'');
-        foreach ($countries as $country) {
-            $state = new XLite_Model_State();
-            $states = $state->findAll('country_code = \'' . $country->get('code') . '\'');
-            if (is_array($states) && count($states) > 0) {
-                $countriesArray[$country->get('code')] = array();
-                foreach ($states as $state) {
-                    $countriesArray[$country->get('code')][$state->get('state_id')] = $state->get('state');
-                }
-            }
-        }
-
-        return $countriesArray;
+        return XLite_Core_Database::getRepo('XLite_Model_Country')
+            ->findCountriesStates();
     }
 
     /**

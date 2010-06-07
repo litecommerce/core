@@ -11,10 +11,8 @@
  * @since     3.0.0
  *}
 
-<widget class="XLite_Module_GiftCertificates_View_AddStatesInfo" />
-
 {* Add gift certificate page *}
-<script language="JavaScript1.2">
+<script type="text/javascript">
 function checkEmailAddress(field) {
 	var goodEmail = field.value.match(/\b(^(\S+@).+((\.com)|(\.net)|(\.edu)|(\.mil)|(\.gov)|(\.org)|(\.biz)|(\...))$)\b/gi);
     

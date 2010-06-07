@@ -115,42 +115,51 @@ class XLite_Model_ShippingZone extends XLite_Model_Abstract
     function getCountries()
     {
         if (!isset($this->countries)) {
-            $c = new XLite_Model_Country();
-            $this->countries = $c->findAll("shipping_zone='".$this->get('shipping_zone')."'");
+            $this->countries = XLite_Core_Database::getRepo('XLite_Model_Country')
+                ->findByShippingZone($this->get('shipping_zone'));
         }
+
         return $this->countries;
     }
 
     function getStates()
     {
         if (!isset($this->states)) {
-            $c = new XLite_Model_State();
-            $this->states = $c->findAll("shipping_zone='".$this->get('shipping_zone')."'", "country_code, state");
+            $this->states = XLite_Core_Database::getRepo('XLite_Model_State')
+                ->findByShippingZone($this->get('shipping_zone'));
         }
+
         return $this->states;
     }
 
     function hasCountries()
     {
-        $countries = $this->get('countries');
-        return count($countries)>0;
+        return 0 < count($this->getCountries());
     }
 
     function hasStates()
     {
-        $states = $this->getStates();
-        return count($states)>0;
+        return 0 < count($this->getStates());
     }
 
     function setCountries($countries)
     {
-        $c = new XLite_Model_Country();
-        foreach ($countries as $country)
+        list($keys, $parameters) = XLite_Core_Database::prepareArray($countries);
+        $list = XLite_Core_Database::getQB()
+            ->select('c')
+            ->from('XLite_Model_Country', 'c')
+            ->where('c.shipping_zone IN (' . implode(', ', $keys) . ')')
+            ->setParameters($parameters)
+            ->getQuery()
+            ->getResult();
+
+        foreach ($lists as $c)
         {
-            $c->set('code', $country);
-            $c->set('shipping_zone', $this->get('shipping_zone'));
-            $c->update();
+            $c->shipping_zone = $this->get('shipping_zone');
+            XLite_Core_Database::getEM()->persist($c);
         }
+        XLite_Core_Database::getEM()->flush();
+
         if (isset($this->countries)) {
         	unset($this->countries);
         }
@@ -158,13 +167,23 @@ class XLite_Model_ShippingZone extends XLite_Model_Abstract
 
     function setStates($states)
     {
-        $c = new XLite_Model_State();
-        foreach ($states as $state)
+        $list = XLite_Core_Database::getQB()
+            ->select('s')
+            ->from('XLite_Model_State', 's')
+            ->where('s.state_id IN (:ids)')
+            ->setParameter('ids', $states)
+            ->getQuery()
+            ->getResult();
+                
+
+        foreach ($list as $s)
         {
-            $c->set('state_id', $state);
-            $c->set('shipping_zone', $this->get('shipping_zone'));
-            $c->update();
+            $s->shipping_zone = $this->get('shipping_zone');
+            XLite_Core_Database::getEM()->persist('s');
         }
+
+        XLite_Core_Database::getEM()->flush();
+
         if (isset($this->states)) {
         	unset($this->states);
         }

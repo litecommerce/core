@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage ____sub_package____
+ * @subpackage Model
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -27,70 +27,104 @@
  */
 
 /**
- * Class Country provides access to countries list 
+ * Country 
  * 
- * @package    XLite
- * @subpackage ____sub_package____
- * @since      3.0.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
+ * @Entity (repositoryClass="XLite_Model_Repo_Country")
+ * @Table (name="xlite_countries")
  */
-class XLite_Model_Country extends XLite_Model_Abstract
+class XLite_Model_Country extends XLite_Model_AbstractEntity
 {
+
     /**
-     * getCountryStatesListSchema 
+     * Country name
      * 
-     * @param mixed $where SQL WHERE condition
-     *  
-     * @return array
-     * @access public
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
      * @since  3.0.0
+     * @Column (type="string", length="50", nullable=false)
      */
-    public function getCountryStatesListSchema($where = null)
-    {
-        $schema = array();
+    protected $country;
 
-        foreach ($this->findAll($where) as $country) {
-            $schema[$country->get('code')] = array();
-        }
+    /**
+     * Country code 
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Id
+     * @Column (type="string", length="2", nullable=false, unique=true)
+     */
+    protected $code;
 
-        return $schema;
-    }
+    /**
+     * Country language
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Column (type="string", length="32", nullable=false)
+     */
+    protected $language = '';
 
+    /**
+     * Country languge charset
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Column (type="string", length="32", nullable=false)
+     */
+    protected $charset = 'iso-8859-1';
 
+    /**
+     * Enabled falg
+     * 
+     * @var    boolean
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Column (type="boolean", nullable=false)
+     */
+    protected $enabled = false;
 
-    public $fields = array(
-            'country'   => '',
-            'code'      => '',
-            'language'  => '',
-            'charset'   => 'iso-8859-1',
-            'enabled'   => 1,
-            'eu_member' => 'N',
-            'shipping_zone' => 0
-        );
-    public $primaryKey = array('code');
-    public $alias = "countries";
-    public $defaultOrder = "country";
+    /**
+     * Country is EU memeber or not
+     * 
+     * @var    boolean
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Column (type="boolean", nullable=false)
+     */
+    protected $eu_member = false;
 
-    public function __construct($code = null)
-    {
-        parent::__construct();
-        if (!empty($code)) {
-            $this->set('code', $code);
-        }
-    }
+    /**
+     * Country shipping zone
+     * 
+     * @var    integer
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Column (type="integer", length="11", nullable=false)
+     */
+    protected $shipping_zone = 0;
 
-    function readAll()
-    {
-        static $cache;
-
-        if (!isset($cache)) {
-            $cache = parent::readAll();
-        }
-        return $cache;
-    }
-
-    function isEuMember()
-    {
-        return $this->get('eu_member') == 'Y' ? true : false;
-    }
+    /**
+     * States (relation)
+     * 
+     * @var    Doctrine\Common\Collections\ArrayCollection
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @OneToMany (targetEntity="XLite_Model_State", mappedBy="country", cascade={"persist","remove"})
+     */
+    protected $states;
 }
 

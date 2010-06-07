@@ -92,7 +92,7 @@ if (goodEmail) {
 <td class=FormButton>State</td>
 <td><font class=Star>*</font></td>
 <td nowrap>
-<widget class="XLite_View_StateSelect" field="contactus_state" fieldId="contactus_state_select" state="{contactus_state}" isLinked=1 />
+<widget class="XLite_View_StateSelect" field="contactus_state" state="{contactus_state}" isLinked=1 />
 <widget class="XLite_Validator_StateValidator" field="contactus_state" countryField="contactus_country">
 <widget class="XLite_Validator_RequiredValidator" field="contactus_state">
 </td>
@@ -101,8 +101,7 @@ if (goodEmail) {
 <tr valign="middle">
 <td class=FormButton>Other state (specify)</td>
 <td>&nbsp;</td>
-<td nowrap><input type="text" name="contactus_custom_state" value="{contactus_custom_state:r}" size="32" maxlength="64">
-</td>
+<td nowrap><input type="text" name="contactus_custom_state" value="{contactus_custom_state:r}" size="32" maxlength="64" /></td>
 <td>&nbsp;</td>
 </tr>
 
@@ -110,7 +109,7 @@ if (goodEmail) {
 <td class=FormButton>Country</td>
 <td><font class=Star>*</font></td>
 <td nowrap>
-<widget class="XLite_View_CountrySelect" field="contactus_country" fieldId="contactus_country_select" country="{contactus_country}" />
+<widget class="XLite_View_CountrySelect" field="contactus_country" country="{contactus_country}" />
 <widget class="XLite_Validator_RequiredValidator" field="contactus_country">
 </td>
 </tr>

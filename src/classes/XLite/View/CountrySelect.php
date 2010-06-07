@@ -79,15 +79,15 @@ class XLite_View_CountrySelect extends XLite_View_FormField
     }
 
     /**
-     * getSearchCondition 
+     * Check - display enabled only countries or not
      * 
-     * @return string
+     * @return boolean
      * @access protected
      * @since  3.0.0
      */
-    protected function getSearchCondition()
+    protected function isEnabledOnly()
     {
-        return $this->getParam(self::PARAM_ALL) ? 'enabled = \'1\'' : null;
+        return !$this->getParam(self::PARAM_ALL);
     }
 
     /**
@@ -99,12 +99,9 @@ class XLite_View_CountrySelect extends XLite_View_FormField
      */
     protected function getCountries()
     {
-        return XLite_Model_CachingFactory::getObjectFromCallback(
-            __METHOD__,
-            'XLite_Model_Country',
-            'findAll',
-            array($this->getSearchCondition())
-        );
+        return $this->isEnabledOnly()
+            ? XLite_Core_Database::getRepo('XLite_Model_Country')->findByEnabled(true)
+            : XLite_Core_Database::getRepo('XLite_Model_Country')->findAll();
     }
 }
 

@@ -27,59 +27,82 @@
  */
 
 /**
- * ____description____
+ * State
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
+ * @Entity (repositoryClass="XLite_Model_Repo_State")
+ * @Table (name="xlite_states")
  */
-class XLite_Model_State extends XLite_Model_Abstract
+class XLite_Model_State extends XLite_Model_AbstractEntity
 {
     /**
-    * @var string $alias The State database table alias.
-    * @access public
-    */	
-    public $alias = "states";
+     * State unique id 
+     * 
+     * @var    integer
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Id
+     * @GeneratedValue (strategy="AUTO")
+     * @Column (type="integer", length="11", nullable=false)
+     */
+    protected $state_id;
 
     /**
-    * @var array $fields The state properties.
-    * @access private
-    */	
-    public $fields = array(
-            'state_id' => '',
-            'state'    => '',  
-            'code'     => '',
-            'country_code'     => '',
-            'shipping_zone' => 0
-        );
+     * State name
+     * 
+     * @var    srting
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Column (type="string", length="32", nullable=false)
+     */
+    protected $state;
 
-    public $autoIncrement = "state_id";
-    public $defaultOrder = "state";
+    /**
+     * State code
+     * 
+     * @var    srting
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Column (type="string", length="32", nullable=false)
+     */
+    protected $code;
 
-    function readAll()
-    {
-        static $cache;
+    /**
+     * Country code
+     * 
+     * @var    srting
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Column (type="string", length="2", nullable=false)
+     */
+    protected $country_code;
 
-        if (!isset($cache)) {
-            $cache = parent::readAll();
-        }
-        return $cache;
-    }
+    /**
+     * Shipping zone id
+     * 
+     * @var    integer
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Column (type="integer", length="11", nullable=false)
+     */
+    protected $shipping_zone = 0;
 
-    function get($name)
-    {
-        if ($name != 'state_id') {
-            $id = $this->get('state_id');
-            if ($id == -1) {
-                switch ($name) {
-                case 'state': return (parent::get('state')) ? parent::get('state') : 'Other';
-                case 'country_code': return '';
-                case 'code': return '';
-                case 'shipping_zone': return 0;
-                }
-            }
-        }
-        return parent::get($name);
-    }
-
+    /**
+     * Country (relation)
+     * 
+     * @var    XLite_Model_Country
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @ManyToOne (targetEntity="XLite_Model_Country", inversedBy="states")
+     * @JoinColumn (name="country_code", referencedColumnName="code")
+     */
+    protected $country;
 }

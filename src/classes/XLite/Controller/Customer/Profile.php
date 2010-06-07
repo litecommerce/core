@@ -40,30 +40,6 @@ class XLite_Controller_Customer_Profile extends XLite_Controller_Customer_Abstra
     public $submode = "warning"; // delete profile status: warning | confirmed | cancelled
 
     /**
-     * getCountriesStates 
-     * 
-     * @return array
-     * @access public
-     * @since  3.0.0
-     */
-    public function getCountriesStates()
-    {
-        $statesInfo = XLite_Model_Factory::create('XLite_Model_Country')->getCountryStatesListSchema('enabled = \'1\'');
-
-        foreach (XLite_Model_Factory::create('XLite_Model_State')->findAll() as $state) {
-
-            $countryCode = $state->get('country_code');
-
-            if (isset($statesInfo[$countryCode])) {
-                $statesInfo[$countryCode][$state->get('state_id')] = $state->get('state');
-            }
-        }
-
-        return $statesInfo;
-    }
-
-
-    /**
      * Common method to determine current location 
      * 
      * @return array

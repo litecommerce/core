@@ -33,18 +33,17 @@
         <tr><td>City</td><td><input type="text" name="destinationCity" value="{destinationCity}"></td></tr>
         <tr>
             <td>State</td>
-            <td>
-			    <widget class="XLite_View_StateSelect" field="destinationState" fieldId="destination_state_select" state="{destinationState}" isLinked=1 />
-  			    <widget class="XLite_Validator_StateValidator" field="destinationState" countryField="destinationCountry">
+            <td><widget class="XLite_View_StateSelect" field="destination_state" state="{destination_state}" isLinked=1 />
+  			    <widget class="XLite_Validator_StateValidator" field="destination_state" countryField="destination_country">
             </td>
         </tr>
         <tr valign="middle">
             <td>Other state (specify)</td>
-            <td><input type="text" name="destination_custom_state" value="{destination_custom_state:r}" size="32" maxlength="64"><td>
+            <td><input type="text" name="destination_custom_state" value="{destination_custom_state:r}" size="32" maxlength="64" /><td>
         </tr>
         <tr>
             <td>Country</td>
-            <td><widget class="XLite_View_CountrySelect" field="destinationCountry" fieldId="destination_country_select" country="{destinationCountry}" /></td>
+            <td><widget class="XLite_View_CountrySelect" field="destination_country" country="{destination_country}" /></td>
         </tr>
         <tr><td>Zip/Postal code</td><td><input type="text" name="destinationZipCode" value="{destinationZipCode}"></td></tr>
         <tr><td>Weight ({weightUnit:h})</td><td><input type="text" name="pounds" size="10" value="{pounds:r}"></td></tr>

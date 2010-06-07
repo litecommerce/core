@@ -122,14 +122,36 @@ class XLite_Module_PayPalPro_Controller_Customer_ExpressCheckout extends XLite_C
 
                 $details = $pm->xpath->query('base:GetExpressCheckoutDetailsResponseDetails/base:PayerInfo', $response)->item(0);
 
-                $state = new XLite_Model_State();
+                $qb = XLite_Core_Database::getQB()
+                    ->select('s')
+                    ->from('XLite_Model_State', 's');
+
                 $countryCode = $pm->getXMLResponseValue('base:Address/base:Country', $details);
                 $stateCode = addslashes($pm->getXMLResponseValue('base:Address/base:StateOrProvince', $details));
-                $stateCondition = 'US' == $countryCode
-                    ? 'code = \'' . $stateCode . '\''
-                    : '(code = \'' . $stateCode . '\ OR state = \'' . $stateCode . '\')';
+                $stateCondition = $qb->expr()->eq('s.code', ':stateCode');
+                if ('US' != $countryCode) {
+                    $stateCondition = $qb->expr()->orx(
+                        $stateCondition,
+                        $qb->expr()->eq('s.state', ':stateCode')
+                    );
+                }
 
-                $state->find('country_code = \'' . $countryCode . '\' AND ' . $stateCondition);
+                $qb->where(
+                    $qb->expr()->andx(
+                        $qb->expr()->eq('s.country_code', ':countryCode'),
+                        $stateCondition
+                    )
+                );
+
+                try {
+                    $state = $qb->setParameters(array('countryCode' => $countryCode, 'stateCode' => $stateCode))
+                        ->getQuery()
+                        ->setMaxResults(1)
+                        ->getSingleResult();
+
+                } catch (Doctrine\ORM\NoResultException $exception) {
+                    $state = false;
+                }
 
                 $payer = $pm->getXMLResponseValue('base:Payer', $details);
 
@@ -165,7 +187,7 @@ class XLite_Module_PayPalPro_Controller_Customer_ExpressCheckout extends XLite_C
                     );
                     $profile->set(
                         'shipping_state',
-                        $state->get('state_id')
+                        $state->state_id
                     );
                     $profile->set(
                         'shipping_country',
@@ -218,7 +240,7 @@ class XLite_Module_PayPalPro_Controller_Customer_ExpressCheckout extends XLite_C
                     );
                     $profile->set(
                         'billing_state',
-                        $state->get('state_id')
+                        $state->state_id
                     );
                     $profile->set(
                         'billing_country',

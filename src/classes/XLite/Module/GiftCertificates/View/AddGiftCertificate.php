@@ -173,11 +173,6 @@ class XLite_Module_GiftCertificates_View_AddGiftCertificate extends XLite_View_D
         $list = parent::getJSFiles();
 
         $list[] = $this->getDir() . '/add_gift_certificate.js';
-        if ($this->config->GiftCertificates->enablePostGC) {
-            $list[] = 'js/select_states_begin.js';
-            $list[] = 'js/select_states_end.js';
-        }
-
         $list[] = 'popup/jquery.blockUI.js';
         $list[] = 'popup/popup.js';
 

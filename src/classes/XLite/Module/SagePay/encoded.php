@@ -410,22 +410,15 @@ $payment->xlite->logger->log("RESPONSE ARRAY: ".var_export($responseArray, true)
 /////////////////////////////////////////// Helper //////////////////////////////////
 function func_SagePay_getState($profile, $field, $customField)
 {
-    if (preg_match('/billing/', $field)) {
-        if ($profile->get('billing_country') != "US")
-            return "";
-    } elseif(preg_match('/shipping/', $field)) {
-        if ($profile->get('shipping_country') != "US")
-            return "";
-    }
-    $stateName = "";
-    $state = new XLite_Model_State();
-    if ($state->find("state_id='".$profile->get($field)."'")) {
-        $stateName = $state->get('code');
-    } else { // state not found
-        $stateName = $profile->get($customField);
+    if (
+		(preg_match('/billing/', $field) && $profile->get('billing_country') != 'US')
+		|| (preg_match('/shipping/', $field) && $profile->get('shipping_country') != 'US')
+	) {
+    	return '';
     }
 
-    return $stateName;
+    $state = XLite_Core_Database::getRepo('XLite_Model_State')->find($profile->get($field));
+    return $state ? $state->code : $profile->get($customField);
 }
 
 function func_SagePay_getBasket($order, $is_form=false)

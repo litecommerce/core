@@ -56,7 +56,7 @@ class XLite_View_FormField_Select_State extends XLite_View_FormField_Select_Regu
      */
     protected function getDefaultOptions()
     {
-        return XLite_Model_CachingFactory::getObjectFromCallback(__METHOD__, 'XLite_Model_State', 'findAll');
+        return XLite_Core_Database::getRepo('XLite_Model_State')->findAllStates();
     }
 }
 
