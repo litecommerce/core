@@ -376,14 +376,14 @@ abstract class XLite_Model_Repo_AbstractRepo extends EntityRepository
     /**
      * Delete cache by entity
      * 
-     * @param XLite_Model_Doctrine_AbstractEntity $entity Record
+     * @param XLite_Model_AbstractEntity $entity Record
      *  
      * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function deleteCacheByEntity(XLite_Model_Doctrine_AbstractEntity $entity)
+    public function deleteCacheByEntity(XLite_Model_AbstractEntity $entity)
     {
         foreach ($this->getCacheCells() as $name => $cell) {
             if ($cell[self::CONVERTER_CACHE_CELL]) {
@@ -450,7 +450,7 @@ abstract class XLite_Model_Repo_AbstractRepo extends EntityRepository
                 // Many fields (field name => sort suffix)
                 foreach ($this->defaultOrderBy as $field => $asc) {
                     if (!isset($exp)) {
-                        $exp = $queryBuilder->expr()->orderBy($alias . '.' . $field, $asc ? 'ASC' : 'DESC');
+                        $exp = new Doctrine\ORM\Query\Expr\OrderBy($alias . '.' . $field, $asc ? 'ASC' : 'DESC');
 
                     } else {
                         $exp->add($alias . '.' . $field, $asc ? 'ASC' : 'DESC');
