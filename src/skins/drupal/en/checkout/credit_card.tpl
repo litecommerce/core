@@ -34,16 +34,6 @@ $('.checkout-details').submit(CheckoutSubmit);
   <table cellspacing="0" class="form-table">
 
     <tr>
-      <td><label for="cc_type">Credit card type:</label></td>
-      <td class="marker">*</td>
-      <td>
-        <select id="cc_type" name="cc_info[cc_type]" onchange="javascript: return showSoloOrSwitch();">
-          <option FOREACH="cart.paymentMethod.cardTypes,card" value="{card.code:r}" selected="{isSelected(card,#code#,cart.details.cc_type)}">{card.card_type:h}</option>
-        </select>
-      </td>
-    </tr>
-
-    <tr>
       <td><label for="cc_name">Cardholder's name:</label></td>
       <td class="marker">*</td>
       <td>
