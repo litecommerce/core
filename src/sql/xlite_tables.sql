@@ -1,18 +1,3 @@
-
-DROP TABLE IF EXISTS xlite_card_types;
-CREATE TABLE xlite_card_types (
-  code varchar(16) NOT NULL default '',
-  card_type varchar(24) NOT NULL default '',
-  cvv2 int(1) NOT NULL default '1',
-  orderby int(11) NOT NULL default '0',
-  enabled int(1) NOT NULL default '1',
-  PRIMARY KEY  (code),
-  KEY card_type (card_type),
-  KEY cvv2 (cvv2),
-  KEY orderby (orderby),
-  KEY enabled (enabled)
-) TYPE=MyISAM;
-
 DROP TABLE IF EXISTS xlite_categories;
 CREATE TABLE xlite_categories (
   category_id int(11) unsigned NOT NULL auto_increment,

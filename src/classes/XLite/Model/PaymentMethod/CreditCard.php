@@ -141,16 +141,14 @@ class XLite_Model_PaymentMethod_CreditCard extends XLite_Model_PaymentMethod
     /**
      * Get card types 
      * 
-     * @return array of XLite_Model_Card
+     * @return empty array
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
     public function getCardTypes()
     {
-        $card = new XLite_Model_Card();
-
-        return $card->findAll();
+        return false;
     }
 
     /**

@@ -80,8 +80,6 @@
 <widget target="categories" template="common/dialog.tpl" body="categories/delete_all.tpl" head="Confirmation" mode="delete_all">
 <widget target="category" template="common/dialog.tpl" body="categories/delete.tpl" head="Confirmation" mode="delete">
 
-<widget target="card_types" template="common/dialog.tpl" body="card_types.tpl" head="Edit credit card types">
-
 <widget target="settings" class="XLite_View_Tabber" body="general_settings.tpl" switch="page">
 
 <widget template="users/search.tpl" target="users">
