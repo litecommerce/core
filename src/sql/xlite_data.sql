@@ -1,12 +1,3 @@
-INSERT INTO xlite_card_types VALUES ('VISA','Visa',1,10,1);
-INSERT INTO xlite_card_types VALUES ('MC','MasterCard',1,20,1);
-INSERT INTO xlite_card_types VALUES ('AMEX','American Express',1,30,1);
-INSERT INTO xlite_card_types VALUES ('SW','Maestro/Switch',1,40,1);
-INSERT INTO xlite_card_types VALUES ('SO','Solo',1,50,1);
---  INSERT INTO xlite_card_types VALUES ('JCB','JCB',0,60,0);
---  INSERT INTO xlite_card_types VALUES ('UKE','Visa Electron',1,70,0);
---  INSERT INTO xlite_card_types VALUES ('DICL','Diners Club',0,70,0);
-
 INSERT INTO xlite_config VALUES ('include_tax_message','Includes tax message',', including VAT','Taxes',0,'text');
 INSERT INTO xlite_config VALUES ('tax_rates','Tax rates','a:3:{i:0;s:6:\"Tax:=0\";i:1;a:2:{s:9:\"condition\";s:30:\"product class=shipping service\";s:6:\"action\";s:6:\"Tax:=0\";}i:2;a:2:{s:9:\"condition\";s:22:\"product class=Tax free\";s:6:\"action\";s:6:\"Tax:=0\";}}','Taxes',20,'');
 INSERT INTO xlite_config VALUES ('use_billing_info','Use billing info to calculate taxes','N','Taxes',10,'checkbox');

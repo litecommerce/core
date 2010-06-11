@@ -34,7 +34,6 @@
 <span IF="target=#profile#&getRequestParamValue(#mode#)=#register#">&nbsp;::&nbsp;<a href="admin.php?target=users" class="NavigationPath">Users</a>&nbsp;::&nbsp;<a href="admin.php?target=profile&mode=register" class="NavigationPath">Add new user</a></span>
 <span IF="target=#order_list#">&nbsp;::&nbsp;<a href="admin.php?target=order_list" class="NavigationPath">Search orders</a></span>
 <span IF="target=#order#">&nbsp;::&nbsp;<a href="admin.php?target=order_list" class="NavigationPath">Search orders</a>&nbsp;::&nbsp;Order details</span>
-<span IF="target=#card_types#">&nbsp;::&nbsp;<a href="admin.php?target=card_types" class="NavigationPath">Edit credit card types</a></span>
 <span IF="target=#shipping_zones#">&nbsp;::&nbsp;<a href="admin.php?target=shipping_zones&page=zones" class="NavigationPath">Shipping settings :: Shipping zones</a></span>
 <span IF="target=#shipping_methods#">&nbsp;::&nbsp;<a href="admin.php?target=shipping_methods" class="NavigationPath">Shipping settings :: Shipping methods</a></span>
 <span IF="target=#shipping_rates#">&nbsp;::&nbsp;<a href="admin.php?target=shipping_rates" class="NavigationPath">Shipping settings :: Shipping charges</a></span>
