@@ -117,7 +117,6 @@ class XLite_Model_PaymentMethod extends XLite_Model_Abstract
         'PhoneOrdering' => 'Model_PaymentMethod_Offline',
         'FaxOrdeing'    => 'Model_PaymentMethod_Offline',
         'PurchaseOrder' => 'Model_PaymentMethod_Offline',
-        'CreditCard'    => 'Model_PaymentMethod_CreditCard',
         'Echeck'        => 'Model_PaymentMethod_Echeck',
         'COD'           => 'Model_PaymentMethod_Offline',
         'MoneyOrdering' => 'Model_PaymentMethod_Offline',
