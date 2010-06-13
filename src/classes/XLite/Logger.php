@@ -112,6 +112,8 @@ class XLite_Logger extends XLite_Base implements XLite_Base_ISingleton
         'ident' => self::LOGGER_DEFAULT_IDENT
     );
 
+    protected static $markTempaltes = false;
+
     /**
      * Constructor
      * 
@@ -152,6 +154,7 @@ class XLite_Logger extends XLite_Base implements XLite_Base_ISingleton
             ini_set('log_errors', 1);
         }
 
+        self::$markTempaltes = (bool)XLite::getInstance()->getOptions(array('debug', 'mark_templates'));
     }
     
     /**
@@ -564,5 +567,10 @@ class XLite_Logger extends XLite_Base implements XLite_Base_ISingleton
         if (!file_exists($path) || $this->securityHeader > filesize($path)) {
             file_put_contents($path, $this->securityHeader . "\n");
         }
+    }
+
+    public static function isMarkTemplates()
+    {
+        return self::$markTempaltes;
     }
 }
