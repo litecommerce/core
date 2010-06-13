@@ -126,9 +126,15 @@ class XLite_Model_ModulesManager extends XLite_Base implements XLite_Base_ISingl
     {
         foreach ($this->getModule()->findAll('enabled = \'1\'') as $module) {
             $className = 'XLite_Module_' . $module->get('name') . '_Main';
-            $moduleObject = new $className();
-            $moduleObject->init();
-            $moduleObject = null;
+            if (class_exists($className)) {
+                $moduleObject = new $className();
+                $moduleObject->init();
+                $moduleObject = null;
+
+            } elseif ($this->getModule()->find('name = \'' . $module->get('name') . '\'')) {
+                $this->getModule()->delete();
+            
+            }
         }
     }
 
@@ -189,16 +195,26 @@ class XLite_Model_ModulesManager extends XLite_Base implements XLite_Base_ISingl
     {
         $names = array();
         foreach ($this->getModule()->findAll() as $module) {
-            $names[] = $module->get('name');
+            $names[$module->get('name')] = true;
         }
 
         foreach (glob(LC_MODULES_DIR . '*' . LC_DS . 'Main.php') as $f) {
             $parts = explode(LC_DS, $f);
             $name = $parts[count($parts) - 2];
-            if (!in_array($name, $names)) {
+            if (!isset($names[$name])) {
                 $this->registerModule($name);
+
+            } else {
+                unset($names[$name]);
             }
         }
+
+        foreach ($names as $name => $tmp) {
+            if ($this->getModule()->find('name = \'' . $name . '\'')) {
+                $this->delete();
+            }
+        }
+
     }
 
     /**

@@ -122,7 +122,7 @@ if (!file_exists(dirname($path))) {
 }
 
 if (!file_exists($path) || 16 > filesize($path)) {
-    file_put_contents($path, '<?php die(1); ?>' . "\n");
+    file_put_contents($path, '<' . '?php die(1); ?' . '>' . "\n");
 }
 
 ini_set('error_log', $path);

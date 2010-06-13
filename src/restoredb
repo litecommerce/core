@@ -55,6 +55,7 @@ require_once 'classes/XLite/Base.php';
 require_once 'classes/XLite/Model/Abstract.php';
 require_once 'classes/XLite/Model/Module.php';
 require_once 'classes/XLite/Module/Abstract.php';
+require_once 'classes/XLite/Base/IPatcher.php';
 
 // modules
 $modules = opendir("classes/XLite/Module");

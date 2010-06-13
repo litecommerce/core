@@ -115,6 +115,7 @@ class XLite_Core_FlexyCompiler extends XLite_Base implements XLite_Base_ISinglet
         $this->tokens = array();
         $this->widgetNames = array();
         $this->errorMessage = '';
+        $this->preprocess();
         $this->html();
         $this->substitutionStart = array();
         $this->substitutionEnd = array();
@@ -162,6 +163,209 @@ class XLite_Core_FlexyCompiler extends XLite_Base implements XLite_Base_ISinglet
     {
         return $this->offset >= strlen($this->source) || $this->errorMessage;
     }
+
+    /**
+     * Preprocess template
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function preprocess()
+    {
+        $tpl = substr($this->file, strlen(LC_SKINS_DIR));
+        list($zone, $lang, $tpl) = explode(LC_DS, $tpl, 3);
+
+        foreach ($this->getPatches($this->getZone($zone), $lang, $tpl) as $patch) {
+            $method = 'process' . ucfirst($patch->patch_type) . 'Patch';
+            if (method_exists($this, $method)) {
+                $this->$method($patch);
+
+            } else {
+                // TODO - add throw exception
+            }
+        }
+    }
+
+    /**
+     * Get zone by skin name
+     * 
+     * @param string $zone Skin name
+     *  
+     * @return string (admin or customer)
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getZone($zone)
+    {
+        return 'admin' == $zone
+            ? XLite_Base_IPatcher::ADMIN_INTERFACE
+            : XLite_Base_IPatcher::CUSTOMER_INTERFACE;
+    }
+
+    /**
+     * Get patches list
+     * 
+     * @param string $zone Interface code
+     * @param string $lang Language code
+     * @param string $tpl  Relative template pathg
+     *  
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getPatches($zone, $lang, $tpl)
+    {
+        if (is_null($this->patches)) {
+            $this->patches = XLite_Core_Database::getRepo('XLite_Model_TemplatePatch')->findAllPatches();
+        }
+
+        $result = array();
+
+        if (!isset($this->patches[$zone]) && isset($this->patches[''])) {
+            $zone = '';
+        }
+
+        if (isset($this->patches[$zone])) {
+            if (!isset($this->patches[$zone][$lang]) && isset($this->patches[$zone][''])) {
+                $lang = '';
+            }
+
+            if (isset($this->patches[$zone][$lang]) && isset($this->patches[$zone][$lang][$tpl])) {
+                $result = $this->patches[$zone][$lang][$tpl];
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Process XPath-based patch 
+     * 
+     * @param XLite_Model_TemplatePatch $patch Patch record
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function processXpathPatch(XLite_Model_TemplatePatch $patch)
+    {
+        $dom = new DOMDocument();
+        $dom->formatOutput = true;
+
+        $domPatch = new DOMDocument();
+
+        // Load source and patch to DOMDocument
+        if ($dom->loadHTML($this->source) && $domPatch->loadHTML($patch->xpath_block)) {
+            $xpath = new DOMXPath($dom);
+
+            // Iterate patch nodes
+            $patches = $dom->importNode($domPatch->documentElement->childNodes->item(0), true)->childNodes;
+            $places = $xpath->query($patch->xpath_query);
+
+            if (0 < $patches->length && 0 < $places->length) {
+                $this->applyXpathPatches($places, $patches, $patch->xpath_insert_type);
+
+                // Save changed source
+                $this->source = $dom->saveHTML();
+            }
+        }
+    }
+
+    /**
+     * Apply XPath-based patches 
+     * 
+     * @param DOMNamedNodeMap $places         Patch placeholders
+     * @param DOMNamedNodeMap $patches        Patches
+     * @param string          $baseInsertType Patch insert type
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function applyXpathPatches(DOMNamedNodeMap $places, DOMNamedNodeMap $patches, $baseInsertType)
+    {
+        foreach ($places as $place) {
+
+            $insertType = $baseInsertType;
+            foreach ($patches as $node) {
+                $node = $node->cloneNode(true);
+
+                if (XLite_Base_IPatcher::XPATH_INSERT_BEFORE == $insertType) {
+
+                    // Insert patch node before XPath result node 
+                    $place->parentNode->insertBefore($node, $place);
+
+                } elseif (XLite_Base_IPatcher::XPATH_INSERT_AFTER == $insertType) {
+
+                    // Insert patch node after XPath result node
+                    if ($place->nextSibling) {
+                        $place->parentNode->insertBefore($node, $place->nextSibling);
+                        $insertType = XLite_Base_IPatcher::XPATH_INSERT_BEFORE;
+                        $place = $place->nextSibling;
+
+                    } else {
+                        $place->parentNode->appendChild($node);
+                    }
+
+                } elseif (XLite_Base_IPatcher::XPATH_REPLACE == $insertType) {
+
+                    // Replace XPath result node to patch node
+                    $place->parentNode->replaceChild($node, $place);
+
+                    if ($node->nextSibling) {
+                        $place = $node->nextSibling;
+                        $insertType = XLite_Base_IPatcher::XPATH_INSERT_BEFORE;
+
+                    } else {
+                        $place = $node;
+                        $insertType = XLite_Base_IPatcher::XPATH_INSERT_AFTER;
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Process regular expression-based patch 
+     * 
+     * @param XLite_Model_TemplatePatch $patch Patch record
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function processRegexpPatch(XLite_Model_TemplatePatch $patch)
+    {
+        $this->source = preg_replace(
+            $patch->regexp_pattern,
+            $patch->regexp_replace,
+            $this->source
+        );
+    }
+
+    /**
+     * Process callback-based patch 
+     * 
+     * @param XLite_Model_TemplatePatch $patch Patch record
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function processCustomPatch(XLite_Model_TemplatePatch $patch)
+    {
+        list($class, $method) = explode('::', $patch->custom_callback, 2);
+        $this->source = $class::$method($this->source);
+    }
+
     // html ::= ([text] tag | [text] comment | [text] flexy)* [text]
     function html()
     {

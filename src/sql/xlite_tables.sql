@@ -449,5 +449,44 @@ CREATE TABLE xlite_forms (
   KEY date (date)
 ) TYPE=MyISAM;
 
+DROP TABLE IF EXISTS xlite_view_lists;
+CREATE TABLE xlite_view_lists (
+  list_id int(11) NOT NULL auto_increment PRIMARY KEY,
+  class varchar(64) NOT NULL default '',
+  list varchar(32) NOT NULL default '',
+  child varchar(64) NOT NULL default '',
+  weight int(11) NOT NULL default 0,
+  callback varchar(64) NOT NULL default '',
+  KEY cl (class, list, weight)
+) TYPE=MyISAM;
+
+DROP TABLE IF EXISTS xlite_view_lists;
+CREATE TABLE xlite_view_lists (
+  list_id int(11) NOT NULL auto_increment PRIMARY KEY,
+  class varchar(64) NOT NULL default '',
+  list varchar(32) NOT NULL default '',
+  child varchar(64) NOT NULL default '',
+  weight mediumint unsigned NOT NULL default 0,
+  tpl varchar(255) NOT NULL default '',
+  KEY cl (class, list, weight)
+) TYPE=MyISAM;
+
+DROP TABLE IF EXISTS xlite_template_patches;
+CREATE TABLE xlite_template_patches (
+  patch_id int(11) NOT NULL auto_increment PRIMARY KEY,
+  zone varchar(16) NOT NULL default 'customer',
+  lang varchar(2) NOT NULL default '',
+  tpl varchar(64) NOT NULL default '',
+  patch_type varchar(8) NOT NULL default '',
+  xpath_query varchar(255) NOT NUll default '',
+  xpath_insert_type varchar(16) NOT NULL default 'before',
+  xpath_block text NOT NULL,
+  regexp_pattern varchar(255) NOT NUll default '',
+  regexp_replace text NOT NULL,
+  custom_callback varchar(128) NOT NUll default '',
+  KEY zlt (zone, lang, tpl)
+) TYPE=MyISAM;
+
+
 -- ALTER TABLE xlite_modules CHANGE version version varchar(12) NOT NULL DEFAULT '0';
 

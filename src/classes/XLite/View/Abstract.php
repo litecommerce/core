@@ -53,6 +53,18 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
 
 
     /**
+     *  View list insertation position
+     */
+    const INSERT_BEFORE = 'before';
+    const INSERT_AFTER  = 'after';
+    const REPLACE       = 'replace';
+
+
+    const DEFAULT_LIST_NAME = 'base';
+
+    protected static $countDeep = 0;
+
+    /**
      * isCloned 
      * 
      * @var    bool
@@ -129,6 +141,15 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
      */
     abstract protected function getDefaultTemplate();
 
+    /**
+     * View lists (cache)
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $viewLists = array();
 
     /**
      * Return full URL by the skindir-related one
@@ -495,7 +516,25 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
         }
 
         // Execute PHP code from compiled template
+        $markTemplates = XLite_Logger::isMarkTemplates();
+
+        if ($markTemplates) {
+            $original = substr($original, strlen(LC_SKINS_DIR));
+            $cnt = XLite_View_Abstract::$countDeep++;
+            echo '<!-- ' . get_called_class() . ' : ' . $original . ' (' . $cnt . ')' . ($this->viewListName ? ' [\'' . $this->viewListName . '\' list child]' : '') . ' {{{ -->';
+        }
+
+        ob_start();
         include $compiled;
+        $content = ob_get_contents();
+        ob_end_clean();
+
+        echo $this->postprocessContent($content);
+
+        if ($markTemplates) {
+            echo '<!-- }}} ' . get_called_class() . ' : ' . $original . ' (' . $cnt . ')' . ' -->';
+        }
+
     }
 
     /**
@@ -620,7 +659,13 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
      */
     public function getCSSFiles()
     {
-        return array();
+        $list = array();
+
+        if (XLite_Logger::isMarkTemplates()) {
+            $list[] = 'template_debuger.css';
+        }
+
+        return $list;
     }
 
     /**
@@ -633,10 +678,16 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
      */
     public function getJSFiles()
     {
-        return array(
+        $list = array(
             'js/common.js',
             'js/jquery.mousewheel.js',
         );
+
+        if (XLite_Logger::isMarkTemplates()) {
+            $list[] = 'js/template_debuger.js';
+        }
+
+        return $list;
     }
 
     /**
@@ -995,6 +1046,308 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
         }
 
         return $result;
+    }
+
+    /**
+     * Get view list 
+     * 
+     * @param string $list List name
+     *  
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getViewList($list = self::DEFAULT_LIST_NAME)
+    {
+        if (!isset($this->viewLists[$list])) {
+            $this->viewLists[$list] = $this->defineViewList($list);
+        }
+
+        return $this->viewLists[$list];
+    }
+
+    /**
+     * Define view list 
+     * 
+     * @param string $list List name
+     *  
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineViewList($list)
+    {
+        $class = $this->getViewListClass();
+
+        $childs = XLite_Core_Database::getRepo('XLite_Model_ViewList')
+            ->findClassList($class, $list);
+
+        $widgets = array();
+
+        $path = XLite_Model_Layout::getInstance()->skin . LC_DS
+            . XLite_Model_Layout::getInstance()->locale . LC_DS;
+        $pathLength = strlen($path);
+
+        foreach ($childs as $widget) {
+
+            $w = false;
+
+            if ($widget->child) {
+
+                // List child is widget
+                $w = $this->getWidget(
+                    array(
+                        'viewListClass' => $class,
+                        'viewListName'  => $list,
+                    ),
+                    $widget->child
+                );
+
+            } elseif ($widget->tpl && 0 === strncmp($path, $widget->tpl, $pathLength)) {
+
+                // List child is template
+                $w = $this->getWidget(
+                    array(
+                        'viewListClass' => $class,
+                        'viewListName'  => $list,
+                        'template'      => substr($widget->tpl, $pathLength),
+                    )
+                );
+            }
+
+            if ($w && $w->isVisible()) {
+                $widgets[] = $w;
+            }
+        }
+
+        return $widgets;
+    }
+
+    /**
+     * Check - view list is visible or not
+     * 
+     * @param string $list List name
+     *  
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isViewListVisible($list)
+    {
+        return 0 < count($this->getViewList($list));
+    }
+
+    /**
+     * Get view list class name
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getViewListClass()
+    {
+        return get_called_class();
+    }
+
+    /**
+     * Content postprocessing
+     * 
+     * @param string $content Content
+     *  
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function postprocessContent($content)
+    {
+        return $content;
+    }
+
+    /**
+     * Get XPath by content 
+     * 
+     * @param string $content Content
+     *  
+     * @return DOMXPath
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getXPathByContent($content)
+    {
+        $dom = new DOMDocument();
+        $dom->formatOutput = true;
+        
+        return @$dom->loadHTML($content) ? new DOMXPath($dom) : null;
+    }
+
+    /**
+     * Get view list content 
+     * 
+     * @param string $list List name
+     *  
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getViewListContent($list)
+    {
+        ob_start();
+        foreach ($this->getViewList($list) as $widget) {
+            $widget->display();
+        }
+        $content = ob_get_contents();
+        ob_end_clean();
+
+        return $content;
+    }
+
+    /**
+     * Get view list content as nodes list
+     * 
+     * @param string $list List name
+     *  
+     * @return DOMNamedNodeMap or null
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getViewListContentAsNodes($list)
+    {
+        $d = new DOMDocument();
+        $content = $this->getViewListContent($list);
+        $result = null;
+        if ($content && @$d->loadHTML($content)) {
+            $result = $d->documentElement->childNodes->item(0)->childNodes;
+        }
+
+        return $result;
+    }
+
+    /**
+     * Insert view list by XPath query
+     * 
+     * @param string $content        Content
+     * @param string $query          XPath query
+     * @param string $list           List name
+     * @param string $insertPosition Insert position code
+     *  
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function insertViewListByXPath($content, $query, $list = self::DEFAULT_LIST_NAME, $insertPosition = self::INSERT_BEFORE)
+    {
+        $xpath = $this->getXPathByContent($content);
+        if ($xpath) {
+            $places = $xpath->query($query);
+            $patches = $this->getViewListContentAsNodes($list);
+            if (0 < $places->length && $patches && 0 < $patches->length) {
+                $this->applyXpathPatches($places, $patches, $insertPosition);
+                $content = $xpath->document->saveHTML();
+            }
+        }
+
+        return $content;
+    }
+
+    /**
+     * Apply XPath-based patches 
+     * 
+     * @param DOMNamedNodeMap $places         Patch placeholders
+     * @param DOMNamedNodeMap $patches        Patches
+     * @param string          $baseInsertType Patch insert type
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function applyXpathPatches(DOMNamedNodeMap $places, DOMNamedNodeMap $patches, $baseInsertType)
+    {
+        foreach ($places as $place) {
+
+            $insertType = $baseInsertType;
+            foreach ($patches as $node) {
+                $node = $node->cloneNode(true);
+
+                if (self::INSERT_BEFORE == $insertType) {
+
+                    // Insert patch node before XPath result node 
+                    $place->parentNode->insertBefore($node, $place);
+
+                } elseif (self::INSERT_AFTER == $insertType) {
+
+                    // Insert patch node after XPath result node
+                    if ($place->nextSibling) {
+                        $place->parentNode->insertBefore($node, $place->nextSibling);
+                        $insertType = self::INSERT_BEFORE;
+                        $place = $place->nextSibling;
+
+                    } else {
+                        $place->parentNode->appendChild($node);
+                    }
+
+                } elseif (self::REPLACE == $insertType) {
+
+                    // Replace XPath result node to patch node
+                    $place->parentNode->replaceChild($node, $place);
+
+                    if ($node->nextSibling) {
+                        $place = $node->nextSibling;
+                        $insertType = self::INSERT_BEFORE;
+
+                    } else {
+                        $place = $node;
+                        $insertType = self::INSERT_AFTER;
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Insert view list by regular expression pattern 
+     * 
+     * @param string $content Content
+     * @param string $pattern Pattern (PCRE)
+     * @param string $list    List name
+     * @param string $replace Replace pattern
+     *  
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function insertViewListByPattern($content, $pattern, $list = self::DEFAULT_LIST_NAME, $replace = '%s')
+    {
+        return preg_replace(
+            $pattern,
+            sprintf($replace, $this->getViewListContent($list)),
+            $content
+        );
+    }
+
+    /**
+     * Display view list content 
+     * 
+     * @param string $list List name
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function displayViewListContent($list = self::DEFAULT_LIST_NAME)
+    {
+        echo $this->getViewListContent($list);
     }
 }
 

@@ -116,6 +116,9 @@ eta = On
 [recorder]
 record_queries = off
 
+[debug]
+mark_templates = off
+
 [images]
 default_image = "images/no_image.png"
 default_image_width = 140

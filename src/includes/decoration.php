@@ -90,6 +90,26 @@ class Decorator
 
 
     /**
+     * Error log filename pattern
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $errorLogFilename = 'decoration.log.%s.php';
+
+    /**
+     * Class comment attribute error message
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $errorMsgAttribute = 'The class comment contains no %s attribute or this attribute is empty';
+
+    /**
      * Doctrine class attributes 
      * 
      * @var    array
@@ -229,6 +249,34 @@ class Decorator
      * @since  3.0.0
      */
     protected $em = null;
+
+    /**
+     * View list childs
+     * 
+     * @var    array
+     * @access protected
+     * @since  3.0
+     */
+    protected $viewListChilds = array();
+
+    /**
+     * Template patches
+     * 
+     * @var    array
+     * @access protected
+     * @since  3.0
+     */
+    protected $templatePatches = array();
+
+    /**
+     * View lists preprocessors 
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $viewListPreprocessors = array();
 
     /**
      * Return current value of the "max_execution_time" INI setting 
@@ -531,6 +579,34 @@ class Decorator
     }
 
     /**
+     * Check if current class implements the "XLite_Base_IViewChild" interface
+     * 
+     * @param string $comment Class comment
+     *  
+     * @return bool
+     * @access protected
+     * @since  3.0
+     */
+    protected function isViewChild($comment)
+    {
+        return (bool)preg_match('/@ListChild\W/Ssi', $comment);
+    }
+
+    /**
+     * Check if current class implements the "XLite_Base_IPatcher" interface
+     * 
+     * @param array $implements list of implemented inerfaces
+     *  
+     * @return bool
+     * @access protected
+     * @since  3.0
+     */
+    protected function isPatcher($implements)
+    {
+        return $this->isImplements('XLite_Base_IPatcher', $implements);
+    }
+
+    /**
      * Return setting from config.ini file 
      * 
      * @param string $section name of section in config file
@@ -698,7 +774,6 @@ class Decorator
         return !$this->isCacheDirExists();
     }
 
-
     /**
      * Retrieve module name from class name 
      * 
@@ -758,9 +833,13 @@ class Decorator
         $comment = null;
 
         if (preg_match(self::CLASS_COMMENT_PATTERN, $data, $matches)) {
-            $end = strpos($data, $matches[0]);
-            $begin = strrpos(substr($data, 0, $end), '/**');
-            $comment = substr($data, $begin, $end - $begin + strlen($matches[1]));
+            $pos = strrpos($matches[1], '*/');
+            $tail = str_replace(array("\t", ' '), array('', ''), substr($matches[1], $pos + 2));
+            if ("\n" == $tail) {
+                $end = strpos($data, $matches[0]);
+                $begin = strrpos(substr($data, 0, $end), '/**');
+                $comment = substr($data, $begin, $end - $begin + strlen($matches[1]));
+            }
         }
 
         return $comment;
@@ -995,6 +1074,16 @@ class Decorator
                     self::INFO_ENTITY        => $isEntity,
                     self::INFO_CLASS_COMMENT => $classComment,
                 );
+
+                if ($this->isViewChild($classComment)) {
+                    $this->viewListChilds[$relativePath] = $class;
+                }
+
+                if ($this->isPatcher($implements)) {
+                    $this->templatePatches[] = $class;
+                }
+
+                $this->checkClassCommentAttributes($classComment, $filePath);
             }
         }
     }
@@ -1216,6 +1305,12 @@ class Decorator
             // TODO - rework
             //$this->generateModelProxies();
 
+            // Regenerate view lists
+            $this->regenerateViewLists();
+
+            // Collect patches to DB
+            $this->collectPatches();
+
             if (
                 !defined('SILENT_CACHE_REBUILD')
                 && 'cli' != PHP_SAPI
@@ -1401,6 +1496,572 @@ class Decorator
         $entityGenerator->setClassToExtend('XLite_Model_Doctrine_AbstractEntity');
 
         $entityGenerator->generate($this->getMetadatas(), LC_MODEL_CACHE_DIR);
+    }
+
+    /**
+     * Check class comment attributes 
+     * 
+     * @param string $comment  Class comment
+     * @param string $filePath File path
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function checkClassCommentAttributes($comment, $filePath)
+    {
+        $errors = array();
+
+        if (!is_string($comment)) {
+            $errors[] = 'The class is not commented';
+
+        } else {
+            $attributes = $this->parseComment(substr(trim($comment), 0, -2));
+
+            // Check required attributes
+            foreach (array('package', 'see', 'since') as $a) {
+                if (!isset($attributes[$a]) || 0 == strlen($attributes[$a][0])) {
+                    $errors[] = sprintf($this->errorMsgAttribute, '@' . $a);
+                }
+                unset($attributes[$a]);
+            }
+
+            // Check @ListChild
+            if (isset($attributes['listchild'])) {
+                $lists = array();
+                foreach ($attributes['listchild'] as $value) {
+                    $lists[] = $this->parseCommentAttribute($value);
+                }
+
+                foreach ($lists as $list) {
+                    if (!isset($list['class'])) {
+                        $errors[] = '@ListChild attribute has not "class" parameter';
+                    }
+                }
+
+                unset($attributes['listchild']);
+            }
+
+            $hasEntity = false;
+            $hasDoctrineAttribute = false;
+            foreach ($this->doctrineClassAttributes as $a) {
+                $key = strtolower($a);
+                if (isset($attributes[$key])) {
+                    if ('entity' == $key) {
+                        $hasEntity = true;
+                    }
+                    $hasDoctrineAttribute = true;
+                    unset($attributes[$key]);
+                }
+            }
+
+            if ($hasDoctrineAttribute && !$hasEntity) {
+                $errors[] = 'Class has not @Entity attribute, but has some Doctrine class attributes';
+            }
+
+            // Remove optional attributes
+            foreach (array('subpackage') as $a) {
+                if (isset($attributes[$a])) {
+                    unset($attributes[$a]);
+                }
+            }
+
+            // Unknown attributes
+            foreach ($attributes as $a => $attr) {
+                $errors[] = 'Class has unknown attribute @' . $a;
+            }
+
+        }
+
+        if ($errors) {
+            $this->addDecorationError($filePath, $errors);
+        }
+    }
+
+    /**
+     * Add error to special log
+     * 
+     * @param string $filePath Path of invalid file
+     * @param string $error    Error message
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function addDecorationError($filePath, $error)
+    {
+        static $path = false;
+
+        if (!$path) {
+            $path = LC_VAR_DIR . 'log' . LC_DS . sprintf($this->errorLogFilename, date('Y-m-d'));
+            if (!file_exists(dirname($path))) {
+                mkdirRecursive(dirname($path));
+            }
+
+            if (!file_exists($path) || 16 > filesize($path)) {
+                file_put_contents($path, '<' . '?php die(1); ?' . '>' . "\n");
+            }
+        }
+
+        if (is_array($error)) {
+            $error = implode("\n\t", $error);
+        }
+
+        $msg = date('[H:i:s]') . ' ';
+
+        $info = pathinfo($filePath);
+
+        switch ($info['extension']) {
+            case 'php':
+                $msg .= 'Repository file';
+                break;
+
+            case 'tpl':
+                $msg .= 'Template';
+                break;
+
+            case 'js':
+                $msg .= 'Javascript repository';
+                break;
+
+            case 'css':
+                $msg .= 'CSS styles repository';
+                break;
+
+            default:
+                $msg .= 'File';
+        }
+
+        $msg .= ': ' . $filePath . '; Errors:' . "\n\t" . $error . "\n\n";
+
+        file_put_contents($path, $msg, FILE_APPEND);
+    }
+    
+    /**
+     * Regenerate view lists 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function regenerateViewLists()
+    {
+        // Truncate old
+        foreach (XLite_Core_Database::getRepo('XLite_Model_ViewList')->findAll() as $l) {
+            XLite_Core_Database::getEM()->remove($l);
+        }
+        XLite_Core_Database::getEM()->flush();
+
+        $this->viewListPreprocessors = array();
+
+        // Create new
+        foreach ($this->viewListChilds as $relativePath => $class) {
+
+            $class = $this->getFinalClass($class);
+
+            if (!$class) {
+                continue;
+            }
+
+            $comment = $this->getClassComment(file_get_contents(LC_CLASSES_CACHE_DIR . $relativePath));
+
+            foreach ($this->getListChildsByComment(substr(trim($comment), 0, -2)) as $list) {
+
+                if (!isset($this->classesInfo[$list['class']])) {
+                    $this->addDecorationError(
+                        LC_CLASSES_CACHE_DIR . $relativePath,
+                        'Class ' . $list['class'] . ' is not found (specified in @ListChild comment attribute)'
+                    );
+
+                } else {
+
+                    XLite_Core_Database::getEM()->persist(
+                        $this->createViewList($list, $class)
+                    );
+                }
+            }
+        }
+
+        // Assemble anniotaions from templates
+        $this->assembleTemplateLists();
+
+        XLite_Core_Database::getEM()->flush();
+
+        // Static preprocessing
+        foreach ($this->viewListPreprocessors as $class => $lists) {
+            foreach ($lists as $list => $preprocessors) {
+                $data = XLite_Core_Database::getQB()
+                    ->select('v')
+                    ->from('XLite_Model_ViewList', 'v')
+                    ->where('v.class = :class AND v.list = :list')
+                    ->setParameters(array('class' => $class, 'list' => $list))
+                    ->getQuery()
+                    ->getResult();
+
+                if ($data) {
+                    foreach ($preprocessors as $preprocessor) {
+                        $preprocessor[0]::$preprocessor[1]($data);
+                    }
+                }
+            }
+        }
+
+        XLite_Core_Database::getEM()->flush();
+
+        $this->viewListPreprocessors = array();
+    }
+
+    /**
+     * Create view list record
+     * 
+     * @param array  $list  List data
+     * @param string $class Widget class name
+     *  
+     * @return XLite_Model_ViewList
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function createViewList(array $list, $class = null)
+    {
+        if (!isset($list['list'])) {
+            $list['list'] = 'base';
+        }
+
+        $viewList = new XLite_Model_ViewList();
+
+
+        $viewList->class = $list['class'];
+        $viewList->list = $list['list'];
+
+        if (isset($list['first'])) {
+            $viewList->weight = $viewList::FIRST_POSITION;
+
+        } elseif (isset($list['last']) || !isset($list['weight'])) {
+            $viewList->weight = $viewList::LAST_POSITION;
+
+        } else {
+            $viewList->weight = min(
+                $viewList::LAST_POSITION,
+                max(
+                    $viewList::FIRST_POSITION,
+                    intval($list['weight'])
+                )
+            );
+        }
+
+        if ($class) {
+            $viewList->child = $class;
+        }
+
+        if (isset($list['controller']) && $list['controller']) {
+            $tmp = explode('::', $list['controller'], 2);
+
+            $preprocessor = false;
+
+            if ($tmp[0] && !isset($tmp[1]) && $class) {
+                $preprocessor = array($class, $list['controller']);
+
+            } elseif ($tmp[0] && isset($tmp[1]) && $tmp[1] && isset($this->classesInfo[$tmp[0]])) {
+                $preprocessor = $tmp;
+            }
+
+            if ($preprocessor) {
+                if (!isset($this->viewListPreprocessors[$list['class']])) {
+                    $this->viewListPreprocessors[$list['class']] = array();
+                }
+
+                if (!isset($this->viewListPreprocessors[$list['class']][$list['list']])) {
+                    $this->viewListPreprocessors[$list['class']][$list['list']] = array();
+                }
+
+                $this->viewListPreprocessors[$list['class']][$list['list']][] = $preprocessor;
+            }
+        }
+
+        return $viewList;
+    }
+
+    /**
+     * Get list childs by comment 
+     * 
+     * @param string $comment Class or template comment
+     *  
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getListChildsByComment($comment)
+    {
+        $attributes = $this->parseComment($comment);
+        $lists = array();
+
+        if (isset($attributes['listchild'])) {
+            foreach ($attributes['listchild'] as $value) {
+                $list = $this->parseCommentAttribute($value);
+                if (isset($list['class']) && $list['class']) {
+                    $lists[] = $list;
+                }
+            }
+        }
+
+        return $lists;
+    }
+
+    /**
+     * Assemble templates list childs
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function assembleTemplateLists()
+    {
+        $sep = preg_quote(LC_DS, '/');
+        $pattern = '/^'
+            . preg_quote(LC_SKINS_DIR, '/')
+            . '\w+' . $sep
+            . '\w+' . $sep
+            . 'modules' . $sep
+            . '(\w+)' . $sep
+            . '/Ss';
+
+        $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(LC_SKINS_DIR));
+        foreach ($iterator as $fileInfo) {
+            if ($fileInfo->isFile()) {
+                $pathInfo = pathinfo($fileInfo->getPathname());
+
+                if (
+                    !empty($pathInfo['extension'])
+                    && 'tpl' === strtolower($pathInfo['extension'])
+                    && (!preg_match($pattern, $fileInfo->getPathname(), $match) || $this->getActiveModules($match[1]))
+                ) {
+                    $this->collectTemplateLists($fileInfo->getPathname());
+                }
+            }
+        }
+    
+    }
+
+    /**
+     * Collect template list childs
+     * 
+     * @param string $path Template path
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function collectTemplateLists($path)
+    {
+        if (preg_match('/\{\*\*(.+)\*\}/USs', file_get_contents($path), $match)) {
+
+            foreach ($this->getListChildsByComment(trim($match[1])) as $list) {
+
+                if (!isset($this->classesInfo[$list['class']])) {
+                    $this->addDecorationError(
+                        $path,
+                        'Class ' . $list['class'] . ' is not found (specified in @ListChild comment attribute)'
+                    );
+
+                } else {
+
+                    $viewList = $this->createViewList($list);
+                    $viewList->tpl = substr($path, strlen(LC_SKINS_DIR));
+
+                    XLite_Core_Database::getEM()->persist($viewList);
+                }
+            }
+        }
+    }
+
+    /**
+     * Parse comment attributes
+     * 
+     * @param string $comment Comment
+     *  
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function parseComment($comment)
+    {
+        $comment = preg_replace('/^\s+\*\s/Sm', '', $comment);
+        $parts = preg_split('/^\@/Sm', $comment);
+
+        array_shift($parts);
+
+        $attributes = array();
+        foreach ($parts as $part) {
+            $part = trim(str_replace("\n", ' ', $part));
+            list($key, $value) = preg_split('/\W/Ss', $part, 2);
+
+            $key = strtolower($key);
+
+            if (!isset($attributes[$key])) {
+                $attributes[$key] = array();
+            }
+
+            $attributes[$key][] = trim($value);
+        }
+
+        return $attributes;
+    }
+
+    /**
+     * Parse comment attribute 
+     * 
+     * @param string $value Comment attribute
+     *  
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function parseCommentAttribute($value)
+    {
+        $parameters = array();
+
+        $parts = preg_split('/(?:\(|\s|,)([\w_]+)/USs', substr($value, 0, -1), -1, PREG_SPLIT_DELIM_CAPTURE);
+        array_shift($parts);
+
+        for ($i = 0; $i < count($parts); $i += 2) {
+            $tmp = explode('=', trim($parts[$i] . $parts[$i + 1]), 2);
+            $parameters[$tmp[0]] = isset($tmp[1])
+                ? preg_replace('/^[^"]*"(.+)"[^"]*$/Ss', '$1', $tmp[1])
+                : true;
+        }
+
+        return $parameters;
+    }
+
+    /**
+     * Get final class by class-decorator
+     * 
+     * @param string $class Class-decorator
+     *  
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getFinalClass($class)
+    {
+        if (!isset($this->classesInfo[$class])) {
+
+            // Class not found
+            $result = null;
+
+        } elseif (isset($this->classDecorators[$class])) {
+
+            // Class already final
+            $result = $class;
+
+        } elseif (
+            $this->classesInfo[$class][self::INFO_EXTENDS_ORIG] != $this->classesInfo[$class][self::INFO_EXTENDS]
+            && isset($this->classDecorators[$this->classesInfo[$class][self::INFO_EXTENDS_ORIG]])
+        ) {
+
+            // Class is decorator
+            $result = $this->classesInfo[$class][self::INFO_EXTENDS_ORIG];
+
+        } else {
+            $result = $class;
+        }
+
+        return $result;
+    }
+
+    /**
+     * Collect template patches
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function collectPatches()
+    {
+        // Truncate old
+        foreach (XLite_Core_Database::getRepo('XLite_Model_TemplatePatch')->findAll() as $r) {
+            XLite_Core_Database::getEM()->remove($r);
+        }
+        XLite_Core_Database::getEM()->flush();
+
+        // Create new
+        foreach ($this->templatePatches as $class) {
+            $patches = $class::getPatches();
+            if (isset($patches[$class::PATCHER_CELL_TYPE])) {
+                $patches = array($patches);
+            }
+
+            foreach ($patches as $patch) {
+
+                $valid = true;
+
+                $templatePatch = new XLite_Model_TemplatePatch();
+
+                $templatePatch->patch_type = isset($patch[$class::PATCHER_CELL_TYPE])
+                    ? $patch[$class::PATCHER_CELL_TYPE]
+                    : $class::CUSTOM_PATCH_TYPE;
+                list($templatePatch->zone, $templatePatch->lang, $templatePatch->tpl) = explode(
+                    ':',
+                    $patch[$class::PATCHER_CELL_TPL],
+                    3
+                );
+
+                if (!$templatePatch->tpl) {
+                    continue;
+                }
+
+                if (
+                    $class::XPATH_PATCH_TYPE == $patch[$class::PATCHER_CELL_TYPE]
+                    && isset($patch[$class::XPATH_CELL_QUERY])
+                    && $patch[$class::XPATH_CELL_QUERY]
+                    && isset($patch[$class::XPATH_CELL_BLOCK])
+                ) {
+                    $templatePatch->xpath_query = $patch[$class::XPATH_CELL_QUERY];
+                    $templatePatch->xpath_insert_type = isset($patch[$class::XPATH_CELL_QUERY_INSERT_TYPE])
+                        ? $patch[$class::XPATH_CELL_QUERY_INSERT_TYPE]
+                        : $class::XPATH_INSERT_BEFORE;
+                    $templatePatch->xpath_block = $patch[$class::XPATH_CELL_BLOCK];
+
+                } elseif (
+                    $class::REGEXP_PATCH_TYPE == $patch[$class::PATCHER_CELL_TYPE]
+                    && isset($patch[$class::REGEXP_CELL_PATTERN])
+                    && $patch[$class::REGEXP_CELL_PATTERN]
+                    && isset($patch[$class::REGEXP_CELL_REPLACE])
+                ) {
+                    $templatePatch->regexp_pattern = $patch[$class::REGEXP_CELL_PATTERN];
+                    $templatePatch->regexp_replace = $patch[$class::REGEXP_CELL_REPLACE];
+
+                } elseif (
+                    $class::CUSTOM_PATCH_TYPE == $patch[$class::PATCHER_CELL_TYPE]
+                    && isset($patch[$class::CUSTOM_CELL_CALLBACK])
+                    && $patch[$class::CUSTOM_CELL_CALLBACK]
+                    && method_exists($class, $class::CUSTOM_CELL_CALLBACK)
+                ) {
+                    $templatePatch->custom_callback = $class . '::' . $patch[$class::CUSTOM_CELL_CALLBACK];
+
+                } else {
+                    $valid = false;
+                    // TODO - add decoration error logging
+                }
+
+                if ($valid) {
+                    XLite_Core_Database::getEM()->persist($templatePatch);
+                }
+            }
+
+            XLite_Core_Database::getEM()->flush();
+        }
     }
 
     /**
