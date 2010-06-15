@@ -29,10 +29,10 @@
 /**
  * Bestsellers widget 
  * 
- * @package    XLite
- * @subpackage View
+ * @package XLite
+ * @see     ____class_see____
  * @see        ____class_see____
- * @since      3.0.0
+ * @since   3.0.0
  */
 class XLite_Module_Bestsellers_View_Bestsellers extends XLite_View_ProductsList
 {

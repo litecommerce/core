@@ -29,9 +29,9 @@
 /**
  * Notify form widget
  *
- * @package    View
- * @subpackage Widget
- * @since      3.0
+ * @package View
+ * @see     ____class_see____
+ * @since   3.0
  */
 class XLite_Module_ProductAdviser_View_PriceNotifyForm extends XLite_View_Abstract
 {

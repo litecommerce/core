@@ -31,9 +31,9 @@ define('EMAIL_REGEXP', '(?:[a-z0-9!#$%&\'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&\'*+\/
 /**
  * Abstract controller
  * 
- * @package    XLite
- * @subpackage Controller
- * @since      3.0.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
 abstract class XLite_Controller_Abstract extends XLite_Core_Handler
 {

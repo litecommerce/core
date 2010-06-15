@@ -31,9 +31,9 @@
 /**
  * XLite_Module_ProductAdviser_Model_ProductAlsoBuy 
  * 
- * @package    XLite
- * @subpackage ____sub_package____
- * @since      3.0.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
 class XLite_Module_ProductAdviser_Model_ProductAlsoBuy extends XLite_Model_Abstract
 {

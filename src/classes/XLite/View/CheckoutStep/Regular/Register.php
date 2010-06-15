@@ -29,9 +29,9 @@
 /**
  * XLite_View_CheckoutStep_Regular_Register 
  * 
- * @package    XLite
- * @subpackage ____sub_package____
- * @since      3.0.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
 class XLite_View_CheckoutStep_Regular_Register extends XLite_View_CheckoutStep_Regular_Abstract
 {

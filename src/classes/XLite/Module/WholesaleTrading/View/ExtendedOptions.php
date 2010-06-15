@@ -29,9 +29,9 @@
 /**
  * Product options list (extended version) widget
  *
- * @package    XLite
- * @subpackage View
- * @since      3.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0
  */
 class XLite_Module_WholesaleTrading_View_ExtendedOptions extends XLite_View_Abstract
 {

@@ -29,9 +29,9 @@
 /**
  * Product options lsit
  *
- * @package    XLite
- * @subpackage View
- * @since      3.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0
  */
 class XLite_Module_ProductOptions_View_ProductOptions extends XLite_View_Abstract
 {

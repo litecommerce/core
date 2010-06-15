@@ -29,9 +29,9 @@
 /**
  * Added-to-cart mark widget
  *
- * @package    XLite
- * @subpackage View
- * @since      3.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0
  */
 class XLite_View_AddedToCartMark extends XLite_View_Abstract
 {

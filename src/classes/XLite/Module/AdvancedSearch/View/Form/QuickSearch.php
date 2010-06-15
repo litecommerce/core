@@ -29,9 +29,9 @@
 /**
  * Advanced quick search form
  * 
- * @package    XLite
- * @subpackage View
- * @since      3.0.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
 class XLite_Module_AdvancedSearch_View_Form_QuickSearch extends XLite_Module_AdvancedSearch_View_Form_Search
 {

@@ -29,9 +29,9 @@
 /**
  * Application singleton
  * 
- * @package    Litecommerce
- * @subpackage XLite
- * @since      3.0.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
 class XLite extends XLite_Base implements XLite_Base_ISingleton
 {

@@ -30,9 +30,10 @@
 
 /**
  * Miscelaneous convertion routines
- *
- * @package    XLite
- * @since      3.0
+ * 
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
 class XLite_Module_DrupalConnector_Core_Converter extends XLite_Core_Converter implements XLite_Base_IDecorator, XLite_Base_ISingleton
 {

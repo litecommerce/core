@@ -62,6 +62,11 @@ class Decorator
     const CLASS_COMMENT_PATTERN = '/(\s+\*\/\s+)(?:abstract +)?class /USsi';
 
     /**
+     * Pattern to get interface DOC block
+     */
+    const INTERFACE_COMMENT_PATTERN = '/(\s+\*\/\s+)interface /USsi';
+
+    /**
      * Pattern to detect entity-based class
      */
     const CLASS_ENTITY_PATTERN = '/@entity/USsi';
@@ -1083,7 +1088,9 @@ class Decorator
                     $this->templatePatches[] = $class;
                 }
 
-                $this->checkClassCommentAttributes($classComment, $filePath);
+                if ($classComment || !preg_match(self::INTERFACE_COMMENT_PATTERN, file_get_contents($filePath))) {
+                    $this->checkClassCommentAttributes($classComment, $filePath);
+                }
             }
         }
     }

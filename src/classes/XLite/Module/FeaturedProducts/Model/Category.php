@@ -29,9 +29,9 @@
 /**
  * XLite_Module_FeaturedProducts_Model_Category 
  * 
- * @package    XLite
- * @subpackage Model
- * @since      3.0.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
 class XLite_Module_FeaturedProducts_Model_Category extends XLite_Model_Category implements XLite_Base_IDecorator
 {

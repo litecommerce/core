@@ -29,9 +29,9 @@
 /**
  * Something customer can put into its cart
  * 
- * @package    XLite
- * @subpackage ____sub_package____
- * @since      3.0.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
 class XLite_Model_OrderItem extends XLite_Model_Abstract
 {

@@ -29,9 +29,9 @@
 /**
  * XLite_Module_ProductOptions_Controller_Customer_Wishlist 
  * 
- * @package    XLite
- * @subpackage ____sub_package____
- * @since      3.0.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
 class XLite_Module_ProductOptions_Controller_Customer_Wishlist extends XLite_Module_WishList_Controller_Customer_Wishlist implements XLite_Base_IDecorator
 {
