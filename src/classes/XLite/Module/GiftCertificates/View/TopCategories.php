@@ -36,19 +36,6 @@
 class XLite_Module_GiftCertificates_View_TopCategories extends XLite_View_TopCategories implements XLite_Base_IDecorator
 {
     /**
-     * Get widget templates directory
-     *
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getDir()
-    {
-        return 'modules/GiftCertificates/categories/' . $this->getParam(self::PARAM_DISPLAY_MODE);
-    }
-
-    /**
      * Assemble item CSS class name 
      * 
      * @param int                  $index    item number
@@ -68,43 +55,27 @@ class XLite_Module_GiftCertificates_View_TopCategories extends XLite_View_TopCat
     }
 
     /**
-     * Assemble gift certificate item CSS class name 
-     * 
-     * @return string
-     * @access public
-     * @since  3.0.0
-     */
-    public function assembleGiftItemClassName()
-    {
-        return 'gift_certificate' == XLite_Core_Request::getInstance()->target
-            ? 'leaf last active-trail gift-link'
-            : 'leaf last gift-link';
-    }
-
-    /**
-     * Assemble list item gift certificate link class name
+     * Assemble list item link class name
+     *
+     * @param integer              $i        item number
+     * @param integer              $count    items count
+     * @param XLite_Model_Category $category current category
      *
      * @return string
      * @access public
      * @since  3.0.0
      */
-    public function assembleGiftLinkClassName()
+    public function assembleListItemClassName($i, $count, XLite_View_Abstract $widget)
     {
-        return 'gift_certificate' == XLite_Core_Request::getInstance()->target
-            ? 'active'
-            : '';
-    }
+        $class = explode(' ', parent::assembleListItemClassName($i, $count, $widget));
 
-    /**
-     * Check - is root level or not
-     * 
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function isRoot()
-    {
-        return !$this->getParam(self::PARAM_IS_SUBTREE);
+        if ($widget instanceof XLite_Module_GiftCertificates_View_TopCategoriesItem)  {
+            if ('gift_certificate' == XLite_Core_Request::getInstance()->target) {
+                $class[] = 'active-trail';
+            }
+            $class[] = 'gift-link';
+        }
+
+        return implode(' ', $class);
     }
 }

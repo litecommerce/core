@@ -204,7 +204,13 @@ class XLite_View_TopCategories extends XLite_View_SideBarBox
             $classes[] = 'first';
         }
 
-        if (($count - 1) == $index) {
+        if (
+            ($count - 1) == $index
+            && $this->isViewListVisible(
+                'childs',
+                array('rootId' => $this->getParam('rootId'), 'is_subtree' => $this->getParam('is_subtree'))
+            )
+        ) {
             $classes[] = 'last';
         }
 
@@ -232,5 +238,28 @@ class XLite_View_TopCategories extends XLite_View_SideBarBox
             ? 'active'
             : '';
     }
+
+    /**
+     * Assemble list item link class name
+     *
+     * @param integer              $i        item number
+     * @param integer              $count    items count
+     * @param XLite_Model_Category $category current category
+     *
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function assembleListItemClassName($i, $count, XLite_View_Abstract $widget)
+    {
+        $classes = array('leaf');
+
+        if (($count - 1) == $i) {
+            $classes[] = 'last';
+        }
+
+        return implode(' ', $classes);
+    }
+
 }
 

@@ -61,7 +61,25 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
 
     const DEFAULT_LIST_NAME = 'base';
 
+    /**
+     * Deep count
+     * 
+     * @var    integer
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
     protected static $countDeep = 0;
+
+    /**
+     * Level count
+     * 
+     * @var    integer
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected static $countLevel = 0;
 
     /**
      * isCloned 
@@ -130,16 +148,6 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
      */
     protected $sessionCellStatus = null;
 
-
-    /**
-     * Return widget default template
-     *
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    abstract protected function getDefaultTemplate();
-
     /**
      * View lists (cache)
      * 
@@ -149,6 +157,15 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
      * @since  3.0.0
      */
     protected $viewLists = array();
+
+    /**
+     * Return widget default template
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    abstract protected function getDefaultTemplate();
 
     /**
      * Return full URL by the skindir-related one
@@ -515,12 +532,25 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
         }
 
         // Execute PHP code from compiled template
+        $cnt = XLite_View_Abstract::$countDeep++;
+        $cntLevel = XLite_View_Abstract::$countLevel++;
         $markTemplates = XLite_Logger::isMarkTemplates();
+        $profilerEnabled = XLite_Model_Profiler::isTemplatesProfilingEnabled();
+
+        if ($profilerEnabled) {
+            $timePoint = str_repeat('+', $cntLevel) . '[TPL ' . str_repeat('0', 4 - strlen((string)$cnt)) . $cnt . '] '
+                . get_called_class() . ' :: ' . substr($original, strlen(LC_SKINS_DIR));
+            XLite_Model_Profiler::getInstance()->log($timePoint);
+        }
 
         if ($markTemplates) {
             $original = substr($original, strlen(LC_SKINS_DIR));
-            $cnt = XLite_View_Abstract::$countDeep++;
-            echo '<!-- ' . get_called_class() . ' : ' . $original . ' (' . $cnt . ')' . ($this->viewListName ? ' [\'' . $this->viewListName . '\' list child]' : '') . ' {{{ -->';
+            echo (
+                '<!-- '
+                . get_called_class() . ' : ' . $original . ' (' . $cnt . ')'
+                . ($this->viewListName ? ' [\'' . $this->viewListName . '\' list child]' : '')
+                . ' {{{ -->'
+            );
         }
 
         ob_start();
@@ -528,12 +558,17 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
         $content = ob_get_contents();
         ob_end_clean();
 
-        echo $this->postprocessContent($content);
+        echo ($this->postprocessContent($content));
 
         if ($markTemplates) {
-            echo '<!-- }}} ' . get_called_class() . ' : ' . $original . ' (' . $cnt . ')' . ' -->';
+            echo ('<!-- }}} ' . get_called_class() . ' : ' . $original . ' (' . $cnt . ')' . ' -->');
         }
 
+        if ($profilerEnabled) {
+            XLite_Model_Profiler::getInstance()->log($timePoint);
+        }
+
+        XLite_View_Abstract::$countLevel--;
     }
 
     /**
@@ -1050,20 +1085,34 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
     /**
      * Get view list 
      * 
-     * @param string $list List name
+     * @param string $list      List name
+     * @param array  $arguments List common arguments
      *  
      * @return array
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getViewList($list = self::DEFAULT_LIST_NAME)
+    protected function getViewList($list = self::DEFAULT_LIST_NAME, array $arguments = array())
     {
         if (!isset($this->viewLists[$list])) {
             $this->viewLists[$list] = $this->defineViewList($list);
         }
 
-        return $this->viewLists[$list];
+        if ($arguments) {
+            foreach ($this->viewLists[$list] as $widget) {
+                $widget->setWidgetParams($arguments);
+            }
+        }
+
+        $result = array();
+        foreach ($this->viewLists[$list] as $widget) {
+            if ($widget->isVisible()) {
+                $result[] = $widget;
+            }
+        }
+
+        return $result;
     }
 
     /**
@@ -1116,7 +1165,7 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
                 );
             }
 
-            if ($w && $w->isVisible()) {
+            if ($w) {
                 $widgets[] = $w;
             }
         }
@@ -1127,16 +1176,17 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
     /**
      * Check - view list is visible or not
      * 
-     * @param string $list List name
+     * @param string $list      List name
+     * @param array  $arguments List common arguments
      *  
      * @return boolean
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function isViewListVisible($list)
+    public function isViewListVisible($list, array $arguments = array())
     {
-        return 0 < count($this->getViewList($list));
+        return 0 < count($this->getViewList($list, $arguments));
     }
 
     /**
@@ -1177,7 +1227,7 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getXPathByContent($content)
+    protected function getXpathByContent($content)
     {
         $dom = new DOMDocument();
         $dom->formatOutput = true;
@@ -1188,17 +1238,18 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
     /**
      * Get view list content 
      * 
-     * @param string $list List name
+     * @param string $list      List name
+     * @param array  $arguments List common arguments
      *  
      * @return string
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getViewListContent($list)
+    protected function getViewListContent($list, array $arguments = array())
     {
         ob_start();
-        foreach ($this->getViewList($list) as $widget) {
+        foreach ($this->getViewList($list, $arguments) as $widget) {
             $widget->display();
         }
         $content = ob_get_contents();
@@ -1242,9 +1293,9 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function insertViewListByXPath($content, $query, $list = self::DEFAULT_LIST_NAME, $insertPosition = self::INSERT_BEFORE)
+    protected function insertViewListByXpath($content, $query, $list = self::DEFAULT_LIST_NAME, $insertPosition = self::INSERT_BEFORE)
     {
-        $xpath = $this->getXPathByContent($content);
+        $xpath = $this->getXpathByContent($content);
         if ($xpath) {
             $places = $xpath->query($query);
             $patches = $this->getViewListContentAsNodes($list);
@@ -1337,16 +1388,17 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
     /**
      * Display view list content 
      * 
-     * @param string $list List name
+     * @param string $list      List name
+     * @param array  $arguments List common arguments
      *  
      * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function displayViewListContent($list = self::DEFAULT_LIST_NAME)
+    public function displayViewListContent($list = self::DEFAULT_LIST_NAME, array $arguments = array())
     {
-        echo $this->getViewListContent($list);
+        echo ($this->getViewListContent($list, $arguments));
     }
 }
 
