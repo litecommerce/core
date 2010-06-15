@@ -15,4 +15,7 @@
     <a href="{buildURL(#category#,##,_ARRAY_(#category_id#^_category.category_id))}" class="{assembleLinkClassName(idx,_categoryArraySize,_category)}">{_category.name}</a>
     <widget template="{getBody()}" rootId="{_category.category_id}" IF="getCategories(_category.category_id)" is_subtree />
   </li>
+  <li FOREACH="getViewList(#childs#,_ARRAY_(#rootId#^getParam(#rootId#),#is_subtree#^getParam(#is_subtree#))),idx,w" class="{assembleListItemClassName(idx,wArraySize,w)}">
+    {w.display()}
+  </li>
 </ul>

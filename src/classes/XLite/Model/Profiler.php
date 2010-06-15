@@ -61,6 +61,16 @@ class XLite_Model_Profiler extends XLite_Base implements XLite_Base_ISingleton
     protected static $memoryPoints = array();
 
     /**
+     * Templates profiling enabled flag
+     * 
+     * @var    boolean
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected static $templatesProfilingEnabled = false;
+
+    /**
      * Enabled flag
      * 
      * @var    boolean
@@ -151,6 +161,20 @@ class XLite_Model_Profiler extends XLite_Base implements XLite_Base_ISingleton
         'image',
     );
 
+    protected static $useXdebugStackTrace = false;
+
+    /**
+     * Check - templates profiling mode is enabled or not
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function isTemplatesProfilingEnabled()
+    {
+        return self::$templatesProfilingEnabled;
+    }
 
     /**
      * There are some targets which are not require profiler
@@ -264,6 +288,10 @@ class XLite_Model_Profiler extends XLite_Base implements XLite_Base_ISingleton
                 'time'  => 0,
             );
 
+            if (self::$useXdebugStackTrace) {
+                xdebug_start_trace(LC_VAR_DIR . 'log' . LC_DS . $timePoint . '.' . microtime(true), XDEBUG_TRACE_COMPUTERIZED);
+            }
+
         } elseif ($this->points[$timePoint]['open']) {
 
             $range = microtime(true) - $this->points[$timePoint]['start'];
@@ -274,10 +302,18 @@ class XLite_Model_Profiler extends XLite_Base implements XLite_Base_ISingleton
             }
             $this->points[$timePoint]['open'] = false;
 
+            if (self::$useXdebugStackTrace) {
+                @xdebug_stop_trace();
+            }
+
         } else {
 
             $this->points[$timePoint]['start'] = microtime(true);
             $this->points[$timePoint]['open'] = true;
+
+            if (self::$useXdebugStackTrace) {
+                xdebug_start_trace(LC_VAR_DIR . 'log' . LC_DS . $timePoint . '.' . microtime(true), XDEBUG_TRACE_COMPUTERIZED);
+            }
 
         }
     }
@@ -296,6 +332,11 @@ class XLite_Model_Profiler extends XLite_Base implements XLite_Base_ISingleton
     {
         $this->enabled = !empty($start);
         $this->start_time = $_SERVER['REQUEST_TIME'];
+        self::$templatesProfilingEnabled = $this->enabled
+            && XLite::getInstance()->getOptions(array('profiler_details', 'process_widgets'));
+
+        self::$useXdebugStackTrace = function_exists('xdebug_start_trace')
+            && XLite::getInstance()->getOptions(array('profiler_details', 'xdebug_log_trace'));
     }
     
     /**

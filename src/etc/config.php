@@ -111,6 +111,8 @@ locale = en
 ;
 [profiler_details]
 enabled = Off
+process_widgets = On
+xdebug_log_trace = Off
 eta = On
 
 [recorder]
