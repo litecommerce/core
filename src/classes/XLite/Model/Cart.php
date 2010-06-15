@@ -51,7 +51,7 @@ class XLite_Model_Cart extends XLite_Model_Order implements XLite_Base_ISingleto
     /**
      * Constructor
      * 
-     * @param mixed $id ____param_comment____
+     * @param int $id order ID
      *  
      * @return void
      * @access public
@@ -62,24 +62,27 @@ class XLite_Model_Cart extends XLite_Model_Order implements XLite_Base_ISingleto
     {
         parent::__construct($id);
 
-        $this->fields['status'] = "T";
-        if ($this->session->isRegistered('order_id')) {
-            $this->set('order_id', $this->session->get('order_id'));
-            if (!$this->is('exists')) {
-                $this->set('order_id', null);
-            }
+        $this->fields['status'] = 'T';
+
+        if ($orderId = XLite_Model_Session::getInstance()->get('order_id')) {
+            $this->set('order_id', $orderId);
+            $this->isExists() ?: $this->set('order_id', null);
         }
-        if ($this->get('status') == "T") {
-            if ($this->auth->get('logged')) {
-                if ($this->auth->getComplex('profile.profile_id') != $this->get('profile_id')) {
-                    $this->set('profile', $this->auth->get('profile'));
+
+        if ('T' === $this->get('status')) {
+
+            $auth = XLite_Model_Auth::getInstance();
+
+            if ($auth->isLogged()) {
+                if ($auth->getProfile()->get('profile_id') != $this->get('profile_id')) {
+                    $this->setProfile($auth->getProfile());
                     $this->calcTotals();
-                    if ($this->isPersistent) {
-                        $this->update();
-                    }
+                    !$this->isPersistent ?: $this->update();
                 }
+                
 
             } elseif ($this->get('profile_id')) {
+
                 $this->set('profile',  null);
                 $this->calcTotals();
             }
@@ -134,12 +137,13 @@ class XLite_Model_Cart extends XLite_Model_Order implements XLite_Base_ISingleto
         if ($this->get('status') == "T") {
             $this->set('date', time());
 
-            if ($this->auth->getComplex('profile.order_id')) {
+            $profile = XLite_Model_Auth::getInstance()->getProfile();
+            if ($profile->get('order_id')) {
                 // anonymous checkout:
                 // use the current profile as order profile
-                $this->set('profile_id', $this->getComplex('profile.profile_id'));
+                $this->set('profile_id', $this->getProfile()->get('profile_id'));
             } else {
-                $this->set('profileCopy', $this->auth->get('profile'));
+                $this->setProfileCopy($profile);
             }
             $this->set('status', "I");
 

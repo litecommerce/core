@@ -12,7 +12,7 @@
  *}
 
 <select id="{getFieldId()}" name="{getName()}"{getAttributesCode():h}>
-  <option value="0">Select one..</option>
+  <option value="">Select one..</option>
   <option value="-1" selected="{getValue()=-1}">Other</option>
   <option FOREACH="getOptions(),state" value="{state.state_id:r}" selected="{state.state_id=getValue()}">{state.state:h}</option>
 </select>

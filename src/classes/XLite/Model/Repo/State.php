@@ -123,7 +123,7 @@ class XLite_Model_Repo_State extends XLite_Model_Repo_AbstractRepo
                 ->setParameter('id', $stateId)
                 ->getQuery()
                 ->getSingleResult();
-            $code = $state->code;
+            $code = $state['code'];
 
         } catch (Doctrine\ORM\NoResultException $exception) {
             $code = null;

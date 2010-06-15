@@ -172,6 +172,20 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
     {
         return XLite_Core_Request::getInstance()->action;
     }
+
+    /**
+     * Clear some data
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function clearDataOnStartup()
+    {
+        self::$controller = null;
+        XLite_Model_CachingFactory::clearCache();
+    }
     
 
     /**
@@ -423,6 +437,9 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
     {
         // Set current area
         self::$adminZone = (bool)$adminZone;
+
+        // Clear some data
+        self::clearDataOnStartup();
 
         // Initialize logger
         XLite_Logger::getInstance();

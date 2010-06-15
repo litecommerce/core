@@ -13,13 +13,13 @@
 
 <widget template="{getDir()}/header.tpl" />
 
-  <widget class="{getFormClass()}" name="{getFormName()}" IF="getFormParams()" formParams="{getFormParams()}" />
-  <widget class="{getFormClass()}" name="{getFormName()}" IF="!getFormParams()" />
+  <widget class="{getFormClass()}" name="{getFormName()}" />
 
     <widget template="{getDir()}/form_content.tpl" />
-    <br /><widget template="{getDir()}/{getFormDir()}/buttons.tpl" />
+    <br /><widget template="{getDir()}/{getFormTemplate(#buttons#)}" />
 
   <widget name="{getFormName()}" end />
 
 <widget template="{getDir()}/footer.tpl" />
 
+<script IF="getInlineJSCode()" type="text/javascript">{getInlineJSCode():r}</script>

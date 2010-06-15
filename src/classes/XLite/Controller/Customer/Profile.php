@@ -35,9 +35,99 @@
  */
 class XLite_Controller_Customer_Profile extends XLite_Controller_Customer_Abstract
 {
-    public $params = array('target', "mode", "submode", "returnUrl"); // mode ::= register | modify | success | delete	 
+    /**
+     * Types of model form
+     */
+
+    const SECTIONS_MAIN      = 'main';
+    const SECTIONS_ADDRESSES = 'addresses';
+    const SECTIONS_ALL       = 'all';
+
+
+    /**
+     * Return class name of the register form 
+     * 
+     * @return string|null
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getModelFormClass()
+    {
+        return 'XLite_View_Model_Profile_Main';
+    }
+
+    /**
+     * Check if profile is not exists
+     * 
+     * @return bool
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionValidate()
+    {
+        return $this->getModelForm()->performAction('validateInput');
+    }
+
+    /**
+     * doActionRegister 
+     * 
+     * @return bool
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionRegister()
+    {
+        $result = $this->getModelForm()->performAction('create');
+
+        // Return to the created account page or to the register page
+        $params = $this->isActionError()
+            ? array(self::PARAM_MODE => self::getRegisterMode())
+            : array('profile_id' => $this->getModelForm()->getProfileId(false));
+        $this->setReturnUrl($this->buildURL('profile', '', $params));
+
+        return $result;
+    }
+
+    /**
+     * doActionUpdate
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionUpdate()
+    {
+        return $this->getModelForm()->performAction('update');
+    }
+
+    protected function doActionDelete()
+    {
+    }
+
+
+    /**
+     * Return value for the "register" mode param
+     *
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getRegisterMode()
+    {
+        return 'register';
+    }
+
+
+
+
+/*    public $params = array('target', "mode", "submode", "returnUrl"); // mode ::= register | modify | success | delete	 
     public $mode = "register"; // default mode	
     public $submode = "warning"; // delete profile status: warning | confirmed | cancelled
+
 
     /**
      * Common method to determine current location 
@@ -46,7 +136,7 @@ class XLite_Controller_Customer_Profile extends XLite_Controller_Customer_Abstra
      * @access protected 
      * @since  3.0.0
      */
-    protected function getLocation()
+/*    protected function getLocation()
     {
         $location = parent::getLocation();
 
@@ -175,5 +265,5 @@ class XLite_Controller_Customer_Profile extends XLite_Controller_Customer_Abstra
             $this->set('mode', "delete");
             $this->set('submode', "confirmed");
         }
-    }
+    }*/
 }

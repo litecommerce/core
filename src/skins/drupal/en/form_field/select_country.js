@@ -1,20 +1,18 @@
-// vim: set ts=4 sw=4 sts=4 et:
+/* vim: set ts=2 sw=2 sts=2 et: */
 
 /**
  * ____file_title____
  *  
- * @category   LiteCommerce
- * @package    XLite
- * @subpackage ____sub_package____
- * @author     Creative Development LLC <info@cdev.ru> 
- * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
- * @version    SVN: $Id$
- * @link       http://www.litecommerce.com/
- * @since      3.0.0
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   SVN: $Id$
+ * @link      http://www.litecommerce.com/
+ * @since     3.0.0
  */
 
 var statesList = [];
-var statesSet  = false;
+var stateSelectors = [];
 
 function StateSelector(countrySelectorId, stateSelectorId, stateInputId)
 {
@@ -40,6 +38,14 @@ function StateSelector(countrySelectorId, stateSelectorId, stateInputId)
         }
     );
 
+    this.stateSelectBox.getParentBlock = function() {
+        return o.getParentBlock(this);
+    }
+
+    this.stateInputBox.getParentBlock = function() {
+        return o.getParentBlock(this);
+    }
+
     this.countrySelectBox.change();
 }
 
@@ -48,29 +54,41 @@ StateSelector.prototype.stateSelectBox = null;
 StateSelector.prototype.stateInputBox = null;
 StateSelector.prototype.stateSavedValue = null;
 
+StateSelector.prototype.getParentBlock = function(selector)
+{
+    var block = selector.parent('td').parent('tr');
+
+    if (!block.length) {
+        block = selector.parent('div');
+    }
+
+    return block;
+}
+
 StateSelector.prototype.changeState = function(state)
 {
     if (-1 == state) {
-        this.stateInputBox.parents('tr:first').show();
+        this.stateInputBox.getParentBlock().show();
     } else {
-        this.stateInputBox.parents('tr:first').hide();
+        this.stateInputBox.getParentBlock().hide();
     }
 }
 
 StateSelector.prototype.changeCountry = function(country)
 {
+
     if (statesList[country]) {
 
         this.removeOptions();
         this.addStates(statesList[country]);
 
-        this.stateSelectBox.parents('tr:first').show();
+        this.stateSelectBox.getParentBlock().show();
         this.stateSelectBox.change();
 
     } else {
 
-        this.stateSelectBox.parents('tr:first').hide();
-        this.stateInputBox.parents('tr:first').show();
+        this.stateSelectBox.getParentBlock().hide();
+        this.stateInputBox.getParentBlock().show();
     }
 }
 

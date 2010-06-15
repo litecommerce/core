@@ -27,68 +27,71 @@
  */
 
 /**
- * Profile model widget (Modify profile page)
+ * XLite_View_Form_Profile_Main 
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @package    XLite
+ * @subpackage ____sub_package____
+ * @see        ____class_see____
+ * @since      3.0.0
  */
-class XLite_View_Model_Profile_Modify extends XLite_View_Model_Profile_Abstract
+class XLite_View_Form_Profile_Main extends XLite_View_Form_Profile_Abstract
 {
     /**
-     * Return name of web form widget class
-     *
+     * isRegisterMode 
+     * 
+     * @return bool
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isRegisterMode()
+    {
+        return self::getCurrentForm()->isRegisterMode();
+    }
+
+    /**
+     * getDefaultTarget 
+     * 
      * @return string
      * @access protected
      * @since  3.0.0
      */
-    protected function getFormClass()
+    protected function getDefaultTarget()
     {
-        return 'XLite_View_Form_Profile_Modify';
-    }
-
-
-    /**
-     * Check if profile ID is passed in request
-     *
-     * @return bool
-     * @access public
-     * @since  3.0.0
-     */
-    public function checkRequestProfileId()
-    {
-        return !empty(XLite_Core_Request::getInstance()->profile_id);
+        return 'profile';
     }
 
     /**
-     * Return ID of current profile
+     * getDefaultAction 
      * 
-     * @return int 
-     * @access public
-     * @since  3.0.0
-     */
-    public function getProfileId()
-    {
-        return $this->checkRequestProfileId() 
-            ? XLite_Core_Request::getInstance()->profile_id 
-            : XLite_Model_Session::getInstance()->get('profile_id');
-    }
-
-    /**
-     * Perform certain action for the model object
-     *
-     * @param array $data model properties
-     *
-     * @return bool
+     * @return string
      * @access protected
      * @since  3.0.0
      */
-    protected function performActionUpdate(array $data = array())
+    protected function getDefaultAction()
     {
-        if ($this->checkRequestProfileId()) {
-            $this->setReturnUrlParams(array('profile_id' => $this->getProfileId()));
+        return 'modify';
+    }
+
+    /**
+     * getDefaultParams 
+     * 
+     * @return array
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultParams()
+    {
+        $result = parent::getDefaultParams();
+
+        if ($this->isRegisterMode()) {
+            // Do not pass the profile ID for new profiles
+            unset($result['profile_id']);
+            // SEt the appropriate mode
+            $result[self::PARAM_MODE] = self::getCurrentForm()->getRegisterMode();
         }
 
-        return parent::performActionUpdate($data);
+        return $result;
     }
 }
+

@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage Model
+ * @subpackage ____sub_package____
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -27,17 +27,46 @@
  */
 
 /**
- * ____description____
+ * XLite_View_AddressBook 
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @package    XLite
+ * @subpackage ____sub_package____
+ * @see        ____class_see____
+ * @since      3.0.0
  */
-class XLite_Module_AdvancedSearch_Model_Auth extends XLite_Model_Auth implements XLite_Base_IDecorator
+class XLite_View_AddressBook extends XLite_View_Dialog
 {
-    function loginProfile(XLite_Model_Profile $profile) 
+    /**
+     * Targets this widget is allowed for
+     *
+     * @var    array
+     * @access protected
+     * @since  3.0.0
+     */
+    protected $allowedTargets = array('address_book');
+
+
+    /**
+     * Return title
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getHead()
     {
-    	parent::loginProfile($profile);
-    	$this->session->set('search', null);
+        return 'Address book';
+    }
+
+    /**
+     * Return templates directory name
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDir()
+    {
+        return 'address_book';
     }
 }

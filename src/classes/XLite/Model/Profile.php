@@ -136,7 +136,7 @@ class XLite_Model_Profile extends XLite_Model_Abstract
      */
     public $defaultOrder = 'login';
 
-    public $_range = 'order_id = 0';
+    public $_range = 'order_id = \'0\'';
 
     /**
      * Address field names
@@ -166,6 +166,21 @@ class XLite_Model_Profile extends XLite_Model_Abstract
     }
 
     /**
+     * Search profile by login 
+     * 
+     * @param string $login user's login
+     *  
+     * @return bool
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function findByLogin($login)
+    {
+        return $this->find('login = \'' . addslashes($login) . '\'');
+    }
+
+    /**
      * Search profile by login and password
      *
      * @param string $login    user's login
@@ -175,12 +190,15 @@ class XLite_Model_Profile extends XLite_Model_Abstract
      * @access public
      * @since  3.0.0
      */
-    public function findByLogin($login, $password)
+    public function findForAuth($login, $password)
     {
-        return $this->find('login = \'' . addslashes($login) . '\' AND password = \'' . addslashes($password) .'\'')
-            && $this->isEnabled();
+        if ((bool) XLite_Core_Request::getInstance()->anonymous) {
+            $this->_range = 'order_id = \'' . XLite_Model_Cart::getInstance()->get('order_id') . '\'';
+        }
+    
+        return $this->findByLogin($login) && ($this->get('password') === $password) && $this->isEnabled();
     }
- 
+
 
     /**
     * Modifies safe properties (excluding adminSecurefields).
@@ -192,13 +210,7 @@ class XLite_Model_Profile extends XLite_Model_Abstract
     function modifyAdminProperties($properties) 
     {
         if (is_array($properties)) {
-            foreach ($properties as $key => $value) {
-                if (array_key_exists($key, $this->_adminSecurefields)) {
-                    if (isset($properties[$key])) {
-                        unset($properties[$key]);
-                    }
-                }
-            }
+            $this->unsetProperties($this->_adminSecurefields);
             $this->setProperties($properties);
         }
     }
@@ -210,16 +222,10 @@ class XLite_Model_Profile extends XLite_Model_Abstract
     * @access public
     * @param array $data The properties data to modify
     **/
-    function modifyProperties($properties) 
+    function modifyCustomerProperties($properties) 
     {
         if (is_array($properties)) {
-            foreach ($properties as $key => $value) {
-                if (array_key_exists($key, $this->_securefields)) {
-                    if (isset($properties[$key])) {
-                        unset($properties[$key]);
-                    }
-                }
-            }
+            $this->unsetProperties($this->_securefields);
             $this->setProperties($properties);
         }
     }
@@ -468,6 +474,7 @@ class XLite_Model_Profile extends XLite_Model_Abstract
     public function isSameAddress()
     {
         $result = $this->isValid();
+
         if ($result) {
             foreach ($this->addressFields as $name) {
                 if ($this->get('billing_' . $name) != $this->get('shipping_' . $name)) {

@@ -162,7 +162,7 @@ class XLite_Module_WholesaleTrading_Model_Profile extends XLite_Model_Profile im
             $this->membershipChanged($this->_oldMembership, $this->get('membership'));
             $this->_membershipChanged = false;
         }
-        if (is_array($this->properties['membership_history'])) {
+        if (!empty($this->properties['membership_history']) && is_array($this->properties['membership_history'])) {
             $this->properties['membership_history'] = serialize($this->properties['membership_history']);
         }
 

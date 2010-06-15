@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage View
+ * @subpackage ____sub_package____
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -27,54 +27,36 @@
  */
 
 /**
- * Profile modify form
+ * XLite_View_JS_StatesList 
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @package    XLite
+ * @subpackage ____sub_package____
+ * @see        ____class_see____
+ * @since      3.0.0
  */
-class XLite_View_Form_Profile_Modify extends XLite_View_Form_Profile_Abstract
+class XLite_View_JS_StatesList extends XLite_View_JS_Abstract
 {
     /**
-     * Return ID for current profile
-     * 
-     * @return int|null
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getProfileId()
-    {
-        return XLite_View_Model_Abstract::getCurrentForm()->getProfileId();
-    }
-
-    /**
-     * getDefaultAction 
-     * 
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getDefaultAction()
-    {
-        return 'update';
-    }
-
-    /**
-     * getDefaultParams 
-     * 
+     * getCountriesStates
+     *
      * @return array
      * @access protected
      * @since  3.0.0
      */
-    protected function getDefaultParams()
+    protected function getCountriesStates()
     {
-        $result = parent::getDefaultParams();
+        return XLite_Core_Database::getRepo('XLite_Model_Country')->findCountriesStates(); 
+    }
 
-        if (XLite_View_Model_Abstract::getCurrentForm()->checkRequestProfileId()) {
-            $result['profile_id'] = $this->getProfileId();
-        }
-
-        return $result;
+    /**
+     * Return widget default template
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultTemplate()
+    {
+        return 'js/states_list.tpl';
     }
 }
-

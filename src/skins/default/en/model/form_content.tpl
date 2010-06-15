@@ -11,5 +11,5 @@
  * @since     3.0.0
  *}
 
-<widget FOREACH="_ARRAY_(#header#,#content#,#footer#),file" template="{getDir()}/{getFormDir()}/{file}.tpl" />
+<widget FOREACH="_ARRAY_(#header#,#content#,#footer#),file" template="{getDir()}/{getFormTemplate(file)}" />
 

@@ -45,7 +45,7 @@ class XLite_View_FormField_Separator_Regular extends XLite_View_FormField_Separa
      */
     protected function getFieldTemplate()
     {
-        return 'separator.tpl';
+        return 'regular.tpl';
     }
 }
 

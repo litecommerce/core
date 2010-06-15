@@ -39,6 +39,7 @@ abstract class XLite_Core_Handler extends XLite_Base
      * Common handler params
      */
 
+    const PARAM_MODE        = 'mode';
     const PARAM_IS_EXPORTED = 'isExported';
 
     /**

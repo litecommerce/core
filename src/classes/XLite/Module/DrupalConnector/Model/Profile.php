@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage View
+ * @subpackage ____sub_package____
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -27,36 +27,47 @@
  */
 
 /**
- * Profile register form
+ * XLite_Module_DrupalConnector_Model_Profile 
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @package    XLite
+ * @subpackage ____sub_package____
+ * @see        ____class_see____
+ * @since      3.0.0
  */
-class XLite_View_Form_Profile_Register extends XLite_View_Form_Profile_Abstract
+class XLite_Module_DrupalConnector_Model_Profile extends XLite_Model_Profile implements XLite_Base_IDecorator
 {
-    /**
-     * getDefaultAction 
-     * 
+	/**
+     * Builds the SQL INSERT statement query for this object properties
+     *
      * @return string
      * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getDefaultAction()
+    protected function _buildInsert()
     {
-        return 'register';
+        if (XLite_Module_DrupalConnector_Handler::getInstance()->checkCurrentCMS()) {
+            $this->properties['cms_name'] = XLite_Module_DrupalConnector_Handler::getInstance()->getCMSName();
+        }
+
+        return parent::_buildInsert();
     }
 
     /**
-     * getDefaultParams
+     * Builds the SQL UPDATE statement for updating this object database record
      *
-     * @return array
+     * @return string
      * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getDefaultParams()
+    protected function _buildUpdate()
     {
-        return parent::getDefaultParams() + array(self::PARAM_MODE => 'register');
+        if (XLite_Module_DrupalConnector_Handler::getInstance()->checkCurrentCMS()) {
+            unset($this->properties['cms_name']);
+            unset($this->properties['cms_profile_id']);
+        }
+
+        return parent::_buildUpdate();
     }
 }
-

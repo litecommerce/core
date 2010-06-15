@@ -251,17 +251,29 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
     }
 
     /**
-     * Return model form object 
+     * Return model form object
      * 
+     * @param array $params form constructor params
+     *  
      * @return XLite_View_Model_Abstract|null
      * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getModelForm()
+    protected function getModelForm(array $params = array())
     {
-        $class = $this->getModelFormClass();
+        $result = null;
+        $class  = $this->getModelFormClass();
 
-        return isset($class) ? XLite_Model_CachingFactory::getObject(__METHOD__ . $class, $class) : null;
+        if (isset($class)) {
+            $result = XLite_Model_CachingFactory::getObject(
+                __METHOD__ . $class . (empty($params) ? '' : md5(serialize($params))),
+                $class,
+                $params
+            );
+        }
+
+        return $result;
     }
 
     /**
@@ -293,7 +305,7 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
     /**
      * Perform some actions before redirect
      *
-     * @param mixed $action performed action
+     * @param string|null $action performed action
      *
      * @return void
      * @access protected
@@ -301,6 +313,12 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
      */
     protected function actionPostprocess($action)
     {
+        if (isset($action)) {
+            $method = __FUNCTION__ . XLite_Core_Converter::convertToCamelCase($action);
+            if (method_exists($this, $method)) {
+                $this->$method();
+            }
+        }
     }
 
 
@@ -456,7 +474,7 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
         if ($this->isRedirectNeeded()) {
             if (XLite_Core_Request::getInstance()->isAJAX() && !$this->isValid()) {
                 // Internal redirect
-                $this->widgetParams[self::PARAM_REDIRECT_CODE]->setValue(279);
+                $this->getWidgetParams(self::PARAM_REDIRECT_CODE)->setValue(279);
             }
 
             $this->redirect();

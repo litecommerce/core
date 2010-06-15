@@ -36,6 +36,17 @@
 class XLite_View_FormField_Select_Membership extends XLite_View_FormField_Select_Regular
 {
     /**
+     * Determines if this field is visible for customers or not 
+     * 
+     * @var    bool
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $isAllowedForCustomer = false;
+
+
+    /**
      * getMembershipsList 
      * 
      * @return void

@@ -36,6 +36,16 @@
 class XLite_Module_DrupalConnector_Handler extends XLite_Core_CMSConnector
 {
     /**
+     * areHooksEnabled 
+     * 
+     * @var    bool
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected static $areHooksEnabled = true;
+
+    /**
      * Forbid URL rewrite routine
      * 
      * @var    boolean
@@ -64,6 +74,46 @@ class XLite_Module_DrupalConnector_Handler extends XLite_Core_CMSConnector
      * @since  3.0.0
      */
     protected $portalParams = array();
+
+
+    /**
+     * Set hooks availability status
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function enableHooks()
+    {
+        self::$areHooksEnabled = true;
+    }
+
+    /**
+     * Set hooks availability status
+     *
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function disableHooks()
+    {
+        self::$areHooksEnabled = false;
+    }
+
+    /**
+     * areHooksEnabled 
+     * 
+     * @return bool
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function areHooksEnabled()
+    {
+        return self::$areHooksEnabled;
+    }
 
     /**
      * Method to access the singleton
@@ -145,6 +195,18 @@ class XLite_Module_DrupalConnector_Handler extends XLite_Core_CMSConnector
     protected function definePortals()
     {
         $this->portals = array(
+            'user/%/addresses' => array(
+                'menu'   => array(
+                    'title'            => 'Addresses',
+                    'description'      => 'Addresses',
+                    'access callback'  => 'lc_connector_user_access',
+                    'access arguments' => array(1),
+                    'weight'           => 50,
+                ),
+                'target' => 'address_book',
+                'prefix' => array($this, 'getAddressesURLPrefix'),
+                'argumentsPreprocessor' => array($this, 'getOrdersArgPreprocess'),
+            ),
             'user/%/orders' => array(
                 'menu'   => array(
                     'title'            => 'Orders history',
@@ -313,6 +375,27 @@ class XLite_Module_DrupalConnector_Handler extends XLite_Core_CMSConnector
         }
 
         return $result;
+    }
+
+    /**
+     * getAddressesURLPrefix 
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getAddressesURLPrefix()
+    {
+        $uid = lc_connector_get_display_user_id()
+            ? lc_connector_get_display_user_id()
+            : user_uid_optional_to_arg('%');
+        
+        return array(
+            'user',
+            $uid,
+            'addresses',
+        );
     }
 
     /**

@@ -37,6 +37,25 @@
 class XLite_View_FormField_Input_Password extends XLite_View_FormField_Input_Abstract
 {
     /**
+     * setCommonAttributes 
+     * 
+     * @param array $attrs field attributes to prepare
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function setCommonAttributes(array $attrs)
+    {
+        $result = parent::setCommonAttributes($attrs);
+        $result['value'] = '';
+
+        return $result;
+    }
+
+
+    /**
      * Return field type
      * 
      * @return string

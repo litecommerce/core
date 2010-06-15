@@ -37,6 +37,18 @@
 abstract class XLite_View_FormField_Separator_Abstract extends XLite_View_FormField_Abstract
 {
     /**
+     * Return name of the folder with templates
+     * 
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDir()
+    {
+        return parent::getDir() . '/separator';
+    }
+
+    /**
      * Return widget default template
      *
      * @return string

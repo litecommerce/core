@@ -11,5 +11,4 @@
  * @since     3.0.0
  *}
 
-<td colspan="100" class="separator"><br /><br />{getLabel()}<br /><hr /></td>
-
+<widget class="XLite_View_Model_Profile_Addresses" />

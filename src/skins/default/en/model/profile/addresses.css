@@ -1,0 +1,78 @@
+/* vim: set ts=2 sw=2 sts=2 et: */
+
+/**
+ * ____file_title____
+ *  
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   SVN: $Id$
+ * @link      http://www.litecommerce.com/
+ * @since     3.0.0
+ */
+
+.profile-form .section
+{
+}
+
+.profile-form .section .table
+{
+  background: #fff url('../../images/blue_bg.png') repeat-x 0px -142px;
+  border: #ccc 1px solid;
+  -moz-border-radius: 0.5em !important;
+  -webkit-border-radius: 0.5em !important;
+  border-radius: 0.5em !important;
+  padding: 8px;
+  margin-top: 0px;
+}
+
+.profile-form .section .table td
+{
+  border-style: none;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.profile-form .billing-section
+{
+  clear: both;
+  float: left;
+  width: 47%;
+}
+
+.profile-form .shipping-section
+{
+  float: right;
+  width: 47%;
+}
+
+.profile-form .model-form-buttons
+{
+  text-align: center;
+  margin-top: -10px;
+}
+
+.profile-form input,
+.profile-form select,
+.profile-form textarea
+{
+  width: 100%;
+}
+
+.profile-form .header
+{
+  font-size: 1.5em;
+  color: #1d436c;
+  text-align: left;
+}
+
+.profile-form .header hr
+{
+  display: none;
+}
+
+.profile-form .shipping-header .ship-as-bill label
+{
+  font-size: 0.6em;
+  color: #333;
+}

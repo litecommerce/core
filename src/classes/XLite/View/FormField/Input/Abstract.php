@@ -47,5 +47,21 @@ abstract class XLite_View_FormField_Input_Abstract extends XLite_View_FormField_
     {
         return 'input.tpl';
     }
+
+    /**
+     * getCommonAttributes 
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getCommonAttributes()
+    {
+        return parent::getCommonAttributes() + array(
+            'type'  => $this->getFieldType(),
+            'value' => $this->getValue(),
+        );
+    }
 }
 

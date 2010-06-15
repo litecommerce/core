@@ -11,7 +11,14 @@
  * @since     3.0.0
  *}
 
-<td>{getParam(#label#)}</td>
-<td class="star">{if:getParam(#required#)}*{else:}&nbsp;{end:}</td>
-<td><widget template="{getDir()}/{getFieldTemplate()}" /></td>
-
+<td>
+  <label for="{getFieldId()}">{getParam(#label#)}</label>
+</td>
+<td class="star">
+  {if:getParam(#required#)}*{else:}&nbsp;{end:}
+</td>
+<td width="100%">
+  <widget template="{getDir()}/{getFieldTemplate()}" />
+  <div class="form-field-comment {getFieldId()}-comment">{getParam(#comment#):r}</div>
+  <script IF="getInlineJSCode()" type="text/javascript">{getInlineJSCode():r}</script>
+</td>

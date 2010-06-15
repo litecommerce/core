@@ -11,5 +11,7 @@
  * @since     3.0.0
  *}
 
-<widget class="XLite_View_Button_Submit" />
+<div class="model-form-buttons">
+  <div class="button {name}" FOREACH="getFormButtons(),name,button">{button.display()}</div>
+</div>
 

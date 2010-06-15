@@ -167,6 +167,7 @@ class XLite_Core_Request extends XLite_Base implements XLite_Base_ISingleton
      *  
      * @return void
      * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function mapRequest(array $data = array())
@@ -175,7 +176,7 @@ class XLite_Core_Request extends XLite_Base implements XLite_Base_ISingleton
             $data = $_REQUEST;
         }
 
-        $this->data = array_merge($this->data, $this->prepare($data));
+        $this->data = array_replace_recursive($this->data, $this->prepare($data));
     }
 
     /**
