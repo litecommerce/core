@@ -32,6 +32,7 @@
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
+ * @ListChild (list="productDetails.image", weight="20")
  */
 class XLite_Module_DetailedImages_View_Zoom extends XLite_View_Abstract
 {
@@ -66,7 +67,7 @@ class XLite_Module_DetailedImages_View_Zoom extends XLite_View_Abstract
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_PRODUCT => new XLite_Model_WidgetParam_Object('Product', null, false, 'XLite_Model_Product'),
+            self::PARAM_PRODUCT => new XLite_Model_WidgetParam_Object('Product', $this->getProduct(), false, 'XLite_Model_Product'),
         );
     }
 

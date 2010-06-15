@@ -1,17 +1,18 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Product details
- *  
- * @author    Creative Development LLC <info@cdev.ru> 
+ * Product details SKU main block
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
+ * @ListChild (list="productDetails.main", weight="20")
  *}
-<widget class="XLite_View_Form_Product_AddToCart" name="add_to_cart" product="{product}" className="product-details hproduct" />
+<div IF="{product.sku}" class="identifier product-sku">
+  <span class="type">SKU:</span>
+  <span class="value">{product.sku}</span>
+</div>
 
-  {displayViewListContent(#productDetails.base#)}
-
-<widget name="add_to_cart" end />

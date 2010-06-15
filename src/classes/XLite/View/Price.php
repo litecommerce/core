@@ -32,6 +32,7 @@
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
+ * @ListChild (list="productDetails.main", weight="40")
  */
 class XLite_View_Price extends XLite_View_Abstract
 {
@@ -66,8 +67,13 @@ class XLite_View_Price extends XLite_View_Abstract
     {
         parent::defineWidgetParams();
 
+        $product = method_exists(XLite::getController(), 'getProduct')
+            ? XLite::getController()->getProduct()
+            : null;
+        
+
         $this->widgetParams += array(
-            self::PARAM_PRODUCT            => new XLite_Model_WidgetParam_Object('Product', null, false, 'XLite_Model_Product'),
+            self::PARAM_PRODUCT            => new XLite_Model_WidgetParam_Object('Product', $product, false, 'XLite_Model_Product'),
             self::PARAM_DISPLAY_ONLY_PRICE => new XLite_Model_WidgetParam_Bool('Only price', false),
         );
     }

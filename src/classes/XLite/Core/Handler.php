@@ -93,7 +93,9 @@ abstract class XLite_Core_Handler extends XLite_Base
      */
     protected function getParam($param)
     {
-        return $this->getWidgetParams($param)->value;
+        $param = $this->getWidgetParams($param);
+
+        return $param ? $param->value : $param;
     }
 
     /**
