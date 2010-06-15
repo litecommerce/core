@@ -9,7 +9,7 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- * @ListChild (class="XLite_Module_AdvancedSearch_View_AdvancedSearch", weight="40")
+ * @ListChild (list="advsearch.vertical.base", weight="40")
  *}
 <tr class="search-category form-field">
   <td colspan="3">

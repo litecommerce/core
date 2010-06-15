@@ -9,7 +9,7 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- * @ListChild (class="XLite_Module_AdvancedSearch_View_AdvancedSearch", weight="30")
+ * @ListChild (list="advsearch.vertical.base", weight="30")
  *}
 <tr class="search-weight">
   <td colspan="3">

@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Search substring
+ * Products list display mode selector
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -9,11 +9,13 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- * @ListChild (list="advsearch.vertical.base", weight="10")
+ * @ListChild (list="productsList.head", weight="10")
  *}
-<tr class="search-string form-field">
-  <td colspan="3">
-    <label for="search-string">Search for:</label>
-    <input type="text" id="search-string" name="search[substring]" value="{search.substring}" />
-  </td>
-</tr>
+<div IF="isDisplayModeAdjustable()" class="display-modes">
+  View as:
+  <ul>
+    <li FOREACH="displayModes,key,name" class="{getDisplayModeLinkClassName(key)}">
+      <a href="{getActionUrl(_ARRAY_(#displayMode#^key))}" class="{key}">{name}</a>
+    </li>
+  </ul>
+</div>

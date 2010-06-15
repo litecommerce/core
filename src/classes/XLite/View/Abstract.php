@@ -59,8 +59,6 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
     const REPLACE       = 'replace';
 
 
-    const DEFAULT_LIST_NAME = 'base';
-
     /**
      * Deep count
      * 
@@ -1093,7 +1091,7 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getViewList($list = self::DEFAULT_LIST_NAME, array $arguments = array())
+    protected function getViewList($list, array $arguments = array())
     {
         if (!isset($this->viewLists[$list])) {
             $this->viewLists[$list] = $this->defineViewList($list);
@@ -1293,7 +1291,7 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function insertViewListByXpath($content, $query, $list = self::DEFAULT_LIST_NAME, $insertPosition = self::INSERT_BEFORE)
+    protected function insertViewListByXpath($content, $query, $list, $insertPosition = self::INSERT_BEFORE)
     {
         $xpath = $this->getXpathByContent($content);
         if ($xpath) {
@@ -1376,7 +1374,7 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function insertViewListByPattern($content, $pattern, $list = self::DEFAULT_LIST_NAME, $replace = '%s')
+    protected function insertViewListByPattern($content, $pattern, $list, $replace = '%s')
     {
         return preg_replace(
             $pattern,
@@ -1396,7 +1394,7 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function displayViewListContent($list = self::DEFAULT_LIST_NAME, array $arguments = array())
+    public function displayViewListContent($list, array $arguments = array())
     {
         echo ($this->getViewListContent($list, $arguments));
     }

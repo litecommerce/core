@@ -106,8 +106,8 @@ class XLite_Model_Repo_ViewList extends XLite_Model_Repo_AbstractRepo
         $qb = XLite_Core_Database::getQB()
             ->select('v')
             ->from('XLite_Model_ViewList', 'v')
-            ->where('v.class = :class AND v.list = :list')
-            ->setParameters(array('class' => $class, 'list' => $list));
+            ->where('v.class IN (:class, :empty) AND v.list = :list')
+            ->setParameters(array('class' => $class, 'empty' => '', 'list' => $list));
 
         return $this->assignDefaultOrderBy($qb, 'v');
     }

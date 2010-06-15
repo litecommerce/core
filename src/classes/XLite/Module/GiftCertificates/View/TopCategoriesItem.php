@@ -32,7 +32,7 @@
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
- * @ListChild (class="XLite_View_TopCategories", list="childs")
+ * @ListChild (list="topCategories.childs")
  */
 class XLite_Module_GiftCertificates_View_TopCategoriesItem extends Xlite_View_Abstract
 {

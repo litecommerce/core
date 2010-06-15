@@ -20,4 +20,8 @@
       <span class="lc-subcategory-name">{subcategory.name}</span>
     </a>
   </li>
+  <li FOREACH="getViewList(#subcategories.childs#),w">
+    {w.display()}
+  </li>
 </ul>
+{displayViewListContent(#subcategories.base#)}

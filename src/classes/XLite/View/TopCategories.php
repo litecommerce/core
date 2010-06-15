@@ -207,7 +207,7 @@ class XLite_View_TopCategories extends XLite_View_SideBarBox
         if (
             ($count - 1) == $index
             && $this->isViewListVisible(
-                'childs',
+                'topCategories.childs',
                 array('rootId' => $this->getParam('rootId'), 'is_subtree' => $this->getParam('is_subtree'))
             )
         ) {

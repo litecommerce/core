@@ -16,7 +16,7 @@
 
   <table>
 
-    {displayViewListContent()}
+    {displayViewListContent(#advsearch.vertical.base#)}
 
   </table>
 
