@@ -1542,8 +1542,8 @@ class Decorator
                 }
 
                 foreach ($lists as $list) {
-                    if (!isset($list['class'])) {
-                        $errors[] = '@ListChild attribute has not "class" parameter';
+                    if (!isset($list['list'])) {
+                        $errors[] = '@ListChild attribute has not "list" parameter';
                     }
                 }
 
@@ -1677,7 +1677,7 @@ class Decorator
 
             foreach ($this->getListChildsByComment(substr(trim($comment), 0, -2)) as $list) {
 
-                if (!isset($this->classesInfo[$list['class']])) {
+                if ($list['class'] && !isset($this->classesInfo[$list['class']])) {
                     $this->addDecorationError(
                         LC_CLASSES_CACHE_DIR . $relativePath,
                         'Class ' . $list['class'] . ' is not found (specified in @ListChild comment attribute)'
@@ -1734,8 +1734,8 @@ class Decorator
      */
     protected function createViewList(array $list, $class = null)
     {
-        if (!isset($list['list'])) {
-            $list['list'] = 'base';
+        if (!isset($list['class'])) {
+            $list['class'] = '';
         }
 
         $viewList = new XLite_Model_ViewList();
@@ -1810,7 +1810,7 @@ class Decorator
         if (isset($attributes['listchild'])) {
             foreach ($attributes['listchild'] as $value) {
                 $list = $this->parseCommentAttribute($value);
-                if (isset($list['class']) && $list['class']) {
+                if (isset($list['list']) && $list['list']) {
                     $lists[] = $list;
                 }
             }
@@ -1871,7 +1871,7 @@ class Decorator
 
             foreach ($this->getListChildsByComment(trim($match[1])) as $list) {
 
-                if (!isset($this->classesInfo[$list['class']])) {
+                if ($list['class'] && !isset($this->classesInfo[$list['class']])) {
                     $this->addDecorationError(
                         $path,
                         'Class ' . $list['class'] . ' is not found (specified in @ListChild comment attribute)'

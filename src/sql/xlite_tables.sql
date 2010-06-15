@@ -464,7 +464,7 @@ DROP TABLE IF EXISTS xlite_view_lists;
 CREATE TABLE xlite_view_lists (
   list_id int(11) NOT NULL auto_increment PRIMARY KEY,
   class varchar(64) NOT NULL default '',
-  list varchar(32) NOT NULL default '',
+  list varchar(64) NOT NULL default '',
   child varchar(64) NOT NULL default '',
   weight mediumint unsigned NOT NULL default 0,
   tpl varchar(255) NOT NULL default '',

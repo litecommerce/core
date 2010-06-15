@@ -66,7 +66,7 @@ class XLite_Model_ViewList extends XLite_Model_AbstractEntity
      * @since  3.0.0
      * @Column (type="string", length="64", nullable=false)
      */
-    protected $class;
+    protected $class = '';
 
     /**
      * Class list name
@@ -75,7 +75,7 @@ class XLite_Model_ViewList extends XLite_Model_AbstractEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @Column (type="string", length="32", nullable=false)
+     * @Column (type="string", length="64", nullable=false)
      */
     protected $list;
 

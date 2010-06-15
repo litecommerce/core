@@ -16,31 +16,15 @@
 
   <div IF="isDisplayModeAdjustable()&isSortBySelectorVisible()" class="list-head">
 
-    <div IF="isDisplayModeAdjustable()" class="display-modes">
-      View as:
-      <ul>
-        <li FOREACH="displayModes,key,name" class="{getDisplayModeLinkClassName(key)}">
-          <a href="{getActionUrl(_ARRAY_(#displayMode#^key))}" class="{key}">{name}</a>
-        </li>
-      </ul>
-    </div>
-
-    <div IF="isSortBySelectorVisible()" class="sort-box">
-
-      <span>Sort by</span>
-      <select class="sort-crit">
-        <option FOREACH="sortByModes,key,name" value="{key}" selected="{isSortByModeSelected(key)}">{name}</option>
-      </select>
-
-      <a href="{getActionUrl(_ARRAY_(#sortOrder#^getSortOrderToChange()))}" class="sort-order">{if:isSortOrderAsc()}&darr;{else:}&uarr;{end:}</a>
-
-    </div>
+    {displayViewListContent(#productsList.head#)}
 
   </div>
 
   <widget template="{getPageBodyTemplate()}" />
 
   <widget name="{getPagerName()}" onlyPages />
+
+  {displayViewListContent(#productsList.base#)}
 
 </div>
 
