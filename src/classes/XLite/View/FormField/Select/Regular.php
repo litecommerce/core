@@ -26,6 +26,13 @@
  * @since      3.0.0
  */
  
+/**
+ * Form regular selector
+ * 
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
+ */
 abstract class XLite_View_FormField_Select_Regular extends XLite_View_FormField_Select_Abstract
 {
 }

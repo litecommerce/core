@@ -29,9 +29,9 @@
 /**
  * XLite_Controller_Admin_Abstract 
  * 
- * @package    XLite
- * @subpackage ____sub_package____
- * @since      3.0.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
 abstract class XLite_Controller_Admin_Abstract extends XLite_Controller_Abstract
 {

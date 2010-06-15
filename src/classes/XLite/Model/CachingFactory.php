@@ -29,9 +29,9 @@
 /**
  * Abstract caching factory 
  * 
- * @package    Lite Commerce
- * @subpackage Model
- * @since      3.0.0
+ * @package Lite Commerce
+ * @see     ____class_see____
+ * @since   3.0.0
  */
 class XLite_Model_CachingFactory extends XLite_Model_Factory implements XLite_Base_ISingleton
 {

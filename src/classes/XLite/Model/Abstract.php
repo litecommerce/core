@@ -42,9 +42,9 @@ $GLOBALS['TEXT_QUALIFIERS'] = array(
 /**
  * Base class is an abstract class for all database-mapped objects
  * 
- * @package    XLite
- * @subpackage ____sub_package____
- * @since      3.0.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
 class XLite_Model_Abstract extends XLite_Base
 {

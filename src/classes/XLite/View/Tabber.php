@@ -30,9 +30,9 @@
  * Tabber is a component allowing to organize your dialog into pages and 
  * switch between the page using Tabs at the top.
  *
- * @package    XLite
- * @subpackage View
- * @since      3.0.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
 class XLite_View_Tabber extends XLite_View_Abstract
 {

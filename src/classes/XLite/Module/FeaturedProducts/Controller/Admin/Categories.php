@@ -29,9 +29,9 @@
 /**
  * XLite_Module_FeaturedProducts_Controller_Admin_Categories
  * 
- * @package    XLite
- * @subpackage Controller
- * @since      3.0.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
 class XLite_Module_FeaturedProducts_Controller_Admin_Categories extends XLite_Controller_Admin_Categories implements XLite_Base_IDecorator
 {

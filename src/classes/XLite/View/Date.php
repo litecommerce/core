@@ -29,10 +29,10 @@
 /**
  * Date selector widget
  * 
- * @package    XLite
- * @subpackage View
+ * @package XLite
+ * @see     ____class_see____
  * @see        ____class_see____
- * @since      3.0.0
+ * @since   3.0.0
  */
 class XLite_View_Date extends XLite_View_FormField
 {

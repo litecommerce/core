@@ -30,9 +30,9 @@
 /**
  * Regular button
  * 
- * @package    XLite
- * @subpackage View
- * @since      3.0.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
 class XLite_View_Button_Regular extends XLite_View_Button_Abstract
 {

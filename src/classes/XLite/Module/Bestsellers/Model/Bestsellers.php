@@ -29,10 +29,10 @@
 /**
  * Bestsellers model 
  * 
- * @package    XLite
- * @subpackage Model
+ * @package XLite
+ * @see     ____class_see____
  * @see        ____class_see____
- * @since      3.0.0
+ * @since   3.0.0
  */
 class XLite_Module_Bestsellers_Model_Bestsellers extends XLite_Base
 {

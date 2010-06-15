@@ -27,12 +27,12 @@
  */
 
 /**
-* Adds "Featured Products" page to customer's zone
-*
-* @access public
-* @version $Id$
-* @package Module_FeaturedProducts
-*/
+ * Featured Products module manager
+ * 
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
+ */
 class XLite_Module_FeaturedProducts_Main extends XLite_Module_Abstract
 {
     const FEATURED_PRODUCTS_TABLE = 'xlite_featured_products';

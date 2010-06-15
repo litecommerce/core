@@ -29,9 +29,9 @@
 /**
  * XLite_View_Content 
  * 
- * @package    XLite
- * @subpackage ____sub_package____
- * @since      3.0.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
 class XLite_View_Content extends XLite_View_Abstract
 {

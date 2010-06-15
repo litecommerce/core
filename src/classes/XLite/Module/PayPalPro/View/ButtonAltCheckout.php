@@ -26,6 +26,13 @@
  * @since      3.0.0
  */
 
+/**
+ * PayPal Pro checkout button
+ * 
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
+ */
 class XLite_Module_PayPalPro_View_ButtonAltCheckout extends XLite_View_Button_Image
 {
     /**

@@ -27,12 +27,12 @@
  */
 
 /**
-* Recently viewed page controller
-*
-* @package LiteCommerce
-* @access public
-* @version $Id$
-*/
+ * Recently viewed page controller
+ * 
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
+ */
 class XLite_Module_ProductAdviser_Controller_Customer_RecentlyViewed extends XLite_Controller_Customer_Abstract
 {
     /**

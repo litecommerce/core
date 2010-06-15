@@ -29,9 +29,9 @@
 /**
  * Gift Certificate E-Card preview controller
  * 
- * @package    XLite
- * @subpackage Controller
- * @since      3.0.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
 class XLite_Module_GiftCertificates_Controller_Admin_PreviewEcard
 extends XLite_Module_GiftCertificates_Controller_Customer_PreviewEcard

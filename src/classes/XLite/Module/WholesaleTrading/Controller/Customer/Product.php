@@ -29,9 +29,9 @@
 /**
  * XLite_Module_WholesaleTrading_Controller_Customer_Product 
  * 
- * @package    XLite
- * @subpackage ____sub_package____
- * @since      3.0.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
 class XLite_Module_WholesaleTrading_Controller_Customer_Product extends XLite_Controller_Customer_Product implements XLite_Base_IDecorator
 {

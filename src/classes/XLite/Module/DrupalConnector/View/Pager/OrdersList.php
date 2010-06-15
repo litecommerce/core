@@ -26,6 +26,13 @@
  * @since      3.0.0
  */
 
+/**
+ * List pager for Orders list
+ * 
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
+ */
 class XLite_Module_DrupalConnector_View_Pager_OrdersList extends XLite_View_Pager_OrdersList
 implements XLite_Base_IDecorator
 {
