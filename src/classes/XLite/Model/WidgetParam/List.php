@@ -91,7 +91,7 @@ class XLite_Model_WidgetParam_List extends XLite_Model_WidgetParam_String
     {
         parent::__construct($label, $value, $isSetting);
 
-        // TODO - check if there are more convinient way to extend this class
+        // TODO - check if there are more convinient ways to extend this class
         if (!isset($this->options)) {
             $this->options = $options;
         }

@@ -39,10 +39,14 @@ abstract class XLite_View_Model_Profile_Abstract extends XLite_View_Model_Abstra
      * Form sections 
      */
     
-    const SECTION_MAIN     = 'main';
-    const SECTION_ACCESS   = 'access';
     const SECTION_BILLING  = 'billing';
     const SECTION_SHIPPING = 'shipping';
+
+    /**
+     * The "Shipping as billing address" checkbox
+     */
+
+    const FLAG_SHIP_AS_BILL = 'shipAsBill';
 
 
     /**
@@ -53,73 +57,6 @@ abstract class XLite_View_Model_Profile_Abstract extends XLite_View_Model_Abstra
      * @since  3.0.0
      */
     protected $allowedTargets = array('profile');
-
-    /**
-     * Available form sections 
-     * 
-     * @var    array
-     * @access protected
-     * @since  3.0.0
-     */
-    protected $sections = array(
-        self::SECTION_MAIN     => 'E-mail & Password',
-        self::SECTION_ACCESS   => 'Access information',
-        self::SECTION_BILLING  => 'Billing address',
-        self::SECTION_SHIPPING => 'Shipping address',
-    );
-
-
-    /**
-     * Schema of the "E-mail & Password" section
-     * 
-     * @var    array
-     * @access protected
-     * @since  3.0.0
-     */
-    protected $mainSchema = array(
-        'login' => array(
-            self::SCHEMA_CLASS    => 'XLite_View_FormField_Input_Text',
-            self::SCHEMA_LABEL    => 'E-mail',
-            self::SCHEMA_REQUIRED => true,
-        ),
-        'password' => array(
-            self::SCHEMA_CLASS    => 'XLite_View_FormField_Input_Password',
-            self::SCHEMA_LABEL    => 'Password',
-            self::SCHEMA_REQUIRED => false,
-            self::SCHEMA_VALUE    => '',
-        ),
-        'password_conf' => array(
-            self::SCHEMA_CLASS    => 'XLite_View_FormField_Input_Password',
-            self::SCHEMA_LABEL    => 'Confirm password',
-            self::SCHEMA_REQUIRED => false,
-            self::SCHEMA_VALUE    => '',
-        ),
-    );
-
-    /**
-     * Schema of the "User access" section
-     * 
-     * @var    array
-     * @access protected
-     * @since  3.0.0
-     */
-    protected $accessSchema = array(
-        'access_level' => array(
-            self::SCHEMA_CLASS    => 'XLite_View_FormField_Select_AccessLevel',
-            self::SCHEMA_LABEL    => 'Access level',
-            self::SCHEMA_REQUIRED => true,
-        ),
-        'status' => array(
-            self::SCHEMA_CLASS    => 'XLite_View_FormField_Select_AccountStatus',
-            self::SCHEMA_LABEL    => 'Account status',
-            self::SCHEMA_REQUIRED => true,
-        ),
-        'membership' => array(
-            self::SCHEMA_CLASS    => 'XLite_View_FormField_Select_Membership',
-            self::SCHEMA_LABEL    => 'Membership',
-            self::SCHEMA_REQUIRED => false,
-        ),
-    );
 
     /**
      * Schema of the "Billing/Shipping address" sections
@@ -195,39 +132,58 @@ abstract class XLite_View_Model_Profile_Abstract extends XLite_View_Model_Abstra
 
 
     /**
-     * Return title
-     *
-     * @return string
+     * Add the checkbox to the fields list 
+     * 
+     * @return array
      * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getHead()
+    protected function getShipAsBillSchema()
     {
-        return 'Profile details';
+        return array(
+            self::FLAG_SHIP_AS_BILL => array(
+                self::SCHEMA_CLASS => 'XLite_View_FormField_Input_Checkbox_ShipAsBill',
+            ),
+        );
     }
 
     /**
-     * Return file name for body template
-     *
-     * @return id
+     * Return instance of the "Ship as bill" separator field
+     * PHP_5_3
+     * 
+     * @return XLite_View_FormField_Separator_ShippingAddress
      * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getBodyTemplate()
+    protected function getShipAsBillWidget()
     {
-        return $this->isExported() ? 'profile/form_content.tpl' : parent::getBodyTemplate();
+        $class = 'XLite_View_FormField_Separator_ShippingAddress';
+        $checkbox = $this->getFormField(self::SECTION_HIDDEN, self::FLAG_SHIP_AS_BILL);
+
+        return new $class(
+            array(
+                self::SCHEMA_LABEL => $this->sections[self::SECTION_SHIPPING],
+                $class::PARAM_SHIP_AS_BILL_CHECKBOX => $checkbox,
+            )
+        );
     }
 
     /**
-     * Model class associated with the form
+     * Return list of the class-specific sections
      *
-     * @return string
+     * @return array
      * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getDefaultModelObjectClass()
+    protected function getProfileAddressSections()
     {
-        return 'XLite_Model_Profile';
+        return array(
+            self::SECTION_BILLING  => 'Billing address',
+            self::SECTION_SHIPPING => 'Shipping address',
+        );
     }
 
     /**
@@ -243,8 +199,51 @@ abstract class XLite_View_Model_Profile_Abstract extends XLite_View_Model_Abstra
     }
 
     /**
-     * Define form field classes and values
+     * Model class associated with the form
      *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultModelObjectClass()
+    {
+        return 'XLite_Model_Profile';
+    }
+
+    /**
+     * Return name of web form widget class
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getFormClass()
+    {
+        return 'XLite_View_Form_Profile';
+    }
+
+    /**
+     * Pass the DOM IDs of the "State" selectbox to the "CountrySelector" widget
+     * 
+     * @param array  &$fields widgets list
+     * @param string $section current section
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function setStateSelectorIds(array &$fields, $section)
+    {
+        $fields[$section . '_country']->setStateSelectorIds(
+            $fields[$section . '_state']->getFieldId(),
+            $fields[$section . '_custom_state']->getFieldId()
+        );
+    }
+
+    /**
+     * Define form field classes and values 
+     * 
      * @return void
      * @access protected
      * @since  3.0.0
@@ -253,35 +252,12 @@ abstract class XLite_View_Model_Profile_Abstract extends XLite_View_Model_Abstra
     {
         parent::defineFormFields();
 
-        foreach ($this->sections as $section => $label) {
-
-            $this->formFields[$section] = new XLite_View_FormField_Separator_Regular(
-                array(self::SCHEMA_LABEL => $label)
-            );
-
-            switch ($section) {
-
-                case self::SECTION_MAIN:
-                    $this->formFields += $this->getMainFields();
-                    $this->formFields['password_conf']->setValue($this->formFields['password']->getValue());
-                    break;
-
-                case self::SECTION_ACCESS:
-                    $this->formFields += $this->getAccessFields();
-                    break;
-
-                case self::SECTION_BILLING:
-                    $this->formFields += $this->getBillingAddressFields();
-                    break;
-
-                case self::SECTION_SHIPPING:
-                    $this->formFields += $this->getShippingAddressFields();
-                    break;
-
-                default:
-            }
+        // "Shipping as billing address" checkbox
+        if (isset($this->formFields[self::SECTION_SHIPPING])) {
+            $this->formFields[self::SECTION_SHIPPING][self::SECTION_PARAM_WIDGET] = $this->getShipAsBillWidget();
         }
     }
+
 
     /**
      * Modify address field schema for certain address type (billing or shipping) 
@@ -296,7 +272,7 @@ abstract class XLite_View_Model_Profile_Abstract extends XLite_View_Model_Abstra
     {
         $result = array();
 
-        foreach ($this->addressSchema as $key =>$data) {
+        foreach ($this->addressSchema as $key => $data) {
             $result[$type . '_' . $key] = $data;
         }
 
@@ -304,182 +280,170 @@ abstract class XLite_View_Model_Profile_Abstract extends XLite_View_Model_Abstra
     }
 
     /**
-     * Populate model object properties by the passed data
-     * 
-     * @param array $data data to set
-     *  
-     * @return void
+     * Some JavaScript code to insert
+     *
+     * @return string
      * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function setModelProperties(array $data)
+    protected function getInlineJSCode()
     {
-        if (isset($data['password'])) {
-            $data['password'] = XLite_Model_Auth::encryptPassword($data['password']);
-        }
-
-        parent::setModelProperties($data);
+        return $this->getWidget(array(), 'XLite_View_JS_StatesList')->getContent();
     }
 
     /**
-     * Check password and its confirmation
+     * Return text for the "Submit" button
      * 
-     * @param array $data passed data
-     *  
-     * @return bool
+     * @return string
      * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function checkPassword(array $data)
+    protected function getSubmitButtonLabel()
     {
-        $result = true;
+        return XLite_Model_Auth::getInstance()->isLogged() ? 'Update profile' : 'Create new account';
+    }
 
-        if (
-            isset($this->sections[self::SECTION_MAIN])
-            && (!empty($data['password']) || !empty($data['password_conf']))
-        ) {
-
-            $result = $data['password'] == $data['password_conf'];
-
-            if (!$result) {
-                XLite_Core_TopMessage::getInstance()->addError('Password and its confirmation do not match');
-            }
-
-        } else {
-
-            $this->getModelObject()->unsetProperty('password');
-            $this->getModelObject()->unsetProperty('password_conf');
-        }
+    /**
+     * Return list of the "Button" widgets
+     *
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getFormButtons()
+    {
+        $result = parent::getFormButtons();
+        $result['submit'] = new XLite_View_Button_Submit(
+            array(XLite_View_Button_Abstract::PARAM_LABEL => $this->getSubmitButtonLabel())
+        );
 
         return $result;
     }
 
     /**
-     * Create profile 
-     * 
-     * @param array $data model properties
-     *  
-     * @return bool
+     * prepareRequestData
+     *
+     * @param array $data request data
+     *
+     * @return array
      * @access protected
-     * @since  3.0.0
-     */
-    protected function performActionCreate(array $data = array())
-    {
-        return $this->checkPassword($data) ? parent::performActionCreate($data) : false;
-    }
-
-    /**
-     * Update profile 
-     * 
-     * @param array $data model properties
-     *  
-     * @return bool
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function performActionUpdate(array $data = array())
-    {
-        return $this->checkPassword($data) ? parent::performActionUpdate($data) : false;
-    }
-
-    /**
-     * Modify profile 
-     * 
-     * @param array $data model properties
-     *  
-     * @return bool
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function performActionModify(array $data = array())
-    {
-        return $this->checkPassword($data) ? parent::performActionModify($data) : false;
-    }
-
-    /**
-     * Return ID of current profile
-     * 
-     * @return integer
-     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    abstract public function getProfileId();
-
-    /**
-     * Return fields list by the corresponding schema
-     * 
-     * @return array
-     * @access public
-     * @since  3.0.0
-     */
-    public function getMainFields()
+    protected function prepareRequestData(array $data)
     {
-        if (!$this->getModelObject()->isPersistent) {
-            foreach (array('password', 'password_conf') as $field) {
-                $this->mainSchema[$field][self::SCHEMA_REQUIRED] = true;
-                unset($this->mainSchema[$field][self::SCHEMA_VALUE]);
+        $result = parent::prepareRequestData($data);
+
+        if (!empty($result[self::FLAG_SHIP_AS_BILL])) {
+            foreach (array_keys($this->addressSchema) as $key) {
+                if (isset($result['billing_' . $key])) {
+                    $result['shipping_' . $key] = $result['billing_' . $key];
+                }
             }
         }
 
-        return $this->getFieldsBySchema($this->mainSchema);
+        return $result;
     }
 
+
     /**
-     * Return fields list by the corresponding schema
-     * 
-     * @return array
+     * Return model object to use
+     *
+     * @return XLite_Model_Abstract
      * @access public
      * @since  3.0.0
      */
-    public function getAccessFields()
+    public function getModelObject()
     {
-        return $this->getFieldsBySchema($this->accessSchema);
+        $profile = parent::getModelObject();
+
+        // Reset profile if it's not valid
+        if (!XLite_Model_Auth::getInstance()->checkProfile($profile)) {
+            $profile = XLite_Model_CachingFactory::getObject(__METHOD__, 'XLite_Model_Profile');
+        }
+
+        return $profile;
     }
 
     /**
      * Return fields list by the corresponding schema
-     * 
+     *
      * @return array
      * @access public
      * @since  3.0.0
      */
-    public function getBillingAddressFields()
+    public function getFormFieldsForSectionBilling()
     {
         $result = $this->getFieldsBySchema($this->getAddressSchema('billing'));
 
         // For country <-> state syncronization
-        $result['billing_country']->setStateSelectorIds(
-            $result['billing_state']->getFieldId(),
-            $result['billing_custom_state']->getFieldId()
-        );
+        $this->setStateSelectorIds($result, 'billing');
 
         return $result;
     }
 
     /**
      * Return fields list by the corresponding schema
-     *  
+     *
      * @return array
      * @access public
      * @since  3.0.0
      */
-    public function getShippingAddressFields()
+    public function getFormFieldsForSectionShipping()
     {
         $result = $this->getFieldsBySchema($this->getAddressSchema('shipping'));
 
         // For country <-> state syncronization
-        $result['shipping_country']->setStateSelectorIds(
-            $result['shipping_state']->getFieldId(),
-            $result['shipping_custom_state']->getFieldId()
-        );
+        $this->setStateSelectorIds($result, 'shipping');
 
         return $result;
     }
 
     /**
-     * Get a list of CSS files required to display the widget properly 
+     * Check if billing and shipping addresses are the same
      * 
+     * @return bool
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getShipAsBillFlag()
+    {
+        return $this->isValid() && $this->getModelObject()->isSameAddress();
+    }
+    
+    /**
+     * getRequestProfileId 
+     * 
+     * @return int|null
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getRequestProfileId()
+    {
+        return XLite_Core_Request::getInstance()->profile_id;
+    }
+
+    /**
+     * Return current profile ID
+     * 
+     * @return int
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getProfileId()
+    {
+        return $this->getRequestProfileId() ?: XLite_Model_Session::getInstance()->get('profile_id');
+    }
+
+    /**
+     * Get a list of CSS files required to display the widget properly
+     *
      * @return array
      * @access public
      * @since  3.0.0
@@ -487,57 +451,17 @@ abstract class XLite_View_Model_Profile_Abstract extends XLite_View_Model_Abstra
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
-
-        $list[] = $this->getDir() . '/profile/profile.css';
+        $list[] = $this->getDir() . '/profile/addresses.css';
 
         return $list;
     }
 
     /**
-     * Check - billing and shuipping addresses are equal or not
-     * 
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function isSameAddress()
-    {
-        return $this->getModelObject()->isSameAddress();
-    }
-
-    /**
-     * Check data and return only ones for the current fieldset 
-     * 
-     * @param array $data data to check
-     *  
-     * @return array
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getFieldsetData(array $data)
-    {
-        $data = parent::getFieldsetData($data);
-
-        if (isset($data['ship_as_bill'])) {
-            if ('Y' == $data['ship_as_bill']) {
-                foreach (array_keys($this->addressSchema) as $k) {
-                    $data['shipping_' . $k] = $data['billing_' . $k];
-                }
-            }
-
-            unset($data['ship_as_bill']);
-        }
-
-        return $data;
-    }
-
-    /**
-     * Constructor
-     * 
-     * @param array $params   Widget parameters
-     * @param array $sections Sections lsit
-     *  
+     * Save current form reference and sections list, and initialize the cache
+     *
+     * @param array $params   widget params
+     * @param array $sections sections list
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -545,11 +469,10 @@ abstract class XLite_View_Model_Profile_Abstract extends XLite_View_Model_Abstra
      */
     public function __construct(array $params = array(), array $sections = array())
     {
-        parent::__construct($params);
+        $this->sections += $this->getProfileAddressSections();
 
-        if (!empty($sections)) {
-            $this->sections = XLite_Core_Converter::filterArrayByKeys($this->sections, $sections);
-        }
+        parent::__construct($params, $sections);
+
+        $this->schemaHidden += $this->getShipAsBillSchema();
     }
 }
-

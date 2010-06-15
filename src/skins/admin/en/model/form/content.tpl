@@ -11,7 +11,13 @@
  * @since     3.0.0
  *}
 
-<table>
-  <tr FOREACH="getFormFields(),name,field">{field.display()}</tr>
-</table>
+{* TODO (FlexyCompiler) - improve the approach to access array fields *}
+{* TODO (FlexyCompiler) - add the ability to use constants *}
+
+<div FOREACH="getFormFields(),section,data" class="{section}-section">
+  <table class="{section}-table">
+    <tr>{data.sectionParamWidget.display()}</tr>
+    <tr FOREACH="data.sectionParamFields,field">{field.display()}</tr>
+  </table>
+</div>
 

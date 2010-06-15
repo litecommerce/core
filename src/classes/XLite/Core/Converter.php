@@ -191,22 +191,39 @@ class XLite_Core_Converter extends XLite_Base implements XLite_Base_ISingleton
     }
 
     /**
-     * Return array elements having the corresponded keys 
+     * Return array elements having the corresponded keys
      * 
-     * @param array $data array to filter
-     * @param array $keys keys (filter rule)
+     * @param array $data   array to filter
+     * @param array $keys   keys (filter rule)
+     * @param bool  $invert flag; determines which function to use: "diff" or "intersect"
      *  
-     * @return array
+     * @return void
      * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function filterArrayByKeys(array $data, array $keys)
+    public static function filterArrayByKeys(array $data, array $keys, $invert = false)
     {
-        return array_intersect_key($data, array_fill_keys($keys, true));
+        $function = 'array_' . ($invert ? 'diff' : 'intersect') . '_key';
+
+        return $function($data, array_fill_keys($keys, true));
     }
 
     /**
-     * Gget cropped dimensions 
+     * Generate random token (32 chars)
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function generateRandomToken()
+    {
+        return md5(microtime(true) + rand(0, 1000000));
+    }
+
+    /**
+     * Get cropped dimensions 
      * 
      * @param integer $w    Original width
      * @param integer $h    Original height

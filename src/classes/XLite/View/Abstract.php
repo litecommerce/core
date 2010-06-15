@@ -48,7 +48,6 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
 
     const PARAM_TEMPLATE     = 'template';
     const PARAM_VISIBLE      = 'visible';
-    const PARAM_MODE         = 'mode';
     const PARAM_SESSION_CELL = 'sessionCell';
 
 

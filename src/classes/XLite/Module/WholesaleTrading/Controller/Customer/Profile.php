@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+// FIXME - must be completely revised
+
 /**
  * ____description____
  * 
@@ -35,7 +37,7 @@
  */
 class XLite_Module_WholesaleTrading_Controller_Customer_Profile extends XLite_Controller_Customer_Profile implements XLite_Base_IDecorator
 {
-    function init()
+/*    function init()
     {
         parent::init();
         $this->params[] = "payed_membership";
@@ -80,5 +82,5 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Profile extends XLite_Co
                 return true;
             }
             return false;
-    }
+    }*/
 }

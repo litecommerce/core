@@ -87,7 +87,10 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
      */
     protected function checkProfile()
     {
-        return XLite_Model_CachingFactory::getObject(__METHOD__, $this->getModelFormClass())->isValid();
+        // TODO - check this
+        //return XLite_Model_CachingFactory::getObject(__METHOD__, $this->getModelFormClass())->isValid();
+
+        return $this->getModelForm()->isValid();
     }
 
     /**
@@ -376,18 +379,17 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
         $this->setStepTopMessage();
     }
 
-
     /**
-     * Register user during checkout
-     *
-     * @return void
+     * doActionModifyProfile 
+     * 
+     * @return bool
      * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function doActionRegister()
+    protected function doActionModifyProfile()
     {
-        $this->getModelForm()->performAction('modify');
-        $this->renewShippingMethod();
+        return $this->getModelForm()->performAction('modify');
     }
 
     /**
@@ -441,21 +443,6 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
             $this->getCart()->set('shipping_id', XLite_Core_Request::getInstance()->shipping);
             $this->updateCart();
         }
-    }
-
-    /**
-     * Renew shipping method 
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function renewShippingMethod()
-    {
-        $this->getCart()->refresh('shippingRates');
-        $this->getCart()->refresh('profile');
-        $this->getCart()->getShippingRates();
     }
 
     /**

@@ -27,48 +27,37 @@
  */
 
 /**
- * Profile model switcher widget
+ * XLite_View_Form_Profile_Addresses 
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @package    XLite
+ * @subpackage ____sub_package____
+ * @see        ____class_see____
+ * @since      3.0.0
  */
-class XLite_View_Model_Profile_Trigger extends XlIte_Base implements XLite_Base_ISingleton
+class XLite_View_Form_Profile_Addresses extends XLite_View_Form_Profile_Abstract
 {
     /**
-     * Register mode
+     * getDefaultTarget 
      * 
      * @return string
      * @access protected
      * @since  3.0.0
      */
-    protected function getRegisterMode()
+    protected function getDefaultTarget()
     {
-        return 'register';
+        return 'address_book';
     }
 
     /**
-     * Return class name of the register form widget
+     * getDefaultAction 
      * 
      * @return string
-     * @access public
+     * @access protected
      * @since  3.0.0
      */
-    public function getProfileFormClass()
+    protected function getDefaultAction()
     {
-        return 'XLite_View_Model_Profile_' 
-            . ($this->getRegisterMode() === XLite_Core_Request::getInstance()->mode ? 'Register' : 'Modify');
-    }
-
-    /**
-     * Use this function to get a reference to this class object
-     *
-     * @return XLite
-     * @access public
-     * @since  3.0.0
-     */
-    public static function getInstance()
-    {
-        return self::getInternalInstance(__CLASS__);
+        return 'update';
     }
 }
+

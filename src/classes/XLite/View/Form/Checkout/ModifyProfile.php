@@ -27,73 +27,49 @@
  */
 
 /**
- * Profile model widget (Register page)
+ * Register form (Checkout page)
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_Model_Profile_Register extends XLite_View_Model_Profile_Abstract
+class XLite_View_Form_Checkout_ModifyProfile extends XLite_View_Form_Checkout_Abstract
 {
     /**
-     * Return name of web form widget class
-     *
+     * Current form name 
+     * 
      * @return string
      * @access protected
      * @since  3.0.0
      */
-    protected function getFormClass()
+    protected function getFormName()
     {
-        return 'XLite_View_Form_Profile_Register';
+        return 'modify_profile_form';
     }
 
     /**
-     * Perform certain action for the model object
-     *
-     * @param array $data model properties
-     *
-     * @return bool
+     * getDefaultAction 
+     * 
+     * @return string
      * @access protected
      * @since  3.0.0
      */
-    protected function performActionCreate(array $data = array())
+    protected function getDefaultAction()
     {
-        $result = parent::performActionCreate($data);
-
-        if ($result) {
-            $this->setReturnUrlParams(array('profile_id' => $this->getModelObject()->get('profile_id')));
-        }
-
-        return $result;
-    }
-
-
-    /**
-     * Perform some action for the model object
-     *
-     * @param string $action action to perform
-     * @param array  $data   form data
-     *
-     * @return bool
-     * @access public
-     * @since  3.0.0
-     */
-    public function performAction($action, array $data = array())
-    {
-        $this->setReturnUrlParams(array(self::PARAM_MODE => 'register'));
-
-        return parent::performAction($action, $data);
+        return 'modify_profile';
     }
 
     /**
-     * Return ID of current profile
-     * 
-     * @return int 
-     * @access public
+     * getDefaultClassName
+     *
+     * @return string
+     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getProfileId()
+    protected function getDefaultClassName()
     {
-        return null;
+        return 'profile-form';
     }
 }
+

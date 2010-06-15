@@ -39,8 +39,9 @@ class XLite_View_FormField_Select_Country extends XLite_View_FormField_Select_Re
      * Widget param names
      */
 
-    const PARAM_ALL = 'all';
-    const PARAM_STATE_SELECTOR = '';
+    const PARAM_ALL               = 'all';
+    const PARAM_STATE_SELECTOR_ID = 'stateSelectorId';
+    const PARAM_STATE_INPUT_ID    = 'stateInputId';
 
 
     /**
@@ -53,23 +54,6 @@ class XLite_View_FormField_Select_Country extends XLite_View_FormField_Select_Re
      */
     protected $onlyEnabled = false;
 
-    /**
-     * State selector id 
-     * 
-     * @var    string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected $stateSelectorId = null;
-
-    /**
-     * State input id 
-     * 
-     * @var    string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected $stateInputId = null;
 
     /**
      * Return field template
@@ -95,7 +79,9 @@ class XLite_View_FormField_Select_Country extends XLite_View_FormField_Select_Re
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_ALL => new XLite_Model_WidgetParam_Bool('All', false),
+            self::PARAM_ALL               => new XLite_Model_WidgetParam_Bool('All', false),
+            self::PARAM_STATE_SELECTOR_ID => new XLite_Model_WidgetParam_String('State select ID', null),
+            self::PARAM_STATE_INPUT_ID    => new XLite_Model_WidgetParam_String('State input ID', null),
         );
     }
 
@@ -114,49 +100,43 @@ class XLite_View_FormField_Select_Country extends XLite_View_FormField_Select_Re
     }
 
     /**
-     * Get countries states array
+     * getDefaultValue 
      * 
-     * @return array
+     * @return string
      * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getCountriesStates()
+    protected function getDefaultValue()
     {
-        return XLite_Core_Database::getRepo('XLite_Model_Country')
-            ->findCountriesStates();
+        return $this->config->General->default_country;
     }
 
     /**
-     * Get state selector id
+     * Some JavaScript code to insert
      *
      * @return string
      * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getStateSelectorId()
+    protected function getInlineJSCode()
     {
-        return $this->stateSelectorId;
+        return '$(document).ready(function() { '
+            . 'stateSelectors[\'' . $this->getFieldId() . '\'] = new StateSelector('
+            . '\'' . $this->getFieldId() . '\', '
+            . '\'' . $this->getParam(self::PARAM_STATE_SELECTOR_ID) . '\', '
+            . '\'' . $this->getParam(self::PARAM_STATE_INPUT_ID) . '\'); });';
     }
 
     /**
-     * Get state input id
+     * Save current form reference and sections list, and initialize the cache
      *
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getStateInputId()
-    {
-        return $this->stateInputId;
-    }
-
-    /**
-     * Constructor
-     * 
      * @param array $params widget params
-     *  
+     *
      * @return void
      * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function __construct(array $params = array())
@@ -179,7 +159,6 @@ class XLite_View_FormField_Select_Country extends XLite_View_FormField_Select_Re
     public function getJSFiles()
     {
         $list = parent::getJSFiles();
-
         $list[] = $this->getDir() . '/select_country.js';
 
         return $list;
@@ -187,7 +166,7 @@ class XLite_View_FormField_Select_Country extends XLite_View_FormField_Select_Re
 
     /**
      * Pass the DOM Id fo the "States" selectbox
-     * NOTE: this function is public since it's called from the View_Model_Profile_Abstract class
+     * NOTE: this function is public since it's called from the View_Model_Profile_Base_Abstract class
      * 
      * @param string $selectorId DOM Id of the "States" selectbox
      *  
@@ -197,8 +176,8 @@ class XLite_View_FormField_Select_Country extends XLite_View_FormField_Select_Re
      */
     public function setStateSelectorIds($selectorId, $inputId)
     {
-        $this->stateSelectorId = $selectorId;
-        $this->stateInputId = $inputId;
+        $this->getWidgetParams(self::PARAM_STATE_SELECTOR_ID)->setValue($selectorId);
+        $this->getWidgetParams(self::PARAM_STATE_INPUT_ID)->setValue($inputId);
     }
 }
 

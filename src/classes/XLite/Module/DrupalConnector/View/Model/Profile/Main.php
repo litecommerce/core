@@ -3,9 +3,9 @@
 
 /**
  * LiteCommerce
- * 
+ *
  * NOTICE OF LICENSE
- * 
+ *
  * This source file is subject to the Open Software License (OSL 3.0)
  * that is bundled with this package in the file LICENSE.txt.
  * It is also available through the world-wide-web at this URL:
@@ -13,11 +13,11 @@
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
  * to licensing@litecommerce.com so we can send you a copy immediately.
- * 
+ *
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage View
- * @author     Creative Development LLC <info@cdev.ru> 
+ * @subpackage ____sub_package____
+ * @author     Creative Development LLC <info@cdev.ru>
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @version    SVN: $Id$
@@ -27,36 +27,30 @@
  */
 
 /**
- * Register form (Checkout page)
- * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * XLite_Module_DrupalConnector_View_Model_Profile_Main
+ *
+ * @package    XLite
+ * @subpackage ____sub_package____
+ * @see        ____class_see____
+ * @since      3.0.0
  */
-class XLite_View_Form_Checkout_Register extends XLite_View_Form_Checkout_Abstract
+class XLite_Module_DrupalConnector_View_Model_Profile_Main extends XLite_View_Model_Profile_Main implements XLite_Base_IDecorator
 {
     /**
-     * Current form name 
-     * 
-     * @return string
+     * Process the errors occured during the "validateInput" action
+     *
+     * @return void
      * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getFormName()
+    protected function postprocessErrorActionValidateInput()
     {
-        return 'register_form';
-    }
-
-    /**
-     * getDefaultAction 
-     * 
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getDefaultAction()
-    {
-        return 'register';
+        if (XLite_Module_DrupalConnector_Handler::getInstance()->checkCurrentCMS()) {
+            // Highligth the "Email" field using Drupal function
+            form_set_error('mail', t($this->getErrorActionValidateInputMessage($this->getRequestData('login'))));
+        } else {
+            parent::postprocessErrorActionValidateInput();
+        }
     }
 }
-

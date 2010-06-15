@@ -42,9 +42,11 @@ abstract class XLite_View_FormField_Abstract extends XLite_View_Abstract
     const PARAM_VALUE      = 'value';
     const PARAM_REQUIRED   = 'required';
     const PARAM_ATTRIBUTES = 'attributes';
-    const PARAM_NAME       = 'name';
+    const PARAM_NAME       = 'fieldName';
     const PARAM_LABEL      = 'label';
     const PARAM_COMMENT    = 'comment';
+
+    const PARAM_IS_ALLOWED_FOR_CUSTOMER = 'isAllowedForCustomer';
 
     /**
      * Available field types
@@ -59,6 +61,16 @@ abstract class XLite_View_FormField_Abstract extends XLite_View_Abstract
 
 
     /**
+     * name 
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $name = null;
+
+    /**
      * validityFlag
      *
      * @var    bool
@@ -66,6 +78,16 @@ abstract class XLite_View_FormField_Abstract extends XLite_View_Abstract
      * @since  3.0.0
      */
     protected $validityFlag = null;
+
+    /**
+     * Determines if this field is visible for customers or not 
+     * 
+     * @var    bool
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $isAllowedForCustomer = true;
 
 
     /**
@@ -103,20 +125,6 @@ abstract class XLite_View_FormField_Abstract extends XLite_View_Abstract
     }
 
     /**
-     * getSavedValue 
-     * 
-     * @return mixed
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getSavedValue()
-    {
-        $form = XLite_View_Model_Abstract::getCurrentForm();
-
-        return isset($form) ? $form->getSavedFieldValue($this->getName()) : null;
-    }
-
-    /**
      * checkSavedValue 
      * 
      * @return bool
@@ -125,7 +133,7 @@ abstract class XLite_View_FormField_Abstract extends XLite_View_Abstract
      */
     protected function checkSavedValue()
     {
-        return !is_null($this->getSavedValue());
+        return !is_null($this->callFormMethod('getSavedData', array($this->getName())));
     }
 
     /**
@@ -145,6 +153,43 @@ abstract class XLite_View_FormField_Abstract extends XLite_View_Abstract
     }
 
     /**
+     * getCommonAttributes 
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getCommonAttributes()
+    {
+        return array(
+            'id'   => $this->getFieldId(),
+            'name' => $this->getName(),
+        );
+    }
+
+    /**
+     * setCommonAttributes 
+     * 
+     * @param array $attrs field attributes to prepare
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function setCommonAttributes(array $attrs)
+    {
+        foreach ($this->getCommonAttributes() as $name => $value) {
+            if (!isset($attrs[$name])) {
+                $attrs[$name] = $value;
+            }
+        }
+
+        return $attrs;
+    }
+
+    /**
      * prepareAttributes 
      * 
      * @param array $attrs field attributes to prepare
@@ -159,7 +204,7 @@ abstract class XLite_View_FormField_Abstract extends XLite_View_Abstract
             $attrs['class'] = (empty($attrs['class']) ? '' : $attrs['class'] . ' ') . 'form_field_error';
         }
 
-        return $attrs;
+        return $this->setCommonAttributes($attrs);
     }
 
     /**
@@ -205,6 +250,58 @@ abstract class XLite_View_FormField_Abstract extends XLite_View_Abstract
     }
 
     /**
+     * Some JavaScript code to insert 
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getInlineJSCode()
+    {
+        return null;
+    }
+
+    /**
+     * getDefaultName 
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getDefaultName()
+    {
+        return null;
+    }
+
+    /**
+     * getDefaultValue 
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getDefaultValue()
+    {
+        return isset($this->name) ? $this->callFormMethod('getDefaultFieldValue', array($this->name)) : null;
+    }
+
+    /**
+     * getDefaultLabel 
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getDefaultLabel()
+    {
+        return null;
+    }
+
+    /**
      * Define widget params 
      * 
      * @return void
@@ -216,12 +313,17 @@ abstract class XLite_View_FormField_Abstract extends XLite_View_Abstract
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_NAME       => new XLite_Model_WidgetParam_String('Name', null),
-            self::PARAM_VALUE      => new XLite_Model_WidgetParam_String('Value', null),
-            self::PARAM_LABEL      => new XLite_Model_WidgetParam_String('Label', null),
+            self::PARAM_NAME       => new XLite_Model_WidgetParam_String('Name', $this->getDefaultName()),
+            self::PARAM_VALUE      => new XLite_Model_WidgetParam_String('Value', $this->getDefaultValue()),
+            self::PARAM_LABEL      => new XLite_Model_WidgetParam_String('Label', $this->getDefaultLabel()),
             self::PARAM_REQUIRED   => new XLite_Model_WidgetParam_Bool('Required', false),
             self::PARAM_COMMENT    => new XLite_Model_WidgetParam_String('Comment', null),
             self::PARAM_ATTRIBUTES => new XLite_Model_WidgetParam_Array('Attributes', array()),
+
+            self::PARAM_IS_ALLOWED_FOR_CUSTOMER => new XLite_Model_WidgetParam_Bool(
+                'Is allowed for customer',
+                $this->isAllowedForCustomer
+            ),
         );
     }
 
@@ -261,6 +363,35 @@ abstract class XLite_View_FormField_Abstract extends XLite_View_Abstract
         return 'The "' . $this->getLabel() . '" field is empty';
     }
 
+    /**
+     * checkFieldAccessability 
+     * 
+     * @return bool
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function checkFieldAccessability()
+    {
+        return $this->getParam(self::PARAM_IS_ALLOWED_FOR_CUSTOMER) || XLite::isAdminZone();
+    }
+
+    /**
+     * callFormMethod 
+     * 
+     * @param string $method class method to call
+     * @param array  $args   call arguments
+     *  
+     * @return mixed
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function callFormMethod($method, array $args = array())
+    {
+        return call_user_func_array(array(XLite_View_Model_Abstract::getCurrentForm(), $method), $args);
+    }
+
 
     /**
      * Return field type
@@ -293,7 +424,7 @@ abstract class XLite_View_FormField_Abstract extends XLite_View_Abstract
      */
     public function getValue()
     {
-        return $this->checkSavedValue() ? $this->getSavedValue() : $this->getParam(self::PARAM_VALUE);
+        return $this->getParam(self::PARAM_VALUE);
     }
 
     /**
@@ -357,10 +488,40 @@ abstract class XLite_View_FormField_Abstract extends XLite_View_Abstract
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
-
         $list[] = $this->getDir() . '/form_field.css';
 
         return $list;
+    }
+
+    /**
+     * Check if widget is visible
+     *
+     * @return bool
+     * @access public
+     * @since  3.0.0
+     */
+    public function isVisible()
+    {
+        return parent::isVisible() && $this->checkFieldAccessability();
+    }
+
+    /**
+     * Save current form reference and sections list, and initialize the cache
+     *
+     * @param array $params widget params
+     *
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function __construct(array $params = array())
+    {
+        if (isset($params[self::PARAM_NAME])) {
+            $this->name = $params[self::PARAM_NAME];
+        };
+
+        parent::__construct($params);
     }
 }
 

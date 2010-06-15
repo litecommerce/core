@@ -121,9 +121,20 @@ class XLite_Model_CachingFactory extends XLite_Model_Factory implements XLite_Ba
      */
     public static function clearCacheCell($signature)
     {
-        if (isset(self::$cache[$signature])) {
-            unset(self::$cache[$signature]);
-        }
+        unset(self::$cache[$signature]);
+    }
+
+    /**
+     * Clear cache 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function clearCache()
+    {
+        self::$cache = null;
     }
 
     /**
@@ -135,7 +146,7 @@ class XLite_Model_CachingFactory extends XLite_Model_Factory implements XLite_Ba
      */
     public function __destruct()
     {
-        self::$objectsCache = null;
+        self::clearCache();
     }
 }
 

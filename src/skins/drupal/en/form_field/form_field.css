@@ -23,3 +23,6 @@ input[type="text"].form_field_error {
   border: 1px solid #ff0000;
 }
 
+.form-field-comment {
+  font-size: 0.9em;
+}

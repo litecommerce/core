@@ -10,35 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-
 <select id="{getFieldId()}" name="{getName()}"{getAttributesCode():h}>
   <option value="">Select one...</option>
   <option FOREACH="getOptions(),optionValue" value="{optionValue.code:r}" selected="{optionValue.code=getValue()}">{optionValue.country:h}</option>
 </select>
-
-<script type="text/javascript">
-$(document).ready(
-  function() {
-
-    if (!statesSet) {
-
-      {foreach:getCountriesStates(),countryCode,data}
-        {if:data}
-          statesList['{countryCode}'] = [];
-          {foreach:data,stateId,state}
-          statesList['{countryCode}'][statesList['{countryCode}'].length] = { id: '{stateId}', state: '{state}' }
-          {end:}
-        {end:}
-      {end:}
-  
-      statesSet = true;
-    }
-
-    if (!stateSelectors) {
-      var stateSelectors = [];
-    }
-
-    stateSelectors['{getFieldId()}'] = new StateSelector('{getFieldId()}', '{getStateSelectorId()}', '{getStateInputId()}');
-  }
-);
-</script>

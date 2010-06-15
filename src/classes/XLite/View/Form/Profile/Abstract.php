@@ -44,19 +44,38 @@ abstract class XLite_View_Form_Profile_Abstract extends XLite_View_Form_Abstract
      */
     protected function getFormName()
     {
-        return 'register_form';
-    }
+        return 'profile_form';
+    }   
 
     /**
-     * getDefaultTarget 
+     * getDefaultParams 
      * 
-     * @return string
+     * @return array
      * @access protected
      * @since  3.0.0
      */
-    protected function getDefaultTarget()
+    protected function getDefaultParams()
     {
-        return 'profile';
+        $result = parent::getDefaultParams();
+
+        if ($profileId = self::getCurrentForm()->getRequestProfileId()) {
+            $result['profile_id'] = $profileId;
+        }
+
+        return $result;
+    }
+
+    /**
+     * getDefaultClassName
+     *
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getDefaultClassName()
+    {
+        return 'profile-form';
     }
 }
 

@@ -36,17 +36,6 @@
 class XLite_Controller_Admin_Profile extends XLite_Controller_Admin_Abstract
 {
     /**
-     * alowedModes 
-     * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected $allowedModes = array('modify', 'register');
-
-
-    /**
      * Class name for the XLite_View_Model_ form (optional)
      * 
      * @return string|null
@@ -55,7 +44,7 @@ class XLite_Controller_Admin_Profile extends XLite_Controller_Admin_Abstract
      */
     protected function getModelFormClass()
     {
-        return XLite_View_Model_Profile_Trigger::getInstance()->getProfileFormClass();
+        return 'XLite_View_Model_Profile_Main';
     }
 
     /**
@@ -67,11 +56,17 @@ class XLite_Controller_Admin_Profile extends XLite_Controller_Admin_Abstract
      */
     protected function doActionUpdate()
     {
-        return $this->getModelForm()->performAction('update');
+        $result = $this->getModelForm()->performAction('update');
+
+        // Return to the certain account if the "profile_id" param is passed in request
+        $params = array('profile_id' => $this->getModelForm()->getRequestProfileId());
+        $this->setReturnUrl($this->buildURL('profile', '', $params));
+
+        return $result;
     }
 
     /**
-     * Register user during checkout
+     * Register new user 
      *
      * @return void
      * @access protected
@@ -79,8 +74,85 @@ class XLite_Controller_Admin_Profile extends XLite_Controller_Admin_Abstract
      */
     protected function doActionRegister()
     {
-        return $this->getModelForm()->performAction('create');
+        $result = $this->getModelForm()->performAction('create');
+        
+        // Return to the created account page or to the register page
+        $params = $this->isActionError()
+            ? array(self::PARAM_MODE => self::getRegisterMode())
+            : array('profile_id' => $this->getModelForm()->getProfileId(false));
+        $this->setReturnUrl($this->buildURL('profile', '', $params));
+
+        return $result;
     }
+
+    /**
+     * Delete profile
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionDelete()
+    {
+        $result = $this->getModelForm()->performAction('delete');
+
+        if (!$this->isActionError()) {
+            $this->setReturnUrl($this->buildURL('users'));
+        }
+    }
+
+
+    /**
+     * Return value for the "register" mode param
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getRegisterMode()
+    {
+        return 'register';
+    }
+
+
+
+
+
+
+
+    /**
+     * Get countries/states arrays
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    /*public function getCountriesStates()
+    {
+        $countriesArray = array();
+
+        $country = new XLite_Model_Country();
+        $countries = $country->findAll("enabled='1'");
+        foreach ($countries as $country) {
+            $countriesArray[$country->get('code')]['number'] = 0;
+            $countriesArray[$country->get('code')]['data'] = array();
+
+            $state = new XLite_Model_State();
+            $states = $state->findAll("country_code='".$country->get('code')."'");
+            if (is_array($states) && count($states) > 0) {
+                $countriesArray[$country->get('code')]['number'] = count($states);
+                foreach ($states as $state) {
+                    $countriesArray[$country->get('code')]['data'][$state->get('state_id')] = $state->get('state');
+                }
+            }
+        }
+
+        return $countriesArray;
+    }*/
+
 
     /**
      * params 
@@ -255,7 +327,7 @@ class XLite_Controller_Admin_Profile extends XLite_Controller_Admin_Abstract
             $this->profile->modifyAdminProperties(XLite_Core_Request::getInstance()->getData());
 
         } else {
-            $this->profile->modifyProperties(XLite_Core_Request::getInstance()->getData());
+            $this->profile->modifyCustomerProperties(XLite_Core_Request::getInstance()->getData());
         }
 
         if (!$this->isFromCheckout()) {
@@ -304,7 +376,7 @@ class XLite_Controller_Admin_Profile extends XLite_Controller_Admin_Abstract
         		return;
         	}
 
-            $this->profile->modifyProperties(XLite_Core_Request::getInstance()->getData());
+            $this->profile->modifyCustomerProperties(XLite_Core_Request::getInstance()->getData());
         }
 
         if (!$this->isFromCheckout()) {

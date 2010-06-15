@@ -36,18 +36,15 @@
 <!-- [/shopping_cart] }}} -->
 
 <!-- [profile] {{{ -->
-<widget target="profile" mode="login" template="common/dialog.tpl" head="Authentication" body="authentication.tpl">
+<widget class="XLite_View_AddressBook" />
+{*<widget target="profile" mode="login" template="common/dialog.tpl" head="Authentication" body="authentication.tpl">
 <widget target="profile" mode="account" template="common/dialog.tpl" head="Your account" body="account.tpl">
 <widget target="login" template="common/dialog.tpl" body="authentication.tpl" head="Authentication">
 <widget target="profile" mode="register" class="XLite_View_RegisterForm" head="New customer" name="registerForm" IF="!showAV" />
 <widget target="profile" mode="success" template="common/dialog.tpl" head="Registration complete" body="register_success.tpl">
-
-{* It's only the test *}
 <widget target="profile" mode="modify" class="XLite_View_Model_Profile_Modify" IF="!showAV" />
-{*<widget target="profile" mode="modify" class="XLite_View_RegisterForm" head="Modify profile" name="profileForm" IF="!showAV" />*}
-
-
-<widget target="profile" mode="delete" template="common/dialog.tpl" head="Delete profile - Confirmation" body="delete_profile.tpl">
+<widget target="profile" mode="modify" class="XLite_View_RegisterForm" head="Modify profile" name="profileForm" IF="!showAV" />
+<widget target="profile" mode="delete" template="common/dialog.tpl" head="Delete profile - Confirmation" body="delete_profile.tpl">*}
 <!-- [/profile] }}} -->
 
 <!-- [checkout] {{{ -->

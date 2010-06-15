@@ -53,6 +53,11 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
     const IP_VALID = 1;
     const IP_INVALID = 0;
 
+    /**
+     * Session var name to keep the secret token 
+     */
+    const SESSION_SECURE_HASH_CELL = 'secureHashCell';
+
 
     /**
      * These session vars will be cleared on logoff
@@ -104,7 +109,9 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
     }
 
     /**
-     * checkProfileAccessibility 
+     * User can access profile only in two cases:
+     * 1) he/she is an admin
+     * 2) its the user's own account
      * 
      * @param XLite_Model_Profile $profile profile to check
      *  
@@ -115,6 +122,47 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
     protected function checkProfileAccessibility(XLite_Model_Profile $profile)
     {
         return $this->isAdmin($this->getProfile()) || $this->getProfile()->get('profile_id') == $profile->get('profile_id');
+    }
+
+    /**
+     * Clear some session avriables on logout 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function clearSessionVars()
+    {
+        foreach ($this->sessionVarsToClear as $name) {
+            XLite_Model_Session::getInstance()->set($name, null);
+        }
+    }
+
+    /**
+     * Check if passed string is equal to the hash, previously saved in session.
+     * It's the secure mechanism to login using the already encrypted password
+     * (unfortunatelly, such cases sometimes occure)
+     * 
+     * @param string $hashString string to check
+     *  
+     * @return bool
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function checkSecureHash($hashString)
+    {
+        $result = false;
+
+        if (!empty($hashString)) {
+            $result = XLite_Model_Session::getInstance()->get(self::SESSION_SECURE_HASH_CELL) === $hashString;
+        }
+
+        // Using this method, it's not possible to log in several times
+        XLite_Model_Session::getInstance()->set(self::SESSION_SECURE_HASH_CELL, null);
+
+        return $result;
     }
 
 
@@ -148,30 +196,33 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
     /**
      * Logs in user to cart
      * 
-     * @param string $login       user's login
-     * @param string $password    user's password
-     * @param bool   $isEncrypted is password already encrypted
+     * @param string $login      user's login
+     * @param string $password   user's password
+     * @param string $secureHash secret token
      *  
      * @return mixed
      * @access public
      * @since  3.0.0
      */
-    public function login($login, $password, $isEncrypted = false)
+    public function login($login, $password, $secureHash = null)
     {
         // Check for the valid parameters
         if (!empty($login) && !empty($password)) {
 
-            if (!$isEncrypted) {
+            if (isset($secureHash)) {
+                if (!$this->checkSecureHash($secureHash)) {
+                    // TODO - potential attack; send the email to admin
+                    $this->doDie('Trying to log in using an invalid secure hash string.');
+                }
+            } else {
                 $password = self::encryptPassword($password);
             }
 
             $profile = new XLite_Model_Profile();
 
             // Deny login if user not found
-            if ($profile->findByLogin($login, $password)) {
-                $this->loginProfile($profile);
-
-                return $profile;
+            if ($profile->findForAuth($login, $password)) {
+                return $this->loginProfile($profile) ? $profile : self::RESULT_ACCESS_DENIED;
             }
         }
 
@@ -190,9 +241,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
         $session = XLite_Model_Session::getInstance();
         $session->set('last_profile_id', $session->get('profile_id'));
 
-        foreach ($this->sessionVarsToClear as $name) {
-            $session->set($name, null);
-        }
+        $this->clearSessionVars();
     }
 
     /**
@@ -221,12 +270,12 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
         $result = null;
         $isCurrent = false;
 
-        if (!isset($profileId)) {
+        if (empty($profileId)) {
             $profileId = XLite_Model_Session::getInstance()->get('profile_id');
             $isCurrent = true;
         }
 
-        if (isset($profileId)) {
+        if (!empty($profileId)) {
             $profile = XLite_Model_CachingFactory::getObject(__METHOD__ . $profileId, 'XLite_Model_Profile', array($profileId));
             if ($profile->isValid() && ($isCurrent || $this->checkProfile($profile))) {
                 $result = $profile;
@@ -353,10 +402,21 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
         return array_combine($this->getAccessLevelsList(), $this->getUserTypes());
     }
 
-
-
-
-
+    /**
+     * Save the secret token in session.
+     * See "checkSecureHash()" method
+     * 
+     * @param string $hashString hash string to save
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setSecureHash($hashString)
+    {
+        XLite_Model_Session::getInstance()->set(self::SESSION_SECURE_HASH_CELL, $hashString);
+    }
 
 
     function _reReadProfiles($newValue = null)  
@@ -419,8 +479,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
             $profile->enable();
         }
         if (strlen($profile->get('password')) > 0) {
-            $profile->set('password', 
-            self::encryptPassword($profile->get('password')));
+            $profile->set('password', self::encryptPassword($profile->get('password')));
             $anonymous = false;
         } else {
             $this->setComplex('session.anonymous', true);
@@ -506,7 +565,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
         // update current shopping cart/order data
         $cartProfile = XLite_Model_Cart::getInstance()->getProfile();
         if ($cartProfile->get('order_id')) {
-            $cartProfile->modifyProperties(XLite_Core_Request::getInstance()->getData());
+            $cartProfile->modifyCustomerProperties(XLite_Core_Request::getInstance()->getData());
             $this->copyBillingInfo($cartProfile);
             $cartProfile->update();
         }

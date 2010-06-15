@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+// FIXME - must be completely revised
+
 /**
  * Profile
  * 
@@ -33,8 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_PayPalPro_Controller_Customer_Profile extends XLite_Controller_Customer_Profile
-implements XLite_Base_IDecorator
+class XLite_Module_PayPalPro_Controller_Customer_Profile extends XLite_Controller_Customer_Profile implements XLite_Base_IDecorator
 {
     /**
      * Handles the request. Parses the request variables if necessary. Attempts to call the specified action function 
@@ -43,7 +44,7 @@ implements XLite_Base_IDecorator
      * @access public
      * @since  3.0.0
      */
-    public function handleRequest()
+/*    public function handleRequest()
     {
         if (
             'modify' == XLite_Core_Request::getInstance()->mode
@@ -54,6 +55,5 @@ implements XLite_Base_IDecorator
         }
 
         parent::handleRequest();
-    }
-    
+    }*/
 }

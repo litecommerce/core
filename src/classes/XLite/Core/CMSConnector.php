@@ -84,17 +84,6 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
 
 
     /**
-     * It's not possible to instantiate this class using the "new" operator
-     *
-     * @return void
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function __construct()
-    {
-    }
-
-    /**
      * getProfileDBFields 
      * 
      * @param int $cmsUserId CMS user Id
@@ -105,7 +94,7 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
      */
     protected function getProfileDBFields($cmsUserId)
     {
-        return array('cms_profile_id' => $cmsUserId, 'cms_name' => $this->getCMSName());
+        return array('cms_profile_id' => intval($cmsUserId), 'cms_name' => $this->getCMSName());
     }
 
     /**
@@ -121,7 +110,29 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
     {
         return XLite_Core_Converter::getInstance()->buildQuery(
             $this->getProfileDBFields($cmsUserId), '=', ' AND ', '\''
-        ) . ' AND order_id = \'0\' AND cms_profile_id > \'0\'';
+        ) . ' AND order_id = \'0\'';
+    }
+
+    /**
+     * Return ID of LC profile associated with the passed ID of CMS profile
+     * 
+     * @param int $cmsUserId CMS profile ID
+     *  
+     * @return int
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getProfileIdByCMSId($cmsUserId)
+    {
+        $profile = XLite_Model_CachingFactory::getObject(__METHOD__ . $cmsUserId, 'XLite_Model_Profile');
+
+        // Not initialized
+        if (!$profile->isRead) {
+            $profile->find($this->getProfileWhereCondition($cmsUserId));
+        }
+
+        return $profile->get('profile_id');
     }
 
 
@@ -178,12 +189,13 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
     }
 
     /**
-     * Save passed params in the requester
-     *
+     * Save passed params in the requester 
+     * 
      * @param array $request params to map
-     *
+     *  
      * @return void
      * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function mapRequest(array $request)
@@ -242,76 +254,70 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
     /**
      * Return application instance 
      * 
+     * @param string $applicationId cache key
+     *  
      * @return XLite
      * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getApplication()
+    public function getApplication($applicationId = null)
     {
         return XLite_Model_CachingFactory::getObjectFromCallback(
-            __METHOD__, XLite::getInstance(), 'run'
+            __METHOD__ . $applicationId, XLite::getInstance(), 'run'
         );
     }
 
     /**
      * Return viewer for current page
      *
+     * @param string $applicationId cache key
+     *
      * @return XLite_View_Controller
      * @access public
      * @since  3.0.0
      */
-    public function getViewer()
+    public function getViewer($applicationId = null)
     {
         return XLite_Model_CachingFactory::getObjectFromCallback(
-            __METHOD__, $this->getApplication(), 'getViewer'
+            __METHOD__ . $applicationId, $this->getApplication($applicationId), 'getViewer'
         );
     }
 
     /**
      * Get controller 
+     *
+     * @param string $applicationId cache key
      * 
      * @return XLite_Controller_Abstract
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getController()
+    public function getController($applicationId = null)
     {
         return XLite_Model_CachingFactory::getObjectFromCallback(
-            __METHOD__, $this->getApplication(), 'getController'
+            __METHOD__ . $applicationId, $this->getApplication($applicationId), 'getController'
         );
     }
 
     /**
-     * Check controller access
-     * FIXME - do not uncomment: this will break the "runFrontController()" functionality
-     * TODO  - code must be refactored
+     * Run controller 
      *
-     * @return boolean
+     * @param string $applicationId cache key
+     *  
+     * @return void
      * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    public function isAllowed()
+    public function runController($applicationId = null)
     {
-        return true;
-
-        /*$oldController = $this->getController();
-
-        $this->getApplication()->setController();
-        $controller = XLite_Model_CachingFactory::getObjectFromCallback(
-            __METHOD__ . '-' . XLite_Core_Request::getInstance()->target,
-            $this->getApplication(),
-            'getController'
+        return XLite_Model_CachingFactory::getObjectFromCallback(
+            __METHOD__ . $applicationId, $this->getApplication($applicationId), 'runController'
         );
-        
-        $result = $controller->checkAccess()
-            && $this->getViewer()->isVisible();
-
-        $this->getApplication()->setController($oldController);
-
-        return $result;*/
     }
- 
+
     /**
      * Return widget
      * 
@@ -375,23 +381,41 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
      */
     public function getProfile($cmsUserId)
     {
-        $profile = XLite_Model_CachingFactory::getObject(
-            __METHOD__ . $cmsUserId,
-            'XLite_Model_Profile'
+        return XLite_Model_Auth::getInstance()->getProfile($this->getProfileIdByCMSId($cmsUserId));
+    }
+
+
+
+    // -----> FIXME - to revise
+
+    /**
+     * Check controller access
+     * FIXME - do not uncomment: this will break the "runFrontController()" functionality
+     * TODO  - code must be refactored
+     *
+     * @return boolean
+     * @access public
+     * @since  3.0.0
+     */
+    public function isAllowed()
+    {
+        return true;
+
+        /*$oldController = $this->getController();
+
+        $this->getApplication()->setController();
+        $controller = XLite_Model_CachingFactory::getObjectFromCallback(
+            __METHOD__ . '-' . XLite_Core_Request::getInstance()->target,
+            $this->getApplication(),
+            'getController'
         );
 
-        // Not initialized
-        if (!$profile->isRead) {
-            // Profile exists
-            if ($profile->find($this->getProfileWhereCondition($cmsUserId))) {
-                // Exists, but not logged in - access denied
-                if (!XLite_Model_Auth::getInstance()->checkProfile($profile)) {
-                    $profile = null;
-                }
-            }
-        }
+        $result = $controller->checkAccess()
+            && $this->getViewer()->isVisible();
 
-        return $profile;
+        $this->getApplication()->setController($oldController);
+
+        return $result;*/
     }
 
     /**
@@ -408,7 +432,7 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
     {
         $url = null;
 
-        if ('category' == $args['target'] && isset($args['category_id']) && $args['category_id']) {
+        if ('category' == $args['target'] && !empty($args['category_id'])) {
 
             // Category
             $category = new XLite_Model_Category(intval($args['category_id']));
@@ -416,7 +440,7 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
                 $url = preg_replace('/\/+$/Ss', '', $category->get('clean_url')) . '/';
             }
 
-        } elseif ('product' == $args['target'] && isset($args['product_id']) && $args['product_id']) {
+        } elseif ('product' == $args['target'] && !empty($args['product_id'])) {
 
             // Product
             $product = new XLite_Model_Product(intval($args['product_id']));
@@ -474,9 +498,6 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
 
         return $cleanUrl;
     }
-
-    // -----> FIXME - to revise
-
 
     /**
      * Get session TTL (in seconds) 

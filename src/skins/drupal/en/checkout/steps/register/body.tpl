@@ -12,9 +12,5 @@
  *}
 
 <div class="checkout-profile">
-  {if:isExported()}
-    {getRegisterFormPlaceholder():r}
-  {else:}
-    <widget class="XLite_View_Model_Profile_Checkout" />
-  {end:}
+  <widget class="XLite_View_Model_Profile_Checkout" />
 </div>

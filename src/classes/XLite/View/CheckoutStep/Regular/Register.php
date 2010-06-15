@@ -58,17 +58,4 @@ class XLite_View_CheckoutStep_Regular_Register extends XLite_View_CheckoutStep_R
     {
         return 'Create new account';
     }
-
-
-    /**
-     * Return the placeholder - some kind of mark to dertemine the register form position
-     *
-     * @return string
-     * @access public
-     * @since  3.0.0
-     */
-    public static function getRegisterFormPlaceholder()
-    {
-        return '<!-- ____REGISTER_FORM_PLACEHOLDER____ -->';
-    }
 }

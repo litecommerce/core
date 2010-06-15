@@ -715,7 +715,7 @@ class XLite_Model_Order extends XLite_Model_Abstract
         $this->$name = null;
 
         if ('shippingRates' == $name) {
-            XLite_Model_CachingFactory::clearCacheCell('getShippingRates');
+            XLite_Model_CachingFactory::clearCacheCell(__CLASS__ . '::getShippingRates');
         }
 
     }
@@ -837,7 +837,7 @@ class XLite_Model_Order extends XLite_Model_Abstract
 
     function getProfile() 
     {
-        if (is_null($this->_profile)) {
+        if (!isset($this->_profile)) {
             $pid = $this->get('profile_id');
             if ($pid) {
                 $this->_profile = new XLite_Model_Profile($pid);
@@ -850,12 +850,12 @@ class XLite_Model_Order extends XLite_Model_Abstract
     function setProfile($profile) 
     {
         $this->_profile = $profile;
-        $this->set('profile_id', is_null($profile) ? 0 : $profile->get('profile_id'));
+        $this->set('profile_id', isset($profile) ? $profile->get('profile_id') : 0);
     }
     
     function getOrigProfile() 
     {
-        if (is_null($this->_origProfile)) {
+        if (!isset($this->_origProfile)) {
             if ($pid = $this->get('orig_profile_id')) {
                 $this->_origProfile = new XLite_Model_Profile($pid);
 
@@ -870,18 +870,18 @@ class XLite_Model_Order extends XLite_Model_Abstract
     function setOrigProfile($profile) 
     {
         $this->_origProfile = $profile;
-        $this->set('orig_profile_id', is_null($profile) ? 0 : $profile->get('profile_id'));
+        $this->set('orig_profile_id', isset($profile) ? $profile->get('profile_id') : 0);
     }
 
     function setProfileCopy($prof) 
     {
-        $this->set('origProfile', $prof);
+        $this->setOrigProfile($prof);
 
         $p = $prof->cloneObject();
         $p->set('order_id', $this->get('order_id'));
         $p->update();
 
-        $this->set('profile', $p);
+        $this->setProfile($p);
     }
 
     /**

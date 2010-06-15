@@ -36,6 +36,12 @@
 class XLite_Controller_Customer_Login extends XLite_Controller_Customer_Abstract
 {
     /**
+     * Index in request array; the secret token used for authorization
+     */
+    const SECURE_TOKEN = 'secureToken';
+
+
+    /**
      * Common method to determine current location 
      * 
      * @return string
@@ -47,22 +53,16 @@ class XLite_Controller_Customer_Login extends XLite_Controller_Customer_Abstract
         return 'Authentication';
     }
 
-    /**
+     /**
      * Perform some actions before redirect
-     *
-     * @param mixed $action performed action
      *
      * @return void
      * @access protected
      * @since  3.0.0
      */
-    protected function actionPostprocess($action)
+    protected function actionPostprocessLogin()
     {
-        parent::actionPostprocess($action);
-
-        if ('login' == $action) {
-            $this->redirectFromLogin();
-        }
+        $this->redirectFromLogin();
     }
 
     /**
@@ -100,9 +100,25 @@ class XLite_Controller_Customer_Login extends XLite_Controller_Customer_Abstract
 
     protected $profile = null;
 
+    /**
+     * Log in using the login and password from request
+     * 
+     * @return XLite_Model_Profile
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function performLogin()
+    {
+        $data = XLite_Core_Request::getInstance()->getData();
+        $token = empty($data[self::SECURE_TOKEN]) ? null : $data[self::SECURE_TOKEN];
+
+        return XLite_Model_Auth::getInstance()->login($data['login'], $data['password'], $token);
+    }
+
     function action_login()
     {
-        $this->profile = $this->auth->login(XLite_Core_Request::getInstance()->login, XLite_Core_Request::getInstance()->password);
+        $this->profile = $this->performLogin();
 
         if ($this->profile === ACCESS_DENIED) {
             $this->set('valid', false);

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+// FIXME - must be completely revised
+
 /**
  * ____description____
  * 
@@ -35,7 +37,7 @@
  */
 class XLite_Module_ProductAdviser_Controller_Customer_Profile extends XLite_Controller_Customer_Profile implements XLite_Base_IDecorator
 {
-    public $from = null;
+/*    public $from = null;
 
     function init()
     {
@@ -55,5 +57,5 @@ class XLite_Module_ProductAdviser_Controller_Customer_Profile extends XLite_Cont
     		$this->session->set('NotifyMeReturn', true);
             $this->set('returnUrl', "cart.php?target=notify_me");
         }
-    }
+    }*/
 }

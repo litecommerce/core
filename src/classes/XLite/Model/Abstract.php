@@ -349,16 +349,8 @@ class XLite_Model_Abstract extends XLite_Base
     {
         if ($this->autoIncrement) {
             $this->isRead = $this->read();
-            // FIXME - check this code
             $new = clone $this;
-            /*if (func_is_php5()) {
-                //$new = clone $this;
-                eval("\$new = clone \$this;");
-            } else {
-                $new = new self;
-                $new->set('properties', $this->get('properties'));
-            }*/
-            $new->setComplex($this->autoIncrement, null);
+            $new->set($this->autoIncrement, null);
             $new->create();
             return $new;
         } else {
@@ -393,12 +385,14 @@ class XLite_Model_Abstract extends XLite_Base
     }
 
     /**
-    * Builds the SQL INSERT statement query for this object properties.
-    * 
-    * @access private
-    * @return string The INSERT sql statement
-    */
-    function _buildInsert() 
+     * Builds the SQL INSERT statement query for this object properties
+     *
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function _buildInsert()
     {
         $properties = $this->properties;
         if (!empty($this->autoIncrement)) {
@@ -436,12 +430,14 @@ class XLite_Model_Abstract extends XLite_Base
     }
 
     /**
-    * Builds the SQL UPDATE statement for updating this object database record.
-    *
-    * @access private
-    * @return string The SQL DELETE statement
-    */
-    function _buildUpdate() 
+     * Builds the SQL UPDATE statement for updating this object database record
+     *
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function _buildUpdate()
     {
         $properties = $this->properties;
         $condition = array();
@@ -906,6 +902,26 @@ class XLite_Model_Abstract extends XLite_Base
         return $sql;
     }
 
+    /**
+     * Perform some action on the object properties
+     * 
+     * @param array  $properties values list
+     * @param string $method     method to execute
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function modifyProperties(array $properties, $method)
+    {
+        foreach ($properties as $field => $value) {
+            if (isset($this->fields[$field])) {
+                $this->$method($field, $properties[$field]);
+            }
+        }
+    }
+
 
     /**
      * Constructs a new database object. The options argument list is a primary key value.
@@ -948,19 +964,31 @@ class XLite_Model_Abstract extends XLite_Base
     /**
      * Sets the properties for this object from the specified array 
      * 
-     * @param array $properties the associative array with propertie
+     * @param array $properties the associative array with properties
      *  
      * @return void
      * @access public
-     * @since  3.0
+     * @see    ____func_see____
+     * @since  3.0.0
      */
     public function setProperties(array $properties)
     {
-        foreach ($properties as $field => $value) {
-            if (isset($this->fields[$field])) {
-                $this->set($field, $properties[$field]);
-            }
-        }
+        $this->modifyProperties($properties, 'set');
+    }
+
+    /**
+     * Unsets the properties for this object from the specified array
+     *
+     * @param array $properties the associative array with properties
+     *
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function unsetProperties(array $properties)
+    {
+        $this->modifyProperties($properties, 'unsetProperty');
     }
 
     /**
@@ -1017,15 +1045,16 @@ class XLite_Model_Abstract extends XLite_Base
     }
 
     /**
-     * Unsets the specified property 
-     * 
+     * Sets the specified property value
+     *
      * @param string $property field name
-     *  
+     * @param mixed  $value    field value
+     *
      * @return void
      * @access public
      * @since  3.0
      */
-    public function unsetProperty($property)
+    public function unsetProperty($property, $value = null)
     {
         unset($this->properties[$property]);
     }
