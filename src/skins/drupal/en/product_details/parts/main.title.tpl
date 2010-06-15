@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Product details
+ * Product details title main block
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -9,9 +9,6 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
+ * @ListChild (list="productDetails.main", weight="10")
  *}
-<widget class="XLite_View_Form_Product_AddToCart" name="add_to_cart" product="{product}" className="product-details hproduct" />
-
-  {displayViewListContent(#productDetails.base#)}
-
-<widget name="add_to_cart" end />
+<h2 class="fn" style="display: none;">{product.name:h}</h2>
