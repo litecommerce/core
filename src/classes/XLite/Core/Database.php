@@ -122,14 +122,15 @@ class XLite_Core_Database extends XLite_Base implements XLite_Base_ISingleton
         self::$em = \Doctrine\ORM\EntityManager::create($this->getDSN(), $this->config);
 
         // Bind events
+        $events = array(Doctrine\ORM\Events::loadClassMetadata);
         if (self::$cacheDriver) {
 
             // Bind cache chekers
-            self::$em->getEventManager()->addEventListener(
-                array(\Doctrine\ORM\Events::postUpdate, \Doctrine\ORM\Events::postRemove),
-                $this
-            );
+            $events[] = Doctrine\ORM\Events::postUpdate;
+            $events[] = Doctrine\ORM\Events::postRemove;
         }
+
+        self::$em->getEventManager()->addEventListener($events, $this);
     }
 
     /**
@@ -367,6 +368,24 @@ class XLite_Core_Database extends XLite_Base implements XLite_Base_ISingleton
     public function postRemove(Doctrine\ORM\Event\LifecycleEventArgs $arg)
     {
         $arg->getEntity()->checkCache();
+    }
+
+    /**
+     * loadClassMetadata event handler
+     * 
+     * @param Doctrine\ORM\Event\LoadClassMetadataEventArgs $eventArgs Event arguments
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function loadClassMetadata(Doctrine\ORM\Event\LoadClassMetadataEventArgs $eventArgs)
+    {
+        $classMetadata = $eventArgs->getClassMetadata();
+        $classMetadata->setTableName(
+            sprintf(XLite_Core_Database::DBTABLE_PATTERN, $classMetadata->getTableName())
+        );
     }
 
     /**

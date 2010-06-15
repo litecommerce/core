@@ -33,7 +33,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  * @Entity (repositoryClass="XLite_Model_Repo_State")
- * @Table (name="xlite_states")
+ * @Table (name="states")
  */
 class XLite_Model_State extends XLite_Model_AbstractEntity
 {

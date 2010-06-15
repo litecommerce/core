@@ -33,7 +33,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  * @Entity (repositoryClass="XLite_Model_Repo_TemplatePatch")
- * @Table (name="xlite_template_patches")
+ * @Table (name="template_patches")
  */
 class XLite_Model_TemplatePatch extends XLite_Model_AbstractEntity
 {

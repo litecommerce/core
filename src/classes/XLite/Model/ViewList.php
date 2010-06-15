@@ -33,7 +33,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  * @Entity (repositoryClass="XLite_Model_Repo_ViewList")
- * @Table (name="xlite_view_lists")
+ * @Table (name="view_lists")
  */
 class XLite_Model_ViewList extends XLite_Model_AbstractEntity
 {
