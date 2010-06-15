@@ -254,7 +254,7 @@ class XLite_Model_Shipping extends XLite_Model_Abstract
 
     /**
      * Used by real-time shipping methods to collect shipping services in
-     * the xlite_shipping tables. It will create a shipping $name of class
+     * the shipping tables. It will create a shipping $name of class
      * $class and destination $destination (L/I) if there is no such
      * method and return an existing or a newly created one 
      * 
