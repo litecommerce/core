@@ -1487,7 +1487,7 @@ class XLite_Model_Order extends XLite_Model_Abstract
 
                 // whether or not to show CC info in mail notification
                 $mail->adminMail = true;
-                $mail->set('charset', $this->xlite->config->Company->locationCountry->get('charset'));
+                $mail->set('charset', $this->xlite->config->Company->locationCountry->charset);
                 $mail->compose(
                     $this->config->Company->site_administrator,
                     $this->config->Company->orders_department,
@@ -1511,7 +1511,7 @@ class XLite_Model_Order extends XLite_Model_Abstract
         $mail = new XLite_Model_Mailer();
         $mail->order = $this;
         $mail->adminMail = true;
-        $mail->set('charset', $this->xlite->config->Company->locationCountry->get('charset'));
+        $mail->set('charset', $this->xlite->config->Company->locationCountry->charset);
         $mail->compose(
             $this->config->Company->site_administrator,
             $this->config->Company->orders_department,
@@ -1555,7 +1555,7 @@ class XLite_Model_Order extends XLite_Model_Abstract
         $mail = new XLite_Model_Mailer();
         $mail->order = $this;
         $mail->adminMail = true;
-        $mail->set('charset', $this->xlite->config->Company->locationCountry->get('charset'));
+        $mail->set('charset', $this->xlite->config->Company->locationCountry->charset);
         $mail->compose(
             $this->config->Company->site_administrator,
             $this->config->Company->orders_department,

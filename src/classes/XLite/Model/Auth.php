@@ -443,21 +443,26 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
         // create profile
         $profile->create();
         if (!$anonymous) {
+
             // send signin mail notification to regular customer
             $mailer = new XLite_Model_Mailer();
+
             // pass this data to the mailer
             $mailer->profile = $profile;
-            $mailer->set('charset', $this->xlite->config->Company->locationCountry->get('charset'));
-            $mailer->compose($this->getComplex('config.Company.site_administrator'),
-                             $profile->get('login'),
-                             "signin_notification"
-                             );
+            $mailer->set('charset', $this->xlite->config->Company->locationCountry->charset);
+            $mailer->compose(
+                $this->config->Company->site_administrator,
+                $profile->get('login'),
+                'signin_notification'
+            );
             $mailer->send();
+
             // send new profile signin notification to admin
-            $mailer->compose($this->getComplex('config.Company.site_administrator'),
-                             $this->getComplex('config.Company.users_department'),
-                             "signin_admin_notification"
-                             );
+            $mailer->compose(
+                $this->config->Company->site_administrator,
+                $this->config->Company->users_department,
+                'signin_admin_notification'
+            );
             $mailer->send();
         }
 
@@ -515,19 +520,19 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
         // send mail notification to customer
         $mailer = new XLite_Model_Mailer();
         $mailer->set('profile', $profile);
-        $mailer->set('charset', $this->xlite->config->Company->locationCountry->get('charset'));
+        $mailer->set('charset', $this->xlite->config->Company->locationCountry->charset);
         $mailer->compose(
-                $this->getComplex('config.Company.users_department'),
-                $profile->get('login'),
-                "profile_modified"
-                );
+            $this->config->Company->users_department,
+            $profile->get('login'),
+            'profile_modified'
+        );
         $mailer->send();
         // notify administration devision (users department)
         $mailer->compose(
-                $this->getComplex('config.Company.site_administrator'),
-                $this->getComplex('config.Company.users_department'),
-                "profile_admin_modified"
-                );
+            $this->config->Company->site_administrator,
+            $this->config->Company->users_department,
+            'profile_admin_modified'
+        );
         $mailer->send();
         
         return REGISTER_SUCCESS;
@@ -583,22 +588,24 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
             // log off first
             $this->logoff();
         }
+
         // send mail notification about deleted profile to customer
         $mailer = new XLite_Model_Mailer();
         $mailer->set('profile', $profile);
-        $mailer->set('charset', $this->xlite->config->Company->locationCountry->get('charset'));
+        $mailer->set('charset', $this->xlite->config->Company->locationCountry->charset);
         $mailer->compose(
-                $this->getComplex('config.Company.users_department'),
-                $profile->get('login'),
-                "profile_deleted"
-                );
+            $this->config->Company->users_department,
+            $profile->get('login'),
+            'profile_deleted'
+        );
         $mailer->send();
+
         // send mail notification about deleted profile to admin
         $mailer->compose(
-                $this->getComplex('config.Company.site_administrator'),
-                $this->getComplex('config.Company.users_department'),
-                "profile_admin_deleted"
-                );
+            $this->config->Company->site_administrator,
+            $this->config->Company->users_department,
+            'profile_admin_deleted'
+        );
         $mailer->send();
         // delete profile data
         $profile->delete();
@@ -670,12 +677,12 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
         $mailer->set('login', isset($_POST['login']) ? $_POST['login'] : "unknown");
         $mailer->set('REMOTE_ADDR', isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : "unknown");
         $mailer->set('HTTP_X_FORWARDED_FOR', isset($_SERVER['HTTP_X_FORWARDED_FOR']) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : "unknown");
-        $mailer->set('charset', $this->xlite->config->Company->locationCountry->get('charset'));
+        $mailer->set('charset', $this->xlite->config->Company->locationCountry->charset);
         $mailer->compose(
-                            $this->getComplex('config.Company.site_administrator'),
-                            $this->getComplex('config.Company.site_administrator'),
-                            "login_error"
-                            );
+            $this->config->Company->site_administrator,
+            $this->config->Company->site_administrator,
+            'login_error'
+        );
         $mailer->send();
     }
 
@@ -802,12 +809,14 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
         }
         $mailer = new XLite_Model_Mailer();
         $mailer->url = $this->xlite->getShopUrl("cart.php?target=recover_password&action=confirm&email=".urlencode($profile->get('login'))."&request_id=".$profile->get('password'));
-        $mailer->set('charset', $this->xlite->config->Company->locationCountry->get('charset'));
-        $mailer->compose($this->config->getComplex('Company.users_department'),
-                         $profile->get('login'),
-                         "recover_request"
-                         );
+        $mailer->set('charset', $this->xlite->config->Company->locationCountry->charset);
+        $mailer->compose(
+            $this->config->Company->users_department,
+            $profile->get('login'),
+            'recover_request'
+        );
         $mailer->send();
+
         return true;
     }
     
