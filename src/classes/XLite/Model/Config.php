@@ -149,25 +149,39 @@ class XLite_Model_Config extends XLite_Model_Abstract implements XLite_Base_ISin
         }
         $config->Company->locationCountry = XLite_Core_Database::getEM()
             ->find('XLite_Model_Country', $config->Company->location_country);
+        if (!$config->Company->locationCountry) {
+            $tmp = XLite_Core_Database::getRepo('XLite_Model_Country')->findAll();
+            $config->Company->locationCountry = array_shift($tmp);
+            unset($tmp);
+        }
+
         $config->Company->locationState = XLite_Core_Database::getRepo('XLite_Model_State')
             ->findById($config->Company->location_state, $config->Company->location_custom_state);
         $config->General->defaultCountry = XLite_Core_Database::getEM()
             ->find('XLite_Model_Country', $config->General->default_country);
-
-        $config->Memberships->memberships = array();
-        if (isset($config->Memberships->membershipsCollection)) {
-            if (is_array($config->Memberships->membershipsCollection)) {
-    			foreach ($config->Memberships->membershipsCollection as $membership) {
-    				$config->Memberships->memberships[] = $membership['membership'];
-    			}
-    		} else {
-                $config->Memberships->membershipsCollection = array();
-    		}
-        } else {
-            $config->Memberships->membershipsCollection = array();
+        if (!$config->Company->defaultCountry) {
+            $tmp = XLite_Core_Database::getRepo('XLite_Model_Country')->findAll();
+            $config->Company->defaultCountry = array_shift($tmp);
+            unset($tmp);
         }
 
-        return ($this->parsedData = $config);
+
+        $config->Memberships->memberships = array();
+        if (
+            !isset($config->Memberships->membershipsCollection)
+            || !is_array($config->Memberships->membershipsCollection)
+        ) {
+            $config->Memberships->membershipsCollection = array();
+
+        } else {
+            foreach ($config->Memberships->membershipsCollection as $membership) {
+                $config->Memberships->memberships[] = $membership['membership'];
+            }
+        }
+
+        $this->parsedData = $config;
+
+        return $this->parsedData;
     }
 
     function createOption($category, $name, $value, $type = null, $comment = null, $orderby = null) 

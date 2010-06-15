@@ -228,11 +228,11 @@ class XLite_Model_Htaccess extends XLite_Model_Abstract
         $mail = new XLite_Model_Mailer();
         $mail->errors = $errors;
         $mail->adminMail = true;
-        $mail->set('charset', $this->xlite->config->Company->locationCountry->get('charset'));
+        $mail->set('charset', $this->xlite->config->Company->locationCountry->charset);
         $mail->compose(
-                $this->config->getComplex('Company.site_administrator'),
-                $this->config->getComplex('Company.site_administrator'),
-                "htaccess_notify");
+                $this->config->Company->site_administrator,
+                $this->config->Company->site_administrator,
+                'htaccess_notify');
         $mail->send();
     }
 }
