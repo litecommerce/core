@@ -9,8 +9,9 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
+ * @ListChild (list="wishlist.childs", weight="20")
  *}
-<widget class="XLite_Module_WishList_View_Form_Wishlist_Send" name="wl_send" wishlist="{getWishlist()}" />
+<widget class="XLite_Module_WishList_View_Form_Wishlist_Send" name="wl_send" wishlist="{getWishlist()}" className="wishlist-send" />
 
   <label for="wishlist_recipient">Send entire wish list by e-mail:</label>
   <input type="text" id="wishlist_recipient" name="wishlist_recipient" value="{wishlist_recipient}" />

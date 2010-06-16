@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Wishlist
+ * Wishlist items block
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -9,9 +9,12 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
+ * @ListChild (list="wishlist.childs", weight="10")
  *}
-<div id="wish-list">
-
-  {displayViewListContent(#wishlist.childs#)}
-
-</div>
+<table class="selected-products">
+  <tbody>
+    <tr class="selected-product" FOREACH="getItems(),key,item">
+      <widget template="modules/WishList/wishlist/item.tpl" key="{key}" item="{item}" />
+    </tr>
+  </tbody>
+</table>

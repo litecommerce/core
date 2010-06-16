@@ -83,4 +83,45 @@ class XLite_Module_WishList_Main extends XLite_Module_Abstract
         parent::init();
         $this->xlite->set('WishListEnabled', true);
     }
+
+    /**
+     * Modify view lists 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function modifyViewLists()
+    {
+        $tpls = array(  
+            'shopping_cart/parts/item.name.tpl',
+            'shopping_cart/parts/item.sku.tpl',
+            'shopping_cart/parts/item.weight.tpl',
+        );
+
+        foreach ($tpls as $tpl) {
+
+            try {
+                $list = XLite_Core_Database::getQB()
+                    ->select('v')
+                    ->from('XLite_Model_ViewList', 'v')
+                    ->where('v.tpl LIKE :tpl AND v.list = :list')
+                    ->setParameters(array('tpl' => '%' . $tpl, 'list' => 'cart.item.info'))
+                    ->getQuery()
+                    ->getSingleResult();
+
+                $newList = new XLite_Model_ViewList();
+                $newList->list = 'wishlist.item.info';
+                $newList->tpl = $list->tpl;
+                $newList->weight = $list->weight;
+
+                XLite_Core_Database::getEM()->persist($newList);
+
+            } catch (Doctrine\ORM\NoResultException $exception) {
+            }
+        }
+
+        XLite_Core_Database::getEM()->flush();
+    }
 }
