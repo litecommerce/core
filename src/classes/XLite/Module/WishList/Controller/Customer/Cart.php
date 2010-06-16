@@ -58,28 +58,30 @@ class XLite_Module_WishList_Controller_Customer_Cart extends XLite_Controller_Cu
             
             if (!$wishlistProduct->isOptionsExist()) {
 
-                // TODO - add top message
+                XLite_Core_TopMessage::getInstance()->add(
+                    'Sorry, but some options of "'
+                    . $wishlistProduct->getProduct()->get('name')
+                    . '" do not exist anymore and you can not add this product to the cart.',
+                    XLite_Core_TopMessage::ERROR
+                );
                 $this->set(
                     'returnUrl',
-                    $this->buildUrl(
-                        'wishlist',
-                        '',
-                        array('absentOptions' => 1, 'invalidProductName' => $wishlistProduct->getProduct()->get('name'))
-                    )
+                    $this->buildUrl('cart')
                 );
 
                 return;
 
             } elseif ($wishlistProduct->isOptionsInvalid()) {
 
-                // TODO - add top message
+                XLite_Core_TopMessage::getInstance()->add(
+                    'Sorry, but options of "'
+                    . $wishlistProduct->getProduct()->get('name')
+                    . '" are invalid. You coudn\'t add product to cart.',
+                    XLite_Core_TopMessage::ERROR
+                );
                 $this->set(
                     'returnUrl',
-                    $this->buildUrl(
-                        'wishlist',
-                        '',
-                        array('invalidOptions' => 1, 'invalidProductName' => $wishlistProduct->getProduct()->get('name'))
-                    )
+                    $this->buildUrl('cart')
                 );
 
                 return;

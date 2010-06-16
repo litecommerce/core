@@ -1677,7 +1677,7 @@ class Decorator
 
             foreach ($this->getListChildsByComment(substr(trim($comment), 0, -2)) as $list) {
 
-                if ($list['class'] && !isset($this->classesInfo[$list['class']])) {
+                if (isset($list['class']) && !isset($this->classesInfo[$list['class']])) {
                     $this->addDecorationError(
                         LC_CLASSES_CACHE_DIR . $relativePath,
                         'Class ' . $list['class'] . ' is not found (specified in @ListChild comment attribute)'
@@ -1696,6 +1696,13 @@ class Decorator
         $this->assembleTemplateLists();
 
         XLite_Core_Database::getEM()->flush();
+
+        // Global modules preprocessing
+        foreach (array_keys($this->classesInfo) as $class) {
+            if (preg_match('/^XLite_Module_\w+_Main$$/', $class) && method_exists($class, 'modifyViewLists')) {
+                $class::modifyViewLists();
+            }
+        }
 
         // Static preprocessing
         foreach ($this->viewListPreprocessors as $class => $lists) {
@@ -1871,7 +1878,7 @@ class Decorator
 
             foreach ($this->getListChildsByComment(trim($match[1])) as $list) {
 
-                if ($list['class'] && !isset($this->classesInfo[$list['class']])) {
+                if (isset($list['class']) && !isset($this->classesInfo[$list['class']])) {
                     $this->addDecorationError(
                         $path,
                         'Class ' . $list['class'] . ' is not found (specified in @ListChild comment attribute)'

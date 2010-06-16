@@ -161,12 +161,20 @@ class XLite_Module_WishList_Model_WishListProduct extends XLite_Model_Abstract
         return $this->getProduct()->getImageURL();
     }
 
-    function getUrl() 
+    /**
+     * Get wishlist item page URL 
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getUrl() 
     {
-        return array(
-            'target' => 'product',
-            'action' => '',
-            'arguments' => array('product_id' => $this->get('product_id'))
+        return XLite_Core_Converter::getInstance()->buildUrl(
+            'product',
+            '',
+            array('product_id' => $this->get('product_id'))
         );
     }
 
