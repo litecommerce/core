@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Shopping cart
+ * Shopping cart butons block
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -9,9 +9,19 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
+ * @ListChild (list="cart.childs", weight="20")
  *}
-<div id="shopping-cart">
+<table cellspacing="0" class="cart-bottom">
+  <tr>
+    <td>
 
-  {displayViewListContent(#cart.childs#)}
+      {displayViewListContent(#cart.bottom.left#)}
 
-</div>
+    </td>
+    <td class="cart-summary">
+
+      {displayViewListContent(#cart.bottom.right#)}
+
+    </td>
+  </tr>
+</table>

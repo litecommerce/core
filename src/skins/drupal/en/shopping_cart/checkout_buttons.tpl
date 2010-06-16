@@ -9,9 +9,6 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
+ * @ListChild (list="cart.totals", weight="20")
  *}
-
-<widget class="XLite_View_Button_Link" label="Checkout" location="{buildUrl(#checkout#)}" style="bright-button big-button checkout-button" />
-<widget class="XLite_Module_PayPalPro_View_ButtonAltCheckout" module="PayPalPro" />
-<widget class="XLite_Module_GoogleCheckout_View_ButtonAltCheckout" module="GoogleCheckout" template="modules/GoogleCheckout/shopping_cart/button.tpl" size="small" background="transparent" />
-<widget module="GoogleCheckout" template="modules/GoogleCheckout/shopping_cart/gcheckout_notes.tpl" />
+{displayViewListContent(#cart.buttons.checkout#)}

@@ -32,6 +32,7 @@
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
+ * @ListChild (list="cart.bottom.right", weight="20")
  */
 class XLite_Module_GiftCertificates_View_CartRow extends XLite_View_Abstract
 {

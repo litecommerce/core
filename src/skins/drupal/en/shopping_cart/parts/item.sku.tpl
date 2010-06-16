@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Shopping cart
+ * Shopping cart item SKU block
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -9,9 +9,6 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
+ * @ListChild (list="cart.item.info", weight="20")
  *}
-<div id="shopping-cart">
-
-  {displayViewListContent(#cart.childs#)}
-
-</div>
+<p class="item-sku" IF="{item.sku}">SKU: {item.sku}</p>

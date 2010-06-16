@@ -27,14 +27,14 @@
  */
 
 /**
- * PayPal Pro checkout button
+ * Google button for Shopping cart page
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
- * @ListChild (list="cart.buttons.checkout", weight="20")
+ * @ListChild (list="cart.buttons.checkout", weight="30")
  */
-class XLite_Module_PayPalPro_View_ButtonAltCheckout extends XLite_View_Button_Image
+class XLite_Module_GoogleCheckout_View_CartButton extends XLite_Module_GoogleCheckout_View_ButtonAltCheckout
 {
     /**
      * Return widget default template
@@ -45,7 +45,7 @@ class XLite_Module_PayPalPro_View_ButtonAltCheckout extends XLite_View_Button_Im
      */
     protected function getDefaultTemplate()
     {
-        return 'modules/PayPalPro/button.tpl';
+        return 'modules/GoogleCheckout/shopping_cart/button.tpl';
     }
 
     /**
@@ -59,28 +59,8 @@ class XLite_Module_PayPalPro_View_ButtonAltCheckout extends XLite_View_Button_Im
     {
         parent::defineWidgetParams();
 
-        $this->widgetParams[self::PARAM_ACTION]->setValue('express_checkout');
+        $this->widgetParams[self::PARAM_SIZE]->setValue('small');
+        $this->widgetParams[self::PARAM_BACKGROUND]->setValue('transparent');
     }
 
-    /**
-     * Check if widget is visible
-     *
-     * @return bool
-     * @access public
-     * @since  3.0.0
-     */
-    public function isVisible()
-    {
-        $result = parent::isVisible();
-
-        if ($result) {
-            $pm = new XLite_Model_PaymentMethod('paypalpro');
-
-            $result = $pm->isExists()
-                && 1 == $pm->get('enabled')
-                && in_array($pm->getComplex('params.solution'), array('pro', 'express'));
-        }
-
-        return $result;
-    }
 }
