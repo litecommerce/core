@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage View
+ * @subpackage ____sub_package____
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -27,27 +27,15 @@
  */
 
 /**
- * PayPal Pro checkout button
+ * Checkout button-link
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
- * @ListChild (list="cart.buttons.checkout", weight="20")
+ * @ListChild (list="cart.buttons.checkout", weight="10")
  */
-class XLite_Module_PayPalPro_View_ButtonAltCheckout extends XLite_View_Button_Image
+class XLite_View_Button_Checkout extends XLite_View_Button_Link
 {
-    /**
-     * Return widget default template
-     *
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getDefaultTemplate()
-    {
-        return 'modules/PayPalPro/button.tpl';
-    }
-
     /**
      * Define widget parameters
      *
@@ -59,28 +47,9 @@ class XLite_Module_PayPalPro_View_ButtonAltCheckout extends XLite_View_Button_Im
     {
         parent::defineWidgetParams();
 
-        $this->widgetParams[self::PARAM_ACTION]->setValue('express_checkout');
-    }
+		$this->widgetParams[self::PARAM_LOCATION]->setValue($this->buildUrl('checkout'));
+		$this->widgetParams[self::PARAM_LABEL]->setValue('Checkout');
+		$this->widgetParams[self::PARAM_STYLE]->setValue('bright-button big-button checkout-button');
+	}
 
-    /**
-     * Check if widget is visible
-     *
-     * @return bool
-     * @access public
-     * @since  3.0.0
-     */
-    public function isVisible()
-    {
-        $result = parent::isVisible();
-
-        if ($result) {
-            $pm = new XLite_Model_PaymentMethod('paypalpro');
-
-            $result = $pm->isExists()
-                && 1 == $pm->get('enabled')
-                && in_array($pm->getComplex('params.solution'), array('pro', 'express'));
-        }
-
-        return $result;
-    }
 }

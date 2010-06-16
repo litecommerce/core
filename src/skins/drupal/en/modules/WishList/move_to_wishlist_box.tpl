@@ -9,6 +9,7 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
+ * @ListChild (list="cart.item.actions", weight="40")
  *}
 <widget class="XLite_Module_WishList_View_Form_Cart_Item_MoveToWishlist" name="item_move" item="{item}" cartId="{cart_id}" />
   

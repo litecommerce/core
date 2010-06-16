@@ -9,6 +9,7 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
+ * @ListChild (list="cart.totals", weight="10")
  *}
 <ul class="cart-sums">
 
