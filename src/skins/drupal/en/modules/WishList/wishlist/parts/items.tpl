@@ -16,5 +16,8 @@
     <tr class="selected-product" FOREACH="getItems(),key,item">
       <widget template="modules/WishList/wishlist/item.tpl" key="{key}" item="{item}" />
     </tr>
+    <tr class="selected-product additional-item" FOREACH="getViewList(#wishlist.items#),w">
+      {w.display()}
+    </tr>
   </tbody>
 </table>
