@@ -9,6 +9,8 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- * @ListChild (list="cart.totals", weight="20")
+ * @ListChild (list="cart.bottom.right", weight="20")
  *}
-{displayViewListContent(#cart.buttons.checkout#)}
+<div class="checkout-buttons">
+  {displayViewListContent(#cart.buttons.checkout#)}
+</div>

@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Shipping cart totals
+ * Shopping cart shipping total
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -9,8 +9,12 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- * @ListChild (list="cart.bottom.right", weight="10")
+ * @ListChild (list="cart.totals", weight="30")
  *}
-<div class="cart-totals">
-  {displayViewListContent(#cart.totals#)}
-</div>
+<li><em>Shipping cost:</em>
+  <span IF="!cart.shippingAvailable">n/a</span>
+  <span IF="cart.shippingAvailable">
+    <span IF="!cart.shipped">Free</span>
+    <span IF="cart.shipped">{price_format(cart,#shipping_cost#):h}</span>
+  </span>
+</li>

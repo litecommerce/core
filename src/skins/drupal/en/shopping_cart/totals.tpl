@@ -9,36 +9,8 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- * @ListChild (list="cart.totals", weight="10")
+ * @ListChild (list="cart.bottom.right", weight="10")
  *}
 <ul class="cart-sums">
-
-  <widget module="WholesaleTrading" template="modules/WholesaleTrading/totals.tpl" />
-
-  <li><em>Subtotal:</em>
-    {price_format(cart,#subtotal#):h}
-  </li>
-
-  <li><em>Shipping cost:</em>
-    <span IF="!cart.shippingAvailable">n/a</span>
-    <span IF="cart.shippingAvailable">
-      <span IF="!cart.shipped">Free</span>
-      <span IF="cart.shipped">{price_format(cart,#shipping_cost#):h}</span>
-    </span>
-  </li>
-
-  <li IF="!cart.getDisplayTaxes()"><em>Tax:</em>
-    n/a
-  </li>
-  <li FOREACH="cart.getDisplayTaxes(),tax_name,tax"><em>{cart.getTaxLabel(tax_name)}:</em>
-    {price_format(tax):h}
-  </li>
-
-  <widget module="GiftCertificates" template="modules/GiftCertificates/totals.tpl" />
-
-  <li class="grand-total"><em>Grand total:</em>
-    {price_format(cart,#total#):h}
-  </li>
-
+  {displayViewListContent(#cart.totals#)}
 </ul>
-
