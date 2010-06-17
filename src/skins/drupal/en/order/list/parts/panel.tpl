@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Orders search widget
+ * Orders list panel
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -9,5 +9,8 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
+ * @ListChild (list="orders.childs", weight="10")
  *}
-{displayViewListContent(#orders.search.base#)}
+<div class="panel orders-panel">
+  {displayViewListContent(#orders.panel#)}
+</div>

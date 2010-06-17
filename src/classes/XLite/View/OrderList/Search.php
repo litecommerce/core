@@ -32,6 +32,7 @@
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
+ * @ListChild (list="orders.search.base", weight="30")
  */
 class XLite_View_OrderList_Search extends XLite_View_OrderList_Abstract
 {
@@ -82,6 +83,30 @@ class XLite_View_OrderList_Search extends XLite_View_OrderList_Abstract
         }
 
         return $this->orders;
+    }
+
+    /**
+     * Get page data 
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getPageData()
+    {
+        if (!isset($this->namedWidgets['pager'])) {
+            $this->getWidget(
+                array(
+                    'data'   => $this->getOrders(),
+                    'pageId' => $this->getPageId(),
+                ),
+                'XLite_View_Pager_OrdersList',
+                'pager'
+            );
+        }
+
+        return $this->namedWidgets['pager']->getPageData();
     }
 
     /**
