@@ -1,4 +1,4 @@
-#!/usr/local/bin/php -q
+#!/usr/local/php-532/bin/php -q
 <?php
 
 function _do_query_upload($sqlfile, $connection = null, $ignoreErrors = false) {
