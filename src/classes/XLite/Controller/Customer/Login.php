@@ -90,7 +90,9 @@ class XLite_Controller_Customer_Login extends XLite_Controller_Customer_Abstract
         $url = $this->getRedirectFromLoginURL();
 
         if (isset($url)) {
-            XLite_Core_CMSConnector::isCMSStarted() ? XLite_Core_Operator::getInstance()->redirect($url) : $this->setReturnUrl($url);
+            XLite_Core_CMSConnector::isCMSStarted() 
+                ? XLite_Core_Operator::getInstance()->redirect($url, true) 
+                : $this->setReturnUrl($url);
         }
     }
 

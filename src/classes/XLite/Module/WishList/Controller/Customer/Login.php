@@ -44,7 +44,7 @@ class XLite_Module_WishList_Controller_Customer_Login extends XLite_Controller_C
      */
     protected function getRedirectFromLoginURL()
     {
-        $result = null;
+        $result = parent::getRedirectFromLoginURL();
         $productId = XLite_Model_Session::getInstance()->get(self::SESSION_CELL_WL_PRODUCT_TO_ADD);
 
         if (isset($productId)) {
