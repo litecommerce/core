@@ -89,18 +89,20 @@ class XLite_Core_Operator extends XLite_Base implements XLite_Base_ISingleton
     }
 
     /**
-     * redirect 
+     * Redirect 
      * 
      * @param string $location URL
+     * @param bool   $force    check or not redirect conditions
      * @param int    $code     operation code
      *  
      * @return void
      * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    public function redirect($location, $code = 302)
+    public function redirect($location, $force = false, $code = 302)
     {
-        if ($this->checkRedirectStatus()) {
+        if ($this->checkRedirectStatus() || $force) {
             $this->setHeaderLocation($location, $code);
             $this->finish();
         }

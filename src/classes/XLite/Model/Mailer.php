@@ -106,7 +106,7 @@ class XLite_Model_Mailer extends XLite_View_Abstract
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $charset           = 'iso-8859-1';
+    protected $charset = 'iso-8859-1';
 
     /**
      * Saved templates skin
@@ -129,7 +129,7 @@ class XLite_Model_Mailer extends XLite_View_Abstract
     protected $template = null;
 
     /**
-     *Eembedded images list
+     * Embedded images list
      * 
      * @var    array
      * @access protected
@@ -137,6 +137,17 @@ class XLite_Model_Mailer extends XLite_View_Abstract
      * @since  3.0.0
      */
     protected $images = array();
+
+    /**
+     * Error message set by PHPMailer class 
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $errorInfo = null;
+
 
     /**
      * Get default template 
@@ -346,6 +357,8 @@ class XLite_Model_Mailer extends XLite_View_Abstract
             $layout->set('skin', $this->templatesSkin);
             $this->templatesSkin = null;
         }
+
+        $this->errorInfo = $this->mail->ErrorInfo;
     }
 
     /**
@@ -400,6 +413,20 @@ class XLite_Model_Mailer extends XLite_View_Abstract
         }
 
         return $headers;
+    }
+
+
+    /**
+     * Return decription of the last occured error
+     * 
+     * @return string|null
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getLastError()
+    {
+        return $this->errorInfo;
     }
 }
 

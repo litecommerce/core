@@ -157,6 +157,32 @@ class XLite_Module_WishList_Controller_Customer_Wishlist extends XLite_Controlle
     }
 
     /**
+     * getActionSendMessageSuccess 
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getActionSendMessageSuccess()
+    {
+        return 'Wishlist has been successfully sent.';
+    }
+
+    /**
+     * getActionSendMessageError 
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getActionSendMessageError()
+    {
+        return 'Unable to send the wishlist (probably, an invalid email given).';
+    }
+
+    /**
      * Send wishlist to friend
      *
      * @return void
@@ -181,6 +207,14 @@ class XLite_Module_WishList_Controller_Customer_Wishlist extends XLite_Controlle
         );
 
         $mailer->send();
+
+        if (!($result = !((bool) $mailer->getLastError()))) {
+            XLite_Core_TopMessage::getInstance()->addError($this->getActionSendMessageError()); 
+        } else {
+            XLite_Core_TopMessage::getInstance()->addInfo($this->getActionSendMessageSuccess());
+        }
+
+        return $result;
     }
 
     /**
