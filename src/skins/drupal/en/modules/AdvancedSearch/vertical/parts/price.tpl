@@ -9,7 +9,7 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- * @ListChild (list="advserch.vertical.base", weight="20")
+ * @ListChild (list="advsearch.vertical.base", weight="20")
  *}
 <tr class="search-price">
   <td colspan="3">
