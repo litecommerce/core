@@ -13,17 +13,11 @@
 <ul class="list-body list-body-list">
 
   <li FOREACH="getPageData(),product" class="hproduct item">
-    <widget class="XLite_View_AddedToCartMark" product="{product}" />
-    <span class="draggable-mark">Drag me to the cart</span>
-    <a IF="isShowThumbnails()" class="url product-thumbnail" href="{buildURL(#product#,##,_ARRAY_(#product_id#^product.product_id,#category_id#^category_id))}"><widget class="XLite_View_Image" image="{product.getThumbnail()}" centerImage=0 maxWidth="{getIconWidth()}" maxHeight="{getIconHeight()}" alt="{product.name}" className="photo" /></a>
-    <div class="body">
-      <a href="{buildURL(#product#,##,_ARRAY_(#product_id#^product.product_id,#category_id#^category_id))}" class="fn product-name">{product.name:h}</a>
-      <br />
-      <div IF="isShowDescription()" class="description product-description">{truncate(product,#brief_description#,#300#):h}</div>
-      <widget class="XLite_View_Price" product="{product}" displayOnlyPrice="true" IF="isShowPrice()" />
-      <widget class="XLite_View_BuyNow" product="{product}" IF="isShowAdd2Cart(product)" style="aux-button add-to-cart" />
-    </div>
+    {displayViewListContent(#productsList.listItem.info#,_ARRAY_(#product#^product))}
+  </li>
 
+  <li FOREACH="getViewList(#productsList.listItems#),w" class="item additional-item">
+    {w.display()}
   </li>
 
   <li IF="isShowMoreLink()">
