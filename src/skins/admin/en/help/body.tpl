@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * ____file_title____
+ * Help menu
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -10,7 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<a href="http://www.litecommerce.com/faqs.html">LiteCommerce FAQs</a><br>
-<a href="http://www.litecommerce.com/fwd.html?url=http://forum.litecommerce.com">Community forums</a><br>
-<a href="http://www.litecommerce.com/fwd.html?url=https://secure.qtmsoft.com">Support helpdesk</a><br>
-<a href="http://www.litecommerce.com/software_license_agreement.html">License agreement</a><br>
+{foreach:getViewList(#menu.help#),i,w}
+  {if:!i=0}<br />{end:}
+  {w.display()}
+{end:}

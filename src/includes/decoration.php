@@ -1867,7 +1867,6 @@ class Decorator
                 }
             }
         }
-    
     }
 
     /**
@@ -1884,9 +1883,16 @@ class Decorator
     {
         if (preg_match('/\{\*\*(.+)\*\}/USs', file_get_contents($path), $match)) {
 
+            $path = substr($path, strlen(LC_SKINS_DIR));
+            $tmp = explode(LC_DS, $path);
+            $zone = 'admin' == $tmp[0]
+                ? XLite_Model_ViewList::ADMIN_INTERFACE
+                : XLite_Model_ViewList::CUSTOMER_INTERFACE;
+
             foreach ($this->getListChildsByComment(trim($match[1])) as $list) {
 
                 if (isset($list['class']) && !isset($this->classesInfo[$list['class']])) {
+
                     $this->addDecorationError(
                         $path,
                         'Class ' . $list['class'] . ' is not found (specified in @ListChild comment attribute)'
@@ -1894,13 +1900,8 @@ class Decorator
 
                 } else {
 
-                    $path = substr($path, strlen(LC_SKINS_DIR));
-
                     if (!isset($list['zone'])) {
-                        $tmp = explode(LC_DS, $path);
-                        $list['zone'] = 'admin' == $tmp[0]
-                            ? XLite_Model_ViewList::ADMIN_INTERFACE
-                            : XLite_Model_ViewList::CUSTOMER_INTERFACE;
+                        $list['zone'] = $zone;
                     }
 
                     $viewList = $this->createViewList($list);

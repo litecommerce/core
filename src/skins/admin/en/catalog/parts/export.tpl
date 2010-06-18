@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Look and feel menu
+ * Export link
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -9,8 +9,6 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
+ * @ListChild (list="menu.catalog", weight="90")
  *}
-{foreach:getViewList(#menu.look_n_feel#),i,w}
-  {if:!i=0}<br />{end:}
-  {w.display()}
-{end:}
+<a href="admin.php?target=export_catalog">Export catalog</a>
