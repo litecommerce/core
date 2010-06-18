@@ -200,6 +200,8 @@
 <widget module="WholesaleTrading" template="modules/WholesaleTrading/memberships/membership_product.tpl">
 <widget module="ProductAdviser" template="modules/ProductAdviser/product.tpl">
 
+{displayViewListContent(#product.modify.childs#)}
+
 <tr><td colspan=2>&nbsp;</td></tr>
 
 <tr>

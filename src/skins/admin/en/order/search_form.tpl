@@ -56,6 +56,8 @@
         </td>
       </tr>
 
+      {displayViewListContent(#orders.search.childs#)}
+
       <tr>
         <td class=FormButton width=78>&nbsp;</td>
         <td height=30>

@@ -58,6 +58,8 @@
 
       <widget module="InventoryTracking" template="modules/InventoryTracking/product_search.tpl">
 
+      {displayViewListContent(#product.search.conditions#)}
+
       <tr>
         <td colspan=3>&nbsp;</td>
       </tr>
