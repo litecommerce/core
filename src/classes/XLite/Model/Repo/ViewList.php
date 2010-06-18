@@ -46,6 +46,7 @@ class XLite_Model_Repo_ViewList extends XLite_Model_Repo_AbstractRepo
     protected $defaultOrderBy = array(
         'weight' => true,
         'child'  => true,
+        'tpl'    => true,
     );
 
     /**
