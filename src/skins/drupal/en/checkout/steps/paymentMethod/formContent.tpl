@@ -9,6 +9,7 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
+ * @ListChild (list="checkout.methods.payment", weight="10")
  *}
 <div id="payment-methods-box">
 

@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Cart totals box
+ * Shipping block
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -9,10 +9,10 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- * @ListChild (list="checkout.methods.payment", weight="20")
- * @ListChild (list="chekout.details", weight="70")
+ * @ListChild (list="checkout.methods", weight="10")
  *}
-<div class="cart-totals checkout-totals">
-  <h2>Summary</h2>
-  <widget template="shopping_cart/totals.tpl" />
+<div class="shipping-estimator checkout-shipping-estimator">
+  <widget class="XLite_View_Form_Checkout_ShippingMethod" name="shipping_method" />
+    <widget template="shopping_cart/delivery.tpl">
+  <widget name="shipping_method" end />
 </div>
