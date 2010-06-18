@@ -1751,6 +1751,11 @@ class Decorator
         $viewList->class = $list['class'];
         $viewList->list = $list['list'];
 
+        if (isset($list['zone'])) {
+            $viewList->zone = $list['zone'];
+
+        }
+
         if (isset($list['first'])) {
             $viewList->weight = $viewList::FIRST_POSITION;
 
@@ -1886,8 +1891,17 @@ class Decorator
 
                 } else {
 
+                    $path = substr($path, strlen(LC_SKINS_DIR));
+
+                    if (!isset($list['zone'])) {
+                        $tmp = explode(LC_DS, $path);
+                        $list['zone'] = 'admin' == $tmp[0]
+                            ? XLite_Model_ViewList::ADMIN_INTERFACE
+                            : XLite_Model_ViewList::CUSTOMER_INTERFACE;
+                    }
+
                     $viewList = $this->createViewList($list);
-                    $viewList->tpl = substr($path, strlen(LC_SKINS_DIR));
+                    $viewList->tpl = $path;
 
                     XLite_Core_Database::getEM()->persist($viewList);
                 }

@@ -1126,9 +1126,12 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
     protected function defineViewList($list)
     {
         $class = $this->getViewListClass();
+        $zone = XLite::isAdminZone()
+            ? XLite_Model_ViewList::ADMIN_INTERFACE
+            : XLite_Model_ViewList::CUSTOMER_INTERFACE;
 
         $childs = XLite_Core_Database::getRepo('XLite_Model_ViewList')
-            ->findClassList($class, $list);
+            ->findClassList($class, $list, $zone);
 
         $widgets = array();
 

@@ -465,10 +465,11 @@ CREATE TABLE xlite_view_lists (
   list_id int(11) NOT NULL auto_increment PRIMARY KEY,
   class varchar(64) NOT NULL default '',
   list varchar(64) NOT NULL default '',
+  zone varchar(16) NOT NULL default 'customer',
   child varchar(64) NOT NULL default '',
   weight mediumint unsigned NOT NULL default 0,
   tpl varchar(255) NOT NULL default '',
-  KEY cl (class, list, weight)
+  KEY clzw (class, list, zone, weight)
 ) TYPE=MyISAM;
 
 DROP TABLE IF EXISTS xlite_template_patches;

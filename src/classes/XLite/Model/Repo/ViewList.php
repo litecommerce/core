@@ -62,7 +62,7 @@ class XLite_Model_Repo_ViewList extends XLite_Model_Repo_AbstractRepo
 
         $list['class_list'] = array(
             self::TTL_CACHE_CELL => self::INFINITY_TTL,
-            self::ATTRS_CACHE_CELL => array('class', 'list'),
+            self::ATTRS_CACHE_CELL => array('class', 'list', 'zone'),
         );
 
         return $list;
@@ -71,20 +71,21 @@ class XLite_Model_Repo_ViewList extends XLite_Model_Repo_AbstractRepo
     /**
      * Find class list 
      *
-     * @param string $class Class name
-     * @param string $list  Class list name
+     * @param string $class List class-owner name
+     * @param string $list  List name
+     * @param string $zone  Current interface name
      * 
      * @return array
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function findClassList($class, $list)
+    public function findClassList($class, $list, $zone = XLite_Model_ViewList::CUSTOMER_INTERFACE)
     {
         $qb = $this->assignQueryCache(
-            $this->defineClassListQuery($class, $list)->getQuery(),
+            $this->defineClassListQuery($class, $list, $zone)->getQuery(),
             'class_list',
-            array('class' => $class, 'list' => $list)
+            array('class' => $class, 'list' => $list, 'zone' => $zone)
         );
 
         return $qb->getResult();
@@ -95,19 +96,20 @@ class XLite_Model_Repo_ViewList extends XLite_Model_Repo_AbstractRepo
      *
      * @param string $class Class name
      * @param string $list  Class list name
+     * @param string $zone  Current interface name
      * 
      * @return Doctrine\ORM\QueryBuilder
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function defineClassListQuery($class, $list)
+    protected function defineClassListQuery($class, $list, $zone)
     {
         $qb = XLite_Core_Database::getQB()
             ->select('v')
             ->from('XLite_Model_ViewList', 'v')
-            ->where('v.class IN (:class, :empty) AND v.list = :list')
-            ->setParameters(array('class' => $class, 'empty' => '', 'list' => $list));
+            ->where('v.class IN (:class, :empty) AND v.list = :list AND v.zone IN (:zone, :empty)')
+            ->setParameters(array('class' => $class, 'empty' => '', 'list' => $list, 'zone' => $zone));
 
         return $this->assignDefaultOrderBy($qb, 'v');
     }

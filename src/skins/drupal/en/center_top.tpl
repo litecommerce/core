@@ -75,3 +75,5 @@
 <!-- [search] {{{ -->
 <widget class="XLite_View_SearchResult" />
 <!-- [/search] }}} -->
+
+{displayViewListContent(#center#)}
