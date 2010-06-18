@@ -59,6 +59,8 @@
         		<td IF="category.productsNumber"><span class="FormButton">{category.productsNumber} product{if:!category.productsNumber=#1#}s{end:}</span>&nbsp;<a href="admin.php?target=product_list&mode=search&mode=search&search_category={category.category_id}" onClick="this.blur()"><u>details</u></a>&nbsp;&gt;&gt;</td>
         		<td class="FormButton" IF="!category.productsNumber">0</td>
             </tr>
+
+      {displayViewListContent(#category.modify.childs#)}
 			<tr>
                 <td colspan=3>
 				<input type="button" value="Modify" onClick="onModifyClick('{category.category_id}')">

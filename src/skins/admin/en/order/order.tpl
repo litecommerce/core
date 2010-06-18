@@ -39,6 +39,9 @@
 	<td>Notes:</td>
 	<td><textarea name="notes" cols="60" rows="7">{order.notes:h}</textarea></td> 
 </tr>
+
+{displayViewListContent(#order.details#)}
+
 <tr valign="top">
 	<td></td>
 	<td><input type="submit" value=" Submit"></td>
