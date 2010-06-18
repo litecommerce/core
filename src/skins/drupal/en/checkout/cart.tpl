@@ -14,11 +14,7 @@
 
   <widget module="ProductOptions" template="modules/ProductOptions/selected_options_js.tpl">
 
-  <widget template="shopping_cart/items.tpl" />
-
-  <div class="cart-totals">
-    <span>Subtotal: {price_format(cart,#subtotal#):h}</span>
-  </div>
+  {displayViewListContent(#checkout.cart#)}
 
 </div>
 

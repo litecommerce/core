@@ -10,6 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  * @ListChild (list="cart.childs", weight="10")
+ * @ListChild (list="checkout.cart", weight="10")
  *}
 <table class="selected-products">
   <tbody>

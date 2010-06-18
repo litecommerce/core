@@ -10,20 +10,4 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-
-<div class="shipping-estimator checkout-shipping-estimator">
-  <widget class="XLite_View_Form_Checkout_ShippingMethod" name="shipping_method" />
-    <widget template="shopping_cart/delivery.tpl">
-  <widget name="shipping_method" end />
-</div>
-
-<widget class="XLite_View_Form_Checkout_PaymentMethod" name="payment_method_form" className="payment-methods" />
-
-  <widget template="{getDir()}/formContent.tpl" />
-  <widget template="checkout/totals.tpl" />
-
-  <div class="checkout-button-row">
-    <widget class="XLite_View_Button_Submit" label="Continue..." />
-  </div>
-
-<widget name="payment_method_form" end />
+{displayViewListContent(#checkout.methods#)}

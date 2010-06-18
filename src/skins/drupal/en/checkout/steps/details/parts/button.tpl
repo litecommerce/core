@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Order details block
+ * Checkout details buttons block
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -9,9 +9,9 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
+ * @ListChild (list="chekout.details", weight="100")
  *}
-<widget class="XLite_View_Form_Checkout_Place" name="checkout" className="checkout-details" />
-
-  {displayViewListContent(#chekout.details#)}
-
-<widget name="checkout" end />
+<div class="button-row">
+  <widget class="XLite_View_Button_Submit" label="Place order" style="bright-button big-button place-button" />
+  <div class="submit-progress" style="display: none;">Please wait while your order is being processed...</div>
+</div>
