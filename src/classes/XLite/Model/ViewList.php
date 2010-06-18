@@ -33,7 +33,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  * @Entity (repositoryClass="XLite_Model_Repo_ViewList")
- * @Table (name="view_lists")
+ * @Table (name="view_lists", indexes={@index(name="clzw", columns={"class", "list", "zone", "weight"})})
  */
 class XLite_Model_ViewList extends XLite_Model_AbstractEntity
 {
@@ -42,6 +42,13 @@ class XLite_Model_ViewList extends XLite_Model_AbstractEntity
      */
     const FIRST_POSITION = 0;
     const LAST_POSITION = 16777215;
+
+
+    /**
+     * Predefined interfaces
+     */
+    const CUSTOMER_INTERFACE = 'customer';
+    const ADMIN_INTERFACE = 'admin';
 
 
     /**
@@ -78,6 +85,17 @@ class XLite_Model_ViewList extends XLite_Model_AbstractEntity
      * @Column (type="string", length="64", nullable=false)
      */
     protected $list;
+
+    /**
+     * List interface
+     * 
+     * @var    srting
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Column (type="string", length="16", nullable=false)
+     */
+    protected $zone = self::CUSTOMER_INTERFACE;
 
     /**
      * Child class name

@@ -42,25 +42,17 @@
 <!-- [main_view] -->
 <table border="0" width="100%" align="center" cellpadding="0" cellspacing="0">
 <tr>
-    <td nobr width="150" valign="top">
-<!-- [left] -->
-<widget template="common/sidebar_box.tpl" dir="management">
-<widget template="common/sidebar_box.tpl" dir="catalog">
-<widget template="common/sidebar_box.tpl" dir="settings">
-<widget template="common/sidebar_box.tpl" dir="maintenance">
-<widget template="common/sidebar_box.tpl" dir="look_feel">
-<widget template="common/sidebar_box.tpl" dir="help">
-<widget module="Affiliate" template="common/sidebar_box.tpl" dir="modules/Affiliate/menu">
-<!-- [/left] -->
-    </td>
-    <td width="10">&nbsp;</td>
-    <td valign="top">
+  <td nobr width="150" valign="top">
+    {displayViewListContent(#menus#)}
+  </td>
+  <td width="10">&nbsp;</td>
+  <td valign="top">
     <noscript>
-            <table border=0 width=500 cellpadding=2 cellspacing=0 align=center>
-            <tr>
-                <td align=center class=ErrorMessage nowrap>This site requires JavaScript to function properly.<br>Please enable JavaScript in your web browser.</td>
-            </tr>
-            </table>
+      <table border=0 width=500 cellpadding=2 cellspacing=0 align=center>
+        <tr>
+          <td align=center class=ErrorMessage nowrap>This site requires JavaScript to function properly.<br>Please enable JavaScript in your web browser.</td>
+        </tr>
+      </table>
     </noscript>
 <!-- [center] -->
 {if:!target=#main#}
@@ -183,13 +175,10 @@
 <widget module="WishList" target="wishlists" template="modules/WishList/wishlists.tpl" head="Wish Lists">
 <widget module="WishList" target="wishlist" template="common/dialog.tpl" body="modules/WishList/wishlist.tpl" head="Wish List">
 <widget module="WholesaleTrading" template="modules/WholesaleTrading/main.tpl"> 
+{displayViewListContent(#center#)}
 <!-- [/center] -->
     </td>
     <td width="10">&nbsp;</td>
-    <td width="0" valign="top">
-<!-- [right] -->
-<!-- [/right] -->
-    </td>
 </table>
 <!-- [/main_view] -->
 
@@ -197,14 +186,15 @@
 </tr>
 
 <!-- align code -->
-<script language="JavaScript">
+<script type="text/javascript">
+<!--
 if (navigator.appName.indexOf('Microsoft') >= 0) {
-    document.write('<TR><TD height="100%"><img src="images/spacer.gif" width=1 height=1></TD></TR>');
+  document.write('<TR><TD height="100%"><img src="images/spacer.gif" width=1 height=1></TD></TR>');
 } else {
-    document.write('<TR><TD><img src="images/spacer.gif" width=1 height=1></TD></TR>');
-}    
+  document.write('<TR><TD><img src="images/spacer.gif" width=1 height=1></TD></TR>');
+} 
+--> 
 </script>
-
 
 <tr>
 <td align="center">
