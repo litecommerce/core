@@ -9,5 +9,6 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
+ * @ListChild (list="menu.management", weight="12")
  *}
-<a href="admin.php?target=create_order&action=create_order">Create order</a><br>
+<a href="admin.php?target=create_order&action=create_order">Create order</a>
