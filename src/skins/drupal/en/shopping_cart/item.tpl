@@ -25,9 +25,9 @@
 </td>
 
 <td class="item-info">
-  {displayViewListContent(#cart.item.info#)}
+  {displayViewListContent(#cart.item.info#,_ARRAY_(#item#^item,#cart_id#^cart_id))}
 </td>
 
 <td class="item-actions">
-  {displayViewListContent(#cart.item.actions#)}
+  {displayViewListContent(#cart.item.actions#,_ARRAY_(#item#^item,#cart_id#^cart_id))}
 </td>
