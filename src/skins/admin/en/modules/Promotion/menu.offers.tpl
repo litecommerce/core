@@ -9,6 +9,6 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- * @ListChild (list="menu.management", weight="14")
+ * @ListChild (list="menu.management", weight="44")
  *}
-<a href="admin.php?target=wishlists">Wish lists</a>
+<a href="admin.php?target=SpecialOffers">Special offers</a>

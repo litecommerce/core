@@ -9,5 +9,6 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
+ * @ListChild (list="menu.management", weight="42")
  *}
-<a href="admin.php?target=gift_certificates">Gift certificates</a><br>
+<a href="admin.php?target=gift_certificates">Gift certificates</a>

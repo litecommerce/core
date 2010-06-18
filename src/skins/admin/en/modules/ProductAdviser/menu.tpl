@@ -10,4 +10,4 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<span IF="xlite.config.ProductAdviser.customer_notifications_enabled"><a href="admin.php?target=CustomerNotifications">Customer Notifications</a><br></span>
+<a href="admin.php?target=CustomerNotifications">Customer Notifications</a>
