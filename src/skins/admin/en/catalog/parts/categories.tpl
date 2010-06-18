@@ -1,16 +1,14 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Look and feel menu
- *
- * @author    Creative Development LLC <info@cdev.ru>
+ * Categories link
+ *  
+ * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
+ * @ListChild (list="menu.catalog", weight="10")
  *}
-{foreach:getViewList(#menu.look_n_feel#),i,w}
-  {if:!i=0}<br />{end:}
-  {w.display()}
-{end:}
+<a href="admin.php?target=categories&category_id=0">Categories</a>

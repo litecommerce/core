@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * ____file_title____
+ * DB import from X-Cart link
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -9,5 +9,6 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
+ * @ListChild (list="menu.maintenance", weight="34")
  *}
-<a href="admin.php?target=xcart_import" class="SidebarItem">Import database from X-Cart gold</a><br>
+<a href="admin.php?target=xcart_import" class="SidebarItem">Import database from X-Cart gold</a>

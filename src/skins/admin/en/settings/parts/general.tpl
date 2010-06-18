@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * ____file_title____
+ * Settings link
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -9,6 +9,6 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
+ * @ListChild (list="menu.settings", weight="10")
  *}
-<a IF="xlite.mm.activeModules.WholesaleTrading" href="admin.php?target=price_list">Print price list<br></a>
-<a IF="xlite.mm.activeModules.WholesaleTrading" href="admin.php?target=global_discount">Global discounts</a><br>
+<a href="admin.php?target=settings" class="SidebarItem">General settings</a>
