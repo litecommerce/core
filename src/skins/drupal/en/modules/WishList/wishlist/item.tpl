@@ -25,12 +25,12 @@
 
 <td class="item-info">
 
-  {displayViewListContent(#wishlist.item.info#)}
+  {displayViewListContent(#wishlist.item.info#,_ARRAY_(#item#^item))}
 
 </td>
 
 <td class="item-actions">
 
-  {displayViewListContent(#wishlist.item.actions#)}
+  {displayViewListContent(#wishlist.item.actions#,_ARRAY_(#item#^item))}
 
 </td>
