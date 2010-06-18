@@ -1544,6 +1544,9 @@ class Decorator
                 foreach ($lists as $list) {
                     if (!isset($list['list'])) {
                         $errors[] = '@ListChild attribute has not "list" parameter';
+
+                    } elseif (isset($list['zone']) && !in_array($list['zone'], array('', true, XLite_Model_ViewList::CUSTOMER_INTERFACE, XLite_Model_ViewList::ADMIN_INTERFACE))) {
+                        $errors[] = '@ListChild attribute has "zone" parameter with wrong value';
                     }
                 }
 
