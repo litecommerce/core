@@ -32,6 +32,8 @@
  * @package XLite
  * @see     ____class_see____
  * @since   3.0
+ * @ListChild (list="productsList.gridItem.title", weight="10")
+ * @ListChild (list="productsList.listItem.info", weight="10")
  */
 class XLite_View_AddedToCartMark extends XLite_View_Abstract
 {
