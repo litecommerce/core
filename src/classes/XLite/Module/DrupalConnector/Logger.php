@@ -37,19 +37,6 @@ class XLite_Module_DrupalConnector_Logger extends XLite_Logger
 implements XLite_Base_ISingleton, XLite_Base_IDecorator
 {
     /**
-     * Get class instance 
-     * 
-     * @return XLite_Logger
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function getInstance()
-    {
-        return self::getInternalInstance(__CLASS__);
-    }
-
-    /**
      * Constructor
      * 
      * @return void

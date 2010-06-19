@@ -80,18 +80,6 @@ class XLite_Model_Factory extends XLite_Base implements XLite_Base_ISingleton
 
 
     /**
-     * Return object instance
-     *
-     * @return XLite_Model_Session
-     * @access public
-     * @since  3.0.0
-     */
-    public static function getInstance()
-    {
-        return self::getInternalInstance(__CLASS__);
-    }
-
-    /**
      * Create object instance 
      * 
      * @param string $name class name

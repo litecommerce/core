@@ -238,18 +238,6 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
     }
 
     /**
-     * Use this function to get a reference to this class object
-     * 
-     * @return XLite
-     * @access public
-     * @since  3.0.0
-     */
-    public static function getInstance()
-    {
-        return self::getInternalInstance(__CLASS__);
-    }
-
-    /**
      * Clean up classes cache (if needed) 
      * 
      * @return void

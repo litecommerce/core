@@ -158,19 +158,6 @@ class XLite_Logger extends XLite_Base implements XLite_Base_ISingleton
     }
     
     /**
-     * Get class instance 
-     * 
-     * @return XLite_Logger
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function getInstance()
-    {
-        return self::getInternalInstance(__CLASS__);
-    }
-
-    /**
      * Add log record
      * 
      * @param string $message Message

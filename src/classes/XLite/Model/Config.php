@@ -225,36 +225,15 @@ class XLite_Model_Config extends XLite_Model_Abstract implements XLite_Base_ISin
     }
 
     /**
-     * Get class instance 
-     * 
-     * @return XLite_Model_Config
+     * Method to access a singleton
+     *
+     * @return XLite_Base
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
     public static function getInstance()
     {
-        return self::getInternalInstance(__CLASS__);
+        return parent::getInstance()->readConfig();
     }
-
-    /**
-     * Return pointer to the single instance of current class
-     *
-     * @param string $className name of derived class
-     *
-     * @return XLite_Base_Singleton
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0
-     */
-    protected static function getInternalInstance($className)
-    {
-        // Create new instance of the object (if it is not already created)
-        if (!isset(self::$instances[$className])) {
-            self::$instances[$className] = new $className();
-        }
-
-        return self::$instances[$className]->readConfig();
-    }
-
 }

@@ -81,6 +81,8 @@ abstract class XLite_Model_Session extends XLite_Base implements XLite_Base_ISin
      */
     protected function __construct()
     {
+        parent::__construct();
+
         $this->options = array_merge($this->options, XLite::getInstance()->getOptions('host_details'));
     }
 
@@ -105,15 +107,22 @@ abstract class XLite_Model_Session extends XLite_Base implements XLite_Base_ISin
 
 
     /**
-     * Return object instance
+     * Method to access a singleton
      *
-     * @return XLite_Model_Session
+     * @return XLite_Base
      * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public static function getInstance()
     {
-        return self::getInternalInstance(__CLASS__ . '_' . LC_SESSION_TYPE);
+        $className = 'XLite_Model_Session_' . LC_SESSION_TYPE;
+
+        if (!isset(self::$instances[$className])) {
+            self::$instances[$className] = new $className();
+        }
+
+        return self::$instances[$className];
     }
 
     /**

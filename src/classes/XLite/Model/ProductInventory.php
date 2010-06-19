@@ -42,12 +42,7 @@ class XLite_Model_ProductInventory extends XLite_Model_Product implements XLite_
             "price" => false
             );
 
-	public static function getInstance()
-    {
-        return self::getInternalInstance(__CLASS__);
-    }
-
-    function _export($layout, $delimiter) 
+	function _export($layout, $delimiter) 
     {
         $data = array();
         $values = $this->getProperties();

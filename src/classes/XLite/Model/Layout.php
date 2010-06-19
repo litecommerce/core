@@ -56,11 +56,6 @@ class XLite_Model_Layout extends XLite_Base implements XLite_Base_ISingleton
     */    
     public $list = array();
 
-    public static function getInstance()
-    {
-        return self::getInternalInstance(__CLASS__);
-    }
-
     public function __construct()
     {
         foreach (array('skin', 'locale') as $name) {

@@ -60,18 +60,6 @@ class XLite_Model_CachingFactory extends XLite_Model_Factory implements XLite_Ba
     }
 
     /**
-     * Return object instance
-     *
-     * @return XLite_Model_Session
-     * @access public
-     * @since  3.0.0
-     */
-    public static function getInstance()
-    {
-        return self::getInternalInstance(__CLASS__);
-    }
-
-    /**
      * Cache and return a result of object method call 
      * 
      * @param string  $signature result key in cache

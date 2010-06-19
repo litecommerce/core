@@ -116,18 +116,6 @@ class XLite_Module_DrupalConnector_Handler extends XLite_Core_CMSConnector
     }
 
     /**
-     * Method to access the singleton
-     *
-     * @return XLite_Module_DrupalConnector_Handler
-     * @access public
-     * @since  3.0
-     */
-    public static function getInstance()
-    {
-        return self::getInternalInstance(__CLASS__);
-    }
-
-    /**
      * Return name of current CMS 
      * 
      * @return string

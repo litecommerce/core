@@ -67,11 +67,6 @@ class XLite_Module_InventoryTracking_Model_Inventory extends XLite_Model_Abstrac
             "order_by" => false,
             );
 
-    public static function getInstance()
-    {
-        return self::getInternalInstance(__CLASS__);
-    }
-
     public function __construct($id = null) 
     {
         parent::__construct($id);

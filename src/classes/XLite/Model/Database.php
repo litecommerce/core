@@ -76,11 +76,6 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
     protected $profiler = null;
     protected $profilerEnabled = false;
 
-    public static function getInstance()
-    {
-        return self::getInternalInstance(__CLASS__);
-    }
-
     public function __construct()
     {
         $this->profiler = XLite_Model_Profiler::getInstance();

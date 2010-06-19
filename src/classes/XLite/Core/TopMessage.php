@@ -76,18 +76,6 @@ class XLite_Core_TopMessage extends XLite_Base implements XLite_Base_ISingleton
     protected $messages = array();
 
     /**
-     * Method to access the singleton 
-     * 
-     * @return XLite_Core_TopMessage
-     * @access public
-     * @since  3.0.0
-     */
-    public static function getInstance()
-    {
-        return self::getInternalInstance(__CLASS__);
-    }
-
-    /**
      * Constructor
      * 
      * @return void

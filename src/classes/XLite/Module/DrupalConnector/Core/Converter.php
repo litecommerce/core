@@ -44,18 +44,6 @@ class XLite_Module_DrupalConnector_Core_Converter extends XLite_Core_Converter i
 
 
     /**
-     * Singleton access method
-     * 
-     * @return XLite_Core_Converter
-     * @access public
-     * @since  3.0
-     */
-    public static function getInstance()
-    {
-        return self::getInternalInstance(__CLASS__);
-    }
-
-    /**
      * Compose URL from target, action and additional params
      *
      * @param string $target    page identifier

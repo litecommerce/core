@@ -165,18 +165,6 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
 
 
     /**
-     * Method to access the singleton
-     *
-     * @return XLite_Core_CMSConnector
-     * @access public
-     * @since  3.0
-     */
-    public static function getInstance()
-    {
-        return self::getInternalInstance(__CLASS__);
-    }
-
-    /**
      * Determines if we export content into a CMS
      *
      * @return bool
