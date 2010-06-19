@@ -77,18 +77,6 @@ class XLite_Core_Operator extends XLite_Base implements XLite_Base_ISingleton
 
 
     /**
-     * Singleton access method
-     * 
-     * @return XLite_Core_Converter
-     * @access public
-     * @since  3.0
-     */
-    public static function getInstance()
-    {
-        return self::getInternalInstance(__CLASS__);
-    }
-
-    /**
      * Redirect 
      * 
      * @param string $location URL

@@ -36,19 +36,6 @@
 class XLite_Model_Cart extends XLite_Model_Order implements XLite_Base_ISingleton
 {
     /**
-     * Get class instance 
-     * 
-     * @return object
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function getInstance()
-    {
-        return self::getInternalInstance(__CLASS__);
-    }
-
-    /**
      * Constructor
      * 
      * @param int $id order ID

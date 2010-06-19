@@ -73,21 +73,6 @@ abstract class XLite_Module_DrupalConnector_Model_Session extends XLite_Model_Se
     }
 
     /**
-     * Return pointer to the single instance of current class
-     *
-     * @param string $className name of derived class
-     *
-     * @return XLite_Base_Singleton
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0
-     */
-    protected static function getInternalInstance($className)
-    {
-        return parent::getInternalInstance($className . '_' . LC_SESSION_TYPE);
-    }
-
-    /**
      * Destructor
      * 
      * @return void

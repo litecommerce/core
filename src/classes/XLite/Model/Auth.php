@@ -167,18 +167,6 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
 
 
     /**
-     * getInstance 
-     * 
-     * @return XLite_Model_Auth
-     * @access public
-     * @since  3.0.0
-     */
-    public static function getInstance()
-    {
-        return self::getInternalInstance(__CLASS__);
-    }
-
-    /**
      * Encrypts password (calculates MD5 hash)
      * 
      * @param string $password password to encrypt

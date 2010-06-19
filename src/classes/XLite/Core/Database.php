@@ -68,19 +68,6 @@ class XLite_Core_Database extends XLite_Base implements XLite_Base_ISingleton
     protected static $cacheDriver = null;
 
     /**
-     * Get instance 
-     * 
-     * @return XLite_Model_Database
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function getInstance()
-    {
-        return self::getInternalInstance(__CLASS__);
-    }
-
-    /**
      * Constructor
      * 
      * @return void

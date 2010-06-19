@@ -42,16 +42,4 @@ implements XLite_Base_IDecorator, XLite_Base_ISingleton
         return array_diff(parent::getCategories(), array('Environment'));
     }
 
-    /**
-     * Get class instance 
-     * 
-     * @return XLite_Model_Config
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function getInstance()
-    {
-        return self::getInternalInstance(__CLASS__);
     }
-}

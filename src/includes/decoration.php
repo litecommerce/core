@@ -89,9 +89,9 @@ class Decorator
     /**
      *  Messages
      */
-    const CONTROLLER_ERR_MSG = 'Module "%s" has defined controller class "%s" which does not decorate any other one and has an ambigous name';
-    const UNDEFINED_CLASS_MSG = 'Decorator: undefined class - "%s"';
-    const CLASS_AREADY_DEFINED_MSG = 'Class "%s" is already defined in file "%s"';
+    const CONTROLLER_ERR_MSG        = 'Module "%s" has defined controller class "%s" which does not decorate any other one and has an ambigous name';
+    const UNDEFINED_CLASS_MSG       = 'Decorator: undefined class - "%s"';
+    const CLASS_ALREADY_DEFINED_MSG = 'Class "%s" is already defined in file "%s"';
 
 
     /**
@@ -432,12 +432,8 @@ class Decorator
         if (!empty($info[self::INFO_IS_ROOT_CLASS]) && preg_match(self::CLASS_PATTERN, $content, $matches)) {
 
             $body = "\n";
-            if (!empty($info[self::INFO_IS_SINGLETON])) {
-                $body .= "\t" . 'public static function getInstance()' . "\n"
-                    . "\t" . '{' . "\n\t\t" . 'return self::getInternalInstance(__CLASS__);' . "\n\t" . '}' . "\n";
-            }
 
-            // Top level class in decorator chain - has an empty body
+            // Top level class in decorator chain has an empty body
             $content = '<?php' . "\n" . trim($info[self::INFO_CLASS_COMMENT]) . "\n" . $matches[1] . 'class ' 
                 . (isset($info[self::INFO_CLASS]) ? $info[self::INFO_CLASS] : $matches[3])
                 . (isset($info[self::INFO_EXTENDS]) ? ' extends ' . $info[self::INFO_EXTENDS] : '')
@@ -455,17 +451,11 @@ class Decorator
 
             // Add MappedSuperclass attribute
             $parent = null;
-            if (
-                isset($this->classDecorators[$info[self::INFO_EXTENDS_ORIG]])
-                && $this->classDecorators[$info[self::INFO_EXTENDS_ORIG]]
-            ) {
-                $parent = $info[self::INFO_EXTENDS_ORIG];
-
-            } elseif (
-                isset($this->classDecorators[$info[self::INFO_CLASS_ORIG]])
-                && $this->classDecorators[$info[self::INFO_CLASS_ORIG]]
-            ) {
-                $parent = $info[self::INFO_CLASS_ORIG];
+            foreach (array(self::INFO_EXTENDS_ORIG, self::INFO_CLASS_ORIG) as $index) {
+                if (!empty($info[$index])) {
+                    $parent = $info[$index];
+                    break;
+                }
             }
 
             if ($parent && $this->classesInfo[$parent][self::INFO_ENTITY]) {
@@ -1064,7 +1054,7 @@ class Decorator
 
                 // Class defined in current PHP file has a wrong name (not corresponded to file name)
                 if (isset($this->classesInfo[$class])) {
-                    echo (sprintf(self::CLASS_AREADY_DEFINED_MSG, $class, $relativePath));
+                    echo (sprintf(self::CLASS_ALREADY_DEFINED_MSG, $class, $relativePath));
                     die (4);
                 }
 

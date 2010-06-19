@@ -89,19 +89,6 @@ class XLite_Core_FlexyCompiler extends XLite_Base implements XLite_Base_ISinglet
     }
 
 
-    /**
-     * Singleton access method
-     * 
-     * @return XLite_Core_Converter
-     * @access public
-     * @since  3.0
-     */
-    public static function getInstance()
-    {
-        return self::getInternalInstance(__CLASS__);
-    }
-
-
     public $substitutionStart = array();
     public $substitutionEnd = array();
     public $substitutionValue = array();

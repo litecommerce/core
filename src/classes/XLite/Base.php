@@ -102,18 +102,19 @@ class XLite_Base
         die ($message);
     }
 
+
     /**
-     * Return pointer to the single instance of current class
+     * Method to access a singleton
      *
-     * @param string $className name of derived class
-     *
-     * @return XLite_Base_Singleton
-     * @access protected
+     * @return XLite_Base
+     * @access public
      * @see    ____func_see____
-     * @since  3.0
+     * @since  3.0.0
      */
-    protected static function getInternalInstance($className)
+    public static function getInstance()
     {
+        $className = get_called_class();
+
         // Create new instance of the object (if it is not already created)
         if (!isset(self::$instances[$className])) {
             self::$instances[$className] = new $className();

@@ -140,18 +140,6 @@ class XLite_Model_ModulesManager extends XLite_Base implements XLite_Base_ISingl
 
 
     /**
-     * Return singleton reference 
-     * 
-     * @return XLite_Model_Modules_Manager
-     * @access public
-     * @since  1.0
-     */
-    public static function getInstance()
-    {
-        return self::getInternalInstance(__CLASS__);
-    }
-
-    /**
      * Attempts to initialize the ModulesManager and all active modules
      * 
      * @return void

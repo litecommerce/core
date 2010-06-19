@@ -233,18 +233,6 @@ class XLite_Model_Profiler extends XLite_Base implements XLite_Base_ISingleton
     }
 
     /**
-     * Use this function to get a reference to this class object 
-     * 
-     * @return XLite_Model_Profiler
-     * @access public
-     * @since  3.0.0
-     */
-    public static function getInstance()
-    {
-        return self::getInternalInstance(__CLASS__);
-    }
-
-    /**
      * Constructor
      * 
      * @return void

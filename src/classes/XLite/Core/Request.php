@@ -149,18 +149,6 @@ class XLite_Core_Request extends XLite_Base implements XLite_Base_ISingleton
     }
 
     /**
-     * Method to access the singleton 
-     * 
-     * @return XLite_Core_CMSConnector
-     * @access public
-     * @since  3.0
-     */
-    public static function getInstance()
-    {
-        return self::getInternalInstance(__CLASS__);
-    }
-
-    /**
      * Map request data
      * 
      * @param array $data custom data (optional)
