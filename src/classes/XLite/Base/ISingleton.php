@@ -35,5 +35,14 @@
  */
 interface XLite_Base_ISingleton
 {
+    /**
+     * Method to access a singleton
+     *
+     * @return XLite_Base
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getInstance();
 }
 
