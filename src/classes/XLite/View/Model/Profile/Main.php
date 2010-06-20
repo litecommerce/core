@@ -348,7 +348,7 @@ class XLite_View_Model_Profile_Main extends XLite_View_Model_Profile_Abstract
      */
     public function getProfileId($checkMode = true)
     {
-        return ($this->isRegisterMode() && $checkMode) ?: parent::getProfileId();
+        return ($this->isRegisterMode() && $checkMode) ? null : parent::getProfileId();
     }
 
     /**

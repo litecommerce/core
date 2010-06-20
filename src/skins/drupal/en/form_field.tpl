@@ -11,7 +11,7 @@
  * @since     3.0.0
  *}
 
-<td>
+<td nowrap="nowrap">
   <label for="{getFieldId()}">{getParam(#label#)}</label>
 </td>
 <td class="star">

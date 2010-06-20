@@ -52,15 +52,6 @@ class XLite_Module_ProductOptions_View_ChangeOptions extends XLite_View_Abstract
      */
     protected $product = null;
 
-    /**
-     * Targets this widget is allowed for
-     *
-     * @var    array
-     * @access protected
-     * @since  3.0.0
-     */
-    protected $allowedTargets = array('change_options');
-
 
     /**
      * Return widget default template
@@ -142,6 +133,23 @@ class XLite_Module_ProductOptions_View_ChangeOptions extends XLite_View_Abstract
         }
 
         return $this->product;
+    }
+
+
+    /**
+     * Return list of targets allowed for this widget
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getAllowedTargets()
+    {
+        $result = parent::getAllowedTargets();
+        $result[] = 'change_options';
+    
+        return $result;
     }
 }
 

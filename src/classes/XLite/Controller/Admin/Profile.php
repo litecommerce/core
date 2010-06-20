@@ -54,35 +54,39 @@ class XLite_Controller_Admin_Profile extends XLite_Controller_Admin_Abstract
      * @access protected
      * @since  3.0.0
      */
-    protected function doActionUpdate()
+    protected function doActionModify()
     {
-        $result = $this->getModelForm()->performAction('update');
-
-        // Return to the certain account if the "profile_id" param is passed in request
-        $params = array('profile_id' => $this->getModelForm()->getRequestProfileId());
-        $this->setReturnUrl($this->buildURL('profile', '', $params));
-
-        return $result;
+        return $this->getModelForm()->performAction('modify');
     }
 
     /**
-     * Register new user 
-     *
+     * actionPostprocessModify 
+     * 
      * @return void
      * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function doActionRegister()
+    protected function actionPostprocessModify()
     {
-        $result = $this->getModelForm()->performAction('create');
-        
-        // Return to the created account page or to the register page
-        $params = $this->isActionError()
-            ? array(self::PARAM_MODE => self::getRegisterMode())
-            : array('profile_id' => $this->getModelForm()->getProfileId(false));
-        $this->setReturnUrl($this->buildURL('profile', '', $params));
+        $params = array();
 
-        return $result;
+        if ($profileId = $this->getModelForm()->getRequestProfileId()) {
+
+            // Update existsing profile: get profile ID from request
+            $params = array('profile_id' => $profileId);
+
+        } elseif ($this->getModelForm()->isRegisterMode()) {
+
+            // Create new: getID of created profile or return to register page
+            $params = $this->isActionError()
+                ? array(self::PARAM_MODE => self::getRegisterMode())
+                : array('profile_id' => $this->getModelForm()->getProfileId(false));
+        }
+
+        if (!empty($params)) {
+            $this->setReturnUrl($this->buildURL('profile', '', $params));
+        }
     }
 
     /**

@@ -50,15 +50,6 @@ abstract class XLite_View_Model_Profile_Abstract extends XLite_View_Model_Abstra
 
 
     /**
-     * Targets this widget is allowed for
-     *
-     * @var    array
-     * @access protected
-     * @since  3.0.0
-     */
-    protected $allowedTargets = array('profile');
-
-    /**
      * Schema of the "Billing/Shipping address" sections
      * 
      * @var    array
@@ -474,5 +465,22 @@ abstract class XLite_View_Model_Profile_Abstract extends XLite_View_Model_Abstra
         parent::__construct($params, $sections);
 
         $this->schemaHidden += $this->getShipAsBillSchema();
+    }
+
+
+    /**
+     * Return list of targets allowed for this widget
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getAllowedTargets()
+    {
+        $result = parent::getAllowedTargets();
+        $result[] = 'profile';
+    
+        return $result;
     }
 }

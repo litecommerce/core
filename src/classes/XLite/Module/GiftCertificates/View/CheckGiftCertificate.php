@@ -36,15 +36,6 @@
 class XLite_Module_GiftCertificates_View_CheckGiftCertificate extends XLite_View_Dialog
 {
     /**
-     * Targets this widget is allowed for
-     *
-     * @var    array
-     * @access protected
-     * @since  3.0.0
-     */
-    protected $allowedTargets = array('check_gift_certificate');
-
-    /**
      * Found gift certificate
      * 
      * @var    XLite_Module_GiftCertificates_Model_GiftCertificate
@@ -182,4 +173,20 @@ class XLite_Module_GiftCertificates_View_CheckGiftCertificate extends XLite_View
         return 'Verify';
     }
 
+
+    /**
+     * Return list of targets allowed for this widget
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getAllowedTargets()
+    {
+        $result = parent::getAllowedTargets();
+        $result[] = 'check_gift_certificate';
+    
+        return $result;
+    }
 }

@@ -11,10 +11,6 @@
  * @since     3.0.0
  *}
 
-<td colspan="100" class="separator">
-  {getLabel()}
-  <div class="ship-as-bill">
-    <widget class="XLite_View_FormField_Input_Checkbox_ShipAsBill" fieldName="{getName()}" isChecked="{getParam(#isSameAddresses#)}" />
-  </div>
-  <br /><hr />
-</td>
+{getLabel()}
+<div class="ship-as-bill">{showShipAsBillCheckbox():h}</div>
+<br /><hr />

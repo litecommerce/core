@@ -43,15 +43,6 @@ class XLite_Module_ProductAdviser_View_RecentlyViewed extends XLite_View_Product
 
 
     /**
-     * Targets this widget is allowed for
-     *
-     * @var    array
-     * @access protected
-     * @since  3.0.0
-     */
-    protected $allowedTargets = array('main', 'category', 'product', 'cart', 'recently_viewed', 'checkout');
-
-    /**
      * The number of products displayed by widget 
      * 
      * @var    integer
@@ -321,5 +312,27 @@ class XLite_Module_ProductAdviser_View_RecentlyViewed extends XLite_View_Product
         }
 
         return $return;
+    }
+
+
+    /**
+     * Return list of targets allowed for this widget
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getAllowedTargets()
+    {
+        $result = parent::getAllowedTargets();
+        $result[] = 'main';
+        $result[] = 'category';
+        $result[] = 'product';
+        $result[] = 'cart';
+        $result[] = 'recently_viewed';
+        $result[] = 'checkout';
+    
+        return $result;
     }
 }

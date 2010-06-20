@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * ____file_title____
+ * Common selector
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -11,7 +11,7 @@
  * @since     3.0.0
  *}
 
-<select name="{getName()}"{getAttributesCode():h} />
+<select id="{getFieldId()}" name="{getName()}"{getAttributesCode():h} />
   <option FOREACH="getOptions(),optionValue,optionLabel" value="{optionValue}" selected="{optionValue=getValue()}">{optionLabel}</option>
 </select>
 

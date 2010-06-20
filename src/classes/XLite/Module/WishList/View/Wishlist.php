@@ -36,15 +36,6 @@
 class XLite_Module_WishList_View_Wishlist extends XLite_View_Dialog
 {
     /**
-     * Targets this widget is allowed for
-     *
-     * @var    array
-     * @access protected
-     * @since  3.0.0
-     */
-    protected $allowedTargets = array('wishlist');
-
-    /**
      * Return title
      *
      * @return string
@@ -91,7 +82,6 @@ class XLite_Module_WishList_View_Wishlist extends XLite_View_Dialog
     public function getJSFiles()
     {
         $list = parent::getJSFiles();
-
         $list[] = $this->getDir() . '/wishlist.js';
 
         return $list;
@@ -108,7 +98,6 @@ class XLite_Module_WishList_View_Wishlist extends XLite_View_Dialog
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
-
         $list[] = $this->getDir() . '/wishlist.css';
 
         return $list;
@@ -149,5 +138,21 @@ class XLite_Module_WishList_View_Wishlist extends XLite_View_Dialog
         return XLite::getController()->getWishList();
     }
 
+
+    /**
+     * Return list of targets allowed for this widget
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getAllowedTargets()
+    {
+        $result = parent::getAllowedTargets();                                                                                    
+        $result[] = 'wishlist';    
+    
+        return $result;
+    }
 }
 

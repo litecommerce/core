@@ -45,15 +45,6 @@ class XLite_Module_ProductAdviser_View_RelatedProducts extends XLite_View_Produc
 
 
     /**
-     * Targets this widget is allowed for
-     *
-     * @var    array
-     * @access protected
-     * @since  3.0.0
-     */
-    protected $allowedTargets = array('product');
-
-    /**
      * Get widget title
      * 
      * @return string
@@ -129,4 +120,20 @@ class XLite_Module_ProductAdviser_View_RelatedProducts extends XLite_View_Produc
         return parent::isVisible() && $this->config->ProductAdviser->related_products_enabled;
     }
 
+
+    /**
+     * Return list of targets allowed for this widget
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getAllowedTargets()
+    {
+        $result = parent::getAllowedTargets();
+        $result[] = 'product';
+    
+        return $result;
+    }
 }

@@ -36,15 +36,6 @@
 class XLite_View_OrderSearch extends XLite_View_Dialog
 {
     /**
-     * Targets this widget is allowed for
-     *
-     * @var    array
-     * @access protected
-     * @since  3.0.0
-     */
-    protected $allowedTargets = array('order_list');
-
-    /**
      * Orders list (cache)
      * 
      * @var    array
@@ -72,6 +63,7 @@ class XLite_View_OrderSearch extends XLite_View_Dialog
      * @since  3.0.0
      */
     protected $conditions = null;
+
 
     /**
      * Return title
@@ -283,5 +275,20 @@ class XLite_View_OrderSearch extends XLite_View_Dialog
         return $list;
     }
 
-}
 
+    /**
+     * Return list of targets allowed for this widget
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getAllowedTargets()
+    {
+        $result = parent::getAllowedTargets();
+        $result[] = 'order_list';
+    
+        return $result;
+    }
+}

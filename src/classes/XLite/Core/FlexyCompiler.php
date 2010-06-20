@@ -726,15 +726,21 @@ class XLite_Core_FlexyCompiler extends XLite_Base implements XLite_Base_ISinglet
 
         if (!isset($module) || XLite_Model_ModulesManager::getInstance()->isActiveModule($module)) {
 
-            $arguments  = isset($attrs['class']) ? $this->flexyAttribute($attrs['class']) : (isset($name) ? 'null' : '');
+            $class = isset($attrs['class']) ? $this->flexyAttribute($attrs['class'], false) : null;
+
+            $arguments  = isset($class) ? $this->flexyAttribute($attrs['class']) : (isset($name) ? 'null' : '');
             $arguments .= isset($name) ? ', ' . $this->flexyAttribute($name) : '';
 
         	$conditions = array();
 
             if (isset($target)) {
-                $conditions[] = '$this->isDisplayRequired(array(\'' 
-                                . str_replace(',', '\',\'', preg_replace('/[^\w,]+/', '', $target)) 
-                                . '\'))';
+                $target = str_replace(',', '\',\'', preg_replace('/[^\w,]+/', '', $target));
+            } elseif (isset($class) && preg_match('/XLite_\w/i', $class)) {
+                $target = implode('\',\'', $class::getAllowedTargets());
+            }
+
+            if (!empty($target)) {
+                $conditions[] = '$this->isDisplayRequired(array(\'' . $target . '\'))';
             }
 
             if (isset($attrs['IF'])) {
@@ -753,7 +759,7 @@ class XLite_Core_FlexyCompiler extends XLite_Base implements XLite_Base_ISinglet
 
             
             if (!empty($conditions)) {
-                $result = 'if (' . implode(' && ', $conditions) . '): ' . $result . ' endif;';
+                $result = 'if (' . implode(' && ', $conditions) . '):' . "\n" . '  ' . $result . "\n" . 'endif;';
             }
         }
 
@@ -991,7 +997,7 @@ class XLite_Core_FlexyCompiler extends XLite_Base implements XLite_Base_ISinglet
         return $result;
     }
 
-    function flexyAttribute($str)
+    function flexyAttribute($str, $addQuotes = true)
     {
         if ($str === '') {
             return '\'\'';
@@ -1015,7 +1021,10 @@ class XLite_Core_FlexyCompiler extends XLite_Base implements XLite_Base_ISinglet
                 if ($pos === false) {
                     $pos = strlen($str);
                 }
-                $s = "'" . str_replace($find, $replace, substr($str, 0, $pos)) . "'";
+                $s = str_replace($find, $replace, substr($str, 0, $pos));
+                if ($addQuotes) {
+                    $s = '\'' . $s . '\'';
+                }
                 $str = substr($str, $pos);
             }
             if ($result === "") {

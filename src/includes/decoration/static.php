@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage View
+ * @subpackage ____sub_package____
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -27,53 +27,35 @@
  */
 
 /**
- * Category widget
+ * Methods to preprocess static properties/functions
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @package    XLite
+ * @see        ____class_see____
+ * @since      3.0.0
  */
-class XLite_View_Category extends XLite_View_Abstract
+class DecoratorStaticRoutines
 {
     /**
-     * Return widget default template
-     *
-     * @return string
-     * @access protected
-     * @since  3.0.0
+     * Pattern to check if "static constructor" is defined
      */
-    protected function getDefaultTemplate()
-    {
-        return 'category_description.tpl';
-    }
+    const PATTERN_STATIC_CONSTRUCTOR = '^\s*(?:final\s+)?\s*(?:public\s+)?static\s+function\s+__constructStatic\s*\(\s*\)';
 
 
     /**
-     * Check widget visibility 
+     * Check and (if found) add the static constructor call 
      * 
-     * @return bool
-     * @access public
-     * @since  3.0.0
-     */
-    public function isVisible()
-    {
-        return parent::isVisible() && $this->getCategory()->get('description');
-    }
-
-
-    /**
-     * Return list of targets allowed for this widget
-     *
-     * @return array
+     * @param string $class    class name
+     * @param string &$content class file content
+     *  
+     * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function getAllowedTargets()
+    public function checkForStaticConstructor($class, &$content)
     {
-        $result = parent::getAllowedTargets();
-        $result[] = 'category';
-    
-        return $result;
+        if (preg_match('/' . self::PATTERN_STATIC_CONSTRUCTOR . '/USism', $content)) {
+            $content .= "\n\n" . '// Call static constructor' . "\n" . $class . '::__constructStatic();';
+        }
     }
 }

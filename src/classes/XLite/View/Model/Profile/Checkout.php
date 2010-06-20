@@ -263,4 +263,21 @@ class XLite_View_Model_Profile_Checkout extends XLite_View_Model_Profile_Main
     {
         return XLite_Model_Cart::getInstance()->get('profile_id');
     }
+
+
+    /**
+     * Return list of targets allowed for this widget
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getAllowedTargets()
+    {
+        $result = parent::getAllowedTargets();
+        $result[] = 'checkout';
+
+        return $result;
+    }
 }

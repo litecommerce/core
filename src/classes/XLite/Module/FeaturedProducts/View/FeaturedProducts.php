@@ -42,15 +42,6 @@ class XLite_Module_FeaturedProducts_View_FeaturedProducts extends XLite_View_Pro
 
 
     /**
-     * Targets this widget is allowed for
-     *
-     * @var    array
-     * @access protected
-     * @since  3.0.0
-     */
-    protected $allowedTargets = array('main', 'category');
-
-    /**
      * Return title
      *
      * @return string
@@ -128,5 +119,23 @@ class XLite_Module_FeaturedProducts_View_FeaturedProducts extends XLite_View_Pro
     public function isVisible()
     {
         return parent::isVisible() && !$this->get('page');
+    }
+
+
+    /**
+     * Return list of targets allowed for this widget
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getAllowedTargets()
+    {
+        $result = parent::getAllowedTargets();
+        $result[] = 'main';
+        $result[] = 'category';
+    
+        return $result;
     }
 }

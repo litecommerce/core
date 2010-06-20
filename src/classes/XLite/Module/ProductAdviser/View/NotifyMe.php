@@ -38,15 +38,6 @@
 class XLite_Module_ProductAdviser_View_NotifyMe extends XLite_View_Dialog
 {
     /**
-     * Targets this widget is allowed for
-     *
-     * @var    array
-     * @access protected
-     * @since  3.0.0
-     */
-    protected $allowedTargets = array('notify_me');
-
-    /**
      * Return title
      *
      * @return string
@@ -121,5 +112,21 @@ class XLite_Module_ProductAdviser_View_NotifyMe extends XLite_View_Dialog
     {
         return $this->checkAction();
     }
-}
 
+
+    /**
+     * Return list of targets allowed for this widget
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getAllowedTargets()
+    {
+        $result = parent::getAllowedTargets();
+        $result[] = 'notify_me';
+    
+        return $result;
+    }
+}

@@ -9,7 +9,7 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- * @ListChild (list="checkout.methods", weight="10")
+ * @ListChild (list="checkout.methods", weight="20")
  *}
 <widget class="XLite_View_Form_Checkout_PaymentMethod" name="payment_method_form" className="payment-methods" />
 

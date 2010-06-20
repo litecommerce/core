@@ -14,9 +14,9 @@
 {* TODO (FlexyCompiler) - improve the approach to access array fields *}
 {* TODO (FlexyCompiler) - add the ability to use constants *}
 
-<div FOREACH="getFormFields(),section,data" class="{section}-section">
-  <table class="{section}-table">
-    <tr>{data.sectionParamWidget.display()}</tr>
+<div FOREACH="getFormFieldsForDisplay(),section,data" class="section {section}-section">
+  <div class="header {section}-header" IF="{isShowSectionHeader(section)}">{data.sectionParamWidget.display()}</div>
+  <table class="table {section}-table">
     <tr FOREACH="data.sectionParamFields,field">{field.display()}</tr>
   </table>
 </div>

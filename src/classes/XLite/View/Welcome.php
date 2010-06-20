@@ -36,16 +36,6 @@
 class XLite_View_Welcome extends XLite_View_Abstract
 {
     /**
-     * Targets this widget is allowed for
-     *
-     * @var    array
-     * @access protected
-     * @since  3.0.0
-     */
-    protected $allowedTargets = array('main');
-
-
-    /**
      * Return widget default template
      *
      * @return string
@@ -68,5 +58,22 @@ class XLite_View_Welcome extends XLite_View_Abstract
     public function isVisible()
     {
         return parent::isVisible() && !XLite_Core_Request::getInstance()->page;
+    }
+
+
+    /**
+     * Return list of targets allowed for this widget
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getAllowedTargets()
+    {
+        $result = parent::getAllowedTargets();
+        $result[] = 'main';
+    
+        return $result;
     }
 }

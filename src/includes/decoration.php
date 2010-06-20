@@ -284,6 +284,17 @@ class Decorator
     protected $viewListPreprocessors = array();
 
     /**
+     * Class instance to handle the static properties/methods
+     * 
+     * @var    DecoratorStaticRoutines
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $staticRoutinesHandler = null;
+
+
+    /**
      * Return current value of the "max_execution_time" INI setting 
      * 
      * @return int|string
@@ -427,17 +438,15 @@ class Decorator
      */
     protected function parseClassFile(array $info)
     {
-        $content = isset($info[self::INFO_FILE]) ? file_get_contents(LC_CLASSES_DIR . $info[self::INFO_FILE]) : '';
+        $content = isset($info[self::INFO_FILE]) ? trim(file_get_contents(LC_CLASSES_DIR . $info[self::INFO_FILE])) : '';
 
         if (!empty($info[self::INFO_IS_ROOT_CLASS]) && preg_match(self::CLASS_PATTERN, $content, $matches)) {
-
-            $body = "\n";
 
             // Top level class in decorator chain has an empty body
             $content = '<?php' . "\n" . trim($info[self::INFO_CLASS_COMMENT]) . "\n" . $matches[1] . 'class ' 
                 . (isset($info[self::INFO_CLASS]) ? $info[self::INFO_CLASS] : $matches[3])
                 . (isset($info[self::INFO_EXTENDS]) ? ' extends ' . $info[self::INFO_EXTENDS] : '')
-                . (isset($matches[6]) ? $matches[6] : '') . "\n" . '{' . $body . '}' . "\n";
+                . (isset($matches[6]) ? $matches[6] : '') . "\n" . '{' . "\n" . '}' . "\n";
 
         } else {
 
@@ -469,6 +478,11 @@ class Decorator
                 }
             }
 
+            // Prepare static members
+            $this->staticRoutinesHandler->checkForStaticConstructor(
+                isset($info[self::INFO_CLASS]) ? $info[self::INFO_CLASS] : $info[self::INFO_CLASS_ORIG],
+                $content
+            );
         }
 
         // Change name of normalized classes in PHP code
@@ -802,7 +816,7 @@ class Decorator
 
         if (preg_match(self::CLASS_PATTERN, $data, $matches)) {
 
-            // Class name, extends clas name and the "implements A, B, C ..." part
+            // Class name, extends class name and the "implements A, B, C ..." part
             foreach (array(3, 5, 7) as $index => $key) {
                 $result[$index] = isset($matches[$key]) ? $matches[$key] : '';
             }
@@ -1028,7 +1042,7 @@ class Decorator
         // Only check PHP files
         $fileNamePattern = '/^' . preg_quote(LC_CLASSES_DIR, '/') . '(.*)\.php$/i';
 
-        require_once __DIR__ . LC_DS . 'decoration.filter.php';
+        require_once __DIR__ . '/decoration/filter.php';
 
         $iterator = new DecoratorFilesFilter(
             new RecursiveIteratorIterator(new RecursiveDirectoryIterator(LC_CLASSES_DIR))
@@ -1278,6 +1292,9 @@ class Decorator
             if ($this->isCacheDirExists()) {
                 $this->cleanUpCache();
             }
+
+            require_once __DIR__ . '/decoration/static.php';
+            $this->staticRoutinesHandler = new DecoratorStaticRoutines();
 
             // Write file to the cache directory
             foreach ($this->classesInfo as $class => $info) {
