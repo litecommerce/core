@@ -102,6 +102,7 @@ class XLite_Module_PayPalPro_Main extends XLite_Module_Abstract
 
     /**
      * Perform some actions at startup
+     * FIXME: must be completely revised
      *
      * @return void
      * @access public
@@ -112,8 +113,10 @@ class XLite_Module_PayPalPro_Main extends XLite_Module_Abstract
         parent::init();
 
         $pm = new XLite_Model_PaymentMethod('paypalpro');
+        $params = $pm->get('params');
+        $solution = $params['solution'];
 
-        switch ($pm->getComplex('params.solution')) {
+        switch ($solution) {
             case 'standard':
                 $this->registerPaymentMethod('paypalpro');
                 XLite_Model_PaymentMethod::factory('paypalpro')->checkServiceURL();
@@ -130,9 +133,9 @@ class XLite_Module_PayPalPro_Main extends XLite_Module_Abstract
         }
 
         $this->xlite->set('PayPalProEnabled', true);
-        $this->xlite->set('PayPalProSolution', $pm->getComplex('params.solution'));
+        $this->xlite->set('PayPalProSolution', $solution);
 
-        if ('standard' !== $pm->getComplex('params.solution')) {
+        if ('standard' !== $solution) {
             XLite::getInstance()->set(
                 'PayPalProExpressEnabled',
                 XLite_Model_PaymentMethod::factory('paypalpro_express')->get('enabled')
