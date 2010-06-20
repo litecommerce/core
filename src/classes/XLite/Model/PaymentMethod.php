@@ -269,19 +269,15 @@ class XLite_Model_PaymentMethod extends XLite_Model_Abstract
         $result = parent::get($name);
 
         if ('params' == $name) {
-
-            if (is_null($this->params) && !empty($result)) {
-
-                $this->params = @unserialize($result);
-
-                if (is_object($this->params)) {
-
-                    // backward compatibility
+            if (!isset($this->params)) {
+                $this->params = empty($result) ? array() : @unserialize($result);
+                // Backward compatibility; uncomment if needed
+                /* if (is_object($this->params)) {
                     $this->params = get_object_vars($this->params);
-                }
+                } */
             }
 
-            $result = $this->params;
+            return $this->params;
         }
 
         return $result;
