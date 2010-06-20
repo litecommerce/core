@@ -37,16 +37,6 @@
 class XLite_View_Model_Profile_Addresses extends XLite_View_Model_Profile_Abstract
 {
     /**
-     * Targets this widget is allowed for
-     *
-     * @var    array
-     * @access protected
-     * @since  3.0.0
-     */
-    protected $allowedTargets = array('address_book');
-
-
-    /**
      * Return name of web form widget class
      *
      * @return string
@@ -93,5 +83,22 @@ class XLite_View_Model_Profile_Addresses extends XLite_View_Model_Profile_Abstra
     protected function getSubmitButtonLabel()
     {
         return 'Apply addresses';
+    }
+
+
+    /**
+     * Return list of targets allowed for this widget
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getAllowedTargets()
+    {
+        $result = parent::getAllowedTargets();
+        $result[] = 'address_book';
+    
+        return $result;
     }
 }

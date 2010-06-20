@@ -24,6 +24,7 @@
   border-radius: 0.5em !important;
   padding: 8px;
   margin-top: 0px;
+  border-collapse: separate;
 }
 
 .profile-form .section .table td

@@ -11,8 +11,5 @@
  * @since     3.0.0
  *}
 
-<td colspan="100" class="separator">
-  {getLabel()}
-  <br /><hr />
-</td>
+{getLabel()}<br /><hr />
 

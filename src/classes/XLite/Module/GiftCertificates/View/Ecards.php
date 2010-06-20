@@ -36,16 +36,6 @@
 class XLite_Module_GiftCertificates_View_Ecards extends XLite_View_Dialog
 {
     /**
-     * Targets this widget is allowed for
-     *
-     * @var    array
-     * @access protected
-     * @since  3.0.0
-     */
-    protected $allowedTargets = array('gift_certificate_ecards');
-
-
-    /**
      * Return title
      *
      * @return string
@@ -67,5 +57,22 @@ class XLite_Module_GiftCertificates_View_Ecards extends XLite_View_Dialog
     protected function getDir()
     {
         return 'modules/GiftCertificates/select_ecard';
+    }
+
+
+    /**
+     * Return list of targets allowed for this widget
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getAllowedTargets()
+    {
+        $result = parent::getAllowedTargets();
+        $result[] = 'gift_certificate_ecards';
+    
+        return $result;
     }
 }

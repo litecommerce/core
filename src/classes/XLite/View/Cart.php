@@ -36,16 +36,6 @@
 class XLite_View_Cart extends XLite_View_Dialog
 {
     /**
-     * Targets this widget is allowed for
-     *
-     * @var    array
-     * @access protected
-     * @since  3.0.0
-     */
-    protected $allowedTargets = array('cart');
-
-
-    /**
      * Return title
      *
      * @return string
@@ -128,6 +118,23 @@ class XLite_View_Cart extends XLite_View_Dialog
                 $this->getDir() . '/delivery.js',
             )
         );
+    }
+
+
+    /**
+     * Return list of targets allowed for this widget
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getAllowedTargets()
+    {
+        $result = parent::getAllowedTargets();
+        $result[] = 'cart';
+    
+        return $result;
     }
 }
 

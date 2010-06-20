@@ -11,5 +11,7 @@
  * @since     3.0.0
  *}
 
-<div class="form-button" FOREACH="getFormButtons(),button">{button.display()}</div>
+<div class="model-form-buttons">
+  <div class="button {name}" FOREACH="getFormButtons(),name,button">{button.display()}</div>
+</div>
 

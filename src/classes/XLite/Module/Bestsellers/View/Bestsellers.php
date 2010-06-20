@@ -44,14 +44,6 @@ class XLite_Module_Bestsellers_View_Bestsellers extends XLite_View_ProductsList
     const PARAM_USE_NODE    = 'useNode';
     const PARAM_CATEGORY_ID = 'category_id';
 
-    /**
-     * Targets this widget is allowed for
-     *
-     * @var    array
-     * @access protected
-     * @since  3.0.0
-     */
-    protected $allowedTargets = array('main', 'category');
 
     /**
      * Get title
@@ -85,7 +77,9 @@ class XLite_Module_Bestsellers_View_Bestsellers extends XLite_View_ProductsList
             self::PARAM_ROOT_ID => new XLite_Model_WidgetParam_ObjectId_Category(
                 'Root category Id', 0, true, true
             ),
-            self::PARAM_CATEGORY_ID => new XLite_Model_WidgetParam_ObjectId_Category('Category ID', 0, false),
+            self::PARAM_CATEGORY_ID => new XLite_Model_WidgetParam_ObjectId_Category(
+                'Category ID', 0, false
+            ),
         );
 
         $this->requestParams[] = self::PARAM_CATEGORY_ID;
@@ -161,4 +155,21 @@ class XLite_Module_Bestsellers_View_Bestsellers extends XLite_View_ProductsList
             : $this->config->Bestsellers->number_of_bestsellers);
     }
 
+
+    /**
+     * Return list of targets allowed for this widget
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getAllowedTargets()
+    {
+        $result = parent::getAllowedTargets();
+        $result[] = 'main';
+        $result[] = 'category';
+    
+        return $result;
+    }
 }

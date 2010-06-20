@@ -46,21 +46,6 @@ class XLite_Module_AdvancedSearch_View_SearchResult extends XLite_View_SearchRes
 
 
     /**
-     * Initialize
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function init(array $attributes = array())
-    {
-        parent::init($attributes);
-
-        $this->allowedTargets[] = 'advanced_search';
-    }
-
-    /**
      * Get products list
      *
      * @return array
@@ -200,6 +185,23 @@ class XLite_Module_AdvancedSearch_View_SearchResult extends XLite_View_SearchRes
             $searchStat = new XLite_Model_SearchStat();
             $searchStat->add($this->getSearchParamValue('substring'), count($this->data));
         }
+    }
+
+
+    /**
+     * Return list of targets allowed for this widget
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getAllowedTargets()
+    {
+        $result = parent::getAllowedTargets();
+        $result[] = 'advanced_search';
+
+        return $result;
     }
 }
 

@@ -37,16 +37,6 @@
 class XLite_View_AddressBook extends XLite_View_Dialog
 {
     /**
-     * Targets this widget is allowed for
-     *
-     * @var    array
-     * @access protected
-     * @since  3.0.0
-     */
-    protected $allowedTargets = array('address_book');
-
-
-    /**
      * Return title
      *
      * @return string
@@ -68,5 +58,22 @@ class XLite_View_AddressBook extends XLite_View_Dialog
     protected function getDir()
     {
         return 'address_book';
+    }
+
+
+    /**
+     * Return list of targets allowed for this widget
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getAllowedTargets()
+    {
+        $result = parent::getAllowedTargets();
+        $result[] = 'address_book';
+    
+        return $result;
     }
 }

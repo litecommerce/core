@@ -36,15 +36,6 @@
 class XLite_Module_WishList_View_SendToFriend extends XLite_View_Dialog
 {
     /**
-     * Targets this widget is allowed for
-     *
-     * @var    array
-     * @access protected
-     * @since  3.0.0
-     */
-    protected $allowedTargets = array('send_friend');
-
-    /**
      * Return title
      *
      * @return string
@@ -77,9 +68,24 @@ class XLite_Module_WishList_View_SendToFriend extends XLite_View_Dialog
      */
     public function isVisible()
     {
-        return parent::isVisible()
-            && $this->getProduct()->is('available');
+        return parent::isVisible() && $this->getProduct()->is('available');
     }
 
+
+    /**
+     * Return list of targets allowed for this widget
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getAllowedTargets()
+    {
+        $result = parent::getAllowedTargets();
+        $result[] = 'send_friend';
+    
+        return $result;
+    }
 }
 

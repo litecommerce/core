@@ -111,15 +111,6 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
     protected $namedWidgets = array();
 
     /**
-     * Targets this widget is allowed for
-     *
-     * @var    array
-     * @access protected
-     * @since  3.0.0
-     */
-    protected $allowedTargets = array();
-
-    /**
      * List of so called "request" params - which take values from request (if passed)
      * 
      * @var    array
@@ -444,15 +435,17 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
 
     /**
      * Check visibility according to the current target
-     *
-     * @return void
+     * 
+     * @return bool
      * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function checkTarget()
     {
-        return empty($this->allowedTargets)
-            || in_array(XLite_Core_Request::getInstance()->target, $this->allowedTargets);
+        $targets = static::getAllowedTargets();
+
+        return empty($targets) || $this->isDisplayRequired($targets);
     }
 
     /**
@@ -748,18 +741,31 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
     }
 
     /**
-     * Check for current target 
-     * FIXME - backward compatibility; use the isVisible() instead
+     * Return list of allowed targets
      * 
-     * @param array $target list of allowed targets
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getAllowedTargets()
+    {
+        return array();
+    }
+
+    /**
+     * Check for current target
+     * 
+     * @param array $targets list of allowed targets
      *  
      * @return bool
      * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    public function isDisplayRequired(array $target)
+    public function isDisplayRequired(array $targets)
     {
-        return in_array(XLite_Core_Request::getInstance()->target, $target);
+        return in_array(XLite_Core_Request::getInstance()->target, $targets);
     }
 
     /**
@@ -1400,6 +1406,21 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
     public function displayViewListContent($list, array $arguments = array())
     {
         echo ($this->getViewListContent($list, $arguments));
+    }
+
+
+    /**
+     * So called "static constructor".
+     * NOTE: do not call the "parent::__constructStatic()": it will be called automatically
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function __constructStatic()
+    {
+        // It's only the example
     }
 }
 

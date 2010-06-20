@@ -36,15 +36,6 @@
 class XLite_View_Invoice extends XLite_View_Dialog
 {
     /**
-     * Targets this widget is allowed for
-     *
-     * @var    array
-     * @access protected
-     * @since  3.0.0
-     */
-    protected $allowedTargets = array('invoice');
-
-    /**
      * Order (cache)
      * 
      * @var    XLite_Model_Order
@@ -105,8 +96,7 @@ class XLite_View_Invoice extends XLite_View_Dialog
      */
     public function isVisible()
     {
-        return parent::isVisible()
-            && $this->getOrder()->isExists();
+        return parent::isVisible() && $this->getOrder()->isExists();
     }
 
     /**
@@ -120,10 +110,25 @@ class XLite_View_Invoice extends XLite_View_Dialog
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
-
         $list[] = 'order/invoice/style.css';
 
         return $list;
     }
-}
 
+
+    /**
+     * Return list of targets allowed for this widget
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getAllowedTargets()
+    {
+        $result = parent::getAllowedTargets();
+        $result[] = 'invoice';
+    
+        return $result;
+    }
+}

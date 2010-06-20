@@ -44,16 +44,6 @@ class XLite_View_Checkout extends XLite_View_Dialog
 
 
     /**
-     * Targets this widget is allowed for
-     *
-     * @var    array
-     * @access protected
-     * @since  3.0.0
-     */
-    protected $allowedTargets = array('checkout');
-
-
-    /**
      * Return title
      *
      * @return string
@@ -119,12 +109,28 @@ class XLite_View_Checkout extends XLite_View_Dialog
     public function getJSFiles()
     {
         $list = parent::getJSFiles();
-
         $list[] = 'checkout/check_cc.js';
         $list[] = 'checkout/checkout.js';
         $list[] = 'shopping_cart/delivery.js';
 
         return $list;
+    }
+
+
+    /**
+     * Return list of targets allowed for this widget
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getAllowedTargets()
+    {
+        $result = parent::getAllowedTargets();
+        $result[] = 'checkout';
+    
+        return $result;
     }
 }
 

@@ -36,12 +36,18 @@
 class XLite_Module_AdvancedSearch_View_AdvancedSearchCenter extends XLite_Module_AdvancedSearch_View_AdvancedSearch
 {
     /**
-     * Targets this widget is allowed for
+     * Return list of targets allowed for this widget
      *
-     * @var    array
-     * @access protected
+     * @return array
+     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    protected $allowedTargets = array('advanced_search');
+    public static function getAllowedTargets()
+    {
+        $result = parent::getAllowedTargets();
+        $result[] = 'advanced_search';
+    
+        return $result;
+    }
 }
-

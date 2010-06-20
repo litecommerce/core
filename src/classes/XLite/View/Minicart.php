@@ -175,7 +175,6 @@ class XLite_View_Minicart extends XLite_View_SideBarBox
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
-
         $list[] = 'mini_cart/minicart.css';
 
         return $list;
@@ -191,7 +190,6 @@ class XLite_View_Minicart extends XLite_View_SideBarBox
     public function getJSFiles()
     {
         $list = parent::getJSFiles();
-
         $list[] = 'mini_cart/minicart.js';
 
         return $list;

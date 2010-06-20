@@ -13,8 +13,7 @@
 
 <widget template="{getDir()}/header.tpl" />
 
-  <widget class="{getFormClass()}" name="{getFormName()}" IF="getFormParams()" formParams="{getFormParams()}" />
-  <widget class="{getFormClass()}" name="{getFormName()}" IF="!getFormParams()" />
+  <widget class="{getFormClass()}" name="{getFormName()}" />
 
     <widget template="{getDir()}/form_content.tpl" />
     <br /><widget template="{getDir()}/{getFormTemplate(#buttons#)}" />

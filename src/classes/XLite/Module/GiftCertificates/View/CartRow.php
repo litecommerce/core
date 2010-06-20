@@ -37,16 +37,6 @@
 class XLite_Module_GiftCertificates_View_CartRow extends XLite_View_Abstract
 {
     /**
-     * Targets this widget is allowed for
-     *
-     * @var    array
-     * @access protected
-     * @since  3.0.0
-     */
-    protected $allowedTargets = array('cart');
-
-
-    /**
      * Return widget default template
      *
      * @return string
@@ -110,7 +100,6 @@ class XLite_Module_GiftCertificates_View_CartRow extends XLite_View_Abstract
     public function getJSFiles()
     {
         $list = parent::getJSFiles();
-
         $list[] = 'modules/GiftCertificates/cart.js';
         $list[] = 'popup/jquery.blockUI.js';
         $list[] = 'popup/popup.js';
@@ -129,9 +118,25 @@ class XLite_Module_GiftCertificates_View_CartRow extends XLite_View_Abstract
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
-
         $list[] = 'popup/popup.css';
 
         return $list;
+    }
+
+
+    /**
+     * Return list of targets allowed for this widget
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getAllowedTargets()
+    {
+        $result = parent::getAllowedTargets();
+        $result[] = 'cart';
+    
+        return $result;
     }
 }

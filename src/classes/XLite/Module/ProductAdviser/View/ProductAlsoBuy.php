@@ -44,16 +44,6 @@ class XLite_Module_ProductAdviser_View_ProductAlsoBuy extends XLite_View_Product
 
 
     /**
-     * Targets this widget is allowed for
-     *
-     * @var    array
-     * @access protected
-     * @since  3.0.0
-     */
-    protected $allowedTargets = array('product');
-
-
-    /**
      * Get widget title
      * 
      * @return string
@@ -117,5 +107,22 @@ class XLite_Module_ProductAdviser_View_ProductAlsoBuy extends XLite_View_Product
     public function isVisible()
     {
         return parent::isVisible() && $this->config->ProductAdviser->products_also_buy_enabled;
+    }
+
+
+    /**
+     * Return list of targets allowed for this widget
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getAllowedTargets()
+    {
+        $result = parent::getAllowedTargets();
+        $result[] = 'product';
+    
+        return $result;
     }
 }

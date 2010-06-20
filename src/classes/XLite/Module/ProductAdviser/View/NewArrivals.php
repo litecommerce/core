@@ -53,14 +53,6 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_ProductsLi
     const PARAM_PRODUCT_ID  = 'product_id';
     const PARAM_CATEGORY_ID = 'category_id';
 
-    /**
-     * Targets this widget is allowed for
-     *
-     * @var    array
-     * @access protected
-     * @since  3.0.0
-     */
-    protected $allowedTargets = array('main', 'category', 'product', 'cart', 'recently_viewed', 'new_arrivals');
 
     /**
      * Flag that means if it is need to display link 'See more...'
@@ -536,6 +528,28 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_ProductsLi
         $this->xlite->set('NewArrivalsAdditionalPresent', $this->additionalPresent);
 
         return $products;
+    }
+
+
+    /**
+     * Return list of targets allowed for this widget
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getAllowedTargets()
+    {
+        $result = parent::getAllowedTargets();
+        $result[] = 'main';
+        $result[] = 'category';
+        $result[] = 'product';
+        $result[] = 'cart';
+        $result[] = 'recently_viewed';
+        $result[] = 'new_arrivals';
+    
+        return $result;
     }
 }
 
