@@ -105,22 +105,10 @@ abstract class XLite_Model_Session extends XLite_Base implements XLite_Base_ISin
      */
     public function getLanguage()
     {
-        $code = $this->get('language');
-        $zone = XLite::isAdminZone() ? 'admin' : 'customer';
-
-        if (!is_array($code)) {
-            $code = array();
-        }
-
-        if (!isset($code[$zone]) || !$code[$zone]) {
-            $this->setLanguage($this->defineCurrentLanguage());
-        }
-
         if (is_null($this->language)) {
-            $code = $this->get('language');
-            $this->language = XLite_Core_Database::getRepo('XLite_Model_Language')->findOneByCode($code[$zone]);
+            $this->language = XLite_Core_Database::getRepo('XLite_Model_Language')
+                ->findOneByCode($this->getCurrentLanguage());
         }
-
 
         return $this->language;
     }
@@ -149,6 +137,31 @@ abstract class XLite_Model_Session extends XLite_Base implements XLite_Base_ISin
             $this->set('language', $code);
             $this->language = null;
         }
+    }
+
+    /**
+     * Get current language 
+     * 
+     * @return string Language code
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getCurrentLanguage()
+    {
+        $code = $this->get('language');
+        $zone = XLite::isAdminZone() ? 'admin' : 'customer';
+
+        if (!is_array($code)) {
+            $code = array();
+        }
+
+        if (!isset($code[$zone]) || !$code[$zone]) {
+            $this->setLanguage($this->defineCurrentLanguage());
+            $code = $this->get('language');
+        }
+
+        return $code[$zone];
     }
 
     /**

@@ -27,13 +27,14 @@
  */
 
 /**
- * ____description____
+ * Session
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class XLite_Module_DrupalConnector_Model_Session extends XLite_Model_Session implements XLite_Base_IDecorator
+abstract class XLite_Module_DrupalConnector_Model_Session extends XLite_Model_Session
+implements XLite_Base_IDecorator
 {
     /**
      * Return path for cookies
@@ -83,5 +84,22 @@ abstract class XLite_Module_DrupalConnector_Model_Session extends XLite_Model_Se
     public function __destruct()
     {
         $this->writeClose();
+    }
+
+    /**
+     * Get current language
+     *
+     * @return string Language code
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getCurrentLanguage()
+    {
+        global $language;
+
+        return (isset($language) && is_object($language) && $language instanceof stdClass)
+            ? $language->language
+            : parent::getCurrentLanguage();
     }
 }

@@ -131,5 +131,49 @@ class XLite_Model_Repo_Language extends XLite_Model_Repo_Base_I18n
 
         return $this->assignDefaultOrderBy($qb, 'l');
     }
+
+    /**
+     * Get languages query 
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getLanguagesQuery()
+    {
+        $query = array(
+            $this->getDefaultInterfaceLanguage(),
+            $this->getDefaultLanguage(),
+        );
+
+        return array_unique($query);
+    }
+
+    /**
+     * Get default interface language 
+     * 
+     * @return string Language code
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getDefaultInterfaceLanguage()
+    {
+        return 'en';
+    }
+
+    /**
+     * Get global default language 
+     * 
+     * @return string Language code
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getDefaultLanguage()
+    {
+        return 'en';
+    }
 }
 
