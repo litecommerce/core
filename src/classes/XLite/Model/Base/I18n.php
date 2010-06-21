@@ -37,6 +37,16 @@
 abstract class XLite_Model_Base_I18n extends XLite_Model_AbstractEntity
 {
     /**
+     * Languages query 
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected static $languagesQuery = null;
+
+    /**
      * Constructor
      * 
      * @return void
@@ -67,25 +77,49 @@ abstract class XLite_Model_Base_I18n extends XLite_Model_AbstractEntity
     /**
      * Get translation 
      * 
-     * @param string $code Language code
+     * @param string  $code     Language code
+     * @param boolean $safeMode Safe mode
      *  
      * @return XLite_Model_Base_Translation
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getTranslation($code = null)
+    public function getTranslation($code = null, $safeMode = true)
     {
         if (is_null($code)) {
             $code = $this->getDefaultLanguageCode();
         }
 
         $result = null;
+        $query = self::getLanguagesQuery();
+        $queryFilled = false;
 
-        foreach ($this->translations as $i => $t) {
+        foreach ($this->translations as $t) {
             if ($t->code == $code) {
                 $result = $t;
                 break;
+
+            } elseif ($safeMode && isset($query[$t->code])) {
+                $query[$t->code] = $t;
+                $queryFilled = true;
+            }
+        }
+
+        if (!$result && $safeMode) {
+            if ($queryFilled) {
+                foreach ($query as $t) {
+                    if ($t) {
+                        $result = $t;
+                        break;
+                    }
+                }
+
+            } elseif (0 < count($this->translations)) {
+                foreach ($this->translations as $t) {
+                    $result = $t;
+                    break;
+                }
             }
         }
 
@@ -137,7 +171,7 @@ abstract class XLite_Model_Base_I18n extends XLite_Model_AbstractEntity
 
         $result = false;
 
-        foreach ($this->translations as $i => $t) {
+        foreach ($this->translations as $t) {
             if ($t->code == $code) {
                 $result = true;
                 break;
@@ -145,5 +179,44 @@ abstract class XLite_Model_Base_I18n extends XLite_Model_AbstractEntity
         }
 
         return $result;
+    }
+
+    /**
+     * Get translation codes 
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getTranslationCodes()
+    {
+        $codes = array();
+
+        foreach ($this->translations as $t) {
+            $codes[] = $t->code;
+        }
+
+        return $codes;
+    }
+
+    /**
+     * Get languages query 
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function getLanguagesQuery()
+    {
+        if (is_null(self::$languagesQuery)) {
+            self::$languagesQuery = array_fill_keys(
+                XLite_Core_Database::getRepo('XLite_Model_Language')->getLanguagesQuery(),
+                false
+            );
+        }
+
+        return self::$languagesQuery;
     }
 }
