@@ -75,6 +75,18 @@ abstract class XLite_Model_AbstractEntity
     protected static $mutators = array();
 
     /**
+     * Dump constructor
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function __construct()
+    {
+    }
+
+    /**
      * Map data to entity columns
      * 
      * @param array $data Data
@@ -105,11 +117,14 @@ abstract class XLite_Model_AbstractEntity
     {
         $class = get_called_class();
 
-        if (!isset($class::$accessors[$name])) {
-            $class::$accessors[$name] = $this->getAccessor($name);
+        if (!isset(self::$accessors[$class])) { 
+            self::$accessors[$class] = array($name => $this->getAccessor($name));
+
+        } elseif (!isset(self::$accessors[$class][$name])) {
+            self::$accessors[$class][$name] = $this->getAccessor($name);
         }
 
-        $accessor = $class::$accessors[$name];
+        $accessor = self::$accessors[$class][$name];
 
         return $accessor
             ? $this->$accessor()
@@ -131,11 +146,14 @@ abstract class XLite_Model_AbstractEntity
     {
         $class = get_called_class();
 
-        if (!isset($class::$mutators[$name])) {
-            $class::$mutators[$name] = $this->getMutator($name);
+        if (!isset(self::$mutators[$class])) {
+            self::$mutators[$class] = array($name => $this->getMutator($name));
+
+        } elseif (!isset(self::$mutators[$class][$name])) {
+            self::$mutators[$class][$name] = $this->getMutator($name);
         }
 
-        $mutator = $class::$mutators[$name];
+        $mutator = self::$mutators[$class][$name];
         if ($mutator) {
             $this->$mutator($value);
 

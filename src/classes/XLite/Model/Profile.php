@@ -92,6 +92,7 @@ class XLite_Model_Profile extends XLite_Model_Abstract
         'membership'            => '',
         'pending_membership'    => '',
         'sidebar_boxes'         => '',
+        'language'              => 'en',
     );
         
     public $_securefields = array(

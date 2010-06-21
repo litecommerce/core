@@ -330,6 +330,7 @@ CREATE TABLE xlite_profiles (
   pending_membership varchar(32) NOT NULL default '',
   order_id int(11) NOT NULL default '0',
   sidebar_boxes TEXT NOT NULL,
+  language varchar(2) NOT NUll default 'en',
   PRIMARY KEY (profile_id),
   KEY (cms_profile_id),
   KEY login (login),
@@ -490,4 +491,26 @@ CREATE TABLE xlite_template_patches (
 
 
 -- ALTER TABLE xlite_modules CHANGE version version varchar(12) NOT NULL DEFAULT '0';
+
+DROP TABLE IF EXISTS xlite_languages;
+CREATE TABLE xlite_languages (
+  lng_id int(11) NOT NULL auto_increment PRIMARY KEY,
+  code char(2) NOT NULL,
+  code3 char(3) NOT NULL default '',
+  country_code char(2) NOT NULL default '',
+  r2l int(1) NOT NULL default 0,
+  active int(1) NOT NULL default 0,
+  UNIQUE KEY code3 (code3),
+  UNIQUE KEY code2 (code),
+  KEY country_code (country_code)
+) TYPE=MyISAM;
+
+DROP TABLE IF EXISTS xlite_language_translations;
+CREATE TABLE xlite_language_translations (
+  label_id int(11) NOT NULL auto_increment PRIMARY KEY,
+  code char(2) NOT NULL,
+  id int(11) NOT NULL default 0,
+  name char(64) NOT NULL,
+  KEY ci (code, id)
+) TYPE=MyISAM;
 
