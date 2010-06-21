@@ -46,6 +46,15 @@ abstract class XLite_Model_Session extends XLite_Base implements XLite_Base_ISin
      */
     protected static $xliteFormId = null;
 
+    /**
+     * Language (cache)
+     * 
+     * @var    XLite_Model_Language
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $language = null;
 
     /**
      * Generate new form ID
@@ -86,6 +95,104 @@ abstract class XLite_Model_Session extends XLite_Base implements XLite_Base_ISin
         $this->options = array_merge($this->options, XLite::getInstance()->getOptions('host_details'));
     }
 
+    /**
+     * Get language
+     * 
+     * @return XLite_Model_Language
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getLanguage()
+    {
+        $code = $this->get('language');
+        $zone = XLite::isAdminZone() ? 'admin' : 'customer';
+
+        if (!is_array($code)) {
+            $code = array();
+        }
+
+        if (!isset($code[$zone]) || !$code[$zone]) {
+            $this->setLanguage($this->defineCurrentLanguage());
+        }
+
+        if (is_null($this->language)) {
+            $code = $this->get('language');
+            $this->language = XLite_Core_Database::getRepo('XLite_Model_Language')->findOneByCode($code[$zone]);
+        }
+
+
+        return $this->language;
+    }
+
+    /**
+     * Set language 
+     * 
+     * @param string $language Language code
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setLanguage($language)
+    {
+        $code = $this->get('language');
+        $zone = XLite::isAdminZone() ? 'admin' : 'customer';
+
+        if (!is_array($code)) {
+            $code = array();
+        }
+
+        if (!isset($code[$zone]) || $code[$zone] != $language) {
+            $code[$zone] = $language;
+            $this->set('language', $code);
+            $this->language = null;
+        }
+    }
+
+    /**
+     * Define current language 
+     * 
+     * @return string Language code
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineCurrentLanguage()
+    {
+        $languages = array();
+
+        if (XLite_Model_Auth::getInstance()->isLogged()) {
+            $languages[] = XLite_Model_Auth::getInstance()->getProfile()->get('language');
+        }
+
+        if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
+            $tmp = explode(',', $_SERVER['HTTP_ACCEPT_LANGUAGE']);
+            $languages = array_merge($languages, preg_replace('/^([a-z]{2}).+$/Ss', '$1', $tmp));
+        }
+
+        // TODO - add interface default language
+
+        // Process query
+        $idx = 999999;
+        $found = false;
+        $first = false;
+        foreach (XLite_Core_Database::getRepo('XLite_Model_Language')->findActiveLanguages() as $lng) {
+            if (!$first) {
+                $first = $lng->code;
+            }
+            $key = array_search($lng->code, $languages);
+            if (false !== $key && $key < $idx) {
+                $idx = $key;
+                $found = $lng->code;
+            }
+        }
+
+        return $found
+            ? $found
+            : ($first ? $first : 'en');
+    }
 
     /**
      * Destroys the concrete session object. Abstract method, should be overridden

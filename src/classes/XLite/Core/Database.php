@@ -35,8 +35,6 @@
  */
 class XLite_Core_Database extends XLite_Base implements XLite_Base_ISingleton
 {
-    const DBTABLE_PATTERN = 'xlite_%s';
-
     /**
      * Doctrine config object
      * 
@@ -370,9 +368,25 @@ class XLite_Core_Database extends XLite_Base implements XLite_Base_ISingleton
     public function loadClassMetadata(Doctrine\ORM\Event\LoadClassMetadataEventArgs $eventArgs)
     {
         $classMetadata = $eventArgs->getClassMetadata();
+
+        // Set table name prefix
         $classMetadata->setTableName(
-            sprintf(XLite_Core_Database::DBTABLE_PATTERN, $classMetadata->getTableName())
+            sprintf(
+                XLite::getInstance()->getOptions(array('database_details', 'table_pattern')),
+                $classMetadata->getTableName()
+            )
         );
+
+        // Set repository
+        if (!$classMetadata->customRepositoryClassName) {
+            $class = str_replace('_Model_', '_Model_Repo_', $classMetadata->getReflectionClass()->getName());
+            if (class_exists($class)) {
+                $classMetadata->setCustomRepositoryClass($class);
+
+            } else {
+                $classMetadata->setCustomRepositoryClass('XLite_Model_Repo_Common');
+            }
+        }
     }
 
     /**
