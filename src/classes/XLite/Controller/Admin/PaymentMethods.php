@@ -57,7 +57,7 @@ class XLite_Controller_Admin_PaymentMethods extends XLite_Controller_Admin_Abstr
 
     function action_update()
     {
-    	$default_offline_payment = $this->config->getComplex('Payments.default_offline_payment');
+    	$default_offline_payment = $this->config->Payments->default_offline_payment;
 
         foreach ($this->data as $id => $data) {
             if (array_key_exists('enabled', $data)) {
@@ -67,8 +67,7 @@ class XLite_Controller_Admin_PaymentMethods extends XLite_Controller_Admin_Abstr
             }
 
             if ($data['payment_method'] == $default_offline_payment && !$data['enabled']) {
-        		$cfg = new XLite_Model_Config();
-                $cfg->createOption('Payments', "default_offline_payment", "");
+                XLite_Core_Database::getRepo('XLite_Model_Config')->createOption('Payments', 'default_offline_payment', '');
             }
 
             $payment_method = new XLite_Model_PaymentMethod();
@@ -80,8 +79,7 @@ class XLite_Controller_Admin_PaymentMethods extends XLite_Controller_Admin_Abstr
 
     function action_default_payment()
     {
-        $cfg = new XLite_Model_Config();
-        $cfg->createOption('Payments', "default_offline_payment", $this->default_payment);
-        $cfg->createOption('Payments', "default_select_payment", $this->default_select_payment);
+        XLite_Core_Database::getRepo('XLite_Model_Config')->createOption('Payments', 'default_offline_payment', $this->default_payment);
+        XLite_Core_Database::getRepo('XLite_Model_Config')->createOption('Payments', 'default_select_payment', $this->default_select_payment);
     }
 }

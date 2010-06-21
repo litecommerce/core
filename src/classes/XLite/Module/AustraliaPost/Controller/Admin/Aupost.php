@@ -67,11 +67,11 @@ class XLite_Module_AustraliaPost_Controller_Admin_Aupost extends XLite_Controlle
         if (empty($this->weight)) 
             $this->weight = 1;
         if (empty($this->sourceZipcode)) 
-            $this->sourceZipcode = $this->config->getComplex('Company.location_zipcode');
+            $this->sourceZipcode = $this->config->Company->location_zipcode;
         if (empty($this->destinationZipcode)) 
-            $this->destinationZipcode = $this->config->getComplex('Company.location_zipcode');
+            $this->destinationZipcode = $this->config->Company->location_zipcode;
         if (empty($this->destinationCountry)) 
-            $this->destinationCountry = $this->config->getComplex('General.default_country');
+            $this->destinationCountry = $this->config->General->default_country;
  
         $this->aupost = new XLite_Module_AustraliaPost_Model_Shipping_Aupost();
         $options = $this->aupost->get('options');

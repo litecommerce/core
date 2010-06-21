@@ -320,8 +320,8 @@ EOT;
         $profile->set('shipping_zipcode', $addr["POSTAL-CODE"]);
         $profile->set('shipping_country', $addr["COUNTRY-CODE"]);
 
-        $_this->config->setComplex('General.default_zicode', $addr["POSTAL-CODE"]);
-        $_this->config->setComplex('General.default_country', $addr["COUNTRY-CODE"]);
+        $_this->config->General->default_zicode = $addr["POSTAL-CODE"];
+        $_this->config->General->default_country = $addr["COUNTRY-CODE"];
 
         // state
 		$state = XLite_Core_Dtabase::getRepo('XLite_Model_State')->finOneByCode($addr['REGION']);

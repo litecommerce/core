@@ -321,11 +321,7 @@ class XLite_Model_Profile extends XLite_Model_Abstract
         parent::import($options);
         // save memberships
         
-        $c = new XLite_Model_Config();
-        $c->set('category', "Memberships");
-        $c->set('name', "memberships");
-        $c->set('value', serialize($this->config->getComplex('Memberships.memberships')));
-        $c->update();
+        XLite_Core_Database::getRepo('XLite_Model_Config')->createOption('Memberships', 'memberships', serialize($this->config->Memberships->memberships), 'serialized');
     }
 
     /**
@@ -361,11 +357,11 @@ class XLite_Model_Profile extends XLite_Model_Abstract
         echo  $login . "<br>\n";
         func_flush();
         if (!empty($properties['membership'])) {
-            $found = array_search($properties['membership'], $this->config->getComplex('Memberships.memberships'));
+            $found = array_search($properties['membership'], $this->config->Memberships->memberships);
             if ($found === false || $found === null) {
-                $memberships = $this->config->getComplex('Memberships.memberships');
+                $memberships = $this->config->Memberships->memberships;
                 $memberships[] = $properties['membership'];
-                $this->config->setComplex('Memberships.memberships', $memberships);
+                $this->config->Memberships->memberships = $memberships;
             }
         }
     }
@@ -429,8 +425,8 @@ class XLite_Model_Profile extends XLite_Model_Abstract
     function getImportFields($layout = null) 
     {
         $layout = array();
-        if (!is_null($this->config->getComplex('ImportExport.user_layout'))) {
-            $layout = explode(',', $this->config->getComplex('ImportExport.user_layout'));
+        if (!is_null($this->config->ImportExport->user_layout)) {
+            $layout = explode(',', $this->config->ImportExport->user_layout);
         }
         // build import fields list
         $fields = array();

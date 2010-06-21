@@ -1116,7 +1116,7 @@ function UPSOnlineTools_displayLevel_gdlib($width, $length, $items, $dirt_region
 
 function UPSOnlineTools_displayContainer_div($_this, $container, $_left, $_top, $_width, $_height)
 {
-    if (!isset($container['levels']) || count($container['levels']) <= 0 || $_this->xlite->config->getComplex('UPSOnlineTools.display_gdlib')) {
+    if (!isset($container['levels']) || count($container['levels']) <= 0 || $_this->xlite->config->UPSOnlineTools->display_gdlib) {
         return;
     }
 
@@ -1135,7 +1135,7 @@ function UPSOnlineTools_displayContainer_div($_this, $container, $_left, $_top, 
 
     $level_index = 0;
     foreach ($container['levels'] as $level) {
-        if ($_this->xlite->config->getComplex('UPSOnlineTools.level_display_method') == 1) {
+        if ($_this->xlite->config->UPSOnlineTools->level_display_method == 1) {
             // proportional
             $height = ceil($level['height'] * $deltaH);
             $top = - floor($level['bottom'] * $deltaH) + $_top + $_height - $height;

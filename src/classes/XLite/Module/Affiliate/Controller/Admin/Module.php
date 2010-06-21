@@ -46,7 +46,7 @@ class XLite_Module_Affiliate_Controller_Admin_Module extends XLite_Controller_Ad
     {
         // this is a fixing for the default module config handler
         // NOTE: LC v2.0.0 only
-        if (version_compare($this->getComplex('config.Version.version'), "2.0.0", "eq")) {
+        if (version_compare($this->config->Version->version, "2.0.0", "eq")) {
             foreach ($_POST as $name => $value) {
                 if (is_array($value)) {
                     $_POST[$name] = serialize($value);

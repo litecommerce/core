@@ -90,22 +90,21 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_UpsConfig extends XLite_Contr
 
             foreach ($settings as $name => $value) {
 
-                $config = new XLite_Model_Config();
-                $config->set('category', 'UPSOnlineTools');
-                $config->set('name', $name);
+                $optionType = null;
 
                 if ($name == 'upsoptions' && is_array($value)) {
+
                     $res = null;
+
                     foreach ($value as $val) {
                         $res = array($val => 'Y');
                     }
 
                     $value = serialize($res);
+                    $optionType = 'serialized';
                 }
 
-                $config->set('value', $value);
-
-                $config->update();
+                XLite_Core_Database::getRepo('XLite_Model_Config')->createOption('UPSOnlineTools', $name, $value, $optionType);
             }
         }
 

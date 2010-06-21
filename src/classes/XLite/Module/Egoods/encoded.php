@@ -10,7 +10,7 @@ function func_moduleEgoods_send_files($order)
             $mail->item = $items[$i];
             $mail->set('clean_after_send', false);
             $mail->compose(
-                    $order->config->getComplex('Company.site_administrator'),
+                    $order->config->Company->site_administrator,
                     $order->getComplex('profile.login'),
                     "modules/Egoods/instructions");
             
@@ -35,7 +35,7 @@ function func_moduleEgoods_send_files($order)
                     $mail->mail->AddAttachment($mail_file->get('data'));
                 }
                 $mail->compose(
-                        $order->config->getComplex('Company.site_administrator'),
+                        $order->config->Company->site_administrator,
                         $order->getComplex('profile.login'),
                         "modules/Egoods/files");
                 $mail->send();
@@ -89,7 +89,7 @@ function func_moduleEgoods_send_pins($order)
                 $mail = new XLite_Module_Egoods_Model_Mailer();
                 $mail->item = $items[$i];
                 $mail->compose(
-                        $order->config->getComplex('Company.site_administrator'),
+                        $order->config->Company->site_administrator,
                         $order->getComplex('profile.login'),
                         "modules/Egoods/pincodes");
                 

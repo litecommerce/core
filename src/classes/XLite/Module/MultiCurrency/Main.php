@@ -104,7 +104,7 @@ class XLite_Module_MultiCurrency_Main extends XLite_Module_Abstract
             $this->defaultCurrency->set('code',"USD");
             $this->defaultCurrency->set('name',"US dollar");
             $this->defaultCurrency->set('exchange_rate',1);
-            $this->defaultCurrency->set('price_format',$this->config->getComplex('General.price_format'));
+            $this->defaultCurrency->set('price_format',$this->config->General->price_format);
             $this->defaultCurrency->set('base',1);
             $this->defaultCurrency->set('enabled',1);
             $this->defaultCurrency->set('countries',serialize(array()));

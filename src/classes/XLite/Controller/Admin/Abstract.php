@@ -195,7 +195,7 @@ abstract class XLite_Controller_Admin_Abstract extends XLite_Controller_Abstract
         if ($this->session->get('no_https')) {
             return false;
         }
-        return $this->getComplex('config.Security.admin_security');
+        return $this->config->Security->admin_security;
     }
 
     function getRecentAdmins()
@@ -246,7 +246,7 @@ abstract class XLite_Controller_Admin_Abstract extends XLite_Controller_Abstract
     <TABLE border="0" width="100%" cellpadding="0" cellspacing="0" valign=top>
     <TR class="displayPageHeader" height="18">
         <TD align=left class="displayPageHeader" valign=middle width="50%">&nbsp;&nbsp;&nbsp;LiteCommerce</TD>
-        <TD align=right class="displayPageHeader" valign=middle width="50%">Version: <?php echo $this->config->getComplex('Version.version'); ?>&nbsp;&nbsp;&nbsp;</TD>
+        <TD align=right class="displayPageHeader" valign=middle width="50%">Version: <?php echo $this->config->Version->version; ?>&nbsp;&nbsp;&nbsp;</TD>
     </TR>
     </TABLE>
 </TD>

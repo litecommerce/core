@@ -79,7 +79,7 @@ class XLite_Module_Egoods_Model_Order extends XLite_Model_Order implements XLite
                     $product->find("product_id = " . $items[$i]->getComplex('product.product_id'));
                     $mail->product = $product;
                     $mail->free_pins = $pin->getFreePinCount($items[$i]->getComplex('product.product_id'));
-                    $mail->compose($this->config->getComplex('Company.site_administrator'), $this->config->getComplex('Company.site_administrator'), "modules/Egoods/low_available_limit");
+                    $mail->compose($this->config->Company->site_administrator, $this->config->Company->site_administrator, "modules/Egoods/low_available_limit");
                     $mail->send();
                 }
             }

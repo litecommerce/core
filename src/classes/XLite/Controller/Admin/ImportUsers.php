@@ -74,16 +74,7 @@ class XLite_Controller_Admin_ImportUsers extends XLite_Controller_Admin_Abstract
     function change_layout($layout_name = "user_layout")
     {
         $layout = implode(',', XLite_Core_Request::getInstance()->$layout_name);
-        $this->config = new XLite_Model_Config();
-        if ($this->config->find("name='$layout_name'")) {
-            $this->config->set('value', $layout);
-            $this->config->update();
-        } else {
-            $this->config->set('name', $layout_name);
-            $this->config->set('category', "ImportExport");
-            $this->config->set('value', $layout);
-            $this->config->create();
-        }
+        XLite_Core_Database::getRepo('XLite_Model_Config')->createOption('ImportExport', $layout_name, $layout);
     }
     function action_layout($layout_name = "user_layout")
     {

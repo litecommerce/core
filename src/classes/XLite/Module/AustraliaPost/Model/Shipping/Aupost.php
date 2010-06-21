@@ -44,7 +44,7 @@ class XLite_Module_AustraliaPost_Model_Shipping_Aupost extends XLite_Model_Shipp
     function getWeightInGrams($order, $weight_unit=null) 
     {
         $weight = (is_object($order)) ? $order->get('weight') : $order;
-        $weight_unit = (isset($weight_unit)) ? $weight_unit : $this->config->getComplex('General.weight_unit');
+        $weight_unit = (isset($weight_unit)) ? $weight_unit : $this->config->General->weight_unit;
 
         switch ($weight_unit) {
         	case 'lbs': 

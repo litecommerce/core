@@ -62,7 +62,7 @@ class XLite_Module_WholesaleTrading_Model_Order extends XLite_Model_Order implem
     {
         $global_discount = $this->get('global_discount');
         if ($global_discount > 0) {
-            if ($this->config->getComplex('Taxes.prices_include_tax') && !$this->getComplex('config.Taxes.discounts_after_taxes')) {
+            if ($this->config->Taxes->prices_include_tax && !$this->config->Taxes->discounts_after_taxes) {
                 $taxed_global_discount = $this->getTaxedGlobalDiscount();
                 $subtotal -= $taxed_global_discount;
             } else {
@@ -82,7 +82,7 @@ class XLite_Module_WholesaleTrading_Model_Order extends XLite_Model_Order implem
         $is_percent_discount = ($this->getComplex('appliedGlobalDiscount.discount_type') == "p");
         if ($is_percent_discount) return $discount;
 
-        if ($this->config->getComplex('Taxes.prices_include_tax') && $this->config->getComplex('Taxes.discounts_after_taxes')) {
+        if ($this->config->Taxes->prices_include_tax && $this->config->Taxes->discounts_after_taxes) {
             $taxed_discount = $discount;
         } else {
             $taxes = (array) $this->getTaxedGlobalDiscountRates();
@@ -103,7 +103,7 @@ class XLite_Module_WholesaleTrading_Model_Order extends XLite_Model_Order implem
             $tax_items = array();
             $tax_values = array();
             foreach ($items as $k=>$i) {
-                if ($this->config->getComplex('Taxes.prices_include_tax')) {
+                if ($this->config->Taxes->prices_include_tax) {
                     $i->set('price', $i->getComplex('product.price'));
                 }
                 $skip_flag = $i->_skipTaxingWholesalePrice;
@@ -139,7 +139,7 @@ class XLite_Module_WholesaleTrading_Model_Order extends XLite_Model_Order implem
         foreach ($tax_items as $k=>$i) {
             if ($discount <= 0) break;
             $taxRates->setOrderItem($i);
-            if (!$this->config->getComplex('Taxes.prices_include_tax')) {
+            if (!$this->config->Taxes->prices_include_tax) {
                 $item_cost = $i->get('taxableTotal');
             } else {
                 $skip_flag = $i->_skipTaxingWholesalePrice;
@@ -188,7 +188,7 @@ class XLite_Module_WholesaleTrading_Model_Order extends XLite_Model_Order implem
     	$result = parent::calcAllTaxes();
 
         if (floatval($this->get('global_discount')) > 0) {
-            if (!($this->getComplex('config.Taxes.prices_include_tax') && $this->getComplex('config.Taxes.discounts_after_taxes'))) {
+            if (!($this->config->Taxes->prices_include_tax && $this->config->Taxes->discounts_after_taxes)) {
                 $rates = $this->getTaxedGlobalDiscountRates();
                 $result = $this->_addTaxes($result, $rates);
                 // after discount correction taxes should be adjusted to default format to avoid rounding problems

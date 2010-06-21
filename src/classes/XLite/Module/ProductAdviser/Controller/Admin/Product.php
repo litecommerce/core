@@ -255,6 +255,6 @@ class XLite_Module_ProductAdviser_Controller_Admin_Product extends XLite_Control
 
     function isRelatedProductsEnabled()
     {
-        return (($this->config->getComplex('ProductAdviser.admin_related_products_enabled') == "Y") ? true : false);
+        return (($this->config->ProductAdviser->admin_related_products_enabled == "Y") ? true : false);
     }
 }

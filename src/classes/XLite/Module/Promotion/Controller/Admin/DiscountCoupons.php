@@ -218,7 +218,7 @@ class XLite_Module_Promotion_Controller_Admin_DiscountCoupons extends XLite_Cont
     function canShowChildren($dc)
     {
         if (!$dc->getChildrenCount()) return false;
-        if ($this->xlite->getComplex('config.Promotion.auto_expand_coupon_orders')) return true;
+        if ($this->xlite->config->Promotion->auto_expand_coupon_orders) return true;
         if ($dc->get('coupon_id') != $this->get('children_coupon_id')) return false;
         return true;
     }

@@ -54,7 +54,7 @@ class XLite_Module_Affiliate_Controller_Customer_ProductBanner extends XLite_Con
 
     function isWasSecure()
     {
-        return $this->getComplex('config.Security.customer_security');
+        return $this->config->Security->customer_security;
     }
 
     function isHTTPS()

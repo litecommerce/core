@@ -61,7 +61,7 @@ class XLite_Controller_Admin_ChangeSkin extends XLite_Controller_Admin_Abstract
             return $this->_currentSkin;
         }
         
-        $this->currentSkinName = $this->config->getComplex('Skin.skin');
+        $this->currentSkinName = $this->config->Skin->skin;
         $this->_currentSkin = str_replace('_', " ", $this->currentSkinName);
 
         return $this->_currentSkin;
@@ -70,8 +70,8 @@ class XLite_Controller_Admin_ChangeSkin extends XLite_Controller_Admin_Abstract
     function isDisplayWarning()
     {
         $skins = array("3-columns_classic", "3-columns_modern", "2-columns_classic", "2-columns_modern");
-        if (!in_array($this->config->getComplex('Skin.skin'), $skins)) {
-            if (!array_key_exists($this->config->getComplex('Skin.skin'), $this->get('skins'))) {
+        if (!in_array($this->config->Skin->skin, $skins)) {
+            if (!array_key_exists($this->config->Skin->skin, $this->get('skins'))) {
                 return true;
             }
         }
@@ -364,8 +364,7 @@ To install the selected skin, please correct the problem and start the installat
         echo "<br><br><b>Cleanup cache...</b><br>";
         func_cleanup_cache('skins', true);
 
-        $config = new XLite_Model_Config();
-        $config->createOption('Skin', "skin", $this->layout);
+        XLite_Core_Database::getRepo('XLite_Model_Config')->createOption('Skin', 'skin', $this->layout);
         
         echo "<br><b>Task completed.</b><br>";
 

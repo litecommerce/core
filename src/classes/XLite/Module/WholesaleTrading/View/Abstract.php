@@ -37,10 +37,10 @@ abstract class XLite_Module_WholesaleTrading_View_Abstract extends XLite_View_Ab
 {
     function price_format($base, $field = "", $thousand_delim = null, $decimal_delim = null)
     {
-        if (is_Object($base) && $base->get($field) === $this->getComplex('config.WholesaleTrading.price_denied_message')) {
-            return $this->getComplex('config.WholesaleTrading.price_denied_message');
-        } else if ($base === $this->getComplex('config.WholesaleTrading.price_denied_message')) {
-            return $this->getComplex('config.WholesaleTrading.price_denied_message');
+        if (is_Object($base) && $base->get($field) === $this->config->WholesaleTrading->price_denied_message) {
+            return $this->config->WholesaleTrading->price_denied_message;
+        } else if ($base === $this->config->WholesaleTrading->price_denied_message) {
+            return $this->config->WholesaleTrading->price_denied_message;
         }
 
         return parent::price_format($base, $field, $thousand_delim, $decimal_delim);

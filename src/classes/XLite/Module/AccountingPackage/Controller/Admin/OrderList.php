@@ -65,16 +65,7 @@ class XLite_Module_AccountingPackage_Controller_Admin_OrderList extends XLite_Co
         foreach (func_get_args() as $name) {
             if (isset($this->$name)) {
                 $value = $this->$name;
-                $config = new XLite_Model_Config();
-                if ($config->find("category='ImportExport' AND name='$name'")) {
-                    $config->set('value', $value);
-                    $config->update();
-                } else {
-                    $config->set('name', $name);
-                    $config->set('category', "ImportExport");
-                    $config->set('value', $value);
-                    $config->create();
-                }
+                XLite_Core_Database::getRepo('XLite_Model_Config')->createOption('ImportExport', $name, $value);
             }
         }
     }
@@ -137,7 +128,7 @@ class XLite_Module_AccountingPackage_Controller_Admin_OrderList extends XLite_Co
     function getDateDue($date, $format = null) 
     {
         if (is_null($format)) {
-            $format = $this->getComplex('config.General.date_format');
+            $format = $this->config->General->date_format;
         }
         return strftime($format, $date);
     }
@@ -159,11 +150,11 @@ class XLite_Module_AccountingPackage_Controller_Admin_OrderList extends XLite_Co
     
     function export($format) 
     {
-        $price_format = $this->config->getComplex('General.price_format');
-        $this->config->setComplex('General.price_format', "%s");
+        $price_format = $this->config->General->price_format;
+        $this->config->General->price_format = '%s';
         require_once LC_MODULES_DIR . 'AccountingPackage' . LC_DS . 'encoded.php';
         AccountingPackage_export($this, $format);
-        $this->config->setComplex('General.price_format', $price_format);
+        $this->config->General->price_format = $price_format;
     }
 
     function found($order, $name) 

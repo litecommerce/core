@@ -89,7 +89,7 @@ class XLite_Module_AntiFraud_Controller_Admin_Fraud extends XLite_Controller_Adm
     function check_ip($check_distance)
     {
         $post = array();
-        $post['service_key'] = $this->config->getComplex('AntiFraud.antifraud_license');
+        $post['service_key'] = $this->config->AntiFraud->antifraud_license;
         $post['ip'] = $this->get('ip');
     
         $properties = $this->get('properties');
@@ -104,7 +104,7 @@ class XLite_Module_AntiFraud_Controller_Admin_Fraud extends XLite_Controller_Adm
         
         $request = new XLite_Model_HTTPS();
         $request->data = $post;
-        $request->url = $this->config->getComplex('AntiFraud.antifraud_url')."/check_ip.php";
+        $request->url = $this->config->AntiFraud->antifraud_url."/check_ip.php";
         $request->request();
         if ($request->error) {
             return array

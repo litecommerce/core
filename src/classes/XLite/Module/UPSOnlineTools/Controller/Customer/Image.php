@@ -64,7 +64,7 @@ class XLite_Module_UPSOnlineTools_Controller_Customer_Image extends XLite_Contro
             $level = $container['levels'][$level_id];
 
             require_once LC_MODULES_DIR . 'UPSOnlineTools' . LC_DS . 'encoded.php';
-            $cont = UPSOnlineTools_displayLevel_gdlib($container['width'], $container['length'], $level['items'], $level['dirt_spaces'], $this->config->getComplex('UPSOnlineTools.visual_container_width'));
+            $cont = UPSOnlineTools_displayLevel_gdlib($container['width'], $container['length'], $level['items'], $level['dirt_spaces'], $this->config->UPSOnlineTools->visual_container_width);
 
             header("Content-type: image/jpeg");
             echo $cont;

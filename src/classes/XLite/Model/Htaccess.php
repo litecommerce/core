@@ -90,6 +90,7 @@ class XLite_Model_Htaccess extends XLite_Model_Abstract
         }
 
         $config = new XLite_Model_Config();
+        /*
         if ($config->find("name = 'last_date' AND category = 'Htaccess'")){
             $now = time();
 
@@ -98,6 +99,7 @@ class XLite_Model_Htaccess extends XLite_Model_Abstract
         } else {
         	$config->createOption('Htaccess', "last_date", "0");
         }
+         */
     }
 
     function makeHash($string)
@@ -135,18 +137,21 @@ class XLite_Model_Htaccess extends XLite_Model_Abstract
 
     function checkFiles()
     {
-        $last_date = $this->getComplex('xlite.config.Htaccess.last_date');
+        $last_date = $this->config->Htaccess->last_date;
         $now = time();
         if (($now - $last_date) < CHECK_INTERVAL)
             return;
 
-        $config = new XLite_Model_Config();
+        // TODO: move last_date counter to the xlite_temporary_vars table
+        /*
+        $config = new XLite_Core_Config();
         if ($config->find("name = 'last_date' AND category = 'Htaccess'")){
             $config->set('value', $now);
             $config->update();
         } else {
         	$config->createOption('Htaccess', "last_date", "0");
         }
+         */
 
         $error_results = array();
         foreach ((array) $this->findAll("", "filename") as $htaccess){

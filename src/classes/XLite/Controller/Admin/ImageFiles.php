@@ -38,7 +38,7 @@ class XLite_Controller_Admin_ImageFiles extends XLite_Controller_Admin_Abstract
     function getImagesDir()
     {
         $images = $this->get('imageClasses');
-        return ($this->getComplex('xlite.config.Images.images_directory') != "") ? $this->getComplex('xlite.config.Images.images_directory') : XLite_Model_Image::IMAGES_DIR;
+        return ($this->xlite->config->Images->images_directory != "") ? $this->xlite->config->Images->images_directory : XLite_Model_Image::IMAGES_DIR;
     }
 
     function action_move_to_filesystem($from = false)
@@ -85,19 +85,10 @@ class XLite_Controller_Admin_ImageFiles extends XLite_Controller_Admin_Abstract
         $images = $this->get('imageClasses');
         $images_directory = ($images_directory != "") ? $images_directory : XLite_Model_Image::IMAGES_DIR;
 
-        $cfg = new XLite_Model_Config();
-        if ($cfg->find("name='images_directory'")) {
-            $cfg->set('value', $images_directory);
-            $cfg->update();
-        } else {
-            $cfg->set('name', "images_directory");
-            $cfg->set('category', "Images");
-            $cfg->set('value', $images_directory);
-            $cfg->create();
-        }
-        
+        XLite_Core_Database::getRepo('XLite_Model_Config')->createOption('Images', 'images_directory', $images_directory);
+
         // re-read config data
-        $this->xlite->config = $cfg->readConfig();
+        $this->xlite->config = XLite_Core_Config::readConfig(true);
         $this->config = $this->xlite->config;
     }
 }

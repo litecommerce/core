@@ -32,208 +32,84 @@
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
+ * @Entity (repositoryClass="XLite_Model_Repo_Config")
+ * @Table (name="config",
+ *         indexes={
+ *              @Index(name="orderby", columns={"orderby"}),
+ *              @Index(name="type", columns={"type"})
+ *         }
+ * )
  */
-class XLite_Model_Config extends XLite_Model_Abstract implements XLite_Base_ISingleton
+class XLite_Model_Config extends XLite_Model_AbstractEntity
 {
-    protected $parsedData = null;
-
-    public $fields = array(
-        'category' => '',
-        'name' => '',
-        'comment' => '',
-        'value' => '',
-        'category' => '',
-        'orderby' => '0',
-        'type' => 'text');
-    
-    public $primaryKey = array('category', 'name');
-    public $alias = 'config';
-    public $defaultOrder = "orderby";
-    public $configClass = "XLite_Model_Config";
-    
-    // GET methods {{{
-    function getCategories()
-    {
-        return array('General', "Company", "Email", "Security","AdminIP", "Captcha", "Environment");
-    }
-
-    function getCategoryNames()
-    {
-        return array('General', "Company", "Email", "Security","Admin IP protection", "Captcha protection", "Environment");
-    }
-    
-    function getByCategory($category)
-    {
-        return $this->findAll("category='$category'", "orderby");
-    }
-    
-
-    // IS methods {{{
-    function isText()
-    {
-        return $this->get('type') == "text";
-    }
-
-    function isCheckbox()
-    {
-        return $this->get('type') == "checkbox";
-    }
-
-    function isCountry()
-    {
-        return $this->get('type') == "country";
-    }
-
-    function isState()
-    {
-        return $this->get('type') == "state";
-    }
-
-    function isChecked()
-    {
-        return $this->get('value') == 'Y';
-    }
-
-    function isSelect()
-    {
-        return $this->get('type') == "select";
-    }
-    
-    function isSelected($property, $value = null, $prop = null)
-    {
-        return parent::isSelected('value', $property);
-    }
-
-    function isName($name)
-    {
-        return $this->get('name') == $name;
-    }
-
-    function isTextArea()
-    {
-        return $this->get('type') == "textarea";
-    }
-    
-    function isSeparator()
-    {
-        return $this->get('type') == "separator";
-    }
-    
-    
 
     /**
-    * Read config variables
-    */
-    public function readConfig($force = false)
-    {
-        if (!is_null($this->parsedData) && !$force) {
-            return $this->parsedData;
-        }
-
-        $config = new XLite_Base();
-        $row = new $this->configClass;
-        $r = $row->iterate();
-        while ($row->next($r)) {
-            $category = $row->get('category');
-            if (!isset($config->$category)) {
-                $config->$category = new XLite_Base();
-            }
-            $name = $row->get('name');
-            if ($row->get('type') == "checkbox") {
-                $config->$category->$name = $row->get('value') == 'Y' ? true : false;
-            } else if ($row->get('type') == "serialized") {
-                $config->$category->$name = unserialize($row->get('value'));
-            } else {
-                $config->$category->$name = $row->get('value');
-            }
-        }
-        $config->Company->locationCountry = XLite_Core_Database::getEM()
-            ->find('XLite_Model_Country', $config->Company->location_country);
-        if (!$config->Company->locationCountry) {
-            $tmp = XLite_Core_Database::getRepo('XLite_Model_Country')->findAll();
-            $config->Company->locationCountry = array_shift($tmp);
-            unset($tmp);
-        }
-
-        $config->Company->locationState = XLite_Core_Database::getRepo('XLite_Model_State')
-            ->findById($config->Company->location_state, $config->Company->location_custom_state);
-        $config->General->defaultCountry = XLite_Core_Database::getEM()
-            ->find('XLite_Model_Country', $config->General->default_country);
-        if (!$config->Company->defaultCountry) {
-            $tmp = XLite_Core_Database::getRepo('XLite_Model_Country')->findAll();
-            $config->Company->defaultCountry = array_shift($tmp);
-            unset($tmp);
-        }
-
-
-        $config->Memberships->memberships = array();
-        if (
-            !isset($config->Memberships->membershipsCollection)
-            || !is_array($config->Memberships->membershipsCollection)
-        ) {
-            $config->Memberships->membershipsCollection = array();
-
-        } else {
-            foreach ($config->Memberships->membershipsCollection as $membership) {
-                $config->Memberships->memberships[] = $membership['membership'];
-            }
-        }
-
-        $this->parsedData = $config;
-
-        return $this->parsedData;
-    }
-
-    function createOption($category, $name, $value, $type = null, $comment = null, $orderby = null) 
-    {
-        $config = new $this->configClass;
-        if ($config->find("name='$name' AND category='$category'")) {
-            $config->set('value', $value);
-            if (!is_null($type)) {
-                $config->set('type', $type);
-            }
-            if (!is_null($comment)) {
-                $config->set('comment', $comment);
-            }
-            if (!is_null($orderby)) {
-                $config->set('orderby', $orderby);
-            }
-            $config->update();
-        } else {
-            $config->set('name', $name);
-            $config->set('category', $category);
-            $config->set('value', $value);
-            if (!is_null($type)) {
-                $config->set('type', $type);
-            }
-            if (!is_null($comment)) {
-                $config->set('comment', $comment);
-            }
-            if (!is_null($orderby)) {
-                $config->set('orderby', $orderby);
-            }
-            $config->create();
-        }
-    }
-
-
-    public function update()
-    {
-        parent::update();
-
-        $this->readConfig(true);
-    }
-
-    /**
-     * Method to access a singleton
-     *
-     * @return XLite_Base
-     * @access public
-     * @see    ____func_see____
+     * Option unique name
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
      * @since  3.0.0
+     * @Id
+     * @Column (type="string", length="32", nullable=false)
      */
-    public static function getInstance()
-    {
-        return parent::getInstance()->readConfig();
-    }
+    protected $name;
+
+    /**
+     * Option comment
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Column (type="string", length="255", nullable=false)
+     */
+    protected $comment = '';
+
+    /**
+     * Option value
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Column (type="text", nullable=false)
+     */
+    protected $value = '';
+
+    /**
+     * Option category
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Id
+     * @Column (type="string", length="32", nullable=false)
+     */
+    protected $category = '';
+
+    /**
+     * Option position within category
+     * 
+     * @var    integer
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Column (type="integer", length="11", nullable=false)
+     */
+    protected $orderby = 0;
+
+    /**
+     * Option type
+     * Allowed values:'','text','textarea','checkbox','country','state','select','serialized','separator'
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Column (type="string", length="32", nullable=false)
+     */
+    protected $type = '';
+
 }

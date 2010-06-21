@@ -56,7 +56,7 @@ class XLite_Module_Promotion_Model_OrderItem extends XLite_Model_OrderItem imple
         global $calcAllTaxesInside;
 
         if (!is_null($this->get('product')) && $this->isComplex('order._bonusPrices')) {
-            if ($this->getComplex('config.Taxes.prices_include_tax') && !$this->getComplex('config.Taxes.discounts_after_taxes') && !$calcAllTaxesInside) {
+            if ($this->config->Taxes->prices_include_tax && !$this->config->Taxes->discounts_after_taxes && !$calcAllTaxesInside) {
                 // calculate original item price without taxes...
                 $p = new XLite_Model_Product($this->get('product_id'));
                 $p->set('price', 100.00); // use a 100 dollar product
@@ -64,7 +64,7 @@ class XLite_Module_Promotion_Model_OrderItem extends XLite_Model_OrderItem imple
                 $orig_price = $price * 100 / $taxed100;
                 $price = $orig_price;
             }
-            if (!($this->getComplex('config.Taxes.prices_include_tax') && $this->getComplex('config.Taxes.discounts_after_taxes') && $calcAllTaxesInside)) {
+            if (!($this->config->Taxes->prices_include_tax && $this->config->Taxes->discounts_after_taxes && $calcAllTaxesInside)) {
                 // take bonuses into account
                 foreach ($this->getComplex('order.appliedBonuses') as $bonus) {
                     if ($bonus->get('bonusType') == "discounts" || $this->get('bonusItem')) {
@@ -72,7 +72,7 @@ class XLite_Module_Promotion_Model_OrderItem extends XLite_Model_OrderItem imple
                     }
                 }
             }
-            if ($this->getComplex('config.Taxes.prices_include_tax') && !$this->getComplex('config.Taxes.discounts_after_taxes') && !$calcAllTaxesInside) {
+            if ($this->config->Taxes->prices_include_tax && !$this->config->Taxes->discounts_after_taxes && !$calcAllTaxesInside) {
                 $p = new XLite_Model_Product($this->get('product_id'));
                 $p->set('price', $price);
                 $price = $p->getTaxedPrice();
@@ -89,7 +89,7 @@ class XLite_Module_Promotion_Model_OrderItem extends XLite_Model_OrderItem imple
             }
         }
 
-        if ($this->config->getComplex('Promotion.only_positive_price')) {
+        if ($this->config->Promotion->only_positive_price) {
             if ($price < 0) {
             	$price = 0;
             }

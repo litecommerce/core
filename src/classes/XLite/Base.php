@@ -59,7 +59,7 @@ class XLite_Base
         'session'  => 'XLite_Model_Session',
         'db'       => 'XLite_Model_Database',
         'logger'   => 'XLite_Logger',
-        'config'   => 'XLite_Model_Config',
+        'config'   => 'XLite_Core_Config',
         'profiler' => 'XLite_Model_Profiler',
         'mm'       => 'XLite_Model_ModulesManager',
         'layout'   => 'XLite_Model_Layout',
@@ -250,7 +250,7 @@ class XLite_Base
                 if ($obj instanceof stdClass) {
                     $obj = isset($obj->$part) ? $obj->$part : null;
 
-                } elseif ($obj instanceof XLite_Model_AbstractEntity) {
+                } elseif ($obj instanceof XLite_Model_AbstractEntity or $obj instanceof XLite_Core_CommonCell) {
                     $obj = $obj->$part;
 
                 } else {

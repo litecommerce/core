@@ -139,7 +139,7 @@ class XLite_Module_Egoods_Model_OrderItem extends XLite_Model_OrderItem implemen
                 $record['name'] = basename($file->get('data'));
                 $record['link'] = $this->xlite->getShopUrl("cart.php?target=download&action=download&acc=") . $link_id;
                 $record['expires'] = $link->get('expire_on');
-                $record['exp_time'] = $this->getComplex('xlite.config.Egoods.exp_days');
+                $record['exp_time'] = $this->xlite->config->Egoods->exp_days;
                 $record['downloads'] = $link->get('available_downloads');
                 $record['delivery'] = $file->get('delivery');
                 $this->_egoods []= $record;

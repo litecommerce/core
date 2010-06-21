@@ -87,8 +87,8 @@ class XLite_Module_Promotion_Model_Cart extends XLite_Model_Cart implements XLit
         $op = $this->get('origProfile');
         $status = $this->get('status');
         if ($status == "P" || $status == "Q" || $status == "C") {
-            if ($this->get('payedByPoints') > $op->get('bonusPoints')*$this->config->getComplex('Promotion.bonusPointsCost')) {
-                $this->set('payedByPoints', $op->get('bonusPoints')*$this->config->getComplex('Promotion.bonusPointsCost'));
+            if ($this->get('payedByPoints') > $op->get('bonusPoints')*$this->config->Promotion->bonusPointsCost) {
+                $this->set('payedByPoints', $op->get('bonusPoints')*$this->config->Promotion->bonusPointsCost);
             }
         }
         $this->calcTotals();

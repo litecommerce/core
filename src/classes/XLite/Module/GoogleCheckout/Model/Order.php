@@ -398,7 +398,7 @@ EOT;
 
     function isGoogleDiscountCouponsAvailable()
     {
-        if ($this->xlite->get('PromotionEnabled') && ($this->config->getComplex('Promotion.allowDC'))) {
+        if ($this->xlite->get('PromotionEnabled') && ($this->config->Promotion->allowDC)) {
             if (!is_null($this->getDC())) {
                 return false;
             }

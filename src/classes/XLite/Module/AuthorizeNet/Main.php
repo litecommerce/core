@@ -92,7 +92,7 @@ class XLite_Module_AuthorizeNet_Main extends XLite_Module_Abstract
      */
     public static function getSettingsForm()
     {
-        XLite_Core_Converter::buildUrl(
+        return XLite_Core_Converter::buildUrl(
             'payment_method',
             '',
             array('payment_method' => 'authorizenet_cc'),

@@ -39,7 +39,7 @@ class XLite_Module_AntiFraud_Controller_Admin_OrderList extends XLite_Controller
         {
             $this->params[] = "show_factor";
             $this->params[] = "risk_factor";
-            if (!isset($this->risk_factor)) $this->risk_factor = $this->config->getComplex('AntiFraud.antifraud_risk_factor');
+            if (!isset($this->risk_factor)) $this->risk_factor = $this->config->AntiFraud->antifraud_risk_factor;
 
             parent::init();
         }

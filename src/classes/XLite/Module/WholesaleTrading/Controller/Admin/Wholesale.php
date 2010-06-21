@@ -37,38 +37,44 @@ class XLite_Module_WholesaleTrading_Controller_Admin_Wholesale extends XLite_Con
 {
     public $params = array('target');
     
-    function action_options() 
+    public function action_options() 
     {
-        $config = new XLite_Model_Config();
-        $options = $config->getByCategory('WholesaleTrading');
-        for ($i=0; $i<count($options); $i++) {
-            $name = $options[$i]->get('name');
+        $options = XLite_Core_Database::getRepo('XLite_Model_Config')->getByCategory('WholesaleTrading', true, true);
+
+        for ($i = 0; $i < count($options); $i++) {
+
+            $name = $options[$i]->name;
+
             if ($name == "bulk_categories") {
-                if (count($_POST['bulk_categories']) > 0) {
-                    $options[$i]->set('value', implode(";", $_POST['bulk_categories']));
+
+                if (is_array($_POST['bulk_categories']) && count($_POST['bulk_categories']) > 0) {
+                    $value = implode(';', $_POST['bulk_categories']);
+                
                 } else {
-                    $options[$i]->set('value', "");
+                    $value = '';
                 }
+
             } else {
-                $type = $options[$i]->get('type');
-                if ($type=='checkbox') {
+
+                $type = $options[$i]->type;
+
+                if ($type == 'checkbox') {
+
                     if (empty($_POST[$name])) {
-                        $val = 'N';
+                        $value = 'N';
+                    
                     } else {
-                        $val = 'Y';
+                        $value = 'Y';
                     }
+
                 } else {
-                    $val = trim($_POST[$name]);
+                    $value = trim($_POST[$name]);
                 }
-
-                $options[$i]->set('value', $val);
             }
+
+            XLite_Core_Database::getRepo('XLite_Model_Config')->createOption('WholesaleTrading', $name, $value);
         }
 
-        // write changes on success
-        for ($i=0; $i<count($options); $i++) {
-            $options[$i]->update();
-        }
     }
 
 }

@@ -106,7 +106,7 @@ class XLite_Module_Affiliate_Model_Profile extends XLite_Model_Profile implement
     function getParents() 
     {
         $parents = array();
-        $tiers = intval($this->getComplex('config.Affiliate.tiers_number'));
+        $tiers = intval($this->config->Affiliate->tiers_number);
         if ($tiers > 1) {
             $parent = $this->get('parent');
             $level = 2; // start from level 2 affiliate
@@ -135,7 +135,7 @@ class XLite_Module_Affiliate_Model_Profile extends XLite_Model_Profile implement
 
     function buildAffiliatesTree(&$affiliates, $level) 
     {
-        $tiers = intval($this->getComplex('config.Affiliate.tiers_number'));
+        $tiers = intval($this->config->Affiliate->tiers_number);
         $pp = new XLite_Module_Affiliate_Model_PartnerPayment();
         foreach ($this->findAll("parent=".$this->get('profile_id')) as $cid => $child) {
             $child->set('level', $level);

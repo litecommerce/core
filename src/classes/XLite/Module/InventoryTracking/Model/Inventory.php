@@ -185,8 +185,8 @@ class XLite_Module_InventoryTracking_Model_Inventory extends XLite_Model_Abstrac
             $mailer->set('item', $item);
             $mailer->set('amount', $this->get('amount'));
             $mailer->compose(
-                    $this->config->getComplex('Company.site_administrator'),
-                    $this->config->getComplex('Company.site_administrator'),
+                    $this->config->Company->site_administrator,
+                    $this->config->Company->site_administrator,
                     "lowlimit_warning_notification");
             $mailer->send();
         }

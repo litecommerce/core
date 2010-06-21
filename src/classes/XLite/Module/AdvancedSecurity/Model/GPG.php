@@ -52,7 +52,7 @@ class XLite_Module_AdvancedSecurity_Model_GPG extends XLite_Base
         //
 
         // use config value
-        $exe = $this->getComplex('config.AdvancedSecurity.gpg_binary_path');
+        $exe = $this->config->AdvancedSecurity->gpg_binary_path;
         if (!is_null($exe) && @file_exists($exe)) {
             $this->exe = $exe;
         }
@@ -73,7 +73,7 @@ class XLite_Module_AdvancedSecurity_Model_GPG extends XLite_Base
         //
 
     // use config value
-    $cfg_home = $this->getComplex('config.AdvancedSecurity.gpg_home');
+    $cfg_home = $this->config->AdvancedSecurity->gpg_home;
     $home = realpath($cfg_home);
     if (!is_null($cfg_home) && $cfg_home != "" && @is_dir($home)) {
         $home = $this->validatePath($home, true);
@@ -88,7 +88,7 @@ class XLite_Module_AdvancedSecurity_Model_GPG extends XLite_Base
         //
         // GnuPG user ID
         //
-        $this->recipient = $this->getComplex('config.AdvancedSecurity.gpg_user_id');
+        $this->recipient = $this->config->AdvancedSecurity->gpg_user_id;
 
         //
         // Temporary directory
@@ -120,11 +120,9 @@ class XLite_Module_AdvancedSecurity_Model_GPG extends XLite_Base
     function validatePath($cmd_file, $isFolder = false)
     {
         // lookup cache for adjusted name
-        $cfg = new XLite_Model_Config();
-
         $valid_names = array();
-        if ($cfg->find("category='AdvancedSecurity' AND name='executable_cache'")) {
-            $valid_names = @unserialize($cfg->get('value'));
+        if (!is_null($this->config->AdvancedSecurity->executable_cache)) {
+            $valid_names = @unserialize($this->config->AdvancedSecurity->executable_cache);
         }
         if (!is_array($valid_names)) $valid_names = array();
 
@@ -152,7 +150,7 @@ class XLite_Module_AdvancedSecurity_Model_GPG extends XLite_Base
 
         if ($cmd_file) {
             $valid_names[$key] = $cmd_file;
-            $cfg->createOption('AdvancedSecurity', "executable_cache", serialize($valid_names), "serialized");
+            XLite_Core_Database::getRepo('XLite_Model_Config')->createOption('AdvancedSecurity', 'executable_cache', serialize($valid_names), 'serialized');
         }
         return $cmd_file;
     }
@@ -304,7 +302,7 @@ class XLite_Module_AdvancedSecurity_Model_GPG extends XLite_Base
         } else {
             return "";
         }
-        $cmd = $this->exe . " --armor --yes --no-tty --disable-mdc --no-random-seed-file --no-verbose --no-greeting --no-secmem-warning --no-permission-warning --no-options --no-random-seed-file --homedir " . $this->homedir . $target . "\"" . $this->getComplex('config.AdvancedSecurity.gpg_user_id') . "\"";
+        $cmd = $this->exe . " --armor --yes --no-tty --disable-mdc --no-random-seed-file --no-verbose --no-greeting --no-secmem-warning --no-permission-warning --no-options --no-random-seed-file --homedir " . $this->homedir . $target . "\"" . $this->config->AdvancedSecurity->gpg_user_id . "\"";
         $data = $this->execGPG($cmd);
         return $data;
     }

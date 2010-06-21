@@ -50,7 +50,7 @@ class XLite_Module_Promotion_Controller_Admin_SpecialOffer extends XLite_Control
 
     function hasMemberships()
     {
-        $memberships = $this->getComplex('config.Memberships.memberships');
+        $memberships = $this->config->Memberships->memberships;
         return !empty($memberships);
     }
 

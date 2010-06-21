@@ -383,7 +383,7 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
     function get($name)
     {
         if ($name == "price" && !$this->is('priceAvailable') && !$this->xlite->is('adminZone')) {
-            return $this->getComplex('config.WholesaleTrading.price_denied_message');
+            return $this->config->WholesaleTrading->price_denied_message;
         }
         return parent::get($name);
     }
@@ -504,7 +504,7 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
         $originalId = $this->get('product_id');
         $newId = $p->get('product_id');
         
-        if ($this->config->getComplex('WholesaleTrading.clone_wholesale_productaccess')) {
+        if ($this->config->WholesaleTrading->clone_wholesale_productaccess) {
             $productAccess = new XLite_Module_WholesaleTrading_Model_ProductAccess();
             foreach ($productAccess->findAll("product_id=$originalId") as $access) {
                 $foo = new XLite_Module_WholesaleTrading_Model_ProductAccess();
@@ -516,7 +516,7 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
             }
         }
         
-        if ($this->config->getComplex('WholesaleTrading.clone_wholesale_purchaselimit')) {
+        if ($this->config->WholesaleTrading->clone_wholesale_purchaselimit) {
             $purchaseLimit = new XLite_Module_WholesaleTrading_Model_PurchaseLimit();
             foreach ($purchaseLimit->findAll("product_id=$originalId") as $limit) {
                 $foo = new XLite_Module_WholesaleTrading_Model_PurchaseLimit();
@@ -527,7 +527,7 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
             }
         }
             
-        if ($this->config->getComplex('WholesaleTrading.clone_wholesale_pricing')) {
+        if ($this->config->WholesaleTrading->clone_wholesale_pricing) {
             $wholesalePricing = new XLite_Module_WholesaleTrading_Model_WholesalePricing();
             foreach ($wholesalePricing->findAll("product_id=$originalId") as $pricing) {
                 $foo = new XLite_Module_WholesaleTrading_Model_WholesalePricing();

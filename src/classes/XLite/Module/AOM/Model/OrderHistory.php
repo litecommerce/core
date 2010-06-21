@@ -92,7 +92,7 @@ class XLite_Module_AOM_Model_OrderHistory extends XLite_Model_Abstract
 
         $secureChanges = "";
 
-        if (!$this->xlite->getComplex('config.AOM.cc_info_history')) {
+        if (!$this->xlite->config->AOM->cc_info_history) {
             foreach ($value as $key=>$val) {
                 if ( is_array($val) ) {
                     foreach ($val as $k=>$v) {
@@ -104,7 +104,7 @@ class XLite_Module_AOM_Model_OrderHistory extends XLite_Model_Abstract
             }
         }
 
-        if ( $this->xlite->getComplex('config.AOM.cc_info_history') && $this->xlite->mm->getComplex('activeModules.AdvancedSecurity') && $this->xlite->is('adminZone') && $this->getComplex('config.AdvancedSecurity.gpg_crypt_db') ) {
+        if ( $this->xlite->config->AOM->cc_info_history && $this->xlite->mm->getComplex('activeModules.AdvancedSecurity') && $this->xlite->is('adminZone') && $this->config->AdvancedSecurity->gpg_crypt_db ) {
             foreach ($value as $key=>$val) {
                 if ( is_array($val) ) {
                     foreach ($val as $k=>$v) {

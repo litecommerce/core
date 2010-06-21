@@ -9,7 +9,7 @@
 
 function Shipping_cps_getRates($_this, $order)
 {
-    if ((is_null($order->get('profile')) && !$_this->config->getComplex('General.def_calc_shippings_taxes')) || $order->get('weight') == 0 || $_this->config->getComplex('Company.location_country') != 'CA') {
+    if ((is_null($order->get('profile')) && !$_this->config->General->def_calc_shippings_taxes) || $order->get('weight') == 0 || $_this->config->Company->location_country != 'CA') {
         return array();
     }
 
@@ -19,14 +19,14 @@ function Shipping_cps_getRates($_this, $order)
     }
 
     $options->packed == 'Y' ? $packed = "<readyToShip/>" : $packed = "";
-    $originalZipcode = $_this->config->getComplex('Company.location_zipcode');
-    $originalCountry = $_this->config->getComplex('Company.location_country');
+    $originalZipcode = $_this->config->Company->location_zipcode;
+    $originalCountry = $_this->config->Company->location_country;
     $options->insured ? $itemsPrice = $options->insured * $options->currency_rate : $itemsPrice = $order->get('subtotal') * $options->currency_rate;
     $weight		 = $_this->getKgs($order);
     $description = $order->get('description');
     if (is_null($order->get('profile'))) {
-    	$destinationCountry = $_this->config->getComplex('General.default_country');
-    	$destinationZipcode = $_this->config->getComplex('General.default_zipcode');
+    	$destinationCountry = $_this->config->General->default_country;
+    	$destinationZipcode = $_this->config->General->default_zipcode;
     	$destinationState   = "Other";
     	$destinationCity    = "City";
     } else {

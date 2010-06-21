@@ -41,39 +41,36 @@ class XLite_Model_Shipping_Online extends XLite_Model_Shipping
 
     public function getOptions()
     {
-        
         $name = $this->configCategory;
+        
         if (isset($this->config->$name)) {
             $options = $this->config->$name;
+        
         } else {
-            $options = new XLite_Base();
+            $options = new XLite_Core_CommonCell();
         }
+        
         foreach ($this->optionsFields as $field) {
             if (!isset($options->$field)) {
                 $options->$field = '';
             }
         }
+
         return $options;
     }
 
     function setOptions($options)
     {
-        
-        $c = new XLite_Model_Config();
         $category = $this->configCategory;
-        $c->set('category', $category);
-        $this->config->$category = new XLite_Base();
+        
         foreach ($this->optionsFields as $field) {
-            if (!isset($options->$field)) {
-                continue;
-            }
-            $c->set('name', $field);
-            $c->set('value', $options->$field);
-            $this->config->$category->$field = $options->$field;
-            if ($c->is('exists')) {
-                $c->update();
-            } else {
-                $c->create();
+
+            if (isset($options->$field)) {
+
+                $name = $field;
+                $value = $options->$field;
+
+                XLite_Core_Database::getRepo('XLite_Model_Config')->createOption($category, $name, $value);
             }
         }
     }
@@ -186,7 +183,7 @@ class XLite_Model_Shipping_Online extends XLite_Model_Shipping
     {
         
         $w = $order->get('weight');
-        switch ($this->config->getComplex('General.weight_unit')) {
+        switch ($this->config->General->weight_unit) {
         case 'lbs': return ceil($w*16.0);
         case 'oz':  return ceil($w*1.0);
         case 'kg':  return ceil($w*35.2740);

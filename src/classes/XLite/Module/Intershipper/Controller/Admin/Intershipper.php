@@ -105,7 +105,7 @@ class XLite_Module_Intershipper_Controller_Admin_Intershipper extends XLite_Cont
         $this->intershipper = new XLite_Module_Intershipper_Model_Shipping_Intershipper();
         $this->set('properties', $_GET);
         
-        $this->rates = $this->intershipper->_queryRates($this->get('ounces'), $this->config->getComplex('Company.location_zipcode'), $this->config->getComplex('Company.location_country'), $this->get('destinationZipCode'), $this->get('destinationCountry'), $this->intershipper->get('options'), 0);
+        $this->rates = $this->intershipper->_queryRates($this->get('ounces'), $this->config->Company->location_zipcode, $this->config->Company->location_country, $this->get('destinationZipCode'), $this->get('destinationCountry'), $this->intershipper->get('options'), 0);
         $this->testResult = true;
         $this->valid = false; // don't returect
     }

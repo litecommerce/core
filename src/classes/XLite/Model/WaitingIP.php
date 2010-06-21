@@ -96,24 +96,21 @@ class XLite_Model_WaitingIP extends XLite_Model_Abstract
     function approveIP()
     {
         $ip = $this->get('ip');
-        $valid_ips_object = new XLite_Model_Config();
 
-        if (!$valid_ips_object->find("category = 'SecurityIP' AND name = 'allow_admin_ip'")) {
-        	$admin_ip = serialize(array());
-            $valid_ips_object->createOption('SecurityIP', "allow_admin_ip", $admin_ip, "serialized");
-            return;
-        }
+        if (is_null($this->config->SecurityIP->allow_admin_ip) || !is_array($this->config->SecurityIP->allow_admin_ip)) {
+            $list = array();
 
-        $list = unserialize($valid_ips_object->get('value'));
-        foreach ($list as $ip_array) {
-            if ($ip_array['ip'] == $ip) {
-            	return;
+        } else {
+            $list = $this->config->SecurityIP->allow_admin_ip;
+            foreach ($list as $ip_array) {
+                if ($ip_array['ip'] == $ip) {
+                	return;
+                }
             }
+
+            $list[] = array('ip' => $ip, 'comment' => '');
         }
 
-        $list[] = array("ip" => $ip, "comment" => "");
-
-        $valid_ips_object->set('value', serialize($list));
-        $valid_ips_object->update();
+        XLite_Core_Database::getRepo('XLite_Model_Config')->createOption('SecurityIP', 'allow_admin_ip', serialize($list), 'serialized');
     }
 }

@@ -311,7 +311,7 @@ class XLite_Module_Promotion_Model_SpecialOffer extends XLite_Model_Abstract
                 $this->condition['Amount'] = $this->get('amount');
                 break;
             case "orderTotal":
-                $this->condition['Total'] =  sprintf($this->config->getComplex('General.price_format'), sprintf("%.02f",$this->get('amount')));
+                $this->condition['Total'] =  sprintf($this->config->General->price_format, sprintf("%.02f",$this->get('amount')));
                 break;
             case "productSet":
                     $this->products = null;
@@ -514,7 +514,7 @@ class XLite_Module_Promotion_Model_SpecialOffer extends XLite_Model_Abstract
                 if ($bonusPrice->get('product_id') == $product->get('product_id') || !is_null($bonusPrice->get('category')) && $order->_inCategoryRecursive($product, $bonusPrice->get('category'))) {
                     if ($bonusPrice->get('bonusType') == '$') {
                         $price = $bonusPrice->get('price');
-        				if ($this->config->getComplex('Taxes.prices_include_tax')) {
+        				if ($this->config->Taxes->prices_include_tax) {
                             $item->set('originalBonusPrice', $price);
                             $product->set('price', $price);
                             $price = $product->get('listPrice');
@@ -522,7 +522,7 @@ class XLite_Module_Promotion_Model_SpecialOffer extends XLite_Model_Abstract
                         return $price;
                     } else {
                         $price = $bonusPrice->get('price') * $price / 100;
-        				if ($this->config->getComplex('Taxes.prices_include_tax') && $this->_calcTaxedPrice) {
+        				if ($this->config->Taxes->prices_include_tax && $this->_calcTaxedPrice) {
                             $item->set('originalBonusPrice', $price);
                             $product->set('price', $price);
                             $price = $product->get('listPrice');
@@ -537,7 +537,7 @@ class XLite_Module_Promotion_Model_SpecialOffer extends XLite_Model_Abstract
 
     function compareOffers(&$offer1, &$offer2, $order)
     {
-        $offerScheme = $this->xlite->config->getComplex('Promotion.offerScheme');
+        $offerScheme = $this->xlite->config->Promotion->offerScheme;
         if (!$offerScheme) {
             return 0;
         }

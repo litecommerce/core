@@ -55,7 +55,7 @@ class XLite_Controller_Admin_Category extends XLite_Controller_Admin_Abstract
 
         if ($this->mode != "add" && $this->mode == "modify") {
             $this->pages['category_modify'] = "Modify category";
-            if ($this->config->getComplex('General.enable_categories_extra_fields')) {
+            if ($this->config->General->enable_categories_extra_fields) {
                 $this->pages['extra_fields'] = "Extra fields";
             }
         } else {

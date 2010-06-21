@@ -237,8 +237,8 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
         $order = $this->get('order');
         $mail->order = $order;
         $mail->compose(
-        		$this->config->getComplex('Company.site_administrator'),
-                $this->config->getComplex('Company.orders_department'),
+        		$this->config->Company->site_administrator,
+                $this->config->Company->orders_department,
                 "modules/AOM/status_changed_admin");
         $mail->send();
 
@@ -248,7 +248,7 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
         $layout->set('skin', XLite::getInstance()->getOptions(array('skin_details', 'skin')));
 
         $mail->compose(
-                $this->config->getComplex('Company.orders_department'),
+                $this->config->Company->orders_department,
                 $order->getComplex('profile.login'),
                 "modules/AOM/status_changed");
         $mail->send();
@@ -370,7 +370,7 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
                             $item->set('productOptions', $product['product_options']);
                         }
                         $pitem = $item->get('product');
-                        if ($this->config->getComplex('Taxes.prices_include_tax')) {
+                        if ($this->config->Taxes->prices_include_tax) {
                             $prod = new XLite_Model_Product();
                             $prod->set('price', $product['price']);
                             $item->set('price', $prod->get('listPrice'));
@@ -632,7 +632,7 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
         $this->cloneUpdated(true);
 
         // Send notifications to specifiend email addresses when update order
-        $emails = $this->config->getComplex('AOM.order_update_notification');
+        $emails = $this->config->AOM->order_update_notification;
         if (is_array($emails) && count($emails) > 0) {
             foreach ($emails as $email) {
                 $mail = new XLite_Model_Mailer();
@@ -641,7 +641,7 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
                 $to_email = trim($this->config->get("Company.$email"));
                 if ($to_email) {
                     $mail->compose(
-                        $this->config->getComplex('Company.site_administrator'),
+                        $this->config->Company->site_administrator,
                         $to_email,
                         "modules/AOM/status_changed_admin");
                     $mail->send();
@@ -661,7 +661,7 @@ class XLite_Module_AOM_Controller_Admin_Order extends XLite_Controller_Admin_Ord
             $clone = $order->clone();
         }
 
-        if ($this->getComplex('config.AOM.clone_silent')) {
+        if ($this->config->AOM->clone_silent) {
             $clone->_disable_all_notifications = true;
         }
 

@@ -107,34 +107,38 @@ class XLite_Module_AdvancedSecurity_Controller_Admin_AdvancedSecurity extends XL
 
     function getSecurityOptions() 
     {
-        $config = new XLite_Model_Config();
-        $options = $config->getByCategory('AdvancedSecurity');
-        return $options;
+        return XLite_Core_Database::getRepo('XLite_Model_Config')->getByCategory('AdvancedSecurity', true, true);
     }
     
     function action_options() 
     {
-        $config = new XLite_Model_Config();
-        $options = $config->getByCategory('AdvancedSecurity');
-        for ($i=0; $i<count($options); $i++) {
-            $name = $options[$i]->get('name');
-            $type = $options[$i]->get('type');
-            if ($type=='checkbox') {
+        $options = $this->getSecurityOptions();
+
+        for ($i = 0; $i < count($options); $i++) {
+
+            $name = $options[$i]->name;
+            $type = $options[$i]->type;
+
+            if ($type == 'checkbox') {
+
                 if (empty($_POST[$name])) {
                     $val = 'N';
+                
                 } else {
                     $val = 'Y';
                 }
+
             } else {
+
                 if (isset($_POST[$name])) {
                     $val = trim($_POST[$name]);
+                
                 } else {
                     continue;
                 }
             }
 
-            $options[$i]->set('value', $val);
-            $options[$i]->update();
+            XLite_Core_Database::getRepo('XLite_Model_Config')->createOption('AdvancedSecurity', $name, $val);
         }
     }
 

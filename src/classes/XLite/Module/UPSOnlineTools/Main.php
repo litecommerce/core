@@ -120,9 +120,9 @@ class XLite_Module_UPSOnlineTools_Main extends XLite_Module_Abstract
         $this->xlite->set('UPSOnlineToolsEnabled', true);
 
         // Check UPS account activation
-        $options = $this->config->get('UPSOnlineTools');
-        if (!$options->get('UPS_username') || !$options->get('UPS_password') || !$options->get('UPS_accesskey')) {
-            $this->config->setComplex('UPSOnlineTools.av_status', 'N');
+        $options = $this->config->UPSOnlineTools;
+        if (!$options->UPS_username || !$options->UPS_password || !$options->UPS_accesskey) {
+            $this->config->UPSOnlineTools->av_status = 'N';
         }
     }
 

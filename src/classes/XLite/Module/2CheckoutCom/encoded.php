@@ -32,7 +32,7 @@ function PaymentMethod_2checkout_handleRequest($_this, $cart)
 
             $_this->xlite->session->writeClose();
 
-            die("<font color=red><b>Security check failed!</b></font> Please contact administrator <b>" . $_this->config->getComplex('Company.site_administrator') . "</b> .");
+            die("<font color=red><b>Security check failed!</b></font> Please contact administrator <b>" . $_this->config->Company->site_administrator . "</b> .");
         }
     }
 
@@ -153,7 +153,7 @@ function PaymentMethod_2checkout_v2_handleRequest($_this, $cart, $security_check
     $_this->xlite->session->writeClose();
 
     if (!$security_check) {
-        die("<font color=red><b>Security check failed!</b></font> Please contact administrator <b>" . $_this->config->getComplex('Company.site_administrator') . "</b> .<hr>Click <a href=\"" . $_this->xlite->getShopUrl("cart.php?target=checkout&mode=error&order_id=".$cart->get('order_id')) . "\"><u>here</u></a> to return into your cart.");
+        die("<font color=red><b>Security check failed!</b></font> Please contact administrator <b>" . $_this->config->Company->site_administrator . "</b> .<hr>Click <a href=\"" . $_this->xlite->getShopUrl("cart.php?target=checkout&mode=error&order_id=".$cart->get('order_id')) . "\"><u>here</u></a> to return into your cart.");
     }
 
     $location = "cart.php?target=checkout&action=return&order_id=".$cart->get('order_id');
