@@ -1770,7 +1770,7 @@ DATA;
      */
     public function get$prefix()
     {
-        return \$this->getTranslation()->$field;
+        return \$this->getSoftTranslation()->$field;
     }
 
     /**

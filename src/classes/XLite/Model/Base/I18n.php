@@ -77,15 +77,50 @@ abstract class XLite_Model_Base_I18n extends XLite_Model_AbstractEntity
     /**
      * Get translation 
      * 
-     * @param string  $code     Language code
-     * @param boolean $safeMode Safe mode
+     * @param string $code Language code
      *  
      * @return XLite_Model_Base_Translation
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getTranslation($code = null, $safeMode = true)
+    public function getTranslation($code = null)
+    {
+        if (is_null($code)) {
+            $code = $this->getDefaultLanguageCode();
+        }
+
+        $result = null;
+
+        foreach ($this->translations as $t) {
+            if ($t->code == $code) {
+                $result = $t;
+                break;
+            }
+        }
+
+        if (!$result) {
+            $className = get_called_class() . 'Translation';
+            $result = new $className();
+            $result->owner = $this;
+            $result->code = $code;
+            $this->translations[] = $result;
+        }
+
+        return $result;
+    }
+
+    /**
+     * Get translation in safe mode
+     * 
+     * @param string $code Language code
+     *  
+     * @return XLite_Model_Base_Translation
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getSoftTranslation($code = null)
     {
         if (is_null($code)) {
             $code = $this->getDefaultLanguageCode();
@@ -100,13 +135,13 @@ abstract class XLite_Model_Base_I18n extends XLite_Model_AbstractEntity
                 $result = $t;
                 break;
 
-            } elseif ($safeMode && isset($query[$t->code])) {
+            } elseif (isset($query[$t->code])) {
                 $query[$t->code] = $t;
                 $queryFilled = true;
             }
         }
 
-        if (!$result && $safeMode) {
+        if (!$result) {
             if ($queryFilled) {
                 foreach ($query as $t) {
                     if ($t) {

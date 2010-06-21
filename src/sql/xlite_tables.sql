@@ -511,6 +511,7 @@ CREATE TABLE xlite_language_translations (
   code char(2) NOT NULL,
   id int(11) NOT NULL default 0,
   name char(64) NOT NULL,
-  KEY ci (code, id)
+  KEY ci (code, id),
+  KEY i (id)
 ) TYPE=MyISAM;
 
