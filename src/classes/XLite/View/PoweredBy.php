@@ -124,8 +124,7 @@ class XLite_View_PoweredBy extends XLite_View_Abstract
             ) {
                 $index = mt_rand(0, count($this->phrases) - 1);
 
-                $config = new XLite_Model_Config();
-                $config->createOption('Internal', 'prnotice_index', $index);
+                XLite_Core_Database::getRepo('XLite_Model_Config')->createOption('Internal', 'prnotice_index', $index);
 
             } else {
                 $index = intval($this->config->Internal->prnotice_index);

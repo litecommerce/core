@@ -94,6 +94,6 @@ class XLite_Controller_Customer_CheckoutSuccess extends XLite_Controller_Custome
 
     function getSecure()
     {
-        return $this->getComplex('config.Security.customer_security');
+        return $this->config->Security->customer_security;
     }
 }

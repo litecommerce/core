@@ -54,22 +54,25 @@ class XLite_Module_Promotion_Model_TaxRates extends XLite_Model_TaxRates impleme
         }
     }
 
-    function saveSchema($name, $schema = "")
+    public function saveSchema($name, $schema = "")
     {
         parent::saveSchema($name, $schema);
+
         // update existing schemas repositary
         if (!is_null($schema)) {
-            $c = new XLite_Model_Config();
-            if ($c->find("category='Taxes' AND name='schemas'")) {
-                $schemas = unserialize($c->get('value'));
-                if ($schema === "") {
-                    $schemas[$name]['discounts_after_taxes'] = ($this->getComplex('config.Taxes.discounts_after_taxes'))?"Y":"N";
-                } elseif (!in_array($schemas[$name]['discounts_after_taxes'], array('Y',"N"))) {
-                    $schemas[$name]['discounts_after_taxes'] = "N";
-                }
-                $c->set('value', serialize($schemas));
-                $c->update();
+
+            if (is_null($this->config->Taxes->schemas) || !is_array($schemas = $this->config->Taxes->schemas)) {
+                $schemas = array();
             }
+
+            if ($schema === "") {
+                $schemas[$name]['discounts_after_taxes'] = ($this->config->Taxes->discounts_after_taxes ? 'Y' : 'N');
+
+            } elseif (!in_array($schemas[$name]['discounts_after_taxes'], array('Y', 'N'))) {
+                $schemas[$name]['discounts_after_taxes'] = 'N';
+            }
+
+            XLite_Core_Database::getRepo('XLite_Model_Config')->createOption('Taxes', 'schemas', serialize($schemas), 'serialized');
         }
     }
 }

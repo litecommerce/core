@@ -65,9 +65,9 @@ class XLite_Module_Affiliate_Controller_Partner extends XLite_Controller_Abstrac
             $stats = new XLite_Module_Affiliate_Model_BannerStats();
             $stats->logClick();
             // issue a partner cookie
-            if ($this->getComplex('config.Affiliate.partner_cookie_lifetime')) {
+            if ($this->config->Affiliate->partner_cookie_lifetime) {
                 // store for "lifetime" days
-                $expire = time() + $this->getComplex('config.Affiliate.partner_cookie_lifetime') * 3600 * 24;
+                $expire = time() + $this->config->Affiliate->partner_cookie_lifetime * 3600 * 24;
                 $domain = func_parse_host(XLite::getInstance()->getOptions(array('host_details', 'http_host')));
                 setcookie('PartnerID', $_GET['partner'], $expire, "/", $domain);
                 setcookie('PartnerClick', $stats->get('stat_id'), $expire, "/", $domain);
@@ -140,6 +140,6 @@ class XLite_Module_Affiliate_Controller_Partner extends XLite_Controller_Abstrac
 
     function getSecure()
     {
-        return $this->getComplex('config.Security.customer_security');
+        return $this->config->Security->customer_security;
     }
 }

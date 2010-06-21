@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage Controller
+ * @subpackage Model
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -27,48 +27,53 @@
  */
 
 /**
- * ____description____
+ * Hierarchy common cell class
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_AOM_Controller_Admin_Module extends XLite_Controller_Admin_Module implements XLite_Base_IDecorator
+class XLite_Core_CommonCell
 {
-    function init()
-    {
-        parent::init();
+    /**
+     * Array of properties 
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $properties = array();
 
-        if ($this->page == "AOM") {
-        	$lay = XLite_Model_Layout::getInstance();
-        	$lay->addLayout('general_settings.tpl', "modules/AOM/config.tpl");
-        }
+    /**
+     * Get property by name
+     * 
+     * @param mixed $name Name of property
+     *  
+     * @return mixed
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function __get($name)
+    {
+        return isset($this->properties[$name]) ? $this->properties[$name] : null;
     }
 
     /**
-     * Update module settings 
+     * Set property value
      * 
+     * @param mixed $name  Name of property
+     * @param mixed $value Value of property
+     *  
      * @return void
-     * @access protected
+     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function doActionUpdate()
+    public function __set($name, $value)
     {
-        if ($this->page == 'AOM') {
-            $value = (is_array($_REQUEST['order_update_notification'])) ? $_REQUEST['order_update_notification'] : array();
-
-            XLite_Core_Database::getRepo('XLite_Model_Config')->createOption('AOM', 'order_update_notification', serialize($value), 'serialized');
-        }
-
-        parent::action_update();
+        $this->properties[$name] = $value;
     }
 
-    function isEmailCheckedAOM($email)
-    {
-        $value = $this->xlite->config->AOM->order_update_notification;
-        if (!is_array($value))
-            return false;
-
-        return (in_array($email, $value)) ? true : false;
-    }
 }

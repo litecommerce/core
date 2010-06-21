@@ -52,12 +52,12 @@ class XLite_Module_SagePay_Model_PaymentMethod_SagepayformCc extends XLite_Model
 
     function getSuccessUrl($order_id)
     {
-        return $this->xlite->getShopUrl("cart.php?target=sagepayform_checkout&action=return", $this->getComplex('config.Security.customer_security'));
+        return $this->xlite->getShopUrl("cart.php?target=sagepayform_checkout&action=return", $this->config->Security->customer_security);
     }
 
     function getFailureUrl($order_id)
     {
-        return $this->xlite->getShopUrl("cart.php?target=sagepayform_checkout&action=return&failed=1", $this->getComplex('config.Security.customer_security'));
+        return $this->xlite->getShopUrl("cart.php?target=sagepayform_checkout&action=return&failed=1", $this->config->Security->customer_security);
     }
 
     function get($name)

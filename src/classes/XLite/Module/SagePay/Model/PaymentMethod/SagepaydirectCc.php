@@ -52,7 +52,7 @@ class XLite_Module_SagePay_Model_PaymentMethod_SagepaydirectCc extends XLite_Mod
 
     function getReturnUrl()  
     {
-        $url = $this->xlite->getShopUrl("cart.php?target=sagepaydirect_checkout&action=return", $this->getComplex('config.Security.customer_security'));
+        $url = $this->xlite->getShopUrl("cart.php?target=sagepaydirect_checkout&action=return", $this->config->Security->customer_security);
         return $this->prepareUrl($url);
     }
 

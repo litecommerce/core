@@ -90,7 +90,7 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
    	
    	function action_add_tax()	
     {
-        $taxes = unserialize($this->config->getComplex('Taxes.taxes'));
+        $taxes = $this->config->Taxes->taxes;
         $postData = XLite_Core_Request::getInstance()->getData();
 
         if ($postData['new_name'] != "") {
@@ -134,16 +134,12 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
     function action_delete_tax()
     {
         if ($this->get('deleted')) {
-            $taxes = unserialize($this->config->getComplex('Taxes.taxes'));
+            $taxes = $this->config->Taxes->taxes;
             $deleted = $this->get('deleted');
             foreach ($deleted as $key => $value) {
                 unset($taxes[$key]);
             }
-    	    $c = new XLite_Model_Config();
-            $c->set('category', "Taxes");
-            $c->set('name', "taxes");
-    	    $c->set('value', serialize($taxes));
-        	$c->update();
+            XLite_Core_Database::getRepo('XLite_Model_Config')->createOption('Taxes', 'taxes', serialize($taxes), 'serialized');
         }
     }
 

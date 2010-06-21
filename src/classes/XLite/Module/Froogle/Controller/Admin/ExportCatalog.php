@@ -54,13 +54,13 @@ class XLite_Module_Froogle_Controller_Admin_ExportCatalog extends XLite_Controll
 
         $this->goCustomer();
 
-        if ($this->getComplex('config.Froogle.direct_product_url')) {
-            $this->xlite->set('GlobalQuickCategoriesNumber', ($this->getComplex('config.Froogle.direct_product_url') == "always") ? true : false);
+        if ($this->config->Froogle->direct_product_url) {
+            $this->xlite->set('GlobalQuickCategoriesNumber', ($this->config->Froogle->direct_product_url == "always") ? true : false);
         }
 
-        $uname = $this->getComplex('config.Froogle.froogle_username') ?
-                 $this->getComplex('config.Froogle.froogle_username') : "froogle";
-        $fname = $this->getComplex('config.Froogle.froogle_file_name') ? $this->getComplex('config.Froogle.froogle_file_name') : $uname . ".txt";
+        $uname = $this->config->Froogle->froogle_username ?
+                 $this->config->Froogle->froogle_username : "froogle";
+        $fname = $this->config->Froogle->froogle_file_name ? $this->config->Froogle->froogle_file_name : $uname . ".txt";
         if ($this->get('mod') == "download") {
             $this->startDownload($fname);
         } else {
@@ -117,12 +117,12 @@ class XLite_Module_Froogle_Controller_Admin_ExportCatalog extends XLite_Controll
         // save buffered content to upload file
         $ufile = "var/tmp/".$fname;
         $fp = fopen($ufile, "rb");
-        $froogle_host = $this->getComplex('config.Froogle.froogle_host');
+        $froogle_host = $this->config->Froogle->froogle_host;
         print "Connecting to Froogle host ".$froogle_host." .. ";
         $ftp = ftp_connect($froogle_host) or $this->doDie("FAILED: unable to connect to $froogle_host");
         print "[OK]<br>";
         print "Logging in .. ";
-        ftp_login($ftp, $this->getComplex('config.Froogle.froogle_username'), $this->getComplex('config.Froogle.froogle_password')) or $this->doDie("FAILED: invalid login/password");
+        ftp_login($ftp, $this->config->Froogle->froogle_username, $this->config->Froogle->froogle_password) or $this->doDie("FAILED: invalid login/password");
         print "[OK]<br>";
         print "Uploading file $fname .. ";
         ftp_fput($ftp, $fname, $fp, FTP_BINARY) or $this->doDie("FAILED: unable to upload file");

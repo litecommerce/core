@@ -52,7 +52,7 @@ class XLite_Module_Affiliate_Model_Auth extends XLite_Model_Auth implements XLit
             $profile->set('password', null);
         }
         $this->loginProfile($profile);
-        if (!$this->getComplex('config.Affiliate.moderated')) {
+        if (!$this->config->Affiliate->moderated) {
             // approve partner for non-moderated registration
             $this->approvePartner($profile);
         } else {
@@ -63,14 +63,14 @@ class XLite_Module_Affiliate_Model_Auth extends XLite_Model_Auth implements XLit
         $mailer = new XLite_Model_Mailer();
         $mailer->profile = $profile;
         // mailto customer with a new signup notification
-        $mailer->compose($this->getComplex('config.Company.site_administrator'),
+        $mailer->compose($this->config->Company->site_administrator,
                 $profile->get('login'),
-                $this->getComplex('config.Affiliate.moderated') ? "modules/Affiliate/partner_signin_notification" : "modules/Affiliate/partner_signin_confirmation"
+                $this->config->Affiliate->moderated ? "modules/Affiliate/partner_signin_notification" : "modules/Affiliate/partner_signin_confirmation"
                 );
         $mailer->send();
         // mailto admin with a new partner signup notification
-        $mailer->compose($this->getComplex('config.Company.site_administrator'),
-                $this->getComplex('config.Company.users_department'),
+        $mailer->compose($this->config->Company->site_administrator,
+                $this->config->Company->users_department,
                 "modules/Affiliate/partner_signin_admin_notification"
                 );
         $mailer->send();
@@ -91,7 +91,7 @@ class XLite_Module_Affiliate_Model_Auth extends XLite_Model_Auth implements XLit
         $mailer = new XLite_Model_Mailer();
         $mailer->profile = $profile;
         $mailer->compose(
-                $this->getComplex('config.Company.site_administrator'),
+                $this->config->Company->site_administrator,
                 $profile->get('login'),
                 "modules/Affiliate/partner_declined"
                 );
@@ -106,7 +106,7 @@ class XLite_Module_Affiliate_Model_Auth extends XLite_Model_Auth implements XLit
         // mailto customer with a new signup notification
         $mailer = new XLite_Model_Mailer();
         $mailer->profile = $profile;
-        $mailer->compose($this->getComplex('config.Company.site_administrator'),
+        $mailer->compose($this->config->Company->site_administrator,
                 $profile->get('login'),
                 "modules/Affiliate/partner_signin_notification"
                 );
@@ -123,7 +123,7 @@ class XLite_Module_Affiliate_Model_Auth extends XLite_Model_Auth implements XLit
         // mailto customer with a new signup notification
         $mailer = new XLite_Model_Mailer();
         $mailer->profile = $profile;
-        $mailer->compose($this->getComplex('config.Company.site_administrator'),
+        $mailer->compose($this->config->Company->site_administrator,
                 $profile->get('login'),
                 "modules/Affiliate/partner_signin_confirmation"
                 );

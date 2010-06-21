@@ -56,8 +56,8 @@ class XLite_Model_TaxRates extends XLite_Base
 
     function _init()
     {
-        if (strlen($this->config->getComplex('Taxes.tax_rates'))>0) {
-            $this->_rates = unserialize($this->config->getComplex('Taxes.tax_rates'));
+        if (strlen($this->config->Taxes->tax_rates)>0) {
+            $this->_rates = unserialize($this->config->Taxes->tax_rates);
         } else {
             $this->_rates = array();
         }
@@ -65,8 +65,8 @@ class XLite_Model_TaxRates extends XLite_Base
             $this->_rates = array();
         }
 
-        if (strlen($this->config->getComplex('Taxes.taxes'))>0) {
-            $this->_taxes = unserialize($this->config->getComplex('Taxes.taxes'));
+        if (strlen($this->config->Taxes->taxes)>0) {
+            $this->_taxes = unserialize($this->config->Taxes->taxes);
         } else {
             $this->_taxes = array();
         }
@@ -437,16 +437,16 @@ array("condition" => "country=Australia", "action" => array("Tax:==GST", "GST:=1
     function setSchema($schema)
     {
         if (is_array($schema)) {
-            $conf = new XLite_Model_Config();
-            $conf->set('category', "Taxes");
+
             foreach ($schema as $name => $value) {
-                $conf->set('name', $name);
+
+                $optionType = null;
                 if (!is_scalar($value)) {
                     $value = serialize($value);
+                    $optionType = 'serialized';
                 }
-                $conf->set('value', $value);
-                $this->config->setComplex("Taxes.$name", $value);
-                $conf->update();
+
+                XLite_Core_Database::getRepo('XLite_Model_Config')->createOption('Taxes', $name, $value, $optionType);
             }
         }
         $this->_init();
@@ -458,7 +458,7 @@ array("condition" => "country=Australia", "action" => array("Tax:==GST", "GST:=1
         if (!is_null($profile)) {
             $this->set('profile', $profile);
         } else {
-            if ($this->config->getComplex('General.def_calc_shippings_taxes')) {
+            if ($this->config->General->def_calc_shippings_taxes) {
                 $default_country = XLite_Core_Database::getEM()->find('XLite_Model_Country', $this->config->General->default_country);
                 $this->_conditionValues['country'] = $default_country->country;
                 if ($default_country->eu_memeber) {
@@ -473,7 +473,7 @@ array("condition" => "country=Australia", "action" => array("Tax:==GST", "GST:=1
 
     function setProfile($profile)
     {
-        if ($this->config->getComplex('Taxes.use_billing_info')) {
+        if ($this->config->Taxes->use_billing_info) {
             $this->_conditionValues['state'] = $profile->getComplex('billingState.state');
             $this->_conditionValues['country'] = $profile->getComplex('billingCountry.country');
             $countryCode = $profile->get('billing_country');
@@ -653,7 +653,7 @@ array("condition" => "country=Australia", "action" => array("Tax:==GST", "GST:=1
             $percent = $this->_calcFormula($percent);
             if (isset($this->_conditionValues['cost'])) {
                 $tax = $this->_conditionValues['cost'] * $percent / 100.0;
-                if ($this->config->getComplex('Taxes.prices_include_tax')) {
+                if ($this->config->Taxes->prices_include_tax) {
                     $tax = $this->formatCurrency($tax);
                     if (isset($this->_conditionValues['amount']) && $this->_conditionValues['product class'] != "shipping service") {
                         $tax = $this->formatCurrency($tax * $this->_conditionValues['amount']);
@@ -853,10 +853,10 @@ array("condition" => "country=Australia", "action" => array("Tax:==GST", "GST:=1
     function getPredefinedSchemas()
     {
         $schemas = $this->_predefinedSchemas; // default set
-        if (!is_null($this->getComplex('config.Taxes.schemas'))) {
-            $savedSchemas = unserialize($this->getComplex('config.Taxes.schemas'));
+        if (!is_null($this->config->Taxes->schemas)) {
+            $savedSchemas = unserialize($this->config->Taxes->schemas);
             if (is_array($savedSchemas)) {
-                foreach (unserialize($this->getComplex('config.Taxes.schemas')) as $k=>$v) {
+                foreach (unserialize($this->config->Taxes->schemas) as $k=>$v) {
                     $schemas[$k] = $v;
                 }
             }
@@ -876,35 +876,35 @@ array("condition" => "country=Australia", "action" => array("Tax:==GST", "GST:=1
         //
         if (!is_null($schema) && $schema == "") {
             $schema = array(
-                    "taxes" => unserialize($taxes = $this->getComplex('config.Taxes.taxes')),
-                    "tax_rates" => unserialize($this->getComplex('config.Taxes.tax_rates')),
-                    "use_billing_info" => $this->getComplex('config.Taxes.use_billing_info') ? "Y" : "N",
-                    "prices_include_tax" => $this->getComplex('config.Taxes.prices_include_tax') ? "Y" : "N",
-                    "include_tax_message" => $this->getComplex('config.Taxes.include_tax_message'),
+                    "taxes" => unserialize($taxes = $this->config->Taxes->taxes),
+                    "tax_rates" => unserialize($this->config->Taxes->tax_rates),
+                    "use_billing_info" => $this->config->Taxes->use_billing_info ? 'Y' : 'N',
+                    "prices_include_tax" => $this->config->Taxes->prices_include_tax ? 'Y' : 'N',
+                    "include_tax_message" => $this->config->Taxes->include_tax_message,
                     );
         }
 
-        $c = new XLite_Model_Config();
-        $c->set('category', "Taxes");
-        $c->set('name', "schemas");
-
-        if (is_null($this->getComplex('config.Taxes.schemas'))) {
+        if (is_null($this->config->Taxes->schemas)) {
             // create schemas repositary
-            $c->set('value', serialize(array($name => $schema)));
-            $c->create();
+            $schemas = array($name => $schema);
+
         } else {
             // update existing schemas repositary
-            $schemas = unserialize($this->getComplex('config.Taxes.schemas'));
+            $schemas = $this->config->Taxes->schemas;
+
             if (is_null($schema)) {
+
                 if (isset($schemas[$name])) {
                     unset($schemas[$name]);
                 }
+
             } else {
                 $schemas[$name] = $schema;
-           }
-            $c->set('value', serialize($schemas));
-            $c->update();
+            }
         }
+
+        XLite_Core_Database::getRepo('XLite_Model_Config')->createOption('Taxes', 'schemas', serialize($schemas), 'serialized');
+
     }
 
     function formatCurrency($price)

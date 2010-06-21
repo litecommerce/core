@@ -79,7 +79,7 @@ class XLite_Module_Affiliate_Model_PartnerPayment extends XLite_Model_Abstract
         $mail->payment = $this;
         $mail->partner = new XLite_Model_Profile($this->get('partner_id'));
         $mail->compose(
-                $this->config->getComplex('Company.orders_department'),
+                $this->config->Company->orders_department,
                 $mail->getComplex('partner.login'),
                 "modules/Affiliate/partner_order_processed");
         $mail->send();

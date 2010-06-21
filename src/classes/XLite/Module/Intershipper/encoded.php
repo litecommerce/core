@@ -62,7 +62,7 @@ function Shipping_intershipper_getRates($_this, $order)
 {
     // original code of Shipping_intershipper::getRates()
     
-    if (is_null($order->get('profile')) && !$_this->config->getComplex('General.def_calc_shippings_taxes')) {
+    if (is_null($order->get('profile')) && !$_this->config->General->def_calc_shippings_taxes) {
         return array();
     }
 
@@ -72,11 +72,11 @@ function Shipping_intershipper_getRates($_this, $order)
     }
 
     $weight = $_this->getOunces($order);
-    $ZipOrigination = $_this->config->getComplex('Company.location_zipcode');
-    $CountryOrigination = $_this->config->getComplex('Company.location_country');
+    $ZipOrigination = $_this->config->Company->location_zipcode;
+    $CountryOrigination = $_this->config->Company->location_country;
     if (is_null($order->get('profile'))) {
-        $ZipDestination = $_this->config->getComplex('General.default_zipcode');
-        $CountryDestination = $_this->config->getComplex('General.default_country');
+        $ZipDestination = $_this->config->General->default_zipcode;
+        $CountryDestination = $_this->config->General->default_country;
     } else {
         $ZipDestination = $order->getComplex('profile.shipping_zipcode');
         $CountryDestination = $order->getComplex('profile.shipping_country');

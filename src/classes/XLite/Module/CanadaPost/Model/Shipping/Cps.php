@@ -44,7 +44,7 @@ class XLite_Module_CanadaPost_Model_Shipping_Cps extends XLite_Model_Shipping_On
     function getKgs($order) 
     {
         $w = $order->get('weight');
-        switch ($this->config->getComplex('General.weight_unit')) {
+        switch ($this->config->General->weight_unit) {
         case 'lbs': return $w*0.453;
         case 'oz':  return $w*0.02831;
         case 'kg':  return $w*1.0;

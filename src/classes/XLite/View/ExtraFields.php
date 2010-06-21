@@ -119,7 +119,7 @@ class XLite_View_ExtraFields extends XLite_View_Abstract
             $product_categories = $this->getParam(self::PARAM_PRODUCT)->getCategories();
 
     	    /* TODO - rework
-            if ($this->config->getComplex('General.enable_extra_fields_inherit') == "Y") {
+            if ($this->config->General->enable_extra_fields_inherit == "Y") {
     	        $this->xlite->set('adminZone', $isAdminZone);
         	}
             */

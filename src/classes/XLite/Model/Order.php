@@ -424,7 +424,7 @@ class XLite_Model_Order extends XLite_Model_Abstract
         }
 
         // tax on shipping
-        if (($this->get('shippingDefined') && !$this->config->getComplex('Taxes.prices_include_tax')) || ($this->get('shippingDefined') && $this->config->getComplex('Taxes.prices_include_tax') && $taxRates->get('shippingDefined'))) {
+        if (($this->get('shippingDefined') && !$this->config->Taxes->prices_include_tax) || ($this->get('shippingDefined') && $this->config->Taxes->prices_include_tax && $taxRates->get('shippingDefined'))) {
             $taxRates->_conditionValues['product class'] = "shipping service";
             $taxRates->_conditionValues['cost'] = $this->get('shippingCost');
             $taxRates->calculateTaxes();
@@ -536,13 +536,13 @@ class XLite_Model_Order extends XLite_Model_Abstract
 
         $total = $this->get('subtotal');
 
-        if (!$this->config->getComplex('Taxes.prices_include_tax')) {
+        if (!$this->config->Taxes->prices_include_tax) {
             $total += $this->get('tax');
         }
 
         $total += $this->get('shippingCost');
 
-        if ($this->config->getComplex('Taxes.prices_include_tax')) {
+        if ($this->config->Taxes->prices_include_tax) {
             $total += $this->get('shippingTax');
         }
 
@@ -945,7 +945,7 @@ class XLite_Model_Order extends XLite_Model_Abstract
     */
     function getDisplayTaxes() 
     {
-        if (is_null($this->get('profile')) && !$this->config->getComplex('General.def_calc_shippings_taxes')) {
+        if (is_null($this->get('profile')) && !$this->config->General->def_calc_shippings_taxes) {
             return null;
         }
 
@@ -1642,12 +1642,12 @@ class XLite_Model_Order extends XLite_Model_Abstract
 
     function isShowCCInfo()
     {
-        return $this->get('payment_method') == "CreditCard" && $this->config->getComplex('Email.show_cc_info');
+        return $this->get('payment_method') == "CreditCard" && $this->config->Email->show_cc_info;
     }
 
     function isShowECheckInfo()
     {
-        return $this->get('payment_method') == "Echeck" && $this->config->getComplex('Email.show_cc_info');
+        return $this->get('payment_method') == "Echeck" && $this->config->Email->show_cc_info;
     }
 
     function recalcItems()
@@ -1656,7 +1656,7 @@ class XLite_Model_Order extends XLite_Model_Abstract
         if (is_array($items)) {
             foreach ($items as $item_key => $item) {
                 $product = $item->get('product');
-                if ($this->config->getComplex('Taxes.prices_include_tax') && isset($product)) {
+                if ($this->config->Taxes->prices_include_tax && isset($product)) {
                     $oldPrice = $item->get('price');
                     $items[$item_key]->setProduct($item->get('product'));
                     $items[$item_key]->updateAmount($item->get('amount'));

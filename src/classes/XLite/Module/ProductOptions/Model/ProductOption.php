@@ -211,7 +211,7 @@ class XLite_Module_ProductOptions_Model_ProductOption extends XLite_Model_Abstra
                     $product->set('price', $newProductPrice);
                 }
             }
-            if (!$this->config->getComplex('Taxes.prices_include_tax')) {
+            if (!$this->config->Taxes->prices_include_tax) {
             	$productPrice = $product->get('listPrice');
             } else {
             	$productPrice = $product->get('price');

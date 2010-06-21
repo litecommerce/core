@@ -57,7 +57,7 @@ class XLite_Controller_Admin_States extends XLite_Controller_Admin_Abstract
         if (isset(XLite_Core_Request::getInstance()->country_code)) {
             $this->set('country_code', XLite_Core_Request::getInstance()->country_code);
         } else {
-            $this->set('country_code', $this->getComplex('config.General.default_country'));
+            $this->set('country_code', $this->config->General->default_country);
         }
     }
     

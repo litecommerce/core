@@ -67,7 +67,7 @@ class XLite_Controller_Admin_Order extends XLite_Controller_Admin_Abstract
 
     function action_update()
     {
-        $status = $this->xlite->config->getComplex('General.clear_cc_info');
+        $status = $this->xlite->config->General->clear_cc_info;
         $postData = XLite_Core_Request::getInstance()->getData();
 
         if ($status != "N" && ($postData['status'] == $status && $status != $this->order->get('status'))) {

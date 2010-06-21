@@ -59,7 +59,7 @@ class XLite_Module_UPSOnlineTools_Model_OrderItem extends XLite_Model_OrderItem 
         }
 
         // weight
-        $weight = UPSOnlineTools_convertWeight($p->get('weight'), $this->config->getComplex('General.weight_unit'), "lbs", 2);
+        $weight = UPSOnlineTools_convertWeight($p->get('weight'), $this->config->General->weight_unit, "lbs", 2);
         if ($weight === false) {
             $weight = $this->packItem->getComplex('product.weight');
         }

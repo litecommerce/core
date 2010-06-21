@@ -208,7 +208,7 @@ class XLite_Controller_Customer_Profile extends XLite_Controller_Customer_Abstra
 
     function getSecure()
     {
-        if ($this->getComplex('config.Security.full_customer_security')) {
+        if ($this->config->Security->full_customer_security) {
             return true;
         } else {
             switch ($this->get('mode')) {
@@ -217,7 +217,7 @@ class XLite_Controller_Customer_Profile extends XLite_Controller_Customer_Abstra
                 case "login"  : 
                 case "account" : 
                 case "success" : 
-                    return $this->getComplex('config.Security.customer_security');
+                    return $this->config->Security->customer_security;
                 default:
                     return false;
             }

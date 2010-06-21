@@ -56,7 +56,7 @@ class XLite_Module_Promotion_Model_PaymentMethod_BonusPoints extends XLite_Model
             return self::PAYMENT_FAILURE;
         }
 
-        $cart->set('payedByPoints', min($payedByPoints * $this->config->getComplex('Promotion.bonusPointsCost'), $cart->getMaxPayByPoints()));
+        $cart->set('payedByPoints', min($payedByPoints * $this->config->Promotion->bonusPointsCost, $cart->getMaxPayByPoints()));
         $cart->calcTotals();
         if ($cart->get('total') > 0) {
             $cart->set('payment_method', ""); // choose payment method once again

@@ -53,12 +53,9 @@ class XLite_Controller_Admin_Module extends XLite_Controller_Admin_Abstract
      * @access protected
      * @since  3.0.0
      */
-    protected function getOptions()
+    public function getOptions()
     {
-        // TODO - check if we need to cache this
-        $config = new XLite_Model_Config();
-
-        return $config->getByCategory($this->page);
+        return XLite_Core_Database::getRepo('XLite_Model_Config')->getByCategory($this->page, true, true);
     }
 
     /**
@@ -72,10 +69,10 @@ class XLite_Controller_Admin_Module extends XLite_Controller_Admin_Abstract
     {
         foreach ($this->getOptions() as $option) {
 
-            $name  = $option->get('name');
+            $name  = $option->name;
             $value = XLite_Core_Request::getInstance()->$name;
 
-            switch ($option->get('type')) {
+            switch ($option->type) {
 
                 case 'checkbox':
                     $value = isset($value) ? 'Y' : 'N';
@@ -89,8 +86,7 @@ class XLite_Controller_Admin_Module extends XLite_Controller_Admin_Abstract
                     $value = trim($value);
             }
 
-            $option->set('value', $value);
-            $option->update();
+            XLite_Core_Database::getRepo('XLite_Model_Config')->createOption($this->page, $name, $value, $type);
         }
     }
 }

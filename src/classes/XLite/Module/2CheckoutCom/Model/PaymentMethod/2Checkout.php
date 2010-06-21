@@ -66,7 +66,7 @@ class XLite_Module_2CheckoutCom_Model_PaymentMethod_2Checkout extends XLite_Mode
         if ($params['version'] != 2) {
     		// Authorize.Net now returns all POST in lowercase.
             if (!isset($_POST['securenumber']) || $_POST['securenumber'] != $cart->getComplex('details.secureNumber')) {
-                die("<font color=red><b>Security check failed!</b></font> Please contact administrator <b>" . $this->config->getComplex('Company.site_administrator') . "</b> .");
+                die("<font color=red><b>Security check failed!</b></font> Please contact administrator <b>" . $this->config->Company->site_administrator . "</b> .");
             }
             require_once LC_MODULES_DIR . '2CheckoutCom' . LC_DS . 'encoded.php';
             PaymentMethod_2checkout_handleRequest($this, $cart);

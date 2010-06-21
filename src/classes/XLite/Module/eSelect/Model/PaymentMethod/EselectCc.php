@@ -54,7 +54,7 @@ class XLite_Module_eSelect_Model_PaymentMethod_EselectCc extends XLite_Model_Pay
 
     function getReturnUrl()  
     {
-        $url = $this->xlite->getShopUrl("cart.php?target=eselect_checkout&action=return", $this->getComplex('config.Security.customer_security'));
+        $url = $this->xlite->getShopUrl("cart.php?target=eselect_checkout&action=return", $this->config->Security->customer_security);
         return $this->prepareUrl($url);
     }
 

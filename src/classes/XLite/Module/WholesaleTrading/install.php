@@ -168,7 +168,7 @@ $MODULE_NAME = "WholesaleTrading";
 start_patching($MODULE_NAME);
 
 if (is_object($this)) {
-    $schema = (!empty($this->layout))?$this->layout:($this->xlite->getComplex('config.Skin.skin'));
+    $schema = (!empty($this->layout))?$this->layout:($this->xlite->config->Skin->skin);
 }
 
 //////////////////////////////////////

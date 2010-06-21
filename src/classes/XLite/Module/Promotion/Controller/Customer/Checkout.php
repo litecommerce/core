@@ -102,7 +102,7 @@ class XLite_Module_Promotion_Controller_Customer_Checkout extends XLite_Controll
             return;
         }
         if (!isset($_REQUEST['action']) && !isset($_REQUEST['mode'])) {
-            if (!$this->session->isRegistered('bonusListDisplayed') && $this->config->getComplex('Promotion.showBonusList')) {
+            if (!$this->session->isRegistered('bonusListDisplayed') && $this->config->Promotion->showBonusList) {
                 if ($this->cart->getBonusList()) {
                 	$needRedirect = false;
                     $bonusList = $this->cart->get('bonusList');

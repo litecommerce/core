@@ -59,20 +59,20 @@ class XLite_Module_MultiCurrency_View_Abstract extends XLite_View_Abstract imple
 
     function price_format($base, $field = "", $thousand_delim = null, $decimal_delim = null) 
     {
-        $price_format 	= $this->config->getComplex('General.price_format');
+        $price_format 	= $this->config->General->price_format;
         $price		 	= is_Object($base) ? $base->get($field) : $base;
         $default		= $this->get('defaultCurrency');
         $currencies 	= $this->get('currencies');
         
-        $this->config->setComplex('General.price_format', $default->get('price_format'));
+        $this->config->General->price_format = $default->get('price_format');
         $result = parent::price_format($price, $field, $thousand_delim, $decimal_delim);
         if (!empty($currencies) && ($this->isTargetAllowed())) {
             $additional = "";
             foreach ($currencies as $currency) {
-                $this->config->setComplex('General.price_format', $currency->get('price_format'));
+                $this->config->General->price_format = $currency->get('price_format');
                 $currency_price = $price * $currency->get('exchange_rate');
                 $currency_price = parent::price_format($currency_price, $field, $thousand_delim, $decimal_delim);
-                if ($this->auth->is('logged')&&$this->config->getComplex('MultiCurrency.country_currency')) {
+                if ($this->auth->is('logged')&&$this->config->MultiCurrency->country_currency) {
                     if ($currency->inCurrencyCountries($this->auth->getComplex('profile.billing_country')))
                         $additional .= $currency_price . ", ";
                 } else {

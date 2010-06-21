@@ -35,6 +35,25 @@
  */
 class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
 {
+
+    /**
+     * The list of option categories displayed on General settings page 
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $displayedCategories = array(
+        'General'     => 'General',
+        'Company'     => 'Company',
+        'Email'       => 'Email',
+        'Security'    => 'Security',
+        'AdminIP'     => 'Admin IP protection',
+        'Captcha'     => 'Captcha protection',
+        'Environment' => 'Environment'
+    );
+
     /**
      * List of pages with captcha 
      * 
@@ -64,8 +83,8 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
         $result = array();
 
         foreach ($this->getCaptchaPages() as $idx => $module) {
-            if (XLite_Model_ModulesManager::getInstance()->isActiveModule($module)) {
-                $result[] = $module;
+            if (empty($module) || XLite_Model_ModulesManager::getInstance()->isActiveModule($module)) {
+                $result[$idx] = $module;
             }
         }
 
@@ -84,47 +103,70 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
         return extension_loaded('gd') && function_exists('gd_info');
     }
 
-
-
-
     public $params = array('target', 'page');
-    public $page = "General";
+    public $page = 'General';
     public $_waiting_list = null;
 
-    function handleRequest()
+    /**
+     * Denies access to Captcha category if it is disabled
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function handleRequest()
     {
-        if ($this->get('page') == "Captcha" && ($this->getComplex('xlite.config.Security.captcha_protection_system') != "Y" || !$this->isGDLibLoaded())){
-            $this->redirect("admin.php?target=settings");
+        if ($this->get('page') == "Captcha" && ($this->config->Security->captcha_protection_system != 'Y' || !$this->isGDLibLoaded())){
+            $this->redirect('admin.php?target=settings');
         }
 
         parent::handleRequest();
     }
 
-    function getSettings()
+    /**
+     * Get tab names 
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getTabPages()
     {
-        return new XLite_Model_Config();
-    }
+        $pages = $this->displayedCategories;
 
-    function getTabPages()
-    {
-        $categories = $this->getComplex('settings.categories');
-        $names = $this->getComplex('settings.categoryNames');
-        $pages = array();
-        for ($i = 0; $i < count($categories); $i++) {
-            if ((!$this->isGDLibLoaded() || $this->getComplex('xlite.config.Security.captcha_protection_system') != "Y") && $categories[$i] == "Captcha")
-                continue;
-            $pages[$categories[$i]] = $names[$i];
+        if (isset($pages['Captcha']) && !$this->isGDLibLoaded() || $this->config->Security->captcha_protection_system != 'Y') {
+            unset($pages['Captcha']);
         }
+
         return $pages;
     }
 
-    function getOptions()
+    /**
+     * Get options for current tab (category)
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getOptions()
     {
-        $settings = $this->get('settings');
-        return $settings->getByCategory($this->page);
+        return XLite_Core_Database::getRepo('XLite_Model_Config')->getByCategory($this->page, true, true);
     }
     
-    function check_https($https_client)    
+    /**
+     * Get HTTPS bouncer 
+     * 
+     * @param string $https_client HTTPS bouncer name
+     *  
+     * @return integer
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function check_https($https_client)    
     {
         $https = new XLite_Model_HTTPS();
         $result = false;
@@ -151,13 +193,31 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
         return $result;
     }
 
-    function isOpenBasedirRestriction()
+    /**
+     * isOpenBasedirRestriction 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isOpenBasedirRestriction()
     {
         $res = (string) @ini_get('open_basedir');
-        return ($res != "");
+        return ($res != '');
     }
     
-    function get($name) 
+    /**
+     * Returns value by request
+     * 
+     * @param string $name Type of value
+     *  
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function get($name) 
     {
         switch($name) {
             case 'phpversion':
@@ -330,7 +390,17 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
         }
     }
 
-    function getDirPermission($dir)
+    /**
+     * Get directory permission
+     * 
+     * @param string $dir Directory path
+     *  
+     * @return integer
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getDirPermission($dir)
     {
         global $options;
 
@@ -347,13 +417,33 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
         return $mode;
     }
 
-    function getDirPermissionStr($dir = '')
+    /**
+     * getDirPermissionStr 
+     * 
+     * @param string $dir ____param_comment____
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getDirPermissionStr($dir = '')
     {
         $mode = (int) $this->getDirPermission($dir);
         return (string) "0" . base_convert($mode, 10, 8);
     }
 
-    function getFilePermission($file)
+    /**
+     * getFilePermission 
+     * 
+     * @param mixed $file ____param_comment____
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getFilePermission($file)
     {
         global $options;
 
@@ -366,13 +456,34 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
         return $mode;
     }
 
-    function getFilePermissionStr($file = '')
+    /**
+     * getFilePermissionStr 
+     * 
+     * @param string $file ____param_comment____
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getFilePermissionStr($file = '')
     {
         $mode = (int) $this->getFilePermission($file);
         return (string) "0" . base_convert($mode, 10, 8);
     }
 
-    function checkSubdirs($path, &$subdir_errors)
+    /**
+     * checkSubdirs 
+     * 
+     * @param mixed $path          ____param_comment____
+     * @param mixed $subdir_errors ____param_comment____
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function checkSubdirs($path, &$subdir_errors)
     {
         if (!is_dir($path))
             return;
@@ -406,31 +517,69 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
         }
     }
 
-    function getCheckFiles()
+    /**
+     * getCheckFiles 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCheckFiles()
     {
         $htaccess = new XLite_Model_Htaccess();
         return $htaccess->checkEnvironment();
     }
 
-    function action_update_htaccess()
+    /**
+     * action_update_htaccess 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function action_update_htaccess()
     {
-        $ids = (array) $this->get('ind');
-        foreach ($ids as $id => $v){
-            $htaccess = new XLite_Model_Htaccess($id);
-            $htaccess->reImage();
+        $ids = XLite_Core_Request::getInstance()->ind;
+
+        if (is_array($ids)) {
+            foreach ($ids as $id => $v){
+                $htaccess = new XLite_Model_Htaccess($id);
+                $htaccess->reImage();
+            }
         }
     }
 
-    function action_restore_htaccess()
+    /**
+     * action_restore_htaccess 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function action_restore_htaccess()
     {
-        $ids = (array) $this->get('ind');
-        foreach ($ids as $id => $v){
-            $htaccess = new XLite_Model_Htaccess($id);
-            $htaccess->restoreFile();
+        $ids = XLite_Core_Request::getInstance()->ind;
+
+        if (is_array($ids)) {
+           foreach ($ids as $id => $v){
+               $htaccess = new XLite_Model_Htaccess($id);
+               $htaccess->restoreFile();
+           }
         }
     }
 
-    function ext_curl_version()
+    /**
+     * ext_curl_version 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function ext_curl_version()
     {
         $curlBinary = @func_find_executable('curl');
         @exec("$curlBinary --version", $output);
@@ -441,13 +590,31 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
                 return "";
     }
     
-    function openssl_version()
+    /**
+     * openssl_version 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function openssl_version()
     {
         $opensslBinary = @func_find_executable('openssl');
         return @exec("$opensslBinary version");
     }
 
-    function httpRequest($url_request)
+    /**
+     * httpRequest 
+     * 
+     * @param mixed $url_request ____param_comment____
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function httpRequest($url_request)
     {
         if (!@ini_get('allow_url_fopen')) {
              @ini_set('allow_url_fopen', 1);
@@ -485,7 +652,15 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
         return $response;
     }
 
-    function getAnsweredVersion()
+    /**
+     * getAnsweredVersion 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getAnsweredVersion()
     {
         if (isset($this->_answeredVersion)) {
             return $this->_answeredVersion;
@@ -502,48 +677,93 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
         return $this->_answeredVersion;
     }
 
-    function getAnsweredVersionError()
+    /**
+     * getAnsweredVersionError 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getAnsweredVersionError()
     {
         return $this->_answeredVersionError;
     }
 
-    function action_phpinfo()
+    /**
+     * action_phpinfo 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function action_phpinfo()
     {
         die(phpinfo());
     }
     
-    function action_update()
+    /**
+     * action_update 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function action_update()
     {
-        $options = $this->get('options');
-        for ($i=0; $i<count($options); $i++) {
-            $name = $options[$i]->get('name');
-            $type = $options[$i]->get('type');
-            if ($type=='checkbox') {
-                $val = empty(XLite_Core_Request::getInstance()->$name) ? 'N' : 'Y';
-            } elseif ($type == "serialized" && isset(XLite_Core_Request::getInstance()->$name) && is_array(XLite_Core_Request::getInstance()->$name)) {
-                $val = serialize(XLite_Core_Request::getInstance()->$name);
+        $optionsToUpdate = array();
+        $options = $this->getOptions();
+
+        // Find changed options and store them in $optionsToUpdate
+        foreach ($options as $key => $option) {
+
+            $name  = $option->name;
+            $type  = $option->type;
+            $value = $option->value;
+
+            if ('checkbox' == $type) {
+                $newValue = empty(XLite_Core_Request::getInstance()->$name) ? 'N' : 'Y';
+
+            } elseif ('serialized' == $type && isset(XLite_Core_Request::getInstance()->$name) && is_array(XLite_Core_Request::getInstance()->$name)) {
+                $newValue = serialize(XLite_Core_Request::getInstance()->$name);
+
             } else {
-                $val = isset(XLite_Core_Request::getInstance()->$name) ? trim(XLite_Core_Request::getInstance()->$name) : '';
+                $newValue = isset(XLite_Core_Request::getInstance()->$name) ? trim(XLite_Core_Request::getInstance()->$name) : '';
             }
 
-            if ($name == "captcha_length"){
-                $val = (int) $val;
-                if ($val < 1 || $val > 10)
+            if ('captcha_length' == $name) {
+                $newValue = intval($newValue);
+                if ($newValue < 1 || $newValue > 10) {
                     continue;
+                }
             }
 
-            $options[$i]->set('value', $val);
+            if ($value != $newValue) {
+                $option->value = $newValue;
+                $optionsToUpdate[] = $option;
+            }
         }
 
-        // optional validation goes here
+        // Save changed options to the database
+        if (!empty($optionsToUpdate)) {
 
-        // write changes on success
-        for ($i=0; $i<count($options); $i++) {
-            $options[$i]->update();
+            foreach ($optionsToUpdate as $option) {
+                XLite_Core_Database::getRepo('XLite_Model_Config')->createOption($option->category, $option->name, $option->value);
+            }
         }
     }
 
-    function getWaitingList()
+    /**
+     * getWaitingList 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getWaitingList()
     {
         if (is_null($this->_waiting_list)){
             $waiting_ip = new XLite_Model_WaitingIP();
@@ -553,17 +773,41 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
         return $this->_waiting_list;
     }
 
-    function getCurrentIP()
+    /**
+     * getCurrentIP 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCurrentIP()
     {
         return $_SERVER['REMOTE_ADDR'];
     }
 
-    function isCurrentIpValid()
+    /**
+     * isCurrentIpValid 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isCurrentIpValid()
     {
         return $this->auth->isValidAdminIP($this, true) == XLite_Model_Auth::IP_VALID;
     }
 
-    function action_approve_ip()
+    /**
+     * action_approve_ip 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function action_approve_ip()
     {
         $ids = (array) $this->get('waiting_ips');
         foreach ($ids as $id){
@@ -574,7 +818,15 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
         
     }
 
-    function action_delete_ip()
+    /**
+     * action_delete_ip 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function action_delete_ip()
     {
         $ids = (array) $this->get('waiting_ips');
         foreach ($ids as $id){
@@ -583,85 +835,162 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
         }
     }
 
-    function getAllowedList()
+    /**
+     * getAllowedList 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getAllowedList($fromDB = false)
     {
-        return $this->getComplex('xlite.config.SecurityIP.allow_admin_ip');
+        if ($fromDB) {
+
+            $ipsListOption = XLite_Core_Database::getRepo('XLite_Model_Config')->findOneBy(array('category' => 'SecurityIP', 'name' => 'allow_admin_ip'));
+
+             if (!is_null($ipsListOption)) {
+                 $ipsList = unserialize($ipsListOption->value);
+             }
+
+             $result = is_array($ipsList) ? $ipsList : array();
+
+        } else {
+            $result = $this->config->SecurityIP->allow_admin_ip;
+        }
+
+        return $result;
     }
 
-    function action_add_new_ip()
+    /**
+     * action_add_new_ip 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function action_add_new_ip()
     {
-        $ip = $this->get('byte_1') . "." . $this->get('byte_2') . "." . $this->get('byte_3') . "." . $this->get('byte_4');
-        $comment = $this->get('comment');
-        $valid_ips_object = new XLite_Model_Config();
-        if (!$valid_ips_object->find("category = 'SecurityIP' AND name = 'allow_admin_ip'"))
-            return;
-        $list = unserialize($valid_ips_object->get('value'));
+        $ip = XLite_Core_Request::getInstance()->byte_1 . '.' .
+              XLite_Core_Request::getInstance()->byte_2 . '.' .
+              XLite_Core_Request::getInstance()->byte_3 . '.' .
+              XLite_Core_Request::getInstance()->byte_4;
 
-        if (!is_array($list) || count($list) < 1){
-            $list = array();
-        }
-        
-        foreach ($list as $ip_array){
-            if ($ip_array['ip'] == $ip){
-                $this->set('returnUrl', "admin.php?target=" . $this->get('target')
-                            . "&page=" . $this->get('page') . "&ip_error=1");
-                return;
+        $comment = XLite_Core_Request::getInstance()->comment;
+
+        $ipsList = $this->getAllowedList(true);
+
+        $ipIsAlreadyListed = false;
+
+        foreach ($ipsList as $ipItem){
+            if ($ipItem['ip'] == $ip){
+                $ipIsAlreadyListed = true;
+                break;
             }
         }
 
-        $list[] = array("ip" => $ip, "comment" => $comment);
+        if (!$ipIsAlreadyListed) {
+            $ipsList[] = array('ip' => $ip, 'comment' => $comment);
+            $ipsList = serialize($ipsList);
+            XLite_Core_Database::getRepo('XLite_Model_Config')->createOption('SecurityIP', 'allow_admin_ip', $ipsList, 'serialized');
 
-        $valid_ips_object->set('value', serialize($list));
-        $valid_ips_object->set('type', "serialized");
-        $valid_ips_object->update();
+        } else {
+           $this->set('returnUrl', "admin.php?target=" . $this->get('target')
+               . "&page=" . $this->get('page') . "&ip_error=1");
+        }
     }
 
-    function action_delete_allowed_ip()
+    /**
+     * action_delete_allowed_ip 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function action_delete_allowed_ip()
     {
-        $new_list = array();
-        $ids = (array) $this->get('allowed_ips');
-        foreach ($this->getAllowedList() as $id => $ip){
-            if (!in_array($id, $ids))
-                $new_list[] = $ip;
+        $ids = XLite_Core_Request::getInstance()->allowed_ips;
+
+        if (is_array($ids) && !empty($ids)) {
+
+            $newList = array();
+
+            $ipsList = $this->getAllowedList(true);
+
+            foreach ($ipsList as $id => $ip){
+                if (!in_array($id, $ids)) {
+                    $newList[] = $ip;
+                }
+            }
+
+            if (empty($newList)){
+                $adminIp = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '';
+                $newList[] = array('ip' => $adminIp, 'comment' => 'Default admin IP');
+            }
+
+            $newList = serialize($newList);
+
+            XLite_Core_Database::getRepo('XLite_Model_Config')->createOption('SecurityIP', 'allow_admin_ip', $newList, 'serialized');
         }
-
-        if (count($new_list) < 1){
-            $admin_ip = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : "";
-            $new_list[] = array("ip" => $admin_ip, "comment" => "Default admin IP");
-        }
-
-        $valid_ips_object = new XLite_Model_Config();
-
-        if (!$valid_ips_object->find("category = 'SecurityIP' AND name = 'allow_admin_ip'"))
-            return;
-
-        $valid_ips_object->set('value', serialize($new_list));
-        $valid_ips_object->update();
     }
 
-    function action_update_allowed_ip()
+    /**
+     * action_update_allowed_ip 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function action_update_allowed_ip()
     {
-        $comments = (array) $this->get('comment');
-        $valid_ips_object = new XLite_Model_Config();
-        if (!$valid_ips_object->find("category = 'SecurityIP' AND name = 'allow_admin_ip'"))
-            return;
-        $list = unserialize($valid_ips_object->get('value'));
-        foreach ($list as $id => $ip){
-            $comment = $comments[$id];
-            $list[$id]['comment'] = $comment;
-        }
+        $commentsList = XLite_Core_Request::getInstance()->comment;
 
-        $valid_ips_object->set('value', serialize($list));
-        $valid_ips_object->update();
+        if (!empty($commentsList) && is_array($commentsList)) {
+
+            $ipsList = $this->getAllowedList(true);
+
+            $needUpdate = false;
+
+            foreach ($ipsList as $id => $ipItem) {
+                if ($commentsList[$id] != $ipsList[$id]['comment']) {
+                    $ipsList[$id]['comment'] = $commentsList[$id];
+                    $needUpdate = true;
+                }
+            }
+
+            if ($needUpdate) {
+                $ipsList = serialize($ipsList);
+                XLite_Core_Database::getRepo('XLite_Model_Config')->createOption('SecurityIP', 'allow_admin_ip', $ipsList, 'serialized');
+            }
+        }
     }
 
 
-    function isWin()
+    /**
+     * isWin 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isWin()
     {
         return (LC_OS_CODE === 'win');
     }
 
-    function getTimeZonesList()
+    /**
+     * getTimeZonesList 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getTimeZonesList()
     {
         $list = func_get_timezones();
         if (is_array($list))
@@ -670,7 +999,15 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
             return array('Not supported');
     }
 
-    function getCurrentTimeZone()
+    /**
+     * getCurrentTimeZone 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCurrentTimeZone()
     {
         $tz = func_get_timezone();
         if ($tz)

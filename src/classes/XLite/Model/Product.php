@@ -522,8 +522,8 @@ class XLite_Model_Product extends XLite_Model_Abstract
             }
         } else {
             $profile = new XLite_Model_Profile();
-            $profile->set('shipping_country', $this->config->getComplex('General.default_country'));
-            $profile->set('billing_country', $this->config->getComplex('General.default_country'));
+            $profile->set('shipping_country', $this->config->General->default_country);
+            $profile->set('billing_country', $this->config->General->default_country);
         }
         // setup customer's info
         $order = new XLite_Model_Order();
@@ -554,7 +554,7 @@ class XLite_Model_Product extends XLite_Model_Abstract
                 $this->get('listPrice');
             }
             if (isset($this->_taxes['Tax']) && $this->_taxes['Tax']!=0) {
-                return $this->config->getComplex('Taxes.include_tax_message');
+                return $this->config->Taxes->include_tax_message;
             }
         }
         return "";
@@ -938,19 +938,9 @@ class XLite_Model_Product extends XLite_Model_Abstract
         // Update product thumbnail and image
         if (!empty($images_directory)) {
             // update images base directory
-            $cfg = new XLite_Model_Config();
-            if ($cfg->find("name='images_directory'")) {
-                $cfg->set('value', $images_directory);
-                $cfg->update();
-            } else {
-                $cfg->set('name', "images_directory");
-                $cfg->set('category', "Images");
-                $cfg->set('value', $images_directory);
-                $cfg->create();
-            }
+            XLite_Core_Database::getRepo('XLite_Model_Config')->createOption('Images', 'images_directory', $images_directory);
             // re-read config data
-            $this->xlite->config = $cfg->readConfig();
-            $this->config = $this->xlite->config;
+            XLite_Core_Config::readConfig();
         }
         if (!empty($properties['thumbnail'])) {
             $this->_importImage($product, "thumbnail", $properties['thumbnail'], $save_images);

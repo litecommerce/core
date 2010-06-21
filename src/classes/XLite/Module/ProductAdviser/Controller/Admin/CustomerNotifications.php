@@ -672,24 +672,7 @@ class XLite_Controller_Admin_CustomerNotifications extends XLite_Controller_Admi
             }
         }
 
-        $config = new XLite_Model_Config();
-        $update_config = true;
-
-        if (!$config->find("name='filters_preferences' AND category='ProductAdviser'")) {
-        	$update_config = false;
-            $config->set('name', "filters_preferences");
-            $config->set('category', "ProductAdviser");
-            $config->set('type', "serialized");
-        }
-
-        $config->set('value', serialize($preferences));
-
-        if ($update_config) {
-            $config->update();
-
-        } else {
-            $config->create();
-        }
+        XLite_Core_Database::getRepo('XLite_Model_Config')->createOption('ProductAdviser', 'filters_preferences', serialize($preferences), 'serialized');
 
         $this->set('returnUrl', $this->buildUrl('CustomerNotifications'));
         $this->redirect();

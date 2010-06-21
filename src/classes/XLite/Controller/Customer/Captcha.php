@@ -40,7 +40,7 @@ class XLite_Controller_Customer_Captcha extends XLite_Controller_Customer_Abstra
     function handleRequest()
     {
         $captcha = new XLite_Model_CaptchaGenerator();
-        $length = ((int) $this->getComplex('config.Captcha.captcha_length') > 0) ? (int) $this->getComplex('config.Captcha.captcha_length') : 5;
+        $length = ((int) $this->config->Captcha->captcha_length > 0) ? (int) $this->config->Captcha->captcha_length : 5;
         $code = $captcha->generateCode($length);
 
         $this->session->set("captcha_".$this->get('id'), $code);

@@ -777,17 +777,9 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
             (!is_array($valid_ips) || 1 > count($valid_ips))
             && !$checkOnly
         ) {
-            $valid_ips_object = new XLite_Model_Config();
             $admin_ip = serialize(array(array('ip' => $admin_ip, 'comment' => 'Default admin IP')));
 
-            if ($valid_ips_object->find('category = \'SecurityIP\' AND name = \'allow_admin_ip\'')) {
-                $valid_ips_object->set('value', $admin_ip);
-                $valid_ips_object->set('type', 'serialized');
-                $valid_ips_object->update();
-
-            } else {
-                $valid_ips_object->createOption('SecurityIP', 'allow_admin_ip', $admin_ip, 'serialized');
-            }
+            XLite_Core_Database::getRepo('XLite_Model_Config')->createOption('SecurityIP', 'allow_admin_ip', $admin_ip, 'serialized');
 
         } else {
 
@@ -883,7 +875,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
         $mailer->set('profile', $profile);
         $mailer->set('charset', $profile->getComplex('billingCountry.charset'));
         $mailer->compose(
-                $this->getComplex('config.Company.users_department'),
+                $this->config->Company->users_department,
                 $profile->get('login'),
                 "recover_recover"
                 );

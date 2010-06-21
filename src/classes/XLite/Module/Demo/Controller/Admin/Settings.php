@@ -45,5 +45,24 @@ implements XLite_Base_IDecorator
 
         return parent::checkAccess();
     }
+
+    /**
+     * Get tab names 
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getTabPages()
+    {
+        $tabs = parent::getTabPages();
+
+        if (isset($tabs['Environment'])) {
+            unset($tabs['Environment']);
+        }
+
+        return $tabs;
+    }
 }
 

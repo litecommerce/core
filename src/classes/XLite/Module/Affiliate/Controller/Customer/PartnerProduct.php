@@ -64,24 +64,26 @@ class XLite_Module_Affiliate_Controller_Customer_PartnerProduct extends XLite_Mo
         return $this->getProduct()->get('name');
     }
 
-    function initView()
+    public function initView()
     {
         parent::initView();
-        if (is_null($this->get('update'))) {
-            $schema = $this->getComplex('config.Miscellaneous.partner_product_banner');
+
+        if (!is_null($this->config->Miscellaneous->partner_product_banner) && is_array($schema = $this->config->Miscellaneous->partner_product_banner)) {
+
             foreach ($schema as $param => $value) {
-                $this->$param = $value;
-            }
-        } else {
-            // update config values
-            $config = new XLite_Model_Config();
-            if ($config->find("name='partner_product_banner'")) {
-                $schema = $this->getComplex('config.Miscellaneous.partner_product_banner');
-                foreach ($schema as $param => $value) {
+
+                if (is_null($this->get('update'))) {
+                    // Read config values
+                    $this->$param = $value;
+
+                } else {
+                    // update config values
                     $schema[$param] = $this->$param;
                 }
-                $config->set('value', serialize($schema));
-                $config->update();
+            }
+
+            if (!is_null($this->get('update'))) {
+                XLite_Core_Database::getRepo('XLite_Model_Config')->createOption('Miscellaneous', 'partner_product_banner', serialize($schema));
             }
         }
     }

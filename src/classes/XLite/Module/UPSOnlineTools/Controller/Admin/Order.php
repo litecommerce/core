@@ -153,7 +153,7 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_Order extends XLite_Controlle
                 $items_list[$k][$field_name] = $product->get($field_name);
             }
 
-            $items_list[$k]['weight_lbs'] = UPSOnlineTools_convertWeight($product->get('weight'), $this->config->getComplex('General.weight_unit'), "lbs", 2);
+            $items_list[$k]['weight_lbs'] = UPSOnlineTools_convertWeight($product->get('weight'), $this->config->General->weight_unit, "lbs", 2);
         }
 
         return array_values($items_list);
@@ -216,7 +216,7 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_Order extends XLite_Controlle
         }
 
         // display container details based on <div>...</div>
-        $result = UPSOnlineTools_displayLevel_div($container['width'], $container['length'], $level['items'], $level['dirt_spaces'], $this->config->getComplex('UPSOnlineTools.visual_container_width'), $level_id);
+        $result = UPSOnlineTools_displayLevel_div($container['width'], $container['length'], $level['items'], $level['dirt_spaces'], $this->config->UPSOnlineTools->visual_container_width, $level_id);
 
         return $result;
     }

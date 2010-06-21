@@ -66,7 +66,7 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_Product extends XLite_Control
 
             // overweight check
             require_once LC_MODULES_DIR . 'UPSOnlineTools' . LC_DS . 'encoded.php';
-            $weight = UPSOnlineTools_convertWeight($product->get('weight'), $this->config->getComplex('General.weight_unit'), "lbs", 2);
+            $weight = UPSOnlineTools_convertWeight($product->get('weight'), $this->config->General->weight_unit, "lbs", 2);
 
             if ($packaging['weight_limit'] > 0 && $weight > $packaging['weight_limit']) {
                 $this->product_overweight = true;

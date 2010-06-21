@@ -38,10 +38,10 @@ class XLite_Module_WholesaleTrading_Controller_Admin_Order extends XLite_Control
     function isShowWholesalerFields()
     {
         if (
-            $this->getComplex('xlite.config.WholesaleTrading.WholesalerFieldsTaxId')   == "Y" ||
-            $this->getComplex('xlite.config.WholesaleTrading.WholesalerFieldsVat')     == "Y" ||
-            $this->getComplex('xlite.config.WholesaleTrading.WholesalerFieldsGst')     == "Y" ||
-            $this->getComplex('xlite.config.WholesaleTrading.WholesalerFieldsPst')     == "Y"
+            $this->xlite->config->WholesaleTrading->WholesalerFieldsTaxId   == "Y" ||
+            $this->xlite->config->WholesaleTrading->WholesalerFieldsVat     == "Y" ||
+            $this->xlite->config->WholesaleTrading->WholesalerFieldsGst     == "Y" ||
+            $this->xlite->config->WholesaleTrading->WholesalerFieldsPst     == "Y"
             ) {
                 return true;
             }

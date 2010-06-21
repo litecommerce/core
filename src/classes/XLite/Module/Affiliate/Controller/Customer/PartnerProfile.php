@@ -95,7 +95,7 @@ class XLite_Module_Affiliate_Controller_Customer_PartnerProfile extends XLite_Mo
 
     function action_register()
     {
-        if (!$this->getComplex('config.Affiliate.registration_enabled')) {
+        if (!$this->config->Affiliate->registration_enabled) {
             $this->set('returnUrl', "cart.php?target=partner_profile&mode=register");
         } else {
             $this->registerForm->action_register();

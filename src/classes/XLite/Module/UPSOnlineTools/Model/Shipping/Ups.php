@@ -264,13 +264,7 @@ EOT;
             $value = $this->encode($value);
         }
 
-        $config = new XLite_Model_Config();
-
-        $config->set('category', 'UPSOnlineTools');
-        $config->set('name', $name);
-        $config->set('value', $value);
-
-        $config->update();
+        XLite_Core_Database::getRepo('XLite_Model_Config')->createOption('UPSOnlineTools', $name, $value);
     }
 
     /**
@@ -926,28 +920,28 @@ EOT;
         static $options = null;
 
         if (is_null($options)) {
-            $options = $this->config->get('UPSOnlineTools');
+            $options = $this->config->UPSOnlineTools;
             foreach (array('UPS_username', 'UPS_password', 'UPS_accesskey') as $name) {
-                $val = $options->get($name);
+                $val = $options->$name;
                 $val = $this->decode($val);
-                $options->setComplex($name, $val);
+                $options->$name = $val;
             }
         }
 
-        switch ($options->get('account_type')) {
+        switch ($options->account_type) {
             case '01':
-                $options->set('customer_classification_code', '01');
-                $options->set('pickup_type', '01');
+                $options->customer_classification_code = '01';
+                $options->pickup_type = '01';
                 break;
 
             case '02':
-                $options->set('customer_classification_code', '03');
-                $options->set('pickup_type', '03');
+                $options->customer_classification_code = '03';
+                $options->pickup_type = '03';
                 break;
 
             default:
-                $options->set('customer_classification_code', '04');
-                $options->set('pickup_type', '11');
+                $options->customer_classification_code = '04';
+                $options->pickup_type = '11';
         }
 
         return $options;

@@ -130,7 +130,7 @@ class XLite_Module_AdvancedSecurity_Model_Order extends XLite_Model_Order implem
     function update()
     {
         $details = $this->get('details');
-        if (!empty($details) && $this->get('payment_method') == "CreditCard" && $this->getComplex('config.AdvancedSecurity.gpg_crypt_db')) {
+        if (!empty($details) && $this->get('payment_method') == "CreditCard" && $this->config->AdvancedSecurity->gpg_crypt_db) {
             if (!$this->xlite->is('adminZone')) { // customer is placing order
                 $this->setSecureDetails($details);
                 // check if GnuPG failed to encrypt data (invalid pubkey?)

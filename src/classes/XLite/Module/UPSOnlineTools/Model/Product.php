@@ -56,7 +56,7 @@ class XLite_Module_UPSOnlineTools_Model_Product extends XLite_Model_Product impl
     function getWeightConv($unit)
     {
         require_once LC_MODULES_DIR . 'UPSOnlineTools' . LC_DS . 'encoded.php';
-        return UPSOnlineTools_convertWeight($this->get('weight'), $this->config->getComplex('General.weight_unit'), $unit, 2);
+        return UPSOnlineTools_convertWeight($this->get('weight'), $this->config->General->weight_unit, $unit, 2);
     }
 
 }

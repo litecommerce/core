@@ -26,20 +26,55 @@
  * @since      3.0.0
  */
 
-class XLite_Module_Demo_Model_Config extends XLite_Model_Config
-implements XLite_Base_IDecorator, XLite_Base_ISingleton
+/**
+ * DB-based configuration registry
+ * 
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
+ */
+class XLite_Core_Config extends XLite_Base implements XLite_Base_ISingleton
 {
     /**
-     * Get configuration categories 
+     * Read config options
      * 
-     * @return array
+     * @param mixed $force ____param_comment____
+     *  
+     * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getCategories()
+    public function readConfig($force = false)
     {
-        return array_diff(parent::getCategories(), array('Environment'));
+        return XLite_Core_Database::getRepo('XLite_Model_Config')->getAllOptions($force);
     }
 
+    /**
+     * Update and re-read options 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function update()
+    {
+        parent::update();
+
+        $this->readConfig(true);
     }
+
+    /**
+     * Method to access a singleton 
+     * 
+     * @return XLite_Core_CommonCell
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getInstance()
+    {
+        return parent::getInstance()->readConfig();
+    }
+}

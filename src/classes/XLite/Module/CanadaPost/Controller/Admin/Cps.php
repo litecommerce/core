@@ -66,9 +66,9 @@ class XLite_Module_CanadaPost_Controller_Admin_Cps extends XLite_Controller_Admi
         if (empty($this->weight)) 
             $this->weight = 1;
         if (empty($this->destinationZipcode)) 
-            $this->destinationZipcode = $this->config->getComplex('Company.location_zipcode');
+            $this->destinationZipcode = $this->config->Company->location_zipcode;
         if (empty($this->destinationCountry)) 
-            $this->destinationCountry = $this->config->getComplex('Company.location_country');
+            $this->destinationCountry = $this->config->Company->location_country;
         $state = XLite_Core_Database::getEM()->find('XLite_Model_State', $this->destinationState);
         $state = $state ? $state->code : 'Other';
  
@@ -78,8 +78,8 @@ class XLite_Module_CanadaPost_Controller_Admin_Cps extends XLite_Controller_Admi
 
         $this->rates = $this->cps->queryRates(
                 $options, 
-                $this->config->getComplex('Company.location_zipcode'), 
-                $this->config->getComplex('Company.location_country'), 
+                $this->config->Company->location_zipcode, 
+                $this->config->Company->location_country, 
                 0, 
                 $this->weight,
                 "Test ",

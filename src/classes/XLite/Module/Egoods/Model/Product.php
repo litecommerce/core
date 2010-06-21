@@ -161,12 +161,12 @@ class XLite_Module_Egoods_Model_Product extends XLite_Model_Product implements X
         $dl->set('file_id', $file_id);
         $dl->set('exp_time', mktime(0, 0, 0, 
                 date('n', time()), 
-                date('j', time()) + $this->getComplex('xlite.config.Egoods.exp_days'), 
+                date('j', time()) + $this->xlite->config->Egoods->exp_days, 
                 date('Y', time())
         ));
         
-        $dl->set('available_downloads', $this->getComplex('xlite.config.Egoods.exp_downloads'));
-        $dl->set('expire_on', $this->getComplex('xlite.config.Egoods.link_expires'));
+        $dl->set('available_downloads', $this->xlite->config->Egoods->exp_downloads);
+        $dl->set('expire_on', $this->xlite->config->Egoods->link_expires);
         $dl->set('link_type', 'A');
         $dl->create();
         return $dl->get('access_key');

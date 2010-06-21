@@ -47,13 +47,13 @@ class XLite_Module_Froogle_Controller_Admin_Module extends XLite_Controller_Admi
 
     function isDisplayOverrideOption()
     {
-        return ($this->getComplex('config.Version.version') > "2.2.21") ? true : false;
+        return ($this->config->Version->version > "2.2.21") ? true : false;
     }
 
     function isVersionUpper2_1()
     {
     
-        return ($this->getComplex('config.Version.version') >= "2.2") ? true : false;
+        return ($this->config->Version->version >= "2.2") ? true : false;
     }
 
     function getFroogleOptions()

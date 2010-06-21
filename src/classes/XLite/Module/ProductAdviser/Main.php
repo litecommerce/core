@@ -136,9 +136,8 @@ class XLite_Module_ProductAdviser_Main extends XLite_Module_Abstract
         /////////////////////////////////////
         // "Product also buy" section
         if ($this->xlite->is('adminZone')) {
-            if ($this->config->getComplex('ProductAdviser.admin_products_also_buy_enabled') != "Y") {
-                $cfg = new XLite_Model_Config();
-                $cfg->createOption('ProductAdviser', "products_also_buy_enabled", "N");
+            if ($this->config->ProductAdviser->admin_products_also_buy_enabled != 'Y') {
+                XLite_Core_Database::getRepo('XLite_Model_Config')->createOption('ProductAdviser', 'products_also_buy_enabled', 'N');
             }
         }
         /////////////////////////////////////
@@ -147,9 +146,8 @@ class XLite_Module_ProductAdviser_Main extends XLite_Module_Abstract
         // "Customer Notifications" section
         if ($this->xlite->is('adminZone')) {
             $this->validateConfig('number_notifications', 1);
-            $customer_notifications_enabled = ($this->config->getComplex('ProductAdviser.customer_notifications_mode') == "0") ? "N" : "Y";
-            $cfg = new XLite_Model_Config();
-            $cfg->createOption('ProductAdviser', "customer_notifications_enabled", $customer_notifications_enabled);
+            $customer_notifications_enabled = ($this->config->ProductAdviser->customer_notifications_mode == '0') ? 'N' : 'Y';
+            XLite_Core_Database::getRepo('XLite_Model_Config')->createOption('ProductAdviser', 'customer_notifications_enabled', $customer_notifications_enabled);
         }
         /////////////////////////////////////
 
@@ -166,7 +164,7 @@ class XLite_Module_ProductAdviser_Main extends XLite_Module_Abstract
 
     function validateConfig($option, $limit=0)
     {
-        $number_orig = $this->config->getComplex('ProductAdviser.' . $option);
+        $number_orig = $this->config->ProductAdviser->$option;
         $number = intval($number_orig);
         $number_updated = false;
         if ($number < $limit) {
@@ -178,8 +176,7 @@ class XLite_Module_ProductAdviser_Main extends XLite_Module_Abstract
             }
         }
         if ($number_updated) {
-            $cfg = new XLite_Model_Config();
-            $cfg->createOption('ProductAdviser', $option, $number);
+            XLite_Core_Database::getRepo('XLite_Model_Config')->createOption('ProductAdviser', $option, $number);
         }
     }
 }

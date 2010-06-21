@@ -110,8 +110,8 @@ class XLite_Controller_Customer_Help extends XLite_Controller_Customer_Abstract
                 $this->set('phone', $this->auth->getComplex('profile.billing_phone'));
                 $this->set('fax', $this->auth->getComplex('profile.billing_fax'));
             } else {
-                $this->set('contactus_state', $this->config->getComplex('General.default_state'));
-                $this->set('contactus_country', $this->config->getComplex('General.default_country'));
+                $this->set('contactus_state', $this->config->General->default_state);
+                $this->set('contactus_country', $this->config->General->default_country);
             }
         }
     }
@@ -140,7 +140,7 @@ class XLite_Controller_Customer_Help extends XLite_Controller_Customer_Abstract
         $cn = XLite_Core_Database::getEM()->find('XLite_Model_Country', $_REQUEST['contactus_country']);
         $mailer->set('country', $cn->get('country')); // fetch country name
         $mailer->set('charset', $cn->get('charset'));
-        $mailer->compose($this->get('email'), $this->config->getComplex('Company.support_department'), "contactus");
+        $mailer->compose($this->get('email'), $this->config->Company->support_department, "contactus");
         $mailer->send();
         $this->set('mode', "contactusMessage");
     }

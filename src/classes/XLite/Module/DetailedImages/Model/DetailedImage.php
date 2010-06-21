@@ -249,20 +249,10 @@ class XLite_Module_DetailedImages_Model_DetailedImage extends XLite_Model_Abstra
         if (!empty($images_directory)) {
 
             // update images base directory
-            $cfg = new XLite_Model_Config();
-            if ($cfg->find('name = \'images_directory\'')) {
-                $cfg->set('value', $images_directory);
-                $cfg->update();
-
-            } else {
-                $cfg->set('name', 'images_directory');
-                $cfg->set('category', 'Images');
-                $cfg->set('value', $images_directory);
-                $cfg->create();
-            }
+            XLite_Core_Database::getRepo('XLite_Model_Config')->createOption('Images', 'images_directory', $images_directory);
 
             // re-read config data
-            $cfg->readConfig();
+            XLite_Core_Config::readConfig();
         }
 
         $image = $properties['image'];

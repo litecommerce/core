@@ -120,16 +120,7 @@ class XLite_Controller_Admin_ExportCatalog extends XLite_Controller_Admin_Abstra
     {
         $layout_name = "fields_layout";
         $layout = implode(',', XLite_Core_Request::getInstance()->$layout_name);
-        $config = new XLite_Model_Config();
-        if ($config->find("name='$layout_name'")) {
-            $config->set('value', $layout);
-            $config->update();
-        } else {
-            $config->set('name', $layout_name);
-            $config->set('category', "ImportExport");
-            $config->set('value', $layout);
-            $config->create();
-        }
+        XLite_Core_Database::getRepo('XLite_Model_Config')->createOption('ImportExport', $layout_name, $layout);
     }
 
     /**

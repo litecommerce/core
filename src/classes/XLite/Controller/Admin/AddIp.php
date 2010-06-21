@@ -41,7 +41,7 @@ class XLite_Controller_Admin_AddIp extends XLite_Controller_Admin_Abstract
     {
         parent::init();
 
-        if ($this->getComplex('xlite.config.Security.admin_ip_protection') == "Y" && $this->get('mode') == "add" && $this->get('unique_key') != ""){
+        if ($this->xlite->config->Security->admin_ip_protection == "Y" && $this->get('mode') == "add" && $this->get('unique_key') != ""){
             $key = $this->get('unique_key');
             $key_pattern = "/^([a-f]|\d){32,32}$/";
 

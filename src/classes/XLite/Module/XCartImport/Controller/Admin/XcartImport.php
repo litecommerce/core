@@ -40,8 +40,8 @@ class XLite_Module_XCartImport_Controller_Admin_XcartImport extends XLite_Contro
     function fillForm()
     {
         parent::fillForm();
-        if ($this->config->getComplex('XCartImport.params')) {
-            $this->set('properties', $this->config->getComplex('XCartImport.params'));
+        if ($this->config->XCartImport->params) {
+            $this->set('properties', $this->config->XCartImport->params);
         } else {
             // default params
             foreach (array('hostspec',"database","username","password") as $param) {
@@ -87,12 +87,10 @@ X-Cart data has been removed.<br>
             $this->import_users = false;
         }
         $this->startDump();
+
         // remeber parameters
-        $c = new XLite_Model_Config();
-        $c->set('category', "XCartImport");
-        $c->set('name', "params");
-        $c->set('value', serialize($_POST));
-        $c->update();
+        XLite_Core_Database::getRepo('XLite_Model_Config')->createOption('XCartImport', 'params', serialize($_POST), 'serialized');
+
         if (!$this->connect()) {
             echo "<br><font color=red>" . $this->error . "</font><br>";
             $this->valid = false; // invalid form
@@ -102,7 +100,7 @@ X-Cart data has been removed.<br>
         } else {
             $this->memberships = array();
             
-            foreach ($this->config->getComplex('Memberships.memberships') as $ms) {
+            foreach ($this->config->Memberships->memberships as $ms) {
                 $this->memberships[$ms] = true;
             }
             if ($this->import_users) {
@@ -113,12 +111,9 @@ X-Cart data has been removed.<br>
             }
             // save memberships
             $ms = array_keys($this->memberships);
-            $c = new XLite_Model_Config();
-            $c->db->connect();
-            $c->set('category', "Memberships");
-            $c->set('name', "memberships");
-            $c->set('value', serialize($ms));
-            $c->update();
+            // TODO: update membership saving - they must be saved in the separate table, not in the config table
+            XLite_Core_Database::getRepo('XLite_Model_Config')->createOption('Memberships', 'memberships', serialize($ms), 'serialized');
+
             ?>
 <br>Import complete. <?php echo "<hr><a href=\"admin.php?target=xcart_import\">Return to admin interface.</a>"; ?><br><br>
 You might want to remove X-Cart tables from your X-Cart database. To do this, turn the checkbox below on and click "Remove":

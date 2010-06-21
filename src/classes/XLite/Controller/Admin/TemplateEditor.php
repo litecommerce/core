@@ -420,7 +420,7 @@ class XLite_Controller_Admin_TemplateEditor extends XLite_Controller_Admin_Abstr
         $file->set('path', "skins_original");
         $file->set('newPath', "skins");
         $file->copy();
-        $file->set('path', sprintf("schemas/templates/%s",$this->config->getComplex('Skin.skin')));
+        $file->set('path', sprintf("schemas/templates/%s",$this->config->Skin->skin));
         $file->set('newPath', "skins");
         $file->copy();
         $this->afterAdvanced();
@@ -430,7 +430,7 @@ class XLite_Controller_Admin_TemplateEditor extends XLite_Controller_Admin_Abstr
     {
         $file = $this->get('file');
         $to = XLite_Core_Request::getInstance()->selected_file;
-        $schema_file = preg_replace("/^(skins)/", sprintf("schemas/templates/%s",$this->config->getComplex('Skin.skin')), $to);
+        $schema_file = preg_replace("/^(skins)/", sprintf("schemas/templates/%s",$this->config->Skin->skin), $to);
         $from = (file_exists($schema_file) ? $schema_file : preg_replace("/^(skins)/", "skins_original", $to));
         copyRecursive($from, $to);
         $this->afterAdvanced();

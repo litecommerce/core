@@ -41,7 +41,7 @@ class XLite_Module_AdvancedSecurity_Model_Mailer extends XLite_Model_Mailer impl
         // encrypt message with a public key if necessary
         if ($this->get('adminMail') && $this->get('order') && $this->getComplex('order.details')) {
             $gpg = new XLite_Module_AdvancedSecurity_Model_GPG();
-            if ($this->getComplex('config.AdvancedSecurity.gpg_crypt_mail')) {
+            if ($this->config->AdvancedSecurity->gpg_crypt_mail) {
                 $this->logger->log("Module_AdvancedSecurity_Mailer::getBody() encrypt message");
     	        // send as a plain mail
         	    $this->mail->IsHTML(false);
@@ -50,7 +50,7 @@ class XLite_Module_AdvancedSecurity_Model_Mailer extends XLite_Model_Mailer impl
     	        $this->mail->Body = $gpg->encrypt($this->decodeHTML($this->get('body')));
             }
 
-            if ($this->getComplex('config.Email.show_cc_info')) {
+            if ($this->config->Email->show_cc_info) {
                 $filename = "details.txt.gpg";
                 $data = $this->getComplex('order.properties.secureDetailsText');
                 if (!empty($data)) {

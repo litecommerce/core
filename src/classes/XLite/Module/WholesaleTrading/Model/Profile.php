@@ -83,7 +83,7 @@ class XLite_Module_WholesaleTrading_Model_Profile extends XLite_Model_Profile im
             // Notify customer
             $mail->adminMail = false;
             $mail->compose(
-                    $this->config->getComplex('Company.orders_department'),
+                    $this->config->Company->orders_department,
                     $this->get('login'),
                     "modules/WholesaleTrading/membership_expired");
             $mail->send();
@@ -91,8 +91,8 @@ class XLite_Module_WholesaleTrading_Model_Profile extends XLite_Model_Profile im
             // Notify admin
             $mail->adminMail = true;
             $mail->compose(
-                    $this->config->getComplex('Company.site_administrator'),
-                    $this->config->getComplex('Company.orders_department'),
+                    $this->config->Company->site_administrator,
+                    $this->config->Company->orders_department,
                     "modules/WholesaleTrading/membership_expired_admin");
             $mail->send();
 
@@ -186,7 +186,7 @@ class XLite_Module_WholesaleTrading_Model_Profile extends XLite_Model_Profile im
 
         $mail->adminMail = false;
         $mail->compose(
-                $this->config->getComplex('Company.orders_department'),
+                $this->config->Company->orders_department,
                 $this->get('login'),
                 $template);
         $mail->send();
@@ -195,10 +195,10 @@ class XLite_Module_WholesaleTrading_Model_Profile extends XLite_Model_Profile im
     function isShowWholesalerFields()
     {
         if (
-            $this->getComplex('xlite.config.WholesaleTrading.WholesalerFieldsTaxId')   == "Y" ||
-            $this->getComplex('xlite.config.WholesaleTrading.WholesalerFieldsVat')     == "Y" ||
-            $this->getComplex('xlite.config.WholesaleTrading.WholesalerFieldsGst')     == "Y" ||
-            $this->getComplex('xlite.config.WholesaleTrading.WholesalerFieldsPst')     == "Y"
+            $this->config->WholesaleTrading->WholesalerFieldsTaxId == "Y" ||
+            $this->config->WholesaleTrading->WholesalerFieldsVat == "Y" ||
+            $this->config->WholesaleTrading->WholesalerFieldsGst == "Y" ||
+            $this->config->WholesaleTrading->WholesalerFieldsPst == "Y"
             ) {
                 return true;
             }

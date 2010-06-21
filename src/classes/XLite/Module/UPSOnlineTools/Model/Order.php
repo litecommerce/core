@@ -318,7 +318,7 @@ class XLite_Module_UPSOnlineTools_Model_Order extends XLite_Model_Order implemen
         $containers = array();
 
         // build list of all used packaging
-        $packaging_ids = array($this->xlite->getComplex('config.UPSOnlineTools.packaging_type'));
+        $packaging_ids = array($this->xlite->config->UPSOnlineTools->packaging_type);
         foreach ((array)$this->get('items') as $item) {
             $packaging_ids[] = $item->getComplex('product.ups_packaging');
         }
@@ -331,10 +331,10 @@ class XLite_Module_UPSOnlineTools_Model_Order extends XLite_Model_Order implemen
         $itemsSkip = array();
         $itemsFailed = array();
 
-        $packing_algorithm = $this->xlite->getComplex('config.UPSOnlineTools.packing_algorithm');
+        $packing_algorithm = $this->xlite->config->UPSOnlineTools->packing_algorithm;
 
         // prevent execution timeout.
-        if (count($items) > $this->xlite->getComplex('config.UPSOnlineTools.packing_limit')) {
+        if (count($items) > $this->xlite->config->UPSOnlineTools->packing_limit) {
             $packing_algorithm = self::BINPACKING_SIMPLE_MAX_SIZE;
         }
 
@@ -351,7 +351,7 @@ class XLite_Module_UPSOnlineTools_Model_Order extends XLite_Model_Order implemen
                 $packaging = $item->get('packaging');
 
                 if ($packaging == self::PACKAGING_TYPE_NONE) {
-                    $packaging = $this->xlite->getComplex('config.UPSOnlineTools.packaging_type');
+                    $packaging = $this->xlite->config->UPSOnlineTools->packaging_type;
                 }
                 if ($packaging == $packaging_id || $is_single_container) {
                     $itemsProceed[] = $item;
@@ -435,11 +435,11 @@ class XLite_Module_UPSOnlineTools_Model_Order extends XLite_Model_Order implemen
         $ups_containers = array();
 
         if (is_null($ptype)) {
-            $ptype = $this->xlite->getComplex('config.UPSOnlineTools.packing_algorithm');
+            $ptype = $this->xlite->config->UPSOnlineTools->packing_algorithm;
         }
 
         if (is_null($packaging_type)) {
-            $packaging_type = $this->xlite->getComplex('config.UPSOnlineTools.packaging_type');
+            $packaging_type = $this->xlite->config->UPSOnlineTools->packaging_type;
         }
 
         $total_weight = 0;
@@ -471,9 +471,9 @@ class XLite_Module_UPSOnlineTools_Model_Order extends XLite_Model_Order implemen
                     }
                 } else {
                     // fixed-size container or unknown
-                    $_width = $this->xlite->getComplex('config.UPSOnlineTools.width');
-                    $_length = $this->xlite->getComplex('config.UPSOnlineTools.length');
-                    $_height = $this->xlite->getComplex('config.UPSOnlineTools.height');
+                    $_width = $this->xlite->config->UPSOnlineTools->width;
+                    $_length = $this->xlite->config->UPSOnlineTools->length;
+                    $_height = $this->xlite->config->UPSOnlineTools->height;
                 }
 
                 $weight_limit = 150; // lbs
