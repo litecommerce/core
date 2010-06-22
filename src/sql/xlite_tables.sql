@@ -528,3 +528,12 @@ CREATE TABLE xlite_language_translations (
   KEY i (id)
 ) TYPE=MyISAM;
 
+DROP TABLE IF EXISTS xlite_language_labels;
+CREATE TABLE xlite_language_labels (
+  label_id int(11) NOT NULL auto_increment PRIMARY KEY,
+  code char(2) NOT NULL,
+  name text NOT NULL,
+  translation text NOT NULL,
+  FULLTEXT KEY cn (code, name)
+) TYPE=MyISAM;
+
