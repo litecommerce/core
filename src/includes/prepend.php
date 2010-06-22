@@ -60,6 +60,8 @@ define('LC_PROXY_CACHE_DIR', LC_CLASSES_CACHE_DIR . 'XLite' . LC_DS . 'Model' . 
 
 define('LC_TMP_DIR', LC_VAR_DIR . 'tmp' . LC_DS);
 
+define('LC_LOCALE_DIR', LC_VAR_DIR . 'locale');
+
 define('LC_SKINS_DIR', LC_ROOT_DIR . 'skins' . LC_DS);
 define('LC_CUSTOMER_AREA_SKIN', LC_SKINS_DIR . 'default' . LC_DS . 'en' . LC_DS);
 define('LC_ADMIN_AREA_SKIN', LC_SKINS_DIR . 'admin' . LC_DS . 'en' . LC_DS);

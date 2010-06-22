@@ -14,7 +14,7 @@
 <table IF="{product.getExtraFields(true)|product.weight|isViewListVisible(#productDetails.attributes#)}" class="product-extra-fields">
 
   <tr IF="{!product.weight=0}">
-    <th>Weight:</th>
+    <th>{t(#Weight#)}:</th>
     <td>{product.weight} {config.General.weight_symbol}</td>
   </tr>
 
