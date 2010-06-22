@@ -33,26 +33,22 @@
  * @return array
  * @since  3.0
  */
-function funcParseConfgFile($section = '')
+function funcParseConfgFile()
 {
-    $options = parse_ini_file(LC_ROOT_DIR . 'etc' . LC_DS . 'config.php', true);
+    $options = parse_ini_file(LC_CONFIG_DIR . 'config.php', true);
 
     if (is_array($options)) {
 
-        if (file_exists(LC_ROOT_DIR . 'etc' . LC_DS . 'config.local.php')) {
+        if (file_exists(LC_CONFIG_DIR . 'config.local.php')) {
 
-            $optionsLocal = parse_ini_file(LC_ROOT_DIR . 'etc' . LC_DS . 'config.local.php', true);
+            $optionsLocal = parse_ini_file(LC_CONFIG_DIR . LC_DS . 'config.local.php', true);
             if (is_array($optionsLocal)) {
-                $options = array_merge($options, $optionsLocal);
+                $options = array_replace_recursive($options, $optionsLocal);
             }
         }
 
     } else {
-        die ('Unable to read/parse configuration file(s)');
-    }
-
-    if ($section) {
-        $options = isset($options[$section]) ? $options[$section] : null;
+        $options = null;
     }
 
     return $options;

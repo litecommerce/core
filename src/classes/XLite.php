@@ -115,21 +115,7 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
      */
     protected function parseConfigFile()
     {
-        $options = parse_ini_file(LC_CONFIG_DIR . 'config.php', true);
-
-        if (is_array($options)) {
-            if (file_exists(LC_CONFIG_DIR . 'config.local.php')) {
-                $optionsLocal = parse_ini_file(LC_CONFIG_DIR . 'config.local.php', true);
-                if (is_array($optionsLocal)) {
-                    $options = array_replace_recursive($options, $optionsLocal);
-                }
-            }
-
-        } else {
-            $this->doDie('Unable to read/parse configuration file(s)');
-        }
-
-        return $options;
+        return funcParseConfgFile();
     }
 
     /**
@@ -215,15 +201,18 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
     {
         if (is_null($this->options)) {
             $this->options = $this->parseConfigFile();
+            if (!is_array($this->options)) {
+                $this->doDie('Unable to read/parse configuration file(s)');
+            }
+
             $this->options['host_details']['web_dir_wo_slash'] = rtrim($this->options['host_details']['web_dir'], '/');
         }
 
         $result = $this->options;
 
         if (is_array($names)) {
-            $names = array_reverse($names);
             while (!empty($names) && !is_null($result)) {
-                $key = array_pop($names);
+                $key = array_shift($names);
                 if (is_null($key)) {
                     break;
                 }

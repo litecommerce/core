@@ -304,6 +304,16 @@ class Decorator
     protected $staticRoutinesHandler = null;
 
     /**
+     * Optional class annotations attributes 
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $optionalClassAttributes = array('subpackage', 'mappedsuperclass');
+
+    /**
      * Return current value of the "max_execution_time" INI setting 
      * 
      * @return int|string
@@ -651,12 +661,14 @@ class Decorator
     {
         if (!isset($this->configOptions)) {
             $this->configOptions = funcParseConfgFile();
+            if (!is_array($this->configOptions)) {
+                die ('Unable to read/parse configuration file(s)');
+            }
         }
 
         $options = $this->configOptions;
         if ($section) {
             $options = isset($options[$section]) ? $options[$section] : null;
-            
         }
 
         return $options;
@@ -1608,7 +1620,7 @@ class Decorator
             }
 
             // Remove optional attributes
-            foreach (array('subpackage') as $a) {
+            foreach ($this->optionalClassAttributes as $a) {
                 if (isset($attributes[$a])) {
                     unset($attributes[$a]);
                 }
@@ -2169,18 +2181,14 @@ DATA;
         foreach ($parts as $part) {
             $part = trim(str_replace("\n", ' ', $part));
             $tmp = preg_split('/\W/Ss', $part, 2);
-            if (2 != count($tmp)) {
-                continue;
-            }
-            
 
-            $key = strtolower($tmp[0]);
+            $tmp[0] = strtolower($tmp[0]);
 
             if (!isset($attributes[$tmp[0]])) {
                 $attributes[$tmp[0]] = array();
             }
 
-            $attributes[$tmp[0]][] = trim($tmp[1]);
+            $attributes[$tmp[0]][] = isset($tmp[1]) ? trim($tmp[1]) : true;
         }
 
         return $attributes;
