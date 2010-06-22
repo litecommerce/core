@@ -44,8 +44,14 @@ function setHeaderChecked()
 
 function deleteAllowedIPs()
 {
-	allowed_ips_form.action.value='delete_allowed_ip';
-	allowed_ips_form.submit();
+  document.allowed_ips_form.elements.namedItem('action').value='delete_allowed_ip';
+	document.allowed_ips_form.submit();
+}
+
+function updateAllowedIPs()
+{
+  document.allowed_ips_form.elements.namedItem('action').value='update_allowed_ip';
+  document.allowed_ips_form.submit();
 }
 
 function allowCurrentIP()
@@ -68,7 +74,7 @@ function allowCurrentIP()
 </script>
 
 Use this section to manage allowed and awaiting IP addresses
-<span id="notes_url" style="display:"><a href="javascript:ShowNotes();" class="NavigationPath" onClick="this.blur()"><b>How to use this section &gt;&gt;&gt;</b></a></span>
+<span id="notes_url" style="display:"><a href="javascript:ShowNotes();" class="NavigationPath"><b>How to use this section &gt;&gt;&gt;</b></a></span>
 <span id="notes_body" style="display: none">
 <br><br>
 The optional 'comment' field can be used for additional
@@ -109,14 +115,14 @@ Your current IP: <b id="current_ip">{currentIP}</b>
 <input type="hidden" name="action" value="" />
 <table border="0" cellspacing="1" cellpadding="2" class="CenterBorder">
 <tr class="TableHead">
-    <th><input id="waiting_ips" type="checkbox" onClick="javascript: this.blur();setChecked('waiting_ips_form','waiting_ips', this.checked);" /></th>
+    <th><input id="waiting_ips" type="checkbox" onClick="javascript: setChecked('waiting_ips_form', 'waiting_ips', this.checked);" /></th>
     <th nowrap class="TableHead">IP</th>
     <th nowrap class="TableHead">First login date</th>
     <th nowrap class="TableHead">Last login date</th>
     <th nowrap class="TableHead">Login attempts</th>
 </tr>
 <tr FOREACH="waitingList,id,waiting_ip" class="{getRowClass(id,#DialogBox#,#TableRow#)}">
-    <td align="center"><input id="waiting_ips" type="checkbox" name="waiting_ips[]" value="{waiting_ip.id}" onClick="javascript: this.blur()" /></td>
+    <td align="center"><input id="waiting_ips" type="checkbox" name="waiting_ips[]" value="{waiting_ip.id}" /></td>
     <td nowrap align=left>&nbsp;{waiting_ip.ip}&nbsp;</td>
     <td nowrap align=left>&nbsp;{time_format(waiting_ip.first_date)}&nbsp;</td>
     <td nowrap align=left>&nbsp;{time_format(waiting_ip.last_date)}&nbsp;</td>
@@ -126,8 +132,8 @@ Your current IP: <b id="current_ip">{currentIP}</b>
 <br />
 <table border=0>
 <tr>
-    <td align="left"><input type="button" class="DialogMainButton" value=" Approve selected " onClick="javascript: waiting_ips_form.action.value='approve_ip'; waiting_ips_form.submit()" /></td>
-    <td align="right"><input type="button" value=" Delete selected " onClick="javascript: waiting_ips_form.action.value='delete_ip'; waiting_ips_form.submit()" /></td>
+    <td align="left"><input type="button" class="DialogMainButton" value=" Approve selected " onClick="javascript: document.waiting_ips_form.elements.namedItem('action').value='approve_ip'; document.waiting_ips_form.submit()" /></td>
+    <td align="right"><input type="button" value=" Delete selected " onClick="javascript: document.waiting_ips_form.elements.namedItem('action').value='delete_ip'; document.waiting_ips_form.submit()" /></td>
 </tr>
 </table>
 </form>
@@ -166,13 +172,13 @@ Your current IP: <b id="current_ip">{currentIP}</b>
     <th class="TableHead">IP</th>
     <th class="TableHead">Comment</th>
     <th class="TableHead">
-        Delete<br /><input id="allowed_ips" type="checkbox" onClick="javascript: this.blur();setChecked('allowed_ips_form','allowed_ips', this.checked);" />
+        Delete<br /><input id="allowed_ips" type="checkbox" onClick="javascript: setChecked('allowed_ips_form', 'allowed_ips', this.checked);" />
     </th>
 </tr>
 <tr FOREACH="allowedList,id,ip" class="{getRowClass(id,#DialogBox#,#TableRow#)}">
     <td align="left">&nbsp;{ip.ip}&nbsp;</td>
     <td align="center">&nbsp;<input type="text" name="comment[{id}]" size="50" maxlength="50" value="{ip.comment}" />&nbsp;</td>
-    <td align="center"><input id="allowed_ips" type="checkbox" name="allowed_ips[]" value="{id}" onClick="javascript: this.blur()"{if:ip.ip=currentIP} disabled{end:}/></td>
+    <td align="center"><input id="allowed_ips" type="checkbox" name="allowed_ips[]" value="{id}" {if:ip.ip=currentIP} disabled{end:}/></td>
 </tr>
 </table>
 <!--end allowed_ips_list-->
@@ -185,7 +191,7 @@ Your current IP: <b id="current_ip">{currentIP}</b>
     <td colspan="7">
         <table border="0" width="100%">
         <tr>
-            <td align="left"><input type="button" value=" Update " class="DialogMainButton" onClick="javascript: allowed_ips_form.action.value='update_allowed_ip'; allowed_ips_form.submit()" /></td>
+            <td align="left"><input type="button" value=" Update " class="DialogMainButton" onClick="javascript: updateAllowedIPs()" /></td>
             <td align="right"><input type="button" value=" Delete selected " onClick="javascript: if(confirm('Are you sure you want to delete the selected IP addresses?\nAfter the selected IP addresses have been deleted, access to the store from these addresses will be prohibited.\nIf your address is among the selected ones, you will also be prohibited to enter the admin area.')) deleteAllowedIPs()" /></td>
         </tr>
         </table>
@@ -254,6 +260,6 @@ Your current IP: <b id="current_ip">{currentIP}</b>
 </tr>
 <tr class="DialogBox">
     <td colspan="5">
-        <input type="button" value=" Add " class="DialogMainButton" onClick="javascript: add_ip_form.submit()" /></td>
+        <input type="button" value=" Add " class="DialogMainButton" onClick="javascript: document.add_ip_form.submit()" /></td>
 </tr>
 </table>
