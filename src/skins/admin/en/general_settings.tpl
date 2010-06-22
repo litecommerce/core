@@ -16,25 +16,25 @@
   <input type="hidden" name="page" value="{page}">
 
   <table cellSpacing="2" cellpadding="2" width="100%">
-    {foreach:options,option}
+    {foreach:getOptions(),option}
       <tr>
-        {if:!option.isSeparator()}
+        {if:!option.type=#separator#}
           {if:!option.type=#serialized#}<td align="right" width="50%">{option.comment:h}: </td>{end:}
           <td width="50%">
 
-            {if:option.isCheckbox()}
+            {if:option.type=#checkbox#}
               {if:option.name=#captcha_protection_system#}
                 {if:isGDLibLoaded()}
-                  <input id="{option.name}" type="checkbox" name="{option.name}" checked="{option.isChecked()}" />
+                  <input id="{option.name}" type="checkbox" name="{option.name}" checked="{option.value=#Y#}" />
                 {else:}
                   <input id="{option.name}" type="checkbox" name="{option.name}" checked="checked" disabled="disabled" />&nbsp;<font class="ErrorMessage">GDLib isn't detected</font>
                 {end:}
               {else:}
-                <input id="{option.name}" type="checkbox" name="{option.name}" checked="{option.isChecked()}" />
+                <input id="{option.name}" type="checkbox" name="{option.name}" checked="{option.value=#Y#}" />
               {end:}
             {end:}
 
-            {if:option.isText()}
+            {if:option.type=#text#}
               {if:option.name=#captcha_length#}
                 <input id="{option.name}" type="text" name="{option.name}" value="{option.value}" size="5" />&nbsp; (more than 1 and less than 10)
               {else:}
@@ -42,27 +42,27 @@
               {end:}
             {end:}
 
-            {if:option.isCountry()}
+            {if:option.type=#country#"}
               <widget class="XLite_View_CountrySelect" field="{option.name}" country="{option.value}" fieldId="{option.name}_select" />
             {end:}
 
-            {if:option.isState()}
+            {if:option.type=#state#"}
               <widget class="XLite_View_StateSelect" field="{option.name}" state="{option.value}" fieldId="{option.name}_select" isLinked=1 />
             {end:}
 
-            {if:option.isName(#mail_backend#)}
+            {if:option.name=#mail_backend#}
               <select name="{option.name}">
-                <option value="mail" selected="{option.isSelected(#mail#)}">mail</option>
-                <option value="sendmail" selected="{option.isSelected(#sendmail#)}">sendmail</option>
-                <option value="smtp" selected="{option.isSelected(#smtp#)}">smtp</option>
+                <option value="mail" selected="{option.value=#mail#}">mail</option>
+                <option value="sendmail" selected="{option.value=#sendmail#}">sendmail</option>
+                <option value="smtp" selected="{option.value=#smtp#}">smtp</option>
               </select>
             {end:}
 
-            {if:option.isTextArea()}
+            {if:option.type=#textarea#}
               <textarea id="{option.name}" name="{option.name}" rows=5>{option.value}</textarea>
             {end:}
 
-            {if:option.isName(#weight_unit#)}
+            {if:option.name=#weight_unit#}
 <script type="text/javascript">
 <!--
 function setUnitSymbol(symbol) {
@@ -73,42 +73,42 @@ function setUnitSymbol(symbol) {
 -->
 </script>
               <select name="{option.name}" onchange="setUnitSymbol(this.value)">
-                <option value="lbs" selected="{option.isSelected(#lbs#)}">LB</option>
-                <option value="oz" selected="{option.isSelected(#oz#)}">OZ</option>
-                <option value="kg" selected="{option.isSelected(#kg#)}">KG</option>
-                <option value="g" selected="{option.isSelected(#g#)}">G</option>
+                <option value="lbs" selected="{option.value=#lbs#}">LB</option>
+                <option value="oz" selected="{option.value=#oz#}">OZ</option>
+                <option value="kg" selected="{option.value=#kg#}">KG</option>
+                <option value="g" selected="{option.value=#g#}">G</option>
               </select>
             {end:}
 
-            {if:option.isName(#httpsClient#)}
+            {if:option.name=#httpsClient#}
               <select name="{option.name}">
-                <option value="autodetect" selected="{option.isSelected(#autodetect#)}">Autodetect</option>
-                <option value="libcurl" selected="{option.isSelected(#libcurl#)}">CURL PHP extension</option>
-                <option value="curl" selected="{option.isSelected(#curl#)}">Curl external application</option>
-                <option value="openssl" selected="{option.isSelected(#openssl#)}">OpenSSL external application</option>
+                <option value="autodetect" selected="{option.value=#autodetect#}">Autodetect</option>
+                <option value="libcurl" selected="{option.value=#libcurl#}">CURL PHP extension</option>
+                <option value="curl" selected="{option.value=#curl#}">Curl external application</option>
+                <option value="openssl" selected="{option.value=#openssl#}">OpenSSL external application</option>
               </select>
             {end:}
 
-            {if:option.isName(#subcategories_look#)}
+            {if:option.name=#subcategories_look#}
               <select name="{option.name}">
-                <option value="list" selected="{option.isSelected(#list#)}">List</option>
-                <option value="icons" selected="{option.isSelected(#icons#)}">Icons</option>
+                <option value="list" selected="{option.value=#list#}">List</option>
+                <option value="icons" selected="{option.value=#icons#}">Icons</option>
               </select>
             {end:}
 
-            {if:option.isName(#thousand_delim#)}
+            {if:option.name=#thousand_delim#}
               <select name="{option.name}">
-                <option value="" selected="{option.isSelected(##)}">No delimiter</option>
-                <option value="," selected="{option.isSelected(#,#)}">,</option>
-                <option value="&amp;nbsp;" selected="{option.isSelected(#&nbsp;#)}">Space</option>
+                <option value="" selected="{option.value=##}">No delimiter</option>
+                <option value="," selected="{option.value=#,#}">,</option>
+                <option value="&amp;nbsp;" selected="{option.value=#&nbsp;#}">Space</option>
               </select>
             {end:}
 
-            {if:option.isName(#decimal_delim#)}
+            {if:option.name=#decimal_delim#}
               <select name="{option.name}">
-                <option value="" selected="{option.isSelected(##)}">No fractional part</option>
-                <option value="." selected="{option.isSelected(#.#)}">.</option>
-                <option value="," selected="{option.isSelected(#,#)}">,</option>
+                <option value="" selected="{option.value=##}">No fractional part</option>
+                <option value="." selected="{option.value=#.#}">.</option>
+                <option value="," selected="{option.value=#,#}">,</option>
               </select>
             {end:}
 
