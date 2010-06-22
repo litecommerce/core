@@ -121,9 +121,10 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
             if (file_exists(LC_CONFIG_DIR . 'config.local.php')) {
                 $optionsLocal = parse_ini_file(LC_CONFIG_DIR . 'config.local.php', true);
                 if (is_array($optionsLocal)) {
-                    $options = array_merge($options, $optionsLocal);
+                    $options = array_replace_recursive($options, $optionsLocal);
                 }
             }
+
         } else {
             $this->doDie('Unable to read/parse configuration file(s)');
         }
