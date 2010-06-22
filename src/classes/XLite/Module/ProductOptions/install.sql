@@ -36,5 +36,6 @@ ALTER TABLE xlite_order_items ADD options TEXT NOT NULL;
 
 ALTER TABLE xlite_products ADD expansion_limit int NOT NULL default 0;
 
-INSERT INTO xlite_config VALUES ('clone_product_options','Clone product options when product is cloned','Y','ProductOptions',30,'checkbox');
+INSERT INTO `xlite_config` VALUES (40,'clone_product_options','ProductOptions','checkbox',30,'Y');
+INSERT INTO `xlite_config_translations` VALUES (34,'en',40,'Clone product options when product is cloned','');
 

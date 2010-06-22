@@ -38,16 +38,29 @@ CREATE TABLE xlite_categories (
 
 DROP TABLE IF EXISTS xlite_config;
 CREATE TABLE xlite_config (
+  config_id int NOT NULL auto_increment,
   name varchar(32) NOT NULL default '',
-  comment varchar(255) NOT NULL default '',
-  value text NOT NULL,
   category varchar(32) NOT NULL default '',
-  orderby int(11) NOT NULL default '0',
   type enum('','text','textarea','checkbox','country','state','select','serialized','separator') default NULL,
-  PRIMARY KEY  (category,name),
+  orderby int(11) NOT NULL default '0',
+  value text NOT NULL,
+  PRIMARY KEY  (config_id),
+  UNIQUE KEY nc (category, name),
   KEY orderby (orderby),
   KEY type (type),
   FULLTEXT KEY value (value)
+) TYPE=MyISAM;
+
+DROP TABLE IF EXISTS xlite_config_translations;
+CREATE TABLE xlite_config_translations (
+  label_id int(11) NOT NULL auto_increment,
+  code char(2) NOT NULL,
+  id int(11) NOT NULL default 0,
+  option_name char(255) NOT NULL,
+  option_comment char(255) NOT NULL,
+  PRIMARY KEY (label_id),
+  KEY ci (code, id),
+  KEY i (id)
 ) TYPE=MyISAM;
 
 DROP TABLE IF EXISTS xlite_waitingips;

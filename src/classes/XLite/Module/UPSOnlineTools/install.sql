@@ -63,34 +63,32 @@ INSERT INTO xlite_shipping(shipping_id,class,destination,name,enabled,order_by) 
 INSERT INTO xlite_shipping(shipping_id,class,destination,name,enabled,order_by) VALUES (34,'ups','L','UPS Today Express',1,210);
 INSERT INTO xlite_shipping(shipping_id,class,destination,name,enabled,order_by) VALUES (35,'ups','L','UPS Today Express Saver',1,220);
 
-INSERT INTO xlite_config(name,value,category) VALUES ('server','https://www.ups.com/ups.app/xml/','UPSOnlineTools');
-INSERT INTO xlite_config(name,value,category) VALUES ('devlicense','EBA2F47A37670E96','UPSOnlineTools');
-INSERT INTO xlite_config(name,value,category) VALUES ('UPS_accesskey','','UPSOnlineTools');
-INSERT INTO xlite_config(name,value,category) VALUES ('UPS_username','','UPSOnlineTools');
-INSERT INTO xlite_config(name,value,category) VALUES ('UPS_password','','UPSOnlineTools');
+INSERT INTO `xlite_config` VALUES (1,'account_type','UPSOnlineTools',NULL,0,'01');
+INSERT INTO `xlite_config` VALUES (21,'av_quality','UPSOnlineTools',NULL,0,'exact');
+INSERT INTO `xlite_config` VALUES (22,'av_status','UPSOnlineTools',NULL,0,'Y');
+INSERT INTO `xlite_config` VALUES (28,'cache_autoclean','UPSOnlineTools','text',0,'1');
+INSERT INTO `xlite_config` VALUES (56,'conversion_rate','UPSOnlineTools',NULL,0,'1');
+INSERT INTO `xlite_config` VALUES (60,'currency_code','UPSOnlineTools',NULL,0,'');
+INSERT INTO `xlite_config` VALUES (79,'delivery_conf','UPSOnlineTools',NULL,0,'0');
+INSERT INTO `xlite_config` VALUES (81,'devlicense','UPSOnlineTools',NULL,0,'EBA2F47A37670E96');
+INSERT INTO `xlite_config` VALUES (85,'dim_units','UPSOnlineTools',NULL,0,'inches');
+INSERT INTO `xlite_config` VALUES (92,'display_gdlib','UPSOnlineTools','text',0,'0');
+INSERT INTO `xlite_config` VALUES (137,'height','UPSOnlineTools',NULL,0,'10');
+INSERT INTO `xlite_config` VALUES (149,'length','UPSOnlineTools',NULL,0,'10');
+INSERT INTO `xlite_config` VALUES (150,'level_display_method','UPSOnlineTools','text',0,'0');
+INSERT INTO `xlite_config` VALUES (193,'packaging_type','UPSOnlineTools',NULL,0,'00');
+INSERT INTO `xlite_config` VALUES (195,'packing_algorithm','UPSOnlineTools','text',0,'0');
+INSERT INTO `xlite_config` VALUES (196,'packing_limit','UPSOnlineTools','text',0,'150');
+INSERT INTO `xlite_config` VALUES (220,'residential','UPSOnlineTools',NULL,0,'');
+INSERT INTO `xlite_config` VALUES (230,'server','UPSOnlineTools',NULL,0,'https://www.ups.com/ups.app/xml/');
+INSERT INTO `xlite_config` VALUES (259,'upsoptions','UPSOnlineTools','serialized',0,'');
+INSERT INTO `xlite_config` VALUES (260,'UPS_accesskey','UPSOnlineTools',NULL,0,'');
+INSERT INTO `xlite_config` VALUES (261,'UPS_password','UPSOnlineTools',NULL,0,'');
+INSERT INTO `xlite_config` VALUES (262,'UPS_username','UPSOnlineTools',NULL,0,'');
+INSERT INTO `xlite_config` VALUES (274,'visual_container_width','UPSOnlineTools','text',0,'200');
+INSERT INTO `xlite_config` VALUES (284,'width','UPSOnlineTools',NULL,0,'10');
 
-INSERT INTO xlite_config(name,value,category) VALUES ('account_type','01','UPSOnlineTools');
-INSERT INTO xlite_config(name,value,category) VALUES ('packaging_type','00','UPSOnlineTools');
-INSERT INTO xlite_config(name,value,category) VALUES ('length','10','UPSOnlineTools');
-INSERT INTO xlite_config(name,value,category) VALUES ('width','10','UPSOnlineTools');
-INSERT INTO xlite_config(name,value,category) VALUES ('height','10','UPSOnlineTools');
-INSERT INTO xlite_config(name,value,category,type) VALUES ('upsoptions','','UPSOnlineTools', 'serialized');
-INSERT INTO xlite_config(name,value,category) VALUES ('conversion_rate','1','UPSOnlineTools');
-INSERT INTO xlite_config(name,value,category) VALUES ('av_status','Y','UPSOnlineTools');
-INSERT INTO xlite_config(name,value,category) VALUES ('av_quality','exact','UPSOnlineTools');
-INSERT INTO xlite_config(name,value,category) VALUES ('dim_units','inches','UPSOnlineTools');
-INSERT INTO xlite_config(name,value,category) VALUES ('currency_code','','UPSOnlineTools');
-INSERT INTO xlite_config(name,value,category) VALUES ('residential','','UPSOnlineTools');
-INSERT INTO xlite_config(name,value,category) VALUES ('delivery_conf','0','UPSOnlineTools');
-
-INSERT INTO xlite_config (name, comment, value, category, orderby, type) VALUES ('packing_algorithm', 'Packing algorithm', '0', 'UPSOnlineTools', '0', 'text');
-
-INSERT INTO xlite_config (name, value, category, type) VALUES ('display_gdlib', '0', 'UPSOnlineTools', 'text');
-INSERT INTO xlite_config (name, value, category, type) VALUES ('visual_container_width', '200', 'UPSOnlineTools', 'text');
-INSERT INTO xlite_config (name, value, category, type) VALUES ('packing_limit', '150', 'UPSOnlineTools', 'text');
-
-INSERT INTO xlite_config (name, value, category, type) VALUES ('cache_autoclean', '1', 'UPSOnlineTools', 'text');
-INSERT INTO xlite_config (name, value, category, type) VALUES ('level_display_method', '0', 'UPSOnlineTools', 'text');
+INSERT INTO `xlite_config_translations` VALUES (147,'en',195,'Packing algorithm','');
 
 
 UPDATE xlite_countries SET eu_member='Y' WHERE code='BG';

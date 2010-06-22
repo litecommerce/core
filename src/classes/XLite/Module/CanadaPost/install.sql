@@ -17,14 +17,15 @@ CREATE TABLE xlite_cps_cache(
 	PRIMARY KEY (weight,origin_zipcode,origin_country,dest_zipcode,dest_city,dest_country,dest_state,insured,packed,height,width,length)
 ) TYPE=MyISAM;
 
-INSERT INTO xlite_config VALUES ('merchant_id','','','CanadaPost',0,'');
-INSERT INTO xlite_config VALUES ('insured','','0','CanadaPost',0,'');
-INSERT INTO xlite_config VALUES ('test_server','','1','CanadaPost',0,'');
-INSERT INTO xlite_config VALUES ('packed','','Y','CanadaPost',0,'');
-INSERT INTO xlite_config VALUES ('width','','24.13','CanadaPost',0,'');
-INSERT INTO xlite_config VALUES ('height','','2.00','CanadaPost',0,'');
-INSERT INTO xlite_config VALUES ('length','','37.47','CanadaPost',0,'');
-INSERT INTO xlite_config VALUES ('currency_rate','','1','CanadaPost',0,'');
+INSERT INTO `xlite_config` VALUES (62,'currency_rate','CanadaPost','',0,'1');
+INSERT INTO `xlite_config` VALUES (135,'height','CanadaPost','',0,'2.00');
+INSERT INTO `xlite_config` VALUES (142,'insured','CanadaPost','',0,'0');
+INSERT INTO `xlite_config` VALUES (147,'length','CanadaPost','',0,'37.47');
+INSERT INTO `xlite_config` VALUES (168,'merchant_id','CanadaPost','',0,'');
+INSERT INTO `xlite_config` VALUES (194,'packed','CanadaPost','',0,'Y');
+INSERT INTO `xlite_config` VALUES (251,'test_server','CanadaPost','',0,'1');
+INSERT INTO `xlite_config` VALUES (282,'width','CanadaPost','',0,'24.13');
+
 
 INSERT INTO xlite_shipping VALUES (79,'cps','L','Canada Post Priority Courier',1,0);
 INSERT INTO xlite_shipping VALUES (80,'cps','L','Canada Post Xpresspost',1,0);

@@ -49,18 +49,27 @@ ALTER TABLE xlite_products ADD validaty_period varchar(32) NOT NULL default '';
 
 ALTER TABLE xlite_order_items ADD wholesale_price decimal(12,2) NOT NULL default '-1.00'  AFTER price;
 
-DELETE FROM xlite_config where name="options_expansion_limit";
-INSERT INTO xlite_config ( name , comment , value , category , orderby , type ) VALUES ( 'price_denied_message', 'Message when price is denied', 'N/A', 'WholesaleTrading', 20, 'text');
-INSERT INTO xlite_config ( name , comment , value , category , orderby , type ) VALUES ( 'bulk_categories', 'Categories for bulk shopping', '', 'WholesaleTrading', 30, 'text');
-INSERT INTO xlite_config ( name , comment , value , category , orderby , type ) VALUES ( 'WholesalerFieldsTaxId', 'Add Sales Permit/Tax ID field to the registration form', '', 'WholesaleTrading', 40, 'checkbox');
-INSERT INTO xlite_config ( name , comment , value , category , orderby , type ) VALUES ( 'WholesalerFieldsVat', 'Add VAT Registration number field to the registration form', '', 'WholesaleTrading', 50, 'checkbox');
-INSERT INTO xlite_config ( name , comment , value , category , orderby , type ) VALUES ( 'WholesalerFieldsGst', 'Add GST Registration number field to the registration form', '', 'WholesaleTrading', 60, 'checkbox');
-INSERT INTO xlite_config ( name , comment , value , category , orderby , type ) VALUES ( 'WholesalerFieldsPst', 'Add PST Registration number field to the registration form', '', 'WholesaleTrading', 70, 'checkbox');
-INSERT INTO xlite_config ( name , comment , value , category , orderby , type ) VALUES ( 'override_membership', 'Membership granted through product purchase overrides current membership', '', 'WholesaleTrading', 80, 'checkbox');
-INSERT INTO xlite_config ( name , comment , value , category , orderby , type ) VALUES ( 'direct_addition', 'Enable direct addition to the cart for products with disabled catalog visibility', '', 'WholesaleTrading', 90, 'checkbox');
-INSERT INTO xlite_config ( name , comment , value , category , orderby , type ) VALUES ( 'clone_wholesale_purchaselimit','Clone purchase limit settings when a product is cloned','Y','WholesaleTrading',100,'checkbox');
-INSERT INTO xlite_config ( name , comment , value , category , orderby , type ) VALUES ( 'clone_wholesale_pricing','Clone wholesale pricing settings when a product is cloned','Y','WholesaleTrading',110,'checkbox');
-INSERT INTO xlite_config ( name , comment , value , category , orderby , type ) VALUES ( 'clone_wholesale_productaccess','Clone product access settings when a product is cloned','Y','WholesaleTrading',120,'checkbox');
-REPLACE INTO xlite_config ( name , comment , value , category , orderby , type ) VALUES ('discounts_after_taxes','Discounts charged after taxes application','N','Taxes',210,'checkbox');
+INSERT INTO `xlite_config` VALUES (26,'bulk_categories','WholesaleTrading','text',30,'');
+INSERT INTO `xlite_config` VALUES (42,'clone_wholesale_pricing','WholesaleTrading','checkbox',110,'Y');
+INSERT INTO `xlite_config` VALUES (43,'clone_wholesale_productaccess','WholesaleTrading','checkbox',120,'Y');
+INSERT INTO `xlite_config` VALUES (44,'clone_wholesale_purchaselimit','WholesaleTrading','checkbox',100,'Y');
+INSERT INTO `xlite_config` VALUES (87,'direct_addition','WholesaleTrading','checkbox',90,'');
+INSERT INTO `xlite_config` VALUES (185,'override_membership','WholesaleTrading','checkbox',80,'');
+INSERT INTO `xlite_config` VALUES (206,'price_denied_message','WholesaleTrading','text',20,'N/A');
+INSERT INTO `xlite_config` VALUES (277,'WholesalerFieldsGst','WholesaleTrading','checkbox',60,'');
+INSERT INTO `xlite_config` VALUES (278,'WholesalerFieldsPst','WholesaleTrading','checkbox',70,'');
+INSERT INTO `xlite_config` VALUES (279,'WholesalerFieldsTaxId','WholesaleTrading','checkbox',40,'');
+INSERT INTO `xlite_config` VALUES (280,'WholesalerFieldsVat','WholesaleTrading','checkbox',50,'');
 
+INSERT INTO `xlite_config_translations` VALUES (23,'en',26,'Categories for bulk shopping','');
+INSERT INTO `xlite_config_translations` VALUES (36,'en',42,'Clone wholesale pricing settings when a product is cloned','');
+INSERT INTO `xlite_config_translations` VALUES (37,'en',43,'Clone product access settings when a product is cloned','');
+INSERT INTO `xlite_config_translations` VALUES (38,'en',44,'Clone purchase limit settings when a product is cloned','');
+INSERT INTO `xlite_config_translations` VALUES (65,'en',87,'Enable direct addition to the cart for products with disabled catalog visibility','');
+INSERT INTO `xlite_config_translations` VALUES (141,'en',185,'Membership granted through product purchase overrides current membership','');
+INSERT INTO `xlite_config_translations` VALUES (152,'en',206,'Message when price is denied','');
+INSERT INTO `xlite_config_translations` VALUES (206,'en',277,'Add GST Registration number field to the registration form','');
+INSERT INTO `xlite_config_translations` VALUES (207,'en',278,'Add PST Registration number field to the registration form','');
+INSERT INTO `xlite_config_translations` VALUES (208,'en',279,'Add Sales Permit/Tax ID field to the registration form','');
+INSERT INTO `xlite_config_translations` VALUES (209,'en',280,'Add VAT Registration number field to the registration form','');
 

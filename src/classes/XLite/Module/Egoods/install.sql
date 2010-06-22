@@ -52,11 +52,15 @@ ALTER TABLE xlite_order_items ADD pincodes text NOT NULL default '';
 ALTER TABLE xlite_order_items ADD egoods text NOT NULL default '';
 ALTER TABLE xlite_products ADD egood_free_for_memberships varchar(255) NOT NULL default '';
 
-INSERT INTO xlite_config ( name , comment , value , category , orderby , type ) VALUES ( 'egoods_store_dir', 'Directory where egoods will be stored<br><i>Either absolute or relative to the LiteCommerce root directory</i>', '', 'Egoods', 10, 'text');
-INSERT INTO xlite_config ( name , comment , value , category , orderby , type ) VALUES ( 'exp_days', 'Egoods links expire in (days)', '7', 'Egoods', 20, 'text');
-UPDATE xlite_config SET comment= 'Egoods links expire in (days)' WHERE category='Egoods' AND name='exp_days';
-INSERT INTO xlite_config ( name , comment , value , category , orderby , type ) VALUES ( 'exp_downloads', 'Number of available downloads', '10', 'Egoods', 30, 'text');
-INSERT INTO xlite_config ( name , comment , value , category , orderby , type ) VALUES ( 'link_expires', 'Egoods links expire on', 'D', 'Egoods', 10, 'select');
-UPDATE xlite_config SET comment= 'Egoods links expire on' WHERE category='Egoods' AND name='link_expires';
-INSERT xlite_config ( name , comment , value , category , orderby , type) VALUES ('pincodes_per_page' , 'Pin codes per page' , '30' , 'Egoods' , 40 , 'text');
+INSERT INTO `xlite_config` VALUES (97,'egoods_store_dir','Egoods','text',10,'');
+INSERT INTO `xlite_config` VALUES (115,'exp_days','Egoods','text',20,'7');
+INSERT INTO `xlite_config` VALUES (116,'exp_downloads','Egoods','text',30,'10');
+INSERT INTO `xlite_config` VALUES (152,'link_expires','Egoods','select',10,'D');
+INSERT INTO `xlite_config` VALUES (204,'pincodes_per_page','Egoods','text',40,'30');
+
+INSERT INTO `xlite_config_translations` VALUES (73,'en',97,'Directory where egoods will be stored<br><i>Either absolute or relative to the LiteCommerce root directory</i>','');
+INSERT INTO `xlite_config_translations` VALUES (90,'en',115,'Egoods links expire in (days)','');
+INSERT INTO `xlite_config_translations` VALUES (91,'en',116,'Number of available downloads','');
+INSERT INTO `xlite_config_translations` VALUES (111,'en',152,'Egoods links expire on','');
+INSERT INTO `xlite_config_translations` VALUES (150,'en',204,'Pin codes per page','');
 

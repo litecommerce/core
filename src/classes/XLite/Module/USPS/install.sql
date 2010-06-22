@@ -28,20 +28,21 @@ CREATE TABLE xlite_usps_nat_cache (
   PRIMARY KEY  (ounces,ziporig,zipdest,package_size,machinable,container_priority,container_express,dim_lenght,dim_width,dim_height,dim_girth,fcmailtype)
 ) TYPE=MyISAM;
 
-INSERT INTO xlite_config VALUES ('userid','','','USPS',0,'');
-INSERT INTO xlite_config VALUES ('server','','','USPS',0,'');
-INSERT INTO xlite_config VALUES ('https','','N','USPS',0,'');
-INSERT INTO xlite_config VALUES ('container_express','','None','USPS',0,'');
-INSERT INTO xlite_config VALUES ('container_priority','','None','USPS',0,'');
-INSERT INTO xlite_config VALUES ('mailtype','','Package','USPS',0,'');
-INSERT INTO xlite_config VALUES ('machinable','','True','USPS',0,'');
-INSERT INTO xlite_config VALUES ('package_size','','Regular','USPS',0,'');
-INSERT INTO xlite_config VALUES ('value_of_content','','500','USPS',0,'');
-INSERT INTO xlite_config VALUES ('fcmailtype','','LETTER','USPS',0,'');
-INSERT INTO xlite_config VALUES ('dim_girth','','34','USPS',0,'');
-INSERT INTO xlite_config VALUES ('dim_height','','15','USPS',0,'');
-INSERT INTO xlite_config VALUES ('dim_lenght','','18','USPS',0,'');
-INSERT INTO xlite_config VALUES ('dim_width','','16','USPS',0,'');
+INSERT INTO `xlite_config` VALUES (53,'container_express','USPS','',0,'None');
+INSERT INTO `xlite_config` VALUES (54,'container_priority','USPS','',0,'None');
+INSERT INTO `xlite_config` VALUES (82,'dim_girth','USPS','',0,'34');
+INSERT INTO `xlite_config` VALUES (83,'dim_height','USPS','',0,'15');
+INSERT INTO `xlite_config` VALUES (84,'dim_lenght','USPS','',0,'18');
+INSERT INTO `xlite_config` VALUES (86,'dim_width','USPS','',0,'16');
+INSERT INTO `xlite_config` VALUES (117,'fcmailtype','USPS','',0,'LETTER');
+INSERT INTO `xlite_config` VALUES (139,'https','USPS','',0,'N');
+INSERT INTO `xlite_config` VALUES (162,'machinable','USPS','',0,'True');
+INSERT INTO `xlite_config` VALUES (163,'mailtype','USPS','',0,'Package');
+INSERT INTO `xlite_config` VALUES (191,'package_size','USPS','',0,'Regular');
+INSERT INTO `xlite_config` VALUES (231,'server','USPS','',0,'');
+INSERT INTO `xlite_config` VALUES (264,'userid','USPS','',0,'');
+INSERT INTO `xlite_config` VALUES (272,'value_of_content','USPS','',0,'500');
+
 
 INSERT INTO xlite_shipping (class, name, destination) VALUES ('usps', 'U.S.P.S. Airmail Parcel Post', 'I');
 INSERT INTO xlite_shipping (class, name, destination) VALUES ('usps', 'U.S.P.S. Bound Printed Matter', 'L');

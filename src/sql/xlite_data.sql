@@ -1,200 +1,122 @@
-INSERT INTO xlite_config VALUES ('include_tax_message','Includes tax message',', including VAT','Taxes',0,'text');
-INSERT INTO xlite_config VALUES ('tax_rates','Tax rates','a:3:{i:0;s:6:\"Tax:=0\";i:1;a:2:{s:9:\"condition\";s:30:\"product class=shipping service\";s:6:\"action\";s:6:\"Tax:=0\";}i:2;a:2:{s:9:\"condition\";s:22:\"product class=Tax free\";s:6:\"action\";s:6:\"Tax:=0\";}}','Taxes',20,'');
-INSERT INTO xlite_config VALUES ('use_billing_info','Use billing info to calculate taxes','N','Taxes',10,'checkbox');
-INSERT INTO xlite_config VALUES ('taxes','','a:1:{i:0;a:2:{s:4:\"name\";s:3:\"Tax\";s:13:\"display_label\";s:3:\"Tax\";}}','Taxes',0,'text');
-INSERT INTO xlite_config VALUES ('prices_include_tax','Prices include tax','N','Taxes',200,'checkbox');
-INSERT INTO xlite_config VALUES ('version','','3.x-dev','Version',0,'');
-INSERT INTO xlite_config VALUES ('memberships','Membership levels','a:0:{}','Memberships',0,'serialized');
-INSERT INTO xlite_config VALUES ('membershipsCollection','Membership levels','a:0:{}','Memberships',0,'serialized');
-INSERT INTO xlite_config VALUES ('product_layout','','sku,name,category,brief_description,description,thumbnail,image,price,tax_class,weight,order_by,enabled,NULL','ImportExport',0,NULL);
-INSERT INTO xlite_config VALUES ('user_layout','','login, password, billing_firstname, billing_lastname','ImportExport',0,NULL);
-INSERT INTO xlite_config VALUES ('params','','a:0:{}','XCartImport',0,'serialized');
-INSERT INTO xlite_config VALUES ('shipping_code','','1702936249','Shipping',0,'text');
-INSERT INTO xlite_config VALUES ('callback_code','','','Shipping',0,'text');
-INSERT INTO xlite_config VALUES ('callback_status','','','Shipping',0,'text');
-INSERT INTO xlite_config VALUES ('license','','','License',0,'text');
-INSERT INTO xlite_config VALUES ('defaultSources','','','Images',0,'serialized');
-INSERT INTO xlite_config VALUES ('default_offline_payment','Payment method to be assumed in case of zero order totals','','Payments',0,'text');
-INSERT INTO xlite_config VALUES ('default_select_payment','Default payment method','','Payments',0,'text');
-
---  General
-
--- Maintenance and operation
-
-INSERT INTO xlite_config VALUES ('operation_presentation','Maintenance and operation','','General', 100, 'separator');
-INSERT INTO xlite_config VALUES ('developer_mode','Developer\'s mode (force to re-generate cache)','','General', 105, 'checkbox');
-INSERT INTO xlite_config VALUES ('shop_closed','Maintenance mode (close the store for maintenance)','N','General',110,'checkbox');
--- UPDATE xlite_config SET orderby = 110, comment='Maintenance mode (close the store for maintenance)' WHERE category = 'General' AND name = 'shop_closed';
-INSERT INTO xlite_config VALUES ('add_on_mode','Checkout desk operation mode','N','General',120,'checkbox');
--- UPDATE xlite_config SET orderby = 120, comment='Checkout desk operation mode' WHERE category = 'General' AND name = 'add_on_mode';
-INSERT INTO xlite_config VALUES ('add_on_mode_page','Checkout desk operation mode main page','cart.php?target=cart','General',125,'select');
-INSERT INTO xlite_config VALUES ('safe_mode','Safe mode (do not initialize modules)','N','General',130,'checkbox');
--- UPDATE xlite_config SET orderby = 130, comment='Safe mode (do not initialize modules)' WHERE category = 'General' AND name = 'safe_mode';
-
---  Customer Zone Settings 	
-
-INSERT INTO xlite_config VALUES ('customer_presentation','Customer Zone settings','','General', 200, 'separator');
--- UPDATE xlite_config SET orderby = 200 WHERE category = 'General' AND name = 'customer_presentation';
-INSERT INTO xlite_config VALUES ('enable_credit_card_validation','Validate credit cards','Y','General',210,'checkbox');
-INSERT INTO xlite_config VALUES ('display_check_number','Display check number for eCheck payment method','Y','General',215,'checkbox');
--- UPDATE xlite_config SET orderby = 210, comment='Validate credit cards' WHERE category = 'General' AND name = 'enable_credit_card_validation';
-INSERT INTO xlite_config VALUES ('subcategories_look','Category listings format','icons','General',220,'select');
--- UPDATE xlite_config SET orderby = 220, comment='Category listings format' WHERE category = 'General' AND name = 'subcategories_look';
-INSERT INTO xlite_config VALUES ('show_thumbnails','Show thumbnails in product list','Y','General',230,'checkbox');
--- UPDATE xlite_config SET orderby = 230 WHERE category = 'General' AND name = 'show_thumbnails';
-INSERT INTO xlite_config VALUES ('buynow_button_enabled','Enable \"Buy Now\" button in the product list','Y','General',240,'checkbox');
--- UPDATE xlite_config SET orderby = 240 WHERE category = 'General' AND name = 'buynow_button_enabled';
-INSERT INTO xlite_config VALUES ('products_per_page','Products per category listing page','10','General',250,'text');
--- UPDATE xlite_config SET orderby = 250, comment='Products per category listing page' WHERE category = 'General' AND name = 'products_per_page';
-INSERT INTO xlite_config VALUES ('direct_product_url','Allow direct URL access to products from disabled categories','N','General',255,'checkbox');
--- UPDATE xlite_config SET comment='Allow direct URL access to products from disabled categories' WHERE name='direct_product_url' AND category='General';
-INSERT INTO xlite_config VALUES ('def_calc_shippings_taxes','Show shipping rates & taxes to unregistered customers<br>(presuming that a customer comes from the default country)','N','General',260,'checkbox');
--- UPDATE xlite_config SET orderby = 260 WHERE category = 'General' AND name = 'def_calc_shippings_taxes';
-INSERT INTO xlite_config VALUES ('enable_anon_checkout','Enable anonymous checkout','Y','General',270,'checkbox');
--- UPDATE xlite_config SET orderby = 270 WHERE category = 'General' AND name = 'enable_anon_checkout';
-INSERT INTO xlite_config VALUES ('minimal_order_amount','Minimum allowed order total','10','General',280,'text');
--- UPDATE xlite_config SET orderby = 280 WHERE category = 'General' AND name = 'minimal_order_amount';
-INSERT INTO xlite_config VALUES ('maximal_order_amount','Maximum allowed order total','99999','General',290,'text');
--- UPDATE xlite_config SET orderby = 290 WHERE category = 'General' AND name = 'maximal_order_amount';
-INSERT INTO xlite_config VALUES ('default_purchase_limit','Default purchase limit','9999','General',293,'text');
-INSERT INTO xlite_config VALUES ('enable_sale_price','Enable \"Market price\" feature','N','General',295,'checkbox');
-INSERT INTO xlite_config VALUES ('you_save','Enable \"save\" label (for Market Price)','N','General',296,'select');
--- UPDATE xlite_config SET orderby = 295 WHERE category = 'General' AND name = 'enable_sale_price';
-INSERT INTO xlite_config VALUES ('redirect_to_cart','Redirect customer to cart when adding a product','Y','General',300,'checkbox');
--- UPDATE xlite_config SET orderby = 300, comment='Redirect customer to cart when adding a product' WHERE category = 'General' AND name = 'redirect_to_cart';
-INSERT INTO xlite_config VALUES ('default_country','Default country in the registration form','US','General',310,'country');
--- UPDATE xlite_config SET orderby = 310 WHERE category = 'General' AND name = 'default_country';
-INSERT INTO xlite_config VALUES ('default_zipcode','Default zip/postal code in the registration form','10000','General',320,'text');
--- UPDATE xlite_config SET orderby = 320 WHERE category = 'General' AND name = 'default_zipcode';
-
---  Administrator Zone settings
-
-INSERT INTO xlite_config VALUES ('admin_presentation','Administrator Zone settings','','General', 400, 'separator');
--- UPDATE xlite_config SET orderby = 400 WHERE category = 'General' AND name = 'admin_presentation';
-INSERT INTO xlite_config VALUES ('products_per_page_admin','Products per page','30','General',410,'text');
--- UPDATE xlite_config SET orderby = 410, comment='Products per page' WHERE category = 'General' AND name = 'products_per_page_admin';
-INSERT INTO xlite_config VALUES ('users_per_page','Users per page','30','General',420,'text');
--- UPDATE xlite_config SET orderby = 420, comment='Users per page' WHERE category = 'General' AND name = 'users_per_page';
-INSERT INTO xlite_config VALUES ('orders_per_page','Orders per page','30','General',430,'text');
--- UPDATE xlite_config SET orderby = 430, comment='Orders per page' WHERE category = 'General' AND name = 'orders_per_page';
-INSERT INTO xlite_config VALUES ('recent_orders','Amount of orders in the recent orders list','10','General',440,'text');
--- UPDATE xlite_config SET orderby = 440, comment='Amount of orders in the recent orders list' WHERE category = 'General' AND name = 'recent_orders';
-INSERT INTO xlite_config VALUES ('login_lifetime','Days to store last login data','3','General',450,'text');
--- UPDATE xlite_config SET orderby = 450, comment='Days to store last login data' WHERE category = 'General' AND name = 'login_lifetime';
-INSERT INTO xlite_config VALUES ('order_starting_number','Initial order number','1','General',460,'text');
--- UPDATE xlite_config SET orderby = 460, comment='Initial order number' WHERE category = 'General' AND name = 'order_starting_number';
-INSERT INTO xlite_config VALUES ('enable_categories_extra_fields','Enable extra fields in the category management dialogue','Y','General',470,'checkbox');
--- UPDATE xlite_config SET orderby = 470 WHERE category = 'General' AND name = 'enable_categories_extra_fields';
-INSERT INTO xlite_config VALUES ('enable_extra_fields_inherit','Enable products to inherit extra fields from disabled categories (for MultiCategories)','Y','General',480,'checkbox');
--- UPDATE xlite_config SET orderby = 480, comment='Enable products to inherit extra fields from disabled categories (for MultiCategories)' WHERE category = 'General' AND name = 'enable_extra_fields_inherit';
-INSERT INTO xlite_config VALUES ('admin_zone_sbbe_enabled','Enable folding sidebar menus','Y','General',490,'checkbox');
--- UPDATE xlite_config SET orderby = 490, comment='Enable folding sidebar menus' WHERE category = 'General' AND name = 'admin_zone_sbbe_enabled';
-INSERT INTO xlite_config VALUES ('clear_cc_info','Clear credit cards info from the database on order status change','N','General',500,'select');
-
---  Units of measurement
-
-INSERT INTO xlite_config VALUES ('unit_presentation','Units of measurement','','General', 600, 'separator');
--- UPDATE xlite_config SET orderby = 600 WHERE category = 'General' AND name = 'unit_presentation';
-INSERT INTO xlite_config VALUES ('weight_unit','Weight unit','lbs','General',610,'select');
--- UPDATE xlite_config SET orderby = 610 WHERE category = 'General' AND name = 'weight_unit';
-INSERT INTO xlite_config VALUES ('weight_symbol','Weight symbol','lbs','General',620,'text');
--- UPDATE xlite_config SET orderby = 620 WHERE category = 'General' AND name = 'weight_symbol';
-INSERT INTO xlite_config VALUES ('price_format','Currency format','$ %s','General',630,'text');
--- UPDATE xlite_config SET orderby = 630 WHERE category = 'General' AND name = 'price_format';
-INSERT INTO xlite_config VALUES ('thousand_delim','Currency thousands delimiter',',','General',640,'select');
--- UPDATE xlite_config SET orderby = 640 WHERE category = 'General' AND name = 'thousand_delim';
-INSERT INTO xlite_config VALUES ('decimal_delim','Currency decimal delimiter','.','General',650,'select');
--- UPDATE xlite_config SET orderby = 650 WHERE category = 'General' AND name = 'decimal_delim';
-INSERT INTO xlite_config VALUES ('date_format','Date format','%m/%d/%Y','General',660,'select');
--- UPDATE xlite_config SET orderby = 660 WHERE category = 'General' AND name = 'date_format';
-INSERT INTO xlite_config VALUES ('time_format','Time format','%H:%M','General',670,'select');
--- UPDATE xlite_config SET orderby = 670 WHERE category = 'General' AND name = 'time_format';
-INSERT INTO xlite_config VALUES ('time_zone','Time zone','','General',680,'select');
-
--- Company
+INSERT INTO `xlite_config` VALUES (2,'active_captcha_pages','Captcha','serialized',30,'');
+INSERT INTO `xlite_config` VALUES (3,'add_on_mode','General','checkbox',120,'N');
+INSERT INTO `xlite_config` VALUES (4,'add_on_mode_page','General','select',125,'cart.php?target=cart');
+INSERT INTO `xlite_config` VALUES (5,'admin_ip_protection','Security','checkbox',100,'N');
+INSERT INTO `xlite_config` VALUES (6,'admin_presentation','General','separator',400,'');
+INSERT INTO `xlite_config` VALUES (9,'admin_security','Security','checkbox',10,'N');
+INSERT INTO `xlite_config` VALUES (10,'admin_zone_sbbe_enabled','General','checkbox',490,'Y');
+INSERT INTO `xlite_config` VALUES (12,'allow_admin_ip','SecurityIP','',40,'');
+INSERT INTO `xlite_config` VALUES (27,'buynow_button_enabled','General','checkbox',240,'Y');
+INSERT INTO `xlite_config` VALUES (29,'callback_code','Shipping','text',0,'');
+INSERT INTO `xlite_config` VALUES (30,'callback_status','Shipping','text',0,'');
+INSERT INTO `xlite_config` VALUES (31,'captcha_length','Captcha','text',20,'5');
+INSERT INTO `xlite_config` VALUES (32,'captcha_protection','Captcha','separator',0,'');
+INSERT INTO `xlite_config` VALUES (33,'captcha_protection_system','Security','checkbox',110,'N');
+INSERT INTO `xlite_config` VALUES (34,'captcha_separator_pages','Captcha','separator',30,'');
+INSERT INTO `xlite_config` VALUES (35,'captcha_type','Captcha','select',10,'all');
+INSERT INTO `xlite_config` VALUES (38,'clear_cc_info','General','select',500,'N');
+INSERT INTO `xlite_config` VALUES (46,'company_address','Company','separator',385,'');
+INSERT INTO `xlite_config` VALUES (47,'company_contacts','Company','separator',455,'');
+INSERT INTO `xlite_config` VALUES (48,'company_fax','Company','text',420,'(555) 555-5555');
+INSERT INTO `xlite_config` VALUES (49,'company_identity','Company','separator',350,'');
+INSERT INTO `xlite_config` VALUES (50,'company_name','Company','text',360,'*Your company name*');
+INSERT INTO `xlite_config` VALUES (51,'company_phone','Company','text',410,'(555) 555-5555');
+INSERT INTO `xlite_config` VALUES (52,'company_website','Company','text',370,'http://');
+INSERT INTO `xlite_config` VALUES (65,'customer_presentation','General','separator',200,'');
+INSERT INTO `xlite_config` VALUES (66,'customer_security','Security','checkbox',0,'Y');
+INSERT INTO `xlite_config` VALUES (67,'date_format','General','select',660,'%m/%d/%Y');
+INSERT INTO `xlite_config` VALUES (68,'decimal_delim','General','select',650,'.');
+INSERT INTO `xlite_config` VALUES (70,'defaultSources','Images','serialized',0,'');
+INSERT INTO `xlite_config` VALUES (71,'default_country','General','country',310,'US');
+INSERT INTO `xlite_config` VALUES (72,'default_offline_payment','Payments','text',0,'');
+INSERT INTO `xlite_config` VALUES (74,'default_purchase_limit','General','text',293,'9999');
+INSERT INTO `xlite_config` VALUES (75,'default_select_payment','Payments','text',0,'');
+INSERT INTO `xlite_config` VALUES (76,'default_zipcode','General','text',320,'10000');
+INSERT INTO `xlite_config` VALUES (77,'def_calc_shippings_taxes','General','checkbox',260,'N');
+INSERT INTO `xlite_config` VALUES (80,'developer_mode','General','checkbox',105,'');
+INSERT INTO `xlite_config` VALUES (89,'direct_product_url','General','checkbox',255,'N');
+INSERT INTO `xlite_config` VALUES (90,'discounts_after_taxes','Taxes','checkbox',210,'N');
+INSERT INTO `xlite_config` VALUES (91,'display_check_number','General','checkbox',215,'Y');
+INSERT INTO `xlite_config` VALUES (100,'enable_anon_checkout','General','checkbox',270,'Y');
+INSERT INTO `xlite_config` VALUES (101,'enable_categories_extra_fields','General','checkbox',470,'Y');
+INSERT INTO `xlite_config` VALUES (102,'enable_credit_card_validation','General','checkbox',210,'Y');
+INSERT INTO `xlite_config` VALUES (103,'enable_extra_fields_inherit','General','checkbox',480,'Y');
+INSERT INTO `xlite_config` VALUES (104,'enable_init_order_notif','Email','checkbox',10,'N');
+INSERT INTO `xlite_config` VALUES (105,'enable_init_order_notif_customer','Email','checkbox',0,'N');
+INSERT INTO `xlite_config` VALUES (107,'enable_sale_price','General','checkbox',295,'Y');
+INSERT INTO `xlite_config` VALUES (120,'form_id_protection','Security','checkbox',90,'Y');
+INSERT INTO `xlite_config` VALUES (128,'full_customer_security','Security','checkbox',5,'N');
+INSERT INTO `xlite_config` VALUES (138,'htaccess_protection','Security','checkbox',110,'Y');
+INSERT INTO `xlite_config` VALUES (140,'httpsClient','Security','select',20,'autodetect');
+INSERT INTO `xlite_config` VALUES (141,'include_tax_message','Taxes','text',0,', including VAT');
+INSERT INTO `xlite_config` VALUES (145,'last_date','Htaccess','',0,'0');
+INSERT INTO `xlite_config` VALUES (151,'license','License','text',0,'');
+INSERT INTO `xlite_config` VALUES (153,'location_address','Company','text',390,'*Your company address*');
+INSERT INTO `xlite_config` VALUES (154,'location_city','Company','text',400,'*You company city*');
+INSERT INTO `xlite_config` VALUES (155,'location_country','Company','country',450,'US');
+INSERT INTO `xlite_config` VALUES (156,'location_custom_state','Company','text',435,'');
+INSERT INTO `xlite_config` VALUES (157,'location_state','Company','state',430,'17');
+INSERT INTO `xlite_config` VALUES (158,'location_zipcode','Company','text',440,'50001');
+INSERT INTO `xlite_config` VALUES (159,'login_lifetime','General','text',450,'3');
+INSERT INTO `xlite_config` VALUES (160,'logoff_clear_cart','Security','checkbox',10,'N');
+INSERT INTO `xlite_config` VALUES (165,'maximal_order_amount','General','text',290,'99999');
+INSERT INTO `xlite_config` VALUES (166,'memberships','Memberships','serialized',0,'a:0:{}');
+INSERT INTO `xlite_config` VALUES (167,'membershipsCollection','Memberships','serialized',0,'a:3:{i:1;a:3:{s:7:\"orderby\";s:2:\"10\";s:10:\"membership\";s:4:\"Gold\";s:13:\"membership_id\";i:1;}i:2;a:3:{s:7:\"orderby\";s:2:\"20\";s:10:\"membership\";s:8:\"Platinum\";s:13:\"membership_id\";i:2;}i:3;a:3:{s:7:\"orderby\";s:2:\"30\";s:10:\"membership\";s:10:\"Wholesaler\";s:13:\"membership_id\";i:3;}}');
+INSERT INTO `xlite_config` VALUES (170,'minimal_order_amount','General','text',280,'10');
+INSERT INTO `xlite_config` VALUES (179,'operation_presentation','General','separator',100,'');
+INSERT INTO `xlite_config` VALUES (180,'orders_department','Company','text',480,'bit-bucket@x-cart.com');
+INSERT INTO `xlite_config` VALUES (181,'orders_per_page','General','text',430,'30');
+INSERT INTO `xlite_config` VALUES (182,'order_starting_number','General','text',460,'1');
+INSERT INTO `xlite_config` VALUES (197,'params','XCartImport','serialized',0,'a:0:{}');
+INSERT INTO `xlite_config` VALUES (199,'partner_product_banner','Miscellaneous','serialized',0,'a:11:{s:11:\"link_target\";s:4:\"_top\";s:5:\"image\";s:9:\"thumbnail\";s:6:\"border\";i:1;s:12:\"product_name\";i:1;s:11:\"description\";s:0:\"\";s:7:\"message\";s:8:\"Buy new!\";s:16:\"background_color\";s:6:\"ffffff\";s:10:\"text_color\";s:6:\"000000\";s:10:\"link_color\";s:6:\"6633ff\";s:5:\"width\";i:120;s:6:\"height\";i:240;}');
+INSERT INTO `xlite_config` VALUES (200,'partner_profile','Miscellaneous','serialized',0,'a:8:{s:17:\"billing_firstname\";s:2:\"on\";s:16:\"billing_lastname\";s:2:\"on\";s:13:\"billing_phone\";s:2:\"on\";s:15:\"billing_address\";s:2:\"on\";s:12:\"billing_city\";s:2:\"on\";s:13:\"billing_state\";s:2:\"on\";s:15:\"billing_country\";s:2:\"on\";s:15:\"billing_zipcode\";s:2:\"on\";}');
+INSERT INTO `xlite_config` VALUES (205,'prices_include_tax','Taxes','checkbox',200,'N');
+INSERT INTO `xlite_config` VALUES (207,'price_format','General','text',630,'$ %s');
+INSERT INTO `xlite_config` VALUES (210,'products_per_page','General','text',250,'10');
+INSERT INTO `xlite_config` VALUES (211,'products_per_page_admin','General','text',410,'30');
+INSERT INTO `xlite_config` VALUES (212,'product_layout','ImportExport',NULL,0,'sku,name,category,brief_description,description,thumbnail,image,price,tax_class,weight,order_by,enabled,NULL');
+INSERT INTO `xlite_config` VALUES (214,'proxy','Security','text',25,'');
+INSERT INTO `xlite_config` VALUES (216,'recent_orders','General','text',440,'10');
+INSERT INTO `xlite_config` VALUES (217,'redirect_to_cart','General','checkbox',300,'Y');
+INSERT INTO `xlite_config` VALUES (228,'safe_mode','General','checkbox',130,'N');
+INSERT INTO `xlite_config` VALUES (233,'shipping_code','Shipping','text',0,'1702936249');
+INSERT INTO `xlite_config` VALUES (234,'shop_closed','General','checkbox',110,'N');
+INSERT INTO `xlite_config` VALUES (236,'show_cc_info','Email','checkbox',40,'N');
+INSERT INTO `xlite_config` VALUES (237,'show_thumbnails','General','checkbox',230,'Y');
+INSERT INTO `xlite_config` VALUES (238,'site_administrator','Company','text',460,'bit-bucket@x-cart.com');
+INSERT INTO `xlite_config` VALUES (239,'smtp_password','Email','text',160,'');
+INSERT INTO `xlite_config` VALUES (240,'smtp_security','Email','select',170,'no');
+INSERT INTO `xlite_config` VALUES (241,'smtp_server','Email','separator',100,'');
+INSERT INTO `xlite_config` VALUES (242,'smtp_server_port','Email','text',130,'25');
+INSERT INTO `xlite_config` VALUES (243,'smtp_server_url','Email','text',120,'');
+INSERT INTO `xlite_config` VALUES (244,'smtp_username','Email','text',150,'');
+INSERT INTO `xlite_config` VALUES (245,'start_year','Company','text',380,'2009');
+INSERT INTO `xlite_config` VALUES (247,'subcategories_look','General','select',220,'icons');
+INSERT INTO `xlite_config` VALUES (248,'support_department','Company','text',490,'bit-bucket@x-cart.com');
+INSERT INTO `xlite_config` VALUES (249,'taxes','Taxes','text',0,'a:1:{i:0;a:2:{s:4:\"name\";s:3:\"Tax\";s:13:\"display_label\";s:3:\"Tax\";}}');
+INSERT INTO `xlite_config` VALUES (250,'tax_rates','Taxes','',20,'a:3:{i:0;s:6:\"Tax:=0\";i:1;a:2:{s:9:\"condition\";s:30:\"product class=shipping service\";s:6:\"action\";s:6:\"Tax:=0\";}i:2;a:2:{s:9:\"condition\";s:22:\"product class=Tax free\";s:6:\"action\";s:6:\"Tax:=0\";}}');
+INSERT INTO `xlite_config` VALUES (252,'thousand_delim','General','select',640,',');
+INSERT INTO `xlite_config` VALUES (255,'time_format','General','select',670,'%H:%M');
+INSERT INTO `xlite_config` VALUES (256,'time_zone','General','select',680,'');
+INSERT INTO `xlite_config` VALUES (258,'unit_presentation','General','separator',600,'');
+INSERT INTO `xlite_config` VALUES (265,'users_department','Company','text',470,'bit-bucket@x-cart.com');
+INSERT INTO `xlite_config` VALUES (266,'users_per_page','General','text',420,'30');
+INSERT INTO `xlite_config` VALUES (267,'user_layout','ImportExport',NULL,0,'login, password, billing_firstname, billing_lastname');
+INSERT INTO `xlite_config` VALUES (268,'use_billing_info','Taxes','checkbox',10,'N');
+INSERT INTO `xlite_config` VALUES (269,'use_smtp','Email','checkbox',110,'N');
+INSERT INTO `xlite_config` VALUES (270,'use_smtp_auth','Email','checkbox',140,'N');
+INSERT INTO `xlite_config` VALUES (271,'valid_email_domains','Email','text',30,'com;net;edu;mil;gov;org;biz');
+INSERT INTO `xlite_config` VALUES (273,'version','Version','',0,'3.x-dev');
+INSERT INTO `xlite_config` VALUES (275,'weight_symbol','General','text',620,'lbs');
+INSERT INTO `xlite_config` VALUES (276,'weight_unit','General','select',610,'lbs');
+INSERT INTO `xlite_config` VALUES (299,'you_save','General','select',296,'Y');
 
 
-INSERT INTO xlite_config VALUES ('company_identity','Identity','','Company',350,'separator');
-INSERT INTO xlite_config VALUES ('company_name','Company name','*Your company name*','Company',360,'text');
--- UPDATE xlite_config SET orderby='360' WHERE category='Company' AND name='company_name';
-INSERT INTO xlite_config VALUES ('company_website','Company website','http://','Company',370,'text');
--- UPDATE xlite_config SET orderby='370' WHERE category='Company' AND name='company_website';
-INSERT INTO xlite_config VALUES ('start_year','Year when store started its operation','2009','Company',380,'text');
--- UPDATE xlite_config SET orderby='380' WHERE category='Company' AND name='start_year';
 
-INSERT INTO xlite_config VALUES ('company_address','Address','','Company',385,'separator');
-INSERT INTO xlite_config VALUES ('location_address','Street address','*Your company address*','Company',390,'text');
--- UPDATE xlite_config SET orderby='390', comment="Street address" WHERE category='Company' AND name='location_address';
-INSERT INTO xlite_config VALUES ('location_city','City','*You company city*','Company',400,'text');
--- UPDATE xlite_config SET orderby='400', comment="City" WHERE category='Company' AND name='location_city';
-INSERT INTO xlite_config VALUES ('company_phone','Phone','(555) 555-5555','Company',410,'text');
--- UPDATE xlite_config SET orderby='410', comment="Phone" WHERE category='Company' AND name='company_phone';
-INSERT INTO xlite_config VALUES ('company_fax','Fax','(555) 555-5555','Company',420,'text');
--- UPDATE xlite_config SET orderby='420', comment="Fax" WHERE category='Company' AND name='company_fax';
-INSERT INTO xlite_config VALUES ('location_state','State','17','Company',430,'state');
--- UPDATE xlite_config SET orderby='430', comment="State" WHERE category='Company' AND name='location_state';
-INSERT INTO xlite_config VALUES ('location_custom_state','Other state (specify)','','Company',435,'text');
-INSERT INTO xlite_config VALUES ('location_zipcode','Zip/postal code','50001','Company',440,'text');
--- UPDATE xlite_config SET orderby='440', comment="Zip/postal code" WHERE category='Company' AND name='location_zipcode';
-INSERT INTO xlite_config VALUES ('location_country','Country','US','Company',450,'country');
--- UPDATE xlite_config SET orderby='450', comment="Country" WHERE category='Company' AND name='location_country';
 
-INSERT INTO xlite_config VALUES ('company_contacts','Contacts','','Company',455,'separator');
-INSERT INTO xlite_config VALUES ('site_administrator','Site administrator e-mail','bit-bucket@x-cart.com','Company',460,'text');
--- UPDATE xlite_config SET orderby='460', comment="Site administrator e-mail" WHERE category='Company' AND name='site_administrator';
-INSERT INTO xlite_config VALUES ('users_department','Customer relations e-mail','bit-bucket@x-cart.com','Company',470,'text');
--- UPDATE xlite_config SET orderby='470', comment="Customer relations e-mail" WHERE category='Company' AND name='users_department';
-INSERT INTO xlite_config VALUES ('orders_department','Sales department e-mail','bit-bucket@x-cart.com','Company',480,'text');
--- UPDATE xlite_config SET orderby='480', comment="Sales department e-mail" WHERE category='Company' AND name='orders_department';
-INSERT INTO xlite_config VALUES ('support_department','HelpDesk/Support service e-mail','bit-bucket@x-cart.com','Company',490,'text');
--- UPDATE xlite_config SET orderby='490', comment="HelpDesk/Support service e-mail" WHERE category='Company' AND name='support_department';
--- DELETE FROM xlite_config WHERE category='Company' AND name='newsletter_email';
+-- ********************************************************************************************************************
 
--- Security
 
-INSERT INTO xlite_config VALUES ('customer_security','Use HTTPS in the Customer Zone (for login, checkout and profile pages)','N','Security',0,'checkbox');
--- UPDATE xlite_config SET comment='Use HTTPS in the Customer Zone (for login, checkout and profile pages)' WHERE name = 'customer_security' AND category = 'Security';
-INSERT INTO xlite_config VALUES ('admin_security','Use HTTPS in the Administrator Zone','N','Security',10,'checkbox');
--- UPDATE xlite_config SET orderby='10', comment='Use HTTPS in the Administrator Zone' WHERE name = 'admin_security' AND category = 'Security';
-INSERT INTO xlite_config VALUES ('full_customer_security','Customer Zone fully on HTTPS','N','Security',5,'checkbox');
-INSERT INTO xlite_config VALUES ('logoff_clear_cart','Clear cart on customer logoff','N','Security',10,'checkbox');
-INSERT INTO xlite_config VALUES ('httpsClient','HTTPS client to use (for integration with secure payment/shipping services)','autodetect','Security',20,'select');
-INSERT INTO xlite_config VALUES ('proxy','HTTPS proxy','','Security',25,'text');
--- UPDATE xlite_config SET orderby='20', comment='HTTPS client to use (for integration with secure payment/shipping services)' WHERE name = 'httpsClient' AND category = 'Security';
--- INSERT INTO xlite_config VALUES ('customer_password_hint','Use password hint to help customers recall forgotten passwords','N','Security',5,'checkbox');
-INSERT INTO xlite_config VALUES ('allow_admin_ip','Allow admin IP','','SecurityIP',40,'');
-INSERT INTO xlite_config VALUES ('form_id_protection','Enable admin forms protection system','Y','Security',90,'checkbox');
-INSERT INTO xlite_config VALUES ('admin_ip_protection','Enable admin IP protection system','N','Security',100,'checkbox');
-INSERT INTO xlite_config VALUES ('captcha_protection_system','Enable Captcha protection system','N','Security',110,'checkbox');
-INSERT INTO xlite_config VALUES ('last_date','','0','Htaccess',0,'');
-INSERT INTO xlite_config VALUES ('htaccess_protection','Enable .htaccess verification system','Y','Security',110,'checkbox');
--- Email
-
--- DELETE FROM xlite_config WHERE category='Email' AND name='show_cc_info';
-INSERT INTO xlite_config VALUES ('enable_init_order_notif_customer','E-mail order details to customers after order placement','N','Email',0,'checkbox');
--- UPDATE xlite_config SET orderby='0', comment="E-mail order details to customers after order placement" WHERE category='Email' AND name='enable_init_order_notif_customer';
-INSERT INTO xlite_config VALUES ('enable_init_order_notif','E-mail order details to the sales department after order placement','N','Email',10,'checkbox');
--- UPDATE xlite_config SET orderby='10', comment="E-mail order details to the sales department after order placement" WHERE category='Email' AND name='enable_init_order_notif';
-INSERT INTO xlite_config VALUES ('valid_email_domains','Valid domain names for email','com;net;edu;mil;gov;org;biz','Email',30,'text');
--- UPDATE xlite_config SET orderby='30', comment='Valid domain names for email', value='com;net;edu;mil;gov;org;biz' WHERE category='Email' AND name='valid_email_domains';
-INSERT INTO xlite_config VALUES ('show_cc_info','Include order details (credit card or eCheck information) into admin order notification message','N','Email',40,'checkbox');
-
---  SMTP server
-INSERT INTO xlite_config VALUES('smtp_server','SMTP server','','Email',100,'separator');
-INSERT INTO xlite_config VALUES('use_smtp','Use SMTP server','N','Email',110,'checkbox');
-INSERT INTO xlite_config VALUES('smtp_server_url','SMTP server','','Email',120,'text');
-INSERT INTO xlite_config VALUES('smtp_server_port','SMTP port','25','Email',130,'text');
-INSERT INTO xlite_config VALUES('use_smtp_auth','Use authentication','N','Email',140,'checkbox');
-INSERT INTO xlite_config VALUES('smtp_username','Username','','Email',150,'text');
-INSERT INTO xlite_config VALUES('smtp_password','Password','','Email',160,'text');
-INSERT INTO xlite_config VALUES('smtp_security','Secure connection','no','Email',170,'select');
-
--- Captcha
-INSERT INTO xlite_config VALUES ('captcha_protection','Image generator options','','Captcha',0,'separator');
-INSERT INTO xlite_config VALUES ('captcha_type','Type of string that should be used for the image','all','Captcha',10,'select');
-INSERT INTO xlite_config VALUES ('captcha_length','Length of string','5','Captcha',20,'text');
-INSERT INTO xlite_config VALUES ('captcha_separator_pages','Where to display','','Captcha',30,'separator');
-INSERT INTO xlite_config VALUES ('active_captcha_pages','active_captcha_pages','','Captcha',30,'serialized');
 
 INSERT INTO xlite_countries VALUES ('Afghanistan','AF','Dari, Pushtu','iso-8859-1',1,'N',0);
 INSERT INTO xlite_countries VALUES ('Albania','AL','Albanian','iso-8859-1',1,'N',0);

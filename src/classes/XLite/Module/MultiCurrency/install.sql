@@ -13,4 +13,7 @@ CREATE TABLE xlite_country_currencies (
     KEY orderby (order_by)
 ) TYPE=MyISAM;
 
-INSERT INTO xlite_config VALUES ('country_currency','Display default currency & customer\'s national currency only ( [*] this option does not have effect when a customer is not logged in)','Y','MultiCurrency',10,'checkbox');
+INSERT INTO `xlite_config` VALUES (57,'country_currency','MultiCurrency','checkbox',10,'Y');
+
+INSERT INTO `xlite_config_translations` VALUES (47,'en',57,'Display default currency & customer\'s national currency only ( [*] this option does not have effect when a customer is not logged in)','');
+
