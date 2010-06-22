@@ -750,7 +750,13 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
         if (!empty($optionsToUpdate)) {
 
             foreach ($optionsToUpdate as $option) {
-                XLite_Core_Database::getRepo('XLite_Model_Config')->createOption($option->category, $option->name, $option->value);
+                XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+                    array(
+                        'category' => $option->category,
+                        'name'     => $option->name,
+                        'value'    => $option->value
+                    )
+                );
             }
         }
     }
@@ -892,8 +898,14 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
 
         if (!$ipIsAlreadyListed) {
             $ipsList[] = array('ip' => $ip, 'comment' => $comment);
-            $ipsList = serialize($ipsList);
-            XLite_Core_Database::getRepo('XLite_Model_Config')->createOption('SecurityIP', 'allow_admin_ip', $ipsList, 'serialized');
+            XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+                array(
+                    'category' => 'SecurityIP',
+                    'name'     => 'allow_admin_ip',
+                    'value'    => serialize($ipsList),
+                    'type'     => 'serialized'
+                )
+            );
 
         } else {
            $this->set('returnUrl', "admin.php?target=" . $this->get('target')
@@ -930,9 +942,14 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
                 $newList[] = array('ip' => $adminIp, 'comment' => 'Default admin IP');
             }
 
-            $newList = serialize($newList);
-
-            XLite_Core_Database::getRepo('XLite_Model_Config')->createOption('SecurityIP', 'allow_admin_ip', $newList, 'serialized');
+            XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+                array(
+                    'category' => 'SecurityIP',
+                    'name'     => 'allow_admin_ip',
+                    'value'    => serialize($newList),
+                    'type'     => 'serialized'
+                )
+            );
         }
     }
 
@@ -962,8 +979,14 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
             }
 
             if ($needUpdate) {
-                $ipsList = serialize($ipsList);
-                XLite_Core_Database::getRepo('XLite_Model_Config')->createOption('SecurityIP', 'allow_admin_ip', $ipsList, 'serialized');
+                XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+                    array(
+                        'category' => 'SecurityIP',
+                        'name'     => 'allow_admin_ip',
+                        'value'    => serialize($ipsList),
+                        'type'     => 'serialized'
+                    )
+                );
             }
         }
     }

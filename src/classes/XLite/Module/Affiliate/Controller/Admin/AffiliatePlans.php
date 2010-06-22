@@ -39,7 +39,13 @@ class XLite_Module_Affiliate_Controller_Admin_AffiliatePlans extends XLite_Contr
     {
         $ap = $this->get('affiliatePlan');
         if ($ap->get('plan_id') == $this->config->Affiliate->default_plan) {
-            XLite_Core_Database::getRepo('XLite_Model_Config')->createOption('Affiliate', 'default_plan', '');
+            XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+                array(
+                    'category' => 'Affiliate',
+                    'name'     => 'default_plan',
+                    'value'    => ''
+                )
+            );
         }
         $ap->delete();
     }
@@ -49,7 +55,13 @@ class XLite_Module_Affiliate_Controller_Admin_AffiliatePlans extends XLite_Contr
         $ap = $this->get('affiliatePlan');
         $ap->update();
         if ($ap->get('plan_id') == $this->config->Affiliate->default_plan && !$ap->get('enabled')) {
-            XLite_Core_Database::getRepo('XLite_Model_Config')->createOption('Affiliate', 'default_plan', '');
+            XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+                array(
+                    'category' => 'Affiliate',
+                    'name'     => 'default_plan',
+                    'value'    => ''
+                )
+            );
         }
     }
     

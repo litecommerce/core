@@ -97,7 +97,13 @@ class XLite_Model_Htaccess extends XLite_Model_Abstract
             $config->set('value', "0");
             $config->update();
         } else {
-        	$config->createOption('Htaccess', "last_date", "0");
+            $config->createOption(
+                array(
+                    'category' => 'Htaccess',
+                    'name'     => 'last_date',
+                    'value'    => '0'
+                )
+            );
         }
          */
     }
@@ -149,7 +155,13 @@ class XLite_Model_Htaccess extends XLite_Model_Abstract
             $config->set('value', $now);
             $config->update();
         } else {
-        	$config->createOption('Htaccess', "last_date", "0");
+            $config->createOption(
+                array(
+                    'category' => 'Htaccess',
+                    'name'     => 'last_date',
+                    'value'    => '0'
+                )
+            );
         }
          */
 

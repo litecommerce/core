@@ -48,7 +48,13 @@ class XLite_Module_WholesaleTrading_Controller_Admin_Taxes extends XLite_Control
         parent::action_add_tax();
 
         $cfg = new XLite_Model_Config();
-        XLite_Core_Database::getRepo('XLite_Model_Config')->createOption('Taxes', 'discounts_after_taxes', $_POST['discounts_after_taxes']);
+        XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+            array(
+                'category' => 'Taxes',
+                'name'     => 'discounts_after_taxes',
+                'value'    => $_POST['discounts_after_taxes']
+            )
+        );
     }
 
     function action_update_options()
@@ -56,6 +62,12 @@ class XLite_Module_WholesaleTrading_Controller_Admin_Taxes extends XLite_Control
         parent::action_update_options();
 
         $cfg = new XLite_Model_Config();
-        XLite_Core_Database::getRepo('XLite_Model_Config')->createOption('Taxes', 'discounts_after_taxes', $_POST['discounts_after_taxes']);
+        XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+            array(
+                'category' => 'Taxes',
+                'name'     => 'discounts_after_taxes',
+                'value'    => $_POST['discounts_after_taxes']
+            )
+        );
     }
 }

@@ -138,7 +138,13 @@ class XLite_Module_AdvancedSecurity_Controller_Admin_AdvancedSecurity extends XL
                 }
             }
 
-            XLite_Core_Database::getRepo('XLite_Model_Config')->createOption('AdvancedSecurity', $name, $val);
+            XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+                array(
+                    'category' => 'AdvancedSecurity',
+                    'name'     => $name,
+                    'value'    => $val
+                )
+            );
         }
     }
 

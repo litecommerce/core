@@ -74,7 +74,13 @@ class XLite_Controller_Admin_ImportUsers extends XLite_Controller_Admin_Abstract
     function change_layout($layout_name = "user_layout")
     {
         $layout = implode(',', XLite_Core_Request::getInstance()->$layout_name);
-        XLite_Core_Database::getRepo('XLite_Model_Config')->createOption('ImportExport', $layout_name, $layout);
+        XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+            array(
+                'category' => 'ImportExport',
+                'name'     => $layout_name,
+                'value'    => $layout
+            )
+        );
     }
     function action_layout($layout_name = "user_layout")
     {

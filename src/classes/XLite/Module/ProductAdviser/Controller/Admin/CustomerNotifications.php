@@ -672,7 +672,14 @@ class XLite_Controller_Admin_CustomerNotifications extends XLite_Controller_Admi
             }
         }
 
-        XLite_Core_Database::getRepo('XLite_Model_Config')->createOption('ProductAdviser', 'filters_preferences', serialize($preferences), 'serialized');
+        XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+            array(
+                'category' => 'ProductAdviser',
+                'name'     => 'filters_preferences',
+                'value'    => serialize($preferences),
+                'type'     => 'serialized'
+            )
+        );
 
         $this->set('returnUrl', $this->buildUrl('CustomerNotifications'));
         $this->redirect();

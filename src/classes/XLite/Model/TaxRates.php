@@ -446,7 +446,14 @@ array("condition" => "country=Australia", "action" => array("Tax:==GST", "GST:=1
                     $optionType = 'serialized';
                 }
 
-                XLite_Core_Database::getRepo('XLite_Model_Config')->createOption('Taxes', $name, $value, $optionType);
+                XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+                    array(
+                        'category' => 'Taxes',
+                        'name'     => $name,
+                        'value'    => $value,
+                        'type'     => $optionType
+                    )
+                );
             }
         }
         $this->_init();
@@ -903,7 +910,14 @@ array("condition" => "country=Australia", "action" => array("Tax:==GST", "GST:=1
             }
         }
 
-        XLite_Core_Database::getRepo('XLite_Model_Config')->createOption('Taxes', 'schemas', serialize($schemas), 'serialized');
+        XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+            array(
+                'category' => 'Taxes',
+                'name'     => 'schemas',
+                'value'    => serialize($schemas),
+                'type'     => 'serialized'
+            )
+        );
 
     }
 

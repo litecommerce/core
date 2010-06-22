@@ -150,7 +150,14 @@ class XLite_Module_AdvancedSecurity_Model_GPG extends XLite_Base
 
         if ($cmd_file) {
             $valid_names[$key] = $cmd_file;
-            XLite_Core_Database::getRepo('XLite_Model_Config')->createOption('AdvancedSecurity', 'executable_cache', serialize($valid_names), 'serialized');
+            XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+                array(
+                    'category' => 'AdvancedSecurity',
+                    'name'     => 'executable_cache',
+                    'value'    => serialize($valid_names),
+                    'type'     => 'serialized'
+                )
+            );
         }
         return $cmd_file;
     }

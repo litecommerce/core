@@ -322,7 +322,14 @@ class XLite_Model_Profile extends XLite_Model_Abstract
         parent::import($options);
         // save memberships
         
-        XLite_Core_Database::getRepo('XLite_Model_Config')->createOption('Memberships', 'memberships', serialize($this->config->Memberships->memberships), 'serialized');
+        XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+            array(
+                'category' => 'Memberships',
+                'name'     => 'memberships',
+                'value'    => serialize($this->config->Memberships->memberships),
+                'type'     => 'serialized'
+            )
+        );
     }
 
     /**

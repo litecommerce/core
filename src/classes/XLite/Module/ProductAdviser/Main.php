@@ -137,7 +137,13 @@ class XLite_Module_ProductAdviser_Main extends XLite_Module_Abstract
         // "Product also buy" section
         if ($this->xlite->is('adminZone')) {
             if ($this->config->ProductAdviser->admin_products_also_buy_enabled != 'Y') {
-                XLite_Core_Database::getRepo('XLite_Model_Config')->createOption('ProductAdviser', 'products_also_buy_enabled', 'N');
+                XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+                    array(
+                        'category' => 'ProductAdviser',
+                        'name'     => 'products_also_buy_enabled',
+                        'value'    => 'N'
+                    )
+                );
             }
         }
         /////////////////////////////////////
@@ -147,7 +153,13 @@ class XLite_Module_ProductAdviser_Main extends XLite_Module_Abstract
         if ($this->xlite->is('adminZone')) {
             $this->validateConfig('number_notifications', 1);
             $customer_notifications_enabled = ($this->config->ProductAdviser->customer_notifications_mode == '0') ? 'N' : 'Y';
-            XLite_Core_Database::getRepo('XLite_Model_Config')->createOption('ProductAdviser', 'customer_notifications_enabled', $customer_notifications_enabled);
+            XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+                array(
+                    'category' => 'ProductAdviser',
+                    'name'     => 'customer_notifications_enabled',
+                    'value'    => $customer_notifications_enabled
+                )
+            );
         }
         /////////////////////////////////////
 
@@ -176,7 +188,13 @@ class XLite_Module_ProductAdviser_Main extends XLite_Module_Abstract
             }
         }
         if ($number_updated) {
-            XLite_Core_Database::getRepo('XLite_Model_Config')->createOption('ProductAdviser', $option, $number);
+            XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+                array(
+                    'category' => 'ProductAdviser',
+                    'name'     => $option,
+                    'value'    => $number
+                )
+            );
         }
     }
 }

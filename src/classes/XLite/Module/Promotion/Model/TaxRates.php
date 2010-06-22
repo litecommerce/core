@@ -72,7 +72,14 @@ class XLite_Module_Promotion_Model_TaxRates extends XLite_Model_TaxRates impleme
                 $schemas[$name]['discounts_after_taxes'] = 'N';
             }
 
-            XLite_Core_Database::getRepo('XLite_Model_Config')->createOption('Taxes', 'schemas', serialize($schemas), 'serialized');
+            XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+                array(
+                    'category' => 'Taxes',
+                    'name'     => 'schemas',
+                    'value'    => serialize($schemas),
+                    'type'     => 'serialized'
+                )
+            );
         }
     }
 }

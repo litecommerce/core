@@ -47,14 +47,28 @@ class XLite_Module_Promotion_Controller_Admin_Taxes extends XLite_Controller_Adm
     {
         parent::action_add_tax();
 
-        XLite_Core_Database::getRepo('XLite_Model_Config')->createOption('Taxes', 'discounts_after_taxes', serialize($_POST['discounts_after_taxes']), 'serialized');
+        XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+            array(
+                'category' => 'Taxes',
+                'name'     => 'discounts_after_taxes',
+                'value'    => serialize($_POST['discounts_after_taxes']),
+                'type'     => 'serialized'
+            )
+        );
     }
 
     function action_update_options()
     {
         parent::action_update_options();
 
-        XLite_Core_Database::getRepo('XLite_Model_Config')->createOption('Taxes', 'discounts_after_taxes', serialize($_POST['discounts_after_taxes']), 'serialized');
+        XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+            array(
+                'category' => 'Taxes',
+                'name'     => 'discounts_after_taxes',
+                'value'    => serialize($_POST['discounts_after_taxes']), 
+                'type'     => 'serialized'
+            )
+        );
 
     }
 }

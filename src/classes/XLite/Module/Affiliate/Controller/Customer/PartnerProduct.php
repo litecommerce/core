@@ -83,7 +83,13 @@ class XLite_Module_Affiliate_Controller_Customer_PartnerProduct extends XLite_Mo
             }
 
             if (!is_null($this->get('update'))) {
-                XLite_Core_Database::getRepo('XLite_Model_Config')->createOption('Miscellaneous', 'partner_product_banner', serialize($schema));
+                XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+                    array(
+                        'category' => 'Miscellaneous',
+                        'name'     => 'partner_product_banner',
+                        'value'    => serialize($schema)
+                    )
+                );
             }
         }
     }

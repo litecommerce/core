@@ -903,7 +903,14 @@ class XLite_Model_Image extends XLite_Model_Abstract
             $this->config->Images->defaultSources[$key] = $source;
         }
 
-        XLite_Core_Database::getRepo('XLite_Model_Config')->createOption('Images', 'defaultSources', serialize($this->config->Images->defaultSources), 'serialized');
+        XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+            array(
+                'category' => 'Images',
+                'name'     => 'defaultSources',
+                'value'    => serialize($this->config->Images->defaultSources),
+                'type'     => 'serialized'
+            )
+        );
     }
 
     public function getFilesystemCount($type = 'F')

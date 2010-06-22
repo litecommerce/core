@@ -70,7 +70,13 @@ class XLite_Model_Shipping_Online extends XLite_Model_Shipping
                 $name = $field;
                 $value = $options->$field;
 
-                XLite_Core_Database::getRepo('XLite_Model_Config')->createOption($category, $name, $value);
+                XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+                    array(
+                        'category' => $category,
+                        'name'     => $name,
+                        'value'    => $value
+                    )
+                );
             }
         }
     }

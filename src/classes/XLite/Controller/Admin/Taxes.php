@@ -139,7 +139,13 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
             foreach ($deleted as $key => $value) {
                 unset($taxes[$key]);
             }
-            XLite_Core_Database::getRepo('XLite_Model_Config')->createOption('Taxes', 'taxes', serialize($taxes), 'serialized');
+            XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+                array(
+                    'category' => 'Taxes',
+                    'name'     => 'taxes',
+                    'value'    => serialize($taxes), 'serialized'
+                )
+            );
         }
     }
 

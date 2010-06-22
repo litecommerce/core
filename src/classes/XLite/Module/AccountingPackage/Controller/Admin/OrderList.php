@@ -65,7 +65,13 @@ class XLite_Module_AccountingPackage_Controller_Admin_OrderList extends XLite_Co
         foreach (func_get_args() as $name) {
             if (isset($this->$name)) {
                 $value = $this->$name;
-                XLite_Core_Database::getRepo('XLite_Model_Config')->createOption('ImportExport', $name, $value);
+                XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+                    array(
+                        'category' => 'ImportExport',
+                        'name'     => $name,
+                        'value'    => $value
+                    )
+                );
             }
         }
     }
