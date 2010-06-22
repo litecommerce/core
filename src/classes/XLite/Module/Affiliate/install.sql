@@ -90,16 +90,21 @@ ALTER TABLE xlite_profiles ADD partner_signup int(11) NOT NULL default '0';
 ALTER TABLE xlite_orders ADD partnerClick int(11) NOT NULL default '0';
 ALTER TABLE xlite_order_items ADD commissions decimal(12,2) NOT NULL default '0.00';
 
+INSERT INTO `xlite_config` VALUES (73,'default_plan','Affiliate','select',20,'');
+INSERT INTO `xlite_config` VALUES (99,'enable_advanced_banner','Affiliate','checkbox',60,'Y');
+INSERT INTO `xlite_config` VALUES (106,'enable_order_totals','Affiliate','checkbox',70,'Y');
+INSERT INTO `xlite_config` VALUES (171,'moderated','Affiliate','checkbox',10,'N');
+INSERT INTO `xlite_config` VALUES (198,'partner_cookie_lifetime','Affiliate','text',50,'7');
+INSERT INTO `xlite_config` VALUES (218,'registration_enabled','Affiliate','checkbox',5,'Y');
+INSERT INTO `xlite_config` VALUES (253,'tiers_number','Affiliate','select',30,'1');
+INSERT INTO `xlite_config` VALUES (254,'tier_commission_rates','Affiliate','serialized',40,'a:4:{i:2;s:4:\"0.00\";i:3;s:4:\"0.00\";i:4;s:4:\"0.00\";i:5;s:4:\"0.00\";}');
 
-INSERT INTO xlite_config (name, comment, value, category, orderby, type) VALUES ('registration_enabled', 'New partner registration is enabled', 'Y', 'Affiliate', '5', 'checkbox');
-INSERT INTO xlite_config (name, comment, value, category, orderby, type) VALUES ('moderated', 'New partner registration is moderated', 'N', 'Affiliate', '10', 'checkbox');
-INSERT INTO xlite_config (name, comment, value, category, orderby, type) VALUES ('default_plan', 'Default affiliate plan', '', 'Affiliate', '20', 'select');
-INSERT INTO xlite_config (name, comment, value, category, orderby, type) VALUES ('tiers_number', 'Number of partnership tiers', '1', 'Affiliate', '30', 'select');
-INSERT INTO xlite_config (name, comment, value, category, orderby, type) VALUES ('tier_commission_rates', 'Tier commission rates', 'a:4:{i:2;s:4:"0.00";i:3;s:4:"0.00";i:4;s:4:"0.00";i:5;s:4:"0.00";}', 'Affiliate', '40', 'serialized');
-INSERT INTO xlite_config (name, comment, value, category, orderby, type) VALUES ('partner_cookie_lifetime', 'Cookie expiry period (days)', '7', 'Affiliate', '50', 'text');
-INSERT INTO xlite_config (name, comment, value, category, orderby, type) VALUES ('enable_advanced_banner', 'Enable product banners customization', 'Y', 'Affiliate', '60', 'checkbox');
-INSERT INTO xlite_config (name, comment, value, category, orderby, type) VALUES ('enable_order_totals', 'Partners can see order totals', 'Y', 'Affiliate', '70', 'checkbox');
-INSERT INTO xlite_config (name, comment, value, category, orderby, type) VALUES ('partner_profile', '', 'a:8:{s:17:"billing_firstname";s:2:"on";s:16:"billing_lastname";s:2:"on";s:13:"billing_phone";s:2:"on";s:15:"billing_address";s:2:"on";s:12:"billing_city";s:2:"on";s:13:"billing_state";s:2:"on";s:15:"billing_country";s:2:"on";s:15:"billing_zipcode";s:2:"on";}', 'Miscellaneous', '0', 'serialized');
-INSERT INTO xlite_config (name, comment, value, category, orderby, type) VALUES ('partner_product_banner', '', 'a:11:{s:11:"link_target";s:4:"_top";s:5:"image";s:9:"thumbnail";s:6:"border";i:1;s:12:"product_name";i:1;s:11:"description";s:0:"";s:7:"message";s:8:"Buy new!";s:16:"background_color";s:6:"ffffff";s:10:"text_color";s:6:"000000";s:10:"link_color";s:6:"6633ff";s:5:"width";i:120;s:6:"height";i:240;}', 'Miscellaneous', '0', 'serialized');
-
+INSERT INTO `xlite_config_translations` VALUES (59,'en',73,'Default affiliate plan','');
+INSERT INTO `xlite_config_translations` VALUES (75,'en',99,'Enable product banners customization','');
+INSERT INTO `xlite_config_translations` VALUES (82,'en',106,'Partners can see order totals','');
+INSERT INTO `xlite_config_translations` VALUES (127,'en',171,'New partner registration is moderated','');
+INSERT INTO `xlite_config_translations` VALUES (148,'en',198,'Cookie expiry period (days)','');
+INSERT INTO `xlite_config_translations` VALUES (163,'en',218,'New partner registration is enabled','');
+INSERT INTO `xlite_config_translations` VALUES (192,'en',253,'Number of partnership tiers','');
+INSERT INTO `xlite_config_translations` VALUES (193,'en',254,'Tier commission rates','');
 

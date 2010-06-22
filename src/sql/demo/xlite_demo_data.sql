@@ -1,10 +1,12 @@
 -- Update config table
-UPDATE xlite_config SET comment = 'Check this to temporary close the shop (not available in Demo store)' WHERE name = 'shop_closed';
+-- shop_close
+UPDATE xlite_config_translations SET option_name = 'Check this to temporary close the shop (not available in Demo store)' WHERE id = 234;
+
 UPDATE xlite_config SET value = 'Y' WHERE name = 'customer_security';
 UPDATE xlite_config SET value = 'Y' WHERE name = 'enable_sale_price';
 UPDATE xlite_config SET value = 'Y' WHERE name = 'you_save';
-REPLACE INTO `xlite_config` VALUES ('memberships','Membership levels','a:0:{}','Memberships',0,'serialized');
-REPLACE INTO `xlite_config` VALUES ('membershipsCollection','Membership levels','a:3:{i:1;a:3:{s:7:\"orderby\";s:2:\"10\";s:10:\"membership\";s:4:\"Gold\";s:13:\"membership_id\";i:1;}i:2;a:3:{s:7:\"orderby\";s:2:\"20\";s:10:\"membership\";s:8:\"Platinum\";s:13:\"membership_id\";i:2;}i:3;a:3:{s:7:\"orderby\";s:2:\"30\";s:10:\"membership\";s:10:\"Wholesaler\";s:13:\"membership_id\";i:3;}}','Memberships',0,'serialized');
+
+UPDATE xlite_config SET value = 'a:3:{i:1;a:3:{s:7:\"orderby\";s:2:\"10\";s:10:\"membership\";s:4:\"Gold\";s:13:\"membership_id\";i:1;}i:2;a:3:{s:7:\"orderby\";s:2:\"20\";s:10:\"membership\";s:8:\"Platinum\";s:13:\"membership_id\";i:2;}i:3;a:3:{s:7:\"orderby\";s:2:\"30\";s:10:\"membership\";s:10:\"Wholesaler\";s:13:\"membership_id\";i:3;}}' WHERE name = 'membershipsCollection';
 
 -- Enable demo modules
 UPDATE xlite_modules SET enabled = '1' WHERE name IN (

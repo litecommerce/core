@@ -40,7 +40,7 @@
  *         }
  * )
  */
-class XLite_Model_Config extends XLite_Model_AbstractEntity
+class XLite_Model_Config extends XLite_Model_Base_I18n
 {
 
     /**
@@ -51,31 +51,21 @@ class XLite_Model_Config extends XLite_Model_AbstractEntity
      * @see    ____var_see____
      * @since  3.0.0
      * @Id
+     * @GeneratedValue (strategy="AUTO")
+     * @Column (type="integer", unique=true)
+     */
+    protected $config_id;
+
+    /**
+     * Option unique name
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
      * @Column (type="string", length="32", nullable=false)
      */
     protected $name;
-
-    /**
-     * Option comment
-     * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     * @Column (type="string", length="255", nullable=false)
-     */
-    protected $comment = '';
-
-    /**
-     * Option value
-     * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     * @Column (type="text", nullable=false)
-     */
-    protected $value = '';
 
     /**
      * Option category
@@ -84,10 +74,21 @@ class XLite_Model_Config extends XLite_Model_AbstractEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @Id
      * @Column (type="string", length="32", nullable=false)
      */
     protected $category = '';
+
+    /**
+     * Option type
+     * Allowed values:'','text','textarea','checkbox','country','state','select','serialized','separator'
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Column (type="string", length="32", nullable=false)
+     */
+    protected $type = '';
 
     /**
      * Option position within category
@@ -101,15 +102,14 @@ class XLite_Model_Config extends XLite_Model_AbstractEntity
     protected $orderby = 0;
 
     /**
-     * Option type
-     * Allowed values:'','text','textarea','checkbox','country','state','select','serialized','separator'
+     * Option value
      * 
      * @var    string
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @Column (type="string", length="32", nullable=false)
+     * @Column (type="text", nullable=false)
      */
-    protected $type = '';
+    protected $value = '';
 
 }

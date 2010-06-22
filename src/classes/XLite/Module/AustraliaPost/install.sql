@@ -13,10 +13,12 @@ CREATE TABLE xlite_aupost_cache (
     PRIMARY KEY (weight, origin_zipcode, dest_zipcode, dest_country, height, width, length)
 ) TYPE=MyISAM;
 
-INSERT INTO xlite_config VALUES ('width','','100','AustraliaPost',0,'');
-INSERT INTO xlite_config VALUES ('height','','10','AustraliaPost',0,'');
-INSERT INTO xlite_config VALUES ('length','','100','AustraliaPost',0,'');
-INSERT INTO xlite_config VALUES ('currency_rate','','1','AustraliaPost',0,'');
+
+INSERT INTO `xlite_config` VALUES (61,'currency_rate','AustraliaPost','',0,'1');
+INSERT INTO `xlite_config` VALUES (134,'height','AustraliaPost','',0,'10');
+INSERT INTO `xlite_config` VALUES (146,'length','AustraliaPost','',0,'100');
+INSERT INTO `xlite_config` VALUES (281,'width','AustraliaPost','',0,'100');
+
 
 --INSERT INTO xlite_shipping VALUES (300,'aupost','L','Australia Post Air Mail',1,0);
 --INSERT INTO xlite_shipping VALUES (301,'aupost','L','Australia Post Economy Air',1,0);

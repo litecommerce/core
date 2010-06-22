@@ -44,16 +44,15 @@ INSERT INTO xlite_shipping VALUES (200,'intershipper','L','UPS Next Day Air Save
 INSERT INTO xlite_shipping VALUES (199,'intershipper','L','UPS 3 Day Select',1,0);
 INSERT INTO xlite_shipping VALUES (198,'intershipper','L','FedEx Ground',1,0);
 
-INSERT INTO xlite_config(name,value,category) VALUES ('contents','OTR','Intershipper');
-INSERT INTO xlite_config(name,value,category) VALUES ('delivery','COM','Intershipper');
-INSERT INTO xlite_config(name,value,category) VALUES ('dunit','IN','Intershipper');
-INSERT INTO xlite_config(name,value,category) VALUES ('height','','Intershipper');
-INSERT INTO xlite_config(name,value,category) VALUES ('insvalue','','Intershipper');
-INSERT INTO xlite_config(name,value,category) VALUES ('length','','Intershipper');
-INSERT INTO xlite_config(name,value,category) VALUES ('packaging','BOX','Intershipper');
-INSERT INTO xlite_config(name,value,category) VALUES ('password','','Intershipper');
-INSERT INTO xlite_config(name,value,category) VALUES ('pickup','DRP','Intershipper');
-INSERT INTO xlite_config(name,value,category) VALUES ('userid','','Intershipper');
-INSERT INTO xlite_config(name,value,category) VALUES ('width','','Intershipper');
-
+INSERT INTO `xlite_config` VALUES (55,'contents','Intershipper',NULL,0,'OTR');
+INSERT INTO `xlite_config` VALUES (78,'delivery','Intershipper',NULL,0,'COM');
+INSERT INTO `xlite_config` VALUES (94,'dunit','Intershipper',NULL,0,'IN');
+INSERT INTO `xlite_config` VALUES (136,'height','Intershipper',NULL,0,'');
+INSERT INTO `xlite_config` VALUES (143,'insvalue','Intershipper',NULL,0,'');
+INSERT INTO `xlite_config` VALUES (148,'length','Intershipper',NULL,0,'');
+INSERT INTO `xlite_config` VALUES (192,'packaging','Intershipper',NULL,0,'BOX');
+INSERT INTO `xlite_config` VALUES (201,'password','Intershipper',NULL,0,'');
+INSERT INTO `xlite_config` VALUES (203,'pickup','Intershipper',NULL,0,'DRP');
+INSERT INTO `xlite_config` VALUES (263,'userid','Intershipper',NULL,0,'');
+INSERT INTO `xlite_config` VALUES (283,'width','Intershipper',NULL,0,'');
 

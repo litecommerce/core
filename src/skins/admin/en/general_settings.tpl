@@ -19,7 +19,7 @@
     {foreach:getOptions(),option}
       <tr>
         {if:!option.type=#separator#}
-          {if:!option.type=#serialized#}<td align="right" width="50%">{option.comment:h}: </td>{end:}
+          {if:!option.type=#serialized#}<td align="right" width="50%">{option.getOptionName():h}: </td>{end:}
           <td width="50%">
 
             {if:option.type=#checkbox#}
@@ -194,7 +194,7 @@ function setUnitSymbol(symbol) {
                 <td colspan=2>&nbsp;</td>
               </tr>
               <tr>
-                <td class="SidebarTitle" align="center" nowrap="nowrap">&nbsp;&nbsp;&nbsp;{option.comment:h}&nbsp;&nbsp;&nbsp;</td>
+                <td class="SidebarTitle" align="center" nowrap="nowrap">&nbsp;&nbsp;&nbsp;{option.option_name:h}&nbsp;&nbsp;&nbsp;</td>
                 <td width="100%">&nbsp;</td>
               </tr>
               <tr>

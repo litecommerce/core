@@ -6,4 +6,6 @@ CREATE TABLE xlite_featured_products (
   PRIMARY KEY  (category_id,product_id)
 ) TYPE=MyISAM;
 
-INSERT INTO xlite_config VALUES ('featured_products_look','Featured products look&feel','grid','FeaturedProducts',10,'select');
+INSERT INTO `xlite_config` VALUES (118,'featured_products_look','FeaturedProducts','select',10,'grid');
+INSERT INTO `xlite_config_translations` VALUES (92,'en',118,'Featured products look&feel','');
+

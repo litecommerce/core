@@ -1,9 +1,9 @@
-INSERT INTO xlite_config ( name , comment , value , category , orderby , type ) VALUES ( 'number_of_bestsellers', 'Number of products in the bestsellers list', '5', 'Bestsellers', '115', 'text');
-UPDATE xlite_config SET comment='Number of products in the bestsellers list' WHERE category='Bestsellers' AND name='number_of_bestsellers';
-INSERT INTO xlite_config ( name , comment , value , category , orderby , type ) VALUES ( 'bestsellers_thumbnails', 'Show thumbnails in the list', 'Y', 'Bestsellers', '115', 'checkbox');
-UPDATE xlite_config SET comment='Show thumbnails in the list' WHERE category='Bestsellers' AND name='bestsellers_thumbnails';
-INSERT INTO xlite_config ( name , comment , value , category , orderby , type ) VALUES ( 'bestsellers_menu', 'Display the list of bestsellers in', '1', 'Bestsellers', '115', 'select');
-UPDATE xlite_config SET comment='Display the list of bestsellers in', type='select' WHERE category='Bestsellers' AND name='bestsellers_menu';
-UPDATE xlite_config SET value='0' WHERE category='Bestsellers' AND name='bestsellers_menu' AND value='N';
+INSERT INTO `xlite_config` VALUES (23,'bestsellers_menu','Bestsellers','select',115,'1');
+INSERT INTO `xlite_config` VALUES (24,'bestsellers_thumbnails','Bestsellers','checkbox',115,'Y');
+INSERT INTO `xlite_config` VALUES (175,'number_of_bestsellers','Bestsellers','text',115,'5');
+
+INSERT INTO `xlite_config_translations` VALUES (20,'en',23,'Display the list of bestsellers in','');
+INSERT INTO `xlite_config_translations` VALUES (21,'en',24,'Show thumbnails in the list','');
+INSERT INTO `xlite_config_translations` VALUES (131,'en',175,'Number of products in the bestsellers list','');
 
 CREATE INDEX xlite_product_links_category ON xlite_product_links (category_id);

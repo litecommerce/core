@@ -36,7 +36,13 @@ ALTER TABLE xlite_orders ADD COLUMN manual_edit int(1) NOT NULL default '0';
 
 ALTER TABLE xlite_order_items ADD COLUMN aom_extra text NOT NULL default '';
 
-INSERT INTO xlite_config (name, comment, value, category, orderby, type) VALUES ('clone_silent', 'Do not send order status change notifications during the "clone order" procedure', 'Y', 'AOM', '10', 'checkbox');
-INSERT INTO xlite_config (name, comment, value, category, orderby, type) VALUES ('cc_info_history', 'Store Credit Card info in order history', 'N', 'AOM', '20', 'checkbox');
-INSERT INTO xlite_config (name, comment, value, category, orderby, type) VALUES ('order_update_notification', 'When an order is modified e-mail order details to', '', 'AOM', '30', 'serialized');
-INSERT INTO xlite_config (name, comment, value, category, orderby, type) VALUES ('status_inheritance', 'Enable status inheritance', 'N', 'AOM', '15', 'checkbox');
+INSERT INTO `xlite_config` VALUES (37,'cc_info_history','AOM','checkbox',20,'N');
+INSERT INTO `xlite_config` VALUES (41,'clone_silent','AOM','checkbox',10,'Y');
+INSERT INTO `xlite_config` VALUES (184,'order_update_notification','AOM','serialized',30,'');
+INSERT INTO `xlite_config` VALUES (246,'status_inheritance','AOM','checkbox',15,'N');
+
+INSERT INTO `xlite_config_translations` VALUES (31,'en',37,'Store Credit Card info in order history','');
+INSERT INTO `xlite_config_translations` VALUES (35,'en',41,'Do not send order status change notifications during the \"clone order\" procedure','');
+INSERT INTO `xlite_config_translations` VALUES (140,'en',184,'When an order is modified e-mail order details to','');
+INSERT INTO `xlite_config_translations` VALUES (187,'en',246,'Enable status inheritance','');
+

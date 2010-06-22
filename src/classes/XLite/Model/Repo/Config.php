@@ -32,10 +32,8 @@
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
- * @Entity (repositoryClass="XLite_Model_Repo_Config")
- * @Table (name="xlite_config")
  */
-class XLite_Model_Repo_Config extends XLite_Model_Repo_AbstractRepo
+class XLite_Model_Repo_Config extends XLite_Model_Repo_Base_I18n
 {
 
     /**
@@ -261,23 +259,24 @@ class XLite_Model_Repo_Config extends XLite_Model_Repo_AbstractRepo
     /**
      * Create new option / Update option value
      * 
-     * @param string  $category Option category name
-     * @param string  $name     Option name
-     * @param mixed   $value    Option value
-     * @param string  $type     Option type
-     * @param string  $comment  Option comment
-     * @param integer $orderby  Option orderby
+     * @param string  $category       Option category name
+     * @param string  $name           Option name
+     * @param mixed   $value          Option value
+     * @param string  $type           Option type
+     * @param string  $option_name    Option comment
+     * @param string  $option_comment Option comment
+     * @param integer $orderby        Option orderby
      *  
      * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function createOption($category, $name, $value, $type = null, $comment = null, $orderby = null) 
+    public function createOption($category, $name, $value, $type = null, $option_name = null, $option_comment = null, $orderby = null) 
     {
         $data = array('value' => $value);
 
-        $optional_fields = array('type', 'comment', 'orderby');
+        $optional_fields = array('type', 'option_name', 'option_comment', 'orderby');
 
         foreach ($optional_fields as $field) {
             if (!is_null($$field)) {

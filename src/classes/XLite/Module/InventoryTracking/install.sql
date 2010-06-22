@@ -15,12 +15,19 @@ ALTER TABLE xlite_orders ADD inventory_changed int(1) NOT NULL DEFAULT '0';
 ALTER TABLE xlite_products ADD sku_variants text NOT NULL default '';
 ALTER TABLE xlite_products ADD tracking int NOT NULL default '0';
 
-INSERT INTO xlite_config ( name , comment , value , category , orderby , type ) VALUES ( 'track_placed_order', 'Track inventory when order is placed', 'N', 'InventoryTracking', '10', 'checkbox');
-INSERT INTO xlite_config ( name , comment , value , category , orderby , type ) VALUES ( 'clone_inventory', 'Clone inventory data when product is cloned', 'Y', 'InventoryTracking', '40', 'checkbox');
-INSERT INTO xlite_config ( name , comment , value , category , orderby , type ) VALUES ( 'create_inventory', 'Automatically create product\'s inventory record when a new product is created', 'Y', 'InventoryTracking', '50', 'checkbox');
-INSERT INTO xlite_config ( name , comment , value , category , orderby , type ) VALUES ( 'inventory_amount', 'Default inventory amount', '10', 'InventoryTracking', '60', 'text');
-INSERT INTO xlite_config ( name , comment , value , category , orderby , type ) VALUES ( 'low_amount', 'Default low available limit', '10', 'InventoryTracking', '70', 'text');
-INSERT INTO xlite_config ( name , comment , value , category , orderby , type ) VALUES ( 'send_notification', 'Enable low stock limit mail notification to admin', 'Y', 'InventoryTracking', '20', 'checkbox');
-INSERT INTO xlite_config ( name , comment , value , category , orderby , type ) VALUES ( 'exclude_product', 'Exclude out-of-stock products from product list (not available for the products with product options set)', 'N', 'InventoryTracking', '30', 'checkbox');
-UPDATE xlite_config SET comment= 'Exclude out-of-stock products from product list' WHERE category='InventoryTracking' AND name='exclude_product';
+INSERT INTO `xlite_config` VALUES (39,'clone_inventory','InventoryTracking','checkbox',40,'Y');
+INSERT INTO `xlite_config` VALUES (59,'create_inventory','InventoryTracking','checkbox',50,'Y');
+INSERT INTO `xlite_config` VALUES (108,'exclude_product','InventoryTracking','checkbox',30,'N');
+INSERT INTO `xlite_config` VALUES (144,'inventory_amount','InventoryTracking','text',60,'10');
+INSERT INTO `xlite_config` VALUES (161,'low_amount','InventoryTracking','text',70,'10');
+INSERT INTO `xlite_config` VALUES (229,'send_notification','InventoryTracking','checkbox',20,'Y');
+INSERT INTO `xlite_config` VALUES (257,'track_placed_order','InventoryTracking','checkbox',10,'N');
+
+INSERT INTO `xlite_config_translations` VALUES (33,'en',39,'Clone inventory data when product is cloned','');
+INSERT INTO `xlite_config_translations` VALUES (49,'en',59,'Automatically create product\'s inventory record when a new product is created','');
+INSERT INTO `xlite_config_translations` VALUES (84,'en',108,'Exclude out-of-stock products from product list','');
+INSERT INTO `xlite_config_translations` VALUES (110,'en',144,'Default inventory amount','');
+INSERT INTO `xlite_config_translations` VALUES (120,'en',161,'Default low available limit','');
+INSERT INTO `xlite_config_translations` VALUES (173,'en',229,'Enable low stock limit mail notification to admin','');
+INSERT INTO `xlite_config_translations` VALUES (196,'en',257,'Track inventory when order is placed','');
 
