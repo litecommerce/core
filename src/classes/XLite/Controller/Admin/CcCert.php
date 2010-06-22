@@ -53,6 +53,12 @@ class XLite_Controller_Admin_CcCert extends XLite_Controller_Admin_Abstract
 
     function saveParam($name, $value)
     {
-        XLite_Core_Database::getRepo('XLite_Model_Config')->createOption($this->get('cc_processor'), $name, $value);
+        XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+            array(
+                'category' => $this->get('cc_processor'),
+                'name'     => $name,
+                'value'    => $value
+            )
+        );
     }
 }

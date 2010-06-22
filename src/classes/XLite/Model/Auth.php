@@ -779,7 +779,14 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
         ) {
             $admin_ip = serialize(array(array('ip' => $admin_ip, 'comment' => 'Default admin IP')));
 
-            XLite_Core_Database::getRepo('XLite_Model_Config')->createOption('SecurityIP', 'allow_admin_ip', $admin_ip, 'serialized');
+            XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+                array(
+                    'category' => 'SecurityIP',
+                    'name'     => 'allow_admin_ip',
+                    'value'    => $admin_ip,
+                    'type'     => 'serialized'
+                )
+            );
 
         } else {
 

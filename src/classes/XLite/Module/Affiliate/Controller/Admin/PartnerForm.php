@@ -65,7 +65,14 @@ class XLite_Module_Affiliate_Controller_Admin_PartnerForm extends XLite_Controll
     {
         $fields = $this->get('default_fields');
         if (is_array($fields)) {
-            XLite_Core_Database::getRepo('XLite_Model_Config')->createOption('Miscellaneous', 'partner_profile', serialize($fields), 'serialized');
+            XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+                array(
+                    'category' => 'Miscellaneous',
+                    'name'     => 'partner_profile',
+                    'value'    => serialize($fields),
+                    'type'     => 'serialized'
+                )
+            );
         }
     }
 }

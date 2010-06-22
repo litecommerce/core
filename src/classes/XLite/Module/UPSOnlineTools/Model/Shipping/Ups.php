@@ -264,7 +264,13 @@ EOT;
             $value = $this->encode($value);
         }
 
-        XLite_Core_Database::getRepo('XLite_Model_Config')->createOption('UPSOnlineTools', $name, $value);
+        XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+            array(
+                'category' => 'UPSOnlineTools',
+                'name'     => $name,
+                'value'    => $value
+            )
+        );
     }
 
     /**

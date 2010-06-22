@@ -57,7 +57,7 @@ class XLite_Model_Config extends XLite_Model_Base_I18n
     protected $config_id;
 
     /**
-     * Option unique name
+     * Option name
      * 
      * @var    string
      * @access protected

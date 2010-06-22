@@ -125,7 +125,13 @@ Please correct errors above and click reload or click the button below to force 
             }
 
             // set current version in config->Version->version
-            XLite_Core_Database::getRepo('XLite_Model_Config')->createOption('Version', 'version', $this->get('to_ver'));
+            XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+                array(
+                    'category' => 'Version',
+                    'name'     => 'version',
+                    'value'    => $this->get('to_ver')
+                )
+            );
         }
     }
 

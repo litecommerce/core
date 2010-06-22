@@ -272,32 +272,50 @@ class XLite_Model_Repo_Config extends XLite_Model_Repo_Base_I18n
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function createOption($category, $name, $value, $type = null, $option_name = null, $option_comment = null, $orderby = null) 
+    public function createOption($data) // $category, $name, $value, $type = null, $option_name = null, $option_comment = null, $orderby = null) 
     {
-        $data = array('value' => $value);
+        // Array of allowed fields and flag required/optional
+        $fields = array(
+            'category' => 1,
+            'name'     => 1,
+            'value'    => 1,
+            'type'     => 0,
+            'orderby'  => 0,
+        );
 
-        $optional_fields = array('type', 'option_name', 'option_comment', 'orderby');
+        $errorFields = array();
 
-        foreach ($optional_fields as $field) {
-            if (!is_null($$field)) {
-                $data[$field] = $$field;
+        foreach ($fields as $field => $required) {
+            if (isset($data[$field]) && !is_null($data[$field])) {
+                $fields[$field] = $data[$field];
+            
+            } elseif ($required) {
+                $errorFields[] = $field;
             }
         }
 
-        if (isset($data['type']) && !$this->isValidOptionType($data['type'])) {
-            throw new Exception('Wrong type of option: ' . $type);
+        if (!empty($errorFields)) {
+            throw new Exception('createOptions() failed: The following required fields are missed: ' . implode(', ', $errorFields));
         }
 
-        $option = $this->findOneBy(array('name' => $name, 'category' => $category));
+        if (isset($fields['type']) && !$this->isValidOptionType($fields['type'])) {
+            throw new Exception('createOptions() failed: Wrong option type: ' . $type);
+        }
+
+        $option = $this->findOneBy(array('name' => $fields['name'], 'category' => $fields['category']));
+
+        // Existing option: unset key fields
+        if ($option) {
+            unset($fields['name']);
+            unset($fields['category']);
 
         // Create a new option
-        if (!$option) {
-            $data['name'] = $name;
-            $data['category'] = $category;
+        } else {
             $option = new XLite_Model_Config();
         }
 
-        $option->map($data);
+
+        $option->map($fields);
         XLite_Core_Database::getEM()->persist($option);
         XLite_Core_Database::getEM()->flush();
     }

@@ -111,6 +111,13 @@ class XLite_Model_WaitingIP extends XLite_Model_Abstract
             $list[] = array('ip' => $ip, 'comment' => '');
         }
 
-        XLite_Core_Database::getRepo('XLite_Model_Config')->createOption('SecurityIP', 'allow_admin_ip', serialize($list), 'serialized');
+        XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+            array(
+                'category' => 'SecurityIP',
+                'name'     => 'allow_admin_ip',
+                'value'    => serialize($list),
+                'type'     => 'serialized'
+            )
+        );
     }
 }

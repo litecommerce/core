@@ -104,7 +104,14 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_UpsConfig extends XLite_Contr
                     $optionType = 'serialized';
                 }
 
-                XLite_Core_Database::getRepo('XLite_Model_Config')->createOption('UPSOnlineTools', $name, $value, $optionType);
+                XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+                    array(
+                        'category' => 'UPSOnlineTools',
+                        'name'     => $name,
+                        'value'    => $value,
+                        'type'     => $optionType
+                    )
+                );
             }
         }
 

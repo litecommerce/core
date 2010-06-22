@@ -364,7 +364,13 @@ To install the selected skin, please correct the problem and start the installat
         echo "<br><br><b>Cleanup cache...</b><br>";
         func_cleanup_cache('skins', true);
 
-        XLite_Core_Database::getRepo('XLite_Model_Config')->createOption('Skin', 'skin', $this->layout);
+        XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+            array(
+                'category' => 'Skin',
+                'name'     => 'skin',
+                'value'    => $this->layout
+            )
+        );
         
         echo "<br><b>Task completed.</b><br>";
 

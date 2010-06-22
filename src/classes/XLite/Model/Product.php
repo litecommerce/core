@@ -938,7 +938,13 @@ class XLite_Model_Product extends XLite_Model_Abstract
         // Update product thumbnail and image
         if (!empty($images_directory)) {
             // update images base directory
-            XLite_Core_Database::getRepo('XLite_Model_Config')->createOption('Images', 'images_directory', $images_directory);
+            XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+                array(
+                    'category' => 'Images',
+                    'name'     => 'images_directory',
+                    'value'    => $images_directory
+                )
+            );
             // re-read config data
             XLite_Core_Config::readConfig();
         }

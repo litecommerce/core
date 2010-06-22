@@ -72,7 +72,13 @@ class XLite_Module_WholesaleTrading_Controller_Admin_Wholesale extends XLite_Con
                 }
             }
 
-            XLite_Core_Database::getRepo('XLite_Model_Config')->createOption('WholesaleTrading', $name, $value);
+            XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+                array(
+                    'category' => 'WholesaleTrading',
+                    'name'     => $name,
+                    'value'    => $value
+                )
+            );
         }
 
     }

@@ -249,7 +249,13 @@ class XLite_Module_DetailedImages_Model_DetailedImage extends XLite_Model_Abstra
         if (!empty($images_directory)) {
 
             // update images base directory
-            XLite_Core_Database::getRepo('XLite_Model_Config')->createOption('Images', 'images_directory', $images_directory);
+            XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+                array(
+                    'category' => 'Images',
+                    'name'     => 'images_directory',
+                    'value'    => $images_directory
+                )
+            );
 
             // re-read config data
             XLite_Core_Config::readConfig();

@@ -81,12 +81,26 @@ class XLite_Model_Membership extends XLite_Model_Abstract
 
                 $this->memberships = $new_memberships;
 
-                XLite_Core_Database::getRepo('XLite_Model_Config')->createOption('Memberships', 'membershipsCollection', serialize($this->memberships), 'serialized');
+                XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+                    array(
+                        'category' => 'Memberships',
+                        'name'     => 'membershipsCollection',
+                        'value'    => serialize($this->memberships),
+                        'type'     => 'serialized'
+                    )
+                );
 
             } else {
                 $this->memberships = array();
 
-                XLite_Core_Database::getRepo('XLite_Model_Config')->createOption('Memberships', 'membershipsCollection', serialize($this->memberships), 'serialized');
+                XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+                    array(
+                        'category' => 'Memberships',
+                        'name'     => 'membershipsCollection',
+                        'value'    => serialize($this->memberships),
+                        'type'     => 'serialized'
+                    )
+                );
             }
         }
         
@@ -129,7 +143,14 @@ class XLite_Model_Membership extends XLite_Model_Abstract
         $memberships[$max] = $membershipData;
         $memberships = (array) $this->sortMemberships($memberships);
 
-        XLite_Core_Database::getRepo('XLite_Model_Config')->createOption('Memberships', 'membershipsCollection', serialize($memberships), 'serialized');
+        XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+            array(
+                'category' => 'Memberships',
+                'name'     => 'membershipsCollection',
+                'value'    => serialize($memberships),
+                'type'     => 'serialized'
+            )
+        );
     }
 
     function update() 
@@ -143,7 +164,14 @@ class XLite_Model_Membership extends XLite_Model_Abstract
         $memberships[$this->get('membership_id')] = $membershipData;
         $memberships = (array) $this->sortMemberships($memberships);
 
-        XLite_Core_Database::getRepo('XLite_Model_Config')->createOption('Memberships', 'membershipsCollection', serialize($memberships), 'serialized');
+        XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+            array(
+                'category' => 'Memberships',
+                'name'     => 'membershipsCollection',
+                'value'    => serialize($memberships),
+                'type'     => 'serialized'
+            )
+        );
     }
 
     function delete() 
@@ -151,7 +179,14 @@ class XLite_Model_Membership extends XLite_Model_Abstract
         $memberships = $this->get('memberships');
         unset($memberships[$this->get('membership_id')]);
         $memberships = (array) $this->sortMemberships($memberships);
-        XLite_Core_Database::getRepo('XLite_Model_Config')->createOption('Memberships', 'membershipsCollection', serialize($memberships), 'serialized');
+        XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+            array(
+                'category' => 'Memberships',
+                'name'     => 'membershipsCollection',
+                'value'    => serialize($memberships),
+                'type'     => 'serialized'
+            )
+        );
     }
 
  	function findAll($where = null, $orderby = null, $groupby = null, $limit = null) 

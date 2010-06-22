@@ -320,7 +320,13 @@ If you are not redirected automatically, <a href="<?php echo $url; ?>">click on 
         $pm->update();
 
         // dublicate "default_shipping_cost" in config
-        XLite_Core_Database::getRepo('XLite_Model_Config')->createOption('GoogleCheckout', 'default_shipping_cost', $params['default_shipping_cost']);
+        XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+            array(
+                'category' => 'GoogleCheckout',
+                'name'     => 'default_shipping_cost',
+                'value'    => $params['default_shipping_cost']
+            )
+        );
     }
 
     function isCheckAvs($value)

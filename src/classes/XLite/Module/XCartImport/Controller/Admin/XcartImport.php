@@ -89,7 +89,14 @@ X-Cart data has been removed.<br>
         $this->startDump();
 
         // remeber parameters
-        XLite_Core_Database::getRepo('XLite_Model_Config')->createOption('XCartImport', 'params', serialize($_POST), 'serialized');
+        XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+            array(
+                'category' => 'XCartImport',
+                'name'     => 'params',
+                'value'    => serialize($_POST),
+                'type'     => 'serialized'
+            )
+        );
 
         if (!$this->connect()) {
             echo "<br><font color=red>" . $this->error . "</font><br>";
@@ -112,7 +119,14 @@ X-Cart data has been removed.<br>
             // save memberships
             $ms = array_keys($this->memberships);
             // TODO: update membership saving - they must be saved in the separate table, not in the config table
-            XLite_Core_Database::getRepo('XLite_Model_Config')->createOption('Memberships', 'memberships', serialize($ms), 'serialized');
+            XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+                array(
+                    'category' => 'Memberships',
+                    'name'     => 'memberships',
+                    'value'    => serialize($ms),
+                    'type'     => 'serialized'
+                )
+            );
 
             ?>
 <br>Import complete. <?php echo "<hr><a href=\"admin.php?target=xcart_import\">Return to admin interface.</a>"; ?><br><br>

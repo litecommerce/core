@@ -86,7 +86,14 @@ class XLite_Controller_Admin_Module extends XLite_Controller_Admin_Abstract
                     $value = trim($value);
             }
 
-            XLite_Core_Database::getRepo('XLite_Model_Config')->createOption($this->page, $name, $value, $type);
+            XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+                array(
+                    'category' => $this->page,
+                    'name'     => $name,
+                    'value'    => $value,
+                    'type'     => $type
+                )
+            );
         }
     }
 }
