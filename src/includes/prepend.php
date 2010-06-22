@@ -88,7 +88,6 @@ set_include_path(
 // Some common functions
 require_once (LC_ROOT_DIR . 'includes' . LC_DS . 'functions.php');
 
-
 // Doctrine 2 autoloading
 require_once (LC_EXT_LIB_DIR . 'Doctrine' . LC_DS . 'Common' . LC_DS . 'ClassLoader.php');
 

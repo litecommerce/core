@@ -476,7 +476,7 @@ class Decorator
                 }
             }
 
-            if ($parent && $this->classesInfo[$parent][self::INFO_ENTITY]) {
+            if ($parent && isset($this->classesInfo[$parent]) && $this->classesInfo[$parent][self::INFO_ENTITY]) {
                 $comment = $this->getClassComment($content);
                 if ($comment) {
                     $newComment = $this->modifyParentEntityClassComment($comment);
@@ -1699,7 +1699,6 @@ class Decorator
         foreach ($this->multilangs as $class) {
 
             $decorated = isset($this->classDecorators[$class]);
-            $info = $this->classesInfo[$className];
             $fn = LC_CLASSES_CACHE_DIR . $this->classesInfo[$class]['file'];
             if (isset($this->classDecorators[$class])) {
                 $fn = preg_replace('/\.php/S', 'Abstract$0', $fn);
@@ -2169,15 +2168,19 @@ DATA;
         $attributes = array();
         foreach ($parts as $part) {
             $part = trim(str_replace("\n", ' ', $part));
-            list($key, $value) = preg_split('/\W/Ss', $part, 2);
+            $tmp = preg_split('/\W/Ss', $part, 2);
+            if (2 != count($tmp)) {
+                continue;
+            }
+            
 
-            $key = strtolower($key);
+            $key = strtolower($tmp[0]);
 
-            if (!isset($attributes[$key])) {
-                $attributes[$key] = array();
+            if (!isset($attributes[$tmp[0]])) {
+                $attributes[$tmp[0]] = array();
             }
 
-            $attributes[$key][] = trim($value);
+            $attributes[$tmp[0]][] = trim($tmp[1]);
         }
 
         return $attributes;
