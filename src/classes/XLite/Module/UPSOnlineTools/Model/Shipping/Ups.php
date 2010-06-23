@@ -298,9 +298,9 @@ EOT;
 
         $options = $this->getOptions();
         if (
-            !$options->get('UPS_username')
-            || !$options->get('UPS_password')
-            || !$options->get('UPS_accesskey')
+            !$options->UPS_username
+            || !$options->UPS_password
+            || !$options->UPS_accesskey
         ) {
             return array();
         }
@@ -459,7 +459,7 @@ EOT;
     ) {
 
         $https = $this->getHTTPSRequester();
-        $https->url = $options->get('server') . 'Rate';
+        $https->url = $options->server . 'Rate';
         $https->method = 'POST';
         $https->urlencoded = true;
 
@@ -518,7 +518,7 @@ EOT;
         array $containers = array()
     ) {
 
-        $customer_classification_code = $options->get('customer_classification_code');
+        $customer_classification_code = $options->customer_classification_code;
 
         if ($originCountry == 'US' && !empty($customer_classification_code)) {
             $customer_classification_query = <<<EOT
@@ -530,14 +530,14 @@ EOT;
 
         // Residential / commercial address indicator
         $residental_flag = '';
-        if ($options->get('residential') == 'Y') {
+        if ($options->residential == 'Y') {
             $residental_flag = "\t\t\t\t" . '<ResidentialAddressIndicator/>';
         }
 
-        $upsAccessKey = $options->get('UPS_accesskey');
-        $upsUserName = $options->get('UPS_username');
-        $upsPassword = $options->get('UPS_password');
-        $pickup_type = $options->get('pickup_type');
+        $upsAccessKey = $options->UPS_accesskey;
+        $upsUserName = $options->UPS_username;
+        $upsPassword = $options->UPS_password;
+        $pickup_type = $options->pickup_type;
 
         $packages = '';
         foreach ($containers as $container) {
@@ -570,14 +570,11 @@ EOT;
             $weight = max(self::MIN_PACKAGE_WEIGHT, $this->formatCurrency(doubleval($weight)));
 
             // Set Additional Handling option
-            $options->set('AH', $container->isAdditionalHandling());
+            $options->AH = $container->isAdditionalHandling();
 
             // set declared value
-            $options->set('iv_amount', $container->getDeclaredValue());
-            $options->set(
-                'iv_currency',
-                $options->get('currency_code') ? $options->get('currency_code') : 'USD'
-            );
+            $options->iv_amount = $container->getDeclaredValue();
+            $options->iv_currency = $options->currency_code ? $options->currency_code : 'USD';
 
             $packages .= $this->createPackage(
                 $width, 
@@ -671,12 +668,12 @@ EOT;
             $dunit = 'CM';
         }
 
-        $insvalue = $this->formatCurrency(doubleval($options->get('iv_amount')));
+        $insvalue = $this->formatCurrency(doubleval($options->iv_amount));
 
         $pkgopt = array();
         $srvopts = array();
         if ($insvalue > 0.1) {
-            $iv_currency = $options->get('iv_currency');
+            $iv_currency = $options->iv_currency;
 
             $pkgopt[] = <<<EOT
                 <InsuredValue>
@@ -688,7 +685,7 @@ EOT;
         }
 
         // delivery confirmation
-        $delivery_conf = intval($options->get('delivery_conf'));
+        $delivery_conf = intval($options->delivery_conf);
         if ($delivery_conf > 0 && $delivery_conf < 4) {
             $tmp = <<<EOT
                 <DeliveryConfirmation>
@@ -712,7 +709,7 @@ EOT;
             . "\t\t\t" . '</PackageServiceOptions>' . "\n";
         }
 
-        $upsoptions = $options->get('upsoptions');
+        $upsoptions = $options->upsoptions;
         if (is_array($upsoptions) && count($upsoptions) > 0) {
             foreach ($upsoptions as $opt=>$val) {
                 if ($val != 'Y') {
@@ -731,7 +728,7 @@ EOT;
             }
         }
 
-        if ($options->get('AH')) {
+        if ($options->AH) {
             $pkgparams .= "\t\t\t" . '<AdditionalHandling/>' . "\n";
         }
 
@@ -821,7 +818,7 @@ EOT;
 
         // enumerate services
         $rates = array();
-        $currency = $this->getOptions()->get('currency_code');
+        $currency = $this->getOptions()->currency_code;
 
         foreach ($this->xpath->query('//RatingServiceSelectionResponse/RatedShipment') as $service) {
             $serviceCode = $this->getXMLNodeValue('Service/Code', $service);
@@ -925,7 +922,7 @@ EOT;
     {
         static $options = null;
 
-        if (is_null($options)) {
+        if (!isset($options)) {
             $options = $this->config->UPSOnlineTools;
             foreach (array('UPS_username', 'UPS_password', 'UPS_accesskey') as $name) {
                 $val = $options->$name;
@@ -1090,7 +1087,7 @@ EOT;
 
         $options = $this->getOptions();
 
-        if ($options->get('av_status') == 'Y' && $shipping_country == 'US') {
+        if ($options->av_status == 'Y' && $shipping_country == 'US') {
 
             if ($shipping_state > 0) {
                 $state_code = XLite_Core_Database::getRepo('XLite_Model_State')->getCodeById($shipping_state);
@@ -1103,7 +1100,7 @@ EOT;
                 $state_code = '';
             }
 
-            $required_quality = $options->get('av_quality');
+            $required_quality = $options->av_quality;
             $av_error = 1;
 
         } else {
@@ -1203,9 +1200,9 @@ EOT;
 
         if ($use_auth) {
 
-            $upsAccessKey = $options->get('UPS_accesskey');
-            $upsUserName = $options->get('UPS_username');
-            $upsPassword = $options->get('UPS_password');
+            $upsAccessKey = $options->UPS_accesskey;
+            $upsUserName = $options->UPS_username;
+            $upsPassword = $options->UPS_password;
 
             $request = <<<EOT
 <?xml version="1.0"?>
@@ -1219,7 +1216,7 @@ EOT;
         }
 
         $https = $this->getHTTPSRequester();
-        $https->url = $options->get('server') . $tool;
+        $https->url = $options->server . $tool;
         $https->method = 'POST';
         $https->urlencoded = true;
         $https->data = $request;

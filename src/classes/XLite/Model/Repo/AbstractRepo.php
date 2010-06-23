@@ -150,7 +150,7 @@ abstract class XLite_Model_Repo_AbstractRepo extends EntityRepository
      */
     protected function getCacheCells($key = null)
     {
-        if (is_null($this->cacheCells)) {
+        if (!isset($this->cacheCells)) {
             $this->cacheCells = $this->defineCacheCells();
 
             // Normalize cache cells
@@ -301,10 +301,9 @@ abstract class XLite_Model_Repo_AbstractRepo extends EntityRepository
         } elseif (self::CACHE_ATTR_KEY == $cell[self::KEY_TYPE_CACHE_CELL]) {
 
             $hash = $this->{$cell[self::GENERATOR_CACHE_CELL]}($params);
-
         }
 
-        if (!is_null($hash) && !$hash) {
+        if (isset($hash) && empty($hash)) {
             $hash = self::EMPTY_CACHE_CELL;
         }
 

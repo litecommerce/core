@@ -179,14 +179,14 @@ class XLite_Logger extends XLite_Base implements XLite_Base_ISingleton
             $this->getIdent()
         );
 
-        if (is_null($level)) {
+        if (!isset($level)) {
             $defaultLevel = $this->options['level'];
             if (defined($defaultLevel)) {
                 $level = constant($defaultLevel);
             }
         }
 
-        if (is_null($level)) {
+        if (!isset($level)) {
             $level = PEAR_LOG_DEBUG;
         }
 
@@ -364,7 +364,7 @@ class XLite_Logger extends XLite_Base implements XLite_Base_ISingleton
                     $args[] = 'object of ' . $this->detectClassName($arg);
                 }
 
-            } elseif (is_null($arg)) {
+            } elseif (!isset($arg)) {
                 $args[] = 'null';
 
             } else {
@@ -457,7 +457,7 @@ class XLite_Logger extends XLite_Base implements XLite_Base_ISingleton
      */
     protected function convertPHPErrorToLogError($errno)
     {
-        if (is_null($this->errorsTranslate)) {
+        if (!isset($this->errorsTranslate)) {
 
             $this->errorsTranslate = array(
                 E_ERROR             => PEAR_LOG_ERR,
@@ -496,7 +496,7 @@ class XLite_Logger extends XLite_Base implements XLite_Base_ISingleton
      */
     protected function getPHPErrorName($errno)
     {
-        if (is_null($this->errorTypes)) {
+        if (!isset($this->errorTypes)) {
             $this->errorTypes = array(
                 E_ERROR             => 'Error',
                 E_WARNING           => 'Warning',

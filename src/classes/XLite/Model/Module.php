@@ -119,7 +119,9 @@ class XLite_Model_Module extends XLite_Model_Abstract
     {
         parent::__construct($name);
 
-        is_null($name) || $this->read();
+        if (isset($name)) {
+            $this->read();
+        }
     }
 
     /**
@@ -134,12 +136,23 @@ class XLite_Model_Module extends XLite_Model_Abstract
         return is_null($link = $this->__call('getSettingsForm')) ? 'admin.php?target=module&page=' . $this->get('name') : $link;
     }
 
+    /**
+     * It's possible to call methods of certain module directly
+     * 
+     * @param string $method method name
+     * @param array  $args   call arguments
+     *  
+     * @return mixed
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     public function __call($method, array $args = array())
     {
-        if (!@class_exists($className = 'XLite_Module_' . $this->get('name') . '_Main')) {
-            require_once LC_MODULES_DIR . $this->get('name') . LC_DS . 'Main.php' ;
-        }
+        $class = 'XLite_Module_' . $this->get('name') . '_Main';
 
-        return call_user_func_array(array($className, $method), $args);
+        return XLite_Core_Operator::isClassExists($class) && method_exists($class, $method)
+            ? call_user_func_array(array($class, $method), $args)
+            : parent::__call($method, $args);
     }
 }

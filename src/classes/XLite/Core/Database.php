@@ -381,7 +381,7 @@ class XLite_Core_Database extends XLite_Base implements XLite_Base_ISingleton
         // Set repository
         if (!$classMetadata->customRepositoryClassName) {
             $class = str_replace('_Model_', '_Model_Repo_', $classMetadata->getReflectionClass()->getName());
-            if (class_exists($class)) {
+            if (XLite_Core_Operator::isClassExists($class)) {
                 $classMetadata->setCustomRepositoryClass($class);
 
             } else {

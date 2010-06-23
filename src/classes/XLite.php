@@ -199,7 +199,7 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
      */
     public function getOptions($names = null)
     {
-        if (is_null($this->options)) {
+        if (!isset($this->options)) {
             $this->options = $this->parseConfigFile();
             if (!is_array($this->options)) {
                 $this->doDie('Unable to read/parse configuration file(s)');
@@ -211,16 +211,16 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
         $result = $this->options;
 
         if (is_array($names)) {
-            while (!empty($names) && !is_null($result)) {
+            while (!empty($names) && isset($result)) {
                 $key = array_shift($names);
-                if (is_null($key)) {
+                if (!isset($key)) {
                     break;
                 }
 
                 $result = isset($result[$key]) ? $result[$key] : null;
             }
 
-        } elseif (!is_null($names)) {
+        } elseif (isset($names)) {
             $result = isset($result[$names]) ? $result[$names] : null;
         }
 
@@ -317,7 +317,7 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
     {
         if (!isset(self::$controller)) {
             $class = self::getControllerClass();
-            if (!class_exists($class)) {
+            if (!XLite_Core_Operator::isClassExists($class)) {
                 XLite::getInstance()->doGlobalDie('Controller class ' . $class . ' not found!');
             }
 

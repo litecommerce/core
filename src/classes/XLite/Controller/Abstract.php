@@ -135,11 +135,7 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
             $location = $this->filterXliteFormID($location);
         }
 
-        XLite_Core_Operator::getInstance()->redirect(
-            $location,
-            false,
-            $this->getParam(self::PARAM_REDIRECT_CODE)
-        );
+        XLite_Core_Operator::redirect($location, false, $this->getParam(self::PARAM_REDIRECT_CODE));
     }
 
     /**

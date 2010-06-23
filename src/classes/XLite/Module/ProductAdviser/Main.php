@@ -163,7 +163,7 @@ class XLite_Module_ProductAdviser_Main extends XLite_Module_Abstract
         }
         /////////////////////////////////////
 
-        $inventorySupport = @class_exists('XLite_Module_InventoryTracking_Model_Inventory');
+        $inventorySupport = XLite_Core_Operator::isClassExists('XLite_Module_InventoryTracking_Model_Inventory');
         $this->xlite->set('PA_InventorySupport', $inventorySupport);
         if ($inventorySupport) {
             if (!$this->xlite->is('adminZone')) {

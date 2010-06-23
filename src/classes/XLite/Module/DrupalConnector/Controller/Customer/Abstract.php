@@ -69,9 +69,7 @@ class XLite_Module_DrupalConnector_Controller_Customer_Abstract extends XLite_Co
      */
     protected function closeStorefront()
     {
-        $this->getDrupalLink() 
-            ? XLite_Core_Operator::getInstance()->redirect($this->getDrupalLink()) 
-            : parent::closeStorefront();
+        $this->getDrupalLink() ? XLite_Core_Operator::redirect($this->getDrupalLink()) : parent::closeStorefront();
     }
 
     /**
