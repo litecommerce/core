@@ -104,7 +104,7 @@ class XLite_Controller_Customer_GetWidget extends XLite_Controller_Customer_Abst
     {
         return parent::checkAccess()
             && $this->checkRequest()
-            && class_exists($this->getClass());
+            && XLite_Core_Operator::isClassExists($this->getClass());
     }
 
     /**

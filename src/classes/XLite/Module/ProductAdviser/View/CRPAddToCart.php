@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+// FIXME - to revise
+
 /**
  * ____description____
  * 
@@ -35,7 +37,7 @@
  */
 class XLite_Module_ProductAdviser_View_CRPAddToCart extends XLite_View_Button
 {
-    public $p_id = null;
+    /*public $p_id = null;
     
     function gethref()
     {
@@ -47,5 +49,5 @@ class XLite_Module_ProductAdviser_View_CRPAddToCart extends XLite_View_Button
         } else {
             return "javascript: document.add_to_cart.product_id.value=".$this->get('p_id')."; if (isValid()) document.add_to_cart.submit()";
         }
-    }
+    }*/
 }

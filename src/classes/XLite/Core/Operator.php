@@ -42,7 +42,7 @@ class XLite_Core_Operator extends XLite_Base implements XLite_Base_ISingleton
      * @access protected
      * @since  3.0.0
      */
-    protected function checkRedirectStatus()
+    protected static function checkRedirectStatus()
     {
         return !XLite_Core_CMSConnector::isCMSStarted() 
             || !XLite_Core_Request::getInstance()->__get(XLite_Core_CMSConnector::NO_REDIRECT);
@@ -58,7 +58,7 @@ class XLite_Core_Operator extends XLite_Base implements XLite_Base_ISingleton
      * @access protected
      * @since  3.0.0
      */
-    protected function setHeaderLocation($location, $code = 302)
+    protected static function setHeaderLocation($location, $code = 302)
     {
         header('Location: ' . $location, true, $code);
     }
@@ -70,7 +70,7 @@ class XLite_Core_Operator extends XLite_Base implements XLite_Base_ISingleton
      * @access protected
      * @since  3.0.0
      */
-    protected function finish()
+    protected static function finish()
     {
         exit (0);
     }
@@ -88,12 +88,27 @@ class XLite_Core_Operator extends XLite_Base implements XLite_Base_ISingleton
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function redirect($location, $force = false, $code = 302)
+    public static function redirect($location, $force = false, $code = 302)
     {
-        if ($this->checkRedirectStatus() || $force) {
-            $this->setHeaderLocation($location, $code);
-            $this->finish();
+        if (static::checkRedirectStatus() || $force) {
+            static::setHeaderLocation($location, $code);
+            static::finish();
         }
+    }
+
+    /**
+     * Check if class exists 
+     * 
+     * @param string $name name of class to check
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function isClassExists($name)
+    {
+        return class_exists($name, false) || file_exists(LC_CLASSES_CACHE_DIR . str_replace('_', LC_DS, $name) . '.php');
     }
 }
 

@@ -320,7 +320,7 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
     public function getWidget($class, array $params = array(), $delta = 0)
     {
         return new XLite_Core_WidgetDataTransport(
-            class_exists($class) ? $this->getViewer()->getWidget($params, $class) : null
+            XLite_Core_Operator::isClassExists($class) ? $this->getViewer()->getWidget($params, $class) : null
         );
     }
 
@@ -339,7 +339,7 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
         $class = XLite_Core_Converter::getControllerClass($target);
 
         return new XLite_Core_WidgetDataTransport(
-            class_exists($class) ? new $class(array('target' => $target) + $params) : null
+            XLite_Core_Operator::isClassExists($class) ? new $class(array('target' => $target) + $params) : null
         );
     }
 

@@ -96,6 +96,11 @@ require_once (LC_EXT_LIB_DIR . 'Doctrine' . LC_DS . 'Common' . LC_DS . 'ClassLoa
 $classLoader = new \Doctrine\Common\ClassLoader('Doctrine', LC_EXT_LIB_DIR);
 $classLoader->register();
 
+
+// Current dir for autoload
+// FIXME - installer must declare it's own autoloader
+define('LC_AUTOLOAD_DIR', defined('XLITE_INSTALL_MODE') ? LC_CLASSES_DIR : LC_CLASSES_CACHE_DIR);
+
 /**
  * Class autoload function
  * 
@@ -107,16 +112,8 @@ $classLoader->register();
  */
 function __lc_autoload($className)
 {
-    if (0 === strncmp($className, 'XLite', 5)) {
-        $fn = defined('XLITE_INSTALL_MODE')
-            ? LC_CLASSES_DIR
-            : LC_CLASSES_CACHE_DIR;
-
-        $fn .= str_replace('_', LC_DS, $className) . '.php';
-
-        if (file_exists($fn)) {
-            require_once ($fn);
-        }
+    if (0 === strpos($className, 'XLite')) {
+        require_once LC_AUTOLOAD_DIR . str_replace('_', LC_DS, $className) . '.php';
     }
 }
 

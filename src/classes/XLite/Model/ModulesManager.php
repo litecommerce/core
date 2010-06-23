@@ -89,7 +89,7 @@ class XLite_Model_ModulesManager extends XLite_Base implements XLite_Base_ISingl
      */
     protected function getModule()
     {
-        if (is_null($this->module)) {
+        if (!isset($this->module)) {
             $this->module = new XLite_Model_Module();
         }
 
@@ -126,7 +126,7 @@ class XLite_Model_ModulesManager extends XLite_Base implements XLite_Base_ISingl
     {
         foreach ($this->getModule()->findAll('enabled = \'1\'') as $module) {
             $className = 'XLite_Module_' . $module->get('name') . '_Main';
-            if (class_exists($className)) {
+            if (XLite_Core_Operator::isClassExists($className)) {
                 $moduleObject = new $className();
                 $moduleObject->init();
                 $moduleObject = null;
@@ -168,7 +168,7 @@ class XLite_Model_ModulesManager extends XLite_Base implements XLite_Base_ISingl
 
     public function getModules($type = null)
     {
-        return $this->getModule()->findAll(is_null($type) ? '' : 'type = \'' . $type . '\'');
+        return $this->getModule()->findAll(isset($type) ? 'type = \'' . $type . '\'' : '');
     }
 
     /**
@@ -244,14 +244,14 @@ class XLite_Model_ModulesManager extends XLite_Base implements XLite_Base_ISingl
 
     public function getActiveModules($moduleName = null)
     {
-        if (is_null($this->activeModules)) {
+        if (!isset($this->activeModules)) {
             $this->activeModules = array();
             foreach ($this->getModule()->findAll('enabled = \'1\'') as $module) {
                 $this->activeModules[$module->get('name')] = true;
             }
         }
 
-        return is_null($moduleName) ? $this->activeModules : isset($this->activeModules[$moduleName]);
+        return isset($moduleName) ? isset($this->activeModules[$moduleName]) : $this->activeModules;
     }
 
     public function getActiveModulesNumber()
