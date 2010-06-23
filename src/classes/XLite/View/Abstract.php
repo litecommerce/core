@@ -536,12 +536,10 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
 
         if ($markTemplates) {
             $original = substr($original, strlen(LC_SKINS_DIR));
-            echo (
-                '<!-- '
-                . get_called_class() . ' : ' . $original . ' (' . $cnt . ')'
-                . ($this->viewListName ? ' [\'' . $this->viewListName . '\' list child]' : '')
-                . ' {{{ -->'
-            );
+            $markTplText = get_called_class() . ' : ' . $original . ' (' . $cnt . ')'
+                . ($this->viewListName ? ' [\'' . $this->viewListName . '\' list child]' : '');
+
+            echo ('<!-- ' . $markTplText . ' {{{ -->');
         }
 
         ob_start();
@@ -552,7 +550,7 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
         echo ($this->postprocessContent($content));
 
         if ($markTemplates) {
-            echo ('<!-- }}} ' . get_called_class() . ' : ' . $original . ' (' . $cnt . ')' . ' -->');
+            echo ('<!-- }}} ' . $markTplText . ' -->');
         }
 
         if ($profilerEnabled) {
