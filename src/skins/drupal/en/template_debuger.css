@@ -1,7 +1,7 @@
 /* vim: set ts=2 sw=2 sts=2 et: */
 
 /**
- * ____file_title____
+ * Templates debugg styles
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -10,38 +10,93 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  */
-
-.debug-box {
-  border: 1px solid red;
-}
-
-tbody.debug-box {
+.tpl-debug-canvas {
+  position: absolute;
   display: block;
+  z-index: 1000000;
 }
 
-.debug-box:hover {
-  border-color: green;
+.tpl-debug-tpl-canvas,
+  .tpl-debug-list-canvas
+{
+  border: 1px dashed #d6ab89;
 }
 
-#debug_template_panel {
+.tpl-debug-current {
+  opacity: 0.2;
+  background-color: #ee6800;
+}
+
+.tpl-debug-info {
+  position: absolute;
+  display: block;
+  z-index: 1100000;
+  border: 1px solid #c6b4ac;
+  background-color: #fff;
+}
+
+.tpl-debug-info ul {
+  border: 3px solid #f3efe4;
+  padding: 10px;
+  margin: 0px;
+  list-style: none;
+}
+
+.tpl-debug-info li {
+  list-style: none;
+  padding-top: 5px;
+  padding-bottom: 10px;
+  background: transparent url(images/separator.png) no-repeat center bottom;
+}
+
+.tpl-debug-info li.last {
+  background-image: none;
+}
+
+.tpl-debug-info li strong {
+  color: #b86e32;
+}
+
+.tpl-debug-switcher {
   position: fixed;
   top: 10px;
-  left: 10px;
+  right: 10px;
   z-index: 5000000;
-  border: 1px solid black;
-  background: white none;
-  padding: 5px;
-  margin: 0px;
-  font-size: 12px;
-  line-height: normal;
+  border: 1px solid #c6b4ac;
+  background-color: #fff;
 }
 
-#debug_template_panel ul,
-  #debug_template_panel li
+.tpl-debug-switcher,
+  .tpl-debug-switcher a
 {
-  list-style: none;
-  padding: 0px;
-  margin: 0px;
+  font-size: 18px;
+  color: #000;
 }
 
+.tpl-debug-switcher a {
+  display: block;
+  height: 40px;
+  line-height: 40px;
+  vertical-align: middle;
+  padding-left: 60px;
+  background: transparent url(images/bulbs.png) no-repeat left top;
+  text-decoration: none;
+}
 
+.tpl-debug-switcher a:hover {
+  color: #000;
+}
+
+.tpl-debug-switcher a span {
+  text-decoration: underline;
+  color: #104d9c;
+}
+
+.tpl-debug-switcher a.disabled {
+  background-position: left -40px;
+}
+
+.tpl-debug-switcher div {
+  border: 3px solid #f3efe4;
+  padding: 10px;
+}
