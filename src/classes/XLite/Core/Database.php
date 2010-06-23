@@ -128,7 +128,8 @@ class XLite_Core_Database extends XLite_Base implements XLite_Base_ISingleton
      */
     public static function getEntityManager()
     {
-        if (is_null(self::$em)) {
+        // FIXME
+        if (!isset(self::$em)) {
             XLite_Core_Database::getInstance();
         }
 
@@ -309,7 +310,7 @@ class XLite_Core_Database extends XLite_Base implements XLite_Base_ISingleton
      */
     public static function isCacheEnabled()
     {
-        return !is_null(self::$cacheDriver);
+        return isset(self::$cacheDriver);
     }
 
     /**

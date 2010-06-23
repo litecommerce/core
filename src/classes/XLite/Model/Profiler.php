@@ -551,12 +551,10 @@ HTML;
         $this->lastTime = microtime(true);
 
         // Uncomment if you want to truncate queries
-        /*
-        if (strlen($query)>300) {
+        /* if (strlen($query)>300) {
             $query = substr($query, 0, 300) . ' ...';
             
-        }
-        */
+        } */
 
         if (!isset(self::$queries[$query])) {
             self::$queries[$query] = array(

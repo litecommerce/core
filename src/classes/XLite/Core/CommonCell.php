@@ -45,10 +45,11 @@ class XLite_Core_CommonCell
      */
     protected $properties = array();
 
+
     /**
      * Get property by name
      * 
-     * @param mixed $name Name of property
+     * @param string $name property name
      *  
      * @return mixed
      * @access public
@@ -63,8 +64,8 @@ class XLite_Core_CommonCell
     /**
      * Set property value
      * 
-     * @param mixed $name  Name of property
-     * @param mixed $value Value of property
+     * @param string $name  property name
+     * @param mixed  $value property value
      *  
      * @return void
      * @access public
@@ -76,4 +77,18 @@ class XLite_Core_CommonCell
         $this->properties[$name] = $value;
     }
 
+    /**
+     * Check if property exists
+     * 
+     * @param string $name property name
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function __isset($name)
+    {
+        return isset($this->properties[$name]);
+    }
 }

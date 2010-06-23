@@ -35,7 +35,6 @@
  */
 class XLite_Model_Repo_Config extends XLite_Model_Repo_Base_I18n
 {
-
     /**
      * Default 'order by' field name
      * 
@@ -86,7 +85,7 @@ class XLite_Model_Repo_Config extends XLite_Model_Repo_Base_I18n
             $data = $this->getFromCache('category', array('category_name' => $category));
         }
         
-        if (is_null($data)) {
+        if (!isset($data)) {
             $data = $this->defineByCategoryQuery($category)->getQuery()->getResult();
             if (!$doNotProcess) {
                 $data = $this->processOptions($data);
@@ -134,7 +133,7 @@ class XLite_Model_Repo_Config extends XLite_Model_Repo_Base_I18n
             $data = $this->getFromCache('all');
         }
         
-        if (is_null($data)) {
+        if (!isset($data)) {
             $data = $this->defineAllOptionsQuery()->getQuery()->getResult();
             $data = $this->processOptions($data);
             $this->saveToCache($data, 'all');
@@ -182,14 +181,14 @@ class XLite_Model_Repo_Config extends XLite_Model_Repo_Base_I18n
             $type     = $option->type;
             $value    = $option->value;
 
-            if (is_null($config->$category)) {
+            if (!isset($config->$category)) {
                 $config->$category = new XLite_Core_CommonCell();
             }
 
-            if ('checkbox' == $type) {
-                $value = ('Y' == $value ? true : false);
+            if ('checkbox' === $type) {
+                $value = ('Y' == $value);
 
-            } elseif ('serialized' == $type) {
+            } elseif ('serialized' === $type) {
                 $value = unserialize($value);
             }
 
@@ -215,16 +214,18 @@ class XLite_Model_Repo_Config extends XLite_Model_Repo_Base_I18n
         // TODO: Need to be moved to the separate model
         if (isset($config->Memberships)) {
 
-            $config->Memberships->memberships = array();
+            $memberships = array();
 
             if (isset($config->Memberships->membershipsCollection) && is_array($config->Memberships->membershipsCollection)) {
                 foreach ($config->Memberships->membershipsCollection as $membership) {
-                    $config->Memberships->memberships[] = $membership['membership'];
+                    $memberships[] = $membership['membership'];
                 }
 
             } else {
                 $config->Memberships->membershipsCollection = array();
-            }
+            }   
+            
+            $config->Memberships->memberships = $memberships;
         }
 
         return $config;
@@ -286,7 +287,7 @@ class XLite_Model_Repo_Config extends XLite_Model_Repo_Base_I18n
         $errorFields = array();
 
         foreach ($fields as $field => $required) {
-            if (isset($data[$field]) && !is_null($data[$field])) {
+            if (isset($data[$field])) {
                 $fields[$field] = $data[$field];
             
             } elseif ($required) {
