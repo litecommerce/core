@@ -53,7 +53,9 @@ class XLite_Model_Cart extends XLite_Model_Order implements XLite_Base_ISingleto
 
         if ($orderId = XLite_Model_Session::getInstance()->get('order_id')) {
             $this->set('order_id', $orderId);
-            $this->isExists() ?: $this->set('order_id', null);
+            if (!$this->isExists()) {
+                $this->set('order_id', null);
+            }
         }
 
         if ('T' === $this->get('status')) {
@@ -64,7 +66,9 @@ class XLite_Model_Cart extends XLite_Model_Order implements XLite_Base_ISingleto
                 if ($auth->getProfile()->get('profile_id') != $this->get('profile_id')) {
                     $this->setProfile($auth->getProfile());
                     $this->calcTotals();
-                    !$this->isPersistent ?: $this->update();
+                    if ($this->isPersistent) {
+                        $this->update();
+                    }    
                 }
                 
 
