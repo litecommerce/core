@@ -1412,14 +1412,8 @@ class Decorator
      */
     protected function getDoctrineCacheDriver()
     {
-        if (is_null($this->cacheDriver)) {
-
-            $options = $this->getConfigOptions('cache');
-            if (!$options || !is_array($options)) {
-                $options = array('type' => false);
-            }
-            
-            $this->cacheDriver = XLite_Core_Database::getCacheDriverByOptions($options);
+        if (!isset($this->cacheDriver)) {
+            $this->cacheDriver = XLite_Core_Database::getCacheDriverByOptions($this->getConfigOptions('cache'));
         }
 
         return $this->cacheDriver;
