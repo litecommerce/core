@@ -35,18 +35,15 @@
  */
 class XLite_Model_Layout extends XLite_Base implements XLite_Base_ISingleton
 {
-    /**
-     * customerAreaSkin 
-     * 
-     * @var    string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected $customerAreaSkin = null;
-
     public $skin = null;
 
+    public $skinCustomer = null;
+
     public $locale = null;
+
+    protected $path = null;
+
+    protected $pathCustomer = null;
 
     /**
     * Skin templates list.
@@ -64,7 +61,7 @@ class XLite_Model_Layout extends XLite_Base implements XLite_Base_ISingleton
             }
         }
 
-        $this->customerAreaSkin = XLite::getInstance()->getOptions(array('skin_details', 'skin'));
+        $this->skinCustomer = XLite::getInstance()->getOptions(array('skin_details', 'skin'));
     }
 
     /**
@@ -117,19 +114,26 @@ class XLite_Model_Layout extends XLite_Base implements XLite_Base_ISingleton
     /**
      * Returns the layout path
      * 
-     * @param bool $forCustomerArea flag
-     *  
      * @return string
      * @access public
      * @since  3.0.0
      */
-    public function getPath($forCustomerArea = false)
+    public function getPath()
     {
-        return sprintf(
-            'skins/%s/%s/',
-            $forCustomerArea ? $this->customerAreaSkin : $this->skin,
-            $this->locale
-        );
+        if (!isset($this->path)) {
+            $this->path = sprintf('skins/%s/%s/', $this->skin, $this->locale);
+        }
+
+        return $this->path;
+    }
+
+    public function getPathCustomer()
+    {
+        if (!isset($this->pathCustomer)) {
+            $this->pathCustomer = sprintf('skins/%s/%s/', $this->skinCustomer, $this->locale);
+        }
+        
+        return $this->pathCustomer;
     }
     
     function getSkins($includeAdmin = false)

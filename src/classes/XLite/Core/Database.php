@@ -187,20 +187,10 @@ class XLite_Core_Database extends XLite_Base implements XLite_Base_ISingleton
      */
     protected function setDoctrineCache()
     {
-        $cache = false;
-
-        $options = XLite::getInstance()->getOptions('cache');
-        if (!$options || !is_array($options)) {
-            $options = array('type' => false);
-        }
-
-        $cache = self::getCacheDriverByOptions($options);
+        $cache = self::getCacheDriverByOptions(XLite::getInstance()->getOptions('cache'));
 
         if ($cache) {
             self::$cacheDriver = $cache;
-
-        } else {
-            $cache = new \Doctrine\Common\Cache\ArrayCache;
         }
 
         $this->config->setMetadataCacheImpl($cache);
@@ -211,19 +201,17 @@ class XLite_Core_Database extends XLite_Base implements XLite_Base_ISingleton
     /**
      * Get cache driver by options list
      * 
-     * @param array $options Options from config.ini
+     * @param mixed $options Options from config.ini
      *  
      * @return \Doctrine\Common\Cache\Cache
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function getCacheDriverByOptions(array $options)
+    public static function getCacheDriverByOptions($options)
     {
-        $cache = false;
-
-        if (!$options || !is_array($options)) {
-            $options = array('type' => false);
+        if (!isset($options) || !is_array($options)) {
+            $options = array('type' => null);
         }
 
         if ('apc' == $options['type']) {
@@ -254,9 +242,14 @@ class XLite_Core_Database extends XLite_Base implements XLite_Base_ISingleton
                 $cache = new \Doctrine\Common\Cache\MemcacheCache;
                 $cache->setMemcache($memcache);
             }
-            
+
         } elseif ('xcache' == $options['type']) {
+
             $cache = new \Doctrine\Common\Cache\XcacheCache;
+
+        } else {
+
+            $cache = new \Doctrine\Common\Cache\ArrayCache;
         }
 
         return $cache;

@@ -51,7 +51,7 @@ class XLite_Model_Template extends XLite_Model_FileNode
     function setPath($path)
     {
         $this->path = $path;
-        $this->file = XLite_Model_Layout::getInstance()->getPath(true) . $path;
+        $this->file = XLite_Model_Layout::getInstance()->getPathCustomer() . $path;
     }
 
     function setContent($content)
