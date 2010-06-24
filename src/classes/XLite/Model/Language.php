@@ -73,17 +73,6 @@ class XLite_Model_Language extends XLite_Model_Base_I18n
     protected $code3 = '';
 
     /**
-     * Country code
-     * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     * @Column (type="string", length="2", nullable=false)
-     */
-    protected $country_code = '';
-
-    /**
      * Right-to-left flag
      * 
      * @var    boolean
