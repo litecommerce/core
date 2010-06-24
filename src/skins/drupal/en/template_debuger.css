@@ -67,33 +67,43 @@
 }
 
 .tpl-debug-switcher,
-  .tpl-debug-switcher a
+  .tpl-debug-switcher a.switcher
 {
+  vertical-align: middle;
   font-size: 18px;
-  color: #000;
 }
 
-.tpl-debug-switcher a {
-  display: block;
+.tpl-debug-switcher a.switcher {
   height: 40px;
   line-height: 40px;
-  vertical-align: middle;
   padding-left: 60px;
   background: transparent url(images/bulbs.png) no-repeat left top;
   text-decoration: none;
+  display: block;
+  float: left;
 }
 
-.tpl-debug-switcher a:hover {
-  color: #000;
-}
-
-.tpl-debug-switcher a span {
+.tpl-debug-switcher a.switcher span {
   text-decoration: underline;
-  color: #104d9c;
 }
 
 .tpl-debug-switcher a.disabled {
   background-position: left -40px;
+}
+
+.tpl-debug-switcher span.text {
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  line-height: 40px;
+}
+
+.tpl-debug-switcher .help {
+  width: 16px;
+  height: 16px;
+  background: transparent url(images/help_mark.png) no-repeat left top;
+  cursor: pointer;
+  padding: 0px;
+  vertical-align: middle;
 }
 
 .tpl-debug-switcher div {

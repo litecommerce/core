@@ -11,6 +11,20 @@
  * @since     3.0.0
  */
 
+function getSkinRoot()
+{
+  var re = new RegExp('js\/common\.js');
+  var list = document.getElementsByTagName('script');
+  var path = null;
+  for (var i = 0; i < list.length; i++) {
+    if (list[i].src && list[i].src.search(re) != -1) {
+      path = list[i].src.replace(/js\/common\.js.*/, '');
+    }
+  }
+
+  return path;
+}
+
 function parseUri (str) {
 	var	o   = parseUri.options,
 		m   = o.parser[o.strictMode ? "strict" : "loose"].exec(str),
