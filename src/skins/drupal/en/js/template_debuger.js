@@ -137,6 +137,7 @@ $(document).ready(
 
     // Add link
     switcher.link = box.appendChild(document.createElement('a'))
+    switcher.link.className = 'switcher';
     switcher.link.appendChild(document.createElement('span')).innerHTML = 'Disable';
     $(switcher.link).click(
       function(event) {
@@ -146,7 +147,15 @@ $(document).ready(
       }
     );
 
-    switcher.link.appendChild(document.createTextNode(' tracing'));
+    var span = box.appendChild(document.createElement('span'));
+    span.innerHTML = 'tracing';
+    span.className = 'text';
+
+    // Add help mark
+    var help = box.appendChild(document.createElement('img'));
+    help.src = getSkinRoot() + 'images/spacer.gif';
+    help.className = 'help';
+    help.title = 'Templates tracking is a utility, showing the template hierarchy of the selected element. If displays the template, where the element which you point at with your mouse is declared and the hierarchy of templates which are called before this template.';
 
     // Add service properties and methods
     switcher.enabled = true;
