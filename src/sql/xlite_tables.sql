@@ -510,12 +510,11 @@ CREATE TABLE xlite_languages (
   lng_id int(11) NOT NULL auto_increment PRIMARY KEY,
   code char(2) NOT NULL,
   code3 char(3) NOT NULL default '',
-  country_code char(2) NOT NULL default '',
   r2l int(1) NOT NULL default 0,
   active int(1) NOT NULL default 0,
   UNIQUE KEY code3 (code3),
   UNIQUE KEY code2 (code),
-  KEY country_code (country_code)
+  KEY active(active)
 ) TYPE=MyISAM;
 
 DROP TABLE IF EXISTS xlite_language_translations;
