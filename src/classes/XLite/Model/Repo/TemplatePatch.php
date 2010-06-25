@@ -97,11 +97,7 @@ class XLite_Model_Repo_TemplatePatch extends XLite_Model_Repo_AbstractRepo
      */
     protected function defineAllPatchesQuery()
     {
-        $qb = XLite_Core_Database::getQB()
-            ->select('t')
-            ->from('XLite_Model_TemplatePatch', 't');
-
-        return $this->assignDefaultOrderBy($qb, 't');
+        return $this->createQueryBuilder();
     }
 
     /**

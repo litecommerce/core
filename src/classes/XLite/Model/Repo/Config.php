@@ -108,17 +108,15 @@ class XLite_Model_Repo_Config extends XLite_Model_Repo_Base_I18n
      */
     protected function defineByCategoryQuery($category)
     {
-        $qb = XLite_Core_Database::getQB()
-            ->select(array('c'))
-            ->from('XLite_Model_Config', 'c')
+        return $this->createQueryBuilder()
             ->where('c.category = :category')
             ->setParameter('category', $category);
-
-        return $this->assignDefaultOrderBy($qb, 'c');
     }
 
     /**
      * Get the list of all options
+     * 
+     * @param boolean $force Do not use cache
      * 
      * @return array
      * @access public
@@ -152,11 +150,7 @@ class XLite_Model_Repo_Config extends XLite_Model_Repo_Base_I18n
      */
     protected function defineAllOptionsQuery()
     {
-        $qb = XLite_Core_Database::getQB()
-            ->select(array('c'))
-            ->from('XLite_Model_Config', 'c');
-     
-        return $this->assignDefaultOrderBy($qb, 'c');
+        return $this->createQueryBuilder();
     }
 
     /**
@@ -208,24 +202,6 @@ class XLite_Model_Repo_Config extends XLite_Model_Repo_Base_I18n
         if (isset($config->General)) {
             $config->General->defaultCountry = XLite_Core_Database::getEM()
                 ->find('XLite_Model_Country', $config->General->default_country);
-        }
-
-        // Prepare memberships array
-        // TODO: Need to be moved to the separate model
-        if (isset($config->Memberships)) {
-
-            $memberships = array();
-
-            if (isset($config->Memberships->membershipsCollection) && is_array($config->Memberships->membershipsCollection)) {
-                foreach ($config->Memberships->membershipsCollection as $membership) {
-                    $memberships[] = $membership['membership'];
-                }
-
-            } else {
-                $config->Memberships->membershipsCollection = array();
-            }   
-            
-            $config->Memberships->memberships = $memberships;
         }
 
         return $config;

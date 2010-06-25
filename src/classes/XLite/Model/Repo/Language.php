@@ -92,11 +92,7 @@ class XLite_Model_Repo_Language extends XLite_Model_Repo_Base_I18n
      */
     protected function defineAllLanguagesQuery()
     {
-        $qb = XLite_Core_Database::getQB()
-            ->select('l')
-            ->from('XLite_Model_Language', 'l');
-
-        return $this->assignDefaultOrderBy($qb, 'l');
+        return $this->createQueryBuilder();
     }
 
     /**
@@ -109,8 +105,11 @@ class XLite_Model_Repo_Language extends XLite_Model_Repo_Base_I18n
      */
     public function findActiveLanguages()
     {
-        return $this->assignQueryCache($this->defineActiveLanguagesQuery()->getQuery(), 'active', array('active' => true))
-            ->getResult();
+        return $this->assignQueryCache(
+            $this->defineActiveLanguagesQuery()->getQuery(),
+            'active',
+            array('active' => true)
+        )->getResult();
     }
 
     /**
@@ -123,13 +122,9 @@ class XLite_Model_Repo_Language extends XLite_Model_Repo_Base_I18n
      */
     protected function defineActiveLanguagesQuery()
     {
-        $qb = XLite_Core_Database::getQB()
-            ->select('l')
-            ->from('XLite_Model_Language', 'l')
+        return $this->createQueryBuilder()
             ->where('l.active = :true')
             ->setParameter('true', true);
-
-        return $this->assignDefaultOrderBy($qb, 'l');
     }
 
     /**
