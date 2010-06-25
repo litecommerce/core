@@ -106,13 +106,9 @@ class XLite_Model_Repo_ViewList extends XLite_Model_Repo_AbstractRepo
      */
     protected function defineClassListQuery($class, $list, $zone)
     {
-        $qb = XLite_Core_Database::getQB()
-            ->select('v')
-            ->from('XLite_Model_ViewList', 'v')
+        return $this->createQueryBuilder()
             ->where('v.class IN (:class, :empty) AND v.list = :list AND v.zone IN (:zone, :empty)')
             ->setParameters(array('class' => $class, 'empty' => '', 'list' => $list, 'zone' => $zone));
-
-        return $this->assignDefaultOrderBy($qb, 'v');
     }
 }
 

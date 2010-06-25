@@ -97,11 +97,7 @@ class XLite_Model_Repo_Country extends XLite_Model_Repo_AbstractRepo
      */
     protected function defineAllCountriesQuery()
     {
-        $qb = XLite_Core_Database::getQB()
-            ->select('c')
-            ->from('XLite_Model_Country', 'c');
-
-        return $this->assignDefaultOrderBy($qb, 'c');
+        return $this->createQueryBuilder();
     }
 
     /**
@@ -134,14 +130,12 @@ class XLite_Model_Repo_Country extends XLite_Model_Repo_AbstractRepo
      */
     protected function defineCountriesStatesQuery()
     {
-        $qb = XLite_Core_Database::getQB()
-            ->select(array('c', 's'))
-            ->from('XLite_Model_Country', 'c')
+        return $this->createQueryBuilder()
+            ->addSelect('s')
             ->leftJoin('c.states', 's')
             ->where('c.enabled = :enabled')
             ->setParameter('enabled', true);
 
-        return $this->assignDefaultOrderBy($qb, 'c');
     }
 
     /**

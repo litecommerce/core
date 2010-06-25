@@ -126,6 +126,16 @@ abstract class XLite_Model_Repo_AbstractRepo extends EntityRepository
     protected $defaultOrderBy = null;
 
     /**
+     * Default model alias 
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $defaultAlias = null;
+
+    /**
      * Define cache cells 
      * 
      * @return array
@@ -436,33 +446,70 @@ abstract class XLite_Model_Repo_AbstractRepo extends EntityRepository
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function assignDefaultOrderBy(Doctrine\ORM\QueryBuilder $queryBuilder, $alias)
+    public function assignDefaultOrderBy(Doctrine\ORM\QueryBuilder $queryBuilder, $alias = null)
     {
         if ($this->defaultOrderBy) {
+
+            if (!isset($alias)) {
+                $alias = $this->getMainAlias($qb);
+            }
+
             if (is_string($this->defaultOrderBy)) {
 
                 // One field
-                $queryBuilder->orderBy($alias . '.' . $this->defaultOrderBy);
+                $queryBuilder->addOrderBy($alias . '.' . $this->defaultOrderBy);
 
             } elseif (is_array($this->defaultOrderBy)) {
 
                 // Many fields (field name => sort suffix)
                 foreach ($this->defaultOrderBy as $field => $asc) {
-                    if (!isset($exp)) {
-                        $exp = new Doctrine\ORM\Query\Expr\OrderBy($alias . '.' . $field, $asc ? 'ASC' : 'DESC');
-
-                    } else {
-                        $exp->add($alias . '.' . $field, $asc ? 'ASC' : 'DESC');
-                    }
+                    $queryBuilder->addOrderBy($alias . '.' . $field, $asc ? 'ASC' : 'DESC');
                 }
 
-                if (isset($exp)) {
-                    $queryBuilder->orderBy($exp);
-                }
             }
         }
 
         return $queryBuilder;
+    }
+
+    /**
+     * Get Query builder main alias 
+     * 
+     * @param Doctrine\ORM\QueryBuilder $qb Query builder
+     *  
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getMainAlias(Doctrine\ORM\QueryBuilder $qb)
+    {
+        $from = $qb->getDQLPart('from');
+        $from = explode(' ', array_shift($from), 2);
+
+        return isset($from[1]) ? $from[1] : $from[0];
+    }
+
+    /**
+     * Create a new QueryBuilder instance that is prepopulated for this entity name
+     * 
+     * @param string $alias Table alias
+     *  
+     * @return Doctrine\ORM\QueryBuilder
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function createQueryBuilder($alias = null)
+    {
+        if (!isset($this->defaultAlias)) {
+            $list = explode('_', $this->_entityName);
+            $this->defaultAlias = strtolower(substr(array_pop($list), 0, 1));
+        }
+
+        $alias = $alias ?: $this->defaultAlias;
+
+        return $this->assignDefaultOrderBy(parent::createQueryBuilder($alias), $alias);
     }
 
     /**

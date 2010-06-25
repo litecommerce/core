@@ -36,7 +36,7 @@
 abstract class XLite_Model_Repo_Base_I18n extends XLite_Model_Repo_AbstractRepo
 {
 	/**
-	 * Add language subquery 
+	 * Add language subquery with language code relation
 	 * 
 	 * @param Doctrine\ORM\QueryBuilder $qb    Query builder
 	 * @param string                    $alias Main model alias
@@ -47,8 +47,12 @@ abstract class XLite_Model_Repo_Base_I18n extends XLite_Model_Repo_AbstractRepo
 	 * @see    ____func_see____
 	 * @since  3.0.0
 	 */
-	protected function addLanguageQuery(Doctrine\ORM\QueryBuilder $qb, $alias, $code = null)
+	protected function addLanguageQuery(Doctrine\ORM\QueryBuilder $qb, $alias = null, $code = null)
 	{
+        if (!isset($alias)) {
+            $alias = $this->getMainAlias($qb);
+        }
+
 		if (is_null($code)) {
 			$code = XLite_Model_Session::getInstance()->getLanguage()->code;
 		}
@@ -69,5 +73,52 @@ abstract class XLite_Model_Repo_Base_I18n extends XLite_Model_Repo_AbstractRepo
 
 		return $qb;
 	}
+
+	/**
+	 * Add translations subquery 
+	 * 
+	 * @param Doctrine\ORM\QueryBuilder $qb    Query builder
+	 * @param string                    $alias Main model alias
+	 *  
+	 * @return Doctrine\ORM\QueryBuilder
+	 * @access protected
+	 * @see    ____func_see____
+	 * @since  3.0.0
+	 */
+	protected function addTranslationsSubquery(Doctrine\ORM\QueryBuilder $qb, $alias = null)
+	{
+        if (!isset($alias)) {
+            $alias = $this->getMainAlias($qb);
+        }
+
+		$qb->add('select', 'translations', true);
+		$qb->add(
+			'join',
+			new Doctrine\ORM\Query\Expr\Join(
+				Doctrine\ORM\Query\Expr\Join::INNER_JOIN,
+				$alias . '.translations',
+				'translations'
+			),
+			true
+		);
+
+		return $qb;
+	}
+
+    /**
+     * Create a new QueryBuilder instance that is prepopulated for this entity name
+     * 
+     * @param string $alias Table alias
+     *  
+     * @return Doctrine\ORM\QueryBuilder
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function createQueryBuilder($alias = null)
+    {
+        return $this->addTranslationsSubquery(parent::createQueryBuilder($alias), $alias);
+
+    }
 }
 

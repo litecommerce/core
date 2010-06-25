@@ -115,15 +115,13 @@ class XLite_Model_Repo_State extends XLite_Model_Repo_AbstractRepo
     public function getCodeById($stateId)
     {
         try {
-            $state = XLite_Core_Database::getQB()
-                ->select('s.code')
-                ->from('XLite_Model_State', 's')
+            $code = $this->createQueryBuilder()
                 ->where('s.state_id = :id')
                 ->setMaxResults(1)
                 ->setParameter('id', $stateId)
                 ->getQuery()
-                ->getSingleResult();
-            $code = $state['code'];
+                ->getSingleResult()
+                ->code;
 
         } catch (Doctrine\ORM\NoResultException $exception) {
             $code = null;
@@ -172,12 +170,9 @@ class XLite_Model_Repo_State extends XLite_Model_Repo_AbstractRepo
      */
     protected function defineAllStatesQuery()
     {
-        $qb = XLite_Core_Database::getQB()
-            ->select(array('s', 'c'))
-            ->from('XLite_Model_State', 's')
+        return $this->createQueryBuilder()
+            ->addSelect('c')
             ->leftJoin('s.country', 'c');
-
-        return $this->assignDefaultOrderBy($qb, 's');
     }
 
     /**
@@ -212,14 +207,11 @@ class XLite_Model_Repo_State extends XLite_Model_Repo_AbstractRepo
      */
     protected function defineByShippingZoneQuery($shippingZone)
     {
-        $qb = XLite_Core_Database::getQB()
-            ->select(array('s', 'c'))
-            ->from('XLite_Model_State', 's')
+        return XLite_Core_Database::getQB()
+            ->addSelect('c')
             ->leftJoin('s.country', 'c')
             ->where('s.shipping_zone = :shipping_zone')
             ->setParameter('shipping_zone', $shippingZone);
-
-        return $this->assignDefaultOrderBy($qb, 's');
     }
 
 }

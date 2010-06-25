@@ -94,9 +94,7 @@ class XLite_Model_Repo_LanguageLabel extends XLite_Model_Repo_AbstractRepo
      */
     protected function defineLabelsByCodeQuery($code)
     {
-        return XLite_Core_Database::getQB()
-            ->select('l')
-            ->from('XLite_Model_LanguageLabel', 'l')
+        return $this->createQueryBuilder()
             ->where('l.code = :code')
             ->setParameter('code', $code);
     }
