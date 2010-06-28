@@ -192,10 +192,15 @@ class XLite_Model_Shipping extends XLite_Model_Abstract
      */
     public static function registerShippingModule($name, $class)
     {
-        if (!isset(self::$registeredShippingModules[$name]) || !(self::$registeredShippingModules[$name] instanceof self)) {
-            if (XLite_Core_Operator::isClassExists($class = 'XLite_' . $class)) {
+        if (
+            !isset(self::$registeredShippingModules[$name])
+            || !(self::$registeredShippingModules[$name] instanceof self)
+        ) {
+            $class = 'XLite_' . $class;
+            if (XLite_Core_Operator::isClassExists($class)) {
                 self::$registeredShippingModules[$name] = new $class();
                 self::$registeredShippingModules[$name]->set('class', $name);
+
             } else {
                 // TODO - add exception throwing
             }
