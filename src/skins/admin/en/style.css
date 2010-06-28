@@ -198,6 +198,67 @@ table.plain-table td {
   background-color: #ffffff;
 }
 
+.right-panel {
+  text-align: right;
+  padding: 5px 0px 10px 0px;
+}
+
+table.data-table {
+  background-color: #ddd;
+}
+
+table.data-table th {
+  background-color: #e5ebef;
+  padding: 3px 5px;
+}
+
+table.data-table td {
+  background-color: #fff;
+  padding: 3px;
+}
+
+table.data-table tr.highlight td {
+  background-color: #eee;
+}
+
+table.data-table .extender {
+  width: 100%;
+}
+
+table.data-table td.extender input {
+  width: 90%;
+}
+
+table.data-table td.center {
+  text-align: center;
+}
+
+input.orderby {
+  width: 4em;
+  text-align: right;
+}
+
+ul.form {
+  margin: 0px;
+  padding: 0px;
+  list-style: none;
+}
+
+ul.form li {
+  margin: 0px;
+  padding: 5px 0px;
+  list-style: none;
+}
+
+ul.form label {
+  display: block;
+  font-style: normal;
+}
+
+div.buttons {
+  margin-top: 10px;
+}
+
 .AomTableHead {
     BACKGROUND-COLOR: #E5EBEF;
 	FONT-SIZE: 12px;
