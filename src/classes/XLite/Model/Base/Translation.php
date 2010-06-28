@@ -70,4 +70,20 @@ abstract class XLite_Model_Base_Translation extends XLite_Model_AbstractEntity
      * @Column (type="string", length="2", nullable=false)
      */
     protected $code = 'en';
+
+    /**
+     * Check cache after enity persis or remove
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function checkCache()
+    {
+        parent::checkCache();
+
+        // Check translation owner cache
+        $this->owner->checkCache();
+    }
 }
