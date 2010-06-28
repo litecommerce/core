@@ -95,7 +95,7 @@ abstract class XLite_Model_Repo_Base_I18n extends XLite_Model_Repo_AbstractRepo
 		$qb->add(
 			'join',
 			new Doctrine\ORM\Query\Expr\Join(
-				Doctrine\ORM\Query\Expr\Join::INNER_JOIN,
+				Doctrine\ORM\Query\Expr\Join::LEFT_JOIN,
 				$alias . '.translations',
 				'translations'
 			),
