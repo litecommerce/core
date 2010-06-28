@@ -97,7 +97,7 @@ class XLite_Module_WholesaleTrading_Model_Profile extends XLite_Model_Profile im
             $mail->send();
 
             // Unset membership
-            $this->set('membership', '');
+            $this->set('membership', 0);
             $this->set('membership_exp_date', 0);
             $this->update();
 

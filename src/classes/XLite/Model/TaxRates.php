@@ -56,20 +56,30 @@ class XLite_Model_TaxRates extends XLite_Base
 
     function _init()
     {
-        if (strlen($this->config->Taxes->tax_rates)>0) {
+        if (is_array($this->config->Taxes->tax_rates)) {
+            $this->_rates = $this->config->Taxes->tax_rates;
+
+        } elseif (strlen($this->config->Taxes->tax_rates) > 0) {
             $this->_rates = unserialize($this->config->Taxes->tax_rates);
+
         } else {
             $this->_rates = array();
         }
+
         if (!is_array($this->_rates)) {
             $this->_rates = array();
         }
 
-        if (strlen($this->config->Taxes->taxes)>0) {
+        if (is_array($this->config->Taxes->taxes)) {
+            $this->_taxes = $this->config->Taxes->taxes;
+
+        } elseif (strlen($this->config->Taxes->taxes) > 0) {
             $this->_taxes = unserialize($this->config->Taxes->taxes);
+
         } else {
             $this->_taxes = array();
         }
+
         if (!is_array($this->_taxes)) {
             $this->_taxes = array();
         }
@@ -498,9 +508,6 @@ array("condition" => "country=Australia", "action" => array("Tax:==GST", "GST:=1
             $this->_conditionValues['country'] .= ",EU country";
         }
         $this->_conditionValues['membership'] = $profile->get('membership');
-        if ($this->_conditionValues['membership'] == "") {
-            $this->_conditionValues['membership'] = "No membership";
-        }
     }
 
     /**

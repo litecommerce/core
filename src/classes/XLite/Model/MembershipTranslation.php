@@ -27,48 +27,25 @@
  */
 
 /**
- * Membership
+ * Memebership translations
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  * @Entity
- * @Table (name="memberships")
+ * @Table (name="membership_translations")
  */
-class XLite_Model_Membership extends XLite_Model_Base_I18n
+class XLite_Model_MembershipTranslation extends XLite_Model_Base_Translation
 {
     /**
-     * Unique id 
+     * Memebership name
      * 
-     * @var    integer
+     * @var    string
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @Id
-     * @GeneratedValue (strategy="AUTO")
-     * @Column (type="integer")
+     * @Column (type="string", length="128")
      */
-    protected $membership_id;
-
-    /**
-     * Position
-     * 
-     * @var    integer
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     * @Column (type="integer")
-     */
-    protected $orderby = 0;
-
-    /**
-     * Active status
-     * 
-     * @var    boolean
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     * @Column (type="boolean")
-     */
-    protected $active = true;
+    protected $name;
 }
+

@@ -322,8 +322,8 @@ class XLite_Module_WholesaleTrading_Model_Order extends XLite_Model_Order implem
         $gd = new XLite_Module_WholesaleTrading_Model_GlobalDiscount();
         $gd->set('defaultOrder', 'subtotal');
         $profile = $this->get('profile');
-        $membership = (is_object($profile)) ? $profile->get('membership') : "";
-        $discounts = $gd->findAll('subtotal < ' . $subtotal . ' AND (membership = \'all\' OR membership = \'' . $membership . '\')');
+        $membership = is_object($profile) ? $profile->get('membership') : 0;
+        $discounts = $gd->findAll('subtotal < ' . $subtotal . ' AND (membership = \'0\' OR membership = \'' . $membership . '\')');
 
         if (count($discounts) != 0) {
             $applied_gd = $discounts[count($discounts) - 1];

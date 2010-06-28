@@ -89,8 +89,8 @@ class XLite_Model_Profile extends XLite_Model_Abstract
         'last_login'            => '0',
         'status'                => 'E',
         'referer'               => '',
-        'membership'            => '',
-        'pending_membership'    => '',
+        'membership'            => 0,
+        'pending_membership'    => 0,
         'sidebar_boxes'         => '',
         'language'              => 'en',
     );
@@ -100,7 +100,7 @@ class XLite_Model_Profile extends XLite_Model_Abstract
         'access_level' => '0',
         'first_login'  => '0',
         'last_login'   => '0',
-        'membership'   => '',
+        'membership'   => 0,
     );
 
     public $_adminSecurefields = array(
@@ -317,24 +317,9 @@ class XLite_Model_Profile extends XLite_Model_Abstract
         return "<profile id=\"$id\">\n$xml</profile>\n";
     }
 
-    function import(array $options) 
-    {
-        parent::import($options);
-        // save memberships
-        
-        XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
-            array(
-                'category' => 'Memberships',
-                'name'     => 'memberships',
-                'value'    => serialize($this->config->Memberships->memberships),
-                'type'     => 'serialized'
-            )
-        );
-    }
-
     /**
     * Import a row from outside. 
-    * It will modify the $this->config->Memberships->memberships variable
+    * It will modify the memberships model
     * SO you need to save it after all.
     */
     function _import(array $options) 
@@ -344,6 +329,20 @@ class XLite_Model_Profile extends XLite_Model_Abstract
         echo "<b>line# $line:</b> ";
 
         $properties = $options['properties'];
+        if (isset($properties['membership']) && $properties['membership']) {
+            $membership = XLite_Core_Database::getRepo('XLite_Model_Membership')->findOneByName($properties['membership'], false);
+            if (!$membership) {
+                $membership = new XLite_Model_Membership();
+                $membership->name = $properties['membership'];
+                XLite_Core_Database::getEM()->persist($membership);
+                XLite_Core_Database::getEM()->flush();
+            }
+
+            $properties['membership'] = $membership->membership_id;
+
+        } else {
+            $properties['membership'] = 0;
+        }
 
         $this->_convertProperties($properties, $options['md5_import']);
         $existent = false;
@@ -364,14 +363,6 @@ class XLite_Model_Profile extends XLite_Model_Abstract
         }
         echo  $login . "<br>\n";
         func_flush();
-        if (!empty($properties['membership'])) {
-            $found = array_search($properties['membership'], $this->config->Memberships->memberships);
-            if ($found === false || $found === null) {
-                $memberships = $this->config->Memberships->memberships;
-                $memberships[] = $properties['membership'];
-                $this->config->Memberships->memberships = $memberships;
-            }
-        }
     }
 
     function _convertProperties(array &$p, $md5_import = '') 

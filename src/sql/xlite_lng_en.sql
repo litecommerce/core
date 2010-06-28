@@ -286,3 +286,9 @@ INSERT INTO `xlite_config_translations` VALUES (204,'en',275,'Weight symbol','')
 INSERT INTO `xlite_config_translations` VALUES (205,'en',276,'Weight unit','');
 INSERT INTO `xlite_config_translations` VALUES (224,'en',299,'Enable \"save\" label (for Market Price)','');
 
+-- Memberships
+INSERT INTO xlite_membership_translations (id, code, name) VALUES (1, 'en', 'Gold');
+INSERT INTO xlite_membership_translations (id, code, name) VALUES (2, 'en', 'Platinum');
+INSERT INTO xlite_membership_translations (id, code, name) VALUES (3, 'en', 'Wholesaler');
+
+

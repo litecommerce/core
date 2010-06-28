@@ -27,7 +27,7 @@
  */
 
 /**
- * ____description____
+ * Taxes
  * 
  * @package XLite
  * @see     ____class_see____
@@ -36,116 +36,181 @@
 class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
 {
     public $params = array('target', 'page', 'mode', 'ind');
-    public $page = "options";
-    public $pages = array('options' => 'Tax Options',
-                       'rates' => 'Rates/Conditions',
-                       'schemes' => 'Tax Scheme Definitions');
+
+    public $page = 'options';
+
+    public $pages = array(
+        'options' => 'Tax Options',
+        'rates'   => 'Rates/Conditions',
+        'schemes' => 'Tax Scheme Definitions',
+    );
                        
-    public $pageTemplates = array( "options" => "tax/options.tpl", 
-                                "rates" => "tax/rates.tpl",	
-                                "schemes"	=> "tax/schemas.tpl",
-                                "add_rate"	=> "tax/add.tpl");
+    public $pageTemplates = array(
+        'options'  => 'tax/options.tpl', 
+        'rates'    => 'tax/rates.tpl',    
+        'schemes'  => 'tax/schemas.tpl',
+        'add_rate' => 'tax/add.tpl',
+    );
+
     public $taxes;
+
     public $_rates;
+
     public $_levels;
     
     protected $invalidExpressions = array();
+
     protected $invalidFormula = array();
  
     function init()
     {
         parent::init();
-        if ($this->get('page') == "add_rate") {
-            $this->pages = array("add_rate" => ($this->get('mode') == "edit" ? "Edit" : "Add")." rate/condition");
+
+        if ($this->get('page') == 'add_rate') {
+            $this->pages = array(
+                'add_rate' => ($this->get('mode') == 'edit' ? 'Edit' : 'Add') . ' rate/condition'
+            );
             $this->pageTemplates = array("add_rate" => "tax/add.tpl");
         }
 
         $this->taxes = new XLite_Model_TaxRates();
         $this->getRates();
 
-        if ($this->get('mode') == "add") {
+        if ($this->get('mode') == 'add') {
             $this->initRuleParams();
-        } elseif ($this->get('mode') == "edit") {
-            $this->action_edit();
+
+        } elseif ($this->get('mode') == 'edit') {
+            $this->doActionEdit();
         }
 
-        if ($this->page == "rates" && !isset($this->action)) {
+        if ($this->page == 'rates' && !isset($this->action)) {
             foreach ($this->_rates as $ind_rate => $rate) {
-            	$value = $this->getCurrentVarValue($ind_rate, $rate);
-            	if (!isset($value)) {
-            		$value = $this->getCurrentCondVarValue($ind_rate, $rate);
-            	}
-            	if (!isset($value)) {
-            		continue;
-            	}
-    			$value = trim($value);
-    			$this->_validateValue($value, $ind_rate);
+                $value = $this->getCurrentVarValue($ind_rate, $rate);
+                if (!isset($value)) {
+                    $value = $this->getCurrentCondVarValue($ind_rate, $rate);
+                }
+
+                if (!isset($value)) {
+                    continue;
+                }
+                $value = trim($value);
+                $this->_validateValue($value, $ind_rate);
             }
+
             if (count($this->invalidExpressions) > 0) {
                 $this->set('inv_exp_error', 1);
                 $this->valid = false;
             }
         }
     }
-   	
-   	function action_add_tax()	
+       
+    /**
+     * Add tax 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+       protected function doActionAddTax()    
     {
+        $poses = array();
         $taxes = $this->config->Taxes->taxes;
-        $postData = XLite_Core_Request::getInstance()->getData();
+        $postData = XLite_Core_Request::getInstance()->new;
 
-        if ($postData['new_name'] != "") {
-            if (empty($postData['new_pos'])) {
-                $postData['new_pos'] = ((int)(max(is_array($postData['pos']) ? $postData['pos'] : array('1'))/10)+1)*10;
-            }
+        if ($postData['name']) {
+            $postData['pos'] = max(0, intval($postData['pos']));
                                                                     
-            $taxes[] = array("pos" => $postData['new_pos'], "name" => $postData['new_name'], "display_label" => $postData['new_display_label'], "registration" => $postData['new_registration']);
-            if (!isset($postData['pos'])) {
-                $postData['pos'] = array();
-            }
-            $postData['pos'][] = $postData['new_pos'];
-        }
-        if (isset($postData['pos'])) {
-            array_multisort($postData['pos'], $taxes);
-        }
-        $schema = array("taxes" => $taxes, "use_billing_info" => $postData['use_billing_info'], "prices_include_tax" => $postData['prices_include_tax'],"include_tax_message" => $postData['include_tax_message']);
-        $this->taxes->setSchema($schema);
-    }
-    
-    function action_update_options()
-    {
-        $taxes = array();
-        $postData = Xlite_Core_Request::getInstance()->getData();
+            $taxes[] = $postData;
 
-        if (isset($postData['pos'])) {
-            foreach ($postData['pos'] as $ind => $pos) {
-                if (empty($pos)) {
-                    $postData['pos'][$ind] = ((int)(max($postData['pos'])/10)+1)*10;
-                }
-                $tax = array("pos" => $postData['pos'][$ind], "name" => $postData['name'][$ind], "display_label" => $postData['display_label'][$ind], "registration" => $postData['registration'][$ind]);
-                $taxes[] = $tax;
+            foreach ($taxes as $i => $data) {
+                $poses[$i] = $data['pos'];
             }
-            array_multisort($postData['pos'],$taxes);
+
+        } else {
+
+            // TODO - add top message
+
         }
 
-        $schema = array("taxes" => $taxes, "use_billing_info" => $postData['use_billing_info'], "prices_include_tax" => $postData['prices_include_tax'],"include_tax_message" => $postData['include_tax_message']);
-        $this->taxes->setSchema($schema);
-    }
+        if ($poses) {
+            array_multisort($poses, $taxes);
 
-    function action_delete_tax()
-    {
-        if ($this->get('deleted')) {
-            $taxes = $this->config->Taxes->taxes;
-            $deleted = $this->get('deleted');
-            foreach ($deleted as $key => $value) {
-                unset($taxes[$key]);
-            }
             XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
                 array(
                     'category' => 'Taxes',
                     'name'     => 'taxes',
-                    'value'    => serialize($taxes), 'serialized'
+                    'value'    => serialize($taxes),
+                    'type'     => 'serialized'
                 )
             );
+        }
+    }
+    
+    /**
+     * Update tax options and exists taxes
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionUpdateOptions()
+    {
+        $taxes = array();
+        $postData = XLite_Core_Request::getInstance()->data;
+
+        if (is_array($postData)) {
+            $poses = array();
+            foreach ($postData as $idx => $data) {
+                $data['pos'] = max(0, intval($data['pos']));
+                $poses[$idx] = $data['pos'];
+                $taxes[] = $data;
+            }
+            array_multisort($poses, $taxes);
+        }
+
+        $schema = array(
+            'taxes'               => $taxes,
+            'use_billing_info'    => XLite_Core_Request::getInstance()->use_billing_info,
+            'prices_include_tax'  => XLite_Core_Request::getInstance()->prices_include_tax,
+            'include_tax_message' => XLite_Core_Request::getInstance()->include_tax_message
+        );
+
+        $this->taxes->setSchema($schema);
+    }
+
+    /**
+     * Delete tax(es)
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionDeleteTax()
+    {
+        $deleted = XLite_Core_Request::getInstance()->deleted;
+        if (!$deleted || !is_array($deleted)) {
+
+            // TODO - add top message
+
+        } else {
+            $taxes = array_diff_key(
+                $this->config->Taxes->taxes,
+                array_flip($deleted)
+            );
+
+            XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+                array(
+                    'category' => 'Taxes',
+                    'name'     => 'taxes',
+                    'value'    => serialize($taxes),
+                    'type'     => 'serialized'
+                )
+            );
+
+            // TODO - add top message
         }
     }
 
@@ -166,11 +231,11 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
     
     function _validateValue($value, $ind_rate)
     {
-    	static $tax;
+        static $tax;
 
-    	if (!isset($tax)) {
-        	$tax = new XLite_Model_TaxRates();
-    	}
+        if (!isset($tax)) {
+            $tax = new XLite_Model_TaxRates();
+        }
 
         // find the corresponding cell in the rates tree
         $ptr =& $this->locateNode($this->taxes->_rates, $this->_levels[$ind_rate]);
@@ -183,6 +248,7 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
             $this->invalidFormula[$ind_rate] = $value;
             $this->set('valid', false);
             return;
+
         } else {
             unset($this->invalidFormula[$ind_rate]);
         }
@@ -190,6 +256,7 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
         if (!preg_match("/^\d+(\.\d+)?$/", $value) && !$tax->checkExpressionSyntax($value, $this->invalidExpressions[$ind_rate], $tax_name)) {
             $this->invalidExpressions[$ind_rate] = '"<b>'.join('</b>", "<b>', $this->invalidExpressions[$ind_rate]).'</b>"';
             return;
+
         } else {
             unset($this->invalidExpressions[$ind_rate]);
         }
@@ -198,6 +265,7 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
         if (is_array($ptr)) {
             // conditional
             $ptr['action'] = $this->_insertValue($ptr['action'], $value);
+
         } else {
             $ptr = $this->_insertValue($ptr, $value);
         }
@@ -216,13 +284,16 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
                 $this->valid = false;
             }
         }
+
         // sort rates
         if (isset(XLite_Core_Request::getInstance()->pos)) {
+
             // build a pos tree
             $posTree = array();
             foreach (XLite_Core_Request::getInstance()->pos as $ind => $pos) {
                 $levels = $this->_levels[$ind];
                 array_pop($levels);
+
                 // locate the corresponding pos array in the pos tree
                 $ptr =& $this->locateNode($posTree, $levels);
                 if (!isset($ptr['orderbys'])) {
@@ -230,9 +301,11 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
                 }
                 $ptr['orderbys'][$ind] = $pos;
             }
+
             // sort all lists recursively
             $this->_sortRates($this->taxes->_rates, $posTree);
         }
+
         // store
         $this->taxes->setSchema(array("tax_rates" => $this->taxes->_rates));
     }
@@ -242,6 +315,7 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
         $ind = XLite_Core_Request::getInstance()->ind;
         $node =& $this->locateNode($this->taxes->_rates, $this->_levels[$ind]);
         $node['open'] = true;
+
         // store
         $this->taxes->setSchema(array("tax_rates" => $this->taxes->_rates));
         $this->getRates(); // re-build the tree
@@ -250,6 +324,7 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
     function action_all()
     {
         $this->changeAll($this->taxes->_rates, XLite_Core_Request::getInstance()->open);
+
         // store
         $this->taxes->setSchema(array("tax_rates" => $this->taxes->_rates));
         $this->getRates(); // re-build the tree
@@ -257,15 +332,16 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
     
     function changeAll(&$tree, $open)
     {
-        for ($i=0; $i<count($tree); $i++) {
+        for ($i = 0; $i < count($tree); $i++) {
             if ($this->isCondition($tree[$i])) {
                 if ($open) {
+
                     $tree[$i]['open'] = true;
-                } else {
-                    if (isset($tree[$i]['open'])) {
-                        unset($tree[$i]['open']);
-                    }
+
+                } elseif (isset($tree[$i]['open'])) {
+                    unset($tree[$i]['open']);
                 }
+
                 $this->changeAll($tree[$i]['action'], $open);
             }
         }
@@ -283,27 +359,49 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
         $this->getRates(); // re-build the tree
     }
 
-    function action_edit()
+    /**
+     * Edit tax rate
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionEdit()
     {
         $this->taxes = new XLite_Model_TaxRates();
-        if (isset(XLite_Core_Request::getInstance()->ind) && XLite_Core_Request::getInstance()->ind !== '') {
-            $this->ind = $ind = XLite_Core_Request::getInstance()->ind;
-            $this->tax = $this->locateNode($this->taxes->_rates, explode(',',$ind));
+        if (
+            isset(XLite_Core_Request::getInstance()->ind)
+            && XLite_Core_Request::getInstance()->ind !== ''
+        ) {
+            $ind = XLite_Core_Request::getInstance()->ind;
+            $this->ind = $ind;
+            $this->tax = $this->locateNode($this->taxes->_rates, explode(',', $ind));
+
         } else {
             $this->tax = '';
         }
+
         $this->initRuleParams();
         $this->edit = 1;
     }
    
-    function action_add()
+    /**
+     * Add tax rate
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionAdd()
     {
-        $this->action_edit();
+        $this->doActionEdit();
         $this->edit = 0;
         $this->tax = '';
     }
     
-    function _readTaxForm()
+    protected function readTaxForm()
     {
         if (isset(XLite_Core_Request::getInstance()->ind)) {
             $ind = XLite_Core_Request::getInstance()->ind;
@@ -311,8 +409,9 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
             $this->taxes = new XLite_Model_TaxRates();
             if ($ind === '') {
                 $ind = array();
+
             } else {
-                $ind = explode(',',$ind);
+                $ind = explode(',', $ind);
             }
             $this->indexes = $ind;
         }
@@ -325,46 +424,56 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
             if (!isset($postData[$param->var])) {
                 continue;
             }
+
             if (trim($postData[$param->var]) !== '') {
-                $conjuncts[] = "$param->cond=".$postData[$param->var];
+                $conjuncts[] = $param->cond . '=' . $postData[$param->var];
             }
         }
-        $condition = join(' AND ', $conjuncts);
+
+        $condition = implode(' AND ', $conjuncts);
         $action = '';
         $taxValue = trim($postData['taxValue']);
         $taxName = trim($postData['taxName']);
         if ($taxName !== '' && $taxValue !== '') {
             if (is_numeric($taxValue)) {
-                $action = "$taxName:=$taxValue";
-                if (is_array($this->tax)){
-                    $currentName = substr($this->tax['action'], 0, strpos($this->tax['action'], ":="));
+                $action = $taxName . ':=' . $taxValue;
+
+                if (is_array($this->tax)) {
+
+                    $currentName = substr($this->tax['action'], 0, strpos($this->tax['action'], ':='));
+
                 } else {
                     $currentName = substr($this->tax, 0, strpos($this->tax, ":="));
                 }
                 
                 $tax = new XLite_Model_TaxRates();
-                if ($currentName != '' && $currentName <> $taxName && $tax->isUsedInExpressions($currentName, $taxName)){
+
+                if ($currentName != '' && $currentName != $taxName && $tax->isUsedInExpressions($currentName, $taxName)){
                     $this->set('error', 'Tax name "' . $currentName . '" is used in another formula.');
                     return null;
                 }
 
-            } elseif ($taxValue{0} == '=') {
+            } elseif (substr($taxValue, 0, 1) == '=') {
+
                 // check expression {{{
                 $invalids = array();
                 $tax = new XLite_Model_TaxRates();
                 if ($tax->checkExpressionSyntax($taxValue, $invalids, $taxName)) {
-                    $action = "$taxName:=$taxValue";
+                    $action = $taxName . ':=' . $taxValue;
+
                 } else {
                     $this->set('inv_exp_error', 1);
                     $this->set('exp_error', '"<b>'.join('</b>", "<b>', $invalids).'</b>"');
                     return null;
                 }
+
                 $currentName = '';
 
-                if (is_array($this->tax)){
-                    $currentName = substr($this->tax['action'], 0, strpos($this->tax['action'], ":="));
+                if (is_array($this->tax)) {
+                    $currentName = substr($this->tax['action'], 0, strpos($this->tax['action'], ':='));
+
                 } else {
-                    $currentName = substr($this->tax, 0, strpos($this->tax, ":="));
+                    $currentName = substr($this->tax, 0, strpos($this->tax, ':='));
                 }
 
                 if ($currentName != '' && $currentName <> $taxName && $tax->isUsedInExpressions($currentName, $taxName)){
@@ -373,83 +482,146 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
                 }
                 
             } else {
-                $this->error = "Tax value must be a number or contain '=' at its start: '$taxValue'";
+
+                $this->error = 'Tax value must be a number or contain \'=\' at its start: \'' . $taxValue . '\'';
                 return null;
             }
         }
+
         if ($action !== '' && $condition === '') {
             return $action;
         }
+
         if ($action !== '' && $condition !== '') {
-            return array("condition" => $condition, "action" => $action);
+            return array(
+                'condition' => $condition,
+                'action'    => $action,
+            );
         }
+
         if ($action === '' && $condition !== '') {
-            return array("condition" => $condition, "action" => array(), "open" => true);
+            return array(
+                'condition' => $condition,
+                'action'    => array(),
+                'open'      => true,
+            );
         }
-        $this->error = "Form is empty";
+
+        $this->error = 'Form is empty';
+
         return null;
     }
     
-    function action_add_submit()
+    /**
+     * Add tax rate
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionAddSubmit()
     {
-        $node = $this->_readTaxForm();
+        $node = $this->readTaxForm();
         
         if (is_null($node)) {
             $this->valid = false;
-            $this->action_add(); // show errors and the form again
+            $this->doActionAdd(); // show errors and the form again
+
         } else {
             $subTree =& $this->locateNode($this->taxes->_rates, $this->indexes);
             if (isset($subTree['action'])) {
                 $subTree['action'][] = $node;
+
             } else {
                 $subTree[] = $node;
             }
+
             // store
-            $this->taxes->setSchema(array("tax_rates" => $this->taxes->_rates));
+            $this->taxes->setSchema(
+                array(
+                    'tax_rates' => $this->taxes->_rates,
+                )
+            );
+
             if (XLite_Core_Request::getInstance()->add_another) {
                 $this->set('returnUrl', 'admin.php?target=taxes&page=add_rate&mode=add');
-                $this->set('mode', "add");
+                $this->set('mode', 'add');
+
             } else {
-                $this->set('mode', "");
+                $this->set('mode', '');
             }
         }
     }
 
-    function action_edit_submit()
+    /**
+     * Edit tax rate
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionEditSubmit()
     {
-        $node = $this->_readTaxForm();
+        $node = $this->readTaxForm();
         if (is_null($node)) {
             $this->valid = false;
-            $this->action_edit(); // show errors and the form again
+            $this->doActionEdit(); // show errors and the form again
+
         } else {
+
             $subTree =& $this->locateNode($this->taxes->_rates, $this->indexes);
-            if (empty($node['action']))	
+            if (empty($node['action']))    {
                 $action = $subTree['action'];
+            }
+
             $subTree = $node;
- 	        if (!empty($action))
+             if (!empty($action)) {
                 $subTree['action'] = $action;
+            }
+
             // store
-            $this->taxes->setSchema(array("tax_rates" => $this->taxes->_rates));
-            $this->set('mode', "");
+            $this->taxes->setSchema(
+                array(
+                    'tax_rates' => $this->taxes->_rates,
+                )
+            );
+            $this->set('mode', '');
         }
     }
 
-    function action_delete_rate()
+    /**
+     * Delete tax rate 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionDeleteRate()
     {
         $ind = $this->_levels[XLite_Core_Request::getInstance()->ind];
         $subTreeIndex = $ind;
         $lastIndex = array_pop($subTreeIndex); // remove last
         $subTree =& $this->locateNode($this->taxes->_rates, $subTreeIndex);
+
         if (isset($subTree[$lastIndex])) {
             unset($subTree[$lastIndex]);
         }
+
         if (isset($subTree['action'][$lastIndex])) {
             unset($subTree['action'][$lastIndex]);
         }
-        // store
-        $this->taxes->setSchema(array("tax_rates" => $this->taxes->_rates));
 
-        $this->set('mode', "");
+        // store
+        $this->taxes->setSchema(
+            array(
+                'tax_rates' => $this->taxes->_rates,
+            )
+        );
+
+        $this->set('mode', '');
 
         $this->setReturnUrl($this->buildUrl('taxes', '', array('page' => 'rates')));
     }
@@ -548,9 +720,13 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
         $memberships->name = "User membership level";
         $memberships->var = "membership";
         $memberships->cond = "membership";
-        $memberships->values = array('No membership');
-        
-        $memberships->values = array_merge($memberships->values, $this->config->Memberships->memberships);
+        $memberships->values = array(
+            0 => 'No membership',
+        );
+
+        foreach (XLite_Core_Database::getRepo('XLite_Model_Membership')->findActiveMemberships() as $m) {
+            $memberships->values[$m->membership_id] = $m->name;
+        }
 
         $zips = new XLite_Base();
         $zips->name = "Zip codes/ranges (e.g. 43200-43300,55555)";
@@ -844,7 +1020,7 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
             $tax = new XLite_Model_TaxRates();
             // setup tax rate calculator
             if (!is_array($tax->_conditionValues)) {
-            	$tax->_conditionValues = array();
+                $tax->_conditionValues = array();
             }
             foreach ($postData as $name => $value) {
                 $name1 = str_replace('_', " ", $name);
@@ -853,17 +1029,17 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
             if (isset($this->country)) {
                 $country = XLite_Core_Database::getEM()->find('XLite_Model_Country', $this->country);
                 $tax->_conditionValues['country'] = $country->country;
-        	    if ($country->eu_member) {
-        		    $tax->_conditionValues['country'] .= ",EU country";
-              	}
+                if ($country->eu_member) {
+                    $tax->_conditionValues['country'] .= ",EU country";
+                  }
             }
             if (isset($this->state)) {
                 $state = XLite_Core_Database::getEM()->find('XLite_Model_State', $this->state);
                 $tax->_conditionValues['state'] = $state->state;
                 unset($state);
-    		}
+            }
 
-        	// calculate taxes
+            // calculate taxes
             $tax->calculateTaxes();
             $this->item_taxes = $tax->_taxValues;
             foreach ($this->item_taxes as $taxkey => $taxvalue) {
@@ -923,9 +1099,9 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
     function action_import()
     {
         if (!$this->checkUploadedFile()) {
-        	$this->set('valid', false);
-        	$this->set('invalid_file', true);
-        	return;
+            $this->set('valid', false);
+            $this->set('invalid_file', true);
+            return;
         }
 
         $file = $this->get('uploadedFile');

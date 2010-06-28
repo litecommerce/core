@@ -565,3 +565,9 @@ INSERT INTO xlite_languages (lng_id, code, code3) VALUES (179,'yi','yid');
 INSERT INTO xlite_languages (lng_id, code, code3) VALUES (180,'yo','yor');
 INSERT INTO xlite_languages (lng_id, code, code3) VALUES (181,'za','zha');
 INSERT INTO xlite_languages (lng_id, code, code3) VALUES (182,'zu','zul');
+
+-- Memberships
+INSERT INTO xlite_memberships VALUES (1, 10, 1);
+INSERT INTO xlite_memberships VALUES (2, 20, 1);
+INSERT INTO xlite_memberships VALUES (3, 30, 1);
+

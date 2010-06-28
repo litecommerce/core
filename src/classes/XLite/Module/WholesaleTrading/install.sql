@@ -4,7 +4,7 @@ CREATE TABLE xlite_wholesale_pricing (
   product_id int(11) NOT NULL default '0',
   amount int(11) NOT NULL default '0',
   price decimal(12,2) NOT NULL default '0.00',
-  membership varchar(255) NOT NULL default '',
+  membership int(11) NOT NULL default 0,
   PRIMARY KEY  (price_id)
 ) TYPE=MyISAM;
 
@@ -31,7 +31,7 @@ CREATE TABLE xlite_global_discount (
   subtotal decimal(12,2) NOT NULL default '0.00',
   discount decimal(12,2) NOT NULL default '0.00',
   discount_type char(1) NOT NULL default '',
-  membership varchar(255) NOT NULL default '',
+  membership int(11) NOT NULL default 0,
   PRIMARY KEY  (discount_id)
 ) TYPE=MyISAM;
 
@@ -44,7 +44,7 @@ ALTER TABLE xlite_profiles ADD membership_history TEXT NOT NULL;
 
 ALTER TABLE xlite_orders ADD global_discount decimal(12,2) NOT NULL default '0.00';
 
-ALTER TABLE xlite_products ADD selling_membership varchar(64) NOT NULL default '';
+ALTER TABLE xlite_products ADD selling_membership int(11) NOT NULL default 0;
 ALTER TABLE xlite_products ADD validaty_period varchar(32) NOT NULL default '';
 
 ALTER TABLE xlite_order_items ADD wholesale_price decimal(12,2) NOT NULL default '-1.00'  AFTER price;

@@ -141,7 +141,7 @@
 <widget target="export_catalog" class="XLite_View_Tabber" body="{pageTemplate}" switch="page">
 <widget target="update_inventory" class="XLite_View_Tabber" body="{pageTemplate}" switch="page">
 
-<widget target="memberships" template="common/dialog.tpl" body="memberships.tpl" head="Membership levels">
+<widget class="XLite_View_Memberships" />
 <widget target="template_editor" class="XLite_View_Tabber" body="{pageTemplate}" switch="editor">
 <widget target="image_files" template="common/dialog.tpl" body="image_files.tpl" head="Image files">
 

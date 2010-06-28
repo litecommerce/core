@@ -114,13 +114,7 @@ class XLite_View_Button_Regular extends XLite_View_Button_Abstract
             $result = 'submitForm(this.form, {' . $this->getJSFormParams($formParams) . '})';
 
         } else {
-            $result = 'submitFormDefault(this.form';
-
-            if (!is_null($this->getParam(self::PARAM_ACTION))) {
-                $result .= '\'' . $this->getParam(self::PARAM_ACTION) . '\'';
-            }
-
-            $result .= ');';
+            $result = 'submitFormDefault(this.form);';
         }
 
         return $result;

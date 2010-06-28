@@ -74,11 +74,11 @@ class XLite_Module_WholesaleTrading_Model_ProductAccess extends XLite_Model_Abst
         $result = false;
         if (
             true === $expand_all
-            && (in_array('all', $acc_list) || ($this->auth->is('logged') && in_array('registered', $acc_list)))
+            && (in_array('all', $acc_list) || ($this->auth->isLogged() && in_array('registered', $acc_list)))
         ) {
             $result = true;
     
-        } elseif($group != '') {
+        } elseif ($group != '') {
             $result = in_array($group, $acc_list);
         }
 
