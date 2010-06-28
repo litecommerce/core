@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage Model
+ * @subpackage View
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -27,48 +27,55 @@
  */
 
 /**
- * Membership
+ * 'Delete selecetd' button
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
- * @Entity
- * @Table (name="memberships")
  */
-class XLite_Model_Membership extends XLite_Model_Base_I18n
+class XLite_View_Button_DeleteSelected extends XLite_View_Button_Regular
 {
     /**
-     * Unique id 
-     * 
-     * @var    integer
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     * @Id
-     * @GeneratedValue (strategy="AUTO")
-     * @Column (type="integer")
+     * Widget parameter names
      */
-    protected $membership_id;
+
+    const PARAM_CONFIRMATION = 'confirm';
 
     /**
-     * Position
-     * 
-     * @var    integer
+     * Define widget parameters
+     *
+     * @return void
      * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     * @Column (type="integer")
+     * @since  1.0.0
      */
-    protected $orderby = 0;
+    protected function defineWidgetParams()
+    {
+        parent::defineWidgetParams();
+
+        $this->widgetParams += array(
+            self::PARAM_CONFIRMATION => new XLite_Model_WidgetParam_String('Confirmation text', '', true),
+        );
+
+        $this->widgetParams[self::PARAM_ACTION]->setValue('delete');
+        $this->widgetParams[self::PARAM_LABEL]->setValue('Delete selected');
+    }
 
     /**
-     * Active status
-     * 
-     * @var    boolean
+     * JavaScript: default JS code to execute
+     *
+     * @return string
      * @access protected
-     * @see    ____var_see____
      * @since  3.0.0
-     * @Column (type="boolean")
      */
-    protected $active = true;
+    protected function getDefaultJSCode()
+    {
+        $code = parent::getDefaultJSCode();
+
+        if ($this->getParam(self::PARAM_CONFIRMATION)) {
+            $code = 'if (confirm(\'' . $this->getParam(self::PARAM_CONFIRMATION) . '\')) { ' . $code . ' }';
+        }
+
+        return $code;
+    }
 }
+

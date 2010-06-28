@@ -27,7 +27,7 @@
  */
 
 /**
- * ____description____
+ * Memberships
  * 
  * @package XLite
  * @see     ____class_see____
@@ -35,125 +35,130 @@
  */
 class XLite_Controller_Admin_Memberships extends XLite_Controller_Admin_Abstract
 {
-    public $params = array('target', "mode");
-    
-    function action_update() 
+    /**
+     * Controller parameters 
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $params = array('target', 'language');
+
+    /**
+     * Update membership list
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionUpdate() 
     {
-        if ($this->get('update_memberships')) {
-            $profilesData = array(
-                'profiles'   => array(),
-                'membership' => array()
-            );
-            $membership = new XLite_Model_Membership();
-            $memberships = $membership->findAll();
-            foreach ($memberships as $id => $membership_) {
-                $profile = new XLite_Model_Profile();
-                $profilesData['profiles'][$id] = $this->getMembershipProfiles($membership_->get('membership'));
-                $profilesData['membership'][$id] = $membership_->get('membership');
-            }
-            $memberships = $this->get('update_memberships');
-            foreach ($memberships as $id => $membership_) {
-                $membership = new XLite_Model_Membership($id);
-                $membership_['membership'] = $membership->stripInvalidData($membership_['membership']);
-                if (strlen($membership_['membership']) <= 0) {
-                    if (strlen($membership->get('membership')) <= 0) {
-                        // delete old empty membership
-                        $this->updateProfilesMembership($this->getMembershipProfiles($membership->get('membership')), $membership->get('membership'), '', true);
-                        $membership->delete();
-                    }
-                    // don't save this membership
+        $data = XLite_Core_Request::getInstance()->update_memberships;
+
+        if (!is_array($data)) {
+
+            // TODO - add top message
+
+        } else {
+
+            $code = $this->getCurrentLanguage();
+            foreach ($data as $id => $row) {
+                $m = XLite_Core_Database::getRepo('XLite_Model_Membership')->find($id);
+
+                if (!$m) {
+                    // TODO - add top message
                     continue;
                 }
-                if (strlen($membership_['membership']) > 32) {
-                    $membership_['membership'] = substr($membership_['membership'], 0, 32);
+
+                try {
+                    $duplicate = XLite_Core_Database::getRepo('XLite_Model_Membership')->createQueryBuilder()
+                        ->andWhere('translations.name = :name', 'm.membership_id != :id')
+                        ->setParameter('name', $row['membership'])
+                        ->setParameter('id', $id)
+                        ->setMaxResults(1)
+                        ->getQuery()
+                        ->getSingleResult();
+
+                    // TODO - add top message
+                    continue;
+
+                } catch (Doctrine\ORM\NoResultException $exception) {
                 }
-                $membership->set('properties', $membership_);
-                $membership->update();
-                if (isset($profilesData['profiles'][$id])) {
-                    $this->updateProfilesMembership($profilesData['profiles'][$id], $profilesData['membership'][$id], $membership->get('membership'));
-                }
+
+                $m->getTranslation($code)->name = $row['membership'];
+                $m->orderby = intval($row['orderby']);
+                $m->active = isset($row['active']) && '1' == $row['active'];
+
+                XLite_Core_Database::getEM()->persist($m);
             }
+
+            XLite_Core_Database::getEM()->flush();
         }
-    }
-
-    function action_delete() 
-    {
-        if ($this->get('deleted_memberships')) {
-            @set_time_limit(0);
-            $memberships = $this->get('deleted_memberships');
-            foreach ($memberships as $membership_id) {
-                $membership = new XLite_Model_Membership($membership_id);
-                $m = $membership->get('membership');
-                $this->updateProfilesMembership($this->getMembershipProfiles($m), $m, '', true);
-                $membership->delete();
-            }
-        }
-    }
-
-    function action_add() 
-    {
-        if ($this->get('new_membership')) {
-            $new_membership = $this->get('new_membership');
-            $membership = new XLite_Model_Membership();
-
-            $new_membership['membership'] = $membership->stripInvalidData($new_membership['membership']);
-            if (strlen($new_membership['membership']) <= 0) {
-                // don't save this membership
-                return;
-            }
-
-            $membership->set('properties',$new_membership);
-            if (strlen($membership->get('orderby')) == 0) {
-                $newPos = 0;
-    			$memberships = $membership->findAll();
-    			foreach ($memberships as $id => $membership_) {
-    				if ($membership_->get('orderby') > $newPos) {
-    					$newPos = $membership_->get('orderby');
-    				}
-    			}
-    			$newPos += 10;
-    			$newPos = floor($newPos/10)*10;
-    			$membership->set('orderby', $newPos);
-            }
-            $membership->create();
-            $this->set('actionProcessed', true);
-        }
-    }
-    
-    function getMemberships() 
-    {
-        $membership = new XLite_Model_Membership();
-        return $membership->findAll();
-    }
-
-    function getMembershipProfiles($membership) 
-    {
-        $profile = new XLite_Model_Profile();
-        return $profile->findAll("membership = '".$membership."' OR pending_membership='".$membership."'");
     }
 
     /**
-    * Update all profiles 
-    */
-    function updateProfilesMembership(&$profiles, $old, $new, $sendNotification=false) 
+     * Delete some membership(s)
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionDelete() 
     {
-        if (!is_array($profiles) || count($profiles) === 0 || $old === $new) {
-            return;
-        }
-        foreach ($profiles as $profile) {
-            if (strcmp($profile->get('membership'), $old) === 0) {
-                $profile->set('membership', $new);
+        $ids = XLite_Core_Request::getInstance()->deleted_memberships;
+
+        if (is_array($ids) && $ids) {
+            list($keys, $data) = XLite_Core_Database::prepareArray($ids, 'id');
+            $list = XLite_Core_Database::getRepo('XLite_Model_Membership')->createQueryBuilder()
+                ->where('m.membership_id IN (' . implode(', ', $keys). ')')
+                ->setParameters($data)
+                ->getQuery()
+                ->getResult();
+            foreach ($list as $m) {
+                XLite_Core_Database::getEM()->remove($m);
             }
-            if (strcmp($profile->get('pending_membership'), $old) === 0) {
-                $profile->set('pending_membership', $new);
-            }
-            
-            if ($sendNotification) {
-                $this->auth->modifyProfile($profile);
-            } else {
-                $profile->update();
-            }
+            XLite_Core_Database::getEM()->flush();
+
+            // TODO - remove membership id from profiles
         }
     }
 
+    /**
+     * Add new membership
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionAdd() 
+    {
+        $data = XLite_Core_Request::getInstance()->new_membership;
+
+        if (!is_array($data)) {
+
+            // TODO - add top message
+
+        } elseif (!isset($data['membership']) || !$data['membership']) {
+
+            // TODO - add top message
+
+        } elseif (XLite_Core_Database::getRepo('XLite_Model_Membership')->findOneByName($data['membership'], false)) {
+
+            // TODO - add top message
+
+        } else {
+
+            $code = $this->getCurrentLanguage();
+            $membership = new XLite_Model_Membership();
+            $membership->orderby = $data['orderby'];
+            $membership->getTranslation($code)->name = $data['membership'];
+
+            XLite_Core_Database::getEM()->persist($membership);
+            XLite_Core_Database::getEM()->flush();
+        }
+    }
 }

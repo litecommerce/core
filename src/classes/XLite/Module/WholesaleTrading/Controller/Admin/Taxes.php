@@ -27,7 +27,7 @@
  */
 
 /**
- * ____description____
+ * Taxes
  * 
  * @package XLite
  * @see     ____class_see____
@@ -43,30 +43,23 @@ class XLite_Module_WholesaleTrading_Controller_Admin_Taxes extends XLite_Control
         return true;
     }
 
-    function action_add_tax()	
+    /**
+     * Update tax options and exists taxes
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionUpdateOptions()
     {
-        parent::action_add_tax();
+        parent::doActionUpdateOptions();
 
-        $cfg = new XLite_Model_Config();
         XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
             array(
                 'category' => 'Taxes',
                 'name'     => 'discounts_after_taxes',
-                'value'    => $_POST['discounts_after_taxes']
-            )
-        );
-    }
-
-    function action_update_options()
-    {
-        parent::action_update_options();
-
-        $cfg = new XLite_Model_Config();
-        XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
-            array(
-                'category' => 'Taxes',
-                'name'     => 'discounts_after_taxes',
-                'value'    => $_POST['discounts_after_taxes']
+                'value'    => XLite_Core_Request::getInstance()->discounts_after_taxes
             )
         );
     }

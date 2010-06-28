@@ -47,17 +47,20 @@ class XLite_View_FormField_Select_Membership extends XLite_View_FormField_Select
 
 
     /**
-     * getMembershipsList 
+     * Get Memberships list 
      * 
-     * @return void
+     * @return array
      * @access protected
      * @since  3.0.0
      */
     protected function getMembershipsList()
     {
-        $list = $this->config->Memberships->memberships;
+        $list = array();
+        foreach (XLite_Core_Database::getRepo('XLite_Model_Membership')->findActiveMemberships() as $m) {
+            $list[$m->membership_id] = $m->name;
+        }
 
-        return empty($list) ? array() : array_combine($list, $list);
+        return $list;
     }
 
     /**

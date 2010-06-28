@@ -35,6 +35,8 @@
  */
 class XLite_Module_WholesaleTrading_Controller_Admin_Product extends XLite_Controller_Admin_Product implements XLite_Base_IDecorator
 {
+    protected $product_access = null;
+
     public function __construct(array $params)
     {
         parent::__construct($params);
@@ -46,7 +48,7 @@ class XLite_Module_WholesaleTrading_Controller_Admin_Product extends XLite_Contr
         $this->pageTemplates['purchase_limit'] = "modules/WholesaleTrading/purchase.tpl";
     }
 
-    function action_update_access()
+    protected function doActionUpdateAccess()
     {
         $pa = new XLite_Module_WholesaleTrading_Model_ProductAccess();
         $found = false;
@@ -55,9 +57,9 @@ class XLite_Module_WholesaleTrading_Controller_Admin_Product extends XLite_Contr
         }
 
         $pa->set('product_id', $this->product_id);
-        $pa->set('show_group', $this->parseAccess($_REQUEST['access_show']));
-        $pa->set('show_price_group', $this->parseAccess($_REQUEST['access_show_price']));
-        $pa->set('sell_group', $this->parseAccess($_REQUEST['access_sell']));
+        $pa->set('show_group', $this->parseAccess(XLite_Core_Request::getInstance()->access_show));
+        $pa->set('show_price_group', $this->parseAccess(XLite_Core_Request::getInstance()->access_show_price));
+        $pa->set('sell_group', $this->parseAccess(XLite_Core_Request::getInstance()->access_sell));
         
         if (true === $found) {
             $pa->update();
@@ -67,9 +69,9 @@ class XLite_Module_WholesaleTrading_Controller_Admin_Product extends XLite_Contr
         }
     }
 
-    function getProductAccess()
+    public function getProductAccess()
     {
-        if (is_null($this->product_access)) {
+        if (!isset($this->product_access)) {
             $pa = new XLite_Module_WholesaleTrading_Model_ProductAccess();
             if (!$pa->find("product_id='" . intval($this->product_id) . "'")) {
                 $pa->set('porduct_id', $this->product_id);
@@ -77,6 +79,7 @@ class XLite_Module_WholesaleTrading_Controller_Admin_Product extends XLite_Contr
             $this->product_access = $pa;
             $pa->collectGarbage();
         }
+
         return $this->product_access;
     }
 
@@ -176,5 +179,18 @@ class XLite_Module_WholesaleTrading_Controller_Admin_Product extends XLite_Contr
         }
 
         return $result;
+    }
+
+    /**
+     * Get active memberships 
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getMemberships()
+    {
+        return XLite_Core_Database::getRepo('XLite_Model_Membership')->findActiveMemberships();
     }
 }

@@ -6,7 +6,7 @@ CREATE TABLE xlite_categories (
   meta_tags varchar(255) NOT NULL default '',
   views_stats int(11) NOT NULL default '0',
   order_by int(11) NOT NULL default '0',
-  membership varchar(32) NOT NULL default '',
+  membership int(11) NOT NULL default 0,
   threshold_bestsellers int(11) unsigned NOT NULL default '1',
   parent int(11) unsigned default '0',
   image mediumblob,
@@ -339,8 +339,8 @@ CREATE TABLE xlite_profiles (
   last_login int(11) NOT NULL default '0',
   status char(1) NOT NULL default 'E',
   referer varchar(255) NOT NULL default '',
-  membership varchar(32) NOT NULL default '',
-  pending_membership varchar(32) NOT NULL default '',
+  membership int(11) NOT NULL default 0,
+  pending_membership int(11) NOT NULL default 0,
   order_id int(11) NOT NULL default '0',
   sidebar_boxes TEXT NOT NULL,
   language varchar(2) NOT NUll default 'en',
@@ -534,5 +534,22 @@ CREATE TABLE xlite_language_labels (
   name text NOT NULL,
   translation text NOT NULL,
   FULLTEXT KEY cn (code, name)
+) TYPE=MyISAM;
+
+DROP TABLE IF EXISTS xlite_memberships;
+CREATE TABLE xlite_memberships (
+  membership_id int(11) NOT NULL auto_increment PRIMARY KEY,
+  orderby int(11) NOT NULL default 0,
+  active int(1) NOT NULL default 1
+) TYPE=MyISAM;
+
+DROP TABLE IF EXISTS xlite_membership_translations;
+CREATE TABLE xlite_membership_translations (
+  label_id int(11) NOT NULL auto_increment PRIMARY KEY,
+  code char(2) NOT NULL,
+  id int(11) NOT NULL default 0,
+  name char(128) NOT NULL,
+  KEY ci (code, id),
+  KEY i (id)
 ) TYPE=MyISAM;
 

@@ -27,25 +27,25 @@
 	<select multiple size="10" name=access_show[]>
 		<option value="all" selected="productAccess.groupInAccessList(#all#,#show_group#,false)">All</option>
 		<option value="registered" selected="productAccess.groupInAccessList(#registered#,#show_group#,false)">Registered</option>
-		<option FOREACH="config.Memberships.memberships,membership" selected="productAccess.groupInAccessList(membership,#show_group#,false)">{membership}</option>
+		<option FOREACH="getMemberships(),membership" value="{membership.membership_id}" selected="productAccess.groupInAccessList(membership.membership_id,#show_group#,false)">{membership.name}</option>
 	</select>
 	</td>
 	<td>
 	<select multiple size="10" name=access_show_price[]>
 		<option value="all" selected="productAccess.groupInAccessList(#all#,#show_price_group#,false)">All</option>
 		<option value="registered" selected="productAccess.groupInAccessList(#registered#,#show_price_group#,false)">Registered</option>
-		<option FOREACH="config.Memberships.memberships,membership" selected="productAccess.groupInAccessList(membership,#show_price_group#,false)">{membership}</option>
+		<option FOREACH="getMemberships(),membership" value="{membership.membership_id}" selected="productAccess.groupInAccessList(membership.membership_id,#show_price_group#,false)">{membership.name}</option>
 	</select>
 	</td>
 	<td>
 	<select multiple size="10" name=access_sell[]>
 		<option value="all" selected="productAccess.groupInAccessList(#all#,#sell_group#,false)">All</option>
         <option value="registered" selected="productAccess.groupInAccessList(#registered#,#sell_group#,false)">Registered</option>
-		<option FOREACH="config.Memberships.memberships,membership" selected="productAccess.groupInAccessList(membership,#sell_group#,false)">{membership}</option>
+		<option FOREACH="getMemberships(),membership" value="{membership.membership_id}" selected="productAccess.groupInAccessList(membership.membership_id,#sell_group#,false)">{membership.name}</option>
 	</select>
 	</td>
 </tr>	
 </table>
 <br>Note: To (un)select more than one group, Ctrl-click it.<br><br>
-<input type="submit" value=" Update ">
+<input type="submit" value="Update" />
 </form>

@@ -55,7 +55,7 @@ class XLite_Model_Category extends XLite_Model_Abstract
         'enabled'               => 1,
         'views_stats'           => 0,
         'order_by'              => 0,
-        'membership'            => '%',
+        'membership'            => '0',
         'threshold_bestsellers' => 1,
         'parent'                => 0,
         'image_type'            => '',
@@ -463,16 +463,13 @@ class XLite_Model_Category extends XLite_Model_Abstract
     {
         $result = true;
 
-        if ($this->auth->is('logged')) {
-            $membership = $this->auth->getComplex('profile.membership');
-        } else {
-            $membership = '';
-        }
-        if (!$this->is('enabled') || trim($this->get('name')) == "" || !$this->_compareMembership($this->get('membership'), $membership)) {
-            $result = false;
-        }
+        $membership = $this->auth->isLogged()
+            ? $this->auth->getProfile()->get('membership')
+            : 0;
 
-        return $result;
+        return $this->is('enabled') && 
+            trim($this->get('name'))
+            && ($this->get('membership') == 0 || $this->get('membership') == $membership);
     }
 
     function filter() 
@@ -509,11 +506,6 @@ class XLite_Model_Category extends XLite_Model_Abstract
         return $result;
     }
     
-    function _compareMembership($categoryMembership, $userMembership) 
-    {
-        return $categoryMembership == 'all' || $categoryMembership == '%' || $categoryMembership == '_%' && $userMembership || $categoryMembership == $userMembership;
-    }
-
     function toXML() 
     {
         $id = "category_" . $this->get('category_id');

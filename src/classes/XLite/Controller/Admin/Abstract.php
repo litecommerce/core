@@ -104,6 +104,20 @@ abstract class XLite_Controller_Admin_Abstract extends XLite_Controller_Abstract
         return $this->getTarget() || $this->isIgnoredTarget() || $this->isXliteFormValid();
     }
 
+    /**
+     * Get current language code
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getCurrentLanguage()
+    {
+        $currentCode = XLite_Core_Request::getInstance()->language;
+
+        return $currentCode ? $currentCode : XLite_Core_Translation::getCurrentLanguageCode();;
+    }
 
 
 

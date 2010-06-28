@@ -1711,6 +1711,11 @@ class Decorator
             }
 
             $tclass = $class . 'Translation';
+            if (!isset($this->classesInfo[$tclass])) {
+                // TODO - add error logging
+                continue;
+            }
+
             $tfn = LC_CLASSES_CACHE_DIR . $this->classesInfo[$tclass]['file'];
             if (isset($this->classDecorators[$tclass])) {
                 $tfn = preg_replace('/\.php/S', 'Abstract$0', $tfn);

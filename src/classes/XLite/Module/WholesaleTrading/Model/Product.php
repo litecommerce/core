@@ -92,7 +92,7 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
     public function __construct($id = null)
     {
         parent::__construct($id);
-        $this->fields['selling_membership'] = "";
+        $this->fields['selling_membership'] = 0;
         $this->fields['validaty_period'] = "";
     }
     
@@ -225,7 +225,7 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
         if ($use_wholesale_price) {
             $wp = new XLite_Module_WholesaleTrading_Model_WholesalePricing();
             $profile = $this->auth->get('profile');
-            $membership = (is_object($profile)) ? " OR membership='" . $profile->get('membership') . "'" : "";
+            $membership = is_object($profile) ? " OR membership='" . $profile->get('membership') . "'" : "";
             $wholesale_prices = $wp->getProductPrices($this->get('product_id'), $amount, $membership);
             if (count($wholesale_prices) != 0) {
                 $wholesale_price = $wholesale_prices[count($wholesale_prices) - 1]->get('price');
@@ -408,7 +408,9 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
             $wp = new XLite_Module_WholesaleTrading_Model_WholesalePricing();
 
             $sqlStr = "product_id = " . $this->get('product_id');
-            $sqlStr .= ( $this->auth->is('logged') ) ? " AND (membership='all' OR membership='" . $this->auth->getComplex('profile.membership') . "')" : " AND membership='all'";
+            $sqlStr .= $this->auth->isLogged()
+                ? " AND (membership = 0 OR membership = '" . $this->auth->getProfile()->get('membership') . "')"
+                : " AND membership = 0";
             $wholesale_pricing = $wp->findAll($sqlStr);
 
             $wholesale_pricing_hash = array();
@@ -417,9 +419,9 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
                     $wholesale_pricing_hash[$wp->get('amount')] = $wpIdx;
 
                 } elseif (
-                    $this->auth->is('logged')
-                    && $this->auth->getComplex('profile.membership') == $wp->get('membership')
-                    && $wholesale_pricing[$wholesale_pricing_hash[$wp->get('amount')]]->get('membership') == "all"
+                    $this->auth->isLogged()
+                    && $this->auth->getProfile()->get('membership') == $wp->get('membership')
+                    && $wholesale_pricing[$wholesale_pricing_hash[$wp->get('amount')]]->get('membership') == 0
                 ) {
                     $wholesale_pricing_hash[$wp->get('amount')] = $wpIdx;
                 }
@@ -447,7 +449,7 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
 
     function isSellingMembership()
     {
-        return strlen($this->get('selling_membership'));
+        return 0 != $this->get('selling_membership');
     }
 
     function getPurchaseLimit()
