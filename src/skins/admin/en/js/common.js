@@ -112,3 +112,27 @@ var URLHandler = {
     return this.baseURLPart + this.buildMainPart(params) + this.buildQueryPart(params);
   }
 }
+
+/**
+ * Columns selector
+ */
+$(document).ready(
+  function() {
+    $('input.column-selector').click(
+      function(event) {
+        if (!this.columnSelectors) {
+          var idx = $(this).parents('th').get(0).cellIndex;
+          var table = $(this).parents('table').get(0);
+          this.columnSelectors = [];
+          for (var r = 0; r < table.rows.length; r++) {
+            this.columnSelectors.push($(':checkbox', table.rows[r].cells[idx]).get(0));
+          }
+          this.columnSelectors = $(this.columnSelectors);
+        }
+
+        this.columnSelectors.attr('checked', this.checked ? 'checked' : '');
+      }
+    );
+  }
+);
+
