@@ -111,6 +111,7 @@ class XLite_Core_Database extends XLite_Base implements XLite_Base_ISingleton
         if (self::$cacheDriver) {
 
             // Bind cache chekers
+            $events[] = Doctrine\ORM\Events::postPersist;
             $events[] = Doctrine\ORM\Events::postUpdate;
             $events[] = Doctrine\ORM\Events::postRemove;
         }
@@ -320,6 +321,21 @@ class XLite_Core_Database extends XLite_Base implements XLite_Base_ISingleton
     }
 
     /**
+     * postPersist event handler
+     * 
+     * @param Doctrine\ORM\Event\LifecycleEventArgs $arg Event argument
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function postPersist(Doctrine\ORM\Event\LifecycleEventArgs $arg)
+    {
+        $arg->getEntity()->checkCache();
+    }
+
+    /**
      * postUpdate event handler
      * 
      * @param Doctrine\ORM\Event\LifecycleEventArgs $arg Event argument
@@ -333,7 +349,6 @@ class XLite_Core_Database extends XLite_Base implements XLite_Base_ISingleton
     {
         $arg->getEntity()->checkCache();
     }
-
     /**
      * postRemove event handler
      * 
@@ -378,7 +393,7 @@ class XLite_Core_Database extends XLite_Base implements XLite_Base_ISingleton
                 $classMetadata->setCustomRepositoryClass($class);
 
             } else {
-                $classMetadata->setCustomRepositoryClass('XLite_Model_Repo_Common');
+                $classMetadata->setCustomRepositoryClass('XLite_Model_Repo_Base_Common');
             }
         }
     }

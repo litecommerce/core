@@ -47,12 +47,12 @@ abstract class XLite_Model_AbstractEntity
     /**
      * Cache enabled flag (cache)
      * 
-     * @var    boolean
+     * @var    array
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected static $cacheEnabled = null;
+    protected static $cacheEnabled = array();
 
     /**
      * Accessors list (cache)
@@ -222,14 +222,14 @@ abstract class XLite_Model_AbstractEntity
     {
         $class = get_called_class();
 
-        if (is_null($class::$cacheEnabled)) {
+        if (!isset(self::$cacheEnabled[$class])) {
             $repo = $this->getRepository();
-            $class::$cacheEnabled = ($repo && $repo instanceof XLite_Model_Repo_AbstractRepo)
+            self::$cacheEnabled[$class] = ($repo && is_subclass_of($repo, 'XLite_Model_Repo_AbstractRepo'))
                 ? $repo->hasCacheCells()
                 : false;
         }
 
-        if ($class::$cacheEnabled) {
+        if (self::$cacheEnabled[$class]) {
             $this->getRepository()->deleteCacheByEntity($this);
         }
     }

@@ -36,6 +36,16 @@
 class XLite_Core_Translation extends XLite_Base implements XLite_Base_ISingleton
 {
     /**
+     * Current language code 
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected static $currentLanguageCode = null;
+
+    /**
      * Translation driver 
      * 
      * @var    XLite_Core_TranslationDriver_Abstract
@@ -57,6 +67,23 @@ class XLite_Core_Translation extends XLite_Base implements XLite_Base_ISingleton
         'XLite_Core_TranslationDriver_Gettext',
         'XLite_Core_TranslationDriver_Db'
     );
+
+    /**
+     * Get current language code
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getCurrentLanguageCode($force = false)
+    {
+        if (!isset(self::$currentLanguageCode) || $force) {
+            self::$currentLanguageCode = XLite_Model_Session::getInstance()->getLanguage()->code;
+        }
+
+        return self::$currentLanguageCode;
+    }
 
     /**
      * Get translation (short static method)
