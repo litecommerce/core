@@ -27,7 +27,7 @@
  */
 
 /**
- * ____description____
+ * Module
  * 
  * @package XLite
  * @see     ____class_see____
@@ -151,8 +151,28 @@ class XLite_Model_Module extends XLite_Model_Abstract
     {
         $class = 'XLite_Module_' . $this->get('name') . '_Main';
 
-        return XLite_Core_Operator::isClassExists($class) && method_exists($class, $method)
-            ? call_user_func_array(array($class, $method), $args)
-            : parent::__call($method, $args);
+        if (XLite_Core_Operator::isClassExists($class)) {
+
+            // Active module
+
+            $result = method_exists($class, $method)
+                ? call_user_func_array(array($class, $method), $args)
+                : parent::__call($method, $args);
+
+        } elseif (file_exists(LC_CLASSES_DIR . str_replace('_', LC_DS, $class) . '.php')) {
+
+            // Disabled module
+
+            require_once LC_CLASSES_DIR . str_replace('_', LC_DS, $class) . '.php';
+            $result = method_exists($class, $method)
+                ? call_user_func_array(array($class, $method), $args)
+                : parent::__call($method, $args);
+
+        } else {
+            $result = parent::__call($method, $args);
+        }
+
+        return $result;
+
     }
 }
