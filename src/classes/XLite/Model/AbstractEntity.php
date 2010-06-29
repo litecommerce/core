@@ -174,7 +174,7 @@ abstract class XLite_Model_AbstractEntity
      */
     protected function getAccessor($name)
     {
-        $method = 'get' . str_replace(' ', '', ucwords(str_replace('_', ' ', $name)));
+        $method = 'get' . XLite_Core_Converter::prepareMethodName($name);
 
         return method_exists($this, $method) ? $method : false;
     }
@@ -191,7 +191,7 @@ abstract class XLite_Model_AbstractEntity
      */
     protected function getMutator($name)
     {
-        $method = 'set' . str_replace(' ', '', ucwords(str_replace('_', ' ', $name)));
+        $method = 'set' . XLite_Core_Converter::prepareMethodName($name);
 
         return method_exists($this, $method) ? $method : false;
     }
