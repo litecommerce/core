@@ -36,6 +36,40 @@
 class XLite_Core_Converter extends XLite_Base implements XLite_Base_ISingleton
 {
     /**
+     * Method name translation records
+     *
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected static $to = array(
+        'Q', 'W', 'E', 'R', 'T',
+        'Y', 'U', 'I', 'O', 'P',
+        'A', 'S', 'D', 'F', 'G',
+        'H', 'J', 'K', 'L', 'Z',
+        'X', 'C', 'V', 'B', 'N',
+        'M',
+    );
+
+    /**
+     * Method name translation patterns
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected static $from = array(
+        '_q', '_w', '_e', '_r', '_t',
+        '_y', '_u', '_i', '_o', '_p',
+        '_a', '_s', '_d', '_f', '_g',
+        '_h', '_j', '_k', '_l', '_z',
+        '_x', '_c', '_v', '_b', '_n',
+        '_m',
+    );
+
+    /**
      * Convert a string like "test_foo_bar" into the camel case (like "TestFooBar")
      * 
      * @param string $string string to convert
@@ -46,7 +80,21 @@ class XLite_Core_Converter extends XLite_Base implements XLite_Base_ISingleton
      */
     public static function convertToCamelCase($string)
     {
-        return strval(preg_replace('/((?:\A|_)([a-zA-Z]))/ie', 'strtoupper(\'\\2\')', $string));
+        return ucfirst(str_replace(self::$from, self::$to, strval($string)));
+    }
+
+    /**
+     * Convert a string like "test_foo_bar" into the camel case (like "testFooBar")
+     * 
+     * @param string $string string to convert
+     *  
+     * @return string
+     * @access public
+     * @since  3.0
+     */
+    public static function prepareMethodName($string)
+    {
+        return str_replace(self::$from, self::$to, strval($string));
     }
 
     /**
