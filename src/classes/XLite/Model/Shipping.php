@@ -27,7 +27,7 @@
  */
 
 /**
- * ____description____
+ * Common shipping method
  * 
  * @package XLite
  * @see     ____class_see____
@@ -88,6 +88,16 @@ class XLite_Model_Shipping extends XLite_Model_Abstract
     protected static $registeredShippingModules = array(
         'Offline' => 'Model_Shipping_Offline',
     );
+
+    /**
+     * Default shipping methods is registered (or not)
+     * 
+     * @var    boolean
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected static $defaultShippingMethodsIsRegistered = false;
 
     /**
      * Normalize service name 
@@ -160,6 +170,10 @@ class XLite_Model_Shipping extends XLite_Model_Abstract
      */
     public function __construct($id = null)
     {
+        if (!self::$defaultShippingMethodsIsRegistered) {
+            self::registerDefaultModules();
+        }
+
         parent::__construct($id);
 
         // unset the class, if it is not registerred within active shipping modules
@@ -190,8 +204,12 @@ class XLite_Model_Shipping extends XLite_Model_Abstract
      * @access public
      * @since  3.0
      */
-    public static function registerShippingModule($name, $class)
+    public static function registerShippingModule($name, $class, $rawRegister = false)
     {
+        if (!$rawRegister && !self::$defaultShippingMethodsIsRegistered) {
+            self::registerDefaultModules();
+        }
+
         if (
             !isset(self::$registeredShippingModules[$name])
             || !(self::$registeredShippingModules[$name] instanceof self)
@@ -310,8 +328,13 @@ class XLite_Model_Shipping extends XLite_Model_Abstract
      */
     public static function registerDefaultModules()
     {
-        foreach (self::$registeredShippingModules as $name => $class) {
-            self::registerShippingModule($name, $class);
+        if (!self::$defaultShippingMethodsIsRegistered) {
+            foreach (self::$registeredShippingModules as $name => $class) {
+                unset(self::$registeredShippingModules[$name]);
+                self::registerShippingModule($name, $class, true);
+            }
+
+            self::$defaultShippingMethodsIsRegistered = true;
         }
     }
 
@@ -335,7 +358,3 @@ class XLite_Model_Shipping extends XLite_Model_Abstract
         return $shippingId ? new $className($shippingId) : new $className();
     }
 }
-
-// Instantiate classes
-XLite_Model_Shipping::registerDefaultModules();
-
