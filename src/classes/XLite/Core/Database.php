@@ -440,4 +440,27 @@ class XLite_Core_Database extends XLite_Base implements XLite_Base_ISingleton
 
         return array($keys, $parameters);
     }
+
+    /**
+     * Build IN () condition 
+     * 
+     * @param Doctrine\ORM\QueryBuilder $qb     Query builder
+     * @param array                     $data   Hash array
+     * @param string                    $prefix Placeholder prefix
+     *  
+     * @return array keys for IN () function
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function buildInCondition(Doctrine\ORM\QueryBuilder $qb, array $data, $prefix = 'arr')
+    {
+        list($keys, $data) = self::prepareArray($data, $prefix);
+
+        foreach ($data as $k => $v) {
+            $qb->setParameter($k, $v);
+        }
+
+        return $keys;
+    }
 }
