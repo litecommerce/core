@@ -101,20 +101,24 @@ $classLoader->register();
 // FIXME - installer must declare it's own autoloader
 define('LC_AUTOLOAD_DIR', defined('XLITE_INSTALL_MODE') ? LC_CLASSES_DIR : LC_CLASSES_CACHE_DIR);
 
-/**
- * Class autoload function
- * 
- * @param string $className class name to use
- *  
- * @return void
- * @see    ____func_see____
- * @since  1.0.0
- */
-function __lc_autoload($className)
-{
-    if (0 === strpos($className, 'XLite')) {
-        require_once LC_AUTOLOAD_DIR . str_replace('_', LC_DS, $className) . '.php';
+if (!function_exists('__lc_autoload')) {
+
+    /**
+     * Class autoload function
+     * 
+     * @param string $className class name to use
+     *  
+     * @return void
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    function __lc_autoload($className)
+    {
+        if (0 === strpos($className, 'XLite')) {
+            require_once LC_AUTOLOAD_DIR . str_replace('_', LC_DS, $className) . '.php';
+        }
     }
+
 }
 
 // Common error reporting settings

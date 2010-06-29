@@ -46,7 +46,18 @@ require_once PATH_TESTS . '/PHPUnit/TestCase.php';
 require_once PATH_TESTS . '/PHPUnit/MetricWriter.php';
 require_once PATH_TESTS . '/PHPUnit/SeleniumTestCase.php';
 
-// X-Lite classes
+// Tests specific autoloader
+
+function __lc_autoload($className)
+{
+var_dump($className);
+
+    if (0 === strpos($className, 'XLite')) {
+        require LC_AUTOLOAD_DIR . str_replace('_', LC_DS, $className) . '.php';
+    }
+}
+
+// Start X-Lite core
 
 chdir(PATH_SRC);
 
