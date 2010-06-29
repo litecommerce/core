@@ -1355,8 +1355,7 @@ class Decorator
             //$this->generateModels();
 
             // Generate model proxies
-            // TODO - rework
-            //$this->generateModelProxies();
+            $this->generateModelProxies();
 
             // Postbuild multilanguage classes
             $this->buildMultilangs();
