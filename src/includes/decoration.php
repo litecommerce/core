@@ -1520,7 +1520,6 @@ class Decorator
      */
     protected function generateModelProxies()
     {
-        mkdirRecursive(LC_PROXY_CACHE_DIR, 0755);
         $this->getEntityManager()
             ->getProxyFactory()
             ->generateProxyClasses($this->getMetadatas(), LC_PROXY_CACHE_DIR);
