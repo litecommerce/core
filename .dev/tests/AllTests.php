@@ -50,8 +50,6 @@ require_once PATH_TESTS . '/PHPUnit/SeleniumTestCase.php';
 
 function __lc_autoload($className)
 {
-var_dump($className);
-
     if (0 === strpos($className, 'XLite')) {
         require LC_AUTOLOAD_DIR . str_replace('_', LC_DS, $className) . '.php';
     }
