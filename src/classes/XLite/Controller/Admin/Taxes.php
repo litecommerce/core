@@ -421,12 +421,12 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
         $postData = XLite_Core_Request::getInstance()->getData();
 
         foreach ($this->taxParams as $param) {
-            if (!isset($postData[$param->var])) {
+            if (!isset($postData[$param['var']])) {
                 continue;
             }
 
-            if (trim($postData[$param->var]) !== '') {
-                $conjuncts[] = $param->cond . '=' . $postData[$param->var];
+            if (trim($postData[$param['var']]) !== '') {
+                $conjuncts[] = $param['cond'] . '=' . $postData[$param['var']];
             }
         }
 
@@ -476,7 +476,7 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
                     $currentName = substr($this->tax, 0, strpos($this->tax, ':='));
                 }
 
-                if ($currentName != '' && $currentName <> $taxName && $tax->isUsedInExpressions($currentName, $taxName)){
+                if ($currentName != '' && $currentName != $taxName && $tax->isUsedInExpressions($currentName, $taxName)){
                     $this->set('error', 'Tax name "' . $currentName . '" is used in another formula.');
                     return null;
                 }
@@ -530,12 +530,16 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
 
         } else {
             $subTree =& $this->locateNode($this->taxes->_rates, $this->indexes);
+            /*
+            // TODO - check it
             if (isset($subTree['action'])) {
                 $subTree['action'][] = $node;
 
             } else {
                 $subTree[] = $node;
             }
+            */
+            $subTree = $node;
 
             // store
             $this->taxes->setSchema(
@@ -640,101 +644,121 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
     
     function initRuleParams()
     {
-        $countries = new XLite_Base();
-        $countries->name = 'Countries';
-        $countries->var  = 'country';
-        $countries->cond  = 'country';
-        $countries->values = array('EU country');
+        // Countries
+
+        $countries = array(
+            'name'   => 'Countries',
+            'var'    => 'country',
+            'cond'   => 'country',
+            'values' => array(
+                'EU country' => 'EU country',
+            ),
+        );
+
         $list = XLite_Core_Database::getRepo('XLite_Model_Country')->findAll();
         foreach ($list as $country) {
-            $countries->values[] = $country->country;
+            $countries['values'][$country->code] = $country->country;
         }
         unset($list);
-        $states = new XLite_Base();
-        $states->name = 'States';
-        $states->var  = 'state';
-        $states->cond  = 'state';
-        $states->values = array();
-        $states->diplay_ex = 1;
 
-        $list = XLite_Core_Database::getQB()
-            ->select('s')
-            ->from('XLite_Model_State', 's')
-            ->orderBy('s.country_code, s.state')
-            ->getQuery()
-            ->getResult();
+        // States
 
-        $lit = true;
-        $last_ccode = '';
+        $states = array(
+            'name'      => 'States',
+            'var'       => 'state',
+            'cond'      => 'state',
+            'values'    => array(),
+            'diplay_ex' => 1,
+        );
+
+        $list = XLite_Core_Database::getRepo('XLite_Model_State')->findAllStates();
+
         foreach ($list as $state) {
-            $country_code = $state->country_code;
-            $country = '';
-            if ($country_code != $last_ccode) {
-                $lit = !$lit;
-                $last_ccode = $country_code;
-                $c = XLite_Core_Database::getEM()->find('XLite_Model_Country', $country_code);
-                $country = $c->country;
+            if (!isset($states['values'][$state->country_code])) {
+                $states['values'][$state->country_code] = array(
+                    'country' => $state->country->country,
+                    'states'  => array(),
+                );
             }
 
-            $states->values[] = array(
-                'val'     => $state->state,
-                'code'    => $state->code,
-                'country' => $country,
-                'lit'     => $lit ? 1 : 0,
-            );
+            $states['values'][$state->country_code]['states'][$state->state_id] = $state->state;
         }
 
-        $cities = new XLite_Base();
-        $cities->name = "Cities";
-        $cities->var = "city";
-        $cities->cond = "city";
-        $cities->values = array();
+        // Cities
+
+        $cities = array(
+            'name'   => 'Cities',
+            'var'    => 'city',
+            'cond'   => 'city',
+            'values' => array(),
+        );
         $pr = new XLite_Model_Profile();
         foreach ($pr->findAll() as $p) {
-            $cities->values[] = $p->get('shipping_city');
+            $cities['values'][$p->get('shipping_city')] = $p->get('shipping_city');
         }
-        $cities->values = array_unique($cities->values);
-        if (isset($cities->values[''])) {
-            unset($cities->values['']);
+        if (isset($cities['values'][''])) {
+            unset($cities['values']['']);
         }
 
-        $pm = new XLite_Base();
-        $pm->name = "Payment method";
-        $pm->var = "pm";
-        $pm->cond = "payment method";
-        $pm->values = array();
+        // Payment methods
+
+        $pm = array(
+            'name'   => 'Payment method',
+            'var'    => 'pm',
+            'cond'   => 'payment method',
+            'values' => array(),
+        );
         $pmethod = new XLite_Model_PaymentMethod();
         $methods = $pmethod->getActiveMethods();
         foreach ($methods as $method) {
-            $pm->values[] = $method->get('name');
+            $pm['values'][$method->get('name')] = $method->get('name');
         }
-        
-        $classes = new XLite_Base();
-        $classes->name = "Product class, either new or existing";
-        $classes->var = "pclass";
-        $classes->cond = "product class";
-        $classes->values = array_unique(array_merge(array('shipping service'), $this->taxes->getProductClasses()));
-        array_multisort($classes->values);
 
-        $memberships = new XLite_Base();
-        $memberships->name = "User membership level";
-        $memberships->var = "membership";
-        $memberships->cond = "membership";
-        $memberships->values = array(
-            0 => 'No membership',
+        // Product classes
+    
+        $classes = array(
+            'name'   => 'Product class, either new or existing',
+            'var'    => 'pclass',
+            'cond'   => 'product class',
+            'values' => array_unique(array_merge(array('shipping service'), $this->taxes->getProductClasses())),
+        );
+        array_multisort($classes['values']);
+        $classes['values'] = array_combine($classes['values'], $classes['values']);
+
+        // Memberships
+
+        $memberships = array(
+            'name'   => 'User membership level',
+            'var'    => 'membership',
+            'cond'   => 'membership',
+            'values' => array(
+                0 => 'No membership',
+            ),
         );
 
         foreach (XLite_Core_Database::getRepo('XLite_Model_Membership')->findActiveMemberships() as $m) {
-            $memberships->values[$m->membership_id] = $m->name;
+            $memberships['values'][$m->membership_id] = $m->name;
         }
 
-        $zips = new XLite_Base();
-        $zips->name = "Zip codes/ranges (e.g. 43200-43300,55555)";
-        $zips->var = "zip";
-        $zips->cond = "zip";
-        $zips->values = array();
+        // Postal zip codes
+
+        $zips = array(
+            'name'   => 'Zip codes/ranges (e.g. 43200-43300,55555)',
+            'var'    => 'zip',
+            'cond'   => 'zip',
+            'values' => array(),
+        );
         
-        $this->taxParams = array($countries,$states,$cities,$pm,$classes,$memberships, $zips);
+        $this->taxParams = array(
+            $countries,
+            $states,
+            $cities,
+            $pm,
+            $classes,
+            $memberships,
+            $zips,
+        );
+
         $this->taxNames = $this->taxes->getTaxNames();
     }
 
@@ -888,19 +912,28 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
         );
     }
 
-    function getCondParam($node, $param, $name=null)
+    function getCondParam($node, $param, $name = null)
     {
-        if ($this->edit && $name && !isset(XLite_Core_Request::getInstance()->$name)) {
+        $result = '';
+
+        if (
+            $this->edit
+            && $name
+            && !isset(XLite_Core_Request::getInstance()->$name)
+        ) {
+
             if (is_array($node)) {
                 $cond = $this->taxes->_parseCondition($node['condition']);
                 if (isset($cond[$param])) {
-                    return join(',', $cond[$param]);
+                    $result = implode(',', $cond[$param]);
                 }
             }
-            return '';
+
         } else {
-            return XLite_Core_Request::getInstance()->$name;
+            $result = XLite_Core_Request::getInstance()->$name;
         }
+
+        return $result;
     }
 
     function getDisplayName($tax)
@@ -922,21 +955,21 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
         if ($this->_maxLevel < count($levels)) {
             $this->_maxLevel = count($levels);
         }
+
         if (!is_array($rates)) {
-        
             $this->_die ("rates='$rates' must be array");
         }
+
         foreach ($rates as $ind_rate => $rate) {
             $this->_rates[$ind] = $rate;
             $this->_levels[$ind] = $levels;
             $this->_levels[$ind][] = $ind_rate;
             $ind++;
-            if (is_array($rate)) {
-                if (is_array($rate['action']) && isset($rate['open'])) {
-                    $levels1 = $levels;
-                    $levels1[] = $ind_rate;
-                    $this->_initRates($rate['action'], $levels1, $ind);
-                }
+
+            if (is_array($rate) && is_array($rate['action']) && isset($rate['open'])) {
+                $levels1 = $levels;
+                $levels1[] = $ind_rate;
+                $this->_initRates($rate['action'], $levels1, $ind);
             }
         }
     }
@@ -948,17 +981,123 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
 
     function getLevels($ind)
     {
-        $result = "";
-        $count = count($this->_levels[$ind])-1;
-        for ($i=0; $i<$count; $i++) {
-            $result .= "<td width=\"35\"></td>";
+        return str_repeat(
+            '<td width="35">&nbsp;</td>',
+            count($this->_levels[$ind]) - 1
+        );
+    }
+
+    /**
+     * Display condition in human-readable style
+     * 
+     * @param array $cond Condition
+     *  
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCondition(array $cond)
+    {
+        $conditions = array();
+
+        foreach ($this->taxes->_parseCondition($cond['condition']) as $name => $ids) {
+            $condition = ucfirst($name);
+
+            $method = 'convert' . XLite_Core_Converter::convertToCamelCase($name) . 'Ids';
+            if (method_exists($this, $method)) {
+                $ids = $this->$method($ids);
+            }
+
+            if (1 < count($ids)) {
+                $condition .= ' in (' . implode(' or ', $ids) . ')';
+
+            } else {
+                $condition .= ' = ' . array_shift($ids);
+            }
+
+            $conditions[] = $condition;
         }
+
+        return implode(' and ', $conditions);
+    }
+
+    /**
+     * Convert country id's to country names
+     * 
+     * @param array $ids Country id's
+     *  
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function convertCountryIds(array $ids)
+    {
+        $qb = XLite_Core_Database::getRepo('XLite_Model_Country')->createQueryBuilder();
+        $keys = XLite_Core_Database::buildInCondition($qb, $ids, 'id');
+        $list = $qb->andWhere('c.code IN (' . implode(', ', $keys). ')')
+            ->getQuery()
+            ->getResult();
+
+        $result = array();
+        foreach ($list as $m) {
+            $result[] = $m->country;
+        }
+
         return $result;
     }
 
-    function getCondition($cond)
+    /**
+     * Convert state id's to state names
+     * 
+     * @param array $ids State id's
+     *  
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function convertStateIds(array $ids)
     {
-        return $cond['condition'];
+        $qb = XLite_Core_Database::getRepo('XLite_Model_State')->createQueryBuilder();
+        $keys = XLite_Core_Database::buildInCondition($qb, $ids, 'id');
+        $list = $qb->andWhere('s.state_id IN (' . implode(', ', $keys). ')')
+            ->getQuery()
+            ->getResult();
+
+        $result = array();
+        foreach ($list as $m) {
+            $result[] = $m->state;
+        }
+
+        return $result;
+    }
+
+    /**
+     * Convert membership id's to membership names
+     * 
+     * @param array $ids Membership id's
+     *  
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function convertMembershipIds(array $ids)
+    {
+        $qb = XLite_Core_Database::getRepo('XLite_Model_Membership')->createQueryBuilder();
+        $keys = XLite_Core_Database::buildInCondition($qb, $ids, 'id');
+        $list = $qb->andWhere('m.membership_id IN (' . implode(', ', $keys). ')')
+            ->getQuery()
+            ->getResult();
+
+        $result = array();
+        foreach ($list as $m) {
+            $result[] = $m->name;
+        }
+
+        return $result;
     }
 
     function isAction($a) 
@@ -1055,7 +1194,7 @@ class XLite_Controller_Admin_Taxes extends XLite_Controller_Admin_Abstract
         }
         
         // show tax calculator
-        $w = new XLite_View_Abstract();
+        $w = new XLite_View_Controller();
         $w->component = $this;
         $w->set('template', "tax/calculator.tpl");
         $w->init();
