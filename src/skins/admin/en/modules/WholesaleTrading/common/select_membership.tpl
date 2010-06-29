@@ -12,24 +12,25 @@
  *}
 
 {if:!isEmpty(history)}
-<select class="FixedSelect" id="{field}" name="{getParam(#field#)}" size="1" OnChange="ChangeMembership(this);">
+<select class="FixedSelect" id="{field}" name="{getParam(#field#)}" onchange="javascript: ChangeMembership(this);">
 {else:}
-<select class="FixedSelect" id="{getParam(#field#)}" name="{getParam(#field#)}" size="1">
+<select class="FixedSelect" id="{getParam(#field#)}" name="{getParam(#field#)}">
 {end:}
 
    <option value="%" IF="{getParam(#allOption#)}" selected="{isSelected(#%#,getParam(#value#))}">All memberships</option>
-   <option value="" selected="{isSelected(##,getParam(#value#))}">No membership</option>
+   <option value="0" selected="{isSelected(##,getParam(#value#))}">No membership</option>
    <option value="pending_membership" IF="pendingOption" selected="{isSelected(#pending_membership#,getParam(#value#))}">Pending membership</option>
-   <option FOREACH="config.Memberships.memberships,membership" selected="{isSelected(membership,getParam(#value#))}" value="{membership:r}">{membership}</option>
+   <option FOREACH="getMemberships(),membership" selected="{isSelected(membership.membership_id,getParam(#value#))}" value="{membership.membership_id}">{membership.name}</option>
 </select>
 
 {if:!isEmpty(history)}
-<script language="javascript">
+<script type="text/javascript">
 var membership_index = document.getElementById('{getParam(#field#)}').selectedIndex;
 function ChangeMembership(obj)
 {
-	if ( confirm("Are you sure you want to change mempership?") ) {
+	if (confirm('Are you sure you want to change mempership?')) {
 		membership_index = obj.selectedIndex;
+
 	} else {
 		obj.options[membership_index].selected = true;
 	}
