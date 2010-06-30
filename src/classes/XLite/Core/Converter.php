@@ -259,6 +259,156 @@ class XLite_Core_Converter extends XLite_Base implements XLite_Base_ISingleton
     }
 
     /**
+     * Resize image by width / height limits
+     * 
+     * @param XLite_Model_Base_Image $image  Image
+     * @param integer                $width  Width limit
+     * @param integer                $height Height limit
+     *  
+     * @return array (new width + new height + image body)
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function resizeImageSoft(XLite_Model_Base_Image $image, $width = null, $height = null)
+    {
+        list($newWidth, $newHeight) = self::getCroppedDimensions(
+            $image->width,
+            $image->height,
+            $width,
+            $height
+        );
+
+        $result = array($newWidth, $newHeight, null);
+
+        if (
+            self::isGDEnabled()
+            && ($newWidth != $image->width || $newHeight != $image->height)
+        ) {
+            $image = self::resizeImage($image, $newWidth, $newHeight);
+
+            if ($image) {
+                $result[2] = $image;
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Resize image 
+     * 
+     * @param XLite_Model_Base_Image $image  Image
+     * @param integer                $width  New width
+     * @param integer                $height New height
+     *  
+     * @return string or false
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function resizeImage(XLite_Model_Base_Image $image, $width, $height)
+    {
+        static $types = array(
+            'image/jpeg' => 'jpeg',
+            'image/jpg'  => 'jpeg',
+            'image/gif'  => 'gif',
+            'image/xpm'  => 'xpm',
+            'image/gd'   => 'gd',
+            'image/gd2'  => 'gd2',
+            'image/wbmp' => 'wbmp',
+            'image/bmp'  => 'wbmp',
+        );
+
+        $type = $image->mime;
+
+        if (!isset($types[$type])) {
+            return false;
+        }
+
+        $type = $types[$type];
+
+        $func = 'imagecreatefrom' . $type;
+        if (!function_exists($func)) {
+            return false;
+        }
+
+        $data = $image->body;
+
+        if (!$data) {
+            return false;
+        }
+
+        $fn = tempnam(LC_TMP_DIR, 'image');
+
+        file_put_contents($fn, $data);
+        unset($data);
+
+        $image = $func($fn);
+        unlink($fn);
+
+        if (!$image) {
+            return false;
+        }
+
+        $newImage = imagecreatetruecolor($width, $height);
+        imagealphablending($newImage, false);
+        imagesavealpha($newImage, true);
+
+        $res = imagecopyresampled(
+            $newImage,
+            $image,
+            0,
+            0,  
+            0,
+            0,
+            $width,
+            $height,
+            $image->width,
+            $image->height
+        );
+        imagedestroy($image);
+
+        require_once LC_EXT_LIB_DIR . 'phpunsharpmask.php';
+
+        $unsharpImage = UnsharpMask($newImage);
+        if ($unsharpImage) {
+            $newImage = $unsharpImage;
+        }
+
+        $func = 'image' . $type;
+
+        ob_start();
+        $result = $func($newImage);
+        $image = ob_get_contents();
+        ob_end_clean();
+        imagedestroy($newImage);
+
+        if (!$result) {
+            return false;
+        }
+
+        return $image;
+    }
+
+    /**
+     * Check - is GDlib enabled or not
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function isGDEnabled()
+    {
+        return function_exists('imagecreatefromjpeg')
+            && function_exists('imagecreatetruecolor')
+            && function_exists('imagealphablending')
+            && function_exists('imagesavealpha')
+            && function_exists('imagecopyresampled');
+    }
+
+    /**
      * Get cropped dimensions 
      * 
      * @param integer $w    Original width
