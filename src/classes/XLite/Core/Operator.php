@@ -110,5 +110,34 @@ class XLite_Core_Operator extends XLite_Base implements XLite_Base_ISingleton
     {
         return class_exists($name, false) || file_exists(LC_CLASSES_CACHE_DIR . str_replace('_', LC_DS, $name) . '.php');
     }
+
+    /**
+     * Get URL content 
+     * 
+     * @param string $url URL
+     *  
+     * @return string or null
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getURLContent($url)
+    {
+        $result = null;
+
+        if (ini_get('allow_url_fopen')) {
+            $result = file_get_contents($url);
+
+        } else {
+            $bouncer = new XLite_Model_HTTPS();
+            $bouncer->url = $url;
+            $bouncer->method = 'GET';
+            if (XLite_Model_HTTPS::HTTPS_SUCCESS == $bouncer->request()) {
+                $result = $bouncer->response;
+            }
+        }
+
+        return $result;
+    }
 }
 

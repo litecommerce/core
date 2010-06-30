@@ -280,7 +280,7 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
     public function getShopUrl($url = '', $secure = false)
     {
         $proto  = ($secure ? 'https' : 'http') . '://';
-        $host   = $this->getOptions(array('host_details', ($secure ? 'https' : 'http') . '_host'));
+        $host   = $this->getOptions(array('host_details', ($secure ? 'https_host' : 'http_host')));
 
         if ('/' != substr($url, 0, 1)) {
             $url = rtrim($this->getOptions(array('host_details', 'web_dir')), '/') . '/' . $url;
