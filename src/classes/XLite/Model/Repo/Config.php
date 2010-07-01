@@ -46,6 +46,17 @@ class XLite_Model_Repo_Config extends XLite_Model_Repo_Base_I18n
     protected $defaultOrderBy = 'orderby';
 
     /**
+     * List of options which are not allowed 
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $disabledOptions = array();
+
+
+    /**
      * Define cache cells 
      * 
      * @return array
@@ -67,6 +78,105 @@ class XLite_Model_Repo_Config extends XLite_Model_Repo_Base_I18n
         );
 
         return $list;
+    }
+
+    /**
+     * Remove option from the "black list" 
+     * 
+     * @param string $category option category
+     * @param string $name     option name
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function enableOption($category, $name)
+    {
+        unset($this->disabledOptions[$category][array_search($name, $this->disabledOptions[$category])]);
+    }
+
+    /**
+     * Add option to the "black list" 
+     * 
+     * @param string $category option category
+     * @param string $name     option name
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function disableOption($category, $name)
+    {
+        if (!isset($this->disabledOptions[$category])) {
+            $this->disabledOptions[$category] = array();
+        }
+
+        $this->disabledOptions[$category][] = $name;
+    }
+
+    /**
+     * Return query (and its params) which is used to filter options 
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getOptionsAbaliabilityCondition()
+    {
+        $conditions = array();
+        $params = array();
+
+        foreach ($this->disabledOptions as $category => $options) {
+
+            $condition = 'c.category = :category' . $category;
+            $params['category' . $category] = $category;
+
+            list($keys, $options) = XLite_Core_Database::prepareArray($options, $category);
+            $condition .= ' AND c.name IN (' . implode(',', $keys) . ')';
+            $params += $options;
+
+            $conditions[] = 'NOT (' . $condition . ')';
+        }
+
+        return array(empty($conditions) ? null : '(' . implode(') AND (', $conditions) . ')', $params);
+    }
+
+    /**
+     * Add "filter" condition to the query builder
+     * 
+     * @param Doctrine\ORM\QueryBuilder $qb current query builder
+     *  
+     * @return Doctrine\ORM\QueryBuilder
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function prepareOptionsAbaliabilityCondition(Doctrine\ORM\QueryBuilder $qb)
+    {
+        list($condition, $params) = $this->getOptionsAbaliabilityCondition();
+
+        return isset($condition) 
+            ? $qb->andWhere($condition)->setParameters($qb->getParameters() + $params) 
+            : $qb;
+    }
+
+
+    /**
+     * Create a new QueryBuilder instance that is prepopulated for this entity name
+     *
+     * @param string $alias Table alias
+     *
+     * @return Doctrine\ORM\QueryBuilder
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function createQueryBuilder($alias = null)
+    {
+        return $this->prepareOptionsAbaliabilityCondition(parent::createQueryBuilder($alias));
     }
 
     /**
@@ -109,7 +219,7 @@ class XLite_Model_Repo_Config extends XLite_Model_Repo_Base_I18n
     protected function defineByCategoryQuery($category)
     {
         return $this->createQueryBuilder()
-            ->where('c.category = :category')
+            ->andWhere('c.category = :category')
             ->setParameter('category', $category);
     }
 
@@ -154,6 +264,23 @@ class XLite_Model_Repo_Config extends XLite_Model_Repo_Base_I18n
     }
 
     /**
+     * Check (and modify) option name and value
+     * 
+     * @param string &$category option category
+     * @param string &$name     option name
+     * @param mixed  &$value    option value
+     *  
+     * @return bool
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function checkNameAndValue(&$category, &$name, &$value)
+    {
+        return true;
+    }
+
+    /**
      * Preprocess options and transform its to the hierarchy of XLite_Core_CommonCell objects
      * 
      * @param array $data Array of options data gathered from the database
@@ -186,7 +313,9 @@ class XLite_Model_Repo_Config extends XLite_Model_Repo_Base_I18n
                 $value = unserialize($value);
             }
 
-            $config->$category->$name = $value;
+            if ($this->checkNameAndValue($category, $name, $value)) {
+                $config->$category->$name = $value;
+            }
         }
 
         // Add human readable store country and state names for Company options
