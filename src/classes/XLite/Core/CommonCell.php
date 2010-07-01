@@ -82,7 +82,7 @@ class XLite_Core_CommonCell
      * 
      * @param string $name property name
      *  
-     * @return void
+     * @return bool
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -90,5 +90,20 @@ class XLite_Core_CommonCell
     public function __isset($name)
     {
         return isset($this->properties[$name]);
+    }
+
+    /**
+     * Unset property
+     * 
+     * @param string $name property name
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function __unset($name)
+    {
+        unset($this->properties[$name]);
     }
 }
