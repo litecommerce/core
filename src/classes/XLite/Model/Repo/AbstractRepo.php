@@ -350,7 +350,7 @@ abstract class XLite_Model_Repo_AbstractRepo extends EntityRepository
      */
     protected function getCacheHashGeneratorName($name)
     {
-        return 'getCacheHash' . ucfirst($name);
+        return 'getCacheHash' . XLite_Core_Converter::convertToCamelCase($name);
     }
 
     /**
@@ -365,7 +365,7 @@ abstract class XLite_Model_Repo_AbstractRepo extends EntityRepository
      */
     protected function getCacheParamsConverterName($name)
     {
-        return 'convertRecordToParams' . ucfirst($name);
+        return 'convertRecordToParams' . XLite_Core_Converter::convertToCamelCase($name);
     }
 
     /**
@@ -510,6 +510,116 @@ abstract class XLite_Model_Repo_AbstractRepo extends EntityRepository
         $alias = $alias ?: $this->defaultAlias;
 
         return $this->assignDefaultOrderBy(parent::createQueryBuilder($alias), $alias);
+    }
+
+    /**
+     * Count records
+     * 
+     * @return integer
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function count()
+    {
+        try {
+            $qb = $this->createQueryBuilder();
+            $alias = $this->getMainAlias($qb);
+            $count = $qb
+                ->select('COUNT(' . $alias . '.' . implode(', ' . $alias . '.', $this->_class->identifier) . ')')
+                ->setMaxResults(1)
+                ->getQuery()
+                ->getSingleScalarResult();
+
+        } catch (Doctrine\ORM\NonUniqueResultException $exception) {
+            $count = 0;
+        }
+
+        return $count;
+    }
+
+    /**
+     * Find entities by id's list
+     * 
+     * @param array $ids Id's list
+     *  
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function findByIds(array $ids)
+    {
+        if (1 < count($this->_class->identifier)) {
+            // TODO - add throw exception
+        }
+
+        $qb = $this->createQueryBuilder();
+        $keys = XLite_Core_Database::buildInCondition($qb, $ids);
+        $alias = $this->getMainAlias($qb);
+        $qb->andWhere($alias . '.' . $this->_class->identifier[0] . ' IN (' . implode(', ', $keys) . ')');
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * Find data frame 
+     * 
+     * @param int $start Start offset
+     * @param int $limit Frame length
+     *  
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function findFrame($start = 0, $limit = 0)
+    {
+        return $this->defineFrameQuery($start, $limit)->getQuery()->getResult();
+    }
+
+    /**
+     * Define query for 'findFrame()' finder
+     * 
+     * @param integer $start Start offset
+     * @param integer $limit Frame length
+     *  
+     * @return Doctrine\ORM\QueryBuilder
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineFrameQuery($start, $limit)
+    {
+        return $this->assignFrame($this->createQueryBuilder(), $start, $limit);
+    }
+
+    /**
+     * Assign frame to query builder
+     * 
+     * @param Doctrine\ORM\QueryBuilder $qb    Query builder
+     * @param int                       $start Start offset
+     * @param int                       $limit Frame length
+     *  
+     * @return Doctrine\ORM\QueryBuilder
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function assignFrame(Doctrine\ORM\QueryBuilder $qb, $start = 0, $limit = 0)
+    {
+        $start = max(0, intval($start));
+        $limit = max(0, intval($limit));
+
+        if (0 < $start) {
+            $qb->setFirstResult($start);
+        }
+
+        if (0 < $limit) {
+            $qb->setMaxResult($limit);
+        }
+
+        return $qb;
     }
 
     /**
