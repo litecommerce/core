@@ -1860,7 +1860,7 @@ DATA;
     {
         $data = file_get_contents($fn);
 
-        if (preg_match_all('/^\s+(?:protected\s+|public\s+|private\s+)?\$\S+/Sm', $data, $match)) {
+        if (preg_match_all('/^\s+(?:protected|public|private)\s+\$\S+/Sm', $data, $match)) {
             $match = array_pop($match[0]);
             $pos = strpos($data, $match);
             $pos = strpos($data, ';', $pos) + 1;
