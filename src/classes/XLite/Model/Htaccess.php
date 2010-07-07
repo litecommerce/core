@@ -143,7 +143,7 @@ class XLite_Model_Htaccess extends XLite_Model_Abstract
 
     function checkFiles()
     {
-        $last_date = $this->config->Htaccess->last_date;
+        $last_date = isset($this->config->Htaccess->last_date) ? $this->config->Htaccess->last_date : 0;
         $now = time();
         if (($now - $last_date) < CHECK_INTERVAL)
             return;

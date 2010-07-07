@@ -35,14 +35,14 @@
  */
 class XLite_Module_WholesaleTrading_Model_Category extends XLite_Model_Category implements XLite_Base_IDecorator
 {
-    function get($name)
+    public function getMembership()
     {
-        $value = parent::get($name);
-        if ($name == "membership" && !$this->xlite->is('adminZone')) {
-            if ($value == "all") {
-                $value = "%";
-            }
+        $value = $this->membership;
+        
+        if (!XLite::isAdminZone() && $value == "all") {
+            $value = "%";
         }
+
         return $value;
     }
 }

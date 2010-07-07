@@ -5,5 +5,3 @@ INSERT INTO `xlite_config` VALUES (175,'number_of_bestsellers','Bestsellers','te
 INSERT INTO `xlite_config_translations` VALUES (20,'en',23,'Display the list of bestsellers in','');
 INSERT INTO `xlite_config_translations` VALUES (21,'en',24,'Show thumbnails in the list','');
 INSERT INTO `xlite_config_translations` VALUES (131,'en',175,'Number of products in the bestsellers list','');
-
-CREATE INDEX xlite_product_links_category ON xlite_product_links (category_id);

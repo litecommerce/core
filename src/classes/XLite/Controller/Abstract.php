@@ -521,11 +521,7 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
      */
     public function getCategory()
     {
-        return XLite_Model_CachingFactory::getObject(
-            __METHOD__,
-            'XLite_Model_Category',
-            array(intval($this->getCategoryId()))
-        );
+        return XLite_Core_Database::getRepo('XLite_Model_Category')->getCategory($this->getCategoryId());
     }
 
     /**
@@ -922,8 +918,8 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
 
         } else {
             $obj = XLite_Core_Database::getEM()->find('XLite_Model_Country', $this->config->General->default_country);
-            if ($obj->get('charset')) {
-                $charset = $obj->get('charset');
+            if ($obj->charset) {
+                $charset = $obj->charset;
             }
         }
 

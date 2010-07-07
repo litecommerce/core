@@ -305,6 +305,7 @@ class XLite_View_Image extends XLite_View_Abstract
 
     /**
      * Preprocess image 
+     * TODO: replace getResizedThumbnailURL to getResizedURL
      * 
      * @return void
      * @access protected
@@ -316,11 +317,13 @@ class XLite_View_Image extends XLite_View_Abstract
         $maxw = max(0, $this->getParam(self::PARAM_MAX_WIDTH));
         $maxh = max(0, $this->getParam(self::PARAM_MAX_HEIGHT));
 
+        $funcName = method_exists($this->getParam(self::PARAM_IMAGE), 'getResizedURL') ? 'getResizedURL' : 'getResizedThumbnailURL';
+
         list(
             $this->properties['width'],
             $this->properties['height'],
             $this->resizedURL
-        ) = $this->getParam(self::PARAM_IMAGE)->getResizedThumbnailURL($maxw, $maxh);
+        ) = $this->getParam(self::PARAM_IMAGE)->$funcName($maxw, $maxh);
 
         // Center the image vertically and horizontally
         if ($this->getParam(self::PARAM_CENTER_IMAGE)) {

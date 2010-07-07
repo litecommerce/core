@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage View
+ * @subpackage Model
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -27,53 +27,14 @@
  */
 
 /**
- * Category widget
+ * Category
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
+ * @Entity
+ * @Table (name="category_images")
  */
-class XLite_View_Category extends XLite_View_Abstract
+class XLite_Model_CategoryImage extends XLite_Model_Base_Image
 {
-    /**
-     * Return widget default template
-     *
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getDefaultTemplate()
-    {
-        return 'category_description.tpl';
-    }
-
-
-    /**
-     * Check widget visibility 
-     * 
-     * @return bool
-     * @access public
-     * @since  3.0.0
-     */
-    public function isVisible()
-    {
-        return parent::isVisible() && $this->getCategory()->description;
-    }
-
-
-    /**
-     * Return list of targets allowed for this widget
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function getAllowedTargets()
-    {
-        $result = parent::getAllowedTargets();
-        $result[] = 'category';
-    
-        return $result;
-    }
 }

@@ -74,7 +74,7 @@ define('LC_IMAGES_DIR', LC_ROOT_DIR . 'images' . LC_DS);
 define('LC_IMAGES_CACHE_DIR', LC_VAR_DIR . 'images' . LC_DS);
 
 define('LC_IMAGES_URL', 'images');
-define('LC_IMAGES_CACHE_URL', LC_VAR_URL . 'images');
+define('LC_IMAGES_CACHE_URL', LC_VAR_URL . '/images');
 
 
 // Namespaces
