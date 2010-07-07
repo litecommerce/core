@@ -473,12 +473,12 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
 
         if (!$cleanUrl) {
 
-            $category = new XLite_Model_Category();
-            if ($category->findByCleanUrl(preg_replace('/\/+$/Ss', '', $path))) {
+            $category = XLite_Core_Database::getRepo('XLite_Model_Category')->getCategoryByCleanUrl(preg_replace('/\/+$/Ss', '', $path));
+            if ($category) {
                 $cleanUrl = XLite_Core_Converter::buildURL(
                     'category',
                     '',
-                    array('category_id' => $category->get('category_id'))
+                    array('category_id' => $category->category_id)
                 );
             }
 

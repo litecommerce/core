@@ -75,7 +75,10 @@ while (($dir = readdir($modules)) !== false) {
 
 closedir($modules);
 
-_do_query_upload("sql/xlite_demo.sql", $connection, true);
+if (!isset($argv[1]) || $argv[1] != "demo") {
+	_do_query_upload("sql/xlite_demo.sql", $connection, true);
+}
+
 _do_query_upload("sql/demo/xlite_demo_user.sql", $connection, true);
 
 if (isset($argv[1]) && $argv[1] == "demo") {

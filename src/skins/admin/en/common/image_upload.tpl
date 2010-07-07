@@ -17,7 +17,7 @@
 
 <br />
 
-<input type="checkbox" name="{getParam(#field#)}_filesystem" value="1" checked="{isFS()}" /> Upload to file system
+{*<input type="checkbox" name="{getParam(#field#)}_filesystem" value="1" checked="{isFS()}" /> Upload to file system*}
 
 <br />
 

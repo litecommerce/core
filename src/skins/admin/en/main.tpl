@@ -66,11 +66,10 @@
 <widget target="modules" template="common/dialog.tpl" head="Modules" body="modules.tpl">
 <widget target="module" template="common/dialog.tpl" head="Module {page} settings" body="general_settings.tpl">
 
-<widget name="categoriesWidget" target="categories" template="common/dialog.tpl" head="Manage categories" body="categories/body.tpl" visible="{!getRequestParamValue(#mode#)=#delete_all#}">
+<widget name="categoriesWidget" target="categories" template="common/dialog.tpl" head="Manage categories" body="categories/body.tpl" visible="{!getRequestParamValue(#mode#)=#delete#}">
 <widget module="FeaturedProducts" template="common/dialog.tpl" head="Featured products" body="modules/FeaturedProducts/featuredProducts.tpl" IF="{namedWidgets.categoriesWidget.visible}">
-<widget target="category" class="XLite_View_Tabber" body="{getPageTemplate()}" switch="page" visible="{!getRequestParamValue(#mode#)=#delete#}">
-<widget target="categories" template="common/dialog.tpl" body="categories/delete_all.tpl" head="Confirmation" mode="delete_all">
-<widget target="category" template="common/dialog.tpl" body="categories/delete.tpl" head="Confirmation" mode="delete">
+<widget target="category" class="XLite_View_Tabber" body="{getPageTemplate()}" switch="page">
+<widget target="categories" template="common/dialog.tpl" body="categories/delete_confirmation.tpl" head="Confirmation" mode="delete">
 
 <widget target="settings" class="XLite_View_Tabber" body="general_settings.tpl" switch="page">
 

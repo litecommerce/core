@@ -344,10 +344,10 @@ class XLite_Core_Converter extends XLite_Base implements XLite_Base_ISingleton
         file_put_contents($fn, $data);
         unset($data);
 
-        $image = $func($fn);
+        $imageResource = $func($fn);
         unlink($fn);
 
-        if (!$image) {
+        if (!$imageResource) {
             return false;
         }
 
@@ -357,7 +357,7 @@ class XLite_Core_Converter extends XLite_Base implements XLite_Base_ISingleton
 
         $res = imagecopyresampled(
             $newImage,
-            $image,
+            $imageResource,
             0,
             0,  
             0,
@@ -367,7 +367,7 @@ class XLite_Core_Converter extends XLite_Base implements XLite_Base_ISingleton
             $image->width,
             $image->height
         );
-        imagedestroy($image);
+        imagedestroy($imageResource);
 
         require_once LC_EXT_LIB_DIR . 'phpunsharpmask.php';
 

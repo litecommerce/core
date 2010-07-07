@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage View
+ * @subpackage Model
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -27,53 +27,61 @@
  */
 
 /**
- * Category widget
+ * Category
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_Category extends XLite_View_Abstract
+class XLite_Model_Repo_CategoryImage extends XLite_Model_Repo_Base_Image
 {
     /**
-     * Return widget default template
-     *
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getDefaultTemplate()
-    {
-        return 'category_description.tpl';
-    }
-
-
-    /**
-     * Check widget visibility 
+     * Define cache cells 
      * 
-     * @return bool
-     * @access public
-     * @since  3.0.0
-     */
-    public function isVisible()
-    {
-        return parent::isVisible() && $this->getCategory()->description;
-    }
-
-
-    /**
-     * Return list of targets allowed for this widget
-     *
      * @return array
-     * @access public
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function getAllowedTargets()
+    protected function defineCacheCells()
     {
-        $result = parent::getAllowedTargets();
-        $result[] = 'category';
-    
-        return $result;
+        $list = parent::defineCacheCells();
+
+        $list['category_image'] = array(
+            self::TTL_CACHE_CELL   => self::INFINITY_TTL,
+            self::ATTRS_CACHE_CELL => array('category_id')
+        );
+
+        return $list;
     }
+
+    /**
+     * Get the category details
+     * 
+     * @param integer $categoryId Node identifier
+     *  
+     * @return object
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getImageById($categoryId)
+    {
+        $data = null;
+
+        if (!is_null($categoryId)) {
+
+            $data = $this->getFromCache('category_image', array('category_id' => $categoryId));
+
+            if (!isset($data)) {
+
+                $data = $this->findOneById($categoryId);
+
+                $this->saveToCache($data, 'category_image', array('category_id' => $categoryId));
+            }
+        }
+
+        return $data;
+    }
+
 }

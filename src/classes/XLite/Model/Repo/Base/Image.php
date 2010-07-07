@@ -47,7 +47,7 @@ abstract class XLite_Model_Repo_Base_Image extends XLite_Model_Repo_AbstractRepo
     {
         $class = get_called_class();
 
-        return str_replace('image', '', strtolower(substr($class, strrpos($class, '_'))));
+        return str_replace('image', '', strtolower(substr($class, strrpos($class, '_') + 1)));
     }
 
     /**
@@ -73,7 +73,7 @@ abstract class XLite_Model_Repo_Base_Image extends XLite_Model_Repo_AbstractRepo
      */
     public function getWebRoot()
     {
-        return XLite::getInstance()->getShopUrl(LC_IMAGES_URL);
+        return XLite::getInstance()->getShopUrl(LC_IMAGES_URL . '/' . $this->getStorageName()) . '/';
     }
 
     /**
@@ -88,7 +88,7 @@ abstract class XLite_Model_Repo_Base_Image extends XLite_Model_Repo_AbstractRepo
      */
     public function getFileSystemCacheRoot($sizeName)
     {
-        return LC_IMAGES_CACHE_DIR . $this->getStorageName() . $sizeName . LC_DS;
+        return LC_IMAGES_CACHE_DIR . $this->getStorageName() . LC_DS . $sizeName . LC_DS;
     }
 
     /**
@@ -103,7 +103,7 @@ abstract class XLite_Model_Repo_Base_Image extends XLite_Model_Repo_AbstractRepo
      */
     public function getWebCacheRoot($sizeName)
     {
-        return XLite::getInstance()->getShopUrl(LC_IMAGES_CACHE_URL . '/' . $sizeName);
+        return XLite::getInstance()->getShopUrl(LC_IMAGES_CACHE_URL . '/' . $this->getStorageName() . '/' . $sizeName);
     }
 
     /**
@@ -134,4 +134,3 @@ abstract class XLite_Model_Repo_Base_Image extends XLite_Model_Repo_AbstractRepo
 
 
 }
-

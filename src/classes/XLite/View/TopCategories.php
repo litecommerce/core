@@ -113,18 +113,11 @@ class XLite_View_TopCategories extends XLite_View_SideBarBox
      */
     protected function getCategories($categoryId = null)
     {
-        if (isset($categoryId)) {
-            $category = XLite_Model_CachingFactory::getObject(
-                __METHOD__ . $categoryId,
-                'XLite_Model_Category',
-                array($categoryId)
-            );
-
-        } else {
-            $category = $this->getWidgetParams(self::PARAM_ROOT_ID)->getObject();
+        if (!isset($categoryId)) {
+            $categoryId = $this->getWidgetParams(self::PARAM_ROOT_ID)->getObject()->category_id;
         }
 
-        return $category->getSubcategories();
+        return XLite_Core_Database::getRepo('XLite_Model_Category')->getCategoriesPlainList($categoryId);
     }
 
     /**
@@ -164,16 +157,19 @@ class XLite_View_TopCategories extends XLite_View_SideBarBox
     public function isActiveTrail(XLite_Model_Category $category)
     {
         if (is_null($this->pathIds)) {
-            $currentCategory = $this->getCategory(XLite_Core_Request::getInstance()->category_id);
 
             $this->pathIds = array();
 
-            foreach ($currentCategory->getPath() as $c) {
-                $this->pathIds[] = $c->get('category_id');
+            $categoriesPath = XLite_Core_Database::getRepo('XLite_Model_Category')->getCategoryPath(XLite_Core_Request::getInstance()->category_id);
+
+            if (is_array($categoriesPath)) {
+                foreach ($categoriesPath as $c) {
+                    $this->pathIds[] = $c->category_id;
+                }
             }
         }
 
-        return in_array($category->get('category_id'), $this->pathIds);
+        return in_array($category->category_id, $this->pathIds);
     }
 
     /**
@@ -193,7 +189,7 @@ class XLite_View_TopCategories extends XLite_View_SideBarBox
 
         $active = $this->isActiveTrail($category);
 
-        if (!$category->getSubcategories()) {
+        if (!$category->hasSubcategories()) {
             $classes[] = 'leaf';
 
         } elseif (self::DISPLAY_MODE_LIST != $this->getParam(self::PARAM_DISPLAY_MODE)) {
@@ -234,7 +230,7 @@ class XLite_View_TopCategories extends XLite_View_SideBarBox
      */
     public function assembleLinkClassName($i, $count, XLite_Model_Category $category)
     {
-        return XLite_Core_Request::getInstance()->category_id == $category->get('category_id')
+        return XLite_Core_Request::getInstance()->category_id == $category->category_id
             ? 'active'
             : '';
     }
@@ -262,4 +258,3 @@ class XLite_View_TopCategories extends XLite_View_SideBarBox
     }
 
 }
-

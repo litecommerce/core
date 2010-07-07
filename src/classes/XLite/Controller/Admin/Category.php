@@ -36,57 +36,47 @@
 class XLite_Controller_Admin_Category extends XLite_Controller_Admin_Abstract
 {
     public $page = "category_modify";
-    public $pages = array
-    (
-        "category_modify"        => "Add/Modify category",
+    public $pages = array(
+        "category_modify" => "Add/Modify category",
     );
-    public $pageTemplates = array
-    (
-        "category_modify"          => "categories/add_modify_body.tpl",
-        "extra_fields"          => "categories/category_extra_fields.tpl",
+
+    public $pageTemplates = array(
+        "category_modify" => "categories/add_modify_body.tpl",
+        "extra_fields"    => "categories/category_extra_fields.tpl",
     );
 
     public $params = array('target', 'category_id', 'mode', 'message', 'page');
     public $order_by = 0;
 
-    function init()
+    protected $addModes = array(
+        'add_child',
+        'add_before',
+        'add_after'
+    );
+
+    /**
+     * Initialize controller 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function init()
     {
         parent::init();
 
-        if ($this->mode != "add" && $this->mode == "modify") {
+        if (!in_array($this->mode, $this->addModes) && $this->mode == "modify") {
+
             $this->pages['category_modify'] = "Modify category";
+
             if ($this->config->General->enable_categories_extra_fields) {
                 $this->pages['extra_fields'] = "Extra fields";
             }
+
         } else {
             $this->pages['category_modify'] = "Add new category";
         }
-    }
-
-    function fillForm()
-    {
-        $this->set('properties', $this->getComplex('category.properties'));
-    }
-
-    function getCategories()
-    {
-        $c = new XLite_Model_Category();
-        $this->categories = $c->findAll();
-        $names = array();
-        $names_hash = array();
-        for ($i = 0; $i < count($this->categories); $i++) 
-        {
-            $name = $this->categories[$i]->get('stringPath');
-            while (isset($names_hash[$name]))
-            {
-                $name .= " ";
-            }
-            $names_hash[$name] = true;
-            $names[] = $name;
-        }
-        array_multisort($names, $this->categories);
-
-        return $this->categories;
     }
 
     function getExtraFields()
@@ -108,140 +98,258 @@ class XLite_Controller_Admin_Category extends XLite_Controller_Admin_Abstract
         return $this->extraFields;
     }
 
-    // FIXME - check this method
-    function getParentCategory()
+    /**
+     * Get category_id of the parent category
+     * 
+     * @return int
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getParentCategoryId($categoryId)
     {
-        if (is_null($this->parentCategory)) {
-            $this->parentCategory = new XLite_Model_Category($this->category_id);
-        }
-        return $this->parentCategory;
+        return XLite_Core_Database::getRepo('XLite_Model_Category')->getParentCategoryId($categoryId ? $categoryId : $this->getCategoryId());
     }
     
-    function getCategory()
+    /**
+     * Get XLite_Model_Category object of current category
+     * 
+     * @return XLite_Model_Category
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCategory()
     {
-        if (is_null($this->category)) {
-            if ($this->get('mode') == "add") {
-                $this->category = new XLite_Model_Category(); // empty category
-            } else {
-                $categoryID = 0;
-                if (isset(XLite_Core_Request::getInstance()->category_id)) {
-                    $categoryID = XLite_Core_Request::getInstance()->category_id;
-                }
-                $this->category = new XLite_Model_Category($categoryID);
-            }
+        if (is_null($this->category) && !in_array($this->mode, $this->addModes)) {
+
+            $this->category = XLite_Core_Database::getRepo('XLite_Model_Category')->getCategory($this->getCategoryId());
         }
+
+        if (is_null($this->category)) {
+            $this->category = new XLite_Model_Category();
+        }
+
         return $this->category;
     }
 
-    function getLocationPath()
+    /**
+     * Return current category Id 
+     * 
+     * @return int
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getCategoryId()
+    {
+        return $this->getParam(self::PARAM_CATEGORY_ID);
+    }
+
+    /**
+     * Prepare location path from category path 
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getLocationPath()
     {
         $result = array();
-        if ($this->get('mode') == "add" && $this->getComplex('parentCategory.category_id') != 0) {
-            foreach ($this->getComplex('parentCategory.path') as $category) {
-                $name = $category->get('name');
-                while (isset($result[$name])) {
-                    $name .= " ";
-                }
-                $result[$name] = "admin.php?target=categories&category_id=" . $category->get('category_id');
-            }
-        } else if ($this->getComplex('category.category_id') != 0) {
-            foreach ($this->getComplex('category.path') as $category) {
-                $name = $category->get('name');
-                while (isset($result[$name])) {
-                    $name .= " ";
-                }
-                $result[$name] = "admin.php?target=categories&category_id=" . $category->get('category_id');
+
+        $categoryPath = XLite_Core_Database::getRepo('XLite_Model_Category')->getCategoryPath($this->getCategoryId());
+
+        if (is_array($categoryPath)) {
+            
+            foreach ($categoryPath as $category) {
+                $result[$category->name] = 'admin.php?target=categories&category_id=' . $category->category_id;
             }
         }
+
         return $result;
     }
 
-    function action_modify()
+    /**
+     * Calculate indentation for displaying category in the tree 
+     * 
+     * @param mixed $depth      Node depth
+     * @param int   $multiplier Custom multiplier
+     *  
+     * @return int
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getIndentation($depth, $multiplier = 0)
     {
-        $valid = (bool) isset($this->name) && strlen(trim($this->name));
-
-        if (!$valid) {
-            $this->set('valid', $valid);
-            return;
-        }
-
-        // update category
-        $category = new XLite_Model_Category();
-        $properties = XLite_Core_Request::getInstance()->getData();
-
-        // Sanitize
-        if (isset($properties['clean_url'])) {
-            $properties['clean_url'] = $this->sanitizeCleanURL($properties['clean_url']);
-            if (
-                0 < strlen($properties['clean_url'])
-                && !$this->checkCleanURLUnique($properties['clean_url'])
-            ) {
-
-                XLite_Core_TopMessage::getInstance()->add(
-                    'The Clean URL you specified is already in use. Please specify another Clean URL',
-                    XLite_Core_TopMessage::ERROR
-                );
-                $this->set('valid', false);
-                return;
-            }
-        }
-
-
-        if (empty($properties['parent'])) $properties['parent'] = 0;
-        $category->setProperties($properties);
-        $category->update();
-
-        // update category image
-        $image = $category->get('image');
-        $image->handleRequest();
-        
-        $this->set('message', "updated");
+        return $depth * $multiplier;
     }
 
-    function action_add()
+    protected function validateCategoryData($newObject = false)
     {
-        $valid = (bool) isset($this->name) && strlen(trim($this->name));
+        $postedData = XLite_Core_Request::getInstance()->getData();
 
-        if (!$valid) {
-            $this->set('valid', $valid);
-            return;
+        $data = array();
+        $isValid = true;
+
+        $fieldsSet = array(
+            'name',
+            'description',
+            'meta_tags',
+            'meta_desc',
+            'meta_title',
+            'enabled',
+            'membership_id',
+            'clean_url',
+        );
+
+        if (!$newObject) {
+            $fieldsSet[] = 'category_id';
         }
 
-        // add category
-        $category = new XLite_Model_Category();
-        $properties = XLite_Core_Request::getInstance()->getData();
+        foreach ($fieldsSet as $field) {
 
-        // Sanitize
-        if (isset($properties['clean_url'])) {
-            $properties['clean_url'] = $this->sanitizeCleanURL($properties['clean_url']);
-            if (
-                0 < strlen($properties['clean_url'])
-                && !$this->checkCleanURLUnique($properties['clean_url'])
-            ) {
+            if (isset($postedData[$field])) {
+                $data[$field] = $postedData[$field];
+            }
 
-                XLite_Core_TopMessage::getInstance()->add(
-                    'The Clean URL you specified is already in use. Please specify another Clean URL',
-                    XLite_Core_TopMessage::ERROR
-                );
-                $this->set('valid', false);
-                return;
+            // 'Clean URL' is optional field and must be a unique
+            if ('clean_url' === $field && isset($data['clean_url'])) {
+
+                $data['clean_url'] = $this->sanitizeCleanURL($data['clean_url']);
+
+                if (!empty($data['clean_url']) && !$this->isCleanURLUnique($data['clean_url'])) {
+
+                    XLite_Core_TopMessage::getInstance()->add(
+                        'The Clean URL you specified is already in use. Please specify another Clean URL',
+                        XLite_Core_TopMessage::ERROR
+                    );
+
+                    $isValid = false;
+                }
+
+            // 'Name' is a mandatory field
+            } elseif ('name' === $field) {
+
+                if (!isset ($data['name']) || 0 == strlen(trim($data['name']))) {
+
+                    XLite_Core_TopMessage::getInstance()->add(
+                        'Not empty category name must be specified',
+                        XLite_Core_TopMessage::ERROR
+                    );
+
+                    $isValid = false;
+                }
+
+            // 'Enabled' field value must be either 0 or 1
+            } elseif ('enabled' === $field) {
+                $data['enabled'] = isset($data['enabled']) && $data['enabled'] == '1' ? 1 : 0;
             }
         }
 
-        $category->set('properties', $properties);
-        $category->set('category_id', null);
-        if (empty(XLite_Core_Request::getInstance()->parent)) XLite_Core_Request::getInstance()->parent = 0;
-        $category->set('parent', XLite_Core_Request::getInstance()->parent);
-        $category->create();
+        return $isValid ? $data : false;
+    }
 
-        // upload category image
-        $image = $category->get('image');
-        $image->handleRequest();
+    public function action_modify()
+    {
+        if ($properties = $this->validateCategoryData()) {
 
-        // switch to modify page
-        $this->set('category_id', $category->get('category_id'));
-        $this->set('mode', "modify");
-        $this->set('message', "added");
+            $code = $this->getCurrentLanguage();
+
+            // update category
+            $category = XLite_Core_Database::getRepo('XLite_Model_Category')->getCategory($properties['category_id']);
+
+            $category->map($properties);
+            $category->getTranslation($code)->name = $properties['name'];
+            $category->getTranslation($code)->description = $properties['description'];
+            $category->getTranslation($code)->meta_tags = $properties['meta_tags'];
+            $category->getTranslation($code)->meta_desc = $properties['meta_desc'];
+            $category->getTranslation($code)->meta_title = $properties['meta_title'];
+
+            XLite_Core_Database::getEM()->persist($category);
+            XLite_Core_Database::getEM()->flush();
+
+            // update category image
+//            $image = $category->get('image');
+//            $image->handleRequest();
+        }
+    }
+
+    /**
+     * add_child action
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function action_add_child()
+    {
+        $this->addCategory('addChild');
+    }
+
+    /**
+     * add_before action
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function action_add_before()
+    {
+        $this->addCategory('addBefore');
+    }
+
+    /**
+     * add_after action
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function action_add_after()
+    {
+        $this->addCategory('addAfter');
+    }
+
+    /**
+     * Add category common action
+     * 
+     * @param string $funcName Name of method
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function addCategory($funcName)
+    {
+        if (in_array($funcName, array('addChild', 'addBefore', 'addAfter'))) {
+
+            if ($properties = $this->validateCategoryData(true)) {
+
+                // update category
+                $category = XLite_Core_Database::getRepo('XLite_Model_Category')->$funcName($this->getCategoryId());
+
+                $category->map($properties);
+
+                $code = $this->getCurrentLanguage();
+                $category->getTranslation($code)->id = $category->category_id;
+                $category->getTranslation($code)->name = $properties['name'];
+                $category->getTranslation($code)->description = $properties['description'];
+                $category->getTranslation($code)->meta_tags = $properties['meta_tags'];
+                $category->getTranslation($code)->meta_desc = $properties['meta_desc'];
+                $category->getTranslation($code)->meta_title = $properties['meta_title'];
+
+                XLite_Core_Database::getEM()->persist($category);
+                XLite_Core_Database::getEM()->flush();
+            }
+
+            $this->redirect('admin.php?target=categories&category_id=' . $category->category_id);
+        }
     }
 
     function action_delete()
@@ -367,10 +475,9 @@ class XLite_Controller_Admin_Category extends XLite_Controller_Admin_Abstract
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function checkCleanURLUnique($cleanURL)
+    protected function isCleanURLUnique($cleanURL)
     {
-        $category = new XLite_Model_Category();
-
-        return !$category->find('clean_url = \'' . $cleanURL . '\'');
+        $result = XLite_Core_Database::getRepo('XLite_Model_Category')->getCategoryByCleanUrl($cleanURL);
+        return empty($result);
     }
 }

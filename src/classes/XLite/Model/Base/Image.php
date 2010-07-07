@@ -249,12 +249,16 @@ abstract class XLite_Model_Base_Image extends XLite_Model_AbstractEntity
         $sizeName = ($width ? $width : 'x') . '.' . ($height ? $height : 'x');
         $path = $this->getRepository()->getFileSystemCacheRoot($sizeName);
 
+        if (!file_exists($path)) {
+            mkdir($path, 0777, true);
+        }
+
         $fn = $this->image_id . '.' . $this->getExtension();
 
         if (file_exists($path . $fn)) {
 
             // File is exists
-            $result = self::getCroppedDimensions(
+            $result = XLite_Core_Converter::getCroppedDimensions(
                 $this->width,
                 $this->height,
                 $width,
@@ -442,6 +446,11 @@ abstract class XLite_Model_Base_Image extends XLite_Model_AbstractEntity
         }
 
         return array($path, $isTempFile);
+    }
+
+    public function isExists()
+    {
+        return !is_null($this->image_id);
     }
 
 }

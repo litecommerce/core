@@ -109,40 +109,7 @@ class XLite_View_CategorySelect extends XLite_View_Abstract
      */
     public function getCategories()
     {
-        if (is_null($this->categories)) {
-            $this->categories = array();
-
-            $c = new XLite_Model_Category();
-            $names_hash = array();
-
-            list($where, $orderby, $groupby, $limit) = $this->getCategoriesCondition();
-
-            $this->categories = $c->findAll($where, $orderby, $groupby, $limit);
-
-            if ($this->getParam(self::PARAM_ROOT_OPTION) && $this->getParam(self::PARAM_CURRENT_CATEGORY_ID) > 0) {
-                $currentCategory = new XLite_Model_Category($this->getParam(self::PARAM_CURRENT_CATEGORY_ID));
-                $currentCategoryPath = $currentCategory->getStringPath() . '/';
-                foreach ($this->categories as $i => $c) {
-                    $name = $c->getStringPath();
-                    if (!(strpos($name, $currentCategoryPath) === false) && strpos($name, $currentCategoryPath) == 0) {
-                        unset($this->categories[$i]);
-                    }
-                }
-            }
-
-            foreach ($this->categories as $c) {
-                $name = $c->getStringPath();
-
-                while (isset($names_hash[$name])) {
-                    $name .= ' ';
-                }
-
-                $names_hash[$name] = true;
-            }
-
-            array_multisort(array_keys($names_hash), $this->categories);
-        }
-
+        $this->categories = XLite_Core_Database::getRepo('XLite_Model_Category')->getCategories();
         return $this->categories;
     }
 
@@ -176,7 +143,7 @@ class XLite_View_CategorySelect extends XLite_View_Abstract
             $categoryId = 0;
         }
 
-        return $category->get('category_id') == $categoryId;
+        return $category->category_id == $categoryId;
     }
 
     /**

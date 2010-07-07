@@ -97,7 +97,7 @@ class XLite_Module_Bestsellers_Model_Bestsellers extends XLite_Base
         $bestsellers = array();
 
         $products = '';
-        if ($cat_id != $category->get('topCategory')->get('category_id')) {
+        if ($cat_id != $category->get('topCategory')->category_id) {
 
             // get all subcategories ID
             $this->ids = array();
@@ -152,7 +152,7 @@ EOT;
                 $product = new XLite_Model_Product($p['product_id']);
                 $categories = $product->get('categories');
                 if (!empty($categories) && $product->filter()) {
-                    $product->category_id = $categories[0]->get('category_id');
+                    $product->category_id = $categories[0]->category_id;
                     $bestsellers[] = $product;
                 }
             }
@@ -172,7 +172,7 @@ EOT;
      */
     protected function getSubcategories($category)
     {
-        $this->ids[] = $category->get('category_id');
+        $this->ids[] = $category->category_id;
 
         $categories = $category->getSubcategories();
 

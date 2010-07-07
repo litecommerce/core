@@ -62,7 +62,7 @@ class XLite_Module_FeaturedProducts_Model_Category extends XLite_Model_Category 
 
             $featuredProduct = new XLite_Module_FeaturedProducts_Model_FeaturedProduct();
 
-            foreach ($featuredProduct->findAll('category_id = \'' . $this->get('category_id') . '\'', $orderby) as $handler) {
+            foreach ($featuredProduct->findAll('category_id = \'' . $this->category_id . '\'', $orderby) as $handler) {
                 $_featuredProducts = array();
                 $_featuredProducts = $handler;
                 $_featuredProducts->set('product', $handler->getProduct());
@@ -89,7 +89,7 @@ class XLite_Module_FeaturedProducts_Model_Category extends XLite_Model_Category 
         if (is_array($products)) {
             foreach ($products as $product) {
     			$fp = new XLite_Module_FeaturedProducts_Model_FeaturedProduct();
-    			$fp->set('category_id', $this->get('category_id'));
+    			$fp->set('category_id', $this->category_id);
        			$fp->set('product_id', $product->get('product_id'));
         		if (!$fp->isExists()) {
             		$fp->create();
@@ -113,7 +113,7 @@ class XLite_Module_FeaturedProducts_Model_Category extends XLite_Model_Category 
         if (is_array($products)) {
             foreach ($products as $product) {
     			$fp = new XLite_Module_FeaturedProducts_Model_FeaturedProduct();
-    			$fp->set('category_id', $this->get('category_id'));
+    			$fp->set('category_id', $this->category_id);
     			$fp->set('product_id', $product->get('product_id'));
     			$fp->delete();
     		}

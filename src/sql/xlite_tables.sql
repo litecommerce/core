@@ -1,39 +1,62 @@
 DROP TABLE IF EXISTS xlite_categories;
 CREATE TABLE xlite_categories (
-  category_id int(11) unsigned NOT NULL auto_increment,
-  name varchar(255) NOT NULL default '',
-  description text NOT NULL,
-  meta_tags varchar(255) NOT NULL default '',
-  views_stats int(11) NOT NULL default '0',
-  order_by int(11) NOT NULL default '0',
-  membership int(11) NOT NULL default 0,
-  threshold_bestsellers int(11) unsigned NOT NULL default '1',
-  parent int(11) unsigned default '0',
-  image mediumblob,
-  image_source char(1) NOT NULL default 'D',
-  image_type varchar(32) NOT NULL default '',
-  image_width int(11) NOT NULL default 0,
-  image_height int(11) NOT NULL default 0,
-  image_size int(11) NOT NULL default 0,
-  enabled int(1) NOT NULL default '1',
-  meta_desc text NOT NULL default '',
-  meta_title varchar(255) NOT NULL default '',
-  clean_url varchar(255) NOT NULL default '',
-  PRIMARY KEY  (category_id),
+  category_id int(11) unsigned NOT NULL AUTO_INCREMENT,
+  lpos int(11) NOT NULL DEFAULT '0',
+  rpos int(11) NOT NULL DEFAULT '0',
+  views_stats int(11) NOT NULL DEFAULT '0',
+  order_by int(11) NOT NULL DEFAULT '0',
+  membership_id int(11) DEFAULT '0',
+  threshold_bestsellers int(11) unsigned NOT NULL DEFAULT '1',
+  enabled int(1) NOT NULL DEFAULT '1',
+  clean_url varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (category_id),
   KEY order_by (order_by),
-  KEY name (name),
-  KEY meta_tags (meta_tags),
   KEY views_stats (views_stats),
-  KEY membership (membership),
+  KEY membership (membership_id),
   KEY threshold_bestsellers (threshold_bestsellers),
-  KEY parent (parent),
-  KEY image_source (image_source),
-  KEY image_type (image_type),
   KEY enabled (enabled),
-  KEY meta_title (meta_title),
-  FULLTEXT KEY meta_desc (meta_desc),
-  FULLTEXT KEY description (description),
-  KEY clean_url(clean_url)
+  KEY clean_url (clean_url)
+) TYPE=MyISAM;
+
+DROP TABLE IF EXISTS xlite_category_images;
+CREATE TABLE xlite_category_images (
+  image_id int(11) unsigned NOT NULL AUTO_INCREMENT,
+  id int(11) NOT NULL DEFAULT '0',
+  path varchar(512) NOT NULL DEFAULT '',
+  mime varchar(64) NOT NULL DEFAULT 'image/jpeg',
+  width int(11) NOT NULL DEFAULT '0',
+  height int(11) NOT NULL DEFAULT '0',
+  size int(11) NOT NULL DEFAULT '0',
+  date int(11) NOT NULL DEFAULT '0',
+  hash varchar(32) NOT NULL DEFAULT '',
+  PRIMARY KEY (image_id),
+  KEY id (id)
+) TYPE=MyISAM;
+
+DROP TABLE IF EXISTS xlite_category_products;
+CREATE TABLE xlite_category_products (
+  product_id int(11) NOT NULL DEFAULT '0',
+  category_id int(11) NOT NULL DEFAULT '0',
+  orderby int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (category_id,product_id),
+  KEY xlite_product_links_product (product_id),
+  KEY orderby (orderby),
+  KEY xlite_product_links_category (category_id)
+) TYPE=MyISAM;
+
+DROP TABLE IF EXISTS xlite_category_translations;
+CREATE TABLE xlite_category_translations (
+  label_id int(11) NOT NULL AUTO_INCREMENT,
+  code char(2) NOT NULL,
+  id int(11) NOT NULL DEFAULT '0',
+  name char(255) NOT NULL,
+  description text NOT NULL,
+  meta_tags varchar(255) NOT NULL DEFAULT '',
+  meta_desc text NOT NULL,
+  meta_title varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (label_id),
+  KEY ci (code,id),
+  KEY i (id)
 ) TYPE=MyISAM;
 
 DROP TABLE IF EXISTS xlite_config;
@@ -201,16 +224,6 @@ CREATE TABLE xlite_payment_methods (
   KEY class (class),
   FULLTEXT KEY params (params),
   KEY enabled (enabled)
-) TYPE=MyISAM;
-
-DROP TABLE IF EXISTS xlite_product_links;
-CREATE TABLE xlite_product_links (
-  product_id int(11) NOT NULL default '0',
-  category_id int(11) NOT NULL default '0',
-  orderby int(11) NOT NULL default '0',
-  PRIMARY KEY  (category_id,product_id),
-  KEY xlite_product_links_product (product_id),
-  KEY orderby (orderby)
 ) TYPE=MyISAM;
 
 DROP TABLE IF EXISTS xlite_products;
