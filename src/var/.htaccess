@@ -1,4 +1,13 @@
 Options -Indexes
+
 <IfModule mod_access.c>
-Deny from all  
+
+Deny from all
+
+<Files ~ "\.(gif|jpe?g|png)$">
+Allow from all
+</Files>
+
 </IfModule>
+
+
