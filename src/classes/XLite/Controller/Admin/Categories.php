@@ -66,9 +66,7 @@ class XLite_Controller_Admin_Categories extends XLite_Controller_Admin_Abstract
      */
     public function getCategories($categoryId = null)
     {
-        $categories = XLite_Core_Database::getRepo('XLite_Model_Category')->getCategories(!is_null($categoryId) ? $categoryId : $this->getCategoryId());
-
-        return $categories;
+        return XLite_Core_Database::getRepo('XLite_Model_Category')->getCategories(!is_null($categoryId) ? $categoryId : $this->getCategoryId());
     }
 
     /**
@@ -134,22 +132,6 @@ class XLite_Controller_Admin_Categories extends XLite_Controller_Admin_Abstract
     protected function getCategoryId()
     {
         return $this->getParam(self::PARAM_CATEGORY_ID);
-    }
-
-    /**
-     * Calculate indentation for displaying category in the tree
-     * 
-     * @param int $depth      Node depth
-     * @param int $multiplier Custom multiplier
-     *  
-     * @return int
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getIndentation($depth, $multiplier = 0)
-    {
-        return $depth * $multiplier;
     }
 
     public function isCategoryLeafNode($categoryId = 0)

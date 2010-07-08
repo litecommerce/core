@@ -171,22 +171,16 @@ class XLite_Controller_Admin_Category extends XLite_Controller_Admin_Abstract
     }
 
     /**
-     * Calculate indentation for displaying category in the tree 
+     * Validate values passed from the REQUEST for updating/creating category 
      * 
-     * @param mixed $depth      Node depth
-     * @param int   $multiplier Custom multiplier
+     * @param bool $isNewObject Flag - is a data for a new category or for updaing existing category
      *  
-     * @return int
-     * @access public
+     * @return array
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getIndentation($depth, $multiplier = 0)
-    {
-        return $depth * $multiplier;
-    }
-
-    protected function validateCategoryData($newObject = false)
+    protected function validateCategoryData($isNewObject = false)
     {
         $postedData = XLite_Core_Request::getInstance()->getData();
 
@@ -204,7 +198,7 @@ class XLite_Controller_Admin_Category extends XLite_Controller_Admin_Abstract
             'clean_url',
         );
 
-        if (!$newObject) {
+        if (!$isNewObject) {
             $fieldsSet[] = 'category_id';
         }
 
@@ -251,6 +245,30 @@ class XLite_Controller_Admin_Category extends XLite_Controller_Admin_Abstract
         return $isValid ? $data : false;
     }
 
+    /**
+     * Check - specified clean URL unique or not
+     * 
+     * @param string $cleanURL Clean URL
+     *  
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isCleanURLUnique($cleanURL)
+    {
+        $result = XLite_Core_Database::getRepo('XLite_Model_Category')->getCategoryByCleanUrl($cleanURL);
+        return empty($result);
+    }
+
+    /**
+     * action_modify 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     public function action_modify()
     {
         if ($properties = $this->validateCategoryData()) {
@@ -350,15 +368,6 @@ class XLite_Controller_Admin_Category extends XLite_Controller_Admin_Abstract
 
             $this->redirect('admin.php?target=categories&category_id=' . $category->category_id);
         }
-    }
-
-    function action_delete()
-    {
-        $category = $this->get('category');
-        // return to categories listing
-        $this->set('target', "categories");
-        $this->set('category_id', $category->get('parent'));
-        $category->delete();
     }
 
     function action_icon()
@@ -465,19 +474,4 @@ class XLite_Controller_Admin_Category extends XLite_Controller_Admin_Abstract
         }
     }
 
-    /**
-     * Check - specified clean URL unique or not
-     * 
-     * @param string $cleanURL Clean URL
-     *  
-     * @return boolean
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function isCleanURLUnique($cleanURL)
-    {
-        $result = XLite_Core_Database::getRepo('XLite_Model_Category')->getCategoryByCleanUrl($cleanURL);
-        return empty($result);
-    }
 }

@@ -53,22 +53,7 @@ class XLite_Controller_Admin_ExtraFields extends XLite_Controller_Admin_Abstract
     
     function getCategories() 
     {
-        if (is_null($this->_categories)) {
-            $c = new XLite_Model_Category();
-            $this->_categories = $c->findAll();
-            $names = array();
-            $names_hash = array();
-            for ($i = 0; $i < count($this->_categories); $i++) {
-                $name = $this->_categories[$i]->get('stringPath');
-                while (isset($names_hash[$name])) {
-                    $name .= " ";
-                }
-                $names_hash[$name] = true;
-                $names[] = $name;
-            }
-            array_multisort($names, $this->_categories);
-        }
-        return $this->_categories;
+        return XLite_Core_Database::getRepo('XLite_Model_Category')->getCategories(!is_null($categoryId) ? $categoryId : $this->getCategoryId());
     }
 
     function getExtraFields()
