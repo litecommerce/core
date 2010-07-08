@@ -1,0 +1,66 @@
+/* vim: set ts=2 sw=2 sts=2 et: */
+
+/**
+ * Simple pager styles
+ *  
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   SVN: $Id$
+ * @link      http://www.litecommerce.com/
+ * @since     3.0.0
+ */
+
+.simple-pager {
+  display: inline;
+  white-space: nowrap;
+  padding-bottom: 3px;
+  padding-right: 4px;
+}
+
+.simple-pager,
+  .simple-pager *
+{
+  vertical-align: middle;
+}
+
+.simple-pager a.arrow {
+  text-decoration: none;
+  padding-bottom: 5px;
+}
+
+.simple-pager a.arrow:hover {
+  background-color: transparent;
+}
+
+.simple-pager a.arrow img {
+  background: transparent url(../images/pager_arrows.png) no-repeat left top;
+  width: 18px;
+  height: 18px;
+}
+
+.simple-pager a.previous {
+  padding-left: 6px;
+  padding-right: 3px;
+}
+
+.simple-pager a.next {
+  padding-left: 3px;
+  padding-right: 6px;
+}
+
+.simple-pager a.next img {
+  background-position: -18px top;
+}
+
+.simple-pager input {
+  width: 29px;
+  border-width: 1px;
+  margin-bottom: 3px;
+}
+
+.simple-pager a.total {
+  color: #0055bd;
+  text-decoration: underline;
+  padding-bottom: 4px;
+}

@@ -12,6 +12,6 @@
  * @ListChild (list="cart.totals", weight="20")
  *}
 <li>
-  <em>Subtotal:</em>
+  <em>{t(#Subtotal#)}:</em>
   {price_format(cart,#subtotal#):h}
 </li>

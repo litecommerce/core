@@ -12,7 +12,7 @@
  * @ListChild (list="productDetails.base", weight="10")
  *}
 <div IF="previousProduct|nextProduct" class="sibliding-links">
-  <a IF="previousProduct" class="previous" href="{buildURL(#product#,##,_ARRAY_(#product_id#^previousProduct.product_id))}" title="{previousProduct.name}">Previous product</a>
+  <a IF="previousProduct" class="previous" href="{buildURL(#product#,##,_ARRAY_(#product_id#^previousProduct.product_id))}" title="{previousProduct.name}">{t(#Previous product#)}</a>
   <span IF="previousProduct&nextProduct">|</span>
-  <a IF="nextProduct" class="next" href="{buildURL(#product#,##,_ARRAY_(#product_id#^nextProduct.product_id))}" title="{nextProduct.name}">Next product</a>
+  <a IF="nextProduct" class="next" href="{buildURL(#product#,##,_ARRAY_(#product_id#^nextProduct.product_id))}" title="{nextProduct.name}">{t(#Next product#)}</a>
 </div>

@@ -12,7 +12,7 @@
  * @ListChild (list="productDetails.main", weight="20")
  *}
 <div IF="{product.sku}" class="identifier product-sku">
-  <span class="type">SKU:</span>
+  <span class="type">{t(#SKU#)}:</span>
   <span class="value">{product.sku}</span>
 </div>
 

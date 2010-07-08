@@ -100,13 +100,18 @@ class XLite_Core_TopMessage extends XLite_Base implements XLite_Base_ISingleton
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function add($text, $type = self::INFO)
+    public function add($text, $type = self::INFO, $rawText = false)
     {
         $result = false;
 
         if (!empty($text)) {
             $text = strval($text);
             if (0 < strlen($text)) {
+
+                if (!$rawText) {
+                    $text = $this->t($text);
+                }
+
                 if (!in_array($type, $this->types)) {
                     $type = self::INFO;
                 }
@@ -126,45 +131,54 @@ class XLite_Core_TopMessage extends XLite_Base implements XLite_Base_ISingleton
     }
 
     /**
-     * Add message of the certain type 
+     * Add information-type message with additional translation arguments
      * 
-     * @param string $text message text
+     * @param string $text      Label name
+     * @param array  $arguments Substitution arguments
+     * @param string $code      Language code
      *  
-     * @return bool
+     * @return boolean
      * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    public function addError($text)
+    public static function addInfo($text, array $arguments = array(), $code = null)
     {
-        return $this->add($text, self::ERROR);
+        static::getInstance()->add(XLite_Core_Translation::lbl($text, $arguments, $code), self::INFO, true);
     }
 
     /**
-     * Add message of the certain type 
+     * Add warning-type message with additional translation arguments
      * 
-     * @param string $text message text
+     * @param string $text      Label name
+     * @param array  $arguments Substitution arguments
+     * @param string $code      Language code
      *  
-     * @return bool
+     * @return boolean
      * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    public function addWarning($text)
+    public static function addWarning($text, array $arguments = array(), $code = null)
     {
-        return $this->add($text, self::WARNING);
+        static::getInstance()->add(XLite_Core_Translation::lbl($text, $arguments, $code), self::WARNING, true);
     }
 
     /**
-     * Add message of the certain type 
+     * Add error-type message with additional translation arguments
      * 
-     * @param string $text message text
+     * @param string $text      Label name
+     * @param array  $arguments Substitution arguments
+     * @param string $code      Language code
      *  
-     * @return bool
+     * @return boolean
      * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    public function addInfo($text)
+    public static function addError($text, array $arguments = array(), $code = null)
     {
-        return $this->add($text, self::INFO);
+        static::getInstance()->add(XLite_Core_Translation::lbl($text, $arguments, $code), self::ERROR, true);
     }
 
     /**

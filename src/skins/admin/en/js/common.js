@@ -189,7 +189,7 @@ InputValidator.prototype.assignValidator = function(elm)
       if (elm.id) {
         var lbl = $('label[for="' + elm.id + '"]').eq(0);
         if (lbl.length) {
-          elm.labelName = $.trim(lbl.html()).replace(/:$/, '');
+          elm.labelName = $.trim(lbl.html()).replace(/:$/, '').replace(/<.+$/, '');
         }
       }
       elm.validate = function(silent) {

@@ -11,6 +11,6 @@
  * @since     3.0.0
  * @ListChild (list="cart.totals", weight="100")
  *}
-<li class="grand-total"><em>Grand total:</em>
+<li class="grand-total"><em>{t(#Grand total#)}:</em>
   {price_format(cart,#total#):h}
 </li>

@@ -46,6 +46,16 @@ class XLite_Model_Repo_Language extends XLite_Model_Repo_Base_I18n
     protected $defaultOrderBy = 'code';
 
     /**
+     * Global default language (cache)
+     * 
+     * @var    XLite_Model_Language
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $defaultLanguage = null;
+
+    /**
      * Define cache cells 
      * 
      * @return array
@@ -61,9 +71,9 @@ class XLite_Model_Repo_Language extends XLite_Model_Repo_Base_I18n
             self::TTL_CACHE_CELL => self::INFINITY_TTL,
         );
 
-        $list['active'] = array(
+        $list['status'] = array(
             self::TTL_CACHE_CELL   => self::INFINITY_TTL,
-            self::ATTRS_CACHE_CELL => array('active'),
+            self::ATTRS_CACHE_CELL => array('status'),
         );
 
         return $list;
@@ -106,26 +116,110 @@ class XLite_Model_Repo_Language extends XLite_Model_Repo_Base_I18n
     public function findActiveLanguages()
     {
         return $this->assignQueryCache(
-            $this->defineActiveLanguagesQuery()->getQuery(),
-            'active',
-            array('active' => true)
+            $this->defineByStatusQuery()->getQuery(XLite_Model_Language::ENABLED),
+            'status',
+            array('status' => XLite_Model_Language::ENABLED)
         )->getResult();
     }
 
     /**
-     * Define query builder for findAllLanguages()
+     * Define query builder for findActiveLanguages()
+     *
+     * @param integer $status Status key
      * 
      * @return Doctrine\ORM\QueryBuilder
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function defineActiveLanguagesQuery()
+    protected function defineByStatusQuery($status)
     {
         return $this->createQueryBuilder()
-            ->where('l.active = :true')
-            ->setParameter('true', true);
+            ->andWhere('l.status = :status')
+            ->setParameter('status', $status);
     }
+
+    /**
+     * Find all added languages
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function findAddedLanguages()
+    {
+        return $this->defineAddedQuery()->getQuery()->getResult();
+    }
+
+    /**
+     * Define query builder for findAddedLanguages()
+     *
+     * @return Doctrine\ORM\QueryBuilder
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineAddedQuery()
+    {
+        return $this->createQueryBuilder()
+            ->andWhere('l.status != :status')
+            ->setParameter('status', XLite_Model_Language::INACTIVE);
+    }
+
+    /**
+     * Find all inactive languages
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function findInactiveLanguages()
+    {
+        return $this->defineByStatusQuery(XLite_Model_Language::INACTIVE)->getQuery()->getResult();
+    }
+
+    /**
+     * Find language one by code 
+     * 
+     * @param string $code Code
+     *  
+     * @return XLite_Model_Language or null
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function findOneByCode($code)
+    {
+        try {
+            $language = $this->defineOneByCodeQuery($code)->getQuery()->getSingleResult();
+
+        } catch (Doctrine\ORM\NoResultException $exception) {
+            $language = null;
+        }
+
+        return $language;
+    }
+
+    /**
+     * Define query builder for findOneByCode()
+     *
+     * @param string $code Language code
+     * 
+     * @return Doctrine\ORM\QueryBuilder
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineOneByCodeQuery($code)
+    {
+        return $this->createQueryBuilder()
+            ->andWhere('l.code = :code')
+            ->setParameter('code', $code)
+            ->setMaxResults(1);
+    }
+
 
     /**
      * Get languages query 
@@ -138,37 +232,33 @@ class XLite_Model_Repo_Language extends XLite_Model_Repo_Base_I18n
     public function getLanguagesQuery()
     {
         $query = array(
-            $this->getDefaultInterfaceLanguage(),
-            $this->getDefaultLanguage(),
+            XLite_Core_Config::getInstance()->General->defaultLanguage->code,
+            $this->getDefaultLanguage()->code,
         );
 
         return array_unique($query);
     }
 
     /**
-     * Get default interface language 
-     * 
-     * @return string Language code
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getDefaultInterfaceLanguage()
-    {
-        return 'en';
-    }
-
-    /**
      * Get global default language 
      * 
      * @return string Language code
-     * @access protected
+     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getDefaultLanguage()
+    public function getDefaultLanguage()
     {
-        return 'en';
+        if (!isset($this->defaultLanguage)) {
+            $this->defaultLanguage = XLite_Core_Database::getRepo('XLite_Model_Language')
+                    ->findOneByCode('en');
+
+            if (!$this->defaultLanguage) {
+                // TODO - add throw exception
+            }
+        }
+
+        return $this->defaultLanguage;
     }
 }
 

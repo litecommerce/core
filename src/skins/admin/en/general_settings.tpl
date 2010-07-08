@@ -19,7 +19,9 @@
     {foreach:getOptions(),option}
       <tr>
         {if:!option.type=#separator#}
-          {if:!option.type=#serialized#}<td align="right" width="50%">{option.option_name:h}: </td>{end:}
+          {if:!option.type=#serialized#}
+            <td align="right" width="50%">{option.option_name:h}: </td>
+          {end:}
           <td width="50%">
 
             {if:option.type=#checkbox#}

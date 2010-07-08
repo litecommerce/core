@@ -1,0 +1,625 @@
+/* vim: set ts=2 sw=2 sts=2 et: */
+
+/**
+ * Language labels page styles
+ *  
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   SVN: $Id$
+ * @link      http://www.litecommerce.com/
+ * @since     3.0.0
+ */
+.languages-dialog {
+  width: 690px;
+}
+
+.languages-dialog * {
+  font-size: 12px;
+}
+
+.languages-dialog a,
+  .select-language-dialog a,
+  .label-dialog a,
+  .confirm-language-delete-dialog a,
+  .add-new-language-dialog a,
+  .language-options-dialog a
+{
+  text-decoration: underline;
+  color: #0055bd;
+}
+
+.languages-dialog a:hover,
+  .select-language-dialog a:hover,
+  .label-dialog a:hover,
+  .confirm-language-delete-dialog a:hover,
+  .add-new-language-dialog a:hover,
+  .language-options-dialog a:hover
+{
+  text-decoration: none;
+  background-color: #276abc;
+  color: #fff;
+}
+
+ul.language-labels .edit,
+  ul.language-labels .delete,
+  ul.added-languages .delete,
+  ul.added-languages .switch,
+  .language-options-dialog .delete
+{
+  text-decoration: none;
+  outline: none;
+}
+
+ul.language-labels .edit:hover, 
+  ul.language-labels .delete:hover,
+  ul.added-languages .delete:hover,
+  ul.added-languages .switch:hover,
+  .language-options-dialog .delete:hover
+{
+  background-color: transparent;
+}
+
+
+.languages-dialog input.big {
+  border-width: 1px;
+  font-size: 18px;
+  vertical-align: middle;
+  padding: 3px 7px;
+}
+
+.languages-dialog input.flag {
+  padding-left: 30px;
+  background-repeat: no-repeat;
+  background-position: 5px 7px;
+}
+
+.languages-search-panel {
+  border: 1px solid #e9ecf3;
+  background-color: #f4f4f4;
+  padding: 14px 17px 11px;
+}
+
+.languages-search-panel input {
+  width: 304px;
+  margin-right: 5px;
+}
+
+.languages-search-panel button {
+  margin-right: 13px;
+}
+
+.languages-search-panel a {
+  vertical-align: middle;
+}
+
+.languages-search-panel .counter {
+  display: block;
+  font-size: 18px;
+  color: #516f92;
+  font-style: italic;
+  padding-top: 9px;
+  padding-left: 3px;
+}
+
+.language-translate-panel {
+  margin-top: 20px;
+  clear: both;
+}
+
+.language-translate-panel .separator {
+  color: #a3a3a3;
+  font-size: 18px;
+}
+
+.language-translate-panel div.left {
+  float: left;
+  width: 48%;
+  white-space: nowrap;
+  padding-top: 3px;
+}
+
+.language-translate-panel div.right {
+  float: right;
+  width: 48%;
+  white-space: nowrap;
+}
+
+.language-translate-panel .language {
+  height: 36px;
+  font-size: 18px;
+}
+
+.language-translate-panel div.left .language {
+  height: 33px;
+}
+
+.language-translate-panel .right .empty {
+  padding-top: 3px;
+}
+
+.language-translate-panel div.right input {
+  width: 212px;
+  margin-right: 5px;
+  background-color: #fff;
+}
+
+.language-translate-panel div.options a {
+  font-size: 11px;
+}
+
+.language-buttons-panel {
+  padding-top: 27px;
+  clear: both;
+  height: 28px;
+}
+
+.language-buttons-panel .left {
+  float: left;
+  width: 45%;
+  height: 30px;
+  vertical-align: middle;
+  line-height: 30px;
+}
+
+.language-buttons-panel .right {
+  float: right;
+  width: 45%;
+  height: 32px;
+  vertical-align: middle;
+  line-height: 30px;
+  text-align: right;
+}
+
+.language-buttons-panel button {
+  margin-right: 6px;
+}
+
+.language-buttons-panel .add-new-label,
+  .language-buttons-panel .add-new-language
+{
+  padding-left: 0px;
+}
+
+.language-buttons-panel .add-new-label span {
+  background: transparent url(../images/icon_add_tag.png) no-repeat 1px top;
+  padding-left: 23px;
+  font-size: 13px;
+}
+
+.language-buttons-panel .add-new-language span {
+  background: transparent url(../images/icon_add_lang.png) no-repeat 1px top;
+  padding-left: 30px;
+  font-size: 13px;
+}
+
+.languages-separator {
+  margin: 10px 0px;
+  clear: both;
+}
+
+ul.language-labels {
+  padding: 0px;
+  margin: 0px;
+  margin-top: 21px;
+  list-style: none;
+}
+
+ul.language-labels li {
+  padding: 0px;
+  margin: 0px;
+  list-style: none;
+  clear: both;
+  padding-bottom: 28px;
+}
+
+ul.language-labels div.title {
+  background-color: #f4f4f4;
+  white-space: nowrap;
+  padding: 10px;
+  padding-right: 9px;
+  vertical-align: middle;
+  margin-bottom: 4px;
+  clear: both;
+  height: 20px;
+}
+
+ul.language-labels div.title * {
+  vertical-align: middle;
+  float: left;
+}
+
+ul.language-labels input.mark {
+  margin: 4px 9px 0px 0px;
+}
+
+ul.language-labels input.name {
+  width: 397px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  font-size: 11px;
+  margin-right: 8px;
+  background: #fff url(../images/icon_tag.png) no-repeat left top;
+  padding: 2px 0px 2px 23px;
+}
+
+ul.language-labels .edit img {
+  background: transparent url(../images/icon_pencil.png) no-repeat left 3px;
+  width: 18px;
+  height: 21px;
+}
+
+ul.language-labels div.title .delete {
+  float: right;
+  width: 18px;
+  height: 18px;
+}
+
+ul.language-labels .delete img {
+  background: transparent url(../images/garbage.png) no-repeat left 2px;
+  width: 20px;
+  height: 18px;
+}
+
+
+ul.language-labels textarea {
+  height: 71px;
+  width: 47%;
+  border-width: 1px;
+  font-size: 12px;
+  padding: 4px 6px;
+}
+
+ul.language-labels textarea.left {
+  float: left;
+}
+
+ul.language-labels textarea.right {
+  float: right;
+}
+
+
+.no-language-labels {
+  font-size: 18px;
+  text-align: center;
+  color: #a3a3a3;
+}
+
+/* Add new language dialog */
+ul.inactive-languages {
+  width: 99%;
+  padding: 0px;
+  margin: 0px;
+  margin-top: 16px;
+  padding-left: 2px;
+  list-style: none;
+  clear: both;
+}
+
+ul.inactive-languages li {
+  margin: 0px;
+  list-style: none;
+  width: 30%;
+  float: left;
+  padding: 5px 10px 6px 0px;
+  white-space: nowrap;
+}
+
+ul.inactive-languages li,
+  ul.inactive-languages li *
+{
+  font-size: 12px;
+  vertical-align: middle;
+}
+
+ul.inactive-languages li span {
+  text-transform: uppercase;
+  padding: 0px 7px;
+  display: inline-block;
+  width: 18px;
+}
+
+/* Select edit language */
+ul.added-languages {
+  width: 99%;
+  padding: 0px;
+  padding-left: 2px;
+  margin: 0px;
+  list-style: none;
+  clear: both;
+}
+
+ul.added-languages li {
+  margin: 0px;
+  list-style: none;
+  padding: 10px 0px;
+}
+
+ul.added-languages li,
+  ul.added-languages li *
+{
+  font-size: 12px;
+  vertical-align: middle;
+}
+
+ul.added-languages a.delete {
+  padding-bottom: 2px;
+}
+
+ul.added-languages a.delete img {
+  background: transparent url(../images/garbage.png) no-repeat top left;
+}
+
+ul.added-languages img.delete {
+  width: 18px;
+  height: 18px;
+}
+
+ul.added-languages a.delete img {
+  width: 18px;
+  height: 18px;
+}
+
+ul.added-languages a.switch img {
+  background: transparent url(../images/switch.png) no-repeat 1px -16px;
+  width: 20px;
+  height: 16px;
+}
+
+ul.added-languages a.switch.enabled img {
+  background-position: 1px top;
+}
+
+ul.added-languages img.selected {
+  background: transparent url(../images/switch.png) no-repeat 1px -32px;
+  width: 16px;
+  height: 16px;
+  padding-left: 1px;
+  padding-right: 3px;
+}
+
+ul.added-languages li span.code {
+  text-transform: uppercase;
+  padding: 0px 4px;
+  display: inline-block;
+  width: 14px;
+}
+
+ul.added-languages li span.selected {
+}
+
+.select-language-dialog hr {
+  margin-top: 18px;
+  margin-bottom: 17px;
+}
+
+/* Add new label dialog */
+.label-dialog ul {
+  padding: 0px;
+  padding-top: 16px;
+  margin: 0px;
+  list-style: none;
+}
+
+.label-dialog ul li {
+  padding: 15px 0px;
+  margin: 0px;
+  list-style: none;
+}
+
+.label-dialog label {
+  font-size: 18px;
+  padding-left: 28px;
+  vertical-align: middle;
+  background-position: left 5px;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.label-dialog label.label {
+  background-image: url(../images/icon_tag.png);
+  background-position: 4px 3px;
+}
+
+.label-dialog label.language {
+}
+
+.label-dialog label span {
+  color: #bcbcbc;
+}
+
+.label-dialog input,
+  .label-dialog textarea
+{
+  border-width: 1px;
+  width: 430px;
+  font-size: 12px;
+}
+
+.label-dialog input.name {
+  height: 17px;
+  border: 1px solid #ddd;
+}
+
+.label-dialog textarea {
+  height: 78px;
+}
+
+.label-dialog .button {
+  padding-top: 10px;
+  text-align: center;
+}
+
+/* Confirm deletion */
+.confirm-language-delete-dialog .body {
+  padding-left: 92px;
+  background: transparent url(../images/icon_error_big.png) no-repeat 24px top;
+}
+
+.confirm-language-delete-dialog .row {
+  padding-top: 10px;
+}
+
+.confirm-language-delete-dialog .row .name {
+  font-size: 18px;
+}
+
+.confirm-language-delete-dialog .flag {
+  margin-right: 5px;
+}
+
+.confirm-language-delete-dialog .buttons {
+  padding-top: 10px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.confirm-language-delete-dialog .buttons .main {
+  margin-right: 20px;
+}
+
+/* Language options dialog */
+.language-options-dialog form,
+  .language-options-dialog div,
+  .language-options-dialog span
+{
+  font-size: 12px;
+}
+
+.language-options-dialog ul {
+  padding: 0px;
+  margin: 0px;
+  list-style: none;
+}
+
+.language-options-dialog ul li {
+  padding: 0px;
+  margin: 0px;
+  list-style: none;
+  line-height: 24px;
+  padding: 6px 0px 20px;
+}
+
+.language-options-dialog li label {
+  display: block;
+  margin-bottom: 6px;
+}
+
+.language-options-dialog li input {
+  font-size: 18px;
+  width: 320px;
+  border-width: 1px;
+  margin-right: 10px;
+  background-color: #fff;
+  padding-left: 30px;
+  background-repeat: no-repeat;
+  background-position: 7px 7px;
+  height: 27px;
+}
+
+.language-options-dialog .switcher,
+  .language-options-dialog .switcher *
+{
+  vertical-align: middle;
+}
+
+.language-options-dialog .switcher img {
+  background: transparent url(../images/switch.png) no-repeat left -16px;
+  width: 16px;
+  height: 16px;
+  margin: 0px 2px 2px 1px;
+}
+
+.language-options-dialog .switcher img.enabled {
+  background-position: left 0px;
+}
+
+.language-options-dialog .switcher img.default {
+  background-position: left -32px;
+}
+
+.language-options-dialog .switcher span {
+  font-weight: bold;
+}
+
+.language-options-dialog .switcher span.enabled,
+  .language-options-dialog .switcher span.default
+{
+  color: #1f7608;
+}
+
+.language-options-dialog .switcher span.disabled {
+  color: #8f8f8f;
+}
+
+.language-options-dialog .switcher a {
+  text-decoration: none;
+  border-bottom: 1px dotted #0055bd;
+}
+
+.language-options-dialog .default-language,
+  .language-options-dialog .default-switcher
+{
+  line-height: 30px;
+  padding-top: 10px;
+}
+
+.language-options-dialog .default-language {
+  color: #05508f;
+}
+
+.language-options-dialog .buttons {
+  text-align: center;
+  margin-top: 27px;
+  position: relative;
+}
+
+.language-options-dialog .delete {
+  background: transparent url(../images/garbage.png) no-repeat top left;
+  padding-left: 20px;
+  padding-top: 1px;
+  color: #0055bd;
+  text-decoration: none;
+  position: absolute;
+  top: 8px;
+  left: 0px;
+}
+
+.language-options-dialog .delete span {
+  text-decoration: underline;
+  white-space: nowrap;
+}
+
+.language-options-dialog .delete:hover {
+  background-color: transparent;
+}
+
+.language-options-dialog .delete:hover span {
+  text-decoration: none;
+  background-color: #276abc;
+  color: #fff;
+}
+
+.language-options-dialog .default-switcher,
+  .language-options-dialog .default-switcher *
+{
+  vertical-align: middle;
+}
+
+.language-options-dialog .default-switcher input {
+  margin: 2px 3px 0px 0px;
+}
+
+/* Common dialog styles */
+.add-new-language-dialog.ui-dialog-content,
+  .select-language-dialog.ui-dialog-content,
+  .label-dialog.ui-dialog-content,
+  .confirm-language-delete-dialog.ui-dialog-content
+  .language-options-dialog.ui-dialog-content
+{
+  overflow: hidden;
+  overflow-y: auto;
+  font-size: 12px;
+}

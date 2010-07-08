@@ -502,14 +502,45 @@ abstract class XLite_Model_Repo_AbstractRepo extends EntityRepository
      */
     public function createQueryBuilder($alias = null)
     {
+        $alias = $alias ?: $this->getDefaultAlias();
+
+        return $this->assignDefaultOrderBy(parent::createQueryBuilder($alias), $alias);
+    }
+
+    /**
+     * Create a new QueryBuilder instance that is prepopulated for this entity name
+     * NOTE: without any relative subqueries!
+     * 
+     * @param string $alias Table alias
+     *  
+     * @return Doctrine\ORM\QueryBuilder
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function createPureQueryBuilder($alias = null)
+    {
+        $alias = $alias ?: $this->getDefaultAlias();
+
+        return $this->assignDefaultOrderBy(parent::createQueryBuilder($alias), $alias);
+    }
+
+    /**
+     * getDefaultAlias 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getDefaultAlias()
+    {
         if (!isset($this->defaultAlias)) {
             $list = explode('_', $this->_entityName);
             $this->defaultAlias = strtolower(substr(array_pop($list), 0, 1));
         }
 
-        $alias = $alias ?: $this->defaultAlias;
-
-        return $this->assignDefaultOrderBy(parent::createQueryBuilder($alias), $alias);
+        return $this->defaultAlias;
     }
 
     /**
@@ -523,19 +554,29 @@ abstract class XLite_Model_Repo_AbstractRepo extends EntityRepository
     public function count()
     {
         try {
-            $qb = $this->createQueryBuilder();
-            $alias = $this->getMainAlias($qb);
-            $count = $qb
-                ->select('COUNT(' . $alias . '.' . implode(', ' . $alias . '.', $this->_class->identifier) . ')')
-                ->setMaxResults(1)
-                ->getQuery()
-                ->getSingleScalarResult();
+            $count = intval($this->defineCountQuery()->getQuery()->getSingleScalarResult());
 
         } catch (Doctrine\ORM\NonUniqueResultException $exception) {
             $count = 0;
         }
 
         return $count;
+    }
+
+    /**
+     * Define Query fo rcount() method
+     * 
+     * @return Doctrine\ORM\QueryBuilder
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineCountQuery()
+    {
+        $qb = $this->createPureQueryBuilder();
+
+        return $qb->select('COUNT(' . implode(', ', $this->getIdentifiersList($qb)) . ')')
+            ->setMaxResults(1);
     }
 
     /**
@@ -591,7 +632,7 @@ abstract class XLite_Model_Repo_AbstractRepo extends EntityRepository
      */
     protected function defineFrameQuery($start, $limit)
     {
-        return $this->assignFrame($this->createQueryBuilder(), $start, $limit);
+        return $this->assignFrame($this->createPureQueryBuilder(), $start, $limit);
     }
 
     /**
@@ -616,10 +657,33 @@ abstract class XLite_Model_Repo_AbstractRepo extends EntityRepository
         }
 
         if (0 < $limit) {
-            $qb->setMaxResult($limit);
+            $qb->setMaxResults($limit);
         }
 
         return $qb;
+    }
+
+    /**
+     * Get identifiers list for specified query builder object
+     * 
+     * @param Doctrine\ORM\QueryBuilder $qb Query builder
+     *  
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getIdentifiersList(Doctrine\ORM\QueryBuilder $qb)
+    {
+        $alias = $this->getMainAlias($qb);
+
+        $list = array();
+
+        foreach ($this->_class->identifier as $i) {
+            $list[] = $alias . '.' . $i;
+        }
+
+        return $list;
     }
 
     /**

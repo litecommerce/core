@@ -103,6 +103,19 @@ class XLite_Core_Translation extends XLite_Base implements XLite_Base_ISingleton
     }
 
     /**
+     * Reset driver cache
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function reset()
+    {
+        $this->getDriver()->reset();
+    }
+
+    /**
      * Get translation
      * 
      * @param string $name      Label name

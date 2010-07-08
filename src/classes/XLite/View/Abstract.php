@@ -767,20 +767,16 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
     }
 
     /**
-     * Language label translation short method
+     * Get current language 
      * 
-     * @param string $name      Label name
-     * @param array  $arguments Substitution arguments
-     * @param string $code      Language code
-     *  
-     * @return string
+     * @return XLite_Model_Language
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function t($name, array $arguments = array(), $code = null)
+    public function getCurrentLanguage()
     {
-        return XLite_Core_Translation::lbl($name, $arguments, $code);
+        return XLite_Model_Session::getInstance()->getLanguage();
     }
 
     /**

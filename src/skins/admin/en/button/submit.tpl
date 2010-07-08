@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * ____file_title____
+ * Submit button
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -10,5 +10,4 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-
 <button type="submit" class="{style}"><span>{getButtonLabel()}</span></button>

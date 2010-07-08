@@ -342,5 +342,23 @@ class XLite_Base
             $this->set($key, $value);
         }
     }
+
+    /**
+     * Language label translation short method
+     * 
+     * @param string $name      Label name
+     * @param array  $arguments Substitution arguments
+     * @param string $code      Language code
+     *  
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function t($name, array $arguments = array(), $code = null)
+    {
+        return XLite_Core_Translation::lbl($name, $arguments, $code);
+    }
+
 }
 

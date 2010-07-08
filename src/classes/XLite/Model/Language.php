@@ -38,6 +38,14 @@
 class XLite_Model_Language extends XLite_Model_Base_I18n
 {
     /**
+     * Language statuses
+     */
+    const INACTIVE = 0;
+    const ADDED = 1;
+    const ENABLED = 2;
+
+
+    /**
      * Unique id 
      * 
      * @var    integer
@@ -79,21 +87,103 @@ class XLite_Model_Language extends XLite_Model_Base_I18n
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @Id
      * @Column (type="boolean")
      */
     protected $r2l = false;
 
     /**
-     * Active
+     * Status
      * 
-     * @var    boolean
+     * @var    integer
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @Id
-     * @Column (type="boolean")
+     * @Column (type="integer")
      */
-    protected $active = true;
+    protected $status = self::INACTIVE;
+
+    /**
+     * Get added status
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getAdded()
+    {
+        return 0 < $this->status;
+    }
+
+    /**
+     * Set added status
+     * 
+     * @param boolean $status Added status
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setAdded($status)
+    {
+        if (
+            $status != $this->getAdded()
+            && (!$status || !$this->getEnabled())
+        ) {
+            $this->status = $status ? self::ADDED : self::INACTIVE;
+        }
+    }
+
+    /**
+     * Get enabled status
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getEnabled()
+    {
+        return self::ENABLED == $this->status;
+    }
+
+    /**
+     * Set enabled status
+     * 
+     * @param boolean $status Enabled status
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setEnabled($status)
+    {
+        if ($status != $this->getEnabled()) {
+            $this->status = $status ? self::ENABLED : self::ADDED;
+        }
+    }
+
+    /**
+     * Get flag URL 
+     * 
+     * @return string or null
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getFlagURL()
+    {
+        $path = XLite_Model_Layout::getInstance()->getSkinURL('images/flags/' . $this->code . '.png');
+
+        if (!file_exists(LC_ROOT_DIR . $path)) {
+            $path = XLite_Model_Layout::getInstance()->getSkinURL('images/flags/__.png');
+        }
+
+        return file_exists(LC_ROOT_DIR . $path)
+            ? XLite::getInstance()->getShopUrl($path)
+            : null;
+    }
 }
 

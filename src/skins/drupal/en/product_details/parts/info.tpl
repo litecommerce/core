@@ -11,5 +11,5 @@
  * @since     3.0.0
  * @ListChild (list="productDetails.base", weight="40")
  *}
-<h3>Description</h3>
+<h3>{t(#Description#)}</h3>
 {displayViewListContent(#productDetails.info#)}
