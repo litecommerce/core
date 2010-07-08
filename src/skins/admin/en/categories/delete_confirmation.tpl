@@ -28,14 +28,14 @@
     <tr IF="getRequestParamValue(#subcats#)=#1#">
       <td colspan="3">
         {foreach:getSubcategories(category.category_id),key,cat}
-        <img src="images/spacer.gif" height="1" width="{getIndentation(cat.depth,20)}" /><b>{cat.name}</b><br />{end:}
+        <img src="images/spacer.gif" height="1" width="{cat.getIndentation(20)}" /><b>{cat.name}</b><br />{end:}
       </td>
     </tr>
 
     <tr IF="!getRequestParamValue(#subcats#)=#1#">
       <td colspan="3">
         {foreach:getCategories(category.category_id),key,cat}
-        <img src="images/spacer.gif" height="1" width="{getIndentation(cat.depth,20)}" /><b>{cat.name}</b><br />{end:}
+        <img src="images/spacer.gif" height="1" width="{cat.getIndentation(20)}" /><b>{cat.name}</b><br />{end:}
       </td>
     </tr>
 

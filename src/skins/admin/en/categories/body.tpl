@@ -98,7 +98,7 @@
     <tr FOREACH="categories,id,cat" class="{getRowClass(id,##,#TableRow#)}">
 
       <td width="100%">
-        <img src="images/spacer.gif" height="1" width="{getIndentation(cat.depth,20)}" />
+        <img src="images/spacer.gif" height="1" width="{cat.getIndentation(20)}" />
         <a href="admin.php?target=categories&category_id={cat.category_id}" title="Click here to access/add subcategories" onClick="this.blur()"><font class="ItemsList"><u>{cat.name:h}</u></font></a> ({cat.products_count} products){if:!cat.enabled}&nbsp;&nbsp;<font color=red>(disabled)</font>{end:}
       </td>
 

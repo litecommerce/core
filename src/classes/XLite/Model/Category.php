@@ -314,6 +314,32 @@ class XLite_Model_Category extends XLite_Model_Base_I18n
         return $data->products_count;
     }
 
+    /**
+     * Calculate indentation for displaying category in the tree 
+     * 
+     * @param int    $multiplier Custom multiplier
+     * @param string $str        String that must be repeated by $multiplier
+     *  
+     * @return int
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getIndentation($multiplier = 0, $str = null)
+    {
+        if (!isset($this->depth)) {
+            $data = XLite_Core_Database::getRepo('XLite_Model_Category')->getCategoryFromHash($this->category_id);
+            $depth = $data->depth;
+
+        } else {
+            $depth = $this->depth;
+        }
+
+        $indentation = ($depth - 1) * $multiplier;
+
+        return (is_null($str) ? $indentation : str_repeat($str, $indentation));
+    }
+
     // TODO: rewrite function - this should be based on XLite_Model_Product
     public function getProducts()
     {
