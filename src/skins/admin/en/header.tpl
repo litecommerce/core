@@ -12,9 +12,13 @@
  *}
 
 <head>
-  <script type="text/javascript">
-    if (document.getElementById("rebuild_cache_block")) document.getElementById("rebuild_cache_block").style.display = "none";
-  </script>
+<script type="text/javascript">
+<!--
+if (document.getElementById('rebuild_cache_block')) {
+  document.getElementById('rebuild_cache_block').style.display = 'none';
+}
+-->
+</script>
 
   <title>LiteCommerce online store builder{if:getTitle()} - {getTitle()}{end:}</title>
   <meta http-equiv="Content-Type" content="text/html; charset={charset}" />

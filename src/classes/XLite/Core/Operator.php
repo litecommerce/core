@@ -139,5 +139,34 @@ class XLite_Core_Operator extends XLite_Base implements XLite_Base_ISingleton
 
         return $result;
     }
+
+    /**
+     * Calculate pagination info
+     * 
+     * @param integer $count Items count
+     * @param integer $page  Current page index
+     * @param integer $limit Page length limit
+     *  
+     * @return array (pages count + current page number)
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function calculatePagination($count, $page = 1, $limit = 20)
+    {
+        $count = max(0, intval($count));
+        $limit = max(0, intval($limit));
+
+        if (0 == $limit && $count) {
+            $pages = 1;
+
+        } else {
+            $pages = 0 == $count ? 0 : ceil($count / $limit);
+        }
+
+        $page = min($pages, max(1, intval($page)));
+
+        return array($pages, $page);
+    }
 }
 

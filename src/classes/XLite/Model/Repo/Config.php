@@ -205,7 +205,7 @@ class XLite_Model_Repo_Config extends XLite_Model_Repo_Base_I18n
 
         return $data;
     }
-    
+
     /**
      * Define query builder for getByCategory()
      *
@@ -221,6 +221,39 @@ class XLite_Model_Repo_Config extends XLite_Model_Repo_Base_I18n
         return $this->createQueryBuilder()
             ->andWhere('c.category = :category')
             ->setParameter('category', $category);
+    }
+
+    /**
+     * Find all visible settings by category name
+     * 
+     * @param string $category Category name
+     *  
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function findByCategoryAndVisible($category)
+    {
+        return $this->defineByCategoryAndVisibleQuery($category)->getQuery()->getResult();
+    }
+
+    /**
+     * Define query for findByCategoryAndVisible() method
+     * 
+     * @param string $category Category name
+     *  
+     * @return Doctrine\ORM\QueryBuilder
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineByCategoryAndVisibleQuery($category)
+    {
+        return $this->createQueryBuilder()
+            ->andWhere('c.category = :category AND c.type != :empty')
+            ->setParameter('category', $category)
+            ->setParameter('empty', '');
     }
 
     /**
@@ -331,6 +364,17 @@ class XLite_Model_Repo_Config extends XLite_Model_Repo_Base_I18n
         if (isset($config->General)) {
             $config->General->defaultCountry = XLite_Core_Database::getEM()
                 ->find('XLite_Model_Country', $config->General->default_country);
+
+            // Get default language object
+            if (isset($config->General->default_language)) {
+                $config->General->defaultLanguage = XLite_Core_Database::getRepo('XLite_Model_Language')
+                    ->findOneByCode($config->General->default_language);
+            }
+
+            if (!isset($config->General->defaultLanguage)) {
+                $config->General->defaultLanguage = XLite_Core_Database::getRepo('XLite_Model_Language')->getDefaultLanguage();
+            }
+
         }
 
         return $config;

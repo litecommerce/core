@@ -1295,6 +1295,7 @@ class Decorator
     {
         unlinkRecursive(LC_CLASSES_CACHE_DIR);
         unlinkRecursive(LC_SKINS_CACHE_DIR);
+        unlinkRecursive(LC_LOCALE_DIR);
     }
 
     /**

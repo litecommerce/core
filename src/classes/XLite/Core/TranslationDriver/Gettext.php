@@ -138,7 +138,7 @@ class XLite_Core_TranslationDriver_Gettext extends XLite_Core_TranslationDriver_
     }
 
     /**
-     * Check - current locale is indetical specified language code opr not
+     * Check - current locale is indetical specified language code or not
      * 
      * @param string $code Language code
      *  

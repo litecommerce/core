@@ -408,5 +408,36 @@ EOT;
     {
         return substr(trim(preg_replace('/[^a-z0-9 \/\.]+/Sis', '', $cleanUrl)), 0, 200);
     }
+
+    /**
+     * Return Viewer object
+     * 
+     * @return XLite_View_Controller
+     * @access public
+     * @since  3.0.0
+     */
+    public function getViewer()
+    {
+        if (
+            XLite_Core_Request::getInstance()->isAJAX()
+            && XLite_Core_Request::getInstance()->widget
+        ) {
+
+            $params = array();
+
+            foreach (array(self::PARAM_SILENT, self::PARAM_DUMP_STARTED) as $name) {
+                $params[$name] = $this->get($name);
+            }
+
+            $class = XLite_Core_Request::getInstance()->widget;
+            $viewer = new $class($params, $this->getViewerTemplate());
+
+        } else {
+            $viewer = parent::getViewer();
+        }
+
+        return $viewer;
+    }
+
 }
 

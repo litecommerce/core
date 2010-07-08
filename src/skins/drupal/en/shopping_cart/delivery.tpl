@@ -11,7 +11,7 @@
  * @since     3.0.0
  *}
 <div IF="cart.shippingAvailable&cart.shipped&cart.getShippingRates()" class="delivery-box">
-  <h4>Delivery</h4>
+  <h4>{t(#Delivery#)}</h4>
 
   <widget module="UPSOnlineTools" template="modules/UPSOnlineTools/delivery.tpl">
 

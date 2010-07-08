@@ -1,0 +1,60 @@
+/* vim: set ts=2 sw=2 sts=2 et: */
+
+/**
+ * Save panel
+ *  
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   SVN: $Id$
+ * @link      http://www.litecommerce.com/
+ * @since     3.0.0
+ */
+.save-panel {
+  position: fixed;
+  border: 1px solid #dbe6f0;
+  background-color: #fff;
+  cursor: move;
+  padding-right: 19px;
+  background: #fff url(images/move_cursor.png) no-repeat right center;
+  white-space: nowrap;
+}
+
+.save-panel .box {
+  background-color: #eaf3f9;
+  cursor: auto;
+  padding: 10px 16px 6px 9px;
+}
+
+.save-panel button {
+  margin-right: 14px;
+  margin-bottom: 3px;
+  padding-left: 9px;
+  padding-right: 10px;
+}
+
+.save-panel a {
+  background: transparent url(images/garbage.png) no-repeat left top;
+  padding-left: 18px;
+  padding-top: 1px;
+  color: #0055bd;
+  text-decoration: none;
+}
+
+.save-panel a span {
+  text-decoration: underline;
+}
+
+.save-panel a:hover {
+  background-color: transparent;
+}
+
+.save-panel a:hover span {
+  text-decoration: none;
+  background-color: #276abc;
+  color: #fff;
+}
+
+.save-panel.ui-draggable-dragging {
+  opacity: 0.8;
+}

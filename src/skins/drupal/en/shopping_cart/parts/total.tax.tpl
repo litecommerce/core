@@ -11,8 +11,8 @@
  * @since     3.0.0
  * @ListChild (list="cart.totals", weight="40")
  *}
-<li IF="!cart.getDisplayTaxes()"><em>Tax:</em>
-  n/a
+<li IF="!cart.getDisplayTaxes()"><em>{t(#Tax#)}:</em>
+  {t(#n/a#)}
 </li>
 <li FOREACH="cart.getDisplayTaxes(),tax_name,tax"><em>{cart.getTaxLabel(tax_name)}:</em>
   {price_format(tax):h}

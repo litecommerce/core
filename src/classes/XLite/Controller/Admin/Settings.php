@@ -153,7 +153,8 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_Abstract
      */
     public function getOptions()
     {
-        return XLite_Core_Database::getRepo('XLite_Model_Config')->getByCategory($this->page, true, true);
+        return XLite_Core_Database::getRepo('XLite_Model_Config')
+            ->findByCategoryAndVisible($this->page);
     }
     
     /**

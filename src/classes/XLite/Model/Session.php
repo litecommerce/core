@@ -185,7 +185,7 @@ abstract class XLite_Model_Session extends XLite_Base implements XLite_Base_ISin
             $languages = array_merge($languages, preg_replace('/^([a-z]{2}).+$/Ss', '$1', $tmp));
         }
 
-        // TODO - add interface default language
+        $languages[] = XLite_Core_Config::getInstance()->General->defaultLanguage->code;
 
         // Process query
         $idx = 999999;

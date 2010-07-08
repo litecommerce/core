@@ -11,10 +11,10 @@
  * @since     3.0.0
  * @ListChild (list="cart.totals", weight="30")
  *}
-<li><em>Shipping cost:</em>
-  <span IF="!cart.shippingAvailable">n/a</span>
+<li><em>{t(#Shipping cost#)}:</em>
+  <span IF="!cart.shippingAvailable">{t(#n/a#)}</span>
   <span IF="cart.shippingAvailable">
-    <span IF="!cart.shipped">Free</span>
+    <span IF="!cart.shipped">{t(#Free#)}</span>
     <span IF="cart.shipped">{price_format(cart,#shipping_cost#):h}</span>
   </span>
 </li>

@@ -98,8 +98,17 @@ implements XLite_Base_IDecorator
     {
         global $language;
 
-        return (isset($language) && is_object($language) && $language instanceof stdClass)
-            ? $language->language
+        if (
+            isset($language)
+            && is_object($language)
+            && $language instanceof stdClass
+            && XLite_Core_Database::getRepo('XLite_Model_Language')->findOneByCode($language->language)
+        ) {
+            $result = $language->language;
+        }
+
+        return isset($result)
+            ? $result
             : parent::getCurrentLanguage();
     }
 }

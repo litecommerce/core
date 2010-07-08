@@ -33,7 +33,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_Repo_LanguageLabel extends XLite_Model_Repo_AbstractRepo
+class XLite_Model_Repo_LanguageLabel extends XLite_Model_Repo_Base_I18n
 {
     /**
      * Define cache cells 
@@ -47,9 +47,12 @@ class XLite_Model_Repo_LanguageLabel extends XLite_Model_Repo_AbstractRepo
     {
         $list = parent::defineCacheCells();
 
-        $list['code'] = array(
-            self::TTL_CACHE_CELL   => self::INFINITY_TTL,
-            self::ATTRS_CACHE_CELL => array('code'),
+        $list['all'] = array(
+            self::TTL_CACHE_CELL => self::INFINITY_TTL,
+        );
+
+        $list['all_by_code'] = array(
+            self::TTL_CACHE_CELL => self::INFINITY_TTL,
         );
 
         return $list;
@@ -71,12 +74,13 @@ class XLite_Model_Repo_LanguageLabel extends XLite_Model_Repo_AbstractRepo
             $code = XLite_Model_Session::getInstance()->getLanguage()->code;
         }
 
-        $data = $this->getFromCache('code', array('code' => $code));
+        $data = $this->getFromCache('all_by_code', array('code' => $code));
         if (is_null($data)) {
             $data = $this->postprocessLabelsByCode(
-                $this->defineLabelsByCodeQuery($code)->getQuery()->getResult()
+                $this->defineLabelsByCodeQuery()->getQuery()->getResult(),
+                $code
             );
-            $this->saveToCache($data, 'code', array('code' => $code));
+            $this->saveToCache($data, 'all_by_code', array('code' => $code));
         }
 
         return $data;
@@ -85,41 +89,129 @@ class XLite_Model_Repo_LanguageLabel extends XLite_Model_Repo_AbstractRepo
     /**
      * Define query builder for findLabelsByCode()
      *
-     * @param string $code Language code
-     * 
      * @return Doctrine\ORM\QueryBuilder
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function defineLabelsByCodeQuery($code)
+    protected function defineLabelsByCodeQuery()
     {
-        return $this->createQueryBuilder()
-            ->where('l.code = :code')
-            ->setParameter('code', $code);
+        return $this->createQueryBuilder();
     }
 
     /**
      * Postprocess for findLabelsByCode()
      * 
-     * @param array $data Language labels
+     * @param array  $data Language labels
+     * @param string $code Language code
      *  
      * @return array
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function postprocessLabelsByCode(array $data)
+    protected function postprocessLabelsByCode(array $data, $code)
     {
         $result = array();
 
         foreach ($data as $row) {
-            $result[$row->name] = $row->translation;
+            $result[$row->name] = $row->getTranslation($code)->label;
         }
         ksort($result);
 
         return $result;
     }
 
+    /**
+     * Count labels by name 
+     * 
+     * @param string $name Name
+     *  
+     * @return integer
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function countByName($name)
+    {
+        try {
+            $count = intval($this->defineCountByNameQuery($name)->getQuery()->getSingleScalarResult());
+
+        } catch (Doctrine\ORM\NonUniqueResultException $exception) {
+            $count = 0;
+        }
+
+        return $count;
+    }
+
+    /**
+     * Define query for 'countByName()' method
+     * 
+     * @param string $name Name
+     *  
+     * @return Doctrine\ORM\QueryBuilder
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineCountByNameQuery($name)
+    {
+        return $this->defineCountQuery()
+            ->andWhere('l.name LIKE :name')
+            ->setParameter('name', '%' . $name . '%');
+    }
+
+    /**
+     * Find lables by name pattern with data frame
+     * 
+     * @param string $name  Name pattern
+     * @param int    $start Start offset
+     * @param int    $limit Frame length
+     *  
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function findLikeName($name, $start = 0, $limit = 0)
+    {
+        return $this->defineLikeNameQuery($name, $start, $limit)->getQuery()->getResult();
+    }
+
+    /**
+     * Define query for 'findLikeName()' method
+     * 
+     * @param string  $name  Name
+     * @param integer $start Start offset
+     * @param integer $limit Frame length
+     *  
+     * @return Doctrine\ORM|QueryBuilder
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineLikeNameQuery($name, $start, $limit)
+    {
+        return $this->assignFrame(
+            $this->createPureQueryBuilder()->andWhere('l.name LIKE :name')->setParameter('name', '%' . $name . '%'),
+            $start,
+            $limit
+        );
+    }
+
+    /**
+     * Convert entity to parameters list for 'all_by_code' cache cell
+     * 
+     * @param XLite_Model_AbstractEntity $entity Entity
+     *  
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function convertRecordToParamsAllByCode(XLite_Model_AbstractEntity $entity)
+    {
+        return array('*');
+    }
 }
 

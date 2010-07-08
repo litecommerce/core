@@ -39,9 +39,10 @@ abstract class XLite_View_Button_Abstract extends XLite_View_Abstract
      * Widget parameter names
      */
 
-    const PARAM_LABEL    = 'label';
-    const PARAM_STYLE    = 'style';
-    const PARAM_DISABLED = 'disabled';
+    const PARAM_LABEL     = 'label';
+    const PARAM_RAW_LABEL = 'rawLabel';
+    const PARAM_STYLE     = 'style';
+    const PARAM_DISABLED  = 'disabled';
 
 
     /**
@@ -76,7 +77,9 @@ abstract class XLite_View_Button_Abstract extends XLite_View_Abstract
      */
     protected function getButtonLabel()
     {
-        return $this->getParam(self::PARAM_LABEL);
+        return is_null($this->getParam(self::PARAM_RAW_LABEL))
+            ? $this->t($this->getParam(self::PARAM_LABEL))
+            : $this->getParam(self::PARAM_RAW_LABEL);
     }
 
     /** 
@@ -91,9 +94,10 @@ abstract class XLite_View_Button_Abstract extends XLite_View_Abstract
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_LABEL    => new XLite_Model_WidgetParam_String('Label', $this->getDefaultLabel(), true),
-            self::PARAM_STYLE    => new XLite_Model_WidgetParam_String('Button style', ''),
-            self::PARAM_DISABLED => new XLite_Model_WidgetParam_Bool('Disabled', 0),
+            self::PARAM_LABEL     => new XLite_Model_WidgetParam_String('Label', $this->getDefaultLabel(), true),
+            self::PARAM_RAW_LABEL => new XLite_Model_WidgetParam_String('Raw label', null, true),
+            self::PARAM_STYLE     => new XLite_Model_WidgetParam_String('Button style', ''),
+            self::PARAM_DISABLED  => new XLite_Model_WidgetParam_Bool('Disabled', 0),
         );
     }
 

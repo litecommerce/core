@@ -524,10 +524,10 @@ CREATE TABLE xlite_languages (
   code char(2) NOT NULL,
   code3 char(3) NOT NULL default '',
   r2l int(1) NOT NULL default 0,
-  active int(1) NOT NULL default 0,
+  status int(1) NOT NULL default 0,
   UNIQUE KEY code3 (code3),
   UNIQUE KEY code2 (code),
-  KEY active(active)
+  KEY status(status)
 ) TYPE=MyISAM;
 
 DROP TABLE IF EXISTS xlite_language_translations;
@@ -543,10 +543,18 @@ CREATE TABLE xlite_language_translations (
 DROP TABLE IF EXISTS xlite_language_labels;
 CREATE TABLE xlite_language_labels (
   label_id int(11) NOT NULL auto_increment PRIMARY KEY,
+  name varchar(255) NOT NULL default '',
+  KEY name (name)
+) TYPE=MyISAM;
+
+DROP TABLE IF EXISTS xlite_language_label_translations;
+CREATE TABLE xlite_language_label_translations (
+  label_id int(11) NOT NULL auto_increment PRIMARY KEY,
   code char(2) NOT NULL,
-  name text NOT NULL,
-  translation text NOT NULL,
-  FULLTEXT KEY cn (code, name)
+  id int(11) NOT NULL default 0,
+  label text NOT NULL,
+  KEY ci (code, id),
+  KEY i (id)
 ) TYPE=MyISAM;
 
 DROP TABLE IF EXISTS xlite_memberships;

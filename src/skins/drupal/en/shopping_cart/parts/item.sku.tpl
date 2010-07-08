@@ -11,4 +11,4 @@
  * @since     3.0.0
  * @ListChild (list="cart.item.info", weight="20")
  *}
-<p class="item-sku" IF="{item.sku}">SKU: {item.sku}</p>
+<p class="item-sku" IF="{item.sku}">{t(#SKU#)}: {item.sku}</p>

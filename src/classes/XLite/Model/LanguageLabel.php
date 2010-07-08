@@ -35,7 +35,7 @@
  * @Entity (repositoryClass="XLite_Model_Repo_LanguageLabel")
  * @Table (name="language_labels")
  */
-class XLite_Model_LanguageLabel extends XLite_Model_AbstractEntity
+class XLite_Model_LanguageLabel extends XLite_Model_Base_I18n
 {
     /**
      * Unique id
@@ -51,35 +51,13 @@ class XLite_Model_LanguageLabel extends XLite_Model_AbstractEntity
     protected $label_id;
 
     /**
-     * Language code 
-     * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     * @Column (type="string", length="2")
-     */
-    protected $code;
-
-    /**
      * Label name
      * 
      * @var    string
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @Column (type="string", length="65536")
+     * @Column (type="string", length="255")
      */
     protected $name;
-
-    /**
-     * Translation
-     * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     * @Column (type="string", length="65536")
-     */
-    protected $translation;
 }
