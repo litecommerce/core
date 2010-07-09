@@ -33,9 +33,8 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Demo_XLite extends XLite implements XLite_Base_IDecorator
+class XLite_Module_Demo_Application extends XLite implements XLite_Base_IDecorator
 {
-
     /**
      * Parse config file and return options list
      * 
