@@ -54,9 +54,9 @@ _do_query_upload("sql/states_GB.sql", $connection, true);
 _do_query_upload("sql/states_CA.sql", $connection, true);
 
 require_once 'classes/XLite/Base.php';
-require_once 'classes/XLite/Model/Abstract.php';
+require_once 'classes/XLite/Model/AModel.php';
 require_once 'classes/XLite/Model/Module.php';
-require_once 'classes/XLite/Module/Abstract.php';
+require_once 'classes/XLite/Module/AModule.php';
 require_once 'classes/XLite/Base/IPatcher.php';
 
 // modules
