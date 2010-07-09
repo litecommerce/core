@@ -33,7 +33,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_2CheckoutCom_Main extends XLite_Module_AModule
+class XLite_Module_TwoCheckoutCom_Main extends XLite_Module_AModule
 {
     /**
      * Module type
@@ -68,7 +68,7 @@ class XLite_Module_2CheckoutCom_Main extends XLite_Module_AModule
      */
     public static function getDescription()
     {
-        return '2Checkout.com credit card payment processor gateway';
+        return 'TwoCheckout.com credit card payment processor gateway';
     }
 
     /**
@@ -92,7 +92,7 @@ class XLite_Module_2CheckoutCom_Main extends XLite_Module_AModule
      */
     public static function getSettingsForm()
     {
-       return "admin.php?target=payment_method&payment_method=2Checkout";
+       return "admin.php?target=payment_method&payment_method=TwoCheckout";
     }
 
     /**
@@ -106,9 +106,9 @@ class XLite_Module_2CheckoutCom_Main extends XLite_Module_AModule
     {
         parent::init();
         
-        $this->registerPaymentMethod('2Checkout');
+        $this->registerPaymentMethod('TwoCheckout');
 
-        $pm = XLite_Model_PaymentMethod::factory('2Checkout');
+        $pm = XLite_Model_PaymentMethod::factory('TwoCheckout');
         $params = $pm->get('params');
         if (!isset($params['version'])) {
             $params['version'] = "2";

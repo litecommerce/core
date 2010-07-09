@@ -33,7 +33,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_2CheckoutCom_Model_PaymentMethod_2Checkout extends XLite_Model_PaymentMethod_CreditCard
+class XLite_Module_TwoCheckoutCom_Model_PaymentMethod_TwoCheckout extends XLite_Model_PaymentMethod_CreditCard
 {
     public $cvverr = array(
             "M" => "Match",
@@ -56,9 +56,9 @@ class XLite_Module_2CheckoutCom_Model_PaymentMethod_2Checkout extends XLite_Mode
             "Z" => "Wrong billing address: 5 digit ZIP matches, Address (Street) does not"
             );
 
-    public $processorName = "2Checkout.com";
-    public $configurationTemplate = "modules/2CheckoutCom/config.tpl";
-    public $formTemplate ="modules/2CheckoutCom/checkout.tpl";
+    public $processorName = "TwoCheckout.com";
+    public $configurationTemplate = "modules/TwoCheckoutCom/config.tpl";
+    public $formTemplate ="modules/TwoCheckoutCom/checkout.tpl";
 
     function handleRequest(XLite_Model_Cart $cart)
     {
@@ -68,7 +68,7 @@ class XLite_Module_2CheckoutCom_Model_PaymentMethod_2Checkout extends XLite_Mode
             if (!isset($_POST['securenumber']) || $_POST['securenumber'] != $cart->getComplex('details.secureNumber')) {
                 die("<font color=red><b>Security check failed!</b></font> Please contact administrator <b>" . $this->config->Company->site_administrator . "</b> .");
             }
-            require_once LC_MODULES_DIR . '2CheckoutCom' . LC_DS . 'encoded.php';
+            require_once LC_MODULES_DIR . 'TwoCheckoutCom' . LC_DS . 'encoded.php';
             PaymentMethod_2checkout_handleRequest($this, $cart);
         } else {
     		$security_check = true;
@@ -97,7 +97,7 @@ class XLite_Module_2CheckoutCom_Model_PaymentMethod_2Checkout extends XLite_Mode
     			}
     		}
 
-            require_once LC_MODULES_DIR . '2CheckoutCom' . LC_DS . 'encoded.php';
+            require_once LC_MODULES_DIR . 'TwoCheckoutCom' . LC_DS . 'encoded.php';
             PaymentMethod_2checkout_v2_handleRequest($this, $cart, $security_check);
         }
     }

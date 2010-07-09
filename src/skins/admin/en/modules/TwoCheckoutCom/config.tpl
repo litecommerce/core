@@ -11,7 +11,7 @@
  * @since     3.0.0
  *}
 <p>
-<span class="SuccessMessage" IF="updated">2Checkout.com parameters were successfully changed.<br>Please make sure that the 2Checkout payment method is enabled on the <a href="admin.php?target=payment_methods">Payment methods</a> page before you can start using it.<hr></span>
+<span class="SuccessMessage" IF="updated">TwoCheckout.com parameters were successfully changed.<br>Please make sure that the TwoCheckout payment method is enabled on the <a href="admin.php?target=payment_methods">Payment methods</a> page before you can start using it.<hr></span>
 
 
 <table border=0 cellspacing=0>
@@ -27,7 +27,7 @@
 <input type="hidden" name="params[test_mode]" value="{pm.params.test_mode}">
 
 <tr>
-    <td align="right" width="200">2Checkout.com payment version:</td>
+    <td align="right" width="200">TwoCheckout.com payment version:</td>
     <td>
     <select name="params[version]">
 	<option value="1" selected="{pm.params.version=#1#}">Version 1 (old mode)</option>
@@ -48,11 +48,11 @@
 {if:pm.params.version=#1#}
 
 Use this page to configure your store to 
-communicate with your 2Checkout.com Payment Processing Gateway. Complete the 
+communicate with your TwoCheckout.com Payment Processing Gateway. Complete the 
 required fields below and press the "Update" button. 
-<P><B>Note:</B> In order to track your 2Checkout orders by the 
+<P><B>Note:</B> In order to track your TwoCheckout orders by the 
 shopping cart software you have to proceed these steps: 
-<LI>Log in to your 2Checkout account 
+<LI>Log in to your TwoCheckout account 
 <LI>Go to the '<I>Shopping cart</I>' menu 
 <LI>Set the option '<I>Return to a routine on your site after credit 
 card processed?</I>' to '<I>Yes</I>' 
@@ -105,11 +105,11 @@ to:<BR>{getShopUrl(#cart.php?target=callback&action=callback&order_id_name=x_inv
 
 Use this page to configure your store to communicate with your Payment Processing Gateway. Complete the required fields below and press the "Update" button.
 <P>
-<b>Note:</b> In order to track your 2Checkout orders by the shopping cart software you have to proceed these steps:
-<li>Log in to your 2Checkout account</li>
+<b>Note:</b> In order to track your TwoCheckout orders by the shopping cart software you have to proceed these steps:
+<li>Log in to your TwoCheckout account</li>
 <li>Click on the '<i>Look & Feel settings</i>' in the '<i>Helpful links</i>' section.</li>
 <li>Set the option '<i>Direct Return?</i>' to '<i>Yes</i>'</li>
-<li>Set the '<i>Approved URL</i>' to:<br>http<span IF="config.Security.customer_security">s://{xlite.options.host_details.https_host}</span><span IF="!config.Security.customer_security">://{xlite.options.host_details.http_host}</span>{xlite.options.host_details.web_dir_wo_slash}/classes/modules/2CheckoutCom/callback.php</li>
+<li>Set the '<i>Approved URL</i>' to:<br>http<span IF="config.Security.customer_security">s://{xlite.options.host_details.https_host}</span><span IF="!config.Security.customer_security">://{xlite.options.host_details.http_host}</span>{xlite.options.host_details.web_dir_wo_slash}/classes/modules/TwoCheckoutCom/callback.php</li>
 <li>Set the '<i>Your secret Word</i>'. A Secret Word is known only to the seller and 2CheckOut.
 
 <P>
@@ -131,7 +131,7 @@ Use this page to configure your store to communicate with your Payment Processin
         <input type="hidden" name="params[md5HashValue]" value="{pm.params.md5HashValue}">
 
         <tr>
-        	<td align="right" width="200">2Checkout.com account number:</td>
+        	<td align="right" width="200">TwoCheckout.com account number:</td>
         	<td><input type=text name="params[account_number]" size=24 value="{pm.params.account_number:r}"></td>
         </tr>
 
