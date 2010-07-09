@@ -27,13 +27,13 @@
  */
 
 /**
- * ____description____
+ * Collection (array)
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_WidgetParam_Array extends XLite_Model_WidgetParam_Abstract
+class XLite_Model_WidgetParam_Collection extends XLite_Model_WidgetParam_Abstract
 {
     /**
      * Param type

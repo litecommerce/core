@@ -159,7 +159,7 @@ class XLite_View_Minicart extends XLite_View_SideBarBox
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_DISPLAY_MODE => new XLite_Model_WidgetParam_List(
+            self::PARAM_DISPLAY_MODE => new XLite_Model_WidgetParam_Set(
                 'Display mode', self::DISPLAY_MODE_VERTICAL, true, $this->displayModes
             ),
         );

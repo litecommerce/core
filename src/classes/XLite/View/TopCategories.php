@@ -132,7 +132,7 @@ class XLite_View_TopCategories extends XLite_View_SideBarBox
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_DISPLAY_MODE => new XLite_Model_WidgetParam_List(
+            self::PARAM_DISPLAY_MODE => new XLite_Model_WidgetParam_Set(
                 'Display mode', 'list', true, $this->displayModes
             ),
             self::PARAM_ROOT_ID      => new XLite_Model_WidgetParam_ObjectId_Category(

@@ -187,7 +187,7 @@ class XLite_View_Pager extends XLite_View_Abstract
             self::PARAM_ITEMS_PER_PAGE => new XLite_Model_WidgetParam_Int(
                 'Items per page', intval($this->config->General->products_per_page), true
             ),
-            self::PARAM_DATA => new XLite_Model_WidgetParam_Array(
+            self::PARAM_DATA => new XLite_Model_WidgetParam_Collection(
                 'Data', array()
             ),
             self::PARAM_SHOW_ITEMS_PER_PAGE_SELECTOR => new XLite_Model_WidgetParam_Checkbox(

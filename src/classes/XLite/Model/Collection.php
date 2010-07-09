@@ -33,7 +33,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_List extends XLite_Base
+class XLite_Model_Collection extends XLite_Base
 {
     /**
      * Start element

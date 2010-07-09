@@ -71,7 +71,7 @@ class XLite_View_Button_Regular extends XLite_View_Button_Abstract
         $this->widgetParams += array(
             self::PARAM_ACTION      => new XLite_Model_WidgetParam_String('LC action', null, true),
             self::PARAM_JS_CODE     => new XLite_Model_WidgetParam_String('JS code', '', true),
-            self::PARAM_FORM_PARAMS => new XLite_Model_WidgetParam_Array('Form params to modify', array(), true),
+            self::PARAM_FORM_PARAMS => new XLite_Model_WidgetParam_Collection('Form params to modify', array(), true),
         );
     }
 

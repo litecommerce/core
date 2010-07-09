@@ -33,7 +33,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_List_CheckoutSteps extends XLite_Model_List
+class XLite_Model_Collection_CheckoutSteps extends XLite_Model_Collection
 {
     /**
      * current 

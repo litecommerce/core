@@ -284,14 +284,14 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
     /**
      * Return checkout steps list
      * 
-     * @return XLite_Model_List_CheckoutSteps
+     * @return XLite_Model_Collection_CheckoutSteps
      * @access protected
      * @since  3.0.0
      */
     protected function getCheckoutSteps()
     {
         if (!isset($this->checkoutSteps)) {
-            $this->checkoutSteps = new XLite_Model_List_CheckoutSteps();
+            $this->checkoutSteps = new XLite_Model_Collection_CheckoutSteps();
             $this->defineCheckoutSteps();
         }
 

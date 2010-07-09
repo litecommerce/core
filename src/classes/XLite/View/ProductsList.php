@@ -459,13 +459,13 @@ abstract class XLite_View_ProductsList extends XLite_View_Container
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_WIDGET_TYPE => new XLite_Model_WidgetParam_List(
+            self::PARAM_WIDGET_TYPE => new XLite_Model_WidgetParam_Set(
                 'Widget type', self::WIDGET_TYPE_CENTER, true, $this->widgetTypes
             ),
-            self::PARAM_DISPLAY_MODE => new XLite_Model_WidgetParam_List(
+            self::PARAM_DISPLAY_MODE => new XLite_Model_WidgetParam_Set(
                 'Display mode', self::DISPLAY_MODE_GRID, true, $this->displayModes
             ),
-            self::PARAM_GRID_COLUMNS => new XLite_Model_WidgetParam_List(
+            self::PARAM_GRID_COLUMNS => new XLite_Model_WidgetParam_Set(
                 'Number of columns (for Grid mode only)', 3, true, $this->getGridColumnsRange()
             ),
             self::PARAM_SHOW_DESCR => new XLite_Model_WidgetParam_Checkbox(
@@ -489,10 +489,10 @@ abstract class XLite_View_ProductsList extends XLite_View_Container
             self::PARAM_ICON_MAX_HEIGHT => new XLite_Model_WidgetParam_Int(
                 'Maximal icon height', 90, true
             ),
-            self::PARAM_SORT_BY => new XLite_Model_WidgetParam_List(
+            self::PARAM_SORT_BY => new XLite_Model_WidgetParam_Set(
                 'Sort by', self::SORT_BY_MODE_DEFAULT, false, $this->sortByModes
             ),
-            self::PARAM_SORT_ORDER => new XLite_Model_WidgetParam_List(
+            self::PARAM_SORT_ORDER => new XLite_Model_WidgetParam_Set(
                 'Sort order', 'asc', false, $this->sortOrderModes
             ),
             self::PARAM_SHOW_ALL_ITEMS_PER_PAGE => new XLite_Model_WidgetParam_Checkbox(
