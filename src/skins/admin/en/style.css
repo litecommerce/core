@@ -339,7 +339,7 @@ button.invert:hover {
 }
 .ui-widget-overlay {
   background-color: black;
-  opacity: 0.5;
+  opacity: 0.4;
   position: absolute;
   top: 0px;
   left: 0px;
@@ -377,6 +377,12 @@ button.invert:hover {
   font-size: 24px;
   font-weight: normal;
   margin: 0px 0px 8px 0px;
+}
+
+.wait-box .box {
+  background: transparent url(images/progress.gif) repeat-x left top;
+  width: 100%;
+  height: 11px;
 }
 
 * html button {

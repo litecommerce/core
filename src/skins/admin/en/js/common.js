@@ -381,3 +381,126 @@ $(document).ready(
     new InputValidator(document);
   }
 );
+
+// Dialog
+
+// Abstract open dialog
+function openDialog(selector, additionalOptions)
+{
+  if (!$('.ui-dialog ' + selector).length) {
+    var options =  {
+      dialogClass: 'popup',
+      draggable: false,
+      modal: true,
+      resizable: false,
+      height: 500,
+      open: function(event) {
+        $('.ui-dialog').css(
+          {
+            overflow: 'visible',
+          }
+        );
+      }
+    }
+
+    if (additionalOptions) {
+      for (var k in additionalOptions) {
+        options[k] = additionalOptions[k];
+      }
+    }
+
+    $(selector).dialog(options);
+
+  } else {
+    $(selector).dialog('open');
+  }
+}
+
+// Loadable dialog
+function loadDialog(url, dialogOptions, callback)
+{
+  openWaitBar();
+
+  var selector = 'tmp-dialog-' + (new Date()).getTime();
+
+  $.get(
+    url,
+    {},
+    function(data, status, ajax) {
+      if (data) {
+        var div = $(document.body.appendChild(document.createElement('div')))
+          .hide()
+          .html($.trim(data));
+        if (1 == div.get(0).childNodes.length) {
+          div = $(div.get(0).childNodes[0]);
+        }
+
+        div.addClass(selector);
+
+        openDialog('.' + selector, dialogOptions);
+        closeWaitBar();
+
+        if (callback) {
+          callback();
+        }
+      }
+    }
+  );
+
+  return '.' + selector;
+}
+
+// Load dialog by link
+function loadDialogByLink(link, url, options)
+{
+  if (!link.linkedDialog) {
+    link.linkedDialog = loadDialog(url, options);
+
+  } else {
+    openDialog(link.linkedDialog, options);
+  }
+}
+
+function openWaitBar()
+{
+  if (typeof(window._waitBar) == 'undefined') {
+    window._waitBar = document.body.appendChild(document.createElement('div'));
+    var selector = 'wait-bar-' + (new Date()).getTime();
+    window._waitBar.style.display = 'none';
+    window._waitBar.className = 'wait-box ' + selector;
+
+    var box = window._waitBar.appendChild(document.createElement('div'));
+    box.className = 'box';
+
+    window._waitBar = '.' + selector;
+  }
+
+  if ($('.ui-dialog ' + window._waitBar).length) {
+    $(window._waitBar).dialog('open');
+
+  } else {
+
+    var options =  {
+      dialogClass:   'popup',
+      draggable:     false,
+      modal:         true,
+      resizable:     false,
+      closeOnEscape: false,
+      minHeight:     11,
+      width:         200,
+      open:          function() {
+        $(window._waitBar).css('min-height', 'auto');
+        $('.ui-dialog-titlebar-close', $(window._waitBar).parents('.ui-dialog').eq(0)).remove();
+      }
+    };
+
+    $(window._waitBar).dialog(options);
+  }
+}
+
+function closeWaitBar()
+{
+  if (typeof(window._waitBar) != 'undefined') {
+    $(window._waitBar).dialog('close');
+  }
+}

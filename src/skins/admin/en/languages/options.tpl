@@ -23,24 +23,24 @@
 
       <li class="default">
         <label>{t(#Language name in X#,_ARRAY_(#language#^defaultLanguage.name))}:</label>
-        <input type="text" name="name[{defaultLanguage.code}]" value="{getTranslation(defaultLanguage)}" style="background-image: url({defaultLanguage.flagURL});" />
+        <input type="text" name="name[{defaultLanguage.code}]" value="{getTranslation(defaultLanguage)}" style="background-image: url({defaultLanguage.flagURL});" lang="{defaultLanguage.code}" xml:lang="{defaultLanguage.code}" />
       </li>
 
       <li IF="!editLanguage.code=defaultLanguage.code" class="native">
         <label>{t(#Native language name#)}:</label>
-        <input type="text" name="name[{editLanguage.code}]" value="{getTranslation(editLanguage)}" style="background-image: url({editLanguage.flagURL});" />
+        <input type="text" name="name[{editLanguage.code}]" value="{getTranslation(editLanguage)}" style="background-image: url({editLanguage.flagURL});" lang="{editLanguage.code}" xml:lang="{editLanguage.code}" />
       </li>
 
     </ul>
 
-    <div class="switcher">
+    <div class="{getSwictherClass()}">
       {if:!canSwitch()}
-        <img src="images/spacer.gif" alt="" class="default" /> The language is <span class="default">enabled</span>
+        <img src="images/spacer.gif" alt="" /> {t(#The language is enabled#):h}
       {else:}
         {if:editLanguage.enabled}
-          <img src="images/spacer.gif" alt="" class="enabled" /> The language is <span class="enabled">enabled</span>
+          <img src="images/spacer.gif" alt="" /> {t(#The language is enabled#):h}
         {else:}
-          <img src="images/spacer.gif" alt="" class="disabled" /> The language is <span class="disabled">disabled</span>
+          <img src="images/spacer.gif" alt="" /> {t(#The language is disabled#):h}
         {end:}
       {end:}
 

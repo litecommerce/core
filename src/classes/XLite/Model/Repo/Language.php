@@ -116,7 +116,7 @@ class XLite_Model_Repo_Language extends XLite_Model_Repo_Base_I18n
     public function findActiveLanguages()
     {
         return $this->assignQueryCache(
-            $this->defineByStatusQuery()->getQuery(XLite_Model_Language::ENABLED),
+            $this->defineByStatusQuery(XLite_Model_Language::ENABLED)->getQuery(),
             'status',
             array('status' => XLite_Model_Language::ENABLED)
         )->getResult();

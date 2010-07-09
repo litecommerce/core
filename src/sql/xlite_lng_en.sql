@@ -82,6 +82,8 @@ INSERT INTO xlite_language_label_translations (id, code, label) VALUES (80, 'en'
 INSERT INTO xlite_language_label_translations (id, code, label) VALUES (81, 'en', 'Delete Language');
 INSERT INTO xlite_language_label_translations (id, code, label) VALUES (82, 'en', 'Edit label');
 INSERT INTO xlite_language_label_translations (id, code, label) VALUES (83, 'en', 'Please specify a pattern to find the required labels');
+INSERT INTO xlite_language_label_translations (id, code, label) VALUES (84, 'en', 'The language is <span>enabled</span>');
+INSERT INTO xlite_language_label_translations (id, code, label) VALUES (85, 'en', 'The language is <span>disabled</span>');
 
 -- Language names
 INSERT INTO xlite_language_translations (code, id, name) VALUES ('en',1,'Afar');

@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage ____sub_package____
+ * @subpackage View
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -33,7 +33,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_LanguagesModify extends XLite_View_Dialog
+class XLite_View_LanguagesModify_Dialog extends XLite_View_Dialog
 {
     /**
      * Labels limit per page
@@ -58,7 +58,7 @@ class XLite_View_LanguagesModify extends XLite_View_Dialog
 	/**
 	 * Labels count
 	 * 
-	 * @var    mixed
+	 * @var    integer
 	 * @access protected
 	 * @see    ____var_see____
 	 * @since  3.0.0
@@ -74,6 +74,16 @@ class XLite_View_LanguagesModify extends XLite_View_Dialog
 	 * @since  3.0.0
 	 */
 	protected $pagesCount = null;
+
+    /**
+     * Translate language 
+     * 
+     * @var    XLite_Model_Language or false
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $translateLanguage = null;
 
     /**
      * Return default template
@@ -122,11 +132,20 @@ class XLite_View_LanguagesModify extends XLite_View_Dialog
     public static function getAllowedTargets()
     {
         $result = parent::getAllowedTargets();
+
         $result[] = 'languages';
 
         return $result;
     }
 
+    /**
+     * Get labels 
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
 	protected function getLabels()
 	{
 		$this->defineLabels();
@@ -134,6 +153,14 @@ class XLite_View_LanguagesModify extends XLite_View_Dialog
 		return $this->labels;
 	}
 
+    /**
+     * Count labels 
+     * 
+     * @return integer
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
 	public function countLabels()
 	{
         $this->defineLabels();
@@ -141,6 +168,14 @@ class XLite_View_LanguagesModify extends XLite_View_Dialog
         return $this->labelsCount;
 	}
 
+    /**
+     * Get pages count
+     * 
+     * @return integer
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
 	public function getPages()
 	{
 		$this->defineLabels();
@@ -148,6 +183,14 @@ class XLite_View_LanguagesModify extends XLite_View_Dialog
 		return $this->pagesCount;
 	}
 
+    /**
+     * Get page index
+     * 
+     * @return integer
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     public function getPage()
     {
         $this->defineLabels();
@@ -157,6 +200,14 @@ class XLite_View_LanguagesModify extends XLite_View_Dialog
         return intval($data['page']);
     }
 
+    /**
+     * Get URL for simple pager
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     public function getPagerURL()
     {
         return $this->buildUrl(
@@ -168,6 +219,14 @@ class XLite_View_LanguagesModify extends XLite_View_Dialog
         );
     }
 
+    /**
+     * Get search substring 
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
 	public function getSearchSubstring()
 	{
 		$data = XLite_Model_Session::getInstance()->get('labelsSearch');
@@ -175,6 +234,14 @@ class XLite_View_LanguagesModify extends XLite_View_Dialog
 		return is_array($data) && isset($data['name']) ? $data['name'] : '';
 	}
 
+    /**
+     * Check - widget search all labels or not
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     public function isSearchAll()
 	{
         $data = XLite_Model_Session::getInstance()->get('labelsSearch');
@@ -182,12 +249,28 @@ class XLite_View_LanguagesModify extends XLite_View_Dialog
         return is_array($data) && !isset($data['name']);
 	}
 
+    /**
+     * Check - search is enabled or not
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     public function isSearch()
     {
         return is_array(XLite_Model_Session::getInstance()->get('labelsSearch'));
     }
 
-    public function getAnotherLanguagesAdded()
+    /**
+     * Check - application has added language withount default language or not
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isAnotherLanguagesAdded()
     {
         $languages = XLite_Core_Database::getRepo('XLite_Model_Language')->findAddedLanguages();
 
@@ -198,101 +281,113 @@ class XLite_View_LanguagesModify extends XLite_View_Dialog
             }
         }
 
-        return $languages;
+        return 0 < count($languages);
     }
 
-    public function isAnotherLanguagesAdded()
-    {
-        return 0 < count($this->getAnotherLanguagesAdded());
-    }
-
-    public function getAddedLanguages()
-    {
-        return XLite_Core_Database::getRepo('XLite_Model_Language')->findAddedLanguages();
-    }
-
+    /**
+     * Get application default language 
+     * 
+     * @return XLite_Model_Language
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     public function getDefaultLanguage()
     {
         return XLite_Core_Database::getRepo('XLite_Model_Language')->getDefaultLanguage();
     }
 
+    /**
+     * Get iterface default language 
+     * 
+     * @return XLite_Model_Language
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     public function getInterfaceLanguage()
     {
         return XLite_Core_Config::getInstance()->General->defaultLanguage;
     }
 
+    /**
+     * Get translate language 
+     * 
+     * @return XLite_Model_Language or null
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     public function getTranslatedLanguage()
     {
-        if (XLite_Core_Request::getInstance()->language) {
-            $language = XLite_Core_Database::getRepo('XLite_Model_Language')->findOneByCode(
-                XLite_Core_Request::getInstance()->language
-            );
-            if ($language && !$language->added) {
-                $language = null;
+        if (!isset($this->translateLanguage)) {
+            $this->translateLanguage = false;
+
+            if (XLite_Core_Request::getInstance()->language) {
+                $language = XLite_Core_Database::getRepo('XLite_Model_Language')->findOneByCode(
+                    XLite_Core_Request::getInstance()->language
+                );
+                if ($language && $language->added) {
+                    $this->translateLanguage = $language;
+                }
             }
         }
 
-        return isset($language)
-            ? $language
-            : $this->getDefaultLanguage();
+        return $this->translateLanguage ? $this->translateLanguage : null;
     }
 
+    /**
+     * Check - is translate language selected or not
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     public function isTranslatedLanguageSelected()
     {
         return XLite_Core_Request::getInstance()->language
-            && !$this->isDefaultLanguage();
+            && $this->getTranslatedLanguage();
     }
 
-    public function isCurrentLanguage(XLite_Model_Language $language)
+    /**
+     * Get label translation with application default language
+     * 
+     * @param XLite_Model_LanguageLabel $label Label
+     *  
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getLabelDefaultValue(XLite_Model_LanguageLabel $label)
     {
-        return $this->getInterfaceLanguage()->code == $language->code;
+        return $label->getTranslation($this->getDefaultLanguage()->code)->label;
     }
 
-    public function isTranslatedLanguage(XLite_Model_Language $language)
-    {
-        return $this->getTranslatedLanguage()->code == $language->code;
-    }
-
-    public function isInterfaceLanguage(XLite_Model_Language $language)
-    {
-        return $this->getInterfaceLanguage()->code == $language->code;
-    }
-
-    public function canDelete(XLite_Model_Language $language)
-    {
-        return !in_array(
-            $language->code,
-            array($this->getDefaultLanguage()->code, $this->getInterfaceLanguage()->code)
-        );
-    }
-
-    public function canSelect(XLite_Model_Language $language)
-    {
-        return $language->code != $this->getDefaultLanguage()->code
-            && (!$this->isTranslatedLanguageSelected() || $language->code != $this->getTranslatedLanguage()->code);
-    }
-
-
-	public function isDefaultLanguage()
-	{
-		return $this->getDefaultLanguage()->code == $this->getTranslatedLanguage()->code;
-	}
-
+    /**
+     * Get label translation with translate language
+     * 
+     * @param XLite_Model_LanguageLabel $label Label
+     *  
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     public function getTranslation(XLite_Model_LanguageLabel $label)
     {
-        $label = XLite_Core_Database::getRepo('XLite_Model_LanguageLabel')->find($label->label_id);
-
-        return $label
-            ? $label->getTranslation($this->getTranslatedLanguage()->code)->label
-            : '';
+        return $label->getTranslation($this->getTranslatedLanguage()->code)->label;
     }
 
-    public function getInactiveLanguages()
-    {
-        return XLite_Core_Database::getRepo('XLite_Model_Language')
-            ->findInactiveLanguages();
-    }
-
+    /**
+     * Define (search) labels 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
 	protected function defineLabels()
 	{
 		if (!isset($this->labels)) {

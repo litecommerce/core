@@ -139,4 +139,21 @@ class XLite_View_TopMessage extends XLite_View_Abstract
 
         return $list;
     }
+
+    /**
+     * Get a list of JS files required to display the widget properly 
+     * 
+     * @return array
+     * @access public
+     * @since  3.0.0
+     */
+    public function getJSFiles()
+    {
+        $list = parent::getJSFiles();
+
+        $list[] = $this->getDir() . '/controller.js';
+
+        return $list;
+    }
+
 }

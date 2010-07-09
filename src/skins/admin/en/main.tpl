@@ -103,7 +103,7 @@
 <widget target="advanced_search" module="AdvancedSearch" template="common/dialog.tpl" body="modules/AdvancedSearch/config.tpl">
 <widget target="order_list" template="order/search.tpl">
 
-<widget class="XLite_View_LanguagesModify" />
+<widget class="XLite_View_LanguagesModify_Dialog" />
 
 <span IF="!xlite.AOMEnabled">
 {if:!xlite.GoogleCheckoutEnabled}
