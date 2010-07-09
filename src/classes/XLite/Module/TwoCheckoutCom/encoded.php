@@ -11,13 +11,13 @@ function PaymentMethod_2checkout_handleRequest($_this, $cart)
     $error = null;
 
     $cart->setComplex('details.x_trans_id', $_POST['x_trans_id']);
-    $cart->set('detailLabels.x_trans_id', "2Checkout.com Transaction ID");
+    $cart->set('detailLabels.x_trans_id', "TwoCheckout.com Transaction ID");
     $cart->setComplex('details.x_response_code', $_POST['x_response_code']);
-    $cart->set('detailLabels.x_response_code', "2Checkout.com Responce Code");
+    $cart->set('detailLabels.x_response_code', "TwoCheckout.com Responce Code");
     $cart->setComplex('details.x_response_subcode', $_POST['x_response_subcode']);
-    $cart->set('detailLabels.x_response_subcode', "2Checkout.com Responce Subcode");
+    $cart->set('detailLabels.x_response_subcode', "TwoCheckout.com Responce Subcode");
     $cart->setComplex('details.x_response_reason_code', $_POST['x_response_reason_code']);
-    $cart->set('detailLabels.x_response_reason_code', "2Checkout.com Responce Reason Code");
+    $cart->set('detailLabels.x_response_reason_code', "TwoCheckout.com Responce Reason Code");
 
     if (isset($_POST['x_amount'])) {
     	$total = sprintf("%.2f", $cart->get('total'));
@@ -25,7 +25,7 @@ function PaymentMethod_2checkout_handleRequest($_this, $cart)
         if ($total != $postTotal) {
             $cart->set('details.error', "Hacking attempt!");
             $cart->setComplex('detailLabels.error', "Error");
-            $cart->set('details.errorDescription', "Total amount doesn't match: Order total=".$total.", 2Checkout amount=".$postTotal);
+            $cart->set('details.errorDescription', "Total amount doesn't match: Order total=".$total.", TwoCheckout amount=".$postTotal);
             $cart->set('detailLabels.errorDescription', "Hacking attempt details");
             $cart->set('status',"F");
             $cart->update();
@@ -40,7 +40,7 @@ function PaymentMethod_2checkout_handleRequest($_this, $cart)
     if (isset($_POST['x_Login'])) $x_Login = $_POST['x_Login'];
     if (isset($_POST['x_login'])) $x_Login = $_POST['x_login'];
 
-    /* md5 changed in 2Checkout; can't use this procedure any more; */
+    /* md5 changed in TwoCheckout; can't use this procedure any more; */
     /*
     $md5 = md5($params->md5HashValue . $x_Login . $_POST['order_number'] . $_POST['x_amount']);
 
@@ -121,18 +121,18 @@ function PaymentMethod_2checkout_v2_handleRequest($_this, $cart, $security_check
     if (!$security_check) {
         $status = "F";
         $cart->setComplex('details.security_check', "FAILED!");
-        $cart->set('detailLabels.security_check', "2Checkout.com Order Security Check");
+        $cart->set('detailLabels.security_check', "TwoCheckout.com Order Security Check");
         $cart->set('details.error', "Security Check Failed!");
         $cart->setComplex('detailLabels.error', "Error");
     }
 
     if (!empty($_POST['tcoid']))	{
         $cart->setComplex('details.tcoid', $_POST['tcoid']);
-        $cart->set('detailLabels.tcoid', "2Checkout.com Transaction ID");
+        $cart->set('detailLabels.tcoid', "TwoCheckout.com Transaction ID");
     }
     if (!empty($_POST['order_number'])) {
         $cart->setComplex('details.order_number', $_POST['order_number']);
-        $cart->set('detailLabels.order_number', "2Checkout.com Order number");
+        $cart->set('detailLabels.order_number', "TwoCheckout.com Order number");
     }
     if (isset($_POST['2co_product_id'])) {
         $_POST['product_id'] = $_POST['2co_product_id'];
@@ -146,7 +146,7 @@ function PaymentMethod_2checkout_v2_handleRequest($_this, $cart, $security_check
     $full_response = implode(", ", $full_response);
 
     $cart->setComplex('details.full_response', $full_response);
-    $cart->set('detailLabels.full_response', "2Checkout.com Full response");
+    $cart->set('detailLabels.full_response', "TwoCheckout.com Full response");
 
     $cart->set('status', $status);
     $cart->update();
