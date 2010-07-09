@@ -221,11 +221,6 @@ abstract class XLite_Controller_Admin_Abstract extends XLite_Controller_Abstract
         return $this->recentAdmins;
     }
 
-    function getCharset()
-    {
-        return $this->config->Company->locationCountry->charset;
-    }
-
     function startDump()
     {
         parent::startDump();

@@ -910,20 +910,7 @@ abstract class XLite_Controller_Abstract extends XLite_Core_Handler
      */
     public function getCharset()
     {
-        $charset = 'iso-8859-1';
-
-        if ($this->auth->isLogged()) {
-            $profile = $this->auth->getProfile();
-            $charset = $profile->getComplex('billingCountry.charset');
-
-        } else {
-            $obj = XLite_Core_Database::getEM()->find('XLite_Model_Country', $this->config->General->default_country);
-            if ($obj->charset) {
-                $charset = $obj->charset;
-            }
-        }
-
-        return $charset;
+        return 'UTF-8';
     }
 
     function getEmailValidatorRegExp()

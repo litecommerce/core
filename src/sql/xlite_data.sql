@@ -656,4 +656,6 @@ INSERT INTO xlite_language_labels (label_id, name) VALUES (80, 'Disabled languag
 INSERT INTO xlite_language_labels (label_id, name) VALUES (81, 'Delete Language');
 INSERT INTO xlite_language_labels (label_id, name) VALUES (82, 'Edit label');
 INSERT INTO xlite_language_labels (label_id, name) VALUES (83, 'Please specify a pattern to find the required labels');
+INSERT INTO xlite_language_labels (label_id, name) VALUES (84, 'The language is enabled');
+INSERT INTO xlite_language_labels (label_id, name) VALUES (85, 'The language is disabled');
 

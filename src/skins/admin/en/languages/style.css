@@ -532,25 +532,20 @@ ul.added-languages li span.selected {
   margin: 0px 2px 2px 1px;
 }
 
-.language-options-dialog .switcher img.enabled {
+.language-options-dialog .switcher-enabled img {
   background-position: left 0px;
 }
 
-.language-options-dialog .switcher img.default {
+.language-options-dialog .switcher-default img {
   background-position: left -32px;
 }
 
 .language-options-dialog .switcher span {
   font-weight: bold;
-}
-
-.language-options-dialog .switcher span.enabled,
-  .language-options-dialog .switcher span.default
-{
   color: #1f7608;
 }
 
-.language-options-dialog .switcher span.disabled {
+.language-options-dialog .switcher-disabled span {
   color: #8f8f8f;
 }
 

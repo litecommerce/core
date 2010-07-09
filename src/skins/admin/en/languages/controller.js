@@ -12,39 +12,69 @@
  */
 
 // Open Add language dialog
-function openAddNewLanguage()
+function openAddNewLanguage(link, page)
 {
-  openDialog('.add-new-language-dialog', {width: 600});
+  var url = 'admin.php?target=languages&widget=XLite_View_LanguagesModify_AddLanguage';
+
+  if (page) {
+    url += '&page=' + page;
+  }
+
+  loadDialogByLink(link, url, {width: 600});
+
+  return false;
 }
 
 // Open Select language dialog
-function openSelectLanguage()
+function openSelectLanguage(link, language, page)
 {
-  openDialog('.select-language-dialog', {width: 600});
+  var url = 'admin.php?target=languages&widget=XLite_View_LanguagesModify_SelectLanguage';
+
+  if (language) {
+    url += '&language=' + language;
+  }
+
+  if (page) {
+    url += '&page=' + page;
+  }
+
+  loadDialogByLink(link, url, {width: 600});
+
+  return false;
 }
 
 // Open Add new label dialog
-function openAddNewLabel()
+function openAddNewLabel(link, language, page)
 {
-  openDialog('.add-new-label-dialog', {width: 600});
+  var url = 'admin.php?target=languages&widget=XLite_View_LanguagesModify_AddLabel';
+
+  if (language) {
+    url += '&language=' + language;
+  }
+
+  if (page) {
+    url += '&page=' + page;
+  }
+
+  loadDialogByLink(link, url, {width: 600});
+
+  return false;
 }
 
 // Open Confirm language deletion dialog
-function confirmLanguageDelete(link, id, language, img, name)
+function confirmLanguageDelete(link, id, language, page)
 {
-  openDialog('.confirm-language-delete-dialog', {width: 400, height: 250});
+  var url = 'admin.php?target=languages&widget=XLite_View_LanguagesModify_ConfirmDeletion&lng_id' + id;
 
-  if (img.length) {
-    $('.confirm-language-delete-dialog .flag').show().attr('src', img)
-
-  } else {
-    $('.confirm-language-delete-dialog .flag').hide();
+  if (language) {
+    url += '&language=' + language;
   }
 
-  $('.confirm-language-delete-dialog .name').html(name);
-  $('#lng_id_remove').attr('value', id);
+  if (page) {
+    url += '&page=' + page;
+  }
 
-  $('#language_remove').attr('value', language ? language : '');
+  loadDialogByLink(link, url, {width: 500, height: 250});
 
   return false;
 }
@@ -52,107 +82,34 @@ function confirmLanguageDelete(link, id, language, img, name)
 // Open Edit label dialog
 function openEditLabelDialog(link, id, language, page)
 {
-  if (!link.linkedDialog) {
-    var url = 'admin.php?target=languages&label_id=' + id + '&widget=XLite_View_EditLanguageLabel';
+  var url = 'admin.php?target=languages&label_id=' + id + '&widget=XLite_View_LanguagesModify_EditLabel';
 
-    if (language) {
-      url += '&language=' + language;
-    }
-
-    if (page) {
-      url += '&page=' + page;
-    }
-
-    link.linkedDialog = loadDialog(url, {width: 600});
-
-  } else {
-    openDialog('.' + link.linkedDialog, {width: 600});
+  if (language) {
+    url += '&language=' + language;
   }
+
+  if (page) {
+    url += '&page=' + page;
+  }
+
+  loadDialogByLink(link, url, {width: 600});
 
   return false;
 }
 
 function openLanguageOptions(link, id, language, page)
 {
-  if (!link.linkedDialog) {
-    var url = 'admin.php?target=languages&lng_id=' + id + '&widget=XLite_View_LanguageOptions';
+  var url = 'admin.php?target=languages&lng_id=' + id + '&widget=XLite_View_LanguageModify_Options';
 
-    if (language) {
-      url += '&language=' + language;
-    }
-
-    if (page) {
-      url += '&page=' + page;
-    }
-
-    link.linkedDialog = loadDialog(url, {width: 600, height: 380});
-
-  } else {
-    openDialog('.' + link.linkedDialog, {width: 600, height: 380});
+  if (language) {
+    url += '&language=' + language;
   }
+
+  if (page) {
+    url += '&page=' + page;
+  }
+
+  loadDialogByLink(link, url, {width: 600, height: 380});
 
   return false;
 }
-
-// Abstract open dialog
-function openDialog(selector, additionalOptions)
-{
-  if (!$('.ui-dialog ' + selector).length) {
-    var options =  {
-      dialogClass: 'popup',
-      draggable: false,
-      modal: true,
-      resizable: false,
-      height: 500,
-      open: function(event) {
-        $('.ui-dialog').css(
-          {
-            overflow: 'visible',
-//            width: ''
-          }
-        );
-      }
-    }
-
-    if (additionalOptions) {
-      for (var k in additionalOptions) {
-        options[k] = additionalOptions[k];
-      }
-    }
-
-    $(selector).dialog(options);
-
-  } else {
-    $(selector).dialog('open');
-  }
-}
-
-function loadDialog(url, dialogOptions, callback)
-{
-  var selector = 'tmp-dialog-' + (new Date()).getTime();
-  $.get(
-    url,
-    {},
-    function(data, status, ajax) {
-      if (data) {
-        var div = $(document.body.appendChild(document.createElement('div')))
-          .hide()
-          .html($.trim(data));
-        if (1 == div.get(0).childNodes.length) {
-          div = $(div.get(0).childNodes[0]);
-        }
-
-        div.addClass(selector);
-
-        openDialog('.' + selector, dialogOptions);
-
-        if (callback) {
-          callback();
-        }
-      }
-    }
-  );
-
-  return selector;
-}
-

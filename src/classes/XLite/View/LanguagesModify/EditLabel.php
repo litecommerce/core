@@ -33,7 +33,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_EditLanguageLabel extends XLite_View_Abstract
+class XLite_View_LanguagesModify_EditLabel extends XLite_View_Abstract
 {
     /**
      * Widget parameters 
@@ -145,6 +145,21 @@ class XLite_View_EditLanguageLabel extends XLite_View_Abstract
     }
 
     /**
+     * Check - is requried language or not
+     *
+     * @param XLite_Model_Language $language Language_
+     *
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isRequiredLanguage(XLite_Model_Language $language)
+    {
+        return $language->code == $this->getDefaultLanguage()->code;
+    }
+
+    /**
      * Get default language 
      * 
      * @return XLite_Model_Language
@@ -158,6 +173,3 @@ class XLite_View_EditLanguageLabel extends XLite_View_Abstract
     }
 
 }
-
-
-

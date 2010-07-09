@@ -33,7 +33,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_LanguageOptions extends XLite_View_Abstract
+class XLite_View_LanguageModify_Options extends XLite_View_Abstract
 {
     /**
      * Widget parameters 
@@ -184,6 +184,30 @@ class XLite_View_LanguageOptions extends XLite_View_Abstract
             && $this->getEditLanguage()->code != $this->getDefaultLanguage()->code;
     }
 
+    /**
+     * Get wwicther block class 
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getSwictherClass()
+    {
+        $classes = array('switcher');
+
+        if (!$this->canSwitch()) {
+            $classes[] = 'switcher-default';
+
+        } elseif ($this->getEditLanguage()->enabled) {
+            $classes[] = 'switcher-enabled';
+
+        } else {
+            $classes[] = 'switcher-disabled';
+        }
+
+        return implode(' ', $classes);
+    }
 }
 
 
