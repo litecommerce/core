@@ -1007,7 +1007,7 @@ array("condition" => "state=District of Columbia", "action" => array(
     function formatCurrency($price)
     {
         if (!isset($this->_BaseObj)) {
-            $this->_BaseObj = new XLite_Model_Abstract();
+            $this->_BaseObj = new XLite_Model_AModel();
         }
 
         return $this->_BaseObj->formatCurrency($price);

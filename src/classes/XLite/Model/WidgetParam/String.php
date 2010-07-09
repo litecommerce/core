@@ -33,7 +33,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_WidgetParam_String extends XLite_Model_WidgetParam_Abstract
+class XLite_Model_WidgetParam_String extends XLite_Model_WidgetParam_AWidgetParam
 {
     /**
      * Param type

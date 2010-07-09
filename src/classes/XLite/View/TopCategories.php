@@ -246,7 +246,7 @@ class XLite_View_TopCategories extends XLite_View_SideBarBox
      * @access public
      * @since  3.0.0
      */
-    public function assembleListItemClassName($i, $count, XLite_View_Abstract $widget)
+    public function assembleListItemClassName($i, $count, XLite_View_AView $widget)
     {
         $classes = array('leaf');
 

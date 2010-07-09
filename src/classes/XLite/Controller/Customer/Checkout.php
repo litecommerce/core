@@ -491,7 +491,7 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
 
             $this->actionPostprocess(null);
             $url = isset($step)
-                ? $this->buildURL('checkout', '', array(XLite_View_Abstract::PARAM_MODE => $step->getMode()))
+                ? $this->buildURL('checkout', '', array(XLite_View_AView::PARAM_MODE => $step->getMode()))
                 : $this->buildURL('cart');
 
             $this->setReturnUrl($url);

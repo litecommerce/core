@@ -33,7 +33,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Controller_Admin_Test extends XLite_Controller_Admin_Abstract
+class XLite_Controller_Admin_Test extends XLite_Controller_Admin_AAdmin
 {
     function action_upload()
     {

@@ -33,7 +33,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_GiftCertificates_Controller_Customer_GiftCertificate extends XLite_Controller_Customer_Abstract
+class XLite_Module_GiftCertificates_Controller_Customer_GiftCertificate extends XLite_Controller_Customer_ACustomer
 {
     /**
      * Month duration in seconds

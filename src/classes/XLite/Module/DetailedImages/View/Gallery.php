@@ -34,7 +34,7 @@
  * @since   3.0
  * @ListChild (list="productDetails.image", weight="30")
  */
-class XLite_Module_DetailedImages_View_Gallery extends XLite_View_Abstract
+class XLite_Module_DetailedImages_View_Gallery extends XLite_View_AView
 {
     /**
      * Widget parameter names

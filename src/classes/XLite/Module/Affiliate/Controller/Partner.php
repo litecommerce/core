@@ -33,7 +33,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Affiliate_Controller_Partner extends XLite_Controller_Abstract
+class XLite_Module_Affiliate_Controller_Partner extends XLite_Controller_AController
 {
     public $template = "modules/Affiliate/main.tpl";
 

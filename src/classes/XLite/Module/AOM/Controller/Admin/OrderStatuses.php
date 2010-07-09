@@ -33,7 +33,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_AOM_Controller_Admin_OrderStatuses extends XLite_Controller_Admin_Abstract
+class XLite_Module_AOM_Controller_Admin_OrderStatuses extends XLite_Controller_Admin_AAdmin
 {
     public $statuses 	= null;
     public $letters	= null;

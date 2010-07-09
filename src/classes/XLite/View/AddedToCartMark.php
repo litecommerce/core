@@ -35,7 +35,7 @@
  * @ListChild (list="productsList.gridItem.title", weight="10")
  * @ListChild (list="productsList.listItem.info", weight="10")
  */
-class XLite_View_AddedToCartMark extends XLite_View_Abstract
+class XLite_View_AddedToCartMark extends XLite_View_AView
 {
     /**
      * Widget parameter names

@@ -72,7 +72,7 @@ implements XLite_Base_IDecorator
 		$this->set('login', self::$demoLogin);
 		$this->set('password', self::$demoPassword);
 		$this->set('additional_note', '<center>(login: ' . self::$demoLogin . ', password: ' . self::$demoPassword . ')</center>');
-        $this->set('additional_header', XLite_Module_Demo_View_Abstract::getAdditionalHeader());
+        $this->set('additional_header', XLite_Module_Demo_View_AView::getAdditionalHeader());
 	}
 }
 

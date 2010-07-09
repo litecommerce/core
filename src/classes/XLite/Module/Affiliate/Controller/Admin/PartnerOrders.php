@@ -33,14 +33,14 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Affiliate_Controller_Admin_PartnerOrders extends XLite_Controller_Admin_Abstract
+class XLite_Module_Affiliate_Controller_Admin_PartnerOrders extends XLite_Controller_Admin_AAdmin
 {
     public $params = array('target', 'mode', 'order_id1', 'order_id2', 'partner_id', 'status', 'payment_status');
     public $crlf = "\r\n";
 
     function action_export() 
     {
-        $w = new XLite_View_Abstract();
+        $w = new XLite_View_AView();
         $w->component = $this;
         $w->set('template', "modules/Affiliate/orders.tpl");
         $this->startDownload('orders.csv');

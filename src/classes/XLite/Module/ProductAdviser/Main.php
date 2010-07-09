@@ -40,7 +40,7 @@ define('CUSTOMER_REQUEST_DECLINED', 'D');
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_ProductAdviser_Main extends XLite_Module_Abstract
+class XLite_Module_ProductAdviser_Main extends XLite_Module_AModule
 {
     /**
      * Module type
@@ -103,7 +103,7 @@ class XLite_Module_ProductAdviser_Main extends XLite_Module_Abstract
 
         // FIXME - trying to instantiate abstract class
         // TODO - check if this code is really needed
-        /*$w = new XLite_View_Abstract();
+        /*$w = new XLite_View_AView();
         $widgetMethods = array_map('strtolower', get_class_methods($w));
         if (!in_array('isarraypointernth', $widgetMethods)) {
         } else {

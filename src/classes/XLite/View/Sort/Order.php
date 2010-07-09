@@ -34,7 +34,7 @@
  * @since   3.0.0
  * @ListChild (list="orders.panel", weight="20")
  */
-class XLite_View_Sort_Order extends XLite_View_Sort_Abstract
+class XLite_View_Sort_Order extends XLite_View_Sort_ASort
 {
     /**
      * Define widget parameters

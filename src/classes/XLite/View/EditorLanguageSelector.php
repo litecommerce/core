@@ -34,7 +34,7 @@
  * @see        ____class_see____
  * @since   3.0.0
  */
-class XLite_View_EditorLanguageSelector extends XLite_View_Abstract
+class XLite_View_EditorLanguageSelector extends XLite_View_AView
 {
     /**
      * Current language code 

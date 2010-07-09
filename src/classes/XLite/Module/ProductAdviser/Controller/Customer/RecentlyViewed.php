@@ -33,7 +33,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_ProductAdviser_Controller_Customer_RecentlyViewed extends XLite_Controller_Customer_Abstract
+class XLite_Module_ProductAdviser_Controller_Customer_RecentlyViewed extends XLite_Controller_Customer_ACustomer
 {
     /**
      * Get current location 

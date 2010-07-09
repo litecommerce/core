@@ -33,7 +33,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_ShippingZone extends XLite_Model_Abstract
+class XLite_Model_ShippingZone extends XLite_Model_AModel
 {
     public $fields = array(
         "shipping_zone" => 0

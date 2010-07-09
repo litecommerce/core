@@ -34,7 +34,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_CategorySelect extends XLite_View_Abstract
+class XLite_View_CategorySelect extends XLite_View_AView
 {
     const PARAM_ALL_OPTION           = 'allOption';
     const PARAM_NONE_OPTION          = 'noneOption';

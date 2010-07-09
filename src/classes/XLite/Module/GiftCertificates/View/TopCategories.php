@@ -65,7 +65,7 @@ class XLite_Module_GiftCertificates_View_TopCategories extends XLite_View_TopCat
      * @access public
      * @since  3.0.0
      */
-    public function assembleListItemClassName($i, $count, XLite_View_Abstract $widget)
+    public function assembleListItemClassName($i, $count, XLite_View_AView $widget)
     {
         $class = explode(' ', parent::assembleListItemClassName($i, $count, $widget));
 

@@ -35,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Controller_Admin_Files extends XLite_Controller_Admin_Abstract
+class XLite_Controller_Admin_Files extends XLite_Controller_Admin_AAdmin
 {
     public $count = 0; //total files count;
     public $action = "default";

@@ -89,7 +89,7 @@ class XLite_Module_DrupalConnector_Controller_Customer_Profile extends XLite_Con
      * 
      * @param string $type part(s) identifier
      *  
-     * @return XLite_View_Model_Profile_Abstract
+     * @return XLite_View_Model_Profile_AProfile
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0

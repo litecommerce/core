@@ -93,7 +93,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_FocusedAudience extends XLi
 
     function export_profiles() 
     {
-        $w = new XLite_View_Abstract();
+        $w = new XLite_View_AView();
         $w->component = $this;
         $w->set('template', "modules/EcommerceReports/export_csv.tpl");
         $this->startDownload('users.csv');

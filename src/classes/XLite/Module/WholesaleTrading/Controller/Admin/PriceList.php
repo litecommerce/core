@@ -33,7 +33,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_WholesaleTrading_Controller_Admin_PriceList extends XLite_Controller_Admin_Abstract
+class XLite_Module_WholesaleTrading_Controller_Admin_PriceList extends XLite_Controller_Admin_AAdmin
 {
     public $params = array('target', 'mode', 'category', 'include_subcategories', 'membership');
     

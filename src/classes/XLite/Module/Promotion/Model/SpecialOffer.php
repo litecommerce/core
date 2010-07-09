@@ -33,7 +33,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Promotion_Model_SpecialOffer extends XLite_Model_Abstract
+class XLite_Module_Promotion_Model_SpecialOffer extends XLite_Model_AModel
 {
     public $fields = array(
         'offer_id' => 0,
@@ -362,7 +362,7 @@ class XLite_Module_Promotion_Model_SpecialOffer extends XLite_Model_Abstract
                 }
                 $value = '';
                 if ($this->get('bonusAmountType') == '$') {
-                    $wg = new XLite_View_Abstract();
+                    $wg = new XLite_View_AView();
                     $value = $wg->price_format($this->get('bonusAmount'));
                 } else {
                     $value = $this->get('bonusAmount').$this->get('bonusAmountType');

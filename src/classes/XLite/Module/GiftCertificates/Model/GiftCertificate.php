@@ -33,7 +33,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_GiftCertificates_Model_GiftCertificate extends XLite_Model_Abstract
+class XLite_Module_GiftCertificates_Model_GiftCertificate extends XLite_Model_AModel
 {
     const GC_DOESNOTEXIST = 1;
     const GC_OK           = 2;

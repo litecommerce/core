@@ -33,7 +33,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Egoods_Model_PinSettings extends XLite_Model_Abstract
+class XLite_Module_Egoods_Model_PinSettings extends XLite_Model_AModel
 {
     public $alias = "pin_settings";
 

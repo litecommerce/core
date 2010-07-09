@@ -202,14 +202,14 @@ class XLite_Model_Repo_LanguageLabel extends XLite_Model_Repo_Base_I18n
     /**
      * Convert entity to parameters list for 'all_by_code' cache cell
      * 
-     * @param XLite_Model_AbstractEntity $entity Entity
+     * @param XLite_Model_AModelEntity $entity Entity
      *  
      * @return array
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function convertRecordToParamsAllByCode(XLite_Model_AbstractEntity $entity)
+    protected function convertRecordToParamsAllByCode(XLite_Model_AModelEntity $entity)
     {
         return array('*');
     }

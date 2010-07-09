@@ -33,7 +33,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_Controller extends XLite_View_Abstract
+class XLite_View_Controller extends XLite_View_AView
 {
     /**
      * Content of the currnt page
@@ -120,13 +120,13 @@ class XLite_View_Controller extends XLite_View_Abstract
     /**
      * getContentWidget 
      * 
-     * @return XLite_View_Abstract
+     * @return XLite_View_AView
      * @access protected
      * @since  3.0.0
      */
     protected function getContentWidget()
     {
-        return $this->getWidget(array(XLite_View_Abstract::PARAM_TEMPLATE => $this->template), 'XLite_View_Content');
+        return $this->getWidget(array(XLite_View_AView::PARAM_TEMPLATE => $this->template), 'XLite_View_Content');
     }
 
     /**

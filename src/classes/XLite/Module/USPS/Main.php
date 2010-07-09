@@ -33,7 +33,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_USPS_Main extends XLite_Module_Abstract
+class XLite_Module_USPS_Main extends XLite_Module_AModule
 {
     /**
      * Get module type

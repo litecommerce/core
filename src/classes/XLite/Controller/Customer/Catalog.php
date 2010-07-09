@@ -33,7 +33,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class XLite_Controller_Customer_Catalog extends XLite_Controller_Customer_Abstract
+abstract class XLite_Controller_Customer_Catalog extends XLite_Controller_Customer_ACustomer
 {
     /**
      * Determines if we need to return categoty link or not 
@@ -118,7 +118,7 @@ abstract class XLite_Controller_Customer_Catalog extends XLite_Controller_Custom
     /**
      * getModelObject 
      * 
-     * @return XLite_Model_Abstract
+     * @return XLite_Model_AModel
      * @access protected
      * @since  3.0.0
      */

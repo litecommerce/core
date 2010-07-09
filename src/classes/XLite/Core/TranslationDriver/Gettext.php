@@ -33,7 +33,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Core_TranslationDriver_Gettext extends XLite_Core_TranslationDriver_Abstract
+class XLite_Core_TranslationDriver_Gettext extends XLite_Core_TranslationDriver_ATranslationDriver
 {
     const DOMAIN        = 'xlite';
     const CHARSET       = 'UTF-8';

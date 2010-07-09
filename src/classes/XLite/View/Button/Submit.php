@@ -33,7 +33,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_Button_Submit extends XLite_View_Button_Abstract
+class XLite_View_Button_Submit extends XLite_View_Button_AButton
 {
     /**
      * Return widget default template

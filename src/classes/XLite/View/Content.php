@@ -33,7 +33,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_Content extends XLite_View_Abstract
+class XLite_View_Content extends XLite_View_AView
 {
     /**
      * Chunk size

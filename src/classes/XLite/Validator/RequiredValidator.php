@@ -33,7 +33,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Validator_RequiredValidator extends XLite_Validator_Abstract
+class XLite_Validator_RequiredValidator extends XLite_Validator_AValidator
 {
     public $template = "common/required_validator.tpl";
     

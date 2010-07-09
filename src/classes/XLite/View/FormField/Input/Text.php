@@ -34,7 +34,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_FormField_Input_Text extends XLite_View_FormField_Input_Abstract
+class XLite_View_FormField_Input_Text extends XLite_View_FormField_Input_AInput
 {
     /**
      * Return field type

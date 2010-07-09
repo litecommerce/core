@@ -33,7 +33,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class XLite_Model_AbstractEntity
+abstract class XLite_Model_AModelEntity
 {
     /**
      * Field access codes

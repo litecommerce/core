@@ -34,7 +34,7 @@
  * @since   3.0
  * @ListChild (list="productDetails.info", weight="30")
  */
-class XLite_Module_WholesaleTrading_View_ExtendedOptions extends XLite_View_Abstract
+class XLite_Module_WholesaleTrading_View_ExtendedOptions extends XLite_View_AView
 {
     /**
      * Widget parameter names

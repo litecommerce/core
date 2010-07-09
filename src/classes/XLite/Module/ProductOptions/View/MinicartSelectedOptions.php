@@ -33,7 +33,7 @@
  * @see     ____class_see____
  * @since   3.0
  */
-class XLite_Module_ProductOptions_View_MinicartSelectedOptions extends XLite_View_Abstract
+class XLite_Module_ProductOptions_View_MinicartSelectedOptions extends XLite_View_AView
 {
     /**
      * Widget parameter names

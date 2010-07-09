@@ -33,7 +33,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_XPaymentsConnector_Module extends XLite_Module_Abstract implements XLite_Base_IDecorator
+class XLite_Module_XPaymentsConnector_Module extends XLite_Module_AModule implements XLite_Base_IDecorator
 {
     /**
      * Easy way to register payment method

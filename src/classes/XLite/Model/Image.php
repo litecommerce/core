@@ -33,7 +33,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_Image extends XLite_Model_Abstract
+class XLite_Model_Image extends XLite_Model_AModel
 {
     const IMAGES_DIR = 'images';
     const IMAGES_CACHE_DIR = 'cache';

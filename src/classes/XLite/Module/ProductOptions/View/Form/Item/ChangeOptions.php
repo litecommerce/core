@@ -33,7 +33,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_ProductOptions_View_Form_Item_ChangeOptions extends XLite_View_Form_Abstract
+class XLite_Module_ProductOptions_View_Form_Item_ChangeOptions extends XLite_View_Form_AForm
 {
     /**
      * Widge parameters names 

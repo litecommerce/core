@@ -33,7 +33,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_AdvancedSecurity_Controller_Admin_AdvancedSecurity extends XLite_Controller_Admin_Abstract
+class XLite_Module_AdvancedSecurity_Controller_Admin_AdvancedSecurity extends XLite_Controller_Admin_AAdmin
 {
     public $params = array('target', "mode");
     public $sample = "The quick brown fox jumps over the lazy dog.";
