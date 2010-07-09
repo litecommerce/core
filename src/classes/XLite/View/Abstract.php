@@ -308,7 +308,7 @@ abstract class XLite_View_Abstract extends XLite_Core_Handler
         $this->widgetParams += array(
             self::PARAM_TEMPLATE     => new XLite_Model_WidgetParam_File('Template', $this->getDefaultTemplate()),
             self::PARAM_VISIBLE      => new XLite_Model_WidgetParam_Bool('Visible', true),
-            self::PARAM_MODE         => new XLite_Model_WidgetParam_Array('Modes', $this->getDefaultModes()),
+            self::PARAM_MODE         => new XLite_Model_WidgetParam_Collection('Modes', $this->getDefaultModes()),
             self::PARAM_SESSION_CELL => new XLite_Model_WidgetParam_String('Session cell', $this->getSessionCell()),
         );
     }

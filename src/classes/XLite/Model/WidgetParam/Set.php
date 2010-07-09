@@ -27,13 +27,13 @@
  */
 
 /**
- * ____description____
+ * Set
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_WidgetParam_List extends XLite_Model_WidgetParam_String
+class XLite_Model_WidgetParam_Set extends XLite_Model_WidgetParam_String
 {
     /**
      * Param type
@@ -53,7 +53,6 @@ class XLite_Model_WidgetParam_List extends XLite_Model_WidgetParam_String
      * @since  3.0.0
      */
     protected $options = null;
-
 
     /**
      * Return list of conditions to check

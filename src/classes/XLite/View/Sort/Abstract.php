@@ -70,9 +70,9 @@ abstract class XLite_View_Sort_Abstract extends XLite_View_Abstract
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_PARAMS          => new XLite_Model_WidgetParam_Array('URL params', array()),
-            self::PARAM_SORT_CRITERIONS => new XLite_Model_WidgetParam_Array('Sort criterions', array()),
-            self::PARAM_CELL            => new XLite_Model_WidgetParam_Array('List conditions cell', array()),
+            self::PARAM_PARAMS          => new XLite_Model_WidgetParam_Collection('URL params', array()),
+            self::PARAM_SORT_CRITERIONS => new XLite_Model_WidgetParam_Collection('Sort criterions', array()),
+            self::PARAM_CELL            => new XLite_Model_WidgetParam_Collection('List conditions cell', array()),
         );
     }
 

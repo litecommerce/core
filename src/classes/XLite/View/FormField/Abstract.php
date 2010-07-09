@@ -318,7 +318,7 @@ abstract class XLite_View_FormField_Abstract extends XLite_View_Abstract
             self::PARAM_LABEL      => new XLite_Model_WidgetParam_String('Label', $this->getDefaultLabel()),
             self::PARAM_REQUIRED   => new XLite_Model_WidgetParam_Bool('Required', false),
             self::PARAM_COMMENT    => new XLite_Model_WidgetParam_String('Comment', null),
-            self::PARAM_ATTRIBUTES => new XLite_Model_WidgetParam_Array('Attributes', array()),
+            self::PARAM_ATTRIBUTES => new XLite_Model_WidgetParam_Collection('Attributes', array()),
 
             self::PARAM_IS_ALLOWED_FOR_CUSTOMER => new XLite_Model_WidgetParam_Bool(
                 'Is allowed for customer',

@@ -72,7 +72,7 @@ class XLite_Module_ProductOptions_Controller_Customer_Wishlist extends XLite_Mod
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_PRODUCT_OPTIONS => new XLite_Model_WidgetParam_Array('Product options', array()),
+            self::PARAM_PRODUCT_OPTIONS => new XLite_Model_WidgetParam_Collection('Product options', array()),
         );
     }
 

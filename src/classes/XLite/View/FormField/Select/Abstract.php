@@ -88,7 +88,7 @@ abstract class XLite_View_FormField_Select_Abstract extends XLite_View_FormField
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_OPTIONS => new XLite_Model_WidgetParam_Array('Options', $this->getDefaultOptions(), false),
+            self::PARAM_OPTIONS => new XLite_Model_WidgetParam_Collection('Options', $this->getDefaultOptions(), false),
         );
     }
 

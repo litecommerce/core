@@ -33,7 +33,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_WidgetParam_Bool extends XLite_Model_WidgetParam_List
+class XLite_Model_WidgetParam_Bool extends XLite_Model_WidgetParam_Set
 {
     /**
      * Options 

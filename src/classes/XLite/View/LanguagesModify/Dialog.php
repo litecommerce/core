@@ -377,7 +377,9 @@ class XLite_View_LanguagesModify_Dialog extends XLite_View_Dialog
      */
     public function getTranslation(XLite_Model_LanguageLabel $label)
     {
-        return $label->getTranslation($this->getTranslatedLanguage()->code)->label;
+        return $this->getTranslatedLanguage()
+            ? $label->getTranslation($this->getTranslatedLanguage()->code)->label
+            : '';
     }
 
     /**

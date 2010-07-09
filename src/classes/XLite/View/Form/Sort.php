@@ -90,7 +90,7 @@ class XLite_View_Form_Sort extends XLite_View_Form_Abstract
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_PARAMS => new XLite_Model_WidgetParam_Array('Parameters', array()),
+            self::PARAM_PARAMS => new XLite_Model_WidgetParam_Collection('Parameters', array()),
         );
 
         $this->widgetParams[self::PARAM_CLASS_NAME]->setValue('sort-box');
