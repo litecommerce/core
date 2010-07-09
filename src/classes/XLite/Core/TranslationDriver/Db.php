@@ -33,7 +33,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Core_TranslationDriver_Db extends XLite_Core_TranslationDriver_Abstract
+class XLite_Core_TranslationDriver_Db extends XLite_Core_TranslationDriver_ATranslationDriver
 {
     /**
      * Translations 

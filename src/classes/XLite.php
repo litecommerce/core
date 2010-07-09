@@ -61,7 +61,7 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
     /**
      * Called controller 
      * 
-     * @var    XLite_Controller_Abstract
+     * @var    XLite_Controller_AController
      * @access protected
      * @since  3.0.0
      */
@@ -309,7 +309,7 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
     /**
      * Get controller
      *
-     * @return XLite_Controller_Abstract
+     * @return XLite_Controller_AController
      * @access public
      * @since  3.0.0
      */
@@ -341,7 +341,7 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
      */
     public static function setController($controller = null)
     {
-        if (is_null($controller) || $controller instanceof XLite_Controller_Abstract) {
+        if (is_null($controller) || $controller instanceof XLite_Controller_AController) {
             self::$controller = $controller;
         }
     }
@@ -407,7 +407,7 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
      * 
      * @param boolean $adminZone Admin interface flag
      *  
-     * @return XLite_View_Abstract
+     * @return XLite_View_AView
      * @access public
      * @since  3.0.0
      */

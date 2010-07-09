@@ -35,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_ProductOptions_Validator_RequiredValidator extends XLite_Validator_Abstract
+class XLite_Module_ProductOptions_Validator_RequiredValidator extends XLite_Validator_AValidator
 {
     const PARAM_OPTION_ID  = 'option_id';
     const PARAM_FIELD_NAME = 'field';

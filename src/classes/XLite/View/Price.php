@@ -34,7 +34,7 @@
  * @since   3.0.0
  * @ListChild (list="productDetails.main", weight="40")
  */
-class XLite_View_Price extends XLite_View_Abstract
+class XLite_View_Price extends XLite_View_AView
 {
     /**
      * Widget parameter names

@@ -33,7 +33,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Validator_CaptchaValidator extends XLite_Validator_Abstract
+class XLite_Validator_CaptchaValidator extends XLite_Validator_AValidator
 {
     public $template = "common/captcha_validator.tpl";
     public $validation_required = array( // array: target => array(action, option_name);

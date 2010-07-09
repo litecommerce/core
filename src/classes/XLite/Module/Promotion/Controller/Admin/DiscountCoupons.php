@@ -39,7 +39,7 @@ define('DIALOG_SORT_MODE_USED', 3);
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Promotion_Controller_Admin_DiscountCoupons extends XLite_Controller_Admin_Abstract
+class XLite_Module_Promotion_Controller_Admin_DiscountCoupons extends XLite_Controller_Admin_AAdmin
 {
     public $couponExists = false;
 

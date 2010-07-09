@@ -33,7 +33,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_Mailer extends XLite_View_Abstract
+class XLite_Model_Mailer extends XLite_View_AView
 {
     const MAIL_SKIN = 'mail';
     const CRLF = "\r\n";

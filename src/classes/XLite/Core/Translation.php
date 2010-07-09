@@ -48,7 +48,7 @@ class XLite_Core_Translation extends XLite_Base implements XLite_Base_ISingleton
     /**
      * Translation driver 
      * 
-     * @var    XLite_Core_TranslationDriver_Abstract
+     * @var    XLite_Core_TranslationDriver_ATranslationDriver
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
@@ -170,7 +170,7 @@ class XLite_Core_Translation extends XLite_Base implements XLite_Base_ISingleton
     /**
      * Get translation driver 
      * 
-     * @return XLite_Core_TranslationDriver_Abstract
+     * @return XLite_Core_TranslationDriver_ATranslationDriver
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -187,7 +187,7 @@ class XLite_Core_Translation extends XLite_Base implements XLite_Base_ISingleton
     /**
      * Define translation driver 
      * 
-     * @return XLite_Core_TranslationDriver_Abstract
+     * @return XLite_Core_TranslationDriver_ATranslationDriver
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0

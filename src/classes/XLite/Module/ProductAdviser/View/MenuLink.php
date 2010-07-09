@@ -34,7 +34,7 @@
  * @since   3.0.0
  * @ListChild (list="menu.management", weight="46", zone="admin")
  */
-class XLite_Module_ProductAdviser_View_MenuLink extends XLite_View_Abstract
+class XLite_Module_ProductAdviser_View_MenuLink extends XLite_View_AView
 {
     /**
      * Return widget default template

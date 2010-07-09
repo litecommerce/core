@@ -33,7 +33,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Affiliate_Controller_Admin_Banner extends XLite_Controller_Admin_Abstract
+class XLite_Module_Affiliate_Controller_Admin_Banner extends XLite_Controller_Admin_AAdmin
 {
     public $params = array('target', 'banner_id', 'mode', 'type');
     

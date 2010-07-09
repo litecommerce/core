@@ -40,7 +40,7 @@ define('MAIL_SKINS', 'mail');
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_Upgrade extends XLite_Model_Abstract
+class XLite_Model_Upgrade extends XLite_Model_AModel
 {
     public $fields = array(
         "from_ver" => "",

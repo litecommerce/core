@@ -35,7 +35,7 @@ define('ORDER_EXPIRATION_TIME', 3600 * 24); // one day
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_Order extends XLite_Model_Abstract
+class XLite_Model_Order extends XLite_Model_AModel
 {
     /**
      * Object properties (table filed => default value)

@@ -216,7 +216,7 @@ class XLite_Module_WishList_Controller_Customer_SendFriend extends XLite_Control
     /**
      * getModelObject
      *
-     * @return XLite_Model_Abstract
+     * @return XLite_Model_AModel
      * @access protected
      * @since  3.0.0
      */

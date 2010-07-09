@@ -34,7 +34,7 @@
  * @since   3.0.0
  * @MappedSuperclass
  */
-abstract class XLite_Model_Base_Image extends XLite_Model_AbstractEntity
+abstract class XLite_Model_Base_Image extends XLite_Model_AModelEntity
 {
     /**
      * Image unique id 

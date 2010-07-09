@@ -36,7 +36,7 @@ func_define('ORDER_HISTORY_CHANGED_MESSAGE', 'Changed');
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_AOM_Model_OrderHistory extends XLite_Model_Abstract
+class XLite_Module_AOM_Model_OrderHistory extends XLite_Model_AModel
 {
     public $fields = array("order_history_id" 	=> '',
                         "order_id"			=> '',

@@ -33,7 +33,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Controller_Admin_AddProduct extends XLite_Controller_Admin_Abstract
+class XLite_Controller_Admin_AddProduct extends XLite_Controller_Admin_AAdmin
 {
     public $params = array('target', "mode", "product_id");
     public $product = null;

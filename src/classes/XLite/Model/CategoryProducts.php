@@ -35,7 +35,7 @@
  * @Entity
  * @Table (name="category_products")
  */
-class XLite_Model_CategoryProducts extends XLite_Model_AbstractEntity
+class XLite_Model_CategoryProducts extends XLite_Model_AModelEntity
 {
     /**
      * Category Id 

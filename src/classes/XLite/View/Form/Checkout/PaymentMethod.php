@@ -33,7 +33,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_Form_Checkout_PaymentMethod extends XLite_View_Form_Checkout_Abstract
+class XLite_View_Form_Checkout_PaymentMethod extends XLite_View_Form_Checkout_ACheckout
 {
     /**
      * Current form name 

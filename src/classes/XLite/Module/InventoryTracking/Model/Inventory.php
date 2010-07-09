@@ -33,7 +33,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_InventoryTracking_Model_Inventory extends XLite_Model_Abstract implements XLite_Base_ISingleton
+class XLite_Module_InventoryTracking_Model_Inventory extends XLite_Model_AModel implements XLite_Base_ISingleton
 {
     /**
     * @var string $alias The credit cards database table alias.

@@ -34,7 +34,7 @@
  * @since   3.0.0
  * @ListChild (list="orders.search.base", weight="30")
  */
-class XLite_View_OrderList_Search extends XLite_View_OrderList_Abstract
+class XLite_View_OrderList_Search extends XLite_View_OrderList_AOrderList
 {
     /**
      * Widget class name

@@ -33,7 +33,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_WholesaleTrading_Model_WholesalePricing extends XLite_Model_Abstract
+class XLite_Module_WholesaleTrading_Model_WholesalePricing extends XLite_Model_AModel
 {
     /**
      * @var string $alias The product access database table alias.

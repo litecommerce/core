@@ -34,7 +34,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_FormField_Separator_Regular extends XLite_View_FormField_Separator_Abstract
+class XLite_View_FormField_Separator_Regular extends XLite_View_FormField_Separator_ASeparator
 {
     /**
      * Return field template

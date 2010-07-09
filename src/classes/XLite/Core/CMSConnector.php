@@ -277,7 +277,7 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
      *
      * @param string $applicationId cache key
      * 
-     * @return XLite_Controller_Abstract
+     * @return XLite_Controller_AController
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

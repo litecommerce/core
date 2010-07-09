@@ -33,7 +33,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class XLite_View_Container extends XLite_View_Abstract
+abstract class XLite_View_Container extends XLite_View_AView
 {
     /**
      * Return title 

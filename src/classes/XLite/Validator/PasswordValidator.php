@@ -33,7 +33,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Validator_PasswordValidator extends XLite_Validator_Abstract
+class XLite_Validator_PasswordValidator extends XLite_Validator_AValidator
 {
     public $template = "common/password_validator.tpl";
     

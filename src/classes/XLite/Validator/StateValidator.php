@@ -33,7 +33,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Validator_StateValidator extends XLite_Validator_Abstract
+class XLite_Validator_StateValidator extends XLite_Validator_AValidator
 {
     public $template = "common/state_validator.tpl";
 

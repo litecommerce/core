@@ -33,7 +33,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_GiftCertificates_View_CEcard extends XLite_View_Abstract
+class XLite_Module_GiftCertificates_View_CEcard extends XLite_View_AView
 {
     /**
      * Gift certificate (cache)

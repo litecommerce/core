@@ -33,7 +33,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_DetailedImages_Model_DetailedImage extends XLite_Model_Abstract
+class XLite_Module_DetailedImages_Model_DetailedImage extends XLite_Model_AModel
 {
     /**
      * Model fields list

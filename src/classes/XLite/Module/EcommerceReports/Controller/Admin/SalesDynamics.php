@@ -131,7 +131,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_SalesDynamics extends XLite
         foreach ($sales['x'] as $xid => $x) {
             $this->salesData[$x] = $sales['y'][$xid];
         }
-        $w = new XLite_View_Abstract();
+        $w = new XLite_View_AView();
         $w->component = $this;
         $w->set('template', "modules/EcommerceReports/export_xls.tpl");
         $this->startDownload('sales.xls');

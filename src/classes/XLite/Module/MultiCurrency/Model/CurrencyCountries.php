@@ -33,7 +33,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_MultiCurrency_Model_CurrencyCountries extends XLite_Model_Abstract
+class XLite_Module_MultiCurrency_Model_CurrencyCountries extends XLite_Model_AModel
 {
     public $fields = array(
             "currency_id" 	=> 0,

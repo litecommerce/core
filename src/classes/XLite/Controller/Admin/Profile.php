@@ -33,7 +33,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Controller_Admin_Profile extends XLite_Controller_Admin_Abstract
+class XLite_Controller_Admin_Profile extends XLite_Controller_Admin_AAdmin
 {
     /**
      * Class name for the XLite_View_Model_ form (optional)

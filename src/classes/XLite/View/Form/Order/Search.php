@@ -33,7 +33,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_Form_Order_Search extends XLite_View_Form_Abstract
+class XLite_View_Form_Order_Search extends XLite_View_Form_AForm
 {
     /**
      * Widget parameter names

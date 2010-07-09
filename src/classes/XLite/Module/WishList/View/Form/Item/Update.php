@@ -33,7 +33,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_WishList_View_Form_Item_Update extends XLite_Module_WishList_View_Form_Item_Abstract
+class XLite_Module_WishList_View_Form_Item_Update extends XLite_Module_WishList_View_Form_Item_AItem
 {
     /**
      * Current form name 

@@ -33,7 +33,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_CheckoutStep_Pseudo_ZeroTotal extends XLite_View_CheckoutStep_Pseudo_Abstract
+class XLite_View_CheckoutStep_Pseudo_ZeroTotal extends XLite_View_CheckoutStep_Pseudo_APseudo
 {
     /**
      * Return title

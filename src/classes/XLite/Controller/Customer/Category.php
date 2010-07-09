@@ -52,7 +52,7 @@ class XLite_Controller_Customer_Category extends XLite_Controller_Customer_Catal
     /**
      * getModelObject
      *
-     * @return XLite_Model_Abstract
+     * @return XLite_Model_AModel
      * @access protected
      * @since  3.0.0
      */

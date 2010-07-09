@@ -34,7 +34,7 @@
  * @see        ____class_see____
  * @since      3.0.0
  */
-class XLite_View_Model_Profile_Main extends XLite_View_Model_Profile_Abstract
+class XLite_View_Model_Profile_Main extends XLite_View_Model_Profile_AProfile
 {
     /**
      * Form sections 

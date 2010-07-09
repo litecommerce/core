@@ -33,7 +33,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Controller_Customer_Upgrade extends XLite_Controller_Customer_Abstract
+class XLite_Controller_Customer_Upgrade extends XLite_Controller_Customer_ACustomer
 {
     function init()
     {

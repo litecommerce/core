@@ -33,7 +33,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_ProductAdviser_View_Form_Product_NotifyMe extends XLite_View_Form_Product_Abstract
+class XLite_Module_ProductAdviser_View_Form_Product_NotifyMe extends XLite_View_Form_Product_AProduct
 {
     /**
      * Current form name

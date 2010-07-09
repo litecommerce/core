@@ -33,7 +33,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Affiliate_Model_PartnerPayment extends XLite_Model_Abstract
+class XLite_Module_Affiliate_Model_PartnerPayment extends XLite_Model_AModel
 {
     public $fields = array (
             "payment_id" => null,
@@ -201,7 +201,7 @@ class XLite_Module_Affiliate_Model_PartnerPayment extends XLite_Model_Abstract
     function _import(array $options) 
     {
         $data = $options['properties'];
-        $w = new XLite_View_Abstract();
+        $w = new XLite_View_AView();
 
         static $line_no;
         if (!isset($line_no)) $line_no = 1; else $line_no++;

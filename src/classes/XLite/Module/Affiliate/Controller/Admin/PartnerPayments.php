@@ -33,7 +33,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Affiliate_Controller_Admin_PartnerPayments extends XLite_Controller_Admin_Abstract
+class XLite_Module_Affiliate_Controller_Admin_PartnerPayments extends XLite_Controller_Admin_AAdmin
 {
     public $crlf = "\r\n";
     public $hasReady = false;
@@ -51,7 +51,7 @@ class XLite_Module_Affiliate_Controller_Admin_PartnerPayments extends XLite_Cont
     
     function action_export_payments() 
     {
-        $w = new XLite_View_Abstract();
+        $w = new XLite_View_AView();
         $w->component = $this;
         $w->set('template', "modules/Affiliate/payments.tpl");
         $this->startDownload('payments.csv');

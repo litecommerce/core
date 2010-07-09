@@ -33,7 +33,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Controller_Admin_AddIp extends XLite_Controller_Admin_Abstract
+class XLite_Controller_Admin_AddIp extends XLite_Controller_Admin_AAdmin
 {
     public $template = "add_ip.tpl";
 

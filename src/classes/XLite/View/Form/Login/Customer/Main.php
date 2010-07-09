@@ -33,7 +33,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_Form_Login_Customer_Main extends XLite_View_Form_Login_Customer_Abstract
+class XLite_View_Form_Login_Customer_Main extends XLite_View_Form_Login_Customer_ACustomer
 {
 }
 

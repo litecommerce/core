@@ -33,7 +33,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Promotion_Model_SpecialOfferProduct extends XLite_Model_Abstract
+class XLite_Module_Promotion_Model_SpecialOfferProduct extends XLite_Model_AModel
 {
     public $fields = array(
         'offer_id' 		=> 0,
