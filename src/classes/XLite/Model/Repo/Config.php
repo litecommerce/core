@@ -147,14 +147,14 @@ class XLite_Model_Repo_Config extends XLite_Model_Repo_Base_I18n
     /**
      * Add "filter" condition to the query builder
      * 
-     * @param Doctrine\ORM\QueryBuilder $qb current query builder
+     * @param \Doctrine\ORM\QueryBuilder $qb current query builder
      *  
-     * @return Doctrine\ORM\QueryBuilder
+     * @return \Doctrine\ORM\QueryBuilder
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function prepareOptionsAbaliabilityCondition(Doctrine\ORM\QueryBuilder $qb)
+    protected function prepareOptionsAbaliabilityCondition(\Doctrine\ORM\QueryBuilder $qb)
     {
         list($condition, $params) = $this->getOptionsAbaliabilityCondition();
 
@@ -169,7 +169,7 @@ class XLite_Model_Repo_Config extends XLite_Model_Repo_Base_I18n
      *
      * @param string $alias Table alias
      *
-     * @return Doctrine\ORM\QueryBuilder
+     * @return \Doctrine\ORM\QueryBuilder
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -211,7 +211,7 @@ class XLite_Model_Repo_Config extends XLite_Model_Repo_Base_I18n
      *
      * @param string $category Category name
      *
-     * @return Doctrine\ORM\QueryBuilder
+     * @return \Doctrine\ORM\QueryBuilder
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -243,7 +243,7 @@ class XLite_Model_Repo_Config extends XLite_Model_Repo_Base_I18n
      * 
      * @param string $category Category name
      *  
-     * @return Doctrine\ORM\QueryBuilder
+     * @return \Doctrine\ORM\QueryBuilder
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -286,7 +286,7 @@ class XLite_Model_Repo_Config extends XLite_Model_Repo_Base_I18n
     /**
      * Define query builder for getAllOptions()
      *
-     * @return Doctrine\ORM\QueryBuilder
+     * @return \Doctrine\ORM\QueryBuilder
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0

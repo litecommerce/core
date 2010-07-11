@@ -38,7 +38,7 @@ class XLite_Core_Database extends XLite_Base implements XLite_Base_ISingleton
     /**
      * Doctrine config object
      * 
-     * @var    Doctrine\ORM\Configuration
+     * @var    \Doctrine\ORM\Configuration
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
@@ -48,7 +48,7 @@ class XLite_Core_Database extends XLite_Base implements XLite_Base_ISingleton
     /**
      * Doctrine entity manager 
      * 
-     * @var    Doctrine\ORM\EntityManager
+     * @var    \Doctrine\ORM\EntityManager
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
@@ -58,7 +58,7 @@ class XLite_Core_Database extends XLite_Base implements XLite_Base_ISingleton
     /**
      * Doctrine cache driver 
      * 
-     * @var    Doctrine\Common\Cache\AbtractCache
+     * @var    \Doctrine\Common\Cache\AbtractCache
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
@@ -107,13 +107,13 @@ class XLite_Core_Database extends XLite_Base implements XLite_Base_ISingleton
         self::$em = \Doctrine\ORM\EntityManager::create($this->getDSN(), $this->config);
 
         // Bind events
-        $events = array(Doctrine\ORM\Events::loadClassMetadata);
+        $events = array(\Doctrine\ORM\Events::loadClassMetadata);
         if (self::$cacheDriver) {
 
             // Bind cache chekers
-            $events[] = Doctrine\ORM\Events::postPersist;
-            $events[] = Doctrine\ORM\Events::postUpdate;
-            $events[] = Doctrine\ORM\Events::postRemove;
+            $events[] = \Doctrine\ORM\Events::postPersist;
+            $events[] = \Doctrine\ORM\Events::postUpdate;
+            $events[] = \Doctrine\ORM\Events::postRemove;
         }
 
         self::$em->getEventManager()->addEventListener($events, $this);
@@ -122,7 +122,7 @@ class XLite_Core_Database extends XLite_Base implements XLite_Base_ISingleton
     /**
      * Get entity manager 
      * 
-     * @return Doctrine\ORM\EntityManager
+     * @return \Doctrine\ORM\EntityManager
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -140,7 +140,7 @@ class XLite_Core_Database extends XLite_Base implements XLite_Base_ISingleton
     /**
      * Get entity manager (short method)
      * 
-     * @return Doctrine\ORM\EntityManager
+     * @return \Doctrine\ORM\EntityManager
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -155,7 +155,7 @@ class XLite_Core_Database extends XLite_Base implements XLite_Base_ISingleton
      *
      * @param string $repository Entity class name
      * 
-     * @return Doctrine\ORM\EntityRepository
+     * @return \Doctrine\ORM\EntityRepository
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -168,7 +168,7 @@ class XLite_Core_Database extends XLite_Base implements XLite_Base_ISingleton
     /**
      * Get repository (short method)
      * 
-     * @return Doctrine\ORM\EntityRepository
+     * @return \Doctrine\ORM\EntityRepository
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -310,7 +310,7 @@ class XLite_Core_Database extends XLite_Base implements XLite_Base_ISingleton
     /**
      * Get cache driver
      *
-     * @return Doctrine\Common\Cache\AbstractCache
+     * @return \Doctrine\Common\Cache\AbstractCache
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -323,14 +323,14 @@ class XLite_Core_Database extends XLite_Base implements XLite_Base_ISingleton
     /**
      * postPersist event handler
      * 
-     * @param Doctrine\ORM\Event\LifecycleEventArgs $arg Event argument
+     * @param \Doctrine\ORM\Event\LifecycleEventArgs $arg Event argument
      *  
      * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function postPersist(Doctrine\ORM\Event\LifecycleEventArgs $arg)
+    public function postPersist(\Doctrine\ORM\Event\LifecycleEventArgs $arg)
     {
         $arg->getEntity()->checkCache();
     }
@@ -338,28 +338,28 @@ class XLite_Core_Database extends XLite_Base implements XLite_Base_ISingleton
     /**
      * postUpdate event handler
      * 
-     * @param Doctrine\ORM\Event\LifecycleEventArgs $arg Event argument
+     * @param \Doctrine\ORM\Event\LifecycleEventArgs $arg Event argument
      *  
      * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function postUpdate(Doctrine\ORM\Event\LifecycleEventArgs $arg)
+    public function postUpdate(\Doctrine\ORM\Event\LifecycleEventArgs $arg)
     {
         $arg->getEntity()->checkCache();
     }
     /**
      * postRemove event handler
      * 
-     * @param Doctrine\ORM\Event\LifecycleEventArgs $arg Event argument
+     * @param \Doctrine\ORM\Event\LifecycleEventArgs $arg Event argument
      *  
      * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function postRemove(Doctrine\ORM\Event\LifecycleEventArgs $arg)
+    public function postRemove(\Doctrine\ORM\Event\LifecycleEventArgs $arg)
     {
         $arg->getEntity()->checkCache();
     }
@@ -367,14 +367,14 @@ class XLite_Core_Database extends XLite_Base implements XLite_Base_ISingleton
     /**
      * loadClassMetadata event handler
      * 
-     * @param Doctrine\ORM\Event\LoadClassMetadataEventArgs $eventArgs Event arguments
+     * @param \Doctrine\ORM\Event\LoadClassMetadataEventArgs $eventArgs Event arguments
      *  
      * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function loadClassMetadata(Doctrine\ORM\Event\LoadClassMetadataEventArgs $eventArgs)
+    public function loadClassMetadata(\Doctrine\ORM\Event\LoadClassMetadataEventArgs $eventArgs)
     {
         $classMetadata = $eventArgs->getClassMetadata();
 
@@ -444,7 +444,7 @@ class XLite_Core_Database extends XLite_Base implements XLite_Base_ISingleton
     /**
      * Build IN () condition 
      * 
-     * @param Doctrine\ORM\QueryBuilder $qb     Query builder
+     * @param \Doctrine\ORM\QueryBuilder $qb     Query builder
      * @param array                     $data   Hash array
      * @param string                    $prefix Placeholder prefix
      *  
@@ -453,7 +453,7 @@ class XLite_Core_Database extends XLite_Base implements XLite_Base_ISingleton
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function buildInCondition(Doctrine\ORM\QueryBuilder $qb, array $data, $prefix = 'arr')
+    public static function buildInCondition(\Doctrine\ORM\QueryBuilder $qb, array $data, $prefix = 'arr')
     {
         list($keys, $data) = self::prepareArray($data, $prefix);
 

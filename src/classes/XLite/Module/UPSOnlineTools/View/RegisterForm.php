@@ -87,7 +87,7 @@ class XLite_Module_UPSOnlineTools_View_RegisterForm extends XLite_View_RegisterF
                 XLite_Core_Request::getInstance()->shipping_state = $state->state_id;
                 XLite_Core_Request::getInstance()->shipping_custom_state = '';
 
-            } catch (Doctrine\ORM\NoResultException $exception) {
+            } catch (\Doctrine\ORM\NoResultException $exception) {
                 XLite_Core_Request::getInstance()->shipping_state = -1;
                 XLite_Core_Request::getInstance()->shipping_custom_state = $value['state'];
             }

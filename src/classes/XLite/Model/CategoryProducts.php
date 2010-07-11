@@ -75,7 +75,7 @@ class XLite_Model_CategoryProducts extends XLite_Model_AModelEntity
     /**
      * Relation to a category entity
      * 
-     * @var    Doctrine\Common\Collections\ArrayCollection
+     * @var    \Doctrine\Common\Collections\ArrayCollection
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
@@ -87,7 +87,7 @@ class XLite_Model_CategoryProducts extends XLite_Model_AModelEntity
     /**
      * Relation to a product entity
      * 
-     * @var    Doctrine\Common\Collections\ArrayCollection
+     * @var    \Doctrine\Common\Collections\ArrayCollection
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0

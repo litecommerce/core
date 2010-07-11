@@ -26,7 +26,7 @@
  * @since      3.0.0
  */
 
-use Doctrine\ORM\EntityRepository;
+use \Doctrine\ORM\EntityRepository;
 
 /**
  * Abstract repository
@@ -197,16 +197,16 @@ abstract class XLite_Model_Repo_AbstractRepo extends EntityRepository
     /**
      * Assign cache options to query
      * 
-     * @param Doctrine\ORM\AbstractQuery $query  Query
+     * @param \Doctrine\ORM\AbstractQuery $query  Query
      * @param string                     $name   Cell name
      * @param array                      $params Cell parameters
      *  
-     * @return Doctrine\ORM\AbstractQuery
+     * @return \Doctrine\ORM\AbstractQuery
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function assignQueryCache(Doctrine\ORM\AbstractQuery $query, $name, array $params = array())
+    protected function assignQueryCache(\Doctrine\ORM\AbstractQuery $query, $name, array $params = array())
     {
         if (XLite_Core_Database::isCacheEnabled()) {
             $cell = $this->getCacheCells($name);
@@ -438,15 +438,15 @@ abstract class XLite_Model_Repo_AbstractRepo extends EntityRepository
     /**
      * Assign default orderBy 
      * 
-     * @param Doctrine\ORM\QueryBuilder $queryBuilder Query builder
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder
      * @param string                    $alias        Table short alias in query builder
      *  
-     * @return Doctrine\ORM\QueryBuilder
+     * @return \Doctrine\ORM\QueryBuilder
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function assignDefaultOrderBy(Doctrine\ORM\QueryBuilder $queryBuilder, $alias = null)
+    public function assignDefaultOrderBy(\Doctrine\ORM\QueryBuilder $queryBuilder, $alias = null)
     {
         if ($this->defaultOrderBy) {
 
@@ -475,14 +475,14 @@ abstract class XLite_Model_Repo_AbstractRepo extends EntityRepository
     /**
      * Get Query builder main alias 
      * 
-     * @param Doctrine\ORM\QueryBuilder $qb Query builder
+     * @param \Doctrine\ORM\QueryBuilder $qb Query builder
      *  
      * @return string
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getMainAlias(Doctrine\ORM\QueryBuilder $qb)
+    protected function getMainAlias(\Doctrine\ORM\QueryBuilder $qb)
     {
         $from = $qb->getDQLPart('from');
         $from = explode(' ', array_shift($from), 2);
@@ -495,7 +495,7 @@ abstract class XLite_Model_Repo_AbstractRepo extends EntityRepository
      * 
      * @param string $alias Table alias
      *  
-     * @return Doctrine\ORM\QueryBuilder
+     * @return \Doctrine\ORM\QueryBuilder
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -513,7 +513,7 @@ abstract class XLite_Model_Repo_AbstractRepo extends EntityRepository
      * 
      * @param string $alias Table alias
      *  
-     * @return Doctrine\ORM\QueryBuilder
+     * @return \Doctrine\ORM\QueryBuilder
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -556,7 +556,7 @@ abstract class XLite_Model_Repo_AbstractRepo extends EntityRepository
         try {
             $count = intval($this->defineCountQuery()->getQuery()->getSingleScalarResult());
 
-        } catch (Doctrine\ORM\NonUniqueResultException $exception) {
+        } catch (\Doctrine\ORM\NonUniqueResultException $exception) {
             $count = 0;
         }
 
@@ -566,7 +566,7 @@ abstract class XLite_Model_Repo_AbstractRepo extends EntityRepository
     /**
      * Define Query fo rcount() method
      * 
-     * @return Doctrine\ORM\QueryBuilder
+     * @return \Doctrine\ORM\QueryBuilder
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -625,7 +625,7 @@ abstract class XLite_Model_Repo_AbstractRepo extends EntityRepository
      * @param integer $start Start offset
      * @param integer $limit Frame length
      *  
-     * @return Doctrine\ORM\QueryBuilder
+     * @return \Doctrine\ORM\QueryBuilder
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -638,16 +638,16 @@ abstract class XLite_Model_Repo_AbstractRepo extends EntityRepository
     /**
      * Assign frame to query builder
      * 
-     * @param Doctrine\ORM\QueryBuilder $qb    Query builder
+     * @param \Doctrine\ORM\QueryBuilder $qb    Query builder
      * @param int                       $start Start offset
      * @param int                       $limit Frame length
      *  
-     * @return Doctrine\ORM\QueryBuilder
+     * @return \Doctrine\ORM\QueryBuilder
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function assignFrame(Doctrine\ORM\QueryBuilder $qb, $start = 0, $limit = 0)
+    protected function assignFrame(\Doctrine\ORM\QueryBuilder $qb, $start = 0, $limit = 0)
     {
         $start = max(0, intval($start));
         $limit = max(0, intval($limit));
@@ -666,14 +666,14 @@ abstract class XLite_Model_Repo_AbstractRepo extends EntityRepository
     /**
      * Get identifiers list for specified query builder object
      * 
-     * @param Doctrine\ORM\QueryBuilder $qb Query builder
+     * @param \Doctrine\ORM\QueryBuilder $qb Query builder
      *  
      * @return array
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getIdentifiersList(Doctrine\ORM\QueryBuilder $qb)
+    protected function getIdentifiersList(\Doctrine\ORM\QueryBuilder $qb)
     {
         $alias = $this->getMainAlias($qb);
 
@@ -716,13 +716,13 @@ abstract class XLite_Model_Repo_AbstractRepo extends EntityRepository
         }
 
         if (!isset($arguments[0])) {
-            throw Doctrine\ORM\ORMException::findByRequiresParameter($method . $by);
+            throw \Doctrine\ORM\ORMException::findByRequiresParameter($method . $by);
         }
 
         $fieldName = str_replace(self::$from, self::$to, lcfirst($by));
 
         if (!$this->_class->hasField($fieldName)) {
-            throw Doctrine\ORM\ORMException::invalidFindByCall(
+            throw \Doctrine\ORM\ORMException::invalidFindByCall(
                 $this->_entityName,
                 $fieldName, 
                 $method . $by

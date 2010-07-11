@@ -85,7 +85,7 @@ class XLite_Model_Repo_Membership extends XLite_Model_Repo_Base_I18n
     /**
      * Define query builder for findAllMemberships()
      * 
-     * @return Doctrine\ORM\QueryBuilder
+     * @return \Doctrine\ORM\QueryBuilder
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -112,7 +112,7 @@ class XLite_Model_Repo_Membership extends XLite_Model_Repo_Base_I18n
     /**
      * Define query builder for findAllMemberships()
      * 
-     * @return Doctrine\ORM\QueryBuilder
+     * @return \Doctrine\ORM\QueryBuilder
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -140,7 +140,7 @@ class XLite_Model_Repo_Membership extends XLite_Model_Repo_Base_I18n
         try {
             $m = $this->defineOneByNameQuery($name, $onlyActive)->getQuery()->getSingleResult();
 
-        } catch (Doctrine\ORM\NoResultException $exception) {
+        } catch (\Doctrine\ORM\NoResultException $exception) {
             $m = null;
         }
 
@@ -153,7 +153,7 @@ class XLite_Model_Repo_Membership extends XLite_Model_Repo_Base_I18n
      * @param string  $name       Name
      * @param boolean $onlyActive Search only in active mebmerships
      *  
-     * @return Doctrine\ORM\QueryBuilder
+     * @return \Doctrine\ORM\QueryBuilder
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
