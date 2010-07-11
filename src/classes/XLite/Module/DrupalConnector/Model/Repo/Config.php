@@ -39,15 +39,15 @@ class XLite_Module_DrupalConnector_Model_Repo_Config extends XLite_Model_Repo_Co
     /**
      * Initializes a new EntityRepository object
      * 
-     * @param Doctrine\ORM\EntityManager         $em    the EntityManager to use
-     * @param Doctrine\ORM\Mapping\ClassMetadata $class the class descriptor
+     * @param \Doctrine\ORM\EntityManager         $em    the EntityManager to use
+     * @param \Doctrine\ORM\Mapping\ClassMetadata $class the class descriptor
      *  
      * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function __construct(Doctrine\ORM\EntityManager $em, Doctrine\ORM\Mapping\ClassMetadata $class)
+    public function __construct(\Doctrine\ORM\EntityManager $em, \Doctrine\ORM\Mapping\ClassMetadata $class)
     {
         parent::__construct($em, $class);
 

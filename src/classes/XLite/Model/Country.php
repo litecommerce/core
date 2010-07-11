@@ -119,7 +119,7 @@ class XLite_Model_Country extends XLite_Model_AModelEntity
     /**
      * States (relation)
      * 
-     * @var    Doctrine\Common\Collections\ArrayCollection
+     * @var    \Doctrine\Common\Collections\ArrayCollection
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0

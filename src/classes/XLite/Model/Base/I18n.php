@@ -58,7 +58,7 @@ abstract class XLite_Model_Base_I18n extends XLite_Model_AModelEntity
     {
         parent::__construct();
 
-        $this->translations = new Doctrine\Common\Collections\ArrayCollection();
+        $this->translations = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**

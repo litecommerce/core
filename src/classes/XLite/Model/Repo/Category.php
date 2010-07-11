@@ -140,7 +140,7 @@ class XLite_Model_Repo_Category extends XLite_Model_Repo_Base_I18n
      * 
      * @param int $categoryId Node Id
      *  
-     * @return Doctrine\ORM\QueryBuilder
+     * @return \Doctrine\ORM\QueryBuilder
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -213,7 +213,7 @@ class XLite_Model_Repo_Category extends XLite_Model_Repo_Base_I18n
      * 
      * @param int $categoryId Node Id
      *  
-     * @return Doctrine\ORM\QueryBuilder
+     * @return \Doctrine\ORM\QueryBuilder
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -306,7 +306,7 @@ class XLite_Model_Repo_Category extends XLite_Model_Repo_Base_I18n
      * 
      * @param int $categoryId Node Id
      *  
-     * @return Doctrine\ORM\QueryBuilder
+     * @return \Doctrine\ORM\QueryBuilder
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -362,7 +362,7 @@ class XLite_Model_Repo_Category extends XLite_Model_Repo_Base_I18n
     /**
      * Defines the query for leaf nodes selection
      * 
-     * @return Doctrine\ORM\QueryBuilder
+     * @return \Doctrine\ORM\QueryBuilder
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -818,7 +818,7 @@ class XLite_Model_Repo_Category extends XLite_Model_Repo_Base_I18n
      * 
      * @param int $productId Product Id
      *  
-     * @return Doctrine\ORM\QueryBuilder
+     * @return \Doctrine\ORM\QueryBuilder
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -864,7 +864,7 @@ class XLite_Model_Repo_Category extends XLite_Model_Repo_Base_I18n
      * 
      * @param string $cleanUrl Category clean Url
      *  
-     * @return Doctrine\ORM\QueryBuilder
+     * @return \Doctrine\ORM\QueryBuilder
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0

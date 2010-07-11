@@ -71,7 +71,7 @@ class XLite_Model_Repo_Country extends XLite_Model_Repo_AbstractRepo
     /**
      * Find all countries 
      * 
-     * @return Doctrine\Common\Collections\ArrayCollection
+     * @return \Doctrine\Common\Collections\ArrayCollection
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -90,7 +90,7 @@ class XLite_Model_Repo_Country extends XLite_Model_Repo_AbstractRepo
     /**
      * Define query builder for findAllCountries()
      * 
-     * @return Doctrine\ORM\QueryBuilder
+     * @return \Doctrine\ORM\QueryBuilder
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -123,7 +123,7 @@ class XLite_Model_Repo_Country extends XLite_Model_Repo_AbstractRepo
     /**
      * Define query builder for findCountriesStates()
      * 
-     * @return Doctrine\ORM\QueryBuilder
+     * @return \Doctrine\ORM\QueryBuilder
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0

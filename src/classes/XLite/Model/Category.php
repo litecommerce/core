@@ -131,7 +131,7 @@ class XLite_Model_Category extends XLite_Model_Base_I18n
     /**
      * Many-to-many relation with products table
      * 
-     * @var    Doctrine\Common\Collections\ArrayCollection
+     * @var    \Doctrine\Common\Collections\ArrayCollection
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
@@ -142,7 +142,7 @@ class XLite_Model_Category extends XLite_Model_Base_I18n
     /**
      * Many-to-one relation with memberships table
      * 
-     * @var    Doctrine\Common\Collections\ArrayCollection
+     * @var    \Doctrine\Common\Collections\ArrayCollection
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
@@ -154,7 +154,7 @@ class XLite_Model_Category extends XLite_Model_Base_I18n
     /**
      * One-to-one relation with category_images table
      * 
-     * @var    Doctrine\Common\Collections\ArrayCollection
+     * @var    \Doctrine\Common\Collections\ArrayCollection
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0

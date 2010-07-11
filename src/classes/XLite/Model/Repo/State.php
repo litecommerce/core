@@ -123,7 +123,7 @@ class XLite_Model_Repo_State extends XLite_Model_Repo_AbstractRepo
                 ->getSingleResult()
                 ->code;
 
-        } catch (Doctrine\ORM\NoResultException $exception) {
+        } catch (\Doctrine\ORM\NoResultException $exception) {
             $code = null;
         }
 
@@ -163,7 +163,7 @@ class XLite_Model_Repo_State extends XLite_Model_Repo_AbstractRepo
     /**
      * Define query builder for findAllStates()
      * 
-     * @return Doctrine\ORM\QueryBuilder
+     * @return \Doctrine\ORM\QueryBuilder
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -200,7 +200,7 @@ class XLite_Model_Repo_State extends XLite_Model_Repo_AbstractRepo
      *
      * @param integer $shippingZone Shipping zone
      *
-     * @return Doctrine\ORM\QueryBuilder
+     * @return \Doctrine\ORM\QueryBuilder
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0

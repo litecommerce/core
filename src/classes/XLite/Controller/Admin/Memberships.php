@@ -84,7 +84,7 @@ class XLite_Controller_Admin_Memberships extends XLite_Controller_Admin_AAdmin
                     // TODO - add top message
                     continue;
 
-                } catch (Doctrine\ORM\NoResultException $exception) {
+                } catch (\Doctrine\ORM\NoResultException $exception) {
                 }
 
                 $m->getTranslation($code)->name = $row['membership'];

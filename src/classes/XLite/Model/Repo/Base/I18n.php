@@ -38,16 +38,16 @@ abstract class XLite_Model_Repo_Base_I18n extends XLite_Model_Repo_AbstractRepo
 	/**
 	 * Add language subquery with language code relation
 	 * 
-	 * @param Doctrine\ORM\QueryBuilder $qb    Query builder
+	 * @param \Doctrine\ORM\QueryBuilder $qb    Query builder
 	 * @param string                    $alias Main model alias
 	 * @param string                    $code  Language code
 	 *  
-	 * @return Doctrine\ORM\QueryBuilder
+	 * @return \Doctrine\ORM\QueryBuilder
 	 * @access protected
 	 * @see    ____func_see____
 	 * @since  3.0.0
 	 */
-	protected function addLanguageQuery(Doctrine\ORM\QueryBuilder $qb, $alias = null, $code = null)
+	protected function addLanguageQuery(\Doctrine\ORM\QueryBuilder $qb, $alias = null, $code = null)
 	{
         if (!isset($alias)) {
             $alias = $this->getMainAlias($qb);
@@ -60,11 +60,11 @@ abstract class XLite_Model_Repo_Base_I18n extends XLite_Model_Repo_AbstractRepo
 		$qb->add('select', 'translations', true);
 		$qb->add(
 			'join',
-			new Doctrine\ORM\Query\Expr\Join(
-				Doctrine\ORM\Query\Expr\Join::INNER_JOIN,
+			new \Doctrine\ORM\Query\Expr\Join(
+				\Doctrine\ORM\Query\Expr\Join::INNER_JOIN,
 				$alias . '.translations',
 				'translations',
-				Doctrine\ORM\Query\Expr\Join::WITH,
+				\Doctrine\ORM\Query\Expr\Join::WITH,
 				'translations.code = :lng'
 			),
 			true
@@ -77,15 +77,15 @@ abstract class XLite_Model_Repo_Base_I18n extends XLite_Model_Repo_AbstractRepo
 	/**
 	 * Add translations subquery 
 	 * 
-	 * @param Doctrine\ORM\QueryBuilder $qb    Query builder
+	 * @param \Doctrine\ORM\QueryBuilder $qb    Query builder
 	 * @param string                    $alias Main model alias
 	 *  
-	 * @return Doctrine\ORM\QueryBuilder
+	 * @return \Doctrine\ORM\QueryBuilder
 	 * @access protected
 	 * @see    ____func_see____
 	 * @since  3.0.0
 	 */
-	protected function addTranslationsSubquery(Doctrine\ORM\QueryBuilder $qb, $alias = null)
+	protected function addTranslationsSubquery(\Doctrine\ORM\QueryBuilder $qb, $alias = null)
 	{
         if (!isset($alias)) {
             $alias = $this->getMainAlias($qb);
@@ -94,8 +94,8 @@ abstract class XLite_Model_Repo_Base_I18n extends XLite_Model_Repo_AbstractRepo
 		$qb->add('select', 'translations', true);
 		$qb->add(
 			'join',
-			new Doctrine\ORM\Query\Expr\Join(
-				Doctrine\ORM\Query\Expr\Join::LEFT_JOIN,
+			new \Doctrine\ORM\Query\Expr\Join(
+				\Doctrine\ORM\Query\Expr\Join::LEFT_JOIN,
 				$alias . '.translations',
 				'translations'
 			),
@@ -110,7 +110,7 @@ abstract class XLite_Model_Repo_Base_I18n extends XLite_Model_Repo_AbstractRepo
      * 
      * @param string $alias Table alias
      *  
-     * @return Doctrine\ORM\QueryBuilder
+     * @return \Doctrine\ORM\QueryBuilder
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

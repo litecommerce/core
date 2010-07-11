@@ -99,7 +99,7 @@ class XLite_Model_Repo_ViewList extends XLite_Model_Repo_AbstractRepo
      * @param string $list  Class list name
      * @param string $zone  Current interface name
      * 
-     * @return Doctrine\ORM\QueryBuilder
+     * @return \Doctrine\ORM\QueryBuilder
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0

@@ -95,7 +95,7 @@ class XLite_Model_Repo_Language extends XLite_Model_Repo_Base_I18n
     /**
      * Define query builder for findAllLanguages()
      * 
-     * @return Doctrine\ORM\QueryBuilder
+     * @return \Doctrine\ORM\QueryBuilder
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -127,7 +127,7 @@ class XLite_Model_Repo_Language extends XLite_Model_Repo_Base_I18n
      *
      * @param integer $status Status key
      * 
-     * @return Doctrine\ORM\QueryBuilder
+     * @return \Doctrine\ORM\QueryBuilder
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -155,7 +155,7 @@ class XLite_Model_Repo_Language extends XLite_Model_Repo_Base_I18n
     /**
      * Define query builder for findAddedLanguages()
      *
-     * @return Doctrine\ORM\QueryBuilder
+     * @return \Doctrine\ORM\QueryBuilder
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -195,7 +195,7 @@ class XLite_Model_Repo_Language extends XLite_Model_Repo_Base_I18n
         try {
             $language = $this->defineOneByCodeQuery($code)->getQuery()->getSingleResult();
 
-        } catch (Doctrine\ORM\NoResultException $exception) {
+        } catch (\Doctrine\ORM\NoResultException $exception) {
             $language = null;
         }
 
@@ -207,7 +207,7 @@ class XLite_Model_Repo_Language extends XLite_Model_Repo_Base_I18n
      *
      * @param string $code Language code
      * 
-     * @return Doctrine\ORM\QueryBuilder
+     * @return \Doctrine\ORM\QueryBuilder
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0

@@ -89,7 +89,7 @@ class XLite_Model_Repo_LanguageLabel extends XLite_Model_Repo_Base_I18n
     /**
      * Define query builder for findLabelsByCode()
      *
-     * @return Doctrine\ORM\QueryBuilder
+     * @return \Doctrine\ORM\QueryBuilder
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -137,7 +137,7 @@ class XLite_Model_Repo_LanguageLabel extends XLite_Model_Repo_Base_I18n
         try {
             $count = intval($this->defineCountByNameQuery($name)->getQuery()->getSingleScalarResult());
 
-        } catch (Doctrine\ORM\NonUniqueResultException $exception) {
+        } catch (\Doctrine\ORM\NonUniqueResultException $exception) {
             $count = 0;
         }
 
@@ -149,7 +149,7 @@ class XLite_Model_Repo_LanguageLabel extends XLite_Model_Repo_Base_I18n
      * 
      * @param string $name Name
      *  
-     * @return Doctrine\ORM\QueryBuilder
+     * @return \Doctrine\ORM\QueryBuilder
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -185,7 +185,7 @@ class XLite_Model_Repo_LanguageLabel extends XLite_Model_Repo_Base_I18n
      * @param integer $start Start offset
      * @param integer $limit Frame length
      *  
-     * @return Doctrine\ORM|QueryBuilder
+     * @return \Doctrine\ORM|QueryBuilder
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0

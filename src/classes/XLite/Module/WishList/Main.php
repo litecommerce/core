@@ -118,7 +118,7 @@ class XLite_Module_WishList_Main extends XLite_Module_AModule
 
                 XLite_Core_Database::getEM()->persist($newList);
 
-            } catch (Doctrine\ORM\NoResultException $exception) {
+            } catch (\Doctrine\ORM\NoResultException $exception) {
             }
         }
 

@@ -149,7 +149,7 @@ class XLite_Module_PayPalPro_Controller_Customer_ExpressCheckout extends XLite_C
                         ->setMaxResults(1)
                         ->getSingleResult();
 
-                } catch (Doctrine\ORM\NoResultException $exception) {
+                } catch (\Doctrine\ORM\NoResultException $exception) {
                     $state = false;
                 }
 

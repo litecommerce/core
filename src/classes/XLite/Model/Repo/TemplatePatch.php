@@ -90,7 +90,7 @@ class XLite_Model_Repo_TemplatePatch extends XLite_Model_Repo_AbstractRepo
     /**
      * Define query builder for findAllPatches()
      * 
-     * @return Doctrine\ORM\QueryBuilder
+     * @return \Doctrine\ORM\QueryBuilder
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
