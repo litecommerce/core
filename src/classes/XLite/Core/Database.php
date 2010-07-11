@@ -225,7 +225,7 @@ class XLite_Core_Database extends XLite_Base implements XLite_Base_ISingleton
             // Memcache
             $servers = explode(';', $options['servers']);
             if ($servers) {
-                $memcache = new Memcache();
+                $memcache = new \Memcache();
                 foreach ($servers as $row) {
                     $row = trim($row);
                     $tmp = explode(':', $row, 2);
