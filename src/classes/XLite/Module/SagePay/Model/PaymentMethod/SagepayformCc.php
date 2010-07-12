@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\SagePay\Model\PaymentMethod;
+
 /**
  * ____description____
  * 
@@ -33,13 +35,13 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_SagePay_Model_PaymentMethod_SagepayformCc extends XLite_Model_PaymentMethod_CreditCard
+class SagepayformCc extends \XLite\Model\PaymentMethod\CreditCard
 {
     public $processorName = "SagePay VSP Form";
     public $hasConfigurationForm = true;
     public $configurationTemplate = "modules/SagePay/config.tpl";
 
-    function handleRequest(XLite_Model_Cart $cart)
+    function handleRequest(\XLite\Model\Cart $cart)
     {
         require_once LC_MODULES_DIR . 'SagePay' . LC_DS . 'encoded.php';
         PaymentMethod_SagePayForm_handleRequest($this, $cart);
@@ -63,11 +65,11 @@ class XLite_Module_SagePay_Model_PaymentMethod_SagepayformCc extends XLite_Model
     function get($name)
     {
         if ($name == "params") {
-            $pm = XLite_Model_PaymentMethod::factory('sagepaydirect_cc');
+            $pm = \XLite\Model\PaymentMethod::factory('sagepaydirect_cc');
             return $pm->get('params');
         }
         if (preg_match("/order.*status/i", $name, $matches)) {
-            $pm = XLite_Model_PaymentMethod::factory('sagepaydirect_cc');
+            $pm = \XLite\Model\PaymentMethod::factory('sagepaydirect_cc');
             return $pm->get($matches[0]);
         }
 

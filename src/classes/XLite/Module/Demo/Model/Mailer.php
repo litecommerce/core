@@ -26,7 +26,9 @@
  * @since      3.0.0
  */
 
-class XLite_Module_Demo_Model_Mailer extends XLite_Model_Mailer implements XLite_Base_IDecorator
+namespace XLite\Module\Demo\Model;
+
+class Mailer extends \XLite\Model\Mailer implements \XLite\Base\IDecorator
 {
     /**
      * Send message
@@ -38,12 +40,12 @@ class XLite_Module_Demo_Model_Mailer extends XLite_Model_Mailer implements XLite
      */
     public function send()
     {
-        XLite_Module_Demo_Main::doForbidOperation('Sending mail is disabled in demo mode');
+        \XLite\Module\Demo\Main::doForbidOperation('Sending mail is disabled in demo mode');
 
         if (isset($this->templatesSkin)) {
 
             // Restore layout
-            $layout = XLite_Model_Layout::getInstance();
+            $layout = \XLite\Model\Layout::getInstance();
             $layout->set('skin', $this->templatesSkin);
             $this->templatesSkin = null;
         }

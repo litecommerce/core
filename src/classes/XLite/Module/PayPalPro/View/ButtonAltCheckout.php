@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\PayPalPro\View;
+
 /**
  * PayPal Pro checkout button
  * 
@@ -34,7 +36,7 @@
  * @since   3.0.0
  * @ListChild (list="cart.buttons.checkout", weight="20")
  */
-class XLite_Module_PayPalPro_View_ButtonAltCheckout extends XLite_View_Button_Image
+class ButtonAltCheckout extends \XLite\View\Button\Image
 {
     /**
      * Return widget default template
@@ -74,7 +76,7 @@ class XLite_Module_PayPalPro_View_ButtonAltCheckout extends XLite_View_Button_Im
         $result = parent::isVisible();
 
         if ($result) {
-            $pm = new XLite_Model_PaymentMethod('paypalpro');
+            $pm = new \XLite\Model\PaymentMethod('paypalpro');
 
             $result = $pm->isExists()
                 && 1 == $pm->get('enabled')

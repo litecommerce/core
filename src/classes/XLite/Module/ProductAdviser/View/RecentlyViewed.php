@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\ProductAdviser\View;
+
 /**
  * Recently viewed products list
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_ProductAdviser_View_RecentlyViewed extends XLite_View_ProductsList
+class RecentlyViewed extends \XLite\View\ProductsList
 {
     /*
      * Parameter specifies that widget is displayed as a page content
@@ -98,10 +100,10 @@ class XLite_Module_ProductAdviser_View_RecentlyViewed extends XLite_View_Product
 
         // pageContent - is a service parameter for displaying widget as a page content
         $this->widgetParams += array(
-            self::PARAM_PAGE_CONTENT => new XLite_Model_WidgetParam_Checkbox(
+            self::PARAM_PAGE_CONTENT => new \XLite\Model\WidgetParam\Checkbox(
                 'Widget is displayed as page content', false, false
             ),
-            self::PARAM_PRODUCT_ID => new XLite_Model_WidgetParam_ObjectId_Product('Product ID', 0, false),
+            self::PARAM_PRODUCT_ID => new \XLite\Model\WidgetParam\ObjectId\Product('Product ID', 0, false),
         );
 
         $this->requestParams[] = self::PARAM_PRODUCT_ID;
@@ -144,8 +146,8 @@ class XLite_Module_ProductAdviser_View_RecentlyViewed extends XLite_View_Product
      */
     protected function getDialogProductId()
     {
-        return 'product' == XLite_Core_Request::getInstance()->target
-            ? XLite_Core_Request::getInstance()->product_id
+        return 'product' == \XLite\Core\Request::getInstance()->target
+            ? \XLite\Core\Request::getInstance()->product_id
             : null;
     }
 
@@ -161,7 +163,7 @@ class XLite_Module_ProductAdviser_View_RecentlyViewed extends XLite_View_Product
     {
         if (
             self::WIDGET_TYPE_CENTER == $this->getParam(self::PARAM_WIDGET_TYPE)
-            && 'recently_viewed' == XLite_Core_Request::getInstance()->target
+            && 'recently_viewed' == \XLite\Core\Request::getInstance()->target
         ) {
             $this->widgetParams[self::PARAM_SHOW_ALL_ITEMS_PER_PAGE]->setValue(false);
         }
@@ -169,9 +171,9 @@ class XLite_Module_ProductAdviser_View_RecentlyViewed extends XLite_View_Product
         return parent::isVisible()
             && $this->checkProductsToDisplay()
             && (
-                'recently_viewed' != XLite_Core_Request::getInstance()->target
+                'recently_viewed' != \XLite\Core\Request::getInstance()->target
                 || $this->getParam(self::PARAM_PAGE_CONTENT)
-                || XLite_Core_Request::getInstance()->isAJAX()
+                || \XLite\Core\Request::getInstance()->isAJAX()
             );
     }
 
@@ -230,7 +232,7 @@ class XLite_Module_ProductAdviser_View_RecentlyViewed extends XLite_View_Product
     /**
      * Get recently viewed products list
      * 
-     * @return array of XLite_Model_Product objects
+     * @return array of \XLite\Model\Product objects
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -243,7 +245,7 @@ class XLite_Module_ProductAdviser_View_RecentlyViewed extends XLite_View_Product
             // Do not include into the products list currently viewed product
             $productId = (int)$this->getDialogProductId();
 
-            $rvObj = new XLite_Module_ProductAdviser_Model_ProductRecentlyViewed();
+            $rvObj = new \XLite\Module\ProductAdviser\Model\ProductRecentlyViewed();
             $rvProducts = $rvObj->findAll(
                 'sid = \'' . $this->session->getID() . '\' AND product_id != \'' . $productId . '\'',
                 'last_viewed DESC'
@@ -255,7 +257,7 @@ class XLite_Module_ProductAdviser_View_RecentlyViewed extends XLite_View_Product
 
                 foreach ($rvProducts as $rvProduct) {
 
-                    $product = new XLite_Model_Product($rvProduct->get('product_id'));
+                    $product = new \XLite\Model\Product($rvProduct->get('product_id'));
 
                     $addSign = !(isset($productId) && $product->get('product_id') == $productId);
 
@@ -296,7 +298,7 @@ class XLite_Module_ProductAdviser_View_RecentlyViewed extends XLite_View_Product
 
         // Check if widget displayed not as a page content
         if (
-            'recently_viewed' != XLite_Core_Request::getInstance()->target
+            'recently_viewed' != \XLite\Core\Request::getInstance()->target
             && is_array($this->recentlyViewedProducts)
             && count($this->recentlyViewedProducts) > $this->getParam(self::PARAM_SIDEBAR_MAX_ITEMS)
         ) {

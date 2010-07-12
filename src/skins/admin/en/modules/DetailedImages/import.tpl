@@ -27,7 +27,7 @@
     <td colspan=2 class=AdminHead>Field order</td>
 </tr>
 <tr><td colspan="2">&nbsp;</td></tr>
-<tr FOREACH="xlite.factory.XLite_Module_DetailedImages_Model_DetailedImage.getImportFields(),id,fields">
+<tr FOREACH="xlite.factory.\XLite\Module\DetailedImages\Model\DetailedImage.getImportFields(),id,fields">
     <td>{id}:</td>
     <td><select name="detailed_images_layout[{id}]">
             <option FOREACH="fields,name,value" value="{name}" selected="{value}">{name}</option>

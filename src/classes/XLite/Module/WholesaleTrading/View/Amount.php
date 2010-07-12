@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\WholesaleTrading\View;
+
 /**
  * Product amount widget
  *
@@ -34,7 +36,7 @@
  * @since   3.0
  * @ListChild (list="productDetails.main", weight="80")
  */
-class XLite_Module_WholesaleTrading_View_Amount extends XLite_View_AView
+class Amount extends \XLite\View\AView
 {
     /**
      * Widget parameter names
@@ -67,7 +69,7 @@ class XLite_Module_WholesaleTrading_View_Amount extends XLite_View_AView
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_PRODUCT => new XLite_Model_WidgetParam_Object('Product', $this->getProduct(), false, 'XLite_Model_Product'),
+            self::PARAM_PRODUCT => new \XLite\Model\WidgetParam\Object('Product', $this->getProduct(), false, '\XLite\Model\Product'),
         );
     }
 

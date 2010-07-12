@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\DetailedImages\Model;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_DetailedImages_Model_Product extends XLite_Model_Product implements XLite_Base_IDecorator
+class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
 {
     /**
      * Get detailed images list
@@ -44,7 +46,7 @@ class XLite_Module_DetailedImages_Model_Product extends XLite_Model_Product impl
      */
     public function getDetailedImages()
     {
-        $image = new XLite_Module_DetailedImages_Model_DetailedImage();
+        $image = new \XLite\Module\DetailedImages\Model\DetailedImage();
 
         return $image->findImages($this->get('product_id'));
     }
@@ -76,7 +78,7 @@ class XLite_Module_DetailedImages_Model_Product extends XLite_Model_Product impl
 
         foreach ($this->getDetailedImages() as $image) {
 
-            $newImage = new XLite_Module_DetailedImages_Model_DetailedImage();
+            $newImage = new \XLite\Module\DetailedImages\Model\DetailedImage();
             $newImage->set('alt', $image->get('alt'));
             $newImage->set('enabled', $image->get('enabled'));
             $newImage->set('order_by', $image->get('order_by'));
@@ -119,7 +121,7 @@ class XLite_Module_DetailedImages_Model_Product extends XLite_Model_Product impl
 
         if (is_array($result)) {
             foreach ($result as $info) {
-                $di = new XLite_Module_DetailedImages_Model_DetailedImage($info['image_id']);
+                $di = new \XLite\Module\DetailedImages\Model\DetailedImage($info['image_id']);
                 $di->delete();
             }
         }
@@ -141,7 +143,7 @@ class XLite_Module_DetailedImages_Model_Product extends XLite_Model_Product impl
     /**
      * Get zoom image 
      * 
-     * @return XLite_Module_DetailedImages_Model_DetailedImage
+     * @return \XLite\Module\DetailedImages\Model\DetailedImage
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0

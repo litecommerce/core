@@ -26,14 +26,16 @@
  * @since      3.0.0
  */
 
+namespace XLite\View\FormField\Select;
+
 /**
- * XLite_View_FormField_Select_AccountStatus 
+ * \XLite\View\FormField\Select\AccountStatus 
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_FormField_Select_AccountStatus extends XLite_View_FormField_Select_Regular
+class AccountStatus extends \XLite\View\FormField\Select\Regular
 {
     /**
      * Determines if this field is visible for customers or not 

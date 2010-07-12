@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\GoogleCheckout\View;
+
 /**
  * Google checkout alternative widget
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_GoogleCheckout_View_GoogleAltCheckout extends XLite_View_AView
+class GoogleAltCheckout extends \XLite\View\AView
 {
     public $GCMerchantID = null;
     public $GCMerchantKey = null;
@@ -54,7 +56,7 @@ class XLite_Module_GoogleCheckout_View_GoogleAltCheckout extends XLite_View_AVie
     function initGoogleData()
     {
         if (!isset($this->GCMerchantID)) {
-            $pm = XLite_Model_PaymentMethod::factory('google_checkout');
+            $pm = \XLite\Model\PaymentMethod::factory('google_checkout');
             $isAdminZone = $this->xlite->is('adminZone');
             $this->xlite->set('adminZone', true);
             $enabled = (bool) $pm->get('enabled');
@@ -146,7 +148,7 @@ class XLite_Module_GoogleCheckout_View_GoogleAltCheckout extends XLite_View_AVie
     {
         $cart = $this->getComplex('dialog.cart');
         if (is_null($cart) || !is_object($cart)) {
-            $cart = XLite_Model_Cart::getInstance();
+            $cart = \XLite\Model\Cart::getInstance();
         }
 
         return $cart->isGoogleAllowPay();

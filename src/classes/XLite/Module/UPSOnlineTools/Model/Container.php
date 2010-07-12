@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\UPSOnlineTools\Model;
+
 /**
  * UPS container
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_UPSOnlineTools_Model_Container extends XLite_Base
+class Container extends \XLite\Base
 {
     const OPTIMIZE_DIVIDE_VER = 1;
     const OPTIMIZE_DIVIDE_HOR = 2;

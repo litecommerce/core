@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Affiliate\Controller\Customer;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Affiliate_Controller_Customer_Partner extends XLite_Module_Affiliate_Controller_Partner
+class Partner extends \XLite\Module\Affiliate\Controller\Partner
 {
     function handleRequest()
     {

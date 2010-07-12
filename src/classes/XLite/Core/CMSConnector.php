@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Core;
+
 /**
  * CMS connector 
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_ISingleton
+abstract class CMSConnector extends \XLite\Base implements \XLite\Base\ISingleton
 {
     /**
      * Name of the request param, which determines the redirect behaviour
@@ -59,12 +61,12 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
      * @since  3.0
      */
     protected $widgetsList = array(
-        'XLite_View_TopCategories'    => 'Categories list',
-        'XLite_View_Minicart'         => 'Minicart',
-        'XLite_View_Subcategories'    => 'Subcategories',
-        'XLite_View_CategoryProducts' => 'Category products list',
-        'XLite_View_ProductBox'       => 'Product block',
-        'XLite_View_PoweredBy'        => '\'Powered by\' block',
+        '\XLite\View\TopCategories'    => 'Categories list',
+        '\XLite\View\Minicart'         => 'Minicart',
+        '\XLite\View\Subcategories'    => 'Subcategories',
+        '\XLite\View\CategoryProducts' => 'Category products list',
+        '\XLite\View\ProductBox'       => 'Product block',
+        '\XLite\View\PoweredBy'        => '\'Powered by\' block',
     );
 
     /**
@@ -108,7 +110,7 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
      */
     protected function getProfileWhereCondition($cmsUserId)
     {
-        return XLite_Core_Converter::getInstance()->buildQuery(
+        return \XLite\Core\Converter::getInstance()->buildQuery(
             $this->getProfileDBFields($cmsUserId), '=', ' AND ', '\''
         ) . ' AND order_id = \'0\'';
     }
@@ -125,7 +127,7 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
      */
     protected function getProfileIdByCMSId($cmsUserId)
     {
-        $profile = XLite_Model_CachingFactory::getObject(__METHOD__ . $cmsUserId, 'XLite_Model_Profile');
+        $profile = \XLite\Model\CachingFactory::getObject(__METHOD__ . $cmsUserId, '\XLite\Model\Profile');
 
         // Not initialized
         if (!$profile->isRead) {
@@ -188,7 +190,7 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
      */
     public function mapRequest(array $request)
     {
-        XLite_Core_Request::getInstance()->mapRequest($request);
+        \XLite\Core\Request::getInstance()->mapRequest($request);
     }
 
     /**
@@ -251,8 +253,8 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
      */
     public function getApplication($applicationId = null)
     {
-        return XLite_Model_CachingFactory::getObjectFromCallback(
-            __METHOD__ . $applicationId, XLite::getInstance(), 'run'
+        return \XLite\Model\CachingFactory::getObjectFromCallback(
+            __METHOD__ . $applicationId, \XLite::getInstance(), 'run'
         );
     }
 
@@ -261,13 +263,13 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
      *
      * @param string $applicationId cache key
      *
-     * @return XLite_View_Controller
+     * @return \XLite\View\Controller
      * @access public
      * @since  3.0.0
      */
     public function getViewer($applicationId = null)
     {
-        return XLite_Model_CachingFactory::getObjectFromCallback(
+        return \XLite\Model\CachingFactory::getObjectFromCallback(
             __METHOD__ . $applicationId, $this->getApplication($applicationId), 'getViewer'
         );
     }
@@ -277,14 +279,14 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
      *
      * @param string $applicationId cache key
      * 
-     * @return XLite_Controller_AController
+     * @return \XLite\Controller\AController
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
     public function getController($applicationId = null)
     {
-        return XLite_Model_CachingFactory::getObjectFromCallback(
+        return \XLite\Model\CachingFactory::getObjectFromCallback(
             __METHOD__ . $applicationId, $this->getApplication($applicationId), 'getController'
         );
     }
@@ -301,7 +303,7 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
      */
     public function runController($applicationId = null)
     {
-        return XLite_Model_CachingFactory::getObjectFromCallback(
+        return \XLite\Model\CachingFactory::getObjectFromCallback(
             __METHOD__ . $applicationId, $this->getApplication($applicationId), 'runController'
         );
     }
@@ -313,14 +315,14 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
      * @param array  $params widget params
      * @param int    $delta  drupal-specific param - so called "delta"
      *  
-     * @return XLite_Core_WidgetDataTransport
+     * @return \XLite\Core\WidgetDataTransport
      * @access public
      * @since  3.0.0
      */
     public function getWidget($class, array $params = array(), $delta = 0)
     {
-        return new XLite_Core_WidgetDataTransport(
-            XLite_Core_Operator::isClassExists($class) ? $this->getViewer()->getWidget($params, $class) : null
+        return new \XLite\Core\WidgetDataTransport(
+            \XLite\Core\Operator::isClassExists($class) ? $this->getViewer()->getWidget($params, $class) : null
         );
     }
 
@@ -330,16 +332,16 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
      * @param string $target controller target
      * @param array  $params controller params
      *
-     * @return XLite_Core_WidgetDataTransport
+     * @return \XLite\Core\WidgetDataTransport
      * @access public
      * @since  3.0.0
      */
     public function getPageInstance($target, array $params = array())
     {
-        $class = XLite_Core_Converter::getControllerClass($target);
+        $class = \XLite\Core\Converter::getControllerClass($target);
 
-        return new XLite_Core_WidgetDataTransport(
-            XLite_Core_Operator::isClassExists($class) ? new $class(array('target' => $target) + $params) : null
+        return new \XLite\Core\WidgetDataTransport(
+            \XLite\Core\Operator::isClassExists($class) ? new $class(array('target' => $target) + $params) : null
         );
     }
 
@@ -363,13 +365,13 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
      * 
      * @param int $cmsUserId internal user ID in CMS
      *  
-     * @return XLite_Model_Profile
+     * @return \XLite\Model\Profile
      * @access public
      * @since  3.0.0
      */
     public function getProfile($cmsUserId)
     {
-        return XLite_Model_Auth::getInstance()->getProfile($this->getProfileIdByCMSId($cmsUserId));
+        return \XLite\Model\Auth::getInstance()->getProfile($this->getProfileIdByCMSId($cmsUserId));
     }
 
 
@@ -392,8 +394,8 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
         /*$oldController = $this->getController();
 
         $this->getApplication()->setController();
-        $controller = XLite_Model_CachingFactory::getObjectFromCallback(
-            __METHOD__ . '-' . XLite_Core_Request::getInstance()->target,
+        $controller = \XLite\Model\CachingFactory::getObjectFromCallback(
+            __METHOD__ . '-' . \XLite\Core\Request::getInstance()->target,
             $this->getApplication(),
             'getController'
         );
@@ -423,7 +425,7 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
         if ('category' == $args['target'] && !empty($args['category_id'])) {
 
             // Category
-            $category = new XLite_Model_Category(intval($args['category_id']));
+            $category = new \XLite\Model\Category(intval($args['category_id']));
             if ($category->isExists() && $category->get('clean_url')) {
                 $url = preg_replace('/\/+$/Ss', '', $category->get('clean_url')) . '/';
             }
@@ -431,7 +433,7 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
         } elseif ('product' == $args['target'] && !empty($args['product_id'])) {
 
             // Product
-            $product = new XLite_Model_Product(intval($args['product_id']));
+            $product = new \XLite\Model\Product(intval($args['product_id']));
             if ($product->isExists() && $product->get('clean_url')) {
                 $url = $product->get('clean_url');
                 if (!preg_match('/(\.html|\/htm)$/Ss', $url)) {
@@ -460,9 +462,9 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
 
         // By product
 
-        $product = new XLite_Model_Product();
+        $product = new \XLite\Model\Product();
         if ($product->findByCleanUrl(preg_replace('/(?:\.html|\.htm)$/Ss', '', $path))) {
-            $cleanUrl = XLite_Core_Converter::buildURL(
+            $cleanUrl = \XLite\Core\Converter::buildURL(
                 'product',
                 '',
                 array('product_id' => $product->get('product_id'))
@@ -473,9 +475,9 @@ abstract class XLite_Core_CMSConnector extends XLite_Base implements XLite_Base_
 
         if (!$cleanUrl) {
 
-            $category = XLite_Core_Database::getRepo('XLite_Model_Category')->getCategoryByCleanUrl(preg_replace('/\/+$/Ss', '', $path));
+            $category = \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategoryByCleanUrl(preg_replace('/\/+$/Ss', '', $path));
             if ($category) {
-                $cleanUrl = XLite_Core_Converter::buildURL(
+                $cleanUrl = \XLite\Core\Converter::buildURL(
                     'category',
                     '',
                     array('category_id' => $category->category_id)

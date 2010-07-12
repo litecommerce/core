@@ -29,8 +29,8 @@
       <input type="hidden" name="page" value="{page}" />
 
       <div class="buttons">
-        <widget class="XLite_View_Button_Submit" label="Delete" style="main invert" />
-        <widget class="XLite_View_Button_Regular" label="Cancel" style="main" jsCode="$(this).parents('.ui-dialog').eq(0).find('.ui-dialog-titlebar-close').click();" />
+        <widget class="\XLite\View\Button\Submit" label="Delete" style="main invert" />
+        <widget class="\XLite\View\Button\Regular" label="Cancel" style="main" jsCode="$(this).parents('.ui-dialog').eq(0).find('.ui-dialog-titlebar-close').click();" />
       </div>
     </form>
 

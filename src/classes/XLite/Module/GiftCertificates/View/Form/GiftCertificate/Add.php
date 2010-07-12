@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\GiftCertificates\View\Form\GiftCertificate;
+
 /**
  * Add gift certificate form
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_GiftCertificates_View_Form_GiftCertificate_Add extends XLite_View_Form_AForm
+class Add extends \XLite\View\Form\AForm
 {
     /**
      * Widget paramater names
@@ -64,9 +66,9 @@ class XLite_Module_GiftCertificates_View_Form_GiftCertificate_Add extends XLite_
     {
         parent::defineWidgetParams();
 
-        $this->widgetParams[self::PARAM_GC_ID] = new XLite_Model_WidgetParam_Int(
+        $this->widgetParams[self::PARAM_GC_ID] = new \XLite\Model\WidgetParam\Int(
             'Gift certificate id',
-            XLite_Core_Request::getInstance()->gcid,
+            \XLite\Core\Request::getInstance()->gcid,
             false
         );
 

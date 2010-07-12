@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Base;
+
 /**
  * Decorator interface
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-interface XLite_Base_IDecorator
+interface IDecorator
 {
 }
 

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Promotion\Model;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Promotion_Model_BonusPrice extends XLite_Model_AModel
+class BonusPrice extends \XLite\Model\AModel
 {
     public $fields = array(
         "offer_id" => 0,
@@ -47,7 +49,7 @@ class XLite_Module_Promotion_Model_BonusPrice extends XLite_Model_AModel
     function getProduct()
     {
         if ($this->get('product_id')) {
-            $product = new XLite_Model_Product($this->get('product_id'));
+            $product = new \XLite\Model\Product($this->get('product_id'));
         } else {
             $product = null;
         }
@@ -57,7 +59,7 @@ class XLite_Module_Promotion_Model_BonusPrice extends XLite_Model_AModel
     function getCategory()
     {
         if ($this->get('category_id')) {
-            $category = new XLite_Model_Category($this->get('category_id'));
+            $category = new \XLite\Model\Category($this->get('category_id'));
         } else {
             $category = null;
         }

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\eWAYxml;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_eWAYxml_Main extends XLite_Module_AModule
+class Main extends \XLite\Module\AModule
 {
     /**
      * Module type
@@ -90,7 +92,7 @@ class XLite_Module_eWAYxml_Main extends XLite_Module_AModule
 
 
 function ewx_func_https_request ($method, $url, $vars) {
-    $request = new XLite_Model_HTTPS();
+    $request = new \XLite\Model\HTTPS();
 
     $request->url = $url;
     $request->data = $vars;

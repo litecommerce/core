@@ -72,7 +72,7 @@ Mandatory fields are marked with an asterisk (<font class="Star">*</font>).
 
       </td>
       <td>
-        <widget class="XLite_Validator_EmailValidator" field="login" />
+        <widget class="\XLite\Validator\EmailValidator" field="login" />
       </td>
     </tr>
 
@@ -84,7 +84,7 @@ Mandatory fields are marked with an asterisk (<font class="Star">*</font>).
       </td>
       <td>
 	    	&nbsp;
-        <widget class="XLite_Validator_RequiredValidator" field="password" visible="{mode=#register#}" />
+        <widget class="\XLite\Validator\RequiredValidator" field="password" visible="{mode=#register#}" />
       </td>
     </tr>
 
@@ -96,8 +96,8 @@ Mandatory fields are marked with an asterisk (<font class="Star">*</font>).
       </td>
       <td>
         &nbsp;
-        <widget class="XLite_Validator_RequiredValidator" field="confirm_password" visible="{mode=#register#}" />
-        <widget class="XLite_Validator_PasswordValidator" field="confirm_password" passwordField="password" visible="{mode=#register#}" />
+        <widget class="\XLite\Validator\RequiredValidator" field="confirm_password" visible="{mode=#register#}" />
+        <widget class="\XLite\Validator\PasswordValidator" field="confirm_password" passwordField="password" visible="{mode=#register#}" />
       </td>
     </tr>
 
@@ -136,7 +136,7 @@ Mandatory fields are marked with an asterisk (<font class="Star">*</font>).
     	<td align="right">Requested membership</td>
       <td><font class="Star">*</font></td>
       <td>
-        <widget class="XLite_View_MembershipSelect" field="pending_membership" value="{pending_membership}" />
+        <widget class="\XLite\View\MembershipSelect" field="pending_membership" value="{pending_membership}" />
         &nbsp;&nbsp;
         {if:xlite.WholesaleTradingEnabled}
         <widget module="WholesaleTrading" template="modules/WholesaleTrading/profile_grant_membership.tpl" />
@@ -151,7 +151,7 @@ Mandatory fields are marked with an asterisk (<font class="Star">*</font>).
     	<td align="right" valign=top>Granted membership</td>
       <td valign=top><font class="Star">*</font></td>
       <td>
-        <widget class="XLite_View_MembershipSelect" field="membership" value="{membership}" />
+        <widget class="\XLite\View\MembershipSelect" field="membership" value="{membership}" />
         <widget module="WholesaleTrading" template="modules/WholesaleTrading/membership_history/caption.tpl" membership_history="{membership_history}" />
       </td>
       <td></td>
@@ -196,7 +196,7 @@ Mandatory fields are marked with an asterisk (<font class="Star">*</font>).
         <input type="text" name="billing_firstname" value="{billing_firstname:r}" size="32" maxlength="128" />
       </td>
       <td>
-        <widget class="XLite_Validator_RequiredValidator" field="billing_firstname" />
+        <widget class="\XLite\Validator\RequiredValidator" field="billing_firstname" />
       </td>
     </tr>
 
@@ -207,7 +207,7 @@ Mandatory fields are marked with an asterisk (<font class="Star">*</font>).
         <input type="text" name="billing_lastname" value="{billing_lastname:r}" size="32" maxlength="128" />
       </td>
       <td align="left">
-        <widget class="XLite_Validator_RequiredValidator" field="billing_lastname" />
+        <widget class="\XLite\Validator\RequiredValidator" field="billing_lastname" />
       </td>
     </tr>
 
@@ -227,7 +227,7 @@ Mandatory fields are marked with an asterisk (<font class="Star">*</font>).
         <input type="text" name="billing_phone" value="{billing_phone:r}" size="32" maxlength="32" />
       </td>    
       <td>
-        <widget class="XLite_Validator_RequiredValidator" field="billing_phone" />
+        <widget class="\XLite\Validator\RequiredValidator" field="billing_phone" />
       </td>
     </tr>
 
@@ -247,7 +247,7 @@ Mandatory fields are marked with an asterisk (<font class="Star">*</font>).
         <input type="text" name="billing_address" value="{billing_address:r}" size="32" maxlength="64" />
       </td>
       <td>
-        <widget class="XLite_Validator_RequiredValidator" field="billing_address" />
+        <widget class="\XLite\Validator\RequiredValidator" field="billing_address" />
       </td>
     </tr>
 
@@ -258,7 +258,7 @@ Mandatory fields are marked with an asterisk (<font class="Star">*</font>).
         <input type="text" name="billing_city" value="{billing_city:r}" size="32" maxlength="64" />
       </td>
       <td>
-        <widget class="XLite_Validator_RequiredValidator" field="billing_city" />
+        <widget class="\XLite\Validator\RequiredValidator" field="billing_city" />
       </td>
     </tr>
 
@@ -266,11 +266,11 @@ Mandatory fields are marked with an asterisk (<font class="Star">*</font>).
       <td align="right">State</td>
       <td><font class="Star">*</font></td>
       <td>
-    		<widget class="XLite_View_StateSelect" field="billing_state" state="{billing_state}" isLinked=1 />
+    		<widget class="\XLite\View\StateSelect" field="billing_state" state="{billing_state}" isLinked=1 />
       </td>
       <td>
-        <widget class="XLite_Validator_RequiredValidator" field="billing_state" />
-        <widget class="XLite_Validator_StateValidator" field="billing_state" countryField="billing_country" />
+        <widget class="\XLite\Validator\RequiredValidator" field="billing_state" />
+        <widget class="\XLite\Validator\StateValidator" field="billing_state" countryField="billing_country" />
       </td>
     </tr>
 
@@ -285,10 +285,10 @@ Mandatory fields are marked with an asterisk (<font class="Star">*</font>).
       <td align="right">Country</td>
       <td><font class="Star">*</font></td>
       <td>
-    		<widget class="XLite_View_CountrySelect" field="billing_country" country="{billing_country}" />
+    		<widget class="\XLite\View\CountrySelect" field="billing_country" country="{billing_country}" />
       </td>
       <td>
-        <widget class="XLite_Validator_RequiredValidator" field="billing_country" />
+        <widget class="\XLite\Validator\RequiredValidator" field="billing_country" />
       </td>
     </tr>
 
@@ -299,7 +299,7 @@ Mandatory fields are marked with an asterisk (<font class="Star">*</font>).
         <input type="text" name="billing_zipcode" value="{billing_zipcode:r}" size="32" maxlength="32" />
       </td>
       <td>
-        <widget class="XLite_Validator_RequiredValidator" field="billing_zipcode" />
+        <widget class="\XLite\Validator\RequiredValidator" field="billing_zipcode" />
       </td>
     </tr>
 
@@ -400,10 +400,10 @@ Mandatory fields are marked with an asterisk (<font class="Star">*</font>).
         <td align="right">State</td>
         <td><font class="Star">*</font></td>
         <td>
-      		<widget class="XLite_View_StateSelect" field="shipping_state" state="{shipping_state}" isLinked=1 />
+      		<widget class="\XLite\View\StateSelect" field="shipping_state" state="{shipping_state}" isLinked=1 />
         </td>
         <td>
-          <widget class="XLite_Validator_StateValidator" field="shipping_state" countryField="shipping_country" />
+          <widget class="\XLite\Validator\StateValidator" field="shipping_state" countryField="shipping_country" />
         </td>
       </tr>
 
@@ -418,7 +418,7 @@ Mandatory fields are marked with an asterisk (<font class="Star">*</font>).
         <td align="right">Country</td>
         <td><font class="Star">*</font></td>
         <td>
-      		<widget class="XLite_View_CountrySelect" field="shipping_country" country="{shipping_country}" />
+      		<widget class="\XLite\View\CountrySelect" field="shipping_country" country="{shipping_country}" />
         </td>
         <td>&nbsp;</td>
       </tr>

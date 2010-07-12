@@ -126,7 +126,10 @@ if (!function_exists('__lc_autoload')) {
     function __lc_autoload($className)
     {
         if (0 === strpos($className, 'XLite')) {
-            require_once LC_AUTOLOAD_DIR . str_replace('_', LC_DS, $className) . '.php';
+            require_once LC_AUTOLOAD_DIR . str_replace('\\', LC_DS, $className) . '.php';
+
+        } elseif (0 === strpos($className, '\XLite')) {
+            require_once LC_AUTOLOAD_DIR . str_replace('\\', LC_DS, substr($className, 1)) . '.php';
         }
     }
 

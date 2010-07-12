@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Controller\Customer;
+
 /**
  * Image viewer
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Controller_Customer_Image extends XLite_Controller_Customer_ACustomer
+class Image extends \XLite\Controller\Customer\ACustomer
 {
     /**
      * Controller parameters 
@@ -56,17 +58,17 @@ class XLite_Controller_Customer_Image extends XLite_Controller_Customer_ACustome
     {
         $this->startImage();
 
-        $id = XLite_Core_Request::getInstance()->id;
+        $id = \XLite\Core\Request::getInstance()->id;
 
-        if (isset(XLite_Core_Request::getInstance()->product_id)) {
-            $id = XLite_Core_Request::getInstance()->product_id;
+        if (isset(\XLite\Core\Request::getInstance()->product_id)) {
+            $id = \XLite\Core\Request::getInstance()->product_id;
 
-        } elseif (isset(XLite_Core_Request::getInstance()->category_id)) {
-            $id = XLite_Core_Request::getInstance()->category_id;
+        } elseif (isset(\XLite\Core\Request::getInstance()->category_id)) {
+            $id = \XLite\Core\Request::getInstance()->category_id;
         }
 
-        $image = new XLite_Model_Image(
-            XLite_Core_Request::getInstance()->action,
+        $image = new \XLite\Model\Image(
+            \XLite\Core\Request::getInstance()->action,
             $id
         );
         $image->show();

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View\Pager;
+
 /**
  * Simple pager
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_Pager_Simple extends XLite_View_AView
+class Simple extends \XLite\View\AView
 {
 
     /**
@@ -68,9 +70,9 @@ class XLite_View_Pager_Simple extends XLite_View_AView
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_PAGES => new XLite_Model_WidgetParam_Int('Pages count', 0),
-            self::PARAM_PAGE  => new XLite_Model_WidgetParam_Int('Current page', 1),
-            self::PARAM_URL   => new XLite_Model_WidgetParam_String('Link URL', null),
+            self::PARAM_PAGES => new \XLite\Model\WidgetParam\Int('Pages count', 0),
+            self::PARAM_PAGE  => new \XLite\Model\WidgetParam\Int('Current page', 1),
+            self::PARAM_URL   => new \XLite\Model\WidgetParam\String('Link URL', null),
         );
     }
 

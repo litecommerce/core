@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td><input name="gd_subtotal" value="{discount.subtotal}" size="7"></td>
-	<td><widget class="XLite_View_MembershipSelect" field="gd_membership" allOption value="{discount.membership}"></td>
+	<td><widget class="\XLite\View\MembershipSelect" field="gd_membership" allOption value="{discount.membership}"></td>
 	<td><input name="gd_value" value="{discount.discount}" size="7"></td>
 	<td>
 		<select name="gd_type" align="right">
@@ -57,7 +57,7 @@
 </tr>
 <tr>
     <td>Membership:</td>
-    <td><widget class="XLite_View_MembershipSelect" allOption field="discount_membership" value=""></td>
+    <td><widget class="\XLite\View\MembershipSelect" allOption field="discount_membership" value=""></td>
 </tr>
 <tr>
 	<td>Discount:</td>

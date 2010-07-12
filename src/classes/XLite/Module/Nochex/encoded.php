@@ -16,7 +16,7 @@
             $order->setComplex('detailLabels.error', "Error");
             $order->set('details.error', "Duplicate transaction : " . $_POST['transaction_id']);
         } else {
-            $request = new XLite_Model_HTTPS();
+            $request = new \XLite\Model\HTTPS();
     	    $request->url = "https://www.nochex.com:443/nochex.dll/apc/apc";
         	$request->data = $_POST;
             $request->request();

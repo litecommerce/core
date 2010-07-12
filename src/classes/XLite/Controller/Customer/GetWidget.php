@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Controller\Customer;
+
 /**
  * Get widget (AJAX)
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Controller_Customer_GetWidget extends XLite_Controller_Customer_ACustomer
+class GetWidget extends \XLite\Controller\Customer\ACustomer
 {
     /**
      * Current page template 
@@ -69,7 +71,7 @@ class XLite_Controller_Customer_GetWidget extends XLite_Controller_Customer_ACus
      */
     public function handleRequest()
     {
-        $request = XLite_Core_Request::getInstance();
+        $request = \XLite\Core\Request::getInstance();
 
         foreach ($this->getAJAXParamsTranslationTable() as $ajaxParam => $requestParam) {
             if (!empty($request->$ajaxParam)) {
@@ -104,7 +106,7 @@ class XLite_Controller_Customer_GetWidget extends XLite_Controller_Customer_ACus
     {
         return parent::checkAccess()
             && $this->checkRequest()
-            && XLite_Core_Operator::isClassExists($this->getClass());
+            && \XLite\Core\Operator::isClassExists($this->getClass());
     }
 
     /**
@@ -122,7 +124,7 @@ class XLite_Controller_Customer_GetWidget extends XLite_Controller_Customer_ACus
     /**
      * Return Viewer object
      * 
-     * @return XLite_View_Controller
+     * @return \XLite\View\Controller
      * @access public
      * @since  3.0.0
      */
@@ -142,6 +144,6 @@ class XLite_Controller_Customer_GetWidget extends XLite_Controller_Customer_ACus
     {
         $param = self::PARAM_AJAX_CLASS;
 
-        return XLite_Core_Request::getInstance()->$param;
+        return \XLite\Core\Request::getInstance()->$param;
     }
 }

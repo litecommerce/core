@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model\WidgetParam;
+
 /**
  * Abstract Object id widget parameter
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class XLite_Model_WidgetParam_ObjectId extends XLite_Model_WidgetParam_Int
+abstract class ObjectId extends \XLite\Model\WidgetParam\Int
 {
     /**
      * Return object class name 
@@ -117,7 +119,7 @@ abstract class XLite_Model_WidgetParam_ObjectId extends XLite_Model_WidgetParam_
      *
      * @param int $id object ID
      *
-     * @return XLite_Base
+     * @return \XLite\Base
      * @access public
      * @since  3.0.0
      */
@@ -125,7 +127,7 @@ abstract class XLite_Model_WidgetParam_ObjectId extends XLite_Model_WidgetParam_
     {
         $id = $this->getId($id);
 
-        return XLite_Model_CachingFactory::getObject(
+        return \XLite\Model\CachingFactory::getObject(
             __METHOD__ . $this->getClassName() . $id, $this->getClassName(), array($id)
         );
     }

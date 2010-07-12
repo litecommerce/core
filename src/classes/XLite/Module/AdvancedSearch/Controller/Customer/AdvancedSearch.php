@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\AdvancedSearch\Controller\Customer;
+
 /**
  * Advanced product search
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_AdvancedSearch_Controller_Customer_AdvancedSearch extends XLite_Controller_Customer_ACustomer
+class AdvancedSearch extends \XLite\Controller\Customer\ACustomer
 {
     /**
      * Controller parameters
@@ -125,7 +127,7 @@ class XLite_Module_AdvancedSearch_Controller_Customer_AdvancedSearch extends XLi
     /**
      * Get products list
      * 
-     * @return array of XLite_Model_Product
+     * @return array of \XLite\Model\Product
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -153,10 +155,10 @@ class XLite_Module_AdvancedSearch_Controller_Customer_AdvancedSearch extends XLi
                 && !isset($properties['options']);
 
                if (
-                XLite_Core_Request::getInstance()->submode == 'found'
+                \XLite\Core\Request::getInstance()->submode == 'found'
                 && !$isDumpSearch
             ) {
-                $p = new XLite_Model_Product();
+                $p = new \XLite\Model\Product();
 
                 foreach ($properties as $key => $value) {
                     if (empty($properties[$key])) {
@@ -212,7 +214,7 @@ class XLite_Module_AdvancedSearch_Controller_Customer_AdvancedSearch extends XLi
                     isset($properties['end_weight'])   ? $properties['end_weight'] : null
                 );
 
-                $searchStat = new XLite_Model_SearchStat();
+                $searchStat = new \XLite\Model\SearchStat();
                 $searchStat->add($properties['substring'], count($this->products));
             }
         }

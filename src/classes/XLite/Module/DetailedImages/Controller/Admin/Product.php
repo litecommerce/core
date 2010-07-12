@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\DetailedImages\Controller\Admin;
+
 /**
  * Detailed images controller
  * 
@@ -33,8 +35,8 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_DetailedImages_Controller_Admin_Product extends XLite_Controller_Admin_Product
-implements XLite_Base_IDecorator
+class Product extends \XLite\Controller\Admin\Product
+implements \XLite\Base\IDecorator
 {
     /**
      * Constructor
@@ -64,9 +66,9 @@ implements XLite_Base_IDecorator
      */
     protected function doActionAddDetailedImage()
     {
-        $dImg = new XLite_Module_DetailedImages_Model_DetailedImage();
+        $dImg = new \XLite\Module\DetailedImages\Model\DetailedImage();
 
-        $data = XLite_Core_Request::getInstance()->getData();
+        $data = \XLite\Core\Request::getInstance()->getData();
         $data['is_zoom'] = isset($data['is_zoom']) ? 'Y' : '';
 
         $dImg->set('properties', $data);
@@ -85,7 +87,7 @@ implements XLite_Base_IDecorator
      */
     protected function doActionDeleteDetailedImage()
     {
-        $dImg = new XLite_Module_DetailedImages_Model_DetailedImage($this->image_id);
+        $dImg = new \XLite\Module\DetailedImages\Model\DetailedImage($this->image_id);
         $dImg->delete();
     }
 
@@ -100,7 +102,7 @@ implements XLite_Base_IDecorator
     protected function doActionUpdateDetailedImages()
     {
         foreach ($this->alt as $imageId => $alt) {
-            $img = new XLite_Module_DetailedImages_Model_DetailedImage($imageId);
+            $img = new \XLite\Module\DetailedImages\Model\DetailedImage($imageId);
 
             $img->set('alt', $alt);
             $img->set('order_by', $this->order_by[$imageId]);

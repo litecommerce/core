@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Controller\Customer;
+
 /**
  * Payment method callback
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Controller_Customer_Callback extends XLite_Controller_Customer_ACustomer
+class Callback extends \XLite\Controller\Customer\ACustomer
 {
     /**
      * This controller is always accessible
@@ -58,36 +60,36 @@ class XLite_Controller_Customer_Callback extends XLite_Controller_Customer_ACust
      */
     protected function doActionCallback()
     {
-        if (isset(XLite_Core_Request::getInstance()->order_id_name)) {
+        if (isset(\XLite\Core\Request::getInstance()->order_id_name)) {
             /**
              * some of gateways can't accept return url on run-time and
              * use the one set in merchant account, so we can't pass
              * 'order_id' in run-time, instead pass the order id parameter name
              */
-            $orderIdName = XLite_Core_Request::getInstance()->order_id_name;
+            $orderIdName = \XLite\Core\Request::getInstance()->order_id_name;
 
         } else {
             $orderIdName = 'order_id';
         }
 
-        if (!isset(XLite_Core_Request::getInstance()->$orderIdName)) {
+        if (!isset(\XLite\Core\Request::getInstance()->$orderIdName)) {
             $this->doDie('The order ID variable \'' . $orderIdName . '\' is not found in request');
         }
 
-        $cart = new XLite_Model_Order(XLite_Core_Request::getInstance()->$orderIdName);
+        $cart = new \XLite\Model\Order(\XLite\Core\Request::getInstance()->$orderIdName);
         if (!$cart->isExists()) {
             $this->doDie('Order #' . $cart->get('order_id') . ' was not found. Please contact administrator.');
         }
 
         $paymentMethod = $cart->getPaymentMethod();
-        if (!($paymentMethod instanceof XLite_Model_PaymentMethod_CreditCard)) {
+        if (!($paymentMethod instanceof \XLite\Model\PaymentMethod\CreditCard)) {
             $this->doDie(
                 'Order #' . $cart->get('order_id') . ' has not assigned online payment methods.'
                 . ' Please contact administrator.'
             );
         }
 
-        $cart->getPaymentMethod()->handleRequest($cart, XLite_Model_PaymentMethod_CreditCard::CALL_BACK);
+        $cart->getPaymentMethod()->handleRequest($cart, \XLite\Model\PaymentMethod\CreditCard::CALL_BACK);
 
         $this->set('silent', true);
     }

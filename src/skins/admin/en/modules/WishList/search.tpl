@@ -45,12 +45,12 @@
 
   	<tr>
 	  	<td class=FormButton noWrap height=10>Creation date from:</td>
-		  <td height=10><widget class="XLite_View_Date" field="startDate" value="{getCondition(#startDate#)}" /></td>
+		  <td height=10><widget class="\XLite\View\Date" field="startDate" value="{getCondition(#startDate#)}" /></td>
   	</tr>
 
     <tr>
       <td class=FormButton noWrap height=10>Creation date through:</td>
-      <td height=10><widget class="XLite_View_Date" field="endDate" value="{getCondition(#endDate#)}" /></td>
+      <td height=10><widget class="\XLite\View\Date" field="endDate" value="{getCondition(#endDate#)}" /></td>
     </tr>
 
     <tr>

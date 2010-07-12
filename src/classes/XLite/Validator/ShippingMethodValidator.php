@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Validator;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Validator_ShippingMethodValidator extends XLite_Validator_RequiredValidator
+class ShippingMethodValidator extends \XLite\Validator\RequiredValidator
 {
     public $template = "common/shipping_method_validator.tpl";
     
@@ -45,7 +47,7 @@ class XLite_Validator_ShippingMethodValidator extends XLite_Validator_RequiredVa
 
         $result = !empty($_POST[$this->get('field')]) || !isset($_POST[$this->get('field')]);
         if ($result && isset($_POST[$this->get('field')]) && !$this->xlite->get('action_add_valid')) {
-            $shipping = new XLite_Model_Shipping();
+            $shipping = new \XLite\Model\Shipping();
             if ($shipping->find("class='offline' AND destination='".$_POST['destination']."' AND name='".addslashes($_POST[$this->get('field')])."'")) {
             	$this->set('shipping_already_exists', true);
             	$result = false;

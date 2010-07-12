@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\WholesaleTrading\Controller\Customer;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_WholesaleTrading_Controller_Customer_Order extends XLite_Controller_Customer_Order implements XLite_Base_IDecorator
+class Order extends \XLite\Controller\Customer\Order implements \XLite\Base\IDecorator
 {
     function getOrder()
     {

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Affiliate\Model;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Affiliate_Model_PartnerPayment extends XLite_Model_AModel
+class PartnerPayment extends \XLite\Model\AModel
 {
     public $fields = array (
             "payment_id" => null,
@@ -75,9 +77,9 @@ class XLite_Module_Affiliate_Model_PartnerPayment extends XLite_Model_AModel
     // sends payment nofitication
     function notifyPartner() 
     {
-        $mail = new XLite_Model_Mailer();
+        $mail = new \XLite\Model\Mailer();
         $mail->payment = $this;
-        $mail->partner = new XLite_Model_Profile($this->get('partner_id'));
+        $mail->partner = new \XLite\Model\Profile($this->get('partner_id'));
         $mail->compose(
                 $this->config->Company->orders_department,
                 $mail->getComplex('partner.login'),
@@ -100,7 +102,7 @@ class XLite_Module_Affiliate_Model_PartnerPayment extends XLite_Model_AModel
     function getPartner() 
     {
         if (is_null($this->partner)) {
-            $this->partner = new XLite_Model_Profile($this->get('partner_id'));
+            $this->partner = new \XLite\Model\Profile($this->get('partner_id'));
         }
         return $this->partner;
     }
@@ -121,7 +123,7 @@ class XLite_Module_Affiliate_Model_PartnerPayment extends XLite_Model_AModel
     function getParent() 
     {
         if (is_null($this->parent)) {
-            $this->parent = new XLite_Model_Profile($this->get('affiliate'));
+            $this->parent = new \XLite\Model\Profile($this->get('affiliate'));
         }
         return $this->parent;
     }
@@ -129,7 +131,7 @@ class XLite_Module_Affiliate_Model_PartnerPayment extends XLite_Model_AModel
     function getOrder() 
     {
         if (is_null($this->order)) {
-            $this->order = new XLite_Model_Order($this->get('order_id'));
+            $this->order = new \XLite\Model\Order($this->get('order_id'));
         }
         return $this->order;
     }
@@ -201,7 +203,7 @@ class XLite_Module_Affiliate_Model_PartnerPayment extends XLite_Model_AModel
     function _import(array $options) 
     {
         $data = $options['properties'];
-        $w = new XLite_View_AView();
+        $w = new \XLite\View\AView();
 
         static $line_no;
         if (!isset($line_no)) $line_no = 1; else $line_no++;

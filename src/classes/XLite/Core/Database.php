@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Core;
+
 /**
  * Database
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Core_Database extends XLite_Base implements XLite_Base_ISingleton
+class Database extends \XLite\Base implements \XLite\Base\ISingleton
 {
     /**
      * Doctrine config object
@@ -131,7 +133,7 @@ class XLite_Core_Database extends XLite_Base implements XLite_Base_ISingleton
     {
         // FIXME
         if (!isset(self::$em)) {
-            XLite_Core_Database::getInstance();
+            \XLite\Core\Database::getInstance();
         }
 
         return self::$em;
@@ -188,7 +190,7 @@ class XLite_Core_Database extends XLite_Base implements XLite_Base_ISingleton
      */
     protected function setDoctrineCache()
     {
-        $cache = self::getCacheDriverByOptions(XLite::getInstance()->getOptions('cache'));
+        $cache = self::getCacheDriverByOptions(\XLite::getInstance()->getOptions('cache'));
 
         if ($cache) {
             self::$cacheDriver = $cache;
@@ -266,7 +268,7 @@ class XLite_Core_Database extends XLite_Base implements XLite_Base_ISingleton
      */
     protected function getDSN()
     {
-        $options = XLite::getInstance()->getOptions('database_details');
+        $options = \XLite::getInstance()->getOptions('database_details');
 
         $dsnFields = array(
             'host'        => 'hostspec',
@@ -381,19 +383,19 @@ class XLite_Core_Database extends XLite_Base implements XLite_Base_ISingleton
         // Set table name prefix
         $classMetadata->setTableName(
             sprintf(
-                XLite::getInstance()->getOptions(array('database_details', 'table_pattern')),
+                \XLite::getInstance()->getOptions(array('database_details', 'table_pattern')),
                 $classMetadata->getTableName()
             )
         );
 
         // Set repository
         if (!$classMetadata->customRepositoryClassName) {
-            $class = str_replace('_Model_', '_Model_Repo_', $classMetadata->getReflectionClass()->getName());
-            if (XLite_Core_Operator::isClassExists($class)) {
+            $class = str_replace('\Model\\', '\Model\Repo\\', $classMetadata->getReflectionClass()->getName());
+            if (\XLite\Core\Operator::isClassExists($class)) {
                 $classMetadata->setCustomRepositoryClass($class);
 
             } else {
-                $classMetadata->setCustomRepositoryClass('XLite_Model_Repo_Base_Common');
+                $classMetadata->setCustomRepositoryClass('\XLite\Model\Repo\Base\Common');
             }
         }
     }

@@ -26,16 +26,18 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\ProductAdviser\Model;
+
 // FIXME - to revise
 
 /**
- * XLite_Module_ProductAdviser_Model_ProductAlsoBuy 
+ * \XLite\Module\ProductAdviser\Model\ProductAlsoBuy 
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_ProductAdviser_Model_ProductAlsoBuy extends XLite_Model_AModel
+class ProductAlsoBuy extends \XLite\Model\AModel
 {
     public $fields = array
     (

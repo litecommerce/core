@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Affiliate\Controller\Customer;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Affiliate_Controller_Customer_PartnerProducts extends XLite_Module_Affiliate_Controller_Partner
+class PartnerProducts extends \XLite\Module\Affiliate\Controller\Partner
 {
     public $params = array('target', 'mode', 'search_productsku', 'substring', 'search_category', 'subcategory_search', 'pageID', 'status');
     public $productsFound = 0;
@@ -50,7 +52,7 @@ class XLite_Module_Affiliate_Controller_Customer_PartnerProducts extends XLite_M
     {
         parent::addBaseLocation();
 
-        $this->locationPath->addNode(new XLite_Model_Location('Banners', $this->buildURL('partner_banners')));
+        $this->locationPath->addNode(new \XLite\Model\Location('Banners', $this->buildURL('partner_banners')));
     }
 
     /**
@@ -69,7 +71,7 @@ class XLite_Module_Affiliate_Controller_Customer_PartnerProducts extends XLite_M
     function getProducts()
     {
         if (is_null($this->products)) {
-            $p = new XLite_Model_Product();
+            $p = new \XLite\Model\Product();
             $this->products = $p->advancedSearch($this->substring,
                     $this->search_productsku,
                     $this->search_category,

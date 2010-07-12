@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\GiftCertificates\Controller\Admin;
+
 /**
  * Gift certificates
  * 
@@ -33,12 +35,12 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_GiftCertificates_Controller_Admin_GiftCertificates extends XLite_Controller_Admin_AAdmin
+class GiftCertificates extends \XLite\Controller\Admin\AAdmin
 {
     /**
      * Gift certificates list
      * 
-     * @var    array of XLite_Module_GiftCertificates_Model_GiftCertificate
+     * @var    array of \XLite\Module\GiftCertificates\Model\GiftCertificate
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
@@ -48,7 +50,7 @@ class XLite_Module_GiftCertificates_Controller_Admin_GiftCertificates extends XL
     /**
      * Get gift certificates 
      * 
-     * @return array of XLite_Module_GiftCertificates_Model_GiftCertificate
+     * @return array of \XLite\Module\GiftCertificates\Model\GiftCertificate
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -56,7 +58,7 @@ class XLite_Module_GiftCertificates_Controller_Admin_GiftCertificates extends XL
     public function getGiftCertificates()
     {
         if (is_null($this->giftCertificates)) {
-            $gc = new XLite_Module_GiftCertificates_Model_GiftCertificate();
+            $gc = new \XLite\Module\GiftCertificates\Model\GiftCertificate();
             $this->giftCertificates = $gc->findAll('', 'add_date desc');
             foreach ($this->giftCertificates as $gc) {
                 $gc->validate();
@@ -77,11 +79,11 @@ class XLite_Module_GiftCertificates_Controller_Admin_GiftCertificates extends XL
     protected function doActionUpdate()
     {
         if (
-            isset(XLite_Core_Request::getInstance()->status)
-            && is_array(XLite_Core_Request::getInstance()->status)
+            isset(\XLite\Core\Request::getInstance()->status)
+            && is_array(\XLite\Core\Request::getInstance()->status)
         ) {
-            foreach (XLite_Core_Request::getInstance()->status as $gcid => $status) {
-                $gc = new XLite_Module_GiftCertificates_Model_GiftCertificate($gcid);
+            foreach (\XLite\Core\Request::getInstance()->status as $gcid => $status) {
+                $gc = new \XLite\Module\GiftCertificates\Model\GiftCertificate($gcid);
                 $gc->set('status', $status);
                 $gc->update();
             }
@@ -98,7 +100,7 @@ class XLite_Module_GiftCertificates_Controller_Admin_GiftCertificates extends XL
      */
     protected function doActionDelete()
     {
-        $gc = new XLite_Module_GiftCertificates_Model_GiftCertificate(XLite_Core_Request::getInstance()->gcid);
+        $gc = new \XLite\Module\GiftCertificates\Model\GiftCertificate(\XLite\Core\Request::getInstance()->gcid);
         $gc->delete();
     }
 
@@ -112,8 +114,8 @@ class XLite_Module_GiftCertificates_Controller_Admin_GiftCertificates extends XL
      */
     protected function doActionDeleteAll()
     {
-        $gc = new XLite_Module_GiftCertificates_Model_GiftCertificate();
-        $status = XLite_Core_Request::getInstance()->deleteStatus;
+        $gc = new \XLite\Module\GiftCertificates\Model\GiftCertificate();
+        $status = \XLite\Core\Request::getInstance()->deleteStatus;
         $toDelete = $gc->iterate('status = \'' . $status . '\'');
         while ($gc->next($toDelete)) {
             $gc->delete();

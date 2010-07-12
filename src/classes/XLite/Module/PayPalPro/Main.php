@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\PayPalPro;
+
 /**
  * Module controller
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_PayPalPro_Main extends XLite_Module_AModule
+class Main extends \XLite\Module\AModule
 {
     /**
      * Module type
@@ -92,11 +94,11 @@ class XLite_Module_PayPalPro_Main extends XLite_Module_AModule
      */
     public static function getSettingsForm() 
     {
-        return XLite_Core_Converter::buildURL(
+        return \XLite\Core\Converter::buildURL(
             'payment_method',   
             '',
             array('payment_method' => 'paypalpro'),
-            XLite::ADMIN_SELF
+            \XLite::ADMIN_SELF
         );
     }
 
@@ -112,14 +114,14 @@ class XLite_Module_PayPalPro_Main extends XLite_Module_AModule
     {
         parent::init();
 
-        $pm = new XLite_Model_PaymentMethod('paypalpro');
+        $pm = new \XLite\Model\PaymentMethod('paypalpro');
         $params = $pm->get('params');
         $solution = $params['solution'];
 
         switch ($solution) {
             case 'standard':
                 $this->registerPaymentMethod('paypalpro');
-                XLite_Model_PaymentMethod::factory('paypalpro')->checkServiceURL();
+                \XLite\Model\PaymentMethod::factory('paypalpro')->checkServiceURL();
                 break;
 
             case 'pro':
@@ -136,9 +138,9 @@ class XLite_Module_PayPalPro_Main extends XLite_Module_AModule
         $this->xlite->set('PayPalProSolution', $solution);
 
         if ('standard' !== $solution) {
-            XLite::getInstance()->set(
+            \XLite::getInstance()->set(
                 'PayPalProExpressEnabled',
-                XLite_Model_PaymentMethod::factory('paypalpro_express')->get('enabled')
+                \XLite\Model\PaymentMethod::factory('paypalpro_express')->get('enabled')
             );
         }
     }

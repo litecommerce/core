@@ -11,4 +11,4 @@
  * @since     3.0.0
  * @ListChild (list="productsList.gridItem.info", weight="10")
  *}
-<widget class="XLite_View_Price" product="{product}" displayOnlyPrice="true" IF="isShowPrice()" />
+<widget class="\XLite\View\Price" product="{product}" displayOnlyPrice="true" IF="isShowPrice()" />

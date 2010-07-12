@@ -15,7 +15,7 @@
     {* FF2 requires an extra div in order to display "inner-blocks" properly *}
     <a href="{buildURL(#category#,##,_ARRAY_(#category_id#^subcategory.category_id))}" class="lc-subcategory-icon">
       <span class="lc-subcategory-icon">
-        <widget class="XLite_View_Image" image="{subcategory.image}" maxWidth="{getIconWidth()}" maxHeight="{getIconHeight()}" alt="{subcategory.name}" centerImage=1 />
+        <widget class="\XLite\View\Image" image="{subcategory.image}" maxWidth="{getIconWidth()}" maxHeight="{getIconHeight()}" alt="{subcategory.name}" centerImage=1 />
       </span>
       <span class="lc-subcategory-name">{subcategory.name}</span>
     </a>

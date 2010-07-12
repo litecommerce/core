@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Controller_Admin_ShippingMethods extends XLite_Controller_Admin_ShippingSettings
+class ShippingMethods extends \XLite\Controller\Admin\ShippingSettings
 {
     function getPageTemplate()
     {
@@ -42,21 +44,21 @@ class XLite_Controller_Admin_ShippingMethods extends XLite_Controller_Admin_Ship
 
     function action_add()
     {
-        $shipping = new XLite_Model_Shipping();
-        $shipping->set('properties', XLite_Core_Request::getInstance()->getData());
+        $shipping = new \XLite\Model\Shipping();
+        $shipping->set('properties', \XLite\Core\Request::getInstance()->getData());
         $shipping->create();
         $this->xlite->set('action_add_valid', true);
     }
 
     function action_update()
     {
-        foreach (XLite_Core_Request::getInstance()->order_by as $shipping_id=>$order_by) {
-            $shipping = new XLite_Model_Shipping($shipping_id);
+        foreach (\XLite\Core\Request::getInstance()->order_by as $shipping_id=>$order_by) {
+            $shipping = new \XLite\Model\Shipping($shipping_id);
             $shipping->set('order_by', $order_by);
             $enabled = 0;
 
-            if (isset(XLite_Core_Request::getInstance()->enabled)) {
-                $_tmp = XLite_Core_Request::getInstance()->enabled;
+            if (isset(\XLite\Core\Request::getInstance()->enabled)) {
+                $_tmp = \XLite\Core\Request::getInstance()->enabled;
                 if (isset($_tmp[$shipping_id])) {
                     $enabled = 1;
                 }
@@ -68,7 +70,7 @@ class XLite_Controller_Admin_ShippingMethods extends XLite_Controller_Admin_Ship
 
     function action_delete()
     {
-        $shipping = new XLite_Model_Shipping(XLite_Core_Request::getInstance()->shipping_id);
+        $shipping = new \XLite\Model\Shipping(\XLite\Core\Request::getInstance()->shipping_id);
         $shipping->delete();
     }
 }

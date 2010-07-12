@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Affiliate\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Affiliate_Controller_Admin_TopPerformers extends XLite_Module_Affiliate_Controller_Admin_PartnerStats
+class TopPerformers extends \XLite\Module\Affiliate\Controller\Admin\PartnerStats
 {
     function getPageTemplate()
     {
@@ -54,7 +56,7 @@ class XLite_Module_Affiliate_Controller_Admin_TopPerformers extends XLite_Module
     function getStats()
     {
         if (is_null($this->stats)) {
-            $ss = new XLite_Module_Affiliate_Model_BannerStats();
+            $ss = new \XLite\Module\Affiliate\Model\BannerStats();
             $this->stats = array();
             $this->stats = $ss->searchTopPerformers(
                 $this->get('startDate'),
@@ -64,7 +66,7 @@ class XLite_Module_Affiliate_Controller_Admin_TopPerformers extends XLite_Module
             $this->stats = array_reverse($this->stats);
             foreach ($this->stats as $sid => $stat) {
                 if (isset($stat['partner_id'])) {
-                    $partner = new XLite_Model_Profile();
+                    $partner = new \XLite\Model\Profile();
                     if (!$partner->find("profile_id=".$stat['partner_id'])) {
                         $partner->set('login', "Unknown");
                     }

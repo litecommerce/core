@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\eWAYxml\Model\PaymentMethod;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_eWAYxml_Model_PaymentMethod_EwayXml extends XLite_Model_PaymentMethod_CreditCard
+class EwayXml extends \XLite\Model\PaymentMethod\CreditCard
 {
     public $configurationTemplate = "modules/eWAYxml/config.tpl";
     public $hasConfigurationForm = true;

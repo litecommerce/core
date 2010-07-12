@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\InventoryTracking\Model;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_InventoryTracking_Model_Inventory extends XLite_Model_AModel implements XLite_Base_ISingleton
+class Inventory extends \XLite\Model\AModel implements \XLite\Base\ISingleton
 {
     /**
     * @var string $alias The credit cards database table alias.
@@ -80,7 +82,7 @@ class XLite_Module_InventoryTracking_Model_Inventory extends XLite_Model_AModel 
     {
         $properties = $options['properties'];
         // search for the product first
-        $product = new XLite_Model_Product();
+        $product = new \XLite\Model\Product();
         $found = false;
 
         // search product by SKU
@@ -99,7 +101,7 @@ class XLite_Module_InventoryTracking_Model_Inventory extends XLite_Model_AModel 
         if ($found) {
             // product found
             $inventory_id = $product->get('product_id') . (!empty($properties['product_options']) ? "|".$properties['product_options'] : "");
-            $inventory = new XLite_Module_InventoryTracking_Model_Inventory();
+            $inventory = new \XLite\Module\InventoryTracking\Model\Inventory();
             $inventory->set('properties', $properties);
 
             if ($inventory->find("inventory_id='$inventory_id'")) {
@@ -127,7 +129,7 @@ class XLite_Module_InventoryTracking_Model_Inventory extends XLite_Model_AModel 
         if ($pos&&(!$this->xlite->get('ProductOptionsEnabled')||($this->xlite->get('ProductOptionsEnabled')&&!in_array('product_options',$layout))))
             return array();
         $product_id = $pos === false ? $inventory_id : substr($inventory_id, 0, $pos);
-        $product = new XLite_Model_Product($product_id);
+        $product = new \XLite\Model\Product($product_id);
         if ($product->find("product_id='$product_id'")) {
             $values = $this->properties;
             foreach ($layout as $field) {
@@ -180,8 +182,8 @@ class XLite_Module_InventoryTracking_Model_Inventory extends XLite_Model_AModel 
             $product_id = $pos === false ? $inventory_id : substr($inventory_id, 0, $pos);
 
             // send low limit notification
-            $mailer = new XLite_Model_Mailer();
-            $mailer->set('product', new XLite_Model_Product($product_id));
+            $mailer = new \XLite\Model\Mailer();
+            $mailer->set('product', new \XLite\Model\Product($product_id));
             $mailer->set('item', $item);
             $mailer->set('amount', $this->get('amount'));
             $mailer->compose(

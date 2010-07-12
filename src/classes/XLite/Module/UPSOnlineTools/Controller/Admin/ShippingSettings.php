@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\UPSOnlineTools\Controller\Admin;
+
 /**
  * Shipping settings controller
  * 
@@ -33,8 +35,8 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_UPSOnlineTools_Controller_Admin_ShippingSettings extends XLite_Controller_Admin_ShippingSettings
-implements XLite_Base_IDecorator
+class ShippingSettings extends \XLite\Controller\Admin\ShippingSettings
+implements \XLite\Base\IDecorator
 {
     /**
      * Get shippings list
@@ -50,7 +52,7 @@ implements XLite_Base_IDecorator
 
             parent::getShippings();
 
-            $method = new XLite_Module_UPSOnlineTools_Model_Shipping_Ups();
+            $method = new \XLite\Module\UPSOnlineTools\Model\Shipping\Ups();
 
             foreach ($this->_shippings as $shippingKey => $shipping) {
                 if ($shipping->get('class') == 'ups') {

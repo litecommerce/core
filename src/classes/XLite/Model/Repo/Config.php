@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model\Repo;
+
 /**
  * DB-based configuration registry
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_Repo_Config extends XLite_Model_Repo_Base_I18n
+class Config extends \XLite\Model\Repo\Base\I18n
 {
     /**
      * Default 'order by' field name
@@ -134,7 +136,7 @@ class XLite_Model_Repo_Config extends XLite_Model_Repo_Base_I18n
             $condition = 'c.category = :category' . $category;
             $params['category' . $category] = $category;
 
-            list($keys, $options) = XLite_Core_Database::prepareArray($options, $category);
+            list($keys, $options) = \XLite\Core\Database::prepareArray($options, $category);
             $condition .= ' AND c.name IN (' . implode(',', $keys) . ')';
             $params += $options;
 
@@ -314,11 +316,11 @@ class XLite_Model_Repo_Config extends XLite_Model_Repo_Base_I18n
     }
 
     /**
-     * Preprocess options and transform its to the hierarchy of XLite_Core_CommonCell objects
+     * Preprocess options and transform its to the hierarchy of \XLite\Core\CommonCell objects
      * 
      * @param array $data Array of options data gathered from the database
      *  
-     * @return XLite_Core_CommonCell
+     * @return \XLite\Core\CommonCell
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -326,7 +328,7 @@ class XLite_Model_Repo_Config extends XLite_Model_Repo_Base_I18n
     public function processOptions($data)
     {
 
-        $config = new XLite_Core_CommonCell();
+        $config = new \XLite\Core\CommonCell();
 
         foreach ($data as $option) {
         
@@ -336,7 +338,7 @@ class XLite_Model_Repo_Config extends XLite_Model_Repo_Base_I18n
             $value    = $option->value;
 
             if (!isset($config->$category)) {
-                $config->$category = new XLite_Core_CommonCell();
+                $config->$category = new \XLite\Core\CommonCell();
             }
 
             if ('checkbox' === $type) {
@@ -353,26 +355,26 @@ class XLite_Model_Repo_Config extends XLite_Model_Repo_Base_I18n
 
         // Add human readable store country and state names for Company options
         if (isset($config->Company)) {
-            $config->Company->locationCountry = XLite_Core_Database::getEM()
-                ->find('XLite_Model_Country', $config->Company->location_country);
+            $config->Company->locationCountry = \XLite\Core\Database::getRepo('XLite\Model\Country')
+                ->find($config->Company->location_country);
 
-            $config->Company->locationState = XLite_Core_Database::getRepo('XLite_Model_State')
+            $config->Company->locationState = \XLite\Core\Database::getRepo('XLite\Model\State')
                 ->findById($config->Company->location_state, $config->Company->location_custom_state);
         }
 
         // Add human readable default country name for General options
         if (isset($config->General)) {
-            $config->General->defaultCountry = XLite_Core_Database::getEM()
-                ->find('XLite_Model_Country', $config->General->default_country);
+            $config->General->defaultCountry = \XLite\Core\Database::getRepo('XLite\Model\Country')
+                ->find($config->General->default_country);
 
             // Get default language object
             if (isset($config->General->default_language)) {
-                $config->General->defaultLanguage = XLite_Core_Database::getRepo('XLite_Model_Language')
+                $config->General->defaultLanguage = \XLite\Core\Database::getRepo('XLite\Model\Language')
                     ->findOneByCode($config->General->default_language);
             }
 
             if (!isset($config->General->defaultLanguage)) {
-                $config->General->defaultLanguage = XLite_Core_Database::getRepo('XLite_Model_Language')->getDefaultLanguage();
+                $config->General->defaultLanguage = \XLite\Core\Database::getRepo('XLite\Model\Language')->getDefaultLanguage();
             }
 
         }
@@ -461,12 +463,12 @@ class XLite_Model_Repo_Config extends XLite_Model_Repo_Base_I18n
 
         // Create a new option
         } else {
-            $option = new XLite_Model_Config();
+            $option = new \XLite\Model\Config();
         }
 
 
         $option->map($fields);
-        XLite_Core_Database::getEM()->persist($option);
-        XLite_Core_Database::getEM()->flush();
+        \XLite\Core\Database::getEM()->persist($option);
+        \XLite\Core\Database::getEM()->flush();
     }
 }

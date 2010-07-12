@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Promotion\Model;
+
 /**
  * ____description____
  * 
@@ -33,11 +35,11 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Promotion_Model_Category extends XLite_Model_Category implements XLite_Base_IDecorator
+class Category extends \XLite\Model\Category implements \XLite\Base\IDecorator
 {
     function delete()
     {
-        $so = new XLite_Module_Promotion_Model_SpecialOffer();
+        $so = new \XLite\Module\Promotion\Model\SpecialOffer();
         $soDeletedCategories = $so->findAll("category_id='" . $this->get('category_id') . "'");
         if (is_array($soDeletedCategories) && count($soDeletedCategories) > 0) {
             foreach ($soDeletedCategories as $sodp) {
@@ -45,11 +47,11 @@ class XLite_Module_Promotion_Model_Category extends XLite_Model_Category impleme
             }
         }
 
-        $bp = new XLite_Module_Promotion_Model_BonusPrice();
+        $bp = new \XLite\Module\Promotion\Model\BonusPrice();
         $bpDeletedCategories = $bp->findAll("category_id='" . $this->get('category_id') . "'");
         if (is_array($bpDeletedCategories) && count($bpDeletedCategories) > 0) {
             foreach ($bpDeletedCategories as $bpdp) {
-                $sodp = new XLite_Module_Promotion_Model_SpecialOffer($bpdp->get('offer_id'));
+                $sodp = new \XLite\Module\Promotion\Model\SpecialOffer($bpdp->get('offer_id'));
                 $sodp->markInvalid();
             }
         }

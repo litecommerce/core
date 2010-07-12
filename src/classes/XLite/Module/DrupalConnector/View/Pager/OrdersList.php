@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\DrupalConnector\View\Pager;
+
 /**
  * List pager for Orders list
  * 
@@ -33,8 +35,8 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_DrupalConnector_View_Pager_OrdersList extends XLite_View_Pager_OrdersList
-implements XLite_Base_IDecorator
+class OrdersList extends \XLite\View\Pager\OrdersList
+implements \XLite\Base\IDecorator
 {
     /**
      * Build page URL by page ID

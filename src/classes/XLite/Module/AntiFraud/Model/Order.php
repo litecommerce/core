@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\AntiFraud\Model;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_AntiFraud_Model_Order extends XLite_Model_Order implements XLite_Base_IDecorator
+class Order extends \XLite\Model\Order implements \XLite\Base\IDecorator
 {
     function getAntiFraudData()
     {
@@ -127,7 +129,7 @@ class XLite_Module_AntiFraud_Model_Order extends XLite_Model_Order implements XL
         $post['service_key'] = $this->config->AntiFraud->antifraud_license;
         $post['safe_distance'] = $this->config->AntiFraud->antifraud_safe_distance;
 
-        $request = new XLite_Model_HTTPS();
+        $request = new \XLite\Model\HTTPS();
         $request->url = $this->config->AntiFraud->antifraud_url."/antifraud_service.php";
         $request->data = $post;
         $request->request();
@@ -143,7 +145,7 @@ class XLite_Module_AntiFraud_Model_Order extends XLite_Model_Order implements XL
     		$data 	= unserialize($data);
 
     		$risk_factor_multiplier = 1;
-    		$found = new XLite_Model_Order($this->get('order_id'));
+    		$found = new \XLite\Model\Order($this->get('order_id'));
 
     		if ($this->config->AntiFraud->antifraud_order_total > 0 && $this->get('total') > 0 &&  $this->get('total') > $this->config->AntiFraud->antifraud_order_total)	{
     			$risk_factor_multiplier *= $this->config->AntiFraud->order_total_multiplier;
@@ -169,14 +171,14 @@ class XLite_Module_AntiFraud_Model_Order extends XLite_Model_Order implements XL
     		
     		$result['total_trust_score'] = $result['total_trust_score'] * $risk_factor_multiplier;
 
-            $country = XLite_Core_Database::getEM()->find('XLite_Model_Country', $profile->get('billing_country'));
+            $country = \XLite\Core\Database::getEM()->find('XLite\Model\Country', $profile->get('billing_country'));
             if ($country->isRiskCountry()) {
                 $result['total_trust_score'] +=  $this->config->AntiFraud->risk_country_multiplier;
             }
     		
             if ($result['available_request'] == $result['used_request']) {
                 $result['error'] = 'LICENSE_KEY_EXPIRED';
-    			$mailer = new XLite_Model_Mailer();
+    			$mailer = new \XLite\Model\Mailer();
     			$mailer->compose($this->config->Company->orders_department,
     							 $this->config->Company->site_administrator, 
     							 "modules/AntiFraud/license_expired");
@@ -250,7 +252,7 @@ class XLite_Module_AntiFraud_Model_Order extends XLite_Model_Order implements XL
         if ($this->xlite->is('adminZone') && $this->config->AntiFraud->always_keep_info) {
         	$afFields = array('customer_ip', "proxy_ip", "af_result", "processed_orders", "declined_orders", "af_data");
 
-            $oldOrder = new XLite_Model_Order($this->get('order_id'));
+            $oldOrder = new \XLite\Model\Order($this->get('order_id'));
         	$oldDetails = $oldOrder->get('details');
         	$details = $this->get('details');
         	$detailsUpdated = false;

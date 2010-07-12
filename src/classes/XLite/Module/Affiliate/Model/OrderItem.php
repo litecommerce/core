@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Affiliate\Model;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Affiliate_Model_OrderItem extends XLite_Model_OrderItem implements XLite_Base_IDecorator
+class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
 {
     public function __construct()
     {
@@ -44,6 +46,6 @@ class XLite_Module_Affiliate_Model_OrderItem extends XLite_Model_OrderItem imple
     // FIXME - check it (see old version)
     function getAffiliateProduct()
     {
-        return new XLite_Model_Product($this->get('product_id'));
+        return new \XLite\Model\Product($this->get('product_id'));
     }
 }

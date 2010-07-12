@@ -44,7 +44,7 @@ function eachNthChange(disable)
 <input id="bonusPoints" type="radio" name="bonusType"  value="bonusPoints" checked="{isSelected(bonusType,#bonusPoints#)}"> Bonus points <br>
 </blockquote>
 <b>Special offer name</b> (shown in the offer list in Admin zone): <input type="text" name="title" value="{title:r}" size="40">
-<widget class="XLite_Validator_RequiredValidator" field="title">
+<widget class="\XLite\Validator\RequiredValidator" field="title">
 <p align="center">
 <a href="javascript: document.offerForm.submit()"><FONT class=FormButton>Next <img src="images/go.gif" width="13" height="13" border="0" align="absmiddle"></FONT></a>
 </p>

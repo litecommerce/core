@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View\LanguagesModify;
+
 /**
  * Add (activate) language dialog
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_LanguagesModify_AddLanguage extends XLite_View_AView
+class AddLanguage extends \XLite\View\AView
 {
     /**
      * Return widget default template
@@ -57,7 +59,7 @@ class XLite_View_LanguagesModify_AddLanguage extends XLite_View_AView
      */
     public function getInactiveLanguages()
     {
-        return XLite_Core_Database::getRepo('XLite_Model_Language')
+        return \XLite\Core\Database::getRepo('XLite\Model\Language')
             ->findInactiveLanguages();
     }
 

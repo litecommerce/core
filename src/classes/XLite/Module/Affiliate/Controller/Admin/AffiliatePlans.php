@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Affiliate\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,13 +35,13 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Affiliate_Controller_Admin_AffiliatePlans extends XLite_Controller_Admin_AAdmin
+class AffiliatePlans extends \XLite\Controller\Admin\AAdmin
 {
     function action_delete()
     {
         $ap = $this->get('affiliatePlan');
         if ($ap->get('plan_id') == $this->config->Affiliate->default_plan) {
-            XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+            \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
                 array(
                     'category' => 'Affiliate',
                     'name'     => 'default_plan',
@@ -55,7 +57,7 @@ class XLite_Module_Affiliate_Controller_Admin_AffiliatePlans extends XLite_Contr
         $ap = $this->get('affiliatePlan');
         $ap->update();
         if ($ap->get('plan_id') == $this->config->Affiliate->default_plan && !$ap->get('enabled')) {
-            XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+            \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
                 array(
                     'category' => 'Affiliate',
                     'name'     => 'default_plan',
@@ -76,7 +78,7 @@ class XLite_Module_Affiliate_Controller_Admin_AffiliatePlans extends XLite_Contr
 
     function getAffiliatePlan()
     {
-        $ap = new XLite_Module_Affiliate_Model_AffiliatePlan(isset($_REQUEST['plan_id']) ? $_REQUEST['plan_id'] : null);
+        $ap = new \XLite\Module\Affiliate\Model\AffiliatePlan(isset($_REQUEST['plan_id']) ? $_REQUEST['plan_id'] : null);
         $ap->set('properties', $_REQUEST);
         return $ap;
     }
@@ -84,7 +86,7 @@ class XLite_Module_Affiliate_Controller_Admin_AffiliatePlans extends XLite_Contr
     function getAffiliatePlans()
     {
         if (is_null($this->affiliatePlans)) {
-            $ap = new XLite_Module_Affiliate_Model_AffiliatePlan();
+            $ap = new \XLite\Module\Affiliate\Model\AffiliatePlan();
             $this->affiliatePlans = $ap->findAll();
         }
         return $this->affiliatePlans;

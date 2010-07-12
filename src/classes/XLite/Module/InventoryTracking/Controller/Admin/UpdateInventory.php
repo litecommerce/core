@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\InventoryTracking\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_InventoryTracking_Controller_Admin_UpdateInventory extends XLite_Controller_Admin_UpdateInventory implements XLite_Base_IDecorator
+class UpdateInventory extends \XLite\Controller\Admin\UpdateInventory implements \XLite\Base\IDecorator
 {
     protected $inventory = null;
 
@@ -46,7 +48,7 @@ class XLite_Module_InventoryTracking_Controller_Admin_UpdateInventory extends XL
 
     function handleRequestAmount()
     {
-        $this->inventory = XLite_Module_InventoryTracking_Model_Inventory::getInstance();
+        $this->inventory = \XLite\Module\InventoryTracking\Model\Inventory::getInstance();
     }
 
     function export_amount()

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View\OrderList;
+
 /**
  * Orders search widget
  * 
@@ -34,7 +36,7 @@
  * @since   3.0.0
  * @ListChild (list="orders.search.base", weight="30")
  */
-class XLite_View_OrderList_Search extends XLite_View_OrderList_AOrderList
+class Search extends \XLite\View\OrderList\AOrderList
 {
     /**
      * Widget class name
@@ -44,7 +46,7 @@ class XLite_View_OrderList_Search extends XLite_View_OrderList_AOrderList
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $widgetClass = 'XLite_View_OrderList_Search';
+    protected $widgetClass = '\XLite\View\OrderList\Search';
 
     /**
      * Search conditions (cache)
@@ -59,7 +61,7 @@ class XLite_View_OrderList_Search extends XLite_View_OrderList_AOrderList
     /**
      * Get orders 
      * 
-     * @return array of XLite_Model_Order
+     * @return array of \XLite\Model\Order
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -69,7 +71,7 @@ class XLite_View_OrderList_Search extends XLite_View_OrderList_AOrderList
         if (is_null($this->orders)) {
             $conditions = $this->getConditions();
 
-            $order = new XLite_Model_Order();
+            $order = new \XLite\Model\Order();
             $this->orders = $order->search(
                 $this->getProfile(),
                 $conditions['order_id'],
@@ -101,7 +103,7 @@ class XLite_View_OrderList_Search extends XLite_View_OrderList_AOrderList
                     'data'   => $this->getOrders(),
                     'pageId' => $this->getPageId(),
                 ),
-                'XLite_View_Pager_OrdersList',
+                '\XLite\View\Pager\OrdersList',
                 'pager'
             );
         }
@@ -112,14 +114,14 @@ class XLite_View_OrderList_Search extends XLite_View_OrderList_AOrderList
     /**
      * Get profile 
      * 
-     * @return XLite_Model_Profile
+     * @return \XLite\Model\Profile
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getProfile()
     {
-        return XLite_Model_Auth::getInstance()->getProfile(XLite_Core_Request::getInstance()->profile_id);
+        return \XLite\Model\Auth::getInstance()->getProfile(\XLite\Core\Request::getInstance()->profile_id);
     }
 
     /**
@@ -150,7 +152,7 @@ class XLite_View_OrderList_Search extends XLite_View_OrderList_AOrderList
         if (is_null($this->conditions)) {
             $this->conditions = $this->session->get('orders_search');
             if (!is_array($this->conditions)) {
-                $this->conditions = XLite_Model_Order::getDefaultSearchConditions();
+                $this->conditions = \XLite\Model\Order::getDefaultSearchConditions();
                 $this->session->set('orders_search', $this->conditions);
             }
         }

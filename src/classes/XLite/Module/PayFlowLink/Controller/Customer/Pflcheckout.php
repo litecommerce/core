@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\PayFlowLink\Controller\Customer;
+
 /**
  * ____description____
  * 
@@ -33,14 +35,14 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_PayFlowLink_Controller_Customer_Pflcheckout extends XLite_Controller_Customer_Checkout
+class Pflcheckout extends \XLite\Controller\Customer\Checkout
 {
     public $registerForm = null;
 
     function init()
     {
     	if ($_REQUEST['target'] == "pflcheckout") {
-    		$this->registerForm = new XLite_Base();
+    		$this->registerForm = new \XLite\Base();
     	}
 
     	parent::init();

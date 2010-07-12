@@ -13,15 +13,15 @@
 <ul class="list-body list-body-list">
 
   <li FOREACH="getPageData(),product" class="item">
-    <widget class="XLite_View_AddedToCartMark" product="{product}" />
+    <widget class="\XLite\View\AddedToCartMark" product="{product}" />
     <span class="draggable-mark">Drag me to the cart</span>
     <a IF="isShowThumbnails()&product.hasThumbnail()" class="product-thumbnail" href="{buildURL(#product#,##,_ARRAY_(#product_id#^product.product_id,#category_id#^category_id))}"><img src="{product.getThumbnailURL()}" alt="" /></a>
     <div class="body">
       <a href="{buildURL(#product#,##,_ARRAY_(#product_id#^product.product_id,#category_id#^category_id))}" class="product-name">{product.name:h}</a>
       <br />
       <div IF="isShowDescription()" class="product-description">{truncate(product,#brief_description#,#300#):h}</div>
-      <widget class="XLite_View_Price" product="{product}" displayOnlyPrice="true" IF="isShowPrice()" />
-      <widget class="XLite_View_BuyNow" product="{product}" IF="isShowAdd2Cart(product)" />
+      <widget class="\XLite\View\Price" product="{product}" displayOnlyPrice="true" IF="isShowPrice()" />
+      <widget class="\XLite\View\BuyNow" product="{product}" IF="isShowAdd2Cart(product)" />
     </div>
 
   </li>

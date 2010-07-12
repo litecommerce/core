@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model;
+
 /**
  * Config multilingual data
  * 
@@ -35,7 +37,7 @@
  * @Entity
  * @Table (name="config_translations")
  */
-class XLite_Model_ConfigTranslation extends XLite_Model_Base_Translation
+class ConfigTranslation extends \XLite\Model\Base\Translation
 {
     /**
      * Human-readable option name

@@ -54,7 +54,7 @@ $('.checkout-details').submit(CheckoutSubmit);
       <td>Start date:</td>
       <td class="marker"><span id="start_date_star">*</span></td>
       <td>
-        <widget class="XLite_View_Date" field="cc_info_cc_start_date_" hide_days="1" higherYear="{getCurrentYear()}" showMonthsNumbers="1" /><br />
+        <widget class="\XLite\View\Date" field="cc_info_cc_start_date_" hide_days="1" higherYear="{getCurrentYear()}" showMonthsNumbers="1" /><br />
         <input type="checkbox" name="no_start_date" id="start_date_box" onclick="javascript: showStar('start_date');">&nbsp;<label for="start_date_box">My card has no "Start date" information</label>
         <input type="hidden" name="cc_info[cc_start_date]" value="MMYY" />
       </td>
@@ -64,7 +64,7 @@ $('.checkout-details').submit(CheckoutSubmit);
       <td>Expiration date:</td>
       <td class="marker">*</td>
       <td>
-        <widget class="XLite_View_Date" field="cc_info_cc_date_" hide_days="1" lowerYear="{getCurrentYear()}" yearsRange="5" showMonthsNumbers="1" />
+        <widget class="\XLite\View\Date" field="cc_info_cc_date_" hide_days="1" lowerYear="{getCurrentYear()}" yearsRange="5" showMonthsNumbers="1" />
         <input type="hidden" name="cc_info[cc_date]" value="MMYY" />
       </td>
     </tr>

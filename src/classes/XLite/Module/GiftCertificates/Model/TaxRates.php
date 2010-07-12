@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\GiftCertificates\Model;
+
 /**
  * Tax rates
  * 
@@ -33,19 +35,19 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_GiftCertificates_Model_TaxRates extends XLite_Model_TaxRates implements XLite_Base_IDecorator
+class TaxRates extends \XLite\Model\TaxRates implements \XLite\Base\IDecorator
 {
     /**
      * Set order item 
      * 
-     * @param XLite_Model_OrderItem $item Order item
+     * @param \XLite\Model\OrderItem $item Order item
      *  
      * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function setOrderItem(XLite_Model_OrderItem $item)
+    public function setOrderItem(\XLite\Model\OrderItem $item)
     {
         parent::setOrderItem($item);
 

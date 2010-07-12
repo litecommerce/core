@@ -10,6 +10,6 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<widget module="ProductAdviser" class="XLite_Module_ProductAdviser_View_RelatedProducts" />
-<widget module="ProductAdviser" class="XLite_Module_ProductAdviser_View_ProductAlsoBuy" />
-<widget module="ProductAdviser" class="XLite_Module_ProductAdviser_View_NewArrivals" widgetType="center" displayMode="list" />
+<widget module="ProductAdviser" class="\XLite\Module\ProductAdviser\View\RelatedProducts" />
+<widget module="ProductAdviser" class="\XLite\Module\ProductAdviser\View\ProductAlsoBuy" />
+<widget module="ProductAdviser" class="\XLite\Module\ProductAdviser\View\NewArrivals" widgetType="center" displayMode="list" />

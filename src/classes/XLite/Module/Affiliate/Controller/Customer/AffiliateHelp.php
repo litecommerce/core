@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Affiliate\Controller\Customer;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Affiliate_Controller_Customer_AffiliateHelp extends XLite_Controller_Customer_Help
+class AffiliateHelp extends \XLite\Controller\Customer\Help
 {
     public $params = array('target',"mode");
     public $template = "modules/Affiliate/main.tpl";

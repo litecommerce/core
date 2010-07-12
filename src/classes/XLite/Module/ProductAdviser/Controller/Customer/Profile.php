@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\ProductAdviser\Controller\Customer;
+
 // FIXME - must be completely revised
 
 /**
@@ -35,7 +37,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_ProductAdviser_Controller_Customer_Profile extends XLite_Controller_Customer_Profile implements XLite_Base_IDecorator
+class Profile extends \XLite\Controller\Customer\Profile implements \XLite\Base\IDecorator
 {
 /*    public $from = null;
 

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\UPSOnlineTools\Model\Shipping;
+
 /**
  * Online shipping method
  * 
@@ -33,8 +35,8 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_UPSOnlineTools_Model_Shipping_Online extends XLite_Model_Shipping_Online
-implements XLite_Base_IDecorator
+class Online extends \XLite\Model\Shipping\Online
+implements \XLite\Base\IDecorator
 {
     /**
      * Get carrier 

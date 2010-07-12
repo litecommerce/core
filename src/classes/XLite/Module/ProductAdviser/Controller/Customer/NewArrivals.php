@@ -26,14 +26,16 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\ProductAdviser\Controller\Customer;
+
 /**
- * XLite_Module_ProductAdviser_Controller_Customer_NewArrivals 
+ * \XLite\Module\ProductAdviser\Controller\Customer\NewArrivals 
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_ProductAdviser_Controller_Customer_NewArrivals extends XLite_Controller_Customer_ACustomer
+class NewArrivals extends \XLite\Controller\Customer\ACustomer
 {
     /**
      * Get current location (for breadcrumbs)

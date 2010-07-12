@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Intershipper\Model\Shipping;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Intershipper_Model_Shipping_Intershipper extends XLite_Model_Shipping_Online
+class Intershipper extends \XLite\Model\Shipping\Online
 {
     public $error = "";
     public $xmlError = false;
@@ -59,7 +61,7 @@ class XLite_Module_Intershipper_Model_Shipping_Intershipper extends XLite_Model_
         return "Intershipper";
     }
 
-    function getRates(XLite_Model_Order $order)
+    function getRates(\XLite\Model\Order $order)
     {
         include_once LC_MODULES_DIR . 'Intershipper' . LC_DS . 'encoded.php';
         return Shipping_intershipper_getRates($this, $order);

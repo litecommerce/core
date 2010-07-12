@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model;
+
 /**
  * Class Profile provides access to user profile data
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_Profile extends XLite_Model_AModel
+class Profile extends \XLite\Model\AModel
 {
     /**
      * Object properties (table filed => default value)
@@ -193,8 +195,8 @@ class XLite_Model_Profile extends XLite_Model_AModel
      */
     public function findForAuth($login, $password)
     {
-        if ((bool) XLite_Core_Request::getInstance()->anonymous) {
-            $this->_range = 'order_id = \'' . XLite_Model_Cart::getInstance()->get('order_id') . '\'';
+        if ((bool) \XLite\Core\Request::getInstance()->anonymous) {
+            $this->_range = 'order_id = \'' . \XLite\Model\Cart::getInstance()->get('order_id') . '\'';
         }
     
         return $this->findByLogin($login) && ($this->get('password') === $password) && $this->isEnabled();
@@ -260,7 +262,7 @@ class XLite_Model_Profile extends XLite_Model_AModel
 
     function getBillingState() 
     {
-        return XLite_Core_Database::getRepo('XLite_Model_State')->findById(
+        return \XLite\Core\Database::getRepo('XLite\Model\State')->findById(
             $this->get('billing_state'),
             $this->get('billing_custom_state')
         );
@@ -268,7 +270,7 @@ class XLite_Model_Profile extends XLite_Model_AModel
 
     function getShippingState() 
     {
-        return XLite_Core_Database::getRepo('XLite_Model_State')->findById(
+        return \XLite\Core\Database::getRepo('XLite\Model\State')->findById(
             $this->get('shipping_state'),
             $this->get('shipping_custom_state')
         );
@@ -276,11 +278,11 @@ class XLite_Model_Profile extends XLite_Model_AModel
 
     function getBillingCountry() 
     {
-        return XLite_Core_Database::getEM()->find('XLite_Model_Country', $this->get('billing_country'));
+        return \XLite\Core\Database::getEM()->find('XLite\Model\Country', $this->get('billing_country'));
     }
     function getShippingCountry() 
     {
-        return XLite_Core_Database::getEM()->find('XLite_Model_Country', $this->get('shipping_country'));
+        return \XLite\Core\Database::getEM()->find('XLite\Model\Country', $this->get('shipping_country'));
     }
 
     function enable() 
@@ -295,7 +297,7 @@ class XLite_Model_Profile extends XLite_Model_AModel
 
     function isExists($login = '') 
     {
-        $p = new XLite_Model_Profile();
+        $p = new \XLite\Model\Profile();
 
         return $p->find('login = \'' . addslashes($login) . '\'');
     }
@@ -307,7 +309,7 @@ class XLite_Model_Profile extends XLite_Model_AModel
 
     function isAdmin() 
     {
-        return XLite_Model_Auth::getInstance()->isAdmin($this);
+        return \XLite\Model\Auth::getInstance()->isAdmin($this);
     }
 
     function toXML() 
@@ -330,12 +332,12 @@ class XLite_Model_Profile extends XLite_Model_AModel
 
         $properties = $options['properties'];
         if (isset($properties['membership']) && $properties['membership']) {
-            $membership = XLite_Core_Database::getRepo('XLite_Model_Membership')->findOneByName($properties['membership'], false);
+            $membership = \XLite\Core\Database::getRepo('XLite\Model\Membership')->findOneByName($properties['membership'], false);
             if (!$membership) {
-                $membership = new XLite_Model_Membership();
+                $membership = new \XLite\Model\Membership();
                 $membership->name = $properties['membership'];
-                XLite_Core_Database::getEM()->persist($membership);
-                XLite_Core_Database::getEM()->flush();
+                \XLite\Core\Database::getEM()->persist($membership);
+                \XLite\Core\Database::getEM()->flush();
             }
 
             $properties['membership'] = $membership->membership_id;
@@ -346,7 +348,7 @@ class XLite_Model_Profile extends XLite_Model_AModel
 
         $this->_convertProperties($properties, $options['md5_import']);
         $existent = false;
-        $profile = new XLite_Model_Profile();
+        $profile = new \XLite\Model\Profile();
         $login =  $properties['login'];
         if (empty($login)) {
             echo "<font color=red>WARNING!</font> Ignoring import row: \"login\" property not found<br>\n";
@@ -397,14 +399,14 @@ class XLite_Model_Profile extends XLite_Model_AModel
 
     function _convertState($value)
     {
-        $state = XLite_Core_Database::getRepo('XLite_Model_State')->findOneByCode($value);
+        $state = \XLite\Core\Database::getRepo('XLite\Model\State')->findOneByCode($value);
 
         if (!$state) {
-            $state = XLite_Core_Database::getRepo('XLite_Model_State')->findOneByState($value);
+            $state = \XLite\Core\Database::getRepo('XLite\Model\State')->findOneByState($value);
         }
 
         if (!$state) {
-            $state = XLite_Core_Database::getRepo('XLite_Model_State')->find(intval($value));
+            $state = \XLite\Core\Database::getRepo('XLite\Model\State')->find(intval($value));
         }
 
 
@@ -413,9 +415,9 @@ class XLite_Model_Profile extends XLite_Model_AModel
 
     function _convertCountry($value)
     {
-        $country = XLite_Core_Database::getRepo('XLite_Model_Country')->find($value);
+        $country = \XLite\Core\Database::getRepo('XLite\Model\Country')->find($value);
         if (!$country) {
-            $country = XLite_Core_Database::getRepo('XLite_Model_Country')->findOneByCountry($value);
+            $country = \XLite\Core\Database::getRepo('XLite\Model\Country')->findOneByCountry($value);
         }
 
         return $country ? $country->code : '';

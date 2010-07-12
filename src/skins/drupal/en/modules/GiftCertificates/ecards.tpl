@@ -19,11 +19,11 @@
 
         <a href="{ecard.image.url}" target="_blank"><img src="{ecard.thumbnail.url}" alt="" /></a>
         <br />
-        <widget class="XLite_View_Button" label="Select" type="button">
+        <widget class="\XLite\View\Button" label="Select" type="button">
         <br />&nbsp;
       </form>
 
     </td>
   </tr>
 </table>
-<widget class="XLite_View_Button" type="button_link" href="{buildURL(#gift_certificate#,##,_ARRAY_(#gcid#^gcid))}" label="Cancel">
+<widget class="\XLite\View\Button" type="button_link" href="{buildURL(#gift_certificate#,##,_ARRAY_(#gcid#^gcid))}" label="Cancel">

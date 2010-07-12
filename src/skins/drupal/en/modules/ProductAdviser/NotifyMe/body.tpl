@@ -10,7 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<widget class="XLite_Module_ProductAdviser_View_Form_Product_NotifyMe" name="notify_me" product="{getProduct()}" className="notify-me" />
+<widget class="\XLite\Module\ProductAdviser\View\Form\Product\NotifyMe" name="notify_me" product="{getProduct()}" className="notify-me" />
 
   <table cellspacing="0" class="form-table">
 
@@ -18,7 +18,7 @@
       <td>Your e-mail:</td>
       <td>
         <input type="text" size="30" name="email" value="{email}" />
-        <widget class="XLite_Validator_EmailValidator" field="email" />
+        <widget class="\XLite\Validator\EmailValidator" field="email" />
       </td>
     </tr>
 
@@ -33,7 +33,7 @@
   </table>
 
   <div class="button-row">
-    <widget class="XLite_View_Button_Submit" label="Notify me" />
+    <widget class="\XLite\View\Button\Submit" label="Notify me" />
   </div>
 
 <widget name="notify_me" end />

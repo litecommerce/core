@@ -35,9 +35,9 @@
         <br>
         <br>
 		<table><tr><td>
-		<widget class="XLite_View_Button_Regular" label="Delete item" action="delete" formParams="{_ARRAY_(#cart_id#^cart_id)}" />
+		<widget class="\XLite\View\Button\Regular" label="Delete item" action="delete" formParams="{_ARRAY_(#cart_id#^cart_id)}" />
 		</td><td>&nbsp;</td><td>
-		<widget class="XLite_View_Button_Submit" label="Update item" />
+		<widget class="\XLite\View\Button\Submit" label="Update item" />
 		</td></tr></table>
         <widget module="GoogleCheckout" template="modules/GoogleCheckout/shopping_cart/item.tpl">
     </td>

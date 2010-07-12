@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\GiftCertificates\View;
+
 /**
  * CAPTCHA
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_GiftCertificates_View_SpambotArrest extends XLite_View_AView
+class SpambotArrest extends \XLite\View\AView
 {
     /**
      * Return widget default template

@@ -14,7 +14,7 @@
 <tr class="separator">
   <td class="row-title" rowspan="2">Category:</td>
   <td colspan="2">
-    <widget template="modules/AdvancedSearch/select_category.tpl" class="XLite_View_CategorySelect" fieldName="search[category]" allOption selectedCategoryId="{search.category}" />
+    <widget template="modules/AdvancedSearch/select_category.tpl" class="\XLite\View\CategorySelect" fieldName="search[category]" allOption selectedCategoryId="{search.category}" />
   </td>
 </tr>
 

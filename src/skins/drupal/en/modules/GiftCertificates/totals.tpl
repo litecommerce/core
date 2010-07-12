@@ -14,8 +14,8 @@
 <li IF="!cart.payedByGC=0" class="paid-gc">
   <em>
     Paid with GC:
-    <widget IF="!target=#checkout#" class="XLite_Module_GiftCertificates_View_Form_GiftCertificate_Remove" name="remove_gc" />
-      <widget class="XLite_View_Button_Image" label="Remove GC" action="remove_gc" />
+    <widget IF="!target=#checkout#" class="\XLite\Module\GiftCertificates\View\Form\GiftCertificate\Remove" name="remove_gc" />
+      <widget class="\XLite\View\Button\Image" label="Remove GC" action="remove_gc" />
     <widget IF="!target=#checkout#" name="remove_gc" end />
   </em>
   {price_format(cart,#payedByGC#):h}

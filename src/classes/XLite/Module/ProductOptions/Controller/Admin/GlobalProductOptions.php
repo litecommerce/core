@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\ProductOptions\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,14 +35,14 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_ProductOptions_Controller_Admin_GlobalProductOptions extends XLite_Controller_Admin_AAdmin
+class GlobalProductOptions extends \XLite\Controller\Admin\AAdmin
 {
     public $_categories = null;
 
     function getCategories() 
     {
         if (is_null($this->_categories)) {
-            $c = new XLite_Model_Category();
+            $c = new \XLite\Model\Category();
             $this->_categories = $c->findAll();
             $names = array();
             $names_hash = array();
@@ -59,7 +61,7 @@ class XLite_Module_ProductOptions_Controller_Admin_GlobalProductOptions extends 
 
     function action_add()
     {
-        $option = new XLite_Module_ProductOptions_Model_ProductOption();
+        $option = new \XLite\Module\ProductOptions\Model\ProductOption();
         $option->set('properties', $this->optdata);
         if (isset($this->opttype) && $this->opttype == "Text" && isset($this->text)) {
             $option->set('properties', $this->text);
@@ -93,7 +95,7 @@ class XLite_Module_ProductOptions_Controller_Admin_GlobalProductOptions extends 
     function action_delete()
     {
         if (isset($this->option_id) && isset($this->global_options) && is_array($this->global_options)) {
-            $po = new XLite_Module_ProductOptions_Model_ProductOption();
+            $po = new \XLite\Module\ProductOptions\Model\ProductOption();
             $child_po = $po->findAll("parent_option_id='".$this->option_id."'");
             if ($child_po) {
                 foreach ($child_po as $option_) {
@@ -112,7 +114,7 @@ class XLite_Module_ProductOptions_Controller_Admin_GlobalProductOptions extends 
     function action_update_product_option()
     {
         if (isset($this->option_id) && isset($this->global_options) && is_array($this->global_options)) {
-            $po = new XLite_Module_ProductOptions_Model_ProductOption($this->option_id);
+            $po = new \XLite\Module\ProductOptions\Model\ProductOption($this->option_id);
             $categories = "";
             if (isset($this->global_options['categories'])) {
                 $categories = $this->global_options['categories'];
@@ -130,7 +132,7 @@ class XLite_Module_ProductOptions_Controller_Admin_GlobalProductOptions extends 
     function getGlobalOptions()
     {
         if (is_null($this->globalOptions)) {
-            $go = new XLite_Module_ProductOptions_Model_ProductOption();
+            $go = new \XLite\Module\ProductOptions\Model\ProductOption();
             $this->globalOptions = $go->findAll("product_id=0");  // global options
         }
         return $this->globalOptions;

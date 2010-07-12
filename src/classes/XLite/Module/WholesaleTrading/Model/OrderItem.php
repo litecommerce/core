@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\WholesaleTrading\Model;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_WholesaleTrading_Model_OrderItem extends XLite_Model_OrderItem implements XLite_Base_IDecorator
+class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
 {
     public $_itemChanged = false;
 
@@ -85,7 +87,7 @@ class XLite_Module_WholesaleTrading_Model_OrderItem extends XLite_Model_OrderIte
         }
         $product = $this->get('product');
         if (!isset($this->wholesale_prices)) {
-            $wp = new XLite_Module_WholesaleTrading_Model_WholesalePricing();
+            $wp = new \XLite\Module\WholesaleTrading\Model\WholesalePricing();
             $this->wholesale_prices = $wp->getProductPrices($product->get('product_id'), $this->get('amount'), "OR membership='" . $this->getComplex('order.profile.membership') . "'");
         }
         if (count($this->wholesale_prices) == 0) {

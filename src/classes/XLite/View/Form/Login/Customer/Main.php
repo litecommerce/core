@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View\Form\Login\Customer;
+
 /**
  * Customer lig-in form
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_Form_Login_Customer_Main extends XLite_View_Form_Login_Customer_ACustomer
+class Main extends \XLite\View\Form\Login\Customer\ACustomer
 {
 }
 

@@ -26,14 +26,16 @@
  * @since      3.0.0
  */
 
+namespace XLite\View\JS;
+
 /**
- * XLite_View_JS_AJS 
+ * \XLite\View\JS\AJS 
  * 
  * @package    XLite
  * @subpackage ____sub_package____
  * @see        ____class_see____
  * @since      3.0.0
  */
-abstract class XLite_View_JS_AJS extends XLite_View_AView
+abstract class AJS extends \XLite\View\AView
 {
 }

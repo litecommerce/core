@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Affiliate\Model;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Affiliate_Model_Order extends XLite_Model_Order implements XLite_Base_IDecorator
+class Order extends \XLite\Model\Order implements \XLite\Base\IDecorator
 {
     public function __construct($id = null) 
     {
@@ -56,7 +58,7 @@ class XLite_Module_Affiliate_Model_Order extends XLite_Model_Order implements XL
             $this->chargePartnerCommissions();
         }
         if ($this->get('partnerClick') != 0) {
-            $pp = new XLite_Module_Affiliate_Model_PartnerPayment();
+            $pp = new \XLite\Module\Affiliate\Model\PartnerPayment();
             if ($pp->find("order_id=".$this->get('order_id')." AND affiliate=0")) {
                 // found commission payment for this order, notify partner
                 $pp->notifyPartner();
@@ -83,7 +85,7 @@ class XLite_Module_Affiliate_Model_Order extends XLite_Model_Order implements XL
             }
             // update order with partner click ID
             if ($partnerClick) {
-                $stat = new XLite_Module_Affiliate_Model_BannerStats($partnerClick);
+                $stat = new \XLite\Module\Affiliate\Model\BannerStats($partnerClick);
                 $partner = $stat->get('partner');
                 if (!is_null($stat->get('partner'))) {
                     $this->set('partnerClick', $partnerClick);
@@ -107,11 +109,11 @@ class XLite_Module_Affiliate_Model_Order extends XLite_Model_Order implements XL
 
         if ($this->get('partnerClick') != 0) { // click found for this order
             // charge and save partner's commissions
-            $stat = new XLite_Module_Affiliate_Model_BannerStats($this->get('partnerClick'));
+            $stat = new \XLite\Module\Affiliate\Model\BannerStats($this->get('partnerClick'));
             $partner = $stat->get('partner');
             if (!is_null($partner)) {
                 $this->set('partner', $partner);
-                $pp = new XLite_Module_Affiliate_Model_PartnerPayment();
+                $pp = new \XLite\Module\Affiliate\Model\PartnerPayment();
                 $pp->charge($this);
             }
         }
@@ -120,7 +122,7 @@ class XLite_Module_Affiliate_Model_Order extends XLite_Model_Order implements XL
     function delete() 
     {
         parent::delete();
-        $pp = new XLite_Module_Affiliate_Model_PartnerPayment();
+        $pp = new \XLite\Module\Affiliate\Model\PartnerPayment();
         $payments = $pp->findAll("order_id=".$this->get('order_id'));
         foreach ($payments as $p) {
             $p->delete();

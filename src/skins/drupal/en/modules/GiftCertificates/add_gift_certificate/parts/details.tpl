@@ -21,7 +21,7 @@
     <td>
       <input type="text" id="purchaser" name="purchaser" value="{gc.purchaser}" />
     </td>
-    <td><widget class="XLite_Validator_RequiredValidator" field="purchaser" /></td>
+    <td><widget class="\XLite\Validator\RequiredValidator" field="purchaser" /></td>
   </tr>
 
   <tr>
@@ -30,7 +30,7 @@
     <td>
       <input type="text" id="recipient" name="recipient" value="{gc.recipient:r}" class="field-required" />
     </td>
-    <td><widget class="XLite_Validator_RequiredValidator" field="recipient" /></td>
+    <td><widget class="\XLite\Validator\RequiredValidator" field="recipient" /></td>
   </tr>
 
   <tr class="amount">
@@ -40,7 +40,7 @@
       <input type="text" id="amount" name="amount" value="{gc.amount}" class="field-required field-float field-range" />
       <span class="field-comment">{price_format(config.GiftCertificates.minAmount):h} - {price_format(config.GiftCertificates.maxAmount):h}</span>
     </td>
-    <td><widget class="XLite_Validator_RangeValidator" field="amount" min="{config.GiftCertificates.minAmount}" max="{config.GiftCertificates.maxAmount}" /></td>
+    <td><widget class="\XLite\Validator\RangeValidator" field="amount" min="{config.GiftCertificates.minAmount}" max="{config.GiftCertificates.maxAmount}" /></td>
   </tr>
 
   <tr>

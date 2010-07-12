@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View\Form\Product;
+
 /**
  * Abstract product-based form
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class XLite_View_Form_Product_AProduct extends XLite_View_Form_AForm
+abstract class AProduct extends \XLite\View\Form\AForm
 {
     /**
      * Widget parameter names
@@ -54,8 +56,8 @@ abstract class XLite_View_Form_Product_AProduct extends XLite_View_Form_AForm
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_PRODUCT => new XLite_Model_WidgetParam_Object(
-                'Product', null, false, 'XLite_Model_Product'
+            self::PARAM_PRODUCT => new \XLite\Model\WidgetParam\Object(
+                'Product', null, false, '\XLite\Model\Product'
             ),
         );
     }
@@ -63,7 +65,7 @@ abstract class XLite_View_Form_Product_AProduct extends XLite_View_Form_AForm
     /**
      * getProduct 
      * 
-     * @return XLite_Model_Product
+     * @return \XLite\Model\Product
      * @access protected
      * @since  3.0.0
      */

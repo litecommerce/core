@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite;
+
 /**
  * Logger 
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Logger extends XLite_Base implements XLite_Base_ISingleton
+class Logger extends \XLite\Base implements \XLite\Base\ISingleton
 {
     /**
      * Logger defaults 
@@ -128,7 +130,7 @@ class XLite_Logger extends XLite_Base implements XLite_Base_ISingleton
 
         $this->options = array_merge(
             $this->options,
-            XLite::getInstance()->getOptions('log_details')
+            \XLite::getInstance()->getOptions('log_details')
         );
 
         set_error_handler(array($this, 'registerPHPError'));
@@ -154,7 +156,7 @@ class XLite_Logger extends XLite_Base implements XLite_Base_ISingleton
             ini_set('log_errors', 1);
         }
 
-        self::$markTempaltes = (bool)XLite::getInstance()->getOptions(array('debug', 'mark_templates'));
+        self::$markTempaltes = (bool)\XLite::getInstance()->getOptions(array('debug', 'mark_templates'));
     }
     
     /**
@@ -173,7 +175,7 @@ class XLite_Logger extends XLite_Base implements XLite_Base_ISingleton
         $dir = getcwd();
         chdir(LC_DIR);
 
-        $logger = Log::singleton(
+        $logger = \Log::singleton(
             $this->getType(),
             $this->getName(),
             $this->getIdent()

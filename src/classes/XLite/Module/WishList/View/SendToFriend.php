@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\WishList\View;
+
 /**
  * Send to friend page
  *
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0
  */
-class XLite_Module_WishList_View_SendToFriend extends XLite_View_Dialog
+class SendToFriend extends \XLite\View\Dialog
 {
     /**
      * Return title

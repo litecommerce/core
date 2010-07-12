@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\WholesaleTrading\Model;
+
 /**
  * Product
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product implements XLite_Base_IDecorator
+class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
 {
     /**
      * Perform direct sale check if the product does not exist
@@ -223,7 +225,7 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
 
         $wholesale_price = false;
         if ($use_wholesale_price) {
-            $wp = new XLite_Module_WholesaleTrading_Model_WholesalePricing();
+            $wp = new \XLite\Module\WholesaleTrading\Model\WholesalePricing();
             $profile = $this->auth->get('profile');
             $membership = is_object($profile) ? " OR membership='" . $profile->get('membership') . "'" : "";
             $wholesale_prices = $wp->getProductPrices($this->get('product_id'), $amount, $membership);
@@ -239,7 +241,7 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
 
             $opts = $this->get('expandedItems');
             foreach ($opts[$optionIndex] as $option) {
-                $po = new XLite_Module_ProductOptions_Model_ProductOption();
+                $po = new \XLite\Module\ProductOptions\Model\ProductOption();
                 $po->set('product_id', $this->get('product_id'));
 
                 $modifiedPrice = ($wholesale_price === false)?($po->_modifiedPrice($option)):($po->_modifiedPrice($option, false, $wholesale_price));
@@ -269,7 +271,7 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
         }
 
         $key = $this->get('key')."|".implode("|", $option_keys);
-        $inventory = new XLite_Module_InventoryTracking_Model_Inventory();
+        $inventory = new \XLite\Module\InventoryTracking\Model\Inventory();
         $inventories = $inventory->findAll("inventory_id LIKE '".$this->get('product_id')."|%' AND enabled=1", "order_by");
         foreach ($inventories as $i) {
             if ($i->keyMatch($key)) {
@@ -284,9 +286,9 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
     {
         $productId = $this->get('product_id');
 
-        $result = XLite_Model_CachingFactory::getObject(
+        $result = \XLite\Model\CachingFactory::getObject(
             __METHOD__ . $productId,
-            'XLite_Module_WholesaleTrading_Model_ProductAccess',
+            '\XLite\Module\WholesaleTrading\Model\ProductAccess',
             array($productId)
         );
 
@@ -296,7 +298,7 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
             $result->isRead = true;
         }
         
-        return XLite_Model_CachingFactory::getObjectFromCallback(
+        return \XLite\Model\CachingFactory::getObjectFromCallback(
             __METHOD__ . $productId . $action,
             $result,
             'groupInAccessList',
@@ -405,7 +407,7 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
     function getWholesalePricing()
     {
         if (is_null($this->wholesale_pricing)) {
-            $wp = new XLite_Module_WholesaleTrading_Model_WholesalePricing();
+            $wp = new \XLite\Module\WholesaleTrading\Model\WholesalePricing();
 
             $sqlStr = "product_id = " . $this->get('product_id');
             $sqlStr .= $this->auth->isLogged()
@@ -454,7 +456,7 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
 
     function getPurchaseLimit()
     {
-        $purchase_limit = new XLite_Module_WholesaleTrading_Model_PurchaseLimit();
+        $purchase_limit = new \XLite\Module\WholesaleTrading\Model\PurchaseLimit();
 
         return $purchase_limit->find("product_id =" . $this->get('product_id')) ? $purchase_limit : false;
     }
@@ -462,9 +464,9 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
     function delete()
     {
         // delete product accesses, purchase limits and wholesale prices
-        $pa = new XLite_Module_WholesaleTrading_Model_ProductAccess();
-        $pl = new XLite_Module_WholesaleTrading_Model_PurchaseLimit();
-        $wp = new XLite_Module_WholesaleTrading_Model_WholesalePricing();
+        $pa = new \XLite\Module\WholesaleTrading\Model\ProductAccess();
+        $pl = new \XLite\Module\WholesaleTrading\Model\PurchaseLimit();
+        $wp = new \XLite\Module\WholesaleTrading\Model\WholesalePricing();
         $this->db->query("DELETE FROM ".$pa->getTable(). " WHERE product_id=".$this->get('product_id'));
         $this->db->query("DELETE FROM ".$pl->getTable(). " WHERE product_id=".$this->get('product_id'));
         $this->db->query("DELETE FROM ".$wp->getTable(). " WHERE product_id=".$this->get('product_id'));
@@ -484,7 +486,7 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
         $classes = array('ProductAccess', "PurchaseLimit", "WholesalePricing");
         foreach ($classes as $class) {
 
-            $className = 'XLite_Module_WholesaleTrading_Model_' . $class;
+            $className = '\XLite\Module\WholesaleTrading\Model\\' . $class;
             $obj = new $className();
 
             $class_table = $obj->getTable();
@@ -507,9 +509,9 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
         $newId = $p->get('product_id');
         
         if ($this->config->WholesaleTrading->clone_wholesale_productaccess) {
-            $productAccess = new XLite_Module_WholesaleTrading_Model_ProductAccess();
+            $productAccess = new \XLite\Module\WholesaleTrading\Model\ProductAccess();
             foreach ($productAccess->findAll("product_id=$originalId") as $access) {
-                $foo = new XLite_Module_WholesaleTrading_Model_ProductAccess();
+                $foo = new \XLite\Module\WholesaleTrading\Model\ProductAccess();
                 $foo->set('product_id', $newId);
                 $foo->set('show_group', $access->get('show_group'));
                 $foo->set('show_price_group', $access->get('show_price_group'));
@@ -519,9 +521,9 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
         }
         
         if ($this->config->WholesaleTrading->clone_wholesale_purchaselimit) {
-            $purchaseLimit = new XLite_Module_WholesaleTrading_Model_PurchaseLimit();
+            $purchaseLimit = new \XLite\Module\WholesaleTrading\Model\PurchaseLimit();
             foreach ($purchaseLimit->findAll("product_id=$originalId") as $limit) {
-                $foo = new XLite_Module_WholesaleTrading_Model_PurchaseLimit();
+                $foo = new \XLite\Module\WholesaleTrading\Model\PurchaseLimit();
                 $foo->set('product_id', $newId);
                 $foo->set('min', $limit->get('min'));
                 $foo->set('max', $limit->get('max'));
@@ -530,9 +532,9 @@ class XLite_Module_WholesaleTrading_Model_Product extends XLite_Model_Product im
         }
             
         if ($this->config->WholesaleTrading->clone_wholesale_pricing) {
-            $wholesalePricing = new XLite_Module_WholesaleTrading_Model_WholesalePricing();
+            $wholesalePricing = new \XLite\Module\WholesaleTrading\Model\WholesalePricing();
             foreach ($wholesalePricing->findAll("product_id=$originalId") as $pricing) {
-                $foo = new XLite_Module_WholesaleTrading_Model_WholesalePricing();
+                $foo = new \XLite\Module\WholesaleTrading\Model\WholesalePricing();
                 $foo->set('product_id', $newId);
                 $foo->set('amount', $pricing->get('amount'));
                 $foo->set('price', $pricing->get('price'));

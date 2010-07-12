@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Affiliate\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Affiliate_Controller_Admin_PartnerPayments extends XLite_Controller_Admin_AAdmin
+class PartnerPayments extends \XLite\Controller\Admin\AAdmin
 {
     public $crlf = "\r\n";
     public $hasReady = false;
@@ -51,7 +53,7 @@ class XLite_Module_Affiliate_Controller_Admin_PartnerPayments extends XLite_Cont
     
     function action_export_payments() 
     {
-        $w = new XLite_View_AView();
+        $w = new \XLite\View\AView();
         $w->component = $this;
         $w->set('template', "modules/Affiliate/payments.tpl");
         $this->startDownload('payments.csv');
@@ -77,7 +79,7 @@ class XLite_Module_Affiliate_Controller_Admin_PartnerPayments extends XLite_Cont
             "delimiter"         => $this->delimiter,
             "return_error"		=> true,
             );
-        $p = new XLite_Module_Affiliate_Model_PartnerPayment();
+        $p = new \XLite\Module\Affiliate\Model\PartnerPayment();
         $p->import($options);
         $this->importError = $p->importError;
 
@@ -92,7 +94,7 @@ class XLite_Module_Affiliate_Controller_Admin_PartnerPayments extends XLite_Cont
     function action_mark_paid() 
     {
         foreach ((array)$this->get('payment_paid') as $id) {
-            $p = new XLite_Module_Affiliate_Model_PartnerPayment();
+            $p = new \XLite\Module\Affiliate\Model\PartnerPayment();
             $p->pay($id);
         }
     }
@@ -101,7 +103,7 @@ class XLite_Module_Affiliate_Controller_Admin_PartnerPayments extends XLite_Cont
     {
         if (is_null($this->payments)) {
             $this->payments = array();
-            $pp = new XLite_Module_Affiliate_Model_PartnerPayment();
+            $pp = new \XLite\Module\Affiliate\Model\PartnerPayment();
             $payments = $pp->findAll();
             // summarize payments
             array_map(array($this, 'summarize'), $payments);

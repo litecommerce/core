@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View;
+
 /**
  * Membership selection widget
  *
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_MembershipSelect extends XLite_View_FormField
+class MembershipSelect extends \XLite\View\FormField
 {
      /*
      * Widget parameters names
@@ -68,10 +70,10 @@ class XLite_View_MembershipSelect extends XLite_View_FormField
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_FIELD_NAME     => new XLite_Model_WidgetParam_String('Field', 'membership', false),
-            self::PARAM_VALUE          => new XLite_Model_WidgetParam_String('Value', '%', false),
-            self::PARAM_ALL_OPTION     => new XLite_Model_WidgetParam_Bool('Display All option', false, false),
-            self::PARAM_PENDING_OPTION => new XLite_Model_WidgetParam_Bool('Display Pending option', false, false)
+            self::PARAM_FIELD_NAME     => new \XLite\Model\WidgetParam\String('Field', 'membership', false),
+            self::PARAM_VALUE          => new \XLite\Model\WidgetParam\String('Value', '%', false),
+            self::PARAM_ALL_OPTION     => new \XLite\Model\WidgetParam\Bool('Display All option', false, false),
+            self::PARAM_PENDING_OPTION => new \XLite\Model\WidgetParam\Bool('Display Pending option', false, false)
         );
     }
 
@@ -85,7 +87,7 @@ class XLite_View_MembershipSelect extends XLite_View_FormField
      */
     public function getMemberships()
     {
-        return XLite_Core_Database::getRepo('XLite_Model_Membership')->findActiveMemberships();
+        return \XLite\Core\Database::getRepo('XLite\Model\Membership')->findActiveMemberships();
     }
 
 }

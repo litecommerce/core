@@ -8,7 +8,7 @@ function func_EcommerceReports_getRawProducts(&$dlg)
         $products_from_categories = array(); // products from selected categories
         if (!empty($categories)) {
             $ids = implode(",", $categories);
-            $pc = new XLite_Model_ProductFromCategory();
+            $pc = new \XLite\Model\ProductFromCategory();
             $productTable = $pc->db->getTableByAlias('products');
             $linkTable = $dlg->db->getTableByAlias('product_links');
             $sql = "SELECT links.product_id " .
@@ -35,7 +35,7 @@ function func_EcommerceReports_getRawItems($dlg, $unique=true)
             $ids = implode(",", $rawProducts);
             $fromDate = $dlg->getComplex('period.fromDate');
             $toDate   = $dlg->getComplex('period.toDate');
-            $product = new XLite_Model_Product();
+            $product = new \XLite\Model\Product();
             $ot = $product->db->getTableByAlias('orders');
             $it = $product->db->getTableByAlias('order_items');
             $pt = $product->db->getTableByAlias('profiles');

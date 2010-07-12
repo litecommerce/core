@@ -12,14 +12,14 @@
  *}
 
 <td class="delete-from-list">
-  <widget class="XLite_View_Form_Cart_Item_Delete" name="itemRemove" item="{item}" cartId="{cart_id}" />
-    <widget class="XLite_View_Button_Image" label="Delete item" />
+  <widget class="\XLite\View\Form\Cart\Item\Delete" name="itemRemove" item="{item}" cartId="{cart_id}" />
+    <widget class="\XLite\View\Button\Image" label="Delete item" />
   <widget name="itemRemove" end />
 </td>
 
 <td class="item-thumbnail" IF="item.hasThumbnail()">
   <a href="{item.url}">
-    <widget class="XLite_View_Image" image="{item.getThumbnail()}" alt="{item.name}" maxWidth="75" maxHeight="75" IF="item.getThumbnail()" />
+    <widget class="\XLite\View\Image" image="{item.getThumbnail()}" alt="{item.name}" maxWidth="75" maxHeight="75" IF="item.getThumbnail()" />
     <img src="{item.thumbnailURL}" alt="{item.name}" IF="!item.getThumbnail()" />
   </a>
 </td>

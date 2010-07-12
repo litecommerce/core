@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\WholesaleTrading\Controller\Admin;
+
 /**
  * Taxes
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_WholesaleTrading_Controller_Admin_Taxes extends XLite_Controller_Admin_Taxes implements XLite_Base_IDecorator
+class Taxes extends \XLite\Controller\Admin\Taxes implements \XLite\Base\IDecorator
 {
     /*
      * This function required for configuring discounts taxing policy
@@ -55,11 +57,11 @@ class XLite_Module_WholesaleTrading_Controller_Admin_Taxes extends XLite_Control
     {
         parent::doActionUpdateOptions();
 
-        XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+        \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
             array(
                 'category' => 'Taxes',
                 'name'     => 'discounts_after_taxes',
-                'value'    => XLite_Core_Request::getInstance()->discounts_after_taxes
+                'value'    => \XLite\Core\Request::getInstance()->discounts_after_taxes
             )
         );
     }

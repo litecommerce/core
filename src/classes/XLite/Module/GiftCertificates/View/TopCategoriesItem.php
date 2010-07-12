@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\GiftCertificates\View;
+
 /**
  * Gift certificate item for Top categories list
  * 
@@ -34,7 +36,7 @@
  * @since   3.0.0
  * @ListChild (list="topCategories.childs")
  */
-class XLite_Module_GiftCertificates_View_TopCategoriesItem extends Xlite_View_Abstract
+class TopCategoriesItem extends Xlite_View_Abstract
 {
     const PARAM_IS_SUBTREE   = 'is_subtree';
 
@@ -50,7 +52,7 @@ class XLite_Module_GiftCertificates_View_TopCategoriesItem extends Xlite_View_Ab
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_IS_SUBTREE => new XLite_Model_WidgetParam_Bool(
+            self::PARAM_IS_SUBTREE => new \XLite\Model\WidgetParam\Bool(
                 'Is subtree', false, false
             ),
         );
@@ -78,7 +80,7 @@ class XLite_Module_GiftCertificates_View_TopCategoriesItem extends Xlite_View_Ab
 	 */
 	public function assembleGiftLinkClassName()
 	{
-		return 'gift_certificate' == XLite_Core_Request::getInstance()->target
+		return 'gift_certificate' == \XLite\Core\Request::getInstance()->target
 			? 'active'
 			: '';
 	}

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Egoods\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Egoods_Controller_Admin_ExportCatalog extends XLite_Controller_Admin_ExportCatalog implements XLite_Base_IDecorator
+class ExportCatalog extends \XLite\Controller\Admin\ExportCatalog implements \XLite\Base\IDecorator
 {
     public function __construct(array $params)
     {
@@ -47,10 +49,10 @@ class XLite_Module_Egoods_Controller_Admin_ExportCatalog extends XLite_Controlle
         global $DATA_DELIMITERS;
 
         // save layout & export
-        $dlg = new XLite_Controller_Admin_ImportCatalog();
+        $dlg = new \XLite\Controller\Admin\ImportCatalog();
         $dlg->action_layout('pin_codes_layout');
         $this->startDownload('pin_codes.csv');
-        $wp = new XLite_Module_Egoods_Model_PinCode();
+        $wp = new \XLite\Module\Egoods\Model\PinCode();
         $wp->export($this->pin_codes_layout, $DATA_DELIMITERS[$this->delimiter], $where = null, $orderby = "product_id,pin_id");
         exit();
     }

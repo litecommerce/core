@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\AuthorizeNet;
+
 /**
  * Authorize.NET module
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_AuthorizeNet_Main extends XLite_Module_AModule
+class Main extends \XLite\Module\AModule
 {
     /**
      * Module type
@@ -92,11 +94,11 @@ class XLite_Module_AuthorizeNet_Main extends XLite_Module_AModule
      */
     public static function getSettingsForm()
     {
-        return XLite_Core_Converter::buildUrl(
+        return \XLite\Core\Converter::buildUrl(
             'payment_method',
             '',
             array('payment_method' => 'authorizenet_cc'),
-            XLite::ADMIN_SELF
+            \XLite::ADMIN_SELF
         );
     }
 

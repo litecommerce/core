@@ -12,10 +12,10 @@
  * @ListChild (list="cart.bottom.left", weight="20")
  *}
 <div class="shipping-estimator">
-  <widget class="XLite_View_Form_Cart_Main" name="shopping_form" />
+  <widget class="\XLite\View\Form\Cart\Main" name="shopping_form" />
     <widget template="shopping_cart/delivery.tpl">
     <noscript>
-      <widget class="XLite_View_Button_Submit" label="Submit" />
+      <widget class="\XLite\View\Button\Submit" label="Submit" />
     </noscript>
   <widget name="shopping_form" end />
 </div>

@@ -10,5 +10,5 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<widget class="XLite_View_MailExplorer" columnCount=1 mode="">
+<widget class="\XLite\View\MailExplorer" columnCount=1 mode="">
 <widget template="template_editor/mail_edit.tpl" mode="edit">

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\ProductAdviser\Model;
+
 /**
  * Order 
  * 
@@ -33,8 +35,8 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_ProductAdviser_Model_Order extends XLite_Model_Order
-implements XLite_Base_IDecorator
+class Order extends \XLite\Model\Order
+implements \XLite\Base\IDecorator
 {
     /**
      * checkedOut 
@@ -68,7 +70,7 @@ implements XLite_Base_IDecorator
 
                 for ($i = $product_id_idx + 1; $i < count($products); $i++) {
 
-                    $statistic = new XLite_Module_ProductAdviser_Model_ProductAlsoBuy();
+                    $statistic = new \XLite\Module\ProductAdviser\Model\ProductAlsoBuy();
 
                     if (!$statistic->find("product_id='".$product_id."' AND product_id_also_buy='".$products[$i]."'")) {
                         $statistic->set('product_id', $product_id);
@@ -81,7 +83,7 @@ implements XLite_Base_IDecorator
                         $statistic->update();
                     }
 
-                    $statistic = new XLite_Module_ProductAdviser_Model_ProductAlsoBuy();
+                    $statistic = new \XLite\Module\ProductAdviser\Model\ProductAlsoBuy();
 
                     if (!$statistic->find("product_id='".$products[$i]."' AND product_id_also_buy='".$product_id."'")) {
                         $statistic->set('product_id', $products[$i]);
@@ -101,14 +103,14 @@ implements XLite_Base_IDecorator
     /**
      * Update inventory
      * 
-     * @param XLite_Model_OrderItem $item Order item
+     * @param \XLite\Model\OrderItem $item Order item
      *  
      * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function updateInventory(XLite_Model_OrderItem $item)
+    public function updateInventory(\XLite\Model\OrderItem $item)
     {
         $requiredAmount = $item->get('amount');
 

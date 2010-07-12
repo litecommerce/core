@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\UPSOnlineTools\Model;
+
 require_once LC_MODULES_DIR . 'UPSOnlineTools' . LC_DS . 'encoded.php';
 
 /**
@@ -35,7 +37,7 @@ require_once LC_MODULES_DIR . 'UPSOnlineTools' . LC_DS . 'encoded.php';
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_UPSOnlineTools_Model_Order extends XLite_Model_Order implements XLite_Base_IDecorator
+class Order extends \XLite\Model\Order implements \XLite\Base\IDecorator
 {
     const PACKAGING_TYPE_NONE = 0;
     const PACKAGING_TYPE_PACKAGE = 2;
@@ -108,7 +110,7 @@ class XLite_Module_UPSOnlineTools_Model_Order extends XLite_Model_Order implemen
             $carriers = $this->getCarriers();
 
             if ($this->get('shipping_id')) {
-                $sm = new XLite_Model_Shipping();
+                $sm = new \XLite\Model\Shipping();
 
                 // return NULL if shipping method not available
                 if (!$sm->find("shipping_id = '" . $this->get('shipping_id') . "' AND enabled = '1'")) {
@@ -117,7 +119,7 @@ class XLite_Module_UPSOnlineTools_Model_Order extends XLite_Model_Order implemen
 
                 } else {
 
-                    $sm = XLite_Model_Shipping::getInstanceByName($sm->get('class'), $this->get('shipping_id'));
+                    $sm = \XLite\Model\Shipping::getInstanceByName($sm->get('class'), $this->get('shipping_id'));
 
                     $this->_carrier = $sm->get('class');
                 }
@@ -196,15 +198,15 @@ class XLite_Module_UPSOnlineTools_Model_Order extends XLite_Model_Order implemen
     /**
      * Shipping rates sorting callback 
      * 
-     * @param XLite_Model_ShippingRate $a First shipping rate
-     * @param XLite_Model_ShippingRate $b Second shipping rate
+     * @param \XLite\Model\ShippingRate $a First shipping rate
+     * @param \XLite\Model\ShippingRate $b Second shipping rate
      *  
      * @return integer
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getShippingRatesOrderCallback(XLite_Model_ShippingRate $a, XLite_Model_ShippingRate $b)
+    public function getShippingRatesOrderCallback(\XLite\Model\ShippingRate $a, \XLite\Model\ShippingRate $b)
     {
         $class_a = $a->getComplex('shipping.class');
         $class_b = $b->getComplex('shipping.class');
@@ -478,7 +480,7 @@ class XLite_Module_UPSOnlineTools_Model_Order extends XLite_Model_Order implemen
 
                 $weight_limit = 150; // lbs
 
-                $container = new XLite_Module_UPSOnlineTools_Model_Container();
+                $container = new \XLite\Module\UPSOnlineTools\Model\Container();
                 $container->setDimensions($_width, $_length, $_height);
                 $container->setWeightLimit($weight_limit);
                 $container->setContainerType(self::PACKAGING_TYPE_PACKAGE); // Package type
@@ -521,7 +523,7 @@ class XLite_Module_UPSOnlineTools_Model_Order extends XLite_Model_Order implemen
                         continue;
 
                     // add new container
-                    $c = new XLite_Module_UPSOnlineTools_Model_Container();
+                    $c = new \XLite\Module\UPSOnlineTools\Model\Container();
                     $c->setDimensions($_width, $_length, $_height);
                     $c->setWeightLimit($weight_limit);
                     $c->setContainerType(self::PACKAGING_TYPE_PACKAGE); // Package type
@@ -532,7 +534,7 @@ class XLite_Module_UPSOnlineTools_Model_Order extends XLite_Model_Order implemen
             break;
             ////////////////////////////////////////////////////////
             case self::BINPACKING_NORMAL_ALGORITHM:    // pack all items in one package
-                $sm = new XLite_Module_UPSOnlineTools_Model_Shipping_Ups();
+                $sm = new \XLite\Module\UPSOnlineTools\Model\Shipping\Ups();
                 $pack = $sm->getUPSContainerDims($packaging_type);
 
                 $const_items = $items;
@@ -576,7 +578,7 @@ class XLite_Module_UPSOnlineTools_Model_Order extends XLite_Model_Order implemen
             break;
             ////////////////////////////////////////////////////////
             case self::BINPACKING_OVERSIZE_ALGORITHM:    // pack items in similar containers
-                $sm = new XLite_Module_UPSOnlineTools_Model_Shipping_Ups();
+                $sm = new \XLite\Module\UPSOnlineTools\Model\Shipping\Ups();
                 $pack = $sm->getUPSContainerDims($packaging_type);
 
                 $ups_containers = UPSOnlineTools_solve_binpack($pack['width'], $pack['length'], $pack['height'], $pack['weight_limit'], $items);
@@ -607,7 +609,7 @@ class XLite_Module_UPSOnlineTools_Model_Order extends XLite_Model_Order implemen
                     foreach ((array)$level->getItems() as $item) {
                         $item_id = $item->get('item_id');
 
-                        $oi = new XLite_Model_OrderItem();
+                        $oi = new \XLite\Model\OrderItem();
                         if ($oi->find("item_id='".addslashes($item_id)."'")) {
                             if ($oi->getComplex('product.ups_add_handling')) {
                                 $ups_containers[$container_id]->setAdditionalHandling(true);

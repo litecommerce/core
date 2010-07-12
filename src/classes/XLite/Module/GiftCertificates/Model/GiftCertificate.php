@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\GiftCertificates\Model;
+
 /**
  * Gift certifiocate
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_GiftCertificates_Model_GiftCertificate extends XLite_Model_AModel
+class GiftCertificate extends \XLite\Model\AModel
 {
     const GC_DOESNOTEXIST = 1;
     const GC_OK           = 2;
@@ -100,7 +102,7 @@ class XLite_Module_GiftCertificates_Model_GiftCertificate extends XLite_Model_AM
     /**
      * Gift certificate e-card (cache)
      * 
-     * @var    XLite_Module_GiftCertificates_Model_ECard
+     * @var    \XLite\Module\GiftCertificates\Model\ECard
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
@@ -110,7 +112,7 @@ class XLite_Module_GiftCertificates_Model_GiftCertificate extends XLite_Model_AM
     /**
      * Recipient state (cache)
      * 
-     * @var    XLite_Model_State
+     * @var    \XLite\Model\State
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
@@ -120,7 +122,7 @@ class XLite_Module_GiftCertificates_Model_GiftCertificate extends XLite_Model_AM
     /**
      * Recipient country (cache)
      * 
-     * @var    XLite_Model_Country
+     * @var    \XLite\Model\Country
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
@@ -130,7 +132,7 @@ class XLite_Module_GiftCertificates_Model_GiftCertificate extends XLite_Model_AM
     /**
      * Profile (cache)
      * 
-     * @var    XLite_Model_Profile
+     * @var    \XLite\Model\Profile
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
@@ -153,7 +155,7 @@ class XLite_Module_GiftCertificates_Model_GiftCertificate extends XLite_Model_AM
     /**
      * Get recipient state 
      * 
-     * @return XLite_Model_State
+     * @return \XLite\Model\State
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -161,7 +163,7 @@ class XLite_Module_GiftCertificates_Model_GiftCertificate extends XLite_Model_AM
     public function getRecipientState()
     {
         if (is_null($this->recipientState)) {
-            $this->recipientState = XLite_Core_Database::getEM()->find('XLite_Model_State', $this->get('recipient_state'));
+            $this->recipientState = \XLite\Core\Database::getEM()->find('XLite\Model\State', $this->get('recipient_state'));
         }
 
         return $this->recipientState;
@@ -170,7 +172,7 @@ class XLite_Module_GiftCertificates_Model_GiftCertificate extends XLite_Model_AM
     /**
      * Get recipient country 
      * 
-     * @return XLite_Model_Country
+     * @return \XLite\Model\Country
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -178,7 +180,7 @@ class XLite_Module_GiftCertificates_Model_GiftCertificate extends XLite_Model_AM
     public function getRecipientCountry()
     {
         if (is_null($this->recipientCountry)) {
-            $this->recipientCountry = XLite_Core_Database::getEM()->find('XLite_Model_Country', $this->get('recipient_country'));
+            $this->recipientCountry = \XLite\Core\Database::getEM()->find('XLite\Model\Country', $this->get('recipient_country'));
         }
 
         return $this->recipientCountry;
@@ -204,7 +206,7 @@ class XLite_Module_GiftCertificates_Model_GiftCertificate extends XLite_Model_AM
             && 'E' == $this->get('send_via')
         ) {
             // send GC by e-mail
-            $mail = new XLite_Model_Mailer();
+            $mail = new \XLite\Model\Mailer();
             $mail->gc = $this;
             $mail->compose(
                 $this->config->Company->site_administrator, 
@@ -272,7 +274,7 @@ class XLite_Module_GiftCertificates_Model_GiftCertificate extends XLite_Model_AM
      */
     public function hasECards()
     {
-        $ec = new XLite_Module_GiftCertificates_Model_ECard();
+        $ec = new \XLite\Module\GiftCertificates\Model\ECard();
 
         return 0 < count($ec->findAll('enabled = 1'));
     }
@@ -280,7 +282,7 @@ class XLite_Module_GiftCertificates_Model_GiftCertificate extends XLite_Model_AM
     /**
      * Get gift certificate e-card 
      * 
-     * @return XLite_Module_GiftCertificates_Model_ECard
+     * @return \XLite\Module\GiftCertificates\Model\ECard
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -288,7 +290,7 @@ class XLite_Module_GiftCertificates_Model_GiftCertificate extends XLite_Model_AM
     public function getECard()
     {
         if (is_null($this->ecard) && $this->get('ecard_id')) {
-            $this->ecard = new XLite_Module_GiftCertificates_Model_ECard($this->get('ecard_id'));
+            $this->ecard = new \XLite\Module\GiftCertificates\Model\ECard($this->get('ecard_id'));
         }
 
         return $this->ecard;
@@ -304,7 +306,7 @@ class XLite_Module_GiftCertificates_Model_GiftCertificate extends XLite_Model_AM
      */
     public function showECardBody()
     {
-        $c = new XLite_Module_GiftCertificates_View_CEcard();
+        $c = new \XLite\Module\GiftCertificates\View\CEcard();
         $c->gc = $this;
         $c->init();
         $c->display();
@@ -322,7 +324,7 @@ class XLite_Module_GiftCertificates_Model_GiftCertificate extends XLite_Model_AM
      */
     public function getBorderHeight($bottom = false)
     {
-        $layout = XLite_Model_Layout::getInstance();
+        $layout = \XLite\Model\Layout::getInstance();
         $borderFile = LC_ROOT_DIR
             . 'skins/mail/'
             . $layout->get('locale')
@@ -363,7 +365,7 @@ class XLite_Module_GiftCertificates_Model_GiftCertificate extends XLite_Model_AM
      */
     public function getBordersDir()
     {
-        $layout = XLite_Model_Layout::getInstance();
+        $layout = \XLite\Model\Layout::getInstance();
 
         return $this->xlite->getShopUrl(
             'skins/mail/' . $layout->get('locale') . '/modules/GiftCertificates/ecards/borders/'
@@ -412,7 +414,7 @@ class XLite_Module_GiftCertificates_Model_GiftCertificate extends XLite_Model_AM
     /**
      * Get profile 
      * 
-     * @return XLite_Model_Profile
+     * @return \XLite\Model\Profile
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -420,7 +422,7 @@ class XLite_Module_GiftCertificates_Model_GiftCertificate extends XLite_Model_AM
     public function getProfile()
     {
         if (is_null($this->gcProfile)) {
-            $this->gcProfile = new XLite_Model_Profile($this->get('profile_id'));
+            $this->gcProfile = new \XLite\Model\Profile($this->get('profile_id'));
         }
 
         return $this->gcProfile;
@@ -470,7 +472,7 @@ class XLite_Module_GiftCertificates_Model_GiftCertificate extends XLite_Model_AM
                 && 'A' == $this->get('status')
             ) {
                 // send warning notification
-                $mailer = new XLite_Model_Mailer();
+                $mailer = new \XLite\Model\Mailer();
                 $mailer->cert = $this;
                 $mailer->compose(
                     $this->config->Company->site_administrator,

@@ -20,7 +20,7 @@
 <tr>
     <td height="10" width="78" class=FormButton>E-mail</td>
     <td width="10" height="10" class="Star">*</td>
-    <td height="10"><input type="text" name="email" value="{email:r}" size="30"><widget class="XLite_Validator_EmailValidator" field="email"></td>
+    <td height="10"><input type="text" name="email" value="{email:r}" size="30"><widget class="\XLite\Validator\EmailValidator" field="email"></td>
 </tr>
 <tr IF="noSuchUser">
     <td colspan="2">&nbsp;</td>
@@ -29,7 +29,7 @@
 <tr><td colspan="3">&nbsp;</td></tr>
 <tr>
     <td colspan="2">&nbsp;</td>
-    <td><widget class="XLite_View_Submit" href="javascript: document.recover_password.submit()" font="FormButton"></td>
+    <td><widget class="\XLite\View\Submit" href="javascript: document.recover_password.submit()" font="FormButton"></td>
 </tr>
 </table>
 

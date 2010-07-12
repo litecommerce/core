@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Affiliate\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Affiliate_Controller_Admin_BannerStats extends XLite_Module_Affiliate_Controller_Admin_PartnerStats
+class BannerStats extends \XLite\Module\Affiliate\Controller\Admin\PartnerStats
 {
     public $statsTotal = array("views" => 0, "click" => 0, "rate" => 0);
 
@@ -56,7 +58,7 @@ class XLite_Module_Affiliate_Controller_Admin_BannerStats extends XLite_Module_A
     function getStats()
     {
         if (is_null($this->stats)) {
-            $stats = new XLite_Module_Affiliate_Model_BannerStats();
+            $stats = new \XLite\Module\Affiliate\Model\BannerStats();
             $this->stats = $stats->search(
                     $this->get('partner_id'),
                     $this->get('startDate'),

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View\LanguagesModify\Button;
+
 /**
  * Add new language button
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_LanguagesModify_Button_AddNewLanguage extends XLite_View_Button_Regular
+class AddNewLanguage extends \XLite\View\Button\Regular
 {
     /**
      * Widget parameters
@@ -53,7 +55,7 @@ class XLite_View_LanguagesModify_Button_AddNewLanguage extends XLite_View_Button
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_PAGE => new XLite_Model_WidgetParam_Int('Page index', 1),
+            self::PARAM_PAGE => new \XLite\Model\WidgetParam\Int('Page index', 1),
         );
 
         $this->widgetParams[self::PARAM_LABEL]->setValue('Add new language');
@@ -84,6 +86,6 @@ class XLite_View_LanguagesModify_Button_AddNewLanguage extends XLite_View_Button
     public function isVisible()
     {
         return parent::isVisible()
-            && XLite_Core_Database::getRepo('XLite_Model_Language')->findInactiveLanguages();
+            && \XLite\Core\Database::getRepo('XLite\Model\Language')->findInactiveLanguages();
     }
 }

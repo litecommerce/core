@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Affiliate\Controller\Customer;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Affiliate_Controller_Customer_PartnerProduct extends XLite_Module_Affiliate_Controller_Partner
+class PartnerProduct extends \XLite\Module\Affiliate\Controller\Partner
 {
     public $params = array('target', 'product_id', 'schema', 'mode', 'backUrl');
 
@@ -48,8 +50,8 @@ class XLite_Module_Affiliate_Controller_Customer_PartnerProduct extends XLite_Mo
     {
         parent::addBaseLocation();
     
-        $this->locationPath->addNode(new XLite_Model_Location('Banners', $this->buildURL('partner_banners')));
-        $this->locationPath->addNode(new XLite_Model_Location('Product banners', $this->get('backUrl')));
+        $this->locationPath->addNode(new \XLite\Model\Location('Banners', $this->buildURL('partner_banners')));
+        $this->locationPath->addNode(new \XLite\Model\Location('Product banners', $this->get('backUrl')));
     }
 
     /**
@@ -83,7 +85,7 @@ class XLite_Module_Affiliate_Controller_Customer_PartnerProduct extends XLite_Mo
             }
 
             if (!is_null($this->get('update'))) {
-                XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+                \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
                     array(
                         'category' => 'Miscellaneous',
                         'name'     => 'partner_product_banner',
@@ -97,7 +99,7 @@ class XLite_Module_Affiliate_Controller_Customer_PartnerProduct extends XLite_Mo
     function getProduct()
     {
         if (is_null($this->product)) {
-            $this->product = new XLite_Model_Product($this->product_id);
+            $this->product = new \XLite\Model\Product($this->product_id);
         }
         return $this->product;
     }

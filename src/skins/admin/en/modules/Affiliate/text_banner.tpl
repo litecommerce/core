@@ -22,7 +22,7 @@
     <tr>
         <td nowrap>Banner name</td>
         <td class=Star>*</td>
-        <td nowrap><input type=text name=name value="{name:r}" size=35 maxlength=255><widget class="XLite_Validator_RequiredValidator" field="name"></td>
+        <td nowrap><input type=text name=name value="{name:r}" size=35 maxlength=255><widget class="\XLite\Validator\RequiredValidator" field="name"></td>
     </tr>
     <tr>
         <td valign=top>Image</td>
@@ -84,7 +84,7 @@
     </td>
     <td IF="mode=#modify#" align=center valign=top width="100%">
     <font class=AdminHead>Preview:</font><br><br>
-    <widget class="XLite_Module_Affiliate_View_Banner" mode="modify" type="js" banner="{banner}">
+    <widget class="\XLite\Module\Affiliate\View\Banner" mode="modify" type="js" banner="{banner}">
     </td>
 </tr>    
 <tr><td colspan=2>&nbsp;</td></tr>

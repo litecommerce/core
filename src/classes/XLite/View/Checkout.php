@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View;
+
 /**
  * Checkout
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_Checkout extends XLite_View_Dialog
+class Checkout extends \XLite\View\Dialog
 {
     /**
      * Indexes in step data array 

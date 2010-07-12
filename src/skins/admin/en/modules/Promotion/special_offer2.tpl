@@ -27,20 +27,20 @@
 </table>
 </td></tr>
 </table>
-Add product: <widget class="XLite_View_ProductSelect" formName="offerForm" formField="addProduct" removeButton>
+Add product: <widget class="\XLite\View\ProductSelect" formName="offerForm" formField="addProduct" removeButton>
 {end:}
 
 {if:conditionType=#productAmount#}
 <h2>Customer buys a certain quantity of a product</h2>
 <table border="0">
 <tr><td>All Products:</td><td><input type="checkbox" name="allProducts" checked="{allProducts}" value="1"></td></tr>
-<tr><td>Product:</td><td>{if:product&product.product_id&!product.exists}<span class="ErrorMessage">A deleted product (#{product.product_id}) has been found!</span>&nbsp;{end:}<widget class="XLite_View_ProductSelect" formName="offerForm" formField="product" removeButton></td></tr>
-<tr><td>Category:</td><td>{if:category&category.category_id&!category.exists}<span class="ErrorMessage">A deleted category (#{category.category_id}) has been found!</span>&nbsp;{end:}<widget class="XLite_View_CategorySelect" fieldName="category_id" noneOption></td></tr>
+<tr><td>Product:</td><td>{if:product&product.product_id&!product.exists}<span class="ErrorMessage">A deleted product (#{product.product_id}) has been found!</span>&nbsp;{end:}<widget class="\XLite\View\ProductSelect" formName="offerForm" formField="product" removeButton></td></tr>
+<tr><td>Category:</td><td>{if:category&category.category_id&!category.exists}<span class="ErrorMessage">A deleted category (#{category.category_id}) has been found!</span>&nbsp;{end:}<widget class="\XLite\View\CategorySelect" fieldName="category_id" noneOption></td></tr>
 <tr>
 	<td>Quantity:</td>
 	<td>
 		<input type="text" size="5" name="amount" value="{amount}"> 
-        <widget class="XLite_Validator_PatternValidator" template="modules/Promotion/amount_validator.tpl" field="amount" pattern="/^[1-9][0-9.]*$/">
+        <widget class="\XLite\Validator\PatternValidator" template="modules/Promotion/amount_validator.tpl" field="amount" pattern="/^[1-9][0-9.]*$/">
 	</td>
 </tr>
 </table>
@@ -49,13 +49,13 @@ Add product: <widget class="XLite_View_ProductSelect" formName="offerForm" formF
 {if:conditionType=#eachNth#}
 <h2>Every Nth product purchased</h2>
 <table border="0">
-<tr><td>Product:</td><td>{if:product&product.product_id&!product.exists}<span class="ErrorMessage">A deleted product (#{product.product_id}) has been found!</span>&nbsp;{end:}<widget class="XLite_View_ProductSelect" formName="offerForm" formField="product" removeButton></td></tr>
-<tr><td>Category:</td><td>{if:category&category.category_id&!category.exists}<span class="ErrorMessage">A deleted category (#{category.category_id}) has been found!</span>&nbsp;{end:}<widget class="XLite_View_CategorySelect" fieldName="category_id" noneOption></td></tr>
+<tr><td>Product:</td><td>{if:product&product.product_id&!product.exists}<span class="ErrorMessage">A deleted product (#{product.product_id}) has been found!</span>&nbsp;{end:}<widget class="\XLite\View\ProductSelect" formName="offerForm" formField="product" removeButton></td></tr>
+<tr><td>Category:</td><td>{if:category&category.category_id&!category.exists}<span class="ErrorMessage">A deleted category (#{category.category_id}) has been found!</span>&nbsp;{end:}<widget class="\XLite\View\CategorySelect" fieldName="category_id" noneOption></td></tr>
 <tr>
 	<td>N:</td>
 	<td>
 		<input type="text" size="5" name="amount" value="{amount}"> 
-        <widget class="XLite_Validator_PatternValidator" template="modules/Promotion/amount_validator.tpl" field="amount" pattern="/^[1-9][0-9.]*$/">
+        <widget class="\XLite\Validator\PatternValidator" template="modules/Promotion/amount_validator.tpl" field="amount" pattern="/^[1-9][0-9.]*$/">
 	</td>
 </tr>
 </table>
@@ -63,7 +63,7 @@ Add product: <widget class="XLite_View_ProductSelect" formName="offerForm" formF
 
 {if:conditionType=#orderTotal#}
 <h2>Order total exceeds a certain amount</h2>
-Minimum order subtotal: <input type="text" name="amount" value="{amount}" size="6"><widget class="XLite_Validator_PatternValidator" template="modules/Promotion/amount_validator.tpl" field="amount" pattern="/^[1-9][0-9.]*$/"><br>
+Minimum order subtotal: <input type="text" name="amount" value="{amount}" size="6"><widget class="\XLite\Validator\PatternValidator" template="modules/Promotion/amount_validator.tpl" field="amount" pattern="/^[1-9][0-9.]*$/"><br>
 {end:}
 
 {if:conditionType=#bonusPoints#}
@@ -81,7 +81,7 @@ Number of points granted: <input type="text" name="amount" value="{amount}" size
 	<option FOREACH="config.Memberships.memberships,membership" selected="{isSelectedMembership(membership)}">{membership}</option>
     </select>
 	<td>
-		<widget class="XLite_Module_Promotion_Validator_PromotionMembershipValidator" field="customer_memberships"> 
+		<widget class="\XLite\Module\Promotion\Validator\PromotionMembershipValidator" field="customer_memberships"> 
 	</td>
 </tr>
 </table>
@@ -100,7 +100,7 @@ Discount amount:
 <p>
 <b>On the following products:</b>
 <span IF="!bonusProducts">
-<widget class="XLite_View_ProductSelect" formName="offerForm" formField="addBonusProduct">
+<widget class="\XLite\View\ProductSelect" formName="offerForm" formField="addBonusProduct">
 </span>
 <span IF="bonusProducts">
 <table border="0" cellpadding=0 cellspacing=0>
@@ -114,10 +114,10 @@ Discount amount:
 </table>
 </td></tr>
 </table>
-Add product: <widget class="XLite_View_ProductSelect" formName="offerForm" formField="addBonusProduct">
+Add product: <widget class="\XLite\View\ProductSelect" formName="offerForm" formField="addBonusProduct">
 </span>
 <p>
-<b>On the following category:</b>{if:bonusCategory&!bonusCategory.exists}&nbsp;<span class="ErrorMessage">A deleted category (#{bonusCategory.category_id}) has been found!</span>&nbsp;{end:} <widget class="XLite_View_CategorySelect" fieldName="bonusCategory_id" noneOption>
+<b>On the following category:</b>{if:bonusCategory&!bonusCategory.exists}&nbsp;<span class="ErrorMessage">A deleted category (#{bonusCategory.category_id}) has been found!</span>&nbsp;{end:} <widget class="\XLite\View\CategorySelect" fieldName="bonusCategory_id" noneOption>
 {end:}
 
 {if:bonusType=#specialPrices#}
@@ -138,8 +138,8 @@ Add product: <widget class="XLite_View_ProductSelect" formName="offerForm" formF
 </tr>
 <tr class=Center align=center><td colspan="6"><b>Add Bonus Price:<b></td></tr>
 <tr class=Center>
-	<td><widget class="XLite_View_ProductSelect" formName="offerForm" formField="addBonusPriceProduct"></td>
-	<td><widget class="XLite_View_CategorySelect" fieldName="addBonusPriceCategory_id" noneOption></td>
+	<td><widget class="\XLite\View\ProductSelect" formName="offerForm" formField="addBonusPriceProduct"></td>
+	<td><widget class="\XLite\View\CategorySelect" fieldName="addBonusPriceCategory_id" noneOption></td>
 	<td>&nbsp;</td>
 	<td><input type="text" name="addBonusPrice" size="6" value="0"></td>
 	<td><select name="addBonusType"><option>$</option><option>%</option></select></td>
@@ -232,7 +232,7 @@ Number of points granted: <input type="text" name="bonusAmount" value="{bonusAmo
 			Start date of the offer: 
 		</td>
 		<td>
-			&nbsp;<widget class="XLite_View_Date" field="start_date" value="{start_date}"> 
+			&nbsp;<widget class="\XLite\View\Date" field="start_date" value="{start_date}"> 
 		</td>
 	</tr>
 	<tr>
@@ -240,7 +240,7 @@ Number of points granted: <input type="text" name="bonusAmount" value="{bonusAmo
 			End date of the offer:
 		</td>
 		<td>
-			 &nbsp;<widget class="XLite_View_Date" field="end_date" value="{end_date}">
+			 &nbsp;<widget class="\XLite\View\Date" field="end_date" value="{end_date}">
 		</td>
 	</tr>
 </table> 

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\XPaymentsConnector;
+
 /**
  * X-Payments connector module
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_XPaymentsConnector_Main extends XLite_Module_AModule
+class Main extends \XLite\Module\AModule
 {
     /**
      * Module type
@@ -94,7 +96,7 @@ class XLite_Module_XPaymentsConnector_Main extends XLite_Module_AModule
     {
         parent::init();
 
-        $conf = new XLite_Module_XPaymentsConnector_Model_Configuration();
+        $conf = new \XLite\Module\XPaymentsConnector\Model\Configuration();
         foreach ($conf->findAll() as $c) {
             $this->registerPaymentMethod(
                 $c->get('method_name'),
@@ -118,24 +120,24 @@ class XLite_Module_XPaymentsConnector_Main extends XLite_Module_AModule
         $failed = false;
 
         // Check shopping cart id
-        $failed |= empty(XLite_Core_Config::getInstance()->XPaymentsConnector->xpc_shopping_cart_id)
-            || !preg_match('/^[\da-f]{32}$/Ss', XLite_Core_Config::getInstance()->XPaymentsConnector->xpc_shopping_cart_id);
+        $failed |= empty(\XLite\Core\Config::getInstance()->XPaymentsConnector->xpc_shopping_cart_id)
+            || !preg_match('/^[\da-f]{32}$/Ss', \XLite\Core\Config::getInstance()->XPaymentsConnector->xpc_shopping_cart_id);
 
         // Check URL
-        $failed |= empty(XLite_Core_Config::getInstance()->XPaymentsConnector->xpc_xpayments_url);
+        $failed |= empty(\XLite\Core\Config::getInstance()->XPaymentsConnector->xpc_xpayments_url);
 
-        $parsed_url = @parse_url(XLite_Core_Config::getInstance()->XPaymentsConnector->xpc_xpayments_url);
+        $parsed_url = @parse_url(\XLite\Core\Config::getInstance()->XPaymentsConnector->xpc_xpayments_url);
 
         $failed |= !$parsed_url || !isset($parsed_url['scheme']) || $parsed_url['scheme'] != 'https';
 
         // Check public key
-        $failed |= empty(XLite_Core_Config::getInstance()->XPaymentsConnector->xpc_public_key);
+        $failed |= empty(\XLite\Core\Config::getInstance()->XPaymentsConnector->xpc_public_key);
 
         // Check private key
-        $failed |= empty(XLite_Core_Config::getInstance()->XPaymentsConnector->xpc_private_key);
+        $failed |= empty(\XLite\Core\Config::getInstance()->XPaymentsConnector->xpc_private_key);
 
         // Check private key password
-        $failed |= empty(XLite_Core_Config::getInstance()->XPaymentsConnector->xpc_private_key_password);
+        $failed |= empty(\XLite\Core\Config::getInstance()->XPaymentsConnector->xpc_private_key_password);
 
         return !$failed;
     }

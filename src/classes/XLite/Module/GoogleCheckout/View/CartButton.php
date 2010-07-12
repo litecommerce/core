@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\GoogleCheckout\View;
+
 /**
  * Google button for Shopping cart page
  * 
@@ -34,7 +36,7 @@
  * @since   3.0.0
  * @ListChild (list="cart.buttons.checkout", weight="30")
  */
-class XLite_Module_GoogleCheckout_View_CartButton extends XLite_Module_GoogleCheckout_View_ButtonAltCheckout
+class CartButton extends \XLite\Module\GoogleCheckout\View\ButtonAltCheckout
 {
     /**
      * Return widget default template

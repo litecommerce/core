@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Bestsellers\Core;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class XLite_Module_Bestsellers_Core_CMSConnector extends XLite_Core_CMSConnector implements XLite_Base_IDecorator
+abstract class CMSConnector extends \XLite\Core\CMSConnector implements \XLite\Base\IDecorator
 {
     /**
      * Constructor
@@ -47,6 +49,6 @@ abstract class XLite_Module_Bestsellers_Core_CMSConnector extends XLite_Core_CMS
     {
         parent::__construct();
 
-        $this->widgetsList['XLite_Module_Bestsellers_View_Bestsellers'] = 'Bestsellers list';
+        $this->widgetsList['\XLite\Module\Bestsellers\View\Bestsellers'] = 'Bestsellers list';
     }
 }

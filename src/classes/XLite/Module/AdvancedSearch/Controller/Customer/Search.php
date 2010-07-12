@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\AdvancedSearch\Controller\Customer;
+
 /**
  * Search products
  * 
@@ -33,12 +35,12 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_AdvancedSearch_Controller_Customer_Search extends XLite_Controller_Customer_Search implements XLite_Base_IDecorator
+class Search extends \XLite\Controller\Customer\Search implements \XLite\Base\IDecorator
 {
     /**
      * Get products list
      * 
-     * @return array of XLite_Model_Product
+     * @return array of \XLite\Model\Product
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -47,7 +49,7 @@ class XLite_Module_AdvancedSearch_Controller_Customer_Search extends XLite_Contr
     {
         if (is_null($this->products)) {
 
-            $p = new XLite_Model_Product();
+            $p = new \XLite\Model\Product();
             $this->products = $p->_advancedSearch(
                 $this->get('substring'),
                 'name',
@@ -68,7 +70,7 @@ class XLite_Module_AdvancedSearch_Controller_Customer_Search extends XLite_Contr
                 null
             );
 
-            $searchStat = new XLite_Model_SearchStat();
+            $searchStat = new \XLite\Model\SearchStat();
             $searchStat->add($this->get('substring'), count($this->products));
 
             $this->session->set('quick_search', $this->get('substring'));

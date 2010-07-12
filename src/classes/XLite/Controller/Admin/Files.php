@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Controller\Admin;
+
 @set_time_limit(0);
 
 /**
@@ -35,7 +37,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Controller_Admin_Files extends XLite_Controller_Admin_AAdmin
+class Files extends \XLite\Controller\Admin\AAdmin
 {
     public $count = 0; //total files count;
     public $action = "default";
@@ -69,7 +71,7 @@ class XLite_Controller_Admin_Files extends XLite_Controller_Admin_AAdmin
                 }
             }
         }
-        if (isset(XLite_Core_Request::getInstance()->mode) && XLite_Core_Request::getInstance()->mode == "full") {
+        if (isset(\XLite\Core\Request::getInstance()->mode) && \XLite\Core\Request::getInstance()->mode == "full") {
             // backup database as well
             $this->db->backup(SQL_DUMP_FILE, false);
             $files[] = SQL_DUMP_FILE;

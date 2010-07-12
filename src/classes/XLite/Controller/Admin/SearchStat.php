@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Controller_Admin_SearchStat extends XLite_Controller_Admin_Stats
+class SearchStat extends \XLite\Controller\Admin\Stats
 {
     public $params = array('target', "listOrder");
     public $order = "query";
@@ -50,7 +52,7 @@ class XLite_Controller_Admin_SearchStat extends XLite_Controller_Admin_Stats
     function getSearchStat()
     {
         if (is_null($this->searchStat)) {
-            $searchStat = new XLite_Model_SearchStat();
+            $searchStat = new \XLite\Model\SearchStat();
             $this->searchStat = $searchStat->findAll(
                 null,
                 isset($this->orders[$this->get('listOrder')]) ? $this->orders[$this->get('listOrder')] : null
@@ -61,8 +63,8 @@ class XLite_Controller_Admin_SearchStat extends XLite_Controller_Admin_Stats
 
     function action_cleanup()
     {
-        $searchStat = new XLite_Model_SearchStat();
-        $searchStat->cleanup(XLite_Core_Request::getInstance()->maxCount);
+        $searchStat = new \XLite\Model\SearchStat();
+        $searchStat->cleanup(\XLite\Core\Request::getInstance()->maxCount);
     }
 
 }

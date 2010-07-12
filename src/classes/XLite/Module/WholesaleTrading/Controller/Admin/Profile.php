@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\WholesaleTrading\Controller\Admin;
+
 // FIXME - must be completely revised
 
 /**
@@ -35,7 +37,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_WholesaleTrading_Controller_Admin_Profile extends XLite_Controller_Admin_Profile implements XLite_Base_IDecorator
+class Profile extends \XLite\Controller\Admin\Profile implements \XLite\Base\IDecorator
 {
     /**
      * Check if it is need to show wholesaler fields in the profile details form
@@ -47,7 +49,7 @@ class XLite_Module_WholesaleTrading_Controller_Admin_Profile extends XLite_Contr
      */
 /*	public function isShowWholesalerFields()
     {
-        $obj = new XLite_Module_WholesaleTrading_Model_Profile();
+        $obj = new \XLite\Module\WholesaleTrading\Model\Profile();
         return $obj->isShowWholesalerFields();
     }
 
@@ -67,12 +69,12 @@ class XLite_Module_WholesaleTrading_Controller_Admin_Profile extends XLite_Contr
 
             $profile = $this->getProfile();
 
-            $exp_type = XLite_Core_Request::getInstance()->membership_exp_type;
+            $exp_type = \XLite\Core\Request::getInstance()->membership_exp_type;
             $exp_date = mktime(
                 0, 0, 0,
-                XLite_Core_Request::getInstance()->membership_exp_dateMonth,
-                XLite_Core_Request::getInstance()->membership_exp_dateDay,
-                XLite_Core_Request::getInstance()->membership_exp_dateYear
+                \XLite\Core\Request::getInstance()->membership_exp_dateMonth,
+                \XLite\Core\Request::getInstance()->membership_exp_dateDay,
+                \XLite\Core\Request::getInstance()->membership_exp_dateYear
             );
 
             $newMembership = $profile->get('membership');
@@ -105,12 +107,12 @@ class XLite_Module_WholesaleTrading_Controller_Admin_Profile extends XLite_Contr
 
         if ($this->statusData['success']) {
 
-            $exp_type = XLite_Core_Request::getInstance()->membership_exp_type;
+            $exp_type = \XLite\Core\Request::getInstance()->membership_exp_type;
             $exp_date = mktime(
                 0, 0, 0,
-                XLite_Core_Request::getInstance()->membership_exp_dateMonth,
-                XLite_Core_Request::getInstance()->membership_exp_dateDay,
-                XLite_Core_Request::getInstance()->membership_exp_dateYear
+                \XLite\Core\Request::getInstance()->membership_exp_dateMonth,
+                \XLite\Core\Request::getInstance()->membership_exp_dateDay,
+                \XLite\Core\Request::getInstance()->membership_exp_dateYear
             );
 
             $newMembership = $profile->get('membership');

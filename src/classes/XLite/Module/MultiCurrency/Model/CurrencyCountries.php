@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\MultiCurrency\Model;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_MultiCurrency_Model_CurrencyCountries extends XLite_Model_AModel
+class CurrencyCountries extends \XLite\Model\AModel
 {
     public $fields = array(
             "currency_id" 	=> 0,

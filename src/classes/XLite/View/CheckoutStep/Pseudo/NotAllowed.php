@@ -26,14 +26,16 @@
  * @since      3.0.0
  */
 
+namespace XLite\View\CheckoutStep\Pseudo;
+
 /**
- * XLite_View_CheckoutStep_Pseudo_NotAllowed 
+ * \XLite\View\CheckoutStep\Pseudo\NotAllowed 
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_CheckoutStep_Pseudo_NotAllowed extends XLite_View_CheckoutStep_Pseudo_APseudo
+class NotAllowed extends \XLite\View\CheckoutStep\Pseudo\APseudo
 {
     /**
      * Return title
@@ -65,7 +67,7 @@ class XLite_View_CheckoutStep_Pseudo_NotAllowed extends XLite_View_CheckoutStep_
             $text .= 'less than ' . $this->price_format($this->config->General->maximal_order_amount);
 
         } else {
-            $this->doDie('XLite_View_CheckoutStep_Pseudo_NotAllowed::getErrorText(): unexpected error');
+            $this->doDie('\XLite\View\CheckoutStep\Pseudo\NotAllowed::getErrorText(): unexpected error');
         }
 
         return $text;

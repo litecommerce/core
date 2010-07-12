@@ -26,15 +26,17 @@
  * @since      3.0.0
  */
 
+namespace XLite\View\FormField\Input;
+
 
 /**
- * XLite_View_FormField_Input_Password 
+ * \XLite\View\FormField\Input\Password 
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_FormField_Input_Password extends XLite_View_FormField_Input_AInput
+class Password extends \XLite\View\FormField\Input\AInput
 {
     /**
      * setCommonAttributes 

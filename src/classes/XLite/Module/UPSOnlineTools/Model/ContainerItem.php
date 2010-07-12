@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\UPSOnlineTools\Model;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_UPSOnlineTools_Model_ContainerItem extends XLite_Base
+class ContainerItem extends \XLite\Base
 {
     public $item_id;
     public $global_id;
@@ -73,7 +75,7 @@ class XLite_Module_UPSOnlineTools_Model_ContainerItem extends XLite_Base
     function getOrderItem()
     {
         $item_id = $this->item_id;
-        $oi = new XLite_Model_OrderItem();
+        $oi = new \XLite\Model\OrderItem();
         $oi->find("item_id='".addslashes($item_id)."'");
 
         return $oi;

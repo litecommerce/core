@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Bestsellers\View;
+
 /**
  * Bestsellers widget 
  * 
@@ -34,7 +36,7 @@
  * @see        ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Bestsellers_View_Bestsellers extends XLite_View_ProductsList
+class Bestsellers extends \XLite\View\ProductsList
 {
     /**
      * Widget parameter names
@@ -71,13 +73,13 @@ class XLite_Module_Bestsellers_View_Bestsellers extends XLite_View_ProductsList
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_USE_NODE => new XLite_Model_WidgetParam_Checkbox(
+            self::PARAM_USE_NODE => new \XLite\Model\WidgetParam\Checkbox(
                 'Use current category id', false, true
             ),
-            self::PARAM_ROOT_ID => new XLite_Model_WidgetParam_ObjectId_Category(
+            self::PARAM_ROOT_ID => new \XLite\Model\WidgetParam\ObjectId\Category(
                 'Root category Id', 0, true, true
             ),
-            self::PARAM_CATEGORY_ID => new XLite_Model_WidgetParam_ObjectId_Category(
+            self::PARAM_CATEGORY_ID => new \XLite\Model\WidgetParam\ObjectId\Category(
                 'Category ID', 0, false
             ),
         );
@@ -117,9 +119,9 @@ class XLite_Module_Bestsellers_View_Bestsellers extends XLite_View_ProductsList
     {
         $args = array($this->getNumberOfBestsellers(), $this->getRootId());
 
-        return XLite_Model_CachingFactory::getObjectFromCallback(
+        return \XLite\Model\CachingFactory::getObjectFromCallback(
             'getBestsellers' . implode('', $args),
-            'XLite_Module_Bestsellers_Model_Bestsellers',
+            '\XLite\Module\Bestsellers\Model\Bestsellers',
             'getBestsellers',
             $args
         );
@@ -136,7 +138,7 @@ class XLite_Module_Bestsellers_View_Bestsellers extends XLite_View_ProductsList
     protected function getRootId()
     {
         return $this->getParam(self::PARAM_USE_NODE) 
-            ? intval(XLite_Core_Request::getInstance()->category_id) 
+            ? intval(\XLite\Core\Request::getInstance()->category_id) 
             : $this->getParam(self::PARAM_ROOT_ID);
     }
 

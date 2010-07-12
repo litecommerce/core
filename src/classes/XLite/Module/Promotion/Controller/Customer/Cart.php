@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Promotion\Controller\Customer;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Promotion_Controller_Customer_Cart extends XLite_Controller_Customer_Cart implements XLite_Base_IDecorator
+class Cart extends \XLite\Controller\Customer\Cart implements \XLite\Base\IDecorator
 {
     public $discountCouponResult = false;
 
@@ -66,7 +68,7 @@ class XLite_Module_Promotion_Controller_Customer_Cart extends XLite_Controller_C
     {
         $this->coupon = addSlashes(trim($this->coupon));
         $this->discountCouponResult = $this->cart->validateDiscountCoupon($this->coupon);
-        $dc = new XLite_Module_Promotion_Model_DiscountCoupon();
+        $dc = new \XLite\Module\Promotion\Model\DiscountCoupon();
         $found = $dc->find("coupon='".$this->coupon."' AND order_id='0'");
         if ($this->discountCouponResult||!$dc->checkCondition($this->cart)) {
             $this->valid = false;

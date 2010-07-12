@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\GoogleCheckout\Controller\Customer;
+
 /**
  * Google checkout main controller
  * 
@@ -33,11 +35,11 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_GoogleCheckout_Controller_Customer_Gcheckout extends XLite_Controller_Customer_Checkout
+class Gcheckout extends \XLite\Controller\Customer\Checkout
 {
     function init()
     {
-        $this->registerForm = new XLite_Base();
+        $this->registerForm = new \XLite\Base();
         parent::init();
     }
 
@@ -50,7 +52,7 @@ class XLite_Module_GoogleCheckout_Controller_Customer_Gcheckout extends XLite_Co
      */
     public function handleRequest()
     {
-        $gacObject = new XLite_Module_GoogleCheckout_View_GoogleAltCheckout();
+        $gacObject = new \XLite\Module\GoogleCheckout\View\GoogleAltCheckout();
         $gacObject->initGoogleData();
 
         if ($this->action != 'checkout' || !isset($gacObject->GCMerchantID)) {
@@ -96,7 +98,7 @@ class XLite_Module_GoogleCheckout_Controller_Customer_Gcheckout extends XLite_Co
             }
         }
 
-        $pm = XLite_Model_PaymentMethod::factory('google_checkout');
+        $pm = \XLite\Model\PaymentMethod::factory('google_checkout');
         $this->cart->setPaymentMethod($pm);
         $this->updateCart();
 

@@ -26,16 +26,18 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model;
+
 /**
  * Country 
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
- * @Entity (repositoryClass="XLite_Model_Repo_Country")
+ * @Entity (repositoryClass="XLite\Model\Repo\Country")
  * @Table (name="countries")
  */
-class XLite_Model_Country extends XLite_Model_AEntity
+class Country extends \XLite\Model\AEntity
 {
 
     /**
@@ -123,7 +125,7 @@ class XLite_Model_Country extends XLite_Model_AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @OneToMany (targetEntity="XLite_Model_State", mappedBy="country", cascade={"persist","remove"})
+     * @OneToMany (targetEntity="\XLite\Model\State", mappedBy="country", cascade={"persist","remove"})
      */
     protected $states;
 }

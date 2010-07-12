@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\USPS\Model\Shipping;
+
 /**
  * USPS shipping
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_USPS_Model_Shipping_Usps extends XLite_Model_Shipping_Online
+class Usps extends \XLite\Model\Shipping\Online
 {
     /**
      * Error message
@@ -171,14 +173,14 @@ class XLite_Module_USPS_Model_Shipping_Usps extends XLite_Model_Shipping_Online
     /**
      * Get shipping rates 
      * 
-     * @param XLite_Model_Order $order Order
+     * @param \XLite\Model\Order $order Order
      *  
-     * @return array of XLite_Model_ShippingRate
+     * @return array of \XLite\Model\ShippingRate
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getRates(XLite_Model_Order $order)
+    public function getRates(\XLite\Model\Order $order)
     {
         $result = array();
         $this->rawRates = array();
@@ -206,14 +208,14 @@ class XLite_Module_USPS_Model_Shipping_Usps extends XLite_Model_Shipping_Online
     /**
      * Get national rates 
      * 
-     * @param XLite_Model_Order $order Order
+     * @param \XLite\Model\Order $order Order
      *  
-     * @return array of XLite_Model_ShippingRate
+     * @return array of \XLite\Model\ShippingRate
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getNationalRates(XLite_Model_Order $order)
+    protected function getNationalRates(\XLite\Model\Order $order)
     {
         $options = $this->getOptions();
         $ounces = $this->getOunces($order);
@@ -278,7 +280,7 @@ class XLite_Module_USPS_Model_Shipping_Usps extends XLite_Model_Shipping_Online
 
         $this->error = '';
         $this->xmlError = false;
-        $xml = new XLite_Model_XML();
+        $xml = new \XLite\Model\XML();
         $tree = $xml->parse($response);
 
         if (!$tree) {
@@ -320,7 +322,7 @@ class XLite_Module_USPS_Model_Shipping_Usps extends XLite_Model_Shipping_Online
      * @param string  $zipDestination Destination zipcode
      * @param obhect  $options        Options
      *  
-     * @return array of XLite_Model_ShippingRate
+     * @return array of \XLite\Model\ShippingRate
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -460,14 +462,14 @@ EOT;
     /**
      * Get international rates 
      * 
-     * @param XLite_Model_Order $order Order
+     * @param \XLite\Model\Order $order Order
      *  
-     * @return array of XLite_Model_ShippingRate
+     * @return array of \XLite\Model\ShippingRate
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getInternationalRates(XLite_Model_Order $order)
+    protected function getInternationalRates(\XLite\Model\Order $order)
     {
         $ounces = $this->getOunces($order);
 
@@ -516,7 +518,7 @@ EOT;
      * @param string  $destinationCountry Destination country code
      * @param object  $options            Options
      *  
-     * @return array of XLite_Model_ShippingRate
+     * @return array of \XLite\Model\ShippingRate
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -571,7 +573,7 @@ EOT;
      * @param string $response    Response
      * @param string $destination Destination code (L or I)
      *  
-     * @return array of XLite_Model_ShippingRate
+     * @return array of \XLite\Model\ShippingRate
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -717,7 +719,7 @@ EOT;
         );
         $id = $shipping->get('shipping_id');
 
-        $this->rawRates[$id] = new XLite_Model_ShippingRate();
+        $this->rawRates[$id] = new \XLite\Model\ShippingRate();
         $this->rawRates[$id]->shipping = $shipping;
         $this->rawRates[$id]->rate = doubleval(trim($rate));
     }
@@ -767,14 +769,14 @@ EOT;
 
         } else {
 
-            $https = new XLite_Model_HTTPS();
+            $https = new \XLite\Model\HTTPS();
             $https->data = $queryString;
             $https->method = 'GET';
             $https->conttype = 'application/xml';
             $https->urlencoded = true;
             $https->url = 'https://' . $url . ':443' . $file;
 
-            if ($https->request() == XLite_Model_HTTPS::HTTPS_ERROR) {
+            if ($https->request() == \XLite\Model\HTTPS::HTTPS_ERROR) {
                 $this->error = $https->error;
 
             } else {

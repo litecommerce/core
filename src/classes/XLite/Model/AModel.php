@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model;
+
 /**
 * Delimiters definitions. Used for import / export store data.
 */
@@ -46,7 +48,7 @@ $GLOBALS['TEXT_QUALIFIERS'] = array(
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_AModel extends XLite_Base
+class AModel extends \XLite\Base
 {
     /**
      * Table alias 
@@ -214,7 +216,7 @@ class XLite_Model_AModel extends XLite_Base
         $where = $this->_buildWhere($where);
         // build select query
         $this->sql = $this->_buildSelect($where, $orderby, $groupby, $limit);
-        $result = XLite_Model_Database::getInstance()->getAll($this->sql);
+        $result = \XLite\Model\Database::getInstance()->getAll($this->sql);
         if (!is_array($result)) {
             $this->_die ($this->sql.": ".$result->getMessage());
         }

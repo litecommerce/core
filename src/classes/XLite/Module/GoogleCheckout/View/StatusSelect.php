@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\GoogleCheckout\View;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_GoogleCheckout_View_StatusSelect extends XLite_View_StatusSelect implements XLite_Base_IDecorator
+class StatusSelect extends \XLite\View\StatusSelect implements \XLite\Base\IDecorator
 {
     function isGoogleCheckoutOrder()
     {

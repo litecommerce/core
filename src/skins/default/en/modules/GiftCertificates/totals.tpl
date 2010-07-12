@@ -17,6 +17,6 @@
 
 <tr IF="!cart.payedByGC=0">
   <td colspan="2">
-    <widget class="XLite_View_Button" href="{buildURL(#cart#,#remove_gc#,_ARRAY_(#return_target#^target))}" label="Remove GC">
+    <widget class="\XLite\View\Button" href="{buildURL(#cart#,#remove_gc#,_ARRAY_(#return_target#^target))}" label="Remove GC">
   </td>
 </tr>

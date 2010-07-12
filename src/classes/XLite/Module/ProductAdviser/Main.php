@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\ProductAdviser;
+
 define('CUSTOMER_NOTIFICATION_PRODUCT', 'product');
 define('CUSTOMER_NOTIFICATION_PRICE', 'price');
 define('CUSTOMER_REQUEST_QUEUED', 'Q');
@@ -40,7 +42,7 @@ define('CUSTOMER_REQUEST_DECLINED', 'D');
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_ProductAdviser_Main extends XLite_Module_AModule
+class Main extends \XLite\Module\AModule
 {
     /**
      * Module type
@@ -103,7 +105,7 @@ class XLite_Module_ProductAdviser_Main extends XLite_Module_AModule
 
         // FIXME - trying to instantiate abstract class
         // TODO - check if this code is really needed
-        /*$w = new XLite_View_AView();
+        /*$w = new \XLite\View\AView();
         $widgetMethods = array_map('strtolower', get_class_methods($w));
         if (!in_array('isarraypointernth', $widgetMethods)) {
         } else {
@@ -137,7 +139,7 @@ class XLite_Module_ProductAdviser_Main extends XLite_Module_AModule
         // "Product also buy" section
         if ($this->xlite->is('adminZone')) {
             if ($this->config->ProductAdviser->admin_products_also_buy_enabled != 'Y') {
-                XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+                \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
                     array(
                         'category' => 'ProductAdviser',
                         'name'     => 'products_also_buy_enabled',
@@ -153,7 +155,7 @@ class XLite_Module_ProductAdviser_Main extends XLite_Module_AModule
         if ($this->xlite->is('adminZone')) {
             $this->validateConfig('number_notifications', 1);
             $customer_notifications_enabled = ($this->config->ProductAdviser->customer_notifications_mode == '0') ? 'N' : 'Y';
-            XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+            \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
                 array(
                     'category' => 'ProductAdviser',
                     'name'     => 'customer_notifications_enabled',
@@ -163,7 +165,7 @@ class XLite_Module_ProductAdviser_Main extends XLite_Module_AModule
         }
         /////////////////////////////////////
 
-        $inventorySupport = XLite_Core_Operator::isClassExists('XLite_Module_InventoryTracking_Model_Inventory');
+        $inventorySupport = \XLite\Core\Operator::isClassExists('\XLite\Module\InventoryTracking\Model\Inventory');
         $this->xlite->set('PA_InventorySupport', $inventorySupport);
         if ($inventorySupport) {
             if (!$this->xlite->is('adminZone')) {
@@ -188,7 +190,7 @@ class XLite_Module_ProductAdviser_Main extends XLite_Module_AModule
             }
         }
         if ($number_updated) {
-            XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+            \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
                 array(
                     'category' => 'ProductAdviser',
                     'name'     => $option,

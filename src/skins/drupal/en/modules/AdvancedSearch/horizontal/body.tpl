@@ -10,7 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<widget class="XLite_Module_AdvancedSearch_View_Form_Search" name="adsearch_form" className="advanced-search" />
+<widget class="\XLite\Module\AdvancedSearch\View\Form\Search" name="adsearch_form" className="advanced-search" />
 
   <table cellspacing="0" class="form-table">
 

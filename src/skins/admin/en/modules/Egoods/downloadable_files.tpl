@@ -168,7 +168,7 @@
 		</tr>
 		<tr>
 			<td><input name="new_acc" size="32" value="{newLinkAccessKey}"></td>
-			<td nowrap><widget class="XLite_View_Date" field="new_exp_date"></td>
+			<td nowrap><widget class="\XLite\View\Date" field="new_exp_date"></td>
 			<td><input name="new_downloads" size="10" value="{config.Egoods.exp_downloads}"></td>
 			<td>
 				<select name="new_expires">

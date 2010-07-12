@@ -10,7 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<widget class="XLite_View_Pager" data="{stat}" name="pager">
+<widget class="\XLite\View\Pager" data="{stat}" name="pager">
 <table IF="stat" border="0" cellspacing="1" cellpadding="3">
 <tr class="TableHead">
 	<td>&nbsp;Product&nbsp;</td>

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\GiftCertificates\Model;
+
 /**
  * Order
  * 
@@ -33,12 +35,12 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_GiftCertificates_Model_Order extends XLite_Model_Order implements XLite_Base_IDecorator
+class Order extends \XLite\Model\Order implements \XLite\Base\IDecorator
 {
     /**
      * Gift certificate (cache)
      * 
-     * @var    XLite_Module_GiftCertificates_Model_GiftCertificate
+     * @var    \XLite\Module\GiftCertificates\Model\GiftCertificate
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
@@ -165,7 +167,7 @@ class XLite_Module_GiftCertificates_Model_Order extends XLite_Model_Order implem
     {
         if (is_null($this->gc)) {
             $this->gc = $this->get('gcid')
-                ? new XLite_Module_GiftCertificates_Model_GiftCertificate($this->get('gcid'))
+                ? new \XLite\Module\GiftCertificates\Model\GiftCertificate($this->get('gcid'))
                 : null;
         }
 
@@ -175,7 +177,7 @@ class XLite_Module_GiftCertificates_Model_Order extends XLite_Model_Order implem
     /**
      * Apply gift certificate
      * 
-     * @param XLite_Module_GiftCertificates_Model_GiftCertificate $gc Gift certificate
+     * @param \XLite\Module\GiftCertificates\Model\GiftCertificate $gc Gift certificate
      *  
      * @return integer Operation status
      * @access public
@@ -184,17 +186,17 @@ class XLite_Module_GiftCertificates_Model_Order extends XLite_Model_Order implem
      */
     public function setGC($gc)
     {
-        $result = XLite_Module_GiftCertificates_Model_GiftCertificate::GC_DISABLED;
+        $result = \XLite\Module\GiftCertificates\Model\GiftCertificate::GC_DISABLED;
 
         if (is_null($gc)) {
 
             $this->gc = null;
             $this->set('gcid', '');
             $this->calcTotals();
-            $result = XLite_Module_GiftCertificates_Model_GiftCertificate::GC_OK;
+            $result = \XLite\Module\GiftCertificates\Model\GiftCertificate::GC_OK;
 
         } elseif (
-            $gc instanceof XLite_Module_GiftCertificates_Model_GiftCertificate
+            $gc instanceof \XLite\Module\GiftCertificates\Model\GiftCertificate
             && 'A' == $gc->get('status')
             && 0 < $gc->get('debit')
         ) {
@@ -202,7 +204,7 @@ class XLite_Module_GiftCertificates_Model_Order extends XLite_Model_Order implem
             $this->gc = $gc;
             $this->set('gcid', $gc->get('gcid'));
             $this->calcTotals();
-            $result = XLite_Module_GiftCertificates_Model_GiftCertificate::GC_OK;
+            $result = \XLite\Module\GiftCertificates\Model\GiftCertificate::GC_OK;
 
         }
 
@@ -234,7 +236,7 @@ class XLite_Module_GiftCertificates_Model_Order extends XLite_Model_Order implem
      */
     protected function checkedOut()
     {
-        if (XLite_Core_Request::getInstance()->target != 'callback') {
+        if (\XLite\Core\Request::getInstance()->target != 'callback') {
             $this->calcTotals();
         }
 

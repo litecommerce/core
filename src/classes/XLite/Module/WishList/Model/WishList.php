@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\WishList\Model;
+
 /**
  * Wishlist base class
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_WishList_Model_WishList extends XLite_Model_AModel
+class WishList extends \XLite\Model\AModel
 {
 
     /**
@@ -111,7 +113,7 @@ class XLite_Module_WishList_Model_WishList extends XLite_Model_AModel
      */
     public function getProducts()
     {
-        $wishlist_product = new XLite_Module_WishList_Model_WishListProduct();
+        $wishlist_product = new \XLite\Module\WishList\Model\WishListProduct();
 
         return $wishlist_product->findAll('wishlist_id = ' . $this->get('wishlist_id'));
     }
@@ -127,7 +129,7 @@ class XLite_Module_WishList_Model_WishList extends XLite_Model_AModel
     public function getProfile()
     {
         if (is_null($this->profile)) {
-            $this->profile = new XLite_Model_Profile($this->get('profile_id'));
+            $this->profile = new \XLite\Model\Profile($this->get('profile_id'));
         }
 
         return $this->profile;
@@ -143,7 +145,7 @@ class XLite_Module_WishList_Model_WishList extends XLite_Model_AModel
      */
     public function collectGarbage()
     {
-        $wishlist = new XLite_Module_WishList_Model_WishList();
+        $wishlist = new \XLite\Module\WishList\Model\WishList();
         $wishlists = $wishlist->findAll();
 
         if (is_array($wishlists)) {
@@ -195,7 +197,7 @@ class XLite_Module_WishList_Model_WishList extends XLite_Model_AModel
 
         if (!empty($sku) || !empty($name)) {
 
-            $product = new XLite_Model_Product();
+            $product = new \XLite\Model\Product();
 
             $found = array();
             $found_product = $product->findImportedProduct($sku, '', '', false);
@@ -214,7 +216,7 @@ class XLite_Module_WishList_Model_WishList extends XLite_Model_AModel
                 return array();
             }
 
-            $wishlist_product = new XLite_Module_WishList_Model_WishListProduct();
+            $wishlist_product = new \XLite\Module\WishList\Model\WishListProduct();
 
             $wishlist_products = $wishlist_product->findAll(implode(' OR ', $found));
 

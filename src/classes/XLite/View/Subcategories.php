@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View;
+
 /**
  * Subcategories list
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_Subcategories extends XLite_View_Dialog
+class Subcategories extends \XLite\View\Dialog
 {
     /**
      * Widget parameter names
@@ -139,13 +141,13 @@ class XLite_View_Subcategories extends XLite_View_Dialog
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_DISPLAY_MODE => new XLite_Model_WidgetParam_Set(
+            self::PARAM_DISPLAY_MODE => new \XLite\Model\WidgetParam\Set(
                 'Display mode', self::DISPLAY_MODE_ICONS, true, $this->displayModes
             ),
-            self::PARAM_ICON_MAX_WIDTH => new XLite_Model_WidgetParam_Int(
+            self::PARAM_ICON_MAX_WIDTH => new \XLite\Model\WidgetParam\Int(
                 'Maximal icon width', 90, true
             ),
-            self::PARAM_ICON_MAX_HEIGHT => new XLite_Model_WidgetParam_Int(
+            self::PARAM_ICON_MAX_HEIGHT => new \XLite\Model\WidgetParam\Int(
                 'Maximal icon height', 90, true
             ),
         );

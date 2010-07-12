@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\AdvancedSecurity\Model;
+
 /**
  * ____description____
  * 
@@ -33,14 +35,14 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_AdvancedSecurity_Model_Mailer extends XLite_Model_Mailer implements XLite_Base_IDecorator
+class Mailer extends \XLite\Model\Mailer implements \XLite\Base\IDecorator
 {
     function compose($from, $to, $dir, $customHeaders = array())
     {
         parent::compose($from, $to, $dir, $customHeaders);
         // encrypt message with a public key if necessary
         if ($this->get('adminMail') && $this->get('order') && $this->getComplex('order.details')) {
-            $gpg = new XLite_Module_AdvancedSecurity_Model_GPG();
+            $gpg = new \XLite\Module\AdvancedSecurity\Model\GPG();
             if ($this->config->AdvancedSecurity->gpg_crypt_mail) {
                 $this->logger->log("Module_AdvancedSecurity_Mailer::getBody() encrypt message");
     	        // send as a plain mail

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Core;
+
 /**
  * Request 
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Core_Request extends XLite_Base implements XLite_Base_ISingleton
+class Request extends \XLite\Base implements \XLite\Base\ISingleton
 {
     /**
      * Cureent request method 
@@ -131,7 +133,7 @@ class XLite_Core_Request extends XLite_Base implements XLite_Base_ISingleton
             $this->checkControlArgument($data['action'], 'Action');
         }
 
-        return XLite::isAdminZone() ? $data : $this->sanitize($data);
+        return \XLite::isAdminZone() ? $data : $this->sanitize($data);
     }
 
     /**
@@ -241,7 +243,7 @@ class XLite_Core_Request extends XLite_Base implements XLite_Base_ISingleton
             || (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == '443')
             || (
                 isset($_SERVER['REMOTE_ADDR'])
-                && XLite::getInstance()->getOptions(array('host_details', 'remote_addr')) == $_SERVER['REMOTE_ADDR']
+                && \XLite::getInstance()->getOptions(array('host_details', 'remote_addr')) == $_SERVER['REMOTE_ADDR']
             );
     }
 

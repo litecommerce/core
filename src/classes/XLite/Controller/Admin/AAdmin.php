@@ -26,14 +26,16 @@
  * @since      3.0.0
  */
 
+namespace XLite\Controller\Admin;
+
 /**
- * XLite_Controller_Admin_AAdmin 
+ * \XLite\Controller\Admin\AAdmin 
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class XLite_Controller_Admin_AAdmin extends XLite_Controller_AController
+abstract class AAdmin extends \XLite\Controller\AController
 {
     /**
      * Check if current page is accessible
@@ -65,8 +67,8 @@ abstract class XLite_Controller_Admin_AAdmin extends XLite_Controller_AControlle
             return true;
         }
 
-        $form = new XLite_Model_XliteForm();
-        $result = $form->find('form_id = \'' . addslashes($this->xlite_form_id) . '\' AND session_id = \'' . XLite_Model_Session::getInstance()->getID() . '\'');
+        $form = new \XLite\Model\XliteForm();
+        $result = $form->find('form_id = \'' . addslashes($this->xlite_form_id) . '\' AND session_id = \'' . \XLite\Model\Session::getInstance()->getID() . '\'');
 
         if (!$result) {
             $form->collectGarbage();
@@ -114,9 +116,9 @@ abstract class XLite_Controller_Admin_AAdmin extends XLite_Controller_AControlle
      */
     protected function getCurrentLanguage()
     {
-        $currentCode = XLite_Core_Request::getInstance()->language;
+        $currentCode = \XLite\Core\Request::getInstance()->language;
 
-        return $currentCode ? $currentCode : XLite_Core_Translation::getCurrentLanguageCode();;
+        return $currentCode ? $currentCode : \XLite\Core\Translation::getCurrentLanguageCode();;
     }
 
 
@@ -126,7 +128,7 @@ abstract class XLite_Controller_Admin_AAdmin extends XLite_Controller_AControlle
 
     function getCustomerZoneWarning()
     {
-        return ('Y' == XLite::getInstance()->config->General->shop_closed) ? 'maintenance_mode' : null;
+        return ('Y' == \XLite::getInstance()->config->General->shop_closed) ? 'maintenance_mode' : null;
     }
 
     /**
@@ -148,8 +150,8 @@ abstract class XLite_Controller_Admin_AAdmin extends XLite_Controller_AControlle
 
         // auto-login request
 /*
-        if (!$this->auth->is('logged') && isset(XLite_Core_Request::getInstance()->login) && isset(XLite_Core_Request::getInstance()->password)) {
-            if ($this->auth->adminLogin(XLite_Core_Request::getInstance()->login, XLite_Core_Request::getInstance()->password) === ACCESS_DENIED) {
+        if (!$this->auth->is('logged') && isset(\XLite\Core\Request::getInstance()->login) && isset(\XLite\Core\Request::getInstance()->password)) {
+            if ($this->auth->adminLogin(\XLite\Core\Request::getInstance()->login, \XLite\Core\Request::getInstance()->password) === ACCESS_DENIED) {
                 die('ACCESS DENIED');
             }
         }
@@ -170,7 +172,7 @@ abstract class XLite_Controller_Admin_AAdmin extends XLite_Controller_AControlle
             !$this->isIgnoredTarget()
             && 'Y' == $this->config->Security->admin_ip_protection
             && !$this->auth->isValidAdminIP($this)
-            && !(XLite_Core_Request::getInstance()->target == 'payment_method' && XLite_Core_Request::getInstance()->action == 'callback')
+            && !(\XLite\Core\Request::getInstance()->target == 'payment_method' && \XLite\Core\Request::getInstance()->action == 'callback')
         ) {
 
             // IP check
@@ -181,7 +183,7 @@ abstract class XLite_Controller_Admin_AAdmin extends XLite_Controller_AControlle
 
         } else {
 
-            if (isset(XLite_Core_Request::getInstance()->no_https)) {
+            if (isset(\XLite\Core\Request::getInstance()->no_https)) {
                 $this->session->set('no_https', true);
             }
 
@@ -199,7 +201,7 @@ abstract class XLite_Controller_Admin_AAdmin extends XLite_Controller_AControlle
      */
     protected function isPublicZone()
     {
-        $request = XLite_Core_Request::getInstance();
+        $request = \XLite\Core\Request::getInstance();
 
         return 'login' == $request->target;
     }
@@ -215,7 +217,7 @@ abstract class XLite_Controller_Admin_AAdmin extends XLite_Controller_AControlle
     function getRecentAdmins()
     {
         if ($this->auth->isLogged() && is_null($this->recentAdmins)) {
-            $profile = new XLite_Model_Profile();
+            $profile = new \XLite\Model\Profile();
             $this->recentAdmins = $profile->findAll("access_level>='".$this->getComplex('auth.adminAccessLevel')."' AND last_login>'0'", "last_login ASC", null, "0, 7");
         }
         return $this->recentAdmins;
@@ -224,7 +226,7 @@ abstract class XLite_Controller_Admin_AAdmin extends XLite_Controller_AControlle
     function startDump()
     {
         parent::startDump();
-        if (!isset(XLite_Core_Request::getInstance()->mode) || XLite_Core_Request::getInstance()->mode != "cp") {
+        if (!isset(\XLite\Core\Request::getInstance()->mode) || \XLite\Core\Request::getInstance()->mode != "cp") {
             $this->displayPageHeader();
         }
     }
@@ -327,10 +329,10 @@ EOT;
         
                             
         if (
-            isset($ignoreTargets[XLite_Core_Request::getInstance()->target]) 
+            isset($ignoreTargets[\XLite\Core\Request::getInstance()->target]) 
             && (
-                in_array("*", $ignoreTargets[XLite_Core_Request::getInstance()->target]) 
-                || (isset(XLite_Core_Request::getInstance()->action) && in_array(XLite_Core_Request::getInstance()->action, $ignoreTargets[XLite_Core_Request::getInstance()->target]))
+                in_array("*", $ignoreTargets[\XLite\Core\Request::getInstance()->target]) 
+                || (isset(\XLite\Core\Request::getInstance()->action) && in_array(\XLite\Core\Request::getInstance()->action, $ignoreTargets[\XLite\Core\Request::getInstance()->target]))
             )
         ) {
             return true;
@@ -344,25 +346,25 @@ EOT;
         );
 
         if (
-            isset($specialIgnoreTargets[XLite_Core_Request::getInstance()->target]) 
+            isset($specialIgnoreTargets[\XLite\Core\Request::getInstance()->target]) 
             && (
-                in_array("*", $specialIgnoreTargets[XLite_Core_Request::getInstance()->target]) 
-                || (isset(XLite_Core_Request::getInstance()->action) && in_array(XLite_Core_Request::getInstance()->action, $specialIgnoreTargets[XLite_Core_Request::getInstance()->target]))
+                in_array("*", $specialIgnoreTargets[\XLite\Core\Request::getInstance()->target]) 
+                || (isset(\XLite\Core\Request::getInstance()->action) && in_array(\XLite\Core\Request::getInstance()->action, $specialIgnoreTargets[\XLite\Core\Request::getInstance()->target]))
             ) 
             && (
-                isset(XLite_Core_Request::getInstance()->login) && isset(XLite_Core_Request::getInstance()->password)
+                isset(\XLite\Core\Request::getInstance()->login) && isset(\XLite\Core\Request::getInstance()->password)
             )
         ) {
             $login = $this->xlite->auth->getComplex('profile.login');
-            $post_login = XLite_Core_Request::getInstance()->login;
-            $post_password = XLite_Core_Request::getInstance()->password;
+            $post_login = \XLite\Core\Request::getInstance()->login;
+            $post_password = \XLite\Core\Request::getInstance()->password;
 
             if ($login != $post_login)
                 return false;
 
             if (!empty($post_login) && !empty($post_password)){
                 $post_password = $this->xlite->auth->encryptPassword($post_password);
-                $profile = new XLite_Model_Profile();
+                $profile = new \XLite\Model\Profile();
                 if ($profile->find("login='".addslashes($post_login)."' AND ". "password='".addslashes($post_password)."'")) {
                     if ($profile->get('enabled') && $profile->is('admin')) {
                         return true;
@@ -377,7 +379,7 @@ EOT;
     // FIXME - check if it's needed
     function getSidebarBoxStatus($boxHead = null)
     {
-        $dialog = new XLite_Controller_Admin_Sbjs();
+        $dialog = new \XLite\Controller\Admin\Sbjs();
         $dialog->sidebar_box_id = $this->strMD5($boxHead);
 
         return $dialog->getSidebarBoxStatus();
@@ -407,15 +409,15 @@ EOT;
     /**
      * Return Viewer object
      * 
-     * @return XLite_View_Controller
+     * @return \XLite\View\Controller
      * @access public
      * @since  3.0.0
      */
     public function getViewer()
     {
         if (
-            XLite_Core_Request::getInstance()->isAJAX()
-            && XLite_Core_Request::getInstance()->widget
+            \XLite\Core\Request::getInstance()->isAJAX()
+            && \XLite\Core\Request::getInstance()->widget
         ) {
 
             $params = array();
@@ -424,7 +426,7 @@ EOT;
                 $params[$name] = $this->get($name);
             }
 
-            $class = XLite_Core_Request::getInstance()->widget;
+            $class = \XLite\Core\Request::getInstance()->widget;
             $viewer = new $class($params, $this->getViewerTemplate());
 
         } else {

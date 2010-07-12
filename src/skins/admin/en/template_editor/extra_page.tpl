@@ -46,13 +46,13 @@
 {else:}
 <input type="text" name="title" value="{title:h}" size="80" width="150px">
 {end:}
-<widget class="XLite_Validator_RequiredValidator" field="title">
+<widget class="\XLite\Validator\RequiredValidator" field="title">
 <br><br>
 {if:!extraPage.page}
 <input type="hidden" value="1" name="new_page">
 <b>Page name:</b><br>
 <input type="text" name="page" value="{page}" size="80" width="150px">
-<widget class="XLite_Validator_PatternValidator" field="page" pattern="/(^[a-zA-Z0-9_]+$)|(^$)/" template="template_editor/name_validator.tpl">
+<widget class="\XLite\Validator\PatternValidator" field="page" pattern="/(^[a-zA-Z0-9_]+$)|(^$)/" template="template_editor/name_validator.tpl">
 <br><br>
 <b>Note:</b> You can leave the page name field empty. In this case it will be generated automatically. 
 <p><i>Only letters, numbers and symbol "_" are allowed in a page name.</i></p>

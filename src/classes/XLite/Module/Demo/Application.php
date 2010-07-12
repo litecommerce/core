@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Demo;
+
 /**
  * Application
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Demo_Application extends XLite implements XLite_Base_IDecorator
+class Application extends XLite implements \XLite\Base\IDecorator
 {
     /**
      * Parse config file and return options list

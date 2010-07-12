@@ -25,7 +25,7 @@
       </div>
     </div>
 
-    <widget class="XLite_View_OrderItemsShort" order="{order}" />
+    <widget class="\XLite\View\OrderItemsShort" order="{order}" />
 
   </li>
 

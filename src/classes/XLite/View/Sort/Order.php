@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View\Sort;
+
 /**
  * Order sort widget 
  * 
@@ -34,7 +36,7 @@
  * @since   3.0.0
  * @ListChild (list="orders.panel", weight="20")
  */
-class XLite_View_Sort_Order extends XLite_View_Sort_ASort
+class Order extends \XLite\View\Sort\ASort
 {
     /**
      * Define widget parameters
@@ -48,7 +50,7 @@ class XLite_View_Sort_Order extends XLite_View_Sort_ASort
         parent::defineWidgetParams();
 
         $this->widgetParams[self::PARAM_PARAMS]->setValue(array('target' => 'order_list', 'mode' => 'search'));
-        $this->widgetParams[self::PARAM_SORT_CRITERIONS]->setValue(XLite_Model_Order::getSortCriterions());
+        $this->widgetParams[self::PARAM_SORT_CRITERIONS]->setValue(\XLite\Model\Order::getSortCriterions());
         $this->widgetParams[self::PARAM_CELL]->setValue($this->session->get('orders_search'));
     }
 }

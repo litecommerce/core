@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model;
+
 define('QUERY_SEARCH_STAT_LENGTH', 64);
 
 /**
@@ -35,7 +37,7 @@ define('QUERY_SEARCH_STAT_LENGTH', 64);
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_SearchStat extends XLite_Model_AModel
+class SearchStat extends \XLite\Model\AModel
 {
     public $fields = array(
         "query" => "",

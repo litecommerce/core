@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model;
+
 /**
  * CSS block
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_CssEditor extends XLite_Base
+class CssEditor extends \XLite\Base
 {
     /**
      * RegExp result keys

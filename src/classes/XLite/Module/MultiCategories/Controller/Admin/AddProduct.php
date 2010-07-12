@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\MultiCategories\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_MultiCategories_Controller_Admin_AddProduct extends XLite_Controller_Admin_AddProduct implements XLite_Base_IDecorator
+class AddProduct extends \XLite\Controller\Admin\AddProduct implements \XLite\Base\IDecorator
 {
     function action_add()
     {
@@ -45,7 +47,7 @@ class XLite_Module_MultiCategories_Controller_Admin_AddProduct extends XLite_Con
                 $product->deleteCategory($categories[$i]);
             }
             foreach ($this->product_categories as $catId) {
-                $cat = new XLite_Model_Category($catId);
+                $cat = new \XLite\Model\Category($catId);
                 if (!$product->inCategory($cat)) {
                     $product->addCategory($cat);
                 }

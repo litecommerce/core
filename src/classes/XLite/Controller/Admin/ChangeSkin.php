@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Controller_Admin_ChangeSkin extends XLite_Controller_Admin_AAdmin
+class ChangeSkin extends \XLite\Controller\Admin\AAdmin
 {
     public $_currentSkin = null;
     public $currentSkinName = null;
@@ -284,7 +286,7 @@ class XLite_Controller_Admin_ChangeSkin extends XLite_Controller_Admin_AAdmin
 
     function updateModulesSkins()
     {
-        $module = new XLite_Model_Module();
+        $module = new \XLite\Model\Module();
         $result = $module->iterate();
         while ($module->next($result)) {
             $name = $module->get('name');
@@ -342,7 +344,7 @@ To install the selected skin, please correct the problem and start the installat
 
     	$ck_res &= $this->createDirs($this->get('directoriesToCreate'));
 
-        $teDialog = new XLite_Controller_Admin_TemplateEditor();
+        $teDialog = new \XLite\Controller\Admin\TemplateEditor();
         $teDialog->getExtraPages();
 
     	echo "<BR><B>Copying templates...</B><BR>\n";
@@ -364,7 +366,7 @@ To install the selected skin, please correct the problem and start the installat
         echo "<br><br><b>Cleanup cache...</b><br>";
         func_cleanup_cache('skins', true);
 
-        XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+        \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
             array(
                 'category' => 'Skin',
                 'name'     => 'skin',

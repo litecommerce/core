@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View\Pager;
+
 /**
  * Pager 
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_Pager_OrdersList extends XLite_View_Pager_Common
+class OrdersList extends \XLite\View\Pager\Common
 {
     /**
      * Return list of page URL params

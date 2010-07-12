@@ -18,7 +18,7 @@
       <td class="marker">*</td>
       <td>
         <input type="text" id="gc_code" name="gcid" />
-        <widget class="XLite_Module_GiftCertificates_Validator_GCValidator" field="gcid" />
+        <widget class="\XLite\Module\GiftCertificates\Validator\GCValidator" field="gcid" />
       </td>
     </tr>
 

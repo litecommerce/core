@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Demo\Controller\Admin;
+
 /**
  * Login / logoff
  * 
@@ -33,8 +35,8 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Demo_Controller_Admin_Login extends XLite_Controller_Admin_Login
-implements XLite_Base_IDecorator
+class Login extends \XLite\Controller\Admin\Login
+implements \XLite\Base\IDecorator
 {
 	/**
 	 * Demo admin login 
@@ -72,7 +74,7 @@ implements XLite_Base_IDecorator
 		$this->set('login', self::$demoLogin);
 		$this->set('password', self::$demoPassword);
 		$this->set('additional_note', '<center>(login: ' . self::$demoLogin . ', password: ' . self::$demoPassword . ')</center>');
-        $this->set('additional_header', XLite_Module_Demo_View_AView::getAdditionalHeader());
+        $this->set('additional_header', \XLite\Module\Demo\View\AView::getAdditionalHeader());
 	}
 }
 

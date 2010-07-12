@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Froogle\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,14 +35,14 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Froogle_Controller_Admin_Module extends XLite_Controller_Admin_Module implements XLite_Base_IDecorator
+class Module extends \XLite\Controller\Admin\Module implements \XLite\Base\IDecorator
 {
     function init()
     {
         parent::init();
 
         if ($this->page == "Froogle") {
-        	$layout = XLite_Model_Layout::getInstance();
+        	$layout = \XLite\Model\Layout::getInstance();
         	$layout->addLayout('general_settings.tpl', "modules/Froogle/config.tpl");
         }
     }

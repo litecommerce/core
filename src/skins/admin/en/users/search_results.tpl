@@ -11,7 +11,7 @@
  * @since     3.0.0
  *}
 
-<widget class="XLite_View_Pager" data="{users}" name="searchResults" itemsPerPage="{config.General.users_per_page}" />
+<widget class="\XLite\View\Pager" data="{users}" name="searchResults" itemsPerPage="{config.General.users_per_page}" />
 
 <script language="JavaScript">
 <!--

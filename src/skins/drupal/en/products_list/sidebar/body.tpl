@@ -14,15 +14,15 @@
 
   <li class="hproduct item" FOREACH="getSideBarData(),product">
 
-    <a IF="isShowThumbnails()" class="url product-thumbnail" href="{buildURL(#product#,##,_ARRAY_(#product_id#^product.product_id,#category_id#^product.category.category_id))}"><widget class="XLite_View_Image" image="{product.getThumbnail()}" maxWidth="45" maxHeight="45" alt="{product.name}" className="photo" /></a>
+    <a IF="isShowThumbnails()" class="url product-thumbnail" href="{buildURL(#product#,##,_ARRAY_(#product_id#^product.product_id,#category_id#^product.category.category_id))}"><widget class="\XLite\View\Image" image="{product.getThumbnail()}" maxWidth="45" maxHeight="45" alt="{product.name}" className="photo" /></a>
 
     <div class="body">
 
         <a class="fn product-name" href="{buildURL(#product#,##,_ARRAY_(#product_id#^product.product_id,#category_id#^product.category.category_id))}">{product.name:h}</a>
         <br />
 
-        {* <widget class="XLite_View_Price" product="{product}" displayOnlyPrice="true" IF="isShowPrice()" /> *}
-        <widget class="XLite_View_BuyNow" product="{product}" IF="isShowAdd2Cart(product)" style="aux-button add-to-cart" showPrice="{isShowPrice()}" />
+        {* <widget class="\XLite\View\Price" product="{product}" displayOnlyPrice="true" IF="isShowPrice()" /> *}
+        <widget class="\XLite\View\BuyNow" product="{product}" IF="isShowAdd2Cart(product)" style="aux-button add-to-cart" showPrice="{isShowPrice()}" />
 
     </div>
 

@@ -11,4 +11,4 @@
  * @since     3.0.0
  * @ListChild (list="productsList.listItem.body", weight="40")
  *}
-<widget class="XLite_View_BuyNow" product="{product}" IF="isShowAdd2Cart(product)" style="aux-button add-to-cart" />
+<widget class="\XLite\View\BuyNow" product="{product}" IF="isShowAdd2Cart(product)" style="aux-button add-to-cart" />

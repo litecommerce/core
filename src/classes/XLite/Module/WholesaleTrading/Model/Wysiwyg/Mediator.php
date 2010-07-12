@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\WholesaleTrading\Model\Wysiwyg;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_WholesaleTrading_Model_Wysiwyg_Mediator extends XLite_Model_Wysiwyg_Mediator implements XLite_Base_IDecorator
+class Mediator extends \XLite\Model\Wysiwyg\Mediator implements \XLite\Base\IDecorator
 {
     
     function export($templates)
@@ -51,7 +53,7 @@ class XLite_Module_WholesaleTrading_Model_Wysiwyg_Mediator extends XLite_Model_W
 
     function WholesaleTrading_remove_admin_layouts()
     {
-        $layout = XLite_Model_Layout::getInstance();
+        $layout = \XLite\Model\Layout::getInstance();
 
         $list = $layout->list;
         unset($list['common/select_membership.tpl']);

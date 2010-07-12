@@ -10,7 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<widget class="XLite_View_Form_Sort" name="sort_form" params="{getFormParams()}" />
+<widget class="\XLite\View\Form\Sort" name="sort_form" params="{getFormParams()}" />
 
 <span>Sort by</span>
 <select name="sortCriterion">

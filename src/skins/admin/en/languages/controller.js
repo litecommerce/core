@@ -14,7 +14,7 @@
 // Open Add language dialog
 function openAddNewLanguage(link, page)
 {
-  var url = 'admin.php?target=languages&widget=XLite_View_LanguagesModify_AddLanguage';
+  var url = 'admin.php?target=languages&widget=\\XLite\\View\\LanguagesModify\\AddLanguage';
 
   if (page) {
     url += '&page=' + page;
@@ -28,7 +28,7 @@ function openAddNewLanguage(link, page)
 // Open Select language dialog
 function openSelectLanguage(link, language, page)
 {
-  var url = 'admin.php?target=languages&widget=XLite_View_LanguagesModify_SelectLanguage';
+  var url = 'admin.php?target=languages&widget=\\XLite\\View\\LanguagesModify\\SelectLanguage';
 
   if (language) {
     url += '&language=' + language;
@@ -46,7 +46,7 @@ function openSelectLanguage(link, language, page)
 // Open Add new label dialog
 function openAddNewLabel(link, language, page)
 {
-  var url = 'admin.php?target=languages&widget=XLite_View_LanguagesModify_AddLabel';
+  var url = 'admin.php?target=languages&widget=\\XLite\\View\\LanguagesModify\\AddLabel';
 
   if (language) {
     url += '&language=' + language;
@@ -64,7 +64,7 @@ function openAddNewLabel(link, language, page)
 // Open Confirm language deletion dialog
 function confirmLanguageDelete(link, id, language, page)
 {
-  var url = 'admin.php?target=languages&widget=XLite_View_LanguagesModify_ConfirmDeletion&lng_id' + id;
+  var url = 'admin.php?target=languages&widget=\\XLite\\View\\LanguagesModify\\ConfirmDeletion&lng_id' + id;
 
   if (language) {
     url += '&language=' + language;
@@ -82,7 +82,7 @@ function confirmLanguageDelete(link, id, language, page)
 // Open Edit label dialog
 function openEditLabelDialog(link, id, language, page)
 {
-  var url = 'admin.php?target=languages&label_id=' + id + '&widget=XLite_View_LanguagesModify_EditLabel';
+  var url = 'admin.php?target=languages&label_id=' + id + '&widget=\\XLite\\View\\LanguagesModify\\EditLabel';
 
   if (language) {
     url += '&language=' + language;
@@ -99,7 +99,7 @@ function openEditLabelDialog(link, id, language, page)
 
 function openLanguageOptions(link, id, language, page)
 {
-  var url = 'admin.php?target=languages&lng_id=' + id + '&widget=XLite_View_LanguageModify_Options';
+  var url = 'admin.php?target=languages&lng_id=' + id + '&widget=\\XLite\\View\\LanguageModify\\Options';
 
   if (language) {
     url += '&language=' + language;

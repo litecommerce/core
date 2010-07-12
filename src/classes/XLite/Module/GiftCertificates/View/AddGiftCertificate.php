@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\GiftCertificates\View;
+
 /**
  * Add / update gift certificate widget
  * 
@@ -33,12 +35,12 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_GiftCertificates_View_AddGiftCertificate extends XLite_View_Dialog
+class AddGiftCertificate extends \XLite\View\Dialog
 {
     /**
      * Gift certificate (cache)
      * 
-     * @var    XLite_Module_GiftCertificates_Model_GiftCertificate
+     * @var    \XLite\Module\GiftCertificates\Model\GiftCertificate
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
@@ -73,7 +75,7 @@ class XLite_Module_GiftCertificates_View_AddGiftCertificate extends XLite_View_D
     /**
      * Get gift certificate 
      * 
-     * @return XLite_Module_GiftCertificates_Model_GiftCertificate
+     * @return \XLite\Module\GiftCertificates\Model\GiftCertificate
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -82,11 +84,11 @@ class XLite_Module_GiftCertificates_View_AddGiftCertificate extends XLite_View_D
     {
         if (is_null($this->gc)) {
 
-            if (XLite_Core_Request::getInstance()->gcid) {
+            if (\XLite\Core\Request::getInstance()->gcid) {
 
                 // Get from request
-                $this->gc = new XLite_Module_GiftCertificates_Model_GiftCertificate(
-                    XLite_Core_Request::getInstance()->gcid
+                $this->gc = new \XLite\Module\GiftCertificates\Model\GiftCertificate(
+                    \XLite\Core\Request::getInstance()->gcid
                 );
 
             } else {
@@ -109,7 +111,7 @@ class XLite_Module_GiftCertificates_View_AddGiftCertificate extends XLite_View_D
      */
     protected function setDefaultGiftCertificate()
     {
-        $this->gc = new XLite_Module_GiftCertificates_Model_GiftCertificate();
+        $this->gc = new \XLite\Module\GiftCertificates\Model\GiftCertificate();
 
         $this->gc->set('send_via', 'E');
         $this->gc->set('border', 'no_border');

@@ -12,5 +12,5 @@
  * @ListChild (list="#minicart.vertical.childs", weight="30")
  *}
 <div class="cart-checkout" IF="!cart.empty">
-  <widget class="XLite_View_Button_Link" label="Checkout" location="{buildURL(#checkout#)}" style="bright-button checkout-button">
+  <widget class="\XLite\View\Button\Link" label="Checkout" location="{buildURL(#checkout#)}" style="bright-button checkout-button">
 </div>

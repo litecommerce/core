@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View;
+
 /**
  * Pager 
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_Pager extends XLite_View_AView
+class Pager extends \XLite\View\AView
 {
     /**
      * Widget parameter names
@@ -181,16 +183,16 @@ class XLite_View_Pager extends XLite_View_AView
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_PAGE_ID => new XLite_Model_WidgetParam_Int(
+            self::PARAM_PAGE_ID => new \XLite\Model\WidgetParam\Int(
                 'Page ID', 0
             ),
-            self::PARAM_ITEMS_PER_PAGE => new XLite_Model_WidgetParam_Int(
+            self::PARAM_ITEMS_PER_PAGE => new \XLite\Model\WidgetParam\Int(
                 'Items per page', intval($this->config->General->products_per_page), true
             ),
-            self::PARAM_DATA => new XLite_Model_WidgetParam_Collection(
+            self::PARAM_DATA => new \XLite\Model\WidgetParam\Collection(
                 'Data', array()
             ),
-            self::PARAM_SHOW_ITEMS_PER_PAGE_SELECTOR => new XLite_Model_WidgetParam_Checkbox(
+            self::PARAM_SHOW_ITEMS_PER_PAGE_SELECTOR => new \XLite\Model\WidgetParam\Checkbox(
                 'Show "Items per page" selector', true, true
             ),
         );

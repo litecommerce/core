@@ -42,7 +42,7 @@
     		{end:}
 		</select>
 
-		<span IF="target=#add_product#"><widget class="XLite_Module_MultiCategories_Validator_MultiCategoriesValidator" field="product_categories"></span>
-        <span IF="target=#product#"><widget class="XLite_Module_MultiCategories_Validator_MultiCategoriesValidator" field="categories"></span>
+		<span IF="target=#add_product#"><widget class="\XLite\Module\MultiCategories\Validator\MultiCategoriesValidator" field="product_categories"></span>
+        <span IF="target=#product#"><widget class="\XLite\Module\MultiCategories\Validator\MultiCategoriesValidator" field="categories"></span>
 	</td>
 </tr>

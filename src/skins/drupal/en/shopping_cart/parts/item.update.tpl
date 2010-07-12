@@ -11,12 +11,12 @@
  * @since     3.0.0
  * @ListChild (list="cart.item.actions", weight="10")
  *}
-<widget class="XLite_View_Form_Cart_Item_Update" name="item" item="{item}" cartId="{cart_id}" />
+<widget class="\XLite\View\Form\Cart\Item\Update" name="item" item="{item}" cartId="{cart_id}" />
   <div class="item-sums">
     <span class="item-price">{price_format(item,#price#):h}</span>
     <span class="sums-multiply">x</span>
     <span class="item-quantity"><input type="text" name="amount" value="{item.amount}" class="wheel-ctrl field-integer field-positive field-non-zero" /></span>
-    <widget class="XLite_View_Button_Image" style="update-icon update-icon-disabled" label="Update" disabled />
+    <widget class="\XLite\View\Button\Image" style="update-icon update-icon-disabled" label="Update" disabled />
     <span class="sums-equals">=</span>
     <span class="item-subtotal">{price_format(item,#total#):h}</span>
   </div>

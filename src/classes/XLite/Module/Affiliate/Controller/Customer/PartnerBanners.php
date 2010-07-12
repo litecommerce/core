@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Affiliate\Controller\Customer;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Affiliate_Controller_Customer_PartnerBanners extends XLite_Module_Affiliate_Controller_Partner
+class PartnerBanners extends \XLite\Module\Affiliate\Controller\Partner
 {
     public $params = array('target', 'mode', 'category_id');
 
@@ -50,7 +52,7 @@ class XLite_Module_Affiliate_Controller_Customer_PartnerBanners extends XLite_Mo
         parent::addBaseLocation();
 
         $this->locationPath->addNode(
-            new XLite_Model_Location('Banners', $this->get('mode') ? $this->buildURL('partner_banners') : null)
+            new \XLite\Model\Location('Banners', $this->get('mode') ? $this->buildURL('partner_banners') : null)
         );
     }
 
@@ -84,7 +86,7 @@ class XLite_Module_Affiliate_Controller_Customer_PartnerBanners extends XLite_Mo
     function getBanners()
     {
         if (is_null($this->banners)) {
-            $this->banner = new XLite_Module_Affiliate_Model_Banner();
+            $this->banner = new \XLite\Module\Affiliate\Model\Banner();
             $this->banners = $this->banner->findAll();
         }
         return $this->banners;
@@ -93,7 +95,7 @@ class XLite_Module_Affiliate_Controller_Customer_PartnerBanners extends XLite_Mo
     function getCategory()
     {
         if (is_null($this->category)) {
-            $this->category = new XLite_Model_Category($this->get('category_id'));
+            $this->category = new \XLite\Model\Category($this->get('category_id'));
         }
         return $this->category;
     }

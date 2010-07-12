@@ -41,7 +41,7 @@ function func_Affiliate_charge(&$payment, $order)
 {
     $commissions = 0;
     // process current partner
-    $planCommission = new XLite_Module_Affiliate_Model_PlanCommission();
+    $planCommission = new \XLite\Module\Affiliate\Model\PlanCommission();
     $commissions = $planCommission->calculate($order);
     if ($commissions >= 0.01) {
         // check for existing partner payment
@@ -61,7 +61,7 @@ function func_Affiliate_charge(&$payment, $order)
         foreach ((array)$order->getComplex('partner.parents') as $level => $parent) {
             $rate = $payment->get("config.Affiliate.tier_commission_rates.$level");
             if ($rate > 0) {
-                $pp = new XLite_Module_Affiliate_Model_PartnerPayment();
+                $pp = new \XLite\Module\Affiliate\Model\PartnerPayment();
                 $update = $pp->find("partner_id=".$parent->get('profile_id')." AND order_id=".$order->get('order_id')." AND affiliate=".$affiliate);
                 $pc =  round((double)($commissions / 100 * $rate + 0.00000000001), 2);
                 if ($pc >= 0.01) {

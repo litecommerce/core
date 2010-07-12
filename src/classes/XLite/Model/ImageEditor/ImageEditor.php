@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model\ImageEditor;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_ImageEditor_ImageEditor extends XLite_Base
+class ImageEditor extends \XLite\Base
 {
     public $images      = array();
     public $images_path;
@@ -75,7 +77,7 @@ class XLite_Model_ImageEditor_ImageEditor extends XLite_Base
         $images = $this->get('images');
         // upload/update image
         $image_file_name = $this->images[$image_name]['filename'];
-        $upload = new XLite_Model_Upload($_FILES[$image_field]);
+        $upload = new \XLite\Model\Upload($_FILES[$image_field]);
         $move   = $upload->move($image_file_name);
         if ($move && !LC_OS_IS_WIN) {
             $real_img_name = realpath('.') . '/' . $image_file_name;

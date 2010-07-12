@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_XliteForm extends XLite_Model_AModel
+class XliteForm extends \XLite\Model\AModel
 {
 
     /**
@@ -86,6 +88,6 @@ class XLite_Model_XliteForm extends XLite_Model_AModel
 
     function getMaxFormsPerSession()
     {
-        return (0 >= ($maxCount = XLite::getInstance()->getOptions(array('HTML_Template_Flexy', 'max_forms_per_session')))) ? 100 : $maxCount;
+        return (0 >= ($maxCount = \XLite::getInstance()->getOptions(array('HTML_Template_Flexy', 'max_forms_per_session')))) ? 100 : $maxCount;
     }
 }

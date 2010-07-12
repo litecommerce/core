@@ -55,7 +55,7 @@ class DecoratorStaticRoutines
     public function checkForStaticConstructor($class, &$content)
     {
         if (preg_match('/' . self::PATTERN_STATIC_CONSTRUCTOR . '/USism', $content)) {
-            $content .= "\n\n" . '// Call static constructor' . "\n" . $class . '::__constructStatic();';
+            $content .= "\n\n" . '// Call static constructor' . "\n" . '\\' . $class . '::__constructStatic();';
         }
     }
 }

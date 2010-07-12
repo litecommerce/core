@@ -26,15 +26,17 @@
  * @since      3.0.0
  */
 
+namespace XLite\View\FormField\Input\Checkbox;
+
 /**
- * XLite_View_FormField_Input_Checkbox_ShipAsBill 
+ * \XLite\View\FormField\Input\Checkbox\ShipAsBill 
  * 
  * @package    XLite
  * @subpackage ____sub_package____
  * @see        ____class_see____
  * @since      3.0.0
  */
-class XLite_View_FormField_Input_Checkbox_ShipAsBill extends XLite_View_FormField_Input_Checkbox
+class ShipAsBill extends \XLite\View\FormField\Input\Checkbox
 {
     /**
      * getDefaultValue

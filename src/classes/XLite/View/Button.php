@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View;
+
 /**
  * Button widget
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_Button extends XLite_View_AView
+class Button extends \XLite\View\AView
 {
     /**
      * Widget parameter names
@@ -68,9 +70,9 @@ class XLite_View_Button extends XLite_View_AView
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_HREF  => new XLite_Model_WidgetParam_String('Location URL', '#'),
-            self::PARAM_IMG   => new XLite_Model_WidgetParam_String('Image', null),
-            self::PARAM_LABEL => new XLite_Model_WidgetParam_String('Label', 'Submit'),
+            self::PARAM_HREF  => new \XLite\Model\WidgetParam\String('Location URL', '#'),
+            self::PARAM_IMG   => new \XLite\Model\WidgetParam\String('Image', null),
+            self::PARAM_LABEL => new \XLite\Model\WidgetParam\String('Label', 'Submit'),
         );
     }
 }

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View\FormField;
+
 /**
  * Abstract form field
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class XLite_View_FormField_AFormField extends XLite_View_AView
+abstract class AFormField extends \XLite\View\AView
 {
     /**
      * Widget param names 
@@ -313,14 +315,14 @@ abstract class XLite_View_FormField_AFormField extends XLite_View_AView
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_NAME       => new XLite_Model_WidgetParam_String('Name', $this->getDefaultName()),
-            self::PARAM_VALUE      => new XLite_Model_WidgetParam_String('Value', $this->getDefaultValue()),
-            self::PARAM_LABEL      => new XLite_Model_WidgetParam_String('Label', $this->getDefaultLabel()),
-            self::PARAM_REQUIRED   => new XLite_Model_WidgetParam_Bool('Required', false),
-            self::PARAM_COMMENT    => new XLite_Model_WidgetParam_String('Comment', null),
-            self::PARAM_ATTRIBUTES => new XLite_Model_WidgetParam_Collection('Attributes', array()),
+            self::PARAM_NAME       => new \XLite\Model\WidgetParam\String('Name', $this->getDefaultName()),
+            self::PARAM_VALUE      => new \XLite\Model\WidgetParam\String('Value', $this->getDefaultValue()),
+            self::PARAM_LABEL      => new \XLite\Model\WidgetParam\String('Label', $this->getDefaultLabel()),
+            self::PARAM_REQUIRED   => new \XLite\Model\WidgetParam\Bool('Required', false),
+            self::PARAM_COMMENT    => new \XLite\Model\WidgetParam\String('Comment', null),
+            self::PARAM_ATTRIBUTES => new \XLite\Model\WidgetParam\Collection('Attributes', array()),
 
-            self::PARAM_IS_ALLOWED_FOR_CUSTOMER => new XLite_Model_WidgetParam_Bool(
+            self::PARAM_IS_ALLOWED_FOR_CUSTOMER => new \XLite\Model\WidgetParam\Bool(
                 'Is allowed for customer',
                 $this->isAllowedForCustomer
             ),
@@ -373,7 +375,7 @@ abstract class XLite_View_FormField_AFormField extends XLite_View_AView
      */
     protected function checkFieldAccessability()
     {
-        return $this->getParam(self::PARAM_IS_ALLOWED_FOR_CUSTOMER) || XLite::isAdminZone();
+        return $this->getParam(self::PARAM_IS_ALLOWED_FOR_CUSTOMER) || \XLite::isAdminZone();
     }
 
     /**
@@ -389,7 +391,7 @@ abstract class XLite_View_FormField_AFormField extends XLite_View_AView
      */
     protected function callFormMethod($method, array $args = array())
     {
-        return call_user_func_array(array(XLite_View_Model_AModel::getCurrentForm(), $method), $args);
+        return call_user_func_array(array(\XLite\View\Model\AModel::getCurrentForm(), $method), $args);
     }
 
 

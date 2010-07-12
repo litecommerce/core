@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\ProductAdviser\View;
+
 /**
  * ____description____
  * 
@@ -34,7 +36,7 @@
  * @since   3.0.0
  * @ListChild (list="productDetails.main", weight="60")
  */
-class XLite_Module_ProductAdviser_View_PriceNotifyLink extends XLite_View_AView
+class PriceNotifyLink extends \XLite\View\AView
 {
     /**
      * Widget parameter names
@@ -78,7 +80,7 @@ class XLite_Module_ProductAdviser_View_PriceNotifyLink extends XLite_View_AView
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_PRODUCT => new XLite_Model_WidgetParam_Object('Product', $this->getProduct(), false, 'XLite_Model_Product'),
+            self::PARAM_PRODUCT => new \XLite\Model\WidgetParam\Object('Product', $this->getProduct(), false, '\XLite\Model\Product'),
         );
     }
 
@@ -167,7 +169,7 @@ class XLite_Module_ProductAdviser_View_PriceNotifyLink extends XLite_View_AView
                 'email = \'' . $email . '\'',
             );
 
-            $notification = new XLite_Module_ProductAdviser_Model_Notification();
+            $notification = new \XLite\Module\ProductAdviser\Model\Notification();
             $notification->set('type', CUSTOMER_NOTIFICATION_PRICE);
             $notification->set('product_id', $this->getParam(self::PARAM_PRODUCT)->get('product_id'));
             $check[] = 'notify_key = \'' . addslashes($notification->get('productKey')) . '\'';

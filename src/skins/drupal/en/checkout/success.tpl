@@ -13,9 +13,9 @@
 
 <widget template="checkout/success_message.tpl" />
 <br />
-<widget class="XLite_View_Button_Link" label="Continue shopping" location="{buildURL()}" />
+<widget class="\XLite\View\Button\Link" label="Continue shopping" location="{buildURL()}" />
 &nbsp;&nbsp;
-<widget class="XLite_View_Button_Link" label="Print invoice" location="{buildUrl(#invoice#,##,_ARRAY_(#order_id#^order.order_id,#printable#^#1#))}" />
+<widget class="\XLite\View\Button\Link" label="Print invoice" location="{buildUrl(#invoice#,##,_ARRAY_(#order_id#^order.order_id,#printable#^#1#))}" />
 <br />
 <br />
 <hr class="tiny" />

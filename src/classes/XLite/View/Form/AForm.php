@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View\Form;
+
 /**
  * Abstract form
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class XLite_View_Form_AForm extends XLite_View_AView
+abstract class AForm extends \XLite\View\AView
 {
     /**
      * Widget parameter names
@@ -261,16 +263,16 @@ abstract class XLite_View_Form_AForm extends XLite_View_AView
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_START => new XLite_Model_WidgetParam_Bool('Is start', true),
-            self::PARAM_END   => new XLite_Model_WidgetParam_Bool('Is end', false),
+            self::PARAM_START => new \XLite\Model\WidgetParam\Bool('Is start', true),
+            self::PARAM_END   => new \XLite\Model\WidgetParam\Bool('Is end', false),
 
-            self::PARAM_FORM_TARGET => new XLite_Model_WidgetParam_String('Target', $this->getDefaultTarget()),
-            self::PARAM_FORM_ACTION => new XLite_Model_WidgetParam_String('Action', $this->getDefaultAction()),
-            self::PARAM_FORM_NAME   => new XLite_Model_WidgetParam_String('Name', ''),
-            self::PARAM_FORM_PARAMS => new XLite_Model_WidgetParam_Collection('Params', $this->getDefaultParams()),
-            self::PARAM_FORM_METHOD => new XLite_Model_WidgetParam_Set('Request method', 'post', array('post', 'get')),
+            self::PARAM_FORM_TARGET => new \XLite\Model\WidgetParam\String('Target', $this->getDefaultTarget()),
+            self::PARAM_FORM_ACTION => new \XLite\Model\WidgetParam\String('Action', $this->getDefaultAction()),
+            self::PARAM_FORM_NAME   => new \XLite\Model\WidgetParam\String('Name', ''),
+            self::PARAM_FORM_PARAMS => new \XLite\Model\WidgetParam\Collection('Params', $this->getDefaultParams()),
+            self::PARAM_FORM_METHOD => new \XLite\Model\WidgetParam\Set('Request method', 'post', array('post', 'get')),
 
-            self::PARAM_CLASS_NAME  => new XLite_Model_WidgetParam_String('Class name', $this->getDefaultClassName()),
+            self::PARAM_CLASS_NAME  => new \XLite\Model\WidgetParam\String('Class name', $this->getDefaultClassName()),
         );
     }
 
@@ -278,14 +280,14 @@ abstract class XLite_View_Form_AForm extends XLite_View_AView
     /**
      * getCurrentForm 
      * 
-     * @return XLite_View_Model_AModel
+     * @return \XLite\View\Model\AModel
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
     protected static function getCurrentForm()
     {
-        return XLite_View_Model_AModel::getCurrentForm();
+        return \XLite\View\Model\AModel::getCurrentForm();
     }
 
 

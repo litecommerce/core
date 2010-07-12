@@ -39,7 +39,7 @@ function go(account_filter) {
 
 <table IF="payments" border=0 cellpadding=5 cellspacing=1>
 <tr>
-    <td colspan=6><widget class="XLite_View_Pager" data="{payments}" name="pager" itemsPerPage="15"></td>
+    <td colspan=6><widget class="\XLite\View\Pager" data="{payments}" name="pager" itemsPerPage="15"></td>
 </tr>
 <tr valign=middle class=TableHead>
     <td align=center rowspan=2><b>Partner</b></td>

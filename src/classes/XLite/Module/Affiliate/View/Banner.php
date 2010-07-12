@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Affiliate\View;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Affiliate_View_Banner extends XLite_View_AView
+class Banner extends \XLite\View\AView
 {
     public $type = "iframe"; // type ::= iframe | js | ssi	
     public $src = null;

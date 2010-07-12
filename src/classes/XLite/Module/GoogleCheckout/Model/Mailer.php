@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\GoogleCheckout\Model;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_GoogleCheckout_Model_Mailer extends XLite_Model_Mailer implements XLite_Base_IDecorator
+class Mailer extends \XLite\Model\Mailer implements \XLite\Base\IDecorator
 {
     function send()
     {

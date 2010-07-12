@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Controller\Customer;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Controller_Customer_Help extends XLite_Controller_Customer_ACustomer
+class Help extends \XLite\Controller\Customer\ACustomer
 {
     public $params = array('target', "mode");
 
@@ -49,7 +51,7 @@ class XLite_Controller_Customer_Help extends XLite_Controller_Customer_ACustomer
     {
         parent::addBaseLocation();
 
-        $this->locationPath->addNode(new XLite_Model_Location('Help zone'));
+        $this->locationPath->addNode(new \XLite\Model\Location('Help zone'));
     }
 
     /**
@@ -118,26 +120,26 @@ class XLite_Controller_Customer_Help extends XLite_Controller_Customer_ACustomer
 
     function getState()
     {
-        $s = XLite_Core_Database::getEM()->find('XLite_Model_State', $this->get('state_id'));
+        $s = \XLite\Core\Database::getEM()->find('XLite\Model\State', $this->get('state_id'));
         return $s->get('state');
     }
 
     function getCountry()
     {
-        $c = XLite_Core_Database::getEM()->find('XLite_Model_Country', $this->get('country_id'));
+        $c = \XLite\Core\Database::getEM()->find('XLite\Model\Country', $this->get('country_id'));
         return $c->get('country');
     }
     
     function action_contactus()
     {
-        $mailer = new XLite_Model_Mailer();
+        $mailer = new \XLite\Model\Mailer();
         $mailer->mapRequest();
-        $st = XLite_Core_Database::getEM()->find('XLite_Model_State', $_REQUEST['contactus_state']);
+        $st = \XLite\Core\Database::getEM()->find('XLite\Model\State', $_REQUEST['contactus_state']);
         if ($st->get('state_id') == -1) {
             $st->set('state', $_REQUEST['contactus_custom_state']);
         }
         $mailer->set('state', $st->get('state')); // fetch state name
-        $cn = XLite_Core_Database::getEM()->find('XLite_Model_Country', $_REQUEST['contactus_country']);
+        $cn = \XLite\Core\Database::getEM()->find('XLite\Model\Country', $_REQUEST['contactus_country']);
         $mailer->set('country', $cn->get('country')); // fetch country name
         $mailer->set('charset', $cn->get('charset'));
         $mailer->compose($this->get('email'), $this->config->Company->support_department, "contactus");

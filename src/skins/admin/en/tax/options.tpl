@@ -99,8 +99,8 @@ showTaxMsg();
 
 
   <div class="buttons">
-    <widget class="XLite_View_Button_Submit" label="Update" />
-    <widget class="XLite_View_Button_DeleteSelected" action="delete_tax" confirm="You are about to delete selected taxes display. Are you sure you want to delete them?" />
+    <widget class="\XLite\View\Button\Submit" label="Update" />
+    <widget class="\XLite\View\Button\DeleteSelected" action="delete_tax" confirm="You are about to delete selected taxes display. Are you sure you want to delete them?" />
   </div>
 
 </form>
@@ -135,6 +135,6 @@ showTaxMsg();
 
   </ul>
 
-  <widget class="XLite_View_Button_Submit" label="Add" />
+  <widget class="\XLite\View\Button\Submit" label="Add" />
 
 </form>

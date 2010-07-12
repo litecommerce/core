@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\ProductOptions\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_ProductOptions_Controller_Admin_InventoryTrackingOption extends XLite_Controller_Admin_AAdmin
+class InventoryTrackingOption extends \XLite\Controller\Admin\AAdmin
 {
     public $optdata = array();
 
@@ -56,7 +58,7 @@ class XLite_Module_ProductOptions_Controller_Admin_InventoryTrackingOption exten
                 $options[] = isset($optdata['option']) ?  "$class:" . $optdata['option'] : $class;
             }
         }
-        $inventory = new XLite_Module_InventoryTracking_Model_Inventory();
+        $inventory = new \XLite\Module\InventoryTracking\Model\Inventory();
         $inventory->set('inventory_id', implode("|", $options));
         $inventory->set('amount', $this->amount);
         $inventory->set('low_avail_limit', $this->low_avail_limit);
@@ -65,7 +67,7 @@ class XLite_Module_ProductOptions_Controller_Admin_InventoryTrackingOption exten
 
     function action_update()
     {
-        $inventory = new XLite_Module_InventoryTracking_Model_Inventory();
+        $inventory = new \XLite\Module\InventoryTracking\Model\Inventory();
         if ($inventory->find("inventory_id='".$this->inventory_id."'")) {
             $inventory->setProperties($this->optdata);
             $inventory->update();
@@ -74,7 +76,7 @@ class XLite_Module_ProductOptions_Controller_Admin_InventoryTrackingOption exten
 
     function action_delete()
     {
-        $inventory = new XLite_Module_InventoryTracking_Model_Inventory();
+        $inventory = new \XLite\Module\InventoryTracking\Model\Inventory();
         if ($inventory->find("inventory_id='".$this->inventory_id."'")) {
             $inventory->delete();
         }

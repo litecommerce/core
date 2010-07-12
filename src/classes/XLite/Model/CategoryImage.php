@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model;
+
 /**
  * Category
  * 
@@ -35,6 +37,6 @@
  * @Entity
  * @Table (name="category_images")
  */
-class XLite_Model_CategoryImage extends XLite_Model_Base_Image
+class CategoryImage extends \XLite\Model\Base\Image
 {
 }

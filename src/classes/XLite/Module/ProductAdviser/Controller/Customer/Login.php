@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\ProductAdviser\Controller\Customer;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_ProductAdviser_Controller_Customer_Login extends XLite_Controller_Customer_Login implements XLite_Base_IDecorator
+class Login extends \XLite\Controller\Customer\Login implements \XLite\Base\IDecorator
 {
     public $from = '';
 

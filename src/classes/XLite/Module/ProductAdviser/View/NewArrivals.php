@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\ProductAdviser\View;
+
 /**
  * New arrivals widget
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_ProductsList
+class NewArrivals extends \XLite\View\ProductsList
 {
      /*
      * Parameter specifies that widget is displayed as a page content
@@ -89,14 +91,14 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_ProductsLi
 
         // pageContent - is a service parameter for displaying widget as a page content
         $this->widgetParams += array(
-            self::PARAM_PAGE_CONTENT => new XLite_Model_WidgetParam_Checkbox(
+            self::PARAM_PAGE_CONTENT => new \XLite\Model\WidgetParam\Checkbox(
                 'Widget is displayed as page content', false, false
             ),
-            self::PARAM_USE_NODE     => new XLite_Model_WidgetParam_Checkbox(
+            self::PARAM_USE_NODE     => new \XLite\Model\WidgetParam\Checkbox(
                 'Show category-specific new arrivals', ('Y' == $this->config->ProductAdviser->category_new_arrivals), true
             ),
-            self::PARAM_PRODUCT_ID  => new XLite_Model_WidgetParam_ObjectId_Product('Product ID', 0, false),
-            self::PARAM_CATEGORY_ID => new XLite_Model_WidgetParam_ObjectId_Category('Category ID', 0, false),
+            self::PARAM_PRODUCT_ID  => new \XLite\Model\WidgetParam\ObjectId\Product('Product ID', 0, false),
+            self::PARAM_CATEGORY_ID => new \XLite\Model\WidgetParam\ObjectId\Category('Category ID', 0, false),
         );
 
         $this->requestParams[] = self::PARAM_PRODUCT_ID;
@@ -148,7 +150,7 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_ProductsLi
 
         if ($visibility && !$this->getParam(self::PARAM_PAGE_CONTENT)) {
 
-            if ('new_arrivals' == XLite_Core_Request::getInstance()->target) {
+            if ('new_arrivals' == \XLite\Core\Request::getInstance()->target) {
 
                 // Do not display widget on page with target='new_arrivals' if it's not page content widget
                 $visibility = false;
@@ -168,7 +170,7 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_ProductsLi
         if (
             $visibility
             && self::WIDGET_TYPE_CENTER == $this->getParam(self::PARAM_WIDGET_TYPE)
-            && 'new_arrivals' == XLite_Core_Request::getInstance()->target
+            && 'new_arrivals' == \XLite\Core\Request::getInstance()->target
         ) {
             // Display pager if widget is a page content widget
             $this->widgetParams[self::PARAM_SHOW_ALL_ITEMS_PER_PAGE]->setValue(false);
@@ -245,7 +247,7 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_ProductsLi
     /**
      * Get current category
      * 
-     * @return XLite_Model_Category
+     * @return \XLite\Model\Category
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -285,21 +287,21 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_ProductsLi
     protected function isContentDialog()
     {
         return $this->getParam(self::PARAM_PAGE_CONTENT)
-            && 'new_arrivals' == XLite_Core_Request::getInstance()->target;
+            && 'new_arrivals' == \XLite\Core\Request::getInstance()->target;
     }
 
     /**
      * Check if product is in the category or its subcategories
      * 
-     * @param XLite_Model_Product  $product  Product
-     * @param XLite_Model_Category $category Category
+     * @param \XLite\Model\Product  $product  Product
+     * @param \XLite\Model\Category $category Category
      *  
      * @return bool
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function isInCategory(XLite_Model_Product $product, XLite_Model_Category $category)
+    protected function isInCategory(\XLite\Model\Product $product, \XLite\Model\Category $category)
     {
         $return = false;
 
@@ -324,14 +326,14 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_ProductsLi
     /**
      * Recursive search of products in current category and its subcategories
      * 
-     * @param XLite_Model_Category $_category Category
+     * @param \XLite\Model\Category $_category Category
      *  
      * @return bool
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function recursiveArrivalsSearch(XLite_Model_Category $_category)
+    protected function recursiveArrivalsSearch(\XLite\Model\Category $_category)
     {
         if (
             $this->isContentDialog()
@@ -345,7 +347,7 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_ProductsLi
         $timeCondition = $this->config->ProductAdviser->period_new_arrivals * 3600;
         $category_id = $_category->get('category_id');
 
-        $obj = new XLite_Module_ProductAdviser_Model_ProductNewArrivals();
+        $obj = new \XLite\Module\ProductAdviser\Model\ProductNewArrivals();
         $arrival_table = $this->db->getTableByAlias($obj->alias);
         $links_table = $this->db->getTableByAlias('product_links');
 
@@ -365,7 +367,7 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_ProductsLi
         foreach ($this->db->getAll($querySQL) as $row) {
             $product_id = $row['product_id'];
 
-            $obj = new XLite_Module_ProductAdviser_Model_ProductNewArrivals($product_id);
+            $obj = new \XLite\Module\ProductAdviser\Model\ProductNewArrivals($product_id);
             if ($this->checkArrivalCondition($_category, $obj)) {
                 if (
                     !$this->isContentDialog()
@@ -376,14 +378,14 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_ProductsLi
                 }
 
                 if (!isset($this->_new_arrival_products[$product_id])) {
-                    $this->_new_arrival_products[$product_id] = new XLite_Model_Product($product_id);
+                    $this->_new_arrival_products[$product_id] = new \XLite\Model\Product($product_id);
                     $this->_new_arrival_products_updated[$product_id] = $row['updated'];
                 }
             }
         }
 
         // get subcategories list
-        $category = new XLite_Model_Category();
+        $category = new \XLite\Model\Category();
         $categories = $category->findAll("parent='$category_id'");
         foreach ($categories as $category) {
             if ($this->recursiveArrivalsSearch($category)) {
@@ -397,8 +399,8 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_ProductsLi
     /**
      * Check if product is available
      * 
-     * @param mixed $category XLite_Model_Category object
-     * @param mixed $ps       XLite_Model_Product object
+     * @param mixed $category \XLite\Model\Category object
+     * @param mixed $ps       \XLite\Model\Product object
      *  
      * @return bool
      * @access public
@@ -408,7 +410,7 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_ProductsLi
     protected function checkArrivalCondition($category, $ps)
     {
         $product_id = $this->getDialogProductId();
-        $product = new XLite_Model_Product($ps->get('product_id'));
+        $product = new \XLite\Model\Product($ps->get('product_id'));
 
         $addSign = (isset($product_id) && $product->get('product_id') == $product_id) ? false : true;
         if ($addSign) {
@@ -430,7 +432,7 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_ProductsLi
     /**
      * Get the list of new arrival products
      * 
-     * @return array of XLite_Model_Product objects
+     * @return array of \XLite\Model\Product objects
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -456,7 +458,7 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_ProductsLi
 
             if (is_null($category)) {
                 // deal with root category
-                $obj = new XLite_Model_Category();
+                $obj = new \XLite\Model\Category();
                 $categories = $obj->findAll('parent = \'0\'');
 
             } else {
@@ -489,7 +491,7 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_ProductsLi
         $products = array();
         $productsStats = array();
         $statsOffset = 0;
-        $stats = new XLite_Module_ProductAdviser_Model_ProductNewArrivals();
+        $stats = new \XLite\Module\ProductAdviser\Model\ProductNewArrivals();
         $timeCondition = $this->config->ProductAdviser->period_new_arrivals * 3600;
         $timeLimit = time();
         $maxSteps = ($this->isContentDialog() || $infinityRange)
@@ -503,7 +505,7 @@ class XLite_Module_ProductAdviser_View_NewArrivals extends XLite_View_ProductsLi
 
             $productsStats = $stats->findAll("new='Y' OR ((updated + '$timeCondition') > '$timeLimit')", null, null, $limit);
             foreach ($productsStats as $ps) {
-                $product = new XLite_Model_Product($ps->get('product_id'));
+                $product = new \XLite\Model\Product($ps->get('product_id'));
 
                 if ($this->checkArrivalCondition($category, $ps)) {
                     $product->checkSafetyMode();

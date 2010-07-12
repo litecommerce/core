@@ -34,7 +34,7 @@
     </ul>
 
     <div class="button">
-      <widget class="XLite_View_Button_Submit" label="Save" style="main invert" />
+      <widget class="\XLite\View\Button\Submit" label="Save" style="main invert" />
     </div>
 
   </form>

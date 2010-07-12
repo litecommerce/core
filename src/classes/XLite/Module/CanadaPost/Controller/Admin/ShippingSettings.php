@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\CanadaPost\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_CanadaPost_Controller_Admin_ShippingSettings extends XLite_Controller_Admin_ShippingSettings implements XLite_Base_IDecorator
+class ShippingSettings extends \XLite\Controller\Admin\ShippingSettings implements \XLite\Base\IDecorator
 {
     public function __construct(array $params) 
     {

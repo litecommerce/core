@@ -15,8 +15,8 @@
   <tr FOREACH="getPageData(),product" class="item">
     <td>{product.sku}</td>
     <td class="product-name-column"><a href="{buildURL(#product#,##,_ARRAY_(#product_id#^product.product_id,#category_id#^category_id))}" class="product-name">{product.name:h}</a></td>
-    <td IF="isShowPrice()" class="product-price-column"><widget class="XLite_View_Price" product="{product}" displayOnlyPrice="true" /></td>
-    <td IF="isShowAdd2Cart(product)" class="product-button-column"><widget class="XLite_View_BuyNow" product="{product}" style="aux-button add-to-cart" /></td>
+    <td IF="isShowPrice()" class="product-price-column"><widget class="\XLite\View\Price" product="{product}" displayOnlyPrice="true" /></td>
+    <td IF="isShowAdd2Cart(product)" class="product-button-column"><widget class="\XLite\View\BuyNow" product="{product}" style="aux-button add-to-cart" /></td>
   </tr>
 
   <tr IF="isShowMoreLink()">

@@ -26,15 +26,17 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\DrupalConnector\Model;
+
 /**
- * XLite_Module_DrupalConnector_Model_Profile 
+ * \XLite\Module\DrupalConnector\Model\Profile 
  * 
  * @package    XLite
  * @subpackage ____sub_package____
  * @see        ____class_see____
  * @since      3.0.0
  */
-class XLite_Module_DrupalConnector_Model_Profile extends XLite_Model_Profile implements XLite_Base_IDecorator
+class Profile extends \XLite\Model\Profile implements \XLite\Base\IDecorator
 {
 	/**
      * Builds the SQL INSERT statement query for this object properties
@@ -46,8 +48,8 @@ class XLite_Module_DrupalConnector_Model_Profile extends XLite_Model_Profile imp
      */
     protected function _buildInsert()
     {
-        if (XLite_Module_DrupalConnector_Handler::getInstance()->checkCurrentCMS()) {
-            $this->properties['cms_name'] = XLite_Module_DrupalConnector_Handler::getInstance()->getCMSName();
+        if (\XLite\Module\DrupalConnector\Handler::getInstance()->checkCurrentCMS()) {
+            $this->properties['cms_name'] = \XLite\Module\DrupalConnector\Handler::getInstance()->getCMSName();
         }
 
         return parent::_buildInsert();
@@ -63,7 +65,7 @@ class XLite_Module_DrupalConnector_Model_Profile extends XLite_Model_Profile imp
      */
     protected function _buildUpdate()
     {
-        if (XLite_Module_DrupalConnector_Handler::getInstance()->checkCurrentCMS()) {
+        if (\XLite\Module\DrupalConnector\Handler::getInstance()->checkCurrentCMS()) {
             unset($this->properties['cms_name']);
             unset($this->properties['cms_profile_id']);
         }

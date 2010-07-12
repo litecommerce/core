@@ -8,7 +8,7 @@ function Shipping_intershipper_parseResponse($_this, $response, $destination)
     // original code of Shipping_intershipper::_parseResponse()
     $_this->error = "";
     $_this->xmlError = false;
-    $xml = new XLite_Model_XML();
+    $xml = new \XLite\Model\XML();
     $tree = $xml->parse($response);
 // print "<pre>"; print_r($tree);
     if (!$tree) {
@@ -50,7 +50,7 @@ function Shipping_intershipper_parseResponse($_this, $response, $destination)
             // TODO - add 4 argument for getService()
             $shipping = $_this->getService('intershipper', $serviceName, $destination);
             $id = $shipping->get('shipping_id');
-            $rates[$id] = new XLite_Model_ShippingRate();
+            $rates[$id] = new \XLite\Model\ShippingRate();
             $rates[$id]->shipping = $shipping;
             $rates[$id]->rate = (double)$quote['RATE']["AMOUNT"] / 100.0;
         }

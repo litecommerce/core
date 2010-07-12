@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\XPaymentsConnector\Model;
+
 /**
  * Order 
  * 
@@ -33,8 +35,8 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_XPaymentsConnector_Model_Order extends XLite_Model_Order
-implements XLite_Base_IDecorator
+class Order extends \XLite\Model\Order
+implements \XLite\Base\IDecorator
 {
     /**
      * Constructs a new database object. The options argument list is a primary key value.

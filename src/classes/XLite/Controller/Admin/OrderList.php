@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Controller\Admin;
+
 
 /**
  * Orders list controller
@@ -34,7 +36,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Controller_Admin_OrderList extends XLite_Controller_Admin_AAdmin
+class OrderList extends \XLite\Controller\Admin\AAdmin
 {
     public $params = array('target', 'mode', 'order_id', 'login', 'status');
 
@@ -118,23 +120,23 @@ class XLite_Controller_Admin_OrderList extends XLite_Controller_Admin_AAdmin
     {
         $dateValue = null;
 
-        if (isset(XLite_Core_Request::getInstance()->$fieldName)) {
-            $dateValue = XLite_Core_Request::getInstance()->get($fieldName);
+        if (isset(\XLite\Core\Request::getInstance()->$fieldName)) {
+            $dateValue = \XLite\Core\Request::getInstance()->get($fieldName);
 
         } else {
             $nameDay   = $fieldName . 'Day';
             $nameMonth = $fieldName . 'Month';
             $nameYear  = $fieldName . 'Year';
 
-            if (isset(XLite_Core_Request::getInstance()->$nameMonth)
-                && isset(XLite_Core_Request::getInstance()->$nameDay)
-                && isset(XLite_Core_Request::getInstance()->$nameYear))
+            if (isset(\XLite\Core\Request::getInstance()->$nameMonth)
+                && isset(\XLite\Core\Request::getInstance()->$nameDay)
+                && isset(\XLite\Core\Request::getInstance()->$nameYear))
             {
                 $dateValue = mktime(
                     0, 0, 0,
-                    XLite_Core_Request::getInstance()->get($nameMonth),
-                    XLite_Core_Request::getInstance()->get($nameDay),
-                    XLite_Core_Request::getInstance()->get($nameYear)
+                    \XLite\Core\Request::getInstance()->get($nameMonth),
+                    \XLite\Core\Request::getInstance()->get($nameDay),
+                    \XLite\Core\Request::getInstance()->get($nameYear)
                 );
             }
         }
@@ -153,7 +155,7 @@ class XLite_Controller_Admin_OrderList extends XLite_Controller_Admin_AAdmin
      */
     protected function isQuickSearch()
     {
-    	return ('export_xls' != XLite_Core_Request::getInstance()->action);
+    	return ('export_xls' != \XLite\Core\Request::getInstance()->action);
     }
 
     /**
@@ -172,16 +174,16 @@ class XLite_Controller_Admin_OrderList extends XLite_Controller_Admin_AAdmin
 
         if (is_null($this->orders)) {
 
-            $order = new XLite_Model_Order();
+            $order = new \XLite\Model\Order();
             $order->collectGarbage();
             $order->fetchKeysOnly = false;
             $order->fetchObjIdxOnly = $this->isQuickSearch();
 
-            $login = XLite_Core_Request::getInstance()->login;
+            $login = \XLite\Core\Request::getInstance()->login;
 
             if (!empty($login)) {
 
-                $profile = new XLite_Model_Profile();
+                $profile = new \XLite\Model\Profile();
                 $profile->_range = null;
 
                 if (!$profile->find("login='" . addslashes($login) . "' AND order_id != '0'")) {
@@ -211,8 +213,8 @@ class XLite_Controller_Admin_OrderList extends XLite_Controller_Admin_AAdmin
             	if ((!empty($login) && $profile->get('profile_id')) || empty($login)) {
                     $this->orders = $order->search(
                             $profile,
-                            XLite_Core_Request::getInstance()->order_id,
-                            XLite_Core_Request::getInstance()->status,
+                            \XLite\Core\Request::getInstance()->order_id,
+                            \XLite\Core\Request::getInstance()->status,
                             $this->getDateValue('startDate'),
                             $this->getDateValue('endDate') + 24 * 3600,
                             $origProfile
@@ -229,8 +231,8 @@ class XLite_Controller_Admin_OrderList extends XLite_Controller_Admin_AAdmin
             if ($enhacedSearch || (!$enhacedSearch && 0 == count($this->orders))) {
             	$orders = $order->search(
                         null,
-                        XLite_Core_Request::getInstance()->order_id,
-                        XLite_Core_Request::getInstance()->status,
+                        \XLite\Core\Request::getInstance()->order_id,
+                        \XLite\Core\Request::getInstance()->status,
                         $this->getDateValue('startDate'),
                         $this->getDateValue('endDate') + 24 * 3600
                     );
@@ -326,7 +328,7 @@ class XLite_Controller_Admin_OrderList extends XLite_Controller_Admin_AAdmin
         $result = array();
 
         if ($this->config->General->recent_orders) {
-            $order = new XLite_Model_Order();
+            $order = new \XLite\Model\Order();
             $order->collectGarbage();
             $where = "status in ('Q','P')";
             $count = $order->count($where);
@@ -354,7 +356,7 @@ class XLite_Controller_Admin_OrderList extends XLite_Controller_Admin_AAdmin
      */
     protected function doActionExportXls()
     {
-        $w = new XLite_View_ExportXLS();
+        $w = new \XLite\View\ExportXLS();
         $w->component = $this;
         $this->startDownload('orders.xls');
         $this->ColumnCount = 9;
@@ -412,9 +414,9 @@ class XLite_Controller_Admin_OrderList extends XLite_Controller_Admin_AAdmin
      */
     protected function doActionDelete()
     {
-        if (isset(XLite_Core_Request::getInstance()->order_ids)) {
-            foreach (XLite_Core_Request::getInstance()->order_ids as $oid => $value) {
-                $order = new XLite_Model_Order($oid);
+        if (isset(\XLite\Core\Request::getInstance()->order_ids)) {
+            foreach (\XLite\Core\Request::getInstance()->order_ids as $oid => $value) {
+                $order = new \XLite\Model\Order($oid);
                 $order->remove();
             }
         }

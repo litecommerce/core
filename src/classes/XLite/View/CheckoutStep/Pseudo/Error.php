@@ -26,14 +26,16 @@
  * @since      3.0.0
  */
 
+namespace XLite\View\CheckoutStep\Pseudo;
+
 /**
- * XLite_View_CheckoutStep_Pseudo_Error 
+ * \XLite\View\CheckoutStep\Pseudo\Error 
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_CheckoutStep_Pseudo_Error extends XLite_View_CheckoutStep_Pseudo_APseudo
+class Error extends \XLite\View\CheckoutStep\Pseudo\APseudo
 {
     /**
      * Return title

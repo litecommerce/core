@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\WholesaleTrading\Model;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_WholesaleTrading_Model_Order extends XLite_Model_Order implements XLite_Base_IDecorator
+class Order extends \XLite\Model\Order implements \XLite\Base\IDecorator
 {
     public function __construct($oid = null)
     {
@@ -96,7 +98,7 @@ class XLite_Module_WholesaleTrading_Model_Order extends XLite_Model_Order implem
     function getItemsByTaxValue()
     {
         if (is_null($this->_items_by_tax_value)) {
-            $taxRates = new XLite_Model_TaxRates();
+            $taxRates = new \XLite\Model\TaxRates();
             $taxRates->set('order', $this);
 
             $items = (array) $this->get('items');
@@ -130,7 +132,7 @@ class XLite_Module_WholesaleTrading_Model_Order extends XLite_Model_Order implem
         $result = array();
         if ($discount <= 0) return $result;
 
-        $taxRates = new XLite_Model_TaxRates();
+        $taxRates = new \XLite\Model\TaxRates();
         $taxRates->set('order', $this);
 
         // apply discount to items maximally taxed 
@@ -176,7 +178,7 @@ class XLite_Module_WholesaleTrading_Model_Order extends XLite_Model_Order implem
             $this->calculateGlobalDiscount($subtotal);
 
             if (is_null($this->_applied_global_discount)) {
-                $this->_applied_global_discount = new XLite_Module_WholesaleTrading_Model_GlobalDiscount();
+                $this->_applied_global_discount = new \XLite\Module\WholesaleTrading\Model\GlobalDiscount();
             }
         }
 
@@ -319,7 +321,7 @@ class XLite_Module_WholesaleTrading_Model_Order extends XLite_Model_Order implem
     {
         $global_discount = 0;
 
-        $gd = new XLite_Module_WholesaleTrading_Model_GlobalDiscount();
+        $gd = new \XLite\Module\WholesaleTrading\Model\GlobalDiscount();
         $gd->set('defaultOrder', 'subtotal');
         $profile = $this->get('profile');
         $membership = is_object($profile) ? $profile->get('membership') : 0;
@@ -338,7 +340,7 @@ class XLite_Module_WholesaleTrading_Model_Order extends XLite_Model_Order implem
             $this->_applied_global_discount = $applied_gd;
 
         } else {
-            $this->_applied_global_discount = new XLite_Module_WholesaleTrading_Model_GlobalDiscount();
+            $this->_applied_global_discount = new \XLite\Module\WholesaleTrading\Model\GlobalDiscount();
         }
 
         return $global_discount;

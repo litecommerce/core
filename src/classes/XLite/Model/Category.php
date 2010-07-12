@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model;
+
 /**
  * Category
  * 
@@ -35,7 +37,7 @@
  * @Entity
  * @Table (name="categories")
  */
-class XLite_Model_Category extends XLite_Model_Base_I18n
+class Category extends \XLite\Model\Base\I18n
 {
     /**
      * Node unique id 
@@ -135,7 +137,7 @@ class XLite_Model_Category extends XLite_Model_Base_I18n
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @OneToMany(targetEntity="XLite_Model_CategoryProducts", mappedBy="categories", cascade={"persist","remove"})
+     * @OneToMany(targetEntity="\XLite\Model\CategoryProducts", mappedBy="categories", cascade={"persist","remove"})
      */
     protected $products;
 
@@ -146,7 +148,7 @@ class XLite_Model_Category extends XLite_Model_Base_I18n
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @ManyToOne(targetEntity="XLite_Model_Membership")
+     * @ManyToOne(targetEntity="\XLite\Model\Membership")
      * @JoinColumn(name="membership_id", referencedColumnName="membership_id")
      */
     protected $membership;
@@ -158,7 +160,7 @@ class XLite_Model_Category extends XLite_Model_Base_I18n
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @ManyToOne(targetEntity="XLite_Model_CategoryImage")
+     * @ManyToOne(targetEntity="\XLite\Model\CategoryImage")
      * @JoinColumn(name="category_id", referencedColumnName="id")
      */
     protected $image;
@@ -206,20 +208,20 @@ class XLite_Model_Category extends XLite_Model_Base_I18n
      */
     public function hasImage()
     {
-        return !is_null(XLite_Core_Database::getRepo('XLite_Model_CategoryImage')->getImageById($this->category_id));
+        return !is_null(\XLite\Core\Database::getRepo('XLite\Model\CategoryImage')->getImageById($this->category_id));
     }
 
     /**
      * Get category image object
      * 
-     * @return XLite_Model_CategoryImage
+     * @return \XLite\Model\CategoryImage
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
     public function getImage()
     {
-        return XLite_Core_Database::getRepo('XLite_Model_CategoryImage')->getImageById($this->category_id);
+        return \XLite\Core\Database::getRepo('XLite\Model\CategoryImage')->getImageById($this->category_id);
     }
 
     /**
@@ -232,7 +234,7 @@ class XLite_Model_Category extends XLite_Model_Base_I18n
      */
     public function getSubcategories()
     {
-        return XLite_Core_Database::getRepo('XLite_Model_Category')->getCategoriesPlainList($this->category_id);
+        return \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategoriesPlainList($this->category_id);
     }
 
     /**
@@ -245,7 +247,7 @@ class XLite_Model_Category extends XLite_Model_Base_I18n
      */
     public function hasSubcategories()
     {
-        $data = XLite_Core_Database::getRepo('XLite_Model_Category')->getCategoryFromHash($this->category_id);
+        $data = \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategoryFromHash($this->category_id);
 
         return ($data->subCategoriesCount > 0);
     }
@@ -260,7 +262,7 @@ class XLite_Model_Category extends XLite_Model_Base_I18n
      */
     public function getStringPath()
     {
-        $path = XLite_Core_Database::getRepo('XLite_Model_Category')->getCategoryPath($this->category_id);
+        $path = \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategoryPath($this->category_id);
 
         $location = "";
 
@@ -281,7 +283,7 @@ class XLite_Model_Category extends XLite_Model_Base_I18n
      */
     public function isEmpty()
     {
-        $data = XLite_Core_Database::getRepo('XLite_Model_Category')->getCategoryFromHash($this->category_id);
+        $data = \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategoryFromHash($this->category_id);
 
         return (0 == $data->products_count && 0 == $data->subCategoriesCount);
     }
@@ -309,7 +311,7 @@ class XLite_Model_Category extends XLite_Model_Base_I18n
      */
     public function getProductsNumber()
     {
-        $data = XLite_Core_Database::getRepo('XLite_Model_Category')->getCategoryFromHash($this->category_id);
+        $data = \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategoryFromHash($this->category_id);
 
         return $data->products_count;
     }
@@ -328,7 +330,7 @@ class XLite_Model_Category extends XLite_Model_Base_I18n
     public function getIndentation($multiplier = 0, $str = null)
     {
         if (!isset($this->depth)) {
-            $data = XLite_Core_Database::getRepo('XLite_Model_Category')->getCategoryFromHash($this->category_id);
+            $data = \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategoryFromHash($this->category_id);
             $depth = $data->depth;
 
         } else {
@@ -340,12 +342,12 @@ class XLite_Model_Category extends XLite_Model_Base_I18n
         return (is_null($str) ? $indentation : str_repeat($str, $indentation));
     }
 
-    // TODO: rewrite function - this should be based on XLite_Model_Product
+    // TODO: rewrite function - this should be based on \XLite\Model\Product
     public function getProducts()
     {
-        $query = XLite_Core_Database::getQB()
+        $query = \XLite\Core\Database::getQB()
             ->select('cp.product_id')
-            ->from('XLite_Model_Category', 'c')
+            ->from('\XLite\Model\Category', 'c')
             ->leftJoin('c.products', 'cp')
             ->where('c.category_id = :categoryId')
             ->setParameter('categoryId', $this->category_id);
@@ -364,7 +366,7 @@ class XLite_Model_Category extends XLite_Model_Base_I18n
         $return = null;
 
         if (!empty($pids)) {
-            $product = new XLite_Model_Product;
+            $product = new \XLite\Model\Product;
             $return = $product->findAll("product_id IN (" . implode(',', $pids) . ")");
         } 
 

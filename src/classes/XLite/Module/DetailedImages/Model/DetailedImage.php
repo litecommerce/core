@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\DetailedImages\Model;
+
 /**
  * Detailed image
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_DetailedImages_Model_DetailedImage extends XLite_Model_AModel
+class DetailedImage extends \XLite\Model\AModel
 {
     /**
      * Model fields list
@@ -87,7 +89,7 @@ class XLite_Module_DetailedImages_Model_DetailedImage extends XLite_Model_AModel
     /**
      * Image object (cache)
      * 
-     * @var    XLite_Model_Image
+     * @var    \XLite\Model\Image
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
@@ -97,7 +99,7 @@ class XLite_Module_DetailedImages_Model_DetailedImage extends XLite_Model_AModel
     /**
      * Get image 
      * 
-     * @return XLite_Model_Image
+     * @return \XLite\Model\Image
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -105,7 +107,7 @@ class XLite_Module_DetailedImages_Model_DetailedImage extends XLite_Model_AModel
     public function getImage()
     {
         if (is_null($this->image)) {
-            $this->image = new XLite_Model_Image('detailed_image', $this->get('image_id'));
+            $this->image = new \XLite\Model\Image('detailed_image', $this->get('image_id'));
         }
 
         return $this->image;
@@ -194,7 +196,7 @@ class XLite_Module_DetailedImages_Model_DetailedImage extends XLite_Model_AModel
     {
         $_image = $this->getImage();
 
-        $newImg = new XLite_Model_Image($_image->imageClass, $_image->get($_image->autoIncrement));
+        $newImg = new \XLite\Model\Image($_image->imageClass, $_image->get($_image->autoIncrement));
 
         if (!$_image->isRead) {
             $_image->read();
@@ -249,7 +251,7 @@ class XLite_Module_DetailedImages_Model_DetailedImage extends XLite_Model_AModel
         if (!empty($images_directory)) {
 
             // update images base directory
-            XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+            \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
                 array(
                     'category' => 'Images',
                     'name'     => 'images_directory',
@@ -258,7 +260,7 @@ class XLite_Module_DetailedImages_Model_DetailedImage extends XLite_Model_AModel
             );
 
             // re-read config data
-            XLite_Core_Config::readConfig();
+            \XLite\Core\Config::readConfig();
         }
 
         $image = $properties['image'];
@@ -271,7 +273,7 @@ class XLite_Module_DetailedImages_Model_DetailedImage extends XLite_Model_AModel
             ? $image 
             : $images_directory . '/' . $image;
 
-        $product = new XLite_Model_Product();
+        $product = new \XLite\Model\Product();
         $found = false;
 
         if (
@@ -295,7 +297,7 @@ class XLite_Module_DetailedImages_Model_DetailedImage extends XLite_Model_AModel
             );
         }
 
-        $detailed_image = new XLite_Module_DetailedImages_Model_DetailedImage();
+        $detailed_image = new \XLite\Module\DetailedImages\Model\DetailedImage();
         echo '<b>line# ' . $line . ':</b> Importing detailed image $image for product ' . $product->get('name' ) .'<br />' . "\n";
 
         // create detailed image

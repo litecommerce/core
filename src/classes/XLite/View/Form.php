@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View;
+
 /**
  * Form
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_Form extends XLite_View_Form_AForm
+class Form extends \XLite\View\Form\AForm
 {
     /**
      * Return form name

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\EcommerceReports\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_EcommerceReports_Controller_Admin_ProductSales extends XLite_Module_EcommerceReports_Controller_Admin_EcommerceReports
+class ProductSales extends \XLite\Module\EcommerceReports\Controller\Admin\EcommerceReports
 {
     function getProductSales() 
     {
@@ -60,9 +62,9 @@ class XLite_Module_EcommerceReports_Controller_Admin_ProductSales extends XLite_
     function sumProductSales($item) 
     {
         $id = $item['product_id'] . (strlen($item['options']) ? md5($item['options']) : "");
-        $orderItem = new XLite_Model_OrderItem();
+        $orderItem = new \XLite\Model\OrderItem();
         $found = $orderItem->find("order_id=".$item['order_id']." AND item_id='".addslashes($item['item_id'])."'");
-        $order = new XLite_Model_Order($item['order_id']);
+        $order = new \XLite\Model\Order($item['order_id']);
         $orderItem->set('order', $order);
         $item['price'] = $orderItem->get('price');
          

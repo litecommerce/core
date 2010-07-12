@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\SagePay\Controller\Customer;
+
 /**
  * ____description____
  * 
@@ -33,13 +35,13 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_SagePay_Controller_Customer_Sagepaydirect extends XLite_Controller_Customer_Checkout
+class Sagepaydirect extends \XLite\Controller\Customer\Checkout
 {
 
     function init()
     {
         if (!is_object($this->registerForm) || is_null($this->registerForm)) {
-            $this->registerForm = new XLite_Base();
+            $this->registerForm = new \XLite\Base();
         }
         parent::init();
         
@@ -68,7 +70,7 @@ class XLite_Module_SagePay_Controller_Customer_Sagepaydirect extends XLite_Contr
             $this->session->writeClose();
 
             $order = $this->get('order');
-            $payment = XLite_Model_PaymentMethod::factory('sagepaydirect_cc');
+            $payment = \XLite\Model\PaymentMethod::factory('sagepaydirect_cc');
 
             require_once LC_MODULES_DIR . 'SagePay' . LC_DS . 'encoded.php';
             func_SagePayDirect_action_return($this, $order, $payment);

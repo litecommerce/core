@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Affiliate\Model;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Affiliate_Model_Auth extends XLite_Model_Auth implements XLite_Base_IDecorator
+class Auth extends \XLite\Model\Auth implements \XLite\Base\IDecorator
 {
     function isAuthenticated($profile)
     {
@@ -60,7 +62,7 @@ class XLite_Module_Affiliate_Model_Auth extends XLite_Model_Auth implements XLit
             $this->pendPartner($profile);
         }
         $profile->update();
-        $mailer = new XLite_Model_Mailer();
+        $mailer = new \XLite\Model\Mailer();
         $mailer->profile = $profile;
         // mailto customer with a new signup notification
         $mailer->compose($this->config->Company->site_administrator,
@@ -88,7 +90,7 @@ class XLite_Module_Affiliate_Model_Auth extends XLite_Model_Auth implements XLit
         $profile->set('access_level', $this->get('declinedPartnerAccessLevel'));
         $profile->update();
         // sent notification to customer
-        $mailer = new XLite_Model_Mailer();
+        $mailer = new \XLite\Model\Mailer();
         $mailer->profile = $profile;
         $mailer->compose(
                 $this->config->Company->site_administrator,
@@ -104,7 +106,7 @@ class XLite_Module_Affiliate_Model_Auth extends XLite_Model_Auth implements XLit
             $profile->set('access_level', $this->get('pendingPartnerAccessLevel'));
         }
         // mailto customer with a new signup notification
-        $mailer = new XLite_Model_Mailer();
+        $mailer = new \XLite\Model\Mailer();
         $mailer->profile = $profile;
         $mailer->compose($this->config->Company->site_administrator,
                 $profile->get('login'),
@@ -121,7 +123,7 @@ class XLite_Module_Affiliate_Model_Auth extends XLite_Model_Auth implements XLit
         }
         $profile->set('plan', $profile->get('pending_plan'));
         // mailto customer with a new signup notification
-        $mailer = new XLite_Model_Mailer();
+        $mailer = new \XLite\Model\Mailer();
         $mailer->profile = $profile;
         $mailer->compose($this->config->Company->site_administrator,
                 $profile->get('login'),

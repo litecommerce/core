@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_ImageClass extends XLite_Base
+class ImageClass extends \XLite\Base
 {
     /**
     * Create an image object based on the image class.
@@ -43,6 +45,6 @@ class XLite_Model_ImageClass extends XLite_Base
     */
     function getImage()
     {
-        return new XLite_Model_Image($this->class, 0);
+        return new \XLite\Model\Image($this->class, 0);
     }
 }

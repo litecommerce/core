@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Promotion\Model\PaymentMethod;
+
 /**
  * ____description____
  * 
@@ -33,12 +35,12 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Promotion_Model_PaymentMethod_BonusPoints extends XLite_Model_PaymentMethod
+class BonusPoints extends \XLite\Model\PaymentMethod
 {
     public $processorName = "Promotion/bonus points";
     public $formTemplate = "modules/Promotion/checkout.tpl";
     
-    function handleRequest(XLite_Model_Cart $cart)
+    function handleRequest(\XLite\Model\Cart $cart)
     {
         $payedByPoints = $_POST['payedByPoints'];
         $details = $cart->get('details');

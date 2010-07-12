@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\GoogleCheckout\Controller\Admin;
+
 func_define('CALLBACK_CHECK_MESSAGE', 'CHECK_CALLBACK_STATUS');
 func_define('CALLBACK_PASSED_MESSAGE', 'CALLBACK TEST PASSED');
 
@@ -36,7 +38,7 @@ func_define('CALLBACK_PASSED_MESSAGE', 'CALLBACK TEST PASSED');
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_GoogleCheckout_Controller_Admin_PaymentMethod extends XLite_Controller_Admin_PaymentMethod implements XLite_Base_IDecorator
+class PaymentMethod extends \XLite\Controller\Admin\PaymentMethod implements \XLite\Base\IDecorator
 {
     function sendRequest(&$payment, $url, $data)
     {
@@ -55,7 +57,7 @@ class XLite_Module_GoogleCheckout_Controller_Admin_PaymentMethod extends XLite_C
     	$https->url      = $url;
 
         $this->xlite->logger->log("Request to: " . $url . " with data:\n" . $data);
-    	if ($https->request() == XLite_Model_HTTPS::HTTPS_ERROR) {
+    	if ($https->request() == \XLite\Model\HTTPS::HTTPS_ERROR) {
     		$this->error = $https->error;
     		return array();
     	}
@@ -91,7 +93,7 @@ class XLite_Module_GoogleCheckout_Controller_Admin_PaymentMethod extends XLite_C
         $this->set('silent', true);
         $this->xlite->logger->log('Received callback from GoogleCheckout');
 
-        $this->pm = new XLite_Model_PaymentMethod('google_checkout');
+        $this->pm = new \XLite\Model\PaymentMethod('google_checkout');
         $params = $this->pm->get('params');
 
         $this->phpAuthUser = $GLOBALS['_SERVER']["PHP_AUTH_USER"];

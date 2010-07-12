@@ -26,15 +26,17 @@
  * @since      3.0.0
  */
 
+namespace XLite\View\Form\Profile;
+
 /**
- * XLite_View_Form_Profile_Addresses 
+ * \XLite\View\Form\Profile\Addresses 
  * 
  * @package    XLite
  * @subpackage ____sub_package____
  * @see        ____class_see____
  * @since      3.0.0
  */
-class XLite_View_Form_Profile_Addresses extends XLite_View_Form_Profile_AProfile
+class Addresses extends \XLite\View\Form\Profile\AProfile
 {
     /**
      * getDefaultTarget 

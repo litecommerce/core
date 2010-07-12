@@ -59,7 +59,7 @@
 <!-- [center] -->
 
 
-<widget class="XLite_View_Location" />
+<widget class="\XLite\View\Location" />
 <widget target="partner" template="modules/Affiliate/dialog.tpl" body="modules/Affiliate/partner_menu.tpl" head="Partner menu">
 
 <!-- [help] {{{ -->
@@ -67,7 +67,7 @@
 <widget target="affiliate_help" mode="privacy_statement" template="modules/Affiliate/dialog.tpl" body="modules/Affiliate/privacy_statement.tpl" head="Privacy statement">
 <!-- [/help] }}} -->
 
-<widget target="partner_profile" mode="modify" template="modules/Affiliate/dialog.tpl" body="modules/Affiliate/modify_profile.tpl" head="Modify profile" class="XLite_View_RegisterForm" name="profileForm">
+<widget target="partner_profile" mode="modify" template="modules/Affiliate/dialog.tpl" body="modules/Affiliate/modify_profile.tpl" head="Modify profile" class="\XLite\View\RegisterForm" name="profileForm">
 <widget target="partner_profile" mode="delete" template="modules/Affiliate/dialog.tpl" body="modules/Affiliate/delete_profile.tpl" head="Delete profile - Confirmation">
 <widget target="partner_profile" mode="success" template="modules/Affiliate/dialog.tpl" body="modules/Affiliate/register_success.tpl" head="Registration success">
 <widget target="partner_banners" mode="" template="modules/Affiliate/dialog.tpl" body="modules/Affiliate/banners.tpl" head="Banners">

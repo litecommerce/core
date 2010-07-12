@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model;
+
 define('SHOW_FULL_PATH', 1);
 
 /**
@@ -35,7 +37,7 @@ define('SHOW_FULL_PATH', 1);
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_FileNode extends XLite_Base
+class FileNode extends \XLite\Base
 {
     public function __construct($path = null, $comment = null, $options = 0)
     {

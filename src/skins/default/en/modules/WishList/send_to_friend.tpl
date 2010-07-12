@@ -19,23 +19,23 @@
 		<td class="NumberOfArticles">Your name:</td>
 		<td width="10"><font class="Star">*</font></td>
 		<td><input type="text" name="sender_name" size="32" value="{senderName}"></td>
-		<td><widget class="XLite_Validator_RequiredValidator" field="sender_name" value="{sender_name}"></td>
+		<td><widget class="\XLite\Validator\RequiredValidator" field="sender_name" value="{sender_name}"></td>
 	</tr>
 	<tr>	
         <td class="NumberOfArticles">Your e-mail:</td> 
 		<td width="10"><font class="Star">*</font></td>
         <td><input type="text" name="sender_email" size="32" value="{senderEmail}"></td>
-        <td><widget class="XLite_Validator_EmailValidator" field="sender_email"></td>
+        <td><widget class="\XLite\Validator\EmailValidator" field="sender_email"></td>
 	</tr>	
 	<tr>
         <td class="NumberOfArticles">Friend's e-mail:</td>
 		<td width="10"><font class="Star">*</font></td>
         <td><input type="text" name="recipient_email" size="32" value="{recipient_email}"></td>
-        <td><widget class="XLite_Validator_EmailValidator" field="recipient_email"></td>
+        <td><widget class="\XLite\Validator\EmailValidator" field="recipient_email"></td>
 	</tr>	
 	<tr>
 		<td>&nbsp;</td>
-        <td colspan="2"><br><widget class="XLite_View_Button_Submit" label="Send to friend" /></td>
+        <td colspan="2"><br><widget class="\XLite\View\Button\Submit" label="Send to friend" /></td>
 		<td>&nbsp;</td>
 	</tr>
 </table>

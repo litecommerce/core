@@ -14,7 +14,7 @@
 <tr>
     <td colspan=2><font class=AdminHead>Field order:</font></td>
 </tr>
-<tr FOREACH="xlite.factory.XLite_Model_ProductInventory.getImportFields(#inventory_layout#),id,fields">
+<tr FOREACH="xlite.factory.\XLite\Model\ProductInventory.getImportFields(#inventory_layout#),id,fields">
     <td width=1>{id}:</td>
     <td width=99%>
         <select name="inventory_layout[{id}]">

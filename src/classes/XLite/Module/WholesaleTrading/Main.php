@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\WholesaleTrading;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_WholesaleTrading_Main extends XLite_Module_AModule
+class Main extends \XLite\Module\AModule
 {
     /**
      * Module type
@@ -106,7 +108,7 @@ class XLite_Module_WholesaleTrading_Main extends XLite_Module_AModule
         parent::init();
 
         // common class decorations
-        if (XLite::isAdminZone()) {
+        if (\XLite::isAdminZone()) {
             $this->addLayout('common/select_membership.tpl', 'modules/WholesaleTrading/common/select_membership.tpl');
         }
 

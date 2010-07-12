@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View\LanguageModify;
+
 /**
  * Language options dialog
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_LanguageModify_Options extends XLite_View_AView
+class Options extends \XLite\View\AView
 {
     /**
      * Widget parameters 
@@ -44,7 +46,7 @@ class XLite_View_LanguageModify_Options extends XLite_View_AView
     /**
      * Language (cache) 
      * 
-     * @var    XLite_Model_Language
+     * @var    \XLite\Model\Language
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
@@ -75,7 +77,7 @@ class XLite_View_LanguageModify_Options extends XLite_View_AView
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_LNG_ID => new XLite_Model_WidgetParam_Int('Language id', null),
+            self::PARAM_LNG_ID => new \XLite\Model\WidgetParam\Int('Language id', null),
         );
 
         $this->requestParams[] = self::PARAM_LNG_ID;
@@ -84,7 +86,7 @@ class XLite_View_LanguageModify_Options extends XLite_View_AView
     /**
      * Get language
      * 
-     * @return XLite_Model_Language or false
+     * @return \XLite\Model\Language or false
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -93,7 +95,7 @@ class XLite_View_LanguageModify_Options extends XLite_View_AView
     {
         if (!isset($this->label)) {
             if ($this->getParam(self::PARAM_LNG_ID)) {
-                $this->editLanguage = XLite_Core_Database::getRepo('XLite_Model_Language')->find($this->getParam(self::PARAM_LNG_ID));
+                $this->editLanguage = \XLite\Core\Database::getRepo('XLite\Model\Language')->find($this->getParam(self::PARAM_LNG_ID));
 
             } else {
                 $this->editLanguage = false;
@@ -119,40 +121,40 @@ class XLite_View_LanguageModify_Options extends XLite_View_AView
     /**
      * Get default language (English)
      * 
-     * @return XLite_Model_Language
+     * @return \XLite\Model\Language
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
     public function getDefaultLanguage()
     {
-        return XLite_Core_Database::getRepo('XLite_Model_Language')->getDefaultLanguage();
+        return \XLite\Core\Database::getRepo('XLite\Model\Language')->getDefaultLanguage();
     }
 
     /**
      * Get default language for customer zone
      * 
-     * @return XLite_Model_Language
+     * @return \XLite\Model\Language
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
     public function getInterfaceLanguage()
     {
-        return XLite_Core_Config::getInstance()->General->defaultLanguage;
+        return \XLite\Core\Config::getInstance()->General->defaultLanguage;
     }
 
     /**
      * Get language translation 
      *
-     * @param XLite_Model_Language $language Translation language
+     * @param \XLite\Model\Language $language Translation language
      *  
      * @return string
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getTranslation(XLite_Model_Language $language)
+    public function getTranslation(\XLite\Model\Language $language)
     {
         return strval($this->getEditLanguage()->getTranslation($language->code)->name);
     }

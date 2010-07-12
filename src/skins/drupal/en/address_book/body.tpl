@@ -11,4 +11,4 @@
  * @since     3.0.0
  *}
 
-<widget class="XLite_View_Model_Profile_Addresses" />
+<widget class="\XLite\View\Model\Profile\Addresses" />

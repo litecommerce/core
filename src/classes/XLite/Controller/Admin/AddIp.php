@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Controller_Admin_AddIp extends XLite_Controller_Admin_AAdmin
+class AddIp extends \XLite\Controller\Admin\AAdmin
 {
     public $template = "add_ip.tpl";
 
@@ -45,7 +47,7 @@ class XLite_Controller_Admin_AddIp extends XLite_Controller_Admin_AAdmin
             $key = $this->get('unique_key');
             $key_pattern = "/^([a-f]|\d){32,32}$/";
 
-            $waiting_list = new XLite_Model_WaitingIP();
+            $waiting_list = new \XLite\Model\WaitingIP();
             if (preg_match($key_pattern, $key) && $waiting_list->find("unique_key = '$key'")){
                 $this->waiting_ip = $waiting_list;
                 $waiting_list->approveIP();

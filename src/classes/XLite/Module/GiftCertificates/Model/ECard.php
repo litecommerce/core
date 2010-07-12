@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\GiftCertificates\Model;
+
 /**
  * E-card
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_GiftCertificates_Model_ECard extends XLite_Model_AModel
+class ECard extends \XLite\Model\AModel
 {
     /**
      * Table alias 
@@ -83,7 +85,7 @@ class XLite_Module_GiftCertificates_Model_ECard extends XLite_Model_AModel
     /**
      * E-card thumbnail (cache)
      * 
-     * @var    XLite_Model_Image
+     * @var    \XLite\Model\Image
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
@@ -93,7 +95,7 @@ class XLite_Module_GiftCertificates_Model_ECard extends XLite_Model_AModel
     /**
      * E-card image (cache)
      * 
-     * @var    XLite_Model_Image
+     * @var    \XLite\Model\Image
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
@@ -103,7 +105,7 @@ class XLite_Module_GiftCertificates_Model_ECard extends XLite_Model_AModel
     /**
      * Get e-card thumbnail 
      * 
-     * @return XLite_Model_Image
+     * @return \XLite\Model\Image
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -111,7 +113,7 @@ class XLite_Module_GiftCertificates_Model_ECard extends XLite_Model_AModel
     public function getThumbnail()
     {
         if (is_null($this->thumbnail)) {
-            $this->thumbnail = new XLite_Model_Image('ecard_thumbnail', $this->get('ecard_id'));
+            $this->thumbnail = new \XLite\Model\Image('ecard_thumbnail', $this->get('ecard_id'));
         }
 
         return $this->thumbnail;
@@ -120,7 +122,7 @@ class XLite_Module_GiftCertificates_Model_ECard extends XLite_Model_AModel
     /**
      * Get e-card image 
      * 
-     * @return XLite_Model_Image
+     * @return \XLite\Model\Image
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -128,7 +130,7 @@ class XLite_Module_GiftCertificates_Model_ECard extends XLite_Model_AModel
     public function getImage()
     {
         if (is_null($this->image)) {
-            $this->image = new XLite_Model_Image('ecard_image', $this->get('ecard_id'));
+            $this->image = new \XLite\Model\Image('ecard_image', $this->get('ecard_id'));
         }
 
         return $this->image;
@@ -145,7 +147,7 @@ class XLite_Module_GiftCertificates_Model_ECard extends XLite_Model_AModel
     public function getAllTemplates()
     {
         $templates = array();
-        $layout = XLite_Model_Layout::getInstance();
+        $layout = \XLite\Model\Layout::getInstance();
 
         $path = LC_ROOT_DIR . 'skins/mail/' . $layout->get('locale') . '/modules/GiftCertificates/ecards';
 
@@ -172,7 +174,7 @@ class XLite_Module_GiftCertificates_Model_ECard extends XLite_Model_AModel
     public function getAllBorders()
     {
         $borders = array();
-        $layout = XLite_Model_Layout::getInstance();
+        $layout = \XLite\Model\Layout::getInstance();
 
         $path = LC_ROOT_DIR . 'skins/mail/' . $layout->get('locale') . '/modules/GiftCertificates/ecards/borders';
 
@@ -219,7 +221,7 @@ class XLite_Module_GiftCertificates_Model_ECard extends XLite_Model_AModel
     {
         $template = LC_ROOT_DIR
             . 'skins/mail/'
-            . XLite_Model_Layout::getInstance()->get('locale')
+            . \XLite\Model\Layout::getInstance()->get('locale')
             . '/modules/GiftCertificates/ecards/'
             . $this->get('template') . '.tpl';
 

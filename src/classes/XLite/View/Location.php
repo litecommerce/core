@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View;
+
 /**
  * Bread crumbs widget
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_Location extends XLite_View_AView
+class Location extends \XLite\View\AView
 {
     /**
      * Return widget default template
@@ -57,7 +59,7 @@ class XLite_View_Location extends XLite_View_AView
      */
     public function isVisible()
     {
-        return parent::isVisible() && !$this->getWidget(array(), 'XLite_View_Welcome', 'welcome')->isVisible();
+        return parent::isVisible() && !$this->getWidget(array(), '\XLite\View\Welcome', 'welcome')->isVisible();
     }
 }
 

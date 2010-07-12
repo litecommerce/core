@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\InventoryTracking\Model;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_InventoryTracking_Model_OrderItem extends XLite_Model_OrderItem implements XLite_Base_IDecorator
+class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
 {
     public function __construct() 
     {
@@ -61,7 +63,7 @@ class XLite_Module_InventoryTracking_Model_OrderItem extends XLite_Model_OrderIt
         if (empty($options)) return false;
 
         $key = $this->get('key');
-        $inventory = new XLite_Module_InventoryTracking_Model_Inventory();
+        $inventory = new \XLite\Module\InventoryTracking\Model\Inventory();
         $inventories = (array) $inventory->findAll("inventory_id LIKE '".$this->get('product_id')."|%'", "order_by");
         foreach ($inventories as $i) {
             if ($i->keyMatch($key)) {

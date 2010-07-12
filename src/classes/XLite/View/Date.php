@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View;
+
 /**
  * Date selector widget
  * 
@@ -34,7 +36,7 @@
  * @see        ____class_see____
  * @since   3.0.0
  */
-class XLite_View_Date extends XLite_View_FormField
+class Date extends \XLite\View\FormField
 {
     /*
      * Names of the widget parameters
@@ -101,9 +103,9 @@ class XLite_View_Date extends XLite_View_FormField
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_FIELD       => new XLite_Model_WidgetParam_String('Name of date field prefix', ''),
-            self::PARAM_VALUE       => new XLite_Model_WidgetParam_Int('Value of date field (timestamp)', time()),
-            self::PARAM_YEARS_RANGE => new XLite_Model_WidgetParam_Int('The range of years', null),
+            self::PARAM_FIELD       => new \XLite\Model\WidgetParam\String('Name of date field prefix', ''),
+            self::PARAM_VALUE       => new \XLite\Model\WidgetParam\Int('Value of date field (timestamp)', time()),
+            self::PARAM_YEARS_RANGE => new \XLite\Model\WidgetParam\Int('The range of years', null),
         );
     }
 

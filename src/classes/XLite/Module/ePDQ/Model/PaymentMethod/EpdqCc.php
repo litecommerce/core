@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\ePDQ\Model\PaymentMethod;
+
 /**
  * ____description____
  * 
@@ -33,14 +35,14 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_ePDQ_Model_PaymentMethod_EpdqCc extends XLite_Model_PaymentMethod_CreditCard
+class EpdqCc extends \XLite\Model\PaymentMethod\CreditCard
 {
     public $configurationTemplate = "modules/ePDQ/config.tpl";
     public $formTemplate = "modules/ePDQ/checkout.tpl";
     public $hasConfigurationForm = true;
     public $processorName = "ePDQ";
 
-    function handleRequest(XLite_Model_Cart $cart)
+    function handleRequest(\XLite\Model\Cart $cart)
     {
         require_once LC_MODULES_DIR . 'ePDQ' . LC_DS . 'encoded.php';
         func_PaymentMethod_epdq_cc_handleRequest($this, $cart);
@@ -66,7 +68,7 @@ class XLite_Module_ePDQ_Model_PaymentMethod_EpdqCc extends XLite_Model_PaymentMe
 
 #perform the HTTP Post
 
-        $request = new XLite_Model_HTTPS();
+        $request = new \XLite\Model\HTTPS();
         $request->urlencoded = true;
         $request->url = $this->getComplex('params.param08');
         $request->data = $_params;

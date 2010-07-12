@@ -26,14 +26,16 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model;
+
 /**
- * XLite_Model_ActionStatus 
+ * \XLite\Model\ActionStatus 
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_ActionStatus extends XLite_Base
+class ActionStatus extends \XLite\Base
 {
     /**
      * Allowed statuses 
@@ -179,7 +181,7 @@ class XLite_Model_ActionStatus extends XLite_Base
             $this->message = $message;
             $this->code    = $code;
         } else {
-            $this->doDie('XLite_Model_ActionStatus::__construct(): unallowed status - "' . strval($status) . '"');
+            $this->doDie('\XLite\Model\ActionStatus::__construct(): unallowed status - "' . strval($status) . '"');
         }
     }
 }

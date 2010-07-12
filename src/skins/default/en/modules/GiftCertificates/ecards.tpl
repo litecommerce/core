@@ -20,11 +20,11 @@
     <td FOREACH="row,ecard" align="center" width="33%">
         <span IF="ecard">
         <a href="{ecard.image.url}" target="_blank"><img src="{ecard.thumbnail.url}" border="0"></a><br>
-        <widget class="XLite_View_Button" label="Select" href="javascript: document.ecard_form.ecard_id.value='{ecard.ecard_id}';document.ecard_form.submit()">
+        <widget class="\XLite\View\Button" label="Select" href="javascript: document.ecard_form.ecard_id.value='{ecard.ecard_id}';document.ecard_form.submit()">
         </span>
         <br>&nbsp;
     </td>
 </tr>
 </form>
 </table>
-<widget class="XLite_View_Submit" href="cart.php?target=gift_certificate&gcid={gcid}" label="Cancel">
+<widget class="\XLite\View\Submit" href="cart.php?target=gift_certificate&gcid={gcid}" label="Cancel">

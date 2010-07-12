@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\AOM\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_AOM_Controller_Admin_OrderList extends XLite_Controller_Admin_OrderList implements XLite_Base_IDecorator
+class OrderList extends \XLite\Controller\Admin\OrderList implements \XLite\Base\IDecorator
 {
     public $orders = null;
     public $params = array('target', 'mode', 'start_order_id', 'end_order_id', 'login', 'status', 'person_info', 'product_name', 'period', 'start_total', 'end_total', 'payment_method', 'shipping_id');
@@ -44,7 +46,7 @@ class XLite_Module_AOM_Controller_Admin_OrderList extends XLite_Controller_Admin
     function getOrders() 
     {
         if (is_null($this->orders)) {
-            $order = new XLite_Model_Order();
+            $order = new \XLite\Model\Order();
             $order->collectGarbage();
 
 // search dates  
@@ -71,7 +73,7 @@ class XLite_Module_AOM_Controller_Admin_OrderList extends XLite_Controller_Admin
 // search by profiles 
 
         if ($this->get('login')||$this->get('person_info'))	{
-            $profile = new XLite_Model_Profile();
+            $profile = new \XLite\Model\Profile();
             $profile->_range = null;
             $person_search = "";
             if ($this->get('person_info')) {
@@ -107,10 +109,10 @@ class XLite_Module_AOM_Controller_Admin_OrderList extends XLite_Controller_Admin
 
             $products = array();
             if ($this->get('product_name')) {
-                $product = new XLite_Model_Product();
+                $product = new \XLite\Model\Product();
                 $product_name = addslashes($this->get('product_name'));
                 $products = $product->findAll("name LIKE '%$product_name%' OR sku LIKE '%$product_name%'");
-                $item = new XLite_Model_OrderItem();
+                $item = new \XLite\Model\OrderItem();
                 $items 	 = $item->findAll("product_name LIKE '%$product_name%' OR product_sku LIKE '%$product_name%'");
                 $product_ids = array();
                 foreach ($products as $product)
@@ -151,7 +153,7 @@ class XLite_Module_AOM_Controller_Admin_OrderList extends XLite_Controller_Admin
     function getPaymentMethods()  
     {
         if (!is_null($this->_paymentMethods)) {
-            $paymentMethod = new XLite_Model_PaymentMethod();
+            $paymentMethod = new \XLite\Model\PaymentMethod();
             $this->_paymentMethods = $paymentMethod->getActiveMethods();
         }
 
@@ -164,9 +166,9 @@ class XLite_Module_AOM_Controller_Admin_OrderList extends XLite_Controller_Admin
     		return $this->_shippingRates;
     	}
 
-        $sr = new XLite_Model_ShippingRate();
+        $sr = new \XLite\Model\ShippingRate();
         $shipping_rates = $sr->findAll();
-        $shipping = new XLite_Model_Shipping();
+        $shipping = new \XLite\Model\Shipping();
     	$modules = $shipping->getModules();
     	$modules = (is_array($modules)) ? array_keys($modules) : array();
         $shippings = $shipping->findAll();

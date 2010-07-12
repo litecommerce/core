@@ -22,7 +22,7 @@ function delete_warning()
 }
 </script>
 
-<widget class="XLite_View_Pager" data="{getWishLists()}" name="pager" />
+<widget class="\XLite\View\Pager" data="{getWishLists()}" name="pager" />
 
 <br />
 

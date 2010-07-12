@@ -12,7 +12,7 @@
  *}
 <div class="save-panel" style="display: none;">
   <div class="box">
-    <widget class="XLite_View_Button_Regular" label="Save" style="main invert" jsCode="return true;" />
+    <widget class="\XLite\View\Button\Regular" label="Save" style="main invert" jsCode="return true;" />
     <a href="javascript:void(0);"><span>Delete selected</span></a>
   </div>
 </div>

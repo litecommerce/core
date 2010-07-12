@@ -48,8 +48,8 @@
 </tr>
 </table>
 
-<p /><widget class="XLite_View_Button_Link" label="Modify address information" location="{buildURL(#checkout#,##,_ARRAY_(#mode#^#register#))}" />
-<p /><widget class="XLite_View_Button_Link" label="Change payment method" location="{buildURL(#checkout#,##,_ARRAY_(#mode#^#paymentMethod#))}" />
+<p /><widget class="\XLite\View\Button\Link" label="Modify address information" location="{buildURL(#checkout#,##,_ARRAY_(#mode#^#register#))}" />
+<p /><widget class="\XLite\View\Button\Link" label="Change payment method" location="{buildURL(#checkout#,##,_ARRAY_(#mode#^#paymentMethod#))}" />
 
 <p>
 <widget template="checkout/credit_card.tpl" visible="{cart.paymentMethod.formTemplate=#checkout/credit_card.tpl#}">

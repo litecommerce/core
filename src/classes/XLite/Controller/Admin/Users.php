@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Controller\Admin;
+
 /**
  * Users list controller
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Controller_Admin_Users extends XLite_Controller_Admin_AAdmin
+class Users extends \XLite\Controller\Admin\AAdmin
 {
     /**
      * params 
@@ -67,7 +69,7 @@ class XLite_Controller_Admin_Users extends XLite_Controller_Admin_AAdmin
     {
     	parent::init();
 
-        if ('orders' == XLite_Core_Request::getInstance()->mode) {
+        if ('orders' == \XLite\Core\Request::getInstance()->mode) {
             $this->search_orders();
             $this->redirect();
             exit;
@@ -90,16 +92,16 @@ class XLite_Controller_Admin_Users extends XLite_Controller_Admin_AAdmin
             $searchParams = $this->getDefaultSearchConditions();
         }
 
-        if (isset(XLite_Core_Request::getInstance()->substring)) {
-            $searchParams['substring'] = XLite_Core_Request::getInstance()->substring;
+        if (isset(\XLite\Core\Request::getInstance()->substring)) {
+            $searchParams['substring'] = \XLite\Core\Request::getInstance()->substring;
         }
 
-        if (isset(XLite_Core_Request::getInstance()->membership)) {
-            $searchParams['membership'] = XLite_Core_Request::getInstance()->membership;
+        if (isset(\XLite\Core\Request::getInstance()->membership)) {
+            $searchParams['membership'] = \XLite\Core\Request::getInstance()->membership;
         }
 
-        if (isset(XLite_Core_Request::getInstance()->user_type)) {
-            $searchParams['user_type'] = XLite_Core_Request::getInstance()->user_type;
+        if (isset(\XLite\Core\Request::getInstance()->user_type)) {
+            $searchParams['user_type'] = \XLite\Core\Request::getInstance()->user_type;
         }
 
         $this->session->set('admin_users_search', $searchParams);
@@ -165,7 +167,7 @@ class XLite_Controller_Admin_Users extends XLite_Controller_Admin_AAdmin
      */
     protected function getUsers()
     {
-        $mode = (isset(XLite_Core_Request::getInstance()->mode) ? XLite_Core_Request::getInstance()->mode : '');
+        $mode = (isset(\XLite\Core\Request::getInstance()->mode) ? \XLite\Core\Request::getInstance()->mode : '');
 
         if ('' == $mode || 'orders' == $mode) {
             return array();
@@ -221,7 +223,7 @@ class XLite_Controller_Admin_Users extends XLite_Controller_Admin_AAdmin
                 $where[] = 'access_level = -1';
             }
 
-            $profile = new XLite_Model_Profile();
+            $profile = new \XLite\Model\Profile();
             $profile->fetchKeysOnly = true;
             $profile->fetchObjIdxOnly = false;
 
@@ -269,7 +271,7 @@ class XLite_Controller_Admin_Users extends XLite_Controller_Admin_AAdmin
      */
     protected function search_orders()
     {
-        $profile = new XLite_Model_Profile($this->profile_id);
+        $profile = new \XLite\Model\Profile($this->profile_id);
         $profile->read();
         $login = $profile->get('login');
 

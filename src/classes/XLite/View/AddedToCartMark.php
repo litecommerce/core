@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View;
+
 /**
  * Added-to-cart mark widget
  *
@@ -35,7 +37,7 @@
  * @ListChild (list="productsList.gridItem.title", weight="10")
  * @ListChild (list="productsList.listItem.info", weight="10")
  */
-class XLite_View_AddedToCartMark extends XLite_View_AView
+class AddedToCartMark extends \XLite\View\AView
 {
     /**
      * Widget parameter names
@@ -68,7 +70,7 @@ class XLite_View_AddedToCartMark extends XLite_View_AView
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_PRODUCT => new XLite_Model_WidgetParam_Object('Product', null, false, 'XLite_Model_Product'),
+            self::PARAM_PRODUCT => new \XLite\Model\WidgetParam\Object('Product', null, false, '\XLite\Model\Product'),
         );
     }
 
@@ -86,7 +88,7 @@ class XLite_View_AddedToCartMark extends XLite_View_AView
 
         // FIXME
         if ($result) {
-            $item = new XLite_Model_OrderItem();
+            $item = new \XLite\Model\OrderItem();
             $item->set('product', $this->getParam(self::PARAM_PRODUCT));
             $result = $this->getCart()->isExistsItem($item);
         }

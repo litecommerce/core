@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\WishList;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_WishList_Main extends XLite_Module_AModule
+class Main extends \XLite\Module\AModule
 {
     /**
      * Module type
@@ -103,25 +105,25 @@ class XLite_Module_WishList_Main extends XLite_Module_AModule
         foreach ($tpls as $tpl) {
 
             try {
-                $list = XLite_Core_Database::getQB()
+                $list = \XLite\Core\Database::getQB()
                     ->select('v')
-                    ->from('XLite_Model_ViewList', 'v')
+                    ->from('XLite\Model\ViewList', 'v')
                     ->where('v.tpl LIKE :tpl AND v.list = :list')
                     ->setParameters(array('tpl' => '%' . $tpl, 'list' => 'cart.item.info'))
                     ->getQuery()
                     ->getSingleResult();
 
-                $newList = new XLite_Model_ViewList();
+                $newList = new \XLite\Model\ViewList();
                 $newList->list = 'wishlist.item.info';
                 $newList->tpl = $list->tpl;
                 $newList->weight = $list->weight;
 
-                XLite_Core_Database::getEM()->persist($newList);
+                \XLite\Core\Database::getEM()->persist($newList);
 
             } catch (\Doctrine\ORM\NoResultException $exception) {
             }
         }
 
-        XLite_Core_Database::getEM()->flush();
+        \XLite\Core\Database::getEM()->flush();
     }
 }

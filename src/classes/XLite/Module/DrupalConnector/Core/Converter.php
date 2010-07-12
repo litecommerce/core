@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\DrupalConnector\Core;
+
 // FIXME - must be refactored
 
 /**
@@ -35,7 +37,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_DrupalConnector_Core_Converter extends XLite_Core_Converter implements XLite_Base_IDecorator, XLite_Base_ISingleton
+class Converter extends \XLite\Core\Converter implements \XLite\Base\IDecorator, \XLite\Base\ISingleton
 {
     /**
      * It's the the root part of Drupal nodes which are the imported LiteCommerce widgets
@@ -58,21 +60,21 @@ class XLite_Module_DrupalConnector_Core_Converter extends XLite_Core_Converter i
     public static function buildURL($target = '', $action = '', array $params = array(), $interface = null)
     {
         if ($target == '') {
-            $target = XLite::TARGET_DEFAULT;
+            $target = \XLite::TARGET_DEFAULT;
         }
 
-        if (!XLite_Module_DrupalConnector_Handler::getInstance()->checkCurrentCMS()) {
+        if (!\XLite\Module\DrupalConnector\Handler::getInstance()->checkCurrentCMS()) {
 
             // Standalone URL
             $result = parent::buildURL($target, $action, $params, $interface);
 
-        } elseif (XLite_Module_DrupalConnector_Handler::getInstance()->isPortal($target)) {
+        } elseif (\XLite\Module\DrupalConnector\Handler::getInstance()->isPortal($target)) {
 
             // Drupal URL (portal)
-            $result = XLite_Module_DrupalConnector_Handler::getInstance()->getPortalPrefix($target, $action, $params);
+            $result = \XLite\Module\DrupalConnector\Handler::getInstance()->getPortalPrefix($target, $action, $params);
 
             if ($params) {
-                $result .= '/' . XLite_Core_Converter::buildQuery($params, '-', '/');
+                $result .= '/' . \XLite\Core\Converter::buildQuery($params, '-', '/');
             }
 
             $result = self::normalizeDrupalURL($result);
@@ -111,7 +113,7 @@ class XLite_Module_DrupalConnector_Core_Converter extends XLite_Core_Converter i
         $url = implode('/', $parts);
 
         if ($params) {
-            $url .= '/' . XLite_Core_Converter::buildQuery($params, '-', '/');
+            $url .= '/' . \XLite\Core\Converter::buildQuery($params, '-', '/');
         }
 
         return $url;

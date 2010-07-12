@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Core;
+
 /**
  * DB-based configuration registry
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Core_Config extends XLite_Base implements XLite_Base_ISingleton
+class Config extends \XLite\Base implements \XLite\Base\ISingleton
 {
     /**
      * Read config options
@@ -47,7 +49,7 @@ class XLite_Core_Config extends XLite_Base implements XLite_Base_ISingleton
      */
     public function readConfig($force = false)
     {
-        return XLite_Core_Database::getRepo('XLite_Model_Config')->getAllOptions($force);
+        return \XLite\Core\Database::getRepo('XLite\Model\Config')->getAllOptions($force);
     }
 
     /**
@@ -68,7 +70,7 @@ class XLite_Core_Config extends XLite_Base implements XLite_Base_ISingleton
     /**
      * Method to access a singleton 
      * 
-     * @return XLite_Core_CommonCell
+     * @return \XLite\Core\CommonCell
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

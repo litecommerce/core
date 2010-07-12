@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View\LanguagesModify;
+
 /**
  * Select language dialog
  * 
@@ -33,12 +35,12 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_LanguagesModify_SelectLanguage extends XLite_View_AView
+class SelectLanguage extends \XLite\View\AView
 {
 	/**
 	 * Translate language (cache)
 	 * 
-	 * @var    XLite_Model_Language
+	 * @var    \XLite\Model\Language
 	 * @access protected
 	 * @see    ____var_see____
 	 * @since  3.0.0
@@ -67,35 +69,35 @@ class XLite_View_LanguagesModify_SelectLanguage extends XLite_View_AView
      */
     public function getAddedLanguages()
     {
-        return XLite_Core_Database::getRepo('XLite_Model_Language')->findAddedLanguages();
+        return \XLite\Core\Database::getRepo('XLite\Model\Language')->findAddedLanguages();
     }
 
     /**
      * Check - is interface language or not
      * 
-     * @param XLite_Model_Language $language ____param_comment____
+     * @param \XLite\Model\Language $language ____param_comment____
      *  
      * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function isInterfaceLanguage(XLite_Model_Language $language)
+    public function isInterfaceLanguage(\XLite\Model\Language $language)
     {
-        return XLite_Core_Config::getInstance()->General->defaultLanguage->code == $language->code;
+        return \XLite\Core\Config::getInstance()->General->defaultLanguage->code == $language->code;
     }
 
     /**
      * Check - is translate language or not
      * 
-     * @param XLite_Model_Language $language Language
+     * @param \XLite\Model\Language $language Language
      *  
      * @return boolean
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function isTranslateLanguage(XLite_Model_Language $language)
+    public function isTranslateLanguage(\XLite\Model\Language $language)
     {
         return $this->getTranslatedLanguage()
             && $this->getTranslatedLanguage()->code == $language->code;
@@ -104,27 +106,27 @@ class XLite_View_LanguagesModify_SelectLanguage extends XLite_View_AView
     /**
      * Get application default language 
      * 
-     * @return XLite_Model_Language
+     * @return \XLite\Model\Language
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
     public function getDefaultLanguage()
     {
-        return XLite_Core_Database::getRepo('XLite_Model_Language')->getDefaultLanguage();
+        return \XLite\Core\Database::getRepo('XLite\Model\Language')->getDefaultLanguage();
     }
 
     /**
      * Check - specified language can been selected or not
      * 
-     * @param XLite_Model_Language $language Language
+     * @param \XLite\Model\Language $language Language
      *  
      * @return boolean
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function canSelect(XLite_Model_Language $language)
+    public function canSelect(\XLite\Model\Language $language)
     {
         return $language->code != $this->getDefaultLanguage()->code
             && (!$this->getTranslatedLanguage() || $language->code != $this->getTranslatedLanguage()->code);
@@ -133,25 +135,25 @@ class XLite_View_LanguagesModify_SelectLanguage extends XLite_View_AView
     /**
      * Check - specified language can been deleted or not
      * 
-     * @param XLite_Model_Language $language Language
+     * @param \XLite\Model\Language $language Language
      *  
      * @return boolean
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function canDelete(XLite_Model_Language $language)
+    public function canDelete(\XLite\Model\Language $language)
     {
         return !in_array(
             $language->code,
-            array($this->getDefaultLanguage()->code, XLite_Core_Config::getInstance()->General->defaultLanguage->code)
+            array($this->getDefaultLanguage()->code, \XLite\Core\Config::getInstance()->General->defaultLanguage->code)
         );
     }
 
     /**
      * Get translated language 
      * 
-     * @return XLite_Model_Language or false
+     * @return \XLite\Model\Language or false
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -159,9 +161,9 @@ class XLite_View_LanguagesModify_SelectLanguage extends XLite_View_AView
     protected function getTranslatedLanguage()
     {
 		if (!isset($this->translateLanguage)) {
-	        if (XLite_Core_Request::getInstance()->language) {
-    	        $this->translateLanguage = XLite_Core_Database::getRepo('XLite_Model_Language')->findOneByCode(
-        	        XLite_Core_Request::getInstance()->language
+	        if (\XLite\Core\Request::getInstance()->language) {
+    	        $this->translateLanguage = \XLite\Core\Database::getRepo('XLite\Model\Language')->findOneByCode(
+        	        \XLite\Core\Request::getInstance()->language
             	);
 	            if (!$this->translateLanguage || !$this->translateLanguage->added) {
 					$this->translateLanguage = false;
@@ -182,7 +184,7 @@ class XLite_View_LanguagesModify_SelectLanguage extends XLite_View_AView
      */
     public function getInactiveLanguages()
     {
-        return XLite_Core_Database::getRepo('XLite_Model_Language')
+        return \XLite\Core\Database::getRepo('XLite\Model\Language')
             ->findInactiveLanguages();
     }
 

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\DrupalConnector;
+
 /**
  * Logger 
  * 
@@ -33,8 +35,8 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_DrupalConnector_Logger extends XLite_Logger
-implements XLite_Base_ISingleton, XLite_Base_IDecorator
+class Logger extends \XLite\Logger
+implements \XLite\Base\ISingleton, \XLite\Base\IDecorator
 {
     /**
      * Constructor
@@ -48,7 +50,7 @@ implements XLite_Base_ISingleton, XLite_Base_IDecorator
     {
         parent::__construct();
 
-        if (XLite_Module_DrupalConnector_Handler::getInstance()->checkCurrentCMS()) {
+        if (\XLite\Module\DrupalConnector\Handler::getInstance()->checkCurrentCMS()) {
             $path = realpath(LC_CONNECTOR_ROOT . '/../..') . LC_DS;
             $this->filesRepositories[$path] = 'drupal root';
         }

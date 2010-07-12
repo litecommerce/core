@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model;
+
 /**
  * Double-linked list
  * 
@@ -33,12 +35,12 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_Collection extends XLite_Base
+class Collection extends \XLite\Base
 {
     /**
      * Start element
      * 
-     * @var    XLite_Model_ListNode
+     * @var    \XLite\Model\ListNode
      * @access protected
      * @since  3.0.0
      */
@@ -47,7 +49,7 @@ class XLite_Model_Collection extends XLite_Base
     /**
      * End element 
      * 
-     * @var    XLite_Model_ListNode
+     * @var    \XLite\Model\ListNode
      * @access protected
      * @since  3.0.0
      */
@@ -69,10 +71,10 @@ class XLite_Model_Collection extends XLite_Base
     /**
      * Search list element using a callback function 
      * 
-     * @param string $method some public method of the XLite_Model_ListNode class
+     * @param string $method some public method of the \XLite\Model\ListNode class
      * @param array  $args   callback arguments
      *  
-     * @return XLite_Model_ListNode
+     * @return \XLite\Model\ListNode
      * @access public
      * @since  3.0.0
      */
@@ -92,7 +94,7 @@ class XLite_Model_Collection extends XLite_Base
      * 
      * @param string $key node identifier
      *  
-     * @return XLite_Model_ListNode
+     * @return \XLite\Model\ListNode
      * @access public
      * @since  3.0.0
      */

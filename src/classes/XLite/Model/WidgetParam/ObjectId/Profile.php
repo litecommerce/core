@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model\WidgetParam\ObjectId;
+
 /**
  * Profiel id Widget parameter 
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_WidgetParam_ObjectId_Profile extends XLite_Model_WidgetParam_ObjectId
+class Profile extends \XLite\Model\WidgetParam\ObjectId
 {
     /**
      * Return object class name
@@ -44,7 +46,7 @@ class XLite_Model_WidgetParam_ObjectId_Profile extends XLite_Model_WidgetParam_O
      */
     protected function getClassName()
     {
-        return 'XLite_Model_Profile';
+        return '\XLite\Model\Profile';
     }
 }
 

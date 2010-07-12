@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Controller\Admin;
+
 /**
  * Customer notifications page controller
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Controller_Admin_CustomerNotifications extends XLite_Controller_Admin_AAdmin
+class CustomerNotifications extends \XLite\Controller\Admin\AAdmin
 {
     /**
      * notifications 
@@ -87,13 +89,13 @@ class XLite_Controller_Admin_CustomerNotifications extends XLite_Controller_Admi
      */
     public function init()
     {
-        if ( !isset(XLite_Core_Request::getInstance()->action)
-            && !( isset(XLite_Core_Request::getInstance()->email)
-            || isset(XLite_Core_Request::getInstance()->pinfo)
-            || isset(XLite_Core_Request::getInstance()->status)
-            || isset(XLite_Core_Request::getInstance()->type)
-            || isset(XLite_Core_Request::getInstance()->prodname)
-            || isset(XLite_Core_Request::getInstance()->period))) {
+        if ( !isset(\XLite\Core\Request::getInstance()->action)
+            && !( isset(\XLite\Core\Request::getInstance()->email)
+            || isset(\XLite\Core\Request::getInstance()->pinfo)
+            || isset(\XLite\Core\Request::getInstance()->status)
+            || isset(\XLite\Core\Request::getInstance()->type)
+            || isset(\XLite\Core\Request::getInstance()->prodname)
+            || isset(\XLite\Core\Request::getInstance()->period))) {
 
             $preferences = $this->config->ProductAdviser->filters_preferences;
 
@@ -186,8 +188,8 @@ class XLite_Controller_Admin_CustomerNotifications extends XLite_Controller_Admi
     {
         $value = null;
 
-        if (isset(XLite_Core_Request::getInstance()->$name)) {
-            $value = XLite_Core_Request::getInstance()->$name;
+        if (isset(\XLite\Core\Request::getInstance()->$name)) {
+            $value = \XLite\Core\Request::getInstance()->$name;
         }
 
         return $value;
@@ -207,7 +209,7 @@ class XLite_Controller_Admin_CustomerNotifications extends XLite_Controller_Admi
      */
     protected function getParameter($name, &$value, $udecode=false)
     {
-        $value = XLite_Core_Request::getInstance()->$name;
+        $value = \XLite\Core\Request::getInstance()->$name;
 
         if (isset($value)) {
 
@@ -240,7 +242,7 @@ class XLite_Controller_Admin_CustomerNotifications extends XLite_Controller_Admi
 
     	 	if (isset($value[$name])) {
                 $value = $value[$name];
-                XLite_Core_Request::getInstance()->$name = $value;
+                \XLite\Core\Request::getInstance()->$name = $value;
 
             } else {
                 $value = null;
@@ -249,7 +251,7 @@ class XLite_Controller_Admin_CustomerNotifications extends XLite_Controller_Admi
         } else {
 
             if (isset($value)) {
-                XLite_Core_Request::getInstance()->$name = $value;
+                \XLite\Core\Request::getInstance()->$name = $value;
             }
 
         }
@@ -325,8 +327,8 @@ class XLite_Controller_Admin_CustomerNotifications extends XLite_Controller_Admi
 
         $name = $fieldName . 'DateRaw';
 
-        if (isset(XLite_Core_Request::getInstance()->$name)) {
-            $dateValue = XLite_Core_Request::getInstance()->get($name);
+        if (isset(\XLite\Core\Request::getInstance()->$name)) {
+            $dateValue = \XLite\Core\Request::getInstance()->get($name);
 
         } else {
             $nameDay   = $fieldName . 'DateDay';
@@ -335,9 +337,9 @@ class XLite_Controller_Admin_CustomerNotifications extends XLite_Controller_Admi
 
             $dateValue = mktime(
                 0, 0, 0,
-                XLite_Core_Request::getInstance()->get($nameMonth),
-                XLite_Core_Request::getInstance()->get($nameDay),
-                XLite_Core_Request::getInstance()->get($nameYear)
+                \XLite\Core\Request::getInstance()->get($nameMonth),
+                \XLite\Core\Request::getInstance()->get($nameDay),
+                \XLite\Core\Request::getInstance()->get($nameYear)
             );
         }
 
@@ -355,7 +357,7 @@ class XLite_Controller_Admin_CustomerNotifications extends XLite_Controller_Admi
     protected function getNotifications()
     {
         if (is_null($this->notifications)) {
-            $cntfs = new XLite_Module_ProductAdviser_Model_Notification();
+            $cntfs = new \XLite\Module\ProductAdviser\Model\Notification();
             
             $condition = array();
             
@@ -449,7 +451,7 @@ class XLite_Controller_Admin_CustomerNotifications extends XLite_Controller_Admi
 
             	if (isset($this->action) && $this->action == "prepare_notifications") {
             		for ($i=0; $i<$this->notificationsNumber; $i++) {
-            			$mail = new XLite_Model_Mailer();
+            			$mail = new \XLite\Model\Mailer();
             			$mail->ntf = $this->notifications[$i];
                         $dir = "modules/ProductAdviser/notifications/".$this->notifications[$i]->get('type')."/";
                         $mail->set('subject', $mail->compile($dir.$mail->get('subjectTemplate')));
@@ -487,7 +489,7 @@ class XLite_Controller_Admin_CustomerNotifications extends XLite_Controller_Admi
             $statuses = implode(", ", $statuses);
 
     		foreach ($this->selected as $notify_id) {
-                $notification = new XLite_Module_ProductAdviser_Model_Notification();
+                $notification = new \XLite\Module\ProductAdviser\Model\Notification();
 
         		$condition = array();
                 $condition[] = "status IN ($statuses)";
@@ -521,7 +523,7 @@ class XLite_Controller_Admin_CustomerNotifications extends XLite_Controller_Admi
             $statuses = implode(", ", $statuses);
 
     		foreach ($this->selected as $notify_id) {
-                $notification = new XLite_Module_ProductAdviser_Model_Notification();
+                $notification = new \XLite\Module\ProductAdviser\Model\Notification();
 
         		$condition = array();
                 $condition[] = "status IN ($statuses)";
@@ -577,7 +579,7 @@ class XLite_Controller_Admin_CustomerNotifications extends XLite_Controller_Admi
 </SCRIPT>
 <?php
     		foreach ($this->ids as $ntf_id) {
-                $notification = new XLite_Module_ProductAdviser_Model_Notification();
+                $notification = new \XLite\Module\ProductAdviser\Model\Notification();
 
         		$condition = array();
                 $condition[] = "status='".CUSTOMER_REQUEST_UPDATED."'";
@@ -588,7 +590,7 @@ class XLite_Controller_Admin_CustomerNotifications extends XLite_Controller_Admi
                     $notification->set('status', CUSTOMER_REQUEST_SENT);
                     $notification->update();
 
-        			$mail = new XLite_Model_Mailer();
+        			$mail = new \XLite\Model\Mailer();
                     $mail->set('subject', $this->subjects[$ntf_id]);
                     $mail->set('body', $this->bodies[$ntf_id]);
                     $mail->set('ignoreDefaultSubjectBody', true);
@@ -663,16 +665,16 @@ class XLite_Controller_Admin_CustomerNotifications extends XLite_Controller_Admi
             $preferences['period'] = $period;
 
             if ('6' == $period) {
-                $preferences['startDateDay'] = XLite_Core_Request::getInstance()->startDateDay;
-                $preferences['startDateMonth'] = XLite_Core_Request::getInstance()->startDateMonth;
-                $preferences['startDateYear'] = XLite_Core_Request::getInstance()->startDateYear;
-                $preferences['endDateDay'] = XLite_Core_Request::getInstance()->endDateDay;
-                $preferences['endDateMonth'] = XLite_Core_Request::getInstance()->endDateMonth;
-                $preferences['endDateYear'] = XLite_Core_Request::getInstance()->endDateYear;
+                $preferences['startDateDay'] = \XLite\Core\Request::getInstance()->startDateDay;
+                $preferences['startDateMonth'] = \XLite\Core\Request::getInstance()->startDateMonth;
+                $preferences['startDateYear'] = \XLite\Core\Request::getInstance()->startDateYear;
+                $preferences['endDateDay'] = \XLite\Core\Request::getInstance()->endDateDay;
+                $preferences['endDateMonth'] = \XLite\Core\Request::getInstance()->endDateMonth;
+                $preferences['endDateYear'] = \XLite\Core\Request::getInstance()->endDateYear;
             }
         }
 
-        XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+        \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
             array(
                 'category' => 'ProductAdviser',
                 'name'     => 'filters_preferences',

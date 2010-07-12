@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Affiliate\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Affiliate_Controller_Admin_Users extends XLite_Controller_Admin_Users implements XLite_Base_IDecorator
+class Users extends \XLite\Controller\Admin\Users implements \XLite\Base\IDecorator
 {
     function getUsers()
     {
@@ -44,7 +46,7 @@ class XLite_Module_Affiliate_Controller_Admin_Users extends XLite_Controller_Adm
             $this->pendingPartners = array();
             foreach ($users as $user) {
                 if (!is_object($user)) {
-                    $user = new XLite_Model_Profile($user['data']['profile_id']);
+                    $user = new \XLite\Model\Profile($user['data']['profile_id']);
                 }
                 if ($user->is('pendingPartner')) {
                     $this->pendingPartners[] = $user;

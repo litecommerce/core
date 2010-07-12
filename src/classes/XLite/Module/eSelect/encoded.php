@@ -336,7 +336,7 @@ function func_eSelect_xmlToArray($xmlData)
 {
     $xmlData = substr($xmlData, 0, strrpos($xmlData, ">")+1);
 
-    $xml = new XLite_Model_XML();
+    $xml = new \XLite\Model\XML();
     $tree = $xml->parse($xmlData);
     if (!$tree) {
         return array();
@@ -348,7 +348,7 @@ function func_eSelect_xmlToArray($xmlData)
 function func_eSelect_getState($profile, $field, $customField)
 {
     $stateName = "";
-	$state = XLite_Core_Database::getRepo('XLite_Model_State')->find($profile->get($field));
+	$state = \XLite\Core\Database::getRepo('XLite\Model\State')->find($profile->get($field));
     return $state ? $state->code : $profile->get($customField);
 }
 
@@ -557,7 +557,7 @@ function func_eSelect_mpgSendRequest(&$payment, &$data)
 
     $xmlString .= "<?xml version=\"1.0\" encoding=\"iso-8859-1\"?><request><store_id>".$params['store_id']."</store_id><api_token>".$params['api_token']."</api_token>$data</request>";
 
-    $request = new XLite_Model_HTTPS();
+    $request = new \XLite\Model\HTTPS();
     $request->data          = $xmlString;
     $request->method        = 'POST';
     $request->conttype      = "text/xml";
@@ -636,7 +636,7 @@ function func_eSelect_mpiSendRequest(&$payment, &$data)
 
     $xmlString = "<?xml version=\"1.0\"?><MpiRequest><store_id>".$params['store_id']."</store_id><api_token>".$params['api_token']."</api_token>$data</MpiRequest>";
 
-    $request = new XLite_Model_HTTPS();
+    $request = new \XLite\Model\HTTPS();
     $request->data          = $xmlString;
     $request->method        = 'POST';
     $request->conttype      = "text/xml";

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Controller\Admin;
+
 /**
  * Languages and language labels controller
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Controller_Admin_Languages extends XLite_Controller_Admin_AAdmin
+class Languages extends \XLite\Controller\Admin\AAdmin
 {
     /**
      * Controller parameters
@@ -57,13 +59,13 @@ class XLite_Controller_Admin_Languages extends XLite_Controller_Admin_AAdmin
     {
         $data = array('page' => 1);
         if (
-            isset(XLite_Core_Request::getInstance()->name)
-            && strlen(XLite_Core_Request::getInstance()->name)
+            isset(\XLite\Core\Request::getInstance()->name)
+            && strlen(\XLite\Core\Request::getInstance()->name)
         ) {
-            $data['name'] = XLite_Core_Request::getInstance()->name;
+            $data['name'] = \XLite\Core\Request::getInstance()->name;
         }
 
-        XLite_Model_Session::getInstance()->set(
+        \XLite\Model\Session::getInstance()->set(
             'labelsSearch',
             $data
         );
@@ -79,28 +81,28 @@ class XLite_Controller_Admin_Languages extends XLite_Controller_Admin_AAdmin
      */
     protected function doActionActive()
     {
-        $id = intval(XLite_Core_Request::getInstance()->lng_id);
-        $language = XLite_Core_Database::getRepo('XLite_Model_Language')->find($id);
+        $id = intval(\XLite\Core\Request::getInstance()->lng_id);
+        $language = \XLite\Core\Database::getRepo('XLite\Model\Language')->find($id);
 
         if (!$language) {
 
-            XLite_Core_TopMessage::addError(
+            \XLite\Core\TopMessage::addError(
                 'The language you want to add has not been found'
             );
 
         } elseif ($language->added) {
 
-            XLite_Core_TopMessage::addError(
+            \XLite\Core\TopMessage::addError(
                 'The language you want to add has already been added'
             );
 
         } else {
 
             $language->added = true;
-            XLite_Core_Database::getEM()->persist($language);
-            XLite_Core_Database::getEM()->flush();
+            \XLite\Core\Database::getEM()->persist($language);
+            \XLite\Core\Database::getEM()->flush();
 
-            XLite_Core_TopMessage::addInfo(
+            \XLite\Core\TopMessage::addInfo(
                 'The X language has been added successfully',
                 array('language' => $language->name)
             );
@@ -118,34 +120,34 @@ class XLite_Controller_Admin_Languages extends XLite_Controller_Admin_AAdmin
      */
     protected function doActionDelete()
     {
-        $id = intval(XLite_Core_Request::getInstance()->lng_id);
-        $language = XLite_Core_Database::getRepo('XLite_Model_Language')->find($id);
+        $id = intval(\XLite\Core\Request::getInstance()->lng_id);
+        $language = \XLite\Core\Database::getRepo('XLite\Model\Language')->find($id);
 
         if (!$language) {
 
-            XLite_Core_TopMessage::addError(
+            \XLite\Core\TopMessage::addError(
                 'The language you want to delete has not been found'
             );
 
-        } elseif ($language->code == XLite_Core_Database::getRepo('XLite_Model_Language')->getDefaultLanguage()->code) {
+        } elseif ($language->code == \XLite\Core\Database::getRepo('XLite\Model\Language')->getDefaultLanguage()->code) {
 
-            XLite_Core_TopMessage::addError(
+            \XLite\Core\TopMessage::addError(
                 'The language you want to delete is the default application language and cannot be deleted'
             );
 
-        } elseif ($language->code == XLite_Core_Config::getInstance()->General->defaultLanguage->code) {
+        } elseif ($language->code == \XLite\Core\Config::getInstance()->General->defaultLanguage->code) {
 
-            XLite_Core_TopMessage::addError(
+            \XLite\Core\TopMessage::addError(
                 'The language you want to delete is the default interface language and cannot be deleted'
             );
 
         } else {
 
             $language->added = false;
-            XLite_Core_Database::getEM()->persist($language);
-            XLite_Core_Database::getEM()->flush();
+            \XLite\Core\Database::getEM()->persist($language);
+            \XLite\Core\Database::getEM()->flush();
 
-            XLite_Core_TopMessage::addInfo(
+            \XLite\Core\TopMessage::addInfo(
                 'The X language has been deleted successfully',
                 array('language' => $language->name)
             );
@@ -163,31 +165,31 @@ class XLite_Controller_Admin_Languages extends XLite_Controller_Admin_AAdmin
      */
     protected function doActionSwitch()
     {
-        $id = intval(XLite_Core_Request::getInstance()->lng_id);
-        $language = XLite_Core_Database::getRepo('XLite_Model_Language')->find($id);
+        $id = intval(\XLite\Core\Request::getInstance()->lng_id);
+        $language = \XLite\Core\Database::getRepo('XLite\Model\Language')->find($id);
 
 
         if (!$language) {
 
-            XLite_Core_TopMessage::addError(
+            \XLite\Core\TopMessage::addError(
                 'The language has not been found'
             );
 
-        } elseif ($language->code == XLite_Core_Config::getInstance()->General->defaultLanguage->code) {
+        } elseif ($language->code == \XLite\Core\Config::getInstance()->General->defaultLanguage->code) {
 
-            XLite_Core_TopMessage::addError(
+            \XLite\Core\TopMessage::addError(
                 'The default interface language cannot be disabled'
             );
 
         } else {
 
             $language->enabled = !$language->enabled;
-            XLite_Core_Database::getEM()->persist($language);
-            XLite_Core_Database::getEM()->flush();
+            \XLite\Core\Database::getEM()->persist($language);
+            \XLite\Core\Database::getEM()->flush();
 
             if ($language->enabled) {
 
-                XLite_Core_TopMessage::addInfo(
+                \XLite\Core\TopMessage::addInfo(
                     'The X language has been enabled successfully',
                     array(
                         'language' => $language->name,
@@ -196,7 +198,7 @@ class XLite_Controller_Admin_Languages extends XLite_Controller_Admin_AAdmin
 
             } else {
 
-                XLite_Core_TopMessage::addInfo(
+                \XLite\Core\TopMessage::addInfo(
                     'The X language has been disabled successfully',
                     array(
                         'language' => $language->name,
@@ -218,42 +220,42 @@ class XLite_Controller_Admin_Languages extends XLite_Controller_Admin_AAdmin
      */
     protected function doActionUpdate()
     {
-        $current = XLite_Core_Request::getInstance()->current;
+        $current = \XLite\Core\Request::getInstance()->current;
 
         // Edit labels for current language
         if (is_array($current) && $current) {
             $this->saveLabels(
                 $current,
-                XLite_Core_Database::getRepo('XLite_Model_Language')->getDefaultLanguage()->code
+                \XLite\Core\Database::getRepo('XLite\Model\Language')->getDefaultLanguage()->code
             );
         }
         unset($current);
 
-        $translated = XLite_Core_Request::getInstance()->translated;
+        $translated = \XLite\Core\Request::getInstance()->translated;
         $translateFail = false;
         if (is_array($translated) && $translated) {
 
-            $language = XLite_Core_Request::getInstance()->language;
+            $language = \XLite\Core\Request::getInstance()->language;
 
             if (!$language) {
 
-                XLite_Core_TopMessage::addWarning(
+                \XLite\Core\TopMessage::addWarning(
                     'Text labels have not been updated successfully: the translation language has not been specified'
                 );
                 $translateFail = true;
 
             } elseif (
-                XLite_Core_Database::getRepo('XLite_Model_Language')->getDefaultLanguage()->code == $language
+                \XLite\Core\Database::getRepo('XLite\Model\Language')->getDefaultLanguage()->code == $language
             ) {
 
-                XLite_Core_TopMessage::addWarning(
+                \XLite\Core\TopMessage::addWarning(
                     'Text labels have not been updated successfully: the default application language has been set as the translation language'
                 );
                 $translateFail = true;
 
-            } elseif (!XLite_Core_Database::getRepo('XLite_Model_Language')->findOneByCode($language)) {
+            } elseif (!\XLite\Core\Database::getRepo('XLite\Model\Language')->findOneByCode($language)) {
 
-                XLite_Core_TopMessage::addWarning(
+                \XLite\Core\TopMessage::addWarning(
                     'Text labels have not been updated successfully: the translation language has not been found'
                 );
                 $translateFail = true;
@@ -261,15 +263,15 @@ class XLite_Controller_Admin_Languages extends XLite_Controller_Admin_AAdmin
             } else {
                 $this->saveLabels(
                     $translated,
-                    XLite_Core_Request::getInstance()->language
+                    \XLite\Core\Request::getInstance()->language
                 );
             }
         }
         unset($translated);
 
         if (!$translateFail) {
-            XLite_Core_TopMessage::addInfo('Text labels have been updated successfully');
-            XLite_Core_Translation::getInstance()->reset();
+            \XLite\Core\TopMessage::addInfo('Text labels have been updated successfully');
+            \XLite\Core\Translation::getInstance()->reset();
         }
     }
 
@@ -283,26 +285,26 @@ class XLite_Controller_Admin_Languages extends XLite_Controller_Admin_AAdmin
      */
     protected function doActionDeleteLabels()
     {
-        $ids = XLite_Core_Request::getInstance()->mark;
+        $ids = \XLite\Core\Request::getInstance()->mark;
         if ($ids && is_array($ids)) {
-            $labels = XLite_Core_Database::getRepo('XLite_Model_LanguageLabel')->findByIds($ids);
+            $labels = \XLite\Core\Database::getRepo('XLite\Model\LanguageLabel')->findByIds($ids);
             foreach ($labels as $label) {
-                XLite_Core_Database::getEM()->remove($label);
+                \XLite\Core\Database::getEM()->remove($label);
             }
 
             if ($labels) {
-                XLite_Core_Database::getEM()->flush();
+                \XLite\Core\Database::getEM()->flush();
             }
         }
 
         if (isset($labels) && $labels) {
 
-            XLite_Core_Translation::getInstance()->reset();
-            XLite_Core_TopMessage::addInfo('Text labels have been deleted');
+            \XLite\Core\Translation::getInstance()->reset();
+            \XLite\Core\TopMessage::addInfo('Text labels have been deleted');
 
         } else {
 
-            XLite_Core_TopMessage::addError(
+            \XLite\Core\TopMessage::addError(
                 'Text labels have not been deleted: no text labels have been found or specified'
             );
 
@@ -319,21 +321,21 @@ class XLite_Controller_Admin_Languages extends XLite_Controller_Admin_AAdmin
      */
     protected function doActionDeleteLabel()
     {
-        $id = XLite_Core_Request::getInstance()->label_id;
+        $id = \XLite\Core\Request::getInstance()->label_id;
         if ($id) {
-            $label = XLite_Core_Database::getRepo('XLite_Model_LanguageLabel')->find($id);
+            $label = \XLite\Core\Database::getRepo('XLite\Model\LanguageLabel')->find($id);
             if ($label) {
-                XLite_Core_Database::getEM()->remove($label);
-                XLite_Core_Database::getEM()->flush();
+                \XLite\Core\Database::getEM()->remove($label);
+                \XLite\Core\Database::getEM()->flush();
             
-                XLite_Core_Translation::getInstance()->reset();
+                \XLite\Core\Translation::getInstance()->reset();
 
-                XLite_Core_TopMessage::addInfo('The text label has been deleted');
+                \XLite\Core\TopMessage::addInfo('The text label has been deleted');
             }
         }
 
         if (!isset($label)) {
-            XLite_Core_TopMessage::addError(
+            \XLite\Core\TopMessage::addError(
                 'The text label has not been deleted: it has been either not found or not specified'
             );
         }
@@ -349,39 +351,39 @@ class XLite_Controller_Admin_Languages extends XLite_Controller_Admin_AAdmin
      */
     protected function doActionAdd()
     {
-        $name = XLite_Core_Request::getInstance()->name;
-        $label = XLite_Core_Request::getInstance()->label;
-        $codeDefault = XLite_Core_Database::getRepo('XLite_Model_Language')->getDefaultLanguage()->code;
-        $codeInterface = XLite_Core_Config::getInstance()->General->defaultLanguage->code;
+        $name = \XLite\Core\Request::getInstance()->name;
+        $label = \XLite\Core\Request::getInstance()->label;
+        $codeDefault = \XLite\Core\Database::getRepo('XLite\Model\Language')->getDefaultLanguage()->code;
+        $codeInterface = \XLite\Core\Config::getInstance()->General->defaultLanguage->code;
 
         if (!$name) {
 
-            XLite_Core_TopMessage::addError(
+            \XLite\Core\TopMessage::addError(
                 'The text label has not been added, because its name has not been specified'
             );
 
-        } elseif (XLite_Core_Database::getRepo('XLite_Model_LanguageLabel')->findOneByName($name)) {
+        } elseif (\XLite\Core\Database::getRepo('XLite\Model\LanguageLabel')->findOneByName($name)) {
 
-            XLite_Core_TopMessage::addError('The text label has not been added, because such a text label already exists');
+            \XLite\Core\TopMessage::addError('The text label has not been added, because such a text label already exists');
 
         } elseif (!isset($label[$codeDefault]) || !$label[$codeDefault]) {
 
-            XLite_Core_TopMessage::addError(
+            \XLite\Core\TopMessage::addError(
                 'The text label has not been added, because its translation for the default application language has not been specified'
             );
 
         } elseif (!isset($label[$codeInterface]) || !$label[$codeInterface]) {
 
-            XLite_Core_TopMessage::addError(
+            \XLite\Core\TopMessage::addError(
                 'The text label has not been added, because its translation for the default interface language has not been specified'
             );
 
         } else {
 
-            $lbl = new XLite_Model_LanguageLabel();
+            $lbl = new \XLite\Model\LanguageLabel();
             $lbl->name = $name;
-            XLite_Core_Database::getEM()->persist($lbl);
-            XLite_Core_Database::getEM()->flush();
+            \XLite\Core\Database::getEM()->persist($lbl);
+            \XLite\Core\Database::getEM()->flush();
         
             foreach ($label as $code => $l) {
                 if ($l) {
@@ -389,12 +391,12 @@ class XLite_Controller_Admin_Languages extends XLite_Controller_Admin_AAdmin
                 }
             }
 
-            XLite_Core_Database::getEM()->persist($lbl);
-            XLite_Core_Database::getEM()->flush();
+            \XLite\Core\Database::getEM()->persist($lbl);
+            \XLite\Core\Database::getEM()->flush();
 
-            XLite_Core_Translation::getInstance()->reset();
+            \XLite\Core\Translation::getInstance()->reset();
 
-            XLite_Core_TopMessage::addInfo('The text label has been added successfully');
+            \XLite\Core\TopMessage::addInfo('The text label has been added successfully');
         }
     }
 
@@ -408,25 +410,25 @@ class XLite_Controller_Admin_Languages extends XLite_Controller_Admin_AAdmin
      */
     protected function doActionEdit()
     {
-        $label = XLite_Core_Request::getInstance()->label;
-        $labelId = intval(XLite_Core_Request::getInstance()->label_id);
-        $codeDefault = XLite_Core_Database::getRepo('XLite_Model_Language')->getDefaultLanguage()->code;
-        $codeInterface = XLite_Core_Config::getInstance()->General->defaultLanguage->code;
-        $lbl = XLite_Core_Database::getRepo('XLite_Model_LanguageLabel')->find($labelId);
+        $label = \XLite\Core\Request::getInstance()->label;
+        $labelId = intval(\XLite\Core\Request::getInstance()->label_id);
+        $codeDefault = \XLite\Core\Database::getRepo('XLite\Model\Language')->getDefaultLanguage()->code;
+        $codeInterface = \XLite\Core\Config::getInstance()->General->defaultLanguage->code;
+        $lbl = \XLite\Core\Database::getRepo('XLite\Model\LanguageLabel')->find($labelId);
 
         if (!$lbl) {
 
-            XLite_Core_TopMessage::addError('The edited language has not been found');
+            \XLite\Core\TopMessage::addError('The edited language has not been found');
 
         } elseif (!isset($label[$codeDefault]) || !$label[$codeDefault]) {
 
-            XLite_Core_TopMessage::addError(
+            \XLite\Core\TopMessage::addError(
                 'The text label has not been modified, because its translation for the default application language has not been specified'
             );
 
         } elseif (!isset($label[$codeInterface]) || !$label[$codeInterface]) {
 
-            XLite_Core_TopMessage::addError(
+            \XLite\Core\TopMessage::addError(
                 'The text label has not been modified, because its translation for the default interface language has not been specified'
             );
 
@@ -435,18 +437,18 @@ class XLite_Controller_Admin_Languages extends XLite_Controller_Admin_AAdmin
             foreach ($label as $code => $l) {
                 if ($l) {
                     $lbl->getTranslation($code)->label = $l;
-                    XLite_Core_Database::getEM()->persist($lbl->getTranslation($code));
+                    \XLite\Core\Database::getEM()->persist($lbl->getTranslation($code));
 
                 } elseif ($lbl->hasTranslation($code)) {
-                    XLite_Core_Database::getEM()->remove($lbl->getTranslation($code));
+                    \XLite\Core\Database::getEM()->remove($lbl->getTranslation($code));
                 }
             }
 
-            XLite_Core_Database::getEM()->flush();
+            \XLite\Core\Database::getEM()->flush();
 
-            XLite_Core_Translation::getInstance()->reset();
+            \XLite\Core\Translation::getInstance()->reset();
 
-            XLite_Core_TopMessage::addInfo('The text label has been modified successfully');
+            \XLite\Core\TopMessage::addInfo('The text label has been modified successfully');
         }
     }
 
@@ -460,19 +462,19 @@ class XLite_Controller_Admin_Languages extends XLite_Controller_Admin_AAdmin
      */
     protected function doActionUpdateLanguage()
     {
-        $lngId = intval(XLite_Core_Request::getInstance()->lng_id);
-        $lng = XLite_Core_Database::getRepo('XLite_Model_Language')->find($lngId);
-        $names = XLite_Core_Request::getInstance()->name;
+        $lngId = intval(\XLite\Core\Request::getInstance()->lng_id);
+        $lng = \XLite\Core\Database::getRepo('XLite\Model\Language')->find($lngId);
+        $names = \XLite\Core\Request::getInstance()->name;
 
-        $codeDefault = XLite_Core_Database::getRepo('XLite_Model_Language')->getDefaultLanguage()->code;
+        $codeDefault = \XLite\Core\Database::getRepo('XLite\Model\Language')->getDefaultLanguage()->code;
 
         if (!$lng) {
 
-            XLite_Core_TopMessage::addError('The edited language has not been found');
+            \XLite\Core\TopMessage::addError('The edited language has not been found');
 
         } elseif (!is_array($names) || !isset($names[$codeDefault]) || !$names[$codeDefault]) {
 
-            XLite_Core_TopMessage::addError(
+            \XLite\Core\TopMessage::addError(
                 'The name of the edited language in the default application language has not been specified'
             );
 
@@ -483,19 +485,19 @@ class XLite_Controller_Admin_Languages extends XLite_Controller_Admin_AAdmin
                     $lng->getTranslation($code)->name = $name;
 
                 } elseif ($lng->hasTranslation($code)) {
-                    XLite_Core_Database::getEM()->remove($lng->getTranslation($code));
+                    \XLite\Core\Database::getEM()->remove($lng->getTranslation($code));
                 }
             }
 
-            XLite_Core_Database::getEM()->persist($lng);
-            XLite_Core_Database::getEM()->flush();
+            \XLite\Core\Database::getEM()->persist($lng);
+            \XLite\Core\Database::getEM()->flush();
 
             if (
                 $lng->enabled
-                && XLite_Core_Request::getInstance()->default
-                && XLite_Core_Config::getInstance()->General->defaultLanguage->code != $lng->code
+                && \XLite\Core\Request::getInstance()->default
+                && \XLite\Core\Config::getInstance()->General->defaultLanguage->code != $lng->code
             ) {
-                XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+                \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
                     array(
                         'name'     => 'default_language',
                         'category' => 'General',
@@ -504,7 +506,7 @@ class XLite_Controller_Admin_Languages extends XLite_Controller_Admin_AAdmin
                 );
             }
 
-            XLite_Core_TopMessage::addInfo('The language data has been saved');
+            \XLite\Core\TopMessage::addInfo('The language data has been saved');
         }
     }
 
@@ -521,7 +523,7 @@ class XLite_Controller_Admin_Languages extends XLite_Controller_Admin_AAdmin
      */
     protected function saveLabels(array $values, $code)
     {
-        $labels = XLite_Core_Database::getRepo('XLite_Model_LanguageLabel')->findByIds(
+        $labels = \XLite\Core\Database::getRepo('XLite\Model\LanguageLabel')->findByIds(
             array_keys($values)
         );
 
@@ -531,12 +533,12 @@ class XLite_Controller_Admin_Languages extends XLite_Controller_Admin_AAdmin
                     $label->getTranslation($code)->label = $values[$label->label_id];
 
                 } elseif ($label->hasTranslation($code)) {
-                    XLite_Core_Database::getEM()->remove($label->getTranslation($code));
+                    \XLite\Core\Database::getEM()->remove($label->getTranslation($code));
                 }
             }
         }
 
-        XLite_Core_Database::getEM()->flush();
+        \XLite\Core\Database::getEM()->flush();
     }
 
     /**
@@ -548,13 +550,13 @@ class XLite_Controller_Admin_Languages extends XLite_Controller_Admin_AAdmin
      */
     protected function getDefaultReturnURL()
     {
-        if (XLite_Core_Request::getInstance()->action) {
+        if (\XLite\Core\Request::getInstance()->action) {
             $url = $this->buildUrl(
                 'languages',
                 '',
                 array(
-                    'language' => XLite_Core_Request::getInstance()->language,
-                    'page'     => max(1, intval(XLite_Core_Request::getInstance()->page)),
+                    'language' => \XLite\Core\Request::getInstance()->language,
+                    'page'     => max(1, intval(\XLite\Core\Request::getInstance()->page)),
                 )
             );
 

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model;
+
 /**
  * Something customer can put into its cart
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_OrderItem extends XLite_Model_AModel
+class OrderItem extends \XLite\Model\AModel
 {
     /**
      * Check for purchase limits 
@@ -56,7 +58,7 @@ class XLite_Model_OrderItem extends XLite_Model_AModel
         $value = min($value, $max);
 
         if ($origValue != $value) {
-            XLite_Core_TopMessage::getInstance()->add(
+            \XLite\Core\TopMessage::getInstance()->add(
                 'Amount of the "' . $product->get('name') . '" product '
                 . 'has been corrected: it must be between ' . $min . ' and ' . $max
             );
@@ -86,15 +88,15 @@ class XLite_Model_OrderItem extends XLite_Model_AModel
     /**
      * Return reference to the associated order object
      * 
-     * @return XLite_Model_Order
+     * @return \XLite\Model\Order
      * @access public
      * @since  3.0.0
      */
     public function getOrder()
     {
-        return XLite_Model_CachingFactory::getObject(
+        return \XLite\Model\CachingFactory::getObject(
             __METHOD__ . $this->_uniqueKey,
-            'XLite_Model_Order',
+            '\XLite\Model\Order',
             array($this->get('order_id'))
         );
     }
@@ -102,13 +104,13 @@ class XLite_Model_OrderItem extends XLite_Model_AModel
     /**
      * A reference to the product object 
      * 
-     * @return XLite_Model_Product
+     * @return \XLite\Model\Product
      * @access public
      * @since  3.0.0
      */
     public function getProduct()
     {
-        return XLite_Model_CachingFactory::getObject(__METHOD__ . $this->_uniqueKey, 'XLite_Model_Product', array($this->get('product_id')));
+        return \XLite\Model\CachingFactory::getObject(__METHOD__ . $this->_uniqueKey, '\XLite\Model\Product', array($this->get('product_id')));
     }
 
     /**
@@ -205,7 +207,7 @@ class XLite_Model_OrderItem extends XLite_Model_AModel
         if ($result) {
             $key = $this->getKey();
             if ($key != $this->get('item_id')) {
-                $item = new XLite_Model_OrderItem();
+                $item = new \XLite\Model\OrderItem();
                 $sql = 'order_id = \'' . $this->get('order_id')
                     . ' \' AND item_id = \'' . addslashes($key) . '\'';
 
@@ -284,7 +286,7 @@ class XLite_Model_OrderItem extends XLite_Model_AModel
     function getRealProduct()
     {
         $this->realProduct = null;
-    	$product = new XLite_Model_Product();
+    	$product = new \XLite\Model\Product();
         $product->find("product_id='".$this->get('product_id')."'");
     	if ($product->get('product_id') == $this->get('product_id')) {
     		$this->realProduct = $product;
@@ -364,7 +366,7 @@ class XLite_Model_OrderItem extends XLite_Model_AModel
     /**
      * Get item thumbnail
      *
-     * @return XLite_Model_Image
+     * @return \XLite\Model\Image
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -442,7 +444,7 @@ class XLite_Model_OrderItem extends XLite_Model_AModel
      */
     public function getURL()
     {
-        return XLite_Core_Converter::getInstance()->buildURL(
+        return \XLite\Core\Converter::getInstance()->buildURL(
             'product',
             '',
             array(

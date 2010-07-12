@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Promotion\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Promotion_Controller_Admin_SpecialOffers extends XLite_Controller_Admin_AAdmin
+class SpecialOffers extends \XLite\Controller\Admin\AAdmin
 {
     public $specialOffers = null;
 
@@ -75,7 +77,7 @@ class XLite_Module_Promotion_Controller_Admin_SpecialOffers extends XLite_Contro
                 break;
         }
         if (is_null($this->specialOffers)) {
-            $sp = new XLite_Module_Promotion_Model_SpecialOffer();
+            $sp = new \XLite\Module\Promotion\Model\SpecialOffer();
             $sp->collectGarbage();
             $this->specialOffers = $sp->findAll("status <> 'Trash'", $s_order);
         }
@@ -92,7 +94,7 @@ class XLite_Module_Promotion_Controller_Admin_SpecialOffers extends XLite_Contro
     function action_update()
     {
         // set 'active' fields
-        $so = new XLite_Module_Promotion_Model_SpecialOffer();
+        $so = new \XLite\Module\Promotion\Model\SpecialOffer();
         foreach ($so->findAll() as $specialOffer) {
             if (isset($_POST['active']) && $_POST['active'][$specialOffer->get('offer_id')]) {
                 $specialOffer->set('enabled', 1);
@@ -107,7 +109,7 @@ class XLite_Module_Promotion_Controller_Admin_SpecialOffers extends XLite_Contro
     {
         if (!empty($this->offer_ids)) {
             foreach ($this->offer_ids as $key => $value) {
-               $so = new XLite_Module_Promotion_Model_SpecialOffer($key);
+               $so = new \XLite\Module\Promotion\Model\SpecialOffer($key);
                $so->delete();
             }
         }
@@ -117,7 +119,7 @@ class XLite_Module_Promotion_Controller_Admin_SpecialOffers extends XLite_Contro
     {
         if (!empty($this->offer_ids)) {
             foreach ($this->offer_ids as $key => $value) {
-               	$so = new XLite_Module_Promotion_Model_SpecialOffer($key);
+               	$so = new \XLite\Module\Promotion\Model\SpecialOffer($key);
                 if ( function_exists('func_is_clone_deprecated') && func_is_clone_deprecated() ) {
                    	$clone = $so->cloneObject();
                 } else {

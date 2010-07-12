@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View;
+
 /**
  * Side-bar box
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class XLite_View_SideBarBox extends XLite_View_Container
+abstract class SideBarBox extends \XLite\View\Container
 {
     /**
      * Return default template

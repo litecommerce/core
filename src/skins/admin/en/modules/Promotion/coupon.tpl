@@ -82,7 +82,7 @@ function TypeChanged(type)
 </tr>
 <tr>
     <td>Expires</td>
-    <td><widget class="XLite_View_Date" field="expire" value="{dc.expire}"></td>
+    <td><widget class="\XLite\View\Date" field="expire" value="{dc.expire}"></td>
 </tr>
 <tr>
     <td valign="top">Apply to</td>
@@ -94,11 +94,11 @@ function TypeChanged(type)
     </tr>
     <tr>
         <td valign="top"><input type="radio" name="applyTo" value="product" checked="{dc.applyTo=#product#}"></td>
-        <td>one product<br><widget class="XLite_View_ProductSelect" formName="coupon_form" product="{dc.product}"></td>
+        <td>one product<br><widget class="\XLite\View\ProductSelect" formName="coupon_form" product="{dc.product}"></td>
     </tr>
     <tr>
         <td valign="top"><input type="radio" name="applyTo" value="category" checked="{dc.applyTo=#category#}"></td>
-        <td>one category <br><widget class="XLite_View_CategorySelect" fieldName="category_id" selectedCategoryId="{dc.category_id}"></td>
+        <td>one category <br><widget class="\XLite\View\CategorySelect" fieldName="category_id" selectedCategoryId="{dc.category_id}"></td>
     </tr>
     </table>
     </td>

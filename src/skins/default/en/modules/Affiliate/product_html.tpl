@@ -91,7 +91,7 @@
     <tr><td>&nbsp;</td></tr>
     <tr>
         <td>Banner source:<br>
-        <textarea rows=12 cols=50><widget class="XLite_Module_Affiliate_View_Banner" name=banner width="{inc(width,2)}" height="{inc(height,2)}" src="{getShopUrl(#cart.php#)}?target=product_banner&mode=advanced&product_id={product_id}&link_target={link_target}&image={image}&product_name={product_name}&description={description}&message={message}&border={border}&width={width}&height={height}&background_color={background_color}&text_color={text_color}&link_color={link_color}&partner={auth.profile.profile_id}"></textarea>
+        <textarea rows=12 cols=50><widget class="\XLite\Module\Affiliate\View\Banner" name=banner width="{inc(width,2)}" height="{inc(height,2)}" src="{getShopUrl(#cart.php#)}?target=product_banner&mode=advanced&product_id={product_id}&link_target={link_target}&image={image}&product_name={product_name}&description={description}&message={message}&border={border}&width={width}&height={height}&background_color={background_color}&text_color={text_color}&link_color={link_color}&partner={auth.profile.profile_id}"></textarea>
         </td>
     </tr>
     </table>

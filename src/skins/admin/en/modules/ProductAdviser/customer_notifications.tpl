@@ -378,12 +378,12 @@ function SaveFilters()
             	<tr>
                 	<td nowrap>Date from:</td>
                 	<td>&nbsp;</td>
-                	<td nowrap><widget class="XLite_View_Date" field="startDate" value="{getDateValue(#start#)}" id_prefix="search_"></td>
+                	<td nowrap><widget class="\XLite\View\Date" field="startDate" value="{getDateValue(#start#)}" id_prefix="search_"></td>
             	</tr>
             	<tr>
                 	<td nowrap>Date through:</td>
                 	<td>&nbsp;</td>
-                	<td nowrap><widget class="XLite_View_Date" field="endDate" value="{getDateValue(#end#)}" id_prefix="search_"></td>
+                	<td nowrap><widget class="\XLite\View\Date" field="endDate" value="{getDateValue(#end#)}" id_prefix="search_"></td>
             	</tr>
             	</tbody>
             	</table>
@@ -421,7 +421,7 @@ function SaveFilters()
 
 <br>
 
-<widget class="XLite_View_Pager" data="{notifications}" name="pager" itemsPerPage="{xlite.config.ProductAdviser.number_notifications}">
+<widget class="\XLite\View\Pager" data="{notifications}" name="pager" itemsPerPage="{xlite.config.ProductAdviser.number_notifications}">
 
 <table IF="namedWidgets.pager.pageData" border=0 cellpadding=1 cellspacing=3>
 

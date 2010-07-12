@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\GoogleCheckout\View;
+
 /**
  * Google button
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_GoogleCheckout_View_ButtonAltCheckout extends XLite_View_Button
+class ButtonAltCheckout extends \XLite\View\Button
 {
 
     /**
@@ -55,7 +57,7 @@ class XLite_Module_GoogleCheckout_View_ButtonAltCheckout extends XLite_View_Butt
     /**
      * Service object
      * 
-     * @var    XLite_Module_GoogleCheckout_View_GoogleAltCheckout
+     * @var    \XLite\Module\GoogleCheckout\View\GoogleAltCheckout
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
@@ -110,7 +112,7 @@ class XLite_Module_GoogleCheckout_View_ButtonAltCheckout extends XLite_View_Butt
     /**
      * Get service object 
      * 
-     * @return XLite_Module_GoogleCheckout_View_GoogleAltCheckout
+     * @return \XLite\Module\GoogleCheckout\View\GoogleAltCheckout
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -118,7 +120,7 @@ class XLite_Module_GoogleCheckout_View_ButtonAltCheckout extends XLite_View_Butt
     public function getGacObject()
     {
         if (is_null($this->gacObject)) {
-            $this->gacObject = new XLite_Module_GoogleCheckout_View_GoogleAltCheckout();
+            $this->gacObject = new \XLite\Module\GoogleCheckout\View\GoogleAltCheckout();
             $this->gacObject->initGoogleData();
         }
 
@@ -151,10 +153,10 @@ class XLite_Module_GoogleCheckout_View_ButtonAltCheckout extends XLite_View_Butt
     {
         parent::defineWidgetParams();
         $this->widgetParams += array(
-            self::PARAM_SIZE => new XLite_Model_WidgetParam_String(
+            self::PARAM_SIZE => new \XLite\Model\WidgetParam\String(
                 'Button size', 'medium', false
             ),
-            self::PARAM_BACKGROUND => new XLite_Model_WidgetParam_String(
+            self::PARAM_BACKGROUND => new \XLite\Model\WidgetParam\String(
                 'Background (white/transparent)', 'white', false
             ),
         );

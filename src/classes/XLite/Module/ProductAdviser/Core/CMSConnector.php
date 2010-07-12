@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\ProductAdviser\Core;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class XLite_Module_ProductAdviser_Core_CMSConnector extends XLite_Core_CMSConnector implements XLite_Base_IDecorator
+abstract class CMSConnector extends \XLite\Core\CMSConnector implements \XLite\Base\IDecorator
 {
     /**
      * Constructor
@@ -47,10 +49,10 @@ abstract class XLite_Module_ProductAdviser_Core_CMSConnector extends XLite_Core_
     {
         parent::__construct();
 
-        $this->widgetsList['XLite_Module_ProductAdviser_View_NewArrivals']     = 'New arrivals';
-        $this->widgetsList['XLite_Module_ProductAdviser_View_RecentlyViewed']  = 'Recently viewed products';
-        $this->widgetsList['XLite_Module_ProductAdviser_View_RelatedProducts'] = 'Related products';
-        $this->widgetsList['XLite_Module_ProductAdviser_View_ProductAlsoBuy']  = 'People who buy this product also buy';
+        $this->widgetsList['\XLite\Module\ProductAdviser\View\NewArrivals']     = 'New arrivals';
+        $this->widgetsList['\XLite\Module\ProductAdviser\View\RecentlyViewed']  = 'Recently viewed products';
+        $this->widgetsList['\XLite\Module\ProductAdviser\View\RelatedProducts'] = 'Related products';
+        $this->widgetsList['\XLite\Module\ProductAdviser\View\ProductAlsoBuy']  = 'People who buy this product also buy';
 
         $this->pageTypes['recently_viewed'] = 'Recently viewed products';
         $this->pageTypes['new_arrivals']    = 'New arrivals';

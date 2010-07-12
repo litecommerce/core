@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View\OrderList;
+
 /**
  * Abstract order list
  * 
@@ -33,12 +35,12 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class XLite_View_OrderList_AOrderList extends XLite_View_Dialog
+abstract class AOrderList extends \XLite\View\Dialog
 {
     /**
      * Orders list (cache)
      * 
-     * @var    array of XLite_Model_Order
+     * @var    array of \XLite\Model\Order
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
@@ -116,8 +118,8 @@ abstract class XLite_View_OrderList_AOrderList extends XLite_View_Dialog
     protected function getAJAXRequestParams()
     {
         $params = array(
-            'widgetTarget' => XLite_Core_Request::getInstance()->target,
-            'widgetAction' => XLite_Core_Request::getInstance()->action,
+            'widgetTarget' => \XLite\Core\Request::getInstance()->target,
+            'widgetAction' => \XLite\Core\Request::getInstance()->action,
             'widgetClass'  => $this->widgetClass,
         );
 
@@ -156,7 +158,7 @@ abstract class XLite_View_OrderList_AOrderList extends XLite_View_Dialog
     /**
      * Get orders 
      * 
-     * @return array of XLite_Model_Order
+     * @return array of \XLite\Model\Order
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

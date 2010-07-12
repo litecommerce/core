@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\AdvancedSecurity\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_AdvancedSecurity_Controller_Admin_AdvancedSecurity extends XLite_Controller_Admin_AAdmin
+class AdvancedSecurity extends \XLite\Controller\Admin\AAdmin
 {
     public $params = array('target', "mode");
     public $sample = "The quick brown fox jumps over the lazy dog.";
@@ -54,7 +56,7 @@ class XLite_Module_AdvancedSecurity_Controller_Admin_AdvancedSecurity extends XL
             return;
         }
         $this->session->set('masterPassword', null); // to avoid update conflict
-        $order = new XLite_Model_Order();
+        $order = new \XLite\Model\Order();
         $orders = $order->findAll("payment_method='CreditCard'");
         $this->startDump();
         for ($i = 0; $i < count($orders); $i++) {
@@ -107,7 +109,7 @@ class XLite_Module_AdvancedSecurity_Controller_Admin_AdvancedSecurity extends XL
 
     function getSecurityOptions() 
     {
-        return XLite_Core_Database::getRepo('XLite_Model_Config')->getByCategory('AdvancedSecurity', true, true);
+        return \XLite\Core\Database::getRepo('XLite\Model\Config')->getByCategory('AdvancedSecurity', true, true);
     }
     
     function action_options() 
@@ -138,7 +140,7 @@ class XLite_Module_AdvancedSecurity_Controller_Admin_AdvancedSecurity extends XL
                 }
             }
 
-            XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+            \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
                 array(
                     'category' => 'AdvancedSecurity',
                     'name'     => $name,
@@ -150,20 +152,20 @@ class XLite_Module_AdvancedSecurity_Controller_Admin_AdvancedSecurity extends XL
 
     function action_delete_keys()
     {
-        $gpg = new XLite_Module_AdvancedSecurity_Model_GPG();
+        $gpg = new \XLite\Module\AdvancedSecurity\Model\GPG();
         $gpg->deleteKeys();
     }
     
     function action_upload_keys()
     {
-        $gpg = new XLite_Module_AdvancedSecurity_Model_GPG();
+        $gpg = new \XLite\Module\AdvancedSecurity\Model\GPG();
         $this->set('valid', $gpg->uploadKeys());
     }
 
     function getGPG() 
     {
         if (is_null($this->gpg)) {
-            $this->gpg = new XLite_Module_AdvancedSecurity_Model_GPG();
+            $this->gpg = new \XLite\Module\AdvancedSecurity\Model\GPG();
         }
         return $this->gpg;
     }

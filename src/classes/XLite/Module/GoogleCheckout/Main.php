@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\GoogleCheckout;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_GoogleCheckout_Main extends XLite_Module_AModule
+class Main extends \XLite\Module\AModule
 {
     /**
      * Module type
@@ -109,7 +111,7 @@ class XLite_Module_GoogleCheckout_Main extends XLite_Module_AModule
 
         $this->registerPaymentMethod('google_checkout');
 
-        $payment_method = XLite_Model_PaymentMethod::factory('google_checkout');
+        $payment_method = \XLite\Model\PaymentMethod::factory('google_checkout');
         $params = $payment_method->get('params');
 
         if (!empty($params['disable_customer_notif'])) {

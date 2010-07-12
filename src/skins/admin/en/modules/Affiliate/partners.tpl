@@ -42,7 +42,7 @@
             <td>    
                 <select name="plan_id">
                     <option value="" selected="{plan_id=##}">All</option>
-                    <option FOREACH="xlite.factory.XLite_Module_Affiliate_Model_AffiliatePlan.findAll(),ap" value="{ap.plan_id}" selected="{ap.plan_id=plan_id}">{ap.title:h}</option>
+                    <option FOREACH="xlite.factory.\XLite\Module\Affiliate\Model\AffiliatePlan.findAll(),ap" value="{ap.plan_id}" selected="{ap.plan_id=plan_id}">{ap.title:h}</option>
                 </select>
                 <br><input type=radio name=plan value=plan checked="plan=#plan#"> Granted plan
                 <br><input type=radio name=plan value=pending_plan checked="plan=#pending_plan#"> Sign-up plan
@@ -50,11 +50,11 @@
         </tr>
         <tr>
             <td>Sign-up date from:</td>
-            <td><widget class="XLite_View_Date" field="startDate"></td>
+            <td><widget class="\XLite\View\Date" field="startDate"></td>
         </tr>    
         <tr>
             <td>Sign-up date through:</td>
-            <td><widget class="XLite_View_Date" field="endDate"></td>
+            <td><widget class="\XLite\View\Date" field="endDate"></td>
         </tr>    
         <tr>
             <td>&nbsp;</td>
@@ -75,7 +75,7 @@
 
 <tr IF="search&partners">
     <td colspan=3>
-        <widget class="XLite_View_Pager" data="{partners}" name="pager" itemsPerPage="{itemsPerPage}">
+        <widget class="\XLite\View\Pager" data="{partners}" name="pager" itemsPerPage="{itemsPerPage}">
     </td>
     <td colspan=2 align=right>
         Items on page:&nbsp;
@@ -109,7 +109,7 @@
     <td>{time_format(partner.partner_signup)}</td>
     <td>
         &nbsp;
-        {foreach:xlite.factory.XLite_Module_Affiliate_Model_AffiliatePlan.findAll(),ap}
+        {foreach:xlite.factory.\XLite\Module\Affiliate\Model\AffiliatePlan.findAll(),ap}
             {if:ap.plan_id=partner.plan}
                 {ap.title:h}
             {end:}
@@ -131,7 +131,7 @@
             <select name=new_plan>
                 <option value="">- do not change -</option>
                 <option value="0">- not assigned -</option>
-                <option FOREACH="xlite.factory.XLite_Module_Affiliate_Model_AffiliatePlan.findAll(),ap" value="{ap.plan_id}">{ap.title:h}</option>
+                <option FOREACH="xlite.factory.\XLite\Module\Affiliate\Model\AffiliatePlan.findAll(),ap" value="{ap.plan_id}">{ap.title:h}</option>
             </select>
         </td>
     </tr>

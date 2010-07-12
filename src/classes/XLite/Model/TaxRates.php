@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model;
+
 /**
  * Tax rates
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_TaxRates extends XLite_Base
+class TaxRates extends \XLite\Base
 {
     const TAX_TOLOWERCASE = 1;
 
@@ -476,7 +478,7 @@ array("condition" => "state=District of Columbia", "action" => array(
                     $optionType = 'serialized';
                 }
 
-                XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+                \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
                     array(
                         'category' => 'Taxes',
                         'name'     => $name,
@@ -497,7 +499,7 @@ array("condition" => "state=District of Columbia", "action" => array(
             $this->set('profile', $profile);
         } else {
             if ($this->config->General->def_calc_shippings_taxes) {
-                $default_country = XLite_Core_Database::getEM()->find('XLite_Model_Country', $this->config->General->default_country);
+                $default_country = \XLite\Core\Database::getEM()->find('XLite\Model\Country', $this->config->General->default_country);
                 $this->_conditionValues['country'] = $default_country->code;
                 /* TODO - rework
                 if ($default_country->eu_memeber) {
@@ -533,27 +535,27 @@ array("condition" => "state=District of Columbia", "action" => array(
         }
 
         /* TODO - rework
-        $c = XLite_Core_Database::getEM()->find('XLite_Model_Country', $this->_conditionValues['country']);
+        $c = \XLite\Core\Database::getEM()->find('XLite\Model\Country', $this->_conditionValues['country']);
         if ($c->eu_memeber) {
             $this->_conditionValues['country'] .= ",EU country";
         }
         */
 
-        $m = XLite_Core_Database::getRepo('XLite_Model_Membership')->find($profile->get('membership'));
+        $m = \XLite\Core\Database::getRepo('XLite\Model\Membership')->find($profile->get('membership'));
         $this->_conditionValues['membership'] = $m ? $m->membership_id : 0;
     }
 
     /**
      * Set order item 
      * 
-     * @param XLite_Model_OrderItem $item Order item
+     * @param \XLite\Model\OrderItem $item Order item
      *  
      * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function setOrderItem(XLite_Model_OrderItem $item)
+    public function setOrderItem(\XLite\Model\OrderItem $item)
     {
         if (!is_null($item->getProduct())) {
             $this->_conditionValues['product class'] = $item->getProduct()->get('tax_class');
@@ -993,7 +995,7 @@ array("condition" => "state=District of Columbia", "action" => array(
             }
         }
 
-        XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+        \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
             array(
                 'category' => 'Taxes',
                 'name'     => 'schemas',
@@ -1007,7 +1009,7 @@ array("condition" => "state=District of Columbia", "action" => array(
     function formatCurrency($price)
     {
         if (!isset($this->_BaseObj)) {
-            $this->_BaseObj = new XLite_Model_AModel();
+            $this->_BaseObj = new \XLite\Model\AModel();
         }
 
         return $this->_BaseObj->formatCurrency($price);

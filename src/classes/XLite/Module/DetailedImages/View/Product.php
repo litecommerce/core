@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\DetailedImages\View;
+
 /**
  * Product details widget
  *
@@ -33,8 +35,8 @@
  * @see     ____class_see____
  * @since   3.0
  */
-class XLite_Module_DetailedImages_View_Product extends XLite_View_Product
-implements XLite_Base_IDecorator
+class Product extends \XLite\View\Product
+implements \XLite\Base\IDecorator
 {
     /**
      * Define view list
@@ -53,7 +55,7 @@ implements XLite_Base_IDecorator
 		if ('productDetails.image' == $list && $this->getProduct()->getHasZoom()) {
 			foreach ($data as $k => $v) {
                 if (
-                    $v instanceof XLite_View_Product
+                    $v instanceof \XLite\View\Product
                     && $v->template == 'product_details/parts/image.box.tpl'
                 ) {
 					unset($data[$k]);

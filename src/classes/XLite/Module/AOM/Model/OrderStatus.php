@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\AOM\Model;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_AOM_Model_OrderStatus extends XLite_Model_AModel
+class OrderStatus extends \XLite\Model\AModel
 {
     public $fields = array(
         'status_id'	=> '',
@@ -54,7 +56,7 @@ class XLite_Module_AOM_Model_OrderStatus extends XLite_Model_AModel
         if ($this->get('parent') == '')	{
             return null;
         } else {
-            $parent = new XLite_Module_AOM_Model_OrderStatus();
+            $parent = new \XLite\Module\AOM\Model\OrderStatus();
             $parent->find("status = '". $this->get('parent') ."'");
             return $parent;
         }

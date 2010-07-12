@@ -134,7 +134,7 @@ function Shipping_aupost_parseResponse($_this, $response, $destination)
     		$shipping = $_this->getService('aupost', $_rate['name'], $destination);
             $shipping->shipping_time = $_rate['shipping_time'];
             $id = $shipping->get('shipping_id');
-            $rates[$id] = new XLite_Model_ShippingRate();
+            $rates[$id] = new \XLite\Model\ShippingRate();
             $rates[$id]->shipping = $shipping;
             $rates[$id]->rate = (double) ($_rate['rate'] / $currency_rate);
     	}

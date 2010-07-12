@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Controller\Admin;
+
 /**
  * Modules
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Controller_Admin_Modules extends XLite_Controller_Admin_AAdmin
+class Modules extends \XLite\Controller\Admin\AAdmin
 {
     protected $modules = null;
 
@@ -43,8 +45,8 @@ class XLite_Controller_Admin_Modules extends XLite_Controller_Admin_AAdmin
     {
         if (is_null($this->modules) || $type !== $this->currentModuleType) {
             $this->currentModuleType = $type;
-            XLite_Model_ModulesManager::getInstance()->updateModulesList();
-            $this->modules = XLite_Model_ModulesManager::getInstance()->getModules($type);
+            \XLite\Model\ModulesManager::getInstance()->updateModulesList();
+            $this->modules = \XLite\Model\ModulesManager::getInstance()->getModules($type);
         }
 
         return $this->modules;
@@ -60,12 +62,12 @@ class XLite_Controller_Admin_Modules extends XLite_Controller_Admin_AAdmin
      */
     protected function doActionUpdate()
     {
-        $activeModules = isset(XLite_Core_Request::getInstance()->active_modules) ? XLite_Core_Request::getInstance()->active_modules : array();
-        $moduleType = isset(XLite_Core_Request::getInstance()->module_type) ? XLite_Core_Request::getInstance()->module_type : null;
+        $activeModules = isset(\XLite\Core\Request::getInstance()->active_modules) ? \XLite\Core\Request::getInstance()->active_modules : array();
+        $moduleType = isset(\XLite\Core\Request::getInstance()->module_type) ? \XLite\Core\Request::getInstance()->module_type : null;
 
         $this->set('returnUrl', $this->buildUrl('modules'));
 
-        if (!XLite_Model_ModulesManager::getInstance()->updateModules($activeModules, $moduleType)) {
+        if (!\XLite\Model\ModulesManager::getInstance()->updateModules($activeModules, $moduleType)) {
             $this->valid = false;
             $this->hidePageHeader();
         }

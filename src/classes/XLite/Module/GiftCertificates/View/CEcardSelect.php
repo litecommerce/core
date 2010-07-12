@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\GiftCertificates\View;
+
 /**
  * Select e-card (customer)
  * 
@@ -33,14 +35,14 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_GiftCertificates_View_CEcardSelect extends XLite_View_AView
+class CEcardSelect extends \XLite\View\AView
 {
     const PARAM_GCID  = 'gcid';
 
     /**
      * E-cards list
      * 
-     * @var    array of XLite_Module_GiftCertificates_Model_ECard
+     * @var    array of \XLite\Module\GiftCertificates\Model\ECard
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
@@ -59,14 +61,14 @@ class XLite_Module_GiftCertificates_View_CEcardSelect extends XLite_View_AView
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_GCID => new XLite_Model_WidgetParam_String('Gift certificate id', ''),
+            self::PARAM_GCID => new \XLite\Model\WidgetParam\String('Gift certificate id', ''),
         );
     }
 
     /**
      * Get e-cards list
      * 
-     * @return array of XLite_Module_GiftCertificates_Model_ECard
+     * @return array of \XLite\Module\GiftCertificates\Model\ECard
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -74,7 +76,7 @@ class XLite_Module_GiftCertificates_View_CEcardSelect extends XLite_View_AView
     public function getECards()
     {
         if (is_null($this->ecards)) {
-            $eCard = new XLite_Module_GiftCertificates_Model_ECard();
+            $eCard = new \XLite\Module\GiftCertificates\Model\ECard();
             $this->ecards = $eCard->findAll('enabled = 1');
         }
 
@@ -84,7 +86,7 @@ class XLite_Module_GiftCertificates_View_CEcardSelect extends XLite_View_AView
     /**
      * Get gift certificate 
      * 
-     * @return XLite_Module_GiftCertificates_Model_GiftCertificate
+     * @return \XLite\Module\GiftCertificates\Model\GiftCertificate
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -92,7 +94,7 @@ class XLite_Module_GiftCertificates_View_CEcardSelect extends XLite_View_AView
     public function getGC()
     {
         if (is_null($this->gc)) {
-            $this->gc = new XLite_Module_GiftCertificates_Model_GiftCertificate(
+            $this->gc = new \XLite\Module\GiftCertificates\Model\GiftCertificate(
                 $this->getParam(self::PARAM_GCID)
             );
         }
@@ -112,7 +114,7 @@ class XLite_Module_GiftCertificates_View_CEcardSelect extends XLite_View_AView
         if ($this->xlite->GiftCertificates_wysiwyg_work) {
             $result = 'modules/GiftCertificates/ecards.tpl';
 
-        } elseif (XLite::isAdminZone()) {
+        } elseif (\XLite::isAdminZone()) {
             $result = 'modules/GiftCertificates/ecard_select.tpl';
 
         } else {

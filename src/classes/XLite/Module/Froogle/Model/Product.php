@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Froogle\Model;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Froogle_Model_Product extends XLite_Model_Product implements XLite_Base_IDecorator
+class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
 {
     function getFroogleHeadLine()
     {
@@ -168,7 +170,7 @@ class XLite_Module_Froogle_Model_Product extends XLite_Model_Product implements 
             default:
                 // category
                 if (!isset($this->_CategoriesFromProducts)) {
-                    $this->_CategoriesFromProducts = new XLite_Model_CategoriesFromProducts();
+                    $this->_CategoriesFromProducts = new \XLite\Model\CategoriesFromProducts();
                 }
                 $this->_CategoriesFromProducts->prodId = $this->get('product_id');
                 if ($this->_CategoriesFromProducts->find("")) {

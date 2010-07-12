@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\GiftCertificates\Controller\Customer;
+
 /**
  * Gift certificate e-cards
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_GiftCertificates_Controller_Customer_GiftCertificateEcards extends XLite_Controller_Customer_ACustomer
+class GiftCertificateEcards extends \XLite\Controller\Customer\ACustomer
 {
     /**
      * Controller parameters
@@ -48,7 +50,7 @@ class XLite_Module_GiftCertificates_Controller_Customer_GiftCertificateEcards ex
     /**
      * Gift certificate (cache)
      * 
-     * @var    XLite_Module_GiftCertificates_Model_GiftCertificate
+     * @var    \XLite\Module\GiftCertificates\Model\GiftCertificate
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
@@ -70,16 +72,16 @@ class XLite_Module_GiftCertificates_Controller_Customer_GiftCertificateEcards ex
     /**
      * Get current gift certificate
      * 
-     * @return XLite_Module_GiftCertificates_Model_GiftCertificate
+     * @return \XLite\Module\GiftCertificates\Model\GiftCertificate
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getGc()
     {
-        if (is_null(XLite_Core_Request::getInstance()->gc)) {
-            $this->gc = new XLite_Module_GiftCertificates_Model_GiftCertificate(
-                XLite_Core_Request::getInstance()->gcid
+        if (is_null(\XLite\Core\Request::getInstance()->gc)) {
+            $this->gc = new \XLite\Module\GiftCertificates\Model\GiftCertificate(
+                \XLite\Core\Request::getInstance()->gcid
             );
         }
 
@@ -96,7 +98,7 @@ class XLite_Module_GiftCertificates_Controller_Customer_GiftCertificateEcards ex
      */
     protected function doActionUpdate()
     {
-        $this->getGc()->set('ecard_id', XLite_Core_Request::getInstance()->ecard_id);
+        $this->getGc()->set('ecard_id', \XLite\Core\Request::getInstance()->ecard_id);
         $this->getGc()->update();
     }
 
@@ -109,7 +111,7 @@ class XLite_Module_GiftCertificates_Controller_Customer_GiftCertificateEcards ex
      */
     public function getReturnUrl()
     {
-        return $this->buildURL('gift_certificate', '', array('gcid' => XLite_Core_Request::getInstance()->gcid));
+        return $this->buildURL('gift_certificate', '', array('gcid' => \XLite\Core\Request::getInstance()->gcid));
     }
 
 }

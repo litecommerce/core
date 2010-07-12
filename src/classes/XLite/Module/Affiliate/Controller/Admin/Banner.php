@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Affiliate\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Affiliate_Controller_Admin_Banner extends XLite_Controller_Admin_AAdmin
+class Banner extends \XLite\Controller\Admin\AAdmin
 {
     public $params = array('target', 'banner_id', 'mode', 'type');
     
@@ -46,7 +48,7 @@ class XLite_Module_Affiliate_Controller_Admin_Banner extends XLite_Controller_Ad
 
     function action_save_banner()
     {
-        $banner = new XLite_Module_Affiliate_Model_Banner();
+        $banner = new \XLite\Module\Affiliate\Model\Banner();
         $banner->set('properties', $_POST);
         $banner->create();
         
@@ -70,7 +72,7 @@ class XLite_Module_Affiliate_Controller_Admin_Banner extends XLite_Controller_Ad
     function getBanner()
     {
         if (is_null($this->banner)) {
-            $this->banner = new XLite_Module_Affiliate_Model_Banner($this->get('banner_id'));
+            $this->banner = new \XLite\Module\Affiliate\Model\Banner($this->get('banner_id'));
         }
         return $this->banner;
     }

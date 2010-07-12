@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\GiftCertificates\Controller\Admin;
+
 /**
  * Select e-card
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_GiftCertificates_Controller_Admin_GiftCertificateSelectEcard extends XLite_Controller_Admin_AAdmin
+class GiftCertificateSelectEcard extends \XLite\Controller\Admin\AAdmin
 {
     /**
      * Controller parameters 
@@ -55,10 +57,10 @@ class XLite_Module_GiftCertificates_Controller_Admin_GiftCertificateSelectEcard 
      */
     protected function doActionUpdate()
     {
-        $gc = new XLite_Module_GiftCertificates_Model_GiftCertificate(
-            XLite_Core_Request::getInstance()->gcid
+        $gc = new \XLite\Module\GiftCertificates\Model\GiftCertificate(
+            \XLite\Core\Request::getInstance()->gcid
         );
-        $gc->set('ecard_id', XLite_Core_Request::getInstance()->ecard_id);
+        $gc->set('ecard_id', \XLite\Core\Request::getInstance()->ecard_id);
         $gc->update();
     }
 
@@ -75,7 +77,7 @@ class XLite_Module_GiftCertificates_Controller_Admin_GiftCertificateSelectEcard 
         return $this->buildUrl(
             'gift_certificate',
             '',
-            array('gcid' => XLite_Core_Request::getInstance()->gcid)
+            array('gcid' => \XLite\Core\Request::getInstance()->gcid)
         );
     }
 }

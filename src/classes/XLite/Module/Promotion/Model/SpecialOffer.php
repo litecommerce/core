@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Promotion\Model;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Promotion_Model_SpecialOffer extends XLite_Model_AModel
+class SpecialOffer extends \XLite\Model\AModel
 {
     public $fields = array(
         'offer_id' => 0,
@@ -75,7 +77,7 @@ class XLite_Module_Promotion_Model_SpecialOffer extends XLite_Model_AModel
     {
         if (is_null($this->product)) {
             if ($this->get('product_id')) {
-                $this->product = new XLite_Model_Product($this->get('product_id'));
+                $this->product = new \XLite\Model\Product($this->get('product_id'));
             } else {
                 $this->product = null;
             }
@@ -92,7 +94,7 @@ class XLite_Module_Promotion_Model_SpecialOffer extends XLite_Model_AModel
     {
         if (is_null($this->category)) {
             if ($this->get('category_id')) {
-                $this->category = new XLite_Model_Category($this->get('category_id'));
+                $this->category = new \XLite\Model\Category($this->get('category_id'));
             } else {
                 $this->category = null;
             }
@@ -104,7 +106,7 @@ class XLite_Module_Promotion_Model_SpecialOffer extends XLite_Model_AModel
     {
         if (is_null($this->bonusCategory)) {
             if ($this->get('bonusCategory_id')) {
-        		$this->bonusCategory = new XLite_Model_Category($this->get('bonusCategory_id'));
+        		$this->bonusCategory = new \XLite\Model\Category($this->get('bonusCategory_id'));
             } else {
                 $this->bonusCategory = null;
             }
@@ -116,10 +118,10 @@ class XLite_Module_Promotion_Model_SpecialOffer extends XLite_Model_AModel
     {
         $this->products = array();
         $this->bonusProducts = array();
-        $so_product = new XLite_Module_Promotion_Model_SpecialOfferProduct();
+        $so_product = new \XLite\Module\Promotion\Model\SpecialOfferProduct();
         $so_products = $so_product->findAll("offer_id = ". $this->get('offer_id'));
         foreach ($so_products as $_product) {
-            $product = new XLite_Model_Product($_product->get('product_id'));
+            $product = new \XLite\Model\Product($_product->get('product_id'));
             if ($_product->get('type') == "C") {
                 $this->products[] = $product;
             } else {
@@ -149,7 +151,7 @@ class XLite_Module_Promotion_Model_SpecialOffer extends XLite_Model_AModel
     function getBonusPrices()
     {
         if (is_null($this->bonusPrices)) {
-            $pricing = new XLite_Module_Promotion_Model_BonusPrice();
+            $pricing = new \XLite\Module\Promotion\Model\BonusPrice();
             $this->bonusPrices = $pricing->findAll("offer_id=" . $this->get('offer_id'));
         }
         return $this->bonusPrices;
@@ -162,7 +164,7 @@ class XLite_Module_Promotion_Model_SpecialOffer extends XLite_Model_AModel
     {
         $product_id = $product->get('product_id');
         $offer_id = $this->get('offer_id');
-        $so_product = new XLite_Module_Promotion_Model_SpecialOfferProduct();
+        $so_product = new \XLite\Module\Promotion\Model\SpecialOfferProduct();
         if (!$so_product->find("offer_id = $offer_id AND product_id = $product_id AND type = '$type'"))
         {
             $so_product->set('offer_id',$offer_id);
@@ -175,7 +177,7 @@ class XLite_Module_Promotion_Model_SpecialOffer extends XLite_Model_AModel
 
     function deleteProduct($product, $type = 'C')
     {
-        $so_product = new XLite_Module_Promotion_Model_SpecialOfferProduct();
+        $so_product = new \XLite\Module\Promotion\Model\SpecialOfferProduct();
         if ($so_product->find("offer_id = ". $this->get('offer_id') ." AND product_id =". $product->get('product_id') ." AND type = '$type'"))
             $so_product->delete();
     }
@@ -195,7 +197,7 @@ class XLite_Module_Promotion_Model_SpecialOffer extends XLite_Model_AModel
         if (is_null($price)) {
             $price = $product->get('price');
         }
-        $pricing = new XLite_Module_Promotion_Model_BonusPrice();
+        $pricing = new \XLite\Module\Promotion\Model\BonusPrice();
         $pricing->set('offer_id', $this->get('offer_id'));
         $pricing->set('product_id', $product_id);
         $pricing->set('category_id', $category_id);
@@ -221,7 +223,7 @@ class XLite_Module_Promotion_Model_SpecialOffer extends XLite_Model_AModel
         } else {
             $category_id = $category->get('category_id');
         }
-        $pricing = new XLite_Module_Promotion_Model_BonusPrice();
+        $pricing = new \XLite\Module\Promotion\Model\BonusPrice();
         $pricing->set('offer_id', $this->get('offer_id'));
         $pricing->set('product_id', $product_id);
         $pricing->set('category_id', $category_id);
@@ -243,7 +245,7 @@ class XLite_Module_Promotion_Model_SpecialOffer extends XLite_Model_AModel
             $category_id = $category->get('category_id');
         }
 
-        $pricing = new XLite_Module_Promotion_Model_BonusPrice();
+        $pricing = new \XLite\Module\Promotion\Model\BonusPrice();
         $pricing->set('offer_id', $this->get('offer_id'));
         $pricing->set('product_id', $product_id);
         $pricing->set('category_id', $category_id);
@@ -252,17 +254,17 @@ class XLite_Module_Promotion_Model_SpecialOffer extends XLite_Model_AModel
 
     function delete()
     {
-        $so_product = new XLite_Module_Promotion_Model_SpecialOfferProduct();
+        $so_product = new \XLite\Module\Promotion\Model\SpecialOfferProduct();
         $so_products = $so_product->findAll("offer_id = ". $this->get('offer_id'));
         foreach ($so_products as $_product)
             $_product->delete();
 
-        $so_bonusPrice = new XLite_Module_Promotion_Model_BonusPrice();
+        $so_bonusPrice = new \XLite\Module\Promotion\Model\BonusPrice();
         $so_bonusPrices = $so_bonusPrice->findAll("offer_id = ". $this->get('offer_id'));
  		foreach ($so_bonusPrices as $_bonusPrice)
            	$_bonusPrice->delete();
 
- 		$membership = new XLite_Module_Promotion_Model_SpecialOfferMembership();
+ 		$membership = new \XLite\Module\Promotion\Model\SpecialOfferMembership();
         $memberships = $membership->findAll('offer_id = ' . $this->get('offer_id'));
         if (is_array($memberships))
             foreach ($memberships as $membership_) {
@@ -301,11 +303,11 @@ class XLite_Module_Promotion_Model_SpecialOffer extends XLite_Model_AModel
             case "productAmount":
             case "eachNth":
                 if ($this->get('product_id')) {
-                    $product = new XLite_Model_Product($this->get('product_id'));
+                    $product = new \XLite\Model\Product($this->get('product_id'));
                     $this->condition['Product'] = $product->get('name');
                 }
                 if ($this->get('category_id')) {
-                    $category = new XLite_Model_Category($this->get('category_id'));
+                    $category = new \XLite\Model\Category($this->get('category_id'));
                     $this->condition['Category'] = $category->get('name');
                 }
                 $this->condition['Amount'] = $this->get('amount');
@@ -322,7 +324,7 @@ class XLite_Module_Promotion_Model_SpecialOffer extends XLite_Model_AModel
                     }
                 break;
             case "hasMembership":
-                $membership = new XLite_Module_Promotion_Model_SpecialOfferMembership();
+                $membership = new \XLite\Module\Promotion\Model\SpecialOfferMembership();
                 $memberships = $membership->findAll('offer_id =' .  $this->get('offer_id'));
                 foreach ($memberships as $membership_)
                     $applied .= "," . $membership_->get('membership');
@@ -349,7 +351,7 @@ class XLite_Module_Promotion_Model_SpecialOffer extends XLite_Model_AModel
                     $this->condition['Discount on'] = "All products";
                 } else {
                     if ($this->get('bonusCategory_id')) {
-                        $category = new XLite_Model_Category($this->get('bonusCategory_id'));
+                        $category = new \XLite\Model\Category($this->get('bonusCategory_id'));
                         $this->condition['Discount on'] = $category->get('name');
                     } else {
                         $this->bonusProducts = null;
@@ -362,7 +364,7 @@ class XLite_Module_Promotion_Model_SpecialOffer extends XLite_Model_AModel
                 }
                 $value = '';
                 if ($this->get('bonusAmountType') == '$') {
-                    $wg = new XLite_View_AView();
+                    $wg = new \XLite\View\AView();
                     $value = $wg->price_format($this->get('bonusAmount'));
                 } else {
                     $value = $this->get('bonusAmount').$this->get('bonusAmountType');
@@ -370,16 +372,16 @@ class XLite_Module_Promotion_Model_SpecialOffer extends XLite_Model_AModel
                 $this->condition['Discount'] = $value;
             break;
             case "specialPrices":
-                $pricing = new XLite_Module_Promotion_Model_BonusPrice();
+                $pricing = new \XLite\Module\Promotion\Model\BonusPrice();
                 $prices = $pricing->findAll("offer_id = " . $this->get('offer_id'));
                 $condition = "";
                 foreach ($prices as $key => $price) {
                     if ($price->get('product_id')) {
-                        $product = new XLite_Model_Product($price->get('product_id'));
+                        $product = new \XLite\Model\Product($price->get('product_id'));
                         $condition = "Product: " . $product->get('name') ." ";
                     }
                     if ($price->get('category_id')) {
-                        $category = new XLite_Model_Category($price->get('category_id'));
+                        $category = new \XLite\Model\Category($price->get('category_id'));
                         $condition .= "Category: " . $category->get('name');
                     }
                     $index = $key + 1;
@@ -447,7 +449,7 @@ class XLite_Module_Promotion_Model_SpecialOffer extends XLite_Model_AModel
             return true;
         case "hasMembership":
             if (!is_null($order->get('profile'))) {
-                $membership = new XLite_Module_Promotion_Model_SpecialOfferMembership();
+                $membership = new \XLite\Module\Promotion\Model\SpecialOfferMembership();
                 $memberships = $membership->findAll("offer_id = ". $this->get('offer_id'));
                 foreach ($memberships as $membership_) {
                     if ($order->getComplex('profile.membership') == $membership_->get('membership')) {
@@ -467,7 +469,7 @@ class XLite_Module_Promotion_Model_SpecialOffer extends XLite_Model_AModel
 
     function _discountAppliesTo($product)
     {
-        $order = new XLite_Model_Order();
+        $order = new \XLite\Model\Order();
         if (!is_null($this->get('bonusCategory')) && $order->_inCategoryRecursive($product, $this->get('bonusCategory'))) {
             return true;
         }
@@ -509,7 +511,7 @@ class XLite_Module_Promotion_Model_SpecialOffer extends XLite_Model_AModel
                 }
             }
         } elseif($this->get('bonusType') == "specialPrices") {
-            $order = new XLite_Model_Order();
+            $order = new \XLite\Model\Order();
             foreach ($this->get('bonusPrices') as $bonusPrice) {
                 if ($bonusPrice->get('product_id') == $product->get('product_id') || !is_null($bonusPrice->get('category')) && $order->_inCategoryRecursive($product, $bonusPrice->get('category'))) {
                     if ($bonusPrice->get('bonusType') == '$') {
@@ -641,11 +643,11 @@ class XLite_Module_Promotion_Model_SpecialOffer extends XLite_Model_AModel
         foreach ($this->get('products') as $product) {
             $clone->addProduct($product, 'C');
         }
-        $membership = new XLite_Module_Promotion_Model_SpecialOfferMembership();
+        $membership = new \XLite\Module\Promotion\Model\SpecialOfferMembership();
         $memberships = $membership->findAll('offer_id = ' . $this->get('offer_id'));
         if (is_array($memberships))	
             foreach ($memberships as $membership_) {
-                $membership = new XLite_Module_Promotion_Model_SpecialOfferMembership();
+                $membership = new \XLite\Module\Promotion\Model\SpecialOfferMembership();
                 $membership->set('offer_id', $clone->get('offer_id'));
                 $membership->set('membership',$membership_->get('membership'));
                 $membership->create();
@@ -675,7 +677,7 @@ class XLite_Module_Promotion_Model_SpecialOffer extends XLite_Model_AModel
             return $bonusProducts;
         }
         $products = array();
-        $cart = XLite_Model_Cart::getInstance();
+        $cart = \XLite\Model\Cart::getInstance();
         foreach ($this->get('bonusPrices') as $bonusPrice) {
             if (!is_null($bonusPrice->get('product'))) {
                 $product = $bonusPrice->get('product');
@@ -722,7 +724,7 @@ class XLite_Module_Promotion_Model_SpecialOffer extends XLite_Model_AModel
             }
         }
 
-        $cart = XLite_Model_Cart::getInstance();
+        $cart = \XLite\Model\Cart::getInstance();
         if (!$cart->isEmpty()) {
         	$excluded_categories = array();
             foreach ($cart->getItems() as $cart_item) {
@@ -822,7 +824,7 @@ class XLite_Module_Promotion_Model_SpecialOffer extends XLite_Model_AModel
             }
         }
         if (!is_null($this->get('category'))) {
-            $order = new XLite_Model_Order();
+            $order = new \XLite\Model\Order();
             return $order->_inCategoryRecursive($product, $this->get('category'));
         }
         return false;
@@ -834,7 +836,7 @@ class XLite_Module_Promotion_Model_SpecialOffer extends XLite_Model_AModel
             return false;
         }
         if (!is_null($this->get('category'))) {
-            $order = new XLite_Model_Order();
+            $order = new \XLite\Model\Order();
             return $order->_inCategoryRecursiveCategory($category, $this->get('category'));
         }
         return false;
@@ -873,7 +875,7 @@ class XLite_Module_Promotion_Model_SpecialOffer extends XLite_Model_AModel
             // bonuscategory should be a subcategory of category or category
             // itself
             if (!is_null($this->get('category')) && !is_null($this->get('bonusCategory'))) {
-                $order = new XLite_Model_Order();
+                $order = new \XLite\Model\Order();
                 if ($order->_inCategoryRecursiveCategory($this->get('category'), $this->get('bonusCategory'))) {
                     $this->bonusCategory = $this->get('category');
 
@@ -930,7 +932,7 @@ class XLite_Module_Promotion_Model_SpecialOffer extends XLite_Model_AModel
             case 'bonusPoints':
                 if ($this->isPersistent) {
                     $offer_id = $this->get('offer_id');
-                    $so_product = new XLite_Module_Promotion_Model_SpecialOfferProduct();
+                    $so_product = new \XLite\Module\Promotion\Model\SpecialOfferProduct();
                     $so_products = $so_product->findAll("offer_id = $offer_id AND type='C'");
                     foreach ($so_products as $_product)
             			$_product->delete();
@@ -946,13 +948,13 @@ class XLite_Module_Promotion_Model_SpecialOffer extends XLite_Model_AModel
             $offer_id = $this->get('offer_id');
             if ($this->isPersistent) {
                 if ($value == 'discounts' || $value == 'freeShipping' || $value == 'bonusPoints') {
-                    $so_bonusPrice = new XLite_Module_Promotion_Model_BonusPrice();
+                    $so_bonusPrice = new \XLite\Module\Promotion\Model\BonusPrice();
         			$so_bonusPrices = $so_bonusPrice->findAll("offer_id = $offer_id");
         			foreach ($so_bonusPrices as $_bonusPrice)
            				$_bonusPrice->delete();
                 }
                 if ($value == 'specialPrices' || $value == 'freeShipping' || $value == 'bonusPoints') {
-                    $so_product = new XLite_Module_Promotion_Model_SpecialOfferProduct();
+                    $so_product = new \XLite\Module\Promotion\Model\SpecialOfferProduct();
                     $so_products = $so_product->findAll("offer_id = $offer_id AND type='B'");
                     foreach ($so_products as $_product)
                         $_product->delete();
@@ -968,7 +970,7 @@ class XLite_Module_Promotion_Model_SpecialOffer extends XLite_Model_AModel
 
     function checkCountry($code)
     {
-        $c = XLite_Core_Database::getEM()->find('XLite_Model_Country', $code);
+        $c = \XLite\Core\Database::getEM()->find('XLite\Model\Country', $code);
         $name = $c->get('country');
         $countries = explode(',', $this->get('bonusCountries'));
         foreach ($countries as $c) {
@@ -981,7 +983,7 @@ class XLite_Module_Promotion_Model_SpecialOffer extends XLite_Model_AModel
     
     function collectGarbage()  
     {
-        $specialOffer = new XLite_Module_Promotion_Model_SpecialOffer();
+        $specialOffer = new \XLite\Module\Promotion\Model\SpecialOffer();
         $specialOffers = $specialOffer->findAll("status = 'Trash'");
         foreach ($specialOffers as $specialOffer_) {
             $specialOffer_->delete();

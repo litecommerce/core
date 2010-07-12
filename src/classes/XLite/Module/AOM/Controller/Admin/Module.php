@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\AOM\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,14 +35,14 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_AOM_Controller_Admin_Module extends XLite_Controller_Admin_Module implements XLite_Base_IDecorator
+class Module extends \XLite\Controller\Admin\Module implements \XLite\Base\IDecorator
 {
     function init()
     {
         parent::init();
 
         if ($this->page == "AOM") {
-        	$lay = XLite_Model_Layout::getInstance();
+        	$lay = \XLite\Model\Layout::getInstance();
         	$lay->addLayout('general_settings.tpl', "modules/AOM/config.tpl");
         }
     }
@@ -57,7 +59,7 @@ class XLite_Module_AOM_Controller_Admin_Module extends XLite_Controller_Admin_Mo
         if ($this->page == 'AOM') {
             $value = (is_array($_REQUEST['order_update_notification'])) ? $_REQUEST['order_update_notification'] : array();
 
-            XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+            \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
                 array(
                     'category' => 'AOM',
                     'name'     => 'order_update_notification',

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View\Button;
+
 
 /**
  * Image-based button
@@ -34,7 +36,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_Button_Image extends XLite_View_Button_Regular
+class Image extends \XLite\View\Button\Regular
 {
     /**
      * Return widget default template

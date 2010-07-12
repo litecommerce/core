@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\XPaymentsConnector\Model\PaymentMethod;
+
 /**
  * X-Payments-based meta payment method
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_XPaymentsConnector_Model_PaymentMethod_XPayment extends XLite_Model_PaymentMethod_CreditCardWebBased
+class XPayment extends \XLite\Model\PaymentMethod\CreditCardWebBased
 {
     const REQ_CURL    = 1;
     const REQ_OPENSSL = 2;
@@ -116,7 +118,7 @@ class XLite_Module_XPaymentsConnector_Model_PaymentMethod_XPayment extends XLite
     /**
      * Current cart 
      * 
-     * @var    XLite_Model_Cart
+     * @var    \XLite\Model\Cart
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
@@ -126,7 +128,7 @@ class XLite_Module_XPaymentsConnector_Model_PaymentMethod_XPayment extends XLite
     /**
      * Confiuration (cache)
      * 
-     * @var    XLite_Module_XPaymentsConnector_Model_Configuration
+     * @var    \XLite\Module\XPaymentsConnector\Model\Configuration
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
@@ -178,14 +180,14 @@ class XLite_Module_XPaymentsConnector_Model_PaymentMethod_XPayment extends XLite
     /**
      * Get form fields 
      *
-     * @param XLite_Model_Cart $cart $cart
+     * @param \XLite\Model\Cart $cart $cart
      * 
      * @return array
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getFields(XLite_Model_Cart $cart)
+    protected function getFields(\XLite\Model\Cart $cart)
     {
         return $this->formFields;
     }
@@ -193,7 +195,7 @@ class XLite_Module_XPaymentsConnector_Model_PaymentMethod_XPayment extends XLite
     /**
      * Handle request
      *
-     * @param XLite_Model_Cart $cart Cart
+     * @param \XLite\Model\Cart $cart Cart
      * @param string           $type Call type
      *
      * @return integer Operation status
@@ -201,7 +203,7 @@ class XLite_Module_XPaymentsConnector_Model_PaymentMethod_XPayment extends XLite
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function handleRequest(XLite_Model_Cart $cart, $type = self::CALL_CHECKOUT)
+    public function handleRequest(\XLite\Model\Cart $cart, $type = self::CALL_CHECKOUT)
     {
         $this->cart = $cart;
 
@@ -251,15 +253,15 @@ class XLite_Module_XPaymentsConnector_Model_PaymentMethod_XPayment extends XLite
             'confId'      => intval($this->getConfiguration()->get('confid')),
             'refId'       => $refId,
             'cart'        => $cart,
-            'returnUrl'   => XLite::getInstance()->getShopUrl(
-                XLite_Core_Converter::buildUrl(
+            'returnUrl'   => \XLite::getInstance()->getShopUrl(
+                \XLite\Core\Converter::buildUrl(
                     'xpayments',
                     'return',
                     array('order_id' => $this->cart->get('order_id'))
                 )
             ),
-            'callbackUrl' => XLite::getInstance()->getShopUrl(
-                XLite_Core_Converter::buildUrl(
+            'callbackUrl' => \XLite::getInstance()->getShopUrl(
+                \XLite\Core\Converter::buildUrl(
                     'callback',
                     'callback',
                     array('order_id' => $this->cart->get('order_id'))
@@ -286,7 +288,7 @@ class XLite_Module_XPaymentsConnector_Model_PaymentMethod_XPayment extends XLite
         return $status;
     }
 
-    public function processReturn(XLite_Model_Cart $cart, $txnId, $refId)
+    public function processReturn(\XLite\Model\Cart $cart, $txnId, $refId)
     {
         $this->cart = $cart;
 
@@ -335,7 +337,7 @@ class XLite_Module_XPaymentsConnector_Model_PaymentMethod_XPayment extends XLite
 
                 $cart->set('status', 'P');
                 $cart->update();
-                $ctrl = new XLite_Controller_Customer_Checkout();
+                $ctrl = new \XLite\Controller\Customer\Checkout();
                 $ctrl->callSuccess();
             }
 
@@ -353,7 +355,7 @@ class XLite_Module_XPaymentsConnector_Model_PaymentMethod_XPayment extends XLite
 
     protected function processCallback()
     {
-        $request = XLite_Core_Request::getInstance();
+        $request = \XLite\Core\Request::getInstance();
 
         $result = self::PAYMENT_FAILURE;
 
@@ -369,7 +371,7 @@ class XLite_Module_XPaymentsConnector_Model_PaymentMethod_XPayment extends XLite
             }
 
             if ($status) {
-                $order = new XLite_Model_Order();
+                $order = new \XLite\Model\Order();
                 foreach ($order->getOrdersByXPCTxnId($request->txnId) as $o) {
                     $o->set('status', $status);
                     $o->update();
@@ -488,7 +490,7 @@ class XLite_Module_XPaymentsConnector_Model_PaymentMethod_XPayment extends XLite
     /**
      * Get configuration 
      * 
-     * @return XLite_Module_XPaymentsConnector_Model_Configuration
+     * @return \XLite\Module\XPaymentsConnector\Model\Configuration
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -496,7 +498,7 @@ class XLite_Module_XPaymentsConnector_Model_PaymentMethod_XPayment extends XLite
     protected function getConfiguration()
     {
         if (is_null($this->conf)) {
-            $this->conf = new XLite_Module_XPaymentsConnector_Model_Configuration(intval($this->get('xpc_confid')));
+            $this->conf = new \XLite\Module\XPaymentsConnector\Model\Configuration(intval($this->get('xpc_confid')));
             if (!$this->conf->isExists()) {
                 $this->conf = null;
             }
@@ -509,11 +511,11 @@ class XLite_Module_XPaymentsConnector_Model_PaymentMethod_XPayment extends XLite
     {
 
         // Check requirements
-        if (!XLite_Module_XPaymentsConnector_Main::isConfigured()) {
+        if (!\XLite\Module\XPaymentsConnector\Main::isConfigured()) {
             return $this->getAPIError('Module is not configured');
         }
 
-        if (XLite_Module_XPaymentsConnector_Main::checkRequirements() != 0) {
+        if (\XLite\Module\XPaymentsConnector\Main::checkRequirements() != 0) {
             return $this->getAPIError('Check module requirements is failed');
         }
 
@@ -539,7 +541,7 @@ class XLite_Module_XPaymentsConnector_Model_PaymentMethod_XPayment extends XLite
             'request' => $xml
         );
 
-        $https = new XLite_Model_HTTPS('libcurl');
+        $https = new \XLite\Model\HTTPS('libcurl');
         $https->url = $this->config->XPaymentsConnector->xpc_xpayments_url . '/api.php';
         $https->timeout = 15000;
         $https->use_ssl3 = true;

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\AntiFraud\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,14 +35,14 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_AntiFraud_Controller_Admin_Module extends XLite_Controller_Admin_Module implements XLite_Base_IDecorator
+class Module extends \XLite\Controller\Admin\Module implements \XLite\Base\IDecorator
 {
     function init()
     {
         parent::init();
 
         if ($this->page == "AntiFraud") {
-        	$lay = XLite_Model_Layout::getInstance();
+        	$lay = \XLite\Model\Layout::getInstance();
         	$lay->addLayout('general_settings.tpl', "modules/AntiFraud/config.tpl");
         }
     }

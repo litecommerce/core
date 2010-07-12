@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\GiftCertificates\Model;
+
 /**
  * Order item
  * 
@@ -33,12 +35,12 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_GiftCertificates_Model_OrderItem extends XLite_Model_OrderItem implements XLite_Base_IDecorator
+class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
 {
     /**
      * Gift certificate (cache)
      * 
-     * @var    XLite_Module_GiftCertificates_Model_GiftCertificate
+     * @var    \XLite\Module\GiftCertificates\Model\GiftCertificate
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
@@ -64,7 +66,7 @@ class XLite_Module_GiftCertificates_Model_OrderItem extends XLite_Model_OrderIte
     /**
      * Get gift certificate
      * 
-     * @return XLite_Module_GiftCertificates_Model_GiftCertificate
+     * @return \XLite\Module\GiftCertificates\Model\GiftCertificate
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -73,7 +75,7 @@ class XLite_Module_GiftCertificates_Model_OrderItem extends XLite_Model_OrderIte
     {
         if (is_null($this->gc)) {
             $gcId = parent::get('gcid');
-            $this->gc = $gcId ? new XLite_Module_GiftCertificates_Model_GiftCertificate($gcId) : null;
+            $this->gc = $gcId ? new \XLite\Module\GiftCertificates\Model\GiftCertificate($gcId) : null;
         }
 
         return $this->gc;
@@ -243,7 +245,7 @@ class XLite_Module_GiftCertificates_Model_OrderItem extends XLite_Model_OrderIte
     /**
      * Setter (for gift certificate) 
      * 
-     * @param XLite_Module_GiftCertificates_Model_GiftCertificate $gc Gift certificate
+     * @param \XLite\Module\GiftCertificates\Model\GiftCertificate $gc Gift certificate
      *  
      * @return void
      * @access public
@@ -252,7 +254,7 @@ class XLite_Module_GiftCertificates_Model_OrderItem extends XLite_Model_OrderIte
      */
     public function setGC($gc)
     {
-        if (is_null($gc) || !($gc instanceof XLite_Module_GiftCertificates_Model_GiftCertificate)) {
+        if (is_null($gc) || !($gc instanceof \XLite\Module\GiftCertificates\Model\GiftCertificate)) {
             $this->gc = null;
             $this->set('gcid', '');
 
@@ -305,7 +307,7 @@ class XLite_Module_GiftCertificates_Model_OrderItem extends XLite_Model_OrderIte
         $gcId = $this->get('gcid');
 
         return $gcId
-            ? XLite_Core_Converter::buildURL('gift_certificate', '', array('gcid' => $gcId))
+            ? \XLite\Core\Converter::buildURL('gift_certificate', '', array('gcid' => $gcId))
             : parent::getURL();
     }
 

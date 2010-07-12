@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Affiliate\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Affiliate_Controller_Admin_Partners extends XLite_Controller_Admin_AAdmin
+class Partners extends \XLite\Controller\Admin\AAdmin
 {
     public $params = array('target', "search", "filter", "partnerStatus", "plan_id", "plan", "startDateMonth", "startDateDay", "startDateYear", "endDateMonth", "endDateDay", "endDateYear", "itemsPerPage");
 
@@ -51,7 +53,7 @@ class XLite_Module_Affiliate_Controller_Admin_Partners extends XLite_Controller_
         $partners = $this->get('ids');
         if (!is_null($partners) && is_array($partners)) {
             foreach ($partners as $pid) {
-                $partner = new XLite_Model_Profile($pid);
+                $partner = new \XLite\Model\Profile($pid);
                 if (!is_null($this->get('delete'))) {
                     $this->auth->deletePartner($partner);
                 } else if (!is_null($this->get('update'))) {
@@ -106,7 +108,7 @@ class XLite_Module_Affiliate_Controller_Admin_Partners extends XLite_Controller_
                 $where[] = " partner_signup <= " . ($this->get('endDate') + 24 * 3600);
             }
             $and = join(' AND ',$where);
-            $profile = new XLite_Model_Profile();
+            $profile = new \XLite\Model\Profile();
             $this->partners = $profile->findAll($and, "partner_signup DESC");
             $this->partnersCount = count($this->partners);
         }

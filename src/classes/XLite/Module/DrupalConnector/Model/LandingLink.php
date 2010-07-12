@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\DrupalConnector\Model;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_DrupalConnector_Model_LandingLink extends XLite_Model_AModel
+class LandingLink extends \XLite\Model\AModel
 {
     /**
      * Record TTL (seconds)
@@ -108,7 +110,7 @@ class XLite_Module_DrupalConnector_Model_LandingLink extends XLite_Model_AModel
         $link = null;
 
         if ($this->isExists() && $this->get('link_id')) {
-            $options = XLite::getInstance()->getOptions('host_details');
+            $options = \XLite::getInstance()->getOptions('host_details');
 
             $link = 'http://' . $options['http_host'] . $options['web_dir'];
             if (substr($link, -1) != '/') {

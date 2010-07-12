@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\SecureTrading\Model\PaymentMethod;
+
 /**
  * ____description____
  * 
@@ -33,14 +35,14 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_SecureTrading_Model_PaymentMethod_Securetrading extends XLite_Model_PaymentMethod_CreditCard
+class Securetrading extends \XLite\Model\PaymentMethod\CreditCard
 {
 
     public $configurationTemplate = "modules/SecureTrading/config.tpl";
     public $processorName = "SecureTrading";
     public $formTemplate = "modules/SecureTrading/checkout.tpl";
 
-    function handleRequest(XLite_Model_Cart $order) {
+    function handleRequest(\XLite\Model\Cart $order) {
         require_once LC_MODULES_DIR . 'SecureTrading' . LC_DS . 'encoded.php';
         PaymentMethod_securetrading_handleRequest($this, $order, true);
     }
@@ -48,11 +50,11 @@ class XLite_Module_SecureTrading_Model_PaymentMethod_Securetrading extends XLite
         return $cart->get('total')*100;
     }
     function getBillingState($cart) {
-        $state = XLite_Core_Database::getEM()->find('XLite_Model_State', $cart->getComplex('profile.billing_state'));
+        $state = \XLite\Core\Database::getEM()->find('XLite\Model\State', $cart->getComplex('profile.billing_state'));
         return $state ? $state->state : '';
     }
     function getCountry($cart)	{
-        $country = XLite_Core_Database::getEM()->find('XLite_Model_Country', $cart->getComplex('profile.billing_country'));
+        $country = \XLite\Core\Database::getEM()->find('XLite\Model\Country', $cart->getComplex('profile.billing_country'));
         return $country ? $country->country : '';
     }
     function getMerchantEmail() {

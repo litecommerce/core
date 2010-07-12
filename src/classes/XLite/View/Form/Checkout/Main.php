@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View\Form\Checkout;
+
 /**
  * Checkout main form
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_Form_Checkout_Main extends XLite_View_Form_Checkout_ACheckout
+class Main extends \XLite\View\Form\Checkout\ACheckout
 {
     /**
      * Current form name 

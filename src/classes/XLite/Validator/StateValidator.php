@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Validator;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Validator_StateValidator extends XLite_Validator_AValidator
+class StateValidator extends \XLite\Validator\AValidator
 {
     public $template = "common/state_validator.tpl";
 
@@ -51,8 +53,8 @@ class XLite_Validator_StateValidator extends XLite_Validator_AValidator
         $field = $this->field;
         $countryField = $this->countryField;
         if (isset($_POST[$field]) && isset($_POST[$countryField]) && $_POST[$field] != '') {
-            $state = XLite_Core_Database::getEM()->find('XLite_Model_State', $_POST[$field]);
-            $country = XLite_Core_Database::getEM()->find('XLite_Model_Country', $_POST[$countryField]);
+            $state = \XLite\Core\Database::getEM()->find('XLite\Model\State', $_POST[$field]);
+            $country = \XLite\Core\Database::getEM()->find('XLite\Model\Country', $_POST[$countryField]);
             return !$state
                 || $state->country_code == ''
                 || ($country && $state->country_code == $country->code);

@@ -51,7 +51,7 @@
 
   <div>
     <label>Category:</label>
-    <widget template="modules/AdvancedSearch/select_category.tpl" class="XLite_View_CategorySelect" fieldName="search[category]" allOption search="{search}">
+    <widget template="modules/AdvancedSearch/select_category.tpl" class="\XLite\View\CategorySelect" fieldName="search[category]" allOption search="{search}">
     <br />
 
     <input type="checkbox" id="search_subcategories" name="search[subcategories]" checked="{search.subcategories}" /><label for="search_subcategories">search in subcategories</label>
@@ -82,6 +82,6 @@
     </select>
   </div>
 
-  <widget class="XLite_View_Button" label="Search" type="button">
+  <widget class="\XLite\View\Button" label="Search" type="button">
 
 </form>

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\PayPalPro\Controller\Admin;
+
 /**
  * Payment method configure
  * 
@@ -33,24 +35,24 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_PayPalPro_Controller_Admin_PaymentMethod extends XLite_Controller_Admin_PaymentMethod
-implements XLite_Base_IDecorator
+class PaymentMethod extends \XLite\Controller\Admin\PaymentMethod
+implements \XLite\Base\IDecorator
 {
     /**
      * Get payment method 
      * 
-     * @return XLite_Model_PaymentMethod
+     * @return \XLite\Model\PaymentMethod
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
     public function getPM()
     {
-        if ('paypalpro' == XLite_Core_Request::getInstance()->payment_method) {
-            $pm = new XLite_Model_PaymentMethod('paypalpro');
+        if ('paypalpro' == \XLite\Core\Request::getInstance()->payment_method) {
+            $pm = new \XLite\Model\PaymentMethod('paypalpro');
 
             if ('express' == $pm->getComplex('params.solution')) {
-                XLite_Core_Request::getInstance()->payment_method = 'paypalpro_express';
+                \XLite\Core\Request::getInstance()->payment_method = 'paypalpro_express';
             }
         }
 

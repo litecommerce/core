@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_Template extends XLite_Model_FileNode
+class Template extends \XLite\Model\FileNode
 {
     public $file; // file name	
     public $comment; // template comment (null if not available)	
@@ -51,7 +53,7 @@ class XLite_Model_Template extends XLite_Model_FileNode
     function setPath($path)
     {
         $this->path = $path;
-        $this->file = XLite_Model_Layout::getInstance()->getPathCustomer() . $path;
+        $this->file = \XLite\Model\Layout::getInstance()->getPathCustomer() . $path;
     }
 
     function setContent($content)

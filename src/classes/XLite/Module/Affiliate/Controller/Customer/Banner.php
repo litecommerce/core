@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Affiliate\Controller\Customer;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Affiliate_Controller_Customer_Banner extends XLite_Controller_AController
+class Banner extends \XLite\Controller\AController
 {
     function getTemplate()
     {
@@ -43,8 +45,8 @@ class XLite_Module_Affiliate_Controller_Customer_Banner extends XLite_Controller
     function getBanner()
     {
         if (is_null($this->banner)) {
-            $this->banner = new XLite_Module_Affiliate_Model_Banner($this->get('banner_id'));
-            $stats = new XLite_Module_Affiliate_Model_BannerStats();
+            $this->banner = new \XLite\Module\Affiliate\Model\Banner($this->get('banner_id'));
+            $stats = new \XLite\Module\Affiliate\Model\BannerStats();
             $stats->logView();
         }
         return $this->banner;

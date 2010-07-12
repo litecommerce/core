@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_ExtraField extends XLite_Model_AModel
+class ExtraField extends \XLite\Model\AModel
 {
     public $fields = array(
             "field_id" => 0,    // primary key
@@ -64,7 +66,7 @@ class XLite_Model_ExtraField extends XLite_Model_AModel
     
     function getProduct() 
     {
-        return new XLite_Model_Product($this->get('product_id'));
+        return new \XLite\Model\Product($this->get('product_id'));
     }
     
     function delete()
@@ -80,7 +82,7 @@ class XLite_Model_ExtraField extends XLite_Model_AModel
     	}
 
         // delete all values
-        $fv = new XLite_Model_FieldValue();
+        $fv = new \XLite\Model\FieldValue();
         $valuesTable = $this->db->getTableByAlias($fv->alias);
         $sql = "DELETE FROM $valuesTable WHERE field_id=" . $this->get('field_id');
         $this->db->query($sql);
@@ -106,7 +108,7 @@ class XLite_Model_ExtraField extends XLite_Model_AModel
             }
 
             if ($this->get('product_id') == 0) {
-                $ef_children = new XLite_Model_ExtraField();
+                $ef_children = new \XLite\Model\ExtraField();
                 $ef_children = $ef_children->findAll("parent_field_id='".$this->get('field_id')."'");
                 if (is_array($ef_children) && count($ef_children) > 0) {
                     $categories_list = explode("|", $this->get('categories'));
@@ -125,11 +127,11 @@ class XLite_Model_ExtraField extends XLite_Model_AModel
     			if (is_array($categories_old) && is_array($categories)) {
     				foreach ($categories_old as $cat_old) {
     					if (!in_array($cat_old, $categories)) {
-    						$product = new XLite_Model_Product();
+    						$product = new \XLite\Model\Product();
                             $products = $product->advancedSearch("", null, $cat_old);
                             if (is_array($products) && count($products) > 0) {
                             	foreach ($products as $product) {
-                            		$ef_children = new XLite_Model_ExtraField();
+                            		$ef_children = new \XLite\Model\ExtraField();
                                     $ef_children->set('ignoreFilter', true);
     								$ef_children = $ef_children->findAll("parent_field_id='".$this->get('field_id')."' AND product_id='".$product->get('product_id')."'");
     								if (is_array($ef_children) && count($ef_children) > 0) {
@@ -185,7 +187,7 @@ class XLite_Model_ExtraField extends XLite_Model_AModel
                             $categories = explode('|',$properties['categories']);
                             foreach ($categories as $category) 
                             {
-                                $cat = new XLite_Model_Category($category);
+                                $cat = new \XLite\Model\Category($category);
                                 $cat_path .= '|'.$cat->getStringPath();
                             }
                             $data[] = substr($cat_path, 1);
@@ -215,7 +217,7 @@ class XLite_Model_ExtraField extends XLite_Model_AModel
     
         if ($properties['sku']==NULL && $properties['product']==NULL)	
         {
-            $global_extra_field = new XLite_Model_ExtraField();
+            $global_extra_field = new \XLite\Model\ExtraField();
             $found = $global_extra_field->find("name='".addslashes($properties['name'])."' AND product_id=0");
             $global_extra_field->set('default_value', $properties['default_value']);
             $global_extra_field->set('name', $properties['name']);
@@ -228,7 +230,7 @@ class XLite_Model_ExtraField extends XLite_Model_AModel
                 $global_extra_field->set('categories',"");
             else 
             {
-                $category = new XLite_Model_Category();
+                $category = new \XLite\Model\Category();
                 foreach ($category->parseCategoryField($properties['category'],true) as $path)	
                 {
                     $cat = $category->findCategory($path);
@@ -244,7 +246,7 @@ class XLite_Model_ExtraField extends XLite_Model_AModel
                 $global_extra_field->update();
             }
     
-            $extra_fields = new XLite_Model_ExtraField();
+            $extra_fields = new \XLite\Model\ExtraField();
             $extra_fields_ = $extra_fields->findAll("name='".addslashes($properties['name'])."' AND product_id<>0");
             if (!empty($extra_fields_))
                 foreach ($extra_fields_ as $extra_field_) 
@@ -254,15 +256,15 @@ class XLite_Model_ExtraField extends XLite_Model_AModel
                 }
                     
         } else {
-            $product = new XLite_Model_Product();
+            $product = new \XLite\Model\Product();
         	$product = $product->findImportedProduct($properties['sku'], $properties['category'], $properties['product'], false /* do not create categories */);
             if (is_null($product)) {
                 echo "<font color=red>Product not found for line ".$this->lineNo."</font><br>";
             }
             else {
                 $productID = $product->get('product_id');
-                $field = new XLite_Model_ExtraField();
-                $global_extra_field = new XLite_Model_ExtraField();
+                $field = new \XLite\Model\ExtraField();
+                $global_extra_field = new \XLite\Model\ExtraField();
                 $global_found = $global_extra_field->find("name='".addslashes($properties['name'])."' AND product_id=0");
                 if ($global_found)
                     $field->set('parent_field_id', $global_extra_field->get('field_id'));
@@ -288,7 +290,7 @@ class XLite_Model_ExtraField extends XLite_Model_AModel
                 $fieldID = $field->get('field_id');
                 // search and update or create field value
         		if (!empty($properties['value']) && strlen($properties['value'])) {
-            		$fv = new XLite_Model_FieldValue();
+            		$fv = new \XLite\Model\FieldValue();
             		$found = $fv->find("field_id=$fieldID AND product_id=$productID");
             		$fv->set('field_id', $fieldID);
             		$fv->set('product_id', $productID);
@@ -356,7 +358,7 @@ class XLite_Model_ExtraField extends XLite_Model_AModel
     {
         if ($this->get('parent_field_id') == 0)
         {
-    		$ef_children = new XLite_Model_ExtraField();
+    		$ef_children = new \XLite\Model\ExtraField();
             $ef_children->set('ignoreFilter', true);
     		$ef_children = $ef_children->findAll("parent_field_id='".$this->get('field_id')."'");
     		if (!(is_array($ef_children) && count($ef_children) > 0))
@@ -386,7 +388,7 @@ class XLite_Model_ExtraField extends XLite_Model_AModel
                "WHERE p.product_id IS NULL AND e.product_id<>0";
         $result = $this->db->getAll($sql);
         foreach ($result as $info) {
-            $ef = new XLite_Model_ExtraField($info['field_id']);
+            $ef = new \XLite\Model\ExtraField($info['field_id']);
             $ef->_collectGarbage();
         }
     }

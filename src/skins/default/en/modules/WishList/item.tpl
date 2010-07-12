@@ -80,10 +80,10 @@
 	        		<font class="ProductPrice">{price_format(item,#total#):h}</font>
 				</td>
 				<td nowrap>
-            		<widget class="XLite_View_Button" template="modules/WishList/common/button.tpl" label="Update amount" href="javascript: document.update{key}_form.submit();" font="FormButton">
+            		<widget class="\XLite\View\Button" template="modules/WishList/common/button.tpl" label="Update amount" href="javascript: document.update{key}_form.submit();" font="FormButton">
 				</td>
 				<td width="100%">
-            		<widget class="XLite_View_Button" template="modules/WishList/common/button.tpl" label="Remove" href="javascript: document.update{key}_form.action.value='delete'; document.update{key}_form.submit();" font="FormButton">
+            		<widget class="\XLite\View\Button" template="modules/WishList/common/button.tpl" label="Remove" href="javascript: document.update{key}_form.action.value='delete'; document.update{key}_form.submit();" font="FormButton">
 				</td>														
 			</tr>
 			</table>
@@ -94,7 +94,7 @@
 				<table cellpadding=0 cellspacing=0 border=0>
 					<tr>
 				        <td colspan="3">
-							<widget class="XLite_View_Button" label="Add to cart" href="javascript: document.update{key}_form.action.value='add'; document.update{key}_form.target.value='cart'; document.update{key}_form.submit();" img="cart4button.gif" font="FormButton">
+							<widget class="\XLite\View\Button" label="Add to cart" href="javascript: document.update{key}_form.action.value='add'; document.update{key}_form.target.value='cart'; document.update{key}_form.submit();" img="cart4button.gif" font="FormButton">
 					    </td>
 					</tr>	
 				</table>	

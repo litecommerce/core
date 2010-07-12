@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\AntiFraud\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_AntiFraud_Controller_Admin_Fraud extends XLite_Controller_Admin_AAdmin
+class Fraud extends \XLite\Controller\Admin\AAdmin
 {
     public $params = array('target', "mode", "order_id");
     public $order = null;
@@ -50,7 +52,7 @@ class XLite_Module_AntiFraud_Controller_Admin_Fraud extends XLite_Controller_Adm
     function getOrder()
     {
         if (is_null($order)) 
-            $order = new XLite_Model_Order($this->get('order_id'));
+            $order = new \XLite\Model\Order($this->get('order_id'));
         return $order;
     }
         
@@ -102,7 +104,7 @@ class XLite_Module_AntiFraud_Controller_Admin_Fraud extends XLite_Controller_Adm
             	$post['zipcode'] = $properties['zipcode'];
         }
         
-        $request = new XLite_Model_HTTPS();
+        $request = new \XLite\Model\HTTPS();
         $request->data = $post;
         $request->url = $this->config->AntiFraud->antifraud_url."/check_ip.php";
         $request->request();

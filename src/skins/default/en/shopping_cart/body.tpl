@@ -10,7 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<widget class="XLite_View_Form_Cart_Main" name="cart_form" />
+<widget class="\XLite\View\Form\Cart\Main" name="cart_form" />
 
   <p align=justify>The items in your shopping cart are listed below. To remove any item click "Delete Item". To place your order, please click "CHECKOUT".</p>
 

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\GiftCertificates\Controller\Admin;
+
 /**
  * E-card
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_GiftCertificates_Controller_Admin_GiftCertificateEcard extends XLite_Controller_Admin_AAdmin
+class GiftCertificateEcard extends \XLite\Controller\Admin\AAdmin
 {
     /**
      * Controller parameters
@@ -48,7 +50,7 @@ class XLite_Module_GiftCertificates_Controller_Admin_GiftCertificateEcard extend
     /**
      * E-card 
      * 
-     * @var    XLite_Module_GiftCertificates_Model_ECard
+     * @var    \XLite\Module\GiftCertificates\Model\ECard
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
@@ -72,7 +74,7 @@ class XLite_Module_GiftCertificates_Controller_Admin_GiftCertificateEcard extend
     /**
      * Get e-card 
      * 
-     * @return XLite_Module_GiftCertificates_Model_ECard
+     * @return \XLite\Module\GiftCertificates\Model\ECard
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -81,10 +83,10 @@ class XLite_Module_GiftCertificates_Controller_Admin_GiftCertificateEcard extend
     {
         if (is_null($this->ecard)) {
             if ($this->get('ecard_id')) {
-                $this->ecard = new XLite_Module_GiftCertificates_Model_ECard($this->get('ecard_id'));
+                $this->ecard = new \XLite\Module\GiftCertificates\Model\ECard($this->get('ecard_id'));
 
             } else {
-                $this->ecard = new XLite_Module_GiftCertificates_Model_ECard();
+                $this->ecard = new \XLite\Module\GiftCertificates\Model\ECard();
                 $this->ecard->set('enabled', 1);
             }
         }
@@ -102,15 +104,15 @@ class XLite_Module_GiftCertificates_Controller_Admin_GiftCertificateEcard extend
      */
     protected function doActionUpdate()
     {
-        if (!isset(XLite_Core_Request::getInstance()->enabled)) {
-            XLite_Core_Request::getInstance()->enabled = 0; // checkbox
+        if (!isset(\XLite\Core\Request::getInstance()->enabled)) {
+            \XLite\Core\Request::getInstance()->enabled = 0; // checkbox
         }
 
-        if (!empty(XLite_Core_Request::getInstance()->new_template)) {
-            XLite_Core_Request::getInstance()->template = XLite_Core_Request::getInstance()->new_template;
+        if (!empty(\XLite\Core\Request::getInstance()->new_template)) {
+            \XLite\Core\Request::getInstance()->template = \XLite\Core\Request::getInstance()->new_template;
         }
 
-        $this->getECard()->set('properties', XLite_Core_Request::getInstance()->getData());
+        $this->getECard()->set('properties', \XLite\Core\Request::getInstance()->getData());
         $this->getECard()->modify();
 
         $this->doActionImages();

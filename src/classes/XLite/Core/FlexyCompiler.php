@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Core;
+
 /**
  * Flexy compiler
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Core_FlexyCompiler extends XLite_Base implements XLite_Base_ISingleton
+class FlexyCompiler extends \XLite\Base implements \XLite\Base\ISingleton
 {
     /**
      * Tag to define arrays in templates
@@ -85,7 +87,7 @@ class XLite_Core_FlexyCompiler extends XLite_Base implements XLite_Base_ISinglet
         $this->file   = $file;
         $this->source = file_get_contents($file);
         
-        $this->urlRewrite = array('images' => XLite::getInstance()->getShopUrl(XLite_Model_Layout::getInstance()->getSkinURL('images')));
+        $this->urlRewrite = array('images' => \XLite::getInstance()->getShopUrl(\XLite\Model\Layout::getInstance()->getSkinURL('images')));
     }
 
 
@@ -188,8 +190,8 @@ class XLite_Core_FlexyCompiler extends XLite_Base implements XLite_Base_ISinglet
     protected function getZone($zone)
     {
         return 'admin' == $zone
-            ? XLite_Base_IPatcher::ADMIN_INTERFACE
-            : XLite_Base_IPatcher::CUSTOMER_INTERFACE;
+            ? \XLite\Base\IPatcher::ADMIN_INTERFACE
+            : \XLite\Base\IPatcher::CUSTOMER_INTERFACE;
     }
 
     /**
@@ -207,7 +209,7 @@ class XLite_Core_FlexyCompiler extends XLite_Base implements XLite_Base_ISinglet
     protected function getPatches($zone, $lang, $tpl)
     {
         if (is_null($this->patches)) {
-            $this->patches = XLite_Core_Database::getRepo('XLite_Model_TemplatePatch')->findAllPatches();
+            $this->patches = \XLite\Core\Database::getRepo('XLite\Model\TemplatePatch')->findAllPatches();
         }
 
         $result = array();
@@ -232,14 +234,14 @@ class XLite_Core_FlexyCompiler extends XLite_Base implements XLite_Base_ISinglet
     /**
      * Process XPath-based patch 
      * 
-     * @param XLite_Model_TemplatePatch $patch Patch record
+     * @param \XLite\Model\TemplatePatch $patch Patch record
      *  
      * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function processXpathPatch(XLite_Model_TemplatePatch $patch)
+    protected function processXpathPatch(\XLite\Model\TemplatePatch $patch)
     {
         $dom = new DOMDocument();
         $dom->formatOutput = true;
@@ -283,35 +285,35 @@ class XLite_Core_FlexyCompiler extends XLite_Base implements XLite_Base_ISinglet
             foreach ($patches as $node) {
                 $node = $node->cloneNode(true);
 
-                if (XLite_Base_IPatcher::XPATH_INSERT_BEFORE == $insertType) {
+                if (\XLite\Base\IPatcher::XPATH_INSERT_BEFORE == $insertType) {
 
                     // Insert patch node before XPath result node 
                     $place->parentNode->insertBefore($node, $place);
 
-                } elseif (XLite_Base_IPatcher::XPATH_INSERT_AFTER == $insertType) {
+                } elseif (\XLite\Base\IPatcher::XPATH_INSERT_AFTER == $insertType) {
 
                     // Insert patch node after XPath result node
                     if ($place->nextSibling) {
                         $place->parentNode->insertBefore($node, $place->nextSibling);
-                        $insertType = XLite_Base_IPatcher::XPATH_INSERT_BEFORE;
+                        $insertType = \XLite\Base\IPatcher::XPATH_INSERT_BEFORE;
                         $place = $place->nextSibling;
 
                     } else {
                         $place->parentNode->appendChild($node);
                     }
 
-                } elseif (XLite_Base_IPatcher::XPATH_REPLACE == $insertType) {
+                } elseif (\XLite\Base\IPatcher::XPATH_REPLACE == $insertType) {
 
                     // Replace XPath result node to patch node
                     $place->parentNode->replaceChild($node, $place);
 
                     if ($node->nextSibling) {
                         $place = $node->nextSibling;
-                        $insertType = XLite_Base_IPatcher::XPATH_INSERT_BEFORE;
+                        $insertType = \XLite\Base\IPatcher::XPATH_INSERT_BEFORE;
 
                     } else {
                         $place = $node;
-                        $insertType = XLite_Base_IPatcher::XPATH_INSERT_AFTER;
+                        $insertType = \XLite\Base\IPatcher::XPATH_INSERT_AFTER;
                     }
                 }
             }
@@ -321,14 +323,14 @@ class XLite_Core_FlexyCompiler extends XLite_Base implements XLite_Base_ISinglet
     /**
      * Process regular expression-based patch 
      * 
-     * @param XLite_Model_TemplatePatch $patch Patch record
+     * @param \XLite\Model\TemplatePatch $patch Patch record
      *  
      * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function processRegexpPatch(XLite_Model_TemplatePatch $patch)
+    protected function processRegexpPatch(\XLite\Model\TemplatePatch $patch)
     {
         $this->source = preg_replace(
             $patch->regexp_pattern,
@@ -340,14 +342,14 @@ class XLite_Core_FlexyCompiler extends XLite_Base implements XLite_Base_ISinglet
     /**
      * Process callback-based patch 
      * 
-     * @param XLite_Model_TemplatePatch $patch Patch record
+     * @param \XLite\Model\TemplatePatch $patch Patch record
      *  
      * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function processCustomPatch(XLite_Model_TemplatePatch $patch)
+    protected function processCustomPatch(\XLite\Model\TemplatePatch $patch)
     {
         list($class, $method) = explode('::', $patch->custom_callback, 2);
         $this->source = $class::$method($this->source);
@@ -724,7 +726,7 @@ class XLite_Core_FlexyCompiler extends XLite_Base implements XLite_Base_ISinglet
     {
         $result = '';
 
-        if (!isset($module) || XLite_Model_ModulesManager::getInstance()->isActiveModule($module)) {
+        if (!isset($module) || \XLite\Model\ModulesManager::getInstance()->isActiveModule($module)) {
 
             $class = isset($attrs['class']) ? $this->flexyAttribute($attrs['class'], false) : null;
 

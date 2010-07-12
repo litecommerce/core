@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Controller\Customer;
+
 /**
  * Invoice controller
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Controller_Customer_Invoice extends XLite_Controller_Customer_ACustomer
+class Invoice extends \XLite\Controller\Customer\ACustomer
 {
     /**
      * Controller parameters
@@ -48,7 +50,7 @@ class XLite_Controller_Customer_Invoice extends XLite_Controller_Customer_ACusto
     /**
      * Order (cache)
      * 
-     * @var    XLite_Model_Order
+     * @var    \XLite\Model\Order
      * @access private
      * @see    ____var_see____
      * @since  3.0.0
@@ -90,7 +92,7 @@ class XLite_Controller_Customer_Invoice extends XLite_Controller_Customer_ACusto
      */
     protected function checkOrderAccess()
     {
-        return $this->session->get('last_order_id') == XLite_Core_Request::getInstance()->order_id
+        return $this->session->get('last_order_id') == \XLite\Core\Request::getInstance()->order_id
             || (
                 $this->auth->isLogged()
                 && $this->auth->getProfile()->get('profile_id') == $this->getOrder()->get('orig_profile_id')
@@ -100,7 +102,7 @@ class XLite_Controller_Customer_Invoice extends XLite_Controller_Customer_ACusto
     /**
      * Get order 
      * 
-     * @return XLite_Model_Order
+     * @return \XLite\Model\Order
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -108,7 +110,7 @@ class XLite_Controller_Customer_Invoice extends XLite_Controller_Customer_ACusto
     public function getOrder()
     {
         if (is_null($this->order)) {
-            $this->order = new XLite_Model_Order(intval(XLite_Core_Request::getInstance()->order_id));
+            $this->order = new \XLite\Model\Order(intval(\XLite\Core\Request::getInstance()->order_id));
         }
 
         return $this->order;

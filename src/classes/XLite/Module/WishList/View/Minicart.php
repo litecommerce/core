@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\WishList\View;
+
 /**
  * Minicart widget
  *
@@ -33,8 +35,8 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_WishList_View_Minicart extends XLite_View_Minicart
-implements XLite_Base_IDecorator
+class Minicart extends \XLite\View\Minicart
+implements \XLite\Base\IDecorator
 {
     /**
      * Check whether in Wislist there are more than 3 items

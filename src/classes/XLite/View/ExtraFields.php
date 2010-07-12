@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View;
+
 /**
  * Extra fields list 
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_ExtraFields extends XLite_View_AView
+class ExtraFields extends \XLite\View\AView
 {
     /**
      * Widget parameter names
@@ -77,7 +79,7 @@ class XLite_View_ExtraFields extends XLite_View_AView
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_PRODUCT => new XLite_Model_WidgetParam_Object('Product', null, false, 'XLite_Model_Product'),
+            self::PARAM_PRODUCT => new \XLite\Model\WidgetParam\Object('Product', null, false, '\XLite\Model\Product'),
         );
     }
 
@@ -153,7 +155,7 @@ class XLite_View_ExtraFields extends XLite_View_AView
 
             foreach ($this->extraFields as $idx => $extraField) {
                 if ($extraField->get('parent_field_id') == 0) {
-                    $ef_child = new XLite_Model_ExtraField();
+                    $ef_child = new \XLite\Model\ExtraField();
                     $ef_child->set('ignoreFilter', true);
 
                     if ($ef_child->find('parent_field_id = \'' . $extraField->get('field_id') . '\' AND enabled = 0 AND product_id = \'' . $this->getParam(self::PARAM_PRODUCT)->get('product_id') . '\'')) {

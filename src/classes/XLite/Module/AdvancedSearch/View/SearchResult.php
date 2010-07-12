@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\AdvancedSearch\View;
+
 /**
  * Search result
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_AdvancedSearch_View_SearchResult extends XLite_View_SearchResult implements XLite_Base_IDecorator
+class SearchResult extends \XLite\View\SearchResult implements \XLite\Base\IDecorator
 {
     /**
      * searchParams 
@@ -58,7 +60,7 @@ class XLite_Module_AdvancedSearch_View_SearchResult extends XLite_View_SearchRes
         if (is_null($this->data)) {
             $this->data = array();
 
-            if ('advanced_search' == XLite_Core_Request::getInstance()->target) {
+            if ('advanced_search' == \XLite\Core\Request::getInstance()->target) {
                 $this->searchProducts();
 
             } else {
@@ -79,7 +81,7 @@ class XLite_Module_AdvancedSearch_View_SearchResult extends XLite_View_SearchRes
     public function isVisible()
     {
         return parent::isVisible()
-            && ('advanced_search' != XLite_Core_Request::getInstance()->target || 'found' == XLite_Core_Request::getInstance()->submode);
+            && ('advanced_search' != \XLite\Core\Request::getInstance()->target || 'found' == \XLite\Core\Request::getInstance()->submode);
     }
 
 
@@ -95,7 +97,7 @@ class XLite_Module_AdvancedSearch_View_SearchResult extends XLite_View_SearchRes
     protected function getSearchParamValue($name)
     {
         if (!isset($this->searchParams)) {
-            $this->searchParams = XLite_Model_Session::getInstance()->get('search');
+            $this->searchParams = \XLite\Model\Session::getInstance()->get('search');
             if (!is_array($this->searchParams)) {
                 $this->searchParams = array();
             }
@@ -130,10 +132,10 @@ class XLite_Module_AdvancedSearch_View_SearchResult extends XLite_View_SearchRes
             && !isset($properties['options']);
 
         if (
-            XLite_Core_Request::getInstance()->submode == 'found'
+            \XLite\Core\Request::getInstance()->submode == 'found'
             && !$isDumpSearch
         ) {
-            $p = new XLite_Model_Product();
+            $p = new \XLite\Model\Product();
 
             foreach ($properties as $key => $value) {
                 $properties[$key] = empty($properties[$key]) ? null : addslashes($properties[$key]);
@@ -182,7 +184,7 @@ class XLite_Module_AdvancedSearch_View_SearchResult extends XLite_View_SearchRes
                 $this->getSearchParamValue('end_weight')
             );
 
-            $searchStat = new XLite_Model_SearchStat();
+            $searchStat = new \XLite\Model\SearchStat();
             $searchStat->add($this->getSearchParamValue('substring'), count($this->data));
         }
     }

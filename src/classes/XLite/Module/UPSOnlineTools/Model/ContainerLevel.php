@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\UPSOnlineTools\Model;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_UPSOnlineTools_Model_ContainerLevel extends XLite_Base
+class ContainerLevel extends \XLite\Base
 {
     public $level_id;
     public $bottom;
@@ -48,7 +50,7 @@ class XLite_Module_UPSOnlineTools_Model_ContainerLevel extends XLite_Base
     // Initialize level
     function init($_bottom, $_width, $_length, $_height)
     {
-        $subspace = new XLite_Module_UPSOnlineTools_Model_Subspace();
+        $subspace = new \XLite\Module\UPSOnlineTools\Model\Subspace();
         $subspace->init($_width, $_length);
 
         $this->subspaces = array();

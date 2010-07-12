@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\AOM\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_AOM_Controller_Admin_OrderStatuses extends XLite_Controller_Admin_AAdmin
+class OrderStatuses extends \XLite\Controller\Admin\AAdmin
 {
     public $statuses 	= null;
     public $letters	= null;
@@ -43,7 +45,7 @@ class XLite_Module_AOM_Controller_Admin_OrderStatuses extends XLite_Controller_A
     function getParentStatuses() 
     {
         if (is_null($this->parent)) {
-            $status = new XLite_Module_AOM_Model_OrderStatus();
+            $status = new \XLite\Module\AOM\Model\OrderStatus();
             $this->parent = $status->findAll("parent = ''");
         }
         return $this->parent;
@@ -52,7 +54,7 @@ class XLite_Module_AOM_Controller_Admin_OrderStatuses extends XLite_Controller_A
     function getOrderStatuses()   
     {
         if (is_null($this->statuses)) {
-            $status = new XLite_Module_AOM_Model_OrderStatus();
+            $status = new \XLite\Module\AOM\Model\OrderStatus();
             $statuses = $status->findAll();
             foreach ($statuses as $status_) {
                 $letter = $status_->get('status');
@@ -60,7 +62,7 @@ class XLite_Module_AOM_Controller_Admin_OrderStatuses extends XLite_Controller_A
                 if ($parent == "") {
                     $this->statuses[$letter]['base'] = $status_;
                 } else {
-                    $order = new XLite_Model_Order();
+                    $order = new \XLite\Model\Order();
                     $counter = $order->count("substatus = '$letter'");
                     $this->statuses[$parent]['children'][$letter]['disabled'] = ($counter ? true : false);
                     if (strlen($letter) != 1) {
@@ -109,9 +111,9 @@ class XLite_Module_AOM_Controller_Admin_OrderStatuses extends XLite_Controller_A
         if (strlen($this->add_status['status']) != 1) {
             return;
         }
-        $status = new XLite_Module_AOM_Model_OrderStatus();
+        $status = new \XLite\Module\AOM\Model\OrderStatus();
         if (!intval($this->add_status['orderby'])) {
-            $status = new XLite_Module_AOM_Model_OrderStatus();
+            $status = new \XLite\Module\AOM\Model\OrderStatus();
             $statuses = $status->findAll("parent = '".$this->add_status['parent']."' OR status = '".$this->add_status['parent']."'");
             $status_ids = array();
             foreach ($statuses as $status_) {
@@ -127,7 +129,7 @@ class XLite_Module_AOM_Controller_Admin_OrderStatuses extends XLite_Controller_A
     {
         if ($this->get('update_status')) {
             foreach ($this->get('update_status') as $status_id => $properties) {
-                $orderStatus = new XLite_Module_AOM_Model_OrderStatus($status_id);
+                $orderStatus = new \XLite\Module\AOM\Model\OrderStatus($status_id);
                 $orderStatus->set('properties',$properties);
                 $orderStatus->set('email',isset($properties['email']));
                 $orderStatus->set('cust_email',isset($properties['cust_email']));
@@ -141,7 +143,7 @@ class XLite_Module_AOM_Controller_Admin_OrderStatuses extends XLite_Controller_A
     {
         if ($this->get('delete_status')) {
             foreach ($this->get('delete_status') as $status_id) {
-                $orderStatus = new XLite_Module_AOM_Model_OrderStatus($status_id);
+                $orderStatus = new \XLite\Module\AOM\Model\OrderStatus($status_id);
                 $orderStatus->delete();
             }
         }

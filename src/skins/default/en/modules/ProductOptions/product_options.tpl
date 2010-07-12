@@ -31,7 +31,7 @@ $(document).ready(
     <select IF="option.opttype=#SelectBox#" name="product_options[{option.optclass}]">
       <option FOREACH="option.productOptions,opt" value="{opt.option_id}" selected="{isOptionSelected(option,opt.option_id)}" >
         {opt.option:h}
-        <widget class="XLite_Module_ProductOptions_View_ProductOptionModifier" option="{opt}" optionGroup="{option}" product="{product}" />
+        <widget class="\XLite\Module\ProductOptions\View\ProductOptionModifier" option="{opt}" optionGroup="{option}" product="{product}" />
 	  	</option>
     </select>
 
@@ -40,7 +40,7 @@ $(document).ready(
         <input type="radio" id="product_option_{option.optclass}_{opt.option_id}" name="product_options[{option.optclass}]" value="{opt.option_id}" checked="{isOptionSelected(option,opt.option_id)}" />
         <label for="product_option_{option.optclass}_{opt.option_id}">
           {opt.option:h}
-          <widget class="XLite_Module_ProductOptions_View_ProductOptionModifier" option="{opt}" optionGroup="{option}" product="{product}" />
+          <widget class="\XLite\Module\ProductOptions\View\ProductOptionModifier" option="{opt}" optionGroup="{option}" product="{product}" />
         </label>
       </li>
     </ul>

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\USPS;
+
 /**
  * USPS module definition
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_USPS_Main extends XLite_Module_AModule
+class Main extends \XLite\Module\AModule
 {
     /**
      * Get module type
@@ -97,7 +99,7 @@ class XLite_Module_USPS_Main extends XLite_Module_AModule
      */
     public static function getSettingsForm()
     {
-        return XLite_Core_Converter::buildUrl('usps', '', array(), XLite::ADMIN_SELF);
+        return \XLite\Core\Converter::buildUrl('usps', '', array(), \XLite::ADMIN_SELF);
     }
 
     /**

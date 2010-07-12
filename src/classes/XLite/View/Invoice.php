@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View;
+
 /**
  * Invoice widget
  * 
@@ -33,12 +35,12 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_Invoice extends XLite_View_Dialog
+class Invoice extends \XLite\View\Dialog
 {
     /**
      * Order (cache)
      * 
-     * @var    XLite_Model_Order
+     * @var    \XLite\Model\Order
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
@@ -72,7 +74,7 @@ class XLite_View_Invoice extends XLite_View_Dialog
     /**
      * Get order 
      * 
-     * @return XLite_Model_Order
+     * @return \XLite\Model\Order
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -80,7 +82,7 @@ class XLite_View_Invoice extends XLite_View_Dialog
     public function getOrder()
     {
         if (is_null($this->order)) {
-            $this->order = new XLite_Model_Order(intval(XLite_Core_Request::getInstance()->order_id));
+            $this->order = new \XLite\Model\Order(intval(\XLite\Core\Request::getInstance()->order_id));
         }
 
         return $this->order;

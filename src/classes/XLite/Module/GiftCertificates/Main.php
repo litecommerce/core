@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\GiftCertificates;
+
 /**
  * Module head class
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_GiftCertificates_Main extends XLite_Module_AModule
+class Main extends \XLite\Module\AModule
 {
     /**
      * Module type
@@ -97,8 +99,8 @@ class XLite_Module_GiftCertificates_Main extends XLite_Module_AModule
         $this->registerPaymentMethod('gift_certificate');
 
         // TODO - review in next verion
-        //XLite_Model_Image::registerImageClass('ecard_thumbnail', 'e-Card thumbnails', 'ecards', 'thumbnail', 'ecard_id');
-        //XLite_Model_Image::registerImageClass('ecard_image', 'e-Card images', 'ecards', 'image', 'ecard_id');
+        //\XLite\Model\Image::registerImageClass('ecard_thumbnail', 'e-Card thumbnails', 'ecards', 'thumbnail', 'ecard_id');
+        //\XLite\Model\Image::registerImageClass('ecard_image', 'e-Card images', 'ecards', 'image', 'ecard_id');
 
         $this->xlite->set('GiftCertificatesEnabled', true);
     }

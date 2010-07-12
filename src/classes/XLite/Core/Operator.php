@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Core;
+
 /**
  * Common operations repository
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Core_Operator extends XLite_Base implements XLite_Base_ISingleton
+class Operator extends \XLite\Base implements \XLite\Base\ISingleton
 {
     /**
      * Check if we need to perform a redirect or not 
@@ -44,8 +46,8 @@ class XLite_Core_Operator extends XLite_Base implements XLite_Base_ISingleton
      */
     protected static function checkRedirectStatus()
     {
-        return !XLite_Core_CMSConnector::isCMSStarted() 
-            || !XLite_Core_Request::getInstance()->__get(XLite_Core_CMSConnector::NO_REDIRECT);
+        return !\XLite\Core\CMSConnector::isCMSStarted() 
+            || !\XLite\Core\Request::getInstance()->__get(\XLite\Core\CMSConnector::NO_REDIRECT);
     }
 
     /**
@@ -108,7 +110,7 @@ class XLite_Core_Operator extends XLite_Base implements XLite_Base_ISingleton
      */
     public static function isClassExists($name)
     {
-        return class_exists($name, false) || file_exists(LC_CLASSES_CACHE_DIR . str_replace('_', LC_DS, $name) . '.php');
+        return class_exists($name, false) || file_exists(LC_CLASSES_CACHE_DIR . str_replace('\\', LC_DS, $name) . '.php');
     }
 
     /**
@@ -129,10 +131,10 @@ class XLite_Core_Operator extends XLite_Base implements XLite_Base_ISingleton
             $result = file_get_contents($url);
 
         } else {
-            $bouncer = new XLite_Model_HTTPS();
+            $bouncer = new \XLite\Model\HTTPS();
             $bouncer->url = $url;
             $bouncer->method = 'GET';
-            if (XLite_Model_HTTPS::HTTPS_SUCCESS == $bouncer->request()) {
+            if (\XLite\Model\HTTPS::HTTPS_SUCCESS == $bouncer->request()) {
                 $result = $bouncer->response;
             }
         }

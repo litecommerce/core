@@ -26,14 +26,16 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\WholesaleTrading\Controller\Customer;
+
 /**
- * XLite_Module_WholesaleTrading_Controller_Customer_Product 
+ * \XLite\Module\WholesaleTrading\Controller\Customer\Product 
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_WholesaleTrading_Controller_Customer_Product extends XLite_Controller_Customer_Product implements XLite_Base_IDecorator
+class Product extends \XLite\Controller\Customer\Product implements \XLite\Base\IDecorator
 {
     // FIXME - must be completely revised; do not uncomment
     /*function init()
@@ -73,7 +75,7 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Product extends XLite_Co
         }
 
         // min/max purchase amount check
-        $pl = new XLite_Module_WholesaleTrading_Model_PurchaseLimit();
+        $pl = new \XLite\Module\WholesaleTrading\Model\PurchaseLimit();
         if ($pl->find("product_id=" . $product->get('product_id'))) {
             $category_id = $this->get('category_id');
             if (!isset($category_id)) {
@@ -96,7 +98,7 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Product extends XLite_Co
     function getWholesalePricing()
     {
         if (is_null($this->wholesale_pricing)) {
-            $product = new XLite_Model_Product($this->getComplex('product.product_id'));
+            $product = new \XLite\Model\Product($this->getComplex('product.product_id'));
             $this->wholesale_pricing = $product->getWholesalePricing();
         }
         return $this->wholesale_pricing;

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View;
+
 /**
  * Product details widget
  *
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0
  */
-class XLite_View_Product extends XLite_View_Dialog
+class Product extends \XLite\View\Dialog
 {
     /**
      * Return title
@@ -74,7 +76,7 @@ class XLite_View_Product extends XLite_View_Dialog
     /**
      * Get previous product 
      * 
-     * @return XLite_Model_Product
+     * @return \XLite\Model\Product
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -91,7 +93,7 @@ class XLite_View_Product extends XLite_View_Dialog
     /**
      * Get next product 
      * 
-     * @return XLite_Model_Product
+     * @return \XLite\Model\Product
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\ProductOptions\Model;
+
 /**
  * Order item
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_ProductOptions_Model_OrderItem extends XLite_Model_OrderItem implements XLite_Base_IDecorator
+class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
 {
     public $options = array();
 
@@ -228,14 +230,14 @@ class XLite_Module_ProductOptions_Model_OrderItem extends XLite_Model_OrderItem 
 
             $product = $this->getProduct();
             if (is_object($product)) {
-                $po = new XLite_Module_ProductOptions_Model_ProductOption();
+                $po = new \XLite\Module\ProductOptions\Model\ProductOption();
                 $po->set('product_id', $product->get('product_id'));
 
                 $originalPrice = $product->get('listPrice');
 
                 $full_price = null;
                 if ($this->xlite->get('WholesaleTradingEnabled')) {
-                    $p = new XLite_Model_Product($this->get('product_id'));
+                    $p = new \XLite\Model\Product($this->get('product_id'));
                     $full_price = $p->getFullPrice($this->get('amount'));
                     if (doubleval($full_price) == $full_price) {
                         $originalPrice = $full_price;
@@ -252,7 +254,7 @@ class XLite_Module_ProductOptions_Model_OrderItem extends XLite_Model_OrderItem 
             $price = parent::get('price');
 
             if ($this->xlite->get('WholesaleTradingEnabled')) {
-                $p = new XLite_Model_Product($this->get('product_id'));
+                $p = new \XLite\Model\Product($this->get('product_id'));
                 $full_price = $p->getFullPrice($this->get('amount'));
                 if (doubleval($full_price) == $full_price) {
                     if ($this->config->Taxes->prices_include_tax) {

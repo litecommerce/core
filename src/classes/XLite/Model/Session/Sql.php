@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model\Session;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_Session_Sql extends XLite_Model_Session implements XLite_Base_ISingleton
+class Sql extends \XLite\Model\Session implements \XLite\Base\ISingleton
 {
     /**
      * The database sql table to store session to 
@@ -44,7 +46,7 @@ class XLite_Model_Session_Sql extends XLite_Model_Session implements XLite_Base_
      */
     protected function getDBTable()
     {
-        return XLite_Model_Database::getInstance()->getTableByAlias('sessions');
+        return \XLite\Model\Database::getInstance()->getTableByAlias('sessions');
     }
 
     /**
@@ -56,7 +58,7 @@ class XLite_Model_Session_Sql extends XLite_Model_Session implements XLite_Base_
      */
     protected function restore()
     {
-        $sessionId = XLite_Core_Request::getInstance()->__get($this->getName());
+        $sessionId = \XLite\Core\Request::getInstance()->__get($this->getName());
 
         if ($result = isset($sessionId)) {
             $this->setID($sessionId);
@@ -105,8 +107,8 @@ class XLite_Model_Session_Sql extends XLite_Model_Session implements XLite_Base_
 
         } else {
             $sname = $this->getName();
-            if (XLite_Core_Request::getInstance()->__get($sname)) {
-                $sid = addslashes(XLite_Core_Request::getInstance()->__get($sname));
+            if (\XLite\Core\Request::getInstance()->__get($sname)) {
+                $sid = addslashes(\XLite\Core\Request::getInstance()->__get($sname));
 
                 $sql = 'SELECT id FROM ' . $this->getDBTable() . ' WHERE data LIKE \'%"' 
                     . self::SESSION_DEFAULT_NAME . '=' . $sid . '"%\'';

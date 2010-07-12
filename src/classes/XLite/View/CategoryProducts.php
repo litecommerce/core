@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View;
+
 /**
  * Category products list widget
  *
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0
  */
-class XLite_View_CategoryProducts extends XLite_View_ProductsList
+class CategoryProducts extends \XLite\View\ProductsList
 {
     /**
      * Widget parameter names
@@ -66,7 +68,7 @@ class XLite_View_CategoryProducts extends XLite_View_ProductsList
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_CATEGORY_ID => new XLite_Model_WidgetParam_ObjectId_Category('Category ID', 0),
+            self::PARAM_CATEGORY_ID => new \XLite\Model\WidgetParam\ObjectId\Category('Category ID', 0),
         );
 
         $this->requestParams[] = self::PARAM_CATEGORY_ID;
@@ -109,7 +111,7 @@ class XLite_View_CategoryProducts extends XLite_View_ProductsList
     protected function getSavedRequestParam($param)
     {
         return self::PARAM_CATEGORY_ID == $param
-            ? XLite_Core_Request::getInstance()->$param
+            ? \XLite\Core\Request::getInstance()->$param
             : parent::getSavedRequestParam($param);
     }
 

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\DetailedImages\View;
+
 /**
  * Product images gallery widget
  *
@@ -34,7 +36,7 @@
  * @since   3.0
  * @ListChild (list="productDetails.image", weight="30")
  */
-class XLite_Module_DetailedImages_View_Gallery extends XLite_View_AView
+class Gallery extends \XLite\View\AView
 {
     /**
      * Widget parameter names
@@ -67,7 +69,7 @@ class XLite_Module_DetailedImages_View_Gallery extends XLite_View_AView
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_PRODUCT => new XLite_Model_WidgetParam_Object('Product', $this->getProduct(), false, 'XLite_Model_Product'),
+            self::PARAM_PRODUCT => new \XLite\Model\WidgetParam\Object('Product', $this->getProduct(), false, '\XLite\Model\Product'),
         );
     }
 
@@ -82,8 +84,8 @@ class XLite_Module_DetailedImages_View_Gallery extends XLite_View_AView
      */
     public function getLightBoxImagesDir()
     {
-        return XLite::getInstance()->getShopUrl(
-            XLite_Model_Layout::getInstance()->getPath() . 'modules/DetailedImages/images'
+        return \XLite::getInstance()->getShopUrl(
+            \XLite\Model\Layout::getInstance()->getPath() . 'modules/DetailedImages/images'
         );
     }
 

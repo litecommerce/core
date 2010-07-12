@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View\FormField\Select;
+
 /**
  * Address type selector
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_FormField_Select_AddressType extends XLite_View_FormField_Select_Regular
+class AddressType extends \XLite\View\FormField\Select\Regular
 {
     /**
      * Get default options list

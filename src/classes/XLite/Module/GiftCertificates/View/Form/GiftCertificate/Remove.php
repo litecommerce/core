@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\GiftCertificates\View\Form\GiftCertificate;
+
 /**
  * Apply gift certificate to order form
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_GiftCertificates_View_Form_GiftCertificate_Remove extends XLite_View_Form_AForm
+class Remove extends \XLite\View\Form\AForm
 {
     /**
      * Current form name 
@@ -75,7 +77,7 @@ class XLite_Module_GiftCertificates_View_Form_GiftCertificate_Remove extends XLi
 
         $this->widgetParams[self::PARAM_FORM_PARAMS]->appendValue(
             array(
-                'return_target' => XLite_Core_Request::getInstance()->target,
+                'return_target' => \XLite\Core\Request::getInstance()->target,
             )
         );
     }

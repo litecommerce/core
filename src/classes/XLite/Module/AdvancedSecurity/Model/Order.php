@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\AdvancedSecurity\Model;
+
 func_define('ORDER_CRYPTED_MESSAGE', '-- This data is encrypted. Please enter master password to view it --');
 
 /**
@@ -35,7 +37,7 @@ func_define('ORDER_CRYPTED_MESSAGE', '-- This data is encrypted. Please enter ma
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_AdvancedSecurity_Model_Order extends XLite_Model_Order implements XLite_Base_IDecorator
+class Order extends \XLite\Model\Order implements \XLite\Base\IDecorator
 {
     public $gpg;
     public $_detailsModified = false; // shows if the order details were modified
@@ -47,7 +49,7 @@ class XLite_Module_AdvancedSecurity_Model_Order extends XLite_Model_Order implem
         $this->fields['secureDetails'] = ''; // GPG encrypted order details
         $this->fields['secureDetailsText'] = ''; // GPG encrypted order details for sending to admin via email
         parent::__construct($id);
-        $this->gpg = new XLite_Module_AdvancedSecurity_Model_GPG();
+        $this->gpg = new \XLite\Module\AdvancedSecurity\Model\GPG();
     }
 
     function setDetails($value)

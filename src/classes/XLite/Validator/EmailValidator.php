@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Validator;
+
 /**
  * Email validator widget
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Validator_EmailValidator extends XLite_Validator_AValidator
+class EmailValidator extends \XLite\Validator\AValidator
 {
     /**
      * Widget template 
@@ -56,7 +58,7 @@ class XLite_Validator_EmailValidator extends XLite_Validator_AValidator
     public function isValid()
     {
         $field = $this->get('field');
-        $request = XLite_Core_Request::getInstance();
+        $request = \XLite\Core\Request::getInstance();
         if (!is_null($request->$field)) {
             $request->$field = trim($request->$field);
         }

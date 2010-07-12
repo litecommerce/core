@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\ProductOptions\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_ProductOptions_Controller_Admin_Product extends XLite_Controller_Admin_Product implements XLite_Base_IDecorator
+class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDecorator
 {
     public function __construct(array $params)
     {
@@ -44,7 +46,7 @@ class XLite_Module_ProductOptions_Controller_Admin_Product extends XLite_Control
 
     function action_update_limit()
     {
-        $product = new XLite_Model_Product($this->product_id);
+        $product = new \XLite\Model\Product($this->product_id);
         $limit = isset($this->expansion_limit) ? 1 : 0;
         $product->set('expansion_limit', $limit);
         $product->update();
@@ -55,7 +57,7 @@ class XLite_Module_ProductOptions_Controller_Admin_Product extends XLite_Control
     function getProductOption() 
     {
         if (is_null($this->option)) {
-            $this->option = new XLite_Module_ProductOptions_Model_ProductOption();
+            $this->option = new \XLite\Module\ProductOptions\Model\ProductOption();
             if (isset($this->option_id)) {
                 $this->option->set('option_id', $this->option_id);
             }
@@ -117,7 +119,7 @@ class XLite_Module_ProductOptions_Controller_Admin_Product extends XLite_Control
     function getOptionException() 
     {
         if (is_null($this->optionException)) {
-            $this->optionException = new XLite_Module_ProductOptions_Model_OptionException();
+            $this->optionException = new \XLite\Module\ProductOptions\Model\OptionException();
             if (isset($this->option_id)) {
                 $this->optionException->set('option_id', $this->option_id);
             }
@@ -161,7 +163,7 @@ class XLite_Module_ProductOptions_Controller_Admin_Product extends XLite_Control
     
     function action_product_option_validator()
     {
-        $validator = new XLite_Module_ProductOptions_Model_OptionValidator();
+        $validator = new \XLite\Module\ProductOptions\Model\OptionValidator();
         $validator->set('product_id', $this->product_id);
         if (isset($this->javascript_code) && strlen(trim($this->javascript_code))) {
             $validator->set('javascript_code', $this->javascript_code);
@@ -193,7 +195,7 @@ class XLite_Module_ProductOptions_Controller_Admin_Product extends XLite_Control
 
     function action_info()
     {
-        $product = new XLite_Model_Product($this->product_id);
+        $product = new \XLite\Model\Product($this->product_id);
         $oldCategories = array();
         $categories = $product->get('categories');
         if (is_array($categories)) {

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\ProductOptions\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_ProductOptions_Controller_Admin_ExportCatalog extends XLite_Controller_Admin_ExportCatalog implements XLite_Base_IDecorator
+class ExportCatalog extends \XLite\Controller\Admin\ExportCatalog implements \XLite\Base\IDecorator
 {
     public function __construct(array $params)
     {
@@ -47,10 +49,10 @@ class XLite_Module_ProductOptions_Controller_Admin_ExportCatalog extends XLite_C
         global $DATA_DELIMITERS;
 
         // save layout & export
-        $dlg = new XLite_Controller_Admin_ImportCatalog();
+        $dlg = new \XLite\Controller\Admin\ImportCatalog();
         $dlg->action_layout('product_options_layout');
         $this->startDownload('product_options.csv');
-        $po = new XLite_Module_ProductOptions_Model_ProductOption();
+        $po = new \XLite\Module\ProductOptions\Model\ProductOption();
         $po->export($this->product_options_layout, $DATA_DELIMITERS[$this->delimiter], $where = null, $orderby = "product_id");
         exit();
     }

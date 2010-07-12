@@ -94,7 +94,7 @@ function GoogleCheckout_sendRequest($_this, &$payment, &$data)
 
     $_this->error = null;
     $_this->xlite->logger->log("Sending request to: " . $https->url);
-    if ($https->request() == XLite_Model_HTTPS::HTTPS_ERROR) {
+    if ($https->request() == \XLite\Model\HTTPS::HTTPS_ERROR) {
         $_this->xlite->logger->log("HTTPS_ERROR: " . $https->error);
         $_this->error = $https->error;
         return array();
@@ -106,19 +106,19 @@ function GoogleCheckout_sendRequest($_this, &$payment, &$data)
 
 function GoogleCheckout_getHTTPS_Object()
 {
-    return new XLite_Model_HTTPS();
+    return new \XLite\Model\HTTPS();
 }
 
 function GoogleCheckout_getXML_Object()
 {
-    $obj = new XLite_Model_XML();
+    $obj = new \XLite\Model\XML();
     if (method_exists($obj, "_compileTreeNode")) {
         return $obj;
     }
 
     $obj = null;
 
-    return new XLite_Module_GoogleCheckout_Model_XML();
+    return new \XLite\Module\GoogleCheckout\Model\XML();
 }
 
 function GoogleCheckout_sendGoogleCheckoutRequest($_this, $order)
@@ -146,10 +146,10 @@ function GoogleCheckout_getGoogleCheckoutXML_Calculation($_this, $address, $ship
     $_old_admin_zone = $_this->xlite->get('adminZone');
     $_this->xlite->set('adminZone', false);
 
-    $cart = XLite_Model_Cart::getInstance();
-    $cart = new XLite_Model_Cart($_this->get('order_id')); // do not insert &
+    $cart = \XLite\Model\Cart::getInstance();
+    $cart = new \XLite\Model\Cart($_this->get('order_id')); // do not insert &
 
-    $pmGC = XLite_Model_PaymentMethod::factory('google_checkout');
+    $pmGC = \XLite\Model\PaymentMethod::factory('google_checkout');
     $params = $pmGC->get('params');
     $currency = $params['currency'];
     $xmlDiscounts = array();
@@ -176,7 +176,7 @@ function GoogleCheckout_getGoogleCheckoutXML_Calculation($_this, $address, $ship
             }
 
             // get coupon object and validate
-            $coupon = new XLite_Module_Promotion_Model_DiscountCoupon();
+            $coupon = new \XLite\Module\Promotion\Model\DiscountCoupon();
             if (!$coupon->find("coupon='".addslashes($coupon_code)."' AND order_id='0'"))
                 continue;
 
@@ -245,13 +245,13 @@ EOT;
         foreach ($discounts as $id=>$discount) {
             $cert_code = addslashes(trim($discount['CODE']));
 
-            $cert = new XLite_Module_GiftCertificates_Model_GiftCertificate();
+            $cert = new \XLite\Module\GiftCertificates\Model\GiftCertificate();
             if (!$cert->find("gcid='".addslashes($cert_code)."'"))
                 continue;
 
             $discounts[$id]['type'] = "cert";
 
-            if ($cert->validate() != XLite_Module_GiftCertificates_Model_GiftCertificate::GC_OK || $cert->get('debit') <= 0)
+            if ($cert->validate() != \XLite\Module\GiftCertificates\Model\GiftCertificate::GC_OK || $cert->get('debit') <= 0)
                 continue;
 
             if ($cert_applied) {
@@ -315,7 +315,7 @@ EOT;
         $valid_methods = array();
 
         // Create fake customer profile
-        $profile = new XLite_Model_Profile();
+        $profile = new \XLite\Model\Profile();
         $profile->set('shipping_city', $addr['CITY']);
         $profile->set('shipping_zipcode', $addr["POSTAL-CODE"]);
         $profile->set('shipping_country', $addr["COUNTRY-CODE"]);
@@ -324,7 +324,7 @@ EOT;
         $_this->config->General->default_country = $addr["COUNTRY-CODE"];
 
         // state
-		$state = XLite_Core_Dtabase::getRepo('XLite_Model_State')->finOneByCode($addr['REGION']);
+		$state = \XLite\Core\Dtabase::getRepo('XLite\Model\State')->finOneByCode($addr['REGION']);
 		$state_id = $state ? $state->state_id : 0;
 
         $profile->set('shipping_state', $state_id);
@@ -348,7 +348,7 @@ EOT;
 
             // Get Shipping method by name from GoogleCheckout
             if ($allow_shipping && is_array($shipping_rates) && count($shipping_rates) > 0) {
-                $shippingMethod = new XLite_Model_Shipping();
+                $shippingMethod = new \XLite\Model\Shipping();
 
                 if ($shippingMethod->find("name='".addslashes($shipping_method)."' AND enabled='1' AND class IN($classes)") && array_key_exists($shippingMethod->get('shipping_id'), $shipping_rates)) {
                     // If order shipable - calculate shipping and tax cost
@@ -425,7 +425,7 @@ function GoogleCheckout_getCouponApplyDescription($coupon)
 
 function GoogleCheckout_getShippingClassesSQL_STRING()
 {
-    $so = new XLite_Model_Shipping();
+    $so = new \XLite\Model\Shipping();
     $modules = $so->get('modules');
 
     $keys = array();
@@ -465,7 +465,7 @@ function GoogleCheckout_new_order_notification($_this, $xmlData)
     // Apply Discount coupon
     $coupon = $_this->getXMLDataByPath($xmlData, "ORDER-ADJUSTMENT/MERCHANT-CODES/COUPON-ADJUSTMENT");
     if ($_this->xlite->get('PromotionEnabled') && $coupon && is_null($order->getDC())) {
-        $dc = new XLite_Module_Promotion_Model_DiscountCoupon();
+        $dc = new \XLite\Module\Promotion\Model\DiscountCoupon();
         $dc->find("coupon='".addslashes($coupon['CODE'])."'");
 
         if ($order->google_checkout_setDC($dc)) {
@@ -478,11 +478,11 @@ function GoogleCheckout_new_order_notification($_this, $xmlData)
     // Apply Gift certificate
     $gift_cert = $_this->getXMLDataByPath($xmlData, "ORDER-ADJUSTMENT/MERCHANT-CODES/GIFT-CERTIFICATE-ADJUSTMENT");
     if ($_this->xlite->get('GiftCertificatesEnabled') && $gift_cert) {
-        $cert = new XLite_Module_GiftCertificates_Model_GiftCertificate();
+        $cert = new \XLite\Module\GiftCertificates\Model\GiftCertificate();
         $cert->find("gcid='".addslashes($gift_cert['CODE'])."'");
         $result = $order->set('GC', $cert);
 
-        if ($result == XLite_Module_GiftCertificates_Model_GiftCertificate::GC_OK) {
+        if ($result == \XLite\Module\GiftCertificates\Model\GiftCertificate::GC_OK) {
             $order->set('payedByGC', $gift_cert["APPLIED-AMOUNT"]);
         } else {
             $_this->xlite->logger->log("NEW-ORDER-NOTIFICATION: Gift certificate #".$gift_cert['CODE']." not applied.");
@@ -493,7 +493,7 @@ function GoogleCheckout_new_order_notification($_this, $xmlData)
 
     // Set Shipping method
     $shipping_info = $_this->getXMLDataByPath($xmlData, "ORDER-ADJUSTMENT/SHIPPING/MERCHANT-CALCULATED-SHIPPING-ADJUSTMENT");
-    $sm = new XLite_Model_Shipping();
+    $sm = new \XLite\Model\Shipping();
     $classes = GoogleCheckout_getShippingClassesSQL_STRING();
 
 $_this->xlite->logger->log("name='".addslashes($shipping_info["SHIPPING-NAME"])."' AND enabled=1 AND class IN($classes)");
@@ -506,7 +506,7 @@ $_this->xlite->logger->log("name='".addslashes($shipping_info["SHIPPING-NAME"]).
     }
 
     // Set Payment method
-    $pm = XLite_Model_PaymentMethod::factory('google_checkout');
+    $pm = \XLite\Model\PaymentMethod::factory('google_checkout');
     $order->setPaymentMethod($pm);
 
 
@@ -552,7 +552,7 @@ $_this->xlite->logger->log("name='".addslashes($shipping_info["SHIPPING-NAME"]).
     $is_new_profile = false;
     $profile = $order->get('profile');
     if (is_null($profile)) {
-        $profile = new XLite_Model_Profile();
+        $profile = new \XLite\Model\Profile();
         $is_new_profile = true;
     } else {
         $order->setProfileCopy($profile);
@@ -578,7 +578,7 @@ if ($is_new_profile) {
     $profile->set('billing_country', $billing_addr["COUNTRY-CODE"]);
     $profile->set('billing_zipcode', $billing_addr["POSTAL-CODE"]);
 
-    $state = XLite_Core_Dtabase::getRepo('XLite_Model_State')->finOneByCode(trim($billing_addr['REGION']));
+    $state = \XLite\Core\Dtabase::getRepo('XLite\Model\State')->finOneByCode(trim($billing_addr['REGION']));
     if ($state) {
         $profile->set('billing_state', $state->state_id);
 
@@ -598,7 +598,7 @@ if ($is_new_profile) {
     $profile->set('shipping_country', $shipping_addr["COUNTRY-CODE"]);
     $profile->set('shipping_zipcode', $shipping_addr["POSTAL-CODE"]);
 
-    $state = XLite_Core_Dtabase::getRepo('XLite_Model_State')->finOneByCode(trim($shipping_addr['REGION']));
+    $state = \XLite\Core\Dtabase::getRepo('XLite\Model\State')->finOneByCode(trim($shipping_addr['REGION']));
     if ($state) {
         $profile->set('shipping_state', $state->state_id);
     } else {
@@ -982,7 +982,7 @@ EOT;
 
 function GoogleCheckout_getOrderByGoogleId($googleId)
 {
-    $order = new XLite_Model_Order();
+    $order = new \XLite\Model\Order();
     if ($order->find("google_id='".addslashes($googleId)."'")) {
         return $order;
     }

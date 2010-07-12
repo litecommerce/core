@@ -26,14 +26,16 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\FeaturedProducts\Model;
+
 /**
- * XLite_Module_FeaturedProducts_Model_Category 
+ * \XLite\Module\FeaturedProducts\Model\Category 
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_FeaturedProducts_Model_Category extends XLite_Model_Category implements XLite_Base_IDecorator
+class Category extends \XLite\Model\Category implements \XLite\Base\IDecorator
 {
     /**
      * Cached featured products list
@@ -51,7 +53,7 @@ class XLite_Module_FeaturedProducts_Model_Category extends XLite_Model_Category 
      * 
      * @param string $orderby orderby string
      *  
-     * @return array of XLite_Module_FeaturedProducts_Model_FeaturedProduct objects
+     * @return array of \XLite\Module\FeaturedProducts\Model\FeaturedProduct objects
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -60,7 +62,7 @@ class XLite_Module_FeaturedProducts_Model_Category extends XLite_Model_Category 
     {
         if (!isset($this->featuredProducts)) {
 
-            $featuredProduct = new XLite_Module_FeaturedProducts_Model_FeaturedProduct();
+            $featuredProduct = new \XLite\Module\FeaturedProducts\Model\FeaturedProduct();
 
             foreach ($featuredProduct->findAll('category_id = \'' . $this->category_id . '\'', $orderby) as $handler) {
                 $_featuredProducts = array();
@@ -77,7 +79,7 @@ class XLite_Module_FeaturedProducts_Model_Category extends XLite_Model_Category 
     /**
      * Add specified products to the featured products list
      * 
-     * @param array $products Array of XLite_Model_Product objects
+     * @param array $products Array of \XLite\Model\Product objects
      *  
      * @return void
      * @access public
@@ -88,7 +90,7 @@ class XLite_Module_FeaturedProducts_Model_Category extends XLite_Model_Category 
     {
         if (is_array($products)) {
             foreach ($products as $product) {
-    			$fp = new XLite_Module_FeaturedProducts_Model_FeaturedProduct();
+    			$fp = new \XLite\Module\FeaturedProducts\Model\FeaturedProduct();
     			$fp->set('category_id', $this->category_id);
        			$fp->set('product_id', $product->get('product_id'));
         		if (!$fp->isExists()) {
@@ -101,7 +103,7 @@ class XLite_Module_FeaturedProducts_Model_Category extends XLite_Model_Category 
     /**
      * Delete specified products from the featured products list
      * 
-     * @param array $products Array of XLite_Model_Product objects
+     * @param array $products Array of \XLite\Model\Product objects
      *  
      * @return void
      * @access public
@@ -112,7 +114,7 @@ class XLite_Module_FeaturedProducts_Model_Category extends XLite_Model_Category 
     {
         if (is_array($products)) {
             foreach ($products as $product) {
-    			$fp = new XLite_Module_FeaturedProducts_Model_FeaturedProduct();
+    			$fp = new \XLite\Module\FeaturedProducts\Model\FeaturedProduct();
     			$fp->set('category_id', $this->category_id);
     			$fp->set('product_id', $product->get('product_id'));
     			$fp->delete();

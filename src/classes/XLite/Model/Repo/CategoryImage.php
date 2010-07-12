@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model\Repo;
+
 /**
  * Category
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_Repo_CategoryImage extends XLite_Model_Repo_Base_Image
+class CategoryImage extends \XLite\Model\Repo\Base\Image
 {
     /**
      * Define cache cells 

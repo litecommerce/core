@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Controller_Admin_CcCert extends XLite_Controller_Admin_AAdmin
+class CcCert extends \XLite\Controller\Admin\AAdmin
 {
 
     public $params = array('target', "cc_processor");
@@ -53,7 +55,7 @@ class XLite_Controller_Admin_CcCert extends XLite_Controller_Admin_AAdmin
 
     function saveParam($name, $value)
     {
-        XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+        \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
             array(
                 'category' => $this->get('cc_processor'),
                 'name'     => $name,

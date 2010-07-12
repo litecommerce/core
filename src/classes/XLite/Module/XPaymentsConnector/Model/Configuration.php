@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\XPaymentsConnector\Model;
+
 /**
  * Payment configuration
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_XPaymentsConnector_Model_Configuration extends XLite_Model_AModel
+class Configuration extends \XLite\Model\AModel
 {
     /**
      * Object properties (table filed => default value)
@@ -128,7 +130,7 @@ class XLite_Module_XPaymentsConnector_Model_Configuration extends XLite_Model_AM
     {
         parent::create();
 
-        $pm = new XLite_Module_XPaymentsConnector_Model_PaymentMethod_XPayment();
+        $pm = new \XLite\Module\XPaymentsConnector\Model\PaymentMethod\XPayment();
 
         $pm->set('payment_method', $this->get('method_name'));
         $pm->set('name', $this->get('name'));
@@ -154,7 +156,7 @@ class XLite_Module_XPaymentsConnector_Model_Configuration extends XLite_Model_AM
 
         parent::delete();
 
-        $pm = new XLite_Module_XPaymentsConnector_Model_PaymentMethod_XPayment();
+        $pm = new \XLite\Module\XPaymentsConnector\Model\PaymentMethod\XPayment();
         $pm = $pm->find('xpc_confid = \'' . $this->get('confid') . '\'');
         if ($pm) {
             $pm->delete();

@@ -63,7 +63,7 @@
 <tr class="{getProfileRow(#TableRow#)}" height="25">
     <td class="ProductDetailsTitle">Membership</td>
 	    <td IF="target=#order#">{if:profile.membership}{profile.membership:h}{else:}No membership{end:}</td>
-	    <td><widget class="XLite_View_MembershipSelect" field="cloned_profile[membership]" value="{cloneProfile.membership}"></td>
+	    <td><widget class="\XLite\View\MembershipSelect" field="cloned_profile[membership]" value="{cloneProfile.membership}"></td>
 </tr>
 </table>
 <table {if:target=#order#}width="100%"{else:}width="465"{end:} cellpadding="0" cellspacing="0">
@@ -126,12 +126,12 @@
 <tr class="{getProfileRow(#TableRow#)}" height="25">
     <td class="ProductDetailsTitle">State/Province</td>
     <td IF="target=#order#">{if:profile.billingState}{profile.billingState.state:h}{else:}N/A{end:}</td>
-    <td><widget class="XLite_View_StateSelect" field="cloned_profile[billing_state]" value="{cloneProfile.billing_state}"></td>
+    <td><widget class="\XLite\View\StateSelect" field="cloned_profile[billing_state]" value="{cloneProfile.billing_state}"></td>
 </tr>
 <tr class="{getProfileRow(#TableRow#)}" height="25">
     <td class="ProductDetailsTitle">Country</td>
     <td IF="target=#order#">{if:profile.billingCountry}{profile.billingCountry.country:h}{else:}N/A{end:}</td>
-    <td><widget class="XLite_View_CountrySelect" field="cloned_profile[billing_country]" value="{cloneProfile.billing_country}"></td>
+    <td><widget class="\XLite\View\CountrySelect" field="cloned_profile[billing_country]" value="{cloneProfile.billing_country}"></td>
 </tr>
 <tr class="{getProfileRow(#TableRow#)}" height="25">
     <td class="ProductDetailsTitle">Zip/Postal code</td>
@@ -203,12 +203,12 @@
 <tr class="{getProfileRow(#TableRow#)}" height="25">
     <td class="ProductDetailsTitle">State/Province</td>
     <td IF="target=#order#">{if:profile.shippingState}{profile.shippingState.state:h}{else:}N/A{end:}</td>
-    <td><widget class="XLite_View_StateSelect" field="cloned_profile[shipping_state]" value="{cloneProfile.shipping_state}"></td>
+    <td><widget class="\XLite\View\StateSelect" field="cloned_profile[shipping_state]" value="{cloneProfile.shipping_state}"></td>
 </tr>
 <tr class="{getProfileRow(#TableRow#)}" height="25">
     <td class="ProductDetailsTitle">Country</td>
     <td IF="target=#order#">{if:profile.shippingCountry}{profile.shippingCountry.country:h}{else:}N/A{end:}</td>
-    <td><widget class="XLite_View_CountrySelect" field="cloned_profile[shipping_country]" value="{cloneProfile.shipping_country}"></td>
+    <td><widget class="\XLite\View\CountrySelect" field="cloned_profile[shipping_country]" value="{cloneProfile.shipping_country}"></td>
 </tr>
 <tr class="{getProfileRow(#TableRow#)}" height="25">
     <td class="ProductDetailsTitle">Zip/Postal code</td>

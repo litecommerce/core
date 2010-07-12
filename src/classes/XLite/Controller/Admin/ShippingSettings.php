@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Controller_Admin_ShippingSettings extends XLite_Controller_Admin_AAdmin
+class ShippingSettings extends \XLite\Controller\Admin\AAdmin
 {
     public $params = array('target');
     public $page = "shipping_methods";
@@ -50,7 +52,7 @@ class XLite_Controller_Admin_ShippingSettings extends XLite_Controller_Admin_AAd
             return $this->_shippings;
         }
 
-        $shipping = new XLite_Model_Shipping();
+        $shipping = new \XLite\Model\Shipping();
     	$modules = $shipping->getModules();
     	$modules = (is_array($modules)) ? array_keys($modules) : array();
         $shippings = $shipping->findAll();

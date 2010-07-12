@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\WishList\Controller\Customer;
+
 /**
  * ____description____
  * 
@@ -33,12 +35,12 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_WishList_Controller_Customer_Checkout extends XLite_Controller_Customer_Checkout implements XLite_Base_IDecorator
+class Checkout extends \XLite\Controller\Customer\Checkout implements \XLite\Base\IDecorator
 {
     function success() 
     {
         if ($this->auth->get('profile')) {
-            $wishlist = new XLite_Module_WishList_Model_WishList();
+            $wishlist = new \XLite\Module\WishList\Model\WishList();
             $wishlist->find("profile_id = ". $this->auth->getComplex('profile.profile_id'));
             $wishlist_products = $wishlist->get('products');
         

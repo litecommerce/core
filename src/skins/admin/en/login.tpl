@@ -27,7 +27,7 @@
 <tr>
 <td valign=top>
 
-<widget class="XLite_View_TopMessage" />
+<widget class="\XLite\View\TopMessage" />
 
 <!-- [top] -->
 <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #f4f4f4; border-bottom: 1px solid #e9ecf3;">
@@ -136,7 +136,7 @@ if (navigator.appName.indexOf('Microsoft') >= 0) {
 <tr>
 <td align="center">
 <!-- [bottom] -->
-<widget class="XLite_View_PoweredBy" />
+<widget class="\XLite\View\PoweredBy" />
 <!-- [/bottom] -->
 
 </td>

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model;
+
 define('ORDER_EXPIRATION_TIME', 3600 * 24); // one day
 
 /**
@@ -35,7 +37,7 @@ define('ORDER_EXPIRATION_TIME', 3600 * 24); // one day
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_Order extends XLite_Model_AModel
+class Order extends \XLite\Model\AModel
 {
     /**
      * Object properties (table filed => default value)
@@ -137,13 +139,13 @@ class XLite_Model_Order extends XLite_Model_AModel
     /**
      * Create new cart item 
      * 
-     * @param XLite_Model_OrderItem $item new item
+     * @param \XLite\Model\OrderItem $item new item
      *  
      * @return void
      * @access protected
      * @since  3.0.0
      */
-    protected function _createItem(XLite_Model_OrderItem $item)
+    protected function _createItem(\XLite\Model\OrderItem $item)
     {
         if (!$this->isPersistent) {
             $this->create();
@@ -165,13 +167,13 @@ class XLite_Model_Order extends XLite_Model_AModel
      * 
      * @param boolean $clearCache Clear cache flag
      * 
-     * @return array of XLite_Model_ShippingRate
+     * @return array of \XLite\Model\ShippingRate
      * @access public
      * @since  3.0.0
      */
     public function getShippingRates($clearCache = false)
     {
-        return XLite_Model_CachingFactory::getObjectFromCallback(
+        return \XLite\Model\CachingFactory::getObjectFromCallback(
             __METHOD__,
             $this,
             'calcShippingRates',
@@ -191,7 +193,7 @@ class XLite_Model_Order extends XLite_Model_AModel
     {
         if (!isset($this->_items)) {
             if ($this->isPersistent) {
-                $item = new XLite_Model_OrderItem();
+                $item = new \XLite\Model\OrderItem();
                 $this->_items = $item->findAll('order_id = \'' . $this->get('order_id') . '\'', 'orderby');
 
             } else {
@@ -217,13 +219,13 @@ class XLite_Model_Order extends XLite_Model_AModel
     /**
      * Add item ro order
      * 
-     * @param XLite_Model_OrderItem $newItem item to add
+     * @param \XLite\Model\OrderItem $newItem item to add
      *  
      * @return boolean
      * @access public
      * @since  3.0.0
      */
-    public function addItem(XLite_Model_OrderItem $newItem)
+    public function addItem(\XLite\Model\OrderItem $newItem)
     {
         $result = false;
 
@@ -409,7 +411,7 @@ class XLite_Model_Order extends XLite_Model_AModel
     */
     function calcAllTaxes() 
     {
-        $taxRates = new XLite_Model_TaxRates();
+        $taxRates = new \XLite\Model\TaxRates();
         $taxRates->set('order', $this);
         $result = array();
         $items = $this->getItems();
@@ -631,7 +633,7 @@ class XLite_Model_Order extends XLite_Model_AModel
                     break;
                 }
 
-                $shippingMethod = new XLite_Model_Shipping($shippingID);
+                $shippingMethod = new \XLite\Model\Shipping($shippingID);
                 $this->setShippingMethod($shippingMethod);
                 $cost = $shippingMethod->calculate($this);
             }
@@ -645,7 +647,7 @@ class XLite_Model_Order extends XLite_Model_AModel
     /**
      * Calculate shipping rates 
      * 
-     * @return array of XLite_Moel_ShippingRate
+     * @return array of \XLite\Moel\ShippingRate
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -657,7 +659,7 @@ class XLite_Model_Order extends XLite_Model_AModel
             // For UPS Online Tools compatibility
             $data = array();
             
-            foreach (XLite_Model_Shipping::getModules() as $module) {
+            foreach (\XLite\Model\Shipping::getModules() as $module) {
                 $data += $module->getRates($this);
             }
 
@@ -672,15 +674,15 @@ class XLite_Model_Order extends XLite_Model_AModel
     /**
      * Shipping rates sorting callback 
      * 
-     * @param XLite_Model_ShippingRate $a First shipping rate
-     * @param XLite_Model_ShippingRate $b Second shipping rate
+     * @param \XLite\Model\ShippingRate $a First shipping rate
+     * @param \XLite\Model\ShippingRate $b Second shipping rate
      *  
      * @return integer
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getShippingRatesOrderCallback(XLite_Model_ShippingRate $a, XLite_Model_ShippingRate $b)
+    public function getShippingRatesOrderCallback(\XLite\Model\ShippingRate $a, \XLite\Model\ShippingRate $b)
     {
         $sa = $a->getShipping();
         $sb = $b->getShipping();
@@ -715,7 +717,7 @@ class XLite_Model_Order extends XLite_Model_AModel
         $this->$name = null;
 
         if ('shippingRates' == $name) {
-            XLite_Model_CachingFactory::clearCacheCell(__CLASS__ . '::getShippingRates');
+            \XLite\Model\CachingFactory::clearCacheCell(__CLASS__ . '::getShippingRates');
         }
 
     }
@@ -761,7 +763,7 @@ class XLite_Model_Order extends XLite_Model_AModel
     /**
      * Get shipping method 
      * 
-     * @return XLite_Model_Shipping
+     * @return \XLite\Model\Shipping
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -769,7 +771,7 @@ class XLite_Model_Order extends XLite_Model_AModel
     public function getShippingMethod() 
     {
         if (is_null($this->_shippingMethod) && $this->get('shipping_id')) {
-            $this->_shippingMethod = new XLite_Model_Shipping($this->get('shipping_id'));
+            $this->_shippingMethod = new \XLite\Model\Shipping($this->get('shipping_id'));
         }
 
         return $this->_shippingMethod;
@@ -778,7 +780,7 @@ class XLite_Model_Order extends XLite_Model_AModel
     /**
      * Set shipping method 
      * 
-     * @param XLite_Model_Shipping $shippingMethod Shipping method
+     * @param \XLite\Model\Shipping $shippingMethod Shipping method
      *  
      * @return void
      * @access public
@@ -787,7 +789,7 @@ class XLite_Model_Order extends XLite_Model_AModel
      */
     public function setShippingMethod($shippingMethod) 
     {
-        if (!is_null($shippingMethod) && $shippingMethod instanceof XLite_Model_Shipping) {
+        if (!is_null($shippingMethod) && $shippingMethod instanceof \XLite\Model\Shipping) {
             $this->_shippingMethod = $shippingMethod;
             $this->set('shipping_id', $shippingMethod->get('shipping_id'));
 
@@ -800,7 +802,7 @@ class XLite_Model_Order extends XLite_Model_AModel
     /**
      * Get payment method 
      * 
-     * @return XLite_Model_PaymentMethod
+     * @return \XLite\Model\PaymentMethod
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -808,7 +810,7 @@ class XLite_Model_Order extends XLite_Model_AModel
     public function getPaymentMethod()
     {
         if (is_null($this->_paymentMethod) && $this->get('payment_method')) {
-            $this->_paymentMethod = XLite_Model_PaymentMethod::factory($this->get('payment_method'));
+            $this->_paymentMethod = \XLite\Model\PaymentMethod::factory($this->get('payment_method'));
         }
 
         return $this->_paymentMethod;
@@ -817,7 +819,7 @@ class XLite_Model_Order extends XLite_Model_AModel
     /**
      * Set payment method 
      * 
-     * @param XLite_Model_PaymentMethod $paymentMethod Payment method
+     * @param \XLite\Model\PaymentMethod $paymentMethod Payment method
      *  
      * @return void
      * @access public
@@ -840,7 +842,7 @@ class XLite_Model_Order extends XLite_Model_AModel
         if (!isset($this->_profile)) {
             $pid = $this->get('profile_id');
             if ($pid) {
-                $this->_profile = new XLite_Model_Profile($pid);
+                $this->_profile = new \XLite\Model\Profile($pid);
             }
         }
 
@@ -857,7 +859,7 @@ class XLite_Model_Order extends XLite_Model_AModel
     {
         if (!isset($this->_origProfile)) {
             if ($pid = $this->get('orig_profile_id')) {
-                $this->_origProfile = new XLite_Model_Profile($pid);
+                $this->_origProfile = new \XLite\Model\Profile($pid);
 
             } else {
                 return $this->getProfile();
@@ -907,14 +909,14 @@ class XLite_Model_Order extends XLite_Model_AModel
     */
     function getTaxLabel($name) 
     {
-        $tax = new XLite_Model_TaxRates();
+        $tax = new \XLite\Model\TaxRates();
 
         return $tax->getTaxLabel($name);
     }
 
     function getRegistration($name) 
     {
-        $tax = new XLite_Model_TaxRates();
+        $tax = new \XLite\Model\TaxRates();
 
         return $tax->getRegistration($name);
     }
@@ -949,7 +951,7 @@ class XLite_Model_Order extends XLite_Model_AModel
             return null;
         }
 
-        $taxRates = new XLite_Model_TaxRates();
+        $taxRates = new \XLite\Model\TaxRates();
         $values = $names = $orderby = array();
         foreach ($this->get('allTaxes') as $name => $value) {
             if ($taxRates->getTaxLabel($name)) {
@@ -1004,14 +1006,14 @@ class XLite_Model_Order extends XLite_Model_AModel
     /**
      * Delete order item 
      * 
-     * @param XLite_Model_OrderItem $item Item
+     * @param \XLite\Model\OrderItem $item Item
      *  
      * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function deleteItem(XLite_Model_OrderItem $item) 
+    public function deleteItem(\XLite\Model\OrderItem $item) 
     {
         $item->delete();
         $this->refresh('items');
@@ -1038,14 +1040,14 @@ class XLite_Model_Order extends XLite_Model_AModel
     /**
      * Check - item exist in order or not 
      * 
-     * @param XLite_Model_OrderItem $item Item
+     * @param \XLite\Model\OrderItem $item Item
      *  
      * @return boolean
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function isExistsItem(XLite_Model_OrderItem $item)
+    public function isExistsItem(\XLite\Model\OrderItem $item)
     {
         $result = false;
 
@@ -1278,7 +1280,7 @@ class XLite_Model_Order extends XLite_Model_AModel
     /**
      * Orders search 
      * 
-     * @param XLite_Model_Profile $profile       Profile
+     * @param \XLite\Model\Profile $profile       Profile
      * @param integer             $id            Order id
      * @param string              $status        Status code
      * @param integer             $startDate     Date (start range)
@@ -1287,7 +1289,7 @@ class XLite_Model_Order extends XLite_Model_AModel
      * @param string              $sortCriterion Sort criterion (field name)
      * @param boolean             $sortOrderAsc  User ascending sort order
      *  
-     * @return array of XLite_Model_Order
+     * @return array of \XLite\Model\Order
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -1336,7 +1338,7 @@ class XLite_Model_Order extends XLite_Model_AModel
     /**
      * Get orders count (by profile)
      * 
-     * @param XLite_Model_Profile $profile      Profile
+     * @param \XLite\Model\Profile $profile      Profile
      * @param boolean             $orig_profile User original profile instead basic profile
      *  
      * @return void
@@ -1344,7 +1346,7 @@ class XLite_Model_Order extends XLite_Model_AModel
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getCountByProfile(XLite_Model_Profile $profile = null, $orig_profile = true)
+    public function getCountByProfile(\XLite\Model\Profile $profile = null, $orig_profile = true)
     {
         $where = array();
 
@@ -1464,7 +1466,7 @@ class XLite_Model_Order extends XLite_Model_AModel
             !in_array($status, array('P', "C", "I"))
             && ($this->config->Email->enable_init_order_notif || $this->config->Email->enable_init_order_notif_customer)
         ) {
-            $mail = new XLite_Model_Mailer();
+            $mail = new \XLite\Model\Mailer();
 
             // for compatibility with dialog.order syntax in mail templates
             $mail->order = $this;
@@ -1508,7 +1510,7 @@ class XLite_Model_Order extends XLite_Model_AModel
      */
     protected function processed()
     {
-        $mail = new XLite_Model_Mailer();
+        $mail = new \XLite\Model\Mailer();
         $mail->order = $this;
         $mail->adminMail = true;
         $mail->set('charset', $this->xlite->config->Company->locationCountry->charset);
@@ -1552,7 +1554,7 @@ class XLite_Model_Order extends XLite_Model_AModel
      */
     protected function failed()
     {
-        $mail = new XLite_Model_Mailer();
+        $mail = new \XLite\Model\Mailer();
         $mail->order = $this;
         $mail->adminMail = true;
         $mail->set('charset', $this->xlite->config->Company->locationCountry->charset);
@@ -1632,7 +1634,7 @@ class XLite_Model_Order extends XLite_Model_AModel
     */
     function collectGarbage($limit = null) 
     {
-        $order = new XLite_Model_Order();
+        $order = new \XLite\Model\Order();
         $order->_range = "status = 'T'";
         $orders = $order->findAll("date < ".(time()-ORDER_EXPIRATION_TIME), 'date', null, $limit);
         foreach ($orders as $o) {

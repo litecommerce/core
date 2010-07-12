@@ -61,8 +61,16 @@ class XLite_Sniffs_PHP_NamingConventions_ValidClassNameSniff extends XLite_NameS
     {
         $tokens = $phpcsFile->getTokens();
 
+		$ns = $phpcsFile->findPrevious(T_NAMESPACE, $stackPtr);
+
         $className = $phpcsFile->findNext(T_STRING, $stackPtr);
         $name      = trim($tokens[$className]['content']);
+		if ($ns) {
+			$ns1 = $phpcsFile->findNext(T_STRING, $ns);
+			$ns2 = $phpcsFile->findNext(T_SEMICOLON, $ns);
+			$ns = $phpcsFile->getTokensAsString($ns1, $ns2 - $ns1);
+			$name = $ns . '\\' . $name;
+		}
 
         // Make sure the first letter is a capital.
         if (preg_match('|^[A-Z]|', $name) === 0) {

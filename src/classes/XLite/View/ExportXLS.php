@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View;
+
 /**
  * Export into XLS-format widget
  *
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_ExportXLS extends XLite_View_AView
+class ExportXLS extends \XLite\View\AView
 {
     /**
      * Return widget default template

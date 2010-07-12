@@ -139,7 +139,7 @@ No coupons found.
 {else:}
 <b>{couponsNumber}</b> coupon{if:!couponsNumber=#1#}s are{else:} is{end:} found.
 {end:}
-<widget class="XLite_View_Pager" name="pager" data="{coupons}" itemsPerPage="{config.Promotion.coupons_per_page}">
+<widget class="\XLite\View\Pager" name="pager" data="{coupons}" itemsPerPage="{config.Promotion.coupons_per_page}">
 <table width="100%" border="0" IF="coupons">
 <form action="admin.php" method="POST" name="coupons_form">
 <input type="hidden" name="target" value="DiscountCoupons">
@@ -225,7 +225,7 @@ orders greater than {price_format(DC.minamount):h}
 		<tr class="DialogBox">
         <td IF="child.order" width=50>&nbsp;<a href="admin.php?target=order&order_id={child.order_id}">#<u>{child.order_id}</u></a>&nbsp;<span IF="!child.coupon=DC.coupon">(<b>{child.coupon}</b>)</span></td>
         <td IF="!child.order" width=50>&nbsp;#{child.order_id}&nbsp;(child.coupon)</td>
-        <td IF="child.order" width=90>&nbsp;<widget class="XLite_View_StatusSelect" order="{child.order}" template="common/order_status.tpl"></td>
+        <td IF="child.order" width=90>&nbsp;<widget class="\XLite\View\StatusSelect" order="{child.order}" template="common/order_status.tpl"></td>
         <td IF="!child.order" width=90>&nbsp;n/a&nbsp;</td>
         <td nowrap IF="child.order" width=120>&nbsp;<a href="admin.php?target=order&order_id={child.order_id}">{time_format(child.order.date)}</a>&nbsp;</td>
         <td IF="!child.order" width=120>&nbsp;n/a&nbsp;</td>
@@ -297,7 +297,7 @@ orders greater than {price_format(DC.minamount):h}
 </tr>
 <tr><td>Expires</td>
 <td>
-<widget class="XLite_View_Date" field="expire">
+<widget class="\XLite\View\Date" field="expire">
 </td></tr>
 <TR>
 <TD valign="top">Apply to</TD>
@@ -305,9 +305,9 @@ orders greater than {price_format(DC.minamount):h}
 <table border="0">
 <tr><td valign="top"><INPUT type="radio" name="applyTo" value="total" checked="{applyTo=#total#}"></td>
 <td>order subtotal, $<br><input type="text" size="24" name="minamount" value="{minamount}"></td></tr>
-<tr><td valign="top"><INPUT type="radio" name="applyTo" value="product" checked="{applyTo=#product#}"></td><td>one product<br><widget class="XLite_View_ProductSelect" formName="coupon_form"></td></tr>
+<tr><td valign="top"><INPUT type="radio" name="applyTo" value="product" checked="{applyTo=#product#}"></td><td>one product<br><widget class="\XLite\View\ProductSelect" formName="coupon_form"></td></tr>
 <tr><td valign="top"><INPUT type="radio" name="applyTo" value="category" checked="{applyTo=#category#}"></td><td>one category
-<br><widget class="XLite_View_CategorySelect" fieldName="category_id">
+<br><widget class="\XLite\View\CategorySelect" fieldName="category_id">
 </td>
 </tr>
 </table>

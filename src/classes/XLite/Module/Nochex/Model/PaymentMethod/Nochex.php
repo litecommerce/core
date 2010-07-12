@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Nochex\Model\PaymentMethod;
+
 /**
  * ____description____
  * 
@@ -33,13 +35,13 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Nochex_Model_PaymentMethod_Nochex extends XLite_Model_PaymentMethod_CreditCard
+class Nochex extends \XLite\Model\PaymentMethod\CreditCard
 {
     public $configurationTemplate = "modules/Nochex/config.tpl";
     public $formTemplate = "modules/Nochex/checkout.tpl";
     public $processorName = "Nochex";
     
-    function handleRequest(XLite_Model_Cart $order)
+    function handleRequest(\XLite\Model\Cart $order)
     {
         require_once LC_MODULES_DIR . 'Nochex' . LC_DS . 'encoded.php';
         PaymentMethod_nochex_handleRequest($order,$this);

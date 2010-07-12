@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model;
+
 define('NOTIFY_INTERVAL', 24 * 60 * 60);
 
 /**
@@ -35,7 +37,7 @@ define('NOTIFY_INTERVAL', 24 * 60 * 60);
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_WaitingIP extends XLite_Model_AModel
+class WaitingIP extends \XLite\Model\AModel
 {
     public $fields = array(
                     "id" => "0",
@@ -73,7 +75,7 @@ class XLite_Model_WaitingIP extends XLite_Model_AModel
 
     function notifyAdmin()
     {
-        $mail = new XLite_Model_Mailer();
+        $mail = new \XLite\Model\Mailer();
         $mail->waiting_ip = $this;
         $mail->adminMail = true;
         $mail->set('charset', $this->xlite->config->Company->locationCountry->charset);
@@ -111,7 +113,7 @@ class XLite_Model_WaitingIP extends XLite_Model_AModel
             $list[] = array('ip' => $ip, 'comment' => '');
         }
 
-        XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+        \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
             array(
                 'category' => 'SecurityIP',
                 'name'     => 'allow_admin_ip',

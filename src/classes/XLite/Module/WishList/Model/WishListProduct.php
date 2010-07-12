@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\WishList\Model;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_WishList_Model_WishListProduct extends XLite_Model_AModel
+class WishListProduct extends \XLite\Model\AModel
 {
     public $product   = null;
     public $orderItem = null;
@@ -71,7 +73,7 @@ class XLite_Module_WishList_Model_WishListProduct extends XLite_Model_AModel
         );
 
         // Search in current wishlist by item ID
-        $result = $this->find(XLite_Core_Converter::buildQuery(array_map('addslashes', $properties), '=', ' AND ', '\''));
+        $result = $this->find(\XLite\Core\Converter::buildQuery(array_map('addslashes', $properties), '=', ' AND ', '\''));
 
         if (!$result) {
             // Assign object properties manually, since they were not assigned in "find()"
@@ -84,7 +86,7 @@ class XLite_Module_WishList_Model_WishListProduct extends XLite_Model_AModel
     function getProduct()  
     {
         if (!isset($this->product)) {
-            $this->product = new XLite_Model_Product($this->get('product_id'));
+            $this->product = new \XLite\Model\Product($this->get('product_id'));
         }
 
         return $this->product;
@@ -93,7 +95,7 @@ class XLite_Module_WishList_Model_WishListProduct extends XLite_Model_AModel
     /**
      * Return the Thumbnai image instance for this product 
      * 
-     * @return XLite_Model_Image
+     * @return \XLite\Model\Image
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -105,7 +107,7 @@ class XLite_Module_WishList_Model_WishListProduct extends XLite_Model_AModel
     function getOrderItem() 
     {
         if (!isset($this->orderItem)) {
-            $this->orderItem = new XLite_Model_OrderItem();
+            $this->orderItem = new \XLite\Model\OrderItem();
             $this->orderItem->set('product', $this->getProduct());
         }
         
@@ -171,7 +173,7 @@ class XLite_Module_WishList_Model_WishListProduct extends XLite_Model_AModel
      */
     public function getUrl() 
     {
-        return XLite_Core_Converter::getInstance()->buildUrl(
+        return \XLite\Core\Converter::getInstance()->buildUrl(
             'product',
             '',
             array('product_id' => $this->get('product_id'))

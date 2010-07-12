@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model;
+
 /**
  * Payment method 
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_PaymentMethod extends XLite_Model_AModel
+class PaymentMethod extends \XLite\Model\AModel
 {
     /**
      * Values returned by habdleRequest($order)
@@ -114,12 +116,12 @@ class XLite_Model_PaymentMethod extends XLite_Model_AModel
      * @since  3.0.0
      */
     protected static $registeredPaymentMethods = array(
-        'PhoneOrdering' => 'Model_PaymentMethod_Offline',
-        'FaxOrdeing'    => 'Model_PaymentMethod_Offline',
-        'PurchaseOrder' => 'Model_PaymentMethod_Offline',
-        'Echeck'        => 'Model_PaymentMethod_Echeck',
-        'COD'           => 'Model_PaymentMethod_Offline',
-        'MoneyOrdering' => 'Model_PaymentMethod_Offline',
+        'PhoneOrdering' => 'Model\PaymentMethod\Offline',
+        'FaxOrdeing'    => 'Model\PaymentMethod\Offline',
+        'PurchaseOrder' => 'Model\PaymentMethod\Offline',
+        'Echeck'        => 'Model\PaymentMethod\Echeck',
+        'COD'           => 'Model\PaymentMethod\Offline',
+        'MoneyOrdering' => 'Model\PaymentMethod\Offline',
     );
 
     /**
@@ -137,14 +139,14 @@ class XLite_Model_PaymentMethod extends XLite_Model_AModel
     /**
      * Handle request 
      * 
-     * @param XLite_Model_Cart $cart Cart
+     * @param \XLite\Model\Cart $cart Cart
      *  
      * @return integer Operation status
      * @access public
      * @see    ____func_see____
      * @since  3.0.0.0
      */
-    public function handleRequest(XLite_Model_Cart $cart)
+    public function handleRequest(\XLite\Model\Cart $cart)
     {
     }
 
@@ -153,7 +155,7 @@ class XLite_Model_PaymentMethod extends XLite_Model_AModel
      * 
      * @param string $name Payment method name
      *  
-     * @return XLite_Model_PaymentMethod
+     * @return \XLite\Model\PaymentMethod
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -197,9 +199,9 @@ class XLite_Model_PaymentMethod extends XLite_Model_AModel
      * A method which registers a new payment method $name.
      * A payment method won't be visible untill you register it.
      * Re-create this object after you call this method, like this:
-     * $pm = new XLite_Model_PaymentMethod();
+     * $pm = new \XLite\Model\PaymentMethod();
      * $pm->registerMethod('my_method');
-     * $pm = new XLite_Model_PaymentMethod();
+     * $pm = new \XLite\Model\PaymentMethod();
      * $pm->getActiveMethods();
      *
      * @param string $name  method name
@@ -233,7 +235,7 @@ class XLite_Model_PaymentMethod extends XLite_Model_AModel
     /**
      * Return list of active payment methods 
      * 
-     * @return XLite_Model_PaymentMethod
+     * @return \XLite\Model\PaymentMethod
      * @access public
      * @since  3.0.0
      */
@@ -251,7 +253,7 @@ class XLite_Model_PaymentMethod extends XLite_Model_AModel
      */
     public function handleConfigRequest()
     {
-        $this->set('params', XLite_Core_Request::getInstance()->params);
+        $this->set('params', \XLite\Core\Request::getInstance()->params);
         $this->update();
     }
     
@@ -308,7 +310,7 @@ class XLite_Model_PaymentMethod extends XLite_Model_AModel
      * 
      * @param string $name payment method name
      *  
-     * @return XLite_Model_PaymentMethod
+     * @return \XLite\Model\PaymentMethod
      * @access public
      * @since  3.0.0
      */
@@ -318,7 +320,7 @@ class XLite_Model_PaymentMethod extends XLite_Model_AModel
             die ('Payment method "' . $name . '" is not registered');
         }
 
-        $className = 'XLite_' . self::$registeredPaymentMethods[$name];
+        $className = 'XLite\\' . self::$registeredPaymentMethods[$name];
 
         return new $className($name);
     }

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\DrupalConnector\Controller\Customer;
+
 /**
  * Invoice controller
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_DrupalConnector_Controller_Customer_Invoice extends XLite_Controller_Customer_Invoice implements XLite_Base_IDecorator
+class Invoice extends \XLite\Controller\Customer\Invoice implements \XLite\Base\IDecorator
 {
     /**
      * Get additional bread crumbs list
@@ -47,7 +49,7 @@ class XLite_Module_DrupalConnector_Controller_Customer_Invoice extends XLite_Con
     {
         return array(
             array('Orders history', $this->buildUrl('order_list')),
-            array('Order', $this->buildUrl('order', '', array('order_id' => XLite_Core_Request::getInstance()->order_id))),
+            array('Order', $this->buildUrl('order', '', array('order_id' => \XLite\Core\Request::getInstance()->order_id))),
         );
     }
 

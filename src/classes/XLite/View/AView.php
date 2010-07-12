@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View;
+
 /**
  * Abstract widget
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class XLite_View_AView extends XLite_Core_Handler
+abstract class AView extends \XLite\Core\Handler
 {
     /**
      * Resource types
@@ -167,7 +169,7 @@ abstract class XLite_View_AView extends XLite_Core_Handler
      */
     protected static function getSkinURL($url)
     {
-        return XLite_Model_Layout::getInstance()->getSkinURL($url);
+        return \XLite\Model\Layout::getInstance()->getSkinURL($url);
     }
 
     /**
@@ -206,7 +208,7 @@ abstract class XLite_View_AView extends XLite_Core_Handler
      */
     protected function getTemplateFile()
     {
-        return XLite_Model_Layout::getInstance()->getLayout($this->getTemplate());
+        return \XLite\Model\Layout::getInstance()->getLayout($this->getTemplate());
     }
 
     /**
@@ -241,7 +243,7 @@ abstract class XLite_View_AView extends XLite_Core_Handler
      * 
      * @param string $class child widget class
      *  
-     * @return XLite_View_AView
+     * @return \XLite\View\AView
      * @access protected
      * @since  3.0.0
      */
@@ -276,7 +278,7 @@ abstract class XLite_View_AView extends XLite_Core_Handler
             $paramName  = self::PARAM_SESSION_CELL;
             $paramValue = $this->getWidgetParams(self::PARAM_SESSION_CELL)->value;
 
-            $this->sessionCellStatus = XLite_Core_Request::getInstance()->$paramName == $paramValue;
+            $this->sessionCellStatus = \XLite\Core\Request::getInstance()->$paramName == $paramValue;
         }
 
         return $this->sessionCellStatus;
@@ -306,10 +308,10 @@ abstract class XLite_View_AView extends XLite_Core_Handler
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_TEMPLATE     => new XLite_Model_WidgetParam_File('Template', $this->getDefaultTemplate()),
-            self::PARAM_VISIBLE      => new XLite_Model_WidgetParam_Bool('Visible', true),
-            self::PARAM_MODE         => new XLite_Model_WidgetParam_Collection('Modes', $this->getDefaultModes()),
-            self::PARAM_SESSION_CELL => new XLite_Model_WidgetParam_String('Session cell', $this->getSessionCell()),
+            self::PARAM_TEMPLATE     => new \XLite\Model\WidgetParam\File('Template', $this->getDefaultTemplate()),
+            self::PARAM_VISIBLE      => new \XLite\Model\WidgetParam\Bool('Visible', true),
+            self::PARAM_MODE         => new \XLite\Model\WidgetParam\Collection('Modes', $this->getDefaultModes()),
+            self::PARAM_SESSION_CELL => new \XLite\Model\WidgetParam\String('Session cell', $this->getSessionCell()),
         );
     }
 
@@ -358,7 +360,7 @@ abstract class XLite_View_AView extends XLite_Core_Handler
         if (!isset($this->savedRequestParams)) {
 
             // Cache the session cell (variable) associatd with the current widget
-            $this->savedRequestParams = XLite_Model_Session::getInstance()->get(
+            $this->savedRequestParams = \XLite\Model\Session::getInstance()->get(
                 $this->getWidgetParams(self::PARAM_SESSION_CELL)->value
             );
 
@@ -386,7 +388,7 @@ abstract class XLite_View_AView extends XLite_Core_Handler
         // For this, we check if "session cell" param is not passed or is not equal to the current one
         $value = $this->checkSessionCell() ? null : $this->getSavedRequestParam($param);
 
-        return isset($value) ? $value : XLite_Core_Request::getInstance()->$param;
+        return isset($value) ? $value : \XLite\Core\Request::getInstance()->$param;
     }
 
     /**
@@ -401,7 +403,7 @@ abstract class XLite_View_AView extends XLite_Core_Handler
      */
     protected static function getResourcesSchema(array $jsResources = array(), array $cssResources = array())
     {
-        return XLite_Core_Converter::getArraySchema(array_keys(self::$resources), array($jsResources, $cssResources));
+        return \XLite\Core\Converter::getArraySchema(array_keys(self::$resources), array($jsResources, $cssResources));
     }
 
     /**
@@ -460,7 +462,7 @@ abstract class XLite_View_AView extends XLite_Core_Handler
         $allowedModes = $this->getParam(self::PARAM_MODE);
 
         return empty($allowedModes)
-            || in_array(XLite_Core_Request::getInstance()->mode, $allowedModes);
+            || in_array(\XLite\Core\Request::getInstance()->mode, $allowedModes);
     }
 
     /**
@@ -477,7 +479,7 @@ abstract class XLite_View_AView extends XLite_Core_Handler
 
         // Save all "request" parameters in session
         if ($this->checkSessionCell()) {
-            XLite_Model_Session::getInstance()->set(
+            \XLite\Model\Session::getInstance()->set(
                 $this->getParam(self::PARAM_SESSION_CELL),
                 $this->getRequestParams()
             );
@@ -518,20 +520,20 @@ abstract class XLite_View_AView extends XLite_Core_Handler
             }
 
             // Save compiled data and checng file access time to prevent repeated compiling
-            file_put_contents($compiled, XLite_Core_FlexyCompiler::getInstance()->parse($original));
+            file_put_contents($compiled, \XLite\Core\FlexyCompiler::getInstance()->parse($original));
             touch($compiled, filemtime($original));
         }
 
         // Execute PHP code from compiled template
-        $cnt = XLite_View_AView::$countDeep++;
-        $cntLevel = XLite_View_AView::$countLevel++;
-        $markTemplates = XLite_Logger::isMarkTemplates();
-        $profilerEnabled = XLite_Model_Profiler::isTemplatesProfilingEnabled();
+        $cnt = \XLite\View\AView::$countDeep++;
+        $cntLevel = \XLite\View\AView::$countLevel++;
+        $markTemplates = \XLite\Logger::isMarkTemplates();
+        $profilerEnabled = \XLite\Model\Profiler::isTemplatesProfilingEnabled();
 
         if ($profilerEnabled) {
             $timePoint = str_repeat('+', $cntLevel) . '[TPL ' . str_repeat('0', 4 - strlen((string)$cnt)) . $cnt . '] '
                 . get_called_class() . ' :: ' . substr($original, strlen(LC_SKINS_DIR));
-            XLite_Model_Profiler::getInstance()->log($timePoint);
+            \XLite\Model\Profiler::getInstance()->log($timePoint);
         }
 
         if ($markTemplates) {
@@ -554,10 +556,10 @@ abstract class XLite_View_AView extends XLite_Core_Handler
         }
 
         if ($profilerEnabled) {
-            XLite_Model_Profiler::getInstance()->log($timePoint);
+            \XLite\Model\Profiler::getInstance()->log($timePoint);
         }
 
-        XLite_View_AView::$countLevel--;
+        \XLite\View\AView::$countLevel--;
     }
 
     /**
@@ -594,7 +596,7 @@ abstract class XLite_View_AView extends XLite_Core_Handler
      * @param string $class  widget class
      * @param string $name   widget class
      *
-     * @return XLite_View_AView
+     * @return \XLite\View\AView
      * @access public
      * @since  3.0.0
      */
@@ -684,7 +686,7 @@ abstract class XLite_View_AView extends XLite_Core_Handler
     {
         $list = array();
 
-        if (XLite_Logger::isMarkTemplates()) {
+        if (\XLite\Logger::isMarkTemplates()) {
             $list[] = 'template_debuger.css';
         }
 
@@ -706,7 +708,7 @@ abstract class XLite_View_AView extends XLite_Core_Handler
             'js/jquery.mousewheel.js',
         );
 
-        if (XLite_Logger::isMarkTemplates()) {
+        if (\XLite\Logger::isMarkTemplates()) {
             $list[] = 'js/template_debuger.js';
         }
 
@@ -763,20 +765,20 @@ abstract class XLite_View_AView extends XLite_Core_Handler
      */
     public function isDisplayRequired(array $targets)
     {
-        return in_array(XLite_Core_Request::getInstance()->target, $targets);
+        return in_array(\XLite\Core\Request::getInstance()->target, $targets);
     }
 
     /**
      * Get current language 
      * 
-     * @return XLite_Model_Language
+     * @return \XLite\Model\Language
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
     public function getCurrentLanguage()
     {
-        return XLite_Model_Session::getInstance()->getLanguage();
+        return \XLite\Model\Session::getInstance()->getLanguage();
     }
 
     /**
@@ -792,7 +794,7 @@ abstract class XLite_View_AView extends XLite_Core_Handler
     {
         $value = parent::get($name);
 
-        return isset($value) ? $value : XLite::getController()->get($name);
+        return isset($value) ? $value : \XLite::getController()->get($name);
     }
 
     /**
@@ -808,7 +810,7 @@ abstract class XLite_View_AView extends XLite_Core_Handler
     {
         $value = parent::__get($name);
 
-        return isset($value) ? $value : XLite::getController()->$name;
+        return isset($value) ? $value : \XLite::getController()->$name;
     }
 
     /**
@@ -823,7 +825,7 @@ abstract class XLite_View_AView extends XLite_Core_Handler
      */
     public function __call($method, array $args = array())
     {
-        return call_user_func_array(array(XLite::getController(), $method), $args);
+        return call_user_func_array(array(\XLite::getController(), $method), $args);
     }
 
     /**
@@ -1143,17 +1145,17 @@ abstract class XLite_View_AView extends XLite_Core_Handler
     protected function defineViewList($list)
     {
         $class = $this->getViewListClass();
-        $zone = XLite::isAdminZone()
-            ? XLite_Model_ViewList::ADMIN_INTERFACE
-            : XLite_Model_ViewList::CUSTOMER_INTERFACE;
+        $zone = \XLite::isAdminZone()
+            ? \XLite\Model\ViewList::ADMIN_INTERFACE
+            : \XLite\Model\ViewList::CUSTOMER_INTERFACE;
 
-        $childs = XLite_Core_Database::getRepo('XLite_Model_ViewList')
+        $childs = \XLite\Core\Database::getRepo('XLite\Model\ViewList')
             ->findClassList($class, $list, $zone);
 
         $widgets = array();
 
-        $path = XLite_Model_Layout::getInstance()->skin . LC_DS
-            . XLite_Model_Layout::getInstance()->locale . LC_DS;
+        $path = \XLite\Model\Layout::getInstance()->skin . LC_DS
+            . \XLite\Model\Layout::getInstance()->locale . LC_DS;
         $pathLength = strlen($path);
 
         foreach ($childs as $widget) {

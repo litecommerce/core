@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View;
+
 
 /**
  * Category selector
@@ -34,7 +36,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_CategorySelect extends XLite_View_AView
+class CategorySelect extends \XLite\View\AView
 {
     const PARAM_ALL_OPTION           = 'allOption';
     const PARAM_NONE_OPTION          = 'noneOption';
@@ -76,13 +78,13 @@ class XLite_View_CategorySelect extends XLite_View_AView
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_ALL_OPTION           => new XLite_Model_WidgetParam_Bool('Display All option', false),
-            self::PARAM_NONE_OPTION          => new XLite_Model_WidgetParam_Bool('Display None option', false),
-            self::PARAM_ROOT_OPTION          => new XLite_Model_WidgetParam_Bool('Display [Root level] option', false),
-            self::PARAM_FIELD_NAME           => new XLite_Model_WidgetParam_String('Field name', ''),
-            self::PARAM_SELECTED_CATEGORY_ID => new XLite_Model_WidgetParam_Int('Selected category id', 0),
-            self::PARAM_CURRENT_CATEGORY_ID  => new XLite_Model_WidgetParam_Int('Current category id', 0),
-            self::PARAM_IGNORE_CURRENT_PATH  => new XLite_Model_WidgetParam_Bool('Ignore current path', false)
+            self::PARAM_ALL_OPTION           => new \XLite\Model\WidgetParam\Bool('Display All option', false),
+            self::PARAM_NONE_OPTION          => new \XLite\Model\WidgetParam\Bool('Display None option', false),
+            self::PARAM_ROOT_OPTION          => new \XLite\Model\WidgetParam\Bool('Display [Root level] option', false),
+            self::PARAM_FIELD_NAME           => new \XLite\Model\WidgetParam\String('Field name', ''),
+            self::PARAM_SELECTED_CATEGORY_ID => new \XLite\Model\WidgetParam\Int('Selected category id', 0),
+            self::PARAM_CURRENT_CATEGORY_ID  => new \XLite\Model\WidgetParam\Int('Current category id', 0),
+            self::PARAM_IGNORE_CURRENT_PATH  => new \XLite\Model\WidgetParam\Bool('Ignore current path', false)
         );
     }
 
@@ -109,7 +111,7 @@ class XLite_View_CategorySelect extends XLite_View_AView
      */
     public function getCategories()
     {
-        $this->categories = XLite_Core_Database::getRepo('XLite_Model_Category')->getCategories();
+        $this->categories = \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategories();
         return $this->categories;
     }
 
@@ -129,14 +131,14 @@ class XLite_View_CategorySelect extends XLite_View_AView
     /**
      * Check - specified category selected or not
      * 
-     * @param XLite_Model_Category $category Category
+     * @param \XLite\Model\Category $category Category
      *  
      * @return boolean
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function isCategorySelected(XLite_Model_Category $category)
+    protected function isCategorySelected(\XLite\Model\Category $category)
     {
         $categoryId = $this->getParam(self::PARAM_SELECTED_CATEGORY_ID);
         if (!is_numeric($categoryId) || 1 > $categoryId) {

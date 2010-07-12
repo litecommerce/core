@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model;
+
 /**
  * Common shipping method
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_Shipping extends XLite_Model_AModel
+class Shipping extends \XLite\Model\AModel
 {
     /**
      * Db table fields
@@ -86,7 +88,7 @@ class XLite_Model_Shipping extends XLite_Model_AModel
      * @since  3.0
      */
     protected static $registeredShippingModules = array(
-        'Offline' => 'Model_Shipping_Offline',
+        'Offline' => 'Model\Shipping\Offline',
     );
 
     /**
@@ -116,17 +118,17 @@ class XLite_Model_Shipping extends XLite_Model_AModel
     /**
      * Return shipping zone 
      * 
-     * @param XLite_Model_Order $order order object
+     * @param \XLite\Model\Order $order order object
      *  
      * @return int
      * @access protected
      * @since  3.0
      */
-    protected function getZone(XLite_Model_Order $order)
+    protected function getZone(\XLite\Model\Order $order)
     {
         if (!($zone = $order->getComplex('profile.shippingState.shipping_zone'))) {
             if (!($zone = $order->getComplex('profile.shippingCountry.shipping_zone'))) {
-                $defaultCountry = XLite_Core_Database::getEM()->find('XLite_Model_Country', $this->config->General->default_country);
+                $defaultCountry = \XLite\Core\Database::getEM()->find('XLite\Model\Country', $this->config->General->default_country);
                 if (!($zone = $defaultCountry->shipping_zone)) {
                     $zone = 0;
                 }
@@ -214,8 +216,8 @@ class XLite_Model_Shipping extends XLite_Model_AModel
             !isset(self::$registeredShippingModules[$name])
             || !(self::$registeredShippingModules[$name] instanceof self)
         ) {
-            $class = 'XLite_' . $class;
-            if (XLite_Core_Operator::isClassExists($class)) {
+            $class = 'XLite\\' . $class;
+            if (\XLite\Core\Operator::isClassExists($class)) {
                 self::$registeredShippingModules[$name] = new $class();
                 self::$registeredShippingModules[$name]->set('class', $name);
 
@@ -228,7 +230,7 @@ class XLite_Model_Shipping extends XLite_Model_AModel
     /**
      * Retrieves all shipping methods relevant to $this shipping module 
      * 
-     * @return XLite_Model_Shipping
+     * @return \XLite\Model\Shipping
      * @access public
      * @since  3.0
      */
@@ -240,12 +242,12 @@ class XLite_Model_Shipping extends XLite_Model_AModel
     /**
      * Return shipping rates (stub)
      * 
-     * @param XLite_Model_Order $order order object
+     * @param \XLite\Model\Order $order order object
      *  
      * @return void
      * @since  3.0
      */
-    public function getRates(XLite_Model_Order $order)
+    public function getRates(\XLite\Model\Order $order)
     {
         $this->doDie("getRates(): Not implemented in abstract class Shipping");
     }
@@ -253,13 +255,13 @@ class XLite_Model_Shipping extends XLite_Model_AModel
     /**
      * calculate 
      * 
-     * @param XLite_Model_Order $order order object
+     * @param \XLite\Model\Order $order order object
      *  
      * @return mixed
      * @access public
      * @since  3.0
      */
-    public function calculate(XLite_Model_Order $order)
+    public function calculate(\XLite\Model\Order $order)
     {
         $rates = $order->get('shippingRates');
         $result = false;
@@ -284,7 +286,7 @@ class XLite_Model_Shipping extends XLite_Model_AModel
      * @param string $name        module name
      * @param string $destination shipping destination
      *  
-     * @return XLite_Model_Shipping
+     * @return \XLite\Model\Shipping
      * @access public
      * @since  3.0
      */
@@ -344,7 +346,7 @@ class XLite_Model_Shipping extends XLite_Model_AModel
      * @param string  $name       Shipping module name
      * @param integer $shippingId Shipping method id
      *  
-     * @return XLite_Model_Shipping
+     * @return \XLite\Model\Shipping
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -353,7 +355,7 @@ class XLite_Model_Shipping extends XLite_Model_AModel
     {
         $className = isset(self::$registeredShippingModules[$name])
             ? get_class(self::$registeredShippingModules[$name])
-            : 'XLite_Model_Shipping';
+            : '\XLite\Model\Shipping';
 
         return $shippingId ? new $className($shippingId) : new $className();
     }

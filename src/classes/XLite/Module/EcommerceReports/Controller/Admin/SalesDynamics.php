@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\EcommerceReports\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_EcommerceReports_Controller_Admin_SalesDynamics extends XLite_Module_EcommerceReports_Controller_Admin_EcommerceReports
+class SalesDynamics extends \XLite\Module\EcommerceReports\Controller\Admin\EcommerceReports
 {
     function handleRequest()
     {
@@ -131,7 +133,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_SalesDynamics extends XLite
         foreach ($sales['x'] as $xid => $x) {
             $this->salesData[$x] = $sales['y'][$xid];
         }
-        $w = new XLite_View_AView();
+        $w = new \XLite\View\AView();
         $w->component = $this;
         $w->set('template', "modules/EcommerceReports/export_xls.tpl");
         $this->startDownload('sales.xls');

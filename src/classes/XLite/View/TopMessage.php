@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View;
+
 /**
  * Top message
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_TopMessage extends XLite_View_AView
+class TopMessage extends \XLite\View\AView
 {
     /**
      * getDir 
@@ -80,7 +82,7 @@ class XLite_View_TopMessage extends XLite_View_AView
      */
     protected function getTopMessages() 
     {
-        return XLite_Core_TopMessage::getInstance()->getPreviousMessages();
+        return \XLite\Core\TopMessage::getInstance()->getPreviousMessages();
     }
 
     /**
@@ -94,7 +96,7 @@ class XLite_View_TopMessage extends XLite_View_AView
      */
     protected function getText(array $data)
     {
-        return $data[XLite_Core_TopMessage::FIELD_TEXT];
+        return $data[\XLite\Core\TopMessage::FIELD_TEXT];
     }
 
     /**
@@ -108,7 +110,7 @@ class XLite_View_TopMessage extends XLite_View_AView
      */
     protected function getType(array $data)
     {
-        return $data[XLite_Core_TopMessage::FIELD_TYPE];
+        return $data[\XLite\Core\TopMessage::FIELD_TYPE];
     }
 
 

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\ProductAdviser\Controller\Customer;
+
 /**
  * Notify me page controller
  * 
@@ -33,12 +35,12 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_ProductAdviser_Controller_Customer_NotifyMe extends XLite_Controller_Customer_ACustomer
+class NotifyMe extends \XLite\Controller\Customer\ACustomer
 {
     /**
      * Product 
      * 
-     * @var    XLite_Model_product
+     * @var    \XLite\Model\product
      * @access public
      * @see    ____var_see____
      * @since  3.0.0
@@ -57,20 +59,20 @@ class XLite_Module_ProductAdviser_Controller_Customer_NotifyMe extends XLite_Con
         $title = 'Notify me';
 
         if (
-            'notify_product' == XLite_Core_Request::getInstance()->action
+            'notify_product' == \XLite\Core\Request::getInstance()->action
             && $this->getProduct()->isOutOfStock()
         ) {
 
             $title = 'Notify me when the product is in stock';
 
         } elseif (
-            'notify_product' == XLite_Core_Request::getInstance()->action
+            'notify_product' == \XLite\Core\Request::getInstance()->action
             && $this->getProduct()->isInStock()
         ) {
 
             $title = 'Notify me when the stock quantity of a product increases';
 
-        } elseif ('notify_price' == XLite_Core_Request::getInstance()->action) {
+        } elseif ('notify_price' == \XLite\Core\Request::getInstance()->action) {
 
             $title = 'Notify me when the price drops';
 
@@ -123,7 +125,7 @@ class XLite_Module_ProductAdviser_Controller_Customer_NotifyMe extends XLite_Con
         }
         $this->set('prevUrl', urlencode($this->url));
 
-        $this->session->set('NotifyMeInfo', XLite_Core_Request::getInstance()->getData());
+        $this->session->set('NotifyMeInfo', \XLite\Core\Request::getInstance()->getData());
 
         if (!$this->auth->is('logged')) {
             $this->set('email', $this->session->get('customerEmail'));
@@ -145,7 +147,7 @@ class XLite_Module_ProductAdviser_Controller_Customer_NotifyMe extends XLite_Con
             return;
         }
 
-        $request = XLite_Core_Request::getInstance();
+        $request = \XLite\Core\Request::getInstance();
 
         if (
             !isset($request->email)
@@ -158,7 +160,7 @@ class XLite_Module_ProductAdviser_Controller_Customer_NotifyMe extends XLite_Con
 
         $email = trim($request->email);
 
-        $notification = new XLite_Module_ProductAdviser_Model_Notification();
+        $notification = new \XLite\Module\ProductAdviser\Model\Notification();
         $check = array();
         $notification->set('type', CUSTOMER_NOTIFICATION_PRODUCT);
         $check[] = 'type = \'' . CUSTOMER_NOTIFICATION_PRODUCT . '\'';
@@ -187,7 +189,7 @@ class XLite_Module_ProductAdviser_Controller_Customer_NotifyMe extends XLite_Con
 
         $notification->set('product_id', $this->product_id);
         /* TODO - it must affected with xlite_inventories.inventory_id and rejectedItemInfo 
-            from XLite_Module_ProductAdviser_Controller_Customer_Product but ... it's not work correctly
+            from \XLite\Module\ProductAdviser\Controller\Customer\Product but ... it's not work correctly
 
         if (isset($request->product_options)) {
             $notification->set('product_options', $request->product_options);
@@ -224,7 +226,7 @@ class XLite_Module_ProductAdviser_Controller_Customer_NotifyMe extends XLite_Con
             return;
         }
 
-        $request = XLite_Core_Request::getInstance();
+        $request = \XLite\Core\Request::getInstance();
 
         if (
             !isset($request->email)
@@ -236,7 +238,7 @@ class XLite_Module_ProductAdviser_Controller_Customer_NotifyMe extends XLite_Con
         }
         $email = trim($request->email);
 
-        $notification = new XLite_Module_ProductAdviser_Model_Notification();
+        $notification = new \XLite\Module\ProductAdviser\Model\Notification();
         $check = array();
         $notification->set('type', CUSTOMER_NOTIFICATION_PRICE);
         $check[] = 'type = \'' . CUSTOMER_NOTIFICATION_PRICE . '\'';
@@ -286,7 +288,7 @@ class XLite_Module_ProductAdviser_Controller_Customer_NotifyMe extends XLite_Con
      */
     protected function assignReturnUrl()
     {
-        if (XLite_Core_Request::getInstance()->isPost()) {
+        if (\XLite\Core\Request::getInstance()->isPost()) {
             if ($this->url) {
                 $this->set('returnUrl', urldecode($this->url));
 

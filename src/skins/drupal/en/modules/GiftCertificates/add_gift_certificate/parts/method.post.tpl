@@ -45,8 +45,8 @@
   <tr>
     <td class="label"><label for="recipient_state">State:</label></td>
     <td class="required">*</td>
-    <td><widget class="XLite_View_StateSelect" field="recipient_state" state="{gc.recipient_state}" isLinked=1 /></td>
-    <td><widget class="XLite_Validator_StateValidator" field="recipient_state" countryField="recipient_country" /></td>
+    <td><widget class="\XLite\View\StateSelect" field="recipient_state" state="{gc.recipient_state}" isLinked=1 /></td>
+    <td><widget class="\XLite\Validator\StateValidator" field="recipient_state" countryField="recipient_country" /></td>
   </tr>
 
   <tr>
@@ -58,8 +58,8 @@
   <tr>
     <td class="label"><label for="recipient_country">Country:</label></td>
     <td class="required">*</td>
-    <td><widget class="XLite_View_CountrySelect" field="recipient_country" country="{gc.recipient_country}" /></td>
-    <td><widget class="XLite_Validator_RequiredValidator" field="recipient_country" /></td>
+    <td><widget class="\XLite\View\CountrySelect" field="recipient_country" country="{gc.recipient_country}" /></td>
+    <td><widget class="\XLite\Validator\RequiredValidator" field="recipient_country" /></td>
   </tr>
 
   <tr>

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Core\TranslationDriver;
+
 /**
  * Abstract translation driver
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class XLite_Core_TranslationDriver_ATranslationDriver extends XLite_Base
+abstract class ATranslationDriver extends \XLite\Base
 {
     /**
      * Translate label

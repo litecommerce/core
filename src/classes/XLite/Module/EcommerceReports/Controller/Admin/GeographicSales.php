@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\EcommerceReports\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_EcommerceReports_Controller_Admin_GeographicSales extends XLite_Module_EcommerceReports_Controller_Admin_ProductSales
+class GeographicSales extends \XLite\Module\EcommerceReports\Controller\Admin\ProductSales
 {
     function getGeoSales() 
     {
@@ -89,9 +91,9 @@ class XLite_Module_EcommerceReports_Controller_Admin_GeographicSales extends XLi
         }
         $productSales = $this->geoSales[$gid];
         $id = $item['product_id'] . (strlen($item['options']) ? md5($item['options']) : "");
-        $orderItem = new XLite_Model_OrderItem();
+        $orderItem = new \XLite\Model\OrderItem();
         $orderItem->find("order_id=".$item['order_id']." AND item_id='".addslashes($item['item_id'])."'");
-        $order = new XLite_Model_Order($item['order_id']);
+        $order = new \XLite\Model\Order($item['order_id']);
         $orderItem->set('order', $order);
         $item['price'] = $orderItem->get('price');
         if (!isset($productSales[$id])) {
@@ -109,13 +111,13 @@ class XLite_Module_EcommerceReports_Controller_Admin_GeographicSales extends XLi
     {
         $prefix = $this->get('group_by');
         if (!is_null($this->get('state_ids'))) { // has selected states
-            $st = new XLite_Model_State($item[$prefix . "_state"]);
+            $st = new \XLite\Model\State($item[$prefix . "_state"]);
             $state = $st->get('state');
         } else {
             $state = "All";
         }
         if (!is_null($this->get('country_codes'))) { // has selected country
-            $cnt = new XLite_Model_Country($item[$prefix . "_country"]);
+            $cnt = new \XLite\Model\Country($item[$prefix . "_country"]);
             $country = $cnt->get('country');
         } else {
             $country = "All";
@@ -135,7 +137,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_GeographicSales extends XLi
     function getCountries() 
     {
         if (is_null($this->countries)) {
-            $country = new XLite_Model_Country();
+            $country = new \XLite\Model\Country();
             $this->countries = $country->findAll();
         }
         return $this->countries;
@@ -144,7 +146,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_GeographicSales extends XLi
     function getStates() 
     {
         if (is_null($this->states)) {
-            $state = new XLite_Model_State();
+            $state = new \XLite\Model\State();
             $this->states = $state->findAll();
         }
         return $this->states;

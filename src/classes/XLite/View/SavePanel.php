@@ -27,6 +27,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View;
+
 /**
  * Save flying panel 
  * 
@@ -34,7 +36,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_SavePanel extends XLite_View_AView
+class SavePanel extends \XLite\View\AView
 {
     /**
      * Widget parameters 
@@ -66,7 +68,7 @@ class XLite_View_SavePanel extends XLite_View_AView
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_FORM_NAME => new XLite_Model_WidgetParam_String('Form name', null),
+            self::PARAM_FORM_NAME => new \XLite\Model\WidgetParam\String('Form name', null),
         );
     }
 

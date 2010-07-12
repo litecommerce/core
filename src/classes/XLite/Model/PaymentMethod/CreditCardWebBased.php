@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model\PaymentMethod;
+
 /**
  * CreditCard-based  / web-based payment method
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class XLite_Model_PaymentMethod_CreditCardWebBased extends XLite_Model_PaymentMethod_CreditCard
+abstract class CreditCardWebBased extends \XLite\Model\PaymentMethod\CreditCard
 {
     /**
      * Form template
@@ -71,19 +73,19 @@ abstract class XLite_Model_PaymentMethod_CreditCardWebBased extends XLite_Model_
     /**
      * Get form fields 
      *
-     * @param XLite_Model_Cart $cart $cart
+     * @param \XLite\Model\Cart $cart $cart
      * 
      * @return array
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    abstract protected function getFields(XLite_Model_Cart $cart);
+    abstract protected function getFields(\XLite\Model\Cart $cart);
 
     /**
      * Handle request
      *
-     * @param XLite_Model_Cart $cart Cart
+     * @param \XLite\Model\Cart $cart Cart
      * @param string           $type Call type
      *
      * @return integer Operation status
@@ -91,7 +93,7 @@ abstract class XLite_Model_PaymentMethod_CreditCardWebBased extends XLite_Model_
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function handleRequest(XLite_Model_Cart $cart, $type = self::CALL_CHECKOUT)
+    public function handleRequest(\XLite\Model\Cart $cart, $type = self::CALL_CHECKOUT)
     {
         if (self::CALL_CHECKOUT == $type) {
             $this->displayRedirectPage($cart);
@@ -112,9 +114,9 @@ abstract class XLite_Model_PaymentMethod_CreditCardWebBased extends XLite_Model_
      */
     public function getReturnURL($fieldName = 'order_id')
     {
-        return XLite::getInstance()->getShopUrl(
-            XLite_Core_Converter::buildUrl('callback', 'callback', array('order_id_name' => $fieldName)),
-            XLite_Core_Request::getInstance()->isHTTPS()
+        return \XLite::getInstance()->getShopUrl(
+            \XLite\Core\Converter::buildUrl('callback', 'callback', array('order_id_name' => $fieldName)),
+            \XLite\Core\Request::getInstance()->isHTTPS()
         );
     }
 
@@ -143,7 +145,7 @@ abstract class XLite_Model_PaymentMethod_CreditCardWebBased extends XLite_Model_
     /**
      * Check total (cart total and transaction total from gateway response)
      * 
-     * @param XLite_Model_Cart $cart  Cart
+     * @param \XLite\Model\Cart $cart  Cart
      * @param float            $total Total from gateway response
      *  
      * @return boolean
@@ -151,7 +153,7 @@ abstract class XLite_Model_PaymentMethod_CreditCardWebBased extends XLite_Model_
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function checkTotal(XLite_Model_Cart $cart, $total)
+    protected function checkTotal(\XLite\Model\Cart $cart, $total)
     {
         $result = true;
 
@@ -172,7 +174,7 @@ abstract class XLite_Model_PaymentMethod_CreditCardWebBased extends XLite_Model_
     /**
      * Check currency (payment method curreny and transaction response currency)
      * 
-     * @param XLite_Model_Cart $cart            Cart
+     * @param \XLite\Model\Cart $cart            Cart
      * @param string           $paymentCurrency Order currency code
      * @param string           $currency        Transaction response currency code
      *  
@@ -181,7 +183,7 @@ abstract class XLite_Model_PaymentMethod_CreditCardWebBased extends XLite_Model_
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function checkCurrency(XLite_Model_Cart $cart, $paymentCurrency, $currency)
+    protected function checkCurrency(\XLite\Model\Cart $cart, $paymentCurrency, $currency)
     {
         $result = true;
 
@@ -203,14 +205,14 @@ abstract class XLite_Model_PaymentMethod_CreditCardWebBased extends XLite_Model_
     /**
      * Display redirect page
      *
-     * @param XLite_Model_Cart $cart Cart
+     * @param \XLite\Model\Cart $cart Cart
      *
      * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function displayRedirectPage(XLite_Model_Cart $cart)
+    protected function displayRedirectPage(\XLite\Model\Cart $cart)
     {
         $method = $this->getFormMethod();
         $url = $this->getFormURL();
@@ -245,17 +247,17 @@ HTML;
     /**
      * Display return page 
      * 
-     * @param XLite_Model_Cart $cart Cart_
+     * @param \XLite\Model\Cart $cart Cart_
      *  
      * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function displayReturnPage(XLite_Model_Cart $cart)
+    protected function displayReturnPage(\XLite\Model\Cart $cart)
     {
         $backUrl = $this->xlite->getShopUrl(
-            XLite_Core_Converter::buildURL(
+            \XLite\Core\Converter::buildURL(
                 'checkout',
                 'return',
                 array('order_id' => $cart->get('order_id'))

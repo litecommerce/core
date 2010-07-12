@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\GiftCertificates\Controller\Admin;
+
 /**
  * Add gift certificate
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_GiftCertificates_Controller_Admin_AddGiftCertificate extends XLite_Controller_Admin_AAdmin
+class AddGiftCertificate extends \XLite\Controller\Admin\AAdmin
 {
     /**
      * Controller parameters
@@ -48,7 +50,7 @@ class XLite_Module_GiftCertificates_Controller_Admin_AddGiftCertificate extends 
     /**
      * Gift Certificate object 
      * 
-     * @var    XLite_Module_GiftCertificates_Model_GiftCertificate
+     * @var    \XLite\Module\GiftCertificates\Model\GiftCertificate
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
@@ -58,7 +60,7 @@ class XLite_Module_GiftCertificates_Controller_Admin_AddGiftCertificate extends 
     /**
      * Get GC object
      * 
-     * @return XLite_Module_GiftCertificates_Model_GiftCertificate
+     * @return \XLite\Module\GiftCertificates\Model\GiftCertificate
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -67,9 +69,9 @@ class XLite_Module_GiftCertificates_Controller_Admin_AddGiftCertificate extends 
     {
         if (is_null($this->gc)) {
 
-            if (XLite_Core_Request::getInstance()->gcid) {
-                $this->gc = new XLite_Module_GiftCertificates_Model_GiftCertificate(
-                    XLite_Core_Request::getInstance()->gcid
+            if (\XLite\Core\Request::getInstance()->gcid) {
+                $this->gc = new \XLite\Module\GiftCertificates\Model\GiftCertificate(
+                    \XLite\Core\Request::getInstance()->gcid
                 );
 
             } else {
@@ -90,11 +92,11 @@ class XLite_Module_GiftCertificates_Controller_Admin_AddGiftCertificate extends 
      */
     protected function setDefaultGiftCertificate()
     {
-        $this->gc = new XLite_Module_GiftCertificates_Model_GiftCertificate();
+        $this->gc = new \XLite\Module\GiftCertificates\Model\GiftCertificate();
         $this->gc->set('send_via', 'E');
         $this->gc->set('border', 'no_border');
 
-        $auth = XLite_Model_Auth::getInstance();
+        $auth = \XLite\Model\Auth::getInstance();
 
         if ($auth->isLogged()) {
             $profile = $auth->getProfile();
@@ -212,17 +214,17 @@ class XLite_Module_GiftCertificates_Controller_Admin_AddGiftCertificate extends 
         $gc = $this->getGC();
 
         if (!is_null($gc)) {
-            $gc->setProperties(XLite_Core_Request::getInstance()->getData());
+            $gc->setProperties(\XLite\Core\Request::getInstance()->getData());
             $gc->set('add_date', time());
             $expirationDate = mktime(
                 0, 0, 0,
-                XLite_Core_Request::getInstance()->expiration_dateMonth,
-                XLite_Core_Request::getInstance()->expiration_dateDay,
-                XLite_Core_Request::getInstance()->expiration_dateYear
+                \XLite\Core\Request::getInstance()->expiration_dateMonth,
+                \XLite\Core\Request::getInstance()->expiration_dateDay,
+                \XLite\Core\Request::getInstance()->expiration_dateYear
             );
             $gc->set('expiration_date', $expirationDate);
 
-            if (empty(XLite_Core_Request::getInstance()->debit)) {
+            if (empty(\XLite\Core\Request::getInstance()->debit)) {
                 $gc->set('debit', $gc->get('amount'));
             }
 

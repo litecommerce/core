@@ -11,4 +11,4 @@
  * @since     3.0.0
  * @ListChild (list="productsList.tableItem.buttons", weight="10")
  *}
-<widget class="XLite_View_BuyNow" product="{product}" style="aux-button add-to-cart" />
+<widget class="\XLite\View\BuyNow" product="{product}" style="aux-button add-to-cart" />

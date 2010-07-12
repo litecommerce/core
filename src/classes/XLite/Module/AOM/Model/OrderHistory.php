@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\AOM\Model;
+
 func_define('ORDER_HISTORY_CRYPTED_MESSAGE', 'Encrypted');
 func_define('ORDER_HISTORY_CHANGED_MESSAGE', 'Changed');
 
@@ -36,7 +38,7 @@ func_define('ORDER_HISTORY_CHANGED_MESSAGE', 'Changed');
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_AOM_Model_OrderHistory extends XLite_Model_AModel
+class OrderHistory extends \XLite\Model\AModel
 {
     public $fields = array("order_history_id" 	=> '',
                         "order_id"			=> '',
@@ -64,7 +66,7 @@ class XLite_Module_AOM_Model_OrderHistory extends XLite_Model_AModel
 
             $val = parent::get('secureChanges');
             if ( trim($val) != "" ) {
-                $gpg = new XLite_Module_AdvancedSecurity_Model_GPG();
+                $gpg = new \XLite\Module\AdvancedSecurity\Model\GPG();
                 $secureChanges = unserialize($gpg->decrypt($val));
     
                 if ( is_array($secureChanges) ) {
@@ -116,7 +118,7 @@ class XLite_Module_AOM_Model_OrderHistory extends XLite_Model_AModel
                 }
             }
 
-            $gpg = new XLite_Module_AdvancedSecurity_Model_GPG();
+            $gpg = new \XLite\Module\AdvancedSecurity\Model\GPG();
             $secureChanges = $gpg->encrypt(serialize($secureChanges));
         }
 
@@ -236,7 +238,7 @@ class XLite_Module_AOM_Model_OrderHistory extends XLite_Model_AModel
                 $history['details'] = $details;
                 $history['changedDetails'] = $changedDetails;
             }
-            $changedStatus = new XLite_Module_AOM_Model_OrderStatus();
+            $changedStatus = new \XLite\Module\AOM\Model\OrderStatus();
             $changedStatus->find("status = '".$_POST['substatus']."'");
             if ($order->getComplex('orderStatus.name') != $changedStatus->get('name'))	{
             	$history['status'] = $order->getComplex('orderStatus.name');
@@ -249,7 +251,7 @@ class XLite_Module_AOM_Model_OrderHistory extends XLite_Model_AModel
         }
 
         if (!empty($history)) {
-            $orderHistory = new XLite_Module_AOM_Model_OrderHistory();
+            $orderHistory = new \XLite\Module\AOM\Model\OrderHistory();
             $orderHistory->set('order_id',$order->get('order_id'));
             $orderHistory->set('login',$this->auth->getComplex('profile.login'));
             $orderHistory->set('changes', $history);

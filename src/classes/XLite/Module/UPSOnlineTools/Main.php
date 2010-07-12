@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\UPSOnlineTools;
+
 /**
  * UPS Online Tools integration
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_UPSOnlineTools_Main extends XLite_Module_AModule
+class Main extends \XLite\Module\AModule
 {
     const CRYPT_SALT = 85;
     const START_CHAR_CODE = 100;
@@ -100,7 +102,7 @@ class XLite_Module_UPSOnlineTools_Main extends XLite_Module_AModule
      */
     public static function getSettingsForm()
     {
-        return XLite_Core_Converter::buildUrl('ups_online_tool', '', array(), XLite::ADMIN_SELF);
+        return \XLite\Core\Converter::buildUrl('ups_online_tool', '', array(), \XLite::ADMIN_SELF);
     }
 
     /**

@@ -55,7 +55,7 @@
 <!-- [center] -->
 <widget target="partner_login" template="modules/Affiliate/welcome.tpl" visible="{action=##&mode=##}">
 <widget target="partner_login" template="modules/Affiliate/dialog.tpl" body="modules/Affiliate/authentication_error.tpl" head="Authentication" visible="{action=#login#}">
-<widget IF="config.Affiliate.registration_enabled" target="partner_profile" mode="register" class="XLite_View_RegisterForm" template="modules/Affiliate/dialog.tpl" body="modules/Affiliate/register_form.tpl" head="A new partner" name="registerForm"/>
+<widget IF="config.Affiliate.registration_enabled" target="partner_profile" mode="register" class="\XLite\View\RegisterForm" template="modules/Affiliate/dialog.tpl" body="modules/Affiliate/register_form.tpl" head="A new partner" name="registerForm"/>
 <widget IF="!config.Affiliate.registration_enabled" target="partner_profile" mode="register" template="modules/Affiliate/dialog.tpl" body="modules/Affiliate/register_closed.tpl" head="Registration closed"/>
 <widget target="partner_profile" mode="sent" template="modules/Affiliate/dialog.tpl" body="modules/Affiliate/request_sent.tpl" head="A new partner">
 <!-- [/center] -->

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\WishList\Controller\Admin;
+
 /**
  * Wishlist admin controller
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_WishList_Controller_Admin_Wishlist extends XLite_Controller_Admin_AAdmin
+class Wishlist extends \XLite\Controller\Admin\AAdmin
 {
     /**
      * wishlist 
@@ -55,7 +57,7 @@ class XLite_Module_WishList_Controller_Admin_Wishlist extends XLite_Controller_A
      */
     protected function getRegularTemplate()
     {
-        if ('print' == XLite_Core_Request::getInstance()->mode) {
+        if ('print' == \XLite\Core\Request::getInstance()->mode) {
             $return = 'modules/WishList/wishlist.tpl';
 
         } else {
@@ -68,7 +70,7 @@ class XLite_Module_WishList_Controller_Admin_Wishlist extends XLite_Controller_A
     /**
      * getWishlist 
      * 
-     * @return XLite_Module_WishList_Model_WishList
+     * @return \XLite\Module\WishList\Model\WishList
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -76,7 +78,7 @@ class XLite_Module_WishList_Controller_Admin_Wishlist extends XLite_Controller_A
     public function getWishlist()
     {
         if (is_null($this->wishlist)) {
-            $this->wishlist = new XLite_Module_WishList_Model_WishList(XLite_Core_Request::getInstance()->wishlist_id);
+            $this->wishlist = new \XLite\Module\WishList\Model\WishList(\XLite\Core\Request::getInstance()->wishlist_id);
         }
 
         return $this->wishlist;
@@ -92,7 +94,7 @@ class XLite_Module_WishList_Controller_Admin_Wishlist extends XLite_Controller_A
      */
     public function doActionDelete()
     {
-        $wishlist = new XLite_Module_WishList_Model_WishList(XLite_Core_Request::getInstance()->wishlist_id);
+        $wishlist = new \XLite\Module\WishList\Model\WishList(\XLite\Core\Request::getInstance()->wishlist_id);
 
         $wishlistProducts = $wishlist->get('products');
 

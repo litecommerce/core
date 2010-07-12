@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_Factory extends XLite_Base implements XLite_Base_ISingleton
+class Factory extends \XLite\Base implements \XLite\Base\ISingleton
 {
     /**
      * Check if class is a singleton 
@@ -46,7 +48,7 @@ class XLite_Model_Factory extends XLite_Base implements XLite_Base_ISingleton
      */
     protected static function isSingleton(ReflectionClass $handler)
     {
-        return $handler->implementsInterface('XLite_Base_ISingleton');
+        return $handler->implementsInterface('\XLite\Base\ISingleton');
     }
 
     /**
@@ -54,7 +56,7 @@ class XLite_Model_Factory extends XLite_Base implements XLite_Base_ISingleton
      *
      * @param string $class class name
      *
-     * @return XLite_Base
+     * @return \XLite\Base
      * @access protected
      * @since  3.0.0
      */
@@ -69,7 +71,7 @@ class XLite_Model_Factory extends XLite_Base implements XLite_Base_ISingleton
      * @param ReflectionClass $handler class descriptor
      * @param array           $args    constructor params
      *  
-     * @return XLite_Base
+     * @return \XLite\Base
      * @access protected
      * @since  3.0.0
      */
@@ -84,7 +86,7 @@ class XLite_Model_Factory extends XLite_Base implements XLite_Base_ISingleton
      * 
      * @param string $name class name
      *  
-     * @return XLite_Base
+     * @return \XLite\Base
      * @access public
      * @since  3.0.0
      */
@@ -99,13 +101,13 @@ class XLite_Model_Factory extends XLite_Base implements XLite_Base_ISingleton
      * @param string $class class name
      * @param array  $args  constructor arguments
      *  
-     * @return XLite_Base
+     * @return \XLite\Base
      * @access public
      * @since  3.0.0
      */
     public static function create($class, array $args = array())
     {
-        $handler = new ReflectionClass($class);
+        $handler = new \ReflectionClass($class);
 
         return self::isSingleton($handler) ? self::getSingleton($class) : self::createObject($handler, $args);
     }

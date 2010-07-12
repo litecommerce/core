@@ -12,7 +12,7 @@
  *}
 <div class="languages-dialog">
 
-<widget IF="countLabels()" class="XLite_View_SavePanel" formName="updateForm" />
+<widget IF="countLabels()" class="\XLite\View\SavePanel" formName="updateForm" />
 
 <form action="admin.php" method="post" name="search_language_form" >
   <input type="hidden" name="target" value="languages" />
@@ -21,7 +21,7 @@
 
   <div class="form-panel languages-search-panel">
     <input type="text" name="name" value="{getSearchSubstring()}" class="big" lang="{defaultLanguage.code}" xml:lang="{defaultLanguage.code}" />
-    <widget class="XLite_View_Button_Submit" label="Search" style="main" />
+    <widget class="\XLite\View\Button\Submit" label="Search" style="main" />
     {if:isTranslatedLanguageSelected()}
       <a href="admin.php?target=languages&action=search&language={language}">{t(#Show all labels#)}</a>
     {else:}
@@ -74,11 +74,11 @@
 
 <div class="language-buttons-panel">
   <div class="left">
-    <widget class="XLite_View_LanguagesModify_Button_AddNewLabel" language="{language}" page="{getPage()}" style="add-new-label" />
-    <widget class="XLite_View_LanguagesModify_Button_AddNewLanguage" page="{getPage()}" style="add-new-language" />
+    <widget class="\XLite\View\LanguagesModify\Button\AddNewLabel" language="{language}" page="{getPage()}" style="add-new-label" />
+    <widget class="\XLite\View\LanguagesModify\Button\AddNewLanguage" page="{getPage()}" style="add-new-language" />
   </div>
   <div IF="countLabels()" class="right">
-    <widget class="XLite_View_Pager_Simple" pages="{getPages()}" page="{getPage()}" url="{getPagerURL()}" />
+    <widget class="\XLite\View\Pager\Simple" pages="{getPages()}" page="{getPage()}" url="{getPagerURL()}" />
     (<strong>{t(#N items#,_ARRAY_(#n#^countLabels()))}</strong> total)
   </div>
 </div>

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\UPSOnlineTools\Controller\Admin;
+
 define('DISABLE_UPS_EDIT_ORDER', true);
 
 /**
@@ -35,7 +37,7 @@ define('DISABLE_UPS_EDIT_ORDER', true);
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_UPSOnlineTools_Controller_Admin_Order extends XLite_Controller_Admin_Order implements XLite_Base_IDecorator
+class Order extends \XLite\Controller\Admin\Order implements \XLite\Base\IDecorator
 {
     // visual coords for default box image "ups_box.gif"	
     public $_img_left = 57;
@@ -93,7 +95,7 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_Order extends XLite_Controlle
 
     function getUPSContainerName($container_type)
     {
-        $sm = new XLite_Module_UPSOnlineTools_Model_Shipping_Ups();
+        $sm = new \XLite\Module\UPSOnlineTools\Model\Shipping\Ups();
         $desc = $sm->getUPSContainerDims($container_type);
         return $desc['name'];
     }
@@ -141,7 +143,7 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_Order extends XLite_Controlle
 
         $export_fields = array('name', "weight", "ups_width", "ups_length", "ups_height", "ups_handle_care");
         foreach ($items_list as $k=>$item) {
-            $oi = new XLite_Model_OrderItem();
+            $oi = new \XLite\Model\OrderItem();
 
             if (!$oi->find("item_id='".$item['item_id']."' AND order_id='$order_id'"))
                 continue;
@@ -173,7 +175,7 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_Order extends XLite_Controlle
         $order = $this->get('order');
 
         if (
-            XLite_Module_UPSOnlineTools_Main::isGDlibEnabled()
+            \XLite\Module\UPSOnlineTools\Main::isGDlibEnabled()
             && $this->config->UPSOnlineTools->display_gdlib
         ) {
             // GDlib
@@ -205,7 +207,7 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_Order extends XLite_Controlle
         // get products names by ids
         $names = array();
         foreach ($pids as $id) {
-            $po = new XLite_Model_Product($id);
+            $po = new \XLite\Model\Product($id);
             $names[$id] = $po->get('name');
         }
 

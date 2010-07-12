@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View\Form\Order;
+
 /**
  * Search orders form
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_Form_Order_Search extends XLite_View_Form_AForm
+class Search extends \XLite\View\Form\AForm
 {
     /**
      * Widget parameter names
@@ -90,7 +92,7 @@ class XLite_View_Form_Order_Search extends XLite_View_Form_AForm
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_MODE => new XLite_Model_WidgetParam_String('Mode', 'search'),
+            self::PARAM_MODE => new \XLite\Model\WidgetParam\String('Mode', 'search'),
         );
     }
 

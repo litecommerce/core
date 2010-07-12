@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\AntiFraud\Model;
+
 /**
  * Country
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_AntiFraud_Model_Country extends XLite_Model_Country implements XLite_Base_IDecorator
+class Country extends \XLite\Model\Country implements \XLite\Base\IDecorator
 {
     /**
      * Country risk rate

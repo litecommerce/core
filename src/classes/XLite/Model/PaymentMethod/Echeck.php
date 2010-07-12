@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model\PaymentMethod;
+
 /**
  * e-check payment method
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_PaymentMethod_Echeck extends XLite_Model_PaymentMethod
+class Echeck extends \XLite\Model\PaymentMethod
 {
     /**
      * Form template 
@@ -75,18 +77,18 @@ class XLite_Model_PaymentMethod_Echeck extends XLite_Model_PaymentMethod
     /**
      * Process cart
      * 
-     * @param XLite_Model_Cart $cart Cart
+     * @param \XLite\Model\Cart $cart Cart
      *  
      * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function process(XLite_Model_Cart $cart)
+    public function process(\XLite\Model\Cart $cart)
     {
         $cart->setDetailLabels($this->formFields);
 
-        $data = XLite_Core_Request::getInstance()->ch_info;
+        $data = \XLite\Core\Request::getInstance()->ch_info;
         foreach ($this->formFields as $key => $name) {
             if (isset($data[$key])) {
                 $cart->setDetail($key, $data[$key]);
@@ -100,14 +102,14 @@ class XLite_Model_PaymentMethod_Echeck extends XLite_Model_PaymentMethod
     /**
      * Handle request 
      * 
-     * @param XLite_Model_Cart $cart Cart
+     * @param \XLite\Model\Cart $cart Cart
      *  
      * @return integer Operation status
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function handleRequest(XLite_Model_Cart $cart)
+    public function handleRequest(\XLite\Model\Cart $cart)
     {
         if ($this->checkRequest()) {
             $this->process($cart);
@@ -132,13 +134,13 @@ class XLite_Model_PaymentMethod_Echeck extends XLite_Model_PaymentMethod
      */
     protected function checkRequest()
     {
-        $data = XLite_Core_Request::getInstance()->ch_info;
+        $data = \XLite\Core\Request::getInstance()->ch_info;
 
         $result = true;
 
         if (!is_array($data)) {
 
-            XLite_Core_TopMessage::getInstance()->add('Check data is required', XLite_Core_TopMessage::ERROR);
+            \XLite\Core\TopMessage::getInstance()->add('Check data is required', \XLite\Core\TopMessage::ERROR);
             $result = false;
 
         } else {
@@ -148,7 +150,7 @@ class XLite_Model_PaymentMethod_Echeck extends XLite_Model_PaymentMethod
 
             foreach ($fields as $key => $name) {
                 if (!isset($data[$key]) || empty($data[$key])) {
-                    XLite_Core_TopMessage::getInstance()->add($name . ' is required', XLite_Core_TopMessage::ERROR);
+                    \XLite\Core\TopMessage::getInstance()->add($name . ' is required', \XLite\Core\TopMessage::ERROR);
                     $result = false;
                 }
             }

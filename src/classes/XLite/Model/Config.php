@@ -26,13 +26,15 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model;
+
 /**
  * DB-based configuration registry
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
- * @Entity (repositoryClass="XLite_Model_Repo_Config")
+ * @Entity (repositoryClass="XLite\Model\Repo\Config")
  * @Table (name="config",
  *         indexes={
  *              @Index(name="orderby", columns={"orderby"}),
@@ -40,7 +42,7 @@
  *         }
  * )
  */
-class XLite_Model_Config extends XLite_Model_Base_I18n
+class Config extends \XLite\Model\Base\I18n
 {
 
     /**

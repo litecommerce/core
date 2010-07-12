@@ -26,16 +26,18 @@
  * @since      3.0.0
  */
 
+namespace XLite\View;
+
 // FIXME - to remove
 
 /**
- * XLite_View_CountrySelect 
+ * \XLite\View\CountrySelect 
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_CountrySelect extends XLite_View_FormField
+class CountrySelect extends \XLite\View\FormField
 {
     /**
      * Widget param names
@@ -71,10 +73,10 @@ class XLite_View_CountrySelect extends XLite_View_FormField
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_ALL        => new XLite_Model_WidgetParam_Bool('All', false),
-            self::PARAM_FIELD_NAME => new XLite_Model_WidgetParam_String('Field name', ''),
-            self::PARAM_FIELD_ID   => new XLite_Model_WidgetParam_String('Field ID', ''),
-            self::PARAM_COUNTRY    => new XLite_Model_WidgetParam_String('Value', '')
+            self::PARAM_ALL        => new \XLite\Model\WidgetParam\Bool('All', false),
+            self::PARAM_FIELD_NAME => new \XLite\Model\WidgetParam\String('Field name', ''),
+            self::PARAM_FIELD_ID   => new \XLite\Model\WidgetParam\String('Field ID', ''),
+            self::PARAM_COUNTRY    => new \XLite\Model\WidgetParam\String('Value', '')
         );
     }
 
@@ -100,8 +102,8 @@ class XLite_View_CountrySelect extends XLite_View_FormField
     protected function getCountries()
     {
         return $this->isEnabledOnly()
-            ? XLite_Core_Database::getRepo('XLite_Model_Country')->findByEnabled(true)
-            : XLite_Core_Database::getRepo('XLite_Model_Country')->findAll();
+            ? \XLite\Core\Database::getRepo('XLite\Model\Country')->findByEnabled(true)
+            : \XLite\Core\Database::getRepo('XLite\Model\Country')->findAll();
     }
 }
 

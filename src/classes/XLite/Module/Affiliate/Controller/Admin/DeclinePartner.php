@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Affiliate\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Affiliate_Controller_Admin_DeclinePartner extends XLite_Controller_Admin_AAdmin
+class DeclinePartner extends \XLite\Controller\Admin\AAdmin
 {
     function action_decline_partner()
     {
@@ -45,7 +47,7 @@ class XLite_Module_Affiliate_Controller_Admin_DeclinePartner extends XLite_Contr
     function getProfile()
     {
         if (is_null($this->profile)) {
-            $this->profile = new XLite_Model_Profile($_REQUEST['profile_id']);
+            $this->profile = new \XLite\Model\Profile($_REQUEST['profile_id']);
         }
         return $this->profile;
     }

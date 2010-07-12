@@ -26,15 +26,17 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\DrupalConnector\View\Model\Profile;
+
 /**
- * XLite_Module_DrupalConnector_View_Model_Profile_AProfile 
+ * \XLite\Module\DrupalConnector\View\Model\Profile\AProfile 
  * 
  * @package    XLite
  * @subpackage ____sub_package____
  * @see        ____class_see____
  * @since      3.0.0
  */
-abstract class XLite_Module_DrupalConnector_View_Model_Profile_AProfile extends XLite_View_Model_Profile_AProfile implements XLite_Base_IDecorator
+abstract class AProfile extends \XLite\View\Model\Profile\AProfile implements \XLite\Base\IDecorator
 {
     /**
      * Error message - Drupal and LC profiles are not synchronized
@@ -60,7 +62,7 @@ abstract class XLite_Module_DrupalConnector_View_Model_Profile_AProfile extends 
      */
     protected function getAccessDeniedMessage()
     {
-        return XLite_Module_DrupalConnector_Handler::getInstance()->checkCurrentCMS()
+        return \XLite\Module\DrupalConnector\Handler::getInstance()->checkCurrentCMS()
             ? $this->getIncompleteProfileErrorMessage()
             : parent::getAccessDeniedMessage();
     }
@@ -74,8 +76,8 @@ abstract class XLite_Module_DrupalConnector_View_Model_Profile_AProfile extends 
      */
     protected function checkAccess()
     {
-        return XLite_Module_DrupalConnector_Handler::getInstance()->checkCurrentCMS()
-            ? !(user_is_logged_in() && !XLite_Model_Auth::getInstance()->isLogged())
+        return \XLite\Module\DrupalConnector\Handler::getInstance()->checkCurrentCMS()
+            ? !(user_is_logged_in() && !\XLite\Model\Auth::getInstance()->isLogged())
             : parent::checkAccess();
     }
 
@@ -95,7 +97,7 @@ abstract class XLite_Module_DrupalConnector_View_Model_Profile_AProfile extends 
     {
         parent::__construct($params, $sections);
 
-        if (XLite_Module_DrupalConnector_Handler::getInstance()->checkCurrentCMS()) {
+        if (\XLite\Module\DrupalConnector\Handler::getInstance()->checkCurrentCMS()) {
             $this->formFieldNames[] = $this->composeFieldName('cms_profile_id');
         }
     }

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View\Form\Checkout;
+
 /**
  * Payment method selection
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_Form_Checkout_PaymentMethod extends XLite_View_Form_Checkout_ACheckout
+class PaymentMethod extends \XLite\View\Form\Checkout\ACheckout
 {
     /**
      * Current form name 

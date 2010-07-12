@@ -26,15 +26,17 @@
  * @since      3.0.0
  */
 
+namespace XLite\View\FormField\Separator;
+
 
 /**
- * XLite_View_FormField_Separator_ASeparator 
+ * \XLite\View\FormField\Separator\ASeparator 
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class XLite_View_FormField_Separator_ASeparator extends XLite_View_FormField_AFormField
+abstract class ASeparator extends \XLite\View\FormField\AFormField
 {
     /**
      * Return name of the folder with templates

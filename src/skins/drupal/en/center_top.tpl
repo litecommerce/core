@@ -11,14 +11,14 @@
  * @since     3.0.0
  *}
 <!-- [catalog] {{{ -->
-<widget class="XLite_View_Category" />
-<widget class="XLite_View_Product" />
+<widget class="\XLite\View\Category" />
+<widget class="\XLite\View\Product" />
 <!-- [/catalog] }}} -->
 
 <!-- [main] {{{ -->
 <widget target="access_denied" template="access_denied.tpl" />
 <widget module="GreetVisitor" target="main" mode="" template="modules/GreetVisitor/greet_visitor.tpl" visible="{greetVisitor&!page}">
-<widget class="XLite_View_Welcome" name="welcome" />
+<widget class="\XLite\View\Welcome" name="welcome" />
 <widget target="main" template="pages.tpl">
 <!-- [/main] }}} -->
 
@@ -32,48 +32,48 @@
 <!-- [/help] }}} -->
 
 <!-- [shopping_cart] {{{ -->
-<widget class="XLite_View_Cart" />
+<widget class="\XLite\View\Cart" />
 <!-- [/shopping_cart] }}} -->
 
 <!-- [profile] {{{ -->
-<widget class="XLite_View_AddressBook" />
+<widget class="\XLite\View\AddressBook" />
 {*<widget target="profile" mode="login" template="common/dialog.tpl" head="Authentication" body="authentication.tpl">
 <widget target="profile" mode="account" template="common/dialog.tpl" head="Your account" body="account.tpl">
 <widget target="login" template="common/dialog.tpl" body="authentication.tpl" head="Authentication">
-<widget target="profile" mode="register" class="XLite_View_RegisterForm" head="New customer" name="registerForm" IF="!showAV" />
+<widget target="profile" mode="register" class="\XLite\View\RegisterForm" head="New customer" name="registerForm" IF="!showAV" />
 <widget target="profile" mode="success" template="common/dialog.tpl" head="Registration complete" body="register_success.tpl">
-<widget target="profile" mode="modify" class="XLite_View_RegisterForm" head="Modify profile" name="profileForm" IF="!showAV"/>
+<widget target="profile" mode="modify" class="\XLite\View\RegisterForm" head="Modify profile" name="profileForm" IF="!showAV"/>
 <widget target="profile" mode="delete" template="common/dialog.tpl" head="Delete profile - Confirmation" body="delete_profile.tpl">*}
 <!-- [/profile] }}} -->
 
 <!-- [checkout] {{{ -->
-<widget class="XLite_View_Checkout" />
+<widget class="\XLite\View\Checkout" />
 
 <widget target="checkoutSuccess" template="checkout/success.tpl" />
 <widget module="GoogleCheckout" template="common/dialog.tpl" body="modules/GoogleCheckout/google_checkout_dialog.tpl" head="Google Checkout payment module" visible="{target=#googlecheckout#&!valid}" />
 <!-- [/checkout] }}} -->
 
 <!-- [order] {{{ -->
-<widget class="XLite_View_OrderSearch" />
-<widget class="XLite_View_Order" />
-<widget class="XLite_View_Invoice" />
+<widget class="\XLite\View\OrderSearch" />
+<widget class="\XLite\View\Order" />
+<widget class="\XLite\View\Invoice" />
 <!-- [/order] }}} -->
 
 <!-- [modules] {{{ -->
-<widget module="GiftCertificates" class="XLite_Module_GiftCertificates_View_AddGiftCertificate" />
-<widget module="GiftCertificates" class="XLite_Module_GiftCertificates_View_Ecards" />
-<widget module="GiftCertificates" class="XLite_Module_GiftCertificates_View_CheckGiftCertificate" />
+<widget module="GiftCertificates" class="\XLite\Module\GiftCertificates\View\AddGiftCertificate" />
+<widget module="GiftCertificates" class="\XLite\Module\GiftCertificates\View\Ecards" />
+<widget module="GiftCertificates" class="\XLite\Module\GiftCertificates\View\CheckGiftCertificate" />
 <widget module="GiftCertificates" target="gift_certificate_info" template="common/dialog.tpl" body="modules/GiftCertificates/gift_certificate_info.tpl" head="Gift certificate">
 <widget module="WishList" target="wishlist,product" mode="MessageSent" template="common/dialog.tpl" body="modules/WishList/message.tpl" head="Message has been sent">
-<widget module="WishList" class="XLite_Module_WishList_View_Wishlist" />
-<widget module="WishList" class="XLite_Module_WishList_View_SendToFriend" />
-<widget module="AdvancedSearch" class="XLite_Module_AdvancedSearch_View_AdvancedSearchCenter" />
+<widget module="WishList" class="\XLite\Module\WishList\View\Wishlist" />
+<widget module="WishList" class="\XLite\Module\WishList\View\SendToFriend" />
+<widget module="AdvancedSearch" class="\XLite\Module\AdvancedSearch\View\AdvancedSearchCenter" />
 <widget module="ProductAdviser" template="modules/ProductAdviser/center_top.tpl">
-<widget module="ProductOptions" class="XLite_Module_ProductOptions_View_ChangeOptions" />
+<widget module="ProductOptions" class="\XLite\Module\ProductOptions\View\ChangeOptions" />
 <!-- [/modules] }}} -->
 
 <!-- [search] {{{ -->
-<widget class="XLite_View_SearchResult" />
+<widget class="\XLite\View\SearchResult" />
 <!-- [/search] }}} -->
 
 {displayViewListContent(#center#)}

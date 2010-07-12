@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Egoods\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Egoods_Controller_Admin_Product extends XLite_Controller_Admin_Product implements XLite_Base_IDecorator
+class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDecorator
 {
     public function __construct(array $params) 
     {
@@ -62,7 +64,7 @@ class XLite_Module_Egoods_Controller_Admin_Product extends XLite_Controller_Admi
             ||
             ($_POST['new_remote'] == "N" && !empty($_POST['new_local_file']))
         ) {
-    		$df = new XLite_Module_Egoods_Model_DownloadableFile();
+    		$df = new \XLite\Module\Egoods\Model\DownloadableFile();
     		$df->set('product_id', $_POST['product_id']);
     		$df->set('store_type', 'F');
     		$df->set('delivery', $_POST['new_file_delivery']);
@@ -86,7 +88,7 @@ class XLite_Module_Egoods_Controller_Admin_Product extends XLite_Controller_Admi
 
     function action_update_egood() 
     {
-        $df = new XLite_Module_Egoods_Model_DownloadableFile($_POST['file_id']);
+        $df = new \XLite\Module\Egoods\Model\DownloadableFile($_POST['file_id']);
         $df->set('delivery', $_POST['delivery']);
 
         if 
@@ -121,10 +123,10 @@ class XLite_Module_Egoods_Controller_Admin_Product extends XLite_Controller_Admi
             return;
         }
         
-        $df = new XLite_Module_Egoods_Model_DownloadableFile($_POST['file_id']);
+        $df = new \XLite\Module\Egoods\Model\DownloadableFile($_POST['file_id']);
         @unlink($df->get('data'));
         $df->delete();
-        $link = new XLite_Module_Egoods_Model_DownloadableLink();
+        $link = new \XLite\Module\Egoods\Model\DownloadableLink();
         $links = $link->findAll('file_id='. $_POST['file_id']);
 
         for ($i = 0; $i < count($links); $i++) {
@@ -139,7 +141,7 @@ class XLite_Module_Egoods_Controller_Admin_Product extends XLite_Controller_Admi
 
     function action_add_link() 
     {
-        $dl = new XLite_Module_Egoods_Model_DownloadableLink($_POST['new_acc']);
+        $dl = new \XLite\Module\Egoods\Model\DownloadableLink($_POST['new_acc']);
         $dl->set('file_id', $_POST['file_id']);
         $dl->set('exp_time', mktime(0, 0, 0, $_POST['new_exp_dateMonth'], $_POST['new_exp_dateDay'], $_POST['new_exp_dateYear']));
         $dl->set('available_downloads', $_POST['new_downloads']);
@@ -154,7 +156,7 @@ class XLite_Module_Egoods_Controller_Admin_Product extends XLite_Controller_Admi
             return;
         }
         foreach ($_POST['selected_links'] as $access_key) {
-            $dl = new XLite_Module_Egoods_Model_DownloadableLink();
+            $dl = new \XLite\Module\Egoods\Model\DownloadableLink();
             if ($dl->find('access_key=' . "'" . $access_key . "'")) {
                 $dl->delete();
             }
@@ -174,7 +176,7 @@ class XLite_Module_Egoods_Controller_Admin_Product extends XLite_Controller_Admi
 
     function action_add_pincode() 
     {
-        $pin = new XLite_Module_Egoods_Model_PinCode();
+        $pin = new \XLite\Module\Egoods\Model\PinCode();
         $pin->set('product_id', $this->get('product_id'));
         $pin->set('pin', $_POST['new_pin']);
         $pin->set('enabled', (int)$_POST['new_pin_enabled']);
@@ -187,7 +189,7 @@ class XLite_Module_Egoods_Controller_Admin_Product extends XLite_Controller_Admi
             return;
         }
         foreach ($_POST['selected_pins'] as $pin_id) {
-            $p = new XLite_Module_Egoods_Model_PinCode($pin_id);
+            $p = new \XLite\Module\Egoods\Model\PinCode($pin_id);
             $p->delete();
         }
     }
@@ -198,7 +200,7 @@ class XLite_Module_Egoods_Controller_Admin_Product extends XLite_Controller_Admi
             return;
         }
         foreach ($_POST['selected_pins'] as $pin_id) {
-            $p = new XLite_Module_Egoods_Model_PinCode($pin_id);
+            $p = new \XLite\Module\Egoods\Model\PinCode($pin_id);
             $p->set('enabled', false);
             $p->update();
         }
@@ -210,7 +212,7 @@ class XLite_Module_Egoods_Controller_Admin_Product extends XLite_Controller_Admi
             return;
         }
         foreach ($_POST['selected_pins'] as $pin_id) {
-            $p = new XLite_Module_Egoods_Model_PinCode($pin_id);
+            $p = new \XLite\Module\Egoods\Model\PinCode($pin_id);
             $p->set('enabled', true);
             $p->update();
         }
@@ -222,7 +224,7 @@ class XLite_Module_Egoods_Controller_Admin_Product extends XLite_Controller_Admi
             return;
         }
         foreach ($_POST['selected_pins'] as $pin_id) {
-            $p = new XLite_Module_Egoods_Model_PinCode($pin_id);
+            $p = new \XLite\Module\Egoods\Model\PinCode($pin_id);
             $p->set('order_id', 0);
             $p->set('item_id', '');
             $p->update();
@@ -232,7 +234,7 @@ class XLite_Module_Egoods_Controller_Admin_Product extends XLite_Controller_Admi
     function getPinCodes() 
     {
         if (!isset($this->pin_codes)) {
-            $p = new XLite_Module_Egoods_Model_PinCode();
+            $p = new \XLite\Module\Egoods\Model\PinCode();
             $this->pin_codes = $p->findAll('product_id=' . $this->get('product_id') . 
                                                 ($this->get('pin_enabled') != null ? 
                                                 ' AND enabled=' . intval($this->get('pin_enabled')) : 
@@ -243,7 +245,7 @@ class XLite_Module_Egoods_Controller_Admin_Product extends XLite_Controller_Admi
 
     function action_update_pin_src() 
     {
-        $pin_settings = new XLite_Module_Egoods_Model_PinSettings();
+        $pin_settings = new \XLite\Module\Egoods\Model\PinSettings();
         $action = "";
         if ($pin_settings->find('product_id=' . $this->getComplex('product.product_id'))) {
             $action = "update";
@@ -258,7 +260,7 @@ class XLite_Module_Egoods_Controller_Admin_Product extends XLite_Controller_Admi
 
     function action_update_pin_cmd_line() 
     {
-        $pin_settings = new XLite_Module_Egoods_Model_PinSettings();
+        $pin_settings = new \XLite\Module\Egoods\Model\PinSettings();
         $action = '';
         if (!$pin_settings->find("product_id=" . $this->getComplex('product.product_id'))) {
             $action = 'create';

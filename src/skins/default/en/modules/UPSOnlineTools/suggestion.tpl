@@ -39,17 +39,17 @@ The UPS OnLine&reg; Tools Address Validation checked your shipping address. Ther
 <table cellpadding="0" cellspacing="15" border="0">
 <tr>
     <td colspan="2">
-        <widget class="XLite_View_Button" label="Re-enter address" href="javascript:document.suggest_form.submit();" font="FormButton">
+        <widget class="\XLite\View\Button" label="Re-enter address" href="javascript:document.suggest_form.submit();" font="FormButton">
     </td>
 {if:suggestionExists}
 </tr>
 <tr>
     <td>
-        <widget class="XLite_View_Button" label="Use suggestion" href="javascript:document.suggest_form.action_type.value=1;document.suggest_form.submit();" font="FormButton">
+        <widget class="\XLite\View\Button" label="Use suggestion" href="javascript:document.suggest_form.action_type.value=1;document.suggest_form.submit();" font="FormButton">
     </td>
 {end:}
     <td>
-        <widget class="XLite_View_Button" label="Keep current address" href="javascript:document.suggest_form.action_type.value=2;document.suggest_form.submit();" font="FormButton">
+        <widget class="\XLite\View\Button" label="Keep current address" href="javascript:document.suggest_form.action_type.value=2;document.suggest_form.submit();" font="FormButton">
     </td>
 </tr>
 </table>

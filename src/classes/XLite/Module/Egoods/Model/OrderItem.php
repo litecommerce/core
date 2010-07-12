@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Egoods\Model;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Egoods_Model_OrderItem extends XLite_Model_OrderItem implements XLite_Base_IDecorator
+class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
 {
     public function __construct()
     {
@@ -78,7 +80,7 @@ class XLite_Module_Egoods_Model_OrderItem extends XLite_Model_OrderItem implemen
 
         if ($this->is('egood') && $amount > 0) {
             if ($this->is('pin')) {
-                $pin = new XLite_Module_Egoods_Model_PinCode();
+                $pin = new \XLite\Module\Egoods\Model\PinCode();
     			if ($amount > $pin->getFreePinCount($this->getComplex('product.product_id'))) {
         			$amount = $pin->getFreePinCount($this->getComplex('product.product_id'));
             		if ($amount <= 0) {
@@ -112,7 +114,7 @@ class XLite_Module_Egoods_Model_OrderItem extends XLite_Model_OrderItem implemen
     function unStoreLinks()
     {
         $ids = explode(",", $this->get('egoods'));
-        $link = new XLite_Module_Egoods_Model_DownloadableLink();
+        $link = new \XLite\Module\Egoods\Model\DownloadableLink();
         foreach ($ids as $link_id) {
             $egoods_links = $link->findAll("access_key='$link_id'");
             foreach ($egoods_links as $egoods_link) {
@@ -133,8 +135,8 @@ class XLite_Module_Egoods_Model_OrderItem extends XLite_Model_OrderItem implemen
         if (!isset($this->_egoods)) {
             $egoods_links = explode(',', $this->get('egoods'));
             foreach ($egoods_links as $link_id) {
-                $link = new XLite_Module_Egoods_Model_DownloadableLink($link_id);
-                $file = new XLite_Module_Egoods_Model_DownloadableFile($link->get('file_id'));
+                $link = new \XLite\Module\Egoods\Model\DownloadableLink($link_id);
+                $file = new \XLite\Module\Egoods\Model\DownloadableFile($link->get('file_id'));
                 $record = array();
                 $record['name'] = basename($file->get('data'));
                 $record['link'] = $this->xlite->getShopUrl("cart.php?target=download&action=download&acc=") . $link_id;

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model\Wysiwyg;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_Wysiwyg_MediatorHtmlStorage extends XLite_Base
+class MediatorHtmlStorage extends \XLite\Base
 {
     function save($file, $content)
     {

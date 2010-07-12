@@ -11,12 +11,12 @@
  * @since     3.0.0
  * @ListChild (list="checkout.methods", weight="20")
  *}
-<widget class="XLite_View_Form_Checkout_PaymentMethod" name="payment_method_form" className="payment-methods" />
+<widget class="\XLite\View\Form\Checkout\PaymentMethod" name="payment_method_form" className="payment-methods" />
 
   {displayViewListContent(#checkout.methods.payment#)}
 
   <div class="checkout-button-row">
-    <widget class="XLite_View_Button_Submit" label="Continue..." />
+    <widget class="\XLite\View\Button\Submit" label="Continue..." />
   </div>
 
 <widget name="payment_method_form" end />

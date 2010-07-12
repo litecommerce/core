@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\UPSOnlineTools\Controller\Admin;
+
 /**
  * Configuration controller
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_UPSOnlineTools_Controller_Admin_UpsConfig extends XLite_Controller_Admin_AAdmin
+class UpsConfig extends \XLite\Controller\Admin\AAdmin
 {
     /**
      * Options (cache)
@@ -48,7 +50,7 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_UpsConfig extends XLite_Contr
     /**
      * UPS shipping method
      * 
-     * @var    XLite_Module_UPSOnLineTools_Model_Shipping_Ups
+     * @var    \XLite\Module\UPSOnLineTools\Model\Shipping\Ups
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
@@ -77,7 +79,7 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_UpsConfig extends XLite_Contr
         $fields = array('width', 'height', 'length');
         foreach ($fields as $key) {
             if (isset($settings[$key])) {
-                $settings[$key] = max(XLite_Module_UPSOnlineTools_Model_PackItem::MIN_DIM_SIZE, $settings[$key]);
+                $settings[$key] = max(\XLite\Module\UPSOnlineTools\Model\PackItem::MIN_DIM_SIZE, $settings[$key]);
             }
         }
 
@@ -104,7 +106,7 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_UpsConfig extends XLite_Contr
                     $optionType = 'serialized';
                 }
 
-                XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+                \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
                     array(
                         'category' => 'UPSOnlineTools',
                         'name'     => $name,
@@ -116,7 +118,7 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_UpsConfig extends XLite_Contr
         }
 
         // Clear UPSOnlineTools cache
-        $ups = new XLite_Module_UPSOnLineTools_Model_Shipping_Ups();
+        $ups = new \XLite\Module\UPSOnLineTools\Model\Shipping\Ups();
         $ups->_cleanCache('ups_online_tools_cache');
     }
 
@@ -130,24 +132,24 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_UpsConfig extends XLite_Contr
      */
     protected function doActionTest() 
     {
-        $this->ups = new XLite_Module_UPSOnLineTools_Model_Shipping_Ups();
+        $this->ups = new \XLite\Module\UPSOnLineTools\Model\Shipping\Ups();
 
         $ptype = $this->config->UPSOnlineTools->packing_algorithm;
         $total_weight = $this->get('pounds');
         $ups_containers = array();
-        $container = new XLite_Module_UPSOnlineTools_Model_Container();
+        $container = new \XLite\Module\UPSOnlineTools\Model\Container();
 
         $packaging_type = 2;
 
         switch ($ptype) {
-            case XLite_Model_Order::BINPACKING_SIMPLE_MAX_SIZE:    // Max size
+            case \XLite\Model\Order::BINPACKING_SIMPLE_MAX_SIZE:    // Max size
                 $container->setDimensions(10, 10, 10);
                 $container->setWeightLimit(0);
 
                 break;
 
-            case XLite_Model_Order::BINPACKING_NORMAL_ALGORITHM:    // pack all items in one package
-            case XLite_Model_Order::BINPACKING_OVERSIZE_ALGORITHM:    // pack items in similar containers
+            case \XLite\Model\Order::BINPACKING_NORMAL_ALGORITHM:    // pack all items in one package
+            case \XLite\Model\Order::BINPACKING_OVERSIZE_ALGORITHM:    // pack items in similar containers
                 $packaging_type = $this->config->UPSOnlineTools->packaging_type;
                 $packData = $this->ups->getUPSContainerDims($packaging_type);
                 $container->setDimensions($packData['width'], $packData['length'], $packData['height']);
@@ -175,7 +177,7 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_UpsConfig extends XLite_Contr
         // Get company state
         $state_id = $this->config->Company->location_state;
         if ($state_id != -1) {
-            $state = XLite_Core_Database::getEM()->find('XLite_Model_State', $state_id);
+            $state = \XLite\Core\Database::getEM()->find('XLite\Model\State', $state_id);
             $originState = $state ? $state->code : '';
             unset($state);
 
@@ -184,28 +186,28 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_UpsConfig extends XLite_Contr
         }
 
         // Get destination state
-        $state_id = XLite_Core_Request::getInstance()->destination_state;
+        $state_id = \XLite\Core\Request::getInstance()->destination_state;
         if ($state_id != -1) {
-            $state = XLite_Core_Database::getEM()->find('XLite_Model_State', $state_id);
+            $state = \XLite\Core\Database::getEM()->find('XLite\Model\State', $state_id);
             $destinationState = $state ? $state->code : '';
             unset($state);
 
         } else {
-            $destinationState = XLite_Core_Request::getInstance()->destination_custom_state;
+            $destinationState = \XLite\Core\Request::getInstance()->destination_custom_state;
         }
 
         $this->rates = $this->ups->getRatesByQuery(
-            XLite_Core_Request::getInstance()->pounds,
+            \XLite\Core\Request::getInstance()->pounds,
             $this->config->Company->location_address,
             $originState,
             $this->config->Company->location_city,
             $this->config->Company->location_zipcode,
             $this->config->Company->location_country,
-            XLite_Core_Request::getInstance()->destinationAddress,
+            \XLite\Core\Request::getInstance()->destinationAddress,
             $destinationState,
-            XLite_Core_Request::getInstance()->destinationCity,
-            XLite_Core_Request::getInstance()->destinationZipCode,
-            XLite_Core_Request::getInstance()->destination_country,
+            \XLite\Core\Request::getInstance()->destinationCity,
+            \XLite\Core\Request::getInstance()->destinationZipCode,
+            \XLite\Core\Request::getInstance()->destination_country,
             $this->ups->getOptions(),
             $ups_containers
         );
@@ -233,7 +235,7 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_UpsConfig extends XLite_Contr
 
     function getPackingTypeList()
     {
-        $ups = new XLite_Module_UPSOnLineTools_Model_Shipping_Ups();
+        $ups = new \XLite\Module\UPSOnLineTools\Model\Shipping\Ups();
         return $ups->getUPSContainersList();
     }
 
@@ -246,7 +248,7 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_UpsConfig extends XLite_Contr
  
     function isGDlibEnabled()
     {
-        return XLite_Module_UPSOnlineTools_Main::isGDLibValid();
+        return \XLite\Module\UPSOnlineTools\Main::isGDLibValid();
     }
 
     function isUseDGlibDisplay()

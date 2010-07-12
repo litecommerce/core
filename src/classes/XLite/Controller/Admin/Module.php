@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Controller\Admin;
+
 /**
  * Module settings
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Controller_Admin_Module extends XLite_Controller_Admin_AAdmin
+class Module extends \XLite\Controller\Admin\AAdmin
 {
     /**
      * params 
@@ -55,7 +57,7 @@ class XLite_Controller_Admin_Module extends XLite_Controller_Admin_AAdmin
      */
     public function getOptions()
     {
-        return XLite_Core_Database::getRepo('XLite_Model_Config')->getByCategory($this->page, true, true);
+        return \XLite\Core\Database::getRepo('XLite\Model\Config')->getByCategory($this->page, true, true);
     }
 
     /**
@@ -70,7 +72,7 @@ class XLite_Controller_Admin_Module extends XLite_Controller_Admin_AAdmin
         foreach ($this->getOptions() as $option) {
 
             $name  = $option->name;
-            $value = XLite_Core_Request::getInstance()->$name;
+            $value = \XLite\Core\Request::getInstance()->$name;
 
             switch ($option->type) {
 
@@ -86,7 +88,7 @@ class XLite_Controller_Admin_Module extends XLite_Controller_Admin_AAdmin
                     $value = trim($value);
             }
 
-            XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+            \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
                 array(
                     'category' => $this->page,
                     'name'     => $name,

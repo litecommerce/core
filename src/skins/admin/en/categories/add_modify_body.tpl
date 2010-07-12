@@ -55,7 +55,7 @@
       <td>{if:category.hasImage()}<img src="{category.image.getURL()}" border="0" />{else:}<img src="images/no_image.png" border="0" />{end:}</td>
       <td>&nbsp;</td>
       <td valign="bottom" rowspan=2>
-      <widget class="XLite_View_ImageUpload" field="image" actionName="icon" formName="add_modify_form" object="{category.image}" />
+      <widget class="\XLite\View\ImageUpload" field="image" actionName="icon" formName="add_modify_form" object="{category.image}" />
       </td>
     </tr>
 
@@ -68,7 +68,7 @@
       <td class="FormButton">Membership</td>
       <td class="Star">*</td>
       <td>
-        <widget class="XLite_View_MembershipSelect" template="common/select_membership.tpl" field="membership_id" value="{category.membership_id}" />
+        <widget class="\XLite\View\MembershipSelect" template="common/select_membership.tpl" field="membership_id" value="{category.membership_id}" />
       </td>  
     </tr>
 

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\SagePay;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_SagePay_Main extends XLite_Module_AModule
+class Main extends \XLite\Module\AModule
 {
     /**
      * Module type
@@ -106,7 +108,7 @@ class XLite_Module_SagePay_Main extends XLite_Module_AModule
     {
         parent::init();
 
-        $pm = new XLite_Model_PaymentMethod();
+        $pm = new \XLite\Model\PaymentMethod();
         $pm->find('payment_method = \'sagepaydirect_cc\'');
 
         switch($pm->getComplex('params.solution')) {

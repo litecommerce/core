@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\eSelect\Model\PaymentMethod;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_eSelect_Model_PaymentMethod_EselectCc extends XLite_Model_PaymentMethod_CreditCard
+class EselectCc extends \XLite\Model\PaymentMethod\CreditCard
 {
     public $configurationTemplate = "modules/eSelect/config.tpl";
     public $hasConfigurationForm = true;

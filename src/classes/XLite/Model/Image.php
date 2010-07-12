@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model;
+
 /**
  * Meta-image
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_Image extends XLite_Model_AModel
+class Image extends \XLite\Model\AModel
 {
     const IMAGES_DIR = 'images';
     const IMAGES_CACHE_DIR = 'cache';
@@ -133,7 +135,7 @@ class XLite_Model_Image extends XLite_Model_AModel
             self::$registeredImageClasses = self::getDefaultImageClasses();
         }
 
-        self::$registeredImageClasses[$class] = new XLite_Model_ImageClass();
+        self::$registeredImageClasses[$class] = new \XLite\Model\ImageClass();
         self::$registeredImageClasses[$class]->set(
             'properties',
             array(
@@ -197,7 +199,7 @@ class XLite_Model_Image extends XLite_Model_AModel
         $result = array();
 
         foreach ($list as $key => $value) {
-            $result[$key] = new XLite_Model_ImageClass();
+            $result[$key] = new \XLite\Model\ImageClass();
             $result[$key]->set('properties', $value);
             $result[$key]->set('class', $key);
         }
@@ -259,7 +261,7 @@ class XLite_Model_Image extends XLite_Model_AModel
 
     function copyTo($id)
     {
-        $newImg = new XLite_Model_Image($this->imageClass, $this->get($this->autoIncrement));
+        $newImg = new \XLite\Model\Image($this->imageClass, $this->get($this->autoIncrement));
 
         if (!$this->isRead) {
             $this->read();
@@ -400,7 +402,7 @@ class XLite_Model_Image extends XLite_Model_AModel
             }
 
             if ($success) {
-                $url = array($neww, $newh, XLite::getInstance()->getShopUrl($webPath));
+                $url = array($neww, $newh, \XLite::getInstance()->getShopUrl($webPath));
             }
 
         }
@@ -568,7 +570,7 @@ class XLite_Model_Image extends XLite_Model_AModel
      */
     public function handleRequest()
     {
-        $data = XLite_Core_Request::getInstance()->getData();
+        $data = \XLite\Core\Request::getInstance()->getData();
 
         $result = self::IMAGE_OK;
 
@@ -600,7 +602,7 @@ class XLite_Model_Image extends XLite_Model_AModel
             && is_uploaded_file($_FILES[$image_field]['tmp_name'])
         ) {
             $this->_shouldProcessUpload = true;
-            $upload = new XLite_Model_Upload($_FILES[$image_field]);
+            $upload = new \XLite\Model\Upload($_FILES[$image_field]);
             if (!file_exists(LC_TMP_DIR)) {
                 mkdirRecursive(LC_TMP_DIR);
             }
@@ -835,25 +837,25 @@ class XLite_Model_Image extends XLite_Model_AModel
     {
         $result = null;
 
-        if (XLite::isAdminZone()) {
+        if (\XLite::isAdminZone()) {
             $action = $this->imageClass;
 
-            $result = XLite_Core_Converter::buildURL(
+            $result = \XLite\Core\Converter::buildURL(
                 'image',
                 $action,
                 array('id' => $this->get('id'), '_' => rand()),
-                XLite::CART_SELF
+                \XLite::CART_SELF
             );
 
         } elseif ($this->get('source') == 'D') {
-            $result = XLite_Core_Converter::buildFullURL(
+            $result = \XLite\Core\Converter::buildFullURL(
                 'image',
                 $this->imageClass,
                 array('id' => $this->get('id'))
             );
 
         } else {
-            $result = XLite::getInstance()->getShopUrl(
+            $result = \XLite::getInstance()->getShopUrl(
                 $this->getFilePath($this->get('data'), true)
             );
         }
@@ -903,7 +905,7 @@ class XLite_Model_Image extends XLite_Model_AModel
             $this->config->Images->defaultSources[$key] = $source;
         }
 
-        XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+        \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
             array(
                 'category' => 'Images',
                 'name'     => 'defaultSources',
@@ -937,7 +939,7 @@ class XLite_Model_Image extends XLite_Model_AModel
         if ($from) {
             $imagesHash = array();
             foreach ($imagesArray as $row) {
-                $image = new XLite_Model_Image($this->imageClass, $row[$this->autoIncrement]);
+                $image = new \XLite\Model\Image($this->imageClass, $row[$this->autoIncrement]);
                 $fn = $image->getFilePath($image->get('data'));
                 if (!isset($imagesHash[$fn])) {
                     $imagesHash[$fn] = 1;
@@ -948,7 +950,7 @@ class XLite_Model_Image extends XLite_Model_AModel
         }
         foreach ($imagesArray as $row) {
             $n++;
-            $image = new XLite_Model_Image($this->imageClass, $row[$this->autoIncrement]);
+            $image = new \XLite\Model\Image($this->imageClass, $row[$this->autoIncrement]);
             print ". ";
             func_flush();
 
@@ -1146,7 +1148,7 @@ class XLite_Model_Image extends XLite_Model_AModel
      */
     public function getCroppedDimensions($maxw, $maxh)
     {
-        return XLite_Core_Converter::getCroppedDimensions(
+        return \XLite\Core\Converter::getCroppedDimensions(
             $this->get('width'),
             $this->get('height'),
             $maxw,

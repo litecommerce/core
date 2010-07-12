@@ -45,7 +45,7 @@ function setHeaderChecked()
 <form name="select_country_form" method="GET">
 <p class="AdminHead">Select country<p>
 <input type="hidden" name="target" value="states">
-<widget class="XLite_View_CountrySelect" field="country_code" country="{country_code}" onchange="javascript: document.select_country_form.submit();" all />
+<widget class="\XLite\View\CountrySelect" field="country_code" country="{country_code}" onchange="javascript: document.select_country_form.submit();" all />
 </form>
 
 <span IF="!states">

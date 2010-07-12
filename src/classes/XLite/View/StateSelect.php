@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View;
+
 // FIXME - to remove
 
 /**
@@ -35,7 +37,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_StateSelect extends XLite_View_FormField
+class StateSelect extends \XLite\View\FormField
 {
     /**
      * Widget param names
@@ -82,11 +84,11 @@ class XLite_View_StateSelect extends XLite_View_FormField
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_FIELD_NAME => new XLite_Model_WidgetParam_String('Field name', ''),
-            self::PARAM_FIELD_ID   => new XLite_Model_WidgetParam_String('Field ID', ''),
-            self::PARAM_STATE      => new XLite_Model_WidgetParam_String('Value', ''),
-            self::PARAM_ONCHANGE   => new XLite_Model_WidgetParam_String('onchange event handler', ''),
-            self::PARAM_IS_LINKED  => new XLite_Model_WidgetParam_Bool('Linked with country selector', 0),
+            self::PARAM_FIELD_NAME => new \XLite\Model\WidgetParam\String('Field name', ''),
+            self::PARAM_FIELD_ID   => new \XLite\Model\WidgetParam\String('Field ID', ''),
+            self::PARAM_STATE      => new \XLite\Model\WidgetParam\String('Value', ''),
+            self::PARAM_ONCHANGE   => new \XLite\Model\WidgetParam\String('onchange event handler', ''),
+            self::PARAM_IS_LINKED  => new \XLite\Model\WidgetParam\Bool('Linked with country selector', 0),
         );
     }
 
@@ -99,7 +101,7 @@ class XLite_View_StateSelect extends XLite_View_FormField
      */
     protected function getStates()
     {
-        return XLite_Core_Database::getRepo('XLite_Model_State')->findAllStates();
+        return \XLite\Core\Database::getRepo('XLite\Model\State')->findAllStates();
     }
 
     /**
@@ -127,7 +129,7 @@ class XLite_View_StateSelect extends XLite_View_FormField
     {
         self::$statesDefined = true;
 
-        return XLite_Core_Database::getRepo('XLite_Model_Country')
+        return \XLite\Core\Database::getRepo('XLite\Model\Country')
             ->findCountriesStates();
     }
 

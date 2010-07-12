@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Affiliate\Model;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Affiliate_Model_PartnerField extends XLite_Model_AModel
+class PartnerField extends \XLite\Model\AModel
 {
     public $fields = array (
             "field_id" => 0,

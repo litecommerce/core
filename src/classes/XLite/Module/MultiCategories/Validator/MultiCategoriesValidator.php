@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\MultiCategories\Validator;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_MultiCategories_Validator_MultiCategoriesValidator extends XLite_Validator_RequiredValidator
+class MultiCategoriesValidator extends \XLite\Validator\RequiredValidator
 {
     public $template = "common/required_validator.tpl";
     

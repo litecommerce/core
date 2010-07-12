@@ -26,15 +26,17 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Promotion\View;
+
 
 /**
- * XLite_Module_Promotion_View_AView
+ * \XLite\Module\Promotion\View\AView
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Promotion_View_AView extends XLite_View_AView implements XLite_Base_IDecorator
+class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
 {
     /**
      * invertSign 

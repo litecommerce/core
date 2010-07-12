@@ -10,12 +10,12 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<widget class="XLite_Module_ProductOptions_View_Form_Item_ChangeOptions" name="change_options" className="change-options" />
+<widget class="\XLite\Module\ProductOptions\View\Form\Item\ChangeOptions" name="change_options" className="change-options" />
 
   <h1>Edit options</h1>
 
-  <widget module="ProductOptions" class="XLite_Module_ProductOptions_View_ProductOptions" product="{getProduct()}" />
+  <widget module="ProductOptions" class="\XLite\Module\ProductOptions\View\ProductOptions" product="{getProduct()}" />
 
-  <widget class="XLite_View_Button_Submit" label="Update" />
+  <widget class="\XLite\View\Button\Submit" label="Update" />
 
 <widget name="change_options" end />

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\AdvancedSecurity\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,12 +35,12 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_AdvancedSecurity_Controller_Admin_Login extends XLite_Controller_Admin_Login implements XLite_Base_IDecorator
+class Login extends \XLite\Controller\Admin\Login implements \XLite\Base\IDecorator
 {
     function action_clear_password()
     {
         if ($this->xlite->config->AdvancedSecurity->clr_mp_logoff) {
-            $orderDialog = new XLite_Controller_Admin_Order();
+            $orderDialog = new \XLite\Controller\Admin\Order();
             $orderDialog->action_clear_password();
         }
     }

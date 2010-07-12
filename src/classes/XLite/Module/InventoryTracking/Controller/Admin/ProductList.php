@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\InventoryTracking\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_InventoryTracking_Controller_Admin_ProductList extends XLite_Controller_Admin_ProductList implements XLite_Base_IDecorator
+class ProductList extends \XLite\Controller\Admin\ProductList implements \XLite\Base\IDecorator
 {
     function init() 
     {
@@ -54,11 +56,11 @@ class XLite_Module_InventoryTracking_Controller_Admin_ProductList extends XLite_
 
             foreach ($this->productsList as $k=>$product) {
                 if (!is_object($product)) {
-                    $product = new XLite_Model_Product($product['data']['product_id']);
+                    $product = new \XLite\Model\Product($product['data']['product_id']);
                 }
                 $product_id = $product->get('product_id');
 
-                $inv = new XLite_Module_InventoryTracking_Model_Inventory();
+                $inv = new \XLite\Module\InventoryTracking\Model\Inventory();
                 if ($this->xlite->get('ProductOptionsEnabled') && $product->get('productOptions') && $product->get('tracking')) {
                     $inventories = (array) $inv->findAll("inventory_id LIKE '$product_id" . "|%' AND enabled=1 $condition");
                     if (empty($inventories)) {

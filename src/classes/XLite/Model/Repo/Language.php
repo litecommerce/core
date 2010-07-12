@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model\Repo;
+
 /**
  * Language repository
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_Repo_Language extends XLite_Model_Repo_Base_I18n
+class Language extends \XLite\Model\Repo\Base\I18n
 {
     /**
      * Default 'order by' field name
@@ -48,7 +50,7 @@ class XLite_Model_Repo_Language extends XLite_Model_Repo_Base_I18n
     /**
      * Global default language (cache)
      * 
-     * @var    XLite_Model_Language
+     * @var    \XLite\Model\Language
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
@@ -116,9 +118,9 @@ class XLite_Model_Repo_Language extends XLite_Model_Repo_Base_I18n
     public function findActiveLanguages()
     {
         return $this->assignQueryCache(
-            $this->defineByStatusQuery(XLite_Model_Language::ENABLED)->getQuery(),
+            $this->defineByStatusQuery(\XLite\Model\Language::ENABLED)->getQuery(),
             'status',
-            array('status' => XLite_Model_Language::ENABLED)
+            array('status' => \XLite\Model\Language::ENABLED)
         )->getResult();
     }
 
@@ -164,7 +166,7 @@ class XLite_Model_Repo_Language extends XLite_Model_Repo_Base_I18n
     {
         return $this->createQueryBuilder()
             ->andWhere('l.status != :status')
-            ->setParameter('status', XLite_Model_Language::INACTIVE);
+            ->setParameter('status', \XLite\Model\Language::INACTIVE);
     }
 
     /**
@@ -177,7 +179,7 @@ class XLite_Model_Repo_Language extends XLite_Model_Repo_Base_I18n
      */
     public function findInactiveLanguages()
     {
-        return $this->defineByStatusQuery(XLite_Model_Language::INACTIVE)->getQuery()->getResult();
+        return $this->defineByStatusQuery(\XLite\Model\Language::INACTIVE)->getQuery()->getResult();
     }
 
     /**
@@ -185,7 +187,7 @@ class XLite_Model_Repo_Language extends XLite_Model_Repo_Base_I18n
      * 
      * @param string $code Code
      *  
-     * @return XLite_Model_Language or null
+     * @return \XLite\Model\Language or null
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -232,7 +234,7 @@ class XLite_Model_Repo_Language extends XLite_Model_Repo_Base_I18n
     public function getLanguagesQuery()
     {
         $query = array(
-            XLite_Core_Config::getInstance()->General->defaultLanguage->code,
+            \XLite\Core\Config::getInstance()->General->defaultLanguage->code,
             $this->getDefaultLanguage()->code,
         );
 
@@ -250,8 +252,8 @@ class XLite_Model_Repo_Language extends XLite_Model_Repo_Base_I18n
     public function getDefaultLanguage()
     {
         if (!isset($this->defaultLanguage)) {
-            $this->defaultLanguage = XLite_Core_Database::getRepo('XLite_Model_Language')
-                    ->findOneByCode('en');
+            $this->defaultLanguage = \XLite\Core\Database::getRepo('XLite\Model\Language')
+                ->findOneByCode('en');
 
             if (!$this->defaultLanguage) {
                 // TODO - add throw exception

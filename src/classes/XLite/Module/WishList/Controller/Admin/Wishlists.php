@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\WishList\Controller\Admin;
+
 /**
  * Wishlists admin controller
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_WishList_Controller_Admin_Wishlists extends XLite_Controller_Admin_AAdmin
+class Wishlists extends \XLite\Controller\Admin\AAdmin
 {
 
     /**
@@ -69,51 +71,51 @@ class XLite_Module_WishList_Controller_Admin_Wishlists extends XLite_Controller_
         $searchParams = $this->session->get('wishlist_search');
 
         if (!is_array($searchParams)) {
-            $searchParams = XLite_Module_WishList_Model_WishList::getDefaultSearchConditions();
+            $searchParams = \XLite\Module\WishList\Model\WishList::getDefaultSearchConditions();
         }
 
-        if (isset(XLite_Core_Request::getInstance()->startId)) {
-            $searchParams['startId'] = intval(XLite_Core_Request::getInstance()->startId);
+        if (isset(\XLite\Core\Request::getInstance()->startId)) {
+            $searchParams['startId'] = intval(\XLite\Core\Request::getInstance()->startId);
             if (0 === $searchParams['startId']) {
                 $searchParams['startId'] = '';
             }
         }
 
-        if (isset(XLite_Core_Request::getInstance()->endId)) {
-            $searchParams['endId'] = intval(XLite_Core_Request::getInstance()->endId);
+        if (isset(\XLite\Core\Request::getInstance()->endId)) {
+            $searchParams['endId'] = intval(\XLite\Core\Request::getInstance()->endId);
             if (0 === $searchParams['endId']) {
                 $searchParams['endId'] = '';
             }
         }
 
-        if (isset(XLite_Core_Request::getInstance()->email)) {
-            $searchParams['email'] = XLite_Core_Request::getInstance()->email;
+        if (isset(\XLite\Core\Request::getInstance()->email)) {
+            $searchParams['email'] = \XLite\Core\Request::getInstance()->email;
         }
 
-        if (isset(XLite_Core_Request::getInstance()->sku)) {
-            $searchParams['sku'] = XLite_Core_Request::getInstance()->sku;
+        if (isset(\XLite\Core\Request::getInstance()->sku)) {
+            $searchParams['sku'] = \XLite\Core\Request::getInstance()->sku;
         }
 
-        if (isset(XLite_Core_Request::getInstance()->productTitle)) {
-            $searchParams['productTitle'] = XLite_Core_Request::getInstance()->productTitle;
+        if (isset(\XLite\Core\Request::getInstance()->productTitle)) {
+            $searchParams['productTitle'] = \XLite\Core\Request::getInstance()->productTitle;
         }
 
         // Validate startDate and endDate
         // TODO: need to move to the unified place
         if (
-            isset(XLite_Core_Request::getInstance()->startDateMonth)
-            && isset(XLite_Core_Request::getInstance()->startDateDay)
-            && isset(XLite_Core_Request::getInstance()->startDateYear)
+            isset(\XLite\Core\Request::getInstance()->startDateMonth)
+            && isset(\XLite\Core\Request::getInstance()->startDateDay)
+            && isset(\XLite\Core\Request::getInstance()->startDateYear)
         ) {
             $searchParams['startDate'] = mktime(
                 0, 0, 0,
-                intval(XLite_Core_Request::getInstance()->startDateMonth),
-                intval(XLite_Core_Request::getInstance()->startDateDay),
-                intval(XLite_Core_Request::getInstance()->startDateYear)
+                intval(\XLite\Core\Request::getInstance()->startDateMonth),
+                intval(\XLite\Core\Request::getInstance()->startDateDay),
+                intval(\XLite\Core\Request::getInstance()->startDateYear)
             );
 
-        } elseif (isset(XLite_Core_Request::getInstance()->startDate)) {
-            $time = strtotime(XLite_Core_Request::getInstance()->startDate);
+        } elseif (isset(\XLite\Core\Request::getInstance()->startDate)) {
+            $time = strtotime(\XLite\Core\Request::getInstance()->startDate);
             if (false !== $time && -1 !== $time) {
                 $searchParams['startDate'] = mktime(
                     0, 0, 0,
@@ -122,25 +124,25 @@ class XLite_Module_WishList_Controller_Admin_Wishlists extends XLite_Controller_
                     date('Y', $time)
                 );
 
-            } elseif (0 == strlen(XLite_Core_Request::getInstance()->startDate)) {
+            } elseif (0 == strlen(\XLite\Core\Request::getInstance()->startDate)) {
                 $searchParams['startDate'] = '';
             }
         }
 
         if (
-            isset(XLite_Core_Request::getInstance()->endDateMonth)
-            && isset(XLite_Core_Request::getInstance()->endDateDay)
-            && isset(XLite_Core_Request::getInstance()->endDateYear)
+            isset(\XLite\Core\Request::getInstance()->endDateMonth)
+            && isset(\XLite\Core\Request::getInstance()->endDateDay)
+            && isset(\XLite\Core\Request::getInstance()->endDateYear)
         ) {
             $searchParams['endDate'] = mktime(
                 23, 59, 59,
-                intval(XLite_Core_Request::getInstance()->endDateMonth),
-                intval(XLite_Core_Request::getInstance()->endDateDay),
-                intval(XLite_Core_Request::getInstance()->endDateYear)
+                intval(\XLite\Core\Request::getInstance()->endDateMonth),
+                intval(\XLite\Core\Request::getInstance()->endDateDay),
+                intval(\XLite\Core\Request::getInstance()->endDateYear)
             );
 
-        } elseif (isset(XLite_Core_Request::getInstance()->endDate)) {
-            $time = strtotime(XLite_Core_Request::getInstance()->endDate);
+        } elseif (isset(\XLite\Core\Request::getInstance()->endDate)) {
+            $time = strtotime(\XLite\Core\Request::getInstance()->endDate);
             if (false !== $time && -1 !== $time) {
                 $searchParams['endDate'] = mktime(
                     23, 59, 59,
@@ -149,7 +151,7 @@ class XLite_Module_WishList_Controller_Admin_Wishlists extends XLite_Controller_
                     date('Y', $time)
                 );
                 
-            } elseif (0 == strlen(XLite_Core_Request::getInstance()->endDate)) {
+            } elseif (0 == strlen(\XLite\Core\Request::getInstance()->endDate)) {
                 $searchParams['endDate'] = '';
             }
         }
@@ -171,7 +173,7 @@ class XLite_Module_WishList_Controller_Admin_Wishlists extends XLite_Controller_
     {
         if (is_null($this->wishlists)) {
 
-            $wishlist = new XLite_Module_WishList_Model_WishList();
+            $wishlist = new \XLite\Module\WishList\Model\WishList();
             $wishlist->collectGarbage();
 
             $profile = false;
@@ -179,7 +181,7 @@ class XLite_Module_WishList_Controller_Admin_Wishlists extends XLite_Controller_
             $searchParams = $this->getConditions();
 
             if (!empty($searchParams['email'])) {
-                $profile = new XLite_Model_Profile();
+                $profile = new \XLite\Model\Profile();
                 $profile->find("login='" . addslashes($searchParams['email']) . "'");
             }
 
@@ -221,13 +223,13 @@ class XLite_Module_WishList_Controller_Admin_Wishlists extends XLite_Controller_
      */
     protected function doActionDelete()
     {
-        if (isset(XLite_Core_Request::getInstance()->wishlistIds)) {
+        if (isset(\XLite\Core\Request::getInstance()->wishlistIds)) {
 
-            $wishlists = XLite_Core_Request::getInstance()->wishlistIds;
+            $wishlists = \XLite\Core\Request::getInstance()->wishlistIds;
 
             foreach ($wishlists as $id) {
 
-                $wishlist = new XLite_Module_WishList_Model_WishList($id);
+                $wishlist = new \XLite\Module\WishList\Model\WishList($id);
                 $wishlistProducts = $wishlist->get('products');
 
                 foreach ($wishlistProducts as $product) {
@@ -252,7 +254,7 @@ class XLite_Module_WishList_Controller_Admin_Wishlists extends XLite_Controller_
         $searchParams = $this->session->get('wishlist_search');
 
         if (!is_array($searchParams)) {
-            $searchParams = XLite_Module_WishList_Model_WishList::getDefaultSearchConditions();
+            $searchParams = \XLite\Module\WishList\Model\WishList::getDefaultSearchConditions();
             $this->session->set('searchParams', $searchParams);
         }
 

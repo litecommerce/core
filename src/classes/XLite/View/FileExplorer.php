@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View;
+
 
 /**
  * File explorer dialog
@@ -34,7 +36,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_FileExplorer extends XLite_View_ColumnList
+class FileExplorer extends \XLite\View\ColumnList
 {
     /*
      * Widget parameters names
@@ -79,9 +81,9 @@ class XLite_View_FileExplorer extends XLite_View_ColumnList
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_FORM_SELECTION_NAME => new XLite_Model_WidgetParam_String('Form selection name', ''),
-            self::PARAM_MODIFIER            => new XLite_Model_WidgetParam_String('Modifier', null),
-            self::PARAM_DSN                 => new XLite_Model_WidgetParam_String('DSN', null),
+            self::PARAM_FORM_SELECTION_NAME => new \XLite\Model\WidgetParam\String('Form selection name', ''),
+            self::PARAM_MODIFIER            => new \XLite\Model\WidgetParam\String('Modifier', null),
+            self::PARAM_DSN                 => new \XLite\Model\WidgetParam\String('DSN', null),
         );
     }
 
@@ -96,7 +98,7 @@ class XLite_View_FileExplorer extends XLite_View_ColumnList
     protected function getLocale()
     {
         if (is_null($this->locale)) {
-            $this->locale = XLite::getInstance()->getOptions(array('skin_details', 'locale'));
+            $this->locale = \XLite::getInstance()->getOptions(array('skin_details', 'locale'));
         }
 
         return $this->locale;
@@ -142,12 +144,12 @@ class XLite_View_FileExplorer extends XLite_View_ColumnList
         if (is_null($modifier)) {
             return array();
         }
-        $zone = isset(XLite_Core_Request::getInstance()->$modifier) ? XLite_Core_Request::getInstance()->$modifier : "default";
+        $zone = isset(\XLite\Core\Request::getInstance()->$modifier) ? \XLite\Core\Request::getInstance()->$modifier : "default";
         $path = $this->getPath($zone);
 
         // check for node
-        if (isset(XLite_Core_Request::getInstance()->node)) {
-            $path = XLite_Core_Request::getInstance()->node;
+        if (isset(\XLite\Core\Request::getInstance()->node)) {
+            $path = \XLite\Core\Request::getInstance()->node;
         }
 
         $childrenDirs = array();
@@ -172,11 +174,11 @@ class XLite_View_FileExplorer extends XLite_View_ColumnList
         $children = array_merge($childrenDirs, $childrenFiles);
 
         for ($i=0; $i<count($children); $i++) {
-            $children[$i] = new XLite_Model_FileNode($path . '/'. $children[$i]);
+            $children[$i] = new \XLite\Model\FileNode($path . '/'. $children[$i]);
         }
 
         if (preg_match('/^(.*\/.*\/.*)\/[^\/]+$/', $path, $matches)) {
-            $par_node = new XLite_Model_FileNode($matches[1]);
+            $par_node = new \XLite\Model\FileNode($matches[1]);
             $par_node->name = '..';
             array_unshift($children, $par_node);
         }

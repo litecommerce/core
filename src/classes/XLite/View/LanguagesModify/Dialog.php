@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View\LanguagesModify;
+
 /**
  * Languages and language labels modification
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_LanguagesModify_Dialog extends XLite_View_Dialog
+class Dialog extends \XLite\View\Dialog
 {
     /**
      * Labels limit per page
@@ -78,7 +80,7 @@ class XLite_View_LanguagesModify_Dialog extends XLite_View_Dialog
     /**
      * Translate language 
      * 
-     * @var    XLite_Model_Language or false
+     * @var    \XLite\Model\Language or false
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
@@ -195,7 +197,7 @@ class XLite_View_LanguagesModify_Dialog extends XLite_View_Dialog
     {
         $this->defineLabels();
 
-        $data = XLite_Model_Session::getInstance()->get('labelsSearch');
+        $data = \XLite\Model\Session::getInstance()->get('labelsSearch');
 
         return intval($data['page']);
     }
@@ -214,7 +216,7 @@ class XLite_View_LanguagesModify_Dialog extends XLite_View_Dialog
             'languages',
             '',
             array(
-                'language' => XLite_Core_Request::getInstance()->language,
+                'language' => \XLite\Core\Request::getInstance()->language,
             )
         );
     }
@@ -229,7 +231,7 @@ class XLite_View_LanguagesModify_Dialog extends XLite_View_Dialog
      */
 	public function getSearchSubstring()
 	{
-		$data = XLite_Model_Session::getInstance()->get('labelsSearch');
+		$data = \XLite\Model\Session::getInstance()->get('labelsSearch');
 
 		return is_array($data) && isset($data['name']) ? $data['name'] : '';
 	}
@@ -244,7 +246,7 @@ class XLite_View_LanguagesModify_Dialog extends XLite_View_Dialog
      */
     public function isSearchAll()
 	{
-        $data = XLite_Model_Session::getInstance()->get('labelsSearch');
+        $data = \XLite\Model\Session::getInstance()->get('labelsSearch');
 
         return is_array($data) && !isset($data['name']);
 	}
@@ -259,7 +261,7 @@ class XLite_View_LanguagesModify_Dialog extends XLite_View_Dialog
      */
     public function isSearch()
     {
-        return is_array(XLite_Model_Session::getInstance()->get('labelsSearch'));
+        return is_array(\XLite\Model\Session::getInstance()->get('labelsSearch'));
     }
 
     /**
@@ -272,7 +274,7 @@ class XLite_View_LanguagesModify_Dialog extends XLite_View_Dialog
      */
     public function isAnotherLanguagesAdded()
     {
-        $languages = XLite_Core_Database::getRepo('XLite_Model_Language')->findAddedLanguages();
+        $languages = \XLite\Core\Database::getRepo('XLite\Model\Language')->findAddedLanguages();
 
         foreach ($languages as $k => $l) {
             if ($l->code == $this->getDefaultLanguage()->code) {
@@ -287,33 +289,33 @@ class XLite_View_LanguagesModify_Dialog extends XLite_View_Dialog
     /**
      * Get application default language 
      * 
-     * @return XLite_Model_Language
+     * @return \XLite\Model\Language
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
     public function getDefaultLanguage()
     {
-        return XLite_Core_Database::getRepo('XLite_Model_Language')->getDefaultLanguage();
+        return \XLite\Core\Database::getRepo('XLite\Model\Language')->getDefaultLanguage();
     }
 
     /**
      * Get iterface default language 
      * 
-     * @return XLite_Model_Language
+     * @return \XLite\Model\Language
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
     public function getInterfaceLanguage()
     {
-        return XLite_Core_Config::getInstance()->General->defaultLanguage;
+        return \XLite\Core\Config::getInstance()->General->defaultLanguage;
     }
 
     /**
      * Get translate language 
      * 
-     * @return XLite_Model_Language or null
+     * @return \XLite\Model\Language or null
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -323,9 +325,9 @@ class XLite_View_LanguagesModify_Dialog extends XLite_View_Dialog
         if (!isset($this->translateLanguage)) {
             $this->translateLanguage = false;
 
-            if (XLite_Core_Request::getInstance()->language) {
-                $language = XLite_Core_Database::getRepo('XLite_Model_Language')->findOneByCode(
-                    XLite_Core_Request::getInstance()->language
+            if (\XLite\Core\Request::getInstance()->language) {
+                $language = \XLite\Core\Database::getRepo('XLite\Model\Language')->findOneByCode(
+                    \XLite\Core\Request::getInstance()->language
                 );
                 if ($language && $language->added) {
                     $this->translateLanguage = $language;
@@ -346,21 +348,21 @@ class XLite_View_LanguagesModify_Dialog extends XLite_View_Dialog
      */
     public function isTranslatedLanguageSelected()
     {
-        return XLite_Core_Request::getInstance()->language
+        return \XLite\Core\Request::getInstance()->language
             && $this->getTranslatedLanguage();
     }
 
     /**
      * Get label translation with application default language
      * 
-     * @param XLite_Model_LanguageLabel $label Label
+     * @param \XLite\Model\LanguageLabel $label Label
      *  
      * @return string
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getLabelDefaultValue(XLite_Model_LanguageLabel $label)
+    public function getLabelDefaultValue(\XLite\Model\LanguageLabel $label)
     {
         return $label->getTranslation($this->getDefaultLanguage()->code)->label;
     }
@@ -368,14 +370,14 @@ class XLite_View_LanguagesModify_Dialog extends XLite_View_Dialog
     /**
      * Get label translation with translate language
      * 
-     * @param XLite_Model_LanguageLabel $label Label
+     * @param \XLite\Model\LanguageLabel $label Label
      *  
      * @return string
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getTranslation(XLite_Model_LanguageLabel $label)
+    public function getTranslation(\XLite\Model\LanguageLabel $label)
     {
         return $this->getTranslatedLanguage()
             ? $label->getTranslation($this->getTranslatedLanguage()->code)->label
@@ -396,24 +398,24 @@ class XLite_View_LanguagesModify_Dialog extends XLite_View_Dialog
             $this->labelsCount = 0;
             $this->labels = array();
 
-            $data = XLite_Model_Session::getInstance()->get('labelsSearch');
+            $data = \XLite\Model\Session::getInstance()->get('labelsSearch');
 
 			if (is_array($data)) {
 
 				// Get total count
 				if (isset($data['name'])) {
-					$this->labelsCount = XLite_Core_Database::getRepo('XLite_Model_LanguageLabel')
+					$this->labelsCount = \XLite\Core\Database::getRepo('XLite\Model\LanguageLabel')
 						->countByName($data['name']);
 
 				} else {
-					$this->labelsCount = XLite_Core_Database::getRepo('XLite_Model_LanguageLabel')->count();
+					$this->labelsCount = \XLite\Core\Database::getRepo('XLite\Model\LanguageLabel')->count();
 				}
 
-                $page = XLite_Core_Request::getInstance()->page
-                    ? XLite_Core_Request::getInstance()->page
+                $page = \XLite\Core\Request::getInstance()->page
+                    ? \XLite\Core\Request::getInstance()->page
                     : $data['page'];
 
-				list($this->pagesCount, $data['page']) = XLite_Core_Operator::calculatePagination(
+				list($this->pagesCount, $data['page']) = \XLite\Core\Operator::calculatePagination(
                     $this->labelsCount,
                     $page,
                     $this->limit
@@ -425,15 +427,15 @@ class XLite_View_LanguagesModify_Dialog extends XLite_View_Dialog
 					$this->labels = array();
 
 				} elseif (isset($data['name'])) {
-					$this->labels = XLite_Core_Database::getRepo('XLite_Model_LanguageLabel')
+					$this->labels = \XLite\Core\Database::getRepo('XLite\Model\LanguageLabel')
 						->findLikeName($data['name'], $start, $this->limit);
 
 				} else {
-					$this->labels = XLite_Core_Database::getRepo('XLite_Model_LanguageLabel')
+					$this->labels = \XLite\Core\Database::getRepo('XLite\Model\LanguageLabel')
                         ->findFrame($start, $this->limit);
 				}
 
-				XLite_Model_Session::getInstance()->set('labelsSearch', $data);
+				\XLite\Model\Session::getInstance()->set('labelsSearch', $data);
 			}
 		}
 	}

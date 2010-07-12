@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Controller\Admin;
+
 /**
  * Payment method configure
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Controller_Admin_PaymentMethod extends XLite_Controller_Admin_AAdmin
+class PaymentMethod extends \XLite\Controller\Admin\AAdmin
 {
     /**
      * Controller parameters 
@@ -48,7 +50,7 @@ class XLite_Controller_Admin_PaymentMethod extends XLite_Controller_Admin_AAdmin
     /**
      * Payment methods (cache) 
      * 
-     * @var    XLite_Model_PaymentMethod
+     * @var    \XLite\Model\PaymentMethod
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
@@ -62,7 +64,7 @@ class XLite_Controller_Admin_PaymentMethod extends XLite_Controller_Admin_AAdmin
     /**
      * Get payment method 
      * 
-     * @return XLite_Model_PaymentMethod
+     * @return \XLite\Model\PaymentMethod
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -70,7 +72,7 @@ class XLite_Controller_Admin_PaymentMethod extends XLite_Controller_Admin_AAdmin
     public function getPM()
     {
         if (is_null($this->pm)) {
-            $this->pm = XLite_Model_PaymentMethod::factory(XLite_Core_Request::getInstance()->payment_method);
+            $this->pm = \XLite\Model\PaymentMethod::factory(\XLite\Core\Request::getInstance()->payment_method);
         }
 
         return $this->pm;

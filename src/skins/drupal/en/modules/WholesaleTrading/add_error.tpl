@@ -19,4 +19,4 @@ You can buy from {min} to {max} items of this product.
 You have already ordered {added} items.
 <br><br>
 </span>
-<widget class="XLite_View_Button" href="javascript: history.go(-1)" label="Go back">
+<widget class="\XLite\View\Button" href="javascript: history.go(-1)" label="Go back">

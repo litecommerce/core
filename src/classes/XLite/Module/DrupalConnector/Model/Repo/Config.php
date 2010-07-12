@@ -26,15 +26,17 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\DrupalConnector\Model\Repo;
+
 /**
- * XLite_Module_DrupalConnector_Model_Repo_Config 
+ * \XLite\Module\DrupalConnector\Model\Repo\Config 
  * 
  * @package    XLite
  * @subpackage ____sub_package____
  * @see        ____class_see____
  * @since      3.0.0
  */
-class XLite_Module_DrupalConnector_Model_Repo_Config extends XLite_Model_Repo_Config implements XLite_Base_IDecorator
+class Config extends \XLite\Model\Repo\Config implements \XLite\Base\IDecorator
 {
     /**
      * Initializes a new EntityRepository object

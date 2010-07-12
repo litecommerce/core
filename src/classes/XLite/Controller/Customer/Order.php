@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Controller\Customer;
+
 /**
  * Order controller
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Controller_Customer_Order extends XLite_Controller_Customer_ACustomer
+class Order extends \XLite\Controller\Customer\ACustomer
 {
     /**
      * Controller parameters
@@ -48,7 +50,7 @@ class XLite_Controller_Customer_Order extends XLite_Controller_Customer_ACustome
     /**
      * Order (cache)
      * 
-     * @var    XLite_Model_Order
+     * @var    \XLite\Model\Order
      * @access private
      * @see    ____var_see____
      * @since  3.0.0
@@ -66,7 +68,7 @@ class XLite_Controller_Customer_Order extends XLite_Controller_Customer_ACustome
     {
         parent::addBaseLocation();
 
-        $this->locationPath->addNode(new XLite_Model_Location('Search orders', $this->buildURL('order_list')));
+        $this->locationPath->addNode(new \XLite\Model\Location('Search orders', $this->buildURL('order_list')));
     }
 
     /**
@@ -104,7 +106,7 @@ class XLite_Controller_Customer_Order extends XLite_Controller_Customer_ACustome
      */
     protected function checkOrderAccess()
     {
-        return $this->session->get('last_order_id') == XLite_Core_Request::getInstance()->order_id
+        return $this->session->get('last_order_id') == \XLite\Core\Request::getInstance()->order_id
             || (
                 $this->auth->isLogged()
                 && $this->auth->getProfile()->get('profile_id') == $this->getOrder()->get('orig_profile_id')
@@ -114,7 +116,7 @@ class XLite_Controller_Customer_Order extends XLite_Controller_Customer_ACustome
     /**
      * Get order 
      * 
-     * @return XLite_Model_Order
+     * @return \XLite\Model\Order
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -122,7 +124,7 @@ class XLite_Controller_Customer_Order extends XLite_Controller_Customer_ACustome
     public function getOrder()
     {
         if (is_null($this->order)) {
-            $this->order = new XLite_Model_Order(intval(XLite_Core_Request::getInstance()->order_id));
+            $this->order = new \XLite\Model\Order(intval(\XLite\Core\Request::getInstance()->order_id));
         }
 
         return $this->order;

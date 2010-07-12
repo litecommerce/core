@@ -26,14 +26,16 @@
  * @since      3.0.0
  */
 
+namespace XLite\View;
+
 /**
- * XLite_View_ExtraPage 
+ * \XLite\View\ExtraPage 
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_ExtraPage extends XLite_View_AView
+class ExtraPage extends \XLite\View\AView
 {
     /**
      * Widget param names 
@@ -54,7 +56,7 @@ class XLite_View_ExtraPage extends XLite_View_AView
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_DATA => new XLite_Model_WidgetParam_Object('Data', null),
+            self::PARAM_DATA => new \XLite\Model\WidgetParam\Object('Data', null),
         );
     }
  

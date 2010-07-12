@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model\Wysiwyg;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_Wysiwyg_MediatorWidget extends XLite_View_AView 
+class MediatorWidget extends \XLite\View\AView 
 {
     public $attributes = array();
     public $attributesEvaled = array();

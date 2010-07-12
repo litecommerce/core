@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Affiliate\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Affiliate_Controller_Admin_PlanCommissions extends XLite_Controller_Admin_AAdmin
+class PlanCommissions extends \XLite\Controller\Admin\AAdmin
 {
     public $params = array('target', "plan_id");
     
@@ -46,7 +48,7 @@ class XLite_Module_Affiliate_Controller_Admin_PlanCommissions extends XLite_Cont
                 return; // wrong data
             }
             foreach ($this->get('commission') as $itemID => $commission) {
-                $pc = new XLite_Module_Affiliate_Model_PlanCommission($this->get('plan_id'), $itemID, $this->get('item_type'));
+                $pc = new \XLite\Module\Affiliate\Model\PlanCommission($this->get('plan_id'), $itemID, $this->get('item_type'));
                 $pc->set('commission', $commissions[$itemID]);
                 $pc->set('commission_type', $types[$itemID]);
                 $pc->update();
@@ -55,7 +57,7 @@ class XLite_Module_Affiliate_Controller_Admin_PlanCommissions extends XLite_Cont
             $deleteItems = $this->get('delete_items');
             if (is_array($deleteItems)) {
                 foreach ($deleteItems as $itemID => $status) {
-                    $pc = new XLite_Module_Affiliate_Model_PlanCommission($this->get('plan_id'), $itemID, $this->get('item_type'));
+                    $pc = new \XLite\Module\Affiliate\Model\PlanCommission($this->get('plan_id'), $itemID, $this->get('item_type'));
                     $pc->delete();
                 }
             }
@@ -82,7 +84,7 @@ class XLite_Module_Affiliate_Controller_Admin_PlanCommissions extends XLite_Cont
 
     function getAffiliatePlan()
     {
-        $ap = new XLite_Module_Affiliate_Model_AffiliatePlan(isset($_REQUEST['plan_id']) ? $_REQUEST['plan_id'] : null);
+        $ap = new \XLite\Module\Affiliate\Model\AffiliatePlan(isset($_REQUEST['plan_id']) ? $_REQUEST['plan_id'] : null);
         $ap->set('properties', $_REQUEST);
         return $ap;
     }
@@ -109,7 +111,7 @@ class XLite_Module_Affiliate_Controller_Admin_PlanCommissions extends XLite_Cont
     function getPlanCommission()
     {
         if (is_null($this->pc)) {
-            $this->pc = new XLite_Module_Affiliate_Model_PlanCommission();
+            $this->pc = new \XLite\Module\Affiliate\Model\PlanCommission();
         }
         return $this->pc;
     }

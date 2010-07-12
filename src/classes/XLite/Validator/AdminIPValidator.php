@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Validator;
+
 define(
     'IPV4_REGEXP_WILDCARD',
     '/^(25[0-5]|2[0-4][0-9]|\*|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|\*|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|\*|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|\*|[01]?[0-9][0-9]?)$/'
@@ -38,7 +40,7 @@ define(
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Validator_AdminIPValidator extends XLite_Validator_AValidator
+class AdminIPValidator extends \XLite\Validator\AValidator
 {
     public $template = "common/ip_validator.tpl";
 

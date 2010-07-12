@@ -11,8 +11,8 @@
  * @since     3.0.0
  *}
 <td class="delete-from-list">
-  <widget class="XLite_View_Form_Cart_Item_Delete" name="itemRemove" item="{item}" cartId="{cart_id}" />
-    <widget class="XLite_View_Button_Image" label="Delete item" />
+  <widget class="\XLite\View\Form\Cart\Item\Delete" name="itemRemove" item="{item}" cartId="{cart_id}" />
+    <widget class="\XLite\View\Button\Image" label="Delete item" />
   <widget name="itemRemove" end />
 </td>
 

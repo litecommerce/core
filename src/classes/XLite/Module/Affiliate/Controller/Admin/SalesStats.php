@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Affiliate\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Affiliate_Controller_Admin_SalesStats extends XLite_Module_Affiliate_Controller_Admin_PartnerStats
+class SalesStats extends \XLite\Module\Affiliate\Controller\Admin\PartnerStats
 {
     public $qty = 0;
     public $saleTotal = 0;
@@ -47,7 +49,7 @@ class XLite_Module_Affiliate_Controller_Admin_SalesStats extends XLite_Module_Af
     function getProduct()
     {
         if (is_null($this->product)) {
-            $this->product = new XLite_Model_Product($this->product_id);
+            $this->product = new \XLite\Model\Product($this->product_id);
         }
         return $this->product;
     }
@@ -55,7 +57,7 @@ class XLite_Module_Affiliate_Controller_Admin_SalesStats extends XLite_Module_Af
     function getSalesStats()
     {
         if (is_null($this->salesStats)) {
-            $pp = new XLite_Module_Affiliate_Model_PartnerPayment();
+            $pp = new \XLite\Module\Affiliate\Model\PartnerPayment();
             $this->salesStats = $pp->searchSales (
                     $this->get('startDate'),
                     $this->get('endDate') + 24 * 3600,

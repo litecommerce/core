@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View\FormField\Select;
+
 /**
  * Form abstract selector
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class XLite_View_FormField_Select_ASelect extends XLite_View_FormField_AFormField
+abstract class ASelect extends \XLite\View\FormField\AFormField
 {
     /**
      * Widget param names 
@@ -88,7 +90,7 @@ abstract class XLite_View_FormField_Select_ASelect extends XLite_View_FormField_
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_OPTIONS => new XLite_Model_WidgetParam_Collection('Options', $this->getDefaultOptions(), false),
+            self::PARAM_OPTIONS => new \XLite\Model\WidgetParam\Collection('Options', $this->getDefaultOptions(), false),
         );
     }
 

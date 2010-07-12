@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\ProductAdviser\Controller\Customer;
+
 
 /**
  * Product controller
@@ -34,14 +36,14 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_ProductAdviser_Controller_Customer_Product extends XLite_Controller_Customer_Product implements XLite_Base_IDecorator
+class Product extends \XLite\Controller\Customer\Product implements \XLite\Base\IDecorator
 {
     public $rejectedItemInfo = null;
     public $priceNotified = null;
 
     function init()
     {
-        $request = $request = XLite_Core_Request::getInstance();
+        $request = $request = \XLite\Core\Request::getInstance();
         $product_id = intval($request->product_id);
         if (
             $product_id > 0
@@ -62,7 +64,7 @@ class XLite_Module_ProductAdviser_Controller_Customer_Product extends XLite_Cont
             	$referers[$product_id] = $referer;
             	$this->session->set('HTTP_REFERER', $referers);
 
-            	$statistic = new XLite_Module_ProductAdviser_Model_ProductRecentlyViewed();
+            	$statistic = new \XLite\Module\ProductAdviser\Model\ProductRecentlyViewed();
             	$sid = $this->session->getID();
                 $statistic->set('sid', $sid);
                 $statistic->set('product_id', $product_id);
@@ -86,9 +88,9 @@ class XLite_Module_ProductAdviser_Controller_Customer_Product extends XLite_Cont
             if ($this->getProduct()->getComplex('inventory.amount') == 0 && $this->getProduct()->get('tracking') == 0) {
 
                 // Product is out-of-stock
-    			$this->rejectedItemInfo = new XLite_Base();
+    			$this->rejectedItemInfo = new \XLite\Base();
     			$this->rejectedItemInfo->set('product_id', $this->getProduct()->get('product_id'));
-    			$this->rejectedItemInfo->set('product', new XLite_Model_Product($this->getProduct()->get('product_id')));
+    			$this->rejectedItemInfo->set('product', new \XLite\Model\Product($this->getProduct()->get('product_id')));
 
             	if ($this->isNotificationSaved($this->rejectedItemInfo)) {
         			$this->rejectedItemInfo = null;
@@ -105,9 +107,9 @@ class XLite_Module_ProductAdviser_Controller_Customer_Product extends XLite_Cont
                 		$this->session->set('rejectedItem', null);
 
                 	} else {
-            			$this->rejectedItemInfo = new XLite_Base();
+            			$this->rejectedItemInfo = new \XLite\Base();
             			$this->rejectedItemInfo->set('product_id', $rejectedItemInfo->product_id);
-            			$this->rejectedItemInfo->set('product', new XLite_Model_Product($rejectedItemInfo->product_id));
+            			$this->rejectedItemInfo->set('product', new \XLite\Model\Product($rejectedItemInfo->product_id));
 
             			if (isset($rejectedItemInfo->productOptions)) {
                 			$this->rejectedItemInfo->set('productOptions', $rejectedItemInfo->productOptions);
@@ -161,7 +163,7 @@ class XLite_Module_ProductAdviser_Controller_Customer_Product extends XLite_Cont
     	    $check[] = "profile_id = '$profile_id'";
             $check[] = "email = '$email'";
 
-            $notification = new XLite_Module_ProductAdviser_Model_Notification();
+            $notification = new \XLite\Module\ProductAdviser\Model\Notification();
             $notification->set('type', CUSTOMER_NOTIFICATION_PRODUCT);
     		$notification->set('product_id', $rejectedItemInfo->product_id);
 
@@ -216,7 +218,7 @@ class XLite_Module_ProductAdviser_Controller_Customer_Product extends XLite_Cont
             $check[] = "profile_id='$profile_id'";
             $check[] = "email='$email'";
 
-    		$notification = new XLite_Module_ProductAdviser_Model_Notification();
+    		$notification = new \XLite\Module\ProductAdviser\Model\Notification();
     		$notification->set('type', CUSTOMER_NOTIFICATION_PRICE);
         	$notification->set('product_id', $this->get('product_id'));
             $check[] = "notify_key='" . addslashes($notification->get('productKey')) . "'";
@@ -243,9 +245,9 @@ class XLite_Module_ProductAdviser_Controller_Customer_Product extends XLite_Cont
         if (isset($this->rp_bulk) && is_array($this->rp_bulk)) {
             foreach ($this->rp_bulk as $product_id => $pended) {
                 if ($pended) {
-                    $request = XLite_Core_Request::getInstance();
+                    $request = \XLite\Core\Request::getInstance();
                     $request->product_id = $product_id;
-                    $cart = new XLite_Controller_Customer_Cart();
+                    $cart = new \XLite\Controller\Customer\Cart();
                     $cart->init();
                     $cart->action_add();
                 }

@@ -23,7 +23,7 @@ function onViewGC() {
 	document.getElementById('btn_view_gift_certs').style.display = 'none';
 }
 		</script>
-		<widget class="XLite_View_Button" label="View Gift Certificates" href="javascript: onViewGC()">
+		<widget class="\XLite\View\Button" label="View Gift Certificates" href="javascript: onViewGC()">
 		</div>
 	</td>
 </tr>

@@ -244,7 +244,7 @@ Your current IP: <b id="current_ip">{currentIP}</b>
 <table border="0">
 <tr class="DialogBox">
     <td nowrap="1" colspan="5">
-        <widget class="XLite_Validator_AdminIPValidator" field="byte_1" field2="byte_2" field3="byte_3" field4="byte_4" />
+        <widget class="\XLite\Validator\AdminIPValidator" field="byte_1" field2="byte_2" field3="byte_3" field4="byte_4" />
         {if:ip_error}
             <font class="ValidateErrorMessage">&nbsp;&nbsp;&lt;&lt;&nbsp;Duplicate IP addresses are not allowed</font>
         {end:}

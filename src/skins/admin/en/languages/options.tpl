@@ -67,7 +67,7 @@
 
     <div class="buttons">
       <a IF="canDelete()" href="admin.php?target=languages&action=delete&lng_id={editLanguage.lng_id}&page={page}" class="delete" onclick="javascript: return confirmLanguageDelete(this, {editLanguage.lng_id}, '', '{editLanguage.flagURL}', '{editLanguage.name}');"><span>{t(#Delete Language#)}</span></a>
-      <widget class="XLite_View_Button_Submit" label="Save" style="main invert" />
+      <widget class="\XLite\View\Button\Submit" label="Save" style="main invert" />
     </div>
   </form>
 </div>

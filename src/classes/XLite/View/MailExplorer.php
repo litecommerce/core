@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View;
+
 
 /**
  * Mail explorer dialog
@@ -34,7 +36,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_MailExplorer extends XLite_View_ColumnList
+class MailExplorer extends \XLite\View\ColumnList
 {
     /**
      * locale 
@@ -66,7 +68,7 @@ class XLite_View_MailExplorer extends XLite_View_ColumnList
     protected function getLocale()
     {
         if (is_null($this->locale)) {
-            $this->locale = XLite::getInstance()->getOptions(array('skin_details', 'locale'));
+            $this->locale = \XLite::getInstance()->getOptions(array('skin_details', 'locale'));
         }
 
         return $this->locale;
@@ -102,8 +104,8 @@ class XLite_View_MailExplorer extends XLite_View_ColumnList
                 }
 
                 if (is_dir($path . '/' . $file) && file_exists($path . '/' . $file . '/' . $this->body)) {
-                    $body = new XLite_Model_FileNode($path . '/' . $file . '/' . $this->body);
-                    array_unshift($this->templates, new XLite_Model_FileNode($path . '/' . $file, $body->get('comment')));
+                    $body = new \XLite\Model\FileNode($path . '/' . $file . '/' . $this->body);
+                    array_unshift($this->templates, new \XLite\Model\FileNode($path . '/' . $file, $body->get('comment')));
                 }
 
                 if (is_dir($path . '/' . $file)) {

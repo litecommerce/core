@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Egoods\Model;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Egoods_Model_Product extends XLite_Model_Product implements XLite_Base_IDecorator
+class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
 {
     public $egoodsNumber = null;
 
@@ -55,7 +57,7 @@ class XLite_Module_Egoods_Model_Product extends XLite_Model_Product implements X
     function getEgoods()
     {
         if (!isset($this->egoods)) {
-            $df = new XLite_Module_Egoods_Model_DownloadableFile();
+            $df = new \XLite\Module\Egoods\Model\DownloadableFile();
             $this->egoods = $df->findAll('product_id=' . $this->get('product_id'));
             $this->egoodsNumber = (is_array($this->egoods)) ? count($this->egoods) : 0;
         }
@@ -147,7 +149,7 @@ class XLite_Module_Egoods_Model_Product extends XLite_Model_Product implements X
     function getPinSettings()
     {
         if (!isset($this->pin_settings)) {
-            $this->pin_settings = new XLite_Module_Egoods_Model_PinSettings();
+            $this->pin_settings = new \XLite\Module\Egoods\Model\PinSettings();
             if (!$this->pin_settings->find('product_id=' . $this->get('product_id'))) {
                 $this->pin_settings->set('product_id', $this->get('product_id'));
             }
@@ -157,7 +159,7 @@ class XLite_Module_Egoods_Model_Product extends XLite_Model_Product implements X
 
     function createLink($file_id)
     {
-        $dl = new XLite_Module_Egoods_Model_DownloadableLink(md5(microtime()));
+        $dl = new \XLite\Module\Egoods\Model\DownloadableLink(md5(microtime()));
         $dl->set('file_id', $file_id);
         $dl->set('exp_time', mktime(0, 0, 0, 
                 date('n', time()), 
@@ -175,7 +177,7 @@ class XLite_Module_Egoods_Model_Product extends XLite_Model_Product implements X
     function createLinks()
     {
         $acc = array();
-        $df = new XLite_Module_Egoods_Model_DownloadableFile();
+        $df = new \XLite\Module\Egoods\Model\DownloadableFile();
         $files = $df->findAll("product_id=" . $this->get('product_id'));
         for ($i = 0; $i < count($files); $i++) {
             if ($files[$i]->get('delivery') == 'L') {
@@ -190,7 +192,7 @@ class XLite_Module_Egoods_Model_Product extends XLite_Model_Product implements X
         if ($this->xlite->is('adminZone')) {
             return parent::filter();
         }
-        $pin = new XLite_Module_Egoods_Model_PinCode();
+        $pin = new \XLite\Module\Egoods\Model\PinCode();
         $avail_amount = $pin->getFreePinCount($this->get('product_id'));
         if ($this->is('pin') && $avail_amount < 1) {
             return false;

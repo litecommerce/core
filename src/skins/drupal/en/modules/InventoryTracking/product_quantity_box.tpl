@@ -16,4 +16,4 @@
   <span IF="{!product.inventory.amount}">- out of stock -</span>
 </div>
 
-<widget module="ProductAdviser" class="XLite_Module_ProductAdviser_View_NotifyLink">
+<widget module="ProductAdviser" class="\XLite\Module\ProductAdviser\View\NotifyLink">

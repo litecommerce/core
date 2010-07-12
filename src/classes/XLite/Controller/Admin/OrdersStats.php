@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Controller_Admin_OrdersStats extends XLite_Controller_Admin_Stats
+class OrdersStats extends \XLite\Controller\Admin\Stats
 {
     protected $stats = array();
 
@@ -54,7 +56,7 @@ class XLite_Controller_Admin_OrdersStats extends XLite_Controller_Admin_Stats
                 "total" => $statRec,
                 "paid" => $statRec);
 
-        $order = new XLite_Model_Order();
+        $order = new \XLite\Model\Order();
         $date = $this->get('monthDate');
         // fetch orders for this month
         array_map(array($this, "summarize"), $order->findAll("date>=$date"));

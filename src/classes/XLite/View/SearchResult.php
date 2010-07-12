@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View;
+
 /**
  * Search result
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_SearchResult extends XLite_View_ProductsList
+class SearchResult extends \XLite\View\ProductsList
 {
     /**
      * Widget parameter names 
@@ -76,7 +78,7 @@ class XLite_View_SearchResult extends XLite_View_ProductsList
     {
         parent::defineWidgetParams();
 
-        $this->widgetParams[self::PARAM_SUBMODE] = new XLite_Model_WidgetParam_String('Submode', 'found');
+        $this->widgetParams[self::PARAM_SUBMODE] = new \XLite\Model\WidgetParam\String('Submode', 'found');
         $this->requestParams[] = self::PARAM_SUBMODE;
     }
 
@@ -93,12 +95,12 @@ class XLite_View_SearchResult extends XLite_View_ProductsList
         if (is_null($this->data)) {
             $this->data = array();
 
-            $p = new XLite_Model_Product();
+            $p = new \XLite\Model\Product();
 
-            $this->data = $p->advancedSearch(XLite_Core_Request::getInstance()->substring, '', 0, true, false, true);
-            if (!isset(XLite_Core_Request::getInstance()->pageID)) {
-                $searchStat = new XLite_Model_SearchStat();
-                $searchStat->add(XLite_Core_Request::getInstance()->substring, count($this->data));
+            $this->data = $p->advancedSearch(\XLite\Core\Request::getInstance()->substring, '', 0, true, false, true);
+            if (!isset(\XLite\Core\Request::getInstance()->pageID)) {
+                $searchStat = new \XLite\Model\SearchStat();
+                $searchStat->add(\XLite\Core\Request::getInstance()->substring, count($this->data));
             }
         }
 

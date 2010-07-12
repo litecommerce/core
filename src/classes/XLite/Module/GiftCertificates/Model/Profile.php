@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\GiftCertificates\Model;
+
 /**
  * User profile
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_GiftCertificates_Model_Profile extends XLite_Model_Profile implements XLite_Base_IDecorator
+class Profile extends \XLite\Model\Profile implements \XLite\Base\IDecorator
 {
     /**
      * Active gift certificates
@@ -48,7 +50,7 @@ class XLite_Module_GiftCertificates_Model_Profile extends XLite_Model_Profile im
     /**
      * Get active gift certificates 
      * 
-     * @return array of XLite_Module_GiftCertificates_Model_GiftCertificate
+     * @return array of \XLite\Module\GiftCertificates\Model\GiftCertificate
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -57,7 +59,7 @@ class XLite_Module_GiftCertificates_Model_Profile extends XLite_Model_Profile im
     {
         if (is_null($this->_active_gift_certs)) {
             $profileId = $this->get('profile_id');
-            $gc = new XLite_Module_GiftCertificates_Model_GiftCertificate();
+            $gc = new \XLite\Module\GiftCertificates\Model\GiftCertificate();
             $this->_active_gift_certs = $gc->findAll('profile_id = \'' . $profileId . '\' AND status = \'A\'');
         }
 

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View;
+
 /**
  * 'Powered by' widget
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_PoweredBy extends XLite_View_AView
+class PoweredBy extends \XLite\View\AView
 {
     /**
      * Advertise phrases 
@@ -67,7 +69,7 @@ class XLite_View_PoweredBy extends XLite_View_AView
      */
     public function isLink()
     {
-        return XLite_Core_Request::getInstance()->target == XLite::TARGET_DEFAULT;
+        return \XLite\Core\Request::getInstance()->target == \XLite::TARGET_DEFAULT;
     }
 
     /**
@@ -124,7 +126,7 @@ class XLite_View_PoweredBy extends XLite_View_AView
             ) {
                 $index = mt_rand(0, count($this->phrases) - 1);
 
-                XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+                \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
                     array(
                         'category' => 'Internal',
                         'name'     => 'prnotice_index',

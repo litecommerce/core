@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View;
+
 /**
  * Tabber is a component allowing to organize your dialog into pages and 
  * switch between the page using Tabs at the top.
@@ -34,7 +36,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_Tabber extends XLite_View_AView
+class Tabber extends \XLite\View\AView
 {
     /*
      * Widget parameters names
@@ -78,9 +80,9 @@ class XLite_View_Tabber extends XLite_View_AView
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_BODY      => new XLite_Model_WidgetParam_String('Body template file', '', false),
-            self::PARAM_SWITCH    => new XLite_Model_WidgetParam_String('Switch', 'page', false),
-            self::PARAM_TAB_PAGES => new XLite_Model_WidgetParam_String('Name of function that returns tab pages', 'getTabPages', false)
+            self::PARAM_BODY      => new \XLite\Model\WidgetParam\String('Body template file', '', false),
+            self::PARAM_SWITCH    => new \XLite\Model\WidgetParam\String('Switch', 'page', false),
+            self::PARAM_TAB_PAGES => new \XLite\Model\WidgetParam\String('Name of function that returns tab pages', 'getTabPages', false)
 
         );
     }
@@ -100,11 +102,11 @@ class XLite_View_Tabber extends XLite_View_AView
         $url = $this->get('url');
         $switch = $this->getParam(self::PARAM_SWITCH);
         $functionName = $this->getParam(self::PARAM_TAB_PAGES);
-        $dialogPages = XLite::getController()->$functionName();
+        $dialogPages = \XLite::getController()->$functionName();
 
         if (is_array($dialogPages)) {
             foreach ($dialogPages as $page => $title) {
-                $p = new XLite_Base();
+                $p = new \XLite\Base();
                 $pageURL = preg_replace("/".$switch."=(\w+)/", $switch."=".$page, $url);
                 $p->set('url', $pageURL);
                 $p->set('title', $title);

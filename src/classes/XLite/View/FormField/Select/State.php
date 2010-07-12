@@ -26,14 +26,16 @@
  * @since      3.0.0
  */
 
+namespace XLite\View\FormField\Select;
+
 /**
- * XLite_View_FormField_Select_State 
+ * \XLite\View\FormField\Select\State 
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_FormField_Select_State extends XLite_View_FormField_Select_Regular
+class State extends \XLite\View\FormField\Select\Regular
 {
     /**
      * Return field template
@@ -56,7 +58,7 @@ class XLite_View_FormField_Select_State extends XLite_View_FormField_Select_Regu
      */
     protected function getDefaultOptions()
     {
-        return XLite_Core_Database::getRepo('XLite_Model_State')->findAllStates();
+        return \XLite\Core\Database::getRepo('XLite\Model\State')->findAllStates();
     }
 }
 

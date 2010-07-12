@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\WishList\View\Form\Wishlist;
+
 /**
  * Send wishlist to friend form
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_WishList_View_Form_Wishlist_Send extends XLite_View_Form_AForm
+class Send extends \XLite\View\Form\AForm
 {
     /**
      * Widget paramater names
@@ -64,7 +66,7 @@ class XLite_Module_WishList_View_Form_Wishlist_Send extends XLite_View_Form_AFor
     {
         parent::defineWidgetParams();
 
-        $this->widgetParams[self::PARAM_WISHLIST] = new XLite_Model_WidgetParam_Object('Wishlist', null, false, 'XLite_Module_WishList_Model_WishList');
+        $this->widgetParams[self::PARAM_WISHLIST] = new \XLite\Model\WidgetParam\Object('Wishlist', null, false, '\XLite\Module\WishList\Model\WishList');
 
         $this->widgetParams[self::PARAM_FORM_TARGET]->setValue('wishlist');
         $this->widgetParams[self::PARAM_FORM_ACTION]->setValue('send');

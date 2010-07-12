@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\AdvancedSearch\View;
+
 /**
  * Advanced search widget (center)
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_AdvancedSearch_View_AdvancedSearchCenter extends XLite_Module_AdvancedSearch_View_AdvancedSearch
+class AdvancedSearchCenter extends \XLite\Module\AdvancedSearch\View\AdvancedSearch
 {
     /**
      * Return list of targets allowed for this widget

@@ -29,11 +29,11 @@
 <tbody id="custom_dates" style="display:none">
 <tr>
     <td nowrap>Date from:</td>
-    <td nowrap><widget class="XLite_View_Date" template="modules/EcommerceReports/form_date.tpl" field="startDate" id_prefix="search_"></td>
+    <td nowrap><widget class="\XLite\View\Date" template="modules/EcommerceReports/form_date.tpl" field="startDate" id_prefix="search_"></td>
 </tr>
 <tr>
     <td nowrap>Date through:</td>
-    <td nowrap><widget class="XLite_View_Date" template="modules/EcommerceReports/form_date.tpl" field="endDate" id_prefix="search_"></td>
+    <td nowrap><widget class="\XLite\View\Date" template="modules/EcommerceReports/form_date.tpl" field="endDate" id_prefix="search_"></td>
 </tr>
 </tbody>
 <widget template="modules/EcommerceReports/period_init_js.tpl">

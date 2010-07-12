@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model\WidgetParam;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class XLite_Model_WidgetParam_AWidgetParam extends XLite_Base
+abstract class AWidgetParam extends \XLite\Base
 {
     /**
      * Indexes in the "conditions" array

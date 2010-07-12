@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\UPSOnlineTools\Model\Shipping;
+
 /**
  * Offline shipping method
  * 
@@ -33,8 +35,8 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_UPSOnlineTools_Model_Shipping_Offline extends XLite_Model_Shipping_Offline
-implements XLite_Base_IDecorator
+class Offline extends \XLite\Model\Shipping\Offline
+implements \XLite\Base\IDecorator
 {
     /**
      * Get carrier 

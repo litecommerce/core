@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\PayFlowLink\Model\PaymentMethod;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_PayFlowLink_Model_PaymentMethod_Payflowlink extends XLite_Model_PaymentMethod_CreditCard
+class Payflowlink extends \XLite\Model\PaymentMethod\CreditCard
 {
     public $processorName = "PayFlowLink";
     public $configurationTemplate = "modules/PayFlowLink/config.tpl";
@@ -52,7 +54,7 @@ class XLite_Module_PayFlowLink_Model_PaymentMethod_Payflowlink extends XLite_Mod
         }
     }
 
-    function handleRequest(XLite_Model_Cart $cart)
+    function handleRequest(\XLite\Model\Cart $cart)
     {
         require_once LC_MODULES_DIR . 'PayFlowLink' . LC_DS . 'encoded.php';
         PaymentMethod_PayFlowLink_handleRequest($this, $cart);

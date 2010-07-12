@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\ProductOptions\Controller\Customer;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_ProductOptions_Controller_Customer_Product extends XLite_Controller_Customer_Product implements XLite_Base_IDecorator
+class Product extends \XLite\Controller\Customer\Product implements \XLite\Base\IDecorator
 {
     function action_buynow()
     {

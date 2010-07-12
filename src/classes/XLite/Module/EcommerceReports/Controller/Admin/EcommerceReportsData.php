@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\EcommerceReports\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_EcommerceReports_Controller_Admin_EcommerceReportsData extends XLite_Module_EcommerceReports_Controller_Admin_SalesDynamics
+class EcommerceReportsData extends \XLite\Module\EcommerceReports\Controller\Admin\SalesDynamics
 {
     public $type = "bars"; // type := bars | lines	
     public $limit = 50;    // limit for type "bars"	
@@ -86,7 +88,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_EcommerceReportsData extend
         srand((float) $sec + ((float) $usec * 100000));
 
         // build cloud of product IDs
-        $p = new XLite_Model_Product();
+        $p = new \XLite\Model\Product();
         // get min price and total products cost
         $table = $this->db->getTableByAlias('products');
         $minPrice = ceil($p->db->getOne("SELECT MIN(price) FROM $table"));
@@ -115,7 +117,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_EcommerceReportsData extend
                 echo "Order #$i ";
 
                 // create order
-                $order = new XLite_Model_Order();
+                $order = new \XLite\Model\Order();
                 $order->set('date', $date);
                 $order->set('status', "P");
 
@@ -137,7 +139,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_EcommerceReportsData extend
                         }
                     }
                     // create product
-                    $product = new XLite_Model_Product($product_id);
+                    $product = new \XLite\Model\Product($product_id);
                     // product QTY
                     // seed with microseconds
                     list($usec, $sec) = explode(' ', microtime());
@@ -147,7 +149,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_EcommerceReportsData extend
                         $amount = 1; // no more that 1 expensive product
                     }
                     // create order item
-                    $item = new XLite_Model_OrderItem();
+                    $item = new \XLite\Model\OrderItem();
                     $item->set('product', $product);
                     $item->set('amount', $amount);
 
@@ -161,8 +163,8 @@ class XLite_Module_EcommerceReports_Controller_Admin_EcommerceReportsData extend
 
                 // create order's profile
                 // default profile
-                $profile = new XLite_Model_Profile(1);
-                $op = new XLite_Model_Profile();
+                $profile = new \XLite\Model\Profile(1);
+                $op = new \XLite\Model\Profile();
                 $properties = $profile->get('properties');
                 if (isset($properties['profile_id'])) {
                 	unset($properties['profile_id']);

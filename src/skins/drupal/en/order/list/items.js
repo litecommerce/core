@@ -44,7 +44,7 @@ function OrderItemsShortListController(container)
   this.modalTarget = this.container;
 
   this.widgetTarget = 'order_history';
-  this.widgetClass = 'XLite_View_OrderItemsShort';
+  this.widgetClass = '\XLite\View\OrderItemsShort';
 
   // Add event listeners
   var o = this;

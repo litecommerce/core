@@ -13,7 +13,7 @@
 {if:option.isName(#default_plan#)}
     <select name="{option.name}">
         <option value="" selected="{option.value=##}"> - select - </option>
-        <option FOREACH="xlite.factory.XLite_Module_Affiliate_Model_AffiliatePlan.findAll(#enabled=1#),ap" value="{ap.plan_id}" selected="{option.value=ap.plan_id}">{ap.title:h}</option>
+        <option FOREACH="xlite.factory.\XLite\Module\Affiliate\Model\AffiliatePlan.findAll(#enabled=1#),ap" value="{ap.plan_id}" selected="{option.value=ap.plan_id}">{ap.title:h}</option>
     </select>
     {end:}
 

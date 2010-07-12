@@ -11,10 +11,10 @@
  * @since     3.0.0
  * @ListChild (list="wishlist.item.actions", weight="20")
  *}
-<widget class="XLite_Module_WishList_View_Form_Item_MoveToCart" name="wl_item_move" item="{item}" />
+<widget class="\XLite\Module\WishList\View\Form\Item\MoveToCart" name="wl_item_move" item="{item}" />
 
   <div class="item-buttons">
-    <widget class="XLite_View_Button_Regular" style="aux-button add-to-cart" label="Move to cart" />
+    <widget class="\XLite\View\Button\Regular" style="aux-button add-to-cart" label="Move to cart" />
     <div class="move-quantity" style="display: none;">
       Qty: <input type="text" name="amount" value="{item.amount}" />
     </div>

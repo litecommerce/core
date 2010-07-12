@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\WishList\View\Button;
+
 /**
  * Clear Wishlist button
  * 
@@ -34,7 +36,7 @@
  * @since   3.0.0
  * @ListChild (list="wishlist.buttons", weight="10")
  */
-class XLite_Module_WishList_View_Button_Clear extends XLite_View_Button_Link
+class Clear extends \XLite\View\Button\Link
 {
     /**
      * Define widget parameters

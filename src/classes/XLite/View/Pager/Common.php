@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View\Pager;
+
 /**
  * Common pager 
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_Pager_Common extends XLite_View_Pager
+class Common extends \XLite\View\Pager
 {
     /**
      * Page short names

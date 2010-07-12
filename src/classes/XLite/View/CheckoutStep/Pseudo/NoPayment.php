@@ -26,14 +26,16 @@
  * @since      3.0.0
  */
 
+namespace XLite\View\CheckoutStep\Pseudo;
+
 /**
- * XLite_View_CheckoutStep_Pseudo_NoPayment 
+ * \XLite\View\CheckoutStep\Pseudo\NoPayment 
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_CheckoutStep_Pseudo_NoPayment extends XLite_View_CheckoutStep_Pseudo_APseudo
+class NoPayment extends \XLite\View\CheckoutStep\Pseudo\APseudo
 {
     /**
      * Return title

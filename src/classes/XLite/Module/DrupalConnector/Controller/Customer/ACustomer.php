@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\DrupalConnector\Controller\Customer;
+
 /**
  * Abstract controller (customer interface)
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_DrupalConnector_Controller_Customer_ACustomer extends XLite_Controller_Customer_ACustomer implements XLite_Base_IDecorator
+class ACustomer extends \XLite\Controller\Customer\ACustomer implements \XLite\Base\IDecorator
 {
     /**
      * Die if trying to access storefront and DrupalConnector module is enabled 
@@ -45,7 +47,7 @@ class XLite_Module_DrupalConnector_Controller_Customer_ACustomer extends XLite_C
     protected function checkStorefrontAccessability()
     {
         return parent::checkStorefrontAccessability() &&
-            XLite_Module_DrupalConnector_Handler::getInstance()->checkCurrentCMS();
+            \XLite\Module\DrupalConnector\Handler::getInstance()->checkCurrentCMS();
     }
 
     /**
@@ -69,7 +71,7 @@ class XLite_Module_DrupalConnector_Controller_Customer_ACustomer extends XLite_C
      */
     protected function closeStorefront()
     {
-        $this->getDrupalLink() ? XLite_Core_Operator::redirect($this->getDrupalLink()) : parent::closeStorefront();
+        $this->getDrupalLink() ? \XLite\Core\Operator::redirect($this->getDrupalLink()) : parent::closeStorefront();
     }
 
     /**
@@ -81,8 +83,8 @@ class XLite_Module_DrupalConnector_Controller_Customer_ACustomer extends XLite_C
      */
     public function getExternalLink()
     {
-        if (XLite_Module_DrupalConnector_Handler::getInstance()->checkCurrentCMS()) {
-            $result = XLite_Core_Converter::buildDrupalURL(
+        if (\XLite\Module\DrupalConnector\Handler::getInstance()->checkCurrentCMS()) {
+            $result = \XLite\Core\Converter::buildDrupalURL(
                 $this->getTarget(),
                 '',
                 $this->getParamsHash(array_keys($this->getWidgetSettings()))

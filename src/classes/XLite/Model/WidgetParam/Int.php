@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model\WidgetParam;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_WidgetParam_Int extends XLite_Model_WidgetParam_AWidgetParam
+class Int extends \XLite\Model\WidgetParam\AWidgetParam
 {
     /**
      * Param type

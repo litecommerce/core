@@ -26,15 +26,17 @@
  * @since      3.0.0
  */
 
+namespace XLite\View\Model\Profile;
+
 /**
- * XLite_View_Model_Profile_Checkout
+ * \XLite\View\Model\Profile\Checkout
  *
  * @package    XLite
  * @subpackage ____sub_package____
  * @see        ____class_see____
  * @since      3.0.0
  */
-class XLite_View_Model_Profile_Checkout extends XLite_View_Model_Profile_Main
+class Checkout extends \XLite\View\Model\Profile\Main
 {
     /**
      * Return name of web form widget class
@@ -45,7 +47,7 @@ class XLite_View_Model_Profile_Checkout extends XLite_View_Model_Profile_Main
      */
     protected function getFormClass()
     {
-        return 'XLite_View_Form_Checkout_ModifyProfile';
+        return '\XLite\View\Form\Checkout\ModifyProfile';
     }
 
     /**
@@ -62,7 +64,7 @@ class XLite_View_Model_Profile_Checkout extends XLite_View_Model_Profile_Main
 	{
 		unset($sections[self::SECTION_ACCESS]);
 
-        if (XLite_Model_Auth::getInstance()->isLogged()) {
+        if (\XLite\Model\Auth::getInstance()->isLogged()) {
 			unset($sections[self::SECTION_MAIN]);
         }
 
@@ -79,8 +81,8 @@ class XLite_View_Model_Profile_Checkout extends XLite_View_Model_Profile_Main
      */
     protected function prepareProfileSecureHash()
     {
-        $result = XLite_Core_Converter::generateRandomToken();
-        XLite_Model_Auth::getInstance()->setSecureHash($result);
+        $result = \XLite\Core\Converter::generateRandomToken();
+        \XLite\Model\Auth::getInstance()->setSecureHash($result);
 
         return $result;
     }
@@ -123,7 +125,7 @@ class XLite_View_Model_Profile_Checkout extends XLite_View_Model_Profile_Main
 
             if (empty($password)) {
                 // 3) Generate new password
-                $password = XLite_Core_Converter::generateRandomToken();
+                $password = \XLite\Core\Converter::generateRandomToken();
                 // It's needed for the parent class
                 $this->setPasswords($password);
             } else {
@@ -149,7 +151,7 @@ class XLite_View_Model_Profile_Checkout extends XLite_View_Model_Profile_Main
     protected function loginProfile($password, $secureHash)
     {
         return is_object(
-            XLite_Model_Auth::getInstance()->login(
+            \XLite\Model\Auth::getInstance()->login(
                 $this->getModelObject()->get('login'), $password, $secureHash
             )
         );
@@ -181,7 +183,7 @@ class XLite_View_Model_Profile_Checkout extends XLite_View_Model_Profile_Main
      */
     protected function isAnonymousUser()
     {
-        return !XLite_Model_Auth::getInstance()->isLogged();
+        return !\XLite\Model\Auth::getInstance()->isLogged();
     }
 
     /**
@@ -194,9 +196,9 @@ class XLite_View_Model_Profile_Checkout extends XLite_View_Model_Profile_Main
      */
     protected function renewShippingMethod()
     {
-        XLite_Model_Cart::getInstance()->refresh('shippingRates');
-        XLite_Model_Cart::getInstance()->refresh('profile');
-        XLite_Model_Cart::getInstance()->getShippingRates();
+        \XLite\Model\Cart::getInstance()->refresh('shippingRates');
+        \XLite\Model\Cart::getInstance()->refresh('profile');
+        \XLite\Model\Cart::getInstance()->getShippingRates();
     }
 
     /**
@@ -210,8 +212,8 @@ class XLite_View_Model_Profile_Checkout extends XLite_View_Model_Profile_Main
     protected function isPassedEmailDifferent()
     {
         return $this->getRequestData('login')
-            && XLite_Model_Auth::getInstance()->isLogged()
-            && XLite_Model_Auth::getInstance()->getProfile()->get('login') !== $this->getModelObject()->get('login');
+            && \XLite\Model\Auth::getInstance()->isLogged()
+            && \XLite\Model\Auth::getInstance()->getProfile()->get('login') !== $this->getModelObject()->get('login');
     }
 
     /**
@@ -228,18 +230,18 @@ class XLite_View_Model_Profile_Checkout extends XLite_View_Model_Profile_Main
 
         // Anonymous user has no primary account, only the one associated with current order
         if ($this->isAnonymousUser()) {
-            $this->getModelObject()->set('order_id', XLite_Model_Cart::getInstance()->get('order_id'));
+            $this->getModelObject()->set('order_id', \XLite\Model\Cart::getInstance()->get('order_id'));
         }
 
         $result = parent::performActionModify();
 
         // Log in on success
-        if ($result && !XLite_Model_Auth::getInstance()->isLogged()) {
+        if ($result && !\XLite\Model\Auth::getInstance()->isLogged()) {
 
             // This request var will modify the behaviour
-            // of the "XLite_Model_Auth::findForAuth()" method
+            // of the "\XLite\Model\Auth::findForAuth()" method
             if ($this->isAnonymousUser()) {
-                XLite_Core_Request::getInstance()->anonymous = true;
+                \XLite\Core\Request::getInstance()->anonymous = true;
             }
 
             $result = $this->loginProfile($password, $secureHash);
@@ -261,7 +263,7 @@ class XLite_View_Model_Profile_Checkout extends XLite_View_Model_Profile_Main
      */
     public function getProfileId($checkMode = true)
     {
-        return XLite_Model_Cart::getInstance()->get('profile_id');
+        return \XLite\Model\Cart::getInstance()->get('profile_id');
     }
 
 

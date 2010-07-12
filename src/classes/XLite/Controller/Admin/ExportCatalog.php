@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Controller_Admin_ExportCatalog extends XLite_Controller_Admin_AAdmin
+class ExportCatalog extends \XLite\Controller\Admin\AAdmin
 {
     public $params = array('target', 'page');
     public $pages = array('products' => 'Export products',
@@ -76,14 +78,14 @@ class XLite_Controller_Admin_ExportCatalog extends XLite_Controller_Admin_AAdmin
         global $DATA_DELIMITERS;
 
         $this->startDownload('products.csv');
-        $product = new XLite_Model_Product();
+        $product = new \XLite\Model\Product();
         $product->export($this->product_layout, $DATA_DELIMITERS[$this->delimiter]);
         exit();
     }
 
     function action_layout()
     {
-        $dlg = new XLite_Controller_Admin_ImportCatalog();
+        $dlg = new \XLite\Controller\Admin\ImportCatalog();
         $dlg->action_layout();
     }
 
@@ -95,13 +97,13 @@ class XLite_Controller_Admin_ExportCatalog extends XLite_Controller_Admin_AAdmin
 
         $this->startDownload('extra_fields.csv');
 
-     	$p = new XLite_Model_Product();
+     	$p = new \XLite\Model\Product();
      	$products = $p->findAll();
         foreach ($products as $product_idx => $product) {
             $products[$product_idx]->populateExtraFields();
         }
 
-        $global_extra_field = new XLite_Model_ExtraField();
+        $global_extra_field = new \XLite\Model\ExtraField();
         foreach ($global_extra_field->findAll("product_id = 0") as $gef) {
              print func_construct_csv($gef->_export($this->fields_layout, $DATA_DELIMITERS[$this->delimiter]), $DATA_DELIMITERS[$this->delimiter], '"');
              print "\n";
@@ -119,8 +121,8 @@ class XLite_Controller_Admin_ExportCatalog extends XLite_Controller_Admin_AAdmin
     function action_fields_layout()
     {
         $layout_name = "fields_layout";
-        $layout = implode(',', XLite_Core_Request::getInstance()->$layout_name);
-        XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+        $layout = implode(',', \XLite\Core\Request::getInstance()->$layout_name);
+        \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
             array(
                 'category' => 'ImportExport',
                 'name'     => $layout_name,

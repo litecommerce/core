@@ -23,10 +23,10 @@
 <input type="hidden" name="target" value="taxes">
 <input type="hidden" name="action" value="calculator">
 <tr>
-	<td>Country:&nbsp;</td><td><widget class="XLite_View_CountrySelect" field="billing_country" country="{country}" /></td>
+	<td>Country:&nbsp;</td><td><widget class="\XLite\View\CountrySelect" field="billing_country" country="{country}" /></td>
 </tr>
 <tr>
-	<td>State:&nbsp;</td><td><widget class="XLite_View_StateSelect" field="billing_state" state="{state}" isLinked=1 /></td>
+	<td>State:&nbsp;</td><td><widget class="\XLite\View\StateSelect" field="billing_state" state="{state}" isLinked=1 /></td>
 </tr>
 <tr>
 	<td>City:&nbsp;</td><td><input type="text" name="city" value="{city}"></td>
@@ -35,13 +35,13 @@
     <td>Zip:&nbsp;</td><td><input type="text" name="zip" value="{zip}"></td>
 </tr>
 <tr>
-	<td>Membership:&nbsp;</td><td><widget class="XLite_View_MembershipSelect" template="common/select_membership.tpl" field="membership"></td>
+	<td>Membership:&nbsp;</td><td><widget class="\XLite\View\MembershipSelect" template="common/select_membership.tpl" field="membership"></td>
 </tr>
 <tr>
 	<td>Payment method:&nbsp;</td>
 	<td>
 		<select name="payment_method">
-			<option FOREACH="xlite.factory.XLite_Model_PaymentMethod.findAll(),payment_method" selected="{isSelected(payment_method,#name#,payment_method)}">{payment_method.name}</option>
+			<option FOREACH="xlite.factory.\XLite\Model\PaymentMethod.findAll(),payment_method" selected="{isSelected(payment_method,#name#,payment_method)}">{payment_method.name}</option>
 		</select>
 	</td>
 </tr>

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View\Form\Login\Customer;
+
 /**
  * Abstract log-in form in customer interface
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class XLite_View_Form_Login_Customer_ACustomer extends XLite_View_Form_Login_ALogin
+abstract class ACustomer extends \XLite\View\Form\Login\ALogin
 {
     /**
      * getSecuritySetting 

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Intershipper\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Intershipper_Controller_Admin_Intershipper extends XLite_Controller_Admin_ShippingSettings
+class Intershipper extends \XLite\Controller\Admin\ShippingSettings
 {
     public $params = array('target', "updated");
     public $settings;
@@ -71,13 +73,13 @@ class XLite_Module_Intershipper_Controller_Admin_Intershipper extends XLite_Cont
     public function __construct(array $params)
     {
         parent::__construct($params);
-        $intershipper = new XLite_Module_Intershipper_Model_Shipping_Intershipper();
+        $intershipper = new \XLite\Module\Intershipper\Model\Shipping\Intershipper();
         $this->settings = $intershipper->get('options');
     }
 
     function action_update()
     {
-        $intershipper = new XLite_Module_Intershipper_Model_Shipping_Intershipper();
+        $intershipper = new \XLite\Module\Intershipper\Model\Shipping\Intershipper();
         $intershipper->set('options', (object)$_POST);
         $this->set('updated',"1");
     }
@@ -102,7 +104,7 @@ class XLite_Module_Intershipper_Controller_Admin_Intershipper extends XLite_Cont
 
     function action_test()
     {
-        $this->intershipper = new XLite_Module_Intershipper_Model_Shipping_Intershipper();
+        $this->intershipper = new \XLite\Module\Intershipper\Model\Shipping\Intershipper();
         $this->set('properties', $_GET);
         
         $this->rates = $this->intershipper->_queryRates($this->get('ounces'), $this->config->Company->location_zipcode, $this->config->Company->location_country, $this->get('destinationZipCode'), $this->get('destinationCountry'), $this->intershipper->get('options'), 0);

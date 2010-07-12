@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\FeaturedProducts\View;
+
 /**
  * Featured products widget 
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_FeaturedProducts_View_FeaturedProducts extends XLite_View_ProductsList
+class FeaturedProducts extends \XLite\View\ProductsList
 {
     /**
      *  Widget parameter names
@@ -67,7 +69,7 @@ class XLite_Module_FeaturedProducts_View_FeaturedProducts extends XLite_View_Pro
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_CATEGORY_ID => new XLite_Model_WidgetParam_ObjectId_Category('Category ID', 0, false),
+            self::PARAM_CATEGORY_ID => new \XLite\Model\WidgetParam\ObjectId\Category('Category ID', 0, false),
         );
 
         $this->requestParams[] = self::PARAM_CATEGORY_ID;

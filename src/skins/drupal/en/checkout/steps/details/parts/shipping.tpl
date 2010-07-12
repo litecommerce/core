@@ -13,5 +13,5 @@
  *}
 <div IF="cart.shippingMethod" class="shipping-method">
   <span class="title">Shipping method:</span>&nbsp;&nbsp;<span class="text">{cart.shippingMethod.name} ({price_format(cart,#shipping_cost#):h})</span>
-  <widget class="XLite_View_Button_Link" label="Change shipping method" style="change" location="{buildURL(#checkout#,##,_ARRAY_(#mode#^#paymentMethod#))}" />
+  <widget class="\XLite\View\Button\Link" label="Change shipping method" style="change" location="{buildURL(#checkout#,##,_ARRAY_(#mode#^#paymentMethod#))}" />
 </div>

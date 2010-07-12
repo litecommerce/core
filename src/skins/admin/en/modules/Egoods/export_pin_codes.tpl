@@ -21,7 +21,7 @@ This page allows to export PIN codes into CSV file.<hr>
 <tr>
     <td colspan=2><font class=AdminHead>Field order:</font></td>
 </tr>
-<tr FOREACH="xlite.factory.XLite_Module_Egoods_Model_PinCode.getImportFields(#pin_codes_layout#),id,fields">
+<tr FOREACH="xlite.factory.\XLite\Module\Egoods\Model\PinCode.getImportFields(#pin_codes_layout#),id,fields">
     <td width=1>{id}:</td>
     <td width=99%>
         <select name="pin_codes_layout[{id}]">

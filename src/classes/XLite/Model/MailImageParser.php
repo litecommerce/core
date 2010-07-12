@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model;
+
 /**
  * Mail images parser
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_MailImageParser extends XLite_Core_FlexyCompiler
+class MailImageParser extends \XLite\Core\FlexyCompiler
 {
     public $webdir;
     public $images;

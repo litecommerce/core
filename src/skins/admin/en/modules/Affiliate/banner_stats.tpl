@@ -19,15 +19,15 @@
 <table border=0 cellpadding=3>
 <tr>
     <td>Period from:</td>
-    <td><widget class="XLite_View_Date" field="startDate"></td>
+    <td><widget class="\XLite\View\Date" field="startDate"></td>
 </tr>    
 <tr>
     <td>Period to:</td>
-    <td><widget class="XLite_View_Date" field="endDate"></td>
+    <td><widget class="\XLite\View\Date" field="endDate"></td>
 </tr>    
 <tr>
     <td valign=top>Partner:</td>
-    <td><widget class="XLite_Module_Affiliate_View_PartnerSelect" ></td>
+    <td><widget class="\XLite\Module\Affiliate\View\PartnerSelect" ></td>
 </tr>
 <tr>
     <td>Sort by:</td>

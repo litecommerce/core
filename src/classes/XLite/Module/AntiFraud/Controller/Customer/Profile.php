@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\AntiFraud\Controller\Customer;
+
 /**
  * ____description____
  * 
@@ -33,14 +35,14 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_AntiFraud_Controller_Customer_Profile extends XLite_Controller_Customer_Profile implements XLite_Base_IDecorator
+class Profile extends \XLite\Controller\Customer\Profile implements \XLite\Base\IDecorator
 {
     function action_modify()
     {
     	parent::action_modify();
 
         if ($this->registerForm->is('valid')) {
-            $cart = XLite_Model_Cart::getInstance();
+            $cart = \XLite\Model\Cart::getInstance();
             if (!$cart->isEmpty()) {
                 $cart->set('profile_id', $this->profileForm->profile->get('profile_id'));
                 $this->setComplex('details.af_result', null);

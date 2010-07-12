@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model;
+
 /**
  * Layoue manager
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_Layout extends XLite_Base implements XLite_Base_ISingleton
+class Layout extends \XLite\Base implements \XLite\Base\ISingleton
 {
     public $skin = null;
 
@@ -57,11 +59,11 @@ class XLite_Model_Layout extends XLite_Base implements XLite_Base_ISingleton
     {
         foreach (array('skin', 'locale') as $name) {
             if (!isset($this->$name)) {
-                $this->$name = XLite::getInstance()->getOptions(array('skin_details', $name));
+                $this->$name = \XLite::getInstance()->getOptions(array('skin_details', $name));
             }
         }
 
-        $this->skinCustomer = XLite::getInstance()->getOptions(array('skin_details', 'skin'));
+        $this->skinCustomer = \XLite::getInstance()->getOptions(array('skin_details', 'skin'));
     }
 
     /**

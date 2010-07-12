@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model;
+
 /**
  * Current location path
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_LocationPath extends XLite_Base
+class LocationPath extends \XLite\Base
 {
     /**
      * List of location nodes 
@@ -63,13 +65,13 @@ class XLite_Model_LocationPath extends XLite_Base
     /**
      * Add location node 
      * 
-     * @param XLite_Model_Location $node location node
+     * @param \XLite\Model\Location $node location node
      *  
      * @return void
      * @access public
      * @since  3.0.0
      */
-    public function addNode(XLite_Model_Location $node)
+    public function addNode(\XLite\Model\Location $node)
     {
         $this->nodes[] = $node;
     }

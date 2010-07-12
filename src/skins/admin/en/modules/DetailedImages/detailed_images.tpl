@@ -100,7 +100,7 @@
     <tr>	
     	<td valign="top">Image file:</td>
     	<td valign="middle">
-        <widget class="XLite_View_ImageUpload" field="image" actionName="add_detailed_image" formName="imageForm" object="{product}" />
+        <widget class="\XLite\View\ImageUpload" field="image" actionName="add_detailed_image" formName="imageForm" object="{product}" />
 	    </td>
     </tr>
 

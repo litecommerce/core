@@ -19,4 +19,4 @@ Please use your e-mail address and the specified password every time you place o
 You are now logged in and are welcome to continue shopping.
 
 <br><br>
-<widget class="XLite_View_Button" label="Continue shopping" href="cart.php" font="FormButton">
+<widget class="\XLite\View\Button" label="Continue shopping" href="cart.php" font="FormButton">

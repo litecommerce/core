@@ -67,7 +67,7 @@ class XLite_NameSniff extends XLite_ReqCodesSniff
 	 * @since   1.0.0
 	 */
 	protected function getWordsByUnderline($name) {
-		return explode('_', $name);
+		return explode('\\', $name);
 	}
 
 	/**

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View\Button;
+
 /**
  * Abstract button
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class XLite_View_Button_AButton extends XLite_View_AView
+abstract class AButton extends \XLite\View\AView
 {
     /**
      * Widget parameter names
@@ -94,10 +96,10 @@ abstract class XLite_View_Button_AButton extends XLite_View_AView
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_LABEL     => new XLite_Model_WidgetParam_String('Label', $this->getDefaultLabel(), true),
-            self::PARAM_RAW_LABEL => new XLite_Model_WidgetParam_String('Raw label', null, true),
-            self::PARAM_STYLE     => new XLite_Model_WidgetParam_String('Button style', ''),
-            self::PARAM_DISABLED  => new XLite_Model_WidgetParam_Bool('Disabled', 0),
+            self::PARAM_LABEL     => new \XLite\Model\WidgetParam\String('Label', $this->getDefaultLabel(), true),
+            self::PARAM_RAW_LABEL => new \XLite\Model\WidgetParam\String('Raw label', null, true),
+            self::PARAM_STYLE     => new \XLite\Model\WidgetParam\String('Button style', ''),
+            self::PARAM_DISABLED  => new \XLite\Model\WidgetParam\Bool('Disabled', 0),
         );
     }
 

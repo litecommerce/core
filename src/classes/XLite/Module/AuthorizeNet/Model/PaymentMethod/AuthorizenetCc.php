@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\AuthorizeNet\Model\PaymentMethod;
+
 /**
  * Authorize.NET
  * 
@@ -33,8 +35,8 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_AuthorizeNet_Model_PaymentMethod_AuthorizenetCc
-extends XLite_Model_PaymentMethod_CreditCardWebBased
+class AuthorizenetCc
+extends \XLite\Model\PaymentMethod\CreditCardWebBased
 {
     /**
      * AVS messages
@@ -207,7 +209,7 @@ extends XLite_Model_PaymentMethod_CreditCardWebBased
     /**
      * Processor (cache)
      * 
-     * @var    XLite_Module_AuthorizeNet_Processor
+     * @var    \XLite\Module\AuthorizeNet\Processor
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
@@ -254,14 +256,14 @@ extends XLite_Model_PaymentMethod_CreditCardWebBased
     /**
      * Get form fields
      *
-     * @param XLite_Model_Cart $cart $cart
+     * @param \XLite\Model\Cart $cart $cart
      *
      * @return array
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getFields(XLite_Model_Cart $cart)
+    protected function getFields(\XLite\Model\Cart $cart)
     {
         $params = $this->get('params');
 
@@ -322,7 +324,7 @@ extends XLite_Model_PaymentMethod_CreditCardWebBased
     /**
      * Handle request
      *
-     * @param XLite_Model_Cart $cart Cart
+     * @param \XLite\Model\Cart $cart Cart
      * @param string           $type Call type
      *
      * @return integer Operation status
@@ -330,12 +332,12 @@ extends XLite_Model_PaymentMethod_CreditCardWebBased
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function handleRequest(XLite_Model_Cart $cart, $type = self::CALL_CHECKOUT)
+    public function handleRequest(\XLite\Model\Cart $cart, $type = self::CALL_CHECKOUT)
     {
         parent::handleRequest($cart, $type);
 
         if (self::CALL_BACK == $type) {
-            $request = XLite_Core_Request::getInstance();
+            $request = \XLite\Core\Request::getInstance();
 
             $status = 1 == $request->x_response_code ? 'P' : 'F';
 

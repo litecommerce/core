@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\InventoryTracking\Controller\Customer;
+
 /**
  * Cart controller
  * 
@@ -33,8 +35,8 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_InventoryTracking_Controller_Customer_Cart extends XLite_Controller_Customer_Cart
-implements XLite_Base_IDecorator
+class Cart extends \XLite\Controller\Customer\Cart
+implements \XLite\Base\IDecorator
 {
     /**
      * Additional return URL
@@ -58,13 +60,13 @@ implements XLite_Base_IDecorator
         parent::updateCart();
 
         if (
-            XLite_Core_Request::getInstance()->action == 'add'
+            \XLite\Core\Request::getInstance()->action == 'add'
             && !is_null($this->getCart()->get('outOfStock'))
         ) {
             $productId = $this->getCart()->get('outOfStock');
-            $categoryId = intval(XLite_Core_Request::getInstance()->category_id);
+            $categoryId = intval(\XLite\Core\Request::getInstance()->category_id);
             if (0 == $categoryId) {
-                $product = new XLite_Model_Product($productId);
+                $product = new \XLite\Model\Product($productId);
                 $categoryId = $product->getComplex('category.category_id');
             }
 
@@ -76,7 +78,7 @@ implements XLite_Base_IDecorator
         }
 
         if (
-            XLite_Core_Request::getInstance()->action == 'add'
+            \XLite\Core\Request::getInstance()->action == 'add'
             && $this->getCart()->get('exceeding')
         ) {
             $this->addReturnUrl = $this->buildUrl('cart', '', array('mode' => 'exceeding'));

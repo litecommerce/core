@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View;
+
 /**
  * Order status selector
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_StatusSelect extends XLite_View_FormField
+class StatusSelect extends \XLite\View\FormField
 {
     /**
      * Widget parameter names 
@@ -67,9 +69,9 @@ class XLite_View_StatusSelect extends XLite_View_FormField
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_ALL_OPTION  => new XLite_Model_WidgetParam_Bool('Display All option', false),
-            self::PARAM_FIELD       => new XLite_Model_WidgetParam_String('Field name', ''),
-            self::PARAM_VALUE       => new XLite_Model_WidgetParam_String('Status code', ''),
+            self::PARAM_ALL_OPTION  => new \XLite\Model\WidgetParam\Bool('Display All option', false),
+            self::PARAM_FIELD       => new \XLite\Model\WidgetParam\String('Field name', ''),
+            self::PARAM_VALUE       => new \XLite\Model\WidgetParam\String('Status code', ''),
         );
     }
 }

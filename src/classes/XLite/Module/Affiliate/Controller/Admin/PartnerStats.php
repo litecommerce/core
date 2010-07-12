@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Affiliate\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Affiliate_Controller_Admin_PartnerStats extends XLite_Controller_Admin_AAdmin
+class PartnerStats extends \XLite\Controller\Admin\AAdmin
 {
     public $params = array('target');
     public $page = "banner_stats";

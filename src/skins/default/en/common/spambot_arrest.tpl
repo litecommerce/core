@@ -35,7 +35,7 @@
 	</td>
 	<td align="left">
         <input type="text" name="captcha_str" />
-        <widget class="XLite_Validator_CaptchaValidator" id="{id}" field="captcha_str">
+        <widget class="\XLite\Validator\CaptchaValidator" id="{id}" field="captcha_str">
 	</td>
 </tr>
 </table>

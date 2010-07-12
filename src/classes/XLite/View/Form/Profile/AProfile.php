@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View\Form\Profile;
+
 /**
  * Profile abstract form
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class XLite_View_Form_Profile_AProfile extends XLite_View_Form_AForm
+abstract class AProfile extends \XLite\View\Form\AForm
 {
     /**
      * Current form name

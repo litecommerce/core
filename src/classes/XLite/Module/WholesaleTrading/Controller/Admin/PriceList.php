@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\WholesaleTrading\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_WholesaleTrading_Controller_Admin_PriceList extends XLite_Controller_Admin_AAdmin
+class PriceList extends \XLite\Controller\Admin\AAdmin
 {
     public $params = array('target', 'mode', 'category', 'include_subcategories', 'membership');
     
@@ -50,7 +52,7 @@ class XLite_Module_WholesaleTrading_Controller_Admin_PriceList extends XLite_Con
      */
     protected function getRegularTemplate()
     {
-        if ('print' == XLite_Core_Request::getInstance()->mode) {
+        if ('print' == \XLite\Core\Request::getInstance()->mode) {
             $return = "modules/WholesaleTrading/pl_print.tpl";
 
         } else {
@@ -66,7 +68,7 @@ class XLite_Module_WholesaleTrading_Controller_Admin_PriceList extends XLite_Con
             $category_id = 0;
             $include_subcategories = true;
         }
-        $cat = new XLite_Model_Category($category_id);
+        $cat = new \XLite\Model\Category($category_id);
         $this->_priceList[] = $cat;
         
         if ($include_subcategories == true) {
@@ -86,7 +88,7 @@ class XLite_Module_WholesaleTrading_Controller_Admin_PriceList extends XLite_Con
     function getWholesalePricing($product_id)
     {
         if (!isset($this->wholesale_pricing[$product_id])) {
-            $wp = new XLite_Module_WholesaleTrading_Model_WholesalePricing();
+            $wp = new \XLite\Module\WholesaleTrading\Model\WholesalePricing();
             $where = "product_id=" . $product_id;
             if ($_REQUEST['membership'] != 'all') {
                 $where .= " and (membership='all' or membership='" . $_REQUEST['membership'] . "')";

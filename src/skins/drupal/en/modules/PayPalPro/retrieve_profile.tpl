@@ -10,7 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<widget class="XLite_Module_PayPalPro_View_Form_ExpressCheckout" name="ec_form" />
+<widget class="\XLite\Module\PayPalPro\View\Form\ExpressCheckout" name="ec_form" />
 
   <table cellspacing="0">
   <tr>

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\ProductOptions\View;
+
 /**
  * Product options lsit
  *
@@ -34,7 +36,7 @@
  * @since   3.0
  * @ListChild (list="productDetails.main", weight="70")
  */
-class XLite_Module_ProductOptions_View_ProductOptions extends XLite_View_AView
+class ProductOptions extends \XLite\View\AView
 {
     /**
      * Widget parameter names
@@ -67,7 +69,7 @@ class XLite_Module_ProductOptions_View_ProductOptions extends XLite_View_AView
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_PRODUCT => new XLite_Model_WidgetParam_Object('Product', $this->getProduct(), false, 'XLite_Model_Product'),
+            self::PARAM_PRODUCT => new \XLite\Model\WidgetParam\Object('Product', $this->getProduct(), false, '\XLite\Model\Product'),
         );
     }
 
@@ -104,7 +106,7 @@ class XLite_Module_ProductOptions_View_ProductOptions extends XLite_View_AView
     /**
      * Check - option is selected or not
      * 
-     * @param XLite_Module_ProductOptions_Model_ProductOption $option   Option class
+     * @param \XLite\Module\ProductOptions\Model\ProductOption $option   Option class
      * @param integer                                         $optionId Option id
      *  
      * @return boolean
@@ -112,7 +114,7 @@ class XLite_Module_ProductOptions_View_ProductOptions extends XLite_View_AView
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function isOptionSelected(XLite_Module_ProductOptions_Model_ProductOption $option, $optionId)
+    public function isOptionSelected(\XLite\Module\ProductOptions\Model\ProductOption $option, $optionId)
     {
         return intval($option->get('selectedValue')) == $optionId;
     }
@@ -120,14 +122,14 @@ class XLite_Module_ProductOptions_View_ProductOptions extends XLite_View_AView
     /**
      * Get option text 
      * 
-     * @param XLite_Module_ProductOptions_Model_ProductOption $option Option class
+     * @param \XLite\Module\ProductOptions\Model\ProductOption $option Option class
      *  
      * @return string
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getOptionText(XLite_Module_ProductOptions_Model_ProductOption $option)
+    public function getOptionText(\XLite\Module\ProductOptions\Model\ProductOption $option)
     {
         return strval($option->get('selectedValue'));
     }

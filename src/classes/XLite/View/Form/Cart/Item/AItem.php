@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View\Form\Cart\Item;
+
 /**
  * Abstract cart item form
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class XLite_View_Form_Cart_Item_AItem extends XLite_View_Form_AForm
+abstract class AItem extends \XLite\View\Form\AForm
 {
     /**
      * Widget paramater names
@@ -76,7 +78,7 @@ abstract class XLite_View_Form_Cart_Item_AItem extends XLite_View_Form_AForm
     protected function getDefaultParams()
     {
         return parent::getDefaultParams() + array(
-            XLite_Controller_AController::PARAM_RETURN_URL => $this->buildURL($this->getTarget()),
+            \XLite\Controller\AController::PARAM_RETURN_URL => $this->buildURL($this->getTarget()),
         );
     }
 
@@ -92,10 +94,10 @@ abstract class XLite_View_Form_Cart_Item_AItem extends XLite_View_Form_AForm
     {
         parent::defineWidgetParams();
 
-        $this->widgetParams[self::PARAM_ITEM] = new XLite_Model_WidgetParam_Object(
-            'Cart item', null, false, 'XLite_Model_OrderItem'
+        $this->widgetParams[self::PARAM_ITEM] = new \XLite\Model\WidgetParam\Object(
+            'Cart item', null, false, '\XLite\Model\OrderItem'
         );
-        $this->widgetParams[self::PARAM_CART_ID] = new XLite_Model_WidgetParam_Int(
+        $this->widgetParams[self::PARAM_CART_ID] = new \XLite\Model\WidgetParam\Int(
             'Cart item id', null, false
         );
     }

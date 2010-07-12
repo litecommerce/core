@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View;
+
 /**
  * Abstract product list
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class XLite_View_ProductsList extends XLite_View_Container
+abstract class ProductsList extends \XLite\View\Container
 {
     /**
      * Widget param names
@@ -193,7 +195,7 @@ abstract class XLite_View_ProductsList extends XLite_View_Container
     /**
      * pager
      *
-     * @var    XLite_View_Pager
+     * @var    \XLite\View\Pager
      * @access protected
      * @since  3.0.0
      */
@@ -255,7 +257,7 @@ abstract class XLite_View_ProductsList extends XLite_View_Container
      */
     protected function getPagerClass()
     {
-        return 'XLite_View_Pager_ProductsList';
+        return '\XLite\View\Pager\ProductsList';
     }
 
     /**
@@ -281,14 +283,14 @@ abstract class XLite_View_ProductsList extends XLite_View_Container
     {
         return array(
             self::PARAM_SESSION_CELL     => $this->getSessionCell(),
-            XLite_View_Pager::PARAM_DATA => $this->getData()
+            \XLite\View\Pager::PARAM_DATA => $this->getData()
         );
     }
 
     /**
      * Get pager 
      * 
-     * @return XLite_View_Pager
+     * @return \XLite\View\Pager
      * @access protected
      * @since  3.0.0
      */
@@ -459,49 +461,49 @@ abstract class XLite_View_ProductsList extends XLite_View_Container
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_WIDGET_TYPE => new XLite_Model_WidgetParam_Set(
+            self::PARAM_WIDGET_TYPE => new \XLite\Model\WidgetParam\Set(
                 'Widget type', self::WIDGET_TYPE_CENTER, true, $this->widgetTypes
             ),
-            self::PARAM_DISPLAY_MODE => new XLite_Model_WidgetParam_Set(
+            self::PARAM_DISPLAY_MODE => new \XLite\Model\WidgetParam\Set(
                 'Display mode', self::DISPLAY_MODE_GRID, true, $this->displayModes
             ),
-            self::PARAM_GRID_COLUMNS => new XLite_Model_WidgetParam_Set(
+            self::PARAM_GRID_COLUMNS => new \XLite\Model\WidgetParam\Set(
                 'Number of columns (for Grid mode only)', 3, true, $this->getGridColumnsRange()
             ),
-            self::PARAM_SHOW_DESCR => new XLite_Model_WidgetParam_Checkbox(
+            self::PARAM_SHOW_DESCR => new \XLite\Model\WidgetParam\Checkbox(
                 'Show product description (for List mode only)', true, true
             ),
-            self::PARAM_SHOW_PRICE => new XLite_Model_WidgetParam_Checkbox(
+            self::PARAM_SHOW_PRICE => new \XLite\Model\WidgetParam\Checkbox(
                 'Show product price', true, true
             ),
-            self::PARAM_SHOW_THUMBNAIL => new XLite_Model_WidgetParam_Checkbox(
+            self::PARAM_SHOW_THUMBNAIL => new \XLite\Model\WidgetParam\Checkbox(
                 'Show product thumbnail', true, true
             ),
-            self::PARAM_SHOW_ADD2CART => new XLite_Model_WidgetParam_Checkbox(
+            self::PARAM_SHOW_ADD2CART => new \XLite\Model\WidgetParam\Checkbox(
                 'Show \'Add to Cart\' button', true, true
             ),
-            self::PARAM_SIDEBAR_MAX_ITEMS => new XLite_Model_WidgetParam_Int(
+            self::PARAM_SIDEBAR_MAX_ITEMS => new \XLite\Model\WidgetParam\Int(
                 'The maximum number of products displayed in sidebar', 5, true
             ),
-            self::PARAM_ICON_MAX_WIDTH => new XLite_Model_WidgetParam_Int(
+            self::PARAM_ICON_MAX_WIDTH => new \XLite\Model\WidgetParam\Int(
                 'Maximal icon width', 90, true
             ),
-            self::PARAM_ICON_MAX_HEIGHT => new XLite_Model_WidgetParam_Int(
+            self::PARAM_ICON_MAX_HEIGHT => new \XLite\Model\WidgetParam\Int(
                 'Maximal icon height', 90, true
             ),
-            self::PARAM_SORT_BY => new XLite_Model_WidgetParam_Set(
+            self::PARAM_SORT_BY => new \XLite\Model\WidgetParam\Set(
                 'Sort by', self::SORT_BY_MODE_DEFAULT, false, $this->sortByModes
             ),
-            self::PARAM_SORT_ORDER => new XLite_Model_WidgetParam_Set(
+            self::PARAM_SORT_ORDER => new \XLite\Model\WidgetParam\Set(
                 'Sort order', 'asc', false, $this->sortOrderModes
             ),
-            self::PARAM_SHOW_ALL_ITEMS_PER_PAGE => new XLite_Model_WidgetParam_Checkbox(
+            self::PARAM_SHOW_ALL_ITEMS_PER_PAGE => new \XLite\Model\WidgetParam\Checkbox(
                 'Display all items on one page', false, true
             ),
-            self::PARAM_SHOW_DISPLAY_MODE_SELECTOR => new XLite_Model_WidgetParam_Checkbox(
+            self::PARAM_SHOW_DISPLAY_MODE_SELECTOR => new \XLite\Model\WidgetParam\Checkbox(
                 'Show "Display mode" selector', true, true
             ),
-            self::PARAM_SHOW_SORT_BY_SELECTOR => new XLite_Model_WidgetParam_Checkbox(
+            self::PARAM_SHOW_SORT_BY_SELECTOR => new \XLite\Model\WidgetParam\Checkbox(
                 'Show "Sort by" selector', true, true
             ),
 
@@ -570,7 +572,7 @@ abstract class XLite_View_ProductsList extends XLite_View_Container
     protected function getAJAXSpecificParams()
     {
         return array(
-            self::PARAM_AJAX_TARGET => XLite_Core_Request::getInstance()->target,
+            self::PARAM_AJAX_TARGET => \XLite\Core\Request::getInstance()->target,
             self::PARAM_AJAX_ACTION => '',
             self::PARAM_AJAX_CLASS  => get_class($this),
         );
@@ -585,7 +587,7 @@ abstract class XLite_View_ProductsList extends XLite_View_Container
      */
     protected function getURLParams()
     {
-        return array('target' => XLite_Core_Request::getInstance()->target) + $this->getCommonParams();
+        return array('target' => \XLite\Core\Request::getInstance()->target) + $this->getCommonParams();
     }
 
     /**
@@ -730,13 +732,13 @@ abstract class XLite_View_ProductsList extends XLite_View_Container
     /**
      * Check - show Add to cart button or not
      *
-     * @param XLite_Model_Product $product Product
+     * @param \XLite\Model\Product $product Product
      *
      * @return boolean
      * @access protected
      * @since  3.0.0
      */
-    protected function isShowAdd2Cart(XLite_Model_Product $product)
+    protected function isShowAdd2Cart(\XLite\Model\Product $product)
     {
         return $this->getParam(self::PARAM_SHOW_ADD2CART);
     }

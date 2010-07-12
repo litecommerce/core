@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View;
+
 /**
  * Module settings 
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_ModuleSettings extends XLite_View_AView
+class ModuleSettings extends \XLite\View\AView
 {
     /**
      * Widget param names 
@@ -108,7 +110,7 @@ class XLite_View_ModuleSettings extends XLite_View_AView
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_SECTION => new XLite_Model_WidgetParam_String('Module name', null),
+            self::PARAM_SECTION => new \XLite\Model\WidgetParam\String('Module name', null),
         );
     }
 

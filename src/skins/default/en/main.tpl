@@ -11,7 +11,7 @@
  * @since     3.0.0
  *}
 
-<widget class="XLite_View_TopMessage" />
+<widget class="\XLite\View\TopMessage" />
 
 <TABLE border="0" width="100%" cellpadding="0" cellspacing="0" class="Container">
 <TR>
@@ -128,8 +128,8 @@
 <!-- [search] -->
 <widget template="search_products.tpl">
 <!-- [/search] -->
-<widget class="XLite_View_TopCategories" />
-<widget module="Bestsellers" class="XLite_Module_Bestsellers_View_Bestsellers" widgetType="sidebar" />
+<widget class="\XLite\View\TopCategories" />
+<widget module="Bestsellers" class="\XLite\Module\Bestsellers\View\Bestsellers" widgetType="sidebar" />
 <widget module="GiftCertificates" template="common/sidebar_box.tpl" head="Gift certificates" dir="modules/GiftCertificates/menu">
 <widget module="Affiliate" template="common/sidebar_box.tpl" head="Affiliate" dir="modules/Affiliate/menu">
 <widget template="common/sidebar_box.tpl" head="Help" dir="help">
@@ -146,12 +146,12 @@
     <TD width="15"><IMG src="images/spacer.gif" width="15" height="1" alt=""></TD>
     <TD width="170" valign="top"><BR>
 <!-- [right] -->
-<widget class="XLite_View_Minicart" />
+<widget class="\XLite\View\Minicart" />
 <widget template="common/sidebar_box.tpl" dir="login" name="loginWidget" head="Authentication" IF="{!auth.isLogged()}" />
 <widget template="common/sidebar_box.tpl" dir="profile" name="profileWidget" head="Your profile" IF="{auth.isLogged()}" />
 <widget template="common/sidebar_box.tpl" dir="authentication" name="authenticationWidget" head="Authentication" IF="{auth.isLogged()}" />
-<widget module="ProductAdviser" class="XLite_Module_ProductAdviser_View_NewArrivals" widgetType="sidebar" />
-<widget module="ProductAdviser" class="XLite_Module_ProductAdviser_View_RecentlyViewed" widgetType="sidebar" />
+<widget module="ProductAdviser" class="\XLite\Module\ProductAdviser\View\NewArrivals" widgetType="sidebar" />
+<widget module="ProductAdviser" class="\XLite\Module\ProductAdviser\View\RecentlyViewed" widgetType="sidebar" />
 <!-- [/right] -->
     </TD>
     <TD width="4"><IMG src="images/spacer.gif" width="4" height="1" alt=""></TD>
@@ -187,7 +187,7 @@ Help |  <A href="cart.php?target=help&amp;mode=contactus"><FONT class="BottomMen
 </TR>
 </TABLE>
 
-<widget class="XLite_View_PoweredBy" />
+<widget class="\XLite\View\PoweredBy" />
 
 </TD>
 </TR>

@@ -18,7 +18,7 @@
     <td>{product.weight} {config.General.weight_symbol}</td>
   </tr>
 
-  <widget class="XLite_View_ExtraFields" product="{product}" />
+  <widget class="\XLite\View\ExtraFields" product="{product}" />
 
   <tr FOREACH="getViewList(#productDetails.attributes#),w">
     {w.display()}

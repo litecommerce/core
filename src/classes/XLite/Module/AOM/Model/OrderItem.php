@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\AOM\Model;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_AOM_Model_OrderItem extends XLite_Model_OrderItem implements XLite_Base_IDecorator
+class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
 {
     public function __construct($id = null) 
     {
@@ -150,7 +152,7 @@ class XLite_Module_AOM_Model_OrderItem extends XLite_Model_OrderItem implements 
     function hasWholesalePricing() 
     {
         if ($this->xlite->getComplex('mm.activeModules.WholesaleTrading')) {
-            $wholesale = new XLite_Module_WholesaleTrading_Model_WholesalePricing() 	;
+            $wholesale = new \XLite\Module\WholesaleTrading\Model\WholesalePricing() 	;
             return count($wholesale->findAll("product_id='" . $this->getComplex('product.product_id') . "' AND amount<= '" . $this->get('amount') . "' AND (membership='all' OR membership='" . $this->getComplex('order.profile.membership') . "')"));
         } else {
             return false;

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\ProductOptions\Model;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_ProductOptions_Model_Category extends XLite_Model_Category implements XLite_Base_IDecorator
+class Category extends \XLite\Model\Category implements \XLite\Base\IDecorator
 {
     function getStringPath() 
     {

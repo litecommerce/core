@@ -26,14 +26,16 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\ProductAdviser\Model;
+
 /**
- * XLite_Module_ProductAdviser_Model_Product
+ * \XLite\Module\ProductAdviser\Model\Product
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_ProductAdviser_Model_Product extends XLite_Model_Product implements XLite_Base_IDecorator
+class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
 {
     public $relatedProducts = null;
     public $productsAlsoBuy = null;
@@ -42,7 +44,7 @@ class XLite_Module_ProductAdviser_Model_Product extends XLite_Model_Product impl
     /**
      * Get the list of related products
      * 
-     * @return array of XLite_Model_Product objects
+     * @return array of \XLite\Model\Product objects
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -53,7 +55,7 @@ class XLite_Module_ProductAdviser_Model_Product extends XLite_Model_Product impl
 
             $productId = $this->get('product_id');
 
-            $relatedProduct = new XLite_Module_ProductAdviser_Model_RelatedProduct();
+            $relatedProduct = new \XLite\Module\ProductAdviser\Model\RelatedProduct();
             $relatedProducts = $relatedProduct->findAll("product_id='$productId'");
             $products = array();
 
@@ -61,7 +63,7 @@ class XLite_Module_ProductAdviser_Model_Product extends XLite_Model_Product impl
 
                 foreach ($relatedProducts as $p_key => $product) {
 
-                    $rp = new XLite_Model_Product($product->get('related_product_id'));
+                    $rp = new \XLite\Model\Product($product->get('related_product_id'));
                     $addSign = true;
                     $addSign &= $rp->filter();
                     $addSign &= $rp->is('available');
@@ -96,7 +98,7 @@ class XLite_Module_ProductAdviser_Model_Product extends XLite_Model_Product impl
     /**
      * Get the list of recommended products (products that are also buy with current product)
      * 
-     * @return array of XLite_Model_Product objects
+     * @return array of \XLite\Model\Product objects
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -106,7 +108,7 @@ class XLite_Module_ProductAdviser_Model_Product extends XLite_Model_Product impl
         if (!isset($this->productsAlsoBuy)) {
 
             $productId = $this->get('product_id');
-            $pabObj = new XLite_Module_ProductAdviser_Model_ProductAlsoBuy();
+            $pabObj = new \XLite\Module\ProductAdviser\Model\ProductAlsoBuy();
             $pabAll = $pabObj->findAll("product_id='$productId'");
             $products = array();
 
@@ -114,7 +116,7 @@ class XLite_Module_ProductAdviser_Model_Product extends XLite_Model_Product impl
 
                 foreach ($pabAll as $p_key => $product) {
 
-                    $pab = new XLite_Model_Product($product->get('product_id_also_buy'));
+                    $pab = new \XLite\Model\Product($product->get('product_id_also_buy'));
                     $addSign = true;
                     $addSign &= $pab->filter();
                     $addSign &= $pab->is('available');
@@ -158,7 +160,7 @@ class XLite_Module_ProductAdviser_Model_Product extends XLite_Model_Product impl
     {
         if (is_array($products)) {
     		foreach ($products as $p_key => $product) {
-                $relatedProduct = new XLite_Module_ProductAdviser_Model_RelatedProduct();
+                $relatedProduct = new \XLite\Module\ProductAdviser\Model\RelatedProduct();
                 $relatedProduct->set('product_id', $this->get('product_id'));
                 $relatedProduct->set('related_product_id', $product->get('product_id'));
     			if (!$relatedProduct->isExists()) {
@@ -182,7 +184,7 @@ class XLite_Module_ProductAdviser_Model_Product extends XLite_Model_Product impl
     {
         if (is_array($products)) {
     		foreach ($products as $p_key => $product) {
-                $relatedProduct = new XLite_Module_ProductAdviser_Model_RelatedProduct();
+                $relatedProduct = new \XLite\Module\ProductAdviser\Model\RelatedProduct();
                 $relatedProduct->set('product_id', $this->get('product_id'));
                 $relatedProduct->set('related_product_id', $product->get('product_id'));
     			if ($relatedProduct->isExists()) {
@@ -209,7 +211,7 @@ class XLite_Module_ProductAdviser_Model_Product extends XLite_Model_Product impl
             //$added = mktime(date('H', $added), 0, 0, date('m', $added), date('d', $added), date('Y', $added));
             $product_id = $this->get('product_id');
 
-        	$statistic = new XLite_Module_ProductAdviser_Model_ProductNewArrivals();
+        	$statistic = new \XLite\Module\ProductAdviser\Model\ProductNewArrivals();
             $statistic->set('product_id', $product_id);
         	if ($statistic->find("product_id='$product_id'")) {
         		$statistic->set('updated', $added);
@@ -244,7 +246,7 @@ class XLite_Module_ProductAdviser_Model_Product extends XLite_Model_Product impl
     	parent::delete();
 
         foreach ($linked as $objName) {
-            $objName = 'XLite_Module_ProductAdviser_Model_' . $objName;
+            $objName = '\XLite\Module\ProductAdviser\Model\\' . $objName;
     		$object = new $objName();
     		$objs = $object->cleanRelations($product_id);
         }
@@ -260,7 +262,7 @@ class XLite_Module_ProductAdviser_Model_Product extends XLite_Model_Product impl
      */
     public function getNewArrival()
     {
-        $stats = new XLite_Module_ProductAdviser_Model_ProductNewArrivals();
+        $stats = new \XLite\Module\ProductAdviser\Model\ProductNewArrivals();
 
         $result = 0;
 
@@ -336,7 +338,7 @@ class XLite_Module_ProductAdviser_Model_Product extends XLite_Model_Product impl
                 $check[] = "notify_key='" . $price['product_id'] . "'";
                 $check = implode(' AND ', $check);
 
-                $notification = new XLite_Module_ProductAdviser_Model_Notification();
+                $notification = new \XLite\Module\ProductAdviser\Model\Notification();
                 $notifications = $notification->findAll($check);
 
                 if (is_array($notifications) && count($notifications) > 0) {
@@ -440,7 +442,7 @@ class XLite_Module_ProductAdviser_Model_Product extends XLite_Model_Product impl
         $check[] = "status='" . CUSTOMER_REQUEST_UPDATED . "'";
         $check = implode(' AND ', $check);
 
-        $notification = new XLite_Module_ProductAdviser_Model_Notification();
+        $notification = new \XLite\Module\ProductAdviser\Model\Notification();
         $pricingCAI = $notification->count($check);
 
         if ($pricingCAI > 0) {

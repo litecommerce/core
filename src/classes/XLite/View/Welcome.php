@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_Welcome extends XLite_View_AView
+class Welcome extends \XLite\View\AView
 {
     /**
      * Return widget default template
@@ -57,7 +59,7 @@ class XLite_View_Welcome extends XLite_View_AView
      */
     public function isVisible()
     {
-        return parent::isVisible() && !XLite_Core_Request::getInstance()->page;
+        return parent::isVisible() && !\XLite\Core\Request::getInstance()->page;
     }
 
 

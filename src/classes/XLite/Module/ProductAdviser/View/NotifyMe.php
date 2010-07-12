@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\ProductAdviser\View;
+
 // FIXME - check this class logic
 
 /**
@@ -35,7 +37,7 @@
  * @see     ____class_see____
  * @since   3.0
  */
-class XLite_Module_ProductAdviser_View_NotifyMe extends XLite_View_Dialog
+class NotifyMe extends \XLite\View\Dialog
 {
     /**
      * Return title
@@ -70,7 +72,7 @@ class XLite_Module_ProductAdviser_View_NotifyMe extends XLite_View_Dialog
      */
     protected function checkAction()
     {
-        return 'notify_product' == XLite_Core_Request::getInstance()->action;
+        return 'notify_product' == \XLite\Core\Request::getInstance()->action;
     }
 
 

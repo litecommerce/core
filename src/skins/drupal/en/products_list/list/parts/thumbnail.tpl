@@ -11,4 +11,4 @@
  * @since     3.0.0
  * @ListChild (list="productsList.listItem.info", weight="30")
  *}
-<a IF="isShowThumbnails()" class="url product-thumbnail" href="{buildURL(#product#,##,_ARRAY_(#product_id#^product.product_id,#category_id#^category_id))}"><widget class="XLite_View_Image" image="{product.getThumbnail()}" centerImage=0 maxWidth="{getIconWidth()}" maxHeight="{getIconHeight()}" alt="{product.name}" className="photo" /></a>
+<a IF="isShowThumbnails()" class="url product-thumbnail" href="{buildURL(#product#,##,_ARRAY_(#product_id#^product.product_id,#category_id#^category_id))}"><widget class="\XLite\View\Image" image="{product.getThumbnail()}" centerImage=0 maxWidth="{getIconWidth()}" maxHeight="{getIconHeight()}" alt="{product.name}" className="photo" /></a>

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model;
+
 if (!extension_loaded('gmp')) {
    require_once LC_ROOT_DIR . 'compat' . LC_DS . 'gmp.php';
 }
@@ -37,7 +39,7 @@ if (!extension_loaded('gmp')) {
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_RSA {
+class RSA {
     
     function random($bits, $randomText)
     {

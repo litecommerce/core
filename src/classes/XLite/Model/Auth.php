@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model;
+
 define('USER_EXISTS', 1);
 define('REGISTER_SUCCESS', 2);
 define('ACCESS_DENIED', 3);
@@ -41,7 +43,7 @@ $_reReadProfiles = false;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
+class Auth extends \XLite\Base implements \XLite\Base\ISingleton
 {
     /**
      * Integer codes for action results
@@ -76,17 +78,17 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
     /**
      * Updates the specified profile on login. Saves profile to session 
      * 
-     * @param XLite_Model_Profile $profile profile object
+     * @param \XLite\Model\Profile $profile profile object
      *  
      * @return bool
      * @access protected
      * @since  3.0.0
      */
-    protected function loginProfile(XLite_Model_Profile $profile)
+    protected function loginProfile(\XLite\Model\Profile $profile)
     {
         if ($result = $profile->isPersistent) {
 
-            XLite_Model_Session::getInstance()->restart();
+            \XLite\Model\Session::getInstance()->restart();
 
             // check for the fisrt time login
             if (!$profile->get('first_login')) {
@@ -100,7 +102,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
             $profile->update();
 
             // save to session
-            XLite_Model_Session::getInstance()->set('profile_id', $profile->get('profile_id'));
+            \XLite\Model\Session::getInstance()->set('profile_id', $profile->get('profile_id'));
 
             $this->rememberLogin($profile->get('login'));
         }
@@ -113,13 +115,13 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
      * 1) he/she is an admin
      * 2) its the user's own account
      * 
-     * @param XLite_Model_Profile $profile profile to check
+     * @param \XLite\Model\Profile $profile profile to check
      *  
      * @return bool
      * @access protected
      * @since  3.0.0
      */
-    protected function checkProfileAccessibility(XLite_Model_Profile $profile)
+    protected function checkProfileAccessibility(\XLite\Model\Profile $profile)
     {
         return $this->isAdmin($this->getProfile()) || $this->getProfile()->get('profile_id') == $profile->get('profile_id');
     }
@@ -135,7 +137,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
     protected function clearSessionVars()
     {
         foreach ($this->sessionVarsToClear as $name) {
-            XLite_Model_Session::getInstance()->set($name, null);
+            \XLite\Model\Session::getInstance()->set($name, null);
         }
     }
 
@@ -156,11 +158,11 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
         $result = false;
 
         if (!empty($hashString)) {
-            $result = XLite_Model_Session::getInstance()->get(self::SESSION_SECURE_HASH_CELL) === $hashString;
+            $result = \XLite\Model\Session::getInstance()->get(self::SESSION_SECURE_HASH_CELL) === $hashString;
         }
 
         // Using this method, it's not possible to log in several times
-        XLite_Model_Session::getInstance()->set(self::SESSION_SECURE_HASH_CELL, null);
+        \XLite\Model\Session::getInstance()->set(self::SESSION_SECURE_HASH_CELL, null);
 
         return $result;
     }
@@ -206,7 +208,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
                 $password = self::encryptPassword($password);
             }
 
-            $profile = new XLite_Model_Profile();
+            $profile = new \XLite\Model\Profile();
 
             // Deny login if user not found
             if ($profile->findForAuth($login, $password)) {
@@ -226,7 +228,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
      */
     public function logoff()
     {
-        $session = XLite_Model_Session::getInstance();
+        $session = \XLite\Model\Session::getInstance();
         $session->set('last_profile_id', $session->get('profile_id'));
 
         $this->clearSessionVars();
@@ -259,12 +261,12 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
         $isCurrent = false;
 
         if (empty($profileId)) {
-            $profileId = XLite_Model_Session::getInstance()->get('profile_id');
+            $profileId = \XLite\Model\Session::getInstance()->get('profile_id');
             $isCurrent = true;
         }
 
         if (!empty($profileId)) {
-            $profile = XLite_Model_CachingFactory::getObject(__METHOD__ . $profileId, 'XLite_Model_Profile', array($profileId));
+            $profile = \XLite\Model\CachingFactory::getObject(__METHOD__ . $profileId, '\XLite\Model\Profile', array($profileId));
             if ($profile->isValid() && ($isCurrent || $this->checkProfile($profile))) {
                 $result = $profile;
             }
@@ -276,13 +278,13 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
     /**
      * Check if passed profile is currently logged in
      * 
-     * @param XLite_Model_Profile $profile profile to check
+     * @param \XLite\Model\Profile $profile profile to check
      *  
      * @return bool
      * @access public
      * @since  3.0.0
      */
-    public function checkProfile(XLite_Model_Profile $profile)
+    public function checkProfile(\XLite\Model\Profile $profile)
     {
         return $this->isLogged() && $this->checkProfileAccessibility($profile);
     }
@@ -304,13 +306,13 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
     /**
      * Checks whether the currently logged user is an administrator
      * 
-     * @param XLite_Model_Profile $profile user profile
+     * @param \XLite\Model\Profile $profile user profile
      *  
      * @return bool
      * @access public
      * @since  3.0.0
      */
-    public function isAdmin(XLite_Model_Profile $profile)
+    public function isAdmin(\XLite\Model\Profile $profile)
     {
         return $profile->get('access_level') >= $this->getAdminAccessLevel();
     }
@@ -403,7 +405,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
      */
     public function setSecureHash($hashString)
     {
-        XLite_Model_Session::getInstance()->set(self::SESSION_SECURE_HASH_CELL, $hashString);
+        \XLite\Model\Session::getInstance()->set(self::SESSION_SECURE_HASH_CELL, $hashString);
     }
 
 
@@ -480,7 +482,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
         if (isset($_SERVER['HTTP_REFERER'])) {
             if (!isset($_COOKIE['LCReferrerCookie'])) {
                 $referer = $_SERVER['HTTP_REFERER'];
-                setcookie('LCReferrerCookie', $referer, time() + 3600 * 24 * 180, "/", XLite::getInstance()->getOptions(array('host_details', 'http_host')));
+                setcookie('LCReferrerCookie', $referer, time() + 3600 * 24 * 180, "/", \XLite::getInstance()->getOptions(array('host_details', 'http_host')));
             } else {
                 $referer = $_COOKIE['LCReferrerCookie'];
             }
@@ -492,7 +494,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
         if (!$anonymous) {
 
             // send signin mail notification to regular customer
-            $mailer = new XLite_Model_Mailer();
+            $mailer = new \XLite\Model\Mailer();
 
             // pass this data to the mailer
             $mailer->profile = $profile;
@@ -526,7 +528,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
     function modify($profile) 
     {
         // check whether another user exists with the same login
-        $another = new XLite_Model_Profile();
+        $another = new \XLite\Model\Profile();
         $login = addslashes($profile->get('login'));
         $profile_id = $profile->get('profile_id');
         if ($another->find("login='$login' AND profile_id!='$profile_id'")) {
@@ -535,7 +537,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
         if ($this->session->get('anonymous')) {
             $this->clearAnonymousPassword($profile);
         } else {
-            $another = new XLite_Model_Profile($profile->get('profile_id'));
+            $another = new \XLite\Model\Profile($profile->get('profile_id'));
             if (strlen($another->get('password')) == 0) {
                 $this->clearAnonymousPassword($profile);
             }
@@ -551,9 +553,9 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
         $this->copyBillingInfo($profile);
 
         // update current shopping cart/order data
-        $cartProfile = XLite_Model_Cart::getInstance()->getProfile();
+        $cartProfile = \XLite\Model\Cart::getInstance()->getProfile();
         if ($cartProfile->get('order_id')) {
-            $cartProfile->modifyCustomerProperties(XLite_Core_Request::getInstance()->getData());
+            $cartProfile->modifyCustomerProperties(\XLite\Core\Request::getInstance()->getData());
             $this->copyBillingInfo($cartProfile);
             $cartProfile->update();
         }
@@ -565,7 +567,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
         $this->membershipSignup($profile);
 
         // send mail notification to customer
-        $mailer = new XLite_Model_Mailer();
+        $mailer = new \XLite\Model\Mailer();
         $mailer->set('profile', $profile);
         $mailer->set('charset', $this->xlite->config->Company->locationCountry->charset);
         $mailer->compose(
@@ -637,7 +639,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
         }
 
         // send mail notification about deleted profile to customer
-        $mailer = new XLite_Model_Mailer();
+        $mailer = new \XLite\Model\Mailer();
         $mailer->set('profile', $profile);
         $mailer->set('charset', $this->xlite->config->Company->locationCountry->charset);
         $mailer->compose(
@@ -663,7 +665,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
     */
     function rememberLogin($login) 
     {
-        $options = XLite::getInstance()->getOptions('host_details');
+        $options = \XLite::getInstance()->getOptions('host_details');
 
         foreach (array($options['http_host'], $options['https_host']) as $host) {
             @setcookie('last_login', $login, time() + 3600 * 24 * $this->config->General->login_lifetime, '/', func_parse_host($host));
@@ -706,7 +708,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
 
     function initHtaccessFiles()
     {
-        $htaccess = new XLite_Model_Htaccess();
+        $htaccess = new \XLite\Model\Htaccess();
         if (!$htaccess->hasImage()){
             $htaccess->makeImage();
         }
@@ -720,7 +722,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
     function sendFailedAdminLogin($profile) 
     {
         // send mail notification about failed login to administrator
-        $mailer = new XLite_Model_Mailer();
+        $mailer = new \XLite\Model\Mailer();
         $mailer->set('login', isset($_POST['login']) ? $_POST['login'] : "unknown");
         $mailer->set('REMOTE_ADDR', isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : "unknown");
         $mailer->set('HTTP_X_FORWARDED_FOR', isset($_SERVER['HTTP_X_FORWARDED_FOR']) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : "unknown");
@@ -738,14 +740,14 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
      * Resource should provide access to "getAccessLevel()" method in order
      * to check authority.
      * 
-     * @param XLite_Base $resource Resource
+     * @param \XLite\Base $resource Resource
      *  
      * @return boolean
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function isAuthorized(XLite_Base $resource)
+    public function isAuthorized(\XLite\Base $resource)
     {
         // check whether resource is valid (has getAccessLevel() method)
         if (!method_exists($resource, 'getAccessLevel'))
@@ -760,7 +762,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
         return $currentLevel >= $resource->getAccessLevel();
     }
 
-    public function isValidAdminIP(XLite_Base $resource, $checkOnly = false)
+    public function isValidAdminIP(\XLite\Base $resource, $checkOnly = false)
     {
         $ip_v4_regexp_wildcard = '/^(25[0-5]|2[0-4][0-9]|\*|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|\*|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|\*|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|\*|[01]?[0-9][0-9]?)$/';
 
@@ -779,7 +781,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
         ) {
             $admin_ip = serialize(array(array('ip' => $admin_ip, 'comment' => 'Default admin IP')));
 
-            XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+            \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
                 array(
                     'category' => 'SecurityIP',
                     'name'     => 'allow_admin_ip',
@@ -816,7 +818,7 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
 
             if (!$is_valid) {
                 if (!$checkOnly) {
-                    $waiting_list = new XLite_Model_WaitingIP();
+                    $waiting_list = new \XLite\Model\WaitingIP();
                     preg_match($ip_v4_regexp,$admin_ip, $admin_ip_bytes);
                     $admin_ip = isset($admin_ip_bytes[0]) ? $admin_ip_bytes[0] : '';
 
@@ -849,11 +851,11 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
 
     function requestRecoverPassword($email) 
     {
-        $profile = new XLite_Model_Profile();
+        $profile = new \XLite\Model\Profile();
         if (!$profile->find("login='$email'")) {
             return false;
         }
-        $mailer = new XLite_Model_Mailer();
+        $mailer = new \XLite\Model\Mailer();
         $mailer->url = $this->xlite->getShopUrl("cart.php?target=recover_password&action=confirm&email=".urlencode($profile->get('login'))."&request_id=".$profile->get('password'));
         $mailer->set('charset', $this->xlite->config->Company->locationCountry->charset);
         $mailer->compose(
@@ -868,13 +870,13 @@ class XLite_Model_Auth extends XLite_Base implements XLite_Base_ISingleton
     
     function recoverPassword($email, $requestID) 
     {
-        $profile = new XLite_Model_Profile();
+        $profile = new \XLite\Model\Profile();
         if (!$profile->find("login='$email'") || $profile->get('password') != $requestID) {
             return false;
         }
 
         $pass = generate_code();
-        $mailer = new XLite_Model_Mailer();
+        $mailer = new \XLite\Model\Mailer();
         $mailer->set('email', $email);
         $mailer->set('new_password', $pass);
         $profile->set('password', md5($pass));

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_ExtraPage extends XLite_Base
+class ExtraPage extends \XLite\Base
 {
     public $templatePrefix; // = "skins/$zone/en/";
     public $page; // a page identifier	
@@ -61,7 +63,7 @@ class XLite_Model_ExtraPage extends XLite_Base
     function getLocale() 
     {
         if (is_null($this->locale)) {
-            $this->locale = XLite::getInstance()->getOptions(array('skin_details', 'locale'));
+            $this->locale = \XLite::getInstance()->getOptions(array('skin_details', 'locale'));
         }
         return $this->locale;
     }
@@ -69,7 +71,7 @@ class XLite_Model_ExtraPage extends XLite_Base
     function getZone()
     {
         if (is_null($this->zone)) {
-            $this->zone = XLite::getInstance()->getOptions(array('skin_details', 'skin'));
+            $this->zone = \XLite::getInstance()->getOptions(array('skin_details', 'skin'));
         }
         return $this->zone;
     }
@@ -101,13 +103,13 @@ class XLite_Model_ExtraPage extends XLite_Base
                 if (preg_match("/<widget (\S+) body=\"(\w+)\.tpl\" head=\"([^\"]+)\" (\S+)/", $line, $matches)) {
                     
                     list($line, $template, $page, $title) = $matches;
-                    $p = new XLite_Model_ExtraPage();
+                    $p = new \XLite\Model\ExtraPage();
                     $p->page = $page;
                     $p->title = func_htmldecode($title);
                     $fd = @fopen($this->get('templatePrefix') . $page . ".tpl", "rb");
                     if ($fd) {
                     	fclose($fd);
-                    	$p->template = new XLite_Model_Template($page . ".tpl");
+                    	$p->template = new \XLite\Model\Template($page . ".tpl");
                     }
                     $pages[] = $p;
                 }
@@ -147,7 +149,7 @@ class XLite_Model_ExtraPage extends XLite_Base
                 break;
             case "menu":
                 $this->getCustomerLayout();
-                $template = new XLite_Base();
+                $template = new \XLite\Base();
                 $template->set('templateFile', $this->menuTemplateDef);
                 $template->set('template', $this->getRelativeTemplatePath($this->menuTemplateDef));
                 $template->set('skinPath', $this->customerLayout->getPath());
@@ -305,7 +307,7 @@ class XLite_Model_ExtraPage extends XLite_Base
             return $this->customerLayout;
         }
 
-        $this->customerLayout = new XLite_Model_Layout();
+        $this->customerLayout = new \XLite\Model\Layout();
 
         // FIXME - to delete
         /*$this->xlite->set('adminZone', false);
@@ -319,14 +321,14 @@ class XLite_Model_ExtraPage extends XLite_Base
     function compile($template)
     {
         // replace layout with customer layout
-     	/*$layout = XLite_Model_Layout::getInstance();
+     	/*$layout = \XLite\Model\Layout::getInstance();
         $skin = $layout->get('skin');
         $layout->set('skin', $this->customerLayout->get('skin'));*/
 
-        $component = new XLite_View_ExtraPage(
+        $component = new \XLite\View\ExtraPage(
             array(
-                XLite_View_ExtraPage::PARAM_TEMPLATE => $template->get('templateFile'),
-                XLite_View_ExtraPage::PARAM_DATA     => $template,
+                \XLite\View\ExtraPage::PARAM_TEMPLATE => $template->get('templateFile'),
+                \XLite\View\ExtraPage::PARAM_DATA     => $template,
             )
         );
         $component->init();
@@ -346,7 +348,7 @@ class XLite_Model_ExtraPage extends XLite_Base
 
     function getRelativeTemplatePath($file)
     {
-        $skin_details = XLite::getInstance()->getOptions('skin_details');
+        $skin_details = \XLite::getInstance()->getOptions('skin_details');
 
         return str_replace('skins/' . $skin_details['skin'] . '/' . $skin_details['locale'] . '/', '', $file);
     }

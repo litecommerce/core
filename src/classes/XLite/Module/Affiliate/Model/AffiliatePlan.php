@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Affiliate\Model;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Affiliate_Model_AffiliatePlan extends XLite_Model_AModel
+class AffiliatePlan extends \XLite\Model\AModel
 {
     public $fields = array(
             "plan_id" => 0,
@@ -49,7 +51,7 @@ class XLite_Module_Affiliate_Model_AffiliatePlan extends XLite_Model_AModel
     function delete()
     {
         // delete plan commissions
-        $pc = new XLite_Module_Affiliate_Model_PlanCommission();
+        $pc = new \XLite\Module\Affiliate\Model\PlanCommission();
         $table = $this->db->getTableByAlias($pc->alias);
         $this->db->query("DELETE FROM $table WHERE plan_id=".$this->get('plan_id'));
         parent::delete();
