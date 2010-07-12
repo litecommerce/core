@@ -26,8 +26,6 @@
  * @since      3.0.0
  */
 
-use \Doctrine\ORM\EntityRepository;
-
 /**
  * Abstract repository
  * 
@@ -35,7 +33,7 @@ use \Doctrine\ORM\EntityRepository;
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class XLite_Model_Repo_ARepo extends EntityRepository
+abstract class XLite_Model_Repo_ARepo extends \Doctrine\ORM\EntityRepository
 {
     /**
      * Cache TTL predefined values 
