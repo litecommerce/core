@@ -68,7 +68,7 @@ class States extends \XLite\Controller\Admin\AAdmin
         if (is_null($this->states)) {
             $this->states = \XLite\Core\Database::getQB()
                 ->select('s')
-                ->from('\XLite\Model\State', 's')
+                ->from('XLite\Model\State', 's')
                 ->where('s.country_code = :code')
                 ->setParameter('code', $this->get('country_code'))
                 ->getQuery()
@@ -112,7 +112,7 @@ class States extends \XLite\Controller\Admin\AAdmin
 
         $state = \XLite\Core\Database::getQB()
             ->select('COUNT(s.state_id)')
-            ->from('\XLite\Model\State', 's')
+            ->from('XLite\Model\State', 's')
             ->where('s.state = :state AND s.code = :code')
             ->setParameters(array('state' => $postData['state'], 'code' => $postData['code']))
             ->getQuery()
