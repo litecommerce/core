@@ -35,7 +35,7 @@ namespace XLite\Controller\Customer;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Captcha extends \XLite\Controller\Customer\ACustomer
+class Captcha extends ACustomer
 {
     public $params = array('target', 'id');
     

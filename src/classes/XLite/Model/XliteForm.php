@@ -35,7 +35,7 @@ namespace XLite\Model;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XliteForm extends \XLite\Model\AModel
+class XliteForm extends AModel
 {
 
     /**

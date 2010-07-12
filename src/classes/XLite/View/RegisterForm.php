@@ -35,7 +35,7 @@ namespace XLite\View;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class RegisterForm extends \XLite\View\Dialog
+class RegisterForm extends Dialog
 {
     /*
      * Widget parameters names

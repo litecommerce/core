@@ -36,7 +36,7 @@ namespace XLite\View;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class MailExplorer extends \XLite\View\ColumnList
+class MailExplorer extends ColumnList
 {
     /**
      * locale 

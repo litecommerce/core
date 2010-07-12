@@ -35,7 +35,7 @@ namespace XLite\View;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Controller extends \XLite\View\AView
+class Controller extends AView
 {
     /**
      * Content of the currnt page

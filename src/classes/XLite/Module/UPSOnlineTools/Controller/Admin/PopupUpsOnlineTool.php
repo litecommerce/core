@@ -35,7 +35,7 @@ namespace XLite\Module\UPSOnlineTools\Controller\Admin;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class PopupUpsOnlineTool extends \XLite\Module\UPSOnlineTools\Controller\Admin\UpsOnlineTool
+class PopupUpsOnlineTool extends UpsOnlineTool
 {
     public $template = "modules/UPSOnlineTools/settings/popup_license.tpl";
 

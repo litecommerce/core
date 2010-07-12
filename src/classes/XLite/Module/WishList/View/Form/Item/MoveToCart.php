@@ -35,7 +35,7 @@ namespace XLite\Module\WishList\View\Form\Item;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class MoveToCart extends \XLite\Module\WishList\View\Form\Item\AItem
+class MoveToCart extends AItem
 {
     /**
      * Current form name 

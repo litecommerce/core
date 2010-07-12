@@ -35,7 +35,7 @@ namespace XLite\View;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Minicart extends \XLite\View\SideBarBox
+class Minicart extends SideBarBox
 {
     /**
      * Widget parameter names

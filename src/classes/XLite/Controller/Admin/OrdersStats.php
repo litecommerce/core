@@ -35,7 +35,7 @@ namespace XLite\Controller\Admin;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class OrdersStats extends \XLite\Controller\Admin\Stats
+class OrdersStats extends Stats
 {
     protected $stats = array();
 

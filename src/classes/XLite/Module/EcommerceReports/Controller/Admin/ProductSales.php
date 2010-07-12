@@ -35,7 +35,7 @@ namespace XLite\Module\EcommerceReports\Controller\Admin;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class ProductSales extends \XLite\Module\EcommerceReports\Controller\Admin\EcommerceReports
+class ProductSales extends EcommerceReports
 {
     function getProductSales() 
     {

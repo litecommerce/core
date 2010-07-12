@@ -35,7 +35,7 @@ namespace XLite\Model\WidgetParam;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Object extends \XLite\Model\WidgetParam\AWidgetParam
+class Object extends AWidgetParam
 {
     /**
      * class 

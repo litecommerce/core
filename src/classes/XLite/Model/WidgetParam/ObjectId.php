@@ -35,7 +35,7 @@ namespace XLite\Model\WidgetParam;
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class ObjectId extends \XLite\Model\WidgetParam\Int
+abstract class ObjectId extends Int
 {
     /**
      * Return object class name 

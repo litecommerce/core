@@ -35,7 +35,7 @@ namespace XLite\Controller\Admin;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class ChangeSkin extends \XLite\Controller\Admin\AAdmin
+class ChangeSkin extends AAdmin
 {
     public $_currentSkin = null;
     public $currentSkinName = null;

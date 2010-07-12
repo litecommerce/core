@@ -35,7 +35,7 @@ namespace XLite\Controller\Admin;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Category extends \XLite\Controller\Admin\AAdmin
+class Category extends AAdmin
 {
     public $page = "category_modify";
     public $pages = array(

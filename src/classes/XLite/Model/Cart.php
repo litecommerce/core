@@ -35,7 +35,7 @@ namespace XLite\Model;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Cart extends \XLite\Model\Order implements \XLite\Base\ISingleton
+class Cart extends Order implements \XLite\Base\ISingleton
 {
     /**
      * Constructor

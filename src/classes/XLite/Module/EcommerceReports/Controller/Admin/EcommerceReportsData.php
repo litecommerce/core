@@ -35,7 +35,7 @@ namespace XLite\Module\EcommerceReports\Controller\Admin;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class EcommerceReportsData extends \XLite\Module\EcommerceReports\Controller\Admin\SalesDynamics
+class EcommerceReportsData extends SalesDynamics
 {
     public $type = "bars"; // type := bars | lines	
     public $limit = 50;    // limit for type "bars"	

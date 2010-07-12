@@ -35,7 +35,7 @@ namespace XLite\View;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class TopMessage extends \XLite\View\AView
+class TopMessage extends AView
 {
     /**
      * getDir 

@@ -36,7 +36,7 @@ namespace XLite\View\Button;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Image extends \XLite\View\Button\Regular
+class Image extends Regular
 {
     /**
      * Return widget default template

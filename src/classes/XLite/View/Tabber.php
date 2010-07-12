@@ -36,7 +36,7 @@ namespace XLite\View;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Tabber extends \XLite\View\AView
+class Tabber extends AView
 {
     /*
      * Widget parameters names

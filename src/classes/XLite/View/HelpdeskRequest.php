@@ -35,7 +35,7 @@ namespace XLite\View;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class HelpdeskRequest extends \XLite\View\AView
+class HelpdeskRequest extends AView
 {
     /**
      * Return widget default template

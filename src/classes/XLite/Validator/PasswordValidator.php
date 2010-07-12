@@ -35,7 +35,7 @@ namespace XLite\Validator;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class PasswordValidator extends \XLite\Validator\AValidator
+class PasswordValidator extends AValidator
 {
     public $template = "common/password_validator.tpl";
     

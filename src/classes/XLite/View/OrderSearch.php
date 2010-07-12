@@ -35,7 +35,7 @@ namespace XLite\View;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class OrderSearch extends \XLite\View\Dialog
+class OrderSearch extends Dialog
 {
     /**
      * Orders list (cache)

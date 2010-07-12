@@ -35,7 +35,7 @@ namespace XLite\Model;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class ShippingRate extends \XLite\Model\AModel
+class ShippingRate extends AModel
 {
     public $alias = "shipping_rates";
     public $fields = array(

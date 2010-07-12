@@ -35,7 +35,7 @@ namespace XLite\Module\EcommerceReports\Controller\Admin;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class SpStats extends \XLite\Module\EcommerceReports\Controller\Admin\EcommerceReports
+class SpStats extends EcommerceReports
 {
     function getShippingMethods() 
     {

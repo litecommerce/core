@@ -35,7 +35,7 @@ namespace XLite\Model;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class ShippingZone extends \XLite\Model\AModel
+class ShippingZone extends AModel
 {
     public $fields = array(
         "shipping_zone" => 0

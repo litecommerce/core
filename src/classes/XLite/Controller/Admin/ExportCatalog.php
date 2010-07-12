@@ -35,7 +35,7 @@ namespace XLite\Controller\Admin;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class ExportCatalog extends \XLite\Controller\Admin\AAdmin
+class ExportCatalog extends AAdmin
 {
     public $params = array('target', 'page');
     public $pages = array('products' => 'Export products',

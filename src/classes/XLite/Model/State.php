@@ -37,7 +37,7 @@ namespace XLite\Model;
  * @Entity (repositoryClass="XLite\Model\Repo\State")
  * @Table (name="states")
  */
-class State extends \XLite\Model\AEntity
+class State extends AEntity
 {
     /**
      * State unique id 

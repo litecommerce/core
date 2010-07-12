@@ -35,7 +35,7 @@ namespace XLite\Controller\Admin;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Countries extends \XLite\Controller\Admin\AAdmin
+class Countries extends AAdmin
 {
     function obligatorySetStatus($status)
     {

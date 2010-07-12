@@ -35,7 +35,7 @@ namespace XLite\View\Form;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Sort extends \XLite\View\Form\AForm
+class Sort extends AForm
 {
     /**
      * Widget parameter names

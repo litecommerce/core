@@ -35,7 +35,7 @@ namespace XLite\Controller\Admin;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class AddProduct extends \XLite\Controller\Admin\AAdmin
+class AddProduct extends AAdmin
 {
     public $params = array('target', "mode", "product_id");
     public $product = null;

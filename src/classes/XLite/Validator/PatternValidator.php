@@ -35,7 +35,7 @@ namespace XLite\Validator;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class PatternValidator extends \XLite\Validator\AValidator
+class PatternValidator extends AValidator
 {
     function isValid()
     {

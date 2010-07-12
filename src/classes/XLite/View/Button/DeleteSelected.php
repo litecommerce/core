@@ -35,7 +35,7 @@ namespace XLite\View\Button;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class DeleteSelected extends \XLite\View\Button\Regular
+class DeleteSelected extends Regular
 {
     /**
      * Widget parameter names

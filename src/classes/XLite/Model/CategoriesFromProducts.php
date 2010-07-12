@@ -35,7 +35,7 @@ namespace XLite\Model;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class CategoriesFromProducts extends \XLite\Model\Category
+class CategoriesFromProducts extends Category
 {
     public $prodId;
 

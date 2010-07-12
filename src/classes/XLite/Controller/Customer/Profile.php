@@ -35,7 +35,7 @@ namespace XLite\Controller\Customer;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Profile extends \XLite\Controller\Customer\ACustomer
+class Profile extends ACustomer
 {
     /**
      * Types of model form

@@ -35,7 +35,7 @@ namespace XLite\View\Form\Checkout;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class ModifyProfile extends \XLite\View\Form\Checkout\ACheckout
+class ModifyProfile extends ACheckout
 {
     /**
      * Current form name 

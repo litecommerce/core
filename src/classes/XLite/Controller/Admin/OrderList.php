@@ -36,7 +36,7 @@ namespace XLite\Controller\Admin;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class OrderList extends \XLite\Controller\Admin\AAdmin
+class OrderList extends AAdmin
 {
     public $params = array('target', 'mode', 'order_id', 'login', 'status');
 

@@ -35,7 +35,7 @@ namespace XLite\Controller\Admin;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class CssEdit extends \XLite\Controller\Admin\AAdmin
+class CssEdit extends AAdmin
 {
     /**
      * Editor 

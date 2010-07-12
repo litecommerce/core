@@ -35,7 +35,7 @@ namespace XLite\View;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class ExtraPage extends \XLite\View\AView
+class ExtraPage extends AView
 {
     /**
      * Widget param names 
