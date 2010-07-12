@@ -36,7 +36,7 @@ namespace XLite\View;
  * @see        ____class_see____
  * @since   3.0.0
  */
-class DatePicker extends \XLite\View\FormField
+class DatePicker extends FormField
 {
     /*
      * Constants: names of a widget parameters

@@ -37,7 +37,7 @@ define('NOTIFY_INTERVAL', 24 * 60 * 60);
  * @see     ____class_see____
  * @since   3.0.0
  */
-class WaitingIP extends \XLite\Model\AModel
+class WaitingIP extends AModel
 {
     public $fields = array(
                     "id" => "0",

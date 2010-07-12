@@ -35,7 +35,7 @@ namespace XLite\View\Form\Cart\Item;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Update extends \XLite\View\Form\Cart\Item\AItem
+class Update extends AItem
 {
     /**
      * Current form name 

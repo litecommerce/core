@@ -35,7 +35,7 @@ namespace XLite\Core\TranslationDriver;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Gettext extends \XLite\Core\TranslationDriver\ATranslationDriver
+class Gettext extends ATranslationDriver
 {
     const DOMAIN        = 'xlite';
     const CHARSET       = 'UTF-8';

@@ -35,7 +35,7 @@ namespace XLite\View;
  * @see     ____class_see____
  * @since   3.0
  */
-class BuyNow extends \XLite\View\AView
+class BuyNow extends AView
 {
     /**
      * Widget parameter names

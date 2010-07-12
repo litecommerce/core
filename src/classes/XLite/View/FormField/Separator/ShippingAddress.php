@@ -36,7 +36,7 @@ namespace XLite\View\FormField\Separator;
  * @see        ____class_see____
  * @since      3.0.0
  */
-class ShippingAddress extends \XLite\View\FormField\Separator\ASeparator
+class ShippingAddress extends ASeparator
 {
     /**
      * Widget param names 

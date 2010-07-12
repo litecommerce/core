@@ -35,7 +35,7 @@ namespace XLite\View\Form\Login\Customer;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Main extends \XLite\View\Form\Login\Customer\ACustomer
+class Main extends ACustomer
 {
 }
 

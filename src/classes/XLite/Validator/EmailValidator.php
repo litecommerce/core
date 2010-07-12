@@ -35,7 +35,7 @@ namespace XLite\Validator;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class EmailValidator extends \XLite\Validator\AValidator
+class EmailValidator extends AValidator
 {
     /**
      * Widget template 

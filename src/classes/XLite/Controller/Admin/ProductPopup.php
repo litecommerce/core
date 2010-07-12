@@ -35,7 +35,7 @@ namespace XLite\Controller\Admin;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class ProductPopup extends \XLite\Controller\Admin\AAdmin
+class ProductPopup extends AAdmin
 {
     public $params = array('target', "formName", "spanName", "formField", 'mode', 'search_productsku', 'substring', 'search_category', 'subcategory_search', 'pageID', 'status');
     public $template = "product_popup.tpl";

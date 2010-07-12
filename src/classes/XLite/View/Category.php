@@ -35,7 +35,7 @@ namespace XLite\View;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Category extends \XLite\View\AView
+class Category extends AView
 {
     /**
      * Return widget default template

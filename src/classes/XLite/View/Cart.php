@@ -35,7 +35,7 @@ namespace XLite\View;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Cart extends \XLite\View\Dialog
+class Cart extends Dialog
 {
     /**
      * Return title

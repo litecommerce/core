@@ -35,7 +35,7 @@ namespace XLite\View;
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class Dialog extends \XLite\View\Container
+abstract class Dialog extends Container
 {
     /**
      * Return default template

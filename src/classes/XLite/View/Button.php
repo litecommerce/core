@@ -35,7 +35,7 @@ namespace XLite\View;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Button extends \XLite\View\AView
+class Button extends AView
 {
     /**
      * Widget parameter names

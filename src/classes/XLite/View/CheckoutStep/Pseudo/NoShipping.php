@@ -35,7 +35,7 @@ namespace XLite\View\CheckoutStep\Pseudo;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class NoShipping extends \XLite\View\CheckoutStep\Pseudo\APseudo
+class NoShipping extends APseudo
 {
     /**
      * Return title

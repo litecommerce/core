@@ -35,7 +35,7 @@ namespace XLite\Model\PaymentMethod;
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class CreditCardWebBased extends \XLite\Model\PaymentMethod\CreditCard
+abstract class CreditCardWebBased extends CreditCard
 {
     /**
      * Form template

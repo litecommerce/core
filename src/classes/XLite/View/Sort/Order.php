@@ -36,7 +36,7 @@ namespace XLite\View\Sort;
  * @since   3.0.0
  * @ListChild (list="orders.panel", weight="20")
  */
-class Order extends \XLite\View\Sort\ASort
+class Order extends ASort
 {
     /**
      * Define widget parameters

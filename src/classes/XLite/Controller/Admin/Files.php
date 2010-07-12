@@ -37,7 +37,7 @@ namespace XLite\Controller\Admin;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Files extends \XLite\Controller\Admin\AAdmin
+class Files extends AAdmin
 {
     public $count = 0; //total files count;
     public $action = "default";

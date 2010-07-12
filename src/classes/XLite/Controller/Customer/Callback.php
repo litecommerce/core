@@ -35,7 +35,7 @@ namespace XLite\Controller\Customer;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Callback extends \XLite\Controller\Customer\ACustomer
+class Callback extends ACustomer
 {
     /**
      * This controller is always accessible

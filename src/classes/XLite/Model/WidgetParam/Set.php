@@ -35,7 +35,7 @@ namespace XLite\Model\WidgetParam;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Set extends \XLite\Model\WidgetParam\String
+class Set extends String
 {
     /**
      * Param type

@@ -36,7 +36,7 @@ namespace XLite\View\JS;
  * @see        ____class_see____
  * @since      3.0.0
  */
-class StatesList extends \XLite\View\JS\AJS
+class StatesList extends AJS
 {
     /**
      * getCountriesStates

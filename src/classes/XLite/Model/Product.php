@@ -35,7 +35,7 @@ namespace XLite\Model;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Product extends \XLite\Model\AModel
+class Product extends AModel
 {
     /**
      * Object properties (table filed => default value)

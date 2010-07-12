@@ -35,7 +35,7 @@ namespace XLite\View;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class AdvBlock extends \XLite\View\AView
+class AdvBlock extends AView
 {
     /**
      * Show widget (for internal block)

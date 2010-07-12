@@ -35,7 +35,7 @@ namespace XLite\Controller\Admin;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Taxes extends \XLite\Controller\Admin\AAdmin
+class Taxes extends AAdmin
 {
     public $params = array('target', 'page', 'mode', 'ind');
 

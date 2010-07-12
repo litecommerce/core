@@ -35,7 +35,7 @@ namespace XLite\Model;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Profile extends \XLite\Model\AModel
+class Profile extends AModel
 {
     /**
      * Object properties (table filed => default value)

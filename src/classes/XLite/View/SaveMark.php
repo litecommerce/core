@@ -35,7 +35,7 @@ namespace XLite\View;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class SaveMark extends \XLite\View\AView
+class SaveMark extends AView
 {
     /**
      * Widget parameter names

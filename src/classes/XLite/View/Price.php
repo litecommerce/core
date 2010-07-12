@@ -36,7 +36,7 @@ namespace XLite\View;
  * @since   3.0.0
  * @ListChild (list="productDetails.main", weight="40")
  */
-class Price extends \XLite\View\AView
+class Price extends AView
 {
     /**
      * Widget parameter names

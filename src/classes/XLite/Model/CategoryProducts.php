@@ -37,7 +37,7 @@ namespace XLite\Model;
  * @Entity
  * @Table (name="category_products")
  */
-class CategoryProducts extends \XLite\Model\AEntity
+class CategoryProducts extends AEntity
 {
     /**
      * Category Id 

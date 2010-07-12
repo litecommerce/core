@@ -35,7 +35,7 @@ namespace XLite\Controller\Customer;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Product extends \XLite\Controller\Customer\Catalog
+class Product extends Catalog
 {
     protected $params = array('product_id');
 

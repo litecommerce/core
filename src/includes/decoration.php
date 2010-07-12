@@ -1186,13 +1186,14 @@ class Decorator
 
                 $e = '';
 
-                if (0 === strpos($extends, '\\Doctrine\\')) {
+                if (0 === strpos($extends, '\Doctrine\\')) {
                     $e = $extends;
 
+                } elseif (0 === strpos($extends, '\XLite\\')) {
+                    $e = substr($extends, 1);
+
                 } elseif ($extends) {
-                    $e = 0 === strpos($extends, '\\XLite\\')
-                        ? substr($extends, 1)
-                        : 'XLite\\' . $extends;
+                    $e = ($namespace ? $namespace : 'XLite') . '\\' . $extends;
                 }
 
                 // Save data

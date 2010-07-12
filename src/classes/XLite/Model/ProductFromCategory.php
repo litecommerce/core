@@ -35,7 +35,7 @@ namespace XLite\Model;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class ProductFromCategory extends \XLite\Model\Product
+class ProductFromCategory extends Product
 {
     public $fetchKeysOnly = true;
 

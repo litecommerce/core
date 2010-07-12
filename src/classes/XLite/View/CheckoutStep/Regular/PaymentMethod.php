@@ -35,7 +35,7 @@ namespace XLite\View\CheckoutStep\Regular;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class PaymentMethod extends \XLite\View\CheckoutStep\Regular\ARegular
+class PaymentMethod extends ARegular
 {
     /**
      * Return step templates directory name

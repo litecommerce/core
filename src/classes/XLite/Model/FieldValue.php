@@ -35,7 +35,7 @@ namespace XLite\Model;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class FieldValue extends \XLite\Model\AModel
+class FieldValue extends AModel
 {
     public $fields = array(
             "product_id" => 0,

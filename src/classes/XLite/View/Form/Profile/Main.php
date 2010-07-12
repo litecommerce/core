@@ -36,7 +36,7 @@ namespace XLite\View\Form\Profile;
  * @see        ____class_see____
  * @since      3.0.0
  */
-class Main extends \XLite\View\Form\Profile\AProfile
+class Main extends AProfile
 {
     /**
      * isRegisterMode 

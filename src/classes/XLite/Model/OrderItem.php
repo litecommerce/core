@@ -35,7 +35,7 @@ namespace XLite\Model;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class OrderItem extends \XLite\Model\AModel
+class OrderItem extends AModel
 {
     /**
      * Check for purchase limits 

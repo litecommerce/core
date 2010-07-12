@@ -35,7 +35,7 @@ namespace XLite\View;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Header extends \XLite\View\AView
+class Header extends AView
 {
     /**
      * Return widget default template

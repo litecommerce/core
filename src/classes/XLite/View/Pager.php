@@ -35,7 +35,7 @@ namespace XLite\View;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Pager extends \XLite\View\AView
+class Pager extends AView
 {
     /**
      * Widget parameter names

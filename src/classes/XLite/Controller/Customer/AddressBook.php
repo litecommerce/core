@@ -36,7 +36,7 @@ namespace XLite\Controller\Customer;
  * @see        ____class_see____
  * @since      3.0.0
  */
-class AddressBook extends \XLite\Controller\Customer\ACustomer
+class AddressBook extends ACustomer
 {
     /**
      * Return class name of the register form 

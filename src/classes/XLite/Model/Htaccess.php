@@ -39,7 +39,7 @@ define('CHECK_INTERVAL', 1 * 24 * 60);
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Htaccess extends \XLite\Model\AModel
+class Htaccess extends AModel
 {
     public $fields = array(
                     "id" => "0",

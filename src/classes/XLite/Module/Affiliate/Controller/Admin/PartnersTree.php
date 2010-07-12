@@ -35,7 +35,7 @@ namespace XLite\Module\Affiliate\Controller\Admin;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class PartnersTree extends \XLite\Module\Affiliate\Controller\Admin\PartnerStats
+class PartnersTree extends PartnerStats
 {
     function getPageTemplate()
     {

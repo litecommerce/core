@@ -35,7 +35,7 @@ namespace XLite\Controller\Customer;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Search extends \XLite\Controller\Customer\ACustomer
+class Search extends ACustomer
 {
     /**
      * Controller parameters
