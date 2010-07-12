@@ -103,7 +103,7 @@ class State extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @ManyToOne (targetEntity="\XLite\Model\Country", inversedBy="states")
+     * @ManyToOne (targetEntity="XLite\Model\Country", inversedBy="states")
      * @JoinColumn (name="country_code", referencedColumnName="code")
      */
     protected $country;

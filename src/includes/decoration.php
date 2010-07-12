@@ -314,6 +314,40 @@ class Decorator
     protected $optionalClassAttributes = array('subpackage', 'mappedsuperclass');
 
     /**
+     * Method name translation records
+     *
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected static $to = array(
+        'Q', 'W', 'E', 'R', 'T',
+        'Y', 'U', 'I', 'O', 'P',
+        'A', 'S', 'D', 'F', 'G',
+        'H', 'J', 'K', 'L', 'Z',
+        'X', 'C', 'V', 'B', 'N',
+        'M',
+    );
+
+    /**
+     * Method name translation patterns
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected static $from = array(
+        '_q', '_w', '_e', '_r', '_t',
+        '_y', '_u', '_i', '_o', '_p',
+        '_a', '_s', '_d', '_f', '_g',
+        '_h', '_j', '_k', '_l', '_z',
+        '_x', '_c', '_v', '_b', '_n',
+        '_m',
+    );
+
+    /**
      * Return current value of the "max_execution_time" INI setting 
      * 
      * @return int|string
@@ -1364,6 +1398,10 @@ class Decorator
     {
         if ($this->isNeedRebuild() || $this->isDeveloperMode() || $force) {
 
+            if (!defined('LC_DECORATION')) {
+                define('LC_DECORATION', true);
+            }
+
             if (!defined('SILENT_CACHE_REBUILD')) {
                 if ('cli' == PHP_SAPI) {
                     $this->showPlainTextBlock();
@@ -1404,15 +1442,14 @@ class Decorator
             // Create model proxies directory
             mkdirRecursive(LC_PROXY_CACHE_DIR);
 
+            // Postbuild multilanguage classes
+            $this->buildMultilangs();
+
             // Generate models
-            // TODO - rework
-            //$this->generateModels();
+            $this->generateModels();
 
             // Generate model proxies
             $this->generateModelProxies();
-
-            // Postbuild multilanguage classes
-            $this->buildMultilangs();
 
             // Regenerate view lists
             $this->regenerateViewLists();
@@ -1603,12 +1640,100 @@ class Decorator
 
         $entityGenerator->setGenerateAnnotations(true);
         $entityGenerator->setGenerateStubMethods(true);
-        $entityGenerator->setRegenerateEntityIfExists(true);
+        $entityGenerator->setRegenerateEntityIfExists(false);
         $entityGenerator->setUpdateEntityIfExists(true);
         $entityGenerator->setNumSpaces(4);
-        $entityGenerator->setClassToExtend('XLite\Model\Doctrine\AbstractEntity');
+        $entityGenerator->setClassToExtend('\XLite\Model\AEntity');
 
-        $entityGenerator->generate($this->getMetadatas(), LC_MODEL_CACHE_DIR);
+        $entityGenerator->generate($this->getMetadatas(), LC_CLASSES_CACHE_DIR);
+
+        $this->postGenerateModels();
+    }
+
+    /**
+     * Additional models generation
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function postGenerateModels()
+    {
+        foreach ($this->getMetadatas() as $metadata) {
+            $path = LC_CLASSES_CACHE_DIR . DIRECTORY_SEPARATOR . str_replace('\\', DIRECTORY_SEPARATOR, $metadata->name) . '.php';
+            $data = file_get_contents($path);
+
+            $additionalMethods = array();
+
+            $relations = array();
+
+            // Add set<RelationName>
+            foreach ($metadata->associationMappings as $an => $av) {
+
+                if (
+                    $av instanceof \Doctrine\ORM\Mapping\OneToManyMapping
+                    || $av instanceof \Doctrine\ORM\Mapping\ManyToManyMapping
+                ) {
+                    $relations[] = $an;
+
+                    $varName = str_replace(self::$from, self::$to, $an);
+                    $methodName = ucfirst($varName);
+                    $additionalMethods[] = <<<PHP
+    /**
+     * Set $an
+     *
+     * @param \\Doctrine\\Common\\Collections\\Collection \$$varName
+     *
+     * @return void
+     * @access public
+     */
+    public function set$methodName(\\Doctrine\\Common\\Collections\\Collection \$$varName)
+    {
+        \$this->$an = \$$varName;
+    }
+PHP;
+                }
+            }
+
+            // Constructor update
+            if ($relations) {
+                $relationsInit = '        $this->'
+                    . implode(' = new \Doctrine\Common\Collections\ArrayCollection;' . "\n" . '        $this->', $relations)
+                    . ' = new \Doctrine\Common\Collections\ArrayCollection;' . "\n";
+
+                $pos = strpos(' __construct(', $data);
+                if (false !== $pos) {
+                    $pos = strpos('    }' . "\n", $data, $pos);
+                    if (false !== $pos) {
+                        $data = substr($data, 0, $pos) . $relationsInit . substr($data, $pos);
+                    }
+
+                } else {
+                    $additionalMethods[] = <<<PHP
+    /**
+     * Constructor
+     *
+     * @return void
+     * @access public
+     */
+    public function __construct()
+    {
+        parent::__construct();
+
+$relationsInit
+    }
+PHP;
+
+                }
+            }
+
+            if ($additionalMethods) {
+                $data = str_replace("\n" . '}', "\n\n" . implode("\n\n", $additionalMethods) . "\n\n" . '}', $data);
+            }
+
+            file_put_contents($path, $data);
+        }
     }
 
     /**

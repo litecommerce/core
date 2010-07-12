@@ -137,7 +137,7 @@ class Category extends \XLite\Model\Base\I18n
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @OneToMany(targetEntity="\XLite\Model\CategoryProducts", mappedBy="categories", cascade={"persist","remove"})
+     * @OneToMany(targetEntity="XLite\Model\CategoryProducts", mappedBy="categories", cascade={"persist","remove"})
      */
     protected $products;
 
@@ -148,7 +148,7 @@ class Category extends \XLite\Model\Base\I18n
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @ManyToOne(targetEntity="\XLite\Model\Membership")
+     * @ManyToOne(targetEntity="XLite\Model\Membership")
      * @JoinColumn(name="membership_id", referencedColumnName="membership_id")
      */
     protected $membership;
@@ -160,7 +160,7 @@ class Category extends \XLite\Model\Base\I18n
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @ManyToOne(targetEntity="\XLite\Model\CategoryImage")
+     * @ManyToOne(targetEntity="XLite\Model\CategoryImage")
      * @JoinColumn(name="category_id", referencedColumnName="id")
      */
     protected $image;
@@ -347,7 +347,7 @@ class Category extends \XLite\Model\Base\I18n
     {
         $query = \XLite\Core\Database::getQB()
             ->select('cp.product_id')
-            ->from('\XLite\Model\Category', 'c')
+            ->from('XLite\Model\Category', 'c')
             ->leftJoin('c.products', 'cp')
             ->where('c.category_id = :categoryId')
             ->setParameter('categoryId', $this->category_id);

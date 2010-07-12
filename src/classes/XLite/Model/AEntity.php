@@ -38,15 +38,6 @@ namespace XLite\Model;
 abstract class AEntity
 {
     /**
-     * Field access codes
-     */
-    const FIELD_READ       = 'r';
-    const FIELD_WRITE      = 'w';
-    const FIELD_RW         = 'a';
-    const FIELD_COLLECTION = 'c';
-
-
-    /**
      * Cache enabled flag (cache)
      * 
      * @var    array
@@ -57,27 +48,17 @@ abstract class AEntity
     protected static $cacheEnabled = array();
 
     /**
-     * Accessors list (cache)
+     * Method names (cache)
      * 
      * @var    array
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected static $accessors = array();
+    protected static $methodNames = array();
 
     /**
-     * Mutators list (cache)
-     * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected static $mutators = array();
-
-    /**
-     * Dump constructor
+     * Constructor (dump)
      * 
      * @return void
      * @access public
@@ -117,21 +98,10 @@ abstract class AEntity
      */
     public function __get($name)
     {
-        $class = get_called_class();
-
-        if (!isset(self::$accessors[$class])) { 
-            self::$accessors[$class] = array($name => $this->getAccessor($name));
-
-        } elseif (!isset(self::$accessors[$class][$name])) {
-            self::$accessors[$class][$name] = $this->getAccessor($name);
-        }
-
-        $accessor = self::$accessors[$class][$name];
+        $accessor = 'get' . $this->getMethodName($name);
 
         // Accessor name assembled into getAccessor() method
-        return $accessor
-            ? $this->$accessor()
-            : (isset($this->$name) ? $this->$name : null);
+        return $this->$accessor();
     }
 
     /**
@@ -147,58 +117,88 @@ abstract class AEntity
      */
     public function __set($name, $value)
     {
+        $mutator = 'set' . $this->getMethodName($name);
+
+        // Mutator name assembled into getMutator() method
+        $this->$mutator($value);
+    }
+
+    /**
+     * Common unset
+     *
+     * @param string $name Property name
+     *
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function __unset($name)
+    {
+        $mutator = 'set' . $this->getMethodName($name);
+
+        // Mutator name assembled into getMutator() method
+        $this->$mutator(null);
+    }
+
+    /**
+     * Get method name
+     * 
+     * @param string $name Property name
+     *  
+     * @return string or false
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getMethodName($name)
+    {
         $class = get_called_class();
 
-        if (!isset(self::$mutators[$class])) {
-            self::$mutators[$class] = array($name => $this->getMutator($name));
+        if (!isset(self::$methodNames[$class])) {
+            self::$methodNames[$class] = array($name => \XLite\Core\Converter::convertToCamelCase($name));
 
-        } elseif (!isset(self::$mutators[$class][$name])) {
-            self::$mutators[$class][$name] = $this->getMutator($name);
+        } elseif (!isset(self::$methodNames[$class][$name])) {
+            self::$methodNames[$class][$name] = \XLite\Core\Converter::convertToCamelCase($name);
         }
 
-        $mutator = self::$mutators[$class][$name];
-        if ($mutator) {
+        return self::$methodNames[$class][$name];
+    }
 
-            // Mutator name assembled into getMutator() method
-            $this->$mutator($value);
+    /**
+     * Common caller
+     * NOTE: Used in decoration procedure, before models updating
+     * 
+     * @param string $methodName Method name
+     * @param array  $args       Method arguments
+     *  
+     * @return mixed
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function __call($methodName, array $args)
+    {
+        $result = null;
+
+        if (defined('LC_DECORATION') && preg_match('/^(get|set)([A-Z]\w+)$/Ss', $methodName, $matches)) {
+
+            $fieldName = \XLite\Core\Converter::convertFromCamelCase(lcfirst($matches[2]));
+
+            if ('get' == $matches[1]) {
+                $result = isset($this->$fieldName) ? $this->$fieldName : null;
+
+            } elseif (property_exists($this, $fieldName) && 0 < count($args)) {
+                $this->$fieldName = $args[0];
+            }
 
         } else {
-            $this->$name = $value;
+
+            throw new \BadMethodCallException($methodName . '() method not found');
+
         }
-    }
 
-    /**
-     * Get accessor method name
-     * 
-     * @param string $name Property name
-     *  
-     * @return string or false
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getAccessor($name)
-    {
-        $method = 'get' . \XLite\Core\Converter::prepareMethodName($name);
-
-        return method_exists($this, $method) ? $method : false;
-    }
-
-    /**
-     * Get mutator method name
-     * 
-     * @param string $name Property name
-     *  
-     * @return string or false
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getMutator($name)
-    {
-        $method = 'set' . \XLite\Core\Converter::prepareMethodName($name);
-
-        return method_exists($this, $method) ? $method : false;
+        return $result;
     }
 
     /**

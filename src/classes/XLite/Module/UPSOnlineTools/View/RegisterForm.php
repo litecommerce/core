@@ -79,7 +79,7 @@ class RegisterForm extends \XLite\View\RegisterForm implements \XLite\Base\IDeco
             try {
                 $state = \XLite\Core\Database::getQB()
                     ->select('s')
-                    ->from('\XLite\Model\State', 's')
+                    ->from('XLite\Model\State', 's')
                     ->where('s.country_code = :country_code AND s.code = :code')
                     ->setParameters(array('country_code' => 'US', 'code' => $value['state']))
                     ->setMaxResults(1)

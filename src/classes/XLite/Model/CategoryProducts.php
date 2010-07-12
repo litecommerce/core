@@ -81,7 +81,7 @@ class CategoryProducts extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @ManyToOne(targetEntity="\XLite\Model\Category", inversedBy="products")
+     * @ManyToOne(targetEntity="XLite\Model\Category", inversedBy="products")
      * @JoinColumn(name="category_id", referencedColumnName="category_id")
      */
     protected $categories;
@@ -93,7 +93,7 @@ class CategoryProducts extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @ManyToOne(targetEntity="\XLite\Model\Product", inversedBy="categories")
+     * @ManyToOne(targetEntity="XLite\Model\Product", inversedBy="categories")
      * @JoinColumn(name="product_id", referencedColumnName="product_id")
      */
     protected $products;

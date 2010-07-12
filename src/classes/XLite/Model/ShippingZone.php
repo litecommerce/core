@@ -149,7 +149,7 @@ class ShippingZone extends \XLite\Model\AModel
         list($keys, $parameters) = \XLite\Core\Database::prepareArray($countries);
         $list = \XLite\Core\Database::getQB()
             ->select('c')
-            ->from('\XLite\Model\Country', 'c')
+            ->from('XLite\Model\Country', 'c')
             ->where('c.shipping_zone IN (' . implode(', ', $keys) . ')')
             ->setParameters($parameters)
             ->getQuery()
@@ -171,7 +171,7 @@ class ShippingZone extends \XLite\Model\AModel
     {
         $list = \XLite\Core\Database::getQB()
             ->select('s')
-            ->from('\XLite\Model\State', 's')
+            ->from('XLite\Model\State', 's')
             ->where('s.state_id IN (:ids)')
             ->setParameter('ids', $states)
             ->getQuery()

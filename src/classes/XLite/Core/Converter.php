@@ -86,7 +86,7 @@ class Converter extends \XLite\Base implements \XLite\Base\ISingleton
     }
 
     /**
-     * Convert a string like "test_foo_bar" into the camel case (like "testFooBar")
+     * Convert a string like "testFooBar" into the underline style (like "test_foo_bar")
      * 
      * @param string $string string to convert
      *  
@@ -94,6 +94,11 @@ class Converter extends \XLite\Base implements \XLite\Base\ISingleton
      * @access public
      * @since  3.0
      */
+    public static function convertFromCamelCase($string)
+    {
+        return str_replace(self::$to, self::$from, strval($string));
+    }
+
     public static function prepareMethodName($string)
     {
         return str_replace(self::$from, self::$to, strval($string));

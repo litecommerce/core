@@ -53,7 +53,7 @@ class Countries extends \XLite\Controller\Admin\AAdmin
         );
         $list = \XLite\Core\Database::getQB()
             ->select('c')
-            ->from('\XLite\Model\Country', 'c')
+            ->from('XLite\Model\Country', 'c')
             ->where('c.code IN (' . implode(', ', $keys) . ')')
             ->setParameters($parameters)
             ->getQuery()

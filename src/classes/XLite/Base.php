@@ -249,10 +249,13 @@ class Base
 
         foreach (explode('.', $name) as $part) {
             if (is_object($obj)) {
-                if ($obj instanceof stdClass) {
+                if ($obj instanceof \stdClass) {
                     $obj = isset($obj->$part) ? $obj->$part : null;
 
-                } elseif ($obj instanceof \XLite\Model\AEntity or $obj instanceof \XLite\Core\CommonCell) {
+                } elseif (
+                    $obj instanceof \XLite\Model\AEntity
+                    || $obj instanceof \XLite\Core\CommonCell
+                ) {
                     $obj = $obj->$part;
 
                 } else {

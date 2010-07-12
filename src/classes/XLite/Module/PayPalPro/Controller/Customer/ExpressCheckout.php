@@ -126,7 +126,7 @@ class ExpressCheckout extends \XLite\Controller\Customer\ACustomer
 
                 $qb = \XLite\Core\Database::getQB()
                     ->select('s')
-                    ->from('\XLite\Model\State', 's');
+                    ->from('XLite\Model\State', 's');
 
                 $countryCode = $pm->getXMLResponseValue('base:Address/base:Country', $details);
                 $stateCode = addslashes($pm->getXMLResponseValue('base:Address/base:StateOrProvince', $details));
