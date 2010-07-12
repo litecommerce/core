@@ -35,7 +35,7 @@
  * @Entity (repositoryClass="XLite_Model_Repo_State")
  * @Table (name="states")
  */
-class XLite_Model_State extends XLite_Model_AModelEntity
+class XLite_Model_State extends XLite_Model_AEntity
 {
     /**
      * State unique id 

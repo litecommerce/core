@@ -35,7 +35,7 @@
  * @Entity (repositoryClass="XLite_Model_Repo_TemplatePatch")
  * @Table (name="template_patches", indexes={@index(name="zlt", columns={"zone", "lang", "tpl"})})
  */
-class XLite_Model_TemplatePatch extends XLite_Model_AModelEntity
+class XLite_Model_TemplatePatch extends XLite_Model_AEntity
 {
     /**
      * Patch id 

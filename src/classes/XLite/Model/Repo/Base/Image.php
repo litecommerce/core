@@ -33,7 +33,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class XLite_Model_Repo_Base_Image extends XLite_Model_Repo_AbstractRepo
+abstract class XLite_Model_Repo_Base_Image extends XLite_Model_Repo_ARepo
 {
     /**
      * Get storage name 

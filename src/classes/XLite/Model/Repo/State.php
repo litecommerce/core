@@ -33,7 +33,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_Repo_State extends XLite_Model_Repo_AbstractRepo
+class XLite_Model_Repo_State extends XLite_Model_Repo_ARepo
 {
     /**
      * Default 'order by' field name

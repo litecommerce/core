@@ -33,7 +33,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class XLite_Model_AModelEntity
+abstract class XLite_Model_AEntity
 {
     /**
      * Field access codes
@@ -224,7 +224,7 @@ abstract class XLite_Model_AModelEntity
 
         if (!isset(self::$cacheEnabled[$class])) {
             $repo = $this->getRepository();
-            self::$cacheEnabled[$class] = ($repo && is_subclass_of($repo, 'XLite_Model_Repo_AbstractRepo'))
+            self::$cacheEnabled[$class] = ($repo && is_subclass_of($repo, 'XLite_Model_Repo_ARepo'))
                 ? $repo->hasCacheCells()
                 : false;
         }

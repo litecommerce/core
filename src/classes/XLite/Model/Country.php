@@ -35,7 +35,7 @@
  * @Entity (repositoryClass="XLite_Model_Repo_Country")
  * @Table (name="countries")
  */
-class XLite_Model_Country extends XLite_Model_AModelEntity
+class XLite_Model_Country extends XLite_Model_AEntity
 {
 
     /**
