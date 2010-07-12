@@ -35,7 +35,7 @@
  * @Entity (repositoryClass="XLite_Model_Repo_ViewList")
  * @Table (name="view_lists", indexes={@index(name="clzw", columns={"class", "list", "zone", "weight"})})
  */
-class XLite_Model_ViewList extends XLite_Model_AModelEntity
+class XLite_Model_ViewList extends XLite_Model_AEntity
 {
     /**
      * Predefined weights 

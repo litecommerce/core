@@ -35,7 +35,7 @@ use \Doctrine\ORM\EntityRepository;
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class XLite_Model_Repo_AbstractRepo extends EntityRepository
+abstract class XLite_Model_Repo_ARepo extends EntityRepository
 {
     /**
      * Cache TTL predefined values 
@@ -385,14 +385,14 @@ abstract class XLite_Model_Repo_AbstractRepo extends EntityRepository
     /**
      * Delete cache by entity
      * 
-     * @param XLite_Model_AModelEntity $entity Record
+     * @param XLite_Model_AEntity $entity Record
      *  
      * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function deleteCacheByEntity(XLite_Model_AModelEntity $entity)
+    public function deleteCacheByEntity(XLite_Model_AEntity $entity)
     {
         foreach ($this->getCacheCells() as $name => $cell) {
             if ($cell[self::CONVERTER_CACHE_CELL]) {

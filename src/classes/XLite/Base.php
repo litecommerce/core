@@ -250,7 +250,7 @@ class XLite_Base
                 if ($obj instanceof stdClass) {
                     $obj = isset($obj->$part) ? $obj->$part : null;
 
-                } elseif ($obj instanceof XLite_Model_AModelEntity or $obj instanceof XLite_Core_CommonCell) {
+                } elseif ($obj instanceof XLite_Model_AEntity or $obj instanceof XLite_Core_CommonCell) {
                     $obj = $obj->$part;
 
                 } else {
