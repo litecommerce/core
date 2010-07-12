@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Affiliate\View;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Affiliate_View_PartnerSelect extends XLite_View_AView
+class PartnerSelect extends \XLite\View\AView
 {
     public $formField = "partner_id";
     public $allOption = true;
@@ -64,7 +66,7 @@ class XLite_Module_Affiliate_View_PartnerSelect extends XLite_View_AView
     function getPartners()
     {
         if (is_null($this->partners)) {
-            $profile = new XLite_Model_Profile();
+            $profile = new \XLite\Model\Profile();
             $this->partners = $profile->findAll('access_level='.$this->auth->get('partnerAccessLevel'));
         }
         return $this->partners;

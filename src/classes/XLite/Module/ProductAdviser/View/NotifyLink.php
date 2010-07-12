@@ -26,7 +26,9 @@
  * @since      3.0.0
  */
 
-// FIXME - must be derived from he same class as the XLite_Module_ProductAdviser_View_NotifyForm one
+namespace XLite\Module\ProductAdviser\View;
+
+// FIXME - must be derived from he same class as the \XLite\Module\ProductAdviser\View\NotifyForm one
 
 /**
  * Notify link widget
@@ -35,7 +37,7 @@
  * @see     ____class_see____
  * @since   3.0
  */
-class XLite_Module_ProductAdviser_View_NotifyLink extends XLite_View_AView
+class NotifyLink extends \XLite\View\AView
 {
     /**
      * Return widget default template

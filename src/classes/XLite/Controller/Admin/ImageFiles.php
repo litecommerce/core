@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,19 +35,19 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Controller_Admin_ImageFiles extends XLite_Controller_Admin_AAdmin
+class ImageFiles extends \XLite\Controller\Admin\AAdmin
 {
     function getImagesDir()
     {
         $images = $this->get('imageClasses');
-        return ($this->xlite->config->Images->images_directory != "") ? $this->xlite->config->Images->images_directory : XLite_Model_Image::IMAGES_DIR;
+        return ($this->xlite->config->Images->images_directory != "") ? $this->xlite->config->Images->images_directory : \XLite\Model\Image::IMAGES_DIR;
     }
 
     function action_move_to_filesystem($from = false)
     {
         $this->startDump();
         $images = $this->get('imageClasses');
-        $imageClass = $images[XLite_Core_Request::getInstance()->index];
+        $imageClass = $images[\XLite\Core\Request::getInstance()->index];
         $n = $imageClass->getImage()->moveToFilesystem($from);
         $m = $this->xlite->get('realyMovedImages');
 
@@ -60,7 +62,7 @@ class XLite_Controller_Admin_ImageFiles extends XLite_Controller_Admin_AAdmin
     function action_update_default_source()
     {
         $images = $this->get('imageClasses');
-        $imageClass = $images[XLite_Core_Request::getInstance()->index];
+        $imageClass = $images[\XLite\Core\Request::getInstance()->index];
         $imageClass->getImage()->setDefaultSource($this->get('default_source'));
     }
 
@@ -71,7 +73,7 @@ class XLite_Controller_Admin_ImageFiles extends XLite_Controller_Admin_AAdmin
     */
     function getImageClasses()
     {
-        return XLite_Model_Image::getImageClasses();
+        return \XLite\Model\Image::getImageClasses();
     }
     
     function getPageReturnUrl()
@@ -83,9 +85,9 @@ class XLite_Controller_Admin_ImageFiles extends XLite_Controller_Admin_AAdmin
     {
         $images_directory = $this->get('images_dir');
         $images = $this->get('imageClasses');
-        $images_directory = ($images_directory != "") ? $images_directory : XLite_Model_Image::IMAGES_DIR;
+        $images_directory = ($images_directory != "") ? $images_directory : \XLite\Model\Image::IMAGES_DIR;
 
-        XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+        \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
             array(
                 'category' => 'Images',
                 'name'     => 'images_directory',
@@ -94,7 +96,7 @@ class XLite_Controller_Admin_ImageFiles extends XLite_Controller_Admin_AAdmin
         );
 
         // re-read config data
-        $this->xlite->config = XLite_Core_Config::readConfig(true);
+        $this->xlite->config = \XLite\Core\Config::readConfig(true);
         $this->config = $this->xlite->config;
     }
 }

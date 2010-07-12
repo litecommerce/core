@@ -11,4 +11,4 @@
  * @since     3.0.0
  * @ListChild (list="productsList.tableItem.info", weight="30")
  *}
-<td IF="isShowPrice()" class="product-price-column"><widget class="XLite_View_Price" product="{product}" displayOnlyPrice="true" /></td>
+<td IF="isShowPrice()" class="product-price-column"><widget class="\XLite\View\Price" product="{product}" displayOnlyPrice="true" /></td>

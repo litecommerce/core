@@ -10,7 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<widget class="XLite_View_Form_Product_AddToCart" name="add_to_cart" product="{product}" className="product-details hproduct" />
+<widget class="\XLite\View\Form\Product\AddToCart" name="add_to_cart" product="{product}" className="product-details hproduct" />
 
   {displayViewListContent(#productDetails.base#)}
 

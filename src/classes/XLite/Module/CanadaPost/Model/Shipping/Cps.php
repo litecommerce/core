@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\CanadaPost\Model\Shipping;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_CanadaPost_Model_Shipping_Cps extends XLite_Model_Shipping_Online 
+class Cps extends \XLite\Model\Shipping\Online 
 {
 
     public $configCategory = "CanadaPost";
@@ -63,7 +65,7 @@ class XLite_Module_CanadaPost_Model_Shipping_Cps extends XLite_Model_Shipping_On
         return "Canada Post";
     }
 
-    function getRates(XLite_Model_Order $order) 
+    function getRates(\XLite\Model\Order $order) 
     {
         include_once LC_MODULES_DIR . 'CanadaPost' . LC_DS . 'encoded.php';
         return Shipping_cps_getRates($this,$order);
@@ -71,12 +73,12 @@ class XLite_Module_CanadaPost_Model_Shipping_Cps extends XLite_Model_Shipping_On
     
     function queryRates($options,$originalZipcode,$originalCountry,$itemsPrice,$weight,$description,$packed,$destinationCity,$destinationZipcode,$destinationState, $destinationCountry) 
     {
-        $request = new XLite_Model_HTTPS();
+        $request = new \XLite\Model\HTTPS();
         $request->url = "sellonline.canadapost.ca:30000";
         $request->method = "POST";
         $request->data = $this->createRequest($options,$originalZipcode,$originalCountry,$itemsPrice,$weight,$description,$packed,$destinationCity,$destinationZipcode,$destinationState, $destinationCountry);
         $request->request();
-        if ($request->request() == XLite_Model_HTTPS::HTTPS_ERROR) {
+        if ($request->request() == \XLite\Model\HTTPS::HTTPS_ERROR) {
             $this->error = $request->error;
             return array();
         }

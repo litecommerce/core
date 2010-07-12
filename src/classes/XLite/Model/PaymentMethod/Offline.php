@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model\PaymentMethod;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_PaymentMethod_Offline extends XLite_Model_PaymentMethod
+class Offline extends \XLite\Model\PaymentMethod
 {
     protected $formTemplate = "checkout/offline.tpl";
 
@@ -46,14 +48,14 @@ class XLite_Model_PaymentMethod_Offline extends XLite_Model_PaymentMethod
     /**
      * Handle request 
      * 
-     * @param XLite_Model_Cart $cart Cart
+     * @param \XLite\Model\Cart $cart Cart
      *  
      * @return integer Operation status
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function handleRequest(XLite_Model_Cart $cart)
+    public function handleRequest(\XLite\Model\Cart $cart)
     {
         $this->process($cart);
 

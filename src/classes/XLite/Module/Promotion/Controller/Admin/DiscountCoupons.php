@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Promotion\Controller\Admin;
+
 define('DEFAULT_DC_EXPIRATION', 3600 * 24 * 7); // a week
 define('DIALOG_SORT_MODE_ALL', 0);
 define('DIALOG_SORT_MODE_ACTIVE', 1);
@@ -39,7 +41,7 @@ define('DIALOG_SORT_MODE_USED', 3);
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Promotion_Controller_Admin_DiscountCoupons extends XLite_Controller_Admin_AAdmin
+class DiscountCoupons extends \XLite\Controller\Admin\AAdmin
 {
     public $couponExists = false;
 
@@ -126,7 +128,7 @@ class XLite_Module_Promotion_Controller_Admin_DiscountCoupons extends XLite_Cont
     		return $this->_couponsArray;
     	}
 
-        $dc = new XLite_Module_Promotion_Model_DiscountCoupon();
+        $dc = new \XLite\Module\Promotion\Model\DiscountCoupon();
 
         $condition = array("order_id='0'");
         $sortConditions = $this->prepareSortConditions();
@@ -170,7 +172,7 @@ class XLite_Module_Promotion_Controller_Admin_DiscountCoupons extends XLite_Cont
 
     function action_add() 
     {
-        $dc = new XLite_Module_Promotion_Model_DiscountCoupon();
+        $dc = new \XLite\Module\Promotion\Model\DiscountCoupon();
         if ($dc->find("coupon='" . $this->get('coupon') . "' AND order_id='0'")) {
             $this->valid = false;
             $this->couponExists = true;
@@ -188,7 +190,7 @@ class XLite_Module_Promotion_Controller_Admin_DiscountCoupons extends XLite_Cont
     {
         if (isset($_POST['status'])) {
             foreach ($_POST['status'] as $coupon_id => $status) {
-                $dc = new XLite_Module_Promotion_Model_DiscountCoupon($coupon_id);
+                $dc = new \XLite\Module\Promotion\Model\DiscountCoupon($coupon_id);
                 $dc->set('status', $status);
                 $dc->update();
             }
@@ -199,7 +201,7 @@ class XLite_Module_Promotion_Controller_Admin_DiscountCoupons extends XLite_Cont
 
     function action_delete() 
     {
-        $dc = new XLite_Module_Promotion_Model_DiscountCoupon($this->get('coupon_id'));
+        $dc = new \XLite\Module\Promotion\Model\DiscountCoupon($this->get('coupon_id'));
         $dc->delete();
 
         $this->_action_postprocess();

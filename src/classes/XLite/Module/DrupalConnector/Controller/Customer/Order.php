@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\DrupalConnector\Controller\Customer;
+
 /**
  * Order controller
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_DrupalConnector_Controller_Customer_Order extends XLite_Controller_Customer_Order implements XLite_Base_IDecorator
+class Order extends \XLite\Controller\Customer\Order implements \XLite\Base\IDecorator
 {
     /**
      * Get additional bread crumbs list

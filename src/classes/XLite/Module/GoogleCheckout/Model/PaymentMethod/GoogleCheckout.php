@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\GoogleCheckout\Model\PaymentMethod;
+
 define('CALLBACK_ERROR_BAD_MERCHANT_NOTE', 1);
 define('CALLBACK_ERROR_BAD_ORDER_ID', 2);
 define('CALLBACK_ERROR_NON_EXISTENT_ORDER_ID', 3);
@@ -38,7 +40,7 @@ define('CALLBACK_ERROR_ILLEGAL_ORDER_ID', 4);
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_GoogleCheckout_Model_PaymentMethod_GoogleCheckout extends XLite_Model_PaymentMethod 
+class GoogleCheckout extends \XLite\Model\PaymentMethod 
 {
     public $configurationTemplate = "modules/GoogleCheckout/config.tpl";
     public $processorName = "GoogleCheckout";
@@ -144,7 +146,7 @@ class XLite_Module_GoogleCheckout_Model_PaymentMethod_GoogleCheckout extends XLi
             }
         }
 
-        $order = new XLite_Model_Order($orderID[0]);
+        $order = new \XLite\Model\Order($orderID[0]);
         if (!$order->isExists()) {
             $this->_errorHandleCallback(CALLBACK_ERROR_NON_EXISTENT_ORDER_ID, $fatal);
             return null;
@@ -253,7 +255,7 @@ EOT;
         }
     }
 
-    function handleRequest(XLite_Model_Cart $order)
+    function handleRequest(\XLite\Model\Cart $order)
     {
         $response = $this->sendGoogleCheckoutRequest($order);
 
@@ -304,7 +306,7 @@ If you are not redirected automatically, <a href="<?php echo $url; ?>">click on 
             $field = "status_" . $name;
             $result = $params[$field];
             if ($this->xlite->AOMEnabled) {
-                $status = new XLite_Module_AOM_Model_OrderStatus();
+                $status = new \XLite\Module\AOM\Model\OrderStatus();
                 if ($status->find("status='".$params[$field]."'")) {
                     if ($status->get('parent')) {
                         $params[$field] = $status->get('parent');
@@ -315,12 +317,12 @@ If you are not redirected automatically, <a href="<?php echo $url; ?>">click on 
             $params["sub".$field] = $result;
         }
 
-        $pm = XLite_Model_PaymentMethod::factory('google_checkout');
+        $pm = \XLite\Model\PaymentMethod::factory('google_checkout');
         $pm->set('params', $params);
         $pm->update();
 
         // dublicate "default_shipping_cost" in config
-        XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+        \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
             array(
                 'category' => 'GoogleCheckout',
                 'name'     => 'default_shipping_cost',
@@ -381,14 +383,14 @@ If you are not redirected automatically, <a href="<?php echo $url; ?>">click on 
 
     function isOnlineShippingsActive()
     {
-        $so = new XLite_Model_Shipping();
+        $so = new \XLite\Model\Shipping();
         foreach ($so->get('modules') as $module) {
             $class_name = $module->get('class');
             if ($class_name == "offline") {
                 continue;
             }
 
-            $shipping = new XLite_Model_Shipping();
+            $shipping = new \XLite\Model\Shipping();
             if ($shipping->count("enabled=1 AND class='$class_name'") > 0) {
                 return true;
             }
@@ -411,7 +413,7 @@ If you are not redirected automatically, <a href="<?php echo $url; ?>">click on 
         }
 
         $subpath = "";
-        $xlite = XLite::getInstance();
+        $xlite = \XLite::getInstance();
 
         if ($xlite->getOptions(array('primary_installation', 'path'))) {
             // deal with ASPE shop

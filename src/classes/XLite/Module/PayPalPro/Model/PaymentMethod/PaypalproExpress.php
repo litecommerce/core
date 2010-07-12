@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\PayPalPro\Model\PaymentMethod;
+
 /**
  * Paypal express checkout
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_PayPalPro_Model_PaymentMethod_PaypalproExpress extends XLite_Model_PaymentMethod_CreditCard
+class PaypalproExpress extends \XLite\Model\PaymentMethod\CreditCard
 {
     /**
      * XPath response object
@@ -84,7 +86,7 @@ class XLite_Module_PayPalPro_Model_PaymentMethod_PaypalproExpress extends XLite_
      */
     public function handleConfigRequest()
     {
-        $pm = new XLite_Model_PaymentMethod('paypalpro');
+        $pm = new \XLite\Model\PaymentMethod('paypalpro');
         $pm->handleConfigRequest();
     }
 
@@ -100,7 +102,7 @@ class XLite_Module_PayPalPro_Model_PaymentMethod_PaypalproExpress extends XLite_
     public function get($name)
     {
         if ('params' == $name) {
-            $pm = new XLite_Model_PaymentMethod('paypalpro');
+            $pm = new \XLite\Model\PaymentMethod('paypalpro');
             $result = $pm->get('params');
 
         } else {
@@ -113,7 +115,7 @@ class XLite_Module_PayPalPro_Model_PaymentMethod_PaypalproExpress extends XLite_
     /**
      * Handle request 
      * 
-     * @param XLite_Model_Cart $cart Cart
+     * @param \XLite\Model\Cart $cart Cart
      * @param string           $type Call type
      *  
      * @return integer Operation status
@@ -121,10 +123,10 @@ class XLite_Module_PayPalPro_Model_PaymentMethod_PaypalproExpress extends XLite_
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function handleRequest(XLite_Model_Cart $cart, $type = self::CALL_CHECKOUT)
+    public function handleRequest(\XLite\Model\Cart $cart, $type = self::CALL_CHECKOUT)
     {
         if (self::CALL_BACK == $type) {
-            $pm = new XLite_Module_PayPalPro_Model_PaymentMethod_Paypalpro('paypalpro');
+            $pm = new \XLite\Module\PayPalPro\Model\PaymentMethod\Paypalpro('paypalpro');
             $result = $pm->processCallback($cart);
 
         } else {
@@ -137,22 +139,22 @@ class XLite_Module_PayPalPro_Model_PaymentMethod_PaypalproExpress extends XLite_
     /**
      * Process cart
      * 
-     * @param XLite_Model_Cart $cart Cart
+     * @param \XLite\Model\Cart $cart Cart
      *  
      * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function process(XLite_Model_Cart $cart)
+    public function process(\XLite\Model\Cart $cart)
     {
         if (!$cart->isPayPalProfileRetrieved()) {
-            $expressCheckout = new XLite_Controller_Customer_Cart();
+            $expressCheckout = new \XLite\Controller\Customer\Cart();
             $expressCheckout->callActionExpressCheckout();
             die ();
         }
 
-        $pm = new XLite_Model_PaymentMethod('paypalpro');
+        $pm = new \XLite\Model\PaymentMethod('paypalpro');
         $response = $this->sendRequest(
             $this->getComplex('params.pro'),
             $this->getDoExpressCheckoutPaymentXML($cart, $pm->getComplex('params.pro'))
@@ -227,14 +229,14 @@ class XLite_Module_PayPalPro_Model_PaymentMethod_PaypalproExpress extends XLite_
      * Process transaction finalize response 
      * 
      * @param DOMNode          $response Response body node
-     * @param XLite_Model_Cart $cart     Cart
+     * @param \XLite\Model\Cart $cart     Cart
      *  
      * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function processFinalizeResponse(DOMNode $response, XLite_Model_Cart $cart)
+    protected function processFinalizeResponse(DOMNode $response, \XLite\Model\Cart $cart)
     {
         $details = $this->xpath->query('base:DoExpressCheckoutPaymentResponseDetails', $response)->item(0);
 
@@ -281,14 +283,14 @@ class XLite_Module_PayPalPro_Model_PaymentMethod_PaypalproExpress extends XLite_
     /**
      * Redirect to PayPal Express Checkout 
      * 
-     * @param XLite_Model_Cart $cart Cart
+     * @param \XLite\Model\Cart $cart Cart
      *  
      * @return boolean
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function startExpressCheckout(XLite_Model_Cart $cart)
+    public function startExpressCheckout(\XLite\Model\Cart $cart)
     {
         $response = $this->sendExpressCheckoutRequest($cart);
 
@@ -298,7 +300,7 @@ class XLite_Module_PayPalPro_Model_PaymentMethod_PaypalproExpress extends XLite_
             && $this->getXMLResponseValue('api:Token', $response)
         ) {
 
-            $pmpro = new XLite_Model_PaymentMethod('paypalpro');
+            $pmpro = new \XLite\Model\PaymentMethod('paypalpro');
 
             $redirect = $pmpro->getComplex('params.pro.mode')
                 ? 'https://www.paypal.com'
@@ -319,16 +321,16 @@ class XLite_Module_PayPalPro_Model_PaymentMethod_PaypalproExpress extends XLite_
     /**
      * Send SetExpressCheckout request  
      * 
-     * @param XLite_Model_Cart $order Cart
+     * @param \XLite\Model\Cart $order Cart
      *  
      * @return mixed
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function sendExpressCheckoutRequest(XLite_Model_Cart $order)
+    public function sendExpressCheckoutRequest(\XLite\Model\Cart $order)
     {
-        $pm = new XLite_Model_PaymentMethod('paypalpro');
+        $pm = new \XLite\Model\PaymentMethod('paypalpro');
 
         $response = $this->sendRequest(
             $pm->getComplex('params.pro'),
@@ -345,7 +347,7 @@ class XLite_Module_PayPalPro_Model_PaymentMethod_PaypalproExpress extends XLite_
     /**
      * Get SetExpressCheckout XML request data
      * 
-     * @param XLite_Model_Cart $order   Cart
+     * @param \XLite\Model\Cart $order   Cart
      * @param array            $payment POayment module data
      *  
      * @return string
@@ -353,7 +355,7 @@ class XLite_Module_PayPalPro_Model_PaymentMethod_PaypalproExpress extends XLite_
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getSetExpressCheckoutXML(XLite_Model_Cart $order, array $payment)
+    protected function getSetExpressCheckoutXML(\XLite\Model\Cart $order, array $payment)
     {
         $cart = $order->get('properties');
 
@@ -406,7 +408,7 @@ EOT;
      */
     public function sendExpressCheckoutDetailsRequest($token)
     {
-        $pm = new XLite_Model_PaymentMethod('paypalpro');
+        $pm = new \XLite\Model\PaymentMethod('paypalpro');
 
         $response = $this->sendRequest(
             $pm->getComplex('params.pro'),
@@ -462,7 +464,7 @@ EOT;
     /**
      * Get DoExpressCheckoutPayment XML request data
      * 
-     * @param XLite_Model_Cart $order   Cart
+     * @param \XLite\Model\Cart $order   Cart
      * @param array            $payment Payment module dat:
      *  
      * @return string
@@ -470,9 +472,9 @@ EOT;
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getDoExpressCheckoutPaymentXML(XLite_Model_Cart $order, array $payment)
+    protected function getDoExpressCheckoutPaymentXML(\XLite\Model\Cart $order, array $payment)
     {
-        $pm = new XLite_Model_PaymentMethod('paypalpro');
+        $pm = new \XLite\Model\PaymentMethod('paypalpro');
 
         $payment       = $pm->getComplex('params.pro');
         $cart          = $order->get('properties');
@@ -529,7 +531,7 @@ EOT;
     protected function getReturnUrl()
     {
         $url = $this->xlite->getShopUrl(
-            XLite_Core_Converter::buildUrl('express_checkout', 'retrieve_profile'),
+            \XLite\Core\Converter::buildUrl('express_checkout', 'retrieve_profile'),
             $this->config->Security->customer_security
         );
 
@@ -551,7 +553,7 @@ EOT;
     {
         $this->lastRequestError = false;
 
-        $request = new XLite_Model_HTTPS();
+        $request = new \XLite\Model\HTTPS();
 
         $request->data       = $data;
         if ('C' == $payment['auth_method']) {
@@ -592,7 +594,7 @@ EOT;
     protected function getCancelUrl()
     {
         $url = $this->xlite->getShopUrl(
-            XLite_Core_Converter::buildUrl('checkout', 'paypal_cancel'),
+            \XLite\Core\Converter::buildUrl('checkout', 'paypal_cancel'),
             $this->config->Security->customer_security
         );
 
@@ -602,17 +604,17 @@ EOT;
     /**
      * Get notify (callback) URL 
      *
-     * @param XLite_Model_Cart $cart Cart
+     * @param \XLite\Model\Cart $cart Cart
      * 
      * @return string
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getNotifyUrl(XLite_Model_Cart $cart)
+    protected function getNotifyUrl(\XLite\Model\Cart $cart)
     {
         $url = $this->xlite->getShopUrl(
-            XLite_Core_Converter::buildUrl(
+            \XLite\Core\Converter::buildUrl(
                 'callback',
                 'callback',
                 array('order_id' => $cart->get('order_id'))

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\ProductAdviser\View;
+
 // FIXME - to revise
 
 /**
@@ -35,14 +37,14 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_ProductAdviser_View_CRPAddToCart extends XLite_View_Button
+class CRPAddToCart extends \XLite\View\Button
 {
     /*public $p_id = null;
     
     function gethref()
     {
-        $product = new XLite_Model_Product($this->get('p_id'));
-        if (class_exists('XLite_Module_ProductOptions_Model_ProductOption') && $product->hasOptions()) {
+        $product = new \XLite\Model\Product($this->get('p_id'));
+        if (class_exists('\XLite\Module\ProductOptions\Model\ProductOption') && $product->hasOptions()) {
             $product->checkSafetyMode();
             $c_id = $product->getComplex('category.category_id');
             return "cart.php?target=product&product_id=".$this->get('p_id')."&category_id=".$c_id;

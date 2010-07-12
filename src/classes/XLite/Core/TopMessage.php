@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Core;
+
 /**
  * Top message
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Core_TopMessage extends XLite_Base implements XLite_Base_ISingleton
+class TopMessage extends \XLite\Base implements \XLite\Base\ISingleton
 {
     /**
      * Message types 
@@ -144,7 +146,7 @@ class XLite_Core_TopMessage extends XLite_Base implements XLite_Base_ISingleton
      */
     public static function addInfo($text, array $arguments = array(), $code = null)
     {
-        static::getInstance()->add(XLite_Core_Translation::lbl($text, $arguments, $code), self::INFO, true);
+        static::getInstance()->add(\XLite\Core\Translation::lbl($text, $arguments, $code), self::INFO, true);
     }
 
     /**
@@ -161,7 +163,7 @@ class XLite_Core_TopMessage extends XLite_Base implements XLite_Base_ISingleton
      */
     public static function addWarning($text, array $arguments = array(), $code = null)
     {
-        static::getInstance()->add(XLite_Core_Translation::lbl($text, $arguments, $code), self::WARNING, true);
+        static::getInstance()->add(\XLite\Core\Translation::lbl($text, $arguments, $code), self::WARNING, true);
     }
 
     /**
@@ -178,7 +180,7 @@ class XLite_Core_TopMessage extends XLite_Base implements XLite_Base_ISingleton
      */
     public static function addError($text, array $arguments = array(), $code = null)
     {
-        static::getInstance()->add(XLite_Core_Translation::lbl($text, $arguments, $code), self::ERROR, true);
+        static::getInstance()->add(\XLite\Core\Translation::lbl($text, $arguments, $code), self::ERROR, true);
     }
 
     /**

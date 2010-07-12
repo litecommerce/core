@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\EcommerceReports\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,13 +35,13 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_EcommerceReports_Controller_Admin_GeneralStats extends XLite_Module_EcommerceReports_Controller_Admin_EcommerceReports
+class GeneralStats extends \XLite\Module\EcommerceReports\Controller\Admin\EcommerceReports
 {
     function getGS()
     {
         if (is_null($this->gs)) {
             $this->gs = array();
-            $this->order = $order = new XLite_Model_Order();
+            $this->order = $order = new \XLite\Model\Order();
             $this->table = $table = $order->db->getTableByAlias($order->alias);
             $fd = $this->getComplex('period.fromDate');
             $td = $this->getComplex('period.toDate');
@@ -118,7 +120,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_GeneralStats extends XLite_
             $this->calcExtraGS();
 
             // members
-            $profile = new XLite_Model_Profile();
+            $profile = new \XLite\Model\Profile();
             $table = $profile->db->getTableByAlias($profile->alias);
             $this->gs['active_accounts'] = $profile->db->getOne("SELECT COUNT(*) FROM $table WHERE status='E' AND order_id=0");
             $this->gs['new_accounts'] = $profile->db->getOne("SELECT COUNT(*) FROM $table WHERE status='E' AND first_login BETWEEN $fd AND $td AND order_id=0");

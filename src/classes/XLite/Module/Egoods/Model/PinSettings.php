@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Egoods\Model;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Egoods_Model_PinSettings extends XLite_Model_AModel
+class PinSettings extends \XLite\Model\AModel
 {
     public $alias = "pin_settings";
 

@@ -54,7 +54,7 @@ class Decorator
     /**
      * Pattern to parse PHP files
      */
-    const CLASS_PATTERN = '/\s*((?:abstract|final)\s+)?(class|interface)\s+([\w_]+)(\s+extends\s+([\w_]+))?(\s+implements\s+([\w_]+(?:\s*,\s*[\w_]+)*))?\s*(\/\*.*\*\/)?\s*{/USsi';
+    const CLASS_PATTERN = '/\s*((?:abstract|final)\s+)?(class|interface)\s+([\w\\\]+)(\s+extends\s+([\w\\\]+))?(\s+implements\s+([\w\\\]+(?:\s*,\s*[\w\\\]+)*))?\s*(\/\*.*\*\/)?\s*{/USsi';
 
     /**
      * Pattern to get class DOC block
@@ -423,7 +423,7 @@ class Decorator
      */
     protected function getFileByClass($class)
     {
-        return str_replace('_', LC_DS, $class) . '.php';
+        return str_replace('\\', LC_DS, $class) . '.php';
     }
 
     /**
@@ -461,10 +461,18 @@ class Decorator
 
         if (!empty($info[self::INFO_IS_ROOT_CLASS]) && preg_match(self::CLASS_PATTERN, $content, $matches)) {
 
+            $namespace = explode(LC_DS, $info[self::INFO_FILE]);
+            array_pop($namespace);
+            $namespace = implode('\\', $namespace);
+
             // Top level class in decorator chain has an empty body
-            $content = '<?php' . "\n" . trim($info[self::INFO_CLASS_COMMENT]) . "\n" . $matches[1] . 'class ' 
+            $content = '<?php' . "\n\n"
+                . 'namespace ' . $namespace . ';' . "\n\n"
+                . 'use \Xlite;' . "\n\n"
+                . trim($info[self::INFO_CLASS_COMMENT]) . "\n"
+                . $matches[1] . 'class ' 
                 . (isset($info[self::INFO_CLASS]) ? $info[self::INFO_CLASS] : $matches[3])
-                . (isset($info[self::INFO_EXTENDS]) ? ' extends ' . $info[self::INFO_EXTENDS] : '')
+                . (isset($info[self::INFO_EXTENDS]) && $info[self::INFO_EXTENDS] ? ' extends ' . $this->buildFullExtends($info[self::INFO_EXTENDS]) : '')
                 . (isset($matches[6]) ? $matches[6] : '') . "\n" . '{' . "\n" . '}' . "\n";
 
         } else {
@@ -472,10 +480,17 @@ class Decorator
             // Replace class and name of class which extends the current one
             $replace = "\n" 
                 . (isset($info[self::INFO_CLASS_TYPE]) ? $info[self::INFO_CLASS_TYPE] . ' ' : '$1') . '$2 ' 
-                . (isset($info[self::INFO_CLASS]) ? $info[self::INFO_CLASS] : '$3') 
-                . (isset($info[self::INFO_EXTENDS]) ? ' extends ' . $info[self::INFO_EXTENDS] : '$4') 
+                . (isset($info[self::INFO_CLASS]) ? preg_replace('/^.+\\\([^\\\]+)$/Ss', '$1', $info[self::INFO_CLASS]) : '$3') 
+                . (isset($info[self::INFO_EXTENDS]) && $info[self::INFO_EXTENDS] ? ' extends ' . $this->buildFullExtends($info[self::INFO_EXTENDS]) : '$4') 
                 . '$6' . "\n" . '{';
             $content = preg_replace(self::CLASS_PATTERN, $replace, $content);
+
+            if (isset($info[self::INFO_CLASS]) && in_array($info[self::INFO_CLASS], $this->normalizedControllers)) {
+                $namespace = explode(LC_DS, $info[self::INFO_FILE]);
+                array_pop($namespace);
+                $namespace = implode('\\', $namespace);
+                $content = preg_replace('/^namespace (.+);/Sm', 'namespace ' . $namespace . ';', $content);
+            }
 
             // Add MappedSuperclass attribute
             $parent = null;
@@ -506,10 +521,26 @@ class Decorator
 
         // Change name of normalized classes in PHP code
         foreach ($this->normalizedControllers as $oldClass => $newClass) {
-            $content = preg_replace('/' . $oldClass . '/i', $newClass, $content);
+            $content = preg_replace('/' . preg_quote($oldClass, '/') . '/i', $newClass, $content);
         }
 
         return $content;
+    }
+
+    /**
+     * Crop class name by uses namesapce
+     * 
+     * @param string $name      Class name
+     * @param string $namespace Uses namespace
+     *  
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function buildFullExtends($name)
+    {
+        return '\\' . $name;
     }
 
     /**
@@ -546,7 +577,7 @@ class Decorator
      */
     protected function isModuleController($class)
     {
-        return preg_match('/XLite_Module_\w+_Controller_?[\w_]*/', $class);
+        return preg_match('/XLite\\\Module\\\[\w]+\\\Controller\\\[\w\\\]*/Ss', $class);
     }
     
     /**
@@ -560,7 +591,7 @@ class Decorator
      */
     protected function prepareModuleController($class)
     {
-        return preg_replace('/XLite_(Module_\w+_)Controller(_?[\w_]*)/', 'XLite_Controller$2', $class);
+        return preg_replace('/XLite\\\(Module\\\[\w]+\\\)Controller(\\\[\w\\\]*)/Ss', 'XLite\\Controller$2', $class);
     }
 
     /**
@@ -589,7 +620,7 @@ class Decorator
      */
     protected function isDecorator($implements)
     {
-        return $this->isImplements('XLite_Base_IDecorator', $implements);
+        return $this->isImplements('\XLite\Base\IDecorator', $implements);
     }
 
     /**
@@ -603,11 +634,11 @@ class Decorator
      */
     protected function isSingleton($implements)
     {
-        return $this->isImplements('XLite_Base_ISingleton', $implements);
+        return $this->isImplements('\XLite\Base\ISingleton', $implements);
     }
 
     /**
-     * Check if current class implements the "XLite_Base_IViewChild" interface
+     * Check if current class implements the "XLite\Base\IViewChild" interface
      * 
      * @param string $comment Class comment
      *  
@@ -621,7 +652,7 @@ class Decorator
     }
 
     /**
-     * Check if current class implements the "XLite_Base_IPatcher" interface
+     * Check if current class implements the "XLite\Base\IPatcher" interface
      * 
      * @param array $implements list of implemented inerfaces
      *  
@@ -631,7 +662,7 @@ class Decorator
      */
     protected function isPatcher($implements)
     {
-        return $this->isImplements('XLite_Base_IPatcher', $implements);
+        return $this->isImplements('\XLite\Base\IPatcher', $implements);
     }
 
     /**
@@ -645,7 +676,7 @@ class Decorator
      */
     protected function isMultilang($extends)
     {
-        return 'XLite_Model_Base_I18n' == $extends;
+        return 'XLite\Model\Base\I18n' == $extends;
     }
 
     /**
@@ -829,7 +860,7 @@ class Decorator
      */
     protected function getModuleNameByClassName($className)
     {
-        return (preg_match('/XLite_Module_(\w+)(_|$)/U', $className, $matches) && 'Abstract' !== $matches[1])
+        return (preg_match('/XLite\\\Module\\\(\w+)(\\\|$)/Ss', $className, $matches) && 'AModule' !== $matches[1])
             ? $matches[1]
             : null;
     }
@@ -845,7 +876,7 @@ class Decorator
      */
     protected function getClassInfo($filePath)
     {
-        $result = array('', '', '', false, '');
+        $result = array('', '', '', false, '', '');
 
         $data = file_get_contents($filePath);
 
@@ -857,6 +888,13 @@ class Decorator
             }
             $result[4] = $this->getClassComment($data);
             $result[3] = (bool)preg_match(self::CLASS_ENTITY_PATTERN, $result[4]);
+
+            // Namespace
+            if (preg_match('/^namespace (\S+);/Sm', $data, $m)) {
+                $result[5] = substr($m[1], 0, 1) == '\\'
+                    ? substr($m[1], 1)
+                    : $m[1];
+            }
         }
 
         return $result;
@@ -1088,13 +1126,18 @@ class Decorator
             $filePath = $fileInfo->getPathname();
 
             // Parse file and get class info
-            list($class, $extends, $implements, $isEntity, $classComment) = $this->getClassInfo($filePath);
+            list($class, $extends, $implements, $isEntity, $classComment, $namespace) = $this->getClassInfo($filePath);
+
+            $key = $class;
+            if ($namespace) {
+                $key = $namespace . '\\' . $key;
+            }
 
             // Check classes for active modules only
             // Do not include class into cache if parent defined in currently disabled module
             if (
                 !empty($class)
-                && $this->isActiveModule($this->getModuleNameByClassName($class))
+                && $this->isActiveModule($this->getModuleNameByClassName($key))
                 && (empty($extends) || $this->isActiveModule($this->getModuleNameByClassName($extends)))
             ) {
 
@@ -1102,17 +1145,28 @@ class Decorator
                 $relativePath = preg_replace($fileNamePattern, '$1.php', $filePath);
 
                 // Class defined in current PHP file has a wrong name (not corresponded to file name)
-                if (isset($this->classesInfo[$class])) {
-                    echo (sprintf(self::CLASS_ALREADY_DEFINED_MSG, $class, $relativePath));
+                if (isset($this->classesInfo[$key])) {
+                    echo (sprintf(self::CLASS_ALREADY_DEFINED_MSG, $key, $relativePath));
                     die (4);
                 }
 
+                $e = '';
+
+                if (0 === strpos($extends, '\\Doctrine\\')) {
+                    $e = $extends;
+
+                } elseif ($extends) {
+                    $e = 0 === strpos($extends, '\\XLite\\')
+                        ? substr($extends, 1)
+                        : 'XLite\\' . $extends;
+                }
+
                 // Save data
-                $this->classesInfo[$class] = array(
+                $this->classesInfo[$key] = array(
                     self::INFO_FILE          => $relativePath,
-                    self::INFO_CLASS_ORIG    => $class,
-                    self::INFO_EXTENDS       => $extends,
-                    self::INFO_EXTENDS_ORIG  => $extends,
+                    self::INFO_CLASS_ORIG    => $key,
+                    self::INFO_EXTENDS       => $e,
+                    self::INFO_EXTENDS_ORIG  => $e,
                     self::INFO_IS_DECORATOR  => $this->isDecorator($implements),
                     self::INFO_IS_SINGLETON  => $this->isSingleton($implements),
                     self::INFO_ENTITY        => $isEntity,
@@ -1120,15 +1174,15 @@ class Decorator
                 );
 
                 if ($this->isViewChild($classComment)) {
-                    $this->viewListChilds[$relativePath] = $class;
+                    $this->viewListChilds[$relativePath] = $key;
                 }
 
                 if ($this->isPatcher($implements)) {
-                    $this->templatePatches[] = $class;
+                    $this->templatePatches[] = $key;
                 }
 
-                if ($this->isMultilang($extends)) {
-                    $this->multilangs[] = $class;
+                if ($this->isMultilang($e)) {
+                    $this->multilangs[] = $key;
                 }
     
                 if ($classComment || !preg_match(self::INTERFACE_COMMENT_PATTERN, file_get_contents($filePath))) {
@@ -1286,7 +1340,6 @@ class Decorator
 
     /**
      * Delete the directory with compiled classes 
-     * 
      * @return void
      * @access public
      * @since  3.0
@@ -1413,7 +1466,7 @@ class Decorator
     protected function getDoctrineCacheDriver()
     {
         if (!isset($this->cacheDriver)) {
-            $this->cacheDriver = XLite_Core_Database::getCacheDriverByOptions($this->getConfigOptions('cache'));
+            $this->cacheDriver = XLite\Core\Database::getCacheDriverByOptions($this->getConfigOptions('cache'));
         }
 
         return $this->cacheDriver;
@@ -1432,9 +1485,20 @@ class Decorator
         if (is_null($this->em)) {
             $config = new \Doctrine\ORM\Configuration;
 
+/*
+            $chain = new \Doctrine\ORM\Mapping\Driver\DriverChain();
+            $chain->addDriver(
+                $config->newDefaultAnnotationDriver(LC_MODEL_CACHE_DIR),
+                LC_MODEL_NS
+            );
+
+            $config->setMetadataDriverImpl($chain);
+*/
+
             $config->setMetadataDriverImpl(
                 $config->newDefaultAnnotationDriver(LC_MODEL_CACHE_DIR)
             );
+
 
             // Set proxy settings
             $config->setProxyDir(LC_PROXY_CACHE_DIR);
@@ -1542,7 +1606,7 @@ class Decorator
         $entityGenerator->setRegenerateEntityIfExists(true);
         $entityGenerator->setUpdateEntityIfExists(true);
         $entityGenerator->setNumSpaces(4);
-        $entityGenerator->setClassToExtend('XLite_Model_Doctrine_AbstractEntity');
+        $entityGenerator->setClassToExtend('XLite\Model\Doctrine\AbstractEntity');
 
         $entityGenerator->generate($this->getMetadatas(), LC_MODEL_CACHE_DIR);
     }
@@ -1904,11 +1968,13 @@ DATA;
      */
     protected function regenerateViewLists()
     {
+        $metadatas = $this->getEntityManager()->getMetadataFactory()->getAllMetadata();
+
         // Truncate old
-        foreach (XLite_Core_Database::getRepo('XLite_Model_ViewList')->findAll() as $l) {
-            XLite_Core_Database::getEM()->remove($l);
+        foreach (XLite\Core\Database::getRepo('XLite\Model\ViewList')->findAll() as $l) {
+            XLite\Core\Database::getEM()->remove($l);
         }
-        XLite_Core_Database::getEM()->flush();
+        XLite\Core\Database::getEM()->flush();
 
         $this->viewListPreprocessors = array();
 
@@ -1933,7 +1999,7 @@ DATA;
 
                 } else {
 
-                    XLite_Core_Database::getEM()->persist(
+                    XLite\Core\Database::getEM()->persist(
                         $this->createViewList($list, $class)
                     );
                 }
@@ -1943,11 +2009,11 @@ DATA;
         // Assemble anniotaions from templates
         $this->assembleTemplateLists();
 
-        XLite_Core_Database::getEM()->flush();
+        XLite\Core\Database::getEM()->flush();
 
         // Global modules preprocessing
         foreach (array_keys($this->classesInfo) as $class) {
-            if (preg_match('/^XLite_Module_\w+_Main$$/', $class) && method_exists($class, 'modifyViewLists')) {
+            if (preg_match('/^XLite\\\Module\\\[\w]+\\\Main$$/', $class) && method_exists($class, 'modifyViewLists')) {
                 $class::modifyViewLists();
             }
         }
@@ -1955,9 +2021,9 @@ DATA;
         // Static preprocessing
         foreach ($this->viewListPreprocessors as $class => $lists) {
             foreach ($lists as $list => $preprocessors) {
-                $data = XLite_Core_Database::getQB()
+                $data = XLite\Core\Database::getQB()
                     ->select('v')
-                    ->from('XLite_Model_ViewList', 'v')
+                    ->from('ViewList', 'v')
                     ->where('v.class = :class AND v.list = :list')
                     ->setParameters(array('class' => $class, 'list' => $list))
                     ->getQuery()
@@ -1971,7 +2037,7 @@ DATA;
             }
         }
 
-        XLite_Core_Database::getEM()->flush();
+        XLite\Core\Database::getEM()->flush();
 
         $this->viewListPreprocessors = array();
     }
@@ -1982,7 +2048,7 @@ DATA;
      * @param array  $list  List data
      * @param string $class Widget class name
      *  
-     * @return XLite_Model_ViewList
+     * @return XLite\Model\ViewList
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -1993,7 +2059,7 @@ DATA;
             $list['class'] = '';
         }
 
-        $viewList = new XLite_Model_ViewList();
+        $viewList = new XLite\Model\ViewList();
 
 
         $viewList->class = $list['class'];
@@ -2131,8 +2197,8 @@ DATA;
             $path = substr($path, strlen(LC_SKINS_DIR));
             $tmp = explode(LC_DS, $path);
             $zone = 'admin' == $tmp[0]
-                ? XLite_Model_ViewList::ADMIN_INTERFACE
-                : XLite_Model_ViewList::CUSTOMER_INTERFACE;
+                ? XLite\Model\ViewList::ADMIN_INTERFACE
+                : XLite\Model\ViewList::CUSTOMER_INTERFACE;
 
             foreach ($this->getListChildsByComment(trim($match[1])) as $list) {
 
@@ -2152,7 +2218,7 @@ DATA;
                     $viewList = $this->createViewList($list);
                     $viewList->tpl = $path;
 
-                    XLite_Core_Database::getEM()->persist($viewList);
+                    XLite\Core\Database::getEM()->persist($viewList);
                 }
             }
         }
@@ -2267,10 +2333,10 @@ DATA;
     protected function collectPatches()
     {
         // Truncate old
-        foreach (XLite_Core_Database::getRepo('XLite_Model_TemplatePatch')->findAll() as $r) {
-            XLite_Core_Database::getEM()->remove($r);
+        foreach (XLite\Core\Database::getRepo('XLite\Model\TemplatePatch')->findAll() as $r) {
+            XLite\Core\Database::getEM()->remove($r);
         }
-        XLite_Core_Database::getEM()->flush();
+        XLite\Core\Database::getEM()->flush();
 
         // Create new
         foreach ($this->templatePatches as $class) {
@@ -2283,7 +2349,7 @@ DATA;
 
                 $valid = true;
 
-                $templatePatch = new XLite_Model_TemplatePatch();
+                $templatePatch = new XLite\Model\TemplatePatch();
 
                 $templatePatch->patch_type = isset($patch[$class::PATCHER_CELL_TYPE])
                     ? $patch[$class::PATCHER_CELL_TYPE]
@@ -2333,11 +2399,11 @@ DATA;
                 }
 
                 if ($valid) {
-                    XLite_Core_Database::getEM()->persist($templatePatch);
+                    XLite\Core\Database::getEM()->persist($templatePatch);
                 }
             }
 
-            XLite_Core_Database::getEM()->flush();
+            XLite\Core\Database::getEM()->flush();
         }
     }
 

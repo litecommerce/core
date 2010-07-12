@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\AntiFraud\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_AntiFraud_Controller_Admin_OrderList extends XLite_Controller_Admin_OrderList implements XLite_Base_IDecorator
+class OrderList extends \XLite\Controller\Admin\OrderList implements \XLite\Base\IDecorator
 {
         function init()
         {
@@ -51,7 +53,7 @@ class XLite_Module_AntiFraud_Controller_Admin_OrderList extends XLite_Controller
             if (!is_null($orders)&&$this->show_factor) {
                 foreach ($orders as $key => $order) {
                     if (!is_object($order)) {
-                        $order = new XLite_Model_Order($order['data']['order_id']);
+                        $order = new \XLite\Model\Order($order['data']['order_id']);
                     }
                     if ($order->getComplex('details.af_result.total_trust_score') < $this->risk_factor)
                         unset($orders[$key]);

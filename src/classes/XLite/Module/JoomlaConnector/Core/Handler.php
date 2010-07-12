@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\JoomlaConnector\Core;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class XLite_Module_JoomlaConnector_Core_Handler extends XLite_Core_Handler implements XLite_Base_IDecorator
+abstract class Handler extends \XLite\Core\Handler implements \XLite\Base\IDecorator
 {
     /**
      * Compose URL from target, action and additional params
@@ -66,7 +68,7 @@ abstract class XLite_Module_JoomlaConnector_Core_Handler extends XLite_Core_Hand
      */
     public function buildURL($target = '', $action = '', array $params = array())
     {
-        return XLite_Module_JoomlaConnector_Handler::getInstance()->checkCurrentCMS()
+        return \XLite\Module\JoomlaConnector\Handler::getInstance()->checkCurrentCMS()
             ? self::getJoomlaURL($target, $action, $params) 
             : parent::buildURL($target, $action, $params);
     }

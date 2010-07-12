@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View;
+
 
 /**
  * ColumnList is a universal class to create columned lists.
@@ -34,7 +36,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_ColumnList extends XLite_View_AView
+class ColumnList extends \XLite\View\AView
 {
     /*
      * Widget parameters names
@@ -78,7 +80,7 @@ class XLite_View_ColumnList extends XLite_View_AView
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_COLUMN_COUNT => new XLite_Model_WidgetParam_Int('Column count', 2)
+            self::PARAM_COLUMN_COUNT => new \XLite\Model\WidgetParam\Int('Column count', 2)
         );
     }
 

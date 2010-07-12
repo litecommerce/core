@@ -16,7 +16,7 @@ If you already have an account, you can authenticate yourself by filling in the 
 
 <hr size="1" noshade>
 
-<widget class="XLite_View_Form_Login_Customer_Main" name="login_form" />
+<widget class="\XLite\View\Form\Login\Customer\Main" name="login_form" />
 
 <table width="100%" border="0" cellspacing="0" cellpadding="2">
 <tr>
@@ -42,7 +42,7 @@ If you already have an account, you can authenticate yourself by filling in the 
 <tr>
     <td colspan="2">&nbsp;</td>
     <td>
-        <widget class="XLite_View_Button_Submit" />
+        <widget class="\XLite\View\Button\Submit" />
     </td>
 </tr>
 </table>

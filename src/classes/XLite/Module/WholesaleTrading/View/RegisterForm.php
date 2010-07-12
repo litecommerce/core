@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\WholesaleTrading\View;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_WholesaleTrading_View_RegisterForm extends XLite_View_RegisterForm implements XLite_Base_IDecorator
+class RegisterForm extends \XLite\View\RegisterForm implements \XLite\Base\IDecorator
 {
     function fillForm()
     {

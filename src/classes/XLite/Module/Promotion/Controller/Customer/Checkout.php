@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Promotion\Controller\Customer;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Promotion_Controller_Customer_Checkout extends XLite_Controller_Customer_Checkout implements XLite_Base_IDecorator
+class Checkout extends \XLite\Controller\Customer\Checkout implements \XLite\Base\IDecorator
 {
     /**
      * Common method to determine current location 
@@ -70,7 +72,7 @@ class XLite_Module_Promotion_Controller_Customer_Checkout extends XLite_Controll
         parent::init();
 
         // TODO - check if there is a more convenient way to do this 
-        if (self::CHECKOUT_MODE_ZERO_TOTAL == XLite_Core_Request::getInstance()->mode) {
+        if (self::CHECKOUT_MODE_ZERO_TOTAL == \XLite\Core\Request::getInstance()->mode) {
             $this->set('skipValidateDiscountCoupon', true);
         }
     }
@@ -79,7 +81,7 @@ class XLite_Module_Promotion_Controller_Customer_Checkout extends XLite_Controll
     {
         if ($this->session->isRegistered('couponFailed')) {
         	if (isset($_REQUEST['mode']) && $_REQUEST['mode'] == "couponFailed") {
-                $dc = new XLite_Module_Promotion_Model_DiscountCoupon();
+                $dc = new \XLite\Module\Promotion\Model\DiscountCoupon();
                 $found = $dc->find("coupon='".$this->session->get('couponFailed')."'");
                 if ($found) {
                     $this->set('discountCoupon', $dc);

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\UPSOnlineTools\Model\Shipping;
+
 /**
  * Shipping
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_UPSOnlineTools_Model_Shipping_Ups extends XLite_Model_Shipping_Online
+class Ups extends \XLite\Model\Shipping\Online
 {
     /**
      *  Minimum package weight (lbs)
@@ -121,7 +123,7 @@ class XLite_Module_UPSOnlineTools_Model_Shipping_Ups extends XLite_Model_Shippin
         $version = $this->config->Version->version;
 
         if (is_numeric($userinfo['state'])) {
-            $userinfo['state'] = XLite_Core_Database::getRepo('XLite_Model_State')->getCodeById($userinfo['state']);
+            $userinfo['state'] = \XLite\Core\Database::getRepo('XLite\Model\State')->getCodeById($userinfo['state']);
         }
 
         $request = <<<EOT
@@ -264,7 +266,7 @@ EOT;
             $value = $this->encode($value);
         }
 
-        XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+        \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
             array(
                 'category' => 'UPSOnlineTools',
                 'name'     => $name,
@@ -276,14 +278,14 @@ EOT;
     /**
      * Get rates 
      * 
-     * @param XLite_Model_Order $order Order
+     * @param \XLite\Model\Order $order Order
      *  
-     * @return array of XLite_Model_ShippingRate
+     * @return array of \XLite\Model\ShippingRate
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getRates(XLite_Model_Order $order)
+    public function getRates(\XLite\Model\Order $order)
     {
         // drop error semapfores
         $this->session->set('ups_failed_items', false);
@@ -313,7 +315,7 @@ EOT;
         // Define company state
         $state_id = $this->config->Company->location_state;
         if ($state_id != -1) {
-            $originState = XLite_Core_Database::getRepo('XLite_Model_State')->getCodeById($state_id);
+            $originState = \XLite\Core\Database::getRepo('XLite\Model\State')->getCodeById($state_id);
 
         } else {
             $originState = $this->config->Company->location_custom_state;
@@ -335,7 +337,7 @@ EOT;
             // Define destination state
             $state_id = $order->getProfile()->get('shipping_state');
             if ($state_id != -1) {
-                $destinationState = XLite_Core_Database::getRepo('XLite_Model_State')->getCodeById($state_id);
+                $destinationState = \XLite\Core\Database::getRepo('XLite\Model\State')->getCodeById($state_id);
 
             } else {
                 $destinationState = $order->getProfile()->get('shipping_custom_state');
@@ -428,14 +430,14 @@ EOT;
     /**
      * Get HTTPS requester 
      * 
-     * @return XLite_Model_HTTPS
+     * @return \XLite\Model\HTTPS
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getHTTPSRequester()
     {
-        $request = new XLite_Model_HTTPS();
+        $request = new \XLite\Model\HTTPS();
         $request->use_ssl3 = true;
         $request->conttype = 'text/xml';
 
@@ -484,7 +486,7 @@ EOT;
         // log UPSOnlineTools request
         $this->logger->log('UPSOnlineTools request:' . "\n" . $request);
 
-        if ($https->request() == XLite_Model_HTTPS::HTTPS_ERROR) {
+        if ($https->request() == \XLite\Model\HTTPS::HTTPS_ERROR) {
             $this->logger->log('HTTPS_ERROR: ' . $https->error);
             $this->error = $https->error;
 
@@ -784,7 +786,7 @@ EOT;
      * @param string $destination   Destination code
      * @param string $originCountry Origination country code
      *  
-     * @return array of XLite_Model_ShippingRate
+     * @return array of \XLite\Model\ShippingRate
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -833,11 +835,11 @@ EOT;
             $shipping_id = $shipping->get('shipping_id');
 
             // to prevent create not-complete shipping object
-            $shipping = new XLite_Model_Shipping($shipping_id);
+            $shipping = new \XLite\Model\Shipping($shipping_id);
             $shipping->set('nameUPS', $this->getNameUPS($shipping->get('name')));
 
             $id = $shipping->get('shipping_id');
-            $rates[$id] = new XLite_Model_ShippingRate($shipping_id);
+            $rates[$id] = new \XLite\Model\ShippingRate($shipping_id);
             $rates[$id]->shipping = $shipping;
             $rates[$id]->rate = doubleval(
                 trim(
@@ -1056,7 +1058,7 @@ EOT;
                 break;
 
             default:
-                $country = XLite_Core_Database::getEM()->find('XLite_Model_Country', $originCountry);
+                $country = \XLite\Core\Database::getEM()->find('XLite\Model\Country', $originCountry);
                 $origin = $country->isEUMember() ? 'EU' : 'OTHER_ORIGINS';
                 break;
         }
@@ -1090,7 +1092,7 @@ EOT;
         if ($options->av_status == 'Y' && $shipping_country == 'US') {
 
             if ($shipping_state > 0) {
-                $state_code = XLite_Core_Database::getRepo('XLite_Model_State')->getCodeById($shipping_state);
+                $state_code = \XLite\Core\Database::getRepo('XLite\Model\State')->getCodeById($shipping_state);
 
             } else {
                 $state_code = $shipping_custom_state;
@@ -1221,7 +1223,7 @@ EOT;
         $https->urlencoded = true;
         $https->data = $request;
 
-        if ($https->request() == XLite_Model_HTTPS::HTTPS_ERROR) {
+        if ($https->request() == \XLite\Model\HTTPS::HTTPS_ERROR) {
             $this->error = 'Connection failed';
             return array();
         }
@@ -1704,14 +1706,14 @@ EOT;
     /**
      * Get XML parser
      * 
-     * @return XLite_Module_UPSOnlineTools_Model_XML
+     * @return \XLite\Module\UPSOnlineTools\Model\XML
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getObjectXML()
     {
-        return new XLite_Model_XML();
+        return new \XLite\Model\XML();
     }
 
     /**
@@ -1742,7 +1744,7 @@ EOT;
      */
     protected function decode($s)
     {
-        $enc = XLite_Module_UPSOnlineTools_Main::CRYPT_SALT ^ $this->decodeChar($s, 0);
+        $enc = \XLite\Module\UPSOnlineTools\Main::CRYPT_SALT ^ $this->decodeChar($s, 0);
         $result = '';
         // $i=2 to skip salt
         for ($i = 2; $i < strlen($s); $i += 2) {
@@ -1768,8 +1770,8 @@ EOT;
      */
     protected function decodeChar($s, $i)
     {
-        return (ord(substr($s, $i, 1)) - XLite_Module_UPSOnlineTools_Main::START_CHAR_CODE) * 16
-            + ord(substr($s, $i + 1, 1)) - XLite_Module_UPSOnlineTools_Main::START_CHAR_CODE;
+        return (ord(substr($s, $i, 1)) - \XLite\Module\UPSOnlineTools\Main::START_CHAR_CODE) * 16
+            + ord(substr($s, $i + 1, 1)) - \XLite\Module\UPSOnlineTools\Main::START_CHAR_CODE;
     }
 
     /**
@@ -1786,7 +1788,7 @@ EOT;
     {
         $enc = rand(1, 255);
         $result = $this->encodeChar($enc);
-        $enc ^= XLite_Module_UPSOnlineTools_Main::CRYPT_SALT;
+        $enc ^= \XLite\Module\UPSOnlineTools\Main::CRYPT_SALT;
         for ($i = 0; $i < strlen($s); $i++) {
             $r = ord(substr($s, $i, 1)) ^ $enc++;
             if ($enc > 255) {
@@ -1811,8 +1813,8 @@ EOT;
      */
     protected function encodeChar($c)
     {
-        return chr(XLite_Module_UPSOnlineTools_Main::START_CHAR_CODE + ($c & 240) / 16)
-            . chr(XLite_Module_UPSOnlineTools_Main::START_CHAR_CODE + ($c & 15));
+        return chr(\XLite\Module\UPSOnlineTools\Main::START_CHAR_CODE + ($c & 240) / 16)
+            . chr(\XLite\Module\UPSOnlineTools\Main::START_CHAR_CODE + ($c & 15));
     }
 
     /**

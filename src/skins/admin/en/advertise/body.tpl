@@ -26,5 +26,5 @@
   </div>
 </div>
 
-<widget class="XLite_View_HelpdeskRequest" />
+<widget class="\XLite\View\HelpdeskRequest" />
 

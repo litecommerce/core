@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Core;
+
 /**
  * Translation core rutine
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Core_Translation extends XLite_Base implements XLite_Base_ISingleton
+class Translation extends \XLite\Base implements \XLite\Base\ISingleton
 {
     /**
      * Current language code 
@@ -48,7 +50,7 @@ class XLite_Core_Translation extends XLite_Base implements XLite_Base_ISingleton
     /**
      * Translation driver 
      * 
-     * @var    XLite_Core_TranslationDriver_ATranslationDriver
+     * @var    \XLite\Core\TranslationDriver\ATranslationDriver
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
@@ -64,8 +66,8 @@ class XLite_Core_Translation extends XLite_Base implements XLite_Base_ISingleton
      * @since  3.0.0
      */
     protected $driversQuery = array(
-        'XLite_Core_TranslationDriver_Gettext',
-        'XLite_Core_TranslationDriver_Db'
+        '\XLite\Core\TranslationDriver\Gettext',
+        '\XLite\Core\TranslationDriver\Db'
     );
 
     /**
@@ -79,7 +81,7 @@ class XLite_Core_Translation extends XLite_Base implements XLite_Base_ISingleton
     public static function getCurrentLanguageCode($force = false)
     {
         if (!isset(self::$currentLanguageCode) || $force) {
-            self::$currentLanguageCode = XLite_Model_Session::getInstance()->getLanguage()->code;
+            self::$currentLanguageCode = \XLite\Model\Session::getInstance()->getLanguage()->code;
         }
 
         return self::$currentLanguageCode;
@@ -130,7 +132,7 @@ class XLite_Core_Translation extends XLite_Base implements XLite_Base_ISingleton
     public function translate($name, array $arguments = array(), $code = null)
     {
         if (is_null($code)) {
-            $code = XLite_Model_Session::getInstance()->getLanguage()->code;
+            $code = \XLite\Model\Session::getInstance()->getLanguage()->code;
         }
 
         $translated = $this::getInstance()->getDriver()->translate($name, $code);
@@ -170,7 +172,7 @@ class XLite_Core_Translation extends XLite_Base implements XLite_Base_ISingleton
     /**
      * Get translation driver 
      * 
-     * @return XLite_Core_TranslationDriver_ATranslationDriver
+     * @return \XLite\Core\TranslationDriver\ATranslationDriver
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -187,7 +189,7 @@ class XLite_Core_Translation extends XLite_Base implements XLite_Base_ISingleton
     /**
      * Define translation driver 
      * 
-     * @return XLite_Core_TranslationDriver_ATranslationDriver
+     * @return \XLite\Core\TranslationDriver\ATranslationDriver
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0

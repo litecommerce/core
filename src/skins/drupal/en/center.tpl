@@ -11,7 +11,7 @@
  * @since     3.0.0
  *}
 <!-- [center] -->
-<widget module="GoogleCheckout" class="XLite_Module_GoogleCheckout_View_GoogleAltCheckout">
+<widget module="GoogleCheckout" class="\XLite\Module\GoogleCheckout\View\GoogleAltCheckout">
 
 <!-- [main] {{{ -->
 <widget module="InventoryTracking" target="cart" mode="exceeding" template="common/dialog.tpl" body="modules/InventoryTracking/exceeding.tpl" head="InventoryTracking Notification">
@@ -20,7 +20,7 @@
 <!-- [/main] }}} -->
 
 <!-- [breadcrumbs] {{{ -->
-<widget class="XLite_View_Location" />
+<widget class="\XLite\View\Location" />
 <!-- [/breadcrumbs] }}} -->
 
 <!-- [page top] {{{ -->
@@ -28,9 +28,9 @@
 <!-- [/page top] }}} -->
 
 <!-- [catalog] {{{ -->
-<widget class="XLite_View_Subcategories" />
-<widget class="XLite_View_CategoryProducts" />
-<widget class="XLite_View_CategoryEmpty" />
+<widget class="\XLite\View\Subcategories" />
+<widget class="\XLite\View\CategoryProducts" />
+<widget class="\XLite\View\CategoryEmpty" />
 <!-- [/catalog] }}} -->
 
 <!-- [profile] {{{ -->
@@ -39,8 +39,8 @@
 
 <!-- [modules] {{{ -->
 <widget module="DetailedImages" target="product" template="common/dialog.tpl" body="modules/DetailedImages/body.tpl" head="Detailed Images" visible="{product.detailedImages}">
-<widget module="Bestsellers" class="XLite_Module_Bestsellers_View_Bestsellers" template="common/dialog.tpl" visible="{!config.Bestsellers.bestsellers_menu}" name="bestsellerswidget">
-<widget module="FeaturedProducts" class="XLite_Module_FeaturedProducts_View_FeaturedProducts" template="common/dialog.tpl">
+<widget module="Bestsellers" class="\XLite\Module\Bestsellers\View\Bestsellers" template="common/dialog.tpl" visible="{!config.Bestsellers.bestsellers_menu}" name="bestsellerswidget">
+<widget module="FeaturedProducts" class="\XLite\Module\FeaturedProducts\View\FeaturedProducts" template="common/dialog.tpl">
 <widget module="Promotion" target="checkout" mode="bonusList" template="common/dialog.tpl" body="modules/Promotion/bonus_list.tpl" head="You qualify for a special offer">
 <widget module="Promotion" target="checkout" template="common/dialog.tpl" body="modules/Promotion/coupon_failed.tpl" head="The discount coupon cannot be used" mode="couponFailed">
 <widget module="Promotion" target="cart" template="common/dialog.tpl" body="modules/Promotion/discount_coupon.tpl" head="Discount coupon" visible="{showDCForm}">

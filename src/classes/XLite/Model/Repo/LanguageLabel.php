@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model\Repo;
+
 /**
  * Langauge labels repository
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_Repo_LanguageLabel extends XLite_Model_Repo_Base_I18n
+class LanguageLabel extends \XLite\Model\Repo\Base\I18n
 {
     /**
      * Define cache cells 
@@ -71,7 +73,7 @@ class XLite_Model_Repo_LanguageLabel extends XLite_Model_Repo_Base_I18n
     public function findLabelsByCode($code = null)
     {
         if (is_null($code)) {
-            $code = XLite_Model_Session::getInstance()->getLanguage()->code;
+            $code = \XLite\Model\Session::getInstance()->getLanguage()->code;
         }
 
         $data = $this->getFromCache('all_by_code', array('code' => $code));
@@ -202,14 +204,14 @@ class XLite_Model_Repo_LanguageLabel extends XLite_Model_Repo_Base_I18n
     /**
      * Convert entity to parameters list for 'all_by_code' cache cell
      * 
-     * @param XLite_Model_AEntity $entity Entity
+     * @param \XLite\Model\AEntity $entity Entity
      *  
      * @return array
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function convertRecordToParamsAllByCode(XLite_Model_AEntity $entity)
+    protected function convertRecordToParamsAllByCode(\XLite\Model\AEntity $entity)
     {
         return array('*');
     }

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\AOM\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_AOM_Controller_Admin_CreateOrder extends XLite_Controller_Admin_Order
+class CreateOrder extends \XLite\Controller\Admin\Order
 {
     public $page = "order_edit";
     public $pages = array("order_edit" => "Create order #%s");
@@ -74,12 +76,12 @@ class XLite_Module_AOM_Controller_Admin_CreateOrder extends XLite_Controller_Adm
 
     function action_create_order() 
     {
-        $order = new XLite_Model_Order();
+        $order = new \XLite\Model\Order();
         $order->set('date',time());
         $order->set('status',"T");
         $order->set('shipping_id',"-1");
         $order->create();
-        $orderHistory = new XLite_Module_AOM_Model_OrderHistory();
+        $orderHistory = new \XLite\Module\AOM\Model\OrderHistory();
         $orderHistory->log($order, null, null,"create_order");
                         
         $this->set('returnUrl',"admin.php?target=create_order&page=order_edit&mode=products&order_id=".$order->get('order_id'));
@@ -87,7 +89,7 @@ class XLite_Module_AOM_Controller_Admin_CreateOrder extends XLite_Controller_Adm
 
     function action_save_changes() 
     {
-        $order = new XLite_Model_Order($this->get('order_id'));
+        $order = new \XLite\Model\Order($this->get('order_id'));
         $order->set('orderStatus',$_POST['substatus']);
         if ($order->get('payment_method') == "CreditCard") {
             $this->addDetails($order);

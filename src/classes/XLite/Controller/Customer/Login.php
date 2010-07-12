@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Controller\Customer;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Controller_Customer_Login extends XLite_Controller_Customer_ACustomer
+class Login extends \XLite\Controller\Customer\ACustomer
 {
     /**
      * Index in request array; the secret token used for authorization
@@ -90,8 +92,8 @@ class XLite_Controller_Customer_Login extends XLite_Controller_Customer_ACustome
         $url = $this->getRedirectFromLoginURL();
 
         if (isset($url)) {
-            XLite_Core_CMSConnector::isCMSStarted() 
-                ? XLite_Core_Operator::redirect($url, true) 
+            \XLite\Core\CMSConnector::isCMSStarted() 
+                ? \XLite\Core\Operator::redirect($url, true) 
                 : $this->setReturnUrl($url);
         }
     }
@@ -105,17 +107,17 @@ class XLite_Controller_Customer_Login extends XLite_Controller_Customer_ACustome
     /**
      * Log in using the login and password from request
      * 
-     * @return XLite_Model_Profile
+     * @return \XLite\Model\Profile
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
     protected function performLogin()
     {
-        $data = XLite_Core_Request::getInstance()->getData();
+        $data = \XLite\Core\Request::getInstance()->getData();
         $token = empty($data[self::SECURE_TOKEN]) ? null : $data[self::SECURE_TOKEN];
 
-        return XLite_Model_Auth::getInstance()->login($data['login'], $data['password'], $token);
+        return \XLite\Model\Auth::getInstance()->login($data['login'], $data['password'], $token);
     }
 
     function action_login()
@@ -127,10 +129,10 @@ class XLite_Controller_Customer_Login extends XLite_Controller_Customer_ACustome
             return;
         }
 
-        $this->set('returnUrl', XLite_Core_Request::getInstance()->returnUrl);
+        $this->set('returnUrl', \XLite\Core\Request::getInstance()->returnUrl);
 
         if (!$this->get('returnUrl')) {
-            $cart = XLite_Model_Cart::getInstance();
+            $cart = \XLite\Model\Cart::getInstance();
             $url = $this->getComplex('xlite.script');
             if (!$cart->get('empty')) {
                 $url .= "?target=cart";
@@ -139,7 +141,7 @@ class XLite_Controller_Customer_Login extends XLite_Controller_Customer_ACustome
             $this->set('returnUrl', $url);
         }
 
-        $cart = XLite_Model_Cart::getInstance();
+        $cart = \XLite\Model\Cart::getInstance();
         $cart->set('profile_id', $this->profile->get('profile_id'));
 
         $this->recalcCart();

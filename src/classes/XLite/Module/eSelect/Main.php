@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\eSelect;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_eSelect_Main extends XLite_Module_AModule
+class Main extends \XLite\Module\AModule
 {
     /**
      * Module type

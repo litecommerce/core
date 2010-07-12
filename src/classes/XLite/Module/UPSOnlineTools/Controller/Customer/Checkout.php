@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\UPSOnlineTools\Controller\Customer;
+
 /**
  * Checkout controller
  * 
@@ -33,8 +35,8 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_UPSOnlineTools_Controller_Customer_Checkout extends XLite_Controller_Customer_Checkout
-implements XLite_Base_IDecorator
+class Checkout extends \XLite\Controller\Customer\Checkout
+implements \XLite\Base\IDecorator
 {
     /**
      * Change shipping method
@@ -51,20 +53,20 @@ implements XLite_Base_IDecorator
         if (
             0 < count($this->getCart()->getCarriers())  
             && $carrier
-            && isset(XLite_Core_Request::getInstance()->carrier)
-            && XLite_Core_Request::getInstance()->carrier != $carrier
+            && isset(\XLite\Core\Request::getInstance()->carrier)
+            && \XLite\Core\Request::getInstance()->carrier != $carrier
         ) {
 
             // Update carrier
-            $rates = $this->getCart()->getCarrierRates(XLite_Core_Request::getInstance()->carrier);
+            $rates = $this->getCart()->getCarrierRates(\XLite\Core\Request::getInstance()->carrier);
             if (!$rates) {
-                XLite_Core_Request::getInstance()->shipping = 0;
+                \XLite\Core\Request::getInstance()->shipping = 0;
 
             } elseif (!isset($rates[$this->getCart()->get('shipping_id')])) {
                 reset($rates);
                 $rate = array_shift($rates);
                 $shipping = $rate->get('shipping');
-                XLite_Core_Request::getInstance()->shipping = $shipping ? $shipping->get('shipping_id') : 0;
+                \XLite\Core\Request::getInstance()->shipping = $shipping ? $shipping->get('shipping_id') : 0;
 
             }
         }

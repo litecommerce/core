@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_ProductInventory extends XLite_Model_Product implements XLite_Base_ISingleton
+class ProductInventory extends \XLite\Model\Product implements \XLite\Base\ISingleton
 {	
     public $importFields = array(
             "NULL"  => false,
@@ -61,7 +63,7 @@ class XLite_Model_ProductInventory extends XLite_Model_Product implements XLite_
 
         $properties = $options['properties'];
         $this->_convertProperties($properties);
-        $product = new XLite_Model_Product();
+        $product = new \XLite\Model\Product();
 
         // search for product by SKU
         if (!empty($properties['sku']) && $product->find("sku='".addslashes($properties['sku'])."'")) {

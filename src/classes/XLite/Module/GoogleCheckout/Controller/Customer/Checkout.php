@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\GoogleCheckout\Controller\Customer;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_GoogleCheckout_Controller_Customer_Checkout extends XLite_Controller_Customer_Checkout implements XLite_Base_IDecorator
+class Checkout extends \XLite\Controller\Customer\Checkout implements \XLite\Base\IDecorator
 {
 
     function init()

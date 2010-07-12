@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Controller\Admin;
+
 /**
  * Payment methods
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Controller_Admin_PaymentMethods extends XLite_Controller_Admin_AAdmin
+class PaymentMethods extends \XLite\Controller\Admin\AAdmin
 {
     protected $configurableMethods = null;
 
@@ -42,7 +44,7 @@ class XLite_Controller_Admin_PaymentMethods extends XLite_Controller_Admin_AAdmi
         if (is_null($this->configurableMethods)) {
 
             $this->configurableMethods = false;
-            $pm = new XLite_Model_PaymentMethod();
+            $pm = new \XLite\Model\PaymentMethod();
             
             foreach ($pm->readAll() as $pm) {
                 if (!is_null($pm->configurationTemplate)) {
@@ -68,7 +70,7 @@ class XLite_Controller_Admin_PaymentMethods extends XLite_Controller_Admin_AAdmi
 
             if ($data['payment_method'] == $default_offline_payment && !$data['enabled']) {
 
-                XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+                \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
                     array(
                         'category' =>'Payments',
                         'name'     => 'default_offline_payment',
@@ -77,7 +79,7 @@ class XLite_Controller_Admin_PaymentMethods extends XLite_Controller_Admin_AAdmi
                 );
             }
 
-            $payment_method = new XLite_Model_PaymentMethod();
+            $payment_method = new \XLite\Model\PaymentMethod();
             $payment_method->setProperties($data);
             $payment_method->read();
             $payment_method->update();
@@ -86,7 +88,7 @@ class XLite_Controller_Admin_PaymentMethods extends XLite_Controller_Admin_AAdmi
 
     function action_default_payment()
     {
-        XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+        \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
             array(
                 'category' => 'Payments',
                 'name'     => 'default_offline_payment',
@@ -94,7 +96,7 @@ class XLite_Controller_Admin_PaymentMethods extends XLite_Controller_Admin_AAdmi
             )
         );
 
-        XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+        \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
             array(
                 'category' => 'Payments',
                 'name'     => 'default_select_payment',

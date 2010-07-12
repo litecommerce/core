@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\EcommerceReports\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_EcommerceReports_Controller_Admin_EcommerceReports extends XLite_Controller_Admin_Stats
+class EcommerceReports extends \XLite\Controller\Admin\Stats
 {
     public $page = "product_sales";
     public $pages = array(
@@ -71,7 +73,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_EcommerceReports extends XL
     function getCategories() 
     {
         if (is_null($this->categories)) {
-            $category = new XLite_Model_Category();
+            $category = new \XLite\Model\Category();
             $this->categories = $category->findAll();
             $names = array();
             $names_hash = array();

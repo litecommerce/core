@@ -87,31 +87,31 @@ function showSettings(solution)
 <tr>
 	<td align="right">'AUTHENTICATED'/'REGISTERED' order status:</td>
 	<td>&nbsp;</td>
-	<td><widget class="XLite_View_StatusSelect" field="params[status_auth]" value="{pm.orderAuthStatus}"></td>
+	<td><widget class="\XLite\View\StatusSelect" field="params[status_auth]" value="{pm.orderAuthStatus}"></td>
 </tr>
 
 <tr>
 	<td align="right">'NOTAUTHED'/'REJECTED' order status:</td>
 	<td>&nbsp;</td>
-	<td><widget class="XLite_View_StatusSelect" field="params[status_reject]" value="{pm.orderRejectStatus}"></td>
+	<td><widget class="\XLite\View\StatusSelect" field="params[status_reject]" value="{pm.orderRejectStatus}"></td>
 </tr>
 
 <tr>
 	<td align="right">'SUCCESS' order status (no 3D-secure check):</td>
 	<td>&nbsp;</td>
-	<td><widget class="XLite_View_StatusSelect" field="params[status_success_no3d]" value="{pm.orderSuccessNo3dStatus}"></td>
+	<td><widget class="\XLite\View\StatusSelect" field="params[status_success_no3d]" value="{pm.orderSuccessNo3dStatus}"></td>
 </tr>
 
 <tr>
 	<td align="right">'SUCCESS' order status (3D-secure passed):</td>
 	<td>&nbsp;</td>
-	<td><widget class="XLite_View_StatusSelect" field="params[status_success_3dok]" value="{pm.orderSuccess3dOkStatus}"></td>
+	<td><widget class="\XLite\View\StatusSelect" field="params[status_success_3dok]" value="{pm.orderSuccess3dOkStatus}"></td>
 </tr>
 
 <tr>
 	<td align="right">'SUCCESS' order status (3D-secure failed):</td>
 	<td>&nbsp;</td>
-	<td><widget class="XLite_View_StatusSelect" field="params[status_success_3dfail]" value="{pm.orderSuccess3dFailStatus}"></td>
+	<td><widget class="\XLite\View\StatusSelect" field="params[status_success_3dfail]" value="{pm.orderSuccess3dFailStatus}"></td>
 </tr>
 
 <tr>

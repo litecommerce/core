@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View;
+
 /**
  * Product box widget
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_ProductBox extends XLite_View_SideBarBox
+class ProductBox extends \XLite\View\SideBarBox
 {
     /**
      * Widget parameter names
@@ -69,7 +71,7 @@ class XLite_View_ProductBox extends XLite_View_SideBarBox
     /**
      * Get product 
      * 
-     * @return XLite_Model_Product
+     * @return \XLite\Model\Product
      * @access protected
      * @since  3.0.0
      */
@@ -90,7 +92,7 @@ class XLite_View_ProductBox extends XLite_View_SideBarBox
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_PRODUCT_ID => new XLite_Model_WidgetParam_ObjectId_Product('Product Id', 0, true),
+            self::PARAM_PRODUCT_ID => new \XLite\Model\WidgetParam\ObjectId\Product('Product Id', 0, true),
         );
     }
 

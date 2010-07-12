@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View;
+
 /**
  * Sidebar categories list
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_TopCategories extends XLite_View_SideBarBox
+class TopCategories extends \XLite\View\SideBarBox
 {
     /**
      * Widget parameter names
@@ -117,7 +119,7 @@ class XLite_View_TopCategories extends XLite_View_SideBarBox
             $categoryId = $this->getWidgetParams(self::PARAM_ROOT_ID)->getObject()->category_id;
         }
 
-        return XLite_Core_Database::getRepo('XLite_Model_Category')->getCategoriesPlainList($categoryId);
+        return \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategoriesPlainList($categoryId);
     }
 
     /**
@@ -132,13 +134,13 @@ class XLite_View_TopCategories extends XLite_View_SideBarBox
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_DISPLAY_MODE => new XLite_Model_WidgetParam_Set(
+            self::PARAM_DISPLAY_MODE => new \XLite\Model\WidgetParam\Set(
                 'Display mode', 'list', true, $this->displayModes
             ),
-            self::PARAM_ROOT_ID      => new XLite_Model_WidgetParam_ObjectId_Category(
+            self::PARAM_ROOT_ID      => new \XLite\Model\WidgetParam\ObjectId\Category(
                 'Parent category ID (leave 0 for root categories list)', 0, true, true
             ),
-            self::PARAM_IS_SUBTREE   => new XLite_Model_WidgetParam_Bool(
+            self::PARAM_IS_SUBTREE   => new \XLite\Model\WidgetParam\Bool(
                 'Is subtree', false, false
             ),
         );
@@ -147,20 +149,20 @@ class XLite_View_TopCategories extends XLite_View_SideBarBox
     /**
      * Check - category included into active trail or not
      * 
-     * @param XLite_Model_Category $category Category
+     * @param \XLite\Model\Category $category Category
      *  
      * @return boolean
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function isActiveTrail(XLite_Model_Category $category)
+    public function isActiveTrail(\XLite\Model\Category $category)
     {
         if (is_null($this->pathIds)) {
 
             $this->pathIds = array();
 
-            $categoriesPath = XLite_Core_Database::getRepo('XLite_Model_Category')->getCategoryPath(XLite_Core_Request::getInstance()->category_id);
+            $categoriesPath = \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategoryPath(\XLite\Core\Request::getInstance()->category_id);
 
             if (is_array($categoriesPath)) {
                 foreach ($categoriesPath as $c) {
@@ -177,13 +179,13 @@ class XLite_View_TopCategories extends XLite_View_SideBarBox
      * 
      * @param int                  $index    item number
      * @param intr                 $count    items count
-     * @param XLite_Model_Category $category current category
+     * @param \XLite\Model\Category $category current category
      *  
      * @return string
      * @access public
      * @since  3.0.0
      */
-    public function assembleItemClassName($index, $count, XLite_Model_Category $category)
+    public function assembleItemClassName($index, $count, \XLite\Model\Category $category)
     {
         $classes = array();
 
@@ -222,15 +224,15 @@ class XLite_View_TopCategories extends XLite_View_SideBarBox
      *
      * @param integer              $i        item number
      * @param integer              $count    items count
-     * @param XLite_Model_Category $category current category
+     * @param \XLite\Model\Category $category current category
      *
      * @return string
      * @access public
      * @since  3.0.0
      */
-    public function assembleLinkClassName($i, $count, XLite_Model_Category $category)
+    public function assembleLinkClassName($i, $count, \XLite\Model\Category $category)
     {
-        return XLite_Core_Request::getInstance()->category_id == $category->category_id
+        return \XLite\Core\Request::getInstance()->category_id == $category->category_id
             ? 'active'
             : '';
     }
@@ -240,13 +242,13 @@ class XLite_View_TopCategories extends XLite_View_SideBarBox
      *
      * @param integer              $i        item number
      * @param integer              $count    items count
-     * @param XLite_Model_Category $category current category
+     * @param \XLite\Model\Category $category current category
      *
      * @return string
      * @access public
      * @since  3.0.0
      */
-    public function assembleListItemClassName($i, $count, XLite_View_AView $widget)
+    public function assembleListItemClassName($i, $count, \XLite\View\AView $widget)
     {
         $classes = array('leaf');
 

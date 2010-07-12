@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\GiftCertificates\View\Form\GiftCertificate;
+
 /**
  * Check gift certificate form
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_GiftCertificates_View_Form_GiftCertificate_Check extends XLite_View_Form_AForm
+class Check extends \XLite\View\Form\AForm
 {
     /**
      * Current form name 

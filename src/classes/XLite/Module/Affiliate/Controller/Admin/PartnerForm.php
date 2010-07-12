@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Affiliate\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Affiliate_Controller_Admin_PartnerForm extends XLite_Controller_Admin_AAdmin
+class PartnerForm extends \XLite\Controller\Admin\AAdmin
 {
     function init()
     {
@@ -45,7 +47,7 @@ class XLite_Module_Affiliate_Controller_Admin_PartnerForm extends XLite_Controll
     
     function action_update_field()
     {
-        $pf = new XLite_Module_Affiliate_Model_PartnerField($_POST['field_id']);
+        $pf = new \XLite\Module\Affiliate\Model\PartnerField($_POST['field_id']);
         if (!is_null($this->get('delete'))) {
             $pf->delete();
         } else {
@@ -56,7 +58,7 @@ class XLite_Module_Affiliate_Controller_Admin_PartnerForm extends XLite_Controll
 
     function action_add_field()
     {
-        $pf = new XLite_Module_Affiliate_Model_PartnerField();
+        $pf = new \XLite\Module\Affiliate\Model\PartnerField();
         $pf->set('properties', $_POST);
         $pf->create();
     }
@@ -65,7 +67,7 @@ class XLite_Module_Affiliate_Controller_Admin_PartnerForm extends XLite_Controll
     {
         $fields = $this->get('default_fields');
         if (is_array($fields)) {
-            XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+            \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
                 array(
                     'category' => 'Miscellaneous',
                     'name'     => 'partner_profile',

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\XPaymentsConnector;
+
 /**
  * Module
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_XPaymentsConnector_Module extends XLite_Module_AModule implements XLite_Base_IDecorator
+class Module extends \XLite\Module\AModule implements \XLite\Base\IDecorator
 {
     /**
      * Easy way to register payment method
@@ -48,7 +50,7 @@ class XLite_Module_XPaymentsConnector_Module extends XLite_Module_AModule implem
     protected function registerPaymentMethod($name, $class = null)
     {
         if ($class) {
-            $method = new XLite_Model_PaymentMethod();
+            $method = new \XLite\Model\PaymentMethod();
             $result = $method->registerMethod($name, $class);
 
         } else {

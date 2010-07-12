@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\AOM\View;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_AOM_View_StatusSelect extends XLite_View_StatusSelect implements XLite_Base_IDecorator
+class StatusSelect extends \XLite\View\StatusSelect implements \XLite\Base\IDecorator
 {
     public $allOption 	= false;
     public $statuses	= null;
@@ -42,7 +44,7 @@ class XLite_Module_AOM_View_StatusSelect extends XLite_View_StatusSelect impleme
     function getStatuses()
     {
         if (is_null($this->statuses)) {
-            $status = new XLite_Module_AOM_Model_OrderStatus();
+            $status = new \XLite\Module\AOM\Model\OrderStatus();
             $this->statuses = $status->findAll();
         }
         return $this->statuses;

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Controller_Admin_Upgrade extends XLite_Controller_Admin_AAdmin
+class Upgrade extends \XLite\Controller\Admin\AAdmin
 {
 
     function init()
@@ -54,16 +56,16 @@ class XLite_Controller_Admin_Upgrade extends XLite_Controller_Admin_AAdmin
 
     function action_upgrade()
     {
-        $up = new XLite_Model_Upgrade();
-        $up->setProperties(XLite_Core_Request::getInstance()->getData());
+        $up = new \XLite\Model\Upgrade();
+        $up->setProperties(\XLite\Core\Request::getInstance()->getData());
         $up->doUpgrade();
         $this->set('silent', true);
     }
 
     function action_upgrade_force()
     {
-        $up = new XLite_Model_Upgrade();
-        $up->setProperties(XLite_Core_Request::getInstance()->getData());
+        $up = new \XLite\Model\Upgrade();
+        $up->setProperties(\XLite\Core\Request::getInstance()->getData());
         $up->success();
         $this->set('silent', true);
     }

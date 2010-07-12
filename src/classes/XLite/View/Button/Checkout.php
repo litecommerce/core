@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View\Button;
+
 /**
  * Checkout button-link
  * 
@@ -34,7 +36,7 @@
  * @since   3.0.0
  * @ListChild (list="cart.buttons.checkout", weight="10")
  */
-class XLite_View_Button_Checkout extends XLite_View_Button_Link
+class Checkout extends \XLite\View\Button\Link
 {
     /**
      * Define widget parameters

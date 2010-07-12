@@ -46,8 +46,8 @@
   </table>
 
   {if:canApply()}
-    <widget class="XLite_Module_GiftCertificates_View_Form_GiftCertificate_Apply" name="apply_form" className="apply-gc" />
-      <widget class="XLite_View_Button_Submit" label="Redeem certificate" />
+    <widget class="\XLite\Module\GiftCertificates\View\Form\GiftCertificate\Apply" name="apply_form" className="apply-gc" />
+      <widget class="\XLite\View\Button\Submit" label="Redeem certificate" />
     <widget name="apply_form" end />
   {end:}
 

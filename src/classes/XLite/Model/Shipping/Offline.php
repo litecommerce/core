@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model\Shipping;
+
 /**
  * Offline shipping method
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_Shipping_Offline extends XLite_Model_Shipping
+class Offline extends \XLite\Model\Shipping
 {
     /**
      * Get module name 
@@ -52,14 +54,14 @@ class XLite_Model_Shipping_Offline extends XLite_Model_Shipping
      * Build find rates SQL query 
      * 
      * @param string            $sql   Initial query
-     * @param XLite_Model_Order $order Order
+     * @param \XLite\Model\Order $order Order
      *  
      * @return string
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function _buildRatesSql($sql, XLite_Model_Order $order)
+    protected function _buildRatesSql($sql, \XLite\Model\Order $order)
     {
         return $sql;
     }
@@ -67,14 +69,14 @@ class XLite_Model_Shipping_Offline extends XLite_Model_Shipping
     /**
      * Get rates 
      * 
-     * @param XLite_Model_Order $order Order
+     * @param \XLite\Model\Order $order Order
      *  
-     * @return array of XLite_Model_ShippingRate
+     * @return array of \XLite\Model\ShippingRate
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getRates(XLite_Model_Order $order)
+    public function getRates(\XLite\Model\Order $order)
     {
         $shop_country = $this->config->Company->location_country;
 
@@ -114,15 +116,15 @@ class XLite_Model_Shipping_Offline extends XLite_Model_Shipping
      * Build get rate SQL query
      * 
      * @param string               $sql    Initiual SQL query
-     * @param XLite_Model_Order    $order  Order
-     * @param XLite_Model_Shipping $method Shipping method
+     * @param \XLite\Model\Order    $order  Order
+     * @param \XLite\Model\Shipping $method Shipping method
      *  
      * @return string
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function _buildRateSql($sql, XLite_Model_Order $order, XLite_Model_Shipping $method)
+    protected function _buildRateSql($sql, \XLite\Model\Order $order, \XLite\Model\Shipping $method)
     {
         return $sql;
     }
@@ -130,21 +132,21 @@ class XLite_Model_Shipping_Offline extends XLite_Model_Shipping
     /**
      * Get rate 
      * 
-     * @param XLite_Model_Order    $order  Order
-     * @param XLite_Model_Shipping $method Shipping method
+     * @param \XLite\Model\Order    $order  Order
+     * @param \XLite\Model\Shipping $method Shipping method
      *  
-     * @return XLite_Model_ShippingRate
+     * @return \XLite\Model\ShippingRate
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getRate(XLite_Model_Order $order, XLite_Model_Shipping $method)
+    protected function getRate(\XLite\Model\Order $order, \XLite\Model\Shipping $method)
     {
         $shipping_id = $method->get('shipping_id');
         $weight = doubleval($order->get('weight'));
         $total = doubleval($order->calcSubTotal(true)); // SubTotal for "shipped only" items
 
-        $r = new XLite_Model_ShippingRate();
+        $r = new \XLite\Model\ShippingRate();
         $zone = $this->getZone($order);
         $items = $order->get('shippedItemsCount');
         $sql = "(shipping_id=-1 OR shipping_id='$shipping_id') AND (shipping_zone=-1 OR shipping_zone='$zone') AND min_weight<=$weight AND max_weight>=$weight AND min_total<=$total AND min_items<=$items AND max_items>=$items AND max_total>$total";

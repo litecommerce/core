@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\UPSOnlineTools\Controller\Customer;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_UPSOnlineTools_Controller_Customer_Image extends XLite_Controller_Customer_Image implements XLite_Base_IDecorator
+class Image extends \XLite\Controller\Customer\Image implements \XLite\Base\IDecorator
 {
     function handleRequest()
     {
@@ -43,7 +45,7 @@ class XLite_Module_UPSOnlineTools_Controller_Customer_Image extends XLite_Contro
                 exit();
             }
 
-            $order = new XLite_Model_Order($this->get('order_id'));
+            $order = new \XLite\Model\Order($this->get('order_id'));
             $containers = $order->get('ups_containers');
 
             $container_id = $this->get('container');

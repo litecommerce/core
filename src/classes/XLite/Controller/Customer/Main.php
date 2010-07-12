@@ -26,14 +26,16 @@
  * @since      3.0.0
  */
 
+namespace XLite\Controller\Customer;
+
 /**
- * XLite_Controller_Customer_Main 
+ * \XLite\Controller\Customer\Main 
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Controller_Customer_Main extends XLite_Controller_Customer_ACustomer
+class Main extends \XLite\Controller\Customer\ACustomer
 {
     /**
      * params 
@@ -84,7 +86,7 @@ class XLite_Controller_Customer_Main extends XLite_Controller_Customer_ACustomer
     {
         parent::init($params);
 
-        if (!isset(XLite_Core_Request::getInstance()->action)) {
+        if (!isset(\XLite\Core\Request::getInstance()->action)) {
             $this->session->set('productListURL', $this->get('url'));
         }
     }
@@ -101,10 +103,10 @@ class XLite_Controller_Customer_Main extends XLite_Controller_Customer_ACustomer
     {
         if (is_null($this->extraPage)) {
 
-            $this->extraPage = new XLite_Model_ExtraPage();
+            $this->extraPage = new \XLite\Model\ExtraPage();
 
-            if (isset(XLite_Core_Request::getInstance()->page) && !empty(XLite_Core_Request::getInstance()->page)) {
-                $this->extraPage = $this->extraPage->findPage(XLite_Core_Request::getInstance()->page);
+            if (isset(\XLite\Core\Request::getInstance()->page) && !empty(\XLite\Core\Request::getInstance()->page)) {
+                $this->extraPage = $this->extraPage->findPage(\XLite\Core\Request::getInstance()->page);
             }
         }
 

@@ -39,7 +39,7 @@
 
 function AccountingPackage_export_qb(&$dialog) 
 {
-    $qb = new XLite_View_AView();
+    $qb = new \XLite\View\AView();
     $qb->component = $dialog;
     $qb->set('template', "modules/AccountingPackage/export_qb.tpl");
     $dialog->startDownload('orders.iif');
@@ -50,7 +50,7 @@ function AccountingPackage_export_qb(&$dialog)
 
 function AccountingPackage_export(&$dialog, $format) 
 {
-    $qb = new XLite_View_AView();
+    $qb = new \XLite\View\AView();
     $qb->component = $dialog;
     $template = $format . "_" . $dialog->get('export_result') . ".tpl";
     $csv = $dialog->get('export_result') . ".csv";

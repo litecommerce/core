@@ -26,14 +26,16 @@
  * @since      3.0.0
  */
 
+namespace XLite\Controller\Customer;
+
 /**
- * XLite_Controller_Customer_Drupal 
+ * \XLite\Controller\Customer\Drupal 
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Controller_Customer_Drupal extends XLite_Controller_Customer_ACustomer
+class Drupal extends \XLite\Controller\Customer\ACustomer
 {
     /**
      * Do not perform any action 

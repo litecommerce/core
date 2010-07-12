@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\ProductOptions\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_ProductOptions_Controller_Admin_OrderList extends XLite_Controller_Admin_OrderList implements XLite_Base_IDecorator
+class OrderList extends \XLite\Controller\Admin\OrderList implements \XLite\Base\IDecorator
 {
     function columnCount($order)
     {

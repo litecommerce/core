@@ -44,7 +44,7 @@ function editTemplate()
     <td width="10"><font class="Star">*</font></td>
     <td>
         {if:ecard.isPersistent}<img src="{ecard.thumbnail.url}?{rand()}">{end:}<br>
-        <widget class="XLite_View_ImageUpload" field="thumbnail" actionName="images" formName="modify_form" object="{ecard}">
+        <widget class="\XLite\View\ImageUpload" field="thumbnail" actionName="images" formName="modify_form" object="{ecard}">
     </td>
 </tr>
 <tr valign="top">
@@ -52,7 +52,7 @@ function editTemplate()
     <td width="10"><font class="Star">*</font></td>
     <td>
         {if:ecard.isPersistent}<img src="{ecard.image.url}?{rand()}">{end:}<br>
-        <widget class="XLite_View_ImageUpload" field="image" actionName="images" formName="modify_form" object="{ecard}">
+        <widget class="\XLite\View\ImageUpload" field="image" actionName="images" formName="modify_form" object="{ecard}">
     </td>
 </tr>
 <tr valign="top">

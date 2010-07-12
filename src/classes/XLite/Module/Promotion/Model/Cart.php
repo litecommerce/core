@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Promotion\Model;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Promotion_Model_Cart extends XLite_Model_Cart implements XLite_Base_IDecorator
+class Cart extends \XLite\Model\Cart implements \XLite\Base\IDecorator
 {
     public $_originalItems = false;
     public $doNotCallCartChanged = false;
@@ -50,7 +52,7 @@ class XLite_Module_Promotion_Model_Cart extends XLite_Model_Cart implements XLit
 
     public function __construct($id = null)
     {
-        $obj = new XLite_Base();
+        $obj = new \XLite\Base();
         $obj->logger->log("->Cart::constructor()");
         $this->doNotCallCartChanged = true;
         parent::__construct($id);
@@ -116,7 +118,7 @@ class XLite_Module_Promotion_Model_Cart extends XLite_Model_Cart implements XLit
                 $bonuses[$i]->delete();
             }
             for ($i=0; $i<count($offers); $i++) {
-                $offer = new XLite_Module_Promotion_Model_SpecialOffer($offers[$i]->get('offer_id'));
+                $offer = new \XLite\Module\Promotion\Model\SpecialOffer($offers[$i]->get('offer_id'));
                 $offer->bonusPrices = null;
                 if ( function_exists('func_is_clone_deprecated') && func_is_clone_deprecated() ) {
                     $newOffer = $offer->cloneObject();
@@ -268,18 +270,18 @@ class XLite_Module_Promotion_Model_Cart extends XLite_Model_Cart implements XLit
                 $newRegularAmount = $regularItemAmount+$bonusItemAmount - $newBonusAmount; // $regularItemAmount+$bonusItemAmount is an invariant
                 if (is_object($regularItem)) {
                     $reg_props = $regularItem->get('properties');
-                    $regularItem1 = new XLite_Model_OrderItem();
+                    $regularItem1 = new \XLite\Model\OrderItem();
                     $regularItem1->set('properties', $reg_props);
-                    $regularItem2 = new XLite_Model_OrderItem();
+                    $regularItem2 = new \XLite\Model\OrderItem();
                     $regularItem2->set('properties', $reg_props);
                 } else {
                     $regularItem1 = $regularItem2 = null;
                 }
                 if (is_object($bonusItem)) {
                     $reg_props = $bonusItem->get('properties');
-                    $bonusItem1 = new XLite_Model_OrderItem();
+                    $bonusItem1 = new \XLite\Model\OrderItem();
                     $bonusItem1->set('properties', $reg_props);
-                    $bonusItem2 = new XLite_Model_OrderItem();
+                    $bonusItem2 = new \XLite\Model\OrderItem();
                     $bonusItem2->set('properties', $reg_props);
                 } else {
                     $bonusItem1 = $bonusItem2 = null;
@@ -473,7 +475,7 @@ class XLite_Module_Promotion_Model_Cart extends XLite_Model_Cart implements XLit
         if (is_null($couponCode)) {
             $couponCode = $this->getComplex('DC.coupon');
         }
-        $coupon = new XLite_Module_Promotion_Model_DiscountCoupon();
+        $coupon = new \XLite\Module\Promotion\Model\DiscountCoupon();
         if (!$coupon->find("coupon='$couponCode' AND order_id=0")) {
             return 'not_found';
         }

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Promotion\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,21 +35,21 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Promotion_Controller_Admin_DiscountCoupon extends XLite_Controller_Admin_AAdmin
+class DiscountCoupon extends \XLite\Controller\Admin\AAdmin
 {
     public $params = array('target', "coupon_id");
 
     function getDC() 
     {
         if (is_null($this->_dc)) {
-            $this->_dc = new XLite_Module_Promotion_Model_DiscountCoupon($this->get('coupon_id'));
+            $this->_dc = new \XLite\Module\Promotion\Model\DiscountCoupon($this->get('coupon_id'));
         }
         return $this->_dc;
     }
 
     function action_update() 
     {
-        $dc = new XLite_Module_Promotion_Model_DiscountCoupon();
+        $dc = new \XLite\Module\Promotion\Model\DiscountCoupon();
         if ($dc->find("coupon='" . addslashes($_POST['coupon']) . "' AND order_id='0' AND coupon_id<>'".addslashes($this->get('coupon_id'))."'")) {
             $this->set('valid', false);
             $this->couponCodeDuplicate = true;

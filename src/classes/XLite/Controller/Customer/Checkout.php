@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Controller\Customer;
+
 /**
  * Checkout 
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
+class Checkout extends \XLite\Controller\Customer\Cart
 {
     /**
      * Avaliable checkout steps (modes)
@@ -75,7 +77,7 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
      */
     protected function getModelFormClass()
     {
-        return 'XLite_View_Model_Profile_Checkout';
+        return '\XLite\View\Model\Profile\Checkout';
     }
 
     /**
@@ -88,7 +90,7 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
     protected function checkProfile()
     {
         // TODO - check this
-        //return XLite_Model_CachingFactory::getObject(__METHOD__, $this->getModelFormClass())->isValid();
+        //return \XLite\Model\CachingFactory::getObject(__METHOD__, $this->getModelFormClass())->isValid();
 
         return $this->getModelForm()->isValid();
     }
@@ -103,7 +105,7 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
      */
     protected function isCheckoutError()
     {
-        return 'error' == XLite_Core_Request::getInstance()->mode;
+        return 'error' == \XLite\Core\Request::getInstance()->mode;
     }
 
     /**
@@ -129,7 +131,7 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
      */
     protected function isRegistrationNeeded()
     {
-        return !XLite_Model_Auth::getInstance()->isLogged() || !$this->checkProfile();
+        return !\XLite\Model\Auth::getInstance()->isLogged() || !$this->checkProfile();
     }
 
     /**
@@ -224,35 +226,35 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
     {
         return array(
             self::CHECKOUT_MODE_ERROR => array(
-                self::STEP_WIDGET_CLASS  => 'XLite_View_CheckoutStep_Pseudo_Error',
+                self::STEP_WIDGET_CLASS  => '\XLite\View\CheckoutStep\Pseudo\Error',
                 self::STEP_IS_NOT_PASSED => $this->isCheckoutError(),
             ),
             self::CHECKOUT_MODE_NOT_ALLOWED => array(
-                self::STEP_WIDGET_CLASS  => 'XLite_View_CheckoutStep_Pseudo_NotAllowed',
+                self::STEP_WIDGET_CLASS  => '\XLite\View\CheckoutStep\Pseudo\NotAllowed',
                 self::STEP_IS_NOT_PASSED => $this->isCheckoutNotAllowed(),
             ),
             self::CHECKOUT_MODE_REGISTER => array(
-                self::STEP_WIDGET_CLASS  => 'XLite_View_CheckoutStep_Regular_Register',
+                self::STEP_WIDGET_CLASS  => '\XLite\View\CheckoutStep\Regular\Register',
                 self::STEP_IS_NOT_PASSED => $this->isRegistrationNeeded(),
             ),
             self::CHECKOUT_MODE_ZERO_TOTAL => array(
-                self::STEP_WIDGET_CLASS  => 'XLite_View_CheckoutStep_Pseudo_ZeroTotal',
+                self::STEP_WIDGET_CLASS  => '\XLite\View\CheckoutStep\Pseudo\ZeroTotal',
                 self::STEP_IS_NOT_PASSED => $this->isZeroOrderTotal(),
             ),
             self::CHECKOUT_MODE_NO_SHIPPING => array(
-                self::STEP_WIDGET_CLASS  => 'XLite_View_CheckoutStep_Pseudo_NoShipping',
+                self::STEP_WIDGET_CLASS  => '\XLite\View\CheckoutStep\Pseudo\NoShipping',
                 self::STEP_IS_NOT_PASSED => $this->isNoShipping(),
             ),
             self::CHECKOUT_MODE_NO_PAYMENT => array(
-                self::STEP_WIDGET_CLASS  => 'XLite_View_CheckoutStep_Pseudo_NoPayment',
+                self::STEP_WIDGET_CLASS  => '\XLite\View\CheckoutStep\Pseudo\NoPayment',
                 self::STEP_IS_NOT_PASSED => $this->isNoPayment(),
             ),
             self::CHECKOUT_MODE_PAYMENT_METHOD => array(
-                self::STEP_WIDGET_CLASS  => 'XLite_View_CheckoutStep_Regular_PaymentMethod',
+                self::STEP_WIDGET_CLASS  => '\XLite\View\CheckoutStep\Regular\PaymentMethod',
                 self::STEP_IS_NOT_PASSED => $this->isPaymentNeeded() || $this->isShippingNeeded(),
             ),
             self::CHECKOUT_MODE_DETAILS => array(
-                self::STEP_WIDGET_CLASS  => 'XLite_View_CheckoutStep_Regular_Details',
+                self::STEP_WIDGET_CLASS  => '\XLite\View\CheckoutStep\Regular\Details',
                 self::STEP_IS_NOT_PASSED => $this->isFinalStep(),
             ),
         );
@@ -269,7 +271,7 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
     {
         foreach ($this->getCheckoutStepDescriptions() as $mode => $data) {
             $this->checkoutSteps->add(
-                new XLite_Model_ListNode_CheckoutStep(
+                new \XLite\Model\ListNode\CheckoutStep(
                     $mode,  
                     $data[self::STEP_WIDGET_CLASS],
                     !$data[self::STEP_IS_NOT_PASSED]
@@ -284,14 +286,14 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
     /**
      * Return checkout steps list
      * 
-     * @return XLite_Model_Collection_CheckoutSteps
+     * @return \XLite\Model\Collection\CheckoutSteps
      * @access protected
      * @since  3.0.0
      */
     protected function getCheckoutSteps()
     {
         if (!isset($this->checkoutSteps)) {
-            $this->checkoutSteps = new XLite_Model_Collection_CheckoutSteps();
+            $this->checkoutSteps = new \XLite\Model\Collection\CheckoutSteps();
             $this->defineCheckoutSteps();
         }
 
@@ -313,16 +315,16 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
     /**
      * Return current order 
      * 
-     * @return XLite_Model_Order
+     * @return \XLite\Model\Order
      * @access protected
      * @since  3.0.0
      */
     protected function getOrder()
     {
-        return XLite_Model_CachingFactory::getObject(
+        return \XLite\Model\CachingFactory::getObject(
             __METHOD__,
-            'XLite_Model_Order',
-            XLite_Core_Request::getInstance()->order_id
+            '\XLite\Model\Order',
+            \XLite\Core\Request::getInstance()->order_id
         );
     }
 
@@ -335,9 +337,9 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
      */
     protected function getPaymentMethods()
     {
-        return XLite_Model_CachingFactory::getObjectFromCallback(
+        return \XLite\Model\CachingFactory::getObjectFromCallback(
             __METHOD__,
-            'XLite_Model_PaymentMethod',
+            '\XLite\Model\PaymentMethod',
             'getActiveMethods'
         );
     }
@@ -355,9 +357,9 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
             $data = $this->getActualStep()->getTopMessage();
 
             if (isset($data)) {
-                XLite_Core_TopMessage::getInstance()->add(
-                    $data[XLite_Core_TopMessage::FIELD_TEXT],
-                    $data[XLite_Core_TopMessage::FIELD_TYPE]
+                \XLite\Core\TopMessage::getInstance()->add(
+                    $data[\XLite\Core\TopMessage::FIELD_TEXT],
+                    $data[\XLite\Core\TopMessage::FIELD_TYPE]
                 );
             }
         }
@@ -405,11 +407,11 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
         // FIXME - is it really needed?
         $this->checkHtaccess();
 
-        $pm = new XLite_Model_PaymentMethod(XLite_Core_Request::getInstance()->payment_id);
+        $pm = new \XLite\Model\PaymentMethod(\XLite\Core\Request::getInstance()->payment_id);
         if (!$pm->isExists()) {
-            XLite_Core_TopMessage::getInstance()->add(
+            \XLite\Core\TopMessage::getInstance()->add(
                 'No payment method selected',
-                XLite_Core_TopMessage::ERROR
+                \XLite\Core\TopMessage::ERROR
             );
     
         } else {
@@ -418,9 +420,9 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
             $this->updateCart();
 
             if ($this->isPaymentNeeded()) {
-                XLite_Core_TopMessage::getInstance()->add(
+                \XLite\Core\TopMessage::getInstance()->add(
                     'The selected payment method is obsolete or invalid. Select another payment method.',
-                    XLite_Core_TopMessage::ERROR
+                    \XLite\Core\TopMessage::ERROR
                 );
             }
         }
@@ -439,8 +441,8 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
         // FIXME - is it really needed?
         $this->checkHtaccess();
 
-        if (isset(XLite_Core_Request::getInstance()->shipping)) {
-            $this->getCart()->set('shipping_id', XLite_Core_Request::getInstance()->shipping);
+        if (isset(\XLite\Core\Request::getInstance()->shipping)) {
+            $this->getCart()->set('shipping_id', \XLite\Core\Request::getInstance()->shipping);
             $this->updateCart();
         }
     }
@@ -448,9 +450,9 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
     /**
      * Return current checkout step
      *
-     * NOTE: function is public since it's required for the XLite_View_Checkout widget
+     * NOTE: function is public since it's required for the \XLite\View\Checkout widget
      * 
-     * @return XLite_Model_ListNode_CheckoutStep
+     * @return \XLite\Model\ListNode\CheckoutStep
      * @access public
      * @since  3.0.0
      */
@@ -462,9 +464,9 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
     /**
      * Return actual heckout step
      *
-     * NOTE: function is public since it can be useful for the XLite_View_Checkout widget
+     * NOTE: function is public since it can be useful for the \XLite\View\Checkout widget
      *
-     * @return XLite_Model_ListNode_CheckoutStep
+     * @return \XLite\Model\ListNode\CheckoutStep
      * @access public
      * @since  3.0.0
      */
@@ -491,21 +493,21 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
 
             $this->actionPostprocess(null);
             $url = isset($step)
-                ? $this->buildURL('checkout', '', array(XLite_View_AView::PARAM_MODE => $step->getMode()))
+                ? $this->buildURL('checkout', '', array(\XLite\View\AView::PARAM_MODE => $step->getMode()))
                 : $this->buildURL('cart');
 
             $this->setReturnUrl($url);
 
         } else {
 
-            if (!isset(XLite_Core_Request::getInstance()->mode)) {
-                XLite_Core_Request::getInstance()->mode = $step->getMode();
+            if (!isset(\XLite\Core\Request::getInstance()->mode)) {
+                \XLite\Core\Request::getInstance()->mode = $step->getMode();
             }
 
-            switch (XLite_Core_Request::getInstance()->mode) {
+            switch (\XLite\Core\Request::getInstance()->mode) {
 
                 case self::CHECKOUT_MODE_ZERO_TOTAL:
-                    XLite_Core_Request::getInstance()->payment_id = $this->config->Payments->default_offline_payment;
+                    \XLite\Core\Request::getInstance()->payment_id = $this->config->Payments->default_offline_payment;
                     $this->doActionPayment();
                     $this->getCart()->checkout();
                     $this->doActionCheckout();
@@ -573,8 +575,8 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
 
         $pm = $this->getCart()->get('paymentMethod');
         if (!is_null($pm)) {
-            $notes = isset(XLite_Core_Request::getInstance()->notes)
-                ? XLite_Core_Request::getInstance()->notes
+            $notes = isset(\XLite\Core\Request::getInstance()->notes)
+                ? \XLite\Core\Request::getInstance()->notes
                 : '';
             $this->getCart()->set('notes', $notes);
 
@@ -582,12 +584,12 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
 
             switch ($pm->handleRequest($this->getCart())) {
 
-                case XLite_Model_PaymentMethod::PAYMENT_SILENT:
+                case \XLite\Model\PaymentMethod::PAYMENT_SILENT:
                     // don't call output()
                     $this->set('silent', true);
                     break;
 
-                case XLite_Model_PaymentMethod::PAYMENT_SUCCESS:
+                case \XLite\Model\PaymentMethod::PAYMENT_SUCCESS:
                     $this->success();
                     $this->setReturnUrl(
                         $this->buildURL(
@@ -598,7 +600,7 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
                     );
                     break;
 
-                case XLite_Model_PaymentMethod::PAYMENT_FAILURE:
+                case \XLite\Model\PaymentMethod::PAYMENT_FAILURE:
                     $this->setReturnUrl(
                         $this->buildURL(
                             'checkout',
@@ -616,7 +618,7 @@ class XLite_Controller_Customer_Checkout extends XLite_Controller_Customer_Cart
         // some of gateways can't accept return url on run-time and
         // use the one set in merchant account, so we can't pass
         // 'order_id' in run-time, instead pass the order id parameter name
-        $request = XLite_Core_Request::getInstance();
+        $request = \XLite\Core\Request::getInstance();
         $orderId = isset($request->order_id_name) ? $request->order_id_name : $request->order_id;
 
         if ($this->isCartProcessed()) {

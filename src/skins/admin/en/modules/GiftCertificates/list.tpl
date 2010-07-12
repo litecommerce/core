@@ -11,7 +11,7 @@
  * @since     3.0.0
  *}
 
-<widget class="XLite_View_Pager" name="pager" data="{giftCertificates}" />
+<widget class="\XLite\View\Pager" name="pager" data="{giftCertificates}" />
 
 <br />
 

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,11 +35,11 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Controller_Admin_CacheManagement extends XLite_Controller_Admin_AAdmin
+class CacheManagement extends \XLite\Controller\Admin\AAdmin
 {
     public function action_rebuild()
     {
-        XLite_Model_ModulesManager::getInstance()->rebuildCache();
+        \XLite\Model\ModulesManager::getInstance()->rebuildCache();
         func_flush('<script language="javascript">document.getElementById("rebuild_cache_block").style.display = "none";</script>' . "\n");
 
         $this->displayPageHeader();

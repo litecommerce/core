@@ -26,15 +26,17 @@
  * @since      3.0.0
  */
 
+namespace XLite\View;
+
 /**
- * XLite_View_AddressBook 
+ * \XLite\View\AddressBook 
  * 
  * @package    XLite
  * @subpackage ____sub_package____
  * @see        ____class_see____
  * @since      3.0.0
  */
-class XLite_View_AddressBook extends XLite_View_Dialog
+class AddressBook extends \XLite\View\Dialog
 {
     /**
      * Return title

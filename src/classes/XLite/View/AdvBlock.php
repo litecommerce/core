@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View;
+
 /**
  * Advertise widget
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_AdvBlock extends XLite_View_AView
+class AdvBlock extends \XLite\View\AView
 {
     /**
      * Show widget (for internal block)
@@ -72,7 +74,7 @@ class XLite_View_AdvBlock extends XLite_View_AView
         return false;
 
         return parent::isVisible()
-            && XLite::isAdminZone()
+            && \XLite::isAdminZone()
             && $this->auth->isLogged()
             && ($this->forceShow || !$this->session->get('advertise_show'));
     }

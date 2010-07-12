@@ -11,4 +11,4 @@
  * @since     3.0.0
  * @ListChild (list="chekout.details", weight="50")
  *}
-<div class="center"><widget class="XLite_View_Button_Link" label="Change addresses" location="{buildURL(#checkout#,##,_ARRAY_(#mode#^#register#))}" /></div>
+<div class="center"><widget class="\XLite\View\Button\Link" label="Change addresses" location="{buildURL(#checkout#,##,_ARRAY_(#mode#^#register#))}" /></div>

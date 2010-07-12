@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model\Repo;
+
 /**
  * Country repository
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_Repo_Country extends XLite_Model_Repo_ARepo
+class Country extends \XLite\Model\Repo\ARepo
 {
     /**
      * Default 'order by' field name

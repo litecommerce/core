@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model;
+
 define('PATCH_APPLIED', 1);
 define('ALREADY_PATCHED', 2);
 define('CANT_PATCH', 3);
@@ -40,7 +42,7 @@ define('MAIL_SKINS', 'mail');
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_Upgrade extends XLite_Model_AModel
+class Upgrade extends \XLite\Model\AModel
 {
     public $fields = array(
         "from_ver" => "",
@@ -63,7 +65,7 @@ class XLite_Model_Upgrade extends XLite_Model_AModel
 
     /**
     * Syntax:
-    * $upgrade = new XLite_Model_Upgrade();
+    * $upgrade = new \XLite\Model\Upgrade();
     * $upgrade->set('from_ver', "1.2.3");
     * $upgrade->set('to_ver', "2.3.4");
     * $upgrade->doUpgrade();
@@ -125,7 +127,7 @@ Please correct errors above and click reload or click the button below to force 
             }
 
             // set current version in config->Version->version
-            XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+            \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
                 array(
                     'category' => 'Version',
                     'name'     => 'version',

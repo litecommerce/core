@@ -33,7 +33,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite extends XLite_Base implements XLite_Base_ISingleton
+class XLite extends \XLite\Base implements \XLite\Base\ISingleton
 {
     /**
      * Endpoints
@@ -61,7 +61,7 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
     /**
      * Called controller 
      * 
-     * @var    XLite_Controller_AController
+     * @var    \XLite\Controller\AController
      * @access protected
      * @since  3.0.0
      */
@@ -127,10 +127,10 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
      */
     protected static function getTarget()
     {
-        $target = XLite_Core_Request::getInstance()->target;
+        $target = \XLite\Core\Request::getInstance()->target;
 
         if (empty($target)) {
-            XLite_Core_Request::getInstance()->target = $target = self::TARGET_DEFAULT;
+            \XLite\Core\Request::getInstance()->target = $target = self::TARGET_DEFAULT;
         }
 
         return $target;
@@ -145,7 +145,7 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
      */
     protected static function getControllerClass()
     {
-        return XLite_Core_Converter::getControllerClass(self::getTarget());
+        return \XLite\Core\Converter::getControllerClass(self::getTarget());
     }
 
     /**
@@ -157,7 +157,7 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
      */
     protected function getAction()
     {
-        return XLite_Core_Request::getInstance()->action;
+        return \XLite\Core\Request::getInstance()->action;
     }
 
     /**
@@ -171,7 +171,7 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
     protected function clearDataOnStartup()
     {
         self::$controller = null;
-        XLite_Model_CachingFactory::clearCache();
+        \XLite\Model\CachingFactory::clearCache();
     }
     
 
@@ -237,7 +237,7 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
     public function __destruct()
     {
         if ($this->isNeedToCleanupCache) {
-            XLite_Model_ModulesManager::getInstance()->cleanupCache();
+            \XLite\Model\ModulesManager::getInstance()->cleanupCache();
         }
     }
 
@@ -287,7 +287,7 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
         }
 
         if ($secure) {
-            $session = XLite_Model_Session::getInstance();
+            $session = \XLite\Model\Session::getInstance();
             $url .= (false !== strpos($url, '?') ? '&' : '?') . $session->getName() . '=' . $session->getID();
         }
 
@@ -297,19 +297,19 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
     /**
      * Return instance of the abstract factory sigleton 
      * 
-     * @return XLite_Model_Factory
+     * @return \XLite\Model\Factory
      * @access public
      * @since  3.0.0
      */
     public function getFactory()
     {
-        return XLite_Model_Factory::getInstance();
+        return \XLite\Model\Factory::getInstance();
     }
 
     /**
      * Get controller
      *
-     * @return XLite_Controller_AController
+     * @return \XLite\Controller\AController
      * @access public
      * @since  3.0.0
      */
@@ -317,11 +317,11 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
     {
         if (!isset(self::$controller)) {
             $class = self::getControllerClass();
-            if (!XLite_Core_Operator::isClassExists($class)) {
-                XLite::getInstance()->doGlobalDie('Controller class ' . $class . ' not found!');
+            if (!\XLite\Core\Operator::isClassExists($class)) {
+                \XLite::getInstance()->doGlobalDie('Controller class ' . $class . ' not found!');
             }
 
-            self::$controller = new $class(XLite_Core_Request::getInstance()->getData());
+            self::$controller = new $class(\XLite\Core\Request::getInstance()->getData());
             self::$controller->init();
         }
 
@@ -341,7 +341,7 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
      */
     public static function setController($controller = null)
     {
-        if (is_null($controller) || $controller instanceof XLite_Controller_AController) {
+        if (is_null($controller) || $controller instanceof \XLite\Controller\AController) {
             self::$controller = $controller;
         }
     }
@@ -370,7 +370,7 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
      */
     public function initModules()
     {
-        XLite_Model_ModulesManager::getInstance()->init();
+        \XLite\Model\ModulesManager::getInstance()->init();
     }
 
     /**
@@ -388,7 +388,7 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
     /**
      * Return viewer object
      * 
-     * @return XLite_View_Controller|null
+     * @return \XLite\View\Controller|null
      * @access public
      * @since  3.0.0
      */
@@ -407,7 +407,7 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
      * 
      * @param boolean $adminZone Admin interface flag
      *  
-     * @return XLite_View_AView
+     * @return \XLite\View\AView
      * @access public
      * @since  3.0.0
      */
@@ -420,14 +420,14 @@ class XLite extends XLite_Base implements XLite_Base_ISingleton
         self::clearDataOnStartup();
 
         // Initialize logger
-        XLite_Logger::getInstance();
+        \XLite\Logger::getInstance();
 
         // Initialize modules
         $this->initModules();
 
         // Set skin for admin area
         if (true === self::$adminZone) {
-            XLite_Model_Layout::getInstance()->skin = 'admin';
+            \XLite\Model\Layout::getInstance()->skin = 'admin';
         }
 
         return $this;

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Controller_Admin_ProductPopup extends XLite_Controller_Admin_AAdmin
+class ProductPopup extends \XLite\Controller\Admin\AAdmin
 {
     public $params = array('target', "formName", "spanName", "formField", 'mode', 'search_productsku', 'substring', 'search_category', 'subcategory_search', 'pageID', 'status');
     public $template = "product_popup.tpl";
@@ -46,7 +48,7 @@ class XLite_Controller_Admin_ProductPopup extends XLite_Controller_Admin_AAdmin
     function getProducts()
     {
         if (is_null($this->products)) {
-            $p = new XLite_Model_Product();
+            $p = new \XLite\Model\Product();
             $this->products = $p->advancedSearch($this->substring,
                     $this->search_productsku,
                     $this->search_category,

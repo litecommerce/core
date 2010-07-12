@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View\Form\Cart\Item;
+
 /**
  * Update cart item form
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_Form_Cart_Item_Update extends XLite_View_Form_Cart_Item_AItem
+class Update extends \XLite\View\Form\Cart\Item\AItem
 {
     /**
      * Current form name 

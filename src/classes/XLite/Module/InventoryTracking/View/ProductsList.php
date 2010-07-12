@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\InventoryTracking\View;
+
 /**
  * Products list
  * 
@@ -33,18 +35,18 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class XLite_Module_InventoryTracking_View_ProductsList extends XLite_View_ProductsList implements XLite_Base_IDecorator
+abstract class ProductsList extends \XLite\View\ProductsList implements \XLite\Base\IDecorator
 {
     /**
      * Check - show Add to cart button or not
      *
-     * @param XLite_Model_Product $product Product
+     * @param \XLite\Model\Product $product Product
      *
      * @return boolean
      * @access protected
      * @since  3.0.0
      */
-    protected function isShowAdd2Cart(XLite_Model_Product $product)
+    protected function isShowAdd2Cart(\XLite\Model\Product $product)
     {
         $result = parent::isShowAdd2Cart($product);
 

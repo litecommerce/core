@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Controller_Admin_Product extends XLite_Controller_Admin_AAdmin
+class Product extends \XLite\Controller\Admin\AAdmin
 {
     public $params = array('target', 'product_id', 'page', 'backUrl');
     public $page = "info";
@@ -57,7 +59,7 @@ class XLite_Controller_Admin_Product extends XLite_Controller_Admin_AAdmin
     function getProduct()
     {
         if (is_null($this->product)) {
-            $this->product = new XLite_Model_Product($this->product_id);
+            $this->product = new \XLite\Model\Product($this->product_id);
         }
 
         if (is_null($this->extraFields)) {
@@ -72,7 +74,7 @@ class XLite_Controller_Admin_Product extends XLite_Controller_Admin_AAdmin
         $this->product->populateExtraFields();
 
         if (is_null($this->extraFields)) {
-            $ef = new XLite_Model_ExtraField();
+            $ef = new \XLite\Model\ExtraField();
             $this->extraFields = $ef->findAll("product_id=".$this->get('product_id'));
         }
         return $this->extraFields;
@@ -80,8 +82,8 @@ class XLite_Controller_Admin_Product extends XLite_Controller_Admin_AAdmin
 
     function action_add_field()
     {
-        $ef = new XLite_Model_ExtraField();
-        $ef->set('properties', XLite_Core_Request::getInstance()->getData());
+        $ef = new \XLite\Model\ExtraField();
+        $ef->set('properties', \XLite\Core\Request::getInstance()->getData());
         $ef->create();
     }
 
@@ -90,12 +92,12 @@ class XLite_Controller_Admin_Product extends XLite_Controller_Admin_AAdmin
     {
         if (!is_null($this->get('delete')) && !is_null($this->get('delete_fields'))) {
             foreach ((array)$this->get('delete_fields') as $id) {
-                $ef = new XLite_Model_ExtraField($id);
+                $ef = new \XLite\Model\ExtraField($id);
                 $ef->delete();
             }
         } elseif (!is_null($this->get('update'))) {
             foreach ((array)$this->get('extra_fields') as $id => $data) {
-                $ef = new XLite_Model_ExtraField($id);
+                $ef = new \XLite\Model\ExtraField($id);
                 $ef->set('properties', $data);
                 $ef->update();
             }
@@ -105,8 +107,8 @@ class XLite_Controller_Admin_Product extends XLite_Controller_Admin_AAdmin
     function action_info()
     {
         // update product properties
-        $product = new XLite_Model_Product($this->product_id);
-        $properties = XLite_Core_Request::getInstance()->getData();
+        $product = new \XLite\Model\Product($this->product_id);
+        $properties = \XLite\Core\Request::getInstance()->getData();
 
         // Sanitize
         if (isset($properties['clean_url'])) {
@@ -116,9 +118,9 @@ class XLite_Controller_Admin_Product extends XLite_Controller_Admin_AAdmin
                 && !$this->checkCleanURLUnique($properties['clean_url'])
             ) {
 
-                XLite_Core_TopMessage::getInstance()->add(
+                \XLite\Core\TopMessage::getInstance()->add(
                     'The Clean URL you specified is already in use. Please specify another Clean URL',
-                    XLite_Core_TopMessage::ERROR
+                    \XLite\Core\TopMessage::ERROR
                 );
                 $this->set('valid', false);
                 return;
@@ -133,7 +135,7 @@ class XLite_Controller_Admin_Product extends XLite_Controller_Admin_AAdmin
 
         // link product category(ies)
         if (isset($this->category_id)) {
-            $category = new XLite_Model_Category($this->category_id);
+            $category = new \XLite\Model\Category($this->category_id);
             $product->set('category', $category);
         }
 
@@ -141,7 +143,7 @@ class XLite_Controller_Admin_Product extends XLite_Controller_Admin_AAdmin
         $extraFields = (array)$this->get('extra_fields');
         if (!empty($extraFields)) {
             foreach ($extraFields as $id => $value) {
-                $fv = new XLite_Model_FieldValue();
+                $fv = new \XLite\Model\FieldValue();
                 $found = $fv->find("field_id=$id AND product_id=$this->product_id");
                 $fv->set('value', $value);
                 if ($found) {
@@ -158,13 +160,13 @@ class XLite_Controller_Admin_Product extends XLite_Controller_Admin_AAdmin
     function action_images()
     {
         $tn = $this->getComplex('product.thumbnail');
-        if ($tn->handleRequest() != XLite_Model_Image::IMAGE_OK && $tn->_shouldProcessUpload) {
+        if ($tn->handleRequest() != \XLite\Model\Image::IMAGE_OK && $tn->_shouldProcessUpload) {
         	$this->set('valid', false);
         	$this->set('thumbnail_read_only', true);
         }
 
         $img = $this->getComplex('product.image');
-        if ($img->handleRequest() != XLite_Model_Image::IMAGE_OK && $img->_shouldProcessUpload) {
+        if ($img->handleRequest() != \XLite\Model\Image::IMAGE_OK && $img->_shouldProcessUpload) {
         	$this->set('valid', false);
         	$this->set('image_read_only', true);
         }
@@ -172,7 +174,7 @@ class XLite_Controller_Admin_Product extends XLite_Controller_Admin_AAdmin
 
     function action_clone()
     {
-        $p_product = new XLite_Model_Product($this->product_id);
+        $p_product = new \XLite\Model\Product($this->product_id);
         $product = $p_product->cloneObject();
         foreach ($p_product->get('categories') as $category) {
             $product->addCategory($category);
@@ -194,7 +196,7 @@ class XLite_Controller_Admin_Product extends XLite_Controller_Admin_AAdmin
      */
     protected function checkCleanURLUnique($cleanURL)
     {
-        $product = new XLite_Model_Product();
+        $product = new \XLite\Model\Product();
 
         return !$product->find('clean_url = \'' . $cleanURL . '\'');
     }

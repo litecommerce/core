@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Affiliate\Model;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Affiliate_Model_BannerStats extends XLite_Model_AModel
+class BannerStats extends \XLite\Model\AModel
 {
     public $fields = array(
             "stat_id"    => 0,
@@ -83,7 +85,7 @@ class XLite_Module_Affiliate_Model_BannerStats extends XLite_Model_AModel
         $endDate = intval($endDate);
 
         // select partners orders
-        $o = new XLite_Model_Order();
+        $o = new \XLite\Model\Order();
         $ordersTable = $o->db->getTableByAlias($o->alias);
         $sql = "SELECT partnerClick AS stat_id, subtotal FROM $ordersTable WHERE partnerClick<>0 AND (status='P' OR status='C')";
         $orders = $this->db->getAll($sql);
@@ -236,13 +238,13 @@ class XLite_Module_Affiliate_Model_BannerStats extends XLite_Model_AModel
                 $result[$i]['rate'] =  sprintf("%.02f", doubleval($result[$i]['clicks'] / $result[$i]['views']));
             }
             if (isset($result[$i]['banner_id'])) {
-                $banner = new XLite_Module_Affiliate_Model_Banner();
+                $banner = new \XLite\Module\Affiliate\Model\Banner();
                 $banner->set('deleted', !$banner->find("banner_id=".$result[$i]['banner_id']));
                 $result[$i]['banner'] = $banner;
             }
             // create product instance
             else if (isset($result[$i]['product_id'])) {
-                $product = new XLite_Model_Product();
+                $product = new \XLite\Model\Product();
                 $product->set('deleted', !$product->find("product_id=".$result[$i]['product_id']));
                 $result[$i]['product'] = $product;
             }
@@ -269,7 +271,7 @@ class XLite_Module_Affiliate_Model_BannerStats extends XLite_Model_AModel
     function getPartner() 
     {
         if (is_null($this->partner)) {
-            $profile = new XLite_Model_Profile($this->get('partner_id'));
+            $profile = new \XLite\Model\Profile($this->get('partner_id'));
             if ($profile->is('partner') && $profile->is('enabled')) {
                 $this->partner = $profile;
             }

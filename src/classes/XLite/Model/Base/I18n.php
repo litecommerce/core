@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model\Base;
+
 /**
  * Translation-owner abstract class
  * 
@@ -34,7 +36,7 @@
  * @since   3.0.0
  * @MappedSuperclass
  */
-abstract class XLite_Model_Base_I18n extends XLite_Model_AEntity
+abstract class I18n extends \XLite\Model\AEntity
 {
     /**
      * Languages query 
@@ -71,7 +73,7 @@ abstract class XLite_Model_Base_I18n extends XLite_Model_AEntity
      */
     protected function getDefaultLanguageCode()
     {
-        return XLite_Model_Session::getInstance()->getLanguage()->code;
+        return \XLite\Model\Session::getInstance()->getLanguage()->code;
     }
 
     /**
@@ -79,7 +81,7 @@ abstract class XLite_Model_Base_I18n extends XLite_Model_AEntity
      * 
      * @param string $code Language code
      *  
-     * @return XLite_Model_Base_Translation
+     * @return \XLite\Model\Base\Translation
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -115,7 +117,7 @@ abstract class XLite_Model_Base_I18n extends XLite_Model_AEntity
      * 
      * @param string $code Language code
      *  
-     * @return XLite_Model_Base_Translation
+     * @return \XLite\Model\Base\Translation
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -247,7 +249,7 @@ abstract class XLite_Model_Base_I18n extends XLite_Model_AEntity
     {
         if (is_null(self::$languagesQuery)) {
             self::$languagesQuery = array_fill_keys(
-                XLite_Core_Database::getRepo('XLite_Model_Language')->getLanguagesQuery(),
+                \XLite\Core\Database::getRepo('XLite\Model\Language')->getLanguagesQuery(),
                 false
             );
         }

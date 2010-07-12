@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View;
+
 /**
  * Buy now widget
  *
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0
  */
-class XLite_View_BuyNow extends XLite_View_AView
+class BuyNow extends \XLite\View\AView
 {
     /**
      * Widget parameter names
@@ -67,9 +69,9 @@ class XLite_View_BuyNow extends XLite_View_AView
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_PRODUCT      => new XLite_Model_WidgetParam_Object('Product', null, false, 'XLite_Model_Product'),
-            self::PARAM_BUTTON_STYLE => new XLite_Model_WidgetParam_String('Button style', ''),
-            self::PARAM_SHOW_PRICE => new XLite_Model_WidgetParam_String('Show the product price in the button', ''),
+            self::PARAM_PRODUCT      => new \XLite\Model\WidgetParam\Object('Product', null, false, '\XLite\Model\Product'),
+            self::PARAM_BUTTON_STYLE => new \XLite\Model\WidgetParam\String('Button style', ''),
+            self::PARAM_SHOW_PRICE => new \XLite\Model\WidgetParam\String('Show the product price in the button', ''),
         );
     }
 
@@ -90,7 +92,7 @@ class XLite_View_BuyNow extends XLite_View_AView
     /**
      * Get product
      * 
-     * @return XLite_Model_Product
+     * @return \XLite\Model\Product
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\ProductAdviser\Model;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_ProductAdviser_Model_Inventory extends XLite_Module_InventoryTracking_Model_Inventory implements XLite_Base_IDecorator
+class Inventory extends \XLite\Module\InventoryTracking\Model\Inventory implements \XLite\Base\IDecorator
 {
     function set($property, $value)
     {
@@ -71,13 +73,13 @@ There <?php echo ($inventoryCAI == 1) ? "is" : "are"; ?> <b><font color=blue><?p
     function update()
     {
     	if ($this->xlite->get('checkInventoryChangedAfterImport')) {
-            $inventory = new XLite_Module_InventoryTracking_Model_Inventory($this->get('inventory_id'));
+            $inventory = new \XLite\Module\InventoryTracking\Model\Inventory($this->get('inventory_id'));
             $oldAmount = $inventory->get('amount');
 
     		$inventoryChangedAmount = $this->properties;
             $inventoryChangedAmount['oldAmount'] = $oldAmount;
 
-    		$notification = new XLite_Module_ProductAdviser_Model_Notification();
+    		$notification = new \XLite\Module\ProductAdviser\Model\Notification();
     		if ($notification->createInventoryChangedNotification($inventoryChangedAmount)) {
         		$this->xlite->set('inventoryChangedAfterImport', $this->xlite->get('inventoryChangedAfterImport') + 1);
     		}

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Controller\Admin;
+
 /**
  * Helpdesk request
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Controller_Admin_Helpdesk extends XLite_Controller_Admin_AAdmin
+class Helpdesk extends \XLite\Controller\Admin\AAdmin
 {
     /**
      * Service server URL 
@@ -64,8 +66,8 @@ class XLite_Controller_Admin_Helpdesk extends XLite_Controller_Admin_AAdmin
         $country = strtolower($this->config->Company->location_country);
         $phone = $this->config->Company->company_phone;
 
-        $subject = XLite_Core_Request::getInstance()->subject;
-        $message = XLite_Core_Request::getInstance()->message;
+        $subject = \XLite\Core\Request::getInstance()->subject;
+        $message = \XLite\Core\Request::getInstance()->message;
 
         $charset = $this->getCharset();
 

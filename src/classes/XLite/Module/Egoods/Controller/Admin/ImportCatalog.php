@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Egoods\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Egoods_Controller_Admin_ImportCatalog extends XLite_Controller_Admin_ImportCatalog implements XLite_Base_IDecorator
+class ImportCatalog extends \XLite\Controller\Admin\ImportCatalog implements \XLite\Base\IDecorator
 {
     public function __construct(array $params = array())
     {
@@ -53,7 +55,7 @@ class XLite_Module_Egoods_Controller_Admin_ImportCatalog extends XLite_Controlle
             "update_existing"	=> $this->update_existing,
             "return_error"		=> true,
             );
-        $pin = new XLite_Module_Egoods_Model_PinCode();
+        $pin = new \XLite\Module\Egoods\Model\PinCode();
         $pin->import($options);
         $this->importError = $pin->importError;
 

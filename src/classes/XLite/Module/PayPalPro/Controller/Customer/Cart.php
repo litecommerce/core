@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\PayPalPro\Controller\Customer;
+
 /**
  * Cart
  * 
@@ -33,8 +35,8 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_PayPalPro_Controller_Customer_Cart extends XLite_Controller_Customer_Cart
-implements XLite_Base_IDecorator
+class Cart extends \XLite\Controller\Customer\Cart
+implements \XLite\Base\IDecorator
 {
     /**
      * Call 'ExpressCheckout' action
@@ -59,7 +61,7 @@ implements XLite_Base_IDecorator
      */
     protected function doActionExpressCheckout()
     {
-        $pm = XLite_Model_PaymentMethod::factory('paypalpro_express');
+        $pm = \XLite\Model\PaymentMethod::factory('paypalpro_express');
 
         if (!$pm->startExpressCheckout($this->getCart())) {
 

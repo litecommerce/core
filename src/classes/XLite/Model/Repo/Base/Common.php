@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model\Repo\Base;
+
 /**
  * Common repository
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_Repo_Base_Common extends XLite_Model_Repo_ARepo
+class Common extends \XLite\Model\Repo\ARepo
 {
 }
 

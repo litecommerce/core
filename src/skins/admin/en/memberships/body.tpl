@@ -13,7 +13,7 @@
 <p>Use this section to review the list of existing membership levels and add new ones.</p>
 
 <div class="right-panel">
-  <widget class="XLite_View_EditorLanguageSelector" />
+  <widget class="\XLite\View\EditorLanguageSelector" />
 </div>
 
 <form IF="getMemberships()" action="admin.php" method="POST" name="update_membership_form">
@@ -38,8 +38,8 @@
 	</table>
 
   <div class="buttons">
-    <widget class="XLite_View_Button_Submit" label="Update" />
-    <widget class="XLite_View_Button_DeleteSelected" />
+    <widget class="\XLite\View\Button\Submit" label="Update" />
+    <widget class="\XLite\View\Button\DeleteSelected" />
   </div>
 </form>
 
@@ -70,6 +70,6 @@
 
   </ul>
 
-  <widget class="XLite_View_Button_Submit" label="Add" />
+  <widget class="\XLite\View\Button\Submit" label="Add" />
 
 </form>

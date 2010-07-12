@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model;
+
 /**
  * Language translations
  * 
@@ -35,7 +37,7 @@
  * @Entity
  * @Table (name="language_translations")
  */
-class XLite_Model_LanguageTranslation extends XLite_Model_Base_Translation
+class LanguageTranslation extends \XLite\Model\Base\Translation
 {
     /**
      * Language name

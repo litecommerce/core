@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Controller\Customer;
+
 /**
  * Product
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Controller_Customer_Product extends XLite_Controller_Customer_Catalog
+class Product extends \XLite\Controller\Customer\Catalog
 {
     protected $params = array('product_id');
 
@@ -75,7 +77,7 @@ class XLite_Controller_Customer_Product extends XLite_Controller_Customer_Catalo
     /**
      * Return random product category 
      * 
-     * @return XLite_Model_Category
+     * @return \XLite\Model\Category
      * @access protected
      * @since  3.0.0
      */
@@ -101,7 +103,7 @@ class XLite_Controller_Customer_Product extends XLite_Controller_Customer_Catalo
     /**
      * getModelObject
      *
-     * @return XLite_Model_AModel
+     * @return \XLite\Model\AModel
      * @access protected
      * @since  3.0.0
      */

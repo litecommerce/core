@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\JoomlaConnector;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_JoomlaConnector_Handler extends XLite_Core_CMSConnector
+class Handler extends \XLite\Core\CMSConnector
 {
     /**
      * Return name of current CMS 

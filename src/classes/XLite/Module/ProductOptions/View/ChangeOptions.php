@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\ProductOptions\View;
+
 /**
  * Change options widget
  *
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0
  */
-class XLite_Module_ProductOptions_View_ChangeOptions extends XLite_View_AView
+class ChangeOptions extends \XLite\View\AView
 {
     /**
      * Widget parameter names
@@ -45,7 +47,7 @@ class XLite_Module_ProductOptions_View_ChangeOptions extends XLite_View_AView
     /**
      * Product (cache)
      * 
-     * @var    XLite_Model_Product
+     * @var    \XLite\Model\Product
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
@@ -77,7 +79,7 @@ class XLite_Module_ProductOptions_View_ChangeOptions extends XLite_View_AView
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_ITEM => new XLite_Model_WidgetParam_Object('Item', null, false, 'XLite_Model_OrderItem'),
+            self::PARAM_ITEM => new \XLite\Model\WidgetParam\Object('Item', null, false, '\XLite\Model\OrderItem'),
         );
     }
 
@@ -91,10 +93,10 @@ class XLite_Module_ProductOptions_View_ChangeOptions extends XLite_View_AView
      */
     public function isVisible()
     {
-        $result = parent::isVisible() && XLite::getController()->getItem();
+        $result = parent::isVisible() && \XLite::getController()->getItem();
 
         if ($result) {
-            $this->widgetParams[self::PARAM_ITEM]->setValue(XLite::getController()->getItem());
+            $this->widgetParams[self::PARAM_ITEM]->setValue(\XLite::getController()->getItem());
 
             $result = $this->getParam(self::PARAM_ITEM)->hasOptions();
         }
@@ -105,7 +107,7 @@ class XLite_Module_ProductOptions_View_ChangeOptions extends XLite_View_AView
     /**
      * Get product 
      * 
-     * @return XLite_Model_Product
+     * @return \XLite\Model\Product
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

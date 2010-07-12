@@ -38,7 +38,7 @@ The form below allows you to create a partner profile. Do not forget that this i
     </td>
     <td>
         &nbsp;
-        <widget class="XLite_Validator_EmailValidator" field="login">
+        <widget class="\XLite\Validator\EmailValidator" field="login">
     </td>
 </tr>
 <tr><td>&nbsp;</td><td>&nbsp;</td><td>
@@ -61,7 +61,7 @@ Please leave the password fields empty<br> if you don't want to change the passw
         <input type="password" name="confirm_password" value="{confirm_password:r}" size="32" maxlength="128">
     </td>
     <td>
-        <widget class="XLite_Validator_PasswordValidator" field="confirm_password" passwordField="password">
+        <widget class="\XLite\Validator\PasswordValidator" field="confirm_password" passwordField="password">
     </td>
 </tr>
 <tr valign="middle">
@@ -112,7 +112,7 @@ Please leave the password fields empty<br> if you don't want to change the passw
     </td>
     <td>
         &nbsp;
-        <widget class="XLite_Validator_RequiredValidator" field="billing_firstname" visible="{config.Miscellaneous.partner_profile.billing_firstname}">
+        <widget class="\XLite\Validator\RequiredValidator" field="billing_firstname" visible="{config.Miscellaneous.partner_profile.billing_firstname}">
     </td>
 </tr>
 <tr valign="middle">
@@ -123,7 +123,7 @@ Please leave the password fields empty<br> if you don't want to change the passw
     </td>
     <td align="left">
         &nbsp;
-        <widget class="XLite_Validator_RequiredValidator" field="billing_lastname" visible="{config.Miscellaneous.partner_profile.billing_lastname}">
+        <widget class="\XLite\Validator\RequiredValidator" field="billing_lastname" visible="{config.Miscellaneous.partner_profile.billing_lastname}">
     </td>
 </tr>
 <tr valign="middle">
@@ -134,7 +134,7 @@ Please leave the password fields empty<br> if you don't want to change the passw
     </td>
     <td>
         &nbsp;
-        <widget class="XLite_Validator_RequiredValidator" field="billing_company" visible="{config.Miscellaneous.partner_profile.billing_company}">
+        <widget class="\XLite\Validator\RequiredValidator" field="billing_company" visible="{config.Miscellaneous.partner_profile.billing_company}">
     </td>
 </tr>
 <tr valign="middle">
@@ -145,7 +145,7 @@ Please leave the password fields empty<br> if you don't want to change the passw
     </td>
     <td>
         &nbsp;
-        <widget class="XLite_Validator_RequiredValidator" field="billing_phone" visible="{config.Miscellaneous.partner_profile.billing_phone}">
+        <widget class="\XLite\Validator\RequiredValidator" field="billing_phone" visible="{config.Miscellaneous.partner_profile.billing_phone}">
     </td>
 </tr>
 <tr valign="middle">
@@ -156,7 +156,7 @@ Please leave the password fields empty<br> if you don't want to change the passw
     </td>
     <td>
         &nbsp;
-        <widget class="XLite_Validator_RequiredValidator" field="billing_fax" visible="{config.Miscellaneous.partner_profile.billing_fax}">
+        <widget class="\XLite\Validator\RequiredValidator" field="billing_fax" visible="{config.Miscellaneous.partner_profile.billing_fax}">
     </td>
 </tr>
 <tr valign="middle">
@@ -167,7 +167,7 @@ Please leave the password fields empty<br> if you don't want to change the passw
     </td>
     <td>
         &nbsp;
-        <widget class="XLite_Validator_RequiredValidator" field="billing_address" visible="{config.Miscellaneous.partner_profile.billing_address}">
+        <widget class="\XLite\Validator\RequiredValidator" field="billing_address" visible="{config.Miscellaneous.partner_profile.billing_address}">
     </td>
 </tr>
 <tr valign="middle">
@@ -178,30 +178,30 @@ Please leave the password fields empty<br> if you don't want to change the passw
     </td>
     <td>
         &nbsp;
-        <widget class="XLite_Validator_RequiredValidator" field="billing_city" visible="{config.Miscellaneous.partner_profile.billing_city}">
+        <widget class="\XLite\Validator\RequiredValidator" field="billing_city" visible="{config.Miscellaneous.partner_profile.billing_city}">
     </td>
 </tr>
 <tr valign="middle">
     <td align="right">State</td>
     <td>{if:config.Miscellaneous.partner_profile.billing_state}<font color="red">*</font>{else:}&nbsp;{end:}</td>
     <td>
-		<widget class="XLite_View_StateSelect" field="billing_state" value="{billing_state}">
+		<widget class="\XLite\View\StateSelect" field="billing_state" value="{billing_state}">
     </td>
     <td>
         &nbsp;
-        <widget class="XLite_Validator_RequiredValidator" field="billing_state" visible="{config.Miscellaneous.partner_profile.billing_state}">
-        <widget class="XLite_Validator_StateValidator" field="billing_state" countryField="billing_country" visible="{config.Miscellaneous.partner_profile.billing_state}">
+        <widget class="\XLite\Validator\RequiredValidator" field="billing_state" visible="{config.Miscellaneous.partner_profile.billing_state}">
+        <widget class="\XLite\Validator\StateValidator" field="billing_state" countryField="billing_country" visible="{config.Miscellaneous.partner_profile.billing_state}">
     </td>
 </tr>
 <tr valign="middle">
     <td align="right">Country</td>
     <td>{if:config.Miscellaneous.partner_profile.billing_country}<font color="red">*</font>{else:}&nbsp;{end:}</td>
     <td>
-		<widget class="XLite_View_CountrySelect" field="billing_country">
+		<widget class="\XLite\View\CountrySelect" field="billing_country">
     </td>
     <td>
         &nbsp;
-        <widget class="XLite_Validator_RequiredValidator" field="billing_country" visible="{config.Miscellaneous.partner_profile.billing_country}">
+        <widget class="\XLite\Validator\RequiredValidator" field="billing_country" visible="{config.Miscellaneous.partner_profile.billing_country}">
     </td>
 </tr>
 <tr valign="middle">
@@ -212,7 +212,7 @@ Please leave the password fields empty<br> if you don't want to change the passw
     </td>
     <td>
         &nbsp;
-        <widget class="XLite_Validator_RequiredValidator" field="billing_zipcode" visible="{config.Miscellaneous.partner_profile.billing_zipcode}">
+        <widget class="\XLite\Validator\RequiredValidator" field="billing_zipcode" visible="{config.Miscellaneous.partner_profile.billing_zipcode}">
     </td>
 </tr>
 
@@ -230,7 +230,7 @@ Please leave the password fields empty<br> if you don't want to change the passw
     <td></td>
     <td>
         <select class="FixedSelect" disabled>
-            <option FOREACH="xlite.factory.XLite_Module_Affiliate_Model_AffiliatePlan.findAll(),ap" value="{ap.plan_id}" selected="{ap.plan_id=pending_plan}">{ap.title:h}</option>
+            <option FOREACH="xlite.factory.\XLite\Module\Affiliate\Model\AffiliatePlan.findAll(),ap" value="{ap.plan_id}" selected="{ap.plan_id=pending_plan}">{ap.title:h}</option>
         </select>
         <input type=hidden name="pending_plan" value="{pending_plan}">
     </td>
@@ -241,7 +241,7 @@ Please leave the password fields empty<br> if you don't want to change the passw
     <td></td>
     <td>
         <select class="FixedSelect" disabled>
-            <option FOREACH="xlite.factory.XLite_Module_Affiliate_Model_AffiliatePlan.findAll(),ap" value="{ap.plan_id}" selected="{ap.plan_id=plan}">{ap.title:h}</option>
+            <option FOREACH="xlite.factory.\XLite\Module\Affiliate\Model\AffiliatePlan.findAll(),ap" value="{ap.plan_id}" selected="{ap.plan_id=plan}">{ap.title:h}</option>
         </select>
     </td>
     <td>&nbsp;</td>
@@ -249,7 +249,7 @@ Please leave the password fields empty<br> if you don't want to change the passw
 
 <!-- ********************************* ADDITIONAL FIELDS ********************************* -->
 
-<widget class="XLite_Module_Affiliate_View_PartnerField" template="modules/Affiliate/partner_field.tpl" formField="partner_fields" partnerFields="{partnerFields}" partner="{profile}">
+<widget class="\XLite\Module\Affiliate\View\PartnerField" template="modules/Affiliate/partner_field.tpl" formField="partner_fields" partnerFields="{partnerFields}" partner="{profile}">
 
 </table>
 

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model;
+
 /**
  * Abstract entity 
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class XLite_Model_AEntity
+abstract class AEntity
 {
     /**
      * Field access codes
@@ -126,6 +128,7 @@ abstract class XLite_Model_AEntity
 
         $accessor = self::$accessors[$class][$name];
 
+        // Accessor name assembled into getAccessor() method
         return $accessor
             ? $this->$accessor()
             : (isset($this->$name) ? $this->$name : null);
@@ -155,6 +158,8 @@ abstract class XLite_Model_AEntity
 
         $mutator = self::$mutators[$class][$name];
         if ($mutator) {
+
+            // Mutator name assembled into getMutator() method
             $this->$mutator($value);
 
         } else {
@@ -174,7 +179,7 @@ abstract class XLite_Model_AEntity
      */
     protected function getAccessor($name)
     {
-        $method = 'get' . XLite_Core_Converter::prepareMethodName($name);
+        $method = 'get' . \XLite\Core\Converter::prepareMethodName($name);
 
         return method_exists($this, $method) ? $method : false;
     }
@@ -191,7 +196,7 @@ abstract class XLite_Model_AEntity
      */
     protected function getMutator($name)
     {
-        $method = 'set' . XLite_Core_Converter::prepareMethodName($name);
+        $method = 'set' . \XLite\Core\Converter::prepareMethodName($name);
 
         return method_exists($this, $method) ? $method : false;
     }
@@ -199,14 +204,14 @@ abstract class XLite_Model_AEntity
     /**
      * Get entity repository 
      * 
-     * @return XLite_Model_Doctrine_Repo_AbstractRepo
+     * @return \XLite\Model\Doctrine\Repo\AbstractRepo
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
     public function getRepository()
     {
-        return XLite_Core_Database::getEntityManager()
+        return \XLite\Core\Database::getEntityManager()
             ->getRepository(get_called_class());
     }
 
@@ -224,7 +229,7 @@ abstract class XLite_Model_AEntity
 
         if (!isset(self::$cacheEnabled[$class])) {
             $repo = $this->getRepository();
-            self::$cacheEnabled[$class] = ($repo && is_subclass_of($repo, 'XLite_Model_Repo_ARepo'))
+            self::$cacheEnabled[$class] = ($repo && is_subclass_of($repo, '\XLite\Model\Repo\ARepo'))
                 ? $repo->hasCacheCells()
                 : false;
         }

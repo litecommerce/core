@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\AOM\View;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_AOM_View_AView extends XLite_View_AView implements XLite_Base_IDecorator
+class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
 {
     function invertSign($value)
     {

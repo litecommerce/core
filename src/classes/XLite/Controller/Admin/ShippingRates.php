@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Controller_Admin_ShippingRates extends XLite_Controller_Admin_ShippingSettings
+class ShippingRates extends \XLite\Controller\Admin\ShippingSettings
 {
     public $params = array('target', 'shipping_zone_range', 'shipping_id_range');
     
@@ -49,18 +51,18 @@ class XLite_Controller_Admin_ShippingRates extends XLite_Controller_Admin_Shippi
     {
         // read select condition from the request
         $condition = array();
-        if (isset(XLite_Core_Request::getInstance()->shipping_zone_range) && strlen(XLite_Core_Request::getInstance()->shipping_zone_range) > 0) {
-            $this->shipping_zone_range = XLite_Core_Request::getInstance()->shipping_zone_range;
+        if (isset(\XLite\Core\Request::getInstance()->shipping_zone_range) && strlen(\XLite\Core\Request::getInstance()->shipping_zone_range) > 0) {
+            $this->shipping_zone_range = \XLite\Core\Request::getInstance()->shipping_zone_range;
             $condition[] = "shipping_zone='$this->shipping_zone_range'";
         }
-        if (!empty(XLite_Core_Request::getInstance()->shipping_id_range)) {
-            $this->shipping_id_range = XLite_Core_Request::getInstance()->shipping_id_range;
+        if (!empty(\XLite\Core\Request::getInstance()->shipping_id_range)) {
+            $this->shipping_id_range = \XLite\Core\Request::getInstance()->shipping_id_range;
             $condition[] = "shipping_id='$this->shipping_id_range'";
         }
         $condition = implode(' AND ', $condition);
-        $sr = new XLite_Model_ShippingRate();
+        $sr = new \XLite\Model\ShippingRate();
         $shipping_rates = $sr->findAll($condition);
-        $shipping = new XLite_Model_Shipping();
+        $shipping = new \XLite\Model\Shipping();
     	$modules = $shipping->getModules();
     	$modules = (is_array($modules)) ? array_keys($modules) : array();
         $shippings = $shipping->findAll();
@@ -90,8 +92,8 @@ class XLite_Controller_Admin_ShippingRates extends XLite_Controller_Admin_Shippi
     function action_add()
     {
         $this->params[] = "message";
-        $rate = new XLite_Model_ShippingRate();
-        $rate->set('properties', XLite_Core_Request::getInstance()->getData());
+        $rate = new \XLite\Model\ShippingRate();
+        $rate->set('properties', \XLite\Core\Request::getInstance()->getData());
         if (!$rate->isExists()) {
         	$this->set('message', "added");
         	$rate->create();
@@ -103,9 +105,9 @@ class XLite_Controller_Admin_ShippingRates extends XLite_Controller_Admin_Shippi
     function action_update()
     {
         $shippingRates = $this->get('shippingRates');
-        foreach (XLite_Core_Request::getInstance()->rate as $key => $rate_data) {
+        foreach (\XLite\Core\Request::getInstance()->rate as $key => $rate_data) {
             if (array_key_exists($key, $shippingRates)) {
-                $rate = new XLite_Model_ShippingRate();
+                $rate = new \XLite\Model\ShippingRate();
                 $rate->set('properties', $rate_data);
                 if ($rate->isExists()) {
                     $rate->update();
@@ -122,7 +124,7 @@ class XLite_Controller_Admin_ShippingRates extends XLite_Controller_Admin_Shippi
     function action_delete()
     {
         $shippingRates = $this->get('shippingRates');
-        $rate = $shippingRates[XLite_Core_Request::getInstance()->deleted_rate];
+        $rate = $shippingRates[\XLite\Core\Request::getInstance()->deleted_rate];
         $rate->delete();
     }
 }

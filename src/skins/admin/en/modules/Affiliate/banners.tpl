@@ -50,7 +50,7 @@
     <table border=1 cellspacing=0 cellpadding=8 background="images/pattern.gif">
     <tr>
     <td>
-    <widget class="XLite_Module_Affiliate_View_Banner" type="js" banner="{banner}">
+    <widget class="\XLite\Module\Affiliate\View\Banner" type="js" banner="{banner}">
     </td>
     </tr>
     </table>

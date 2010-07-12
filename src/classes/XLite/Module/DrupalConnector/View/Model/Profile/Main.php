@@ -26,15 +26,17 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\DrupalConnector\View\Model\Profile;
+
 /**
- * XLite_Module_DrupalConnector_View_Model_Profile_Main
+ * \XLite\Module\DrupalConnector\View\Model\Profile\Main
  *
  * @package    XLite
  * @subpackage ____sub_package____
  * @see        ____class_see____
  * @since      3.0.0
  */
-class XLite_Module_DrupalConnector_View_Model_Profile_Main extends XLite_View_Model_Profile_Main implements XLite_Base_IDecorator
+class Main extends \XLite\View\Model\Profile\Main implements \XLite\Base\IDecorator
 {
     /**
      * Process the errors occured during the "validateInput" action
@@ -46,7 +48,7 @@ class XLite_Module_DrupalConnector_View_Model_Profile_Main extends XLite_View_Mo
      */
     protected function postprocessErrorActionValidateInput()
     {
-        if (XLite_Module_DrupalConnector_Handler::getInstance()->checkCurrentCMS()) {
+        if (\XLite\Module\DrupalConnector\Handler::getInstance()->checkCurrentCMS()) {
             // Highligth the "Email" field using Drupal function
             form_set_error('mail', t($this->getErrorActionValidateInputMessage($this->getRequestData('login'))));
         } else {

@@ -16,7 +16,7 @@
 <tr>
     <td>User <b>{auth.profile.login}</b> is logged in.</td>
     <td>
-        <widget class="XLite_View_Button_Link" label="Logoff" location="{buildURL(#login#,#logoff#)}" />
+        <widget class="\XLite\View\Button\Link" label="Logoff" location="{buildURL(#login#,#logoff#)}" />
     </td>
 </tr>
 <tr><td colspan=2><br><br></td><tr>
@@ -25,13 +25,13 @@
         <h2>Account settings</h2>
         <table border=0>
         <tr>
-            <td><widget class="XLite_View_Button_Link" label="Order history" location="{buildURL(#order_list#)}" /></td>
+            <td><widget class="\XLite\View\Button\Link" label="Order history" location="{buildURL(#order_list#)}" /></td>
             <td>&nbsp;&nbsp;</td>
             <!-- AFTER HISTORY -->
-            <td><widget class="XLite_View_Button_Link" label="Modify profile" location="{buildURL(#profile#,##,_ARRAY_(#mode#^#modify#))}" /></td>
+            <td><widget class="\XLite\View\Button\Link" label="Modify profile" location="{buildURL(#profile#,##,_ARRAY_(#mode#^#modify#))}" /></td>
             <td>&nbsp;&nbsp;</td>
             <!-- AFTER PROFILE -->
-            <td><widget class="XLite_View_Button_Link" label="Delete profile" location="{buildURL(#profile#,##,_ARRAY_(#mode#^#delete#))}" /></td>
+            <td><widget class="\XLite\View\Button\Link" label="Delete profile" location="{buildURL(#profile#,##,_ARRAY_(#mode#^#delete#))}" /></td>
             <td>&nbsp;&nbsp;</td>
         </tr>
         </table>

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View\Button;
+
 /**
  * 'Delete selecetd' button
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_Button_DeleteSelected extends XLite_View_Button_Regular
+class DeleteSelected extends \XLite\View\Button\Regular
 {
     /**
      * Widget parameter names
@@ -53,7 +55,7 @@ class XLite_View_Button_DeleteSelected extends XLite_View_Button_Regular
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_CONFIRMATION => new XLite_Model_WidgetParam_String('Confirmation text', '', true),
+            self::PARAM_CONFIRMATION => new \XLite\Model\WidgetParam\String('Confirmation text', '', true),
         );
 
         $this->widgetParams[self::PARAM_ACTION]->setValue('delete');

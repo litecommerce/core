@@ -12,6 +12,6 @@
  * @ListChild (list="chekout.details", weight="100")
  *}
 <div class="button-row">
-  <widget class="XLite_View_Button_Submit" label="Place order" style="bright-button big-button place-button" />
+  <widget class="\XLite\View\Button\Submit" label="Place order" style="bright-button big-button place-button" />
   <div class="submit-progress" style="display: none;">Please wait while your order is being processed...</div>
 </div>

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\ProductAdviser\Model;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_ProductAdviser_Model_RelatedProduct extends XLite_Model_AModel
+class RelatedProduct extends \XLite\Model\AModel
 {
     public $fields = array
     (
@@ -49,7 +51,7 @@ class XLite_Module_ProductAdviser_Model_RelatedProduct extends XLite_Model_AMode
     function filter()
     {
     	if (is_null($this->product)) {
-        	$this->product = new XLite_Model_Product($this->get('product_id'));
+        	$this->product = new \XLite\Model\Product($this->get('product_id'));
         }
     	if (is_object($this->product)) {
         	return $this->product->filter();

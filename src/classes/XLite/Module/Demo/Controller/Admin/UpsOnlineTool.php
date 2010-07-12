@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Demo\Controller\Admin;
+
 /**
  * UPS Online Tool controller
  * 
@@ -33,8 +35,8 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Demo_Controller_Admin_UpsOnlineTool extends XLite_Module_UPSOnlineTools_Controller_Admin_UpsOnlineTool
-implements XLite_Base_IDecorator
+class UpsOnlineTool extends \XLite\Module\UPSOnlineTools\Controller\Admin\UpsOnlineTool
+implements \XLite\Base\IDecorator
 {
     /**
      * Check if current page is accessible
@@ -45,8 +47,8 @@ implements XLite_Base_IDecorator
      */
     public function checkAccess()
     {
-        if (XLite_Core_Request::getInstance()->action) {
-            XLite_Module_Demo_Main::doForbidAction();
+        if (\XLite\Core\Request::getInstance()->action) {
+            \XLite\Module\Demo\Main::doForbidAction();
         }
 
         return parent::checkAccess();

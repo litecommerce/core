@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\GiftCertificates\Core;
+
 /**
  * CMS connector
  * 
@@ -33,8 +35,8 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class XLite_Module_GiftCertificates_Core_CMSConnector extends XLite_Core_CMSConnector
-implements XLite_Base_IDecorator
+abstract class CMSConnector extends \XLite\Core\CMSConnector
+implements \XLite\Base\IDecorator
 {
     /**
      * Constructor

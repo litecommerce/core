@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\GiftCertificates\Controller\Customer;
+
 /**
  * Gift certificate
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_GiftCertificates_Controller_Customer_GiftCertificate extends XLite_Controller_Customer_ACustomer
+class GiftCertificate extends \XLite\Controller\Customer\ACustomer
 {
     /**
      * Month duration in seconds
@@ -53,7 +55,7 @@ class XLite_Module_GiftCertificates_Controller_Customer_GiftCertificate extends 
     /**
      * Gift certificate (cache)
      * 
-     * @var    XLite_Module_GiftCertificates_Model_GiftCertificate
+     * @var    \XLite\Module\GiftCertificates\Model\GiftCertificate
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
@@ -69,7 +71,7 @@ class XLite_Module_GiftCertificates_Controller_Customer_GiftCertificate extends 
      */
     public function getTitle()
     {
-        return XLite_Core_Request::getInstance()->gcid
+        return \XLite\Core\Request::getInstance()->gcid
             ? 'Update gift certificate'
             : 'Add gift certificate';
     }
@@ -89,7 +91,7 @@ class XLite_Module_GiftCertificates_Controller_Customer_GiftCertificate extends 
     /**
      * Get gift certificate 
      * 
-     * @return XLite_Module_GiftCertificates_Model_GiftCertificate
+     * @return \XLite\Module\GiftCertificates\Model\GiftCertificate
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -98,17 +100,17 @@ class XLite_Module_GiftCertificates_Controller_Customer_GiftCertificate extends 
     {
         if (is_null($this->gc)) {
 
-            if (XLite_Core_Request::getInstance()->gcid) {
+            if (\XLite\Core\Request::getInstance()->gcid) {
 
                 // Get from request
-                $this->gc = new XLite_Module_GiftCertificates_Model_GiftCertificate(
-                    XLite_Core_Request::getInstance()->gcid
+                $this->gc = new \XLite\Module\GiftCertificates\Model\GiftCertificate(
+                    \XLite\Core\Request::getInstance()->gcid
                 );
 
             } else {
 
                 // Set default form values
-                $this->gc = new XLite_Module_GiftCertificates_Model_GiftCertificate();
+                $this->gc = new \XLite\Module\GiftCertificates\Model\GiftCertificate();
                 $this->assembleDefaultCertificate();
             }
         }
@@ -169,7 +171,7 @@ class XLite_Module_GiftCertificates_Controller_Customer_GiftCertificate extends 
         }
 
         if (!$found) {
-            $oi = new XLite_Model_OrderItem();
+            $oi = new \XLite\Model\OrderItem();
             $oi->set('GC', $this->getGC());
             $this->getCart()->addItem($oi);
         }
@@ -198,8 +200,8 @@ class XLite_Module_GiftCertificates_Controller_Customer_GiftCertificate extends 
      */
     protected function doActionApply()
     {
-        $gcid = trim(XLite_Core_Request::getInstance()->gcid);
-        $this->getCart()->set('GC', new XLite_Module_GiftCertificates_Model_GiftCertificate($gcid));
+        $gcid = trim(\XLite\Core\Request::getInstance()->gcid);
+        $this->getCart()->set('GC', new \XLite\Module\GiftCertificates\Model\GiftCertificate($gcid));
         $this->getCart()->update();
 
         $this->set('returnUrl', $this->buildURL('checkout'));
@@ -241,7 +243,7 @@ class XLite_Module_GiftCertificates_Controller_Customer_GiftCertificate extends 
 
         if (!is_null($this->getGC())) {
             $gc = $this->getGC();
-            $gc->setProperties(XLite_Core_Request::getInstance()->getData());
+            $gc->setProperties(\XLite\Core\Request::getInstance()->getData());
             $gc->set('status', 'D');
             $gc->set('debit', $gc->get('amount'));
             $gc->set('add_date', time());

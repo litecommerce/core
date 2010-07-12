@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\PayPalPro\Controller\Customer;
+
 /**
  * Checkout
  * 
@@ -33,8 +35,8 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_PayPalPro_Controller_Customer_Checkout extends XLite_Controller_Customer_Checkout
-implements XLite_Base_IDecorator
+class Checkout extends \XLite\Controller\Customer\Checkout
+implements \XLite\Base\IDecorator
 {
     /**
      * Cancel PayPal payment
@@ -65,7 +67,7 @@ implements XLite_Base_IDecorator
     protected function doActionPaypalReturn()
     {
         if ('T' == $this->getCart()->get('status')) {
-            $pm = new XLite_Model_PaymentMethod('paypalpro');
+            $pm = new \XLite\Model\PaymentMethod('paypalpro');
             $params = $pm->get('params');
             $this->getCart()->set('status', $params['standard']['use_queued'] ? 'Q' : 'I');
             $this->updateCart();
@@ -92,7 +94,7 @@ implements XLite_Base_IDecorator
      */
     protected function doActionExpressCheckout()
     {
-        $pm = XLite_Model_PaymentMethod::factory('paypalpro_express');
+        $pm = \XLite\Model\PaymentMethod::factory('paypalpro_express');
 
         if (!$pm->startExpressCheckout($this->getCart())) {
 

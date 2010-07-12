@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Base;
+
 /**
  * Singleton interface
  * 
@@ -33,12 +35,12 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-interface XLite_Base_ISingleton
+interface ISingleton
 {
     /**
      * Method to access a singleton
      *
-     * @return XLite_Base
+     * @return \XLite\Base
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

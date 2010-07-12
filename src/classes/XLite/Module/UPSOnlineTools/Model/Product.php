@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\UPSOnlineTools\Model;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_UPSOnlineTools_Model_Product extends XLite_Model_Product implements XLite_Base_IDecorator
+class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
 {
     public function __construct($id=null)
     {

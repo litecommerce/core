@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\AntiFraud\Controller\Customer;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_AntiFraud_Controller_Customer_Callback extends XLite_Controller_Customer_Callback implements XLite_Base_IDecorator
+class Callback extends \XLite\Controller\Customer\Callback implements \XLite\Base\IDecorator
 {
     function action_callback()
     {

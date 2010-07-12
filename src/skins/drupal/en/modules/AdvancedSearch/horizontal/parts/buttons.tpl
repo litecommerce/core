@@ -13,5 +13,5 @@
  *}
 <tr class="buttons-row">
   <td><a href="javascript:void(0);" class="reset">Reset</a></td>
-  <td colspan="2"><widget class="XLite_View_Button_Submit" label="Search" /></td>
+  <td colspan="2"><widget class="\XLite\View\Button\Submit" label="Search" /></td>
 </tr>

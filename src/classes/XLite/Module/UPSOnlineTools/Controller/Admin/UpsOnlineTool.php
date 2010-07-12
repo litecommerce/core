@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\UPSOnlineTools\Controller\Admin;
+
 /**
  * Register UPS account controller
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_UPSOnlineTools_Controller_Admin_UpsOnlineTool extends XLite_Controller_Admin_AAdmin
+class UpsOnlineTool extends \XLite\Controller\Admin\AAdmin
 {
 
     function getCurrentStep()
@@ -43,7 +45,7 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_UpsOnlineTool extends XLite_C
 
     function getLicense(&$ret)
     {
-        $obj = new XLite_Module_UPSOnlineTools_Model_Shipping_Ups();
+        $obj = new \XLite\Module\UPSOnlineTools\Model\Shipping\Ups();
 
         return $obj->getAgreement($ret);
     }
@@ -73,7 +75,7 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_UpsOnlineTool extends XLite_C
 
     protected function processStep3()
     {
-        $obj = new XLite_Module_UPSOnlineTools_Model_Shipping_Ups();
+        $obj = new \XLite\Module\UPSOnlineTools\Model\Shipping\Ups();
         $ret = $this->getReg();
 
         $result = true;
@@ -168,8 +170,8 @@ EOT;
             $ret = array();
         }
 
-        if (XLite_Core_Request::getInstance()->isPost()) {
-            $ret = array_merge($ret, XLite_Core_Request::getInstance()->getData());
+        if (\XLite\Core\Request::getInstance()->isPost()) {
+            $ret = array_merge($ret, \XLite\Core\Request::getInstance()->getData());
             $this->session->set('ups_profile', $ret);
         }
 
@@ -211,13 +213,13 @@ EOT;
 
     function getUPSStates()
     {
-        $obj = new XLite_Module_UPSOnlineTools_Model_Shipping_Ups();
+        $obj = new \XLite\Module\UPSOnlineTools\Model\Shipping\Ups();
         return $obj->getUPSStates();
     }
 
     function getUPSCountries()
     {
-        $obj = new XLite_Module_UPSOnlineTools_Model_Shipping_Ups();
+        $obj = new \XLite\Module\UPSOnlineTools\Model\Shipping\Ups();
         return $obj->getUPSCountries();
     }
 }

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\WishList\Controller\Customer;
+
 /**
  * Cart controller
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_WishList_Controller_Customer_Cart extends XLite_Controller_Customer_Cart implements XLite_Base_IDecorator
+class Cart extends \XLite\Controller\Customer\Cart implements \XLite\Base\IDecorator
 {
     /**
      * Add item to cart (from wishlist)
@@ -45,24 +47,24 @@ class XLite_Module_WishList_Controller_Customer_Cart extends XLite_Controller_Cu
      */
     protected function action_add()
     {
-        $wishlistId = XLite_Core_Request::getInstance()->wishlist_id;
-        $itemId = XLite_Core_Request::getInstance()->item_id;
-        $amount = intval(XLite_Core_Request::getInstance()->amount);
+        $wishlistId = \XLite\Core\Request::getInstance()->wishlist_id;
+        $itemId = \XLite\Core\Request::getInstance()->item_id;
+        $amount = intval(\XLite\Core\Request::getInstance()->amount);
 
         if (!is_null($wishlistId) && !is_null($itemId)) {
 
             // process this wishlist
             parent::getCurrentItem();
 
-            $wishlistProduct = new XLite_Module_WishList_Model_WishListProduct($itemId, $wishlistId);
+            $wishlistProduct = new \XLite\Module\WishList\Model\WishListProduct($itemId, $wishlistId);
             
             if (!$wishlistProduct->isOptionsExist()) {
 
-                XLite_Core_TopMessage::getInstance()->add(
+                \XLite\Core\TopMessage::getInstance()->add(
                     'Sorry, but some options of "'
                     . $wishlistProduct->getProduct()->get('name')
                     . '" do not exist anymore and you can not add this product to the cart.',
-                    XLite_Core_TopMessage::ERROR
+                    \XLite\Core\TopMessage::ERROR
                 );
                 $this->set(
                     'returnUrl',
@@ -73,11 +75,11 @@ class XLite_Module_WishList_Controller_Customer_Cart extends XLite_Controller_Cu
 
             } elseif ($wishlistProduct->isOptionsInvalid()) {
 
-                XLite_Core_TopMessage::getInstance()->add(
+                \XLite\Core\TopMessage::getInstance()->add(
                     'Sorry, but options of "'
                     . $wishlistProduct->getProduct()->get('name')
                     . '" are invalid. You coudn\'t add product to cart.',
-                    XLite_Core_TopMessage::ERROR
+                    \XLite\Core\TopMessage::ERROR
                 );
                 $this->set(
                     'returnUrl',
@@ -93,7 +95,7 @@ class XLite_Module_WishList_Controller_Customer_Cart extends XLite_Controller_Cu
             }
 
             $this->currentItem->set('options', $wishlistProduct->get('options'));
-            $this->currentItem->set('amount', XLite_Core_Request::getInstance()->amount);
+            $this->currentItem->set('amount', \XLite\Core\Request::getInstance()->amount);
         }
 
         parent::action_add();

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View\LanguagesModify\Button;
+
 /**
  * Add new label button
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_LanguagesModify_Button_AddNewLabel extends XLite_View_Button_Regular
+class AddNewLabel extends \XLite\View\Button\Regular
 {
     /**
      * Widget parameters
@@ -54,8 +56,8 @@ class XLite_View_LanguagesModify_Button_AddNewLabel extends XLite_View_Button_Re
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_LANGUAGE => new XLite_Model_WidgetParam_String('Language code', null),
-            self::PARAM_PAGE     => new XLite_Model_WidgetParam_Int('Page index', 1),
+            self::PARAM_LANGUAGE => new \XLite\Model\WidgetParam\String('Language code', null),
+            self::PARAM_PAGE     => new \XLite\Model\WidgetParam\Int('Page index', 1),
         );
 
         $this->widgetParams[self::PARAM_LABEL]->setValue('Add new label');

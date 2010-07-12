@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\WorldPay\Model\PaymentMethod;
+
 /**
  * ____description____
  * 
@@ -33,14 +35,14 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_WorldPay_Model_PaymentMethod_Worldpay extends XLite_Model_PaymentMethod_CreditCard
+class Worldpay extends \XLite\Model\PaymentMethod\CreditCard
 {
     public $configurationTemplate = "modules/WorldPay/config.tpl";
     public $formTemplate = "modules/WorldPay/checkout.tpl";
     public $processorName = "RBS WorldPay";
     public $hasConfugurationForm = true;
 
-    function handleRequest(XLite_Model_Cart $cart)
+    function handleRequest(\XLite\Model\Cart $cart)
     {
         require_once LC_MODULES_DIR . 'WorldPay' . LC_DS . 'encoded.php';
         func_PaymentMethod_worldpay_handleRequest($this, $cart);

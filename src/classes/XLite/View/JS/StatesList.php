@@ -26,15 +26,17 @@
  * @since      3.0.0
  */
 
+namespace XLite\View\JS;
+
 /**
- * XLite_View_JS_StatesList 
+ * \XLite\View\JS\StatesList 
  * 
  * @package    XLite
  * @subpackage ____sub_package____
  * @see        ____class_see____
  * @since      3.0.0
  */
-class XLite_View_JS_StatesList extends XLite_View_JS_AJS
+class StatesList extends \XLite\View\JS\AJS
 {
     /**
      * getCountriesStates
@@ -45,7 +47,7 @@ class XLite_View_JS_StatesList extends XLite_View_JS_AJS
      */
     protected function getCountriesStates()
     {
-        return XLite_Core_Database::getRepo('XLite_Model_Country')->findCountriesStates(); 
+        return \XLite\Core\Database::getRepo('XLite\Model\Country')->findCountriesStates(); 
     }
 
     /**

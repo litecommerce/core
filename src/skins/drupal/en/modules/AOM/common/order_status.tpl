@@ -11,7 +11,7 @@
  * @since     3.0.0
  *}
 {if:order.substatus} 
-<widget class="XLite_Module_AOM_View_OrderStatus" status="{order.substatus}">
+<widget class="\XLite\Module\AOM\View\OrderStatus" status="{order.substatus}">
 {else:}
-<widget class="XLite_Module_AOM_View_OrderStatus" status="{order.status}">
+<widget class="\XLite\Module\AOM\View\OrderStatus" status="{order.status}">
 {end:}

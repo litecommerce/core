@@ -26,15 +26,17 @@
  * @since      3.0.0
  */
 
+namespace XLite\Controller\Customer;
+
 /**
- * XLite_Controller_Customer_AddressBook 
+ * \XLite\Controller\Customer\AddressBook 
  * 
  * @package    XLite
  * @subpackage ____sub_package____
  * @see        ____class_see____
  * @since      3.0.0
  */
-class XLite_Controller_Customer_AddressBook extends XLite_Controller_Customer_ACustomer
+class AddressBook extends \XLite\Controller\Customer\ACustomer
 {
     /**
      * Return class name of the register form 
@@ -45,7 +47,7 @@ class XLite_Controller_Customer_AddressBook extends XLite_Controller_Customer_AC
      */
     protected function getModelFormClass()
     {
-        return 'XLite_View_Model_Profile_Addresses';
+        return '\XLite\View\Model\Profile\Addresses';
     }
 
     /**

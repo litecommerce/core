@@ -177,7 +177,7 @@ Use this section to define additional {if:target=#extra_fields#}global {end:}pro
     <td class=Star width=10>*</td>
     <td>
         <input type=text name=name value="{name:r}" size=32 maxlength=255>
-        <widget class="XLite_Validator_RequiredValidator" field="name">
+        <widget class="\XLite\Validator\RequiredValidator" field="name">
     </td>
 </tr>    
 <tr>

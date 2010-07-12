@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Affiliate\View;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Affiliate_View_PartnerRegisterForm extends XLite_View_RegisterForm implements XLite_Base_IDecorator
+class PartnerRegisterForm extends \XLite\View\RegisterForm implements \XLite\Base\IDecorator
 {
     function fillForm()
     {
@@ -76,7 +78,7 @@ class XLite_Module_Affiliate_View_PartnerRegisterForm extends XLite_View_Registe
             $this->profile = $this->auth->get('profile');
         }
         if (is_null($this->profile)) {
-            $this->profile = new XLite_Model_Profile(isset($_REQUEST['profile_id']) ? $_REQUEST['profile_id'] : null);
+            $this->profile = new \XLite\Model\Profile(isset($_REQUEST['profile_id']) ? $_REQUEST['profile_id'] : null);
         }
         return $this->profile;
     }
@@ -89,7 +91,7 @@ class XLite_Module_Affiliate_View_PartnerRegisterForm extends XLite_View_Registe
     function getPartnerFields()
     {
         if (is_null($this->partnerFields)) {
-            $pf = new XLite_Module_Affiliate_Model_PartnerField();
+            $pf = new \XLite\Module\Affiliate\Model\PartnerField();
             $this->partnerFields = $pf->findAll();
         }
         return $this->partnerFields;

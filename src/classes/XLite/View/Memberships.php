@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View;
+
 /**
  * Membership modify widget
  *
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0
  */
-class XLite_View_Memberships extends XLite_View_Dialog
+class Memberships extends \XLite\View\Dialog
 {
     /**
      * Return title
@@ -85,7 +87,7 @@ class XLite_View_Memberships extends XLite_View_Dialog
      */
     public function getMemberships()
     {
-        $list = XLite_Core_Database::getRepo('XLite_Model_Membership')->findAllMemberships();
+        $list = \XLite\Core\Database::getRepo('XLite\Model\Membership')->findAllMemberships();
 
         // TODO - add linked profiles calculataion
 
@@ -113,9 +115,9 @@ class XLite_View_Memberships extends XLite_View_Dialog
      */
     protected function getLanguage()
     {
-        $language = XLite_Core_Request::getInstance()->language;
+        $language = \XLite\Core\Request::getInstance()->language;
 
-        return $language ? $language : XLite_Core_Translation::getCurrentLanguageCode();
+        return $language ? $language : \XLite\Core\Translation::getCurrentLanguageCode();
     }
 
     /**

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\EcommerceReports\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_EcommerceReports_Controller_Admin_FocusedAudience extends XLite_Module_EcommerceReports_Controller_Admin_EcommerceReports
+class FocusedAudience extends \XLite\Module\EcommerceReports\Controller\Admin\EcommerceReports
 {
     public $crlf = "\r\n";
 
@@ -58,7 +60,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_FocusedAudience extends XLi
             }
             // create list of original profiles
             foreach ($ids as $id) {
-                $this->profiles[] = new XLite_Model_Profile($id);
+                $this->profiles[] = new \XLite\Model\Profile($id);
             }
         }
         return $this->profiles;
@@ -93,7 +95,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_FocusedAudience extends XLi
 
     function export_profiles() 
     {
-        $w = new XLite_View_AView();
+        $w = new \XLite\View\AView();
         $w->component = $this;
         $w->set('template', "modules/EcommerceReports/export_csv.tpl");
         $this->startDownload('users.csv');
@@ -108,7 +110,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_FocusedAudience extends XLi
             $this->targetProfiles = array();
             $profileIDs = (array)$this->get('profile_ids');
             foreach ($profileIDs as $pid) {
-                $this->targetProfiles[] = new XLite_Model_Profile($pid);
+                $this->targetProfiles[] = new \XLite\Model\Profile($pid);
             }
         }
         return $this->targetProfiles;
@@ -120,7 +122,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_FocusedAudience extends XLi
             $this->orders = array();
             $orderIDs = (array)$this->get('order_ids');
             foreach ($orderIDs as $oid) {
-                $this->orders[] = new XLite_Model_Order($oid);
+                $this->orders[] = new \XLite\Model\Order($oid);
             }
         }
         return $this->orders;
@@ -192,7 +194,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_FocusedAudience extends XLi
     function collectFocusedSales($order) 
     {
         if ($order['passed']) {
-            $this->focusedSales[] = new XLite_Model_Order($order['order_id']);
+            $this->focusedSales[] = new \XLite\Model\Order($order['order_id']);
         }
     }
 
@@ -387,7 +389,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_FocusedAudience extends XLi
     {
         $where = "";
         if (($discountCoupon = $this->get('discountCoupon')) != null) {
-        	$dc = new XLite_Module_Promotion_Model_DiscountCoupon();
+        	$dc = new \XLite\Module\Promotion\Model\DiscountCoupon();
         	if (is_object($dc) && $dc->find("coupon='$discountCoupon' AND order_id='0'")) {
             	$where .= " AND $ot.discountCoupon='".$dc->get('coupon_id')."' ";
             }
@@ -415,7 +417,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_FocusedAudience extends XLi
 
     function hasProduct($user_id, $product_id) 
     {
-        $product = new XLite_Model_Product();
+        $product = new \XLite\Model\Product();
         $fromDate = $this->getComplex('period.fromDate');
         $toDate   = $this->getComplex('period.toDate');
         $ot = $product->db->getTableByAlias('orders');
@@ -440,7 +442,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_FocusedAudience extends XLi
 
     function hasCategory($user_id, $category_id) 
     {
-        $product = new XLite_Model_Product();
+        $product = new \XLite\Model\Product();
         $fromDate = $this->getComplex('period.fromDate');
         $toDate   = $this->getComplex('period.toDate');
         $ot = $product->db->getTableByAlias('orders');

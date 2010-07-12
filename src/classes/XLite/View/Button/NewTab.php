@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View\Button;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_Button_NewTab extends XLite_View_Button_Link
+class NewTab extends \XLite\View\Button\Link
 {
     /**
      * JavaScript: this code will be used by default 

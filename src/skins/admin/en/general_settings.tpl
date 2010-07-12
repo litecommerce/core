@@ -45,11 +45,11 @@
             {end:}
 
             {if:option.type=#country#"}
-              <widget class="XLite_View_CountrySelect" field="{option.name}" country="{option.value}" fieldId="{option.name}_select" />
+              <widget class="\XLite\View\CountrySelect" field="{option.name}" country="{option.value}" fieldId="{option.name}_select" />
             {end:}
 
             {if:option.type=#state#"}
-              <widget class="XLite_View_StateSelect" field="{option.name}" state="{option.value}" fieldId="{option.name}_select" isLinked=1 />
+              <widget class="\XLite\View\StateSelect" field="{option.name}" state="{option.value}" fieldId="{option.name}_select" isLinked=1 />
             {end:}
 
             {if:option.name=#mail_backend#}
@@ -185,7 +185,7 @@ function setUnitSymbol(symbol) {
               {end:}
             {end:}
 
-            <widget class="XLite_View_ModuleSettings" section="{page}" option="{option}" />
+            <widget class="\XLite\View\ModuleSettings" section="{page}" option="{option}" />
 
           </td>
         {else:}
@@ -337,4 +337,4 @@ if (!httpsEnabled) {
   <widget page="AdminIP" template="waiting_ips.tpl" />
 {end:}
 
-<widget class="XLite_View_ModuleSettingsFooter" section="{page}" />
+<widget class="\XLite\View\ModuleSettingsFooter" section="{page}" />

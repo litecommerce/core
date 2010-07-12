@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\UPSOnlineTools\Model;
+
 require_once LC_MODULES_DIR . 'UPSOnlineTools' . LC_DS . 'encoded.php';
 
 /**
@@ -35,7 +37,7 @@ require_once LC_MODULES_DIR . 'UPSOnlineTools' . LC_DS . 'encoded.php';
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_UPSOnlineTools_Model_OrderItem extends XLite_Model_OrderItem implements XLite_Base_IDecorator
+class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
 {
     protected $packItem = null;
 
@@ -53,7 +55,7 @@ class XLite_Module_UPSOnlineTools_Model_OrderItem extends XLite_Model_OrderItem 
         $p = $this->get('product');
 
         // dimension
-        $this->packItem = new XLite_Module_UPSOnlineTools_Model_PackItem();
+        $this->packItem = new \XLite\Module\UPSOnlineTools\Model\PackItem();
         foreach (array('width', "height", "length") as $field) {
             $this->packItem->setComplex($field, $p->get("ups_".$field));
         }

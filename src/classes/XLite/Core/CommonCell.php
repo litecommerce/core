@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Core;
+
 /**
  * Hierarchy common cell class
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Core_CommonCell
+class CommonCell
 {
     /**
      * Array of properties 

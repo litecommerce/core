@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\PayPalPro\Controller\Customer;
+
 /**
  * Express checkout landing controller
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_PayPalPro_Controller_Customer_ExpressCheckout extends XLite_Controller_Customer_ACustomer
+class ExpressCheckout extends \XLite\Controller\Customer\ACustomer
 {
     /**
      * Get secure controller status
@@ -71,13 +73,13 @@ class XLite_Module_PayPalPro_Controller_Customer_ExpressCheckout extends XLite_C
      */
     protected function doActionProfile()
     {
-        $pm = XLite_Model_PaymentMethod::factory('paypalpro_express');
+        $pm = \XLite\Model\PaymentMethod::factory('paypalpro_express');
 
         $response = $pm->sendExpressCheckoutRequest($this->getCart());
 
         if ($response['ACK'] == 'Success' && !empty($response['TOKEN'])) {
 
-            $pmpro = XLite_Model_PaymentMethod::factory('paypalpro');
+            $pmpro = \XLite\Model\PaymentMethod::factory('paypalpro');
 
             $redirect = $pmpro->getComplex('params.pro.mode')
                 ? 'https://www.paypal.com'
@@ -101,9 +103,9 @@ class XLite_Module_PayPalPro_Controller_Customer_ExpressCheckout extends XLite_C
      */
     protected function doActionRetrieveProfile()
     {
-        $request = XLite_Core_Request::getInstance();
+        $request = \XLite\Core\Request::getInstance();
 
-        $pm = new XLite_Model_PaymentMethod('paypalpro');
+        $pm = new \XLite\Model\PaymentMethod('paypalpro');
 
         if (
             in_array($pm->getComplex('params.solution'), array('pro', 'express'))
@@ -111,8 +113,8 @@ class XLite_Module_PayPalPro_Controller_Customer_ExpressCheckout extends XLite_C
             && !empty($request->token)
         ) {
 
-            $profile = new XLite_Model_Profile();
-            $pm = XLite_Model_PaymentMethod::factory('paypalpro_express');
+            $profile = new \XLite\Model\Profile();
+            $pm = \XLite\Model\PaymentMethod::factory('paypalpro_express');
             $response = $pm->sendExpressCheckoutDetailsRequest($request->token);
 
             if (
@@ -122,9 +124,9 @@ class XLite_Module_PayPalPro_Controller_Customer_ExpressCheckout extends XLite_C
 
                 $details = $pm->xpath->query('base:GetExpressCheckoutDetailsResponseDetails/base:PayerInfo', $response)->item(0);
 
-                $qb = XLite_Core_Database::getQB()
+                $qb = \XLite\Core\Database::getQB()
                     ->select('s')
-                    ->from('XLite_Model_State', 's');
+                    ->from('\XLite\Model\State', 's');
 
                 $countryCode = $pm->getXMLResponseValue('base:Address/base:Country', $details);
                 $stateCode = addslashes($pm->getXMLResponseValue('base:Address/base:StateOrProvince', $details));
@@ -210,7 +212,7 @@ class XLite_Module_PayPalPro_Controller_Customer_ExpressCheckout extends XLite_C
 
                     // New profile
 
-                    $profile = new XLite_Model_Profile();
+                    $profile = new \XLite\Model\Profile();
 
                     $profile->set('login', $payer);
 
@@ -257,7 +259,7 @@ class XLite_Module_PayPalPro_Controller_Customer_ExpressCheckout extends XLite_C
                     $this->auth->getProfile()->update();
                 }
                                                         
-                XLite_Model_Auth::getInstance()->getProfile()->read();
+                \XLite\Model\Auth::getInstance()->getProfile()->read();
 
                 $this->getCart()->set('paymentMethod', $pm);
 

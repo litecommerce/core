@@ -26,14 +26,16 @@
  * @since      3.0.0
  */
 
+namespace XLite\View\FormField\Select;
+
 /**
- * XLite_View_FormField_Select_AccessLevel 
+ * \XLite\View\FormField\Select\AccessLevel 
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_FormField_Select_AccessLevel extends XLite_View_FormField_Select_Regular
+class AccessLevel extends \XLite\View\FormField\Select\Regular
 {
     /**
      * Determines if this field is visible for customers or not 
@@ -55,7 +57,7 @@ class XLite_View_FormField_Select_AccessLevel extends XLite_View_FormField_Selec
      */
     protected function getDefaultOptions()
     {
-        return XLite_Model_Auth::getInstance()->getUserTypesRaw();
+        return \XLite\Model\Auth::getInstance()->getUserTypesRaw();
     }
 
     /**
@@ -67,7 +69,7 @@ class XLite_View_FormField_Select_AccessLevel extends XLite_View_FormField_Selec
      */
     protected function checkFieldValue()
     {
-        return in_array($this->getValue(), XLite_Model_Auth::getInstance()->getAccessLevelsList());
+        return in_array($this->getValue(), \XLite\Model\Auth::getInstance()->getAccessLevelsList());
     }
 }
 

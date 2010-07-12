@@ -67,8 +67,8 @@
 
 <tr><td colspan=4 class=AdminTitle>Add category rate</td></tr>
 <tr><td colspan=4 class=AdminTitle>&nbsp;</td></tr>
-<tr><td colspan=4><widget class="XLite_View_CategorySelect" fieldName="item_id"></td></tr>
-<tr><td colspan=4>Category commission rate: <widget template="modules/Affiliate/rate.tpl" pc="{xlite.factory.XLite_Module_Affiliate_Model_PlanCommission}"></td></tr>
+<tr><td colspan=4><widget class="\XLite\View\CategorySelect" fieldName="item_id"></td></tr>
+<tr><td colspan=4>Category commission rate: <widget template="modules/Affiliate/rate.tpl" pc="{xlite.factory.\XLite\Module\Affiliate\Model\PlanCommission}"></td></tr>
 <tr><td colspan=4><input type=submit value=" Add "></td></tr>
 
 </form>
@@ -116,8 +116,8 @@
 
 <tr><td colspan=4 class=AdminTitle>Add product rate</td></tr>
 <tr><td colspan=4 class=AdminTitle>&nbsp;</td></tr>
-<tr><td colspan=4>Product: <widget class="XLite_View_ProductSelect" formName="add_product_commission_form" formField="item"></td></tr>
-<tr><td colspan=4>Product commission rate: <widget template="modules/Affiliate/rate.tpl" pc="{xlite.factory.XLite_Module_Affiliate_Model_PlanCommission}"></td></tr>
+<tr><td colspan=4>Product: <widget class="\XLite\View\ProductSelect" formName="add_product_commission_form" formField="item"></td></tr>
+<tr><td colspan=4>Product commission rate: <widget template="modules/Affiliate/rate.tpl" pc="{xlite.factory.\XLite\Module\Affiliate\Model\PlanCommission}"></td></tr>
 <tr><td colspan=4><input type=submit value=" Add "></td></tr>
 
 </form>

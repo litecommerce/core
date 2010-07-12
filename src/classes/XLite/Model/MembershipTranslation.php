@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model;
+
 /**
  * Memebership translations
  * 
@@ -35,7 +37,7 @@
  * @Entity
  * @Table (name="membership_translations")
  */
-class XLite_Model_MembershipTranslation extends XLite_Model_Base_Translation
+class MembershipTranslation extends \XLite\Model\Base\Translation
 {
     /**
      * Memebership name

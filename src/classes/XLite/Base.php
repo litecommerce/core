@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite;
+
 /**
  * Base class
  * FIXME - must be abstract (see Model/Config.php)
@@ -34,7 +36,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Base
+class Base
 {
     /**
      * Array of instances for all derived classes
@@ -55,14 +57,14 @@ class XLite_Base
      */
     protected static $singletons = array(
         'xlite'    => 'XLite',
-        'auth'     => 'XLite_Model_Auth',
-        'session'  => 'XLite_Model_Session',
-        'db'       => 'XLite_Model_Database',
-        'logger'   => 'XLite_Logger',
-        'config'   => 'XLite_Core_Config',
-        'profiler' => 'XLite_Model_Profiler',
-        'mm'       => 'XLite_Model_ModulesManager',
-        'layout'   => 'XLite_Model_Layout',
+        'auth'     => '\XLite\Model\Auth',
+        'session'  => '\XLite\Model\Session',
+        'db'       => '\XLite\Model\Database',
+        'logger'   => '\XLite\Logger',
+        'config'   => '\XLite\Core\Config',
+        'profiler' => '\XLite\Model\Profiler',
+        'mm'       => '\XLite\Model\ModulesManager',
+        'layout'   => '\XLite\Model\Layout',
     );
 
 
@@ -88,13 +90,13 @@ class XLite_Base
      */
     protected function doDie($message)
     {
-        if (!($this instanceof XLite_Logger)) {
-            XLite_Logger::getInstance()->log($message, PEAR_LOG_ERR);
+        if (!($this instanceof \XLite\Logger)) {
+            \XLite\Logger::getInstance()->log($message, PEAR_LOG_ERR);
         }
 
         if (
             $this instanceof XLite
-            || XLite::getInstance()->getOptions(array('log_details', 'suppress_errors'))
+            || \XLite::getInstance()->getOptions(array('log_details', 'suppress_errors'))
         ) {
             $message = 'Internal error. Contact the site administrator.';
         }
@@ -106,7 +108,7 @@ class XLite_Base
     /**
      * Method to access a singleton
      *
-     * @return XLite_Base
+     * @return \XLite\Base
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -250,7 +252,7 @@ class XLite_Base
                 if ($obj instanceof stdClass) {
                     $obj = isset($obj->$part) ? $obj->$part : null;
 
-                } elseif ($obj instanceof XLite_Model_AEntity or $obj instanceof XLite_Core_CommonCell) {
+                } elseif ($obj instanceof \XLite\Model\AEntity or $obj instanceof \XLite\Core\CommonCell) {
                     $obj = $obj->$part;
 
                 } else {
@@ -357,7 +359,7 @@ class XLite_Base
      */
     public function t($name, array $arguments = array(), $code = null)
     {
-        return XLite_Core_Translation::lbl($name, $arguments, $code);
+        return \XLite\Core\Translation::lbl($name, $arguments, $code);
     }
 
 }

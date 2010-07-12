@@ -36,7 +36,7 @@
       <tr>
         <td class=FormButton noWrap height=10>Order status:</td>
         <td height=10>
-          <widget class="XLite_View_StatusSelect" field="status" allOption />
+          <widget class="\XLite\View\StatusSelect" field="status" allOption />
         </td>
       </tr>
 
@@ -45,14 +45,14 @@
       <tr>
         <td class=FormButton noWrap height=10>Order date from:</td>
         <td height=10>
-          <widget class="XLite_View_Date" field="startDate" value="{startDate}" />
+          <widget class="\XLite\View\Date" field="startDate" value="{startDate}" />
         </td>
       </tr>
 
       <tr>
         <td class=FormButton noWrap height=10>Order date through:</td>
         <td height=10>
-          <widget class="XLite_View_Date" field="endDate" value="{endDate}" />
+          <widget class="\XLite\View\Date" field="endDate" value="{endDate}" />
         </td>
       </tr>
 

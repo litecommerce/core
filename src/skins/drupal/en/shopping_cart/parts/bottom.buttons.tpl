@@ -12,8 +12,8 @@
  * @ListChild (list="cart.bottom.left", weight="10")
  *}
 <div class="cart-buttons">
-  <widget class="XLite_View_Form_Cart_Clear" name="clear_form" className="plain" />
-    <widget class="XLite_View_Button_Submit" label="Clear cart" template="shopping_cart/clear_cart_button.tpl" />
+  <widget class="\XLite\View\Form\Cart\Clear" name="clear_form" className="plain" />
+    <widget class="\XLite\View\Button\Submit" label="Clear cart" template="shopping_cart/clear_cart_button.tpl" />
   <widget name="clear_form" end >
-  <widget class="XLite_View_Button_Link" label="Continue shopping" location="{getContinueURL()}" IF="getContinueURL()" />
+  <widget class="\XLite\View\Button\Link" label="Continue shopping" location="{getContinueURL()}" IF="getContinueURL()" />
 </div>

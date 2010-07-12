@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Promotion\Model;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Promotion_Model_DiscountCoupon extends XLite_Model_AModel
+class DiscountCoupon extends \XLite\Model\AModel
 {
     public $fields = array(
         "coupon_id" => "", // coupon unique id
@@ -68,7 +70,7 @@ class XLite_Module_Promotion_Model_DiscountCoupon extends XLite_Model_AModel
             break;
 
             case "product":
-                $cart = XLite_Model_Cart::getInstance();
+                $cart = \XLite\Model\Cart::getInstance();
                 foreach ($cart->get('items') as $item) {
                     if ($item->get('product_id') == $this->get('product_id')) {
                         return true;
@@ -81,7 +83,7 @@ class XLite_Module_Promotion_Model_DiscountCoupon extends XLite_Model_AModel
         		require_once LC_MODULES_DIR . 'Promotion' . LC_DS . 'encoded.php';
 
                 $category = $this->get('category');
-                $cart = XLite_Model_Cart::getInstance();
+                $cart = \XLite\Model\Cart::getInstance();
                 foreach ($cart->get('items') as $item) {
                     if (func_in_category_recursive($item->get('product'), $category)) {
                         return true;
@@ -100,7 +102,7 @@ class XLite_Module_Promotion_Model_DiscountCoupon extends XLite_Model_AModel
     */
     function getPeer()
     {
-        $peer = new XLite_Module_Promotion_Model_DiscountCoupon();
+        $peer = new \XLite\Module\Promotion\Model\DiscountCoupon();
         $condition = "coupon='".$this->get('coupon')."' AND parent_id='0'";
         if ($this->get('new_link_mode')) {
             $condition = "coupon_id='".$this->get('parent_id')."'";
@@ -119,7 +121,7 @@ class XLite_Module_Promotion_Model_DiscountCoupon extends XLite_Model_AModel
         }
 
         if ($this->get('category_id')) {
-            $this->category = new XLite_Model_Category($this->get('category_id'));
+            $this->category = new \XLite\Model\Category($this->get('category_id'));
             if (is_object($this->category)) {
                 if (!$this->category->find("category_id='".$this->get('category_id')."'")) {
             		$this->category = null;
@@ -145,7 +147,7 @@ class XLite_Module_Promotion_Model_DiscountCoupon extends XLite_Model_AModel
         }
 
         if ($this->get('order_id')) {
-            $this->order = new XLite_Model_Order($this->get('order_id'));
+            $this->order = new \XLite\Model\Order($this->get('order_id'));
             if (is_object($this->order)) {
                 if (!$this->order->find("order_id='".$this->get('order_id')."'")) {
             		$this->order = null;
@@ -166,7 +168,7 @@ class XLite_Module_Promotion_Model_DiscountCoupon extends XLite_Model_AModel
         }
 
         if ($this->get('product_id')) {
-            $this->product = new XLite_Model_Product($this->get('product_id'));
+            $this->product = new \XLite\Model\Product($this->get('product_id'));
             if (is_object($this->product)) {
                 if (!$this->product->find("product_id='".$this->get('product_id')."'")) {
             		$this->product = null;
@@ -201,7 +203,7 @@ class XLite_Module_Promotion_Model_DiscountCoupon extends XLite_Model_AModel
     function getChildrenCount()
     {
         if (!isset($this->_children_count)) {
-            $o = new XLite_Model_Order();
+            $o = new \XLite\Model\Order();
             $coupons_table = $this->getTable();
             $orders_table = $o->getTable();
 

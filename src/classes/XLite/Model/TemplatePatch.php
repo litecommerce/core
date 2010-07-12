@@ -26,16 +26,18 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model;
+
 /**
  * Template patch
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
- * @Entity (repositoryClass="XLite_Model_Repo_TemplatePatch")
+ * @Entity (repositoryClass="XLite\Model\Repo\TemplatePatch")
  * @Table (name="template_patches", indexes={@index(name="zlt", columns={"zone", "lang", "tpl"})})
  */
-class XLite_Model_TemplatePatch extends XLite_Model_AEntity
+class TemplatePatch extends \XLite\Model\AEntity
 {
     /**
      * Patch id 

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View\LanguagesModify;
+
 /**
  * Add new label dialog
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_LanguagesModify_AddLabel extends XLite_View_AView
+class AddLabel extends \XLite\View\AView
 {
     /**
      * Return widget default template
@@ -50,27 +52,27 @@ class XLite_View_LanguagesModify_AddLabel extends XLite_View_AView
     /**
      * Get application default language 
      * 
-     * @return XLite_Model_Language
+     * @return \XLite\Model\Language
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
     public function getDefaultLanguage()
     {
-        return XLite_Core_Database::getRepo('XLite_Model_Language')->getDefaultLanguage();
+        return \XLite\Core\Database::getRepo('XLite\Model\Language')->getDefaultLanguage();
     }
 
     /**
      * Check - is requried language or not
      * 
-     * @param XLite_Model_Language $language Language_
+     * @param \XLite\Model\Language $language Language_
      *  
      * @return boolean
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function isRequiredLanguage(XLite_Model_Language $language)
+    public function isRequiredLanguage(\XLite\Model\Language $language)
     {
         return $language->code == $this->getDefaultLanguage()->code;
     }
@@ -85,7 +87,7 @@ class XLite_View_LanguagesModify_AddLabel extends XLite_View_AView
      */
     public function getAddedLanguages()
     {
-        return XLite_Core_Database::getRepo('XLite_Model_Language')->findAddedLanguages();
+        return \XLite\Core\Database::getRepo('XLite\Model\Language')->findAddedLanguages();
     }
 
 }

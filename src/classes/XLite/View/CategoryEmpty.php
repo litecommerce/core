@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View;
+
 /**
  * Category (empty state)  widget
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_CategoryEmpty extends XLite_View_Dialog
+class CategoryEmpty extends \XLite\View\Dialog
 {
     /**
      * Return title

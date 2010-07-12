@@ -26,15 +26,17 @@
  * @since      3.0.0
  */
 
+namespace XLite\View\FormField\Input;
+
 /**
- * XLite_View_FormField_Input_Checkbox 
+ * \XLite\View\FormField\Input\Checkbox 
  * 
  * @package    XLite
  * @subpackage ____sub_package____
  * @see        ____class_see____
  * @since      3.0.0
  */
-class XLite_View_FormField_Input_Checkbox extends XLite_View_FormField_Input_AInput
+class Checkbox extends \XLite\View\FormField\Input\AInput
 {
     /**
      * Widget param names 
@@ -55,7 +57,7 @@ class XLite_View_FormField_Input_Checkbox extends XLite_View_FormField_Input_AIn
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_IS_CHECKED => new XLite_Model_WidgetParam_Bool('Is checked', false),
+            self::PARAM_IS_CHECKED => new \XLite\Model\WidgetParam\Bool('Is checked', false),
         );
     }
 

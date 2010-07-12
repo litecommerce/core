@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\WishList\View\Button;
+
 /**
  * Add product to wishlist button widget
  *
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_WishList_View_Button_AddToWishlist extends XLite_View_Button_Regular
+class AddToWishlist extends \XLite\View\Button\Regular
 {
     /**
      * Widget parameter names
@@ -54,7 +56,7 @@ class XLite_Module_WishList_View_Button_AddToWishlist extends XLite_View_Button_
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_PRODUCT => new XLite_Model_WidgetParam_Object('Product', null, false, 'XLite_Model_Product'),
+            self::PARAM_PRODUCT => new \XLite\Model\WidgetParam\Object('Product', null, false, '\XLite\Model\Product'),
         );
 
         $this->widgetParams[self::PARAM_ACTION]->setValue('add');

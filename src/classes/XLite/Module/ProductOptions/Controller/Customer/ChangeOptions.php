@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\ProductOptions\Controller\Customer;
+
 /**
  * Change options from cart / wishlist item
  * 
@@ -33,12 +35,12 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_ProductOptions_Controller_Customer_ChangeOptions extends XLite_Controller_Customer_ACustomer
+class ChangeOptions extends \XLite\Controller\Customer\ACustomer
 {
     /**
      * Item (cache)
      * 
-     * @var    XLite_Model_OrderItem
+     * @var    \XLite\Model\OrderItem
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
@@ -99,8 +101,8 @@ class XLite_Module_ProductOptions_Controller_Customer_ChangeOptions extends XLit
      */
     protected function assembleReturnUrl()
     {
-        $this->set('returnUrl', $this->buildUrl(XLite::TARGET_DEFAULT));
-        if (XLite_Core_Request::getInstance()->source == 'cart') {
+        $this->set('returnUrl', $this->buildUrl(\XLite::TARGET_DEFAULT));
+        if (\XLite\Core\Request::getInstance()->source == 'cart') {
             $this->set('returnUrl', $this->buildUrl('cart'));
         }
     }
@@ -115,8 +117,8 @@ class XLite_Module_ProductOptions_Controller_Customer_ChangeOptions extends XLit
      */
     protected function doActionChange()
     {
-        if (XLite_Core_Request::getInstance()->source == 'cart') {
-            $this->getItem()->setProductOptions(XLite_Core_Request::getInstance()->product_options);
+        if (\XLite\Core\Request::getInstance()->source == 'cart') {
+            $this->getItem()->setProductOptions(\XLite\Core\Request::getInstance()->product_options);
 
             $invalidOptions = $this->getItem()->get('invalidOptions');
 
@@ -125,11 +127,11 @@ class XLite_Module_ProductOptions_Controller_Customer_ChangeOptions extends XLit
                 $this->getItem()->update();
                 $this->updateCart();
 
-                XLite_Core_TopMessage::getInstance()->add('Options has been successfully changed');
+                \XLite\Core\TopMessage::getInstance()->add('Options has been successfully changed');
 
             } else {
 
-                XLite_Core_TopMessage::getInstance()->add('Invalid options', XLite_Core_TopMessage::ERROR);
+                \XLite\Core\TopMessage::getInstance()->add('Invalid options', \XLite\Core\TopMessage::ERROR);
                 $this->getWidgetParams(self::PARAM_REDIRECT_CODE)->setValue(279);
 
                 $this->set(
@@ -138,9 +140,9 @@ class XLite_Module_ProductOptions_Controller_Customer_ChangeOptions extends XLit
                         'change_options',
                         '',
                         array(
-                            'source'     => XLite_Core_Request::getInstance()->source,
-                            'storage_id' => XLite_Core_Request::getInstance()->storage_id,
-                            'item_id'    => XLite_Core_Request::getInstance()->item_id,
+                            'source'     => \XLite\Core\Request::getInstance()->source,
+                            'storage_id' => \XLite\Core\Request::getInstance()->storage_id,
+                            'item_id'    => \XLite\Core\Request::getInstance()->item_id,
                         )
                     )
                 );
@@ -151,7 +153,7 @@ class XLite_Module_ProductOptions_Controller_Customer_ChangeOptions extends XLit
     /**
      * Get cart / wishlist item 
      * 
-     * @return XLite_Model_OrderItem
+     * @return \XLite\Model\OrderItem
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -162,18 +164,18 @@ class XLite_Module_ProductOptions_Controller_Customer_ChangeOptions extends XLit
             $this->item = false;
 
             if (
-                XLite_Core_Request::getInstance()->source == 'cart'
-                && is_numeric(XLite_Core_Request::getInstance()->item_id)
+                \XLite\Core\Request::getInstance()->source == 'cart'
+                && is_numeric(\XLite\Core\Request::getInstance()->item_id)
             ) {
                 $items = $this->getCart()->getItems();
 
-                $itemId = XLite_Core_Request::getInstance()->item_id;
+                $itemId = \XLite\Core\Request::getInstance()->item_id;
                 if (
                     isset($items[$itemId])
                     && $items[$itemId]->getProduct()
                     && $items[$itemId]->hasOptions()
                 ) {
-                    $this->item = $items[XLite_Core_Request::getInstance()->item_id];
+                    $this->item = $items[\XLite\Core\Request::getInstance()->item_id];
                 }
             }
         }

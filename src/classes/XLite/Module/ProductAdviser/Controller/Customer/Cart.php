@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\ProductAdviser\Controller\Customer;
+
 /**
  * Cart controller
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_ProductAdviser_Controller_Customer_Cart extends XLite_Controller_Customer_Cart implements XLite_Base_IDecorator
+class Cart extends \XLite\Controller\Customer\Cart implements \XLite\Base\IDecorator
 {
     public $rejectedItemInfo = null;
 
@@ -54,7 +56,7 @@ class XLite_Module_ProductAdviser_Controller_Customer_Cart extends XLite_Control
             if (!is_null($this->cart->get('outOfStock'))) {
 
     			$rejectedItemInfo = new StdClass();
-            	$rejectedItem = new XLite_Model_OrderItem();
+            	$rejectedItem = new \XLite\Model\OrderItem();
             	$product = $this->get('product');
             	$rejectedItemInfo->product_id = $product->get('product_id');
                 $rejectedItem->set('product', $product);
@@ -98,9 +100,9 @@ class XLite_Module_ProductAdviser_Controller_Customer_Cart extends XLite_Control
 
             $rejectedItemInfo = $this->session->get('rejectedItem');
             $this->session->set('rejectedItem', null);
-            $this->rejectedItemInfo = new XLite_Base();
+            $this->rejectedItemInfo = new \XLite\Base();
             $this->rejectedItemInfo->set('product_id', $rejectedItemInfo->product_id);
-            $this->rejectedItemInfo->set('product', new XLite_Model_Product($this->rejectedItemInfo->product_id));
+            $this->rejectedItemInfo->set('product', new \XLite\Model\Product($this->rejectedItemInfo->product_id));
             $this->rejectedItemInfo->set('amount', $rejectedItemInfo->availableAmount);
             $this->rejectedItemInfo->set('key', $rejectedItemInfo->itemKey);
 
@@ -153,7 +155,7 @@ class XLite_Module_ProductAdviser_Controller_Customer_Cart extends XLite_Control
         $check[] = "profile_id='$profile_id'";
         $check[] = "email='$email'";
 
-        $notification = new XLite_Module_ProductAdviser_Model_Notification();
+        $notification = new \XLite\Module\ProductAdviser\Model\Notification();
         $notification->set('type', CUSTOMER_NOTIFICATION_PRODUCT);
         $notification->set('product_id', $rejectedItemInfo->product_id);
         if (isset($rejectedItemInfo->productOptions)) {

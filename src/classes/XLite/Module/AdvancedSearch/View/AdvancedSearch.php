@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\AdvancedSearch\View;
+
 /**
  * Advanced search widget
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_AdvancedSearch_View_AdvancedSearch extends XLite_View_Dialog
+class AdvancedSearch extends \XLite\View\Dialog
 {
     /**
      * Widget parameter names
@@ -100,7 +102,7 @@ class XLite_Module_AdvancedSearch_View_AdvancedSearch extends XLite_View_Dialog
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_DISPLAY_MODE => new XLite_Model_WidgetParam_Set(
+            self::PARAM_DISPLAY_MODE => new \XLite\Model\WidgetParam\Set(
                 'Display mode', self::DISPLAY_MODE_HORIZONTAL, true, $this->displayModes
             ),
         );

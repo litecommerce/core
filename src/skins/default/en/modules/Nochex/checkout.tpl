@@ -50,7 +50,7 @@ function CheckoutSubmit()
 <input type="hidden" name="callback_url" value="{cart.paymentMethod.getResponderURL(cart):h}">
 <p>By clicking "SUBMIT" you agree with our "<a href='cart.php?target=help&amp;mode=terms_conditions'><u>Terms &amp; Conditions</u></a>" and "<a href='cart.php?target=help&amp;mode=privacy_statement'><u>Privacy statement</u></a>".<br>
 <span id="submit_order_button">
-<widget class="XLite_View_Button" label="Submit order" href="javascript: CheckoutSubmit();">
+<widget class="\XLite\View\Button" label="Submit order" href="javascript: CheckoutSubmit();">
 </span>
 <span id="submiting_process" style="display:none"></span>
 </form>

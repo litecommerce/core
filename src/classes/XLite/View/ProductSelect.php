@@ -26,10 +26,12 @@
  * @since      3.0.0
  */
 
+namespace XLite\View;
+
 
 /**
- * XLite_View_ProductSelect is a popup product search & select dialog.
- * Syntax:  <widget class="XLite_View_ProductSelect" formName="offerForm" formField="addBonusProduct">
+ * \XLite\View\ProductSelect is a popup product search & select dialog.
+ * Syntax:  <widget class="\XLite\View\ProductSelect" formName="offerForm" formField="addBonusProduct">
  * where formName is a 'name' attribute of the form tag, formField is a form field name. A hidden field named $formField.'_id'
  * will be created to hold the selected product id.
  * Optional parameters are: 
@@ -39,7 +41,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_ProductSelect extends XLite_View_AView
+class ProductSelect extends \XLite\View\AView
 {
     /*
      * Widget parameters names
@@ -85,11 +87,11 @@ class XLite_View_ProductSelect extends XLite_View_AView
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_FORM_NAME     => new XLite_Model_WidgetParam_String('Form name', ''),
-            self::PARAM_FORM_FIELD    => new XLite_Model_WidgetParam_String('Form field', ''),
-            self::PARAM_LABEL         => new XLite_Model_WidgetParam_String('Form label', 'Select product'),
-            self::PARAM_PRODUCT       => new XLite_Model_WidgetParam_Object('Product object', null),
-            self::PARAM_REMOVE_BUTTON => new XLite_Model_WidgetParam_Bool('Display Remove button', false),
+            self::PARAM_FORM_NAME     => new \XLite\Model\WidgetParam\String('Form name', ''),
+            self::PARAM_FORM_FIELD    => new \XLite\Model\WidgetParam\String('Form field', ''),
+            self::PARAM_LABEL         => new \XLite\Model\WidgetParam\String('Form label', 'Select product'),
+            self::PARAM_PRODUCT       => new \XLite\Model\WidgetParam\Object('Product object', null),
+            self::PARAM_REMOVE_BUTTON => new \XLite\Model\WidgetParam\Bool('Display Remove button', false),
         );
     }
 
@@ -122,7 +124,7 @@ class XLite_View_ProductSelect extends XLite_View_AView
                 $this->product = $this->getParam(self::PARAM_PRODUCT);
 
             } else {
-                $this->product = ($productId = $this->get($this->getParam(self::PARAM_FORM_FIELD) . '_id')) ? new XLite_Model_Product($productId) : null;
+                $this->product = ($productId = $this->get($this->getParam(self::PARAM_FORM_FIELD) . '_id')) ? new \XLite\Model\Product($productId) : null;
             }
         }
 

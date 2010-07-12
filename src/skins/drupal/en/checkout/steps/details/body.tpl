@@ -10,7 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<widget class="XLite_View_Form_Checkout_Place" name="checkout" className="checkout-details" />
+<widget class="\XLite\View\Form\Checkout\Place" name="checkout" className="checkout-details" />
 
   {displayViewListContent(#chekout.details#)}
 

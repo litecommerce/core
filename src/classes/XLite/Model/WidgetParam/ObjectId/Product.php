@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model\WidgetParam\ObjectId;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_WidgetParam_ObjectId_Product extends XLite_Model_WidgetParam_ObjectId
+class Product extends \XLite\Model\WidgetParam\ObjectId
 {
     /**
      * Return object class name
@@ -44,6 +46,6 @@ class XLite_Model_WidgetParam_ObjectId_Product extends XLite_Model_WidgetParam_O
      */
     protected function getClassName()
     {
-        return 'XLite_Model_Product';
+        return '\XLite\Model\Product';
     }
 }

@@ -27,11 +27,11 @@
         </tr>
         <tr>
             <td>Province/State:</td>
-            <td><widget class="XLite_View_StateSelect" field="destinationState"></td>
+            <td><widget class="\XLite\View\StateSelect" field="destinationState"></td>
         </tr>
         <tr>
             <td>Country:</td> 
-            <td><widget class="XLite_View_CountrySelect" field="destinationCountry"></td>
+            <td><widget class="\XLite\View\CountrySelect" field="destinationCountry"></td>
         </tr>
         <tr>
             <td>Postal/ZIP Code:</td>

@@ -32,11 +32,11 @@
         <table border=0>
         <tr>
             <td>Period from:</td>
-            <td><widget class="XLite_View_Date" field="startDate"></td>
+            <td><widget class="\XLite\View\Date" field="startDate"></td>
         </tr>    
         <tr>
             <td>Period to:</td>
-            <td><widget class="XLite_View_Date" field="endDate"></td>
+            <td><widget class="\XLite\View\Date" field="endDate"></td>
         </tr>    
         </table>
      </td>   
@@ -50,7 +50,7 @@
 
 <table IF="search&payments" border=0 cellpadding=5 cellspacing=1>
 <tr>
-    <td colspan=2><widget class="XLite_View_Pager" data="{payments}" name="pager"></td>
+    <td colspan=2><widget class="\XLite\View\Pager" data="{payments}" name="pager"></td>
 </tr>
 <tr class=TableHead>
     <td align=center><b>Date</b></td>

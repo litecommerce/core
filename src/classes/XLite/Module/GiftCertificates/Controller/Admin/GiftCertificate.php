@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\GiftCertificates\Controller\Admin;
+
 /**
  * Gift certificate
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_GiftCertificates_Controller_Admin_GiftCertificate extends XLite_Controller_Admin_AAdmin
+class GiftCertificate extends \XLite\Controller\Admin\AAdmin
 {
     /**
      * Controller parameters
@@ -48,7 +50,7 @@ class XLite_Module_GiftCertificates_Controller_Admin_GiftCertificate extends XLi
     /**
      * Gift certificate (cache) 
      * 
-     * @var    XLite_Module_GiftCertificates_Model_GiftCertificate
+     * @var    \XLite\Module\GiftCertificates\Model\GiftCertificate
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
@@ -58,7 +60,7 @@ class XLite_Module_GiftCertificates_Controller_Admin_GiftCertificate extends XLi
     /**
      * Get gift certificate
      * 
-     * @return XLite_Module_GiftCertificates_Model_GiftCertificate
+     * @return \XLite\Module\GiftCertificates\Model\GiftCertificate
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -66,8 +68,8 @@ class XLite_Module_GiftCertificates_Controller_Admin_GiftCertificate extends XLi
     public function getGC()
     {
         if (is_null($this->gc)) {
-            $this->gc = new XLite_Module_GiftCertificates_Model_GiftCertificate(
-                XLite_Core_Request::getInstance()->gcid
+            $this->gc = new \XLite\Module\GiftCertificates\Model\GiftCertificate(
+                \XLite\Core\Request::getInstance()->gcid
             );
         }
 

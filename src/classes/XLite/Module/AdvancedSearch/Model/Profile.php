@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\AdvancedSearch\Model;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_AdvancedSearch_Model_Profile extends XLite_Model_Profile implements XLite_Base_IDecorator
+class Profile extends \XLite\Model\Profile implements \XLite\Base\IDecorator
 {
     public function __construct($id = null)
     {

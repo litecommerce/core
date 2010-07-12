@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Controller\Customer;
+
 /**
  * Category
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Controller_Customer_Category extends XLite_Controller_Customer_Catalog
+class Category extends \XLite\Controller\Customer\Catalog
 {
     /**
      * Define widget parameters
@@ -52,7 +54,7 @@ class XLite_Controller_Customer_Category extends XLite_Controller_Customer_Catal
     /**
      * getModelObject
      *
-     * @return XLite_Model_AModel
+     * @return \XLite\Model\AModel
      * @access protected
      * @since  3.0.0
      */

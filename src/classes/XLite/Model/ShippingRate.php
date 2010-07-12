@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_ShippingRate extends XLite_Model_AModel
+class ShippingRate extends \XLite\Model\AModel
 {
     public $alias = "shipping_rates";
     public $fields = array(
@@ -58,7 +60,7 @@ class XLite_Model_ShippingRate extends XLite_Model_AModel
     function getShipping()
     {
         if (is_null($this->shipping) && $this->get('shipping_id')) {
-            $this->shipping = new XLite_Model_Shipping($this->get('shipping_id'));
+            $this->shipping = new \XLite\Model\Shipping($this->get('shipping_id'));
         }
         return $this->shipping;
     }

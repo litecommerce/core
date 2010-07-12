@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Promotion\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Promotion_Controller_Admin_Taxes extends XLite_Controller_Admin_Taxes implements XLite_Base_IDecorator
+class Taxes extends \XLite\Controller\Admin\Taxes implements \XLite\Base\IDecorator
 {
     /*
      * This function required for configuring discounts taxing policy
@@ -47,7 +49,7 @@ class XLite_Module_Promotion_Controller_Admin_Taxes extends XLite_Controller_Adm
     {
         parent::action_add_tax();
 
-        XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+        \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
             array(
                 'category' => 'Taxes',
                 'name'     => 'discounts_after_taxes',
@@ -61,7 +63,7 @@ class XLite_Module_Promotion_Controller_Admin_Taxes extends XLite_Controller_Adm
     {
         parent::action_update_options();
 
-        XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+        \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
             array(
                 'category' => 'Taxes',
                 'name'     => 'discounts_after_taxes',

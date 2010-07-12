@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\WholesaleTrading\Controller\Customer;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_WholesaleTrading_Controller_Customer_CheckoutSuccess extends XLite_Controller_Customer_CheckoutSuccess implements XLite_Base_IDecorator
+class CheckoutSuccess extends \XLite\Controller\Customer\CheckoutSuccess implements \XLite\Base\IDecorator
 {
     function getOrder()
     {

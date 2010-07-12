@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\MultiCurrency\View;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_MultiCurrency_View_AView extends XLite_View_AView implements XLite_Base_IDecorator
+class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
 {
     public $currencies 		= null;
     public $defaultCurrency 	= null;
@@ -41,7 +43,7 @@ class XLite_Module_MultiCurrency_View_AView extends XLite_View_AView implements 
     function getCurrencies() 
     {
         if (is_null($this->currencies)) {
-            $currency = new XLite_Module_MultiCurrency_Model_CurrencyCountries();
+            $currency = new \XLite\Module\MultiCurrency\Model\CurrencyCountries();
             $this->currencies = $currency->findAll("enabled = 1 and base = 0");
         }
         return $this->currencies;
@@ -51,7 +53,7 @@ class XLite_Module_MultiCurrency_View_AView extends XLite_View_AView implements 
     function getDefaultCurrency()  
     {
         if (is_null($this->defaultCurrency)) {
-            $this->defaultCurrency = new XLite_Module_MultiCurrency_Model_CurrencyCountries();
+            $this->defaultCurrency = new \XLite\Module\MultiCurrency\Model\CurrencyCountries();
             $this->defaultCurrency->find("base = 1");
         }
         return $this->defaultCurrency;

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\ProductAdviser\View;
+
 /**
  * Notify form widget
  *
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0
  */
-class XLite_Module_ProductAdviser_View_PriceNotifyForm extends XLite_View_AView
+class PriceNotifyForm extends \XLite\View\AView
 {
     /**
      * Widget parameter names
@@ -66,7 +68,7 @@ class XLite_Module_ProductAdviser_View_PriceNotifyForm extends XLite_View_AView
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_PRODUCT => new XLite_Model_WidgetParam_Object('Product', null, false, 'XLite_Model_Product'),
+            self::PARAM_PRODUCT => new \XLite\Model\WidgetParam\Object('Product', null, false, '\XLite\Model\Product'),
         );
     }
 

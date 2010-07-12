@@ -13,7 +13,7 @@
 <tr>
 	<td class="FormButton">Select membership to sell through this product&nbsp;</td>
 	<td class="ProductDeails">
-		<widget class="XLite_View_MembershipSelect" field="selling_membership" value="{product.selling_membership}" />
+		<widget class="\XLite\View\MembershipSelect" field="selling_membership" value="{product.selling_membership}" />
 	</td>
 </tr>
 <tr>

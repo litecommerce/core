@@ -32,7 +32,7 @@ If you are a registered customer, please <a href="{buildURL(#profile#,##,_ARRAY_
 <br>
 <span IF="userExists" class="ErrorMessage">&gt;&gt;&nbsp;The user is already registered! Please select another e-mail.&nbsp;&lt;&lt;</span>
 
-<widget class="XLite_View_Form_Profile_Register" name="registration_form" />
+<widget class="\XLite\View\Form\Profile\Register" name="registration_form" />
 
 <table width="100%" border="0" cellspacing="0" cellpadding="2">
 
@@ -46,7 +46,7 @@ If you are a registered customer, please <a href="{buildURL(#profile#,##,_ARRAY_
         <input type="text" name="login" value="{login:r}" size="32" maxlength="128">
     </td>
     <td>
-        <widget class="XLite_Validator_EmailValidator" field="login">
+        <widget class="\XLite\Validator\EmailValidator" field="login">
     </td>
 </tr>
 <tr valign="middle" IF="allowAnonymous">
@@ -63,7 +63,7 @@ If you are a registered customer, please <a href="{buildURL(#profile#,##,_ARRAY_
     </td>
     <td>
         &nbsp;
-        <widget class="XLite_Validator_RequiredValidator" field="password" visible="{!allowAnonymous}">
+        <widget class="\XLite\Validator\RequiredValidator" field="password" visible="{!allowAnonymous}">
     </td>
 </tr>
 <tr valign="middle">
@@ -74,8 +74,8 @@ If you are a registered customer, please <a href="{buildURL(#profile#,##,_ARRAY_
     </td>
     <td>
         &nbsp;
-        <widget class="XLite_Validator_RequiredValidator" field="confirm_password" visible="{!allowAnonymous}">
-        <widget class="XLite_Validator_PasswordValidator" field="confirm_password" passwordField="password" visible="{!allowAnonymous}">
+        <widget class="\XLite\Validator\RequiredValidator" field="confirm_password" visible="{!allowAnonymous}">
+        <widget class="\XLite\Validator\PasswordValidator" field="confirm_password" passwordField="password" visible="{!allowAnonymous}">
     </td>
 </tr>
 <tr>
@@ -107,7 +107,7 @@ If you are a registered customer, please <a href="{buildURL(#profile#,##,_ARRAY_
         <input type="text" name="billing_firstname" value="{billing_firstname:r}" size="32" maxlength="128">
     </td>
     <td>
-        <widget class="XLite_Validator_RequiredValidator" field="billing_firstname">
+        <widget class="\XLite\Validator\RequiredValidator" field="billing_firstname">
     </td>
 </tr>
 <tr valign="middle">
@@ -117,7 +117,7 @@ If you are a registered customer, please <a href="{buildURL(#profile#,##,_ARRAY_
         <input type="text" name="billing_lastname" value="{billing_lastname:r}" size="32" maxlength="128">
     </td>
     <td align="left">
-        <widget class="XLite_Validator_RequiredValidator" field="billing_lastname">
+        <widget class="\XLite\Validator\RequiredValidator" field="billing_lastname">
     </td>
 </tr>
 <tr valign="middle">
@@ -136,7 +136,7 @@ If you are a registered customer, please <a href="{buildURL(#profile#,##,_ARRAY_
         <input type="text" name="billing_phone" value="{billing_phone:r}" size="32" maxlength="32">
     </td>
     <td>
-        <widget class="XLite_Validator_RequiredValidator" field="billing_phone">
+        <widget class="\XLite\Validator\RequiredValidator" field="billing_phone">
     </td>
 </tr>
 <tr valign="middle">
@@ -155,7 +155,7 @@ If you are a registered customer, please <a href="{buildURL(#profile#,##,_ARRAY_
         <input type="text" name="billing_address" value="{billing_address:r}" size="32" maxlength="64">
     </td>
     <td>
-        <widget class="XLite_Validator_RequiredValidator" field="billing_address">
+        <widget class="\XLite\Validator\RequiredValidator" field="billing_address">
     </td>
 </tr>
 <tr valign="middle">
@@ -165,16 +165,16 @@ If you are a registered customer, please <a href="{buildURL(#profile#,##,_ARRAY_
         <input type="text" name="billing_city" value="{billing_city:r}" size="32" maxlength="64">
     </td>
     <td>
-        <widget class="XLite_Validator_RequiredValidator" field="billing_city">
+        <widget class="\XLite\Validator\RequiredValidator" field="billing_city">
     </td>
 </tr>
 <tr valign="middle">
     <td align="right">State</td>
     <td><font class="Star">*</font></td>
-    <td><widget class="XLite_View_StateSelect" field="billing_state" state="billing_state" isLinked=1 /></td>
+    <td><widget class="\XLite\View\StateSelect" field="billing_state" state="billing_state" isLinked=1 /></td>
     <td>
-        <widget class="XLite_Validator_RequiredValidator" field="billing_state">
-        <widget class="XLite_Validator_StateValidator" field="billing_state" countryField="billing_country">
+        <widget class="\XLite\Validator\RequiredValidator" field="billing_state">
+        <widget class="\XLite\Validator\StateValidator" field="billing_state" countryField="billing_country">
     </td>
 </tr>
 <tr valign="middle">
@@ -188,8 +188,8 @@ If you are a registered customer, please <a href="{buildURL(#profile#,##,_ARRAY_
 <tr valign="middle">
     <td align="right">Country</td>
     <td><font class="Star">*</font></td>
-    <td><widget class="XLite_View_CountrySelect" field="billing_country" country="{billing_country}" /></td>
-    <td><widget class="XLite_Validator_RequiredValidator" field="billing_country"></td>
+    <td><widget class="\XLite\View\CountrySelect" field="billing_country" country="{billing_country}" /></td>
+    <td><widget class="\XLite\Validator\RequiredValidator" field="billing_country"></td>
 </tr>
 <tr valign="middle">
     <td align="right">Zip code</td>
@@ -198,7 +198,7 @@ If you are a registered customer, please <a href="{buildURL(#profile#,##,_ARRAY_
         <input type="text" name="billing_zipcode" value="{billing_zipcode:r}" size="32" maxlength="32">
     </td>
     <td>
-        <widget class="XLite_Validator_RequiredValidator" field="billing_zipcode">
+        <widget class="\XLite\Validator\RequiredValidator" field="billing_zipcode">
     </td>
 </tr>
 
@@ -294,9 +294,9 @@ If you are a registered customer, please <a href="{buildURL(#profile#,##,_ARRAY_
 <tr valign="middle">
     <td align="right">State</td>
     <td><font class="Star">*</font></td>
-    <td><widget class="XLite_View_StateSelect" field="shipping_state" state="{shipping_state}" isLinked=1 /></td>
+    <td><widget class="\XLite\View\StateSelect" field="shipping_state" state="{shipping_state}" isLinked=1 /></td>
     <td>
-        <widget class="XLite_Validator_StateValidator" field="shipping_state" countryField="shipping_country">
+        <widget class="\XLite\Validator\StateValidator" field="shipping_state" countryField="shipping_country">
     </td>
 </tr>
 <tr valign="middle">
@@ -308,7 +308,7 @@ If you are a registered customer, please <a href="{buildURL(#profile#,##,_ARRAY_
 <tr valign="middle">
     <td align="right">Country</td>
     <td><font class="Star">*</font></td>
-    <td><widget class="XLite_View_CountrySelect" field="shipping_country" country="{shipping_country}" /></td>
+    <td><widget class="\XLite\View\CountrySelect" field="shipping_country" country="{shipping_country}" /></td>
     <td>&nbsp;</td>
 </tr>
 <tr valign="middle">
@@ -333,7 +333,7 @@ If you are a registered customer, please <a href="{buildURL(#profile#,##,_ARRAY_
 <tr valign="middle">
     <td align="right">Membership</td>
     <td>&nbsp;</td>
-    <td><widget class="XLite_View_MembershipSelect" field="pending_membership">
+    <td><widget class="\XLite\View\MembershipSelect" field="pending_membership">
 	</td>
 </tr>
 </tbody>
@@ -353,7 +353,7 @@ If you are a registered customer, please <a href="{buildURL(#profile#,##,_ARRAY_
     <td >
         By clicking "SUBMIT" you agree with our <a href="cart.php?target=help&amp;mode=terms_conditions" style="TEXT-DECORATION: underline" target="_blank">Terms &amp; Conditions.</a><br>
         <br>
-        <widget class="XLite_View_Button_Submit" />
+        <widget class="\XLite\View\Button\Submit" />
         <br>
     </td>
 </tr>

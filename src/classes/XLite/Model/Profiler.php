@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model;
+
 /**
  * Profiler
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_Profiler extends XLite_Base implements XLite_Base_ISingleton
+class Profiler extends \XLite\Base implements \XLite\Base\ISingleton
 {
     const QUERY_LIMIT_TIMES = 2;
     const QUERY_LIMIT_DURATION = 0.05;
@@ -185,7 +187,7 @@ class XLite_Model_Profiler extends XLite_Base implements XLite_Base_ISingleton
      */
     protected function isTargetAllowed()
     {
-        return !in_array(XLite_Core_Request::getInstance()->target, $this->disallowedTargets);
+        return !in_array(\XLite\Core\Request::getInstance()->target, $this->disallowedTargets);
     }
 
     /**
@@ -225,11 +227,11 @@ class XLite_Model_Profiler extends XLite_Base implements XLite_Base_ISingleton
      */
     protected function getStartupFlag()
     {
-        return XLite::getInstance()->getOptions(array('profiler_details', 'enabled'))
+        return \XLite::getInstance()->getOptions(array('profiler_details', 'enabled'))
             && $this->isTargetAllowed()
-            && !XLite_Core_Request::getInstance()->isPost()
-            && !XLite_Core_Request::getInstance()->isCLI()
-            && !XLite_Core_Request::getInstance()->isAJAX();
+            && !\XLite\Core\Request::getInstance()->isPost()
+            && !\XLite\Core\Request::getInstance()->isCLI()
+            && !\XLite\Core\Request::getInstance()->isAJAX();
     }
 
     /**
@@ -321,10 +323,10 @@ class XLite_Model_Profiler extends XLite_Base implements XLite_Base_ISingleton
         $this->enabled = !empty($start);
         $this->start_time = $_SERVER['REQUEST_TIME'];
         self::$templatesProfilingEnabled = $this->enabled
-            && XLite::getInstance()->getOptions(array('profiler_details', 'process_widgets'));
+            && \XLite::getInstance()->getOptions(array('profiler_details', 'process_widgets'));
 
         self::$useXdebugStackTrace = function_exists('xdebug_start_trace')
-            && XLite::getInstance()->getOptions(array('profiler_details', 'xdebug_log_trace'));
+            && \XLite::getInstance()->getOptions(array('profiler_details', 'xdebug_log_trace'));
     }
     
     /**
@@ -337,7 +339,7 @@ class XLite_Model_Profiler extends XLite_Base implements XLite_Base_ISingleton
      */
     protected function stop()
     {
-        if ($this->enabled && !XLite_Core_Request::getInstance()->isPopup) {
+        if ($this->enabled && !\XLite\Core\Request::getInstance()->isPopup) {
 
             $this->stop_time = microtime(true);
 

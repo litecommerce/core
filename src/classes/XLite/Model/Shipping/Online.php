@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model\Shipping;
+
 define('SHIPPING_CACHE_EXPIRATION', 3600 * 12); // half of a day
 
 /**
@@ -35,7 +37,7 @@ define('SHIPPING_CACHE_EXPIRATION', 3600 * 12); // half of a day
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_Shipping_Online extends XLite_Model_Shipping
+class Online extends \XLite\Model\Shipping
 {
     public $optionsTable;
 
@@ -47,7 +49,7 @@ class XLite_Model_Shipping_Online extends XLite_Model_Shipping
             $options = $this->config->$name;
         
         } else {
-            $options = new XLite_Core_CommonCell();
+            $options = new \XLite\Core\CommonCell();
         }
         
         foreach ($this->optionsFields as $field) {
@@ -70,7 +72,7 @@ class XLite_Model_Shipping_Online extends XLite_Model_Shipping
                 $name = $field;
                 $value = $options->$field;
 
-                XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+                \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
                     array(
                         'category' => $category,
                         'name'     => $name,
@@ -85,9 +87,9 @@ class XLite_Model_Shipping_Online extends XLite_Model_Shipping
     {
         $result = array();
 
-        $cart = XLite_Model_Cart::getInstance();
+        $cart = \XLite\Model\Cart::getInstance();
 
-        $order = new XLite_Model_Order($cart->get('order_id'));
+        $order = new \XLite\Model\Order($cart->get('order_id'));
         $weight = doubleval($order->get('weight'));
         $total = doubleval($order->calcSubTotal(true)); // SubTotal for "shipped only" items
         $items = $order->get('shippedItemsCount');
@@ -96,7 +98,7 @@ class XLite_Model_Shipping_Online extends XLite_Model_Shipping
         if (!empty($rates)) {
             foreach (explode(',', $rates) as $rate) {
                 list($shipping_id, $rate_value) = explode(':', $rate, 2);
-                $rateObject = new XLite_Model_ShippingRate($shipping_id);
+                $rateObject = new \XLite\Model\ShippingRate($shipping_id);
 
                 $sql = '(shipping_id = -1 OR shipping_id = \'' . $shipping_id . '\')'
                     . ' AND (shipping_zone = -1 OR shipping_zone = \'' . $zone . '\')'
@@ -109,8 +111,8 @@ class XLite_Model_Shipping_Online extends XLite_Model_Shipping
 
                 $rateObject->find($sql, 'shipping_id DESC, shipping_zone DESC');
 
-                $shipping = new XLite_Model_Shipping($shipping_id);
-                $rateObject->shipping = XLite_Model_Shipping::getInstanceByName($shipping->get('class'), $shipping_id);
+                $shipping = new \XLite\Model\Shipping($shipping_id);
+                $rateObject->shipping = \XLite\Model\Shipping::getInstanceByName($shipping->get('class'), $shipping_id);
 
                 if ($rateObject->shipping->isExists() && $rateObject->shipping->is('enabled')) {
 

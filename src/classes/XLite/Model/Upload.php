@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model;
+
 define('LC_UPLOAD_OK',        0); // OK
 define('LC_UPLOAD_NO_FILE',   1); // is not uploaded file
 define('LC_UPLOAD_TMPDIR_NO', 2); // upload_tmp_dir not exists
@@ -42,7 +44,7 @@ define('LC_UPLOAD_UNK',       7); // unknown error
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_Upload extends XLite_Base
+class Upload extends \XLite\Base
 {
     /**
     * Upload code.

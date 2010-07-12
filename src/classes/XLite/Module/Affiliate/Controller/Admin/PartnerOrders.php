@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Affiliate\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,14 +35,14 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Affiliate_Controller_Admin_PartnerOrders extends XLite_Controller_Admin_AAdmin
+class PartnerOrders extends \XLite\Controller\Admin\AAdmin
 {
     public $params = array('target', 'mode', 'order_id1', 'order_id2', 'partner_id', 'status', 'payment_status');
     public $crlf = "\r\n";
 
     function action_export() 
     {
-        $w = new XLite_View_AView();
+        $w = new \XLite\View\AView();
         $w->component = $this;
         $w->set('template', "modules/Affiliate/orders.tpl");
         $this->startDownload('orders.csv');
@@ -60,7 +62,7 @@ class XLite_Module_Affiliate_Controller_Admin_PartnerOrders extends XLite_Contro
     function getSales() 
     {
         if (is_null($this->sales)) {
-            $pp = new XLite_Module_Affiliate_Model_PartnerPayment();
+            $pp = new \XLite\Module\Affiliate\Model\PartnerPayment();
             $this->sales = $pp->searchSales(
                     $this->get('startDate'),
                     $this->get('endDate') + 24 * 3600,

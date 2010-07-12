@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\AdvancedSecurity\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,14 +35,14 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_AdvancedSecurity_Controller_Admin_PaymentMethods extends XLite_Controller_Admin_PaymentMethods implements XLite_Base_IDecorator
+class PaymentMethods extends \XLite\Controller\Admin\PaymentMethods implements \XLite\Base\IDecorator
 {
 
     function isAdvancedSecurityDisplayNote()
     {
-        $pm = XLite_Model_PaymentMethod::factory('CreditCard');
+        $pm = \XLite\Model\PaymentMethod::factory('CreditCard');
 
-        $gpg = new XLite_Module_AdvancedSecurity_Model_GPG();
+        $gpg = new \XLite\Module\AdvancedSecurity\Model\GPG();
         return ($pm->get('enabled') && (!$gpg->get('publicKey') || !$gpg->get('secretKey'))) ? true : false;
     }
 

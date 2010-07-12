@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model;
+
 define('MM_OK', 0);
 define('MM_ARCHIVE_CORRUPTED', 1);
 define('MM_BROKEN_DEPENDENCIES', 2);
@@ -37,7 +39,7 @@ define('MM_BROKEN_DEPENDENCIES', 2);
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_ModulesManager extends XLite_Base implements XLite_Base_ISingleton
+class ModulesManager extends \XLite\Base implements \XLite\Base\ISingleton
 {
     /**
      * GET params to enable safe mode
@@ -64,7 +66,7 @@ class XLite_Model_ModulesManager extends XLite_Base implements XLite_Base_ISingl
     /**
      * Module object
      * 
-     * @var    XLite_Model_Module
+     * @var    \XLite\Model\Module
      * @access protected
      * @since  1.0
      */
@@ -83,14 +85,14 @@ class XLite_Model_ModulesManager extends XLite_Base implements XLite_Base_ISingl
     /**
      * Instantiate moduel object
      * 
-     * @return XLite_Model_Module
+     * @return \XLite\Model\Module
      * @access protected
      * @since  1.0
      */
     protected function getModule()
     {
         if (!isset($this->module)) {
-            $this->module = new XLite_Model_Module();
+            $this->module = new \XLite\Model\Module();
         }
 
         return $this->module;
@@ -107,8 +109,8 @@ class XLite_Model_ModulesManager extends XLite_Base implements XLite_Base_ISingl
     {
         $result = false;
 
-        if (XLite::getInstance()->is('adminZone') && isset($_GET[self::PARAM_SAFE_MODE])) {
-            $authCode = XLite::getInstance()->getOptions(array('installer_details', 'auth_code'));
+        if (\XLite::getInstance()->is('adminZone') && isset($_GET[self::PARAM_SAFE_MODE])) {
+            $authCode = \XLite::getInstance()->getOptions(array('installer_details', 'auth_code'));
             $result = empty($authCode) xor (isset($_GET[self::PARAM_AUTH_CODE]) && ($authCode == $_GET[self::PARAM_AUTH_CODE]));
         }
 
@@ -125,8 +127,8 @@ class XLite_Model_ModulesManager extends XLite_Base implements XLite_Base_ISingl
     protected function initModules()
     {
         foreach ($this->getModule()->findAll('enabled = \'1\'') as $module) {
-            $className = 'XLite_Module_' . $module->get('name') . '_Main';
-            if (XLite_Core_Operator::isClassExists($className)) {
+            $className = '\XLite\Module\\' . $module->get('name') . '\Main';
+            if (\XLite\Core\Operator::isClassExists($className)) {
                 $moduleObject = new $className();
                 $moduleObject->init();
                 $moduleObject = null;
@@ -151,15 +153,15 @@ class XLite_Model_ModulesManager extends XLite_Base implements XLite_Base_ISingl
         if ($this->isInSafeMode()) {
 
             if ('on' == $_GET[self::PARAM_SAFE_MODE]) {
-                XLite_Model_Session::getInstance()->setComplex(self::SESSION_VAR_SAFE_MODE, true);
+                \XLite\Model\Session::getInstance()->setComplex(self::SESSION_VAR_SAFE_MODE, true);
                 $this->set('safeMode', true);
             } elseif ('off' == $_GET[self::PARAM_SAFE_MODE]) {
-                XLite_Model_Session::getInstance()->setComplex(self::SESSION_VAR_SAFE_MODE, null);
+                \XLite\Model\Session::getInstance()->setComplex(self::SESSION_VAR_SAFE_MODE, null);
             }
         }
 
-        if ($this->config->General->safe_mode || XLite_Model_Session::getInstance()->isRegistered('safe_mode')) {
-            XLite::getInstance()->setCleanUpCacheFlag(true);
+        if ($this->config->General->safe_mode || \XLite\Model\Session::getInstance()->isRegistered('safe_mode')) {
+            \XLite::getInstance()->setCleanUpCacheFlag(true);
             $this->set('safeMode', true);
         }
 
@@ -220,9 +222,9 @@ class XLite_Model_ModulesManager extends XLite_Base implements XLite_Base_ISingl
 
         require_once LC_MODULES_DIR . $name . LC_DS . 'Main.php';
 
-        $className = 'XLite_Module_' . $name . '_Main';
+        $className = '\XLite\Module\\' . $name . '\Main';
 
-        $module = new XLite_Model_Module();
+        $module = new \XLite\Model\Module();
 
         $module->set('name', $name);
         $module->set('mutual_modules', implode(',', $className::getMutualModules()));
@@ -275,15 +277,15 @@ class XLite_Model_ModulesManager extends XLite_Base implements XLite_Base_ISingl
 
     public function changeModuleStatus($module, $status, $cleanupCache = false)
     {
-        if (!($module instanceof XLite_Model_Module)) {
-            $module = new XLite_Model_Module($module);
+        if (!($module instanceof \XLite\Model\Module)) {
+            $module = new \XLite\Model\Module($module);
         }
 
         $status ? $module->enable() : $module->disable();
         $result = $module->update();
 
         if ($cleanupCache) {
-            XLite::getInstance()->setCleanUpCacheFlag(true);
+            \XLite::getInstance()->setCleanUpCacheFlag(true);
         }
 
         return $result;

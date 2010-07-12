@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Promotion\Model;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Promotion_Model_Order extends XLite_Model_Order implements XLite_Base_IDecorator
+class Order extends \XLite\Model\Order implements \XLite\Base\IDecorator
 {
     public $_bonusPrices = true; // getPrice & getSubTotal return bonus prices	
     protected $DC = null;
@@ -255,7 +257,7 @@ class XLite_Module_Promotion_Model_Order extends XLite_Model_Order implements XL
 
     function getSpecialOffers($where="")
     {
-        $so = new XLite_Module_Promotion_Model_SpecialOffer();
+        $so = new \XLite\Module\Promotion\Model\SpecialOffer();
         $result = array();
         $where = $this->buildWhereSpecialOffers($where);
         $found = $so->findAll($where);
@@ -360,7 +362,7 @@ class XLite_Module_Promotion_Model_Order extends XLite_Model_Order implements XL
             if (!$this->get('order_id')) {
                 $this->_appliedBonuses = array();
             } else {
-                $bonus = new XLite_Module_Promotion_Model_SpecialOffer();
+                $bonus = new \XLite\Module\Promotion\Model\SpecialOffer();
                 $bonus->_range = "order_id=" . $this->get('order_id');
                 $this->_appliedBonuses = $bonus->findAll($where);
             }
@@ -470,7 +472,7 @@ class XLite_Module_Promotion_Model_Order extends XLite_Model_Order implements XL
     function getDC()
     {
         if (is_null($this->DC) && $this->get('order_id')) {
-            $dc = new XLite_Module_Promotion_Model_DiscountCoupon();
+            $dc = new \XLite\Module\Promotion\Model\DiscountCoupon();
             $dc->_range = "";
             if ($dc->find("order_id=".$this->get('order_id'))) {
                 $this->DC = $dc;
@@ -552,7 +554,7 @@ class XLite_Module_Promotion_Model_Order extends XLite_Model_Order implements XL
     function getItemsByTaxValue()
     {
         if (is_null($this->_items_by_tax_value)) {
-            $taxRates = new XLite_Model_TaxRates();
+            $taxRates = new \XLite\Model\TaxRates();
             $taxRates->set('order', $this);
 
             $items = (array) $this->get('items');
@@ -602,7 +604,7 @@ class XLite_Module_Promotion_Model_Order extends XLite_Model_Order implements XL
             }
         }
 
-        $taxRates = new XLite_Model_TaxRates();
+        $taxRates = new \XLite\Model\TaxRates();
         $taxRates->set('order', $this);
 
         // apply discount to items maximally taxed 

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Controller\Customer;
+
 /**
  * Abstract controller for Customer interface
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class XLite_Controller_Customer_ACustomer extends XLite_Controller_AController
+abstract class ACustomer extends \XLite\Controller\AController
 {
     /**
      * cart 
@@ -122,7 +124,7 @@ abstract class XLite_Controller_Customer_ACustomer extends XLite_Controller_ACon
     /**
      * Return current (or default) product object
      * 
-     * @return XLite_Model_Product
+     * @return \XLite\Model\Product
      * @access public
      * @since  3.0.0
      */
@@ -136,13 +138,13 @@ abstract class XLite_Controller_Customer_ACustomer extends XLite_Controller_ACon
     /**
      * Return cart instance 
      * 
-     * @return XLite_Model_Order
+     * @return \XLite\Model\Order
      * @access public
      * @since  3.0.0
      */
     public function getCart()
     {
-        return XLite_Model_CachingFactory::getObject(__METHOD__, 'XLite_Model_Cart');
+        return \XLite\Model\CachingFactory::getObject(__METHOD__, '\XLite\Model\Cart');
     }
 
     /**

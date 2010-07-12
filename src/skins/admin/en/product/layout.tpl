@@ -20,7 +20,7 @@
             <font class=AdminHead>Field order:</font></td>
         {end:}
 </tr>
-<tr FOREACH="xlite.factory.XLite_Model_Product.importFields,id,fields">
+<tr FOREACH="xlite.factory.\XLite\Model\Product.importFields,id,fields">
     <td width=1>{id}:</td>
     <td width=99%>
         <select name="product_layout[{id}]">

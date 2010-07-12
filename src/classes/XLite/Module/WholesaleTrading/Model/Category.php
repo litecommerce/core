@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\WholesaleTrading\Model;
+
 /**
  * ____description____
  * 
@@ -33,13 +35,13 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_WholesaleTrading_Model_Category extends XLite_Model_Category implements XLite_Base_IDecorator
+class Category extends \XLite\Model\Category implements \XLite\Base\IDecorator
 {
     public function getMembership()
     {
         $value = $this->membership;
         
-        if (!XLite::isAdminZone() && $value == "all") {
+        if (!\XLite::isAdminZone() && $value == "all") {
             $value = "%";
         }
 

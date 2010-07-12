@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View;
+
 /**
  * Image upload component.
  *
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_ImageUpload extends XLite_View_AView
+class ImageUpload extends \XLite\View\AView
 {
     /*
      * Widget parameters names
@@ -70,10 +72,10 @@ class XLite_View_ImageUpload extends XLite_View_AView
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_FIELD       => new XLite_Model_WidgetParam_String('Field', ''),
-            self::PARAM_ACTION_NAME => new XLite_Model_WidgetParam_String('Action name', ''),
-            self::PARAM_FORM_NAME   => new XLite_Model_WidgetParam_String('Form name', ''),
-            self::PARAM_OBJECT      => new XLite_Model_WidgetParam_Object('Object', null),
+            self::PARAM_FIELD       => new \XLite\Model\WidgetParam\String('Field', ''),
+            self::PARAM_ACTION_NAME => new \XLite\Model\WidgetParam\String('Action name', ''),
+            self::PARAM_FORM_NAME   => new \XLite\Model\WidgetParam\String('Form name', ''),
+            self::PARAM_OBJECT      => new \XLite\Model\WidgetParam\Object('Object', null),
         );
     }
 

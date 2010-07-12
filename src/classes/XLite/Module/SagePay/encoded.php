@@ -334,7 +334,7 @@ $_this->xlite->logger->log("SagePay VSP Form response:".var_export($responseArra
     $order_id = $out[1];
 
     // check order exists
-    $_order = new XLite_Model_Order();
+    $_order = new \XLite\Model\Order();
     if (!$_order->find("order_id='$order_id'")) {
 if (SAGEPAY_FORM_DEBUG_LOG) {
 $_this->xlite->logger->log("SagePay VSP Form response Error: Order #$order_id not found.");
@@ -364,7 +364,7 @@ function func_SagePayDirect_sendRequestDirect(&$payment, $post, $url=null)
         $url = $payment->get('serviceUrl');
     }
 
-    $https = new XLite_Model_HTTPS();
+    $https = new \XLite\Model\HTTPS();
     $https->url        = $url;
     $https->data       = $post;
     $https->method     = 'POST';
@@ -417,7 +417,7 @@ function func_SagePay_getState($profile, $field, $customField)
     	return '';
     }
 
-    $state = XLite_Core_Database::getRepo('XLite_Model_State')->find($profile->get($field));
+    $state = \XLite\Core\Database::getRepo('XLite\Model\State')->find($profile->get($field));
     return $state ? $state->code : $profile->get($customField);
 }
 

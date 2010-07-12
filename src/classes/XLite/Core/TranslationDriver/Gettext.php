@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Core\TranslationDriver;
+
 /**
  * gettext-based driver
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Core_TranslationDriver_Gettext extends XLite_Core_TranslationDriver_ATranslationDriver
+class Gettext extends \XLite\Core\TranslationDriver\ATranslationDriver
 {
     const DOMAIN        = 'xlite';
     const CHARSET       = 'UTF-8';
@@ -256,7 +258,7 @@ class XLite_Core_TranslationDriver_Gettext extends XLite_Core_TranslationDriver_
      */
     protected function createIndexFile($path, $code)
     {
-        $list = XLite_Core_Database::getRepo('XLite_Model_LanguageLabel')->findLabelsByCode($code);
+        $list = \XLite\Core\Database::getRepo('XLite\Model\LanguageLabel')->findLabelsByCode($code);
 
         // .mo-file format source: http://www.gnu.org/software/gettext/manual/gettext.html#MO-Files
         $fp = @fopen($path, 'wb');
@@ -319,7 +321,7 @@ class XLite_Core_TranslationDriver_Gettext extends XLite_Core_TranslationDriver_
      */
     protected function createIndexFileBin($path, $code)
     {
-        $list = XLite_Core_Database::getRepo('XLite_Model_LanguageLabel')->findLabelsByCode($code);
+        $list = \XLite\Core\Database::getRepo('XLite\Model\LanguageLabel')->findLabelsByCode($code);
 
         $poPath = LC_TMP_DIR . 'translate.' . $code . '.po';
         $fp = @fopen($poPath, 'wb');

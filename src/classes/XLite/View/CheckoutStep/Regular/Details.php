@@ -26,14 +26,16 @@
  * @since      3.0.0
  */
 
+namespace XLite\View\CheckoutStep\Regular;
+
 /**
- * XLite_View_CheckoutStep_Regular_Details 
+ * \XLite\View\CheckoutStep\Regular\Details 
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_CheckoutStep_Regular_Details extends XLite_View_CheckoutStep_Regular_ARegular
+class Details extends \XLite\View\CheckoutStep\Regular\ARegular
 {
     /**
      * Return step templates directory name

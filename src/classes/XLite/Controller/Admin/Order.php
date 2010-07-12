@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Controller_Admin_Order extends XLite_Controller_Admin_AAdmin
+class Order extends \XLite\Controller\Admin\AAdmin
 {
     public $params = array('target', "order_id");
 
@@ -47,7 +49,7 @@ class XLite_Controller_Admin_Order extends XLite_Controller_Admin_AAdmin
      */
     protected function getRegularTemplate()
     {
-        if ('invoice' == XLite_Core_Request::getInstance()->mode) {
+        if ('invoice' == \XLite\Core\Request::getInstance()->mode) {
             $return = "common/print_invoice.tpl";
 
         } else {
@@ -60,7 +62,7 @@ class XLite_Controller_Admin_Order extends XLite_Controller_Admin_AAdmin
     function getOrder()
     {
         if (is_null($this->order)) {
-            $this->order = new XLite_Model_Order($this->get('order_id'));
+            $this->order = new \XLite\Model\Order($this->get('order_id'));
         }
         return $this->order;
     }
@@ -68,7 +70,7 @@ class XLite_Controller_Admin_Order extends XLite_Controller_Admin_AAdmin
     function action_update()
     {
         $status = $this->xlite->config->General->clear_cc_info;
-        $postData = XLite_Core_Request::getInstance()->getData();
+        $postData = \XLite\Core\Request::getInstance()->getData();
 
         if ($status != "N" && ($postData['status'] == $status && $status != $this->order->get('status'))) {
             $postData['details']["cc_number"] = "--- Removed ---";

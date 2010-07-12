@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Controller_Admin_States extends XLite_Controller_Admin_AAdmin
+class States extends \XLite\Controller\Admin\AAdmin
 {
     function init()
     {
@@ -54,8 +56,8 @@ class XLite_Controller_Admin_States extends XLite_Controller_Admin_AAdmin
 
     function fillForm()
     {
-        if (isset(XLite_Core_Request::getInstance()->country_code)) {
-            $this->set('country_code', XLite_Core_Request::getInstance()->country_code);
+        if (isset(\XLite\Core\Request::getInstance()->country_code)) {
+            $this->set('country_code', \XLite\Core\Request::getInstance()->country_code);
         } else {
             $this->set('country_code', $this->config->General->default_country);
         }
@@ -64,9 +66,9 @@ class XLite_Controller_Admin_States extends XLite_Controller_Admin_AAdmin
     function getStates()
     {
         if (is_null($this->states)) {
-            $this->states = XLite_Core_Database::getQB()
+            $this->states = \XLite\Core\Database::getQB()
                 ->select('s')
-                ->from('XLite_Model_State', 's')
+                ->from('\XLite\Model\State', 's')
                 ->where('s.country_code = :code')
                 ->setParameter('code', $this->get('country_code'))
                 ->getQuery()
@@ -80,7 +82,7 @@ class XLite_Controller_Admin_States extends XLite_Controller_Admin_AAdmin
     {
 
         $fields = array('country_code', "code", "state");
-        $postData = XLite_Core_Request::getInstance()->getData();
+        $postData = \XLite\Core\Request::getInstance()->getData();
 
         foreach ($postData as $k=>$v) {
             if (in_array($k, $fields)) {
@@ -88,7 +90,7 @@ class XLite_Controller_Admin_States extends XLite_Controller_Admin_AAdmin
             }
         }
 
-        $country = XLite_Core_Database::getRepo('XLite_Model_Country')->find($postData['country_code']);
+        $country = \XLite\Core\Database::getRepo('XLite\Model\Country')->find($postData['country_code']);
 
         if (!$country) {
             $this->set('valid', false);
@@ -108,9 +110,9 @@ class XLite_Controller_Admin_States extends XLite_Controller_Admin_AAdmin
             return;
         }
 
-        $state = XLite_Core_Database::getQB()
+        $state = \XLite\Core\Database::getQB()
             ->select('COUNT(s.state_id)')
-            ->from('XLite_Model_State', 's')
+            ->from('\XLite\Model\State', 's')
             ->where('s.state = :state AND s.code = :code')
             ->setParameters(array('state' => $postData['state'], 'code' => $postData['code']))
             ->getQuery()
@@ -122,11 +124,11 @@ class XLite_Controller_Admin_States extends XLite_Controller_Admin_AAdmin
             return;
         }
 
-        $state = new XLite_Model_State();
+        $state = new \XLite\Model\State();
         $state->map($postData);
         $state->country = $country;
-        XLite_Core_Database::getEM()->persist($state);
-        XLite_Core_Database::getEM()->flush();
+        \XLite\Core\Database::getEM()->persist($state);
+        \XLite\Core\Database::getEM()->flush();
 
         $this->obligatorySetStatus('added');
     }
@@ -134,17 +136,17 @@ class XLite_Controller_Admin_States extends XLite_Controller_Admin_AAdmin
     function action_update()
     {
         $stateData = array();
-        if (isset(XLite_Core_Request::getInstance()->state_data)) {
-            $stateData = XLite_Core_Request::getInstance()->state_data;
+        if (isset(\XLite\Core\Request::getInstance()->state_data)) {
+            $stateData = \XLite\Core\Request::getInstance()->state_data;
         }
 
         // use POST'ed data to modify state properties
         foreach ($stateData as $state_id => $state_data) {
-            $state = XLite_Core_Database::getEM()->find('XLite_Model_State', $state_id);
+            $state = \XLite\Core\Database::getEM()->find('XLite\Model\State', $state_id);
             $state->map($state_data);
-            XLite_Core_Database::getEM()->persist($state);
+            \XLite\Core\Database::getEM()->persist($state);
         }
-        XLite_Core_Database::getEM()->flush();
+        \XLite\Core\Database::getEM()->flush();
 
         $this->obligatorySetStatus('updated');
     }
@@ -152,16 +154,16 @@ class XLite_Controller_Admin_States extends XLite_Controller_Admin_AAdmin
     function action_delete()
     {
         $states = array();
-        if (isset(XLite_Core_Request::getInstance()->delete_states)) {
-            $states = XLite_Core_Request::getInstance()->delete_states;
+        if (isset(\XLite\Core\Request::getInstance()->delete_states)) {
+            $states = \XLite\Core\Request::getInstance()->delete_states;
         }
         foreach ($states as $id => $state_id) {
-            $state = XLite_Core_Database::getEM()->find('XLite_Model_State', $state_id);
+            $state = \XLite\Core\Database::getEM()->find('XLite\Model\State', $state_id);
             if ($state) {
-                XLite_Core_Database::getEM()->remove($state);
+                \XLite\Core\Database::getEM()->remove($state);
             }
         }
-        XLite_Core_Database::getEM()->flush();
+        \XLite\Core\Database::getEM()->flush();
 
         $this->obligatorySetStatus('deleted');
     }

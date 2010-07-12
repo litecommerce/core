@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model\Base;
+
 /**
  * Object translation 
  * 
@@ -34,7 +36,7 @@
  * @since   3.0.0
  * @MappedSuperclass
  */
-abstract class XLite_Model_Base_Translation extends XLite_Model_AEntity
+abstract class Translation extends \XLite\Model\AEntity
 {
     /**
      * Label unique id 

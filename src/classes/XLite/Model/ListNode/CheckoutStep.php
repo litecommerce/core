@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model\ListNode;
+
 /**
  * Checkout step
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_ListNode_CheckoutStep extends XLite_Model_ListNode
+class CheckoutStep extends \XLite\Model\ListNode
 {
     /**
      * Is checkout step passed or not 
@@ -144,6 +146,6 @@ class XLite_Model_ListNode_CheckoutStep extends XLite_Model_ListNode
      */
     public function getTopMessage()
     {
-        return XLite_Model_Factory::create($this->getWidgetClass())->getTopMessage($this->isPassed());
+        return \XLite\Model\Factory::create($this->getWidgetClass())->getTopMessage($this->isPassed());
     }
 }

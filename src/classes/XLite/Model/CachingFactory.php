@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model;
+
 /**
  * Abstract caching factory 
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_CachingFactory extends XLite_Model_Factory implements XLite_Base_ISingleton
+class CachingFactory extends \XLite\Model\Factory implements \XLite\Base\ISingleton
 {
     /**
      * Objects cache 
@@ -88,7 +90,7 @@ class XLite_Model_CachingFactory extends XLite_Model_Factory implements XLite_Ba
      * @param string $class     object class name
      * @param array  $args      constructor arguments
      *  
-     * @return XLite_Base
+     * @return \XLite\Base
      * @access public
      * @since  3.0.0
      */

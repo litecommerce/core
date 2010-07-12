@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View;
+
 /**
  * Abstract container widget
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class XLite_View_Container extends XLite_View_AView
+abstract class Container extends \XLite\View\AView
 {
     /**
      * Return title 
@@ -110,7 +112,7 @@ abstract class XLite_View_Container extends XLite_View_AView
      */
     protected function useBodyTemplate()
     {
-        return XLite_Core_CMSConnector::isCMSStarted() && $this->isWrapper();
+        return \XLite\Core\CMSConnector::isCMSStarted() && $this->isWrapper();
     }
 }
 

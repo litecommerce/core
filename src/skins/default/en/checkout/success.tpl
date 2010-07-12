@@ -13,8 +13,8 @@
 
 <widget template="common/dialog.tpl" head="Order processed" body="checkout/success_message.tpl">
 
-<p /><widget class="XLite_View_Button_Link" label="Continue shopping" location="{buildURL()}" />
-<p /><widget class="XLite_View_Button_NewTab" label="Print invoice" location="{buildURL(#order#,##,_ARRAY_(#mode#^#invoice#,#order_id#^order.order_id))}" />
+<p /><widget class="\XLite\View\Button\Link" label="Continue shopping" location="{buildURL()}" />
+<p /><widget class="\XLite\View\Button\NewTab" label="Print invoice" location="{buildURL(#order#,##,_ARRAY_(#mode#^#invoice#,#order_id#^order.order_id))}" />
 <p /><widget template="common/dialog.tpl" head="Invoice" body="common/invoice.tpl">
-<p /><widget class="XLite_View_Button_Link" label="Continue shopping" location="{buildURL()}" />
+<p /><widget class="\XLite\View\Button\Link" label="Continue shopping" location="{buildURL()}" />
 

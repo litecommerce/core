@@ -156,7 +156,7 @@ function submitAction(form, action)
 		<td nowrap align=right><b>Charge amount ($):</b></td>
 		<td>&nbsp;</td>
 		<td><input type="text" name="charge_amount" {if:charge_amount}value="{charge_amount}"{else:}value="{order.googleRemainCharge}"{end:}></td>
-		<td><widget class="XLite_Validator_RequiredValidator" field="charge_amount"></td>
+		<td><widget class="\XLite\Validator\RequiredValidator" field="charge_amount"></td>
 	</tr>
 </table>
 		</td>
@@ -196,7 +196,7 @@ function submitAction(form, action)
 		<td nowrap align=right><b>Refund amount ($):</b></td>
 		<td>&nbsp;</td>
 		<td><input type="text" name="refund_amount" value="{order.googleRemainRefund}"></td>
-		<td><widget class="XLite_Validator_RequiredValidator" field="refund_amount"></td>
+		<td><widget class="\XLite\Validator\RequiredValidator" field="refund_amount"></td>
 	</tr>
 	<tr>
 		<td nowrap align=right><b>Reason:</b></td>
@@ -208,13 +208,13 @@ function submitAction(form, action)
 				<option value="Other">Other (describe below)</option>
 			</select>
 		</td>
-		<td><widget class="XLite_Validator_RequiredValidator" field="refund_reason"></td>
+		<td><widget class="\XLite\Validator\RequiredValidator" field="refund_reason"></td>
 	</tr>
 	<tr>
 		<td nowrap align=right><b>Comment:</b></td>
 		<td>&nbsp;</td>
 		<td><textarea name="refund_comment" rows=3 cols=70>{refund_comment:h}</textarea></td>
-		<td><widget class="XLite_Validator_RequiredValidator" field="refund_comment"></td>
+		<td><widget class="\XLite\Validator\RequiredValidator" field="refund_comment"></td>
 	</tr>
 	<tr>
 		<td colspan=3><input type="button" value="Refund order" OnClick="submitAction(refund_cancel_form, 'gcheckout_refund_order');"></td>
@@ -248,13 +248,13 @@ function submitAction(form, action)
 				<option value="Other">Other (describe below)</option>
 			</select>
 		</td>
-		<td><widget class="XLite_Validator_RequiredValidator" field="cancel_reason"></td>
+		<td><widget class="\XLite\Validator\RequiredValidator" field="cancel_reason"></td>
 	</tr>
 	<tr>
 		<td nowrap align=right><b>Comment:</b></td>
 		<td>&nbsp;</td>
 		<td><textarea name="cancel_comment" rows=3 cols=70>{cancel_comment:h}</textarea></td>
-		<td><widget class="XLite_Validator_RequiredValidator" field="cancel_comment"></td>
+		<td><widget class="\XLite\Validator\RequiredValidator" field="cancel_comment"></td>
 	</tr>
 	<tr>
 		<td colspan=3><input type="button" value="Cancel order" OnClick="submitAction(refund_cancel_form, 'gcheckout_cancel_order');"></td>
@@ -338,7 +338,7 @@ function submitAction(form, action)
 <table border=0>
 	<tr>
 		<td>Message:<br><textarea name="message" rows=7 cols=70>{message:h}</textarea></td>
-		<td><widget class="XLite_Validator_RequiredValidator" field="message"></td>
+		<td><widget class="\XLite\Validator\RequiredValidator" field="message"></td>
 	</tr>
 </table>
 		</td>

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Controller_Admin_Categories extends XLite_Controller_Admin_AAdmin
+class Categories extends \XLite\Controller\Admin\AAdmin
 {
     public $params = array('target', 'category_id');
 
@@ -48,8 +50,8 @@ class XLite_Controller_Admin_Categories extends XLite_Controller_Admin_AAdmin
     protected $category = array();
 
     public function init() {
-        if ('delete' == XLite_Core_Request::getInstance()->mode) {
-            $deleteMode = 'delete' . ('1' == XLite_Core_Request::getInstance()->subcats ? '_subcats' : '');
+        if ('delete' == \XLite\Core\Request::getInstance()->mode) {
+            $deleteMode = 'delete' . ('1' == \XLite\Core\Request::getInstance()->subcats ? '_subcats' : '');
             $this->set('deleteMode', $deleteMode);
         }
     }
@@ -66,7 +68,7 @@ class XLite_Controller_Admin_Categories extends XLite_Controller_Admin_AAdmin
      */
     public function getCategories($categoryId = null)
     {
-        return XLite_Core_Database::getRepo('XLite_Model_Category')->getCategories(!is_null($categoryId) ? $categoryId : $this->getCategoryId());
+        return \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategories(!is_null($categoryId) ? $categoryId : $this->getCategoryId());
     }
 
     /**
@@ -93,7 +95,7 @@ class XLite_Controller_Admin_Categories extends XLite_Controller_Admin_AAdmin
      * 
      * @param int $categoryId Category Id
      *  
-     * @return XLite_Model_Category
+     * @return \XLite\Model\Category
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -101,7 +103,7 @@ class XLite_Controller_Admin_Categories extends XLite_Controller_Admin_AAdmin
     public function getCategory($categoryId = 0)
     {
         if (!isset($this->category[$categoryId])) {
-            $this->category[$categoryId] = XLite_Core_Database::getRepo('XLite_Model_Category')->getCategory((0 < $categoryId) ? $categoryId : $this->getCategoryId());
+            $this->category[$categoryId] = \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategory((0 < $categoryId) ? $categoryId : $this->getCategoryId());
         }
 
         return $this->category[$categoryId];
@@ -112,14 +114,14 @@ class XLite_Controller_Admin_Categories extends XLite_Controller_Admin_AAdmin
      * 
      * @param int $categoryId Category Id
      *  
-     * @return XLite_Model_Category
+     * @return \XLite\Model\Category
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
     public function getParentCategory($categoryId = null)
     {
-        return XLite_Core_Database::getRepo('XLite_Model_Category')->getParentCategory(!is_null($categoryId) ? $categoryId : $this->getCategoryId());
+        return \XLite\Core\Database::getRepo('XLite\Model\Category')->getParentCategory(!is_null($categoryId) ? $categoryId : $this->getCategoryId());
     }
 
     /**
@@ -136,7 +138,7 @@ class XLite_Controller_Admin_Categories extends XLite_Controller_Admin_AAdmin
 
     public function isCategoryLeafNode($categoryId = 0)
     {
-        return XLite_Core_Database::getRepo('XLite_Model_Category')->isCategoryLeafNode($categoryId ? $categoryId : $this->getCategoryId());
+        return \XLite\Core\Database::getRepo('XLite\Model\Category')->isCategoryLeafNode($categoryId ? $categoryId : $this->getCategoryId());
     }
 
     /**
@@ -149,7 +151,7 @@ class XLite_Controller_Admin_Categories extends XLite_Controller_Admin_AAdmin
      */
     public function getMemberships()
     {
-        return XLite_Core_Database::getRepo('XLite_Model_Membership')->findAllMemberships();
+        return \XLite\Core\Database::getRepo('XLite\Model\Membership')->findAllMemberships();
     }
 
     public function isRootCategories($categories)
@@ -212,17 +214,17 @@ class XLite_Controller_Admin_Categories extends XLite_Controller_Admin_AAdmin
      */
     protected function deleteCategories($subcategoriesOnly = false)
     {
-        $categoryId = XLite_Core_Request::getInstance()->category_id;
+        $categoryId = \XLite\Core\Request::getInstance()->category_id;
 
         if ($subcategoriesOnly) {
             $redirectParam = '&category_id=' . $categoryId;
 
         } else {
-            $parentCategory = XLite_Core_Database::getRepo('XLite_Model_Category')->getParentCategory($categoryId);
+            $parentCategory = \XLite\Core\Database::getRepo('XLite\Model\Category')->getParentCategory($categoryId);
             $redirectParam = (!is_null($parentCategory->category_id) ? '&category_id=' . $parentCategory->category_id : '');
         }
 
-        XLite_Core_Database::getRepo('XLite_Model_Category')->deleteCategory($categoryId, $subcategoriesOnly);
+        \XLite\Core\Database::getRepo('XLite\Model\Category')->deleteCategory($categoryId, $subcategoriesOnly);
 
         $this->redirect('admin.php?target=categories' . $redirectParam);
     }
@@ -239,7 +241,7 @@ class XLite_Controller_Admin_Categories extends XLite_Controller_Admin_AAdmin
     {
         $result = array();
 
-        $categoryPath = XLite_Core_Database::getRepo('XLite_Model_Category')->getCategoryPath($this->getCategoryId());
+        $categoryPath = \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategoryPath($this->getCategoryId());
 
         if (is_array($categoryPath)) {
             

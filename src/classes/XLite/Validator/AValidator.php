@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Validator;
+
 /**
  * Abstract validator
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class XLite_Validator_AValidator extends XLite_View_AView
+abstract class AValidator extends \XLite\View\AView
 {
     /**
      * Return widget default template
@@ -71,9 +73,9 @@ abstract class XLite_Validator_AValidator extends XLite_View_AView
     {
         $class = strtolower(get_class($this));
 
-        return !isset(XLite_Core_Request::getInstance()->VALIDATE)
-            || !isset(XLite_Core_Request::getInstance()->VALIDATE[$class])
-            || !isset(XLite_Core_Request::getInstance()->VALIDATE[$class][$this->get('field')]);
+        return !isset(\XLite\Core\Request::getInstance()->VALIDATE)
+            || !isset(\XLite\Core\Request::getInstance()->VALIDATE[$class])
+            || !isset(\XLite\Core\Request::getInstance()->VALIDATE[$class][$this->get('field')]);
     }
 
     /**

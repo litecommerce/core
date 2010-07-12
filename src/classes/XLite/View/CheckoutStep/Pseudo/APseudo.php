@@ -26,14 +26,16 @@
  * @since      3.0.0
  */
 
+namespace XLite\View\CheckoutStep\Pseudo;
+
 /**
- * XLite_View_CheckoutStep_Pseudo_APseudo 
+ * \XLite\View\CheckoutStep\Pseudo\APseudo 
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class XLite_View_CheckoutStep_Pseudo_APseudo extends XLite_View_CheckoutStep_ACheckoutStep
+abstract class APseudo extends \XLite\View\CheckoutStep\ACheckoutStep
 {
     /**
      * Return step templates directory name

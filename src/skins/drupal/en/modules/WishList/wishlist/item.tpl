@@ -11,14 +11,14 @@
  * @since     3.0.0
  *}
 <td class="delete-from-list">
-  <widget class="XLite_Module_WishList_View_Form_Item_Delete" name="wl_remove" item="{item}" />
-    <widget class="XLite_View_Button_Image" label="Remove" action="delete" />
+  <widget class="\XLite\Module\WishList\View\Form\Item\Delete" name="wl_remove" item="{item}" />
+    <widget class="\XLite\View\Button\Image" label="Remove" action="delete" />
   <widget name="wl_remove" end />
 </td>
 
 <td class="item-thumbnail" IF="item.hasImage()">
   <a href="{item.getUrl()}">
-    <widget class="XLite_View_Image" image="{item.getThumbnail()}" alt="{item.name}" maxWidth="75" maxHeight="75" IF="item.getThumbnail()" />
+    <widget class="\XLite\View\Image" image="{item.getThumbnail()}" alt="{item.name}" maxWidth="75" maxHeight="75" IF="item.getThumbnail()" />
     <img src="{item.imageURL}" alt="{item.name}" IF="!item.getThumbnail()"/>
   </a>
 </td>

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\GiftCertificates\Model\PaymentMethod;
+
 /**
  * Payment method
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_GiftCertificates_Model_PaymentMethod_GiftCertificate extends XLite_Model_PaymentMethod
+class GiftCertificate extends \XLite\Model\PaymentMethod
 {
     /**
      * Payment form template
@@ -58,22 +60,22 @@ class XLite_Module_GiftCertificates_Model_PaymentMethod_GiftCertificate extends 
     /**
      * Handle request 
      * 
-     * @param XLite_Model_Cart $cart Cart
+     * @param \XLite\Model\Cart $cart Cart
      *  
      * @return integer Operation status
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function handleRequest(XLite_Model_Cart $cart)
+    public function handleRequest(\XLite\Model\Cart $cart)
     {
-        $gcid = trim(XLite_Core_Request::getInstance()->gcid);
-        $gc = new XLite_Module_GiftCertificates_Model_GiftCertificate($gcid);
+        $gcid = trim(\XLite\Core\Request::getInstance()->gcid);
+        $gc = new \XLite\Module\GiftCertificates\Model\GiftCertificate($gcid);
         $setResult = $cart->setGC($gc);
 
         $result = self::PAYMENT_SILENT;
 
-        if ($setResult != XLite_Module_GiftCertificates_Model_GiftCertificate::GC_OK) {
+        if ($setResult != \XLite\Module\GiftCertificates\Model\GiftCertificate::GC_OK) {
 
             // Failed
             $result = self::PAYMENT_FAILURE;
@@ -84,7 +86,7 @@ class XLite_Module_GiftCertificates_Model_PaymentMethod_GiftCertificate extends 
             $cart->set('payment_method', '');
             $cart->update();
 
-            header('Location: ' . XLite_Core_Converter::buildUrl('checkout', '', array('mode' => 'paymentMethod')));
+            header('Location: ' . \XLite\Core\Converter::buildUrl('checkout', '', array('mode' => 'paymentMethod')));
 
         } else {
 
@@ -99,7 +101,7 @@ class XLite_Module_GiftCertificates_Model_PaymentMethod_GiftCertificate extends 
     /**
      * Return list of active payment methods
      *
-     * @return XLite_Model_PaymentMethod
+     * @return \XLite\Model\PaymentMethod
      * @access public
      * @since  3.0
      */
@@ -107,7 +109,7 @@ class XLite_Module_GiftCertificates_Model_PaymentMethod_GiftCertificate extends 
     {
         $result = array();
 
-        $controller = XLite::getController();
+        $controller = \XLite::getController();
 
         if (method_exists($controller, 'getCart') && !$controller->getCart()->canApplyGiftCertificate()) {
             $result = $this->findAll('enabled = \'1\' AND payment_method != \'gift_certificate\'');

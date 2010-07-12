@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\ProductOptions\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_ProductOptions_Controller_Admin_ImportCatalog extends XLite_Controller_Admin_ImportCatalog implements XLite_Base_IDecorator
+class ImportCatalog extends \XLite\Controller\Admin\ImportCatalog implements \XLite\Base\IDecorator
 {
     public function __construct(array $params = array())
     {
@@ -52,7 +54,7 @@ class XLite_Module_ProductOptions_Controller_Admin_ImportCatalog extends XLite_C
             "text_qualifier"    => $this->text_qualifier,
             "return_error"		=> true,
             );
-        $p = new XLite_Module_ProductOptions_Model_ProductOption();
+        $p = new \XLite\Module\ProductOptions\Model\ProductOption();
         $p->import($options);
         $this->importError = $p->importError;
 

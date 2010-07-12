@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\AOM\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_AOM_Controller_Admin_OrdersStats extends XLite_Controller_Admin_OrdersStats implements XLite_Base_IDecorator
+class OrdersStats extends \XLite\Controller\Admin\OrdersStats implements \XLite\Base\IDecorator
 {
     function getPageTemplate()
     {
@@ -44,7 +46,7 @@ class XLite_Module_AOM_Controller_Admin_OrdersStats extends XLite_Controller_Adm
     {
         // typedef
         $statRec = array("today" => 0, "week" => 0, "month" => 0);
-        $orderStatus = new XLite_Module_AOM_Model_OrderStatus();
+        $orderStatus = new \XLite\Module\AOM\Model\OrderStatus();
         $orderStatuses = $orderStatus->findAll();
         $orderStatusesHash = array();
         foreach ($orderStatuses as $orderStatus_) {
@@ -55,7 +57,7 @@ class XLite_Module_AOM_Controller_Admin_OrdersStats extends XLite_Controller_Adm
         $this->stats['total'] = $statRec;
         $this->stats['paid'] = $statRec;
         
-        $order = new XLite_Model_Order();
+        $order = new \XLite\Model\Order();
         $date = $this->get('monthDate');
         // fetch orders for this month
         array_map(array($this, "summarize"), $order->findAll("date>=$date"));

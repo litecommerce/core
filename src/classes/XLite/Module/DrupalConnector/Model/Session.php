@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\DrupalConnector\Model;
+
 /**
  * Session
  * 
@@ -33,8 +35,8 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class XLite_Module_DrupalConnector_Model_Session extends XLite_Model_Session
-implements XLite_Base_IDecorator
+abstract class Session extends \XLite\Model\Session
+implements \XLite\Base\IDecorator
 {
     /**
      * Return path for cookies
@@ -45,7 +47,7 @@ implements XLite_Base_IDecorator
      */
     protected function getPath()
     {
-        return XLite_Module_DrupalConnector_Handler::getInstance()->checkCurrentCMS()
+        return \XLite\Module\DrupalConnector\Handler::getInstance()->checkCurrentCMS()
             ? base_path() 
             : parent::getPath();
     }
@@ -102,7 +104,7 @@ implements XLite_Base_IDecorator
             isset($language)
             && is_object($language)
             && $language instanceof stdClass
-            && XLite_Core_Database::getRepo('XLite_Model_Language')->findOneByCode($language->language)
+            && \XLite\Core\Database::getRepo('XLite\Model\Language')->findOneByCode($language->language)
         ) {
             $result = $language->language;
         }

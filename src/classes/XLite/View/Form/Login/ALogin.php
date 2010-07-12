@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View\Form\Login;
+
 /**
  * Abstract log-in form
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class XLite_View_Form_Login_ALogin extends XLite_View_Form_AForm
+abstract class ALogin extends \XLite\View\Form\AForm
 {
     /**
      * getSecuritySetting 
@@ -109,7 +111,7 @@ abstract class XLite_View_Form_Login_ALogin extends XLite_View_Form_AForm
      */
     protected function getFormAction()
     {
-        return $this->getShopUrl(XLite::getInstance()->getScript(), $this->getSecuritySetting());
+        return $this->getShopUrl(\XLite::getInstance()->getScript(), $this->getSecuritySetting());
     }
 }
 

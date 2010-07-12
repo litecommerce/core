@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Controller\Admin;
+
 /**
  * CSS editor
  * 
@@ -33,12 +35,12 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Controller_Admin_CssEdit extends XLite_Controller_Admin_AAdmin
+class CssEdit extends \XLite\Controller\Admin\AAdmin
 {
     /**
      * Editor 
      * 
-     * @var    XLite_Modl_CssEditor
+     * @var    \XLite\Modl\CssEditor
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
@@ -98,7 +100,7 @@ class XLite_Controller_Admin_CssEdit extends XLite_Controller_Admin_AAdmin
     public function getLocale() 
     {
         if (is_null($this->locale)) {
-            $this->locale = XLite::getInstance()->getOptions(array('skin_details', 'locale'));
+            $this->locale = \XLite::getInstance()->getOptions(array('skin_details', 'locale'));
         }
 
         return $this->locale;
@@ -115,7 +117,7 @@ class XLite_Controller_Admin_CssEdit extends XLite_Controller_Admin_AAdmin
     public function getZone() 
     {
         if (is_null($this->zone)) {
-            $this->zone = XLite::getInstance()->getOptions(array('skin_details', 'skin'));
+            $this->zone = \XLite::getInstance()->getOptions(array('skin_details', 'skin'));
         }
 
         return $this->zone;
@@ -124,7 +126,7 @@ class XLite_Controller_Admin_CssEdit extends XLite_Controller_Admin_AAdmin
     /**
      * Get editor 
      * 
-     * @return XLite_Model_CssEditor
+     * @return \XLite\Model\CssEditor
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -132,7 +134,7 @@ class XLite_Controller_Admin_CssEdit extends XLite_Controller_Admin_AAdmin
     public function getEditor()
     {
         if (!isset($this->editor)) {
-            $this->editor = new XLite_Model_CssEditor($this->getCssFile());
+            $this->editor = new \XLite\Model\CssEditor($this->getCssFile());
         }
 
         return $this->editor;
@@ -164,12 +166,12 @@ class XLite_Controller_Admin_CssEdit extends XLite_Controller_Admin_AAdmin
         $editor = $this->getEditor();
         if ($editor->setStyle($this->style_id, $this->style)) {
             $editor->save();
-            XLite_Core_TopMessage::getInstance()->add('CSS modifications saved');
+            \XLite\Core\TopMessage::getInstance()->add('CSS modifications saved');
 
         } else {
-            XLite_Core_TopMessage::getInstance()->add(
+            \XLite\Core\TopMessage::getInstance()->add(
                 sprintf('Failed to save CSS modifications. Check %s file permissions.', $this->getCssFile()),
-                XLite_Core_TopMessage::ERROR
+                \XLite\Core\TopMessage::ERROR
             );
         }
     }

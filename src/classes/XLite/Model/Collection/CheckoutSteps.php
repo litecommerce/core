@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model\Collection;
+
 /**
  * Checkout steps list
  * 
@@ -33,12 +35,12 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_Collection_CheckoutSteps extends XLite_Model_Collection
+class CheckoutSteps extends \XLite\Model\Collection
 {
     /**
      * current 
      * 
-     * @var    XLite_Model_ListNode_CheckoutStep
+     * @var    \XLite\Model\ListNode\CheckoutStep
      * @access protected
      * @since  3.0.0
      */
@@ -47,7 +49,7 @@ class XLite_Model_Collection_CheckoutSteps extends XLite_Model_Collection
     /**
      * actual 
      * 
-     * @var    XLite_Model_ListNode_CheckoutStep
+     * @var    \XLite\Model\ListNode\CheckoutStep
      * @access protected
      * @since  3.0.0
      */
@@ -57,13 +59,13 @@ class XLite_Model_Collection_CheckoutSteps extends XLite_Model_Collection
     /**
      * findLastPassedRegularStep 
      * 
-     * @param XLite_Model_ListNode_CheckoutStep &$step object to prepare
+     * @param \XLite\Model\ListNode\CheckoutStep &$step object to prepare
      *  
      * @return void
      * @access protected
      * @since  3.0.0
      */
-    protected function findLastPassedRegularStep(XLite_Model_ListNode_CheckoutStep &$step)
+    protected function findLastPassedRegularStep(\XLite\Model\ListNode\CheckoutStep &$step)
     {
         while ($step && !$step->isRegularStep()) {
             $step = $step->getPrev();
@@ -73,13 +75,13 @@ class XLite_Model_Collection_CheckoutSteps extends XLite_Model_Collection
     /**
      * correctStep 
      * 
-     * @param XLite_Model_ListNode_CheckoutStep &$step object to prepare
+     * @param \XLite\Model\ListNode\CheckoutStep &$step object to prepare
      *  
      * @return void
      * @access protected
      * @since  3.0.0
      */
-    protected function correctStep(XLite_Model_ListNode_CheckoutStep &$step)
+    protected function correctStep(\XLite\Model\ListNode\CheckoutStep &$step)
     {
         if (isset($step) && !$step->isPassed()) {
             $this->findLastPassedRegularStep($step);
@@ -92,7 +94,7 @@ class XLite_Model_Collection_CheckoutSteps extends XLite_Model_Collection
      * @param bool   $isActual flag to determine step type
      * @param string $method   name of the callback function used to prepare step object
      *  
-     * @return XLite_Model_ListNode_CheckoutStep
+     * @return \XLite\Model\ListNode\CheckoutStep
      * @access protected
      * @since  3.0.0
      */
@@ -101,7 +103,7 @@ class XLite_Model_Collection_CheckoutSteps extends XLite_Model_Collection
         $name = $isActual ? 'actual' : 'current';
 
         if (!isset($this->$name)) {
-            $this->$name = $this->findByCallbackResult('checkMode', array(XLite_Core_Request::getInstance()->mode));
+            $this->$name = $this->findByCallbackResult('checkMode', array(\XLite\Core\Request::getInstance()->mode));
 
             if (isset($method)) {
                 // $method is method argument. See getCurrentStep() method
@@ -116,7 +118,7 @@ class XLite_Model_Collection_CheckoutSteps extends XLite_Model_Collection
     /**
      * Return current (so called "regular" step
      * 
-     * @return XLite_Model_ListNode_CheckoutStep
+     * @return \XLite\Model\ListNode\CheckoutStep
      * @access public
      * @since  3.0.0
      */
@@ -128,7 +130,7 @@ class XLite_Model_Collection_CheckoutSteps extends XLite_Model_Collection
     /**
      * Return actual ("regular" or "pseudo") checkout step
      * 
-     * @return XLite_Model_ListNode_CheckoutStep
+     * @return \XLite\Model\ListNode\CheckoutStep
      * @access public
      * @since  3.0.0
      */

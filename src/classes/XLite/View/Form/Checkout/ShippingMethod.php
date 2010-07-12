@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View\Form\Checkout;
+
 /**
  * Shipping method selection
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_Form_Checkout_ShippingMethod extends XLite_View_Form_AForm
+class ShippingMethod extends \XLite\View\Form\AForm
 {
     /**
      * Current form name 

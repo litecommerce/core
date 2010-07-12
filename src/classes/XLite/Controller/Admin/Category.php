@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Controller_Admin_Category extends XLite_Controller_Admin_AAdmin
+class Category extends \XLite\Controller\Admin\AAdmin
 {
     public $page = "category_modify";
     public $pages = array(
@@ -83,7 +85,7 @@ class XLite_Controller_Admin_Category extends XLite_Controller_Admin_AAdmin
     {
         if (is_null($this->extraFields)) 
         {
-            $ef = new XLite_Model_ExtraField();
+            $ef = new \XLite\Model\ExtraField();
             $extraFields = $ef->findAll("product_id=0");  // global fields
             foreach ($extraFields as $extraField_key => $extraField)
             {
@@ -108,13 +110,13 @@ class XLite_Controller_Admin_Category extends XLite_Controller_Admin_AAdmin
      */
     public function getParentCategoryId($categoryId)
     {
-        return XLite_Core_Database::getRepo('XLite_Model_Category')->getParentCategoryId($categoryId ? $categoryId : $this->getCategoryId());
+        return \XLite\Core\Database::getRepo('XLite\Model\Category')->getParentCategoryId($categoryId ? $categoryId : $this->getCategoryId());
     }
     
     /**
-     * Get XLite_Model_Category object of current category
+     * Get \XLite\Model\Category object of current category
      * 
-     * @return XLite_Model_Category
+     * @return \XLite\Model\Category
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -123,11 +125,11 @@ class XLite_Controller_Admin_Category extends XLite_Controller_Admin_AAdmin
     {
         if (is_null($this->category) && !in_array($this->mode, $this->addModes)) {
 
-            $this->category = XLite_Core_Database::getRepo('XLite_Model_Category')->getCategory($this->getCategoryId());
+            $this->category = \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategory($this->getCategoryId());
         }
 
         if (is_null($this->category)) {
-            $this->category = new XLite_Model_Category();
+            $this->category = new \XLite\Model\Category();
         }
 
         return $this->category;
@@ -158,7 +160,7 @@ class XLite_Controller_Admin_Category extends XLite_Controller_Admin_AAdmin
     {
         $result = array();
 
-        $categoryPath = XLite_Core_Database::getRepo('XLite_Model_Category')->getCategoryPath($this->getCategoryId());
+        $categoryPath = \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategoryPath($this->getCategoryId());
 
         if (is_array($categoryPath)) {
             
@@ -182,7 +184,7 @@ class XLite_Controller_Admin_Category extends XLite_Controller_Admin_AAdmin
      */
     protected function validateCategoryData($isNewObject = false)
     {
-        $postedData = XLite_Core_Request::getInstance()->getData();
+        $postedData = \XLite\Core\Request::getInstance()->getData();
 
         $data = array();
         $isValid = true;
@@ -215,9 +217,9 @@ class XLite_Controller_Admin_Category extends XLite_Controller_Admin_AAdmin
 
                 if (!empty($data['clean_url']) && !$this->isCleanURLUnique($data['clean_url'])) {
 
-                    XLite_Core_TopMessage::getInstance()->add(
+                    \XLite\Core\TopMessage::getInstance()->add(
                         'The Clean URL you specified is already in use. Please specify another Clean URL',
-                        XLite_Core_TopMessage::ERROR
+                        \XLite\Core\TopMessage::ERROR
                     );
 
                     $isValid = false;
@@ -228,9 +230,9 @@ class XLite_Controller_Admin_Category extends XLite_Controller_Admin_AAdmin
 
                 if (!isset ($data['name']) || 0 == strlen(trim($data['name']))) {
 
-                    XLite_Core_TopMessage::getInstance()->add(
+                    \XLite\Core\TopMessage::getInstance()->add(
                         'Not empty category name must be specified',
-                        XLite_Core_TopMessage::ERROR
+                        \XLite\Core\TopMessage::ERROR
                     );
 
                     $isValid = false;
@@ -257,7 +259,7 @@ class XLite_Controller_Admin_Category extends XLite_Controller_Admin_AAdmin
      */
     protected function isCleanURLUnique($cleanURL)
     {
-        $result = XLite_Core_Database::getRepo('XLite_Model_Category')->getCategoryByCleanUrl($cleanURL);
+        $result = \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategoryByCleanUrl($cleanURL);
         return empty($result);
     }
 
@@ -276,7 +278,7 @@ class XLite_Controller_Admin_Category extends XLite_Controller_Admin_AAdmin
             $code = $this->getCurrentLanguage();
 
             // update category
-            $category = XLite_Core_Database::getRepo('XLite_Model_Category')->getCategory($properties['category_id']);
+            $category = \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategory($properties['category_id']);
 
             $category->map($properties);
             $category->getTranslation($code)->name = $properties['name'];
@@ -285,8 +287,8 @@ class XLite_Controller_Admin_Category extends XLite_Controller_Admin_AAdmin
             $category->getTranslation($code)->meta_desc = $properties['meta_desc'];
             $category->getTranslation($code)->meta_title = $properties['meta_title'];
 
-            XLite_Core_Database::getEM()->persist($category);
-            XLite_Core_Database::getEM()->flush();
+            \XLite\Core\Database::getEM()->persist($category);
+            \XLite\Core\Database::getEM()->flush();
 
             // update category image
 //            $image = $category->get('image');
@@ -350,7 +352,7 @@ class XLite_Controller_Admin_Category extends XLite_Controller_Admin_AAdmin
             if ($properties = $this->validateCategoryData(true)) {
 
                 // update category
-                $category = XLite_Core_Database::getRepo('XLite_Model_Category')->$funcName($this->getCategoryId());
+                $category = \XLite\Core\Database::getRepo('XLite\Model\Category')->$funcName($this->getCategoryId());
 
                 $category->map($properties);
 
@@ -362,8 +364,8 @@ class XLite_Controller_Admin_Category extends XLite_Controller_Admin_AAdmin
                 $category->getTranslation($code)->meta_desc = $properties['meta_desc'];
                 $category->getTranslation($code)->meta_title = $properties['meta_title'];
 
-                XLite_Core_Database::getEM()->persist($category);
-                XLite_Core_Database::getEM()->flush();
+                \XLite\Core\Database::getEM()->persist($category);
+                \XLite\Core\Database::getEM()->flush();
             }
 
             $this->redirect('admin.php?target=categories&category_id=' . $category->category_id);
@@ -380,7 +382,7 @@ class XLite_Controller_Admin_Category extends XLite_Controller_Admin_AAdmin
 
     function action_add_field()
     {
-        $_postData = XLite_Core_Request::getInstance()->getData();
+        $_postData = \XLite\Core\Request::getInstance()->getData();
         foreach ($_postData as $post_key => $post_value)
         {
             if (strcmp(substr($post_key, 0, 7), "add_ef_") == 0)
@@ -395,7 +397,7 @@ class XLite_Controller_Admin_Category extends XLite_Controller_Admin_AAdmin
             $categories = (array)$this->get('add_categories');
             if (!empty($categories)) 
             {
-                $ef = new XLite_Model_ExtraField();
+                $ef = new \XLite\Model\ExtraField();
                 $ef->set('properties', $_postData);
                 $ef->setCategoriesList($categories);
                 $ef->create();
@@ -406,16 +408,16 @@ class XLite_Controller_Admin_Category extends XLite_Controller_Admin_AAdmin
                 $categories = (array)$this->get('add_categories');
                 if (!empty($categories)) {
                     foreach ($categories as $categoryID) {
-                        $category = new XLite_Model_Category($categoryID);
+                        $category = new \XLite\Model\Category($categoryID);
                         foreach ((array)$category->get('products') as $product) {
-                            $ef = new XLite_Model_ExtraField();
+                            $ef = new \XLite\Model\ExtraField();
                             $ef->set('properties', $_postData);
                             $ef->set('product_id', $product->get('product_id'));
                             $ef->create();
                         }
                     }
                 } else {
-                    $ef = new XLite_Model_ExtraField();
+                    $ef = new \XLite\Model\ExtraField();
                     $ef->set('properties', $_postData);
                     $ef->create();
                 }
@@ -424,9 +426,9 @@ class XLite_Controller_Admin_Category extends XLite_Controller_Admin_AAdmin
         // DELETE field
         elseif (!is_null($this->get('delete_field'))) {
             foreach ((array)$this->get('add_categories') as $categoryID) {
-                $category = new XLite_Model_Category($categoryID);
+                $category = new \XLite\Model\Category($categoryID);
                 foreach ((array)$category->get('products') as $product) {
-                    $ef = new XLite_Model_ExtraField();
+                    $ef = new \XLite\Model\ExtraField();
                     if ($ef->find("name='".addslashes($this->get('name'))."' AND product_id=".$product->get('product_id'))) {
                         $ef->delete();
                     }
@@ -442,10 +444,10 @@ class XLite_Controller_Admin_Category extends XLite_Controller_Admin_AAdmin
             $category_id = $this->get('category_id');
             foreach ((array)$this->get('delete_fields') as $id) {
                 $data = array();
-                $ef = new XLite_Model_ExtraField($id);
+                $ef = new \XLite\Model\ExtraField($id);
                 $categories = $ef->getCategories();
                 if ( !is_array($categories) || count($categories) == 0 ) {
-                    $cat = new XLite_Model_Category();
+                    $cat = new \XLite\Model\Category();
                     $cats = $cat->findAll();
                     $categories = array();
                     foreach ($cats as $v)
@@ -466,7 +468,7 @@ class XLite_Controller_Admin_Category extends XLite_Controller_Admin_AAdmin
         {
             foreach ((array)$this->get('extra_fields') as $id => $data) 
             {
-                $ef = new XLite_Model_ExtraField($id);
+                $ef = new \XLite\Model\ExtraField($id);
                 $ef->set('categories_old', $ef->get('categories'));
                 $ef->set('properties', $data);
                 $ef->update();

@@ -10,11 +10,11 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<widget class="XLite_Module_GiftCertificates_View_Form_GiftCertificate_Check" name="check_form" className="verify-gc" />
+<widget class="\XLite\Module\GiftCertificates\View\Form\GiftCertificate\Check" name="check_form" className="verify-gc" />
 
   <img src="images/spacer.gif" alt="" />
   <input type="text" name="gcid" value="{getGcIdValue()}"{if:!gcid} class="temporary"{end:} />
-  <widget class="XLite_View_Button_Submit" label="{getButtonLabel()}" />
+  <widget class="\XLite\View\Button\Submit" label="{getButtonLabel()}" />
 
 <script type="text/javascript">
 <!--

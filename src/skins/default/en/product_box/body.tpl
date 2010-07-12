@@ -23,10 +23,10 @@
     <span>{product.sku}</span>
   </div>
 
-  <widget class="XLite_View_Price" product="{product}" template="common/price_plain.tpl" />
+  <widget class="\XLite\View\Price" product="{product}" template="common/price_plain.tpl" />
 
   <br />
 
-  <widget class="XLite_View_BuyNow" product="{product}" />
+  <widget class="\XLite\View\BuyNow" product="{product}" />
 
 </div>

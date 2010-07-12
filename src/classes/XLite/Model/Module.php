@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model;
+
 /**
  * Module
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_Module extends XLite_Model_AModel
+class Module extends \XLite\Model\AModel
 {
     /**
      * Module types
@@ -102,7 +104,7 @@ class XLite_Model_Module extends XLite_Model_AModel
      */
     protected function addLayout($oldTemplate, $newTemplate)
     {
-        XLite_Model_Layout::getInstance()->addLayout($oldTemplate, $newTemplate);
+        \XLite\Model\Layout::getInstance()->addLayout($oldTemplate, $newTemplate);
     }
 
 
@@ -149,9 +151,9 @@ class XLite_Model_Module extends XLite_Model_AModel
      */
     public function __call($method, array $args = array())
     {
-        $class = 'XLite_Module_' . $this->get('name') . '_Main';
+        $class = '\XLite\Module\\' . $this->get('name') . '\Main';
 
-        if (XLite_Core_Operator::isClassExists($class)) {
+        if (\XLite\Core\Operator::isClassExists($class)) {
 
             // Active module
 
@@ -159,11 +161,11 @@ class XLite_Model_Module extends XLite_Model_AModel
                 ? call_user_func_array(array($class, $method), $args)
                 : parent::__call($method, $args);
 
-        } elseif (file_exists(LC_CLASSES_DIR . str_replace('_', LC_DS, $class) . '.php')) {
+        } elseif (file_exists(LC_CLASSES_DIR . str_replace('\\', LC_DS, $class) . '.php')) {
 
             // Disabled module
 
-            require_once LC_CLASSES_DIR . str_replace('_', LC_DS, $class) . '.php';
+            require_once LC_CLASSES_DIR . str_replace('\\', LC_DS, $class) . '.php';
             $result = method_exists($class, $method)
                 ? call_user_func_array(array($class, $method), $args)
                 : parent::__call($method, $args);

@@ -134,15 +134,15 @@ function selectProduct(p_id)
 <table border="0" cellpadding="5" cellspacing="0">
 <tr>
 	<td>
-	<widget class="XLite_View_Button" label="Reset" href="javascript: document.bulk_shopping_form.action.value=''; document.bulk_shopping_form.submit();">
+	<widget class="\XLite\View\Button" label="Reset" href="javascript: document.bulk_shopping_form.action.value=''; document.bulk_shopping_form.submit();">
 	</td>	
 	<td>
-	<widget class="XLite_View_Button" label="Calculate" href="javascript: document.bulk_shopping_form.action.value='calculate_price'; document.bulk_shopping_form.submit();">
+	<widget class="\XLite\View\Button" label="Calculate" href="javascript: document.bulk_shopping_form.action.value='calculate_price'; document.bulk_shopping_form.submit();">
 	</td>
 </tr>
 <tr>
 	<td colspan="2">
-	<widget class="XLite_View_Button" label="Add to Cart" href="javascript: document.bulk_shopping_form.submit()" img="cart4button.gif" font="FormButton">
+	<widget class="\XLite\View\Button" label="Add to Cart" href="javascript: document.bulk_shopping_form.submit()" img="cart4button.gif" font="FormButton">
 	</td>
 </tr>	
 </table>

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View;
+
 /**
  * Registration form widget
  *
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_RegisterForm extends XLite_View_Dialog
+class RegisterForm extends \XLite\View\Dialog
 {
     /*
      * Widget parameters names
@@ -72,7 +74,7 @@ class XLite_View_RegisterForm extends XLite_View_Dialog
     /**
      * Return current profile object 
      * 
-     * @return XLite_Model_Profile
+     * @return \XLite\Model\Profile
      * @access protected
      * @since  3.0.0
      */
@@ -93,11 +95,11 @@ class XLite_View_RegisterForm extends XLite_View_Dialog
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_HEAD => new XLite_Model_WidgetParam_String(
+            self::PARAM_HEAD => new \XLite\Model\WidgetParam\String(
                 'Title', 'Profile details'
             ),
-            self::PARAM_PROFILE_ID => new XLite_Model_WidgetParam_ObjectId_Profile(
-                'Profile Id', XLite_Core_Request::getInstance()->profile_id
+            self::PARAM_PROFILE_ID => new \XLite\Model\WidgetParam\ObjectId\Profile(
+                'Profile Id', \XLite\Core\Request::getInstance()->profile_id
             ),
         );
     }

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\UPSOnlineTools\View;
+
 /**
  * Register form
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_UPSOnlineTools_View_RegisterForm extends XLite_View_RegisterForm implements XLite_Base_IDecorator
+class RegisterForm extends \XLite\View\RegisterForm implements \XLite\Base\IDecorator
 {
     /**
      * UPS address validation error 
@@ -59,11 +61,11 @@ class XLite_Module_UPSOnlineTools_View_RegisterForm extends XLite_View_RegisterF
         // TODO - temporary disabled
         return true;
 
-        if (XLite::isAdminZone()) {
+        if (\XLite::isAdminZone()) {
             return true;
         }
 
-        $actionType = XLite_Core_Request::getInstance()->action_type;
+        $actionType = \XLite\Core\Request::getInstance()->action_type;
 
         if ($actionType == 1) {
 
@@ -72,28 +74,28 @@ class XLite_Module_UPSOnlineTools_View_RegisterForm extends XLite_View_RegisterF
             $value = $this->session->get('ups_av_result');
             $value = $value[$suggest];
 
-            XLite_Core_Request::getInstance()->shipping_country = 'US';
+            \XLite\Core\Request::getInstance()->shipping_country = 'US';
 
             try {
-                $state = XLite_Core_Database::getQB()
+                $state = \XLite\Core\Database::getQB()
                     ->select('s')
-                    ->from('XLite_Model_State', 's')
+                    ->from('\XLite\Model\State', 's')
                     ->where('s.country_code = :country_code AND s.code = :code')
                     ->setParameters(array('country_code' => 'US', 'code' => $value['state']))
                     ->setMaxResults(1)
                     ->getQuery()
                     ->getSingleResult();
 
-                XLite_Core_Request::getInstance()->shipping_state = $state->state_id;
-                XLite_Core_Request::getInstance()->shipping_custom_state = '';
+                \XLite\Core\Request::getInstance()->shipping_state = $state->state_id;
+                \XLite\Core\Request::getInstance()->shipping_custom_state = '';
 
             } catch (\Doctrine\ORM\NoResultException $exception) {
-                XLite_Core_Request::getInstance()->shipping_state = -1;
-                XLite_Core_Request::getInstance()->shipping_custom_state = $value['state'];
+                \XLite\Core\Request::getInstance()->shipping_state = -1;
+                \XLite\Core\Request::getInstance()->shipping_custom_state = $value['state'];
             }
 
-            XLite_Core_Request::getInstance()->shipping_city = $value['city'];
-            XLite_Core_Request::getInstance()->shipping_zipcode = $value['zipcode'];
+            \XLite\Core\Request::getInstance()->shipping_city = $value['city'];
+            \XLite\Core\Request::getInstance()->shipping_zipcode = $value['zipcode'];
 
             $this->session->set('ups_av_result', null);
 
@@ -115,7 +117,7 @@ class XLite_Module_UPSOnlineTools_View_RegisterForm extends XLite_View_RegisterF
 
         } else {
 
-            $obj = new XLite_Module_UPSOnlineTools_Model_Shipping_Ups();
+            $obj = new \XLite\Module\UPSOnlineTools\Model\Shipping\Ups();
             $avResult = array();
 
             # copy billing to shipping
@@ -128,13 +130,13 @@ class XLite_Module_UPSOnlineTools_View_RegisterForm extends XLite_View_RegisterF
             );
             foreach ($arr as $bil => $ship) {
                 if (
-                    empty(XLite_Core_Request::getInstance()->$ship)
-                    || ($ship == 'shipping_state' && XLite_Core_Request::getInstance()->$ship == -1)
+                    empty(\XLite\Core\Request::getInstance()->$ship)
+                    || ($ship == 'shipping_state' && \XLite\Core\Request::getInstance()->$ship == -1)
                 ) {
-                    $upsUsed[$ship] = XLite_Core_Request::getInstance()->$bil;
+                    $upsUsed[$ship] = \XLite\Core\Request::getInstance()->$bil;
 
                 } else {
-                    $upsUsed[$ship] = XLite_Core_Request::getInstance()->$ship;
+                    $upsUsed[$ship] = \XLite\Core\Request::getInstance()->$ship;
                     $this->session->set('ups_used', $upsUsed);
                 }
             }
@@ -150,8 +152,8 @@ class XLite_Module_UPSOnlineTools_View_RegisterForm extends XLite_View_RegisterF
                 $requestResult
             );
             $this->session->set('ups_av_result', $avResult);
-            XLite_Core_Request::getInstance()->action_type = null;
-            $this->session->set('ups_av_profile', XLite_Core_Request::getInstance()->getData());
+            \XLite\Core\Request::getInstance()->action_type = null;
+            $this->session->set('ups_av_profile', \XLite\Core\Request::getInstance()->getData());
 
             if (
                 true !== $result

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\WishList\View\Form\Cart\Item;
+
 /**
  * Move cart item to wishlist form
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_WishList_View_Form_Cart_Item_MoveToWishlist extends XLite_View_Form_Cart_Item_AItem
+class MoveToWishlist extends \XLite\View\Form\Cart\Item\AItem
 {
     /**
      * Current form name 

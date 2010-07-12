@@ -95,7 +95,7 @@
   </table>
 
   <div class="buttons">
-    <widget class="XLite_View_Button_Submit" label="Update" />
+    <widget class="\XLite\View\Button\Submit" label="Update" />
 		<a href="javascript:void(0);" onclick="javascript: window.open('admin.php?target=taxes&action=calculator','tax_calculator','width=600,height=550,toolbar=no,status=no,scrollbars=yes,resizable=no,menubar=no,location=no,direction=no'); return false;"><img src="images/go.gif" width="13" height="13" alt="" align="absmiddle" /> Tax calculator</a>
   </div>
 

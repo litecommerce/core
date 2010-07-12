@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Controller_Admin_UpdateInventory extends XLite_Controller_Admin_AAdmin
+class UpdateInventory extends \XLite\Controller\Admin\AAdmin
 {
     public $params = array('target', 'page');
     public $pages = array('pricing' => 'Update pricing');
@@ -61,7 +63,7 @@ class XLite_Controller_Admin_UpdateInventory extends XLite_Controller_Admin_AAdm
 
     function handleRequestPricing()
     {
-        $this->inventory = XLite_Model_ProductInventory::getInstance();
+        $this->inventory = \XLite\Model\ProductInventory::getInstance();
     }
 
     function action_export()
@@ -75,7 +77,7 @@ class XLite_Controller_Admin_UpdateInventory extends XLite_Controller_Admin_AAdm
     function action_layout($layout)
     {
         // save/update layout
-        $dlg = new XLite_Controller_Admin_ImportCatalog();
+        $dlg = new \XLite\Controller\Admin\ImportCatalog();
         $dlg->action_layout($layout);
     }
 

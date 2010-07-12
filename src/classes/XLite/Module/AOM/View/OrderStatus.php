@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\AOM\View;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_AOM_View_OrderStatus extends XLite_Module_AOM_View_StatusSelect
+class OrderStatus extends \XLite\Module\AOM\View\StatusSelect
 {
     public $allOption 	= false;
     public $template 	= "modules/AOM/common/statuses.tpl";

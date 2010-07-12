@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Core;
+
 /**
  * Miscelaneous convertion routines
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Core_Converter extends XLite_Base implements XLite_Base_ISingleton
+class Converter extends \XLite\Base implements \XLite\Base\ISingleton
 {
     /**
      * Method name translation records
@@ -131,9 +133,9 @@ class XLite_Core_Converter extends XLite_Base implements XLite_Base_ISingleton
      */
     public static function getControllerClass($target)
     {
-        return 'XLite_Controller_' 
-               . (XLite::isAdminZone() ? 'Admin' : 'Customer') 
-               . (empty($target) ? '' : '_' . self::convertToCamelCase($target));
+        return '\XLite\Controller\\' 
+               . (\XLite::isAdminZone() ? 'Admin' : 'Customer') 
+               . (empty($target) ? '' : '\\' . self::convertToCamelCase($target));
     }
 
     /**
@@ -150,7 +152,7 @@ class XLite_Core_Converter extends XLite_Base implements XLite_Base_ISingleton
      */
     public static function buildURL($target = '', $action = '', array $params = array(), $interface = null)
     {
-        $url = isset($interface) ? $interface : XLite::getInstance()->getScript();
+        $url = isset($interface) ? $interface : \XLite::getInstance()->getScript();
 
         $parts = array();
 
@@ -186,7 +188,7 @@ class XLite_Core_Converter extends XLite_Base implements XLite_Base_ISingleton
      */
     public static function buildFullURL($target = '', $action = '', array $params = array())
     {
-        return XLite::getInstance()->getShopUrl(self::buildURL($target, $action, $params));
+        return \XLite::getInstance()->getShopUrl(self::buildURL($target, $action, $params));
     }
 
     /**
@@ -261,7 +263,7 @@ class XLite_Core_Converter extends XLite_Base implements XLite_Base_ISingleton
     /**
      * Resize image by width / height limits
      * 
-     * @param XLite_Model_Base_Image $image  Image
+     * @param \XLite\Model\Base\Image $image  Image
      * @param integer                $width  Width limit
      * @param integer                $height Height limit
      *  
@@ -270,7 +272,7 @@ class XLite_Core_Converter extends XLite_Base implements XLite_Base_ISingleton
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function resizeImageSoft(XLite_Model_Base_Image $image, $width = null, $height = null)
+    public static function resizeImageSoft(\XLite\Model\Base\Image $image, $width = null, $height = null)
     {
         list($newWidth, $newHeight) = self::getCroppedDimensions(
             $image->width,
@@ -298,7 +300,7 @@ class XLite_Core_Converter extends XLite_Base implements XLite_Base_ISingleton
     /**
      * Resize image 
      * 
-     * @param XLite_Model_Base_Image $image  Image
+     * @param \XLite\Model\Base\Image $image  Image
      * @param integer                $width  New width
      * @param integer                $height New height
      *  
@@ -307,7 +309,7 @@ class XLite_Core_Converter extends XLite_Base implements XLite_Base_ISingleton
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function resizeImage(XLite_Model_Base_Image $image, $width, $height)
+    public static function resizeImage(\XLite\Model\Base\Image $image, $width, $height)
     {
         static $types = array(
             'image/jpeg' => 'jpeg',

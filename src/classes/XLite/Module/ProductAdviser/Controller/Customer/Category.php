@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\ProductAdviser\Controller\Customer;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_ProductAdviser_Controller_Customer_Category extends XLite_Controller_Customer_Category implements XLite_Base_IDecorator
+class Category extends \XLite\Controller\Customer\Category implements \XLite\Base\IDecorator
 {
     public $priceNotified = array();
 
@@ -62,7 +64,7 @@ class XLite_Module_ProductAdviser_Controller_Customer_Category extends XLite_Con
             $check[] = "profile_id='$profile_id'";
             $check[] = "email='$email'";
 
-    		$notification = new XLite_Module_ProductAdviser_Model_Notification();
+    		$notification = new \XLite\Module\ProductAdviser\Model\Notification();
     		$notification->set('type', CUSTOMER_NOTIFICATION_PRICE);
         	$notification->set('product_id', $product_id);
             $check[] = "notify_key='" . addslashes($notification->get('productKey')) . "'";

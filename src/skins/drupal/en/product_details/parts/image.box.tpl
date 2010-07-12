@@ -12,6 +12,6 @@
  * @ListChild (list="productDetails.image", weight="10")
  *}
 <div class="product-thumbnail-box">
-  <widget class="XLite_View_Image" image="{product.getImage()}" className="photo product-thumbnail" id="product_image_{product.product_id}" maxWidth="100" centerImage />
-  <widget class="XLite_View_SaveMark" product="{product}" />
+  <widget class="\XLite\View\Image" image="{product.getImage()}" className="photo product-thumbnail" id="product_image_{product.product_id}" maxWidth="100" centerImage />
+  <widget class="\XLite\View\SaveMark" product="{product}" />
 </div>

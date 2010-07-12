@@ -11,7 +11,7 @@
  * @since     3.0.0
  * @ListChild (list="wishlist.item.actions", weight="10")
  *}
-<widget class="XLite_Module_WishList_View_Form_Item_Update" name="wl_item" item="{item}" />
+<widget class="\XLite\Module\WishList\View\Form\Item\Update" name="wl_item" item="{item}" />
 
   <div class="item-sums">
     <span class="item-price">{price_format(item,#price#):h}</span>

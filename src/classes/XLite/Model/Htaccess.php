@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model;
+
 define('HTACCESS_NOT_EXISTS', 'MISSING');
 define('HTACCESS_WRONG', 'FAILED');
 define('CHECK_INTERVAL', 1 * 24 * 60);
@@ -37,7 +39,7 @@ define('CHECK_INTERVAL', 1 * 24 * 60);
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_Htaccess extends XLite_Model_AModel
+class Htaccess extends \XLite\Model\AModel
 {
     public $fields = array(
                     "id" => "0",
@@ -82,14 +84,14 @@ class XLite_Model_Htaccess extends XLite_Model_AModel
                 $content = "";
             @fclose($fp);
             $hash = $this->makeHash($content);
-            $htaccess = new XLite_Model_Htaccess();
+            $htaccess = new \XLite\Model\Htaccess();
             $htaccess->set('filename', $file);
             $htaccess->set('content', $content);
             $htaccess->set('hash', $hash);
             $htaccess->create();
         }
 
-        $config = new XLite_Model_Config();
+        $config = new \XLite\Model\Config();
         /*
         if ($config->find("name = 'last_date' AND category = 'Htaccess'")){
             $now = time();
@@ -150,7 +152,7 @@ class XLite_Model_Htaccess extends XLite_Model_AModel
 
         // TODO: move last_date counter to the xlite_temporary_vars table
         /*
-        $config = new XLite_Core_Config();
+        $config = new \XLite\Core\Config();
         if ($config->find("name = 'last_date' AND category = 'Htaccess'")){
             $config->set('value', $now);
             $config->update();
@@ -242,7 +244,7 @@ class XLite_Model_Htaccess extends XLite_Model_AModel
 
     function notifyAdmin($errors)
     {
-        $mail = new XLite_Model_Mailer();
+        $mail = new \XLite\Model\Mailer();
         $mail->errors = $errors;
         $mail->adminMail = true;
         $mail->set('charset', $this->xlite->config->Company->locationCountry->charset);

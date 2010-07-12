@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\AntiFraud\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_AntiFraud_Controller_Admin_Order extends XLite_Controller_Admin_Order implements XLite_Base_IDecorator
+class Order extends \XLite\Controller\Admin\Order implements \XLite\Base\IDecorator
 {
     public $order = null;
     public $country = null;
@@ -49,10 +51,10 @@ class XLite_Module_AntiFraud_Controller_Admin_Order extends XLite_Controller_Adm
         $post = array();
         $post['mode'] = "add_ip";
         $post['ip']	= $this->getComplex('order.address');
-        $post['shop_host'] = func_parse_host(XLite::getInstance()->getOptions(array('host_details', 'http_host')));
+        $post['shop_host'] = func_parse_host(\XLite::getInstance()->getOptions(array('host_details', 'http_host')));
         $post['reason'] = strip_tags($this->get('fraud_comment'));
         $post['service_key'] = $this->config->AntiFraud->antifraud_license;
-        $request = new XLite_Model_HTTPS();
+        $request = new \XLite\Model\HTTPS();
         $request->data = $post;
         $request->url = $this->config->AntiFraud->antifraud_url."/add_fraudulent_ip.php";
         $request->request();
@@ -63,7 +65,7 @@ class XLite_Module_AntiFraud_Controller_Admin_Order extends XLite_Controller_Adm
     function getOrder()
     {
         if (is_null($this->order)) {
-            $this->order = new XLite_Model_Order($this->get('order_id'));
+            $this->order = new \XLite\Model\Order($this->get('order_id'));
         }
         return $this->order;
     }
@@ -80,7 +82,7 @@ class XLite_Module_AntiFraud_Controller_Admin_Order extends XLite_Controller_Adm
         }
 
         $order = $this->get('order');
-        $this->country = XLite_Core_Database::getEM()->find('XLite_Model_Country', $order->getComplex('profile.billing_country'));
+        $this->country = \XLite\Core\Database::getEM()->find('XLite\Model\Country', $order->getComplex('profile.billing_country'));
 
         // TODO - WTF? Cuntry has not 'order' field. Rework it
         //$this->country->set('order', $order);

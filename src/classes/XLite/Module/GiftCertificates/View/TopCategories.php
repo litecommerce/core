@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\GiftCertificates\View;
+
 /**
  * Sidebar categories list
  * 
@@ -33,20 +35,20 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_GiftCertificates_View_TopCategories extends XLite_View_TopCategories implements XLite_Base_IDecorator
+class TopCategories extends \XLite\View\TopCategories implements \XLite\Base\IDecorator
 {
     /**
      * Assemble item CSS class name 
      * 
      * @param int                  $index    item number
      * @param intr                 $count    items count
-     * @param XLite_Model_Category $category current category
+     * @param \XLite\Model\Category $category current category
      *  
      * @return string
      * @access public
      * @since  3.0.0
      */
-    public function assembleItemClassName($index, $count, XLite_Model_Category $category)
+    public function assembleItemClassName($index, $count, \XLite\Model\Category $category)
     {
         $classes = explode(' ', parent::assembleItemClassName($index, $count, $category));
         $classes = preg_grep('/^last$/Ss', $classes, PREG_GREP_INVERT);
@@ -59,18 +61,18 @@ class XLite_Module_GiftCertificates_View_TopCategories extends XLite_View_TopCat
      *
      * @param integer              $i        item number
      * @param integer              $count    items count
-     * @param XLite_Model_Category $category current category
+     * @param \XLite\Model\Category $category current category
      *
      * @return string
      * @access public
      * @since  3.0.0
      */
-    public function assembleListItemClassName($i, $count, XLite_View_AView $widget)
+    public function assembleListItemClassName($i, $count, \XLite\View\AView $widget)
     {
         $class = explode(' ', parent::assembleListItemClassName($i, $count, $widget));
 
-        if ($widget instanceof XLite_Module_GiftCertificates_View_TopCategoriesItem)  {
-            if ('gift_certificate' == XLite_Core_Request::getInstance()->target) {
+        if ($widget instanceof \XLite\Module\GiftCertificates\View\TopCategoriesItem)  {
+            if ('gift_certificate' == \XLite\Core\Request::getInstance()->target) {
                 $class[] = 'active-trail';
             }
             $class[] = 'gift-link';

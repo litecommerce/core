@@ -33,8 +33,8 @@
         <tr><td>City</td><td><input type="text" name="destinationCity" value="{destinationCity}"></td></tr>
         <tr>
             <td>State</td>
-            <td><widget class="XLite_View_StateSelect" field="destination_state" state="{destination_state}" isLinked=1 />
-  			    <widget class="XLite_Validator_StateValidator" field="destination_state" countryField="destination_country">
+            <td><widget class="\XLite\View\StateSelect" field="destination_state" state="{destination_state}" isLinked=1 />
+  			    <widget class="\XLite\Validator\StateValidator" field="destination_state" countryField="destination_country">
             </td>
         </tr>
         <tr valign="middle">
@@ -43,7 +43,7 @@
         </tr>
         <tr>
             <td>Country</td>
-            <td><widget class="XLite_View_CountrySelect" field="destination_country" country="{destination_country}" /></td>
+            <td><widget class="\XLite\View\CountrySelect" field="destination_country" country="{destination_country}" /></td>
         </tr>
         <tr><td>Zip/Postal code</td><td><input type="text" name="destinationZipCode" value="{destinationZipCode}"></td></tr>
         <tr><td>Weight ({weightUnit:h})</td><td><input type="text" name="pounds" size="10" value="{pounds:r}"></td></tr>

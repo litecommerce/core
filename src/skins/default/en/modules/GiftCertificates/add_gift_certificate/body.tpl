@@ -10,7 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<widget class="XLite_Module_GiftCertificates_View_AddStatesInfo" />
+<widget class="\XLite\Module\GiftCertificates\View\AddStatesInfo" />
 
 {* Add gift certificate page *}
 <script type="text/javascript">
@@ -91,14 +91,14 @@ The gift certificate will include the sender's name, the recipient's name and a 
 <td align="right">From</td>
 <td><font class="Star">*</font></td>
 <td align="left"><input type="text" name="purchaser" size="30" value="{purchaser}"></td>
-<td>&nbsp;<widget class="XLite_Validator_RequiredValidator" field="purchaser"></td>
+<td>&nbsp;<widget class="\XLite\Validator\RequiredValidator" field="purchaser"></td>
 </tr>
 
 <tr>
 <td align="right">To</td>
 <td><font class="Star">*</font></td>
 <td align="left"><input type="text" name="recipient" size="30" value="{recipient:r}"> </td>
-<td>&nbsp;<widget class="XLite_Validator_RequiredValidator" field="recipient"></td>
+<td>&nbsp;<widget class="\XLite\Validator\RequiredValidator" field="recipient"></td>
 </tr>
 
 <tr>
@@ -124,12 +124,12 @@ Specify the amount in currency.<br><br>
 <td align="left"><input type="text" name="amount" size="6" value="{amount}">
 {price_format(config.GiftCertificates.minAmount):h} - {price_format(config.GiftCertificates.maxAmount):h}
 </td>
-<td>&nbsp;<widget class="XLite_Validator_RangeValidator" field="amount" min="{config.GiftCertificates.minAmount}" max="{config.GiftCertificates.maxAmount}"></td>
+<td>&nbsp;<widget class="\XLite\Validator\RangeValidator" field="amount" min="{config.GiftCertificates.minAmount}" max="{config.GiftCertificates.maxAmount}"></td>
 </tr>
 
 <tr valign="middle" IF="!gc.gcid">
 <td colspan="3"><br>
-<widget class="XLite_Module_GiftCertificates_View_SpambotArrest" id="on_add_giftcert{gc.gcid}">
+<widget class="\XLite\Module\GiftCertificates\View\SpambotArrest" id="on_add_giftcert{gc.gcid}">
 </td>    
 </tr>
 
@@ -167,12 +167,12 @@ Specify the amount in currency.<br><br>
 </tr>
 <tr IF="gc.ecard_id">
 <td>
-    <widget class="XLite_View_Button" href="javascript: document.gccreate.action.value='delete_ecard';document.gccreate.submit()" label="Delete e-Card">
+    <widget class="\XLite\View\Button" href="javascript: document.gccreate.action.value='delete_ecard';document.gccreate.submit()" label="Delete e-Card">
 </td>
 </tr>
 <tr>
 <td>
-    <widget class="XLite_View_Button" href="javascript: document.gccreate.action.value='select_ecard';document.gccreate.submit()" label="Select e-Card">
+    <widget class="\XLite\View\Button" href="javascript: document.gccreate.action.value='select_ecard';document.gccreate.submit()" label="Select e-Card">
 </td>
 </tr>
 </table>
@@ -212,7 +212,7 @@ Specify the amount in currency.<br><br>
 <td nowrap align="right">&nbsp;</td>
 <td>&nbsp;</td>
 <td align="left">
-<widget class="XLite_View_Button" href="javascript: document.gccreate.action.value='preview_ecard';document.gccreate.submit()" label="Preview e-Card">
+<widget class="\XLite\View\Button" href="javascript: document.gccreate.action.value='preview_ecard';document.gccreate.submit()" label="Preview e-Card">
     <br>&nbsp;
 </td>
 </tr>
@@ -265,8 +265,8 @@ Specify the amount in currency.<br><br>
 <tr>
 <td nowrap align=right>State</td>
 <td><font class="Star">*</font></td>
-    <td><widget class="XLite_View_StateSelect" field="recipient_state" state="{recipient_state}" isLinked=1 /></td>
-    <td><widget class="XLite_Validator_StateValidator" field="recipient_state" countryField="recipient_country" /></td>
+    <td><widget class="\XLite\View\StateSelect" field="recipient_state" state="{recipient_state}" isLinked=1 /></td>
+    <td><widget class="\XLite\Validator\StateValidator" field="recipient_state" countryField="recipient_country" /></td>
 </tr>
 
 <tr>
@@ -281,8 +281,8 @@ Specify the amount in currency.<br><br>
 <tr>
 <td nowrap align=right>Country</td>
 <td><font class="Star">*</font></td>
-<td><widget class="XLite_View_CountrySelect" field="recipient_country" country="{recipient_country}" /></td>
-<td><widget class="XLite_Validator_RequiredValidator" field="recipient_country"></td>
+<td><widget class="\XLite\View\CountrySelect" field="recipient_country" country="{recipient_country}" /></td>
+<td><widget class="\XLite\Validator\RequiredValidator" field="recipient_country"></td>
 </tr>
 
 <tr>
@@ -298,6 +298,6 @@ Specify the amount in currency.<br><br>
 <p>
 <center>
 
-<widget IF="isGCAdded()" class="XLite_View_Button" href="javascript: formSubmit()" label="Update"/>
-<widget IF="!isGCAdded()" class="XLite_View_Button" href="javascript: formSubmit()" label="Add to cart"/>
+<widget IF="isGCAdded()" class="\XLite\View\Button" href="javascript: formSubmit()" label="Update"/>
+<widget IF="!isGCAdded()" class="\XLite\View\Button" href="javascript: formSubmit()" label="Add to cart"/>
 </center>

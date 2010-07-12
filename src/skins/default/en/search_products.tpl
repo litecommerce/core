@@ -10,7 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<widget class="XLite_View_Form_Search_Product_Simple" name="search_form" />
+<widget class="\XLite\View\Form\Search\Product\Simple" name="search_form" />
 
 <TABLE border="0" cellpadding="0" cellspacing="0">
 <TR>
@@ -24,7 +24,7 @@
 		    <TD><SPAN IF="!substring:r"><INPUT type="text" name="substring" style="width:75pt;color:#888888" value="Find product" onFocus="this.value=''; this.style.color='#000000';"></SPAN>
 			    <SPAN IF="substring:r"><INPUT type="text" name="substring" style="width:75pt" value="{substring:r}"></SPAN>
 			</TD>
-		    <TD><widget class="XLite_View_Button_Submit" label="Go" /></TD>
+		    <TD><widget class="\XLite\View\Button\Submit" label="Go" /></TD>
 		</TR>
 		<TR IF="xlite.AdvancedSearchEnabled">
 			<TD>

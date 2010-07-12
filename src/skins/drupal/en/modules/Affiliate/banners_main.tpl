@@ -19,7 +19,7 @@
 <tr><td>&nbsp;</td></tr>
 <tr><td class=TextTitle>&quot;{banner.name:h}&quot; banner</td></tr>
 <tr>
-    <td><widget name="bannerWidget" class="XLite_Module_Affiliate_View_Banner" type="js" banner="{banner}"></td>
+    <td><widget name="bannerWidget" class="\XLite\Module\Affiliate\View\Banner" type="js" banner="{banner}"></td>
 </tr>
 <tr>
     <td>

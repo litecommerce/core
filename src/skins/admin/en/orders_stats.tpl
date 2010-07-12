@@ -68,4 +68,4 @@
 </p>
 
 <p>
-<widget class="XLite_View_Button" label="Perform order search" href="admin.php?target=order_list" font="FormButton">
+<widget class="\XLite\View\Button" label="Perform order search" href="admin.php?target=order_list" font="FormButton">

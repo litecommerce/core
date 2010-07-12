@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\UPSOnlineTools\Controller;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_UPSOnlineTools_Controller_AController extends XLite_Controller_AController implements XLite_Base_IDecorator
+class AController extends \XLite\Controller\AController implements \XLite\Base\IDecorator
 {
     function isShowAV()
     {
@@ -54,7 +56,7 @@ class XLite_Module_UPSOnlineTools_Controller_AController extends XLite_Controlle
     function getUpsUsed() 
     {
         if (!isset($this->_ups_profile)) {
-            $this->_ups_profile = new XLite_Model_Profile();
+            $this->_ups_profile = new \XLite\Model\Profile();
             $this->_ups_profile->set('properties', $this->session->get('ups_used'));
         }
 

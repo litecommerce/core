@@ -17,7 +17,7 @@ var gcMaxAmount = {config.GiftCertificates.maxAmount};
 var bordersDir = '{gc.bordersDir}';
 </script>
 
-<widget class="XLite_Module_GiftCertificates_View_Form_GiftCertificate_Add" name="addgc" className="gift-certificate" />
+<widget class="\XLite\Module\GiftCertificates\View\Form\GiftCertificate\Add" name="addgc" className="gift-certificate" />
 
   {displayViewListContent(#giftcert.childs#)}
 

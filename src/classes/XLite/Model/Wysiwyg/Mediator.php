@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model\Wysiwyg;
+
 define('EDIT_START_IMG', 'edit_area.gif');
 define('EDIT_START_SHORT_IMG', 'edit_area_s.gif');
 define('EDIT_END_IMG', 'end.gif');
@@ -55,7 +57,7 @@ $GLOBALS['TEMPLATE_REFERENCE_PARAMS'] = array(
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_Wysiwyg_Mediator extends XLite_Base
+class Mediator extends \XLite\Base
 {
     public $widgetClass = "WysiwygMediatorWidget";
     public $templateClass = "Template";
@@ -105,7 +107,7 @@ class XLite_Model_Wysiwyg_Mediator extends XLite_Base
     		}
     	}
 
-        $exportParser = new XLite_Model_Wysiwyg_ExportParser();
+        $exportParser = new \XLite\Model\Wysiwyg\ExportParser();
         $exportParser->widgetClass = $this->widgetClass;
         $exportParser->wysiwygMediator = $this;
         if (strpos($widget->get('templateFile'), '}')) {
@@ -153,7 +155,7 @@ class XLite_Model_Wysiwyg_Mediator extends XLite_Base
     function _replaceVal($src, $params, $openF = '', $closeF = '')
     {
         if (!is_array($params)) {
-            XLite::getInstance()->doGlobalDie("Wrong params type:" . gettype($params));
+            \XLite::getInstance()->doGlobalDie("Wrong params type:" . gettype($params));
         }
         foreach ($params as $name => $value) {
             foreach (array('', ':r', ':h') as $modifier) {
@@ -240,7 +242,7 @@ class XLite_Model_Wysiwyg_Mediator extends XLite_Base
         if (!file_exists($w->get('templateFile'))) {
             return '';
         }
-        $fc = new XLite_Model_Wysiwyg_ExportParser();
+        $fc = new \XLite\Model\Wysiwyg\ExportParser();
         $fc->source = $fc->translateTemplate(file_get_contents($w->get('templateFile')));
         for ($i=0; $i<count($w->widgets); $i++) {
             $ww = $w->widgets[$i];
@@ -268,7 +270,7 @@ class XLite_Model_Wysiwyg_Mediator extends XLite_Base
         if (!file_exists($w->get('templateFile'))) {
             return '';
         }
-        $fc = new XLite_Model_Wysiwyg_ExportParser();
+        $fc = new \XLite\Model\Wysiwyg\ExportParser();
         $fc->source = $fc->translateTemplate(file_get_contents($w->get('templateFile')));
         for ($i=0; $i<count($w->widgets); $i++) {
             $ww = $w->widgets[$i];
@@ -437,7 +439,7 @@ EOT
             );
         }
         @fclose($fd);
-        $layout = XLite_Model_Layout::getInstance();
+        $layout = \XLite\Model\Layout::getInstance();
         $templatesDir = $layout->getPath();
         copyFile($templatesDir . 'style.css', HTML_BUILDER_PATH . 'style.css');
         copyRecursive($templatesDir . 'images', HTML_BUILDER_PATH . 'images');
@@ -542,7 +544,7 @@ EOT;
     
     function _getComment(&$root, $link = false)
     {
-        $node = new XLite_Model_FileNode($root->get('templateFile'));
+        $node = new \XLite\Model\FileNode($root->get('templateFile'));
         $comment = $node->get('comment');
         if (!$comment) {
             $comment = $root->get('template');
@@ -581,14 +583,14 @@ EOT;
     function getHtmlStorage()
     {
         if (is_null($this->htmlStorage)) {
-            $this->htmlStorage = new XLite_Model_Wysiwyg_MediatorHtmlStorage();
+            $this->htmlStorage = new \XLite\Model\Wysiwyg\MediatorHtmlStorage();
         }
         return $this->htmlStorage;
     }
 
     function importPage($page)
     {
-        $wysiwygImporter = new XLite_Model_Wysiwyg_ImportParser();
+        $wysiwygImporter = new \XLite\Model\Wysiwyg\ImportParser();
         $wysiwygImporter->set('source', $page);
         $wysiwygImporter->set('imagesDir', $this->get('imagesDir'));
         $wysiwygImporter->parse();
@@ -604,7 +606,7 @@ EOT;
     function import()
     {
         $this->errors = 0;
-        $this->layout = $layout = XLite_Model_Layout::getInstance();
+        $this->layout = $layout = \XLite\Model\Layout::getInstance();
         $templatesDir = $layout->getPath();
 
         $code = copyRecursive(HTML_BUILDER_PATH . 'images', $templatesDir . 'images');

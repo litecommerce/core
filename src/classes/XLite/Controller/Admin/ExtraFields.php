@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,14 +35,14 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Controller_Admin_ExtraFields extends XLite_Controller_Admin_AAdmin
+class ExtraFields extends \XLite\Controller\Admin\AAdmin
 {
     public $_categories = null;
 
     function fillForm()
     {
         if (!isset($this->name)) {
-            $ef = new XLite_Model_ExtraField();
+            $ef = new \XLite\Model\ExtraField();
             $this->set('properties', $ef->fields);
         }
         parent::fillForm();
@@ -48,18 +50,18 @@ class XLite_Controller_Admin_ExtraFields extends XLite_Controller_Admin_AAdmin
     
     function isCategorySelected($name, $categoryID)
     {
-        return (isset(XLite_Core_Request::getInstance()->$name) && is_array(XLite_Core_Request::getInstance()->$name)) ? in_array($categoryID, XLite_Core_Request::getInstance()->$name) : false;
+        return (isset(\XLite\Core\Request::getInstance()->$name) && is_array(\XLite\Core\Request::getInstance()->$name)) ? in_array($categoryID, \XLite\Core\Request::getInstance()->$name) : false;
     }
     
     function getCategories() 
     {
-        return XLite_Core_Database::getRepo('XLite_Model_Category')->getCategories(!is_null($categoryId) ? $categoryId : $this->getCategoryId());
+        return \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategories(!is_null($categoryId) ? $categoryId : $this->getCategoryId());
     }
 
     function getExtraFields()
     {
         if (is_null($this->extraFields)) {
-            $ef = new XLite_Model_ExtraField();
+            $ef = new \XLite\Model\ExtraField();
             $this->extraFields = $ef->findAll("product_id=0");  // global fields
         }
         return $this->extraFields;
@@ -69,14 +71,14 @@ class XLite_Controller_Admin_ExtraFields extends XLite_Controller_Admin_AAdmin
     {
         if (!is_null($this->get('delete')) && !is_null($this->get('delete_fields')) && $this->get('delete') == "delete") {
             foreach ((array)$this->get('delete_fields') as $id) {
-                $ef = new XLite_Model_ExtraField($id);
+                $ef = new \XLite\Model\ExtraField($id);
                 $ef->delete();
             }
         } elseif (!is_null($this->get('update'))) {
             foreach ((array)$this->get('extra_fields') as $id => $data) 
             {
                 $rewrite = !(isset($data['rewrite']) && $data['rewrite'] == "yes");
-                $ef = new XLite_Model_ExtraField($id);
+                $ef = new \XLite\Model\ExtraField($id);
                 $ef->set('categories_old', $ef->get('categories'));
 
                 if ($data['global'] == 0){
@@ -90,7 +92,7 @@ class XLite_Controller_Admin_ExtraFields extends XLite_Controller_Admin_AAdmin
                     } else {
                         if ($rewrite){
                             $old = array();
-                            $category = new XLite_Model_Category();
+                            $category = new \XLite\Model\Category();
                             $categories = $category->findAll();
                             foreach ($categories as $category) {
                                 $old[] = $category->get('category_id');
@@ -112,7 +114,7 @@ class XLite_Controller_Admin_ExtraFields extends XLite_Controller_Admin_AAdmin
                             
                         } else {
                             $old = array();
-                            $category = new XLite_Model_Category();
+                            $category = new \XLite\Model\Category();
                             $categories = $category->findAll();
                             foreach ($categories as $category) {
                                 $old[] = $category->get('category_id');
@@ -134,8 +136,8 @@ class XLite_Controller_Admin_ExtraFields extends XLite_Controller_Admin_AAdmin
         if (!is_null($this->get('add_field'))) {
             $categories = (array)$this->get('add_categories');
 
-            $ef = new XLite_Model_ExtraField();
-            $ef->set('properties', XLite_Core_Request::getInstance()->getData());
+            $ef = new \XLite\Model\ExtraField();
+            $ef->set('properties', \XLite\Core\Request::getInstance()->getData());
             if (!empty($categories)) {
                 $ef->setCategoriesList($categories);
             }

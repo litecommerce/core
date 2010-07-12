@@ -33,7 +33,7 @@
   </td>
   <td class=ProductDetails>
     <input type="text" name="name" size="45" value="{name:r}">
-    <widget class="XLite_Validator_RequiredValidator" field="name">
+    <widget class="\XLite\Validator\RequiredValidator" field="name">
   </td>
 </tr>
 
@@ -47,12 +47,12 @@
 	</table>
 	</td>
     <td>
-        <widget class="XLite_View_CategorySelect" fieldName="category_id" selectedCategoryId="{product.categories.0.category_id}">
-		<widget class="XLite_Validator_RequiredValidator" field="category_id">
+        <widget class="\XLite\View\CategorySelect" fieldName="category_id" selectedCategoryId="{product.categories.0.category_id}">
+		<widget class="\XLite\Validator\RequiredValidator" field="category_id">
     </td>
 </tr>
 
-<widget module="MultiCategories" class="XLite_View_CategorySelect" template="modules/MultiCategories/additionalCategories.tpl" product="{product}" fieldName="category_id" >
+<widget module="MultiCategories" class="\XLite\View\CategorySelect" template="modules/MultiCategories/additionalCategories.tpl" product="{product}" fieldName="category_id" >
 
 <tr>
   <td valign=middle class="FormButton">
@@ -108,7 +108,7 @@
   Settings/Taxes/add rate/condition dialog</i></td>
   <td valign="middle">
     <select name="tax_class"><option value="" selected="tax_class=##">None</option>
-	<option FOREACH="xlite.factory.XLite_Model_TaxRates.productClasses,_taxClass" option="{_taxClass}" selected="tax_class=_taxClass">{_taxClass}</option>
+	<option FOREACH="xlite.factory.\XLite\Model\TaxRates.productClasses,_taxClass" option="{_taxClass}" selected="tax_class=_taxClass">{_taxClass}</option>
 	</select>
   </td>
 </tr>
@@ -160,7 +160,7 @@
   <td class=ProductDetails valign=top height="15"><font class="FormButton">Thumbnail</font><br>(in products list)</td>
   <td class=ProductDetails valign="middle">
   <span IF="thumbnail_read_only" class="ErrorMessage">WARNING! File cannot be uploaded!<br>Please check and correct file permissions.<br></span>
-  <widget class="XLite_View_ImageUpload" field="thumbnail" actionName="images" formName="modify_form" object="{product}">
+  <widget class="\XLite\View\ImageUpload" field="thumbnail" actionName="images" formName="modify_form" object="{product}">
   </td>
 </tr>
 
@@ -168,7 +168,7 @@
   <td class=ProductDetails valign=top height="15"><font class="FormButton">Image</font><br>(on product details page)</td>
   <td class=ProductDetails valign="middle">
   <span IF="image_read_only" class="ErrorMessage">WARNING! File cannot be uploaded!<br>Please check and correct file permissions.<br></span>
-  <widget class="XLite_View_ImageUpload" field="image" actionName="images" formName="modify_form" object="{product}">
+  <widget class="\XLite\View\ImageUpload" field="image" actionName="images" formName="modify_form" object="{product}">
   </td>
 </tr>
 
@@ -222,7 +222,7 @@
 
 {*extraFields*}
 <widget module="GoogleCheckout" template="modules/GoogleCheckout/product/add.tpl">
-<widget class="XLite_View_ExtraFields" template="product/extra_fields.tpl" product="{product}">
+<widget class="\XLite\View\ExtraFields" template="product/extra_fields.tpl" product="{product}">
 
 <widget module="WholesaleTrading" template="modules/WholesaleTrading/memberships/membership_product.tpl">
 

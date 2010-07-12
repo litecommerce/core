@@ -26,15 +26,17 @@
  * @since      3.0.0
  */
 
+namespace XLite\View\FormField\Separator;
+
 /**
- * XLite_View_FormField_Separator_ShippingAddress 
+ * \XLite\View\FormField\Separator\ShippingAddress 
  * 
  * @package    XLite
  * @subpackage ____sub_package____
  * @see        ____class_see____
  * @since      3.0.0
  */
-class XLite_View_FormField_Separator_ShippingAddress extends XLite_View_FormField_Separator_ASeparator
+class ShippingAddress extends \XLite\View\FormField\Separator\ASeparator
 {
     /**
      * Widget param names 
@@ -67,8 +69,8 @@ class XLite_View_FormField_Separator_ShippingAddress extends XLite_View_FormFiel
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_SHIP_AS_BILL_CHECKBOX => new XLite_Model_WidgetParam_Object(
-                '"Ship as bill" checkbox', null, false, 'XLite_View_FormField_Input_Checkbox_ShipAsBill'
+            self::PARAM_SHIP_AS_BILL_CHECKBOX => new \XLite\Model\WidgetParam\Object(
+                '"Ship as bill" checkbox', null, false, '\XLite\View\FormField\Input\Checkbox\ShipAsBill'
             ),
         );
     }

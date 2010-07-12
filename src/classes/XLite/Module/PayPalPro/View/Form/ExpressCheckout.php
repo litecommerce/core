@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\PayPalPro\View\Form;
+
 /**
  * Express checkout form
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_PayPalPro_View_Form_ExpressCheckout extends XLite_View_Form_AForm
+class ExpressCheckout extends \XLite\View\Form\AForm
 {
     /**
      * Current form name 

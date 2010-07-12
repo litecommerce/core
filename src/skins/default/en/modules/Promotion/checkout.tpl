@@ -47,7 +47,7 @@
 <span class="ErrorMEssage" ID="bonusPointsWarning"></span>
 <input type="hidden" name="priceFormat" value="{config.General.price_format:r}">
 <br>
-<widget class="XLite_View_Button" label="Submit order" href="javascript: bonusPointsFormSubmit();">
+<widget class="\XLite\View\Button" label="Submit order" href="javascript: bonusPointsFormSubmit();">
 </form>
 
 <script>

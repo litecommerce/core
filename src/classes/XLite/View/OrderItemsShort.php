@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View;
+
 /**
  * Order items list (short version)
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_OrderItemsShort extends XLite_View_AView
+class OrderItemsShort extends \XLite\View\AView
 {
     /**
      *  Widget parameters names
@@ -56,7 +58,7 @@ class XLite_View_OrderItemsShort extends XLite_View_AView
     /**
      * Order (cache)
      * 
-     * @var    XLite_Model_Order
+     * @var    \XLite\Model\Order
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
@@ -88,9 +90,9 @@ class XLite_View_OrderItemsShort extends XLite_View_AView
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_ORDER    => new XLite_Model_WidgetParam_Object('Order', null, false, 'XLite_Model_Order'),
-            self::PARAM_ORDER_ID => new XLite_Model_WidgetParam_Int('Order id', null, false),
-            self::PARAM_FULL     => new XLite_Model_WidgetParam_Bool('Display full list', false),
+            self::PARAM_ORDER    => new \XLite\Model\WidgetParam\Object('Order', null, false, '\XLite\Model\Order'),
+            self::PARAM_ORDER_ID => new \XLite\Model\WidgetParam\Int('Order id', null, false),
+            self::PARAM_FULL     => new \XLite\Model\WidgetParam\Bool('Display full list', false),
         );
     }
 
@@ -111,7 +113,7 @@ class XLite_View_OrderItemsShort extends XLite_View_AView
     /**
      * Get order 
      * 
-     * @return XLite_Model_Order
+     * @return \XLite\Model\Order
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -122,7 +124,7 @@ class XLite_View_OrderItemsShort extends XLite_View_AView
 
             $this->order = false;
 
-            if ($this->getParam(self::PARAM_ORDER) instanceof XLite_Model_Order) {
+            if ($this->getParam(self::PARAM_ORDER) instanceof \XLite\Model\Order) {
 
                 // order based
                 $this->order = $this->getParam(self::PARAM_ORDER);
@@ -130,7 +132,7 @@ class XLite_View_OrderItemsShort extends XLite_View_AView
             } elseif (0 < $this->getRequestParamValue(self::PARAM_ORDER_ID)) {
 
                 // order id based
-                $order = new XLite_Model_Order($this->getRequestParamValue(self::PARAM_ORDER_ID));
+                $order = new \XLite\Model\Order($this->getRequestParamValue(self::PARAM_ORDER_ID));
                 if ($order->isExists()) {
                     $this->order = $order;
                 }
@@ -156,7 +158,7 @@ class XLite_View_OrderItemsShort extends XLite_View_AView
     /**
      * Get order items 
      * 
-     * @return array of XLite_Model_OrderItem
+     * @return array of \XLite\Model\OrderItem
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

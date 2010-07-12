@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View;
+
 /**
  * Date picker widget
  * 
@@ -34,7 +36,7 @@
  * @see        ____class_see____
  * @since   3.0.0
  */
-class XLite_View_DatePicker extends XLite_View_FormField
+class DatePicker extends \XLite\View\FormField
 {
     /*
      * Constants: names of a widget parameters
@@ -91,10 +93,10 @@ class XLite_View_DatePicker extends XLite_View_FormField
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_FIELD     => new XLite_Model_WidgetParam_String('Name of date field prefix', 'date'),
-            self::PARAM_VALUE     => new XLite_Model_WidgetParam_Int('Value of date field (timestamp)', null),
-            self::PARAM_HIGH_YEAR => new XLite_Model_WidgetParam_Int('The high year', date('Y', time()) - 1),
-            self::PARAM_LOW_YEAR  => new XLite_Model_WidgetParam_Int('The low year', 2035),
+            self::PARAM_FIELD     => new \XLite\Model\WidgetParam\String('Name of date field prefix', 'date'),
+            self::PARAM_VALUE     => new \XLite\Model\WidgetParam\Int('Value of date field (timestamp)', null),
+            self::PARAM_HIGH_YEAR => new \XLite\Model\WidgetParam\Int('The high year', date('Y', time()) - 1),
+            self::PARAM_LOW_YEAR  => new \XLite\Model\WidgetParam\Int('The low year', 2035),
         );
     }
 

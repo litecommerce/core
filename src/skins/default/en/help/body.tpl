@@ -25,7 +25,7 @@
 	<td><a href="cart.php?target=help&amp;mode=terms_conditions" class="SidebarItems"><FONT class="CategoriesList">Terms &amp; Conditions</FONT></a></td>
 </tr>
 </tbody>
-<tbody IF="!isEmpty(xlite.factory.XLite_Model_ExtraPage.pages)">
+<tbody IF="!isEmpty(xlite.factory.\XLite\Model\ExtraPage.pages)">
 <widget template="help/pages_links.tpl">
 </tbody>
 </table>

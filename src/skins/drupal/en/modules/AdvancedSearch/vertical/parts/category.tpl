@@ -14,6 +14,6 @@
 <tr class="search-category form-field">
   <td colspan="3">
     <label for="search-category">Category:</label>
-    <widget template="modules/AdvancedSearch/select_category.tpl" class="XLite_View_CategorySelect" fieldName="search[category]" allOption selectedCategoryId="{search.category}" />
+    <widget template="modules/AdvancedSearch/select_category.tpl" class="\XLite\View\CategorySelect" fieldName="search[category]" allOption selectedCategoryId="{search.category}" />
   </td>
 </tr>

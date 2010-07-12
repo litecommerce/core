@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View;
+
 /**
  * Controller main widget
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_Controller extends XLite_View_AView
+class Controller extends \XLite\View\AView
 {
     /**
      * Content of the currnt page
@@ -88,8 +90,8 @@ class XLite_View_Controller extends XLite_View_AView
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_SILENT       => new XLite_Model_WidgetParam_Bool('Silent', false),
-            self::PARAM_DUMP_STARTED => new XLite_Model_WidgetParam_Bool('Dump started', false)
+            self::PARAM_SILENT       => new \XLite\Model\WidgetParam\Bool('Silent', false),
+            self::PARAM_DUMP_STARTED => new \XLite\Model\WidgetParam\Bool('Dump started', false)
         );
     }
 
@@ -120,13 +122,13 @@ class XLite_View_Controller extends XLite_View_AView
     /**
      * getContentWidget 
      * 
-     * @return XLite_View_AView
+     * @return \XLite\View\AView
      * @access protected
      * @since  3.0.0
      */
     protected function getContentWidget()
     {
-        return $this->getWidget(array(XLite_View_AView::PARAM_TEMPLATE => $this->template), 'XLite_View_Content');
+        return $this->getWidget(array(\XLite\View\AView::PARAM_TEMPLATE => $this->template), '\XLite\View\Content');
     }
 
     /**

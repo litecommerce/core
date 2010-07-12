@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Validator;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Validator_MembershipValidator extends XLite_Validator_AValidator
+class MembershipValidator extends \XLite\Validator\AValidator
 {
     public $template = "common/membership_validator.tpl";
     
@@ -63,7 +65,7 @@ class XLite_Validator_MembershipValidator extends XLite_Validator_AValidator
     		if (strlen($membershipData) == 0) {
     			return false;
     		}
-            $membership = new XLite_Model_Membership();
+            $membership = new \XLite\Model\Membership();
             if ($membershipData != $membership->stripInvalidData($membershipData)) {
                 $this->set('dataInvalid', true);
                 return false;

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\UPSOnlineTools\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_UPSOnlineTools_Controller_Admin_Product extends XLite_Controller_Admin_Product implements XLite_Base_IDecorator
+class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDecorator
 {
     public $product_oversize = false;
     public $product_overweight = false;
@@ -52,7 +54,7 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_Product extends XLite_Control
                 "length" => $product->get('ups_length'),
                 "handle_care" => $product->get('ups_handle_care')
             );
-            $item = new XLite_Module_UPSOnlineTools_Model_PackItem();
+            $item = new \XLite\Module\UPSOnlineTools\Model\PackItem();
             $item->set('properties', $properties);
             $fake_items[] = $item;
 
@@ -96,7 +98,7 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_Product extends XLite_Control
 
         $fields = array('ups_width', "ups_height", "ups_length");
         foreach ($fields as $field) {
-            $properties[$field] = max(XLite_Module_UPSOnlineTools_Model_PackItem::MIN_DIM_SIZE, $this->get($field));
+            $properties[$field] = max(\XLite\Module\UPSOnlineTools\Model\PackItem::MIN_DIM_SIZE, $this->get($field));
         }
 
         $properties['ups_packaging'] = $this->get('ups_packaging');
@@ -111,7 +113,7 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_Product extends XLite_Control
 
     function getUPSPackagingList()
     {
-        $ups = new XLite_Module_UPSOnlineTools_Model_Shipping_Ups();
+        $ups = new \XLite\Module\UPSOnlineTools\Model\Shipping\Ups();
 
 
         $list = array();
@@ -124,7 +126,7 @@ class XLite_Module_UPSOnlineTools_Controller_Admin_Product extends XLite_Control
 
     function getCurrentPackaging()
     {
-        $ups = new XLite_Module_UPSOnlineTools_Model_Shipping_Ups();
+        $ups = new \XLite\Module\UPSOnlineTools\Model\Shipping\Ups();
         $dims = $ups->getUPSContainerDims($this->getComplex('product.ups_packaging'));
 
         return $dims;

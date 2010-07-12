@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model;
+
 /**
  * Language label translations
  * 
@@ -35,7 +37,7 @@
  * @Entity
  * @Table (name="language_label_translations")
  */
-class XLite_Model_LanguageLabelTranslation extends XLite_Model_Base_Translation
+class LanguageLabelTranslation extends \XLite\Model\Base\Translation
 {
     /**
      * Label

@@ -64,7 +64,7 @@
 	<td>Status</td>
 	</tr>
 	<tr>
-	<td><input size="32" name="new_pin"><widget class="XLite_Validator_RequiredValidator" field="new_pin"></td>
+	<td><input size="32" name="new_pin"><widget class="\XLite\Validator\RequiredValidator" field="new_pin"></td>
 	<td>
 		<select name="new_pin_enabled">
 			<option value="1" selected>Enabled</option>
@@ -98,7 +98,7 @@
 </tr>
 </form>
 </table>
-<widget class="XLite_View_Pager" data="{pinCodes}" name="pager" itemsPerPage="{config.Egoods.pincodes_per_page}">
+<widget class="\XLite\View\Pager" data="{pinCodes}" name="pager" itemsPerPage="{config.Egoods.pincodes_per_page}">
 <table border="0" cellpadding="1" cellspacing="3">
 <form name="edit_pins" action="admin.php" method="POST">
 <input FOREACH="allparams,_name,_val" type="hidden" name="{_name}" value="{_val}"/>

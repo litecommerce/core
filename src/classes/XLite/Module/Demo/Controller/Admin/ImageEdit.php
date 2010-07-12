@@ -26,8 +26,10 @@
  * @since      3.0.0
  */
 
-class XLite_Module_Demo_Controller_Admin_ImageEdit extends XLite_Controller_Admin_ImageEdit
-implements XLite_Base_IDecorator
+namespace XLite\Module\Demo\Controller\Admin;
+
+class ImageEdit extends \XLite\Controller\Admin\ImageEdit
+implements \XLite\Base\IDecorator
 {
     /**
      * Change image
@@ -39,7 +41,7 @@ implements XLite_Base_IDecorator
      */
     protected function doActionChange()
     {
-        XLite_Module_Demo_Main::doForbidAction();
+        \XLite\Module\Demo\Main::doForbidAction();
     }
 }
 

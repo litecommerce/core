@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Promotion\Validator;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Promotion_Validator_PromotionMembershipValidator extends XLite_Validator_RequiredValidator
+class PromotionMembershipValidator extends \XLite\Validator\RequiredValidator
 {
     public $template = "common/required_validator.tpl";
 
@@ -44,7 +46,7 @@ class XLite_Module_Promotion_Validator_PromotionMembershipValidator extends XLit
         }
 
         if ($_POST['action']=="update2") {
-                $specialOffer = new XLite_Module_Promotion_Model_SpecialOffer($_POST['offer_id']);
+                $specialOffer = new \XLite\Module\Promotion\Model\SpecialOffer($_POST['offer_id']);
                 if ($specialOffer->get('conditionType') == "hasMembership")
                 {
                      $result =  !empty($_POST[$this->get('field')]);

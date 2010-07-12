@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\GiftCertificates\View;
+
 /**
  * E-card (customer)
  * 
@@ -33,12 +35,12 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_GiftCertificates_View_CEcard extends XLite_View_AView
+class CEcard extends \XLite\View\AView
 {
     /**
      * Gift certificate (cache)
      * 
-     * @var    XLite_Module_GiftCertificates_Model_GiftCertificate
+     * @var    \XLite\Module\GiftCertificates\Model\GiftCertificate
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
@@ -78,7 +80,7 @@ class XLite_Module_GiftCertificates_View_CEcard extends XLite_View_AView
      */
     protected function getTemplateFile()
     {
-        $layout = XLite_Model_Layout::getInstance();
+        $layout = \XLite\Model\Layout::getInstance();
 
         return 'skins/mail/' . $layout->get('locale') . '/' . $this->get('template');
     }

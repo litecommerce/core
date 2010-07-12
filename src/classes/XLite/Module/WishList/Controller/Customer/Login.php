@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\WishList\Controller\Customer;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_WishList_Controller_Customer_Login extends XLite_Controller_Customer_Login implements XLite_Base_IDecorator
+class Login extends \XLite\Controller\Customer\Login implements \XLite\Base\IDecorator
 {
     /**
      * Return URL to redirect from login
@@ -45,10 +47,10 @@ class XLite_Module_WishList_Controller_Customer_Login extends XLite_Controller_C
     protected function getRedirectFromLoginURL()
     {
         $result = parent::getRedirectFromLoginURL();
-        $productId = XLite_Model_Session::getInstance()->get(self::SESSION_CELL_WL_PRODUCT_TO_ADD);
+        $productId = \XLite\Model\Session::getInstance()->get(self::SESSION_CELL_WL_PRODUCT_TO_ADD);
 
         if (isset($productId)) {
-            XLite_Model_Session::getInstance()->set(self::SESSION_CELL_WL_PRODUCT_TO_ADD, null);
+            \XLite\Model\Session::getInstance()->set(self::SESSION_CELL_WL_PRODUCT_TO_ADD, null);
             $result = $this->buildURL('wishlist', 'add', array('product_id' => $productId));
         }
 

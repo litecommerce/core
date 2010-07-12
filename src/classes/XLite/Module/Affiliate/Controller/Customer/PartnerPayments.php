@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Affiliate\Controller\Customer;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Affiliate_Controller_Customer_PartnerPayments extends XLite_Module_Affiliate_Controller_Partner
+class PartnerPayments extends \XLite\Module\Affiliate\Controller\Partner
 {
     public $totalPaid = 0.00;
 
@@ -59,7 +61,7 @@ class XLite_Module_Affiliate_Controller_Customer_PartnerPayments extends XLite_M
 
         if (is_null($this->payments)) {
             $this->payments = array();
-            $pp = new XLite_Module_Affiliate_Model_PartnerPayment();
+            $pp = new \XLite\Module\Affiliate\Model\PartnerPayment();
             $table = $pp->db->getTableByAlias($pp->alias);
             $partnerID = $this->getComplex('auth.profile.profile_id');
             if ($this->get('period') == "period") {

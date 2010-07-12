@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\WholesaleTrading\Model;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_WholesaleTrading_Model_GlobalDiscount extends XLite_Model_AModel
+class GlobalDiscount extends \XLite\Model\AModel
 {
     /**
     * @var string $alias The product access database table alias.

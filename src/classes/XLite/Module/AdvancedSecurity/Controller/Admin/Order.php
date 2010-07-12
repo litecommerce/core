@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\AdvancedSecurity\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,11 +35,11 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_AdvancedSecurity_Controller_Admin_Order extends XLite_Controller_Admin_Order implements XLite_Base_IDecorator
+class Order extends \XLite\Controller\Admin\Order implements \XLite\Base\IDecorator
 {
     function action_submit_password()
     {
-        $gpg = new XLite_Module_AdvancedSecurity_Model_GPG();
+        $gpg = new \XLite\Module\AdvancedSecurity\Model\GPG();
         if ($gpg->isPasswordValid($this->get('master_password'))) {
             $this->session->set('masterPassword', $this->get('master_password'));
         } else {
@@ -54,7 +56,7 @@ class XLite_Module_AdvancedSecurity_Controller_Admin_Order extends XLite_Control
     function getGPG()
     {
         if (is_null($this->gpg)) {
-            $this->gpg = new XLite_Module_AdvancedSecurity_Model_GPG();
+            $this->gpg = new \XLite\Module\AdvancedSecurity\Model\GPG();
         }
         return $this->gpg;
     }

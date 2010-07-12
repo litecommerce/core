@@ -25,7 +25,7 @@ This section provides the capability to manually modify all templates of the Cus
 <input type="hidden" name="file" value="{file.path}">
 <input type="hidden" name="node" value="{file.node}">
 
-<widget class="XLite_View_Tabber" body="template_editor/advanced_tree.tpl" tabPages="getTreePages" switch="zone">
+<widget class="\XLite\View\Tabber" body="template_editor/advanced_tree.tpl" tabPages="getTreePages" switch="zone">
 
 <script>
 var parent_dir = "{node}"

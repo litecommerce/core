@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Egoods\Model;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Egoods_Model_DownloadableFile extends XLite_Model_AModel
+class DownloadableFile extends \XLite\Model\AModel
 {
     public $alias = "downloadable_files";
     public $autoIncrement = "file_id";
@@ -55,13 +57,13 @@ class XLite_Module_Egoods_Model_DownloadableFile extends XLite_Model_AModel
             
     function getLinks()
     {
-        $links = new XLite_Module_Egoods_Model_DownloadableLink();
+        $links = new \XLite\Module\Egoods\Model\DownloadableLink();
         return $links->findAll('file_id=' . $this->get('file_id'));
     }
 
     function getManualLinks()
     {
-        $links = new XLite_Module_Egoods_Model_DownloadableLink();
+        $links = new \XLite\Module\Egoods\Model\DownloadableLink();
         if (!isset($this->_manual_links)) {
             $this->_manual_links = $links->findAll('file_id=' . $this->get('file_id') . " and link_type='M'");
         }
@@ -79,7 +81,7 @@ class XLite_Module_Egoods_Model_DownloadableFile extends XLite_Model_AModel
     
     function getActiveLinks()
     {
-        $l = new XLite_Module_Egoods_Model_DownloadableLink();
+        $l = new \XLite\Module\Egoods\Model\DownloadableLink();
         $links = $l->findAll('file_id=' . $this->get('file_id'));
         $active_links = array();
         for ($i = 0; $i < count($links); $i ++) {

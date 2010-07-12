@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model;
+
 /**
  * Language
  * 
@@ -35,7 +37,7 @@
  * @Entity
  * @Table (name="languages")
  */
-class XLite_Model_Language extends XLite_Model_Base_I18n
+class Language extends \XLite\Model\Base\I18n
 {
     /**
      * Language statuses
@@ -175,14 +177,14 @@ class XLite_Model_Language extends XLite_Model_Base_I18n
      */
     public function getFlagURL()
     {
-        $path = XLite_Model_Layout::getInstance()->getSkinURL('images/flags/' . $this->code . '.png');
+        $path = \XLite\Model\Layout::getInstance()->getSkinURL('images/flags/' . $this->code . '.png');
 
         if (!file_exists(LC_ROOT_DIR . $path)) {
-            $path = XLite_Model_Layout::getInstance()->getSkinURL('images/flags/__.png');
+            $path = \XLite\Model\Layout::getInstance()->getSkinURL('images/flags/__.png');
         }
 
         return file_exists(LC_ROOT_DIR . $path)
-            ? XLite::getInstance()->getShopUrl($path)
+            ? \XLite::getInstance()->getShopUrl($path)
             : null;
     }
 }

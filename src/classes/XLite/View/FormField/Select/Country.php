@@ -26,14 +26,16 @@
  * @since      3.0.0
  */
 
+namespace XLite\View\FormField\Select;
+
 /**
- * XLite_View_FormField_Select_Country 
+ * \XLite\View\FormField\Select\Country 
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_FormField_Select_Country extends XLite_View_FormField_Select_Regular
+class Country extends \XLite\View\FormField\Select\Regular
 {
     /**
      * Widget param names
@@ -79,9 +81,9 @@ class XLite_View_FormField_Select_Country extends XLite_View_FormField_Select_Re
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_ALL               => new XLite_Model_WidgetParam_Bool('All', false),
-            self::PARAM_STATE_SELECTOR_ID => new XLite_Model_WidgetParam_String('State select ID', null),
-            self::PARAM_STATE_INPUT_ID    => new XLite_Model_WidgetParam_String('State input ID', null),
+            self::PARAM_ALL               => new \XLite\Model\WidgetParam\Bool('All', false),
+            self::PARAM_STATE_SELECTOR_ID => new \XLite\Model\WidgetParam\String('State select ID', null),
+            self::PARAM_STATE_INPUT_ID    => new \XLite\Model\WidgetParam\String('State input ID', null),
         );
     }
 
@@ -95,8 +97,8 @@ class XLite_View_FormField_Select_Country extends XLite_View_FormField_Select_Re
     protected function getDefaultOptions()
     {
         return $this->onlyEnabled
-            ? XLite_Core_Database::getRepo('XLite_Model_Country')->findByEnabled(true)
-            : XLite_Core_Database::getRepo('XLite_Model_Country')->findAll();
+            ? \XLite\Core\Database::getRepo('XLite\Model\Country')->findByEnabled(true)
+            : \XLite\Core\Database::getRepo('XLite\Model\Country')->findAll();
     }
 
     /**

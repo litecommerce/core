@@ -26,8 +26,10 @@
  * @since      3.0.0
  */
 
-class XLite_Module_Demo_Controller_Admin_CssEdit extends XLite_Controller_Admin_CssEdit
-implements XLite_Base_IDecorator
+namespace XLite\Module\Demo\Controller\Admin;
+
+class CssEdit extends \XLite\Controller\Admin\CssEdit
+implements \XLite\Base\IDecorator
 {
     /**
      * Save CSS
@@ -39,7 +41,7 @@ implements XLite_Base_IDecorator
      */
     protected function doActionSave()
     {
-        XLite_Module_Demo_Main::doForbidAction();
+        \XLite\Module\Demo\Main::doForbidAction();
     }
 
     /**
@@ -52,7 +54,7 @@ implements XLite_Base_IDecorator
      */
     protected function doActionRestoreDefault()
     {
-        XLite_Module_Demo_Main::doForbidAction();
+        \XLite\Module\Demo\Main::doForbidAction();
     }
 
 }

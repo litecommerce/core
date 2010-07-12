@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\DrupalConnector\View\Form;
+
 /**
  * Abstract form widget
  * 
@@ -33,8 +35,8 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class XLite_Module_DrupalConnector_View_Form_AForm extends XLite_View_Form_AForm
-implements XLite_Base_IDecorator
+abstract class AForm extends \XLite\View\Form\AForm
+implements \XLite\Base\IDecorator
 {
     /**
      * Chech if widget is exported into Drupal and current form has its method = "GET"
@@ -45,7 +47,7 @@ implements XLite_Base_IDecorator
      */
     protected function isDrupalGetForm()
     {
-        return XLite_Module_DrupalConnector_Handler::getInstance()->checkCurrentCMS() 
+        return \XLite\Module\DrupalConnector\Handler::getInstance()->checkCurrentCMS() 
                && 'get' == strtolower($this->getParam(self::PARAM_FORM_METHOD));
     }
 

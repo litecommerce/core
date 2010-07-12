@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model\Repo;
+
 /**
  * View list repository
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_Repo_ViewList extends XLite_Model_Repo_ARepo
+class ViewList extends \XLite\Model\Repo\ARepo
 {
     /**
      * Default 'order by' field name
@@ -81,7 +83,7 @@ class XLite_Model_Repo_ViewList extends XLite_Model_Repo_ARepo
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function findClassList($class, $list, $zone = XLite_Model_ViewList::CUSTOMER_INTERFACE)
+    public function findClassList($class, $list, $zone = \XLite\Model\ViewList::CUSTOMER_INTERFACE)
     {
         $qb = $this->assignQueryCache(
             $this->defineClassListQuery($class, $list, $zone)->getQuery(),

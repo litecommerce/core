@@ -11,7 +11,7 @@
  * @since     3.0.0
  *}
 
-<widget class="XLite_View_TopMessage" />
+<widget class="\XLite\View\TopMessage" />
 
 <table border=0 width="100%" height="100%">
 <tr>
@@ -60,7 +60,7 @@
 <p />
 {end:}
 <widget target="access_denied" template="access_denied.tpl">
-<widget class="XLite_View_AdvBlock" />
+<widget class="\XLite\View\AdvBlock" />
 <widget template="common/dialog.tpl" head="Customer zone warning" body="customer_zone_warning.tpl" IF="{getCustomerZoneWarning()}">
 <widget target="main" template="common/dialog.tpl" head="Welcome to the Administrator Zone" body="menu.tpl">
 <widget target="modules" template="common/dialog.tpl" head="Modules" body="modules.tpl">
@@ -68,10 +68,10 @@
 
 <widget name="categoriesWidget" target="categories" template="common/dialog.tpl" head="Manage categories" body="categories/body.tpl" visible="{!getRequestParamValue(#mode#)=#delete#}">
 <widget module="FeaturedProducts" template="common/dialog.tpl" head="Featured products" body="modules/FeaturedProducts/featuredProducts.tpl" IF="{namedWidgets.categoriesWidget.visible}">
-<widget target="category" class="XLite_View_Tabber" body="{getPageTemplate()}" switch="page">
+<widget target="category" class="\XLite\View\Tabber" body="{getPageTemplate()}" switch="page">
 <widget target="categories" template="common/dialog.tpl" body="categories/delete_confirmation.tpl" head="Confirmation" mode="delete">
 
-<widget target="settings" class="XLite_View_Tabber" body="general_settings.tpl" switch="page">
+<widget target="settings" class="\XLite\View\Tabber" body="general_settings.tpl" switch="page">
 
 <widget template="users/search.tpl" target="users">
 <widget target="recent_login" template="common/dialog.tpl" body="recent_login.tpl" head="Login history">
@@ -79,7 +79,7 @@
 <widget target="payment_methods" template="common/dialog.tpl" body="payment_methods/body.tpl" head="Payment methods">
 
 <widget target="product_list" template="product/product_list_form.tpl">
-<widget target="product" class="XLite_View_Tabber" body="{pageTemplate}" switch="page">
+<widget target="product" class="\XLite\View\Tabber" body="{pageTemplate}" switch="page">
 
 <widget target="extra_fields" template="common/dialog.tpl" body="product/extra_fields_form.tpl" head="Global extra fields">
 
@@ -91,10 +91,10 @@
 <widget target="wysiwyg" template="common/dialog.tpl" head="HTML design import/export" body="wysiwyg.tpl" />
 *}
 
-<widget class="XLite_View_Model_Profile_Main" />
+<widget class="\XLite\View\Model\Profile\Main" />
 
-{*<widget target="profile" class="XLite_View_RegisterForm" head="Modify profile" name="profileForm" IF="{getRequestParamValue(#mode#)=#modify#|getRequestParamValue(#mode#)=##}" />
-<widget target="profile" class="XLite_View_RegisterForm" head="Add new user" name="registerForm" IF="{getRequestParamValue(#mode#)=#register#}" />*}
+{*<widget target="profile" class="\XLite\View\RegisterForm" head="Modify profile" name="profileForm" IF="{getRequestParamValue(#mode#)=#modify#|getRequestParamValue(#mode#)=##}" />
+<widget target="profile" class="\XLite\View\RegisterForm" head="Add new user" name="registerForm" IF="{getRequestParamValue(#mode#)=#register#}" />*}
 
 <widget target="order_list,order,advanced_security" module="AdvancedSecurity" template="modules/AdvancedSecurity/advanced_security.tpl">
 <widget module="AntiFraud" target='order'  visible="{mode}" mode="{mode}" template="common/dialog.tpl" body="modules/AntiFraud/tracking/message.tpl" head="AntiFraud Service Notification">
@@ -103,7 +103,7 @@
 <widget target="advanced_search" module="AdvancedSearch" template="common/dialog.tpl" body="modules/AdvancedSearch/config.tpl">
 <widget target="order_list" template="order/search.tpl">
 
-<widget class="XLite_View_LanguagesModify_Dialog" />
+<widget class="\XLite\View\LanguagesModify\Dialog" />
 
 <span IF="!xlite.AOMEnabled">
 {if:!xlite.GoogleCheckoutEnabled}
@@ -115,9 +115,9 @@
 <span IF="xlite.AOMEnabled">
 <widget module="AOM" template="modules/AOM/main.tpl">
 </span>
-<widget target="shipping_methods" class="XLite_View_Tabber" body="{pageTemplate}" switch="target">
-<widget target="shipping_rates" class="XLite_View_Tabber" body="{pageTemplate}" switch="target">
-<widget target="shipping_zones" class="XLite_View_Tabber" body="{pageTemplate}" switch="target">
+<widget target="shipping_methods" class="\XLite\View\Tabber" body="{pageTemplate}" switch="target">
+<widget target="shipping_rates" class="\XLite\View\Tabber" body="{pageTemplate}" switch="target">
+<widget target="shipping_zones" class="\XLite\View\Tabber" body="{pageTemplate}" switch="target">
 <widget module="GoogleCheckout" template="modules/GoogleCheckout/main.tpl">
 
 <widget template="stats.tpl">
@@ -134,16 +134,16 @@
 *}
 <widget target="countries" template="common/dialog.tpl" body="countries.tpl" head="Countries">
 <widget target="states" template="common/dialog.tpl" body="states.tpl" head="States">
-<widget class="XLite_View_Tabber" target="taxes" body="{pageTemplate}" switch="page">
-<widget class="XLite_View_Tabber" target="db" body="{pageTemplate}" switch="page">
+<widget class="\XLite\View\Tabber" target="taxes" body="{pageTemplate}" switch="page">
+<widget class="\XLite\View\Tabber" target="db" body="{pageTemplate}" switch="page">
 
 <widget target="import_users" template="common/dialog.tpl" body="import_users.tpl" head="Import users">
-<widget target="import_catalog" class="XLite_View_Tabber" body="{pageTemplate}" switch="page">
-<widget target="export_catalog" class="XLite_View_Tabber" body="{pageTemplate}" switch="page">
-<widget target="update_inventory" class="XLite_View_Tabber" body="{pageTemplate}" switch="page">
+<widget target="import_catalog" class="\XLite\View\Tabber" body="{pageTemplate}" switch="page">
+<widget target="export_catalog" class="\XLite\View\Tabber" body="{pageTemplate}" switch="page">
+<widget target="update_inventory" class="\XLite\View\Tabber" body="{pageTemplate}" switch="page">
 
-<widget class="XLite_View_Memberships" />
-<widget target="template_editor" class="XLite_View_Tabber" body="{pageTemplate}" switch="editor">
+<widget class="\XLite\View\Memberships" />
+<widget target="template_editor" class="\XLite\View\Tabber" body="{pageTemplate}" switch="editor">
 <widget target="image_files" template="common/dialog.tpl" body="image_files.tpl" head="Image files">
 
 {* Gift Certificates module *}
@@ -162,12 +162,12 @@
 <widget module="Promotion" target="DiscountCoupons" template="common/dialog.tpl" body="modules/Promotion/coupons.tpl" head="Discount coupons">
 <widget module="Promotion" template="modules/Promotion/main.tpl">
 
-<widget module="USPS" target="usps" class="XLite_View_Tabber" body="{pageTemplate}" switch="target">
+<widget module="USPS" target="usps" class="\XLite\View\Tabber" body="{pageTemplate}" switch="target">
 <widget module="USPS" target="usps"  template="common/dialog.tpl" body="modules/USPS/test.tpl" head="USPS Live Test">
-<widget module="Intershipper" target="intershipper" class="XLite_View_Tabber" body="{pageTemplate}" switch="target">
+<widget module="Intershipper" target="intershipper" class="\XLite\View\Tabber" body="{pageTemplate}" switch="target">
 <widget module="Intershipper" target="intershipper"  template="common/dialog.tpl" body="modules/Intershipper/test.tpl" head="Intershipper Live Test">
 <widget module="AustraliaPost" template="modules/AustraliaPost/main.tpl">
-<widget module="CanadaPost" target="cps" class="XLite_View_Tabber" body="{pageTemplate}" switch="target">
+<widget module="CanadaPost" target="cps" class="\XLite\View\Tabber" body="{pageTemplate}" switch="target">
 <widget module="CanadaPost" target="cps" template="common/dialog.tpl" body="modules/CanadaPost/test.tpl" head="Canada Post Live Test">
 <widget module="XCartImport" target="xcart_import" template="common/dialog.tpl" body="modules/XCartImport/dialog.tpl" head="Import X-Cart data">
 <widget module="Affiliate" template="modules/Affiliate/main.tpl">
@@ -203,7 +203,7 @@ if (navigator.appName.indexOf('Microsoft') >= 0) {
 <table WIDTH="100%" BORDER=0 CELLPADDING=3 CELLSPACING=0>
 <tr>
 <td bgcolor=#E0E0E0 HEIGHT=15 align=left>
-<widget class="XLite_View_PoweredBy" />
+<widget class="\XLite\View\PoweredBy" />
 </td>
 <td bgcolor=#E0E0E0 HEIGHT=15 align=right>
 <font color="#8A8A8A">Copyright &copy; {config.Company.start_year} {config.Company.company_name}</font>

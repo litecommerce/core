@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model\Repo;
+
 /**
  * Membership repository
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_Repo_Membership extends XLite_Model_Repo_Base_I18n
+class Membership extends \XLite\Model\Repo\Base\I18n
 {
     /**
      * Default 'order by' field name
@@ -130,7 +132,7 @@ class XLite_Model_Repo_Membership extends XLite_Model_Repo_Base_I18n
      * @param string  $name       Name
      * @param boolean $onlyActive Search only in active mebmerships
      *  
-     * @return XLite_Model_Membership or null
+     * @return \XLite\Model\Membership or null
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Egoods\Model;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Egoods_Model_Mailer extends XLite_Model_Mailer
+class Mailer extends \XLite\Model\Mailer
 {
     public $clean_after_send = true;
 
@@ -58,7 +60,7 @@ class XLite_Module_Egoods_Model_Mailer extends XLite_Model_Mailer
         $this->set('body', $this->compile($dir.$this->get('bodyTemplate'), false));
 
         // find all images and fetch them; replace with cid:...
-        $imageParser = new XLite_Model_MailImageParser();
+        $imageParser = new \XLite\Model\MailImageParser();
         $imageParser->source = $this->get('body');
         $imageParser->webdir = $this->xlite->getShopUrl("");
         $imageParser->parse();

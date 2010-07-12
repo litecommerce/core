@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\GiftCertificates\Controller\Customer;
+
 /**
  * Checkoput controller
  * 
@@ -33,8 +35,8 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_GiftCertificates_Controller_Customer_Checkout extends XLite_Controller_Customer_Checkout
-implements XLite_Base_IDecorator
+class Checkout extends \XLite\Controller\Customer\Checkout
+implements \XLite\Base\IDecorator
 {
     /**
      * Remove applied gift certificate
@@ -77,7 +79,7 @@ implements XLite_Base_IDecorator
     {
         if ($this->config->GiftCertificates->expiration_email) {
 
-            $gc = new XLite_Module_GiftCertificates_Model_GiftCertificate();
+            $gc = new \XLite\Module\GiftCertificates\Model\GiftCertificate();
 
             $gcs = $gc->findAll(
                 implode(' AND ', $gc->getExpirationConditions()),

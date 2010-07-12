@@ -15,7 +15,7 @@
 <input type="hidden" foreach="allparams,param,v" name="{param}" value="{v}"/>
 <font class=TextTitle>Select category:</font>
 <br><br>
-<widget class="XLite_View_CategorySelect" template="modules/Affiliate/select_category.tpl" fieldName="category_id">
+<widget class="\XLite\View\CategorySelect" template="modules/Affiliate/select_category.tpl" fieldName="category_id">
 <br><br>
 <input type=submit value="Build links">
 </form>

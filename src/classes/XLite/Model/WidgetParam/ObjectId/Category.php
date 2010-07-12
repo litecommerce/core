@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model\WidgetParam\ObjectId;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_WidgetParam_ObjectId_Category extends XLite_Model_WidgetParam_ObjectId
+class Category extends \XLite\Model\WidgetParam\ObjectId
 {
     /**
      * Allowed or not to  use root category id (0) 
@@ -54,7 +56,7 @@ class XLite_Model_WidgetParam_ObjectId_Category extends XLite_Model_WidgetParam_
      */
     protected function getClassName()
     {
-        return 'XLite_Model_Category';
+        return '\XLite\Model\Category';
     }
 
     /**

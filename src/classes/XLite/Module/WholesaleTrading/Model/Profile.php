@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\WholesaleTrading\Model;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_WholesaleTrading_Model_Profile extends XLite_Model_Profile implements XLite_Base_IDecorator
+class Profile extends \XLite\Model\Profile implements \XLite\Base\IDecorator
 {
     public $_membershipChanged = false;
     public $_oldMembership = "";
@@ -77,7 +79,7 @@ class XLite_Module_WholesaleTrading_Model_Profile extends XLite_Model_Profile im
         }
 
         if ($readStatus && ($this->get('membership_exp_date') > 0) && (time() > $this->get('membership_exp_date')) ) {
-            $mail = new XLite_Model_Mailer();
+            $mail = new \XLite\Model\Mailer();
             $mail->profile = $this;
 
             // Notify customer
@@ -171,7 +173,7 @@ class XLite_Module_WholesaleTrading_Model_Profile extends XLite_Model_Profile im
 
     function membershipChanged($oldMembership, $newMembership)
     {
-        $mail = new XLite_Model_Mailer();
+        $mail = new \XLite\Model\Mailer();
         $mail->profile = $this;
         $mail->oldMembership = $oldMembership;
         $mail->newMembership = $newMembership;

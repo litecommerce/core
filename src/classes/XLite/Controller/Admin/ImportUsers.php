@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,13 +35,13 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Controller_Admin_ImportUsers extends XLite_Controller_Admin_AAdmin
+class ImportUsers extends \XLite\Controller\Admin\AAdmin
 {
     public $import_error = false;
 
     function init()
     {
-        $p = new XLite_Model_Profile();
+        $p = new \XLite\Model\Profile();
         $this->import_fields = $p->get('importFields');
         parent::init();
     }
@@ -66,15 +68,15 @@ class XLite_Controller_Admin_ImportUsers extends XLite_Controller_Admin_AAdmin
             "md5_import"        => $this->md5_import,
             "return_error"		=> true,
             );
-        $p = new XLite_Model_Profile();
+        $p = new \XLite\Model\Profile();
         $p->import($options);
         $this->importError = $p->importError;
     }
 
     function change_layout($layout_name = "user_layout")
     {
-        $layout = implode(',', XLite_Core_Request::getInstance()->$layout_name);
-        XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+        $layout = implode(',', \XLite\Core\Request::getInstance()->$layout_name);
+        \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
             array(
                 'category' => 'ImportExport',
                 'name'     => $layout_name,

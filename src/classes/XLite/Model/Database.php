@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model;
+
 define('BACKUP_LIMIT_COUNT', 10);
 
 // define DB backup properties
@@ -40,7 +42,7 @@ define('SQL_UPLOAD_DIR', 'var/tmp/');
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
+class Database extends \XLite\Base implements \XLite\Base\ISingleton
 {
     const DBTABLE_PREFIX = 'xlite_';
 
@@ -78,7 +80,7 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
 
     public function __construct()
     {
-        $this->profiler = XLite_Model_Profiler::getInstance();
+        $this->profiler = \XLite\Model\Profiler::getInstance();
         $this->profilerEnabled = $this->profiler->enabled;
 
         $this->connected || $this->connect();
@@ -88,7 +90,7 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
     {
         // profile db connect
         $time = microtime(true);
-        $options = XLite::getInstance()->getOptions('database_details');
+        $options = \XLite::getInstance()->getOptions('database_details');
 
         if (!empty($options['socket'])) {
             $options['hostspec'] .= ':' . $options['socket'];
@@ -402,7 +404,7 @@ class XLite_Model_Database extends XLite_Base implements XLite_Base_ISingleton
         $error = query_upload($file, $this->db->connection, true, true);
         // cleanup compiled cache
         echo "<br>\n";
-        XLite_Model_ModulesManager::getInstance()->cleanupCache();
+        \XLite\Model\ModulesManager::getInstance()->cleanupCache();
         return $error;
     }
 

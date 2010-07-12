@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model\Repo\Base;
+
 /**
  * Image abstract repository
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class XLite_Model_Repo_Base_Image extends XLite_Model_Repo_ARepo
+abstract class Image extends \XLite\Model\Repo\ARepo
 {
     /**
      * Get storage name 
@@ -73,7 +75,7 @@ abstract class XLite_Model_Repo_Base_Image extends XLite_Model_Repo_ARepo
      */
     public function getWebRoot()
     {
-        return XLite::getInstance()->getShopUrl(LC_IMAGES_URL . '/' . $this->getStorageName()) . '/';
+        return \XLite::getInstance()->getShopUrl(LC_IMAGES_URL . '/' . $this->getStorageName()) . '/';
     }
 
     /**
@@ -103,7 +105,7 @@ abstract class XLite_Model_Repo_Base_Image extends XLite_Model_Repo_ARepo
      */
     public function getWebCacheRoot($sizeName)
     {
-        return XLite::getInstance()->getShopUrl(LC_IMAGES_CACHE_URL . '/' . $this->getStorageName() . '/' . $sizeName);
+        return \XLite::getInstance()->getShopUrl(LC_IMAGES_CACHE_URL . '/' . $this->getStorageName() . '/' . $sizeName);
     }
 
     /**

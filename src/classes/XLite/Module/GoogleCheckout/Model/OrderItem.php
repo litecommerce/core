@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\GoogleCheckout\Model;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_GoogleCheckout_Model_OrderItem extends XLite_Model_OrderItem implements XLite_Base_IDecorator
+class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
 {
     function getGoogleCheckoutCurrency()
     {

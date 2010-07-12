@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model;
+
 /**
  * Mailer 
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_Mailer extends XLite_View_AView
+class Mailer extends \XLite\View\AView
 {
     const MAIL_SKIN = 'mail';
     const CRLF = "\r\n";
@@ -205,9 +207,9 @@ class XLite_Model_Mailer extends XLite_View_AView
      */
     public function selectCustomerLayout()
     {
-        $layout = XLite_Model_Layout::getInstance();
+        $layout = \XLite\Model\Layout::getInstance();
         $this->templatesSkin = $layout->get('skin');
-        $layout->set('skin', XLite::getInstance()->getOptions(array('skin_details', 'skin')));
+        $layout->set('skin', \XLite::getInstance()->getOptions(array('skin_details', 'skin')));
     }
 
     /**
@@ -239,7 +241,7 @@ class XLite_Model_Mailer extends XLite_View_AView
         $fname = tempnam(LC_COMPILE_DIR, 'mail');
         file_put_contents($fname, $this->get('body'));
 
-        $imageParser = new XLite_Model_MailImageParser();
+        $imageParser = new \XLite\Model\MailImageParser();
         $imageParser->webdir = $this->xlite->getShopUrl();
         $imageParser->parse($fname);
 
@@ -353,7 +355,7 @@ class XLite_Model_Mailer extends XLite_View_AView
 
         if (isset($this->templatesSkin)) {
             // Restore layout
-            $layout = XLite_Model_Layout::getInstance();
+            $layout = \XLite\Model\Layout::getInstance();
             $layout->set('skin', $this->templatesSkin);
             $this->templatesSkin = null;
         }
@@ -376,7 +378,7 @@ class XLite_Model_Mailer extends XLite_View_AView
     {
         // replace layout with mailer skinned
         if ($switchLayout) {
-            $layout = XLite_Model_Layout::getInstance();
+            $layout = \XLite\Model\Layout::getInstance();
             $skin = $layout->get('skin');
             $layout->set('skin', self::MAIL_SKIN);
 

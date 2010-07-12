@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\GiftCertificates\Controller\Admin;
+
 /**
  * E-cards
  * 
@@ -33,19 +35,19 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_GiftCertificates_Controller_Admin_GiftCertificateEcards extends XLite_Controller_Admin_AAdmin
+class GiftCertificateEcards extends \XLite\Controller\Admin\AAdmin
 {
     /**
      * Get e-cards 
      * 
-     * @return array of XLite_Module_GiftCertificates_Model_ECard
+     * @return array of \XLite\Module\GiftCertificates\Model\ECard
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
     public function getECards()
     {
-        $ecard = new XLite_Module_GiftCertificates_Model_ECard();
+        $ecard = new \XLite\Module\GiftCertificates\Model\ECard();
 
         return $ecard->findAll();
     }
@@ -61,14 +63,14 @@ class XLite_Module_GiftCertificates_Controller_Admin_GiftCertificateEcards exten
     protected function doActionUpdate()
     {
         if (
-            isset(XLite_Core_Request::getInstance()->pos)
-            && is_array(XLite_Core_Request::getInstance()->pos)
+            isset(\XLite\Core\Request::getInstance()->pos)
+            && is_array(\XLite\Core\Request::getInstance()->pos)
         ) {
 
-            foreach (XLite_Core_Request::getInstance()->pos as $ecardId => $orderBy) {
-                $ec = new XLite_Module_GiftCertificates_Model_ECard($ecardId);
+            foreach (\XLite\Core\Request::getInstance()->pos as $ecardId => $orderBy) {
+                $ec = new \XLite\Module\GiftCertificates\Model\ECard($ecardId);
                 $ec->set('order_by', $orderBy);
-                $ec->set('enabled', isset(XLite_Core_Request::getInstance()->enabled[$ecardId]) ? 1 : 0);
+                $ec->set('enabled', isset(\XLite\Core\Request::getInstance()->enabled[$ecardId]) ? 1 : 0);
                 $ec->update();
             }
         }
@@ -84,7 +86,7 @@ class XLite_Module_GiftCertificates_Controller_Admin_GiftCertificateEcards exten
      */
     protected function doActionDelete()
     {
-        $ec = new XLite_Module_GiftCertificates_Model_ECard(XLite_Core_Request::getInstance()->ecard_id);
+        $ec = new \XLite\Module\GiftCertificates\Model\ECard(\XLite\Core\Request::getInstance()->ecard_id);
         $ec->delete();
     }
 

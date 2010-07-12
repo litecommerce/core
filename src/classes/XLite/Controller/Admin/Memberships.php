@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Controller\Admin;
+
 /**
  * Memberships
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Controller_Admin_Memberships extends XLite_Controller_Admin_AAdmin
+class Memberships extends \XLite\Controller\Admin\AAdmin
 {
     /**
      * Controller parameters 
@@ -55,7 +57,7 @@ class XLite_Controller_Admin_Memberships extends XLite_Controller_Admin_AAdmin
      */
     protected function doActionUpdate() 
     {
-        $data = XLite_Core_Request::getInstance()->update_memberships;
+        $data = \XLite\Core\Request::getInstance()->update_memberships;
 
         if (!is_array($data)) {
 
@@ -65,7 +67,7 @@ class XLite_Controller_Admin_Memberships extends XLite_Controller_Admin_AAdmin
 
             $code = $this->getCurrentLanguage();
             foreach ($data as $id => $row) {
-                $m = XLite_Core_Database::getRepo('XLite_Model_Membership')->find($id);
+                $m = \XLite\Core\Database::getRepo('XLite\Model\Membership')->find($id);
 
                 if (!$m) {
                     // TODO - add top message
@@ -73,7 +75,7 @@ class XLite_Controller_Admin_Memberships extends XLite_Controller_Admin_AAdmin
                 }
 
                 try {
-                    $duplicate = XLite_Core_Database::getRepo('XLite_Model_Membership')->createQueryBuilder()
+                    $duplicate = \XLite\Core\Database::getRepo('XLite\Model\Membership')->createQueryBuilder()
                         ->andWhere('translations.name = :name', 'm.membership_id != :id')
                         ->setParameter('name', $row['membership'])
                         ->setParameter('id', $id)
@@ -91,10 +93,10 @@ class XLite_Controller_Admin_Memberships extends XLite_Controller_Admin_AAdmin
                 $m->orderby = intval($row['orderby']);
                 $m->active = isset($row['active']) && '1' == $row['active'];
 
-                XLite_Core_Database::getEM()->persist($m);
+                \XLite\Core\Database::getEM()->persist($m);
             }
 
-            XLite_Core_Database::getEM()->flush();
+            \XLite\Core\Database::getEM()->flush();
         }
     }
 
@@ -108,19 +110,19 @@ class XLite_Controller_Admin_Memberships extends XLite_Controller_Admin_AAdmin
      */
     protected function doActionDelete() 
     {
-        $ids = XLite_Core_Request::getInstance()->deleted_memberships;
+        $ids = \XLite\Core\Request::getInstance()->deleted_memberships;
 
         if (is_array($ids) && $ids) {
-            list($keys, $data) = XLite_Core_Database::prepareArray($ids, 'id');
-            $list = XLite_Core_Database::getRepo('XLite_Model_Membership')->createQueryBuilder()
+            list($keys, $data) = \XLite\Core\Database::prepareArray($ids, 'id');
+            $list = \XLite\Core\Database::getRepo('XLite\Model\Membership')->createQueryBuilder()
                 ->where('m.membership_id IN (' . implode(', ', $keys). ')')
                 ->setParameters($data)
                 ->getQuery()
                 ->getResult();
             foreach ($list as $m) {
-                XLite_Core_Database::getEM()->remove($m);
+                \XLite\Core\Database::getEM()->remove($m);
             }
-            XLite_Core_Database::getEM()->flush();
+            \XLite\Core\Database::getEM()->flush();
 
             // TODO - remove membership id from profiles
         }
@@ -136,7 +138,7 @@ class XLite_Controller_Admin_Memberships extends XLite_Controller_Admin_AAdmin
      */
     protected function doActionAdd() 
     {
-        $data = XLite_Core_Request::getInstance()->new_membership;
+        $data = \XLite\Core\Request::getInstance()->new_membership;
 
         if (!is_array($data)) {
 
@@ -146,19 +148,19 @@ class XLite_Controller_Admin_Memberships extends XLite_Controller_Admin_AAdmin
 
             // TODO - add top message
 
-        } elseif (XLite_Core_Database::getRepo('XLite_Model_Membership')->findOneByName($data['membership'], false)) {
+        } elseif (\XLite\Core\Database::getRepo('XLite\Model\Membership')->findOneByName($data['membership'], false)) {
 
             // TODO - add top message
 
         } else {
 
             $code = $this->getCurrentLanguage();
-            $membership = new XLite_Model_Membership();
+            $membership = new \XLite\Model\Membership();
             $membership->orderby = $data['orderby'];
             $membership->getTranslation($code)->name = $data['membership'];
 
-            XLite_Core_Database::getEM()->persist($membership);
-            XLite_Core_Database::getEM()->flush();
+            \XLite\Core\Database::getEM()->persist($membership);
+            \XLite\Core\Database::getEM()->flush();
         }
     }
 }

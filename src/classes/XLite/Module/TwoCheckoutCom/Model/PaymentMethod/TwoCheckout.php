@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\TwoCheckoutCom\Model\PaymentMethod;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_TwoCheckoutCom_Model_PaymentMethod_TwoCheckout extends XLite_Model_PaymentMethod_CreditCard
+class TwoCheckout extends \XLite\Model\PaymentMethod\CreditCard
 {
     public $cvverr = array(
             "M" => "Match",
@@ -60,7 +62,7 @@ class XLite_Module_TwoCheckoutCom_Model_PaymentMethod_TwoCheckout extends XLite_
     public $configurationTemplate = "modules/TwoCheckoutCom/config.tpl";
     public $formTemplate ="modules/TwoCheckoutCom/checkout.tpl";
 
-    function handleRequest(XLite_Model_Cart $cart)
+    function handleRequest(\XLite\Model\Cart $cart)
     {
         $params = $this->get('params');
         if ($params['version'] != 2) {

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View\Button;
+
 /**
  * Submit button 
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_Button_Submit extends XLite_View_Button_AButton
+class Submit extends \XLite\View\Button\AButton
 {
     /**
      * Return widget default template

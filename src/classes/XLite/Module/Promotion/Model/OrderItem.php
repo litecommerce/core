@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Promotion\Model;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Promotion_Model_OrderItem extends XLite_Model_OrderItem implements XLite_Base_IDecorator
+class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
 {
     public $_isBonusItem = false;
     public $_createPeerItem = false;
@@ -58,7 +60,7 @@ class XLite_Module_Promotion_Model_OrderItem extends XLite_Model_OrderItem imple
         if (!is_null($this->get('product')) && $this->isComplex('order._bonusPrices')) {
             if ($this->config->Taxes->prices_include_tax && !$this->config->Taxes->discounts_after_taxes && !$calcAllTaxesInside) {
                 // calculate original item price without taxes...
-                $p = new XLite_Model_Product($this->get('product_id'));
+                $p = new \XLite\Model\Product($this->get('product_id'));
                 $p->set('price', 100.00); // use a 100 dollar product
                 $taxed100 = $p->getTaxedPrice(); // tax increment
                 $orig_price = $price * 100 / $taxed100;
@@ -73,7 +75,7 @@ class XLite_Module_Promotion_Model_OrderItem extends XLite_Model_OrderItem imple
                 }
             }
             if ($this->config->Taxes->prices_include_tax && !$this->config->Taxes->discounts_after_taxes && !$calcAllTaxesInside) {
-                $p = new XLite_Model_Product($this->get('product_id'));
+                $p = new \XLite\Model\Product($this->get('product_id'));
                 $p->set('price', $price);
                 $price = $p->getTaxedPrice();
             }
@@ -193,7 +195,7 @@ class XLite_Module_Promotion_Model_OrderItem extends XLite_Model_OrderItem imple
                 return true;
             }
             if ($offer->get('category_id') != 0) {
-                $cat = new XLite_Model_Category($offer->get('category_id'));
+                $cat = new \XLite\Model\Category($offer->get('category_id'));
                 if ($product->inCategory($cat)) {
                     return true;
                 }

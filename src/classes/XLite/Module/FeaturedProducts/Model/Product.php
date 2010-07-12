@@ -26,14 +26,16 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\FeaturedProducts\Model;
+
 /**
- * XLite_Module_FeaturedProducts_Model_Product
+ * \XLite\Module\FeaturedProducts\Model\Product
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_FeaturedProducts_Model_Product extends XLite_Model_Product implements XLite_Base_IDecorator
+class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
 {
     /**
      * Delete featured product
@@ -45,7 +47,7 @@ class XLite_Module_FeaturedProducts_Model_Product extends XLite_Model_Product im
      */
     public function delete()
     {
-        $this->db->query("DELETE FROM " . XLite_Module_FeaturedProducts_Main::FEATURED_PRODUCTS_TABLE . " WHERE product_id='" . $this->get('product_id') . "'");
+        $this->db->query("DELETE FROM " . \XLite\Module\FeaturedProducts\Main::FEATURED_PRODUCTS_TABLE . " WHERE product_id='" . $this->get('product_id') . "'");
         parent::delete();
     }
 
@@ -62,12 +64,12 @@ class XLite_Module_FeaturedProducts_Model_Product extends XLite_Model_Product im
         parent::collectGarbage();
 
         $products_table = $this->db->getTableByAlias('products');
-        $sql = "SELECT f.product_id FROM " . XLite_Module_FeaturedProducts_Main::FEATURED_PRODUCTS_TABLE . " f LEFT OUTER JOIN $products_table p ON f.product_id=p.product_id WHERE p.product_id IS NULL";
+        $sql = "SELECT f.product_id FROM " . \XLite\Module\FeaturedProducts\Main::FEATURED_PRODUCTS_TABLE . " f LEFT OUTER JOIN $products_table p ON f.product_id=p.product_id WHERE p.product_id IS NULL";
         $result = $this->db->getAll($sql);
 
         if (is_array($result) && count($result) > 0) {
             foreach ($result as $info) {
-                $this->db->query("DELETE FROM " . XLite_Module_FeaturedProducts_Main::FEATURED_PRODUCTS_TABLE . " WHERE product_id='" . $info['product_id'] . "'");
+                $this->db->query("DELETE FROM " . \XLite\Module\FeaturedProducts\Main::FEATURED_PRODUCTS_TABLE . " WHERE product_id='" . $info['product_id'] . "'");
             }
         }
     }

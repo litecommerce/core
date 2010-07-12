@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model;
+
 /**
  * HTTPS bouncer
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_HTTPS extends XLite_Base
+class HTTPS extends \XLite\Base
 {
     const HTTPS_ERROR = 1;
     const HTTPS_SUCCESS = 2;
@@ -1124,7 +1126,7 @@ class XLite_Model_HTTPS extends XLite_Base
 /**
  * cURL header callback
  * 
- * @param mixed  $curl   cURL request resource or XLite_Model_HTTPS object
+ * @param mixed  $curl   cURL request resource or \XLite\Model\HTTPS object
  * @param string $header Headers string
  *  
  * @return integer
@@ -1137,7 +1139,7 @@ function saveCURLHeader($curl, $header = '')
 
     $result = 0;
 
-    if ($curl instanceof XLite_Model_HTTPS) {
+    if ($curl instanceof \XLite\Model\HTTPS) {
         $object = $curl;
     }
 

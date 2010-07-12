@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Controller\Admin;
+
 /**
  * Settings
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_AAdmin
+class Settings extends \XLite\Controller\Admin\AAdmin
 {
 
     /**
@@ -83,7 +85,7 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_AAdmin
         $result = array();
 
         foreach ($this->getCaptchaPages() as $idx => $module) {
-            if (empty($module) || XLite_Model_ModulesManager::getInstance()->isActiveModule($module)) {
+            if (empty($module) || \XLite\Model\ModulesManager::getInstance()->isActiveModule($module)) {
                 $result[$idx] = $module;
             }
         }
@@ -153,7 +155,7 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_AAdmin
      */
     public function getOptions()
     {
-        return XLite_Core_Database::getRepo('XLite_Model_Config')
+        return \XLite\Core\Database::getRepo('XLite\Model\Config')
             ->findByCategoryAndVisible($this->page);
     }
     
@@ -169,7 +171,7 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_AAdmin
      */
     public function check_https($https_client)    
     {
-        $https = new XLite_Model_HTTPS();
+        $https = new \XLite\Model\HTTPS();
         $result = false;
 
         switch ($https_client) {
@@ -187,8 +189,8 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_AAdmin
 
             default:
                 $result = $https->detectSoftware()
-                    ? XLite_Model_HTTPS::HTTPS_SUCCESS
-                    : XLite_Model_HTTPS::HTTPS_ERROR;
+                    ? \XLite\Model\HTTPS::HTTPS_SUCCESS
+                    : \XLite\Model\HTTPS::HTTPS_ERROR;
         }
 
         return $result;
@@ -528,7 +530,7 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_AAdmin
      */
     public function getCheckFiles()
     {
-        $htaccess = new XLite_Model_Htaccess();
+        $htaccess = new \XLite\Model\Htaccess();
         return $htaccess->checkEnvironment();
     }
 
@@ -542,11 +544,11 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_AAdmin
      */
     public function action_update_htaccess()
     {
-        $ids = XLite_Core_Request::getInstance()->ind;
+        $ids = \XLite\Core\Request::getInstance()->ind;
 
         if (is_array($ids)) {
             foreach ($ids as $id => $v){
-                $htaccess = new XLite_Model_Htaccess($id);
+                $htaccess = new \XLite\Model\Htaccess($id);
                 $htaccess->reImage();
             }
         }
@@ -562,11 +564,11 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_AAdmin
      */
     public function action_restore_htaccess()
     {
-        $ids = XLite_Core_Request::getInstance()->ind;
+        $ids = \XLite\Core\Request::getInstance()->ind;
 
         if (is_array($ids)) {
            foreach ($ids as $id => $v){
-               $htaccess = new XLite_Model_Htaccess($id);
+               $htaccess = new \XLite\Model\Htaccess($id);
                $htaccess->restoreFile();
            }
         }
@@ -725,13 +727,13 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_AAdmin
             $value = $option->value;
 
             if ('checkbox' == $type) {
-                $newValue = empty(XLite_Core_Request::getInstance()->$name) ? 'N' : 'Y';
+                $newValue = empty(\XLite\Core\Request::getInstance()->$name) ? 'N' : 'Y';
 
-            } elseif ('serialized' == $type && isset(XLite_Core_Request::getInstance()->$name) && is_array(XLite_Core_Request::getInstance()->$name)) {
-                $newValue = serialize(XLite_Core_Request::getInstance()->$name);
+            } elseif ('serialized' == $type && isset(\XLite\Core\Request::getInstance()->$name) && is_array(\XLite\Core\Request::getInstance()->$name)) {
+                $newValue = serialize(\XLite\Core\Request::getInstance()->$name);
 
             } else {
-                $newValue = isset(XLite_Core_Request::getInstance()->$name) ? trim(XLite_Core_Request::getInstance()->$name) : '';
+                $newValue = isset(\XLite\Core\Request::getInstance()->$name) ? trim(\XLite\Core\Request::getInstance()->$name) : '';
             }
 
             if ('captcha_length' == $name) {
@@ -751,7 +753,7 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_AAdmin
         if (!empty($optionsToUpdate)) {
 
             foreach ($optionsToUpdate as $option) {
-                XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+                \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
                     array(
                         'category' => $option->category,
                         'name'     => $option->name,
@@ -773,7 +775,7 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_AAdmin
     public function getWaitingList()
     {
         if (is_null($this->_waiting_list)){
-            $waiting_ip = new XLite_Model_WaitingIP();
+            $waiting_ip = new \XLite\Model\WaitingIP();
             $this->_waiting_list = (array) $waiting_ip->findAll("", "first_date");
         }
 
@@ -803,7 +805,7 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_AAdmin
      */
     public function isCurrentIpValid()
     {
-        return $this->auth->isValidAdminIP($this, true) == XLite_Model_Auth::IP_VALID;
+        return $this->auth->isValidAdminIP($this, true) == \XLite\Model\Auth::IP_VALID;
     }
 
     /**
@@ -818,7 +820,7 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_AAdmin
     {
         $ids = (array) $this->get('waiting_ips');
         foreach ($ids as $id){
-            $waiting_ip = new XLite_Model_WaitingIP($id);
+            $waiting_ip = new \XLite\Model\WaitingIP($id);
             $waiting_ip->approveIP();
             $waiting_ip->delete();
         }
@@ -837,7 +839,7 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_AAdmin
     {
         $ids = (array) $this->get('waiting_ips');
         foreach ($ids as $id){
-            $waiting_ip = new XLite_Model_WaitingIP($id);
+            $waiting_ip = new \XLite\Model\WaitingIP($id);
             $waiting_ip->delete();
         }
     }
@@ -854,7 +856,7 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_AAdmin
     {
         if ($fromDB) {
 
-            $ipsListOption = XLite_Core_Database::getRepo('XLite_Model_Config')->findOneBy(array('category' => 'SecurityIP', 'name' => 'allow_admin_ip'));
+            $ipsListOption = \XLite\Core\Database::getRepo('XLite\Model\Config')->findOneBy(array('category' => 'SecurityIP', 'name' => 'allow_admin_ip'));
 
              if (!is_null($ipsListOption)) {
                  $ipsList = unserialize($ipsListOption->value);
@@ -879,12 +881,12 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_AAdmin
      */
     public function action_add_new_ip()
     {
-        $ip = XLite_Core_Request::getInstance()->byte_1 . '.' .
-              XLite_Core_Request::getInstance()->byte_2 . '.' .
-              XLite_Core_Request::getInstance()->byte_3 . '.' .
-              XLite_Core_Request::getInstance()->byte_4;
+        $ip = \XLite\Core\Request::getInstance()->byte_1 . '.' .
+              \XLite\Core\Request::getInstance()->byte_2 . '.' .
+              \XLite\Core\Request::getInstance()->byte_3 . '.' .
+              \XLite\Core\Request::getInstance()->byte_4;
 
-        $comment = XLite_Core_Request::getInstance()->comment;
+        $comment = \XLite\Core\Request::getInstance()->comment;
 
         $ipsList = $this->getAllowedList(true);
 
@@ -899,7 +901,7 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_AAdmin
 
         if (!$ipIsAlreadyListed) {
             $ipsList[] = array('ip' => $ip, 'comment' => $comment);
-            XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+            \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
                 array(
                     'category' => 'SecurityIP',
                     'name'     => 'allow_admin_ip',
@@ -924,7 +926,7 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_AAdmin
      */
     public function action_delete_allowed_ip()
     {
-        $ids = XLite_Core_Request::getInstance()->allowed_ips;
+        $ids = \XLite\Core\Request::getInstance()->allowed_ips;
 
         if (is_array($ids) && !empty($ids)) {
 
@@ -943,7 +945,7 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_AAdmin
                 $newList[] = array('ip' => $adminIp, 'comment' => 'Default admin IP');
             }
 
-            XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+            \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
                 array(
                     'category' => 'SecurityIP',
                     'name'     => 'allow_admin_ip',
@@ -964,7 +966,7 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_AAdmin
      */
     public function action_update_allowed_ip()
     {
-        $commentsList = XLite_Core_Request::getInstance()->comment;
+        $commentsList = \XLite\Core\Request::getInstance()->comment;
 
         if (!empty($commentsList) && is_array($commentsList)) {
 
@@ -980,7 +982,7 @@ class XLite_Controller_Admin_Settings extends XLite_Controller_Admin_AAdmin
             }
 
             if ($needUpdate) {
-                XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+                \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
                     array(
                         'category' => 'SecurityIP',
                         'name'     => 'allow_admin_ip',

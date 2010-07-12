@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model;
+
 define('SESSION_DEFAULT_ID', md5(uniqid(rand(), true)));
 
 /**
@@ -35,7 +37,7 @@ define('SESSION_DEFAULT_ID', md5(uniqid(rand(), true)));
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class XLite_Model_Session extends XLite_Base implements XLite_Base_ISingleton
+abstract class Session extends \XLite\Base implements \XLite\Base\ISingleton
 {
     /**
      * Currently used form ID 
@@ -49,7 +51,7 @@ abstract class XLite_Model_Session extends XLite_Base implements XLite_Base_ISin
     /**
      * Language (cache)
      * 
-     * @var    XLite_Model_Language
+     * @var    \XLite\Model\Language
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
@@ -66,7 +68,7 @@ abstract class XLite_Model_Session extends XLite_Base implements XLite_Base_ISin
      */
     protected function generateXliteFormID()
     {
-        $form = new XLite_Model_XliteForm();
+        $form = new \XLite\Model\XliteForm();
 
         $formId = md5(uniqid(rand(0,time())));
         $sessId = $this->getID();
@@ -92,13 +94,13 @@ abstract class XLite_Model_Session extends XLite_Base implements XLite_Base_ISin
     {
         parent::__construct();
 
-        $this->options = array_merge($this->options, XLite::getInstance()->getOptions('host_details'));
+        $this->options = array_merge($this->options, \XLite::getInstance()->getOptions('host_details'));
     }
 
     /**
      * Get language
      * 
-     * @return XLite_Model_Language
+     * @return \XLite\Model\Language
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -106,7 +108,7 @@ abstract class XLite_Model_Session extends XLite_Base implements XLite_Base_ISin
     public function getLanguage()
     {
         if (is_null($this->language)) {
-            $this->language = XLite_Core_Database::getRepo('XLite_Model_Language')
+            $this->language = \XLite\Core\Database::getRepo('XLite\Model\Language')
                 ->findOneByCode($this->getCurrentLanguage());
         }
 
@@ -126,7 +128,7 @@ abstract class XLite_Model_Session extends XLite_Base implements XLite_Base_ISin
     public function setLanguage($language)
     {
         $code = $this->get('language');
-        $zone = XLite::isAdminZone() ? 'admin' : 'customer';
+        $zone = \XLite::isAdminZone() ? 'admin' : 'customer';
 
         if (!is_array($code)) {
             $code = array();
@@ -150,7 +152,7 @@ abstract class XLite_Model_Session extends XLite_Base implements XLite_Base_ISin
     protected function getCurrentLanguage()
     {
         $code = $this->get('language');
-        $zone = XLite::isAdminZone() ? 'admin' : 'customer';
+        $zone = \XLite::isAdminZone() ? 'admin' : 'customer';
 
         if (!is_array($code)) {
             $code = array();
@@ -176,8 +178,8 @@ abstract class XLite_Model_Session extends XLite_Base implements XLite_Base_ISin
     {
         $languages = array();
 
-        if (XLite_Model_Auth::getInstance()->isLogged()) {
-            $languages[] = XLite_Model_Auth::getInstance()->getProfile()->get('language');
+        if (\XLite\Model\Auth::getInstance()->isLogged()) {
+            $languages[] = \XLite\Model\Auth::getInstance()->getProfile()->get('language');
         }
 
         if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
@@ -185,13 +187,13 @@ abstract class XLite_Model_Session extends XLite_Base implements XLite_Base_ISin
             $languages = array_merge($languages, preg_replace('/^([a-z]{2}).+$/Ss', '$1', $tmp));
         }
 
-        $languages[] = XLite_Core_Config::getInstance()->General->defaultLanguage->code;
+        $languages[] = \XLite\Core\Config::getInstance()->General->defaultLanguage->code;
 
         // Process query
         $idx = 999999;
         $found = false;
         $first = false;
-        foreach (XLite_Core_Database::getRepo('XLite_Model_Language')->findActiveLanguages() as $lng) {
+        foreach (\XLite\Core\Database::getRepo('XLite\Model\Language')->findActiveLanguages() as $lng) {
             if (!$first) {
                 $first = $lng->code;
             }
@@ -229,14 +231,14 @@ abstract class XLite_Model_Session extends XLite_Base implements XLite_Base_ISin
     /**
      * Method to access a singleton
      *
-     * @return XLite_Base
+     * @return \XLite\Base
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
     public static function getInstance()
     {
-        $className = 'XLite_Model_Session_' . LC_SESSION_TYPE;
+        $className = '\XLite\Model\Session\\' . LC_SESSION_TYPE;
 
         if (!isset(self::$instances[$className])) {
             self::$instances[$className] = new $className();
@@ -257,7 +259,7 @@ abstract class XLite_Model_Session extends XLite_Base implements XLite_Base_ISin
      */
     public function get($name)
     {
-        $this->doDie('XLite_Model_Session::get(): Trying to call the abstract method');
+        $this->doDie('\XLite\Model\Session::get(): Trying to call the abstract method');
     }
 
     /**
@@ -273,7 +275,7 @@ abstract class XLite_Model_Session extends XLite_Base implements XLite_Base_ISin
      */
     public function set($name, $value)
     {
-        $this->doDie('XLite_Model_Session::set(): Trying to call the abstract method');
+        $this->doDie('\XLite\Model\Session::set(): Trying to call the abstract method');
     }
 
     /**
@@ -297,9 +299,9 @@ abstract class XLite_Model_Session extends XLite_Base implements XLite_Base_ISin
      */
     public function restart()
     {
-        if (XLite_Core_Request::getInstance()->__get(self::SESSION_DEFAULT_NAME)) {
+        if (\XLite\Core\Request::getInstance()->__get(self::SESSION_DEFAULT_NAME)) {
 
-            XLite_Core_Request::getInstance()->__set(self::SESSION_DEFAULT_NAME, null);
+            \XLite\Core\Request::getInstance()->__set(self::SESSION_DEFAULT_NAME, null);
             $this->set('_' . self::SESSION_DEFAULT_NAME, self::SESSION_DEFAULT_NAME . '=' . $this->getID());
 
             $this->destroy();
@@ -436,7 +438,7 @@ abstract class XLite_Model_Session extends XLite_Base implements XLite_Base_ISin
      */
     protected function getPath()
     {
-        return XLite::getInstance()->getOptions(array('host_details', 'web_dir'));
+        return \XLite::getInstance()->getOptions(array('host_details', 'web_dir'));
     }
 
     function setTtl($ttl = self::SESSION_DEFAULT_TTL)

@@ -31,13 +31,13 @@
     <td>
 		<table cellpadding="0" cellspacing="0" border="0">
 		<tr>
-		    <td><widget class="XLite_View_Button_Submit" label="Log in" /></td>
+		    <td><widget class="\XLite\View\Button\Submit" label="Log in" /></td>
 		</tr>
 		<tr>
 			<td><IMG src="images/spacer.gif" width="1" height="5" alt=""></td>
 		</tr>
 		<tr>
-			<td><widget class="XLite_View_Button_Link" location="cart.php?target=profile&mode=register" label="Register" /></td>
+			<td><widget class="\XLite\View\Button\Link" location="cart.php?target=profile&mode=register" label="Register" /></td>
 		</tr>
 		</table>
     </td>

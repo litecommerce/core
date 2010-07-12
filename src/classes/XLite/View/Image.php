@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View;
+
 /**
  * Image
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_Image extends XLite_View_AView
+class Image extends \XLite\View\AView
 {
     /**
      * Widget arguments names 
@@ -111,13 +113,13 @@ class XLite_View_Image extends XLite_View_AView
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_IMAGE             => new XLite_Model_WidgetParam_Object('Image', null, false, 'XLite_Model_Image'),
-            self::PARAM_ALT               => new XLite_Model_WidgetParam_String('Alt. text', '', false),
-            self::PARAM_MAX_WIDTH         => new XLite_Model_WidgetParam_Int('Max. width', 0),
-            self::PARAM_MAX_HEIGHT        => new XLite_Model_WidgetParam_Int('Max. height', 0),
-            self::PARAM_CENTER_IMAGE      => new XLite_Model_WidgetParam_Checkbox('Center the image after resizing', true),
-            self::PARAM_USE_CACHE         => new XLite_Model_WidgetParam_Bool('Use cache', 1),
-            self::PARAM_USE_DEFAULT_IMAGE => new XLite_Model_WidgetParam_Bool('Use default image', 1),
+            self::PARAM_IMAGE             => new \XLite\Model\WidgetParam\Object('Image', null, false, '\XLite\Model\Image'),
+            self::PARAM_ALT               => new \XLite\Model\WidgetParam\String('Alt. text', '', false),
+            self::PARAM_MAX_WIDTH         => new \XLite\Model\WidgetParam\Int('Max. width', 0),
+            self::PARAM_MAX_HEIGHT        => new \XLite\Model\WidgetParam\Int('Max. height', 0),
+            self::PARAM_CENTER_IMAGE      => new \XLite\Model\WidgetParam\Checkbox('Center the image after resizing', true),
+            self::PARAM_USE_CACHE         => new \XLite\Model\WidgetParam\Bool('Use cache', 1),
+            self::PARAM_USE_DEFAULT_IMAGE => new \XLite\Model\WidgetParam\Bool('Use default image', 1),
         );
     }
 
@@ -144,7 +146,7 @@ class XLite_View_Image extends XLite_View_AView
     protected function checkDefaultImage()
     {
         return $this->getParam(self::PARAM_USE_DEFAULT_IMAGE) 
-            && XLite::getInstance()->getOptions(array('images', 'default_image'));
+            && \XLite::getInstance()->getOptions(array('images', 'default_image'));
     }
 
     /**
@@ -220,11 +222,11 @@ class XLite_View_Image extends XLite_View_AView
 
             // Defualt image
 
-            $url = XLite::getInstance()->getOptions(array('images', 'default_image'));
+            $url = \XLite::getInstance()->getOptions(array('images', 'default_image'));
 
-            if (!XLite_Core_Converter::isURL($url)) {
-                $url = XLite::getInstance()->getShopUrl(
-                    XLite_Model_Layout::getInstance()->getSkinURL($url)
+            if (!\XLite\Core\Converter::isURL($url)) {
+                $url = \XLite::getInstance()->getShopUrl(
+                    \XLite\Model\Layout::getInstance()->getSkinURL($url)
                 );
             }
         }
@@ -341,9 +343,9 @@ class XLite_View_Image extends XLite_View_AView
      */
     protected function processDefaultImage()
     {
-        list($this->properties['width'], $this->properties['height']) = XLite_Core_Converter::getCroppedDimensions(
-            XLite::getInstance()->getOptions(array('images', 'default_image_width')),
-            XLite::getInstance()->getOptions(array('images', 'default_image_height')),
+        list($this->properties['width'], $this->properties['height']) = \XLite\Core\Converter::getCroppedDimensions(
+            \XLite::getInstance()->getOptions(array('images', 'default_image_width')),
+            \XLite::getInstance()->getOptions(array('images', 'default_image_height')),
             max(0, $this->getParam(self::PARAM_MAX_WIDTH)),
             max(0, $this->getParam(self::PARAM_MAX_HEIGHT))
         );

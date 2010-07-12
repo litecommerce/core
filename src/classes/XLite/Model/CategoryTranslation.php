@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model;
+
 /**
  * Category multilingual data
  * 
@@ -35,7 +37,7 @@
  * @Entity
  * @Table (name="category_translations")
  */
-class XLite_Model_CategoryTranslation extends XLite_Model_Base_Translation
+class CategoryTranslation extends \XLite\Model\Base\Translation
 {
     /**
      * Category name

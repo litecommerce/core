@@ -88,13 +88,13 @@ Complete the required fields below and press the "Update" button.<hr>
 <tr>
 	<td align="right">Success order status:</td>
 	<td>&nbsp;</td>
-	<td><widget class="XLite_View_StatusSelect" field="params[status_success]" value="{pm.orderSuccessStatus}"></td>
+	<td><widget class="\XLite\View\StatusSelect" field="params[status_success]" value="{pm.orderSuccessStatus}"></td>
 </tr>
 
 <tr>
 	<td align="right">Failed order status:</td>
 	<td>&nbsp;</td>
-	<td><widget class="XLite_View_StatusSelect" field="params[status_fail]" value="{pm.orderFailStatus}"></td>
+	<td><widget class="\XLite\View\StatusSelect" field="params[status_fail]" value="{pm.orderFailStatus}"></td>
 </tr>
 
 <tr>

@@ -21,7 +21,7 @@
 <widget target="banners" template="common/dialog.tpl" head="Banners" body="modules/Affiliate/banners.tpl">
 <widget target="banner" mode="add" template="common/dialog.tpl" head="Add {type} banner" body="modules/Affiliate/banner.tpl">
 <widget target="banner" mode="modify" template="common/dialog.tpl" head="{banner.name:h}" body="modules/Affiliate/banner.tpl">
-<widget target="banner_stats" class="XLite_View_Tabber" body="{pageTemplate}" switch="target">
-<widget target="sales_stats" class="XLite_View_Tabber" body="{pageTemplate}" switch="target">
-<widget target="top_performers" class="XLite_View_Tabber" body="{pageTemplate}" switch="target">
-<widget target="partners_tree" class="XLite_View_Tabber" body="{pageTemplate}" switch="target">
+<widget target="banner_stats" class="\XLite\View\Tabber" body="{pageTemplate}" switch="target">
+<widget target="sales_stats" class="\XLite\View\Tabber" body="{pageTemplate}" switch="target">
+<widget target="top_performers" class="\XLite\View\Tabber" body="{pageTemplate}" switch="target">
+<widget target="partners_tree" class="\XLite\View\Tabber" body="{pageTemplate}" switch="target">

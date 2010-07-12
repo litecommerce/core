@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Egoods\Model;
+
 /**
  * ____description____
  * 
@@ -33,16 +35,16 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Egoods_Model_PurchaseLimit extends XLite_Module_WholesaleTrading_Model_PurchaseLimit implements XLite_Base_IDecorator
+class PurchaseLimit extends \XLite\Module\WholesaleTrading\Model\PurchaseLimit implements \XLite\Base\IDecorator
 {
     function get($property) {
         $value = parent::get($property);
 
         if ($property == "max") {
-            $product = new XLite_Model_Product($this->get('product_id'));
+            $product = new \XLite\Model\Product($this->get('product_id'));
             if ($product->is('egood')) {
                 if ($product->is('pin')) {
-                    $pin = new XLite_Module_Egoods_Model_PinCode();
+                    $pin = new \XLite\Module\Egoods\Model\PinCode();
                     $freePinCounts = $pin->getFreePinCount($this->get('product_id'));
     			    if ($value > $freePinCounts) {
                         $value = $freePinCounts;

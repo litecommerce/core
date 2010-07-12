@@ -11,4 +11,4 @@
  * @since     3.0.0
  * @ListChild (list="giftcert.buttons", weight="10")
  *}
-<widget IF="!isGCAdded()" class="XLite_View_Button_Submit" label="Add certificate to cart" />
+<widget IF="!isGCAdded()" class="\XLite\View\Button\Submit" label="Add certificate to cart" />

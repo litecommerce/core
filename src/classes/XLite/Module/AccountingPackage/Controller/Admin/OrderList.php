@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\AccountingPackage\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_AccountingPackage_Controller_Admin_OrderList extends XLite_Controller_Admin_OrderList implements XLite_Base_IDecorator
+class OrderList extends \XLite\Controller\Admin\OrderList implements \XLite\Base\IDecorator
 {
     public $delimiter  = "\t";
     public $crlf       = "\r\n";
@@ -65,7 +67,7 @@ class XLite_Module_AccountingPackage_Controller_Admin_OrderList extends XLite_Co
         foreach (func_get_args() as $name) {
             if (isset($this->$name)) {
                 $value = $this->$name;
-                XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+                \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
                     array(
                         'category' => 'ImportExport',
                         'name'     => $name,

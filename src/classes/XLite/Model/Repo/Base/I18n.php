@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model\Repo\Base;
+
 /**
  * Translations-owner abstract reporitory
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class XLite_Model_Repo_Base_I18n extends XLite_Model_Repo_ARepo
+abstract class I18n extends \XLite\Model\Repo\ARepo
 {
 	/**
 	 * Add language subquery with language code relation
@@ -54,7 +56,7 @@ abstract class XLite_Model_Repo_Base_I18n extends XLite_Model_Repo_ARepo
         }
 
 		if (is_null($code)) {
-			$code = XLite_Model_Session::getInstance()->getLanguage()->code;
+			$code = \XLite\Model\Session::getInstance()->getLanguage()->code;
 		}
 
 		$qb->add('select', 'translations', true);

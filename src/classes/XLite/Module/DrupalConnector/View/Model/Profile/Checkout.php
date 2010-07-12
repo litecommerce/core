@@ -26,15 +26,17 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\DrupalConnector\View\Model\Profile;
+
 /**
- * XLite_Module_DrupalConnector_View_Model_Profile_Checkout
+ * \XLite\Module\DrupalConnector\View\Model\Profile\Checkout
  *
  * @package    XLite
  * @subpackage ____sub_package____
  * @see        ____class_see____
  * @since      3.0.0
  */
-class XLite_Module_DrupalConnector_View_Model_Profile_Checkout extends XLite_View_Model_Profile_Checkout implements XLite_Base_IDecorator
+class Checkout extends \XLite\View\Model\Profile\Checkout implements \XLite\Base\IDecorator
 {
 	/**
      * Comment for the "Username" field
@@ -61,7 +63,7 @@ class XLite_Module_DrupalConnector_View_Model_Profile_Checkout extends XLite_Vie
     {
         return array(
             'username' => array(
-                self::SCHEMA_CLASS    => 'XLite_View_FormField_Input_Text',
+                self::SCHEMA_CLASS    => '\XLite\View\FormField\Input\Text',
                 self::SCHEMA_LABEL    => 'Username',
                 self::SCHEMA_REQUIRED => false,
                 self::SCHEMA_COMMENT  => $this->getUsernameFieldComment(),
@@ -79,7 +81,7 @@ class XLite_Module_DrupalConnector_View_Model_Profile_Checkout extends XLite_Vie
      */
     protected function addUsernameField()
     {
-        if (!user_is_logged_in() && !XLite_Model_Auth::getInstance()->isLogged()) {
+        if (!user_is_logged_in() && !\XLite\Model\Auth::getInstance()->isLogged()) {
             $this->mainSchema = $this->getUsernameField() + $this->mainSchema;
         }
     }
@@ -110,10 +112,10 @@ class XLite_Module_DrupalConnector_View_Model_Profile_Checkout extends XLite_Vie
 	 */
 	protected function isDrupalRegistrationNeeded()
     {
-        return XLite_Module_DrupalConnector_Handler::getInstance()->checkCurrentCMS()
+        return \XLite\Module\DrupalConnector\Handler::getInstance()->checkCurrentCMS()
             && !$this->isAnonymousUser()
             && !user_is_logged_in()
-            && !XLite_Model_Auth::getInstance()->isLogged();
+            && !\XLite\Model\Auth::getInstance()->isLogged();
     }
 
     /**
@@ -125,7 +127,7 @@ class XLite_Module_DrupalConnector_View_Model_Profile_Checkout extends XLite_Vie
      */
     protected function isEmailChangeNeeded()
     {
-        return XLite_Module_DrupalConnector_Handler::getInstance()->checkCurrentCMS()
+        return \XLite\Module\DrupalConnector\Handler::getInstance()->checkCurrentCMS()
             && $this->isPassedEmailDifferent()
             && user_is_logged_in();
     }
@@ -189,7 +191,7 @@ class XLite_Module_DrupalConnector_View_Model_Profile_Checkout extends XLite_Vie
     protected function startDrupalProfileModifications()
     {
         // Suppress hooks
-        XLite_Module_DrupalConnector_Handler::getInstance()->disableHooks();
+        \XLite\Module\DrupalConnector\Handler::getInstance()->disableHooks();
     }
 
 	/**
@@ -263,7 +265,7 @@ class XLite_Module_DrupalConnector_View_Model_Profile_Checkout extends XLite_Vie
     {
         $result = parent::isAnonymousUser();
 
-        if (XLite_Module_DrupalConnector_Handler::getInstance()->checkCurrentCMS()) {
+        if (\XLite\Module\DrupalConnector\Handler::getInstance()->checkCurrentCMS()) {
             // Do not register Drupal account if the "Username" field is not filled
             $result = $result && ('' == $this->getRequestData('username'));
         }
@@ -320,7 +322,7 @@ class XLite_Module_DrupalConnector_View_Model_Profile_Checkout extends XLite_Vie
     {
         parent::__construct($params, $sections);
 
-        if (XLite_Module_DrupalConnector_Handler::getInstance()->checkCurrentCMS()) {
+        if (\XLite\Module\DrupalConnector\Handler::getInstance()->checkCurrentCMS()) {
             $this->prepareMainSchema();
             $this->formFieldNames[] = $this->composeFieldName('password');
         }

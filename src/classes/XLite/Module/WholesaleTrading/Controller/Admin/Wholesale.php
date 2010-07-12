@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\WholesaleTrading\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,13 +35,13 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_WholesaleTrading_Controller_Admin_Wholesale extends XLite_Controller_Admin_AAdmin
+class Wholesale extends \XLite\Controller\Admin\AAdmin
 {
     public $params = array('target');
     
     public function action_options() 
     {
-        $options = XLite_Core_Database::getRepo('XLite_Model_Config')->getByCategory('WholesaleTrading', true, true);
+        $options = \XLite\Core\Database::getRepo('XLite\Model\Config')->getByCategory('WholesaleTrading', true, true);
 
         for ($i = 0; $i < count($options); $i++) {
 
@@ -72,7 +74,7 @@ class XLite_Module_WholesaleTrading_Controller_Admin_Wholesale extends XLite_Con
                 }
             }
 
-            XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+            \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
                 array(
                     'category' => 'WholesaleTrading',
                     'name'     => $name,

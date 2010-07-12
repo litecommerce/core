@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\GreetVisitor\Controller\Customer;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_GreetVisitor_Controller_Customer_Main extends XLite_Controller_Customer_Main implements XLite_Base_IDecorator
+class Main extends \XLite\Controller\Customer\Main implements \XLite\Base\IDecorator
 {
     function isGreetVisitor()
     {
@@ -49,8 +51,8 @@ class XLite_Module_GreetVisitor_Controller_Customer_Main extends XLite_Controlle
     {
         parent::startPage();
 
-        $options = XLite::getInstance()->getOptions('host_details');
-        $auth    = XLite_Model_Auth::getInstance();
+        $options = \XLite::getInstance()->getOptions('host_details');
+        $auth    = \XLite\Model\Auth::getInstance();
 
         if ($auth->isLogged()) {
             $first_last = $auth->getComplex('profile.billing_firstname') . ' ' . $auth->getComplex('profile.billing_lastname');
@@ -61,7 +63,7 @@ class XLite_Module_GreetVisitor_Controller_Customer_Main extends XLite_Controlle
     
     function action_nogreeting()
     {
-        $options = XLite::getInstance()->getOptions('host_details');
+        $options = \XLite::getInstance()->getOptions('host_details');
 
         setcookie('GreetingCookie', "", time() - 3600 * 24 * 180, "/", func_parse_host($options['http_host']));
         setcookie('GreetingCookie', "", time() - 3600 * 24 * 180, "/", func_parse_host($options['https_host']));

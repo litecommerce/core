@@ -20,7 +20,7 @@ function aom_order_clone($_this, $clone)
             $cloneSpecialOffer->set('order_id',$clone->get('order_id'));
             $cloneSpecialOffer->update();
         }
-        $cart = new XLite_Model_Cart($clone->get('order_id'));
+        $cart = new \XLite\Model\Cart($clone->get('order_id'));
         $cart->set('DC', $_this->getComplex('orderDC.peer'));
     }
 
@@ -67,14 +67,14 @@ function aom_get_clone_order($_this)
         if (is_null($aom_orders[$_this->get('order_id')])) {
             $found = false;
         } else {
-            $order = new XLite_Model_Order();
+            $order = new \XLite\Model\Order();
             $order->_range = "status = 'T'";
             $found = $order->find("order_id = ". $aom_orders[$_this->get('order_id')]);
         }
         if ($found) {
-            $_this->clone_order = new XLite_Model_Order($aom_orders[$_this->get('order_id')]);
+            $_this->clone_order = new \XLite\Model\Order($aom_orders[$_this->get('order_id')]);
         } else {
-            $order = new XLite_Model_Order($_this->get('order_id'));
+            $order = new \XLite\Model\Order($_this->get('order_id'));
             if ( function_exists('func_is_clone_deprecated') && func_is_clone_deprecated() ) {
                 $_this->clone_order = $order->cloneObject();
             } else {
@@ -94,10 +94,10 @@ function aom_get_clone_order($_this)
 function aom_get_profile($_this)
 {
     if (is_null($_this->profile)) {
-        $order = new XLite_Model_Order($_this->get('order_id'));
+        $order = new \XLite\Model\Order($_this->get('order_id'));
         $_this->profile = $order->get('profile');
         if (is_null($_this->profile)) {
-            $_this->profile = new XLite_Model_Profile();
+            $_this->profile = new \XLite\Model\Profile();
             $_this->profile->set('order_id', $_this->get('order_id'));
             $_this->profile->create();
             $order->set('profile_id', $_this->profile->get('profile_id'));
@@ -111,13 +111,13 @@ function aom_split_order($_this)
 {
     if ($_this->get('split_items')) {
         $order = $_this->get('order');
-        $splitOrder = new XLite_Model_Order();
+        $splitOrder = new \XLite\Model\Order();
         $splitOrder->set('date',time());
         $splitOrder->create();
         foreach ($order->get('items') as $item) {
             if (in_array($item->get('uniqueKey'),$_this->get('split_items'))) {
                 $prop = $item->get('properties');
-                $newItem = new XLite_Model_OrderItem();
+                $newItem = new \XLite\Model\OrderItem();
                 $newItem->set('properties', $prop);
 
                 $splitOrder->addItem($newItem);
@@ -137,7 +137,7 @@ function aom_split_order($_this)
         $splitOrder->update();
         $_this->updateOrderAsCart($splitOrder);
         $_this->clone_order->delete();
-        $orderHistory = new XLite_Module_AOM_Model_OrderHistory();
+        $orderHistory = new \XLite\Module\AOM\Model\OrderHistory();
         $orderHistory->log($order, $splitOrder, null, "split_order");
         $orderHistory->log($splitOrder, $order, null, "split_order");
         $_this->set('returnUrl',"admin.php?target=order&page=order_edit&mode=products&order_id=".$splitOrder->get('order_id'));

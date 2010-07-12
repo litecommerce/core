@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Affiliate\Controller\Customer;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Affiliate_Controller_Customer_PartnerLogin extends XLite_Controller_Customer_Login
+class PartnerLogin extends \XLite\Controller\Customer\Login
 {
     public $template = "modules/Affiliate/login.tpl";
     public $partnerZoneUrl = "cart.php?target=partner";

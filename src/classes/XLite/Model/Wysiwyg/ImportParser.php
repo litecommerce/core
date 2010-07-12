@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model\Wysiwyg;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_Wysiwyg_ImportParser extends XLite_Core_FlexyCompiler
+class ImportParser extends \XLite\Core\FlexyCompiler
 {
     public $imagesDir = null;
     public $template = null;
@@ -105,7 +107,7 @@ class XLite_Model_Wysiwyg_ImportParser extends XLite_Core_FlexyCompiler
 
     function translateTemplate($src)
     {
-        $lay = XLite_Model_Layout::getInstance();
+        $lay = \XLite\Model\Layout::getInstance();
         return str_replace(array('<!--*', '*-->', 'style.css'), array('{*', '*}', 'skins/' . $lay->get('skin') . '/' . $lay->get('locale') . '/style.css'), $src);
     }
 

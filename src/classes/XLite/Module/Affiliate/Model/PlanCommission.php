@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Affiliate\Model;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Affiliate_Model_PlanCommission extends XLite_Model_AModel
+class PlanCommission extends \XLite\Model\AModel
 {
     public $fields = array(
             "plan_id" => 0,
@@ -48,17 +50,17 @@ class XLite_Module_Affiliate_Model_PlanCommission extends XLite_Model_AModel
 
     function getProduct()
     {
-        return new XLite_Model_Product($this->get('item_id'));
+        return new \XLite\Model\Product($this->get('item_id'));
     }
 
     function getCategory()
     {
-        return new XLite_Model_Category($this->get('item_id'));
+        return new \XLite\Model\Category($this->get('item_id'));
     }
 
     function getBasicCommission()
     {
-        $bc = new XLite_Module_Affiliate_Model_PlanCommission();
+        $bc = new \XLite\Module\Affiliate\Model\PlanCommission();
         if ($bc->find("plan_id=".$this->getComplex('order.partner.plan')." AND item_id=0 AND item_type='B'")) {
             return $bc;
         }
@@ -66,7 +68,7 @@ class XLite_Module_Affiliate_Model_PlanCommission extends XLite_Model_AModel
     }
     function getProductCommission($product_id)
     {
-        $pc = new XLite_Module_Affiliate_Model_PlanCommission();
+        $pc = new \XLite\Module\Affiliate\Model\PlanCommission();
         if ($pc->find("plan_id=".$this->getComplex('order.partner.plan')." AND item_id=$product_id AND item_type='P'")) {
             return $pc;
         }
@@ -74,7 +76,7 @@ class XLite_Module_Affiliate_Model_PlanCommission extends XLite_Model_AModel
     }
     function getCategoryCommission($category_id)
     {
-        $cc = new XLite_Module_Affiliate_Model_PlanCommission();
+        $cc = new \XLite\Module\Affiliate\Model\PlanCommission();
         if ($cc->find("plan_id=".$this->getComplex('order.partner.plan')." AND item_id=$category_id AND item_type='C'")) {
             return $cc;
         }
@@ -91,7 +93,7 @@ class XLite_Module_Affiliate_Model_PlanCommission extends XLite_Model_AModel
     {
         $this->order = $order;
         $commissions = 0;
-        $ap = new XLite_Module_Affiliate_Model_AffiliatePlan($order->getComplex('partner.plan'));
+        $ap = new \XLite\Module\Affiliate\Model\AffiliatePlan($order->getComplex('partner.plan'));
         if ($ap->is('enabled')) {
             $commissions = $this->get('orderCommissions');
         }

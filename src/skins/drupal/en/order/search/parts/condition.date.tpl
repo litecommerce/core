@@ -14,9 +14,9 @@
 <tr>
   <td>Date (range):</td>
   <td>
-    <widget class="XLite_View_DatePicker" field="startDate" value="{getCondition(#startDate#)}" />
+    <widget class="\XLite\View\DatePicker" field="startDate" value="{getCondition(#startDate#)}" />
     &ndash;
-    <widget class="XLite_View_DatePicker" field="endDate" value="{getCondition(#endDate#)}" />
+    <widget class="\XLite\View\DatePicker" field="endDate" value="{getCondition(#endDate#)}" />
   </td>
-  <td class="button-cell"><widget class="XLite_View_Button_Submit" label="Search orders" /></td>
+  <td class="button-cell"><widget class="\XLite\View\Button\Submit" label="Search orders" /></td>
 </tr>

@@ -215,17 +215,17 @@ Visit <a href="http://code.google.com/apis/checkout/"><u>this page</u></a> to le
 <tr>
 	<td nowrap align="right">'CHARGEABLE' order status:</td>
     <td>&nbsp;</td>
-	<td><widget class="XLite_View_StatusSelect" field="params[status_chargeable]" value="{pm.chargeableStatus}"></td>
+	<td><widget class="\XLite\View\StatusSelect" field="params[status_chargeable]" value="{pm.chargeableStatus}"></td>
 </tr>
 <tr>
 	<td nowrap align="right">'CHARGED' order status:</td>
     <td>&nbsp;</td>
-	<td><widget class="XLite_View_StatusSelect" field="params[status_charged]" value="{pm.chargedStatus}"></td>
+	<td><widget class="\XLite\View\StatusSelect" field="params[status_charged]" value="{pm.chargedStatus}"></td>
 </tr>
 <tr>
 	<td nowrap align="right">Declined/Canceled/Failed order status:</td>
     <td>&nbsp;</td>
-	<td><widget class="XLite_View_StatusSelect" field="params[status_failed]" value="{pm.failedStatus}"></td>
+	<td><widget class="\XLite\View\StatusSelect" field="params[status_failed]" value="{pm.failedStatus}"></td>
 </tr>
 
 <tr>

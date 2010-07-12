@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Affiliate\Controller;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Affiliate_Controller_Partner extends XLite_Controller_AController
+class Partner extends \XLite\Controller\AController
 {
     public $template = "modules/Affiliate/main.tpl";
 
@@ -51,8 +53,8 @@ class XLite_Module_Affiliate_Controller_Partner extends XLite_Controller_AContro
     {
         parent::addBaseLocation();
 
-        if ('partner' !== XLite_Core_Request::getInstance()->target) {
-            $this->locationPath->addNode(new XLite_Model_Location('Partner zone', $this->buildURL('partner')));
+        if ('partner' !== \XLite\Core\Request::getInstance()->target) {
+            $this->locationPath->addNode(new \XLite\Model\Location('Partner zone', $this->buildURL('partner')));
         }
     }
 
@@ -62,13 +64,13 @@ class XLite_Module_Affiliate_Controller_Partner extends XLite_Controller_AContro
     {
         parent::init();
         if ($_SERVER['REQUEST_METHOD'] == "GET" && $this->get('target') != "banner" && $this->get('target') != "product_banner" && !$this->xlite->is('adminZone') && isset($_GET['partner']) && (!isset($_COOKIE['PartnerID']) || (isset($_COOKIE['PartnerID']) && $_COOKIE['PartnerID'] != $_GET['partner']))) {
-            $stats = new XLite_Module_Affiliate_Model_BannerStats();
+            $stats = new \XLite\Module\Affiliate\Model\BannerStats();
             $stats->logClick();
             // issue a partner cookie
             if ($this->config->Affiliate->partner_cookie_lifetime) {
                 // store for "lifetime" days
                 $expire = time() + $this->config->Affiliate->partner_cookie_lifetime * 3600 * 24;
-                $domain = func_parse_host(XLite::getInstance()->getOptions(array('host_details', 'http_host')));
+                $domain = func_parse_host(\XLite::getInstance()->getOptions(array('host_details', 'http_host')));
                 setcookie('PartnerID', $_GET['partner'], $expire, "/", $domain);
                 setcookie('PartnerClick', $stats->get('stat_id'), $expire, "/", $domain);
             }
@@ -89,7 +91,7 @@ class XLite_Module_Affiliate_Controller_Partner extends XLite_Controller_AContro
     function getShopLayout()
     {
         if (is_null($this->shopLayout)) {
-            $this->shopLayout = XLite_Model_Layout::getInstance();
+            $this->shopLayout = \XLite\Model\Layout::getInstance();
         }
         return $this->shopLayout;
     }

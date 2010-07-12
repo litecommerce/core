@@ -26,14 +26,16 @@
  * @since      3.0.0
  */
 
+namespace XLite\View\CheckoutStep\Regular;
+
 /**
- * XLite_View_CheckoutStep_Regular_ARegular 
+ * \XLite\View\CheckoutStep\Regular\ARegular 
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class XLite_View_CheckoutStep_Regular_ARegular extends XLite_View_CheckoutStep_ACheckoutStep
+abstract class ARegular extends \XLite\View\CheckoutStep\ACheckoutStep
 {
     /**
      * Return top message text for error

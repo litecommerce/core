@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Controller_Admin_Wysiwyg extends XLite_Controller_Admin_AAdmin
+class Wysiwyg extends \XLite\Controller\Admin\AAdmin
 {
     public $builder = null;
     public $exportTemplates = array('main.tpl', "common/print_invoice.tpl");
@@ -60,7 +62,7 @@ class XLite_Controller_Admin_Wysiwyg extends XLite_Controller_Admin_AAdmin
     function getBuilder()
     {
         if (is_null($this->builder)) {
-            $this->builder = new XLite_Model_Wysiwyg_Mediator();
+            $this->builder = new \XLite\Model\Wysiwyg\Mediator();
         }
         return $this->builder;
     }
@@ -69,7 +71,7 @@ class XLite_Controller_Admin_Wysiwyg extends XLite_Controller_Admin_AAdmin
     {
         $this->startDump();
         $this->_resetLayout();
-        if (!isset(XLite_Core_Request::getInstance()->mode) || XLite_Core_Request::getInstance()->mode != "cp") {
+        if (!isset(\XLite\Core\Request::getInstance()->mode) || \XLite\Core\Request::getInstance()->mode != "cp") {
             print "<pre>\n";
             if ($this->getBuilder()->export($this->exportTemplates)) {
                 print "\n\nA set of HTML pages generated successfully.<br>The pages are located in the 'var/html' subfolder of your LiteCommerce installation.\n";
@@ -95,7 +97,7 @@ class XLite_Controller_Admin_Wysiwyg extends XLite_Controller_Admin_AAdmin
     {
         $this->startDump();
         $this->_resetLayout();
-        if (!isset(XLite_Core_Request::getInstance()->mode) || XLite_Core_Request::getInstance()->mode != "cp") {
+        if (!isset(\XLite\Core\Request::getInstance()->mode) || \XLite\Core\Request::getInstance()->mode != "cp") {
             print "<pre>\n";
             if ($this->getBuilder()->import()) {
                 print "\n\nA set of template files generated successfully.\n";
@@ -121,7 +123,7 @@ class XLite_Controller_Admin_Wysiwyg extends XLite_Controller_Admin_AAdmin
     {
         global $options;
         // reset Layout settings to customer default
-        $layout = XLite_Model_Layout::getInstance(); //::getInstance();
+        $layout = \XLite\Model\Layout::getInstance(); //::getInstance();
         $layout->set('skin', $options['skin_details']["skin"]);
         $layout->set('locale', $options['skin_details']["locale"]);
     }

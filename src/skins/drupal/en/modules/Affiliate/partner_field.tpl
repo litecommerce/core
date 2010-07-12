@@ -38,5 +38,5 @@
         <input IF="field.field_type=#CheckBox#&!get" type=checkbox name="{formField}[{field.field_id}]" value="checked" checked="{!value=##}"/>
 
     </td>
-    <td>&nbsp;<widget class="XLite_Module_Affiliate_View_PartnerFieldValidator" fields="{partnerFields}" field="{formField}" field_id="{field.field_id}"></td>
+    <td>&nbsp;<widget class="\XLite\Module\Affiliate\View\PartnerFieldValidator" fields="{partnerFields}" field="{formField}" field_id="{field.field_id}"></td>
 </tr>

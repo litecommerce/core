@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\WholesaleTrading\Controller\Customer;
+
 
 /**
  * Cart controller
@@ -34,7 +36,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_WholesaleTrading_Controller_Customer_Cart extends XLite_Controller_Customer_Cart implements XLite_Base_IDecorator
+class Cart extends \XLite\Controller\Customer\Cart implements \XLite\Base\IDecorator
 {
     /**
      * Update errors list
@@ -73,33 +75,33 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Cart extends XLite_Contr
         /*if (
             $this->xlite->get('ProductOptionsEnabled')
             && is_object($this->getProduct())
-            && isset(XLite_Core_Request::getInstance()->OptionSetIndex[$this->getProduct()->get('product_id')])
+            && isset(\XLite\Core\Request::getInstance()->OptionSetIndex[$this->getProduct()->get('product_id')])
         ) {
             $options_set = $this->getProduct()->get('expandedItems');
-            foreach ($options_set[XLite_Core_Request::getInstance()->OptionSetIndex[$this->getProduct()->get('product_id')]] as $_opt) {
+            foreach ($options_set[\XLite\Core\Request::getInstance()->OptionSetIndex[$this->getProduct()->get('product_id')]] as $_opt) {
                 $this->product_options[$_opt->class] = $_opt->option_id;
             }
         }*/
 
         // Detect amount
         if (
-            isset(XLite_Core_Request::getInstance()->amount)
-            && XLite_Core_Request::getInstance()->amount > 0
+            isset(\XLite\Core\Request::getInstance()->amount)
+            && \XLite\Core\Request::getInstance()->amount > 0
         ) {
-            $amount = XLite_Core_Request::getInstance()->amount;
+            $amount = \XLite\Core\Request::getInstance()->amount;
         }
 
         if (
-            isset(XLite_Core_Request::getInstance()->wishlist_amount)
-            && XLite_Core_Request::getInstance()->wishlist_amount > 0
+            isset(\XLite\Core\Request::getInstance()->wishlist_amount)
+            && \XLite\Core\Request::getInstance()->wishlist_amount > 0
         ) {
-            $amount = XLite_Core_Request::getInstance()->wishlist_amount;
+            $amount = \XLite\Core\Request::getInstance()->wishlist_amount;
         }
 
-        if (!isset(XLite_Core_Request::getInstance()->opt_product_qty)) {
+        if (!isset(\XLite\Core\Request::getInstance()->opt_product_qty)) {
 
             // min/max purchase amount check
-            $pl = new XLite_Module_WholesaleTrading_Model_PurchaseLimit();
+            $pl = new \XLite\Module\WholesaleTrading\Model\PurchaseLimit();
             if ($pl->find("product_id=" . $this->getCurrentItem()->getProduct()->get('product_id'))) {
                 $exists_amount = 0;
                 foreach ($items as $i) {
@@ -157,8 +159,8 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Cart extends XLite_Contr
     {
         $items = $this->getCart()->get('items');
 
-        $cartId = XLite_Core_Request::getInstance()->cart_id;
-        $amount = XLite_Core_Request::getInstance()->amount;
+        $cartId = \XLite\Core\Request::getInstance()->cart_id;
+        $amount = \XLite\Core\Request::getInstance()->amount;
         if (!is_array($amount)) {
             $amount = array($cartId => $amount);
         }
@@ -176,7 +178,7 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Cart extends XLite_Contr
         }
 
         foreach ($raw_items as $key => $amount) {
-            $purchase_limit = new XLite_Module_WholesaleTrading_Model_PurchaseLimit();
+            $purchase_limit = new \XLite\Module\WholesaleTrading\Model\PurchaseLimit();
             $limit = array();
             if ($purchase_limit->find('product_id = ' . $key)) {
                 $limit = $purchase_limit->get('properties');
@@ -199,7 +201,7 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Cart extends XLite_Contr
 
         } else {
             foreach ($this->updateErrors as $key => $error) {
-                $product = new XLite_Model_Product($key);
+                $product = new \XLite\Model\Product($key);
                 $this->updateErrors[$key]['name'] = $product->get('name');
             }
 

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Controller\Admin;
+
 /**
  * Login
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Controller_Admin_Login extends XLite_Controller_Admin_AAdmin
+class Login extends \XLite\Controller\Admin\AAdmin
 {
     /**
      * getRegularTemplate
@@ -50,7 +52,7 @@ class XLite_Controller_Admin_Login extends XLite_Controller_Admin_AAdmin
 
     public function getAccessLevel()
     {
-        return XLite_Model_Auth::getInstance()->getCustomerAccessLevel();
+        return \XLite\Model\Auth::getInstance()->getCustomerAccessLevel();
     }
 
     function fillForm()
@@ -73,14 +75,14 @@ class XLite_Controller_Admin_Login extends XLite_Controller_Admin_AAdmin
     protected function doActionLogin()
     {
         $profile = $this->auth->adminLogin(
-            XLite_Core_Request::getInstance()->login,
-            XLite_Core_Request::getInstance()->password
+            \XLite\Core\Request::getInstance()->login,
+            \XLite\Core\Request::getInstance()->password
         );
 
         if (is_int($profile) && ACCESS_DENIED === $profile) {
 
             $this->set('valid', false);
-            XLite_Core_TopMessage::getInstance()->add('Invalid login or password', XLite_Core_TopMessage::ERROR);
+            \XLite\Core\TopMessage::getInstance()->add('Invalid login or password', \XLite\Core\TopMessage::ERROR);
             $returnUrl = $this->buildUrl('login');
 
         } elseif ($this->xlite->session->isRegistered('lastWorkingURL')) {

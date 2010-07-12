@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\ProductAdviser\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_ProductAdviser_Controller_Admin_ProductList extends XLite_Controller_Admin_ProductList implements XLite_Base_IDecorator
+class ProductList extends \XLite\Controller\Admin\ProductList implements \XLite\Base\IDecorator
 {
     public $notifyPresentedHash = array();
 
@@ -75,7 +77,7 @@ class XLite_Module_ProductAdviser_Controller_Admin_ProductList extends XLite_Con
     		$check[] = "status='" . CUSTOMER_REQUEST_UPDATED . "'";
     		$check = implode(' AND ', $check);
 
-    		$notification = new XLite_Module_ProductAdviser_Model_Notification();
+    		$notification = new \XLite\Module\ProductAdviser\Model\Notification();
     		$this->notifyPresentedHash[$product_id] = $notification->count($check);
     	}
         return $this->notifyPresentedHash[$product_id];

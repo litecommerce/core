@@ -26,15 +26,17 @@
  * @since      3.0.0
  */
 
+namespace XLite\View\Form\Profile;
+
 /**
- * XLite_View_Form_Profile_Main 
+ * \XLite\View\Form\Profile\Main 
  * 
  * @package    XLite
  * @subpackage ____sub_package____
  * @see        ____class_see____
  * @since      3.0.0
  */
-class XLite_View_Form_Profile_Main extends XLite_View_Form_Profile_AProfile
+class Main extends \XLite\View\Form\Profile\AProfile
 {
     /**
      * isRegisterMode 

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\SagePay\Model\PaymentMethod;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_SagePay_Model_PaymentMethod_SagepaydirectCc extends XLite_Model_PaymentMethod_CreditCard
+class SagepaydirectCc extends \XLite\Model\PaymentMethod\CreditCard
 {
     public $configurationTemplate = "modules/SagePay/config.tpl";
     public $hasConfigurationForm = true;
@@ -133,7 +135,7 @@ class XLite_Module_SagePay_Model_PaymentMethod_SagepaydirectCc extends XLite_Mod
             $field = "status_" . $name;
             $result = $params[$field];
             if ($this->xlite->AOMEnabled) {
-                $status = new XLite_Module_AOM_Model_OrderStatus();
+                $status = new \XLite\Module\AOM\Model\OrderStatus();
                 if ($status->find("status='".$params[$field]."'")) {
                     if ($status->get('parent')) {
                         $params[$field] = $status->get('parent');
@@ -144,7 +146,7 @@ class XLite_Module_SagePay_Model_PaymentMethod_SagepaydirectCc extends XLite_Mod
             $params["sub".$field] = $result;
         }
 
-        $pm = XLite_Model_PaymentMethod::factory('sagepaydirect_cc');
+        $pm = \XLite\Model\PaymentMethod::factory('sagepaydirect_cc');
         $pm->set('params', $params);
         $pm->update();
     }

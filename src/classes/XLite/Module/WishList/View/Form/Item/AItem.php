@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\WishList\View\Form\Item;
+
 /**
  * Abstract wishlist item form
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class XLite_Module_WishList_View_Form_Item_AItem extends XLite_View_Form_AForm
+abstract class AItem extends \XLite\View\Form\AForm
 {
     /**
      * Widget paramater names
@@ -64,7 +66,7 @@ abstract class XLite_Module_WishList_View_Form_Item_AItem extends XLite_View_For
     {
         parent::defineWidgetParams();
 
-        $this->widgetParams[self::PARAM_ITEM] = new XLite_Model_WidgetParam_Object('Wishlist item', null, false, 'XLite_Model_OrderItem');
+        $this->widgetParams[self::PARAM_ITEM] = new \XLite\Model\WidgetParam\Object('Wishlist item', null, false, '\XLite\Model\OrderItem');
 
         $this->widgetParams[self::PARAM_FORM_TARGET]->setValue('wishlist');
     }

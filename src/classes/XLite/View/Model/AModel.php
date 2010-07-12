@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View\Model;
+
 /**
  * Abstract model widget
  *
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class XLite_View_Model_AModel extends XLite_View_Dialog
+abstract class AModel extends \XLite\View\Dialog
 {
     /**
      * Widget param names
@@ -46,19 +48,19 @@ abstract class XLite_View_Model_AModel extends XLite_View_Dialog
      * Indexes in field schemas
      *
      * FIXME: keep this list synchronized with the classes,
-     * derived from the XLite_View_FormField_AFormField
+     * derived from the \XLite\View\FormField\AFormField
      */
 
     const SCHEMA_CLASS      = 'class';
-    const SCHEMA_VALUE      = XLite_View_FormField_AFormField::PARAM_VALUE;
-    const SCHEMA_REQUIRED   = XLite_View_FormField_AFormField::PARAM_REQUIRED;
-    const SCHEMA_ATTRIBUTES = XLite_View_FormField_AFormField::PARAM_ATTRIBUTES;
-    const SCHEMA_NAME       = XLite_View_FormField_AFormField::PARAM_NAME;
-    const SCHEMA_LABEL      = XLite_View_FormField_AFormField::PARAM_LABEL;
-    const SCHEMA_COMMENT    = XLite_View_FormField_AFormField::PARAM_COMMENT;
+    const SCHEMA_VALUE      = \XLite\View\FormField\AFormField::PARAM_VALUE;
+    const SCHEMA_REQUIRED   = \XLite\View\FormField\AFormField::PARAM_REQUIRED;
+    const SCHEMA_ATTRIBUTES = \XLite\View\FormField\AFormField::PARAM_ATTRIBUTES;
+    const SCHEMA_NAME       = \XLite\View\FormField\AFormField::PARAM_NAME;
+    const SCHEMA_LABEL      = \XLite\View\FormField\AFormField::PARAM_LABEL;
+    const SCHEMA_COMMENT    = \XLite\View\FormField\AFormField::PARAM_COMMENT;
 
-    const SCHEMA_OPTIONS = XLite_View_FormField_Select_ASelect::PARAM_OPTIONS;
-    const SCHEMA_IS_CHECKED = XLite_View_FormField_Input_Checkbox::PARAM_IS_CHECKED;
+    const SCHEMA_OPTIONS = \XLite\View\FormField\Select\ASelect::PARAM_OPTIONS;
+    const SCHEMA_IS_CHECKED = \XLite\View\FormField\Input\Checkbox::PARAM_IS_CHECKED;
 
     /**
      * Session cell to store form data
@@ -93,7 +95,7 @@ abstract class XLite_View_Model_AModel extends XLite_View_Dialog
     /**
      * Current form object
      *
-     * @var    XLite_View_Model_AModel
+     * @var    \XLite\View\Model\AModel
      * @access protected
      * @since  3.0.0
      */
@@ -259,13 +261,13 @@ abstract class XLite_View_Model_AModel extends XLite_View_Dialog
     /**
      * This object will be used if another one is not pased
      *
-     * @return XLite_Model_AModel
+     * @return \XLite\Model\AModel
      * @access protected
      * @since  3.0.0
      */
     protected function getDefaultModelObject()
     {
-        return XLite_Model_Factory::create(
+        return \XLite\Model\Factory::create(
             $this->getDefaultModelObjectClass(),
             $this->getDefaultModelObjectKeys()
         );
@@ -343,7 +345,7 @@ abstract class XLite_View_Model_AModel extends XLite_View_Dialog
 
         foreach ($this->sections as $section => $label) {
 
-            $widget = new XLite_View_FormField_Separator_Regular(
+            $widget = new \XLite\View\FormField\Separator\Regular(
                 array(self::SCHEMA_LABEL => $label)
             );
 
@@ -378,7 +380,7 @@ abstract class XLite_View_Model_AModel extends XLite_View_Dialog
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_MODEL_OBJECT => new XLite_Model_WidgetParam_Object(
+            self::PARAM_MODEL_OBJECT => new \XLite\Model\WidgetParam\Object(
                 'Object', $this->getDefaultModelObject(), false, $this->getDefaultModelObjectClass()
             ),
         );
@@ -442,7 +444,7 @@ abstract class XLite_View_Model_AModel extends XLite_View_Dialog
      */
     protected function prepareFormDataToSave(array $data)
     {
-        return XLite_Core_Converter::convertTreeToFlatArray($data);
+        return \XLite\Core\Converter::convertTreeToFlatArray($data);
     }
 
     /**
@@ -454,7 +456,7 @@ abstract class XLite_View_Model_AModel extends XLite_View_Dialog
      */
     protected function getSavedForms()
     {
-        return XLite_Model_Session::getInstance()->get(self::SAVED_FORMS);
+        return \XLite\Model\Session::getInstance()->get(self::SAVED_FORMS);
     }
 
     /**
@@ -501,7 +503,7 @@ abstract class XLite_View_Model_AModel extends XLite_View_Dialog
             unset($savedData[$this->getFormName()]);
         }
 
-        XLite_Model_Session::getInstance()->set(self::SAVED_FORMS, empty($savedData) ? null : $savedData);
+        \XLite\Model\Session::getInstance()->set(self::SAVED_FORMS, empty($savedData) ? null : $savedData);
     }
 
     /**
@@ -526,7 +528,7 @@ abstract class XLite_View_Model_AModel extends XLite_View_Dialog
      */
     protected function postprocessSuccessActionCreate()
     {
-        XLite_Core_TopMessage::getInstance()->addInfo('Data have been saved successfully');
+        \XLite\Core\TopMessage::getInstance()->addInfo('Data have been saved successfully');
     }
 
     /**
@@ -539,7 +541,7 @@ abstract class XLite_View_Model_AModel extends XLite_View_Dialog
      */
     protected function postprocessSuccessActionUpdate()
     {
-        XLite_Core_TopMessage::getInstance()->addInfo('Data have been saved successfully');
+        \XLite\Core\TopMessage::getInstance()->addInfo('Data have been saved successfully');
     }
 
     /**
@@ -552,7 +554,7 @@ abstract class XLite_View_Model_AModel extends XLite_View_Dialog
      */
     protected function postprocessSuccessActionModify()
     {
-        XLite_Core_TopMessage::getInstance()->addInfo('Data have been saved successfully');
+        \XLite\Core\TopMessage::getInstance()->addInfo('Data have been saved successfully');
     }
 
     /**
@@ -565,7 +567,7 @@ abstract class XLite_View_Model_AModel extends XLite_View_Dialog
      */
     protected function postprocessSuccessActionDelete()
     {
-        XLite_Core_TopMessage::getInstance()->addInfo('Data have been deleted successfully');
+        \XLite\Core\TopMessage::getInstance()->addInfo('Data have been deleted successfully');
     }
 
     /**
@@ -596,7 +598,7 @@ abstract class XLite_View_Model_AModel extends XLite_View_Dialog
      */
     protected function postprocessErrorAction()
     {
-        XLite_Core_TopMessage::getInstance()->addBatch($this->getErrorMessages(), XLite_Core_TopMessage::ERROR);
+        \XLite\Core\TopMessage::getInstance()->addBatch($this->getErrorMessages(), \XLite\Core\TopMessage::ERROR);
 
         if (method_exists($this, $method = __FUNCTION__ . ucfirst($this->currentAction))) {
             // Run corresponded function
@@ -638,14 +640,14 @@ abstract class XLite_View_Model_AModel extends XLite_View_Dialog
      * @param string $name field name
      * @param array  $data field description
      *
-     * @return XLite_View_FormField_AFormField
+     * @return \XLite\View\FormField\AFormField
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getFieldBySchema($name, array $data)
     {
-        return XLite_Model_Factory::create($data[self::SCHEMA_CLASS], array($this->getFieldSchemaArgs($name, $data)));
+        return \XLite\Model\Factory::create($data[self::SCHEMA_CLASS], array($this->getFieldSchemaArgs($name, $data)));
     }
 
     /**
@@ -744,7 +746,7 @@ abstract class XLite_View_Model_AModel extends XLite_View_Dialog
      * @param string $name           field name
      * @param bool   $preprocessName flag; prepare field name or not
      *
-     * @return XLite_View_FormField_AFormField
+     * @return \XLite\View\FormField\AFormField
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -825,14 +827,14 @@ abstract class XLite_View_Model_AModel extends XLite_View_Dialog
     protected function defineRequestData(array $data = array(), $name = null)
     {
         if (empty($data)) {
-            $data = XLite_Core_Request::getInstance()->getData();
+            $data = \XLite\Core\Request::getInstance()->getData();
         }
         // FIXME: check if there is the way to avoid this
         $this->formFields = null;
 
         // TODO: check if there is more convenient way to do this
         $this->requestData = $this->prepareRequestData($data);
-        $this->requestData = XLite_Core_Converter::filterArrayByKeys($this->requestData, $this->getFormFields(true));
+        $this->requestData = \XLite\Core\Converter::filterArrayByKeys($this->requestData, $this->getFormFields(true));
     }
 
     /**
@@ -1194,7 +1196,7 @@ abstract class XLite_View_Model_AModel extends XLite_View_Dialog
     /**
      * Return model object to use
      *
-     * @return XLite_Model_AModel
+     * @return \XLite\Model\AModel
      * @access public
      * @since  3.0.0
      */
@@ -1217,7 +1219,7 @@ abstract class XLite_View_Model_AModel extends XLite_View_Dialog
     public function __construct(array $params = array(), array $sections = array())
     {
         if (!empty($sections)) {
-            $this->sections = XLite_Core_Converter::filterArrayByKeys($this->sections, $sections);
+            $this->sections = \XLite\Core\Converter::filterArrayByKeys($this->sections, $sections);
         }
 
         parent::__construct($params);

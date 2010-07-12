@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\WishList\Controller\Customer;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_WishList_Controller_Customer_Product extends XLite_Controller_Customer_Product implements XLite_Base_IDecorator
+class Product extends \XLite\Controller\Customer\Product implements \XLite\Base\IDecorator
 {
     function getSenderName() 
     {
@@ -48,11 +50,11 @@ class XLite_Module_WishList_Controller_Customer_Product extends XLite_Controller
 
     function action_send_friend() 
     {
-        $Mailer = new XLite_Model_Mailer();
+        $Mailer = new \XLite\Model\Mailer();
         $Mailer->sender_name  = $this->sender_name;
         $Mailer->sender_email = $this->sender_email;
         $Mailer->recipient_email = $this->recipient_email;
-        $product = new XLite_Model_Product($this->product_id);
+        $product = new \XLite\Model\Product($this->product_id);
  		$Mailer->product = $product;
         $Mailer->url = $this->getShopUrl("cart.php?target=product&product_id=".$this->product_id);
         $Mailer->compose($this->get('sender_email'),$this->get('recipient_email'),"modules/WishList/send_friend");

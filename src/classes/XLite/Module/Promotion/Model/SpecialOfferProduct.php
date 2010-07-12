@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Promotion\Model;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Promotion_Model_SpecialOfferProduct extends XLite_Model_AModel
+class SpecialOfferProduct extends \XLite\Model\AModel
 {
     public $fields = array(
         'offer_id' 		=> 0,

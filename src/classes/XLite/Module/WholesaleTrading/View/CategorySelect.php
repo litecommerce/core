@@ -26,14 +26,16 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\WholesaleTrading\View;
+
 /**
- * XLite_Module_WholesaleTrading_View_CategorySelect
+ * \XLite\Module\WholesaleTrading\View\CategorySelect
  *
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_WholesaleTrading_View_CategorySelect extends XLite_View_CategorySelect
+class CategorySelect extends \XLite\View\CategorySelect
 {
     /**
      * setFieldName 
@@ -54,14 +56,14 @@ class XLite_Module_WholesaleTrading_View_CategorySelect extends XLite_View_Categ
     /**
      * Check if category is in the bulk_categories list 
      * 
-     * @param XLite_Model_Category $category
+     * @param \XLite\Model\Category $category
      *  
      * @return bool
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function isCategorySelected(XLite_Model_Category $category)
+    protected function isCategorySelected(\XLite\Model\Category $category)
     {
         return in_array($category->get('category_id'), explode(";", $this->config->WholesaleTrading->bulk_categories));
     }

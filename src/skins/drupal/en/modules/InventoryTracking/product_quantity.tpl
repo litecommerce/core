@@ -16,4 +16,4 @@
   <td IF="{!product.inventory.amount}" class="ErrorMessage" nowrap>- out of stock -</td>
 </tr>
 
-<widget module="ProductAdviser"  class="XLite_Module_ProductAdviser_View_NotifyLink">
+<widget module="ProductAdviser"  class="\XLite\Module\ProductAdviser\View\NotifyLink">

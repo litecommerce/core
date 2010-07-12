@@ -36,10 +36,10 @@
 	<tr>
         <td class="ProductDetailsTitle" width="20%">Status:</td>
         {if:config.General.clear_cc_info}
-	    <td align="left" IF="order.status=config.General.clear_cc_info"><widget class="XLite_View_StatusSelect" field="substatus" value="{order.orderStatus.status}" style="width: 150px; border-width: 1px; border-color: #516176; border-style: solid;"></td>
-        <td align="left" IF="!order.status=config.General.clear_cc_info"><widget class="XLite_View_StatusSelect" field="substatus" value="{order.orderStatus.status}" style="width: 150px; border-width: 1px; border-color: #516176; border-style: solid;" pm="{order.paymentMethod.payment_method}"></td>
+	    <td align="left" IF="order.status=config.General.clear_cc_info"><widget class="\XLite\View\StatusSelect" field="substatus" value="{order.orderStatus.status}" style="width: 150px; border-width: 1px; border-color: #516176; border-style: solid;"></td>
+        <td align="left" IF="!order.status=config.General.clear_cc_info"><widget class="\XLite\View\StatusSelect" field="substatus" value="{order.orderStatus.status}" style="width: 150px; border-width: 1px; border-color: #516176; border-style: solid;" pm="{order.paymentMethod.payment_method}"></td>
         {else:}
-        <td align="left"><widget class="XLite_View_StatusSelect" field="substatus" value="{order.orderStatus.status}" style="width: 150px; border-wi
+        <td align="left"><widget class="\XLite\View\StatusSelect" field="substatus" value="{order.orderStatus.status}" style="width: 150px; border-wi
 dth: 1px; border-color: #516176; border-style: solid;"></td>
         {end:}
 	</tr>

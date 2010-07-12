@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\FeaturedProducts;
+
 /**
  * Featured Products module manager
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_FeaturedProducts_Main extends XLite_Module_AModule
+class Main extends \XLite\Module\AModule
 {
     const FEATURED_PRODUCTS_TABLE = 'xlite_featured_products';
 

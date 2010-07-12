@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View;
+
 /**
  * Language selector for editor page
  * 
@@ -34,7 +36,7 @@
  * @see        ____class_see____
  * @since   3.0.0
  */
-class XLite_View_EditorLanguageSelector extends XLite_View_AView
+class EditorLanguageSelector extends \XLite\View\AView
 {
     /**
      * Current language code 
@@ -70,7 +72,7 @@ class XLite_View_EditorLanguageSelector extends XLite_View_AView
     {
         $list = array();
 
-        foreach (XLite_Core_Database::getRepo('XLite_Model_Language')->findActiveLanguages() as $l) {
+        foreach (\XLite\Core\Database::getRepo('XLite\Model\Language')->findActiveLanguages() as $l) {
             $list[$l->code] = $l->name;
         }
 
@@ -90,9 +92,9 @@ class XLite_View_EditorLanguageSelector extends XLite_View_AView
     public function isLanguageSelected($code)
     {
         if (!isset($this->currentCode)) {
-            $this->currentCode = XLite_Core_Request::getInstance()->language;
+            $this->currentCode = \XLite\Core\Request::getInstance()->language;
             if (!$this->currentCode) {
-                $this->currentCode = XLite_Core_Translation::getCurrentLanguageCode();
+                $this->currentCode = \XLite\Core\Translation::getCurrentLanguageCode();
             }
         }
 

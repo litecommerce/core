@@ -102,7 +102,7 @@ Use this section to define additional product detail fields for the entire categ
       <td class=Star width=10>*</td>
       <td>
         <input type=text name=add_ef_name value="{add_ef_name:r}" size=32 maxlength=255 />
-        <widget class="XLite_Validator_RequiredValidator" field="add_ef_name" />
+        <widget class="\XLite\Validator\RequiredValidator" field="add_ef_name" />
       </td>
     </tr>
 

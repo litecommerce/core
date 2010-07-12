@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\ProductOptions\Validator;
+
 // FIXME - check this class
 
 /**
@@ -35,7 +37,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_ProductOptions_Validator_RequiredValidator extends XLite_Validator_AValidator
+class RequiredValidator extends \XLite\Validator\AValidator
 {
     const PARAM_OPTION_ID  = 'option_id';
     const PARAM_FIELD_NAME = 'field';
@@ -66,9 +68,9 @@ class XLite_Module_ProductOptions_Validator_RequiredValidator extends XLite_Vali
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_OPTION_ID   => new XLite_Model_WidgetParam_Int('Option Id', null),
-            self::PARAM_FIELD_NAME  => new XLite_Model_WidgetParam_String('Field', null),
-            self::PARAM_ACTION      => new XLite_Model_WidgetParam_String('Action', null)
+            self::PARAM_OPTION_ID   => new \XLite\Model\WidgetParam\Int('Option Id', null),
+            self::PARAM_FIELD_NAME  => new \XLite\Model\WidgetParam\String('Field', null),
+            self::PARAM_ACTION      => new \XLite\Model\WidgetParam\String('Action', null)
         );
     }
 
@@ -101,19 +103,19 @@ class XLite_Module_ProductOptions_Validator_RequiredValidator extends XLite_Vali
                 $result = !empty($fieldData) || !isset($fieldData);
 
             } else {
-            	$result = !empty(XLite_Core_Request::getInstance()->$fieldName) || !isset(XLite_Core_Request::getInstance()->$fieldName);
+            	$result = !empty(\XLite\Core\Request::getInstance()->$fieldName) || !isset(\XLite\Core\Request::getInstance()->$fieldName);
     	    }
 
             if (!$result) {
 
                 if (
-                     ( isset(XLite_Core_Request::getInstance()->action)
-                      && $this->getParam(self::PARAM_ACTION) != XLite_Core_Request::getInstance()->action )
+                     ( isset(\XLite\Core\Request::getInstance()->action)
+                      && $this->getParam(self::PARAM_ACTION) != \XLite\Core\Request::getInstance()->action )
                      || 
-                     ( isset(XLite_Core_Request::getInstance()->action)
+                     ( isset(\XLite\Core\Request::getInstance()->action)
                        && $this->getParam(self::PARAM_ACTION) == "update_product_option"
-                       && isset(XLite_Core_Request::getInstance()->option_id)
-                       && $this->getParam(self::PARAM_OPTION_ID) != XLite_Core_Request::getInstance()->option_id )
+                       && isset(\XLite\Core\Request::getInstance()->option_id)
+                       && $this->getParam(self::PARAM_OPTION_ID) != \XLite\Core\Request::getInstance()->option_id )
                     ) {
                 	$result = true;
             	}

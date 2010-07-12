@@ -34,7 +34,7 @@ The coupon <b>{coupon}</b> is expired.
 <tr>
 <td></td>
 <td>
-<widget class="XLite_View_Button" href="javascript: document.couponform.submit()" label="Add">
+<widget class="\XLite\View\Button" href="javascript: document.couponform.submit()" label="Add">
 </td>
 </tr>
 </table>

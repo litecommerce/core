@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Affiliate\Controller\Customer;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Affiliate_Controller_Customer_PartnerSummary extends XLite_Module_Affiliate_Controller_Partner
+class PartnerSummary extends \XLite\Module\Affiliate\Controller\Partner
 {
     /**
      * Common method to determine current location 
@@ -62,7 +64,7 @@ class XLite_Module_Affiliate_Controller_Customer_PartnerSummary extends XLite_Mo
                     "approved" => 0.00,
                     "paid" => 0.00,
                     );
-            $pp = new XLite_Module_Affiliate_Model_PartnerPayment();
+            $pp = new \XLite\Module\Affiliate\Model\PartnerPayment();
             foreach ((array)$pp->findAll("partner_id=".$this->getComplex('auth.profile.profile_id')) as $payment) {
                 if ($payment->get('affiliate') == 0) {
                     $this->sales['total']++;

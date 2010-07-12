@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\DrupalConnector\View;
+
 /**
  * Products list
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class XLite_Module_DrupalConnector_View_ProductsList extends XLite_View_ProductsList implements XLite_Base_IDecorator
+abstract class ProductsList extends \XLite\View\ProductsList implements \XLite\Base\IDecorator
 {
     /**
      * Input arguments (AJAX) 
@@ -52,11 +54,11 @@ abstract class XLite_Module_DrupalConnector_View_ProductsList extends XLite_View
     {
         parent::defineWidgetParams();
 
-        if (XLite_Module_DrupalConnector_Handler::getInstance()->checkCurrentCMS()) {
+        if (\XLite\Module\DrupalConnector\Handler::getInstance()->checkCurrentCMS()) {
 
             // FIXME - define actual param type and value here
             $this->widgetParams += array(
-                self::PARAM_BLOCK_DELTA => new XLite_Model_WidgetParam_String(
+                self::PARAM_BLOCK_DELTA => new \XLite\Model\WidgetParam\String(
                     'Block delta', ''
                 ),
             );

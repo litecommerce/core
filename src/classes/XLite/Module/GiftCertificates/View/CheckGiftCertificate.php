@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\GiftCertificates\View;
+
 /**
  * Check gift certificate widget
  * 
@@ -33,12 +35,12 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_GiftCertificates_View_CheckGiftCertificate extends XLite_View_Dialog
+class CheckGiftCertificate extends \XLite\View\Dialog
 {
     /**
      * Found gift certificate
      * 
-     * @var    XLite_Module_GiftCertificates_Model_GiftCertificate
+     * @var    \XLite\Module\GiftCertificates\Model\GiftCertificate
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
@@ -87,16 +89,16 @@ class XLite_Module_GiftCertificates_View_CheckGiftCertificate extends XLite_View
     /**
      * Get found gift certificate
      * 
-     * @return XLite_Module_GiftCertificates_Model_GiftCertificate
+     * @return \XLite\Module\GiftCertificates\Model\GiftCertificate
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
     public function getFoundGc()
     {
-        if (is_null($this->foundgc) && XLite_Core_Request::getInstance()->gcid) {
-            $this->foundgc = new XLite_Module_GiftCertificates_Model_GiftCertificate(
-                XLite_Core_Request::getInstance()->gcid
+        if (is_null($this->foundgc) && \XLite\Core\Request::getInstance()->gcid) {
+            $this->foundgc = new \XLite\Module\GiftCertificates\Model\GiftCertificate(
+                \XLite\Core\Request::getInstance()->gcid
             );
         }
 
@@ -113,7 +115,7 @@ class XLite_Module_GiftCertificates_View_CheckGiftCertificate extends XLite_View
      */
     public function isFound()
     {
-        return XLite_Core_Request::getInstance()->gcid ? $this->getFoundGc()->isExists() : false;
+        return \XLite\Core\Request::getInstance()->gcid ? $this->getFoundGc()->isExists() : false;
     }
 
     /**
@@ -141,8 +143,8 @@ class XLite_Module_GiftCertificates_View_CheckGiftCertificate extends XLite_View
      */
     public function getGcIdValue()
     {
-        return XLite_Core_Request::getInstance()->gcid
-            ? XLite_Core_Request::getInstance()->gcid
+        return \XLite\Core\Request::getInstance()->gcid
+            ? \XLite\Core\Request::getInstance()->gcid
             : 'Gift certificate number';
     }
 
@@ -157,7 +159,7 @@ class XLite_Module_GiftCertificates_View_CheckGiftCertificate extends XLite_View
     public function canApply()
     {
         return 'A' == $this->getFoundGc()->get('status')
-            && XLite::getController()->getCart()->canApplyGiftCertificate();
+            && \XLite::getController()->getCart()->canApplyGiftCertificate();
     }
 
     /**

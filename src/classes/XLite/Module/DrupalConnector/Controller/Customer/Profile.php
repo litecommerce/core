@@ -26,15 +26,17 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\DrupalConnector\Controller\Customer;
+
 /**
- * XLite_Module_DrupalConnector_Controller_Customer_Profile 
+ * \XLite\Module\DrupalConnector\Controller\Customer\Profile 
  * 
  * @package    XLite
  * @subpackage ____sub_package____
  * @see        ____class_see____
  * @since      3.0.0
  */
-class XLite_Module_DrupalConnector_Controller_Customer_Profile extends XLite_Controller_Customer_Profile implements XLite_Base_IDecorator
+class Profile extends \XLite\Controller\Customer\Profile implements \XLite\Base\IDecorator
 {
     /**
      * Types of model form
@@ -55,7 +57,7 @@ class XLite_Module_DrupalConnector_Controller_Customer_Profile extends XLite_Con
      */
     protected function getModelFormPartMain()
     {
-        return array(XLite_View_Model_Profile_Main::SECTION_MAIN);
+        return array(\XLite\View\Model\Profile\Main::SECTION_MAIN);
     }
 
     /**
@@ -68,7 +70,7 @@ class XLite_Module_DrupalConnector_Controller_Customer_Profile extends XLite_Con
      */
     protected function getModelFormPartAddresses()
     {
-        return array(XLite_View_Model_Profile_Main::SECTION_ADDRESSES);
+        return array(\XLite\View\Model\Profile\Main::SECTION_ADDRESSES);
     }
 
     /**
@@ -89,7 +91,7 @@ class XLite_Module_DrupalConnector_Controller_Customer_Profile extends XLite_Con
      * 
      * @param string $type part(s) identifier
      *  
-     * @return XLite_View_Model_Profile_AProfile
+     * @return \XLite\View\Model\Profile\AProfile
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0

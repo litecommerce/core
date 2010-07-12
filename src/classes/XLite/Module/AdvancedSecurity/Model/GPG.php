@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\AdvancedSecurity\Model;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_AdvancedSecurity_Model_GPG extends XLite_Base
+class GPG extends \XLite\Base
 {
     public $tmpdir    = null;
     public $homedir   = null;
@@ -150,7 +152,7 @@ class XLite_Module_AdvancedSecurity_Model_GPG extends XLite_Base
 
         if ($cmd_file) {
             $valid_names[$key] = $cmd_file;
-            XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+            \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
                 array(
                     'category' => 'AdvancedSecurity',
                     'name'     => 'executable_cache',

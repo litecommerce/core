@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\WishList\Controller\Customer;
+
 /**
  * Abstract customer interface controller
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_WishList_Controller_Customer_ACustomer extends XLite_Controller_Customer_ACustomer implements XLite_Base_IDecorator
+class ACustomer extends \XLite\Controller\Customer\ACustomer implements \XLite\Base\IDecorator
 {
     /**
      * Name of the session cell kept the product ID to add to wishlist
@@ -44,7 +46,7 @@ class XLite_Module_WishList_Controller_Customer_ACustomer extends XLite_Controll
     /**
      * wishlist 
      * 
-     * @var    XLite_Module_WishList_Model_WishList
+     * @var    \XLite\Module\WishList\Model\WishList
      * @access protected
      * @since  3.0.0
      */
@@ -53,16 +55,16 @@ class XLite_Module_WishList_Controller_Customer_ACustomer extends XLite_Controll
     /**
      * Get wishlist 
      * 
-     * @return XLite_Module_WishList_Model_WishList
+     * @return \XLite\Module\WishList\Model\WishList
      * @access public
      * @since  3.0.0
      */
     public function getWishList()
     {
-        $profile = XLite_Model_Auth::getInstance()->getProfile(XLite_Core_Request::getInstance()->profile_id);
+        $profile = \XLite\Model\Auth::getInstance()->getProfile(\XLite\Core\Request::getInstance()->profile_id);
 
         if (!isset($this->wishlist) && isset($profile)) {
-            $this->wishlist = new XLite_Module_WishList_Model_WishList();
+            $this->wishlist = new \XLite\Module\WishList\Model\WishList();
             $profileId = $profile->get('profile_id');
 
             if (!$this->wishlist->find('profile_id = \'' . $profileId . '\'')) {

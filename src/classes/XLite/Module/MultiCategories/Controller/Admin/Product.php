@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\MultiCategories\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,19 +35,19 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_MultiCategories_Controller_Admin_Product extends XLite_Controller_Admin_Product implements XLite_Base_IDecorator
+class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDecorator
 {
     function action_info()
     {
         parent::action_info();
-        $product = new XLite_Model_Product($this->product_id);
+        $product = new \XLite\Model\Product($this->product_id);
         $categories = $product->get('categories');
         for ($i = 0; $i < count($categories); $i++) {
             $product->deleteCategory($categories[$i]);
         }
         if (isset($this->categories)) {
             foreach ($this->categories as $catId) {
-                $cat = new XLite_Model_Category($catId);
+                $cat = new \XLite\Model\Category($catId);
                 //if (!$product->inCategory($cat)) {
                     $product->addCategory($cat);
                 //}

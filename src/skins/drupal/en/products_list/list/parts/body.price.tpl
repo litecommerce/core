@@ -11,4 +11,4 @@
  * @since     3.0.0
  * @ListChild (list="productsList.listItem.body", weight="30")
  *}
-<widget class="XLite_View_Price" product="{product}" displayOnlyPrice="true" IF="isShowPrice()" />
+<widget class="\XLite\View\Price" product="{product}" displayOnlyPrice="true" IF="isShowPrice()" />

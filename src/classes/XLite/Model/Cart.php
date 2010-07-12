@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model;
+
 /**
  * Cart 
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_Cart extends XLite_Model_Order implements XLite_Base_ISingleton
+class Cart extends \XLite\Model\Order implements \XLite\Base\ISingleton
 {
     /**
      * Constructor
@@ -51,7 +53,7 @@ class XLite_Model_Cart extends XLite_Model_Order implements XLite_Base_ISingleto
 
         $this->fields['status'] = 'T';
 
-        if ($orderId = XLite_Model_Session::getInstance()->get('order_id')) {
+        if ($orderId = \XLite\Model\Session::getInstance()->get('order_id')) {
             $this->set('order_id', $orderId);
             if (!$this->isExists()) {
                 $this->set('order_id', null);
@@ -60,7 +62,7 @@ class XLite_Model_Cart extends XLite_Model_Order implements XLite_Base_ISingleto
 
         if ('T' === $this->get('status')) {
 
-            $auth = XLite_Model_Auth::getInstance();
+            $auth = \XLite\Model\Auth::getInstance();
 
             if ($auth->isLogged()) {
                 if ($auth->getProfile()->get('profile_id') != $this->get('profile_id')) {
@@ -128,7 +130,7 @@ class XLite_Model_Cart extends XLite_Model_Order implements XLite_Base_ISingleto
         if ($this->get('status') == "T") {
             $this->set('date', time());
 
-            $profile = XLite_Model_Auth::getInstance()->getProfile();
+            $profile = \XLite\Model\Auth::getInstance()->getProfile();
             if ($profile->get('order_id')) {
                 // anonymous checkout:
                 // use the current profile as order profile
@@ -145,7 +147,7 @@ class XLite_Model_Cart extends XLite_Model_Order implements XLite_Base_ISingleto
     /**
      * Calculate shipping rates 
      * 
-     * @return array of XLite_Moel_ShippingRate
+     * @return array of \XLite\Moel\ShippingRate
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

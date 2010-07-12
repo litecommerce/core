@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model\PaymentMethod;
+
 /**
  * CreditCard-based payment method
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_PaymentMethod_CreditCard extends XLite_Model_PaymentMethod
+class CreditCard extends \XLite\Model\PaymentMethod
 {
     const CALL_CHECKOUT = 'checkout';
     const CALL_BACK     = 'callback';
@@ -61,14 +63,14 @@ class XLite_Model_PaymentMethod_CreditCard extends XLite_Model_PaymentMethod
     /**
      * Process cart
      * 
-     * @param XLite_Model_Cart $cart Cart
+     * @param \XLite\Model\Cart $cart Cart
      *  
      * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function process(XLite_Model_Cart $cart)
+    public function process(\XLite\Model\Cart $cart)
     {
         // save CC details to order
         $cart->setDetails($this->cc_info);
@@ -106,8 +108,8 @@ class XLite_Model_PaymentMethod_CreditCard extends XLite_Model_PaymentMethod
     {
         $info = array();
 
-        if (isset(XLite_Core_Request::getInstance()->cc_info) && is_array(XLite_Core_Request::getInstance()->cc_info)) {
-            $info = array_map('trim', XLite_Core_Request::getInstance()->cc_info);
+        if (isset(\XLite\Core\Request::getInstance()->cc_info) && is_array(\XLite\Core\Request::getInstance()->cc_info)) {
+            $info = array_map('trim', \XLite\Core\Request::getInstance()->cc_info);
 
             if (isset($info['cc_number'])) {
                 $info['cc_number'] = preg_replace('/\D/Ss', '', $info['cc_number']);
@@ -120,7 +122,7 @@ class XLite_Model_PaymentMethod_CreditCard extends XLite_Model_PaymentMethod
     /**
      * Handle request 
      * 
-     * @param XLite_Model_Cart $cart Cart
+     * @param \XLite\Model\Cart $cart Cart
      * @param string           $type Call type
      *  
      * @return integer Operation status
@@ -128,7 +130,7 @@ class XLite_Model_PaymentMethod_CreditCard extends XLite_Model_PaymentMethod
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function handleRequest(XLite_Model_Cart $cart, $type = self::CALL_CHECKOUT)
+    public function handleRequest(\XLite\Model\Cart $cart, $type = self::CALL_CHECKOUT)
     {
         $this->cc_info = $this->getPaymentInfo();
         $this->process($cart);

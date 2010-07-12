@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Affiliate\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Affiliate_Controller_Admin_PartnersTree extends XLite_Module_Affiliate_Controller_Admin_PartnerStats
+class PartnersTree extends \XLite\Module\Affiliate\Controller\Admin\PartnerStats
 {
     function getPageTemplate()
     {
@@ -43,7 +45,7 @@ class XLite_Module_Affiliate_Controller_Admin_PartnersTree extends XLite_Module_
     function getRoot()
     {
         if (is_null($this->root)) {
-            $this->root = new XLite_Model_Profile($this->get('partner_id'));
+            $this->root = new \XLite\Model\Profile($this->get('partner_id'));
         }
         return $this->root;
     }

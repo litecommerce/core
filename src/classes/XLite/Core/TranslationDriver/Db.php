@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Core\TranslationDriver;
+
 /**
  * DB-based driver
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Core_TranslationDriver_Db extends XLite_Core_TranslationDriver_ATranslationDriver
+class Db extends \XLite\Core\TranslationDriver\ATranslationDriver
 {
     /**
      * Translations 
@@ -59,7 +61,7 @@ class XLite_Core_TranslationDriver_Db extends XLite_Core_TranslationDriver_ATran
     public function translate($name, $code)
     {
         if (!isset($this->translations[$code])) {
-            $this->translations[$code] = XLite_Core_Database::getRepo('XLite_Model_LanguageLabel')->findLabelsByCode($code);
+            $this->translations[$code] = \XLite\Core\Database::getRepo('XLite\Model\LanguageLabel')->findLabelsByCode($code);
         }
 
         return isset($this->translations[$code][$name]) ? $this->translations[$code][$name] : null;

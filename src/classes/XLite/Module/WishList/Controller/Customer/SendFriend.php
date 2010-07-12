@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\WishList\Controller\Customer;
+
 /**
  * Send to friend product info
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_WishList_Controller_Customer_SendFriend extends XLite_Controller_Customer_Catalog
+class SendFriend extends \XLite\Controller\Customer\Catalog
 {
     /**
      * Controller parameters
@@ -71,52 +73,52 @@ class XLite_Module_WishList_Controller_Customer_SendFriend extends XLite_Control
         if (!$this->getProduct()) {
             $this->setReturnUrl($this->buildURL('main'));
 
-        } elseif (!XLite_Core_Request::getInstance()->sender_name) {
+        } elseif (!\XLite\Core\Request::getInstance()->sender_name) {
 
-            XLite_Core_TopMessage::getInstance()->add(
+            \XLite\Core\TopMessage::getInstance()->add(
                 '\'Your name\' field is empty',
-                XLite_Core_TopMessage::ERROR
+                \XLite\Core\TopMessage::ERROR
             );
             $this->set('valid', false);
 
-        } elseif (!XLite_Core_Request::getInstance()->sender_email) {
+        } elseif (!\XLite\Core\Request::getInstance()->sender_email) {
 
-            XLite_Core_TopMessage::getInstance()->add(
+            \XLite\Core\TopMessage::getInstance()->add(
                 '\'Your e-mail\' field is empty',
-                XLite_Core_TopMessage::ERROR
+                \XLite\Core\TopMessage::ERROR
             );
             $this->set('valid', false);
 
-        } elseif (!preg_match('/^' . EMAIL_REGEXP . '$/Ss', XLite_Core_Request::getInstance()->sender_email)) {
+        } elseif (!preg_match('/^' . EMAIL_REGEXP . '$/Ss', \XLite\Core\Request::getInstance()->sender_email)) {
 
-            XLite_Core_TopMessage::getInstance()->add(
+            \XLite\Core\TopMessage::getInstance()->add(
                 '\'Your e-mail\' has wrong format',
-                XLite_Core_TopMessage::ERROR
+                \XLite\Core\TopMessage::ERROR
             );
             $this->set('valid', false);
 
-        } elseif (!XLite_Core_Request::getInstance()->recipient_email) {
+        } elseif (!\XLite\Core\Request::getInstance()->recipient_email) {
 
-            XLite_Core_TopMessage::getInstance()->add(
+            \XLite\Core\TopMessage::getInstance()->add(
                 '\'Friend\'s e-mail\' field is empty',
-                XLite_Core_TopMessage::ERROR
+                \XLite\Core\TopMessage::ERROR
             );
             $this->set('valid', false);
 
-        } elseif (!preg_match('/^' . EMAIL_REGEXP . '$/Ss', XLite_Core_Request::getInstance()->recipient_email)) {
+        } elseif (!preg_match('/^' . EMAIL_REGEXP . '$/Ss', \XLite\Core\Request::getInstance()->recipient_email)) {
 
-            XLite_Core_TopMessage::getInstance()->add(
+            \XLite\Core\TopMessage::getInstance()->add(
                 '\'Friend\'s e-mail\' has wrong format',
-                XLite_Core_TopMessage::ERROR
+                \XLite\Core\TopMessage::ERROR
             );
             $this->set('valid', false);
 
         } else {
 
-            $mailer = new XLite_Model_Mailer();
-            $mailer->sender_name = XLite_Core_Request::getInstance()->sender_name;
-            $mailer->sender_email = XLite_Core_Request::getInstance()->sender_email;
-            $mailer->recipient_email = XLite_Core_Request::getInstance()->recipient_email;
+            $mailer = new \XLite\Model\Mailer();
+            $mailer->sender_name = \XLite\Core\Request::getInstance()->sender_name;
+            $mailer->sender_email = \XLite\Core\Request::getInstance()->sender_email;
+            $mailer->recipient_email = \XLite\Core\Request::getInstance()->recipient_email;
             $mailer->product = $this->getProduct();
             $mailer->url = $this->getShopUrl(
                 $this->buildURL(
@@ -126,8 +128,8 @@ class XLite_Module_WishList_Controller_Customer_SendFriend extends XLite_Control
                 )
             );
             $mailer->compose(
-                XLite_Core_Request::getInstance()->sender_email,
-                XLite_Core_Request::getInstance()->recipient_email,
+                \XLite\Core\Request::getInstance()->sender_email,
+                \XLite\Core\Request::getInstance()->recipient_email,
                 'modules/WishList/send_friend'
             );
             $mailer->send();
@@ -155,10 +157,10 @@ class XLite_Module_WishList_Controller_Customer_SendFriend extends XLite_Control
         $result = '';
 
         if (
-            isset(XLite_Core_Request::getInstance()->sender_name)
-            && XLite_Core_Request::getInstance()->sender_name
+            isset(\XLite\Core\Request::getInstance()->sender_name)
+            && \XLite\Core\Request::getInstance()->sender_name
         ) {
-            $result = XLite_Core_Request::getInstance()->sender_name;
+            $result = \XLite\Core\Request::getInstance()->sender_name;
 
         } elseif ($this->auth->isLogged()) {
             $profile = $this->auth->getProfile();
@@ -180,8 +182,8 @@ class XLite_Module_WishList_Controller_Customer_SendFriend extends XLite_Control
     {
         $result = '';
 
-        if (isset(XLite_Core_Request::getInstance()->sender_email)) {
-            $result = XLite_Core_Request::getInstance()->sender_email;
+        if (isset(\XLite\Core\Request::getInstance()->sender_email)) {
+            $result = \XLite\Core\Request::getInstance()->sender_email;
 
         } elseif ($this->auth->isLogged()) {
             $result = $this->auth->getProfile()->get('login');
@@ -202,7 +204,7 @@ class XLite_Module_WishList_Controller_Customer_SendFriend extends XLite_Control
         parent::addBaseLocation(true);
 
         $this->locationPath->addNode(
-            new XLite_Model_Location(
+            new \XLite\Model\Location(
                 $this->getProduct()->get('name'),
                 $this->buildURL(
                     'product',
@@ -216,7 +218,7 @@ class XLite_Module_WishList_Controller_Customer_SendFriend extends XLite_Control
     /**
      * getModelObject
      *
-     * @return XLite_Model_AModel
+     * @return \XLite\Model\AModel
      * @access protected
      * @since  3.0.0
      */
@@ -249,7 +251,7 @@ class XLite_Module_WishList_Controller_Customer_SendFriend extends XLite_Control
     /**
      * Return random product category 
      * 
-     * @return XLite_Model_Category
+     * @return \XLite\Model\Category
      * @access protected
      * @since  3.0.0
      */

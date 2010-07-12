@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\ProductOptions\View\Form\Item;
+
 /**
  * Change options form
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_ProductOptions_View_Form_Item_ChangeOptions extends XLite_View_Form_AForm
+class ChangeOptions extends \XLite\View\Form\AForm
 {
     /**
      * Widge parameters names 
@@ -92,9 +94,9 @@ class XLite_Module_ProductOptions_View_Form_Item_ChangeOptions extends XLite_Vie
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_SOURCE     => new XLite_Model_WidgetParam_String('Source', XLite_Core_Request::getInstance()->source),
-            self::PARAM_STORAGE_ID => new XLite_Model_WidgetParam_Int('Storage id', XLite_Core_Request::getInstance()->storage_id),
-            self::PARAM_ITEM_ID    => new XLite_Model_WidgetParam_Int('Item id', XLite_Core_Request::getInstance()->item_id),
+            self::PARAM_SOURCE     => new \XLite\Model\WidgetParam\String('Source', \XLite\Core\Request::getInstance()->source),
+            self::PARAM_STORAGE_ID => new \XLite\Model\WidgetParam\Int('Storage id', \XLite\Core\Request::getInstance()->storage_id),
+            self::PARAM_ITEM_ID    => new \XLite\Model\WidgetParam\Int('Item id', \XLite\Core\Request::getInstance()->item_id),
         );
     }
 

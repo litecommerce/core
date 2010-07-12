@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model;
+
 /**
  * List node
  * 
@@ -33,12 +35,12 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_ListNode extends XLite_Base
+class ListNode extends \XLite\Base
 {
     /**
      * Link to previous list element or null
      * 
-     * @var    XLite_Model_ListNode or null
+     * @var    \XLite\Model\ListNode or null
      * @access protected
      * @since  3.0.0
      */
@@ -47,7 +49,7 @@ class XLite_Model_ListNode extends XLite_Base
     /**
      * Link to next list element or null
      * 
-     * @var    XLite_Model_ListNode|null
+     * @var    \XLite\Model\ListNode|null
      * @access protected
      * @since  3.0.0
      */
@@ -80,7 +82,7 @@ class XLite_Model_ListNode extends XLite_Base
     /**
      * Return link to previous list element
      * 
-     * @return XLite_Model_ListNode|null
+     * @return \XLite\Model\ListNode|null
      * @access public
      * @since  3.0.0
      */
@@ -92,7 +94,7 @@ class XLite_Model_ListNode extends XLite_Base
     /**
      * Return link to next list element
      *
-     * @return XLite_Model_ListNode|null
+     * @return \XLite\Model\ListNode|null
      * @access public
      * @since  3.0.0
      */

@@ -39,7 +39,7 @@ The form below allows you to create a partner profile. Do not forget that this i
     </td>
     <td>
         &nbsp;
-        <widget class="XLite_Validator_EmailValidator" field="login">
+        <widget class="\XLite\Validator\EmailValidator" field="login">
     </td>
 </tr>
 <tr valign="middle">
@@ -50,7 +50,7 @@ The form below allows you to create a partner profile. Do not forget that this i
     </td>
     <td>
         &nbsp;
-        <widget class="XLite_Validator_RequiredValidator" field="password">
+        <widget class="\XLite\Validator\RequiredValidator" field="password">
     </td>
 </tr>
 <tbody IF="!auth.logged">
@@ -62,8 +62,8 @@ The form below allows you to create a partner profile. Do not forget that this i
     </td>
     <td>
         &nbsp;
-        <widget class="XLite_Validator_RequiredValidator" field="confirm_password">
-        <widget class="XLite_Validator_PasswordValidator" field="confirm_password" passwordField="password">
+        <widget class="\XLite\Validator\RequiredValidator" field="confirm_password">
+        <widget class="\XLite\Validator\PasswordValidator" field="confirm_password" passwordField="password">
     </td>
 </tr>
 <tr valign="middle">
@@ -74,7 +74,7 @@ The form below allows you to create a partner profile. Do not forget that this i
     </td>
     <td>
         &nbsp;
-        <widget class="XLite_Validator_RequiredValidator" field="password_hint" visible="{config.Miscellaneous.partner_profile.password_hint}">
+        <widget class="\XLite\Validator\RequiredValidator" field="password_hint" visible="{config.Miscellaneous.partner_profile.password_hint}">
     </td>
 </tr>
 <tr valign="middle">
@@ -85,7 +85,7 @@ The form below allows you to create a partner profile. Do not forget that this i
     </td>
     <td>
         &nbsp;
-        <widget class="XLite_Validator_RequiredValidator" field="password_hint_answer" visible="{config.Miscellaneous.partner_profile.password_hint_answer}">
+        <widget class="\XLite\Validator\RequiredValidator" field="password_hint_answer" visible="{config.Miscellaneous.partner_profile.password_hint_answer}">
     </td>
 </tr>
 </tbody>
@@ -120,7 +120,7 @@ The form below allows you to create a partner profile. Do not forget that this i
     </td>
     <td>
         &nbsp;
-        <widget class="XLite_Validator_RequiredValidator" field="billing_firstname" visible="{config.Miscellaneous.partner_profile.billing_firstname}">
+        <widget class="\XLite\Validator\RequiredValidator" field="billing_firstname" visible="{config.Miscellaneous.partner_profile.billing_firstname}">
     </td>
 </tr>
 <tr valign="middle">
@@ -131,7 +131,7 @@ The form below allows you to create a partner profile. Do not forget that this i
     </td>
     <td align="left">
         &nbsp;
-        <widget class="XLite_Validator_RequiredValidator" field="billing_lastname" visible="{config.Miscellaneous.partner_profile.billing_lastname}">
+        <widget class="\XLite\Validator\RequiredValidator" field="billing_lastname" visible="{config.Miscellaneous.partner_profile.billing_lastname}">
     </td>
 </tr>
 <tr valign="middle">
@@ -142,7 +142,7 @@ The form below allows you to create a partner profile. Do not forget that this i
     </td>
     <td>
         &nbsp;
-        <widget class="XLite_Validator_RequiredValidator" field="billing_company" visible="{config.Miscellaneous.partner_profile.billing_company}">
+        <widget class="\XLite\Validator\RequiredValidator" field="billing_company" visible="{config.Miscellaneous.partner_profile.billing_company}">
     </td>
 </tr>
 <tr valign="middle">
@@ -153,7 +153,7 @@ The form below allows you to create a partner profile. Do not forget that this i
     </td>
     <td>
         &nbsp;
-        <widget class="XLite_Validator_RequiredValidator" field="billing_phone" visible="{config.Miscellaneous.partner_profile.billing_phone}">
+        <widget class="\XLite\Validator\RequiredValidator" field="billing_phone" visible="{config.Miscellaneous.partner_profile.billing_phone}">
     </td>
 </tr>
 <tr valign="middle">
@@ -164,7 +164,7 @@ The form below allows you to create a partner profile. Do not forget that this i
     </td>
     <td>
         &nbsp;
-        <widget class="XLite_Validator_RequiredValidator" field="billing_fax" visible="{config.Miscellaneous.partner_profile.billing_fax}">
+        <widget class="\XLite\Validator\RequiredValidator" field="billing_fax" visible="{config.Miscellaneous.partner_profile.billing_fax}">
     </td>
 </tr>
 <tr valign="middle">
@@ -175,7 +175,7 @@ The form below allows you to create a partner profile. Do not forget that this i
     </td>
     <td>
         &nbsp;
-        <widget class="XLite_Validator_RequiredValidator" field="billing_address" visible="{config.Miscellaneous.partner_profile.billing_address}">
+        <widget class="\XLite\Validator\RequiredValidator" field="billing_address" visible="{config.Miscellaneous.partner_profile.billing_address}">
     </td>
 </tr>
 <tr valign="middle">
@@ -186,30 +186,30 @@ The form below allows you to create a partner profile. Do not forget that this i
     </td>
     <td>
         &nbsp;
-        <widget class="XLite_Validator_RequiredValidator" field="billing_city" visible="{config.Miscellaneous.partner_profile.billing_city}">
+        <widget class="\XLite\Validator\RequiredValidator" field="billing_city" visible="{config.Miscellaneous.partner_profile.billing_city}">
     </td>
 </tr>
 <tr valign="middle">
     <td align="right">State</td>
     <td>{if:config.Miscellaneous.partner_profile.billing_state}<font color="red">*</font>{else:}&nbsp;{end:}</td>
     <td>
-		<widget class="XLite_View_StateSelect" field="billing_state" value="{billing_state}" fieldId="billing_state_id">
+		<widget class="\XLite\View\StateSelect" field="billing_state" value="{billing_state}" fieldId="billing_state_id">
     </td>
     <td>
         &nbsp;
-        <widget class="XLite_Validator_RequiredValidator" field="billing_state" visible="{config.Miscellaneous.partner_profile.billing_state}">
-        <widget class="XLite_Validator_StateValidator" field="billing_state" countryField="billing_country" visible="{config.Miscellaneous.partner_profile.billing_state}">
+        <widget class="\XLite\Validator\RequiredValidator" field="billing_state" visible="{config.Miscellaneous.partner_profile.billing_state}">
+        <widget class="\XLite\Validator\StateValidator" field="billing_state" countryField="billing_country" visible="{config.Miscellaneous.partner_profile.billing_state}">
     </td>
 </tr>
 <tr valign="middle">
     <td align="right">Country</td>
     <td>{if:config.Miscellaneous.partner_profile.billing_country}<font color="red">*</font>{else:}&nbsp;{end:}</td>
     <td>
-		<widget class="XLite_View_CountrySelect" field="billing_country" fieldId="xx2">
+		<widget class="\XLite\View\CountrySelect" field="billing_country" fieldId="xx2">
     </td>
     <td>
         &nbsp;
-        <widget class="XLite_Validator_RequiredValidator" field="billing_country" visible="{config.Miscellaneous.partner_profile.billing_country}">
+        <widget class="\XLite\Validator\RequiredValidator" field="billing_country" visible="{config.Miscellaneous.partner_profile.billing_country}">
     </td>
 </tr>
 <tr valign="middle">
@@ -220,7 +220,7 @@ The form below allows you to create a partner profile. Do not forget that this i
     </td>
     <td>
         &nbsp;
-        <widget class="XLite_Validator_RequiredValidator" field="billing_zipcode" visible="{config.Miscellaneous.partner_profile.billing_zipcode}">
+        <widget class="\XLite\Validator\RequiredValidator" field="billing_zipcode" visible="{config.Miscellaneous.partner_profile.billing_zipcode}">
     </td>
 </tr>
 
@@ -239,7 +239,7 @@ The form below allows you to create a partner profile. Do not forget that this i
     <td>
         <select class="FixedSelect" name="pending_plan">
             <option value="" selected="{pending_plan=##}">Select one..</option>
-            <span FOREACH="xlite.factory.XLite_Module_Affiliate_Model_AffiliatePlan.findAll(),ap">
+            <span FOREACH="xlite.factory.\XLite\Module\Affiliate\Model\AffiliatePlan.findAll(),ap">
             <span IF="ap.plan_id=config.Affiliate.default_plan">
             <option value="{ap.plan_id}" selected="{ap.plan_id=pending_plan}">{ap.title:h} (default)</option>
             </span>
@@ -250,13 +250,13 @@ The form below allows you to create a partner profile. Do not forget that this i
         </select>
     </td>
     <td>&nbsp;
-        <widget class="XLite_Validator_RequiredValidator" field="pending_plan"> 
+        <widget class="\XLite\Validator\RequiredValidator" field="pending_plan"> 
     </td>
 </tr>
 
 <!-- ********************************* ADDITIONAL FIELDS ********************************* -->
 
-<widget class="XLite_Module_Affiliate_View_PartnerField" template="modules/Affiliate/partner_field.tpl" formField="partner_fields" partnerFields="{partnerFields}">
+<widget class="\XLite\Module\Affiliate\View\PartnerField" template="modules/Affiliate/partner_field.tpl" formField="partner_fields" partnerFields="{partnerFields}">
 
 </table>
 

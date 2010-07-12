@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\EcommerceReports\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_EcommerceReports_Controller_Admin_SpStats extends XLite_Module_EcommerceReports_Controller_Admin_EcommerceReports
+class SpStats extends \XLite\Module\EcommerceReports\Controller\Admin\EcommerceReports
 {
     function getShippingMethods() 
     {
@@ -51,7 +53,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_SpStats extends XLite_Modul
 
     function getShippingMethod($sid) 
     {
-        $sm = new XLite_Model_Shipping();
+        $sm = new \XLite\Model\Shipping();
         if (!$sm->find("shipping_id=$sid")) {
             $sm->set('shipping_id', $sid);
             $name = ($sid == 0)?"Free shipping":"Unknown (id:$sid)";
@@ -127,7 +129,7 @@ class XLite_Module_EcommerceReports_Controller_Admin_SpStats extends XLite_Modul
     function getOrder() 
     {
         if (is_null($this->order)) {
-            $this->order = new XLite_Model_Order();
+            $this->order = new \XLite\Model\Order();
         }
         return $this->order;
     }

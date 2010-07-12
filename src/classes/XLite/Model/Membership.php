@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model;
+
 /**
  * Membership
  * 
@@ -35,7 +37,7 @@
  * @Entity
  * @Table (name="memberships")
  */
-class XLite_Model_Membership extends XLite_Model_Base_I18n
+class Membership extends \XLite\Model\Base\I18n
 {
     /**
      * Unique id 

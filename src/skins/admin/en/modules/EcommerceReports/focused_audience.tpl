@@ -42,7 +42,7 @@
         <table border=0 cellspacing=1 cellpadding=3>
         <tr valign=top>
             <td>
-                <widget class="XLite_View_ProductSelect" formName="ecommerce_report_form" formField="product1" removeButton>
+                <widget class="\XLite\View\ProductSelect" formName="ecommerce_report_form" formField="product1" removeButton>
             </td>
             <td>
                 <select name=product1_mod>
@@ -62,7 +62,7 @@
 
         <tr valign=top>
             <td>
-                <widget class="XLite_View_ProductSelect" formName="ecommerce_report_form" formField="product2" removeButton>
+                <widget class="\XLite\View\ProductSelect" formName="ecommerce_report_form" formField="product2" removeButton>
             </td>
             <td>
                 <select name=product2_mod>
@@ -82,7 +82,7 @@
 
         <tr valign=top>
             <td>
-                <widget class="XLite_View_ProductSelect" formName="ecommerce_report_form" formField="product3" removeButton>
+                <widget class="\XLite\View\ProductSelect" formName="ecommerce_report_form" formField="product3" removeButton>
             </td>
             <td>
                 <select name=product3_mod>
@@ -128,12 +128,12 @@
 
 <tr>
     <td>State:</td>
-    <td><widget class="XLite_View_StateSelect" field="state"></td>
+    <td><widget class="\XLite\View\StateSelect" field="state"></td>
 </tr>
 
 <tr>
     <td>Country:</td>
-    <td><widget class="XLite_View_CountrySelect" field="country"></td>
+    <td><widget class="\XLite\View\CountrySelect" field="country"></td>
 </tr>
 
 <tr>
@@ -184,7 +184,7 @@
 
 <tr>
     <td>Membership:</td>
-    <td><widget class="XLite_View_MembershipSelect" template="common/select_membership.tpl" field="membership" allOption></td>
+    <td><widget class="\XLite\View\MembershipSelect" template="common/select_membership.tpl" field="membership" allOption></td>
 </tr>
 
 <tr>

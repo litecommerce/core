@@ -24,8 +24,8 @@
 <input type="hidden" name="order_id" value="{order.order_id}">
 <tr>
 	<td>Status:</td>
-	<td IF="order.status=config.General.clear_cc_info"><widget class="XLite_View_StatusSelect" field="status" value="{order.status}"></td>
-	<td IF="!order.status=config.General.clear_cc_info"><widget class="XLite_View_StatusSelect" field="status" value="{order.status}" pm="{order.paymentMethod.payment_method}"></td>
+	<td IF="order.status=config.General.clear_cc_info"><widget class="\XLite\View\StatusSelect" field="status" value="{order.status}"></td>
+	<td IF="!order.status=config.General.clear_cc_info"><widget class="\XLite\View\StatusSelect" field="status" value="{order.status}" pm="{order.paymentMethod.payment_method}"></td>
 </tr>
 {foreach:order.details,name,val}
 <tr valign="top" IF="order.getDetailLabel(name)">

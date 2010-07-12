@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\WholesaleTrading\Controller\Customer;
+
 // FIXME - must be completely revised
 
 /**
@@ -35,7 +37,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_WholesaleTrading_Controller_Customer_Profile extends XLite_Controller_Customer_Profile implements XLite_Base_IDecorator
+class Profile extends \XLite\Controller\Customer\Profile implements \XLite\Base\IDecorator
 {
 /*    function init()
     {
@@ -48,9 +50,9 @@ class XLite_Module_WholesaleTrading_Controller_Customer_Profile extends XLite_Co
     {
         parent::action_register();
         if ($this->registerForm->is('valid')) {
-            $product = new XLite_Model_Product();
+            $product = new \XLite\Model\Product();
             if ($this->registerForm->getComplex('profile.pending_membership') != "" && $product->find("selling_membership='" . $this->registerForm->getComplex('profile.pending_membership') . "'")) {
-                $oi = new XLite_Model_OrderItem();
+                $oi = new \XLite\Model\OrderItem();
                 $oi->set('product', $product);
                 $this->cart->addItem($oi);
                 $this->updateCart();

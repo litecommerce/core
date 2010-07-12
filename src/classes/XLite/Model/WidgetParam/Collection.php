@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model\WidgetParam;
+
 /**
  * Collection (array)
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_WidgetParam_Collection extends XLite_Model_WidgetParam_AWidgetParam
+class Collection extends \XLite\Model\WidgetParam\AWidgetParam
 {
     /**
      * Param type

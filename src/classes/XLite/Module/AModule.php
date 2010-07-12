@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module;
+
 /**
  * Module
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class XLite_Module_AModule extends XLite_Model_Module
+abstract class AModule extends \XLite\Model\Module
 {
     /**
      * Return module name by class name
@@ -44,7 +46,7 @@ abstract class XLite_Module_AModule extends XLite_Model_Module
      */
     protected function getModuleName()
     {
-        return preg_match('/XLite_Module_(\w+)_Main/', get_class($this), $matches) ?
+        return preg_match('/XLite\\\Module\\\(\w+)\\\Main/', get_class($this), $matches) ?
             $matches[1] : $this->doDie('Module class name is invalid - "' . get_class($this) . '"');
     }
 
@@ -59,8 +61,8 @@ abstract class XLite_Module_AModule extends XLite_Model_Module
      */
     protected function registerPaymentMethod($name)
     {
-        $method = new XLite_Model_PaymentMethod();
-        $class  = 'Module_' . $this->getModuleName() . '_Model_PaymentMethod_' . XLite_Core_Converter::convertToCamelCase($name);
+        $method = new \XLite\Model\PaymentMethod();
+        $class  = 'Module\\' . $this->getModuleName() . '\Model\PaymentMethod\\' . \XLite\Core\Converter::convertToCamelCase($name);
 
         return $method->registerMethod($name, $class);
     }
@@ -76,8 +78,8 @@ abstract class XLite_Module_AModule extends XLite_Model_Module
      */
     protected function registerShippingModule($name)
     {
-        $shipping = new XLite_Model_Shipping();
-        $class  = 'Module_' . $this->getModuleName() . '_Model_Shipping_' . XLite_Core_Converter::convertToCamelCase($name);
+        $shipping = new \XLite\Model\Shipping();
+        $class  = 'Module\\' . $this->getModuleName() . '\Model\Shipping\\' . \XLite\Core\Converter::convertToCamelCase($name);
 
         return $shipping->registerShippingModule($name, $class);
     }

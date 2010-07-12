@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Egoods\Model;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Egoods_Model_PinCode extends XLite_Model_AModel
+class PinCode extends \XLite\Model\AModel
 {
     public $alias = "pin_codes";
 
@@ -61,7 +63,7 @@ class XLite_Module_Egoods_Model_PinCode extends XLite_Model_AModel
 
     function getFreePinCount($product_id) 
     {
-        $product = new XLite_Model_Product($product_id);
+        $product = new \XLite\Model\Product($product_id);
         if ($product->get('pin_type') == 'D') {
             return count($this->findAll("item_id='' AND enabled=1 AND order_id=0 AND product_id=" . $product_id));
         } else if ($product->get('pin_type') == 'E') {
@@ -86,11 +88,11 @@ class XLite_Module_Egoods_Model_PinCode extends XLite_Model_AModel
             if ($field == "NULL") {
                 $data[] = "";
             } elseif ($field == "product") {
-                $product = new XLite_Model_Product($values['product_id']);
+                $product = new \XLite\Model\Product($values['product_id']);
                 $data[] = $this->_stripSpecials($product->get('name'));
             } elseif ($field == "category") {
-                $product = new XLite_Model_Product($values['product_id']);
-                $category = new XLite_Model_Category();
+                $product = new \XLite\Model\Product($values['product_id']);
+                $category = new \XLite\Model\Category();
                 $data[] =  $category->createCategoryField($product->get('categories'));
             } elseif (isset($values[$field])) {
                 $data[] =  $this->_stripSpecials($values[$field]);
@@ -108,13 +110,13 @@ class XLite_Module_Egoods_Model_PinCode extends XLite_Model_AModel
 
         echo "<b>Importing CSV file line # $line_no: </b>";
 
-        $product = new XLite_Model_Product();
+        $product = new \XLite\Model\Product();
         $product = $product->findImportedProduct("",$properties['category'],$properties['product'],false);
         if (!is_object($product)) {
             echo "product <b>\"".$properties['product']."\"</b> not found in category <b>\"".$properties['category']."\"</b>. Pin code not imported.<br>";
             return false;
         }
-        $pin = new XLite_Module_Egoods_Model_PinCode();
+        $pin = new \XLite\Module\Egoods\Model\PinCode();
         $found = $pin->find("pin = '".$properties['pin']."' AND product_id =". $product->get('product_id'));
 
         $pin->set('pin', $properties['pin']);

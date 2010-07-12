@@ -10,4 +10,4 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-document.write('<widget class="XLite_Module_Affiliate_View_RichBanner" banner="{banner}" href="{getShopUrl(#cart.php#)}?banner_id={banner.banner_id}&partner={partner}" src="{getShopUrl(#cart.php#,secure,#1#)}?target=image&action=banner_image&id={banner.banner_id}">');
+document.write('<widget class="\XLite\Module\Affiliate\View\RichBanner" banner="{banner}" href="{getShopUrl(#cart.php#)}?banner_id={banner.banner_id}&partner={partner}" src="{getShopUrl(#cart.php#,secure,#1#)}?target=image&action=banner_image&id={banner.banner_id}">');

@@ -26,8 +26,10 @@
  * @since      3.0.0
  */
 
-class XLite_Module_Demo_Controller_Admin_Module extends XLite_Controller_Admin_Module
-implements XLite_Base_IDecorator
+namespace XLite\Module\Demo\Controller\Admin;
+
+class Module extends \XLite\Controller\Admin\Module
+implements \XLite\Base\IDecorator
 {
     /**
      * Update modules list
@@ -39,7 +41,7 @@ implements XLite_Base_IDecorator
      */
     protected function doActionUpdate()
     {
-        XLite_Module_Demo_Main::doForbidAction();
+        \XLite\Module\Demo\Main::doForbidAction();
     }
 }
 

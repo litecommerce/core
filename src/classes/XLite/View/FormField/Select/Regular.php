@@ -25,6 +25,8 @@
  * @see        ____file_see____
  * @since      3.0.0
  */
+
+namespace XLite\View\FormField\Select;
  
 /**
  * Form regular selector
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class XLite_View_FormField_Select_Regular extends XLite_View_FormField_Select_ASelect
+abstract class Regular extends \XLite\View\FormField\Select\ASelect
 {
 }
 

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Core;
+
 /**
  * Abstract handler (common parent for viewer and controller) 
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class XLite_Core_Handler extends XLite_Base
+abstract class Handler extends \XLite\Base
 {
     /**
      * Common handler params
@@ -78,7 +80,7 @@ abstract class XLite_Core_Handler extends XLite_Base
     protected function defineWidgetParams()
     {
         $this->widgetParams = array(
-            self::PARAM_IS_EXPORTED => new XLite_Model_WidgetParam_Bool('Is exported', XLite_Core_CMSConnector::isCMSStarted()),
+            self::PARAM_IS_EXPORTED => new \XLite\Model\WidgetParam\Bool('Is exported', \XLite\Core\CMSConnector::isCMSStarted()),
         );
     }
 
@@ -271,7 +273,7 @@ abstract class XLite_Core_Handler extends XLite_Base
      */
     public function buildURL($target = '', $action = '', array $params = array())
     {
-        return XLite_Core_Converter::buildURL($target, $action, $params);
+        return \XLite\Core\Converter::buildURL($target, $action, $params);
     }
 
     /**

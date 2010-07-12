@@ -15,12 +15,12 @@
 
   <b>Frequently used templates:</b>
 
-  <widget class="XLite_View_FileExplorer" columnCount="1" dsn="shortcuts" />
+  <widget class="\XLite\View\FileExplorer" columnCount="1" dsn="shortcuts" />
 
 <hr />
 
 </span>
 
-<widget class="XLite_View_FileExplorer" formSelectionName="selected_file" columnCount="2" modifier="zone" />
+<widget class="\XLite\View\FileExplorer" formSelectionName="selected_file" columnCount="2" modifier="zone" />
 
 

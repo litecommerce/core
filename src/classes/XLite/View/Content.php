@@ -26,14 +26,16 @@
  * @since      3.0.0
  */
 
+namespace XLite\View;
+
 /**
- * XLite_View_Content 
+ * \XLite\View\Content 
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_Content extends XLite_View_AView
+class Content extends \XLite\View\AView
 {
     /**
      * Chunk size
@@ -76,7 +78,7 @@ class XLite_View_Content extends XLite_View_AView
      */
     protected function echoContent()
     {
-        array_map(array($this, 'echoChunk'), str_split(XLite_View_Controller::$bodyContent, self::BUFFER_SIZE));
+        array_map(array($this, 'echoChunk'), str_split(\XLite\View\Controller::$bodyContent, self::BUFFER_SIZE));
     }
 
 
@@ -89,7 +91,7 @@ class XLite_View_Content extends XLite_View_AView
      */
     public function display()
     {
-        isset(XLite_View_Controller::$bodyContent) ? $this->echoContent() : parent::display();
+        isset(\XLite\View\Controller::$bodyContent) ? $this->echoContent() : parent::display();
     }
 }
 

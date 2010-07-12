@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\DetailedImages\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_DetailedImages_Controller_Admin_ImportCatalog extends XLite_Controller_Admin_ImportCatalog implements XLite_Base_IDecorator
+class ImportCatalog extends \XLite\Controller\Admin\ImportCatalog implements \XLite\Base\IDecorator
 {
     public function __construct(array $params = array())
     {
@@ -58,7 +60,7 @@ class XLite_Module_DetailedImages_Controller_Admin_ImportCatalog extends XLite_C
                 "return_error" => true,
                 );
 
-        $detailed_image = new XLite_Module_DetailedImages_Model_DetailedImage();
+        $detailed_image = new \XLite\Module\DetailedImages\Model\DetailedImage();
         $detailed_image->import($options);
         $this->importError = $detailed_image->importError;
 

@@ -26,14 +26,16 @@
  * @since      3.0.0
  */
 
+namespace XLite\View\CheckoutStep;
+
 /**
- * XLite_View_CheckoutStep_ACheckoutStep 
+ * \XLite\View\CheckoutStep\ACheckoutStep 
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class XLite_View_CheckoutStep_ACheckoutStep extends XLite_View_Dialog
+abstract class ACheckoutStep extends \XLite\View\Dialog
 {
     /**
      * Return step templates directory name 
@@ -101,8 +103,8 @@ abstract class XLite_View_CheckoutStep_ACheckoutStep extends XLite_View_Dialog
     public function getTopMessage($isPassed)
     {
         return array(
-            XLite_Core_TopMessage::FIELD_TYPE => $isPassed ? XLite_Core_TopMessage::INFO : XLite_Core_TopMessage::ERROR,
-            XLite_Core_TopMessage::FIELD_TEXT => $isPassed ? $this->getSuccessText() : $this->getErrorText(),
+            \XLite\Core\TopMessage::FIELD_TYPE => $isPassed ? \XLite\Core\TopMessage::INFO : \XLite\Core\TopMessage::ERROR,
+            \XLite\Core\TopMessage::FIELD_TEXT => $isPassed ? $this->getSuccessText() : $this->getErrorText(),
         );
     }
 }

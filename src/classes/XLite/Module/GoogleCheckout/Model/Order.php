@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\GoogleCheckout\Model;
+
 /**
  * Order
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_GoogleCheckout_Model_Order extends XLite_Model_Order implements XLite_Base_IDecorator
+class Order extends \XLite\Model\Order implements \XLite\Base\IDecorator
 {
     public $GoogleCheckout_profile = null;
 
@@ -145,11 +147,11 @@ EOT;
     function getGoogleCheckoutXML_Shippings()
     {
         $shippings = array();
-        $so = new XLite_Model_Shipping();
+        $so = new \XLite\Model\Shipping();
         foreach ($so->get('modules') as $module) {
             $shipping_class = $module->get('class');
 
-            $shipping = new XLite_Model_Shipping();
+            $shipping = new \XLite\Model\Shipping();
             $shippings = array_merge($shippings, $shipping->findAll("enabled=1 AND class='$shipping_class'"));
         }
 
@@ -160,7 +162,7 @@ EOT;
         $shippingsXML = array();
 
         foreach ($shippings as $shipping) {
-            $shippingRate = new XLite_Model_ShippingRate();
+            $shippingRate = new \XLite\Model\ShippingRate();
             $shippingRate->set('shipping', $shipping);
             $shippingsXML[] = $shippingRate->getGoogleCheckoutXML();
         }
@@ -228,7 +230,7 @@ EOT;
         }
 
         if (!is_null($dc)) {
-            $coupon = new XLite_Module_Promotion_Model_DiscountCoupon();
+            $coupon = new \XLite\Module\Promotion\Model\DiscountCoupon();
             if ( function_exists('func_is_clone_deprecated') && func_is_clone_deprecated() ) {
                 $clone = $dc->cloneObject();
             } else {
@@ -299,7 +301,7 @@ EOT;
 
         $disableCustomerNotif = $this->xlite->get('GoogleCheckoutDCN');
         if (!isset($disableCustomerNotif)) {
-            $pmGC = XLite_Model_PaymentMethod::factory('google_checkout');
+            $pmGC = \XLite\Model\PaymentMethod::factory('google_checkout');
             $disableCustomerNotif = $pmGC->getComplex('params.disable_customer_notif');
             $this->xlite->set('GoogleCheckoutDCN', $disableCustomerNotif);
         }
@@ -403,7 +405,7 @@ EOT;
                 return false;
             }
 
-            $dc = new XLite_Module_Promotion_Model_DiscountCoupon();
+            $dc = new \XLite\Module\Promotion\Model\DiscountCoupon();
             if ($dc->count("status='A' AND expire>='".time()."' AND order_id='0'") > 0) {
                 return true;
             }
@@ -426,11 +428,11 @@ EOT;
     function isGoogleGiftCertificatesAvailable()
     {
         if ($this->xlite->get('GiftCertificatesEnabled') && is_null($this->getGC())) {
-            $gc = new XLite_Module_GiftCertificates_Model_GiftCertificate();
+            $gc = new \XLite\Module\GiftCertificates\Model\GiftCertificate();
             $certs = $gc->findAll();
             foreach ($certs as $cert) {
                 if (
-                    $cert->validate() == XLite_Module_GiftCertificates_Model_GiftCertificate::GC_OK
+                    $cert->validate() == \XLite\Module\GiftCertificates\Model\GiftCertificate::GC_OK
                     && 0 < $cert->get('debit')
                 ) {
                     return true;

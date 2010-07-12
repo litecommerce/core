@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\AustraliaPost\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_AustraliaPost_Controller_Admin_Aupost extends XLite_Controller_Admin_ShippingSettings
+class Aupost extends \XLite\Controller\Admin\ShippingSettings
 {
     public $params = array('target', "updated");
     public $page		="aupost";
@@ -46,13 +48,13 @@ class XLite_Module_AustraliaPost_Controller_Admin_Aupost extends XLite_Controlle
     {
         parent::__construct($params);
 
-        $aupost = new XLite_Module_AustraliaPost_Model_Shipping_Aupost();
+        $aupost = new \XLite\Module\AustraliaPost\Model\Shipping\Aupost();
         $this->settings = $aupost->get('options');
     }
     
     function action_update()  
     {
-        $aupost = new XLite_Module_AustraliaPost_Model_Shipping_Aupost();
+        $aupost = new \XLite\Module\AustraliaPost\Model\Shipping\Aupost();
         $currency_rate = $_POST['currency_rate'];
         if (((double) $currency_rate) <= 0) {
             $_POST['currency_rate'] = 1;
@@ -73,7 +75,7 @@ class XLite_Module_AustraliaPost_Controller_Admin_Aupost extends XLite_Controlle
         if (empty($this->destinationCountry)) 
             $this->destinationCountry = $this->config->General->default_country;
  
-        $this->aupost = new XLite_Module_AustraliaPost_Model_Shipping_Aupost();
+        $this->aupost = new \XLite\Module\AustraliaPost\Model\Shipping\Aupost();
         $options = $this->aupost->get('options');
 
         $this->rates = $this->aupost->queryRates

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View\Model\Profile;
+
 /**
  * Profile model widget
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class XLite_View_Model_Profile_AProfile extends XLite_View_Model_AModel
+abstract class AProfile extends \XLite\View\Model\AModel
 {
     /**
      * Form sections 
@@ -58,64 +60,64 @@ abstract class XLite_View_Model_Profile_AProfile extends XLite_View_Model_AModel
      */
     protected $addressSchema = array(
         'type' => array(
-            self::SCHEMA_CLASS    => 'XLite_View_FormField_Select_AddressType',
+            self::SCHEMA_CLASS    => '\XLite\View\FormField\Select\AddressType',
             self::SCHEMA_LABEL    => 'Address type',
             self::SCHEMA_REQUIRED => true,
         ),
         'title' => array(
-            self::SCHEMA_CLASS    => 'XLite_View_FormField_Select_Title',
+            self::SCHEMA_CLASS    => '\XLite\View\FormField\Select\Title',
             self::SCHEMA_LABEL    => 'Title',
         ),
         'firstname' => array(
-            self::SCHEMA_CLASS    => 'XLite_View_FormField_Input_Text',
+            self::SCHEMA_CLASS    => '\XLite\View\FormField\Input\Text',
             self::SCHEMA_LABEL    => 'Firstname',
             self::SCHEMA_REQUIRED => true,
         ),
         'lastname' => array(
-            self::SCHEMA_CLASS    => 'XLite_View_FormField_Input_Text',
+            self::SCHEMA_CLASS    => '\XLite\View\FormField\Input\Text',
             self::SCHEMA_LABEL    => 'Lastname',
             self::SCHEMA_REQUIRED => true,
         ),
         'company' => array(
-            self::SCHEMA_CLASS    => 'XLite_View_FormField_Input_Text',
+            self::SCHEMA_CLASS    => '\XLite\View\FormField\Input\Text',
             self::SCHEMA_LABEL    => 'Company',
         ),
         'phone' => array(
-            self::SCHEMA_CLASS    => 'XLite_View_FormField_Input_Text',
+            self::SCHEMA_CLASS    => '\XLite\View\FormField\Input\Text',
             self::SCHEMA_LABEL    => 'Phone',
             self::SCHEMA_REQUIRED => true,
         ),
         'fax' => array(
-            self::SCHEMA_CLASS    => 'XLite_View_FormField_Input_Text',
+            self::SCHEMA_CLASS    => '\XLite\View\FormField\Input\Text',
             self::SCHEMA_LABEL    => 'Fax',
         ),
         'address' => array(
-            self::SCHEMA_CLASS    => 'XLite_View_FormField_Input_Text',
+            self::SCHEMA_CLASS    => '\XLite\View\FormField\Input\Text',
             self::SCHEMA_LABEL    => 'Address',
             self::SCHEMA_REQUIRED => true,
         ),
         'city' => array(
-            self::SCHEMA_CLASS    => 'XLite_View_FormField_Input_Text',
+            self::SCHEMA_CLASS    => '\XLite\View\FormField\Input\Text',
             self::SCHEMA_LABEL    => 'City',
             self::SCHEMA_REQUIRED => true,
         ),
         'state' => array(
-            self::SCHEMA_CLASS    => 'XLite_View_FormField_Select_State',
+            self::SCHEMA_CLASS    => '\XLite\View\FormField\Select\State',
             self::SCHEMA_LABEL    => 'State',
             self::SCHEMA_REQUIRED => true,
         ),
         'custom_state' => array(
-            self::SCHEMA_CLASS    => 'XLite_View_FormField_Input_Text',
+            self::SCHEMA_CLASS    => '\XLite\View\FormField\Input\Text',
             self::SCHEMA_LABEL    => 'Other state',
             self::SCHEMA_REQUIRED => false,
         ),
         'country' => array(
-            self::SCHEMA_CLASS    => 'XLite_View_FormField_Select_Country',
+            self::SCHEMA_CLASS    => '\XLite\View\FormField\Select\Country',
             self::SCHEMA_LABEL    => 'Country',
             self::SCHEMA_REQUIRED => true,
         ),
         'zipcode' => array(
-            self::SCHEMA_CLASS    => 'XLite_View_FormField_Input_Text',
+            self::SCHEMA_CLASS    => '\XLite\View\FormField\Input\Text',
             self::SCHEMA_LABEL    => 'Zip code',
             self::SCHEMA_REQUIRED => true,
         ),
@@ -134,7 +136,7 @@ abstract class XLite_View_Model_Profile_AProfile extends XLite_View_Model_AModel
     {
         return array(
             self::FLAG_SHIP_AS_BILL => array(
-                self::SCHEMA_CLASS => 'XLite_View_FormField_Input_Checkbox_ShipAsBill',
+                self::SCHEMA_CLASS => '\XLite\View\FormField\Input\Checkbox\ShipAsBill',
             ),
         );
     }
@@ -143,14 +145,14 @@ abstract class XLite_View_Model_Profile_AProfile extends XLite_View_Model_AModel
      * Return instance of the "Ship as bill" separator field
      * PHP_5_3
      * 
-     * @return XLite_View_FormField_Separator_ShippingAddress
+     * @return \XLite\View\FormField\Separator\ShippingAddress
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getShipAsBillWidget()
     {
-        $class = 'XLite_View_FormField_Separator_ShippingAddress';
+        $class = '\XLite\View\FormField\Separator\ShippingAddress';
         $checkbox = $this->getFormField(self::SECTION_HIDDEN, self::FLAG_SHIP_AS_BILL);
 
         return new $class(
@@ -198,7 +200,7 @@ abstract class XLite_View_Model_Profile_AProfile extends XLite_View_Model_AModel
      */
     protected function getDefaultModelObjectClass()
     {
-        return 'XLite_Model_Profile';
+        return '\XLite\Model\Profile';
     }
 
     /**
@@ -210,7 +212,7 @@ abstract class XLite_View_Model_Profile_AProfile extends XLite_View_Model_AModel
      */
     protected function getFormClass()
     {
-        return 'XLite_View_Form_Profile';
+        return '\XLite\View\Form\Profile';
     }
 
     /**
@@ -280,7 +282,7 @@ abstract class XLite_View_Model_Profile_AProfile extends XLite_View_Model_AModel
      */
     protected function getInlineJSCode()
     {
-        return $this->getWidget(array(), 'XLite_View_JS_StatesList')->getContent();
+        return $this->getWidget(array(), '\XLite\View\JS\StatesList')->getContent();
     }
 
     /**
@@ -293,7 +295,7 @@ abstract class XLite_View_Model_Profile_AProfile extends XLite_View_Model_AModel
      */
     protected function getSubmitButtonLabel()
     {
-        return XLite_Model_Auth::getInstance()->isLogged() ? 'Update profile' : 'Create new account';
+        return \XLite\Model\Auth::getInstance()->isLogged() ? 'Update profile' : 'Create new account';
     }
 
     /**
@@ -307,8 +309,8 @@ abstract class XLite_View_Model_Profile_AProfile extends XLite_View_Model_AModel
     protected function getFormButtons()
     {
         $result = parent::getFormButtons();
-        $result['submit'] = new XLite_View_Button_Submit(
-            array(XLite_View_Button_AButton::PARAM_LABEL => $this->getSubmitButtonLabel())
+        $result['submit'] = new \XLite\View\Button\Submit(
+            array(\XLite\View\Button\AButton::PARAM_LABEL => $this->getSubmitButtonLabel())
         );
 
         return $result;
@@ -343,7 +345,7 @@ abstract class XLite_View_Model_Profile_AProfile extends XLite_View_Model_AModel
     /**
      * Return model object to use
      *
-     * @return XLite_Model_AModel
+     * @return \XLite\Model\AModel
      * @access public
      * @since  3.0.0
      */
@@ -352,8 +354,8 @@ abstract class XLite_View_Model_Profile_AProfile extends XLite_View_Model_AModel
         $profile = parent::getModelObject();
 
         // Reset profile if it's not valid
-        if (!XLite_Model_Auth::getInstance()->checkProfile($profile)) {
-            $profile = XLite_Model_CachingFactory::getObject(__METHOD__, 'XLite_Model_Profile');
+        if (!\XLite\Model\Auth::getInstance()->checkProfile($profile)) {
+            $profile = \XLite\Model\CachingFactory::getObject(__METHOD__, '\XLite\Model\Profile');
         }
 
         return $profile;
@@ -416,7 +418,7 @@ abstract class XLite_View_Model_Profile_AProfile extends XLite_View_Model_AModel
      */
     public function getRequestProfileId()
     {
-        return XLite_Core_Request::getInstance()->profile_id;
+        return \XLite\Core\Request::getInstance()->profile_id;
     }
 
     /**
@@ -429,7 +431,7 @@ abstract class XLite_View_Model_Profile_AProfile extends XLite_View_Model_AModel
      */
     public function getProfileId()
     {
-        return $this->getRequestProfileId() ?: XLite_Model_Session::getInstance()->get('profile_id');
+        return $this->getRequestProfileId() ?: \XLite\Model\Session::getInstance()->get('profile_id');
     }
 
     /**

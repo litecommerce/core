@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Controller;
+
 define('EMAIL_REGEXP', '(?:[a-z0-9!#$%&\'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&\'*+\/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])');
 
 /**
@@ -35,7 +37,7 @@ define('EMAIL_REGEXP', '(?:[a-z0-9!#$%&\'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&\'*+\/
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class XLite_Controller_AController extends XLite_Core_Handler
+abstract class AController extends \XLite\Core\Handler
 {
     /**
      * Controller main params
@@ -59,7 +61,7 @@ abstract class XLite_Controller_AController extends XLite_Core_Handler
     /**
      * Object to keep action status
      * 
-     * @var    XLite_Model_ActionError_Abstract
+     * @var    \XLite\Model\ActionError\Abstract
      * @access protected
      * @since  3.0.0
      */
@@ -68,7 +70,7 @@ abstract class XLite_Controller_AController extends XLite_Core_Handler
     /**
      * Breadcrumbs 
      * 
-     * @var    XLite_Model_LocationPath
+     * @var    \XLite\Model\LocationPath
      * @access protected
      * @since  3.0.0
      */
@@ -84,7 +86,7 @@ abstract class XLite_Controller_AController extends XLite_Core_Handler
      */
     protected function checkAccess()
     {
-        return XLite_Model_Auth::getInstance()->isAuthorized($this);
+        return \XLite\Model\Auth::getInstance()->isAuthorized($this);
     }
 
     /**
@@ -96,7 +98,7 @@ abstract class XLite_Controller_AController extends XLite_Core_Handler
      */
     protected function getDefaultRedirectCode()
     {
-        return XLite_Core_Request::getInstance()->isAJAX() ? 278 : 302;
+        return \XLite\Core\Request::getInstance()->isAJAX() ? 278 : 302;
     }
 
     /**
@@ -135,7 +137,7 @@ abstract class XLite_Controller_AController extends XLite_Core_Handler
             $location = $this->filterXliteFormID($location);
         }
 
-        XLite_Core_Operator::redirect($location, false, $this->getParam(self::PARAM_REDIRECT_CODE));
+        \XLite\Core\Operator::redirect($location, false, $this->getParam(self::PARAM_REDIRECT_CODE));
     }
 
     /**
@@ -160,7 +162,7 @@ abstract class XLite_Controller_AController extends XLite_Core_Handler
      */
     protected function addBaseLocation()
     {
-        $this->locationPath->addNode(new XLite_Model_Location('Home', $this->buildURL()));
+        $this->locationPath->addNode(new \XLite\Model\Location('Home', $this->buildURL()));
     }
 
     /**
@@ -223,23 +225,23 @@ abstract class XLite_Controller_AController extends XLite_Core_Handler
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_TARGET => new XLite_Model_WidgetParam_String('Target', null),
-            self::PARAM_ACTION => new XLite_Model_WidgetParam_String('Action', null),
+            self::PARAM_TARGET => new \XLite\Model\WidgetParam\String('Target', null),
+            self::PARAM_ACTION => new \XLite\Model\WidgetParam\String('Action', null),
         );
 
         $this->widgetParams += array(
-            self::PARAM_CATEGORY_ID => new XLite_Model_WidgetParam_ObjectId_Category('Category Id', 0),
-            self::PARAM_PRODUCT_ID  => new XLite_Model_WidgetParam_ObjectId_Product('Product Id', 0),
+            self::PARAM_CATEGORY_ID => new \XLite\Model\WidgetParam\ObjectId\Category('Category Id', 0),
+            self::PARAM_PRODUCT_ID  => new \XLite\Model\WidgetParam\ObjectId\Product('Product Id', 0),
         );
 
         $this->widgetParams += array(
-            self::PARAM_RETURN_URL    => new XLite_Model_WidgetParam_String('Return URL', $this->getDefaultReturnURL()),
-            self::PARAM_REDIRECT_CODE => new XLite_Model_WidgetParam_Int('Redirect code', $this->getDefaultRedirectCode()),
+            self::PARAM_RETURN_URL    => new \XLite\Model\WidgetParam\String('Return URL', $this->getDefaultReturnURL()),
+            self::PARAM_REDIRECT_CODE => new \XLite\Model\WidgetParam\Int('Redirect code', $this->getDefaultRedirectCode()),
         );
     }
 
     /**
-     * Class name for the XLite_View_Model_ form (optional)
+     * Class name for the \XLite\View\Model\ form (optional)
      * 
      * @return string|null
      * @access protected
@@ -255,7 +257,7 @@ abstract class XLite_Controller_AController extends XLite_Core_Handler
      * 
      * @param array $params form constructor params
      *  
-     * @return XLite_View_Model_AModel|null
+     * @return \XLite\View\Model\AModel|null
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -266,7 +268,7 @@ abstract class XLite_Controller_AController extends XLite_Core_Handler
         $class  = $this->getModelFormClass();
 
         if (isset($class)) {
-            $result = XLite_Model_CachingFactory::getObject(
+            $result = \XLite\Model\CachingFactory::getObject(
                 __METHOD__ . $class . (empty($params) ? '' : md5(serialize($params))),
                 $class,
                 $params
@@ -314,7 +316,7 @@ abstract class XLite_Controller_AController extends XLite_Core_Handler
     protected function actionPostprocess($action)
     {
         if (isset($action)) {
-            $method = __FUNCTION__ . XLite_Core_Converter::convertToCamelCase($action);
+            $method = __FUNCTION__ . \XLite\Core\Converter::convertToCamelCase($action);
             if (method_exists($this, $method)) {
                 $this->$method();
             }
@@ -331,7 +333,7 @@ abstract class XLite_Controller_AController extends XLite_Core_Handler
      */
     public function isRedirectNeeded()
     {
-        return (XLite_Core_Request::getInstance()->isPost() || $this->getReturnUrl()) && !$this->silent;
+        return (\XLite\Core\Request::getInstance()->isPost() || $this->getReturnUrl()) && !$this->silent;
     }
 
     /**
@@ -371,13 +373,13 @@ abstract class XLite_Controller_AController extends XLite_Core_Handler
      */
     public function getShopUrl($url, $secure = false)
     {
-        return XLite::getInstance()->getShopUrl($url, $secure);
+        return \XLite::getInstance()->getShopUrl($url, $secure);
     }
 
     /**
      * Return current location path 
      * 
-     * @return XLite_Model_LocationPath
+     * @return \XLite\Model\LocationPath
      * @access public
      * @since  3.0.0
      */
@@ -385,11 +387,11 @@ abstract class XLite_Controller_AController extends XLite_Core_Handler
     {
         if (!isset($this->locationPath)) {
 
-            $this->locationPath = new XLite_Model_LocationPath();
+            $this->locationPath = new \XLite\Model\LocationPath();
             $this->addBaseLocation();
 
             if ($this->getLocation()) {
-                $this->locationPath->addNode(new XLite_Model_Location($this->getLocation()));
+                $this->locationPath->addNode(new \XLite\Model\Location($this->getLocation()));
             }
         }
 
@@ -454,12 +456,12 @@ abstract class XLite_Controller_AController extends XLite_Core_Handler
 
             $this->markAsAccessDenied();
 
-        } elseif (!empty(XLite_Core_Request::getInstance()->action) && $this->isValid()) {
+        } elseif (!empty(\XLite\Core\Request::getInstance()->action) && $this->isValid()) {
 
-            $action = XLite_Core_Request::getInstance()->action;
+            $action = \XLite\Core\Request::getInstance()->action;
 
             $oldMethodName = 'action_' . $action;
-            $newMethodName = 'doAction' . XLite_Core_Converter::convertToCamelCase($action);
+            $newMethodName = 'doAction' . \XLite\Core\Converter::convertToCamelCase($action);
 
             if (method_exists($this, $oldMethodName)) {
                 $this->$oldMethodName();
@@ -472,7 +474,7 @@ abstract class XLite_Controller_AController extends XLite_Core_Handler
         }
 
         if ($this->isRedirectNeeded()) {
-            if (XLite_Core_Request::getInstance()->isAJAX() && !$this->isValid()) {
+            if (\XLite\Core\Request::getInstance()->isAJAX() && !$this->isValid()) {
                 // Internal redirect
                 $this->getWidgetParams(self::PARAM_REDIRECT_CODE)->setValue(279);
             }
@@ -484,7 +486,7 @@ abstract class XLite_Controller_AController extends XLite_Core_Handler
     /**
      * Return Viewer object
      * 
-     * @return XLite_View_Controller
+     * @return \XLite\View\Controller
      * @access public
      * @since  3.0.0
      */
@@ -496,7 +498,7 @@ abstract class XLite_Controller_AController extends XLite_Core_Handler
             $params[$name] = $this->get($name);
         }
 
-        return new XLite_View_Controller($params, $this->getViewerTemplate());
+        return new \XLite\View\Controller($params, $this->getViewerTemplate());
     }
 
     /**
@@ -515,28 +517,28 @@ abstract class XLite_Controller_AController extends XLite_Core_Handler
      * Return current (or default) category object
      * FIXME - must be moved to the low-level controllers
      * 
-     * @return XLite_Model_Category
+     * @return \XLite\Model\Category
      * @access public
      * @since  3.0.0 EE
      */
     public function getCategory()
     {
-        return XLite_Core_Database::getRepo('XLite_Model_Category')->getCategory($this->getCategoryId());
+        return \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategory($this->getCategoryId());
     }
 
     /**
      * Return current (or default) product object
      * FIXME - must be moved to the low-level controllers
      * 
-     * @return XLite_Model_Product
+     * @return \XLite\Model\Product
      * @access public
      * @since  3.0.0 EE
      */
     public function getProduct()
     {
-        return XLite_Model_CachingFactory::getObject(
+        return \XLite\Model\CachingFactory::getObject(
             __METHOD__,
-            'XLite_Model_Product',
+            '\XLite\Model\Product',
             array(intval($this->getProductId()))
         );
     }
@@ -579,7 +581,7 @@ abstract class XLite_Controller_AController extends XLite_Core_Handler
      */
     public function setActionStatus($status, $message = '', $code = 0)
     {
-        $this->actionStatus = new XLite_Model_ActionStatus($status, $message, $code);
+        $this->actionStatus = new \XLite\Model\ActionStatus($status, $message, $code);
     }
 
     /**
@@ -594,7 +596,7 @@ abstract class XLite_Controller_AController extends XLite_Core_Handler
      */
     public function setActionError($message = '', $code = 0)
     {
-        $this->setActionStatus(XLite_Model_ActionStatus::STATUS_ERROR, $message, $code);
+        $this->setActionStatus(\XLite\Model\ActionStatus::STATUS_ERROR, $message, $code);
     }
 
     /**
@@ -609,7 +611,7 @@ abstract class XLite_Controller_AController extends XLite_Core_Handler
      */
     public function setActionSuccess($message = '', $code = 0)
     {
-        $this->setActionStatus(XLite_Model_ActionStatus::STATUS_SUCCESS, $message, $code);
+        $this->setActionStatus(\XLite\Model\ActionStatus::STATUS_SUCCESS, $message, $code);
     }
 
 
@@ -682,7 +684,7 @@ abstract class XLite_Controller_AController extends XLite_Core_Handler
     {
         $this->params = array('target');
         $this->set('target', 'access_denied');
-        XLite_Core_Request::getInstance()->target = 'access_denied';
+        \XLite\Core\Request::getInstance()->target = 'access_denied';
     }
 
     /**
@@ -739,7 +741,7 @@ abstract class XLite_Controller_AController extends XLite_Core_Handler
 
     function _clear_xsid_data()
     {
-        unset($_REQUEST[XLite_Model_Session::SESSION_DEFAULT_NAME]);
+        unset($_REQUEST[\XLite\Model\Session::SESSION_DEFAULT_NAME]);
         $this->xlite->session->destroy();
         $this->xlite->session->setID(SESSION_DEFAULT_ID);
         $this->xlite->session->_initialize();
@@ -771,7 +773,7 @@ abstract class XLite_Controller_AController extends XLite_Core_Handler
      */
     public function isHTTPS()
     {
-        return XLite_Core_Request::getInstance()->isHTTPS();
+        return \XLite\Core\Request::getInstance()->isHTTPS();
     }
 
     function startDownload($filename, $contentType = "application/force-download")
@@ -960,7 +962,7 @@ abstract class XLite_Controller_AController extends XLite_Core_Handler
     function checkHtaccess()
     {
         if ('Y' == $this->config->Security->htaccess_protection) {
-            $htaccess = new XLite_Model_Htaccess();
+            $htaccess = new \XLite\Model\Htaccess();
             $htaccess->checkFiles();
         }
     }

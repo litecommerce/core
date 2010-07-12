@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\GoogleCheckout\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_GoogleCheckout_Controller_Admin_Order extends XLite_Controller_Admin_Order implements XLite_Base_IDecorator
+class Order extends \XLite\Controller\Admin\Order implements \XLite\Base\IDecorator
 {
     public $page = "order_info";
     public $payment_method = null;
@@ -84,7 +86,7 @@ class XLite_Module_GoogleCheckout_Controller_Admin_Order extends XLite_Controlle
         }
 
         if ($this->get('action')) {
-            $this->payment_method = new XLite_Model_PaymentMethod('google_checkout');
+            $this->payment_method = new \XLite\Model\PaymentMethod('google_checkout');
             require_once LC_MODULES_DIR . 'GoogleCheckout' . LC_DS . 'encoded.php';
         }
 

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\USPS\Controller\Admin;
+
 /**
  * USPS administrative controller
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_USPS_Controller_Admin_Usps extends XLite_Controller_Admin_ShippingSettings
+class Usps extends \XLite\Controller\Admin\ShippingSettings
 {
     /**
      * Controller parameters
@@ -100,7 +102,7 @@ class XLite_Module_USPS_Controller_Admin_Usps extends XLite_Controller_Admin_Shi
     {
         parent::__construct($params);
 
-        $usps = new XLite_Module_USPS_Model_Shipping_Usps();
+        $usps = new \XLite\Module\USPS\Model\Shipping\Usps();
         $this->settings = $usps->getOptions();
     }
 
@@ -114,8 +116,8 @@ class XLite_Module_USPS_Controller_Admin_Usps extends XLite_Controller_Admin_Shi
      */
     protected function doActionUpdate()
     {
-        $usps = new XLite_Module_USPS_Model_Shipping_Usps();
-        $usps->setOptions((object)XLite_Core_Request::getInstance()->getData());
+        $usps = new \XLite\Module\USPS\Model\Shipping\Usps();
+        $usps->setOptions((object)\XLite\Core\Request::getInstance()->getData());
         $this->set('updated', '1');
     }
 
@@ -129,8 +131,8 @@ class XLite_Module_USPS_Controller_Admin_Usps extends XLite_Controller_Admin_Shi
      */
     public function getOunces()
     {
-        return isset(XLite_Core_Request::getInstance()->ounces)
-            ? XLite_Core_Request::getInstance()->ounces
+        return isset(\XLite\Core\Request::getInstance()->ounces)
+            ? \XLite\Core\Request::getInstance()->ounces
             : 1;
     }
     
@@ -144,8 +146,8 @@ class XLite_Module_USPS_Controller_Admin_Usps extends XLite_Controller_Admin_Shi
      */
     public function getDestinationCountry()
     {
-        return isset(XLite_Core_Request::getInstance()->destinationCountry)
-            ? XLite_Core_Request::getInstance()->destinationCountry
+        return isset(\XLite\Core\Request::getInstance()->destinationCountry)
+            ? \XLite\Core\Request::getInstance()->destinationCountry
             : 'United Kingdom (Great Britain)';
     }
     
@@ -159,8 +161,8 @@ class XLite_Module_USPS_Controller_Admin_Usps extends XLite_Controller_Admin_Shi
      */
     public function getZipDestination()
     {
-        return isset(XLite_Core_Request::getInstance()->ZipDestination)
-            ? XLite_Core_Request::getInstance()->ZipDestination
+        return isset(\XLite\Core\Request::getInstance()->ZipDestination)
+            ? \XLite\Core\Request::getInstance()->ZipDestination
             : '73003';
     }
 
@@ -187,8 +189,8 @@ class XLite_Module_USPS_Controller_Admin_Usps extends XLite_Controller_Admin_Shi
      */
     protected function doActionIntTest()
     {
-        $usps = new XLite_Module_USPS_Model_Shipping_Usps();
-        $this->set('properties', XLite_Core_Request::getInstance()->getData());
+        $usps = new \XLite\Module\USPS\Model\Shipping\Usps();
+        $this->set('properties', \XLite\Core\Request::getInstance()->getData());
         $this->rates = $usps->getInternationalRatesQuery(
             $this->getOunces(),
             $this->getDestinationCountry(),
@@ -209,8 +211,8 @@ class XLite_Module_USPS_Controller_Admin_Usps extends XLite_Controller_Admin_Shi
      */
     protected function doActionNatTest()
     {
-        $usps = new XLite_Module_USPS_Model_Shipping_Usps();
-        $this->set('properties', XLite_Core_Request::getInstance()->getData());
+        $usps = new \XLite\Module\USPS\Model\Shipping\Usps();
+        $this->set('properties', \XLite\Core\Request::getInstance()->getData());
 
         $this->rates = $usps->getNationalRatesQuery(
             $this->getOunces(),

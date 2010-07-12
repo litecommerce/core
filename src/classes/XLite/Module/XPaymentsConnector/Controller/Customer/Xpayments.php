@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\XPaymentsConnector\Controller\Customer;
+
 /**
  * X-Payments special controller
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_XPaymentsConnector_Controller_Customer_Xpayments extends XLite_Controller_Customer_ACustomer
+class Xpayments extends \XLite\Controller\Customer\ACustomer
 {
     /**
      * Handles the request.
@@ -60,7 +62,7 @@ class XLite_Module_XPaymentsConnector_Controller_Customer_Xpayments extends XLit
      */
     protected function doActionReturn()
     {
-        $request = XLite_Core_Request::getInstance();
+        $request = \XLite\Core\Request::getInstance();
 
         if (
             $request->isPost()

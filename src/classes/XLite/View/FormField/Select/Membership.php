@@ -26,14 +26,16 @@
  * @since      3.0.0
  */
 
+namespace XLite\View\FormField\Select;
+
 /**
- * XLite_View_FormField_Select_Membership 
+ * \XLite\View\FormField\Select\Membership 
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_FormField_Select_Membership extends XLite_View_FormField_Select_Regular
+class Membership extends \XLite\View\FormField\Select\Regular
 {
     /**
      * Determines if this field is visible for customers or not 
@@ -56,7 +58,7 @@ class XLite_View_FormField_Select_Membership extends XLite_View_FormField_Select
     protected function getMembershipsList()
     {
         $list = array();
-        foreach (XLite_Core_Database::getRepo('XLite_Model_Membership')->findActiveMemberships() as $m) {
+        foreach (\XLite\Core\Database::getRepo('XLite\Model\Membership')->findActiveMemberships() as $m) {
             $list[$m->membership_id] = $m->name;
         }
 

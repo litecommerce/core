@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\InventoryTracking\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_InventoryTracking_Controller_Admin_Product extends XLite_Controller_Admin_Product implements XLite_Base_IDecorator
+class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDecorator
 {
     public $maxOrderBy = 1;
     protected $inventory = null;
@@ -49,7 +51,7 @@ class XLite_Module_InventoryTracking_Controller_Admin_Product extends XLite_Cont
     function init()
     {
         if (isset($_REQUEST['product_id']) && intval($_REQUEST['product_id']) > 0) {
-            $product = new XLite_Model_Product($_REQUEST['product_id']);
+            $product = new \XLite\Model\Product($_REQUEST['product_id']);
         	if (!$this->xlite->get('ProductOptionsEnabled') || ($this->xlite->get('ProductOptionsEnabled') && !$product->hasOptions())) {
             	if ($product->get('tracking') != 0 ) {
                 	$product->set('tracking', 0);
@@ -63,7 +65,7 @@ class XLite_Module_InventoryTracking_Controller_Admin_Product extends XLite_Cont
     function getOrderItem()
     {
         if (is_null($this->orderItem)) {
-            $this->orderItem = new XLite_Model_OrderItem();
+            $this->orderItem = new \XLite\Model\OrderItem();
             $this->orderItem->set('product', $this->get('product'));
         }
         return $this->orderItem;
@@ -72,7 +74,7 @@ class XLite_Module_InventoryTracking_Controller_Admin_Product extends XLite_Cont
     function getInventory()
     {
         if (is_null($this->inventory)) {
-            $this->inventory = new XLite_Module_InventoryTracking_Model_Inventory();
+            $this->inventory = new \XLite\Module\InventoryTracking\Model\Inventory();
             $found = $this->inventory->find("inventory_id='" . addslashes($this->getOrderItem()->get('key')) . "'");
             $this->set('cardFound', $found);
             // set card status to DISABLED in ADD mode
@@ -89,7 +91,7 @@ class XLite_Module_InventoryTracking_Controller_Admin_Product extends XLite_Cont
     function action_tracking_selection()
     {
         if (!isset($this->tracking)) return;
-        $product = new XLite_Model_Product($this->product_id);
+        $product = new \XLite\Model\Product($this->product_id);
         $product->find("product_id = '".$this->product_id."'");
         $product->set('tracking',$this->tracking);
         $product->update();
@@ -111,7 +113,7 @@ class XLite_Module_InventoryTracking_Controller_Admin_Product extends XLite_Cont
         if (!$this->xlite->get('ProductOptionsEnabled')) {
             return $inventories;
         }
-        $inventory = new XLite_Module_InventoryTracking_Model_Inventory();
+        $inventory = new \XLite\Module\InventoryTracking\Model\Inventory();
         $inventories = $inventory->findAll("inventory_id LIKE '".$this->product_id."|%'");
         for ($k = 0; $k < count($inventories); $k++) {
             $inventory_id = $inventories[$k]->get('inventory_id');
@@ -134,7 +136,7 @@ class XLite_Module_InventoryTracking_Controller_Admin_Product extends XLite_Cont
         if (!$this->xlite->get('ProductOptionsEnabled')) {
             return $productOptions;
         }
-        $po = new XLite_Module_ProductOptions_Model_ProductOption();
+        $po = new \XLite\Module\ProductOptions\Model\ProductOption();
         $productOptions = $po->findAll("product_id=$this->product_id");
         return $productOptions;
     }
@@ -142,7 +144,7 @@ class XLite_Module_InventoryTracking_Controller_Admin_Product extends XLite_Cont
     function updateProductInventorySku() 
     {
         $product_id = addslashes($this->get('product_id'));
-        $p = new XLite_Model_Product();
+        $p = new \XLite\Model\Product();
         if ($p->find("product_id='$product_id'")) {
             $p->updateInventorySku();
         }
@@ -150,14 +152,14 @@ class XLite_Module_InventoryTracking_Controller_Admin_Product extends XLite_Cont
 
     function action_delete_tracking_option()
     {
-        $i = new XLite_Module_InventoryTracking_Model_Inventory($this->inventory_id);
+        $i = new \XLite\Module\InventoryTracking\Model\Inventory($this->inventory_id);
         $i->delete();
         $this->updateProductInventorySku();
     }
 
     function action_update_tracking_option()
     {
-        $i = new XLite_Module_InventoryTracking_Model_Inventory($this->inventory_id);
+        $i = new \XLite\Module\InventoryTracking\Model\Inventory($this->inventory_id);
         $this->optdata['inventory_sku'] = preg_replace("/\|/", "-", $this->optdata['inventory_sku']);
         $i->set('properties', $this->optdata);
         $i->update();
@@ -169,7 +171,7 @@ class XLite_Module_InventoryTracking_Controller_Admin_Product extends XLite_Cont
         if (empty($this->optdata)) {
             return;
         }
-        $inventory = new XLite_Module_InventoryTracking_Model_Inventory();
+        $inventory = new \XLite\Module\InventoryTracking\Model\Inventory();
         $options[] = $this->product_id;
         foreach ($this->optdata as $class => $optdata) {
             if (isset($optdata['used'])) {

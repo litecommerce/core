@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\DetailedImages\View;
+
 /**
  * Detailed image
  * 
@@ -33,12 +35,12 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_DetailedImages_View_Image extends XLite_View_Image
+class Image extends \XLite\View\Image
 {
     /**
      * Detailed image (cache)
      * 
-     * @var    XLite_Module_DetailedImages_Model_DetailedImage
+     * @var    \XLite\Module\DetailedImages\Model\DetailedImage
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
@@ -48,7 +50,7 @@ class XLite_Module_DetailedImages_View_Image extends XLite_View_Image
     /**
      * Get detailed image 
      * 
-     * @return XLite_Module_DetailedImages_Model_DetailedImage
+     * @return \XLite\Module\DetailedImages\Model\DetailedImage
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -56,7 +58,7 @@ class XLite_Module_DetailedImages_View_Image extends XLite_View_Image
     protected function getDetailedImage()
     {
         if (is_null($this->detailedImage)) {
-            $this->detailedImage = new XLite_Module_DetailedImages_Model_DetailedImage(
+            $this->detailedImage = new \XLite\Module\DetailedImages\Model\DetailedImage(
                 $this->getParam(self::PARAM_IMAGE)->get('id')
             );
         }

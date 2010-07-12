@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_CaptchaGenerator extends XLite_Base
+class CaptchaGenerator extends \XLite\Base
 {
     public function __construct()
     {

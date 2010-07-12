@@ -54,7 +54,7 @@ function PaymentMethod_chronopay_handleRequest($_this, $cart)
 function PaymentMethod_chronopay_callback()
 {
     if (isset($_REQUEST['cs1']) && is_numeric($_REQUEST['cs1']) && $_REQUEST['cs1'] > 0 && isset($_REQUEST['cs2']) && $_REQUEST['cs2'] == "chronopay") {
-        $cart = new XLite_Model_Order($_REQUEST['cs1']);
+        $cart = new \XLite\Model\Order($_REQUEST['cs1']);
         $pm = $cart->get('paymentMethod');
 
         # security issue

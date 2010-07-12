@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model\Repo;
+
 /**
  * Category repository class
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_Repo_Category extends XLite_Model_Repo_Base_I18n
+class Category extends \XLite\Model\Repo\Base\I18n
 {
     /**
      * className
@@ -43,7 +45,7 @@ class XLite_Model_Repo_Category extends XLite_Model_Repo_Base_I18n
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $className = 'XLite_Model_Category';
+    protected $className = '\XLite\Model\Category';
 
     /**
      * Define cache cells 
@@ -100,7 +102,7 @@ class XLite_Model_Repo_Category extends XLite_Model_Repo_Base_I18n
 
     protected function addEnabledCondition($qb, $alias = 'c')
     {
-        if (!XLite::getInstance()->isAdminZone()) {
+        if (!\XLite::getInstance()->isAdminZone()) {
             $qb->andWhere($alias . '.enabled = 1');
         }
 
@@ -112,7 +114,7 @@ class XLite_Model_Repo_Category extends XLite_Model_Repo_Base_I18n
      * 
      * @param integer $categoryId Node Id
      *  
-     * @return XLite_Model_Category
+     * @return \XLite\Model\Category
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -148,7 +150,9 @@ class XLite_Model_Repo_Category extends XLite_Model_Repo_Base_I18n
     protected function defineNodeQuery($categoryId)
     {
         $qb = $this->createQueryBuilder('c')
+            ->addSelect('m', 'i')
             ->leftJoin('c.membership', 'm')
+            ->leftJoin('c.image', 'i')
             ->where('c.category_id = :categoryId')
             ->setMaxResults(1)
             ->setParameter('categoryId', $categoryId);
@@ -244,7 +248,7 @@ class XLite_Model_Repo_Category extends XLite_Model_Repo_Base_I18n
      * 
      * @param int $categoryId Category Id
      *  
-     * @return XLite_Model_Category
+     * @return \XLite\Model\Category
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -270,7 +274,7 @@ class XLite_Model_Repo_Category extends XLite_Model_Repo_Base_I18n
             $result = $data[$hash[$categoryId]];
         
         } else {
-            $result = new XLite_Model_Category;
+            $result = new \XLite\Model\Category;
         }
 
         return $result;
@@ -387,9 +391,9 @@ class XLite_Model_Repo_Category extends XLite_Model_Repo_Base_I18n
 
         if (!isset($data)) {
 
-            $qb = XLite_Core_Database::getQB();
+            $qb = \XLite\Core\Database::getQB();
             $qb ->select('max(n.rpos) as maxrpos')
-                ->from($this->className, 'n');
+                ->from($this->_entityName, 'n');
 
             $data = $qb->getQuery()->getSingleScalarResult();
 
@@ -404,7 +408,7 @@ class XLite_Model_Repo_Category extends XLite_Model_Repo_Base_I18n
      * 
      * @param int $categoryId Node Id
      *  
-     * @return XLite_Model_Category or false
+     * @return \XLite\Model\Category or false
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -420,8 +424,8 @@ class XLite_Model_Repo_Category extends XLite_Model_Repo_Base_I18n
             $parentLpos = $parentCategory->lpos;
 
             // Increase lpos field for parent and all right nodes
-            $qb = XLite_Core_Database::getQB();
-            $qb ->update('XLite_Model_Category', 'n')
+            $qb = \XLite\Core\Database::getQB();
+            $qb ->update('\XLite\Model\Category', 'n')
                 ->set('n.lpos', 'n.lpos + :offset')
                 ->where(
                     $qb->expr()->gte('n.lpos', ':parentLpos')
@@ -436,8 +440,8 @@ class XLite_Model_Repo_Category extends XLite_Model_Repo_Base_I18n
             $qb->getQuery()->execute();
 
             // Increase rpos field for parent and all right nodes
-            $qb = XLite_Core_Database::getQB();
-            $qb ->update('XLite_Model_Category', 'n')
+            $qb = \XLite\Core\Database::getQB();
+            $qb ->update('\XLite\Model\Category', 'n')
                 ->set('n.rpos', 'n.rpos + :offset')
                 ->where(
                     $qb->expr()->gte('n.rpos', ':parentLpos')
@@ -450,18 +454,18 @@ class XLite_Model_Repo_Category extends XLite_Model_Repo_Base_I18n
                 );
             $qb->getQuery()->execute();
 
-            $newCategory = new XLite_Model_Category();
+            $newCategory = new \XLite\Model\Category();
             $newCategory->lpos = $parentLpos;
             $newCategory->rpos = $parentLpos + 1;
-            XLite_Core_Database::getEM()->persist($newCategory);
-            XLite_Core_Database::getEM()->flush();
+            \XLite\Core\Database::getEM()->persist($newCategory);
+            \XLite\Core\Database::getEM()->flush();
 
             $result = $newCategory;
 
             if (is_null($result->category_id)) {
-                XLite_Core_TopMessage::getInstance()->add(
+                \XLite\Core\TopMessage::getInstance()->add(
                     'Error of a new category creation',
-                    XLite_Core_TopMessage::ERROR
+                    \XLite\Core\TopMessage::ERROR
                 );
             }
         }
@@ -474,7 +478,7 @@ class XLite_Model_Repo_Category extends XLite_Model_Repo_Base_I18n
      * 
      * @param int $categoryId Node Id
      *  
-     * @return XLite_Model_Category or false
+     * @return \XLite\Model\Category or false
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -490,8 +494,8 @@ class XLite_Model_Repo_Category extends XLite_Model_Repo_Base_I18n
             $parentRpos = $parentCategory->rpos;
 
             // Increase lpos field for all right nodes
-            $qb = XLite_Core_Database::getQB();
-            $qb ->update('XLite_Model_Category', 'n')
+            $qb = \XLite\Core\Database::getQB();
+            $qb ->update('\XLite\Model\Category', 'n')
                 ->set('n.lpos', 'n.lpos + :offset')
                 ->where(
                     $qb->expr()->gt('n.lpos', ':parentRpos')
@@ -505,8 +509,8 @@ class XLite_Model_Repo_Category extends XLite_Model_Repo_Base_I18n
             $qb->getQuery()->execute();
 
             // Increase rpos field for all right nodes
-            $qb = XLite_Core_Database::getQB();
-            $qb ->update('XLite_Model_Category', 'n')
+            $qb = \XLite\Core\Database::getQB();
+            $qb ->update('\XLite\Model\Category', 'n')
                 ->set('n.rpos', 'n.rpos + :offset')
                 ->where(
                     $qb->expr()->gt('n.rpos', ':parentRpos')
@@ -519,18 +523,18 @@ class XLite_Model_Repo_Category extends XLite_Model_Repo_Base_I18n
                 );
             $qb->getQuery()->execute();
 
-            $newCategory = new XLite_Model_Category();
+            $newCategory = new \XLite\Model\Category();
             $newCategory->lpos = $parentRpos + 1;
             $newCategory->rpos = $parentRpos + 2;
-            XLite_Core_Database::getEM()->persist($newCategory);
-            XLite_Core_Database::getEM()->flush();
+            \XLite\Core\Database::getEM()->persist($newCategory);
+            \XLite\Core\Database::getEM()->flush();
 
             $result = $newCategory;
 
             if (is_null($result->category_id)) {
-                XLite_Core_TopMessage::getInstance()->add(
+                \XLite\Core\TopMessage::getInstance()->add(
                     'Error of a new category creation',
-                    XLite_Core_TopMessage::ERROR
+                    \XLite\Core\TopMessage::ERROR
                 );
             }
         }
@@ -543,7 +547,7 @@ class XLite_Model_Repo_Category extends XLite_Model_Repo_Base_I18n
      * 
      * @param int $categoryId Node Id
      *  
-     * @return XLite_Model_Category or false
+     * @return \XLite\Model\Category or false
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -578,8 +582,8 @@ class XLite_Model_Repo_Category extends XLite_Model_Repo_Base_I18n
         if (!$skipUpdate) {
 
             // Increase lpos field for all right nodes
-            $qb = XLite_Core_Database::getQB();
-            $qb ->update('XLite_Model_Category', 'n')
+            $qb = \XLite\Core\Database::getQB();
+            $qb ->update('\XLite\Model\Category', 'n')
                 ->set('n.lpos', 'n.lpos + :offset')
                 ->where(
                     $qb->expr()->gt('n.lpos', ':parentLpos')
@@ -594,8 +598,8 @@ class XLite_Model_Repo_Category extends XLite_Model_Repo_Base_I18n
             $qb->getQuery()->execute();
 
             // Increase rpos field for parent and all right nodes
-            $qb = XLite_Core_Database::getQB();
-            $qb ->update('XLite_Model_Category', 'n')
+            $qb = \XLite\Core\Database::getQB();
+            $qb ->update('\XLite\Model\Category', 'n')
                 ->set('n.rpos', 'n.rpos + :offset')
                 ->where(
                     $qb->expr()->gte('n.rpos', ':parentRpos')
@@ -609,19 +613,19 @@ class XLite_Model_Repo_Category extends XLite_Model_Repo_Base_I18n
             $qb->getQuery()->execute();
         }
 
-        $newCategory = new XLite_Model_Category();
+        $newCategory = new \XLite\Model\Category();
         $newCategory->lpos = $parentLpos + 1;
         $newCategory->rpos = $parentLpos + 2;
 
-        XLite_Core_Database::getEM()->persist($newCategory);
-        XLite_Core_Database::getEM()->flush();
+        \XLite\Core\Database::getEM()->persist($newCategory);
+        \XLite\Core\Database::getEM()->flush();
 
         $result = $newCategory;
 
         if (is_null($result->category_id)) {
-            XLite_Core_TopMessage::getInstance()->add(
+            \XLite\Core\TopMessage::getInstance()->add(
                 'Error of a new category creation',
-                XLite_Core_TopMessage::ERROR
+                \XLite\Core\TopMessage::ERROR
             );
         }
     
@@ -635,7 +639,7 @@ class XLite_Model_Repo_Category extends XLite_Model_Repo_Base_I18n
      * 
      * @param int $categoryId Category Id
      *  
-     * @return XLite_Model_Category
+     * @return \XLite\Model\Category
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -645,7 +649,7 @@ class XLite_Model_Repo_Category extends XLite_Model_Repo_Base_I18n
         $category = $this->getNode($categoryId);
 
         if (empty($category)) {
-            $category = new XLite_Model_Category;    
+            $category = new \XLite\Model\Category;    
         }
 
         return $category;
@@ -738,7 +742,7 @@ class XLite_Model_Repo_Category extends XLite_Model_Repo_Base_I18n
     public function getParentCategory($categoryId)
     {
         $path = $this->getNodePath($categoryId);
-        return (count($path) > 1) ? $path[count($path)-2] : new XLite_Model_Category();
+        return (count($path) > 1) ? $path[count($path)-2] : new \XLite\Model\Category();
     }
 
     /**
@@ -836,7 +840,7 @@ class XLite_Model_Repo_Category extends XLite_Model_Repo_Base_I18n
      * 
      * @param string $cleanUrl Clean URL value
      *  
-     * @return XLite_Model_Category
+     * @return \XLite\Model\Category
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -895,11 +899,11 @@ class XLite_Model_Repo_Category extends XLite_Model_Repo_Base_I18n
             foreach ($categoriesToDelete as $category) {
 
                 if (!($subcatsOnly && $categoryId == $category->category_id)) {
-                    XLite_Core_Database::getEM()->remove($category);
+                    \XLite\Core\Database::getEM()->remove($category);
                 }
             }
 
-            XLite_Core_Database::getEM()->flush();
+            \XLite\Core\Database::getEM()->flush();
         }
     }
 
@@ -1005,7 +1009,7 @@ class XLite_Model_Repo_Category extends XLite_Model_Repo_Base_I18n
         $topID = $this->getComplex('topCategory.category_id');
         $category_id = $topID;
         foreach ($path as $n) {
-            $category = new XLite_Model_Category();
+            $category = new \XLite\Model\Category();
             if ($category->find("name='".addslashes($n)."' AND parent=$category_id")) {
                 $category_id = $category->get('category_id');
                 continue;
@@ -1015,7 +1019,7 @@ class XLite_Model_Repo_Category extends XLite_Model_Repo_Base_I18n
             $category->create();
             $category_id = $category->get('category_id');
         }
-        return new XLite_Model_Category($category_id);
+        return new \XLite\Model\Category($category_id);
     }
 
     function findCategory($path) 
@@ -1026,14 +1030,14 @@ class XLite_Model_Repo_Category extends XLite_Model_Repo_Base_I18n
         $topID = $this->getComplex('topCategory.category_id');
         $category_id = $topID;
         foreach ($path as $n) {
-            $category = new XLite_Model_Category();
+            $category = new \XLite\Model\Category();
             if ($category->find("name='".addslashes($n)."' AND parent=$category_id")) {
                 $category_id = $category->get('category_id');
                 continue;
             }
             return null;
         }
-        return new XLite_Model_Category($category_id);
+        return new \XLite\Model\Category($category_id);
     }
 
     function filterRule()
@@ -1073,7 +1077,7 @@ class XLite_Model_Repo_Category extends XLite_Model_Repo_Base_I18n
                 // check parent categories
                 $parent = $this->getParentCategory();
                 if (isset($parent)) {
-                    $result = $result && XLite_Model_CachingFactory::getObjectFromCallback(
+                    $result = $result && \XLite\Model\CachingFactory::getObjectFromCallback(
                         __METHOD__ . $parent->get('category_id'), $parent, 'filter'
                     );
                 }

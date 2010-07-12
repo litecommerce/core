@@ -41,7 +41,7 @@
 	</tr>	
     <tr>
         <td class="FormButton">Order status:</td>
-        <td><widget class="XLite_View_StatusSelect" field="status" allOption style="width: 100%"></td>
+        <td><widget class="\XLite\View\StatusSelect" field="status" allOption style="width: 100%"></td>
         <td>&nbsp;</td>
         <td class="FormButton">Product name:</td>
         <td><input type="text" name="product_name" value="{product_name}" class="Input"></td>
@@ -79,12 +79,12 @@
 	<tbody id="custom_dates" style="display: none;">
 	<tr>
 		<td class="FormButton">Date from:</td>
-		<td colspan="3"><widget class="XLite_View_Date" field="startDate"></td>
+		<td colspan="3"><widget class="\XLite\View\Date" field="startDate"></td>
         <td></td>		
 	</tr>
     <tr>
         <td class="FormButton">Date through:</td>
-        <td colspan="3"><widget class="XLite_View_Date" field="endDate"></td>
+        <td colspan="3"><widget class="\XLite\View\Date" field="endDate"></td>
         <td></td>
     </tr>
 	</tbody>

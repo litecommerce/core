@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\ProductAdviser\View;
+
 // FIXME - must be completely revised
 
 /**
@@ -35,7 +37,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_ProductAdviser_View_CategoryButton extends XLite_View_AView
+class CategoryButton extends \XLite\View\AView
 {
     /**
      * Return widget default template

@@ -39,7 +39,7 @@ if (goodEmail) {
 <td><font class=Star>*</font></td>
 <td nowrap>
 <input type=text name=email size=32 maxlength=128 value="{email:r}">
-<widget class="XLite_Validator_EmailValidator" field="email">
+<widget class="\XLite\Validator\EmailValidator" field="email">
 </td>
 </tr>
 
@@ -48,7 +48,7 @@ if (goodEmail) {
 <td><font class=Star>*</font></td>
 <td nowrap>
 <input type=text name=firstname size=32 maxlength=32 value="{firstname:r}">
-<widget class="XLite_Validator_RequiredValidator" field="firstname">
+<widget class="\XLite\Validator\RequiredValidator" field="firstname">
 </td>
 </tr>
 
@@ -57,7 +57,7 @@ if (goodEmail) {
 <td><font class=Star>*</font></td>
 <td nowrap>
 <input type=text name=lastname size=32 maxlength=32 value="{lastname:r}">
-<widget class="XLite_Validator_RequiredValidator" field="lastname">
+<widget class="\XLite\Validator\RequiredValidator" field="lastname">
 </td>
 </tr>
 
@@ -66,7 +66,7 @@ if (goodEmail) {
 <td><font class=Star>*</font></td>
 <td nowrap>
 <input type=text name=address size=32 maxlength=64 value="{address:r}">
-<widget class="XLite_Validator_RequiredValidator" field="address">
+<widget class="\XLite\Validator\RequiredValidator" field="address">
 </td>
 </tr>
 
@@ -75,7 +75,7 @@ if (goodEmail) {
 <td><font class=Star>*</font></td>
 <td nowrap>
 <input type=text name=zipcode size=32 maxlength=32 value="{zipcode:r}">
-<widget class="XLite_Validator_RequiredValidator" field="zipcode">
+<widget class="\XLite\Validator\RequiredValidator" field="zipcode">
 </td>
 </tr>
 
@@ -84,7 +84,7 @@ if (goodEmail) {
 <td><font class=Star>*</font></td>
 <td nowrap>
 <input type=text name=city size=32 maxlength=64 value="{city:r}">
-<widget class="XLite_Validator_RequiredValidator" field="city">
+<widget class="\XLite\Validator\RequiredValidator" field="city">
 </td>
 </tr>
 
@@ -92,9 +92,9 @@ if (goodEmail) {
 <td class=FormButton>State</td>
 <td><font class=Star>*</font></td>
 <td nowrap>
-<widget class="XLite_View_StateSelect" field="contactus_state" state="{contactus_state}" isLinked=1 />
-<widget class="XLite_Validator_StateValidator" field="contactus_state" countryField="contactus_country">
-<widget class="XLite_Validator_RequiredValidator" field="contactus_state">
+<widget class="\XLite\View\StateSelect" field="contactus_state" state="{contactus_state}" isLinked=1 />
+<widget class="\XLite\Validator\StateValidator" field="contactus_state" countryField="contactus_country">
+<widget class="\XLite\Validator\RequiredValidator" field="contactus_state">
 </td>
 </tr>
 
@@ -109,8 +109,8 @@ if (goodEmail) {
 <td class=FormButton>Country</td>
 <td><font class=Star>*</font></td>
 <td nowrap>
-<widget class="XLite_View_CountrySelect" field="contactus_country" country="{contactus_country}" />
-<widget class="XLite_Validator_RequiredValidator" field="contactus_country">
+<widget class="\XLite\View\CountrySelect" field="contactus_country" country="{contactus_country}" />
+<widget class="\XLite\Validator\RequiredValidator" field="contactus_country">
 </td>
 </tr>
 
@@ -119,7 +119,7 @@ if (goodEmail) {
 <td><font class=Star>*</font></td>
 <td nowrap>
 <input type=text name=phone size=32 maxlength=32 value="{phone:r}">
-<widget class="XLite_Validator_RequiredValidator" field="phone">
+<widget class="\XLite\Validator\RequiredValidator" field="phone">
 </td>
 </tr>
 
@@ -149,7 +149,7 @@ if (goodEmail) {
 <td><font class=Star>*</font></td>
 <td nowrap>
 <input type=text name="subj" size=32 maxlength=128 value="{subj:r}">
-<widget class="XLite_Validator_RequiredValidator" field="subj">
+<widget class="\XLite\Validator\RequiredValidator" field="subj">
 </td>
 </tr>
 
@@ -158,7 +158,7 @@ if (goodEmail) {
 <td valign=top><font class=Star>*</font></td>
 <td nowrap>
 <textarea cols=48 rows=12 name=body>{body}</textarea>
-<widget class="XLite_Validator_RequiredValidator" field="body">
+<widget class="\XLite\Validator\RequiredValidator" field="body">
 </td>
 </tr>
 
@@ -173,7 +173,7 @@ if (goodEmail) {
 <td>&nbsp;</td>
 <td nowrap>
 <br>
-<widget class="XLite_View_Submit" href="javascript: if (checkEmailAddress(document.contactus.email)) document.contactus.submit()" font="FormButton">
+<widget class="\XLite\View\Submit" href="javascript: if (checkEmailAddress(document.contactus.email)) document.contactus.submit()" font="FormButton">
 </td>
 </tr>
 </table>

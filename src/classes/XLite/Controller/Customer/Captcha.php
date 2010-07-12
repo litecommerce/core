@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Controller\Customer;
+
 /**
  * ____description____
  * 
@@ -33,13 +35,13 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Controller_Customer_Captcha extends XLite_Controller_Customer_ACustomer
+class Captcha extends \XLite\Controller\Customer\ACustomer
 {
     public $params = array('target', 'id');
     
     function handleRequest()
     {
-        $captcha = new XLite_Model_CaptchaGenerator();
+        $captcha = new \XLite\Model\CaptchaGenerator();
         $length = ((int) $this->config->Captcha->captcha_length > 0) ? (int) $this->config->Captcha->captcha_length : 5;
         $code = $captcha->generateCode($length);
 

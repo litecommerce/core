@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Controller\Customer;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Controller_Customer_Profile extends XLite_Controller_Customer_ACustomer
+class Profile extends \XLite\Controller\Customer\ACustomer
 {
     /**
      * Types of model form
@@ -53,7 +55,7 @@ class XLite_Controller_Customer_Profile extends XLite_Controller_Customer_ACusto
      */
     protected function getModelFormClass()
     {
-        return 'XLite_View_Model_Profile_Main';
+        return '\XLite\View\Model\Profile\Main';
     }
 
     /**
@@ -184,7 +186,7 @@ class XLite_Controller_Customer_Profile extends XLite_Controller_Customer_ACusto
 
         if (isset($this->profileForm) && $this->profileForm->isFromCheckout()) {
 
-            $cart = XLite_Model_Cart::getInstance();
+            $cart = \XLite\Model\Cart::getInstance();
             $cart->isEmpty() ? $this->_initAuthProfile() : $this->profileForm->profile = $cart->get('profile');
 
         } else {
@@ -240,7 +242,7 @@ class XLite_Controller_Customer_Profile extends XLite_Controller_Customer_ACusto
         $this->set('mode', $this->profileForm->get('mode'));
 
         if ($this->registerForm->is('valid')) {
-            $cart = XLite_Model_Cart::getInstance();
+            $cart = \XLite\Model\Cart::getInstance();
             if (!$cart->isEmpty()) {
                 $cart->set('profile_id', $this->profileForm->profile->get('profile_id'));
                 $cart->setProfile($this->profileForm->profile);

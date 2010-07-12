@@ -26,8 +26,10 @@
  * @since      3.0.0
  */
 
-class XLite_Module_Demo_Controller_Admin_ImportCatalog extends XLite_Controller_Admin_ImportCatalog
-implements XLite_Base_IDecorator
+namespace XLite\Module\Demo\Controller\Admin;
+
+class ImportCatalog extends \XLite\Controller\Admin\ImportCatalog
+implements \XLite\Base\IDecorator
 {
 
     /**
@@ -39,8 +41,8 @@ implements XLite_Base_IDecorator
      */
     public function checkAccess()
     {
-        if (XLite_Core_Request::getInstance()->action) {
-            XLite_Module_Demo_Main::doForbidAction();
+        if (\XLite\Core\Request::getInstance()->action) {
+            \XLite\Module\Demo\Main::doForbidAction();
         }
 
         return parent::checkAccess();

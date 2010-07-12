@@ -26,14 +26,16 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\FeaturedProducts\Model;
+
 /**
- * XLite_Module_FeaturedProducts_Model_FeaturedProduct 
+ * \XLite\Module\FeaturedProducts\Model\FeaturedProduct 
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_FeaturedProducts_Model_FeaturedProduct extends XLite_Model_AModel
+class FeaturedProduct extends \XLite\Model\AModel
 {
     /**
      * fields 
@@ -69,7 +71,7 @@ class XLite_Module_FeaturedProducts_Model_FeaturedProduct extends XLite_Model_AM
     /**
      * product 
      * 
-     * @var    XLite_Model_Product
+     * @var    \XLite\Model\Product
      * @access protected
      * @since  3.0.0
      */
@@ -90,7 +92,7 @@ class XLite_Module_FeaturedProducts_Model_FeaturedProduct extends XLite_Model_AM
      * getProduct 
      * FIXME - must be protected; see Module/FeaturedProducts/Model/Category.php
      * 
-     * @return XLite_Model_Product
+     * @return \XLite\Model\Product
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -98,7 +100,7 @@ class XLite_Module_FeaturedProducts_Model_FeaturedProduct extends XLite_Model_AM
     public function getProduct()
     {
         if (!isset($this->product)) {
-            $this->product = new XLite_Model_Product($this->get('product_id'));
+            $this->product = new \XLite\Model\Product($this->get('product_id'));
         }
 
         return $this->product;

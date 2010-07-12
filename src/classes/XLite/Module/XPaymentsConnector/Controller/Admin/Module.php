@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\XPaymentsConnector\Controller\Admin;
+
 /**
  * Module settings
  * 
@@ -33,8 +35,8 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_XPaymentsConnector_Controller_Admin_Module extends XLite_Controller_Admin_Module
-implements XLite_Base_IDecorator
+class Module extends \XLite\Controller\Admin\Module
+implements \XLite\Base\IDecorator
 {
     /**
      * Test request to X-Payments
@@ -46,16 +48,16 @@ implements XLite_Base_IDecorator
      */
     protected function doActionXpcTest()
     {
-        $pm = new XLite_Module_XPaymentsConnector_Model_PaymentMethod_XPayment();
+        $pm = new \XLite\Module\XPaymentsConnector\Model\PaymentMethod\XPayment();
         if ($pm->sendTestRequest()) {
-            XLite_Core_TopMessage::getInstance()->add('Test transaction successfully complete.');
+            \XLite\Core\TopMessage::getInstance()->add('Test transaction successfully complete.');
 
         } else {
-            XLite_Core_TopMessage::getInstance()->add(
+            \XLite\Core\TopMessage::getInstance()->add(
                 'Test transaction failed. Please check the X-Payment Connector settings and try again.'
                 . ' If all options is ok review your X-Payments settings and'
                 . ' make sure you have properly defined shopping cart properties.',
-                XLite_Core_TopMessage::ERROR
+                \XLite\Core\TopMessage::ERROR
             );
         }
     }
@@ -72,13 +74,13 @@ implements XLite_Base_IDecorator
     {
         $this->session->set('xpc_payment_methods', array());
 
-        $pm = new XLite_Module_XPaymentsConnector_Model_PaymentMethod_XPayment();
+        $pm = new \XLite\Module\XPaymentsConnector\Model\PaymentMethod\XPayment();
         $list = $pm->requestPaymentMethods();
 
         if (!$list) {
-            XLite_Core_TopMessage::getInstance()->add(
+            \XLite\Core\TopMessage::getInstance()->add(
                 'Error had occured during the requesting of payment methods from X-Payments',
-                XLite_Core_TopMessage::ERROR
+                \XLite\Core\TopMessage::ERROR
             );
 
         } else {
@@ -97,21 +99,21 @@ implements XLite_Base_IDecorator
     protected function doActionXpcImport()
     {
         $types = array(
-            'is_auth'        => XLite_Module_XPaymentsConnector_Model_PaymentMethod_XPayment::TRAN_TYPE_AUTH,
-            'is_capture'     => XLite_Module_XPaymentsConnector_Model_PaymentMethod_XPayment::TRAN_TYPE_CAPTURE,
-            'is_void'        => XLite_Module_XPaymentsConnector_Model_PaymentMethod_XPayment::TRAN_TYPE_VOID,
-            'is_refund'      => XLite_Module_XPaymentsConnector_Model_PaymentMethod_XPayment::TRAN_TYPE_REFUND,
-            'is_part_refund' => XLite_Module_XPaymentsConnector_Model_PaymentMethod_XPayment::TRAN_TYPE_PART_REFUND,
-            'is_get_info'    => XLite_Module_XPaymentsConnector_Model_PaymentMethod_XPayment::TRAN_TYPE_GET_INFO,
-            'is_accept'      => XLite_Module_XPaymentsConnector_Model_PaymentMethod_XPayment::TRAN_TYPE_ACCEPT,
-            'is_decline'     => XLite_Module_XPaymentsConnector_Model_PaymentMethod_XPayment::TRAN_TYPE_DECLINE,
+            'is_auth'        => \XLite\Module\XPaymentsConnector\Model\PaymentMethod\XPayment::TRAN_TYPE_AUTH,
+            'is_capture'     => \XLite\Module\XPaymentsConnector\Model\PaymentMethod\XPayment::TRAN_TYPE_CAPTURE,
+            'is_void'        => \XLite\Module\XPaymentsConnector\Model\PaymentMethod\XPayment::TRAN_TYPE_VOID,
+            'is_refund'      => \XLite\Module\XPaymentsConnector\Model\PaymentMethod\XPayment::TRAN_TYPE_REFUND,
+            'is_part_refund' => \XLite\Module\XPaymentsConnector\Model\PaymentMethod\XPayment::TRAN_TYPE_PART_REFUND,
+            'is_get_info'    => \XLite\Module\XPaymentsConnector\Model\PaymentMethod\XPayment::TRAN_TYPE_GET_INFO,
+            'is_accept'      => \XLite\Module\XPaymentsConnector\Model\PaymentMethod\XPayment::TRAN_TYPE_ACCEPT,
+            'is_decline'     => \XLite\Module\XPaymentsConnector\Model\PaymentMethod\XPayment::TRAN_TYPE_DECLINE,
         );
 
-        $conf = new XLite_Module_XPaymentsConnector_Model_Configuration();
+        $conf = new \XLite\Module\XPaymentsConnector\Model\Configuration();
         $conf->deleteAll();
 
         foreach ($this->session->get('xpc_payment_methods') as $pm) {
-            $conf = new XLite_Module_XPaymentsConnector_Model_Configuration();
+            $conf = new \XLite\Module\XPaymentsConnector\Model\Configuration();
             $conf->set('confid', $pm['id']);
             $conf->set('name', $pm['name']);
             $conf->set('module', $pm['moduleName']);
@@ -132,7 +134,7 @@ implements XLite_Base_IDecorator
 
         $this->session->set('xpc_payment_methods', array());
 
-        XLite_Core_TopMessage::getInstance()->add('Payment methods have been successfully imported');
+        \XLite\Core\TopMessage::getInstance()->add('Payment methods have been successfully imported');
     }
 
     /**
@@ -158,7 +160,7 @@ implements XLite_Base_IDecorator
      */
     public function isXPCConfigured()
     {
-        return XLite_Module_XPaymentsConnector_Main::isConfigured();
+        return \XLite\Module\XPaymentsConnector\Main::isConfigured();
     }
 
     /**
@@ -216,7 +218,7 @@ implements XLite_Base_IDecorator
      */
     public function isPaymentMethodsImported()
     {
-        $conf = new XLite_Module_XPaymentsConnector_Model_Configuration();
+        $conf = new \XLite\Module\XPaymentsConnector\Model\Configuration();
 
         return 0 < count($conf->findAll());
     }

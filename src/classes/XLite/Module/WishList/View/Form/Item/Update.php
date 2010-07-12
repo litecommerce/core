@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\WishList\View\Form\Item;
+
 /**
  * Update wishlist item form
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_WishList_View_Form_Item_Update extends XLite_Module_WishList_View_Form_Item_AItem
+class Update extends \XLite\Module\WishList\View\Form\Item\AItem
 {
     /**
      * Current form name 

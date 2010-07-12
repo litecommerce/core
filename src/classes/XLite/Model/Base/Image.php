@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model\Base;
+
 /**
  * Image abstract store
  * 
@@ -34,7 +36,7 @@
  * @since   3.0.0
  * @MappedSuperclass
  */
-abstract class XLite_Model_Base_Image extends XLite_Model_AEntity
+abstract class Image extends \XLite\Model\AEntity
 {
     /**
      * Image unique id 
@@ -148,7 +150,7 @@ abstract class XLite_Model_Base_Image extends XLite_Model_AEntity
     public function getBody()
     {
         return $this->isURL()
-            ? XLite_Core_Operator::getURLContent($this->path)
+            ? \XLite\Core\Operator::getURLContent($this->path)
             : file_get_contents($this->getRepository()->getFileSystemRoot() . $this->path);
     }
 
@@ -258,7 +260,7 @@ abstract class XLite_Model_Base_Image extends XLite_Model_AEntity
         if (file_exists($path . $fn)) {
 
             // File is exists
-            $result = XLite_Core_Converter::getCroppedDimensions(
+            $result = \XLite\Core\Converter::getCroppedDimensions(
                 $this->width,
                 $this->height,
                 $width,
@@ -270,7 +272,7 @@ abstract class XLite_Model_Base_Image extends XLite_Model_AEntity
         } else {
 
             // File is not exists
-            $result = XLite_Core_Converter::resizeImageSoft($this, $width, $height);
+            $result = \XLite\Core\Converter::resizeImageSoft($this, $width, $height);
             $result[2] = (!$result[2] || !file_put_contents($path . $fn, $result[2]))
                 ? $this->getURL()
                 : $this->getRepository()->getWebCacheRoot($sizeName) . '/' . $fn;
@@ -303,7 +305,7 @@ abstract class XLite_Model_Base_Image extends XLite_Model_AEntity
 
             // Move file
             $fn = basename($path);
-            $newPath = XLite_Core_Operator::getUniquePath($root . $fn);
+            $newPath = \XLite\Core\Operator::getUniquePath($root . $fn);
             if (!copy($path, $newPath)) {
                 $result = false;
             }
@@ -339,7 +341,7 @@ abstract class XLite_Model_Base_Image extends XLite_Model_AEntity
 
         if ($copy2fs) {
             $fn = tempnam(LC_TMP_DIR, 'load_image');
-            $image = XLite_Core_Operator::getURLContent($url);
+            $image = \XLite\Core\Operator::getURLContent($url);
             $result = ($image && file_put_contents($fn, $image))
                 ? $this->loadFromLocalFile($fn)
                 : false;

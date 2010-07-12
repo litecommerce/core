@@ -28,9 +28,9 @@
       <font class="ProductPriceConverting">{price_format(item,#price#):h}</font>
       <br />
       <br />
-      <widget class="XLite_View_Button_Link" location="{buildURL(#gift_certificate#,##,_ARRAY_(#gcid#^item.gcid))}" label="Modify certificate" />
+      <widget class="\XLite\View\Button\Link" location="{buildURL(#gift_certificate#,##,_ARRAY_(#gcid#^item.gcid))}" label="Modify certificate" />
       &nbsp;&nbsp;&nbsp;
-      <widget class="XLite_View_Button_Link" href="{buildURL(#cart#,#delete#,_ARRAY_(#cart_id#^cart_id))}" label="Delete item" />
+      <widget class="\XLite\View\Button\Link" href="{buildURL(#cart#,#delete#,_ARRAY_(#cart_id#^cart_id))}" label="Delete item" />
     </td>
   </tr>
 

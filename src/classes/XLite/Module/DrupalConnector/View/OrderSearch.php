@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\DrupalConnector\View;
+
 /**
  * Orders search widget
  * 
@@ -33,13 +35,13 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_DrupalConnector_View_OrderSearch extends XLite_View_OrderSearch
-implements XLite_Base_IDecorator
+class OrderSearch extends \XLite\View\OrderSearch
+implements \XLite\Base\IDecorator
 {
     /**
      * Get profile
      *
-     * @return XLite_Model_Profile
+     * @return \XLite\Model\Profile
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -49,7 +51,7 @@ implements XLite_Base_IDecorator
         $pid = lc_connector_get_display_profile_id();
 
         return $pid
-            ? new XLite_Model_Profile($pid)
+            ? new \XLite\Model\Profile($pid)
             : parent::getProfile();
     }
 }

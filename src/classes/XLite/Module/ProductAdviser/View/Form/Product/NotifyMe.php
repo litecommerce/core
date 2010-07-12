@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\ProductAdviser\View\Form\Product;
+
 /**
  * 'Notify me' form
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_ProductAdviser_View_Form_Product_NotifyMe extends XLite_View_Form_Product_AProduct
+class NotifyMe extends \XLite\View\Form\Product\AProduct
 {
     /**
      * Current form name
@@ -58,7 +60,7 @@ class XLite_Module_ProductAdviser_View_Form_Product_NotifyMe extends XLite_View_
     {
         parent::initView();
 
-        $this->widgetParams[self::PARAM_FORM_ACTION]->setValue(XLite_Core_Request::getInstance()->action);
+        $this->widgetParams[self::PARAM_FORM_ACTION]->setValue(\XLite\Core\Request::getInstance()->action);
         $this->widgetParams[self::PARAM_FORM_PARAMS]->appendValue($this->getFormDefaultParams());
     }
 
@@ -73,26 +75,26 @@ class XLite_Module_ProductAdviser_View_Form_Product_NotifyMe extends XLite_View_
     {
         $params = array(
             'product_id' => $this->getProduct()->get('product_id'),
-            'mode'       => XLite_Core_Request::getInstance()->mode
+            'mode'       => \XLite\Core\Request::getInstance()->mode
         );
 
-        if ('notify_product' == XLite_Core_Request::getInstance()->action) {
+        if ('notify_product' == \XLite\Core\Request::getInstance()->action) {
 
-            if (XLite_Core_Request::getInstance()->amount) {
-                $params['amount'] = XLite_Core_Request::getInstance()->amount;
+            if (\XLite\Core\Request::getInstance()->amount) {
+                $params['amount'] = \XLite\Core\Request::getInstance()->amount;
 
             } elseif ($this->getProduct()->get('inventory')) {
                 $params['amount'] = $this->getProduct()->getInventory()->get('amount');
             }
 
-            if (XLite_Core_Request::getInstance()->product_options) {
-                $params['product_options'] = XLite_Core_Request::getInstance()->product_options;
+            if (\XLite\Core\Request::getInstance()->product_options) {
+                $params['product_options'] = \XLite\Core\Request::getInstance()->product_options;
             }
 
-        } elseif ('notify_price' == XLite_Core_Request::getInstance()->action) {
+        } elseif ('notify_price' == \XLite\Core\Request::getInstance()->action) {
 
-            if (XLite_Core_Request::getInstance()->product_price) {
-                $params['product_price'] = XLite_Core_Request::getInstance()->product_price;
+            if (\XLite\Core\Request::getInstance()->product_price) {
+                $params['product_price'] = \XLite\Core\Request::getInstance()->product_price;
 
             } else {
                 $params['product_price'] = $this->getProduct()->getListPrice();

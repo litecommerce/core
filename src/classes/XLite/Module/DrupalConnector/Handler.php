@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\DrupalConnector;
+
 /**
  * CMS connector
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_DrupalConnector_Handler extends XLite_Core_CMSConnector
+class Handler extends \XLite\Core\CMSConnector
 {
     /**
      * areHooksEnabled 
@@ -149,7 +151,7 @@ class XLite_Module_DrupalConnector_Handler extends XLite_Core_CMSConnector
      */
     public function getLandingLink()
     {
-        $link = new XLite_Module_DrupalConnector_Model_LandingLink();
+        $link = new \XLite\Module\DrupalConnector\Model\LandingLink();
         $link->create();
 
         return $link->getLink();
@@ -236,7 +238,7 @@ class XLite_Module_DrupalConnector_Handler extends XLite_Core_CMSConnector
 
         );
 
-        if (XLite_Model_ModulesManager::getInstance()->isActiveModule('WishList')) {
+        if (\XLite\Model\ModulesManager::getInstance()->isActiveModule('WishList')) {
             $this->portals['user/%/wishlist'] = array(
                 'menu'   => array(
                     'title'            => 'Wish list',
@@ -331,7 +333,7 @@ class XLite_Module_DrupalConnector_Handler extends XLite_Core_CMSConnector
         if (false === $result) {
             $result = implode(
                 '/',
-                array(XLite_Module_DrupalConnector_Core_Converter::DRUPAL_ROOT_NODE, $target, $action)
+                array(\XLite\Module\DrupalConnector\Core\Converter::DRUPAL_ROOT_NODE, $target, $action)
             );
         }
 

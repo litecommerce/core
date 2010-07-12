@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Controller_Admin_Db extends XLite_Controller_Admin_AAdmin
+class Db extends \XLite\Controller\Admin\AAdmin
 {
     /**
      * File size limit 
@@ -108,7 +110,7 @@ class XLite_Controller_Admin_Db extends XLite_Controller_Admin_AAdmin
         $verbose  = false;
         $destfile = null; // write to 'stdout' by default
 
-        if (XLite_Core_Request::getInstance()->write_to_file) {
+        if (\XLite\Core\Request::getInstance()->write_to_file) {
             $destfile = $this->sqldump_file;
             $verbose  = true;
             (isset($this->mode) && $this->mode == "cp") or $this->startDump();
@@ -116,12 +118,12 @@ class XLite_Controller_Admin_Db extends XLite_Controller_Admin_AAdmin
             $this->startDownload('db_backup.sql.php');
         }
         $this->db->backup($destfile, $verbose);
-        if (isset(XLite_Core_Request::getInstance()->write_to_file)) {
+        if (isset(\XLite\Core\Request::getInstance()->write_to_file)) {
             if (isset($this->mode) && $this->mode == "cp") {
                 // Windows Control Panel mode. suppress "back" message.
                 die('OK');
             } else {
-        		if (XLite_Core_Request::getInstance()->write_to_file) {
+        		if (\XLite\Core\Request::getInstance()->write_to_file) {
             		echo "<br><b>Database backup created successfully</b><br>";
             	}
                 $this->set('silent', true);
@@ -147,9 +149,9 @@ class XLite_Controller_Admin_Db extends XLite_Controller_Admin_AAdmin
 
         // check whether to restore from file upload
         mkdirRecursive(SQL_UPLOAD_DIR);
-        if (!isset(XLite_Core_Request::getInstance()->local_file))
+        if (!isset(\XLite\Core\Request::getInstance()->local_file))
         {
-            $upload = new XLite_Model_Upload($_FILES['userfile']);
+            $upload = new \XLite\Model\Upload($_FILES['userfile']);
             $srcfile = SQL_UPLOAD_DIR.$upload->getName();
             if (!$upload->move($srcfile)) {
                 $this->error = $upload->getErrorMessage();

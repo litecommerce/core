@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View\Sort;
+
 // FIXME - class should use the same approaches as the ProductsList one
 
 /**
@@ -35,7 +37,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class XLite_View_Sort_ASort extends XLite_View_AView
+abstract class ASort extends \XLite\View\AView
 {
     /**
      * Widget parameter names
@@ -70,9 +72,9 @@ abstract class XLite_View_Sort_ASort extends XLite_View_AView
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_PARAMS          => new XLite_Model_WidgetParam_Collection('URL params', array()),
-            self::PARAM_SORT_CRITERIONS => new XLite_Model_WidgetParam_Collection('Sort criterions', array()),
-            self::PARAM_CELL            => new XLite_Model_WidgetParam_Collection('List conditions cell', array()),
+            self::PARAM_PARAMS          => new \XLite\Model\WidgetParam\Collection('URL params', array()),
+            self::PARAM_SORT_CRITERIONS => new \XLite\Model\WidgetParam\Collection('Sort criterions', array()),
+            self::PARAM_CELL            => new \XLite\Model\WidgetParam\Collection('List conditions cell', array()),
         );
     }
 
@@ -149,7 +151,7 @@ abstract class XLite_View_Sort_ASort extends XLite_View_AView
     {
         $params = $this->getParam(self::PARAM_PARAMS);
 
-        $target = XLite::TARGET_DEFAULT;
+        $target = \XLite::TARGET_DEFAULT;
         $action = '';
 
         if (isset($params['target'])) {

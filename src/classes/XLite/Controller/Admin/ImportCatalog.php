@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Controller_Admin_ImportCatalog extends XLite_Controller_Admin_AAdmin
+class ImportCatalog extends \XLite\Controller\Admin\AAdmin
 {
     public $params = array('target', "page", "import_error");
     public $page = "products"; // the default import page	
@@ -53,12 +55,12 @@ class XLite_Controller_Admin_ImportCatalog extends XLite_Controller_Admin_AAdmin
                 $this->set('invalid_userfile_state', "invalid_upload_file");
             }
 
-            if (XLite_Core_Request::getInstance()->localfile != "" && !is_readable(XLite_Core_Request::getInstance()->localfile)) {
+            if (\XLite\Core\Request::getInstance()->localfile != "" && !is_readable(\XLite\Core\Request::getInstance()->localfile)) {
                 $this->set('invalid_localfile', true);
                 $this->set('invalid_localfile_state', "invalid_file");
             }
             
-            if ($_FILES['userfile']['tmp_name'] == "" && XLite_Core_Request::getInstance()->localfile == "") {
+            if ($_FILES['userfile']['tmp_name'] == "" && \XLite\Core\Request::getInstance()->localfile == "") {
                 $this->set('invalid_userfile', true);
                 $this->set('invalid_userfile_state', "empty_file");
             }
@@ -106,15 +108,15 @@ class XLite_Controller_Admin_ImportCatalog extends XLite_Controller_Admin_AAdmin
             "return_error"		=> true,
             );
 
-        $product = new XLite_Model_Product();
+        $product = new \XLite\Model\Product();
         $product->import($options);
         $this->importError = $product->importError;
     }
 
     function action_layout($layout_name = "product_layout")
     {
-        $layout = implode(',', XLite_Core_Request::getInstance()->$layout_name);
-        XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+        $layout = implode(',', \XLite\Core\Request::getInstance()->$layout_name);
+        \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
             array(
                 'category' => 'ImportExport',
                 'name'     => $layout_name,
@@ -134,7 +136,7 @@ class XLite_Controller_Admin_ImportCatalog extends XLite_Controller_Admin_AAdmin
             "return_error"		=> true,
             );
          
-        $field = new XLite_Model_ExtraField();
+        $field = new \XLite\Model\ExtraField();
         $field->import($options);
         $this->importError = $field->importError;
     }
@@ -142,8 +144,8 @@ class XLite_Controller_Admin_ImportCatalog extends XLite_Controller_Admin_AAdmin
     function action_fields_layout()
     {
         $layout_name = "fields_layout";
-        $layout = implode(',', XLite_Core_Request::getInstance()->$layout_name);
-        XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+        $layout = implode(',', \XLite\Core\Request::getInstance()->$layout_name);
+        \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
             array(
                 'category' => 'ImportExport',
                 'name'     => $layout_name,
@@ -191,7 +193,7 @@ class XLite_Controller_Admin_ImportCatalog extends XLite_Controller_Admin_AAdmin
 
     function getImagesDir()
     {
-        $image = new XLite_Model_Image();
-        return ($this->xlite->config->Images->images_directory != "") ? $this->xlite->config->Images->images_directory : XLite_Model_Image::IMAGES_DIR;
+        $image = new \XLite\Model\Image();
+        return ($this->xlite->config->Images->images_directory != "") ? $this->xlite->config->Images->images_directory : \XLite\Model\Image::IMAGES_DIR;
     }
 }

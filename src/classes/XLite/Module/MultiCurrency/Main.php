@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\MultiCurrency;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_MultiCurrency_Main extends XLite_Module_AModule
+class Main extends \XLite\Module\AModule
 {
     /**
      * Module type
@@ -97,10 +99,10 @@ class XLite_Module_MultiCurrency_Main extends XLite_Module_AModule
         parent::init();
         $this->xlite->set('MultiCurrencyEnabled',true);
 
-        $this->defaultCurrency = new XLite_Module_MultiCurrency_Model_CurrencyCountries();
+        $this->defaultCurrency = new \XLite\Module\MultiCurrency\Model\CurrencyCountries();
    		$found = $this->defaultCurrency->find("base = 1");
         if (!$found) {
-            $this->defaultCurrency = new XLite_Module_MultiCurrency_Model_CurrencyCountries();
+            $this->defaultCurrency = new \XLite\Module\MultiCurrency\Model\CurrencyCountries();
             $this->defaultCurrency->set('code',"USD");
             $this->defaultCurrency->set('name',"US dollar");
             $this->defaultCurrency->set('exchange_rate',1);

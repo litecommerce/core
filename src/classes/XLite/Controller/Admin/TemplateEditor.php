@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Controller_Admin_TemplateEditor extends XLite_Controller_Admin_AAdmin
+class TemplateEditor extends \XLite\Controller\Admin\AAdmin
 {
     protected $locale = null;
 
@@ -86,7 +88,7 @@ class XLite_Controller_Admin_TemplateEditor extends XLite_Controller_Admin_AAdmi
     function getLocale() 
     {
         if (is_null($this->locale)) {
-            $this->locale = XLite::getInstance()->getOptions(array('skin_details', 'locale'));
+            $this->locale = \XLite::getInstance()->getOptions(array('skin_details', 'locale'));
         }
         return $this->locale;
     }
@@ -94,14 +96,14 @@ class XLite_Controller_Admin_TemplateEditor extends XLite_Controller_Admin_AAdmi
     function getZone() 
     {
         if (is_null($this->zone)) {
-            $this->zone = XLite::getInstance()->getOptions(array('skin_details', 'skin'));
+            $this->zone = \XLite::getInstance()->getOptions(array('skin_details', 'skin'));
         }
         return $this->zone;
     }
     
     function getTreePages() 
     {
-        $zone = XLite::getInstance()->getOptions(array('skin_details', 'skin'));
+        $zone = \XLite::getInstance()->getOptions(array('skin_details', 'skin'));
         if (is_null($this->treePages)) {
             $this->treePages = array(
                     $zone => "Customer zone",
@@ -148,7 +150,7 @@ class XLite_Controller_Admin_TemplateEditor extends XLite_Controller_Admin_AAdmi
 
         $pages = array();
         foreach ($templates as $name) {
-            $pages[] = new XLite_Model_FileNode("skins/$zone/$locale/".$name, null, SHOW_FULL_PATH);
+            $pages[] = new \XLite\Model\FileNode("skins/$zone/$locale/".$name, null, SHOW_FULL_PATH);
         }
 
         if ($this->get('valid') == false) {
@@ -168,20 +170,20 @@ class XLite_Controller_Admin_TemplateEditor extends XLite_Controller_Admin_AAdmi
         $zone   = $this->get('zone');
         $locale = $this->get('locale');
         if ($zone == "mail") {
-            $shortcuts = array( new XLite_Model_FileNode("skins/mail/$locale/order_processed/body.tpl", null, SHOW_FULL_PATH), 
+            $shortcuts = array( new \XLite\Model\FileNode("skins/mail/$locale/order_processed/body.tpl", null, SHOW_FULL_PATH), 
                     );
         } elseif ($zone == "admin") {
         } else {
             $shortcuts = array(
-                new XLite_Model_FileNode("skins/$zone/$locale/main.tpl", null, SHOW_FULL_PATH),
-                new XLite_Model_FileNode("skins/$zone/$locale/category_products.tpl", null, SHOW_FULL_PATH),
-                new XLite_Model_FileNode("skins/$zone/$locale/category_subcategories.tpl", null, SHOW_FULL_PATH),
-                new XLite_Model_FileNode("skins/$zone/$locale/product_details.tpl", null, SHOW_FULL_PATH),
-                new XLite_Model_FileNode("skins/$zone/$locale/checkout", "Checkout pages", SHOW_FULL_PATH),
-                new XLite_Model_FileNode("skins/$zone/$locale/common/invoice.tpl", "Invoice form template", SHOW_FULL_PATH),
-                new XLite_Model_FileNode("skins/$zone/$locale/common/print_invoice.tpl", "Printable Invoice form template", SHOW_FULL_PATH),
-                new XLite_Model_FileNode('cart.html', null, SHOW_FULL_PATH),
-                new XLite_Model_FileNode('shop_closed.html', "Shop is closed warning template", SHOW_FULL_PATH),
+                new \XLite\Model\FileNode("skins/$zone/$locale/main.tpl", null, SHOW_FULL_PATH),
+                new \XLite\Model\FileNode("skins/$zone/$locale/category_products.tpl", null, SHOW_FULL_PATH),
+                new \XLite\Model\FileNode("skins/$zone/$locale/category_subcategories.tpl", null, SHOW_FULL_PATH),
+                new \XLite\Model\FileNode("skins/$zone/$locale/product_details.tpl", null, SHOW_FULL_PATH),
+                new \XLite\Model\FileNode("skins/$zone/$locale/checkout", "Checkout pages", SHOW_FULL_PATH),
+                new \XLite\Model\FileNode("skins/$zone/$locale/common/invoice.tpl", "Invoice form template", SHOW_FULL_PATH),
+                new \XLite\Model\FileNode("skins/$zone/$locale/common/print_invoice.tpl", "Printable Invoice form template", SHOW_FULL_PATH),
+                new \XLite\Model\FileNode('cart.html', null, SHOW_FULL_PATH),
+                new \XLite\Model\FileNode('shop_closed.html', "Shop is closed warning template", SHOW_FULL_PATH),
             );
         }
         return $shortcuts;
@@ -192,8 +194,8 @@ class XLite_Controller_Admin_TemplateEditor extends XLite_Controller_Admin_AAdmi
     */
     function action_update_templates() 
     {
-        foreach (XLite_Core_Request::getInstance()->template as $path => $content) {
-            $t = new XLite_Model_FileNode($path);
+        foreach (\XLite\Core\Request::getInstance()->template as $path => $content) {
+            $t = new \XLite\Model\FileNode($path);
             $t->set('content', $content);
             $t->update();
         	if ($t->writePermitted) {
@@ -209,35 +211,35 @@ class XLite_Controller_Admin_TemplateEditor extends XLite_Controller_Admin_AAdmi
 
     function getMailTemplates()
     {
-        $node = XLite_Core_Request::getInstance()->node;
-        $path = XLite_Core_Request::getInstance()->path;
-        $data['subject'] = new XLite_Model_FileNode("$node/subject.tpl");
-        $data['body'] = new XLite_Model_FileNode("$node/body.tpl");
-        $data['signature'] = new XLite_Model_FileNode("$path/signature.tpl");
+        $node = \XLite\Core\Request::getInstance()->node;
+        $path = \XLite\Core\Request::getInstance()->path;
+        $data['subject'] = new \XLite\Model\FileNode("$node/subject.tpl");
+        $data['body'] = new \XLite\Model\FileNode("$node/body.tpl");
+        $data['signature'] = new \XLite\Model\FileNode("$path/signature.tpl");
         return $data;
     }
 
     function action_update_mail()
     {
     	$writePermitted = false;
-        $node = XLite_Core_Request::getInstance()->node;
-        $path = XLite_Core_Request::getInstance()->path;
-        $s = new XLite_Model_FileNode("$node/subject.tpl");
-        $s->set('content', XLite_Core_Request::getInstance()->subject);
+        $node = \XLite\Core\Request::getInstance()->node;
+        $path = \XLite\Core\Request::getInstance()->path;
+        $s = new \XLite\Model\FileNode("$node/subject.tpl");
+        $s->set('content', \XLite\Core\Request::getInstance()->subject);
         $s->update();
         if ($s->writePermitted) {
             $writePermitted = true;
         	$this->set('subjectWriteError', true);
         }
-        $b = new XLite_Model_FileNode("$node/body.tpl");
-        $b->set('content', XLite_Core_Request::getInstance()->body);
+        $b = new \XLite\Model\FileNode("$node/body.tpl");
+        $b->set('content', \XLite\Core\Request::getInstance()->body);
         $b->update();
         if ($b->writePermitted) {
             $writePermitted = true;
         	$this->set('bodyWriteError', true);
         }
-        $sig = new XLite_Model_FileNode("$path/signature.tpl");
-        $sig->set('content', XLite_Core_Request::getInstance()->signature);
+        $sig = new \XLite\Model\FileNode("$path/signature.tpl");
+        $sig->set('content', \XLite\Core\Request::getInstance()->signature);
         $sig->update();
         if ($sig->writePermitted) {
             $writePermitted = true;
@@ -256,9 +258,9 @@ class XLite_Controller_Admin_TemplateEditor extends XLite_Controller_Admin_AAdmi
     function getExtraPage() 
     {
         if (is_null($this->extraPage)) {
-            $this->extraPage = new XLite_Model_ExtraPage();
-            if (isset(XLite_Core_Request::getInstance()->page) && !empty(XLite_Core_Request::getInstance()->page)) {
-                $this->extraPage = $this->extraPage->findPage(XLite_Core_Request::getInstance()->page);
+            $this->extraPage = new \XLite\Model\ExtraPage();
+            if (isset(\XLite\Core\Request::getInstance()->page) && !empty(\XLite\Core\Request::getInstance()->page)) {
+                $this->extraPage = $this->extraPage->findPage(\XLite\Core\Request::getInstance()->page);
             }
         }
         return $this->extraPage;
@@ -281,14 +283,14 @@ class XLite_Controller_Admin_TemplateEditor extends XLite_Controller_Admin_AAdmi
                 $title = $ep->get('title');
                 $content = $ep->getComplex('template.content');
 
-                XLite_Core_Request::getInstance()->page = $page;
+                \XLite\Core\Request::getInstance()->page = $page;
                 $this->extraPage = null;
                 $this->getExtraPage();
                 $this->action_page_remove();
 
-                XLite_Core_Request::getInstance()->page = "";
-                XLite_Core_Request::getInstance()->title = $title;
-                XLite_Core_Request::getInstance()->content = $content;
+                \XLite\Core\Request::getInstance()->page = "";
+                \XLite\Core\Request::getInstance()->title = $title;
+                \XLite\Core\Request::getInstance()->content = $content;
                 $this->extraPage = null;
                 $this->getExtraPage();
                 $this->action_update_page();
@@ -298,11 +300,11 @@ class XLite_Controller_Admin_TemplateEditor extends XLite_Controller_Admin_AAdmi
 
     function action_update_page() 
         {
-        $page = trim(XLite_Core_Request::getInstance()->page);
-        $this->extraPage = new XLite_Model_ExtraPage();
+        $page = trim(\XLite\Core\Request::getInstance()->page);
+        $this->extraPage = new \XLite\Model\ExtraPage();
         $this->setComplex('extraPage.page', $page);
-        $this->setComplex('extraPage.title', trim(XLite_Core_Request::getInstance()->title));
-        $this->setComplex('extraPage.content', trim(XLite_Core_Request::getInstance()->content));
+        $this->setComplex('extraPage.title', trim(\XLite\Core\Request::getInstance()->title));
+        $this->setComplex('extraPage.content', trim(\XLite\Core\Request::getInstance()->content));
         if ($this->new_page) {
             $this->extraPage->add();
         } else {
@@ -336,10 +338,10 @@ class XLite_Controller_Admin_TemplateEditor extends XLite_Controller_Admin_AAdmi
 
     function getFile() 
     {
-        $path = isset(XLite_Core_Request::getInstance()->file) ? XLite_Core_Request::getInstance()->file : null;
-        $file = new XLite_Model_FileNode($path);
-        if (isset(XLite_Core_Request::getInstance()->content)) {
-            $file->set('content', XLite_Core_Request::getInstance()->content);
+        $path = isset(\XLite\Core\Request::getInstance()->file) ? \XLite\Core\Request::getInstance()->file : null;
+        $file = new \XLite\Model\FileNode($path);
+        if (isset(\XLite\Core\Request::getInstance()->content)) {
+            $file->set('content', \XLite\Core\Request::getInstance()->content);
         }
         return $file;
     }
@@ -359,25 +361,25 @@ class XLite_Controller_Admin_TemplateEditor extends XLite_Controller_Admin_AAdmi
     
     function action_remove() 
     {
-        $file = new XLite_Model_FileNode(XLite_Core_Request::getInstance()->selected_file);
+        $file = new \XLite\Model\FileNode(\XLite\Core\Request::getInstance()->selected_file);
         $file->remove();
         $this->afterAdvanced();
     }
 
     function action_copy() 
     {
-        $file = new XLite_Model_FileNode(XLite_Core_Request::getInstance()->selected_file);
+        $file = new \XLite\Model\FileNode(\XLite\Core\Request::getInstance()->selected_file);
         $basename = dirname($file->path);
-        $file->set('newPath', $basename . "/" . XLite_Core_Request::getInstance()->new_name);
+        $file->set('newPath', $basename . "/" . \XLite\Core\Request::getInstance()->new_name);
         $file->copy();
         $this->afterAdvanced();
     }
 
     function action_rename() 
     {
-        $file = new XLite_Model_FileNode(XLite_Core_Request::getInstance()->selected_file);
+        $file = new \XLite\Model\FileNode(\XLite\Core\Request::getInstance()->selected_file);
         $basename = dirname($file->path);
-        $file->set('newPath', $basename . "/" . XLite_Core_Request::getInstance()->new_name);
+        $file->set('newPath', $basename . "/" . \XLite\Core\Request::getInstance()->new_name);
         $file->rename();
         $this->afterAdvanced();
     }
@@ -429,7 +431,7 @@ class XLite_Controller_Admin_TemplateEditor extends XLite_Controller_Admin_AAdmi
     function action_restore() 
     {
         $file = $this->get('file');
-        $to = XLite_Core_Request::getInstance()->selected_file;
+        $to = \XLite\Core\Request::getInstance()->selected_file;
         $schema_file = preg_replace("/^(skins)/", sprintf("schemas/templates/%s",$this->config->Skin->skin), $to);
         $from = (file_exists($schema_file) ? $schema_file : preg_replace("/^(skins)/", "skins_original", $to));
         copyRecursive($from, $to);

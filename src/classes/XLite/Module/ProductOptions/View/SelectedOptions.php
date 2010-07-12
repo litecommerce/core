@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\ProductOptions\View;
+
 /**
  * Selected product options widget
  *
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0
  */
-class XLite_Module_ProductOptions_View_SelectedOptions extends XLite_View_AView
+class SelectedOptions extends \XLite\View\AView
 {
     /**
      * Widget parameter names
@@ -69,17 +71,17 @@ class XLite_Module_ProductOptions_View_SelectedOptions extends XLite_View_AView
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_ITEM       => new XLite_Model_WidgetParam_Object('Item', null, false, 'XLite_Model_OrderItem'),
-            self::PARAM_SOURCE     => new XLite_Model_WidgetParam_String('Source', ''),
-            self::PARAM_STORAGE_ID => new XLite_Model_WidgetParam_Int('Storage id', null),
-            self::PARAM_ITEM_ID    => new XLite_Model_WidgetParam_Int('Item id', null),
+            self::PARAM_ITEM       => new \XLite\Model\WidgetParam\Object('Item', null, false, '\XLite\Model\OrderItem'),
+            self::PARAM_SOURCE     => new \XLite\Model\WidgetParam\String('Source', ''),
+            self::PARAM_STORAGE_ID => new \XLite\Model\WidgetParam\Int('Storage id', null),
+            self::PARAM_ITEM_ID    => new \XLite\Model\WidgetParam\Int('Item id', null),
         );
     }
 
     /**
      * getItem 
      * 
-     * @return XLite_Model_OrderItem
+     * @return \XLite\Model\OrderItem
      * @access protected
      * @since  3.0.0
      */

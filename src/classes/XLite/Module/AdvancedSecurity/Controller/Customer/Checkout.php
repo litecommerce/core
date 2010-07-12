@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\AdvancedSecurity\Controller\Customer;
+
 /**
  * ____description____
  * 
@@ -33,14 +35,14 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_AdvancedSecurity_Controller_Customer_Checkout extends XLite_Controller_Customer_Checkout implements XLite_Base_IDecorator
+class Checkout extends \XLite\Controller\Customer\Checkout implements \XLite\Base\IDecorator
 {
     
     function getPaymentMethods()
     {
         $methods = parent::getPaymentMethods();
 
-        $gpg = new XLite_Module_AdvancedSecurity_Model_GPG();
+        $gpg = new \XLite\Module\AdvancedSecurity\Model\GPG();
         if ($gpg->get('publicKey') && $gpg->get('secretKey'))
             return $methods;
 

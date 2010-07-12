@@ -26,14 +26,16 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\DetailedImages;
+
 /**
- * XLite_Module_DetailedImages_Main 
+ * \XLite\Module\DetailedImages\Main 
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_DetailedImages_Main extends XLite_Module_AModule
+class Main extends \XLite\Module\AModule
 {
     /**
      * Module type
@@ -82,7 +84,7 @@ class XLite_Module_DetailedImages_Main extends XLite_Module_AModule
     {
         parent::init();
 
-        XLite_Model_Image::registerImageClass(
+        \XLite\Model\Image::registerImageClass(
             'detailed_image',
             'Detailed images',
             'images',

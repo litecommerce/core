@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Controller\Customer;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Controller_Customer_RecoverPassword extends XLite_Controller_Customer_ACustomer
+class RecoverPassword extends \XLite\Controller\Customer\ACustomer
 {
     public $params = array('target', "mode", "email", "link_mailed");
 
@@ -49,7 +51,7 @@ class XLite_Controller_Customer_RecoverPassword extends XLite_Controller_Custome
     {
         parent::addBaseLocation();
 
-        $this->locationPath->addNode(new XLite_Model_Location('Help zone'));
+        $this->locationPath->addNode(new \XLite\Model\Location('Help zone'));
     }
 
     /**

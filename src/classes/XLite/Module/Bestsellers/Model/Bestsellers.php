@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Bestsellers\Model;
+
 /**
  * Bestsellers model 
  * 
@@ -34,7 +36,7 @@
  * @see        ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Bestsellers_Model_Bestsellers extends XLite_Base
+class Bestsellers extends \XLite\Base
 {
     /**
      * Subcategories id
@@ -51,7 +53,7 @@ class XLite_Module_Bestsellers_Model_Bestsellers extends XLite_Base
      * 
      * @param integer $category_id ____param_comment____
      *  
-     * @return array of XLite_Model_Product objects
+     * @return array of \XLite\Model\Product objects
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -85,14 +87,14 @@ class XLite_Module_Bestsellers_Model_Bestsellers extends XLite_Base
      * 
      * @param integer $cat_id Category id
      *  
-     * @return array of XLite_Model_Product objects
+     * @return array of \XLite\Model\Product objects
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
     protected function calculateBestsellers($numberOfBestsellers, $cat_id)
     {
-        $category = new XLite_Model_Category($cat_id);
+        $category = new \XLite\Model\Category($cat_id);
 
         $bestsellers = array();
 
@@ -149,7 +151,7 @@ EOT;
             // fill bestsellers array with product instances
             $best = $category->db->getAll($sql);
             foreach ($best as $p) {
-                $product = new XLite_Model_Product($p['product_id']);
+                $product = new \XLite\Model\Product($p['product_id']);
                 $categories = $product->get('categories');
                 if (!empty($categories) && $product->filter()) {
                     $product->category_id = $categories[0]->category_id;
@@ -164,7 +166,7 @@ EOT;
     /**
      * Get subcategories 
      * 
-     * @param XLite_Model_Category $category Category
+     * @param \XLite\Model\Category $category Category
      *  
      * @return void
      * @see    ____func_see____

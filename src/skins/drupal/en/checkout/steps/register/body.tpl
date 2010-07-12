@@ -12,5 +12,5 @@
  *}
 
 <div class="checkout-profile">
-  <widget class="XLite_View_Model_Profile_Checkout" />
+  <widget class="\XLite\View\Model\Profile\Checkout" />
 </div>

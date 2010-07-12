@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Controller_Admin_TopSellers extends XLite_Controller_Admin_Stats
+class TopSellers extends \XLite\Controller\Admin\Stats
 {
     public $todayItems = array();
     public $weekItems = array();
@@ -60,7 +62,7 @@ class XLite_Controller_Admin_TopSellers extends XLite_Controller_Admin_Stats
                 "total" => $statRec,
                 "paid" => $statRec);
 
-        $order = new XLite_Model_Order();
+        $order = new \XLite\Model\Order();
         $date = $this->get('monthDate');
         array_map(array($this, "collect"), $order->findAll("(status='P' OR status='C') AND date>=$date"));
         $this->sort('todayItems');

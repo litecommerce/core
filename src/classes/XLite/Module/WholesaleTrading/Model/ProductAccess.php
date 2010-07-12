@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\WholesaleTrading\Model;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_WholesaleTrading_Model_ProductAccess extends XLite_Model_AModel
+class ProductAccess extends \XLite\Model\AModel
 {
     /**
     * @var string $alias The product access database table alias.
@@ -94,10 +96,10 @@ class XLite_Module_WholesaleTrading_Model_ProductAccess extends XLite_Model_AMod
             if ($field == "NULL") {
                 $data[] = "";
             } elseif ($field == "product") {
-                $product = new XLite_Model_Product($values['product_id']);
+                $product = new \XLite\Model\Product($values['product_id']);
                 $data[] = $product->get('name');
             } elseif ($field == "sku") {
-                $product = new XLite_Model_Product($values['product_id']);
+                $product = new \XLite\Model\Product($values['product_id']);
                 $data[] = $product->get('sku');
             } elseif (isset($values[$field])) {
                 $data[] =  $this->_stripSpecials($values[$field]);
@@ -112,8 +114,8 @@ class XLite_Module_WholesaleTrading_Model_ProductAccess extends XLite_Model_AMod
         if (!isset($line_no)) $line_no = 1; else $line_no++;
                     
         $properties = $options['properties'];
-        $pa = new XLite_Module_WholesaleTrading_Model_ProductAccess();
-        $product = new XLite_Model_Product();
+        $pa = new \XLite\Module\WholesaleTrading\Model\ProductAccess();
+        $product = new \XLite\Model\Product();
 
         $product = $product->findImportedProduct($properties['sku'], '', $properties['product'], false, $options['unique_identifier']);
         if (!is_null($product)) {
@@ -141,7 +143,7 @@ class XLite_Module_WholesaleTrading_Model_ProductAccess extends XLite_Model_AMod
 
     function collectGarbage()
     {
-        $product_table_name = XLite_Model_Factory::create('XLite_Model_Product')->getTable();
+        $product_table_name = \XLite\Model\Factory::create('\XLite\Model\Product')->getTable();
         $table_name = $this->getTable();
 
         $sql =<<<EOSQL
@@ -155,7 +157,7 @@ EOSQL;
 
         $collection = $this->db->getAll($sql);
         foreach ($collection as $item) {
-            $pa = new XLite_Module_WholesaleTrading_Model_ProductAccess();
+            $pa = new \XLite\Module\WholesaleTrading\Model\ProductAccess();
             if ($pa->find("product_id='".$item['product_id']."'")) {
             	$pa->delete();
             }

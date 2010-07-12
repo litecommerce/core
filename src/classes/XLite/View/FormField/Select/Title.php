@@ -26,14 +26,16 @@
  * @since      3.0.0
  */
 
+namespace XLite\View\FormField\Select;
+
 /**
- * XLite_View_FormField_Select_Title 
+ * \XLite\View\FormField\Select\Title 
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_FormField_Select_Title extends XLite_View_FormField_Select_Regular
+class Title extends \XLite\View\FormField\Select\Regular
 {
     /**
      * getDefaultOptions

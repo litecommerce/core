@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\ProductOptions\View;
+
 /**
  * Product option modifier widget
  *
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0
  */
-class XLite_Module_ProductOptions_View_ProductOptionModifier extends XLite_View_AView
+class ProductOptionModifier extends \XLite\View\AView
 {
     /**
      * Widget parameter names
@@ -68,9 +70,9 @@ class XLite_Module_ProductOptions_View_ProductOptionModifier extends XLite_View_
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_PRODUCT      => new XLite_Model_WidgetParam_Object('Product', null, false, 'XLite_Model_Product'),
-            self::PARAM_OPTION       => new XLite_Model_WidgetParam_Object('Option', null, false, 'stdClass'),
-            self::PARAM_OPTION_GROUP => new XLite_Model_WidgetParam_Object('Option group', null, false, 'XLite_Module_ProductOptions_Model_ProductOption'),
+            self::PARAM_PRODUCT      => new \XLite\Model\WidgetParam\Object('Product', null, false, '\XLite\Model\Product'),
+            self::PARAM_OPTION       => new \XLite\Model\WidgetParam\Object('Option', null, false, 'stdClass'),
+            self::PARAM_OPTION_GROUP => new \XLite\Model\WidgetParam\Object('Option group', null, false, '\XLite\Module\ProductOptions\Model\ProductOption'),
         );
     }
 

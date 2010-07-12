@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\GiftCertificates\View;
+
 /**
  * Verify (and apply) gift certificate box
  * 
@@ -34,7 +36,7 @@
  * @since   3.0.0
  * @ListChild (list="cart.bottom.right", weight="30")
  */
-class XLite_Module_GiftCertificates_View_CartRow extends XLite_View_AView
+class CartRow extends \XLite\View\AView
 {
     /**
      * Return widget default template

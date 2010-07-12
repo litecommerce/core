@@ -28,7 +28,7 @@
 			        <td nowrap class="ProductDetailsTitle">Status:</td>
 					<td>&nbsp;</td> 
 			        <td IF="!target=#create_order#">{order.orderStatus.name}</td>
-                    <td IF="target=#create_order#"><widget class="XLite_View_StatusSelect" field="substatus" value="{order.orderStatus.status}" style="width: 150px; border-width: 1px; border-color: #516176; border-style: solid;"></td>
+                    <td IF="target=#create_order#"><widget class="\XLite\View\StatusSelect" field="substatus" value="{order.orderStatus.status}" style="width: 150px; border-width: 1px; border-color: #516176; border-style: solid;"></td>
 			    </tr>
                 <tr>
                     <td nowrap class="ProductDetailsTitle">E-mail:</td>

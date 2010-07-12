@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Egoods\Controller\Customer;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Egoods_Controller_Customer_Download extends XLite_Controller_AController
+class Download extends \XLite\Controller\AController
 {
     public $params = array('mode');
 
@@ -49,7 +51,7 @@ class XLite_Module_Egoods_Controller_Customer_Download extends XLite_Controller_
     function downloadByAccessKey() 
     {
         $access_key = $_REQUEST['acc'];
-        $dl = new XLite_Module_Egoods_Model_DownloadableLink();
+        $dl = new \XLite\Module\Egoods\Model\DownloadableLink();
         $time = time();
         
         // check if the link with given access key exists
@@ -62,7 +64,7 @@ class XLite_Module_Egoods_Controller_Customer_Download extends XLite_Controller_
                 return;
             }
             
-            $df = new XLite_Module_Egoods_Model_DownloadableFile($dl->get('file_id'));
+            $df = new \XLite\Module\Egoods\Model\DownloadableFile($dl->get('file_id'));
             // check for file
             if (!is_file($df->get('data'))) {
                 $this->set('returnUrl', 'cart.php?target=download&mode=file_not_found&filename=' . 
@@ -82,7 +84,7 @@ class XLite_Module_Egoods_Controller_Customer_Download extends XLite_Controller_
             $dl->update();
             
             // save download statistics
-            $ds = new XLite_Module_Egoods_Model_DownloadsStatistics();
+            $ds = new \XLite\Module\Egoods\Model\DownloadsStatistics();
             $ds->set('file_id', $df->get('file_id'));
             $ds->set('date', $time);
             $ds->set('headers', "HTTP_REFERER=" . $_SERVER['HTTP_REFERER'] . ", REMOTE_ADDR=" . $_SERVER['REMOTE_ADDR']);
@@ -97,10 +99,10 @@ class XLite_Module_Egoods_Controller_Customer_Download extends XLite_Controller_
     {
         $file_id = $_REQUEST['file_id'];
         $time = time();
-        $df = new XLite_Module_Egoods_Model_DownloadableFile($file_id);
+        $df = new \XLite\Module\Egoods\Model\DownloadableFile($file_id);
         $product_id = $df->get('product_id');
         
-        $product = new XLite_Model_Product($product_id);
+        $product = new \XLite\Model\Product($product_id);
         if (!$product->isFreeForMembership($this->getComplex('cart.profile.membership'))) {
             $this->set('returnUrl', 'cart.php?target=download&mode=file_access_denied&reason=M');
             return;
@@ -122,7 +124,7 @@ class XLite_Module_Egoods_Controller_Customer_Download extends XLite_Controller_
         $this->readFile($df->get('data'));
 
         // save download statistics
-        $ds = new XLite_Module_Egoods_Model_DownloadsStatistics();
+        $ds = new \XLite\Module\Egoods\Model\DownloadsStatistics();
         $ds->set('file_id', $df->get('file_id'));
         $ds->set('date', $time);
         $ds->set('headers', "HTTP_REFERER=" . $_SERVER['HTTP_REFERER'] . ", REMOTE_ADDR=" . $_SERVER['REMOTE_ADDR']);

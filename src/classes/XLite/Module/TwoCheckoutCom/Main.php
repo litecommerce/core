@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\TwoCheckoutCom;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_TwoCheckoutCom_Main extends XLite_Module_AModule
+class Main extends \XLite\Module\AModule
 {
     /**
      * Module type
@@ -108,7 +110,7 @@ class XLite_Module_TwoCheckoutCom_Main extends XLite_Module_AModule
         
         $this->registerPaymentMethod('TwoCheckout');
 
-        $pm = XLite_Model_PaymentMethod::factory('TwoCheckout');
+        $pm = \XLite\Model\PaymentMethod::factory('TwoCheckout');
         $params = $pm->get('params');
         if (!isset($params['version'])) {
             $params['version'] = "2";

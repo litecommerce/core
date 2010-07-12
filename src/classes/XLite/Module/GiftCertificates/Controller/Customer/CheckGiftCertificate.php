@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\GiftCertificates\Controller\Customer;
+
 /**
  * Check gift certificate
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_GiftCertificates_Controller_Customer_CheckGiftCertificate extends XLite_Controller_Customer_ACustomer
+class CheckGiftCertificate extends \XLite\Controller\Customer\ACustomer
 {
     /**
      * Controller parameters
@@ -48,7 +50,7 @@ class XLite_Module_GiftCertificates_Controller_Customer_CheckGiftCertificate ext
     /**
      * Found gift certificate
      * 
-     * @var    XLite_Module_GiftCertificates_Model_GiftCertificate
+     * @var    \XLite\Module\GiftCertificates\Model\GiftCertificate
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0

@@ -22,11 +22,11 @@
 <table border=0 cellpadding=3>
 <tr>
     <td>Order date from:</td>
-    <td><widget class="XLite_View_Date" field="startDate"></td>
+    <td><widget class="\XLite\View\Date" field="startDate"></td>
 </tr>    
 <tr>
     <td>Order date through:</td>
-    <td><widget class="XLite_View_Date" field="endDate"></td>
+    <td><widget class="\XLite\View\Date" field="endDate"></td>
 </tr>    
 <tr>
     <td  nowrap height=10>Order id</td>
@@ -34,11 +34,11 @@
 </tr>
 <tr>
     <td>Order status:</td>
-    <td><widget class="XLite_View_StatusSelect" field="status" allOption></td>
+    <td><widget class="\XLite\View\StatusSelect" field="status" allOption></td>
 </tr>
 <tr>
     <td valign=top>Partner:</td>
-    <td><widget class="XLite_Module_Affiliate_View_PartnerSelect" ></td>
+    <td><widget class="\XLite\Module\Affiliate\View\PartnerSelect" ></td>
 </tr>
 <tr>
     <td>Payment status:</td>

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Affiliate;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Affiliate_Main extends XLite_Module_AModule
+class Main extends \XLite\Module\AModule
 {
     /**
      * Module type
@@ -94,6 +96,6 @@ class XLite_Module_Affiliate_Main extends XLite_Module_AModule
     {
         parent::init();
 
-        XLite_Model_Image::registerImageClass('banner_image', 'Banner images', 'banners', 'banner', 'banner_id');
+        \XLite\Model\Image::registerImageClass('banner_image', 'Banner images', 'banners', 'banner', 'banner_id');
     }
 }

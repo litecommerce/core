@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View\Form\Checkout;
+
 /**
  * Checkout abstract form
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class XLite_View_Form_Checkout_ACheckout extends XLite_View_Form_AForm
+abstract class ACheckout extends \XLite\View\Form\AForm
 {
     /**
      * getDefaultTarget 

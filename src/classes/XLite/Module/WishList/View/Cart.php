@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\WishList\View;
+
 /**
  * Cart widget
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_WishList_View_Cart extends XLite_View_Cart implements XLite_Base_IDecorator
+class Cart extends \XLite\View\Cart implements \XLite\Base\IDecorator
 {
     /**
      * Register JS files

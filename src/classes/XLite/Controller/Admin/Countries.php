@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Controller_Admin_Countries extends XLite_Controller_Admin_AAdmin
+class Countries extends \XLite\Controller\Admin\AAdmin
 {
     function obligatorySetStatus($status)
     {
@@ -46,12 +48,12 @@ class XLite_Controller_Admin_Countries extends XLite_Controller_Admin_AAdmin
     function action_update()
     {
         // parse POST'ed data, modify country properties
-        list($keys, $parameters) = XLite_Core_Database::prepareArray(
-            array_keys(XLite_Core_Request::getInstance()->countries)
+        list($keys, $parameters) = \XLite\Core\Database::prepareArray(
+            array_keys(\XLite\Core\Request::getInstance()->countries)
         );
-        $list = XLite_Core_Database::getQB()
+        $list = \XLite\Core\Database::getQB()
             ->select('c')
-            ->from('XLite_Model_Country', 'c')
+            ->from('\XLite\Model\Country', 'c')
             ->where('c.code IN (' . implode(', ', $keys) . ')')
             ->setParameters($parameters)
             ->getQuery()
@@ -59,14 +61,14 @@ class XLite_Controller_Admin_Countries extends XLite_Controller_Admin_AAdmin
 
         if ($list) {
             foreach ($list as $country) {
-                $data = XLite_Core_Request::getInstance()->countries[$country->code];
+                $data = \XLite\Core\Request::getInstance()->countries[$country->code];
                 $data['eu_member'] = isset($data['eu_member']);
                 $data['enabled'] = isset($data['enabled']);
                 $country->map($data);
-                XLite_Core_Database::getEM()->persist($country);
+                \XLite\Core\Database::getEM()->persist($country);
             }
 
-            XLite_Core_Database::getEM()->flush();
+            \XLite\Core\Database::getEM()->flush();
         }
 
         $this->obligatorySetStatus('updated');
@@ -74,55 +76,55 @@ class XLite_Controller_Admin_Countries extends XLite_Controller_Admin_AAdmin
 
     function action_add()
     {
-        if ( empty(XLite_Core_Request::getInstance()->code) ) {
+        if ( empty(\XLite\Core\Request::getInstance()->code) ) {
             $this->set('valid', false);
             $this->obligatorySetStatus('code');
             return;
         }
 
-        $country = XLite_Core_Database::getRepo('XLite_Model_Country')->find(XLite_Core_Request::getInstance()->code);
+        $country = \XLite\Core\Database::getRepo('XLite\Model\Country')->find(\XLite\Core\Request::getInstance()->code);
         if ($country) {
             $this->set('valid', false);
             $this->obligatorySetStatus('exists');
             return;
         }
 
-        if (empty(XLite_Core_Request::getInstance()->country)) {
+        if (empty(\XLite\Core\Request::getInstance()->country)) {
             $this->set('valid', false);
             $this->obligatorySetStatus('country');
             return;
         }
 
-        if (empty(XLite_Core_Request::getInstance()->charset)) {
+        if (empty(\XLite\Core\Request::getInstance()->charset)) {
             $this->set('valid', false);
             $this->obligatorySetStatus('charset');
             return;
         }
 
-        $country = new XLite_Model_Country();
+        $country = new \XLite\Model\Country();
 
-        $country->map(XLite_Core_Request::getInstance()->getData());
-        $country->eu_member = isset(XLite_Core_Request::getInstance()->eu_member);
-        $country->enabled = isset(XLite_Core_Request::getInstance()->enabled);
+        $country->map(\XLite\Core\Request::getInstance()->getData());
+        $country->eu_member = isset(\XLite\Core\Request::getInstance()->eu_member);
+        $country->enabled = isset(\XLite\Core\Request::getInstance()->enabled);
 
-        XLite_Core_Database::getEM()->persist($country);
-        XLite_Core_Database::getEM()->flush();
+        \XLite\Core\Database::getEM()->persist($country);
+        \XLite\Core\Database::getEM()->flush();
 
         $this->obligatorySetStatus('added');
     }
 
     function action_delete()
     {
-        $countries = XLite_Core_Request::getInstance()->delete_countries;
+        $countries = \XLite\Core\Request::getInstance()->delete_countries;
 
         if ( is_array($countries) && count($countries) > 0 ) {
             foreach ($countries as $code) {
-                $country = XLite_Core_Database::getEM()->find('XLite_Model_Country', $code);
+                $country = \XLite\Core\Database::getEM()->find('XLite\Model\Country', $code);
                 if ($country) {
-                    XLite_Core_Database::getEM()->remove($country);
+                    \XLite\Core\Database::getEM()->remove($country);
                 }
             }
-            XLite_Core_Database::getEM()->flush();
+            \XLite\Core\Database::getEM()->flush();
         }
 
         $this->obligatorySetStatus('deleted');
@@ -139,6 +141,6 @@ class XLite_Controller_Admin_Countries extends XLite_Controller_Admin_AAdmin
      */
     public function getCountries()
     {
-        return XLite_Core_Database::getRepo('XLite_Model_Country')->findAllCountries();
+        return \XLite\Core\Database::getRepo('XLite\Model\Country')->findAllCountries();
     }
 }

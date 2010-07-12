@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model;
+
 /**
  * Product 
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_Product extends XLite_Model_AModel
+class Product extends \XLite\Model\AModel
 {
     /**
      * Object properties (table filed => default value)
@@ -97,7 +99,7 @@ class XLite_Model_Product extends XLite_Model_AModel
     /**
      * Product image 
      * 
-     * @var    XLite_Model_Image
+     * @var    \XLite\Model\Image
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
@@ -107,7 +109,7 @@ class XLite_Model_Product extends XLite_Model_AModel
     /**
      * Thumbnail 
      * 
-     * @var    XLite_Model_Image
+     * @var    \XLite\Model\Image
      * @access protected
      * @since  3.0.0
      */
@@ -128,14 +130,14 @@ class XLite_Model_Product extends XLite_Model_AModel
     /**
      * Return the Thumbnail image instance for this product 
      * 
-     * @return XLite_Model_Image
+     * @return \XLite\Model\Image
      * @access public
      * @since  3.0.0
      */
     public function getThumbnail()
     {
         if (!isset($this->thumbnail)) {
-            $this->thumbnail = new XLite_Model_Image('product_thumbnail', $this->get('product_id'));
+            $this->thumbnail = new \XLite\Model\Image('product_thumbnail', $this->get('product_id'));
         }
 
         return $this->thumbnail;
@@ -144,7 +146,7 @@ class XLite_Model_Product extends XLite_Model_AModel
     /**
      * Get product image 
      * 
-     * @return XLite_Model_Image
+     * @return \XLite\Model\Image
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -152,7 +154,7 @@ class XLite_Model_Product extends XLite_Model_AModel
     public function getImage()
     {
         if (!isset($this->image)) {
-            $this->image = new XLite_Model_Image('product_image', $this->get('product_id'));
+            $this->image = new \XLite\Model\Image('product_image', $this->get('product_id'));
         }
 
         return $this->image;
@@ -196,11 +198,11 @@ class XLite_Model_Product extends XLite_Model_AModel
                "WHERE l.product_id IS NULL";
         $result = $this->db->getAll($sql);
         foreach ($result as $info) {
-            $product = new XLite_Model_Product($info['product_id']);
+            $product = new \XLite\Model\Product($info['product_id']);
             $product->_collectGarbage();
         }
 
-        $ef = new XLite_Model_ExtraField();
+        $ef = new \XLite\Model\ExtraField();
         $ef->collectGarbage();
     }
 
@@ -237,7 +239,7 @@ class XLite_Model_Product extends XLite_Model_AModel
         parent::delete();
 
         // delete extra fields 
-        $fv = new XLite_Model_FieldValue();
+        $fv = new \XLite\Model\FieldValue();
         $table = $this->db->getTableByAlias($fv->alias);
         $sql = 'DELETE FROM ' . $table . ' WHERE product_id = \''. $this->get('product_id') . '\'';
         $this->db->query($sql);
@@ -255,7 +257,7 @@ class XLite_Model_Product extends XLite_Model_AModel
     {
         $sql = 'SELECT product_id FROM ' . $this->getTable();
         foreach ($this->db->getAll($sql) as $p) {
-            $product = new XLite_Model_Product($p['product_id']);
+            $product = new \XLite\Model\Product($p['product_id']);
             if ($product->isExists()) {
                 $product->delete();
             }
@@ -273,14 +275,14 @@ class XLite_Model_Product extends XLite_Model_AModel
         $image->copyTo($id);
         $image = $this->getThumbnail();
         $image->copyTo($id);
-        $ef = new XLite_Model_ExtraField();
+        $ef = new \XLite\Model\ExtraField();
         $it = $ef->findAll("product_id='". $this->get('product_id')."'");
         foreach ($it as $extra_field) {
             $ef = $extra_field->cloneObject();
             $ef->set('product_id', $id);
             $ef->update();
 
-            $fv = new XLite_Model_FieldValue();
+            $fv = new \XLite\Model\FieldValue();
             if ($fv->find("field_id='".$extra_field->get('field_id')."' AND product_id='".$this->get('product_id')."'")) {
                 $fv->read();
                 $fv_new = $fv;
@@ -320,7 +322,7 @@ class XLite_Model_Product extends XLite_Model_AModel
         $id = $this->get('product_id');
 
         // reset cached result for admin zone
-        if (XLite::isAdminZone() || !$useCache) {
+        if (\XLite::isAdminZone() || !$useCache) {
             if (isset($categories[$id][$where][$orderby])) {
                 unset($categories[$id][$where][$orderby]);
             }
@@ -345,17 +347,17 @@ class XLite_Model_Product extends XLite_Model_AModel
             if ($this->isPersistent) {
 
                 if (!isset($this->_CategoriesFromProducts)) {
-                    $this->_CategoriesFromProducts = new XLite_Model_CategoriesFromProducts();
+                    $this->_CategoriesFromProducts = new \XLite\Model\CategoriesFromProducts();
                 }
                 $this->_CategoriesFromProducts->prodId = $this->get('product_id');
                 $result = $this->_CategoriesFromProducts->findAll($where, $orderby);
-                if (!XLite::isAdminZone() || $useCache) {
+                if (!\XLite::isAdminZone() || $useCache) {
                     $categories[$id][$where][$orderby] = $result;
                 }
 
             } else {
 
-                if (!XLite::isAdminZone() || $useCache) {
+                if (!\XLite::isAdminZone() || $useCache) {
                     $categories[$id][$where][$orderby] = $result;
                 }
             }
@@ -388,7 +390,7 @@ class XLite_Model_Product extends XLite_Model_AModel
 
         $id = $this->get('product_id');
         // reset cached result for admin zone
-        if (XLite::isAdminZone() || !$useCache) {
+        if (\XLite::isAdminZone() || !$useCache) {
             if (isset($categoriesNumber[$id][$where][$orderby])) {
                 unset($categoriesNumber[$id][$where][$orderby]);
             }
@@ -408,7 +410,7 @@ class XLite_Model_Product extends XLite_Model_AModel
             }
 
             if ($this->isPersistent) {
-                $p = new XLite_Model_CategoriesFromProducts();
+                $p = new \XLite\Model\CategoriesFromProducts();
                 $p->prodId = $this->get('product_id');
                 $categoriesNumber[$id][$where][$orderby] = $p->count($where);
 
@@ -448,7 +450,7 @@ class XLite_Model_Product extends XLite_Model_AModel
     function inCategory($c) 
     {
         if ($this->isPersistent && is_object($c)) {
-            $p = new XLite_Model_CategoriesFromProducts();
+            $p = new \XLite\Model\CategoriesFromProducts();
             $p->prodId = $this->get('product_id');
             if ($p->findAll("links.category_id='" . $c->get('category_id') . "'")) {
                 return true;
@@ -511,22 +513,22 @@ class XLite_Model_Product extends XLite_Model_AModel
         }
 
         if (!isset($this->_taxRates)) {
-            $this->_taxRates = new XLite_Model_TaxRates();
+            $this->_taxRates = new \XLite\Model\TaxRates();
         }
         if ($this->auth->is('logged')) {
-            $cart = XLite_Model_Cart::getInstance();
+            $cart = \XLite\Model\Cart::getInstance();
             if (!$cart->isEmpty()) {
                 $profile = $cart->get('profile');
             } else {
                 $profile = $this->auth->get('profile');
             }
         } else {
-            $profile = new XLite_Model_Profile();
+            $profile = new \XLite\Model\Profile();
             $profile->set('shipping_country', $this->config->General->default_country);
             $profile->set('billing_country', $this->config->General->default_country);
         }
         // setup customer's info
-        $order = new XLite_Model_Order();
+        $order = new \XLite\Model\Order();
         $order->set('profile', $profile);
         $this->_taxRates->set('order', $order);
         $this->_taxRates->_conditionValues['product class'] = $this->get('tax_class');
@@ -568,7 +570,7 @@ class XLite_Model_Product extends XLite_Model_AModel
     function populateExtraFields()
     {
         $product_categories = $this->getCategories();
-        $ef = new XLite_Model_ExtraField();
+        $ef = new \XLite\Model\ExtraField();
         $extraFields = $ef->findAll("product_id=0");
         if (is_array($extraFields))
         {
@@ -597,7 +599,7 @@ class XLite_Model_Product extends XLite_Model_AModel
                 }
                 if ($found)
                 {
-                    $ef_child = new XLite_Model_ExtraField();
+                    $ef_child = new \XLite\Model\ExtraField();
                     if (!$ef_child->find("product_id='".$this->get('product_id')."' AND parent_field_id='".$extraField->get('field_id')."'"))
                     {
                         $obj_fields = array_keys($extraField->properties);
@@ -635,7 +637,7 @@ class XLite_Model_Product extends XLite_Model_AModel
             $enabledOnly = !$this->xlite->is('adminZone');
         }
         $extraFields = array();
-        $ef = new XLite_Model_ExtraField();
+        $ef = new \XLite\Model\ExtraField();
         if ($enabledOnly) {
             $filter = " AND enabled=1";
         } else {
@@ -674,7 +676,7 @@ class XLite_Model_Product extends XLite_Model_AModel
         }
         // fill with stored / default values
         foreach ($extraFields as $idx => $extraField) {
-            $fv = new XLite_Model_FieldValue();
+            $fv = new \XLite\Model\FieldValue();
             if ($fv->find("field_id=".$extraField->get('field_id')." AND product_id=".$this->get('product_id'))) {
                 $extraFields[$idx]->set('value', $fv->get('value'));
             } else {
@@ -806,7 +808,7 @@ class XLite_Model_Product extends XLite_Model_AModel
     function _exportCategory($layout=null, $delimiter=null) 
     {
         if (!isset($this->_CategoriesFromProducts)) {
-            $this->_CategoriesFromProducts = new XLite_Model_CategoriesFromProducts();
+            $this->_CategoriesFromProducts = new \XLite\Model\CategoriesFromProducts();
         }
         return $this->_CategoriesFromProducts->createCategoryField($this->get('categories'));
     }
@@ -846,14 +848,14 @@ class XLite_Model_Product extends XLite_Model_AModel
                 $field = "";
         }
 
-        $product = new XLite_Model_Product();
+        $product = new \XLite\Model\Product();
         // search for product by SKU 
         if (!empty($sku) && $product->find($fsku."='".addslashes($sku)."'")) {
             return $product;
         }
         // or by category/NAME combination
         elseif (!empty($categoryString) && !empty($productName) && $product->find($fname."='".addslashes($productName)."'")) {
-            $cat = new XLite_Model_Category();
+            $cat = new \XLite\Model\Category();
             $slashedName = addslashes($productName);
             $categoryIds = array();
             foreach ($cat->parseCategoryField($categoryString, true) as $path) {
@@ -870,7 +872,7 @@ class XLite_Model_Product extends XLite_Model_AModel
             if (count($categoryIds)) {
                 $link_table = $this->db->getTableByAlias('categories');
                 $where = "$link_table.category_id in (".implode(',',$categoryIds).")";
-                $p = new XLite_Model_Product();
+                $p = new \XLite\Model\Product();
                 foreach ($p->findAll($fname."='$slashedName'") as $product) {
                     if (count($product->getCategories($where))) {
                         return $product;
@@ -890,14 +892,14 @@ class XLite_Model_Product extends XLite_Model_AModel
      * 
      * @param string $url Clean URL
      *  
-     * @return XLite_Model_Product
+     * @return \XLite\Model\Product
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
     public function findByCleanUrl($url)
     {
-        return XLite_Model_CachingFactory::getObjectFromCallback(
+        return \XLite\Model\CachingFactory::getObjectFromCallback(
             __METHOD__ . $url,
             $this,
             'find',
@@ -909,8 +911,8 @@ class XLite_Model_Product extends XLite_Model_AModel
     {
         $properties       = $options['properties'];
         $default_category = $options['default_category'];
-        $image = new XLite_Model_Image();
-        $images_directory = ($options['images_directory'] != "") ? $options['images_directory'] : XLite_Model_Image::IMAGES_DIR;
+        $image = new \XLite\Model\Image();
+        $images_directory = ($options['images_directory'] != "") ? $options['images_directory'] : \XLite\Model\Image::IMAGES_DIR;
         $save_images      = $options['save_images'];
         $uniq_identifier  = $options['unique_identifier'];
 
@@ -918,7 +920,7 @@ class XLite_Model_Product extends XLite_Model_AModel
         $existent = false;
         $product = $this->findImportedProduct($properties['sku'], $properties['category'], $properties['name'], true, $uniq_identifier);
         if (is_null($product)) {
-            $product = new XLite_Model_Product();
+            $product = new \XLite\Model\Product();
         }
         static $line_no;
         if (!isset($line_no)) $line_no = 1; else $line_no++;
@@ -938,7 +940,7 @@ class XLite_Model_Product extends XLite_Model_AModel
         // Update product thumbnail and image
         if (!empty($images_directory)) {
             // update images base directory
-            XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+            \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
                 array(
                     'category' => 'Images',
                     'name'     => 'images_directory',
@@ -946,7 +948,7 @@ class XLite_Model_Product extends XLite_Model_AModel
                 )
             );
             // re-read config data
-            XLite_Core_Config::readConfig();
+            \XLite\Core\Config::readConfig();
         }
         if (!empty($properties['thumbnail'])) {
             $this->_importImage($product, "thumbnail", $properties['thumbnail'], $save_images);
@@ -970,7 +972,7 @@ class XLite_Model_Product extends XLite_Model_AModel
 
     function _importImage($product, $type, $name, $save_images) 
     {
-        $i = new XLite_Model_Image();
+        $i = new \XLite\Model\Image();
         $name = trim($name);
         $image_path = $i->getFilePath($name);
         echo ">> Import product $type, name $image_path<br>\n";
@@ -991,7 +993,7 @@ class XLite_Model_Product extends XLite_Model_AModel
     function _importCategory($product, $properties, $default_category) 
     {
         $category_id = null;
-        $category = new XLite_Model_Category();
+        $category = new \XLite\Model\Category();
         if (!empty($properties['category'])) {
             $newCategories = $category->parseCategoryField($properties['category'], true);
             // convert paths to categories
@@ -999,7 +1001,7 @@ class XLite_Model_Product extends XLite_Model_AModel
                 $newCategories[$i] = $category->createRecursive($newCategories[$i]);
             }
         } elseif (!is_null($default_category) && $category->find("category_id='$default_category'")) {
-            $newCategories = array( new XLite_Model_Category($default_category));
+            $newCategories = array( new \XLite\Model\Category($default_category));
         } else {
             echo "Category unspecified or invalid data for product ".$product->get('name') . "<br>Properties dump:<pre>";
             print_r($properties);
@@ -1044,7 +1046,7 @@ class XLite_Model_Product extends XLite_Model_AModel
     {
         // NOTE - due to speedup we do not check if product is assigned for at least one category 
 
-        return XLite::isAdminZone() ? parent::filter() : $this->get('enabled');
+        return \XLite::isAdminZone() ? parent::filter() : $this->get('enabled');
     }
 
     /**
@@ -1095,7 +1097,7 @@ class XLite_Model_Product extends XLite_Model_AModel
 
         if (!empty($category_id)) {
 
-            $category = new XLite_Model_Category($category_id);
+            $category = new \XLite\Model\Category($category_id);
             $result = $category->getProducts($query, null, false);
             $result = $this->_assocArray($result, "product_id");
             $categories = $category->getSubcategories();
@@ -1109,7 +1111,7 @@ class XLite_Model_Product extends XLite_Model_AModel
 
         } else {
 
-            $p = new XLite_Model_Product();
+            $p = new \XLite\Model\Product();
             $result = $p->findAll($query);
         }
 

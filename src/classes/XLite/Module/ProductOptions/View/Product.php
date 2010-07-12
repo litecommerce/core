@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\ProductOptions\View;
+
 /**
  * Product widget
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_ProductOptions_View_Product extends XLite_View_Product implements XLite_Base_IDecorator
+class Product extends \XLite\View\Product implements \XLite\Base\IDecorator
 {
     /**
      * Check - available product for sale or not

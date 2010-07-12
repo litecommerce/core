@@ -33,7 +33,7 @@
 		<TD class="FormButton" noWrap height=10>In category</TD>
 		<TD width=10 height=10><FONT class="ErrorMessage">*</FONT></TD>
 		<TD height=10>
-            <widget class="XLite_View_CategorySelect" fieldName="search_category" allOption>
+            <widget class="\XLite\View\CategorySelect" fieldName="search_category" allOption>
         </TD>
 	</TR>
 	<TR>

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\ProductAdviser\Model;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_ProductAdviser_Model_Notification extends XLite_Model_AModel
+class Notification extends \XLite\Model\AModel
 {
     public $fields = array
     (
@@ -82,7 +84,7 @@ class XLite_Module_ProductAdviser_Model_Notification extends XLite_Model_AModel
     	switch ($name) {
     		case "listPrice":
                 $result = parent::get('price');
-                $product = new XLite_Model_Product($this->get('product_id'));
+                $product = new \XLite\Model\Product($this->get('product_id'));
                 $product->set('price', $result);
                 $result = sprintf("%.02f", $product->get('listPrice'));
             break;
@@ -130,7 +132,7 @@ class XLite_Module_ProductAdviser_Model_Notification extends XLite_Model_AModel
     		return null;
 
     	if (is_null($this->ntfProduct)) {
-            $p = new XLite_Model_Product($this->get('product_id'));
+            $p = new \XLite\Model\Product($this->get('product_id'));
             if (!$p->is('exists')) {
                 $this->errorPresent = true;
                 $this->errorDescription = "Product was deleted.";
@@ -154,7 +156,7 @@ class XLite_Module_ProductAdviser_Model_Notification extends XLite_Model_AModel
             $quantity = $this->get('quantity');
             $p->set('quantity', 0);
         	if ($this->xlite->get('PA_InventorySupport')) {
-    			$inventory = new XLite_Module_InventoryTracking_Model_Inventory();
+    			$inventory = new \XLite\Module\InventoryTracking\Model\Inventory();
     			if ($inventory->find("inventory_id='".addslashes($this->getProductKey())."'")) {
         			$p->set('quantity', $inventory->get('amount'));
     			}

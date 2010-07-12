@@ -26,15 +26,17 @@
  * @since      3.0.0
  */
 
+namespace XLite\View\Model\Profile;
+
 /**
- * XLite_View_Model_Profile_Addresses 
+ * \XLite\View\Model\Profile\Addresses 
  * 
  * @package    XLite
  * @subpackage ____sub_package____
  * @see        ____class_see____
  * @since      3.0.0
  */
-class XLite_View_Model_Profile_Addresses extends XLite_View_Model_Profile_AProfile
+class Addresses extends \XLite\View\Model\Profile\AProfile
 {
     /**
      * Return name of web form widget class
@@ -45,7 +47,7 @@ class XLite_View_Model_Profile_Addresses extends XLite_View_Model_Profile_AProfi
      */
     protected function getFormClass()
     {
-        return 'XLite_View_Form_Profile_Addresses';
+        return '\XLite\View\Form\Profile\Addresses';
     }
 
     /**
@@ -69,7 +71,7 @@ class XLite_View_Model_Profile_Addresses extends XLite_View_Model_Profile_AProfi
      */
     protected function checkAccess()
     {
-        return XLite_Model_Auth::getInstance()->isLogged();
+        return \XLite\Model\Auth::getInstance()->isLogged();
     }
 
     /**

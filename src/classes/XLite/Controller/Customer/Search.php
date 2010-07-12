@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Controller\Customer;
+
 /**
  * Products search
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Controller_Customer_Search extends XLite_Controller_Customer_ACustomer
+class Search extends \XLite\Controller\Customer\ACustomer
 {
     /**
      * Controller parameters
@@ -78,7 +80,7 @@ class XLite_Controller_Customer_Search extends XLite_Controller_Customer_ACustom
     {
         parent::init();
 
-        if (!isset(XLite_Core_Request::getInstance()->action)) {
+        if (!isset(\XLite\Core\Request::getInstance()->action)) {
             $this->session->set('productListURL', $this->getUrl());
         }
     }
@@ -86,7 +88,7 @@ class XLite_Controller_Customer_Search extends XLite_Controller_Customer_ACustom
     /**
      * Get products list
      * 
-     * @return array of XLite_Model_Product
+     * @return array of \XLite\Model\Product
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -95,10 +97,10 @@ class XLite_Controller_Customer_Search extends XLite_Controller_Customer_ACustom
     {
         if (is_null($this->products)) {
 
-            $p = new XLite_Model_Product();
+            $p = new \XLite\Model\Product();
             $this->products = $p->advancedSearch($this->get('substring'), '', 0, true, false, true);
             if ($this->get('pageID') == null) {
-                $searchStat = new XLite_Model_SearchStat();
+                $searchStat = new \XLite\Model\SearchStat();
                 $searchStat->add($this->get('substring'), count($this->products));
             }
         }

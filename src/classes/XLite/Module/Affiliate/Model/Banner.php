@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Affiliate\Model;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Affiliate_Model_Banner extends XLite_Model_AModel
+class Banner extends \XLite\Model\AModel
 {
     public $fields = array(
             "banner_id"    => 0,
@@ -60,7 +62,7 @@ class XLite_Module_Affiliate_Model_Banner extends XLite_Model_AModel
     function getImage()
     {
         if (is_null($this->image)) {
-            $this->image = new XLite_Model_Image('banner_image', $this->get('banner_id'));
+            $this->image = new \XLite\Model\Image('banner_image', $this->get('banner_id'));
         }
         return $this->image;
     }

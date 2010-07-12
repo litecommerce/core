@@ -105,7 +105,7 @@ if (navigator.appName.indexOf('Microsoft') >= 0) {
 <tr>
 <td align="center">
 <!-- [bottom] -->
-<widget class="XLite_View_PoweredBy" />
+<widget class="\XLite\View\PoweredBy" />
 <!-- [/bottom] -->
 
 </td>

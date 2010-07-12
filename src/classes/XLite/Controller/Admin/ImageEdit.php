@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Controller\Admin;
+
 /**
  * Image edit
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Controller_Admin_ImageEdit extends XLite_Controller_Admin_AAdmin
+class ImageEdit extends \XLite\Controller\Admin\AAdmin
 {
     protected $locale = null;
 
@@ -42,7 +44,7 @@ class XLite_Controller_Admin_ImageEdit extends XLite_Controller_Admin_AAdmin
     function getLocale() 
     {
         if (is_null($this->locale)) {
-            $this->locale = XLite::getInstance()->getOptions(array('skin_details', 'locale'));
+            $this->locale = \XLite::getInstance()->getOptions(array('skin_details', 'locale'));
         }
         return $this->locale;
     }
@@ -50,7 +52,7 @@ class XLite_Controller_Admin_ImageEdit extends XLite_Controller_Admin_AAdmin
     function getZone()
     {
         if (is_null($this->zone)) {
-            $this->zone = XLite::getInstance()->getOptions(array('skin_details', 'skin'));
+            $this->zone = \XLite::getInstance()->getOptions(array('skin_details', 'skin'));
         }
         return $this->zone;
     }
@@ -60,7 +62,7 @@ class XLite_Controller_Admin_ImageEdit extends XLite_Controller_Admin_AAdmin
         $zone   = $this->get('zone');
         $locale = $this->get('locale');
         if (!isset($this->editor)) {
-            $this->editor = new XLite_Model_ImageEditor_ImageEditor("skins/$zone/$locale/images.ini");
+            $this->editor = new \XLite\Model\ImageEditor\ImageEditor("skins/$zone/$locale/images.ini");
         }
         return $this->editor;
     }

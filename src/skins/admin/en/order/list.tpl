@@ -34,7 +34,7 @@ function setHeaderChecked()
 // -->
 </script>
 
-<widget class="XLite_View_Pager_Common" data="{orders}" name="pager" itemsPerPage="{config.General.orders_per_page}">
+<widget class="\XLite\View\Pager\Common" data="{orders}" name="pager" itemsPerPage="{config.General.orders_per_page}">
 
 <br>
 

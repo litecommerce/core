@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View;
+
 /**
  * Orders search widget
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_OrderSearch extends XLite_View_Dialog
+class OrderSearch extends \XLite\View\Dialog
 {
     /**
      * Orders list (cache)
@@ -102,7 +104,7 @@ class XLite_View_OrderSearch extends XLite_View_Dialog
         if (is_null($this->conditions)) {
             $this->conditions = $this->session->get('orders_search');
             if (!is_array($this->conditions)) {
-                $this->conditions = XLite_Model_Order::getDefaultSearchConditions();
+                $this->conditions = \XLite\Model\Order::getDefaultSearchConditions();
                 $this->session->set('orders_search', $this->conditions);
             }
         }
@@ -137,7 +139,7 @@ class XLite_View_OrderSearch extends XLite_View_Dialog
      */
     public function isDefaultConditions()
     {
-        $default = XLite_Model_Order::getDefaultSearchConditions();
+        $default = \XLite\Model\Order::getDefaultSearchConditions();
 
         unset($default['sortCriterion'], $default['sortOrder']);
 
@@ -164,7 +166,7 @@ class XLite_View_OrderSearch extends XLite_View_Dialog
         if (is_null($this->orders)) {
             $conditions = $this->getConditions();
 
-            $order = new XLite_Model_Order();
+            $order = new \XLite\Model\Order();
             $this->orders = $order->search(
                 $this->getProfile(),
                 $conditions['order_id'],
@@ -183,7 +185,7 @@ class XLite_View_OrderSearch extends XLite_View_Dialog
     /**
      * Get profile
      *
-     * @return XLite_Model_Profile
+     * @return \XLite\Model\Profile
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -192,18 +194,18 @@ class XLite_View_OrderSearch extends XLite_View_Dialog
     {
         $result = null;
 
-        if (XLite::isAdminZone()) {
-            if (XLite_Core_Request::getInstance()->profile_id) {
-                $result = new XLite_Model_Profile(XLite_Core_Request::getInstance()->profile_id);
+        if (\XLite::isAdminZone()) {
+            if (\XLite\Core\Request::getInstance()->profile_id) {
+                $result = new \XLite\Model\Profile(\XLite\Core\Request::getInstance()->profile_id);
                 if (!$result->isExists()) {
                     $result = null;
                 }
             }
 
         } else {
-            $result = XLite_Model_Auth::getInstance()->getProfile(XLite_Core_Request::getInstance()->profile_id);
+            $result = \XLite\Model\Auth::getInstance()->getProfile(\XLite\Core\Request::getInstance()->profile_id);
             if (!$result) {
-                $result = XLite_Model_Auth::getInstance()->getProfile();
+                $result = \XLite\Model\Auth::getInstance()->getProfile();
             }
         }
 
@@ -234,7 +236,7 @@ class XLite_View_OrderSearch extends XLite_View_Dialog
     public function getTotalCount()
     {
         if (is_null($this->totalCount)) {
-            $order = new XLite_Model_Order();
+            $order = new \XLite\Model\Order();
             $this->totalCount = $order->getCountByProfile($this->getProfile());
         }
 

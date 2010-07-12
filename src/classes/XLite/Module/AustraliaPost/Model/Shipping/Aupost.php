@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\AustraliaPost\Model\Shipping;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_AustraliaPost_Model_Shipping_Aupost extends XLite_Model_Shipping_Online 
+class Aupost extends \XLite\Model\Shipping\Online 
 {
 
     public $configCategory = "AustraliaPost";
@@ -69,7 +71,7 @@ class XLite_Module_AustraliaPost_Model_Shipping_Aupost extends XLite_Model_Shipp
         return "Australia Post";
     }
 
-    function getRates(XLite_Model_Order $order) 
+    function getRates(\XLite\Model\Order $order) 
     {
         include_once LC_MODULES_DIR . 'AustraliaPost' . LC_DS . 'encoded.php';
         return Shipping_aupost_getRates($this,$order);

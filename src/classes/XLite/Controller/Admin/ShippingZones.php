@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Controller_Admin_ShippingZones extends XLite_Controller_Admin_ShippingSettings
+class ShippingZones extends \XLite\Controller\Admin\ShippingSettings
 {
     function getPageTemplate()
     {
@@ -42,33 +44,33 @@ class XLite_Controller_Admin_ShippingZones extends XLite_Controller_Admin_Shippi
 
     function action_update_states()
     {
-        if (XLite_Core_Request::getInstance()->target_state_zone == 'new') {
+        if (\XLite\Core\Request::getInstance()->target_state_zone == 'new') {
             // create new zone
-            $zone = new XLite_Model_ShippingZone();
+            $zone = new \XLite\Model\ShippingZone();
             $zone->create();
         } else {
             // move to specified zone
-            $zone = new XLite_Model_ShippingZone(XLite_Core_Request::getInstance()->target_state_zone);
+            $zone = new \XLite\Model\ShippingZone(\XLite\Core\Request::getInstance()->target_state_zone);
         }
         // move selected states
-        if (isset(XLite_Core_Request::getInstance()->states)) {
-            $zone->set('states', XLite_Core_Request::getInstance()->states);
+        if (isset(\XLite\Core\Request::getInstance()->states)) {
+            $zone->set('states', \XLite\Core\Request::getInstance()->states);
         }
     }
 
     function action_update_countries()
     {
-        if (XLite_Core_Request::getInstance()->target_country_zone == 'new') {
+        if (\XLite\Core\Request::getInstance()->target_country_zone == 'new') {
             // create new zone
-            $zone = new XLite_Model_ShippingZone();
+            $zone = new \XLite\Model\ShippingZone();
             $zone->create();
         } else {
             // move to specified zone
-            $zone = new XLite_Model_ShippingZone(XLite_Core_Request::getInstance()->target_country_zone);
+            $zone = new \XLite\Model\ShippingZone(\XLite\Core\Request::getInstance()->target_country_zone);
         }
         // move selected countries
-        if (isset(XLite_Core_Request::getInstance()->countries)) {
-            $zone->set('countries', XLite_Core_Request::getInstance()->countries);
+        if (isset(\XLite\Core\Request::getInstance()->countries)) {
+            $zone->set('countries', \XLite\Core\Request::getInstance()->countries);
         }
     }
 }

@@ -61,7 +61,7 @@ function SubmitHandler(formName)
 <p>By clicking "SUBMIT" you agree with our "Terms &amp; Conditions" and "Privacy statement".
 </p>
 <div id="submiting_process">
-<widget class="XLite_View_Button" label="Submit order" href="javascript: SubmitHandler('paypal_standard');">
+<widget class="\XLite\View\Button" label="Submit order" href="javascript: SubmitHandler('paypal_standard');">
 </div>
 </form>
 </span>
@@ -73,7 +73,7 @@ function SubmitHandler(formName)
 <p>By clicking "SUBMIT" you agree with our "Terms &amp; Conditions" and "Privacy statement".<br>
 <br>
 <div id="submiting_process">
-<widget class="XLite_View_Button" label="Submit order" href="javascript: SubmitHandler('paypal_form');">
+<widget class="\XLite\View\Button" label="Submit order" href="javascript: SubmitHandler('paypal_form');">
 </div>
 </form>
 </span>

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\AdvancedSearch\Core;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class XLite_Module_AdvancedSearch_Core_CMSConnector extends XLite_Core_CMSConnector implements XLite_Base_IDecorator
+abstract class CMSConnector extends \XLite\Core\CMSConnector implements \XLite\Base\IDecorator
 {
     /**
      * Constructor
@@ -47,7 +49,7 @@ abstract class XLite_Module_AdvancedSearch_Core_CMSConnector extends XLite_Core_
     {
         parent::__construct();
 
-        $this->widgetsList['XLite_Module_AdvancedSearch_View_AdvancedSearch'] = 'Advanced search';
+        $this->widgetsList['\XLite\Module\AdvancedSearch\View\AdvancedSearch'] = 'Advanced search';
 
         $this->pageTypes['advanced_search'] = 'Advanced search';
     }

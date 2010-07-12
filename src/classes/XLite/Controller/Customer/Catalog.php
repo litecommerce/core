@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Controller\Customer;
+
 /**
  * ____description____
  * 
@@ -33,19 +35,19 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class XLite_Controller_Customer_Catalog extends XLite_Controller_Customer_ACustomer
+abstract class Catalog extends \XLite\Controller\Customer\ACustomer
 {
     /**
      * Determines if we need to return categoty link or not 
      * 
-     * @param XLite_Model_Category $category category model object to use
+     * @param \XLite\Model\Category $category category model object to use
      * @param bool                 $includeCurrent flag
      *  
      * @return string
      * @access protected
      * @since  3.0.0
      */
-    protected function checkCategoryLink(XLite_Model_Category $category, $includeCurrent)
+    protected function checkCategoryLink(\XLite\Model\Category $category, $includeCurrent)
     {
         return $includeCurrent || $this->getCategoryId() !== $category->category_id;
     }
@@ -53,14 +55,14 @@ abstract class XLite_Controller_Customer_Catalog extends XLite_Controller_Custom
     /**
      * Return link to category page 
      * 
-     * @param XLite_Model_Category $category category model object to use
+     * @param \XLite\Model\Category $category category model object to use
      * @param bool                 $includeCurrent flag
      *  
      * @return string
      * @access protected
      * @since  3.0.0
      */
-    protected function getCategoryURL(XLite_Model_Category $category, $includeCurrent)
+    protected function getCategoryURL(\XLite\Model\Category $category, $includeCurrent)
     {
         return $this->checkCategoryLink($category, $includeCurrent) 
             ? $this->buildURL('category', '', array('category_id' => $category->category_id))
@@ -70,16 +72,16 @@ abstract class XLite_Controller_Customer_Catalog extends XLite_Controller_Custom
     /**
      * Return category name and link 
      * 
-     * @param XLite_Model_Category $category       category model object to use_
+     * @param \XLite\Model\Category $category       category model object to use_
      * @param bool                 $includeCurrent flag
      *  
-     * @return XLite_Model_Location
+     * @return \XLite\Model\Location
      * @access protected
      * @since  3.0.0
      */
-    protected function getCategoryLocation(XLite_Model_Category $category, $includeCurrent)
+    protected function getCategoryLocation(\XLite\Model\Category $category, $includeCurrent)
     {
-        return new XLite_Model_Location($category->name, $this->getCategoryURL($category, $includeCurrent));
+        return new \XLite\Model\Location($category->name, $this->getCategoryURL($category, $includeCurrent));
     }
 
     /**
@@ -93,7 +95,7 @@ abstract class XLite_Controller_Customer_Catalog extends XLite_Controller_Custom
     {
         parent::addBaseLocation();
 
-        $categoryPath = XLite_Core_Database::getRepo('XLite_Model_Category')->getCategoryPath(XLite_Core_Request::getInstance()->category_id);
+        $categoryPath = \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategoryPath(\XLite\Core\Request::getInstance()->category_id);
 
         foreach ($categoryPath as $category) {
             if (0 < $category->category_id) {
@@ -118,7 +120,7 @@ abstract class XLite_Controller_Customer_Catalog extends XLite_Controller_Custom
     /**
      * getModelObject 
      * 
-     * @return XLite_Model_AModel
+     * @return \XLite\Model\AModel
      * @access protected
      * @since  3.0.0
      */

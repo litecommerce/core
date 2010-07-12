@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\ProductOptions\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,23 +35,23 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_ProductOptions_Controller_Admin_AddProduct extends XLite_Controller_Admin_AddProduct implements XLite_Base_IDecorator
+class AddProduct extends \XLite\Controller\Admin\AddProduct implements \XLite\Base\IDecorator
 {
     function action_add() 
     {
         parent::action_add();
-        $product = new XLite_Model_Product($this->get('product_id'));
+        $product = new \XLite\Model\Product($this->get('product_id'));
         foreach ($product->get('categories') as $category) {
             $product_categories[] = $category->get('category_id');
         }
-        $po = new XLite_Module_ProductOptions_Model_ProductOption();
+        $po = new \XLite\Module\ProductOptions\Model\ProductOption();
         $gpo = $po->get('globalOptions');
         if ($gpo) 
             foreach ($gpo as $global_option) {
                 $gpo_categories = $global_option->getCategories();
                 $intersect = array_intersect($gpo_categories,$product_categories);
                 if (empty($gpo_categories) || (!empty($gpo_categories) && !empty($intersect))) {
-                    $po = new XLite_Module_ProductOptions_Model_ProductOption();
+                    $po = new \XLite\Module\ProductOptions\Model\ProductOption();
                     $po->set('properties',$global_option->get('properties'));
                     $po->set('product_id',$this->get('product_id'));
                     $po->set('parent_option_id',$global_option->get('option_id'));

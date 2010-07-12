@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\XCartImport\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_XCartImport_Controller_Admin_XcartImport extends XLite_Controller_Admin_AAdmin
+class XcartImport extends \XLite\Controller\Admin\AAdmin
 {
     public $importedProductOptions;
     
@@ -45,7 +47,7 @@ class XLite_Module_XCartImport_Controller_Admin_XcartImport extends XLite_Contro
         } else {
             // default params
             foreach (array('hostspec',"database","username","password") as $param) {
-                $this->setComplex($param, XLite::getInstance()->getOptions(array('database_details', $param)));
+                $this->setComplex($param, \XLite::getInstance()->getOptions(array('database_details', $param)));
             }
             $this->import_users = true;
             $this->import_catalog = true;
@@ -89,7 +91,7 @@ X-Cart data has been removed.<br>
         $this->startDump();
 
         // remeber parameters
-        XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+        \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
             array(
                 'category' => 'XCartImport',
                 'name'     => 'params',
@@ -119,7 +121,7 @@ X-Cart data has been removed.<br>
             // save memberships
             $ms = array_keys($this->memberships);
             // TODO: update membership saving - they must be saved in the separate table, not in the config table
-            XLite_Core_Database::getRepo('XLite_Model_Config')->createOption(
+            \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
                 array(
                     'category' => 'Memberships',
                     'name'     => 'memberships',
@@ -370,13 +372,13 @@ You might want to remove X-Cart tables from your X-Cart database. To do this, tu
         }
 
         if ($path == 'products_categories') {
-            $obj = new XLite_Model_Product();
+            $obj = new \XLite\Model\Product();
     		if (is_object($obj)) {
     			// connecting to LC database
     			$obj->db->connect();
     		}
             if ($obj->find("product_id='" . $row['productid'] . "'")) {
-            	$c = new XLite_Model_Category();
+            	$c = new \XLite\Model\Category();
             	if ($c->find("category_id='" . $row['categoryid'] . "'")) {
         			$obj->addCategory($c);
                     $obj->update();
@@ -427,9 +429,9 @@ You might want to remove X-Cart tables from your X-Cart database. To do this, tu
                     } else {
 
                         // for LC version lower than 2.2
-                        $state = XLite_Core_Database::getRepo('XLite_Model_State')->findByCode($val);
+                        $state = \XLite\Core\Database::getRepo('XLite\Model\State')->findByCode($val);
                         if (!$state) {
-                            $state = XLite_Core_Database::getRepo('XLite_Model_State')->findByState($val);
+                            $state = \XLite\Core\Database::getRepo('XLite\Model\State')->findByState($val);
                         }
         
                         $state_code = $state ? $state->state_id : -1;
@@ -457,7 +459,7 @@ You might want to remove X-Cart tables from your X-Cart database. To do this, tu
         } else if ($path == 'detailedimage') {
             $cond = "";
         } else {
-            XLite::getInstance()->doGlobalDie("Incorrect path $path");
+            \XLite::getInstance()->doGlobalDie("Incorrect path $path");
         }
 
         if (is_object($obj)) {
@@ -498,7 +500,7 @@ You might want to remove X-Cart tables from your X-Cart database. To do this, tu
             }
             if ($path == 'product') {
                 foreach ($this->category_links as $cat_id) {
-                    $obj->addCategory( new XLite_Model_Category($cat_id));
+                    $obj->addCategory( new \XLite\Model\Category($cat_id));
                 }
                 $this->category_links = array();
             }

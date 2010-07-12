@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\GiftCertificates\Validator;
+
 /**
  * Gift certificate validator
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_GiftCertificates_Validator_GCValidator extends XLite_Validator_AValidator
+class GCValidator extends \XLite\Validator\AValidator
 {
     /**
      * Validator template 
@@ -102,37 +104,37 @@ class XLite_Module_GiftCertificates_Validator_GCValidator extends XLite_Validato
         if (!parent::isValid()) {
             $result = false;
 
-        } elseif (isset(XLite_Core_Request::getInstance()->$fieldName)) {
+        } elseif (isset(\XLite\Core\Request::getInstance()->$fieldName)) {
 
-            XLite_Core_Request::getInstance()->$fieldName = trim(XLite_Core_Request::getInstance()->$fieldName);
-            $this->gcid = XLite_Core_Request::getInstance()->$fieldName;
+            \XLite\Core\Request::getInstance()->$fieldName = trim(\XLite\Core\Request::getInstance()->$fieldName);
+            $this->gcid = \XLite\Core\Request::getInstance()->$fieldName;
 
             // Pass validation if cert already related with current order
-            $cart = XLite_Model_Cart::getInstance();
+            $cart = \XLite\Model\Cart::getInstance();
             if (!is_object($cart) || is_null($cart) || $cart->get('gcid') != $this->gcid) {
 
                 // validate
-                $gc = new XLite_Module_GiftCertificates_Model_GiftCertificate($this->gcid);
+                $gc = new \XLite\Module\GiftCertificates\Model\GiftCertificate($this->gcid);
                 $gcStatus = 0 == strlen($this->gcid)
-                    ? XLite_Module_GiftCertificates_Model_GiftCertificate::GC_DOESNOTEXIST
+                    ? \XLite\Module\GiftCertificates\Model\GiftCertificate::GC_DOESNOTEXIST
                     : $gc->validate();
 
                 $result = false;
 
                 switch ($gcStatus) {
-                    case XLite_Module_GiftCertificates_Model_GiftCertificate::GC_OK: 
+                    case \XLite\Module\GiftCertificates\Model\GiftCertificate::GC_OK: 
                         $result = true;
                         break;
 
-                    case XLite_Module_GiftCertificates_Model_GiftCertificate::GC_DOESNOTEXIST: 
+                    case \XLite\Module\GiftCertificates\Model\GiftCertificate::GC_DOESNOTEXIST: 
                         $this->doesnotexist = true;
                         break;
 
-                    case XLite_Module_GiftCertificates_Model_GiftCertificate::GC_EXPIRED: 
+                    case \XLite\Module\GiftCertificates\Model\GiftCertificate::GC_EXPIRED: 
                         $this->expired = true;
                         break;
 
-                    case XLite_Module_GiftCertificates_Model_GiftCertificate::GC_DISABLED: 
+                    case \XLite\Module\GiftCertificates\Model\GiftCertificate::GC_DISABLED: 
                         $this->notactive = true;
                         break;
 

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Core;
+
 /**
  * Widget data transport
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Core_WidgetDataTransport extends XLite_Base
+class WidgetDataTransport extends \XLite\Base
 {
     /**
      * Handler to use

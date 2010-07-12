@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Affiliate\View;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Affiliate_View_PartnerFieldValidator extends XLite_Validator_AValidator
+class PartnerFieldValidator extends \XLite\Validator\AValidator
 {
     public $template = "common/required_validator.tpl";
     

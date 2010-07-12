@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\AdvancedSearch\View\Form;
+
 /**
  * Advanced search form
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_AdvancedSearch_View_Form_Search extends XLite_View_Form_AForm
+class Search extends \XLite\View\Form\AForm
 {
     /**
      * Current form name

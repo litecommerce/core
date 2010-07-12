@@ -10,4 +10,4 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-{*<widget class="XLite_View_Button_regular" label="Add to Wish List" target="wishlist" action="add" />*}
+{*<widget class="\XLite\View\Button\regular" label="Add to Wish List" target="wishlist" action="add" />*}

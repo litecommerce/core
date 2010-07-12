@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View\Form;
+
 /**
  * Sort form
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_Form_Sort extends XLite_View_Form_AForm
+class Sort extends \XLite\View\Form\AForm
 {
     /**
      * Widget parameter names
@@ -90,7 +92,7 @@ class XLite_View_Form_Sort extends XLite_View_Form_AForm
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_PARAMS => new XLite_Model_WidgetParam_Collection('Parameters', array()),
+            self::PARAM_PARAMS => new \XLite\Model\WidgetParam\Collection('Parameters', array()),
         );
 
         $this->widgetParams[self::PARAM_CLASS_NAME]->setValue('sort-box');

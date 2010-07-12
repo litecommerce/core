@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Controller\Admin;
+
 /**
  * Profile management controller
  * 
@@ -33,10 +35,10 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Controller_Admin_Profile extends XLite_Controller_Admin_AAdmin
+class Profile extends \XLite\Controller\Admin\AAdmin
 {
     /**
-     * Class name for the XLite_View_Model_ form (optional)
+     * Class name for the \XLite\View\Model\ form (optional)
      * 
      * @return string|null
      * @access protected
@@ -44,7 +46,7 @@ class XLite_Controller_Admin_Profile extends XLite_Controller_Admin_AAdmin
      */
     protected function getModelFormClass()
     {
-        return 'XLite_View_Model_Profile_Main';
+        return '\XLite\View\Model\Profile\Main';
     }
 
     /**
@@ -138,13 +140,13 @@ class XLite_Controller_Admin_Profile extends XLite_Controller_Admin_AAdmin
     {
         $countriesArray = array();
 
-        $country = new XLite_Model_Country();
+        $country = new \XLite\Model\Country();
         $countries = $country->findAll("enabled='1'");
         foreach ($countries as $country) {
             $countriesArray[$country->get('code')]['number'] = 0;
             $countriesArray[$country->get('code')]['data'] = array();
 
-            $state = new XLite_Model_State();
+            $state = new \XLite\Model\State();
             $states = $state->findAll("country_code='".$country->get('code')."'");
             if (is_array($states) && count($states) > 0) {
                 $countriesArray[$country->get('code')]['number'] = count($states);
@@ -232,7 +234,7 @@ class XLite_Controller_Admin_Profile extends XLite_Controller_Admin_AAdmin
      * @since  3.0.0
      */
   /*  public function getMode() {
-        $_mode = XLite_Core_Request::getInstance()->mode;
+        $_mode = \XLite\Core\Request::getInstance()->mode;
 
         if (empty($_mode) || !in_array($_mode, $this->allowedModes))
             $_mode = $this->defaultMode;
@@ -267,7 +269,7 @@ class XLite_Controller_Admin_Profile extends XLite_Controller_Admin_AAdmin
 
             if (!$profile->isAdmin() || !$profile->isEnabled() || !$this->auth->isLastAdmin($profile)) {
                 // perform delete; no confirmation
-                XLite_Core_Request::getInstance()->action = 'delete';
+                \XLite\Core\Request::getInstance()->action = 'delete';
             }
         }
 
@@ -277,7 +279,7 @@ class XLite_Controller_Admin_Profile extends XLite_Controller_Admin_AAdmin
     /**
      * Get user profile 
      * 
-     * @return XLite_Model_Profile object
+     * @return \XLite\Model\Profile object
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -285,7 +287,7 @@ class XLite_Controller_Admin_Profile extends XLite_Controller_Admin_AAdmin
 /*    public function getProfile()
     {
         if (is_null($this->profile)) {
-            $this->profile = new XLite_Model_Profile(XLite_Core_Request::getInstance()->profile_id);
+            $this->profile = new \XLite\Model\Profile(\XLite\Core\Request::getInstance()->profile_id);
         }
 
         return $this->profile;
@@ -314,24 +316,24 @@ class XLite_Controller_Admin_Profile extends XLite_Controller_Admin_AAdmin
 /* TODO: remove - do not need to reinitialize sesion when admin creates user 
 
     	if (
-            isset($_REQUEST[XLite_Model_Session::SESSION_DEFAULT_NAME]) 
-            && !(isset($_GET[XLite_Model_Session::SESSION_DEFAULT_NAME]) || isset($_POST[XLite_Model_Session::SESSION_DEFAULT_NAME]))
+            isset($_REQUEST[\XLite\Model\Session::SESSION_DEFAULT_NAME]) 
+            && !(isset($_GET[\XLite\Model\Session::SESSION_DEFAULT_NAME]) || isset($_POST[\XLite\Model\Session::SESSION_DEFAULT_NAME]))
         ) {
-    		unset($_REQUEST[XLite_Model_Session::SESSION_DEFAULT_NAME]);
+    		unset($_REQUEST[\XLite\Model\Session::SESSION_DEFAULT_NAME]);
         }
 
-        $this->xlite->session->set('_' . XLite_Model_Session::SESSION_DEFAULT_NAME, XLite_Model_Session::SESSION_DEFAULT_NAME . '=' . $this->xlite->session->getID());
+        $this->xlite->session->set('_' . \XLite\Model\Session::SESSION_DEFAULT_NAME, \XLite\Model\Session::SESSION_DEFAULT_NAME . '=' . $this->xlite->session->getID());
         $this->xlite->session->destroy();
         $this->xlite->session->setID(SESSION_DEFAULT_ID);
         $this->xlite->session->_initialize();
  */
-/*        $this->profile = new XLite_Model_Profile();
+/*        $this->profile = new \XLite\Model\Profile();
 
         if ($this->xlite->is('adminZone')) {
-            $this->profile->modifyAdminProperties(XLite_Core_Request::getInstance()->getData());
+            $this->profile->modifyAdminProperties(\XLite\Core\Request::getInstance()->getData());
 
         } else {
-            $this->profile->modifyCustomerProperties(XLite_Core_Request::getInstance()->getData());
+            $this->profile->modifyCustomerProperties(\XLite\Core\Request::getInstance()->getData());
         }
 
         if (!$this->isFromCheckout()) {
@@ -370,7 +372,7 @@ class XLite_Controller_Admin_Profile extends XLite_Controller_Admin_AAdmin
 /*    protected function doActionModify()
     {
         if ($this->xlite->is('adminZone')) {
-            $this->profile->modifyAdminProperties(XLite_Core_Request::getInstance()->getData());
+            $this->profile->modifyAdminProperties(\XLite\Core\Request::getInstance()->getData());
 
         } else {
 
@@ -380,7 +382,7 @@ class XLite_Controller_Admin_Profile extends XLite_Controller_Admin_AAdmin
         		return;
         	}
 
-            $this->profile->modifyCustomerProperties(XLite_Core_Request::getInstance()->getData());
+            $this->profile->modifyCustomerProperties(\XLite\Core\Request::getInstance()->getData());
         }
 
         if (!$this->isFromCheckout()) {

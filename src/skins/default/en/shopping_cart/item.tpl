@@ -25,7 +25,7 @@
 		  {truncate(item.brief_description,#300#):h}<br />
       <br />
         
-      <widget module="ProductOptions" class="XLite_Module_ProductOptions_View_SelectedOptions" item="{item}" item_id="{cart_id}" />
+      <widget module="ProductOptions" class="\XLite\Module\ProductOptions\View\SelectedOptions" item="{item}" item_id="{cart_id}" />
       <br />	
 		  <span IF="{item.weight}">
 		    Weight: {item.weight} {config.General.weight_symbol}<br />
@@ -47,9 +47,9 @@
 
 		  <table>
         <tr>
-		  <td><widget class="XLite_View_Button_Regular" label="Delete item" action="delete" formParams="{_ARRAY_(#cart_id#^cart_id)}" /></td>
+		  <td><widget class="\XLite\View\Button\Regular" label="Delete item" action="delete" formParams="{_ARRAY_(#cart_id#^cart_id)}" /></td>
           <td>&nbsp;</td>
-          <td><widget class="XLite_View_Button_Submit" label="Update item" /></td>
+          <td><widget class="\XLite\View\Button\Submit" label="Update item" /></td>
         </tr>
       </table>
 

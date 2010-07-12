@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Controller\Admin;
+
 
 /**
  * Products list controller
@@ -34,7 +36,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Controller_Admin_ProductList extends XLite_Controller_Admin_AAdmin
+class ProductList extends \XLite\Controller\Admin\AAdmin
 {
     /**
      * params 
@@ -77,7 +79,7 @@ class XLite_Controller_Admin_ProductList extends XLite_Controller_Admin_AAdmin
     public function init() 
     {
         parent::init();
-        $this->set('mode', XLite_Core_Request::getInstance()->mode);
+        $this->set('mode', \XLite\Core\Request::getInstance()->mode);
     }
 
     /**
@@ -135,10 +137,10 @@ class XLite_Controller_Admin_ProductList extends XLite_Controller_Admin_AAdmin
     {
         $result = null;
 
-    	if ('search' == XLite_Core_Request::getInstance()->mode) {
+    	if ('search' == \XLite\Core\Request::getInstance()->mode) {
 
         	if (is_null($this->productsList)) {
-                $p = new XLite_Model_Product();
+                $p = new \XLite\Model\Product();
                 $p->collectGarbage();
     			$this->productsList = $p->advancedSearch(
     				$this->substring,
@@ -182,7 +184,7 @@ class XLite_Controller_Admin_ProductList extends XLite_Controller_Admin_AAdmin
     protected function doActionUpdate()
     {
         foreach ($this->product_orderby as $product_id => $order_by) {
-            $p = new XLite_Model_Product($product_id);
+            $p = new \XLite\Model\Product($product_id);
             $p->set('order_by', $order_by);
             $p->set('price', $this->product_price[$product_id]);
             $p->update();
@@ -201,20 +203,20 @@ class XLite_Controller_Admin_ProductList extends XLite_Controller_Admin_AAdmin
      */
     protected function doActionDelete()
     {
-        $productIds = (isset(XLite_Core_Request::getInstance()->product_ids) && is_array(XLite_Core_Request::getInstance()->product_ids) ? XLite_Core_Request::getInstance()->product_ids : null);
+        $productIds = (isset(\XLite\Core\Request::getInstance()->product_ids) && is_array(\XLite\Core\Request::getInstance()->product_ids) ? \XLite\Core\Request::getInstance()->product_ids : null);
 
         if (!empty($productIds)) {
 
-            if (isset(XLite_Core_Request::getInstance()->confirmed)) {
+            if (isset(\XLite\Core\Request::getInstance()->confirmed)) {
 
                 $this->set('mode', 'search');
 
-    			if (!XLite_Core_Request::getInstance()->confirmed) {
+    			if (!\XLite\Core\Request::getInstance()->confirmed) {
     				return;
     			}
 
                 foreach ($productIds as $productId) {
-        			$p = new XLite_Model_Product($productId);
+        			$p = new \XLite\Model\Product($productId);
                     $p->delete();
                 }
 
@@ -228,7 +230,7 @@ class XLite_Controller_Admin_ProductList extends XLite_Controller_Admin_AAdmin
                 $products = array();
 
                 foreach ($productIds as $idx => $productId) {
-                    $products[$idx] = new XLite_Model_Product($productId);
+                    $products[$idx] = new \XLite\Model\Product($productId);
                 }
 
                 $this->set('product_ids', $products);
@@ -246,10 +248,10 @@ class XLite_Controller_Admin_ProductList extends XLite_Controller_Admin_AAdmin
      */
     protected function doActionClone()
     {
-        if (isset(XLite_Core_Request::getInstance()->product_ids) && is_array(XLite_Core_Request::getInstance()->product_ids)) {
+        if (isset(\XLite\Core\Request::getInstance()->product_ids) && is_array(\XLite\Core\Request::getInstance()->product_ids)) {
 
-            foreach (XLite_Core_Request::getInstance()->product_ids as $product_id) {
-    			$p = new XLite_Model_Product($product_id);
+            foreach (\XLite\Core\Request::getInstance()->product_ids as $product_id) {
+    			$p = new \XLite\Model\Product($product_id);
                 $product = $p->cloneObject();
 
     			foreach ($p->get('categories') as $category) {

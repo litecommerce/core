@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\WishList\View;
+
 /**
  * Wishlist
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_WishList_View_Wishlist extends XLite_View_Dialog
+class Wishlist extends \XLite\View\Dialog
 {
     /**
      * Return title
@@ -117,7 +119,7 @@ class XLite_Module_WishList_View_Wishlist extends XLite_View_Dialog
 
         $wishlist = $this->getWishlist();
         if ($wishlist) {
-            $wishlist_product = new XLite_Module_WishList_Model_WishListProduct();
+            $wishlist_product = new \XLite\Module\WishList\Model\WishListProduct();
 
             $result = $wishlist_product->findAll('wishlist_id = \'' . $wishlist->get('wishlist_id') . '\'');
         }
@@ -128,14 +130,14 @@ class XLite_Module_WishList_View_Wishlist extends XLite_View_Dialog
     /**
      * Get wishlist 
      * 
-     * @return XLite_Module_WishList_Model_WishList
+     * @return \XLite\Module\WishList\Model\WishList
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
     public function getWishlist()
     {
-        return XLite::getController()->getWishList();
+        return \XLite::getController()->getWishList();
     }
 
 

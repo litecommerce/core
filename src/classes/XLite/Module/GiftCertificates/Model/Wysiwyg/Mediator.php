@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\GiftCertificates\Model\Wysiwyg;
+
 /**
  * ____description____
  * 
@@ -33,8 +35,8 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_GiftCertificates_Model_Wysiwyg_Mediator extends XLite_Model_Wysiwyg_Mediator
-implements XLite_Base_IDecorator
+class Mediator extends \XLite\Model\Wysiwyg\Mediator
+implements \XLite\Base\IDecorator
 {
     public function export($templates)
     {

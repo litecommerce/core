@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\UPSOnlineTools\Model;
+
 /**
  * Item pack
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_UPSOnlineTools_Model_PackItem extends XLite_Base
+class PackItem extends \XLite\Base
 {
     const MIN_DIM_SIZE = 1;
     
@@ -41,7 +43,7 @@ class XLite_Module_UPSOnlineTools_Model_PackItem extends XLite_Base
     public $length = self::MIN_DIM_SIZE;
     public $height = self::MIN_DIM_SIZE;
 
-    public $weight = XLite_Module_UPSOnlineTools_Model_Shipping_Ups::MIN_PACKAGE_WEIGHT;
+    public $weight = \XLite\Module\UPSOnlineTools\Model\Shipping\Ups::MIN_PACKAGE_WEIGHT;
 
     public $declaredValue = 0;
     public $handle_care = false;

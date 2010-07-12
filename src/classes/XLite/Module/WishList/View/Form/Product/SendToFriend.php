@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\WishList\View\Form\Product;
+
 /**
  * Send to friend product to cart form
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_WishList_View_Form_Product_SendToFriend extends XLite_View_Form_Product_AProduct
+class SendToFriend extends \XLite\View\Form\Product\AProduct
 {
     /**
      * Current form name

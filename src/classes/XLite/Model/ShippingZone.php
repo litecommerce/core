@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_ShippingZone extends XLite_Model_AModel
+class ShippingZone extends \XLite\Model\AModel
 {
     public $fields = array(
         "shipping_zone" => 0
@@ -76,12 +78,12 @@ class XLite_Model_ShippingZone extends XLite_Model_AModel
     {
         $zones = array();
         foreach ($array as $zone) {
-            $zone_object = new XLite_Model_ShippingZone();
+            $zone_object = new \XLite\Model\ShippingZone();
             $zone_object->_updateProperties($zone);
             $zones[$zone['shipping_zone']] = $zone_object;
         }
         if (!isset($zones[0])) {
-            $z = new XLite_Model_ShippingZone();
+            $z = new \XLite\Model\ShippingZone();
             $z->set('shipping_zone', 0);
             $zones[0] = $z;
         }
@@ -115,7 +117,7 @@ class XLite_Model_ShippingZone extends XLite_Model_AModel
     function getCountries()
     {
         if (!isset($this->countries)) {
-            $this->countries = XLite_Core_Database::getRepo('XLite_Model_Country')
+            $this->countries = \XLite\Core\Database::getRepo('XLite\Model\Country')
                 ->findByShippingZone($this->get('shipping_zone'));
         }
 
@@ -125,7 +127,7 @@ class XLite_Model_ShippingZone extends XLite_Model_AModel
     function getStates()
     {
         if (!isset($this->states)) {
-            $this->states = XLite_Core_Database::getRepo('XLite_Model_State')
+            $this->states = \XLite\Core\Database::getRepo('XLite\Model\State')
                 ->findByShippingZone($this->get('shipping_zone'));
         }
 
@@ -144,10 +146,10 @@ class XLite_Model_ShippingZone extends XLite_Model_AModel
 
     function setCountries($countries)
     {
-        list($keys, $parameters) = XLite_Core_Database::prepareArray($countries);
-        $list = XLite_Core_Database::getQB()
+        list($keys, $parameters) = \XLite\Core\Database::prepareArray($countries);
+        $list = \XLite\Core\Database::getQB()
             ->select('c')
-            ->from('XLite_Model_Country', 'c')
+            ->from('\XLite\Model\Country', 'c')
             ->where('c.shipping_zone IN (' . implode(', ', $keys) . ')')
             ->setParameters($parameters)
             ->getQuery()
@@ -156,9 +158,9 @@ class XLite_Model_ShippingZone extends XLite_Model_AModel
         foreach ($lists as $c)
         {
             $c->shipping_zone = $this->get('shipping_zone');
-            XLite_Core_Database::getEM()->persist($c);
+            \XLite\Core\Database::getEM()->persist($c);
         }
-        XLite_Core_Database::getEM()->flush();
+        \XLite\Core\Database::getEM()->flush();
 
         if (isset($this->countries)) {
         	unset($this->countries);
@@ -167,9 +169,9 @@ class XLite_Model_ShippingZone extends XLite_Model_AModel
 
     function setStates($states)
     {
-        $list = XLite_Core_Database::getQB()
+        $list = \XLite\Core\Database::getQB()
             ->select('s')
-            ->from('XLite_Model_State', 's')
+            ->from('\XLite\Model\State', 's')
             ->where('s.state_id IN (:ids)')
             ->setParameter('ids', $states)
             ->getQuery()
@@ -179,10 +181,10 @@ class XLite_Model_ShippingZone extends XLite_Model_AModel
         foreach ($list as $s)
         {
             $s->shipping_zone = $this->get('shipping_zone');
-            XLite_Core_Database::getEM()->persist('s');
+            \XLite\Core\Database::getEM()->persist('s');
         }
 
-        XLite_Core_Database::getEM()->flush();
+        \XLite\Core\Database::getEM()->flush();
 
         if (isset($this->states)) {
         	unset($this->states);

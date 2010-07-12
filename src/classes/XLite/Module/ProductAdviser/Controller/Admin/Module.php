@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\ProductAdviser\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,14 +35,14 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_ProductAdviser_Controller_Admin_Module extends XLite_Controller_Admin_Module implements XLite_Base_IDecorator
+class Module extends \XLite\Controller\Admin\Module implements \XLite\Base\IDecorator
 {
     function init()
     {
         parent::init();
 
         if ($this->page == "ProductAdviser") {
-        	$lay = XLite_Model_Layout::getInstance();
+        	$lay = \XLite\Model\Layout::getInstance();
         	$lay->addLayout('general_settings.tpl', "modules/ProductAdviser/config.tpl");
         }
     }

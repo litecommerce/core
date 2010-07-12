@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Egoods\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,12 +35,12 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Egoods_Controller_Admin_DownloadStatistics extends XLite_Controller_Admin_Stats
+class DownloadStatistics extends \XLite\Controller\Admin\Stats
 {
     function getStat()
     {
         if (!isset($this->stats)) {
-            $ds = new XLite_Module_Egoods_Model_DownloadsStatistics();
+            $ds = new \XLite\Module\Egoods\Model\DownloadsStatistics();
             $this->stats = $ds->findAll();
         }
         return $this->stats;
@@ -46,8 +48,8 @@ class XLite_Module_Egoods_Controller_Admin_DownloadStatistics extends XLite_Cont
 
     function getProductName($file_id, $trim=25)
     {
-        $df = new XLite_Module_Egoods_Model_DownloadableFile($file_id);
-        $product = new XLite_Model_Product($df->get('product_id'));
+        $df = new \XLite\Module\Egoods\Model\DownloadableFile($file_id);
+        $product = new \XLite\Model\Product($df->get('product_id'));
         $name = $product->get('name');
         if (strlen($name) <= $trim) {
             return $name;
@@ -58,8 +60,8 @@ class XLite_Module_Egoods_Controller_Admin_DownloadStatistics extends XLite_Cont
 
     function getProductHref($file_id)
     {
-        $df = new XLite_Module_Egoods_Model_DownloadableFile($file_id);
-        $product = new XLite_Model_Product($df->get('product_id'));
+        $df = new \XLite\Module\Egoods\Model\DownloadableFile($file_id);
+        $product = new \XLite\Model\Product($df->get('product_id'));
         return "admin.php?target=product&product_id=" . $product->get('product_id') . "&page=downloadable_files";
     }
 

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\ProductOptions\Controller\Customer;
+
 /**
  * Cart controller
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_ProductOptions_Controller_Customer_Cart extends XLite_Controller_Customer_Cart implements XLite_Base_IDecorator
+class Cart extends \XLite\Controller\Customer\Cart implements \XLite\Base\IDecorator
 {
     /**
      * Get (and create) current cart item
@@ -56,8 +58,8 @@ class XLite_Module_ProductOptions_Controller_Customer_Cart extends XLite_Control
 
                 $options = array();
 
-                if (isset(XLite_Core_Request::getInstance()->product_options)) {
-                    $options = XLite_Core_Request::getInstance()->product_options;
+                if (isset(\XLite\Core\Request::getInstance()->product_options)) {
+                    $options = \XLite\Core\Request::getInstance()->product_options;
 
                 } else {
                     foreach ($this->getProduct()->getDefaultProductOptions() as $class => $oid) {
@@ -110,7 +112,7 @@ class XLite_Module_ProductOptions_Controller_Customer_Cart extends XLite_Control
 
             // TODO - add top message
 
-            $this->set('returnUrl', $this->buildUrl('product', '', array('product_id' => XLite_Core_Request::getInstance()->product_id)));
+            $this->set('returnUrl', $this->buildUrl('product', '', array('product_id' => \XLite\Core\Request::getInstance()->product_id)));
         }
     }
 }

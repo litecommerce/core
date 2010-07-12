@@ -12,4 +12,4 @@
  * @ListChild (list="productDetails.buttons", weight="20")
  *}
 <span class="separator">or</span>
-<widget module="WishList" class="XLite_Module_WishList_View_Button_AddToWishlist" product="{product}" style="link-button" />
+<widget module="WishList" class="\XLite\Module\WishList\View\Button\AddToWishlist" product="{product}" style="link-button" />

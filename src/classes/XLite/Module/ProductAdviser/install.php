@@ -437,7 +437,7 @@ EOT;
 EOT;
     	$replace_str = <<<EOT
 <widget class="CTopCategories" template="common/sidebar_box.tpl" head="Categories" dir="categories" visible="{!target=#main#}">
-<widget module="ProductAdviser" class="XLite_Module_ProductAdviser_View_NewArrivals" template="common/sidebar_box.tpl" display_in="menu">
+<widget module="ProductAdviser" class="\XLite\Module\ProductAdviser\View\NewArrivals" template="common/sidebar_box.tpl" display_in="menu">
 <widget module="ProductAdviser" target="main,category,product,cart" class="CRecentliesProducts" template="common/sidebar_box.tpl" head="Recently viewed" dir="modules/ProductAdviser/RecentlyViewed">
 EOT;
     	patch_template($location, null, $find_str, $replace_str);
@@ -503,7 +503,7 @@ EOT;
 EOT;
     	$replace_str = <<<EOT
 <widget template="common/sidebar_box.tpl" dir="authentication" name="authenticationWidget" head="Authentication" IF="{auth.isLogged()}" />
-<widget module="ProductAdviser" class="XLite_Module_ProductAdviser_View_NewArrivals" template="common/sidebar_box.tpl" display_in="menu">
+<widget module="ProductAdviser" class="\XLite\Module\ProductAdviser\View\NewArrivals" template="common/sidebar_box.tpl" display_in="menu">
 <widget module="ProductAdviser" target="main,category,product,cart" class="CRecentliesProducts" template="common/sidebar_box.tpl" head="Recently viewed" dir="modules/ProductAdviser/RecentlyViewed">
 EOT;
     	patch_template($location, null, $find_str, $replace_str);

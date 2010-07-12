@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\DrupalConnector\View;
+
 /**
  * Abstract widget
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class XLite_Module_DrupalConnector_View_AView extends XLite_View_AView implements XLite_Base_IDecorator
+abstract class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
 {
     /**
      * Relative path from web directory path to the XLite web directory 
@@ -76,7 +78,7 @@ abstract class XLite_Module_DrupalConnector_View_AView extends XLite_View_AView 
 
             // FIXME - "base_path()" is a Drupal function declared in global scope
             $basePath  = self::prepareBasePath(base_path());
-            $xlitePath = self::prepareBasePath(XLite::getInstance()->getOptions(array('host_details', 'web_dir')));
+            $xlitePath = self::prepareBasePath(\XLite::getInstance()->getOptions(array('host_details', 'web_dir')));
 
             $basePathSize = count($basePath);
             $minPathSize  = min($basePathSize, count($xlitePath));
@@ -122,7 +124,7 @@ abstract class XLite_Module_DrupalConnector_View_AView extends XLite_View_AView 
     {
         $data = parent::prepareResources($data);
 
-        if (XLite_Module_DrupalConnector_Handler::getInstance()->checkCurrentCMS()) {
+        if (\XLite\Module\DrupalConnector\Handler::getInstance()->checkCurrentCMS()) {
             $data = self::modifyResourcePaths($data);
         }
 
@@ -141,7 +143,7 @@ abstract class XLite_Module_DrupalConnector_View_AView extends XLite_View_AView 
     {
         $result = parent::getJSFiles();
 
-        if (XLite_Module_DrupalConnector_Handler::getInstance()->checkCurrentCMS()) {
+        if (\XLite\Module\DrupalConnector\Handler::getInstance()->checkCurrentCMS()) {
             $result[] = 'modules/DrupalConnector/drupal.js';
         }
 

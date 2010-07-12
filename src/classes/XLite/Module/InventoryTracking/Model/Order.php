@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\InventoryTracking\Model;
+
 /**
  * Order
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_InventoryTracking_Model_Order extends XLite_Model_Order implements XLite_Base_IDecorator
+class Order extends \XLite\Model\Order implements \XLite\Base\IDecorator
 {
     /**
      * Constructor
@@ -82,16 +84,16 @@ class XLite_Module_InventoryTracking_Model_Order extends XLite_Model_Order imple
     /**
      * Update inventory 
      * 
-     * @param XLite_Model_OrderItem $item Order item
+     * @param \XLite\Model\OrderItem $item Order item
      *  
      * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function updateInventory(XLite_Model_OrderItem $item)
+    public function updateInventory(\XLite\Model\OrderItem $item)
     {
-        $inventory = new XLite_Module_InventoryTracking_Model_Inventory();
+        $inventory = new \XLite\Module\InventoryTracking\Model\Inventory();
 
         if (
             $this->xlite->get('ProductOptionsEnabled')
@@ -169,7 +171,7 @@ class XLite_Module_InventoryTracking_Model_Order extends XLite_Model_Order imple
     /**
      * Update item inventory 
      * 
-     * @param XLite_Module_InventoryTracking_Model_Inventory $inventory Item inventory
+     * @param \XLite\Module\InventoryTracking\Model\Inventory $inventory Item inventory
      * @param array                                          $items     Order items
      *  
      * @return void
@@ -177,7 +179,7 @@ class XLite_Module_InventoryTracking_Model_Order extends XLite_Model_Order imple
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function updateItemInventory(XLite_Module_InventoryTracking_Model_Inventory $inventory, array $items)
+    protected function updateItemInventory(\XLite\Module\InventoryTracking\Model\Inventory $inventory, array $items)
     {
         $amount = $inventory->get('amount');
 
@@ -232,7 +234,7 @@ class XLite_Module_InventoryTracking_Model_Order extends XLite_Model_Order imple
 
         // update product(s) inventory        
         foreach ($this->getItems() as $item) {
-            $inventory = new XLite_Module_InventoryTracking_Model_Inventory();
+            $inventory = new \XLite\Module\InventoryTracking\Model\Inventory();
 
             if (
                 $this->xlite->get('ProductOptionsEnabled')
@@ -271,15 +273,15 @@ class XLite_Module_InventoryTracking_Model_Order extends XLite_Model_Order imple
      * Change item inventory 
      * 
      * @param boolean                                        $status    Decrease inventory flag
-     * @param XLite_Module_InventoryTracking_Model_Inventory $inventory Inventory item
-     * @param XLite_Model_OrderItem                          $item      Order item
+     * @param \XLite\Module\InventoryTracking\Model\Inventory $inventory Inventory item
+     * @param \XLite\Model\OrderItem                          $item      Order item
      *  
      * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function changeItemInventory($status, XLite_Module_InventoryTracking_Model_Inventory $inventory, XLite_Model_OrderItem $item)
+    protected function changeItemInventory($status, \XLite\Module\InventoryTracking\Model\Inventory $inventory, \XLite\Model\OrderItem $item)
     {
         $amount = $status
             ? $inventory->get('amount') - $item->get('amount')

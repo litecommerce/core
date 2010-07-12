@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\PayPalPro\Model;
+
 /**
  * Order
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_PayPalPro_Model_Order extends XLite_Model_Order implements XLite_Base_IDecorator
+class Order extends \XLite\Model\Order implements \XLite\Base\IDecorator
 {
     /**
      * Get order details 
@@ -48,7 +50,7 @@ class XLite_Module_PayPalPro_Model_Order extends XLite_Model_Order implements XL
         $details = parent::getDetails();
 
         if (
-            !XLite::isAdminZone()
+            !\XLite::isAdminZone()
             && in_array($this->get('payment_method'), array('paypalpro', 'paypalpro_express'))
             && isset($details['error'])
             && isset($details['errorDescription'])

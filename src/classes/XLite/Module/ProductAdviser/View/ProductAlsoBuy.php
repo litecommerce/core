@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\ProductAdviser\View;
+
 // FIXME - related templates must be deleted
 
 /**
@@ -35,7 +37,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_ProductAdviser_View_ProductAlsoBuy extends XLite_View_ProductsList
+class ProductAlsoBuy extends \XLite\View\ProductsList
 {
     /**
      *  Widget parameter names
@@ -67,7 +69,7 @@ class XLite_Module_ProductAdviser_View_ProductAlsoBuy extends XLite_View_Product
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_PRODUCT_ID => new XLite_Model_WidgetParam_ObjectId_Product('Product ID', 0, false),
+            self::PARAM_PRODUCT_ID => new \XLite\Model\WidgetParam\ObjectId\Product('Product ID', 0, false),
         );
 
         $this->requestParams[] = self::PARAM_PRODUCT_ID;

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model\Repo;
+
 /**
  * Country repository
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Model_Repo_State extends XLite_Model_Repo_ARepo
+class State extends \XLite\Model\Repo\ARepo
 {
     /**
      * Default 'order by' field name
@@ -73,14 +75,14 @@ class XLite_Model_Repo_State extends XLite_Model_Repo_ARepo
      *
      * @param string $customState Custom state name
      * 
-     * @return XLite_Model_State
+     * @return \XLite\Model\State
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
     public function getOtherState($customState = '')
     {
-        $state = new XLite_Model_State();
+        $state = new \XLite\Model\State();
         $state->state = $customState ? $customState : 'Other';
         $state->state_id = -1;
 
@@ -136,14 +138,58 @@ class XLite_Model_Repo_State extends XLite_Model_Repo_ARepo
      * @param integer $stateId     State id
      * @param string  $customState Custom state name if state is dump 'Other' state
      *  
-     * @return XLite_Model_State
+     * @return \XLite\Model\State
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
     public function findById($stateId, $customState = '')
     {
-        return $this->isOtherStateId($stateId) ? $this->getOtherState($customState) : $this->find($stateId);
+        return $this->isOtherStateId($stateId)
+            ? $this->getOtherState($customState)
+            : $this->findOneByStateId($stateId);
+    }
+
+    /**
+     * Find state by id
+     * 
+     * @param integer $stateId State id
+     *  
+     * @return \XLite\Model\State
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function findOneByStateId($stateId)
+    {
+        try {
+            $state = $this->defineOneByStateIdQuery()->getQuery()->getSingleResult();
+
+        } catch (\Doctrine\ORM\NoResultException $exception) {
+            $state = null;
+        }
+
+        return $state;
+    }
+
+    /**
+     * Define query builder for findOneByStateId()
+     *
+     * @param integer $stateId State id
+     * 
+     * @return \Doctrine\ORM\QueryBuilder
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineOneByStateIdQuery($stateId)
+    {
+        return $this->createQueryBuilder()
+            ->addSelect('c')
+            ->leftJoin('s.country', 'c')
+            ->andWhere('s.state_id = :id')
+            ->setParameter('id', $stateId)
+            ->setMaxResults(1);
     }
 
     /**
@@ -207,7 +253,7 @@ class XLite_Model_Repo_State extends XLite_Model_Repo_ARepo
      */
     protected function defineByShippingZoneQuery($shippingZone)
     {
-        return XLite_Core_Database::getQB()
+        return \XLite\Core\Database::getQB()
             ->addSelect('c')
             ->leftJoin('s.country', 'c')
             ->where('s.shipping_zone = :shipping_zone')

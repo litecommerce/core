@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\AOM\Model;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_AOM_Model_Order extends XLite_Model_Order implements XLite_Base_IDecorator
+class Order extends \XLite\Model\Order implements \XLite\Base\IDecorator
 {
     public $orderStatus = null;
     public $_productItems = null;
@@ -101,14 +103,14 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order implements XLite_Ba
 
     function getLocationCountry() 
     {
-        $country = new XLite_Model_Country();
+        $country = new \XLite\Model\Country();
         $country->find("code = '".$this->config->Company->location_country."'");
         return $country;
     }
 
     function getLocationState() 
     {
-        $state = XLite_Core_Database::getEM()->find('XLite_Model_State', $this->config->Company->location_state);
+        $state = \XLite\Core\Database::getEM()->find('XLite\Model\State', $this->config->Company->location_state);
         return $state;
     }
     
@@ -267,7 +269,7 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order implements XLite_Ba
             if ($orderStatus->get('parent') !== '') {
                 $status = $orderStatus->get('parent');
             }
-            $substatus = new XLite_Module_AOM_Model_OrderStatus();
+            $substatus = new \XLite\Module\AOM\Model\OrderStatus();
             if ($substatus->find("status = '".$this->_oldSubstatus."'") && $substatus->get('parent') !== '') {
                 $oldStatus = $substatus->get('parent');
             } else {
@@ -277,7 +279,7 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order implements XLite_Ba
         $this->internalStatusChanged($oldStatus, $status);
 
         if (!$this->_disable_all_notifications) {
-            $mail = new XLite_Model_Mailer();
+            $mail = new \XLite\Model\Mailer();
             $mail->order = $this;
          
             if ($orderStatus->get('email')) {
@@ -290,9 +292,9 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order implements XLite_Ba
             }
             if ($orderStatus->get('cust_email')) {
                 // Switch layout to castomer area
-                $layout = XLite_Model_Layout::getInstance();
+                $layout = \XLite\Model\Layout::getInstance();
                 $active_skin = $layout->get('skin');
-                $layout->set('skin', XLite::getInstance()->getOptions(array('skin_details', 'skin')));
+                $layout->set('skin', \XLite::getInstance()->getOptions(array('skin_details', 'skin')));
                 $mail->set('adminMail', false);
     		    $mail->compose(
         		        $this->config->Company->orders_department,
@@ -308,7 +310,7 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order implements XLite_Ba
     
     function getOrderHistory()  
     {
-        $orderHistory = new XLite_Module_AOM_Model_OrderHistory();
+        $orderHistory = new \XLite\Module\AOM\Model\OrderHistory();
         return array_reverse($orderHistory->findAll("order_id = " . $this->get('order_id'),"date"));
     }
     
@@ -333,7 +335,7 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order implements XLite_Ba
 
     function getProductItems()  
     {
-        $orderItem = new XLite_Model_OrderItem();
+        $orderItem = new \XLite\Model\OrderItem();
         $this->_productItems = $orderItem->findAll("order_id='" .$this->get('order_id'). "' AND product_id <> 0");
         foreach ($this->_productItems as $key => $item) {
             $this->_productItems[$key]->order = $this;
@@ -359,7 +361,7 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order implements XLite_Ba
     			if (!$this->config->Taxes->prices_include_tax) {
     				$this->xlite->set('AOMcalcAllTaxesInside', true);
     			} else {
-                	$taxRates = new XLite_Model_TaxRates();
+                	$taxRates = new \XLite\Model\TaxRates();
                 	$profile = $this->get('profile');
                 	if (isset($profile) && is_object($profile)) {
                     	$taxRates->setProfile($this->get('profile'));
@@ -390,7 +392,7 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order implements XLite_Ba
     {
         $gcid = $this->get('gcid');
         if (!empty($gcid)) {
-            $gc = new XLite_Module_GiftCertificates_Model_GiftCertificate($gcid);
+            $gc = new \XLite\Module\GiftCertificates\Model\GiftCertificate($gcid);
         }
         return $gc;
     }
@@ -403,7 +405,7 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order implements XLite_Ba
             if (empty($gcid)) 
                 unset($items[$key]);
             else 
-                $gc[$item->get('item_id')] = new XLite_Module_GiftCertificates_Model_GiftCertificate($gcid);
+                $gc[$item->get('item_id')] = new \XLite\Module\GiftCertificates\Model\GiftCertificate($gcid);
         }
         return is_array($gc) ? $gc : false;
     }
@@ -416,7 +418,7 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order implements XLite_Ba
     function getOrderDC() 
     {
         if (is_null($this->DC) && $this->get('order_id')) {
-            $dc = new XLite_Module_Promotion_Model_DiscountCoupon();
+            $dc = new \XLite\Module\Promotion\Model\DiscountCoupon();
             $dc->_range = "";
             if ($dc->find("order_id=".$this->get('order_id'))) {
                 $this->DC = $dc;
@@ -455,7 +457,7 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order implements XLite_Ba
         $applied_global_discount = 0;
 
         $gd = $this->get('appliedGlobalDiscount');
-        if (!is_object($gd)) $gd = new XLite_Module_WholesaleTrading_Model_GlobalDiscount();
+        if (!is_object($gd)) $gd = new \XLite\Module\WholesaleTrading\Model\GlobalDiscount();
 
         if ($gd->get('discount_type') != "a") {
             // if percent (or undefined) discount value differs from its original value, then the discount is absolute
@@ -504,7 +506,7 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order implements XLite_Ba
         if ($applied_discount <= 0) return 0;
 
         $dc = $this->get('orderDC');
-        if (!is_object($dc)) $dc = new XLite_Module_Promotion_Model_DiscountCoupon();
+        if (!is_object($dc)) $dc = new \XLite\Module\Promotion\Model\DiscountCoupon();
         if ($dc->get('type') != "absolute") {
             // if percent (or undefined) discount value differs from its original value, then the discount is absolute
             if ($this->config->Taxes->prices_include_tax && $this->xlite->AOM_product_originalPrice) {
@@ -515,7 +517,7 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order implements XLite_Ba
                 $subtotal = 0;
                 foreach ($this->get('items') as $i) {
                     $price = $i->get('price');
-                    $p = new XLite_Model_Product($i->get('product_id'));
+                    $p = new \XLite\Model\Product($i->get('product_id'));
                     $p->set('price', $price);
                     $price = $p->getTaxedPrice();
                     $subtotal += $price * $i->get('amount');
@@ -572,7 +574,7 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order implements XLite_Ba
 
     function setOrderStatus($value)  
     {
-        $substatus = new XLite_Module_AOM_Model_OrderStatus();
+        $substatus = new \XLite\Module\AOM\Model\OrderStatus();
         $substatus->find("status = '$value'");
         if ($substatus->get('parent') == '') {
             $_POST['status'] = $value;
@@ -593,7 +595,7 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order implements XLite_Ba
     function getOrderStatus()  
     {
         $status = ($this->get('substatus') == '') ? $this->get('status') : $this->get('substatus');
-        $this->orderStatus = new XLite_Module_AOM_Model_OrderStatus();
+        $this->orderStatus = new \XLite\Module\AOM\Model\OrderStatus();
         $this->orderStatus->find("status = '$status'");
        	return $this->orderStatus;
  	}
@@ -633,7 +635,7 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order implements XLite_Ba
         }
         
         if (!empty($status)) {
-            $orderStatus = new XLite_Module_AOM_Model_OrderStatus();
+            $orderStatus = new \XLite\Module\AOM\Model\OrderStatus();
             $orderStatus->find("status = '$status'");
             if ($orderStatus->get('parent')) {
                 $where[] = "substatus = '$status'";
@@ -664,7 +666,7 @@ class XLite_Module_AOM_Model_Order extends XLite_Model_Order implements XLite_Ba
         $this->_items = null;
         if ( !$this->config->Taxes->prices_include_tax )
             return;
-        $taxRates = new XLite_Model_TaxRates();
+        $taxRates = new \XLite\Model\TaxRates();
         $taxRates->set('order', $this);
         foreach ($this->get('items') as $item) {
             $calcAllTaxesAOM = $this->xlite->get('AOMcalcAllTaxesInside');

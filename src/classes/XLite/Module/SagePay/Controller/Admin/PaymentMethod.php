@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\SagePay\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_SagePay_Controller_Admin_PaymentMethod extends XLite_Controller_Admin_PaymentMethod implements XLite_Base_IDecorator
+class PaymentMethod extends \XLite\Controller\Admin\PaymentMethod implements \XLite\Base\IDecorator
 {
     function getPM()
     {

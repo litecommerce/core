@@ -26,16 +26,18 @@
  * @since      3.0.0
  */
 
+namespace XLite\Model;
+
 /**
  * State
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
- * @Entity (repositoryClass="XLite_Model_Repo_State")
+ * @Entity (repositoryClass="XLite\Model\Repo\State")
  * @Table (name="states")
  */
-class XLite_Model_State extends XLite_Model_AEntity
+class State extends \XLite\Model\AEntity
 {
     /**
      * State unique id 
@@ -97,11 +99,11 @@ class XLite_Model_State extends XLite_Model_AEntity
     /**
      * Country (relation)
      * 
-     * @var    XLite_Model_Country
+     * @var    \XLite\Model\Country
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @ManyToOne (targetEntity="XLite_Model_Country", inversedBy="states")
+     * @ManyToOne (targetEntity="\XLite\Model\Country", inversedBy="states")
      * @JoinColumn (name="country_code", referencedColumnName="code")
      */
     protected $country;

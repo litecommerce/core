@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\DetailedImages\Controller\Customer;
+
 /**
  * Image
  * 
@@ -33,8 +35,8 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_DetailedImages_Controller_Customer_Image extends XLite_Controller_Customer_Image
-implements XLite_Base_IDecorator
+class Image extends \XLite\Controller\Customer\Image
+implements \XLite\Base\IDecorator
 {
     /**
      * Show detailed image
@@ -46,7 +48,7 @@ implements XLite_Base_IDecorator
      */
     protected function doActionDetailedImages()
     {
-        $request = XLite_Core_Request::getInstance();
+        $request = \XLite\Core\Request::getInstance();
 
         $id = 0;
         if (isset($request->id)) {
@@ -56,7 +58,7 @@ implements XLite_Base_IDecorator
             $id = $request->image_id;
         }
 
-        $detailedImage = new XLite_Module_DetailedImages_Model_DetailedImage($id);
+        $detailedImage = new \XLite\Module\DetailedImages\Model\DetailedImage($id);
         $detailedImage->getImage()->show();
     }
 }

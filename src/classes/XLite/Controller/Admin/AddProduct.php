@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,15 +35,15 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Controller_Admin_AddProduct extends XLite_Controller_Admin_AAdmin
+class AddProduct extends \XLite\Controller\Admin\AAdmin
 {
     public $params = array('target', "mode", "product_id");
     public $product = null;
 
     function init()
     {
-        if (!(isset(XLite_Core_Request::getInstance()->product_id) && !isset(XLite_Core_Request::getInstance()->action) && isset(XLite_Core_Request::getInstance()->mode) && XLite_Core_Request::getInstance()->mode == "notification")) {
-            XLite_Core_Request::getInstance()->product_id = null;
+        if (!(isset(\XLite\Core\Request::getInstance()->product_id) && !isset(\XLite\Core\Request::getInstance()->action) && isset(\XLite\Core\Request::getInstance()->mode) && \XLite\Core\Request::getInstance()->mode == "notification")) {
+            \XLite\Core\Request::getInstance()->product_id = null;
         }
 
     	parent::init();
@@ -50,7 +52,7 @@ class XLite_Controller_Admin_AddProduct extends XLite_Controller_Admin_AAdmin
     function action_add()
     {
         $product = $this->get('product');
-        $properties = XLite_Core_Request::getInstance()->getData();
+        $properties = \XLite\Core\Request::getInstance()->getData();
 
         // Sanitize
         if (isset($properties['clean_url'])) {
@@ -60,9 +62,9 @@ class XLite_Controller_Admin_AddProduct extends XLite_Controller_Admin_AAdmin
                 && !$this->checkCleanURLUnique($properties['clean_url'])
             ) {
 
-                XLite_Core_TopMessage::getInstance()->add(
+                \XLite\Core\TopMessage::getInstance()->add(
                     'The Clean URL you specified is already in use. Please specify another Clean URL',
-                    XLite_Core_TopMessage::ERROR
+                    \XLite\Core\TopMessage::ERROR
                 );
                 $this->set('valid', false);
                 return;
@@ -79,7 +81,7 @@ class XLite_Controller_Admin_AddProduct extends XLite_Controller_Admin_AAdmin
         }
 
         if (isset($this->category_id)) {
-            $category = new XLite_Model_Category($this->category_id);
+            $category = new \XLite\Model\Category($this->category_id);
             $product->set('category', $category);
         }
 
@@ -88,7 +90,7 @@ class XLite_Controller_Admin_AddProduct extends XLite_Controller_Admin_AAdmin
         if (!empty($extraFields)) {
             foreach ($extraFields as $id => $value) {
                 if (strlen($value)) {
-                    $fv = new XLite_Model_FieldValue();
+                    $fv = new \XLite\Model\FieldValue();
                     $found = $fv->find("field_id=$id AND product_id=".$product->get('product_id'));
                     $fv->set('value', $value);
                     if ($found) {
@@ -109,13 +111,13 @@ class XLite_Controller_Admin_AddProduct extends XLite_Controller_Admin_AAdmin
     function action_images()
     {
         $tn = $this->getComplex('product.thumbnail');
-        if ($tn->handleRequest() != XLite_Model_Image::IMAGE_OK && $tn->_shouldProcessUpload) {
+        if ($tn->handleRequest() != \XLite\Model\Image::IMAGE_OK && $tn->_shouldProcessUpload) {
         	$this->set('valid', false);
         	$this->set('thumbnail_read_only', true);
         }
 
         $img = $this->getComplex('product.image');
-        if ($img->handleRequest() != XLite_Model_Image::IMAGE_OK && $img->_shouldProcessUpload) {
+        if ($img->handleRequest() != \XLite\Model\Image::IMAGE_OK && $img->_shouldProcessUpload) {
         	$this->set('valid', false);
         	$this->set('image_read_only', true);
         }
@@ -124,7 +126,7 @@ class XLite_Controller_Admin_AddProduct extends XLite_Controller_Admin_AAdmin
     function getProduct()
     {
         if (is_null($this->product)) {
-            $this->product = new XLite_Model_Product($this->get('product_id'));
+            $this->product = new \XLite\Model\Product($this->get('product_id'));
         }
         return $this->product;
     }
@@ -141,7 +143,7 @@ class XLite_Controller_Admin_AddProduct extends XLite_Controller_Admin_AAdmin
      */
     protected function checkCleanURLUnique($cleanURL)
     {
-        $product = new XLite_Model_Product();
+        $product = new \XLite\Model\Product();
 
         return !$product->find('clean_url = \'' . $cleanURL . '\'');
     }

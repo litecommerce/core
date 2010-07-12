@@ -116,5 +116,5 @@
 </table>
 
 <center>
-<widget class="XLite_View_Button" href="cart.php?target=checkout" label="Continue checkout.." font="FormButton">
+<widget class="\XLite\View\Button" href="cart.php?target=checkout" label="Continue checkout.." font="FormButton">
 </center>

@@ -11,7 +11,7 @@
  * @since     3.0.0
  *}
 
-<widget class="XLite_View_Form_Checkout_Place" name="checkout" className="checkout-details" />
+<widget class="\XLite\View\Form\Checkout\Place" name="checkout" className="checkout-details" />
   <span class="title">E-mail:</span>&nbsp;&nbsp;{cart.profile.login}<br />
 
   <div class="billing-address-form">
@@ -50,10 +50,10 @@
 
   </div>
 
-  <div class="center"><widget class="XLite_View_Button_Link" label="Change addresses" location="{buildURL(#checkout#,##,_ARRAY_(#mode#^#register#))}" /></div>
+  <div class="center"><widget class="\XLite\View\Button\Link" label="Change addresses" location="{buildURL(#checkout#,##,_ARRAY_(#mode#^#register#))}" /></div>
 
   <div class="payment-method">
-    <widget class="XLite_View_Button_Link" label="Change payment method" style="change" location="{buildURL(#checkout#,##,_ARRAY_(#mode#^#paymentMethod#))}" />
+    <widget class="\XLite\View\Button\Link" label="Change payment method" style="change" location="{buildURL(#checkout#,##,_ARRAY_(#mode#^#paymentMethod#))}" />
     <h2>{cart.paymentMethod.name}</h2> 
     <widget template="{getDir()}/paymentForm.tpl" />
   </div>
@@ -70,7 +70,7 @@
   </div>
 
   <div class="button-row">
-    <widget class="XLite_View_Button_Submit" label="Place order" style="bright-button big-button place-button" />
+    <widget class="\XLite\View\Button\Submit" label="Place order" style="bright-button big-button place-button" />
     <div class="submit-progress" style="display: none;">Please wait while your order is being processed...</div>
   </div>
 

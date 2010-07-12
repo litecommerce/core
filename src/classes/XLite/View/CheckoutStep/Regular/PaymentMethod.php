@@ -26,14 +26,16 @@
  * @since      3.0.0
  */
 
+namespace XLite\View\CheckoutStep\Regular;
+
 /**
- * XLite_View_CheckoutStep_Regular_PaymentMethod 
+ * \XLite\View\CheckoutStep\Regular\PaymentMethod 
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_CheckoutStep_Regular_PaymentMethod extends XLite_View_CheckoutStep_Regular_ARegular
+class PaymentMethod extends \XLite\View\CheckoutStep\Regular\ARegular
 {
     /**
      * Return step templates directory name
@@ -62,14 +64,14 @@ class XLite_View_CheckoutStep_Regular_PaymentMethod extends XLite_View_CheckoutS
     /**
      * Check - specified payment method is selected or not
      *
-     * @param XLite_Model_PaymentMethod $paymentMethod Payment method
+     * @param \XLite\Model\PaymentMethod $paymentMethod Payment method
      *
      * @return boolean
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function isPaymentSelected(XLite_Model_PaymentMethod $paymentMethod)
+    protected function isPaymentSelected(\XLite\Model\PaymentMethod $paymentMethod)
     {
         return $this->getCart()->get('paymentMethod')
             && $this->getCart()->get('paymentMethod')->get('payment_method') == $paymentMethod->get('payment_method');

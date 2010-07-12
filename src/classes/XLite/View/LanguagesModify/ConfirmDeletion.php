@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View\LanguagesModify;
+
 /**
  * Confirm language deletion dialog
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_LanguagesModify_ConfirmDeletion extends XLite_View_AView
+class ConfirmDeletion extends \XLite\View\AView
 {
     /**
      * Widgets parameters 
@@ -65,7 +67,7 @@ class XLite_View_LanguagesModify_ConfirmDeletion extends XLite_View_AView
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_LNG_ID => new XLite_Model_WidgetParam_Int('Language id', null),
+            self::PARAM_LNG_ID => new \XLite\Model\WidgetParam\Int('Language id', null),
         );
 
         $this->requestParams[] = self::PARAM_LNG_ID;
@@ -74,14 +76,14 @@ class XLite_View_LanguagesModify_ConfirmDeletion extends XLite_View_AView
     /**
      * Get confirm language 
      * 
-     * @return XLite_Model_Language or null
+     * @return \XLite\Model\Language or null
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
     public function getConfirmLanguage()
     {
-        return XLite_Core_Database::getRepo('XLite_Model_Language')
+        return \XLite\Core\Database::getRepo('XLite\Model\Language')
             ->find($this->getParam(self::PARAM_LNG_ID));
     }
 

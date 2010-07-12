@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Controller\Customer;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Controller_Customer_Upgrade extends XLite_Controller_Customer_ACustomer
+class Upgrade extends \XLite\Controller\Customer\ACustomer
 {
     function init()
     {
@@ -54,7 +56,7 @@ class XLite_Controller_Customer_Upgrade extends XLite_Controller_Customer_ACusto
 
     function action_upgrade()
     {
-        $up = new XLite_Model_Upgrade();
+        $up = new \XLite\Model\Upgrade();
         $up->setProperties($_GET);
         $up->doUpgrade();
         $this->set('silent', true);
@@ -62,7 +64,7 @@ class XLite_Controller_Customer_Upgrade extends XLite_Controller_Customer_ACusto
 
     function action_upgrade_force()
     {
-        $up = new XLite_Model_Upgrade();
+        $up = new \XLite\Model\Upgrade();
         $up->setProperties($_GET);
         $up->success();
         $this->set('silent', true);

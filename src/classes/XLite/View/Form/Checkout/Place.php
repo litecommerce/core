@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\View\Form\Checkout;
+
 /**
  * Place order form
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_Form_Checkout_Place extends XLite_View_Form_AForm
+class Place extends \XLite\View\Form\AForm
 {
     /**
      * Current form name 

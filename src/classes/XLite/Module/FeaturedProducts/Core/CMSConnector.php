@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\FeaturedProducts\Core;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class XLite_Module_FeaturedProducts_Core_CMSConnector extends XLite_Core_CMSConnector implements XLite_Base_IDecorator
+abstract class CMSConnector extends \XLite\Core\CMSConnector implements \XLite\Base\IDecorator
 {
     /**
      * Constructor
@@ -47,6 +49,6 @@ abstract class XLite_Module_FeaturedProducts_Core_CMSConnector extends XLite_Cor
     {
         parent::__construct();
 
-        $this->widgetsList['XLite_Module_FeaturedProducts_View_FeaturedProducts'] = 'Featured products';
+        $this->widgetsList['\XLite\Module\FeaturedProducts\View\FeaturedProducts'] = 'Featured products';
     }
 }

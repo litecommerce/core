@@ -26,15 +26,17 @@
  * @since      3.0.0
  */
 
+namespace XLite\View\FormField\Separator;
+
 
 /**
- * XLite_View_FormField_Separator_Regular 
+ * \XLite\View\FormField\Separator\Regular 
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_View_FormField_Separator_Regular extends XLite_View_FormField_Separator_ASeparator
+class Regular extends \XLite\View\FormField\Separator\ASeparator
 {
     /**
      * Return field template

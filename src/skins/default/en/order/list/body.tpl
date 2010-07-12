@@ -12,8 +12,8 @@
  *}
 <div class="orders-list {getClassIdentifier()}">
   <div class="panel orders-panel">
-    <widget class="XLite_View_Pager_Common" data="{getOrders()}" name="pager" pageId="{getPageId()}" />
-    <widget class="XLite_View_Sort_Order" />
+    <widget class="\XLite\View\Pager\Common" data="{getOrders()}" name="pager" pageId="{getPageId()}" />
+    <widget class="\XLite\View\Sort\Order" />
   </div>
 
   <ul IF="namedWidgets.pager.getPageData()" class="list">
@@ -30,7 +30,7 @@
         </div>
       </div>
 
-      <widget class="XLite_View_OrderItemsShort" order="{order}" />
+      <widget class="\XLite\View\OrderItemsShort" order="{order}" />
 
     </li>
 

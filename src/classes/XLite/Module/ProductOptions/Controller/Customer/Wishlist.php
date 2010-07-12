@@ -26,14 +26,16 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\ProductOptions\Controller\Customer;
+
 /**
- * XLite_Module_ProductOptions_Controller_Customer_Wishlist 
+ * \XLite\Module\ProductOptions\Controller\Customer\Wishlist 
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_ProductOptions_Controller_Customer_Wishlist extends XLite_Module_WishList_Controller_Customer_Wishlist implements XLite_Base_IDecorator
+class Wishlist extends \XLite\Module\WishList\Controller\Customer\Wishlist implements \XLite\Base\IDecorator
 {
     /**
      * Widget param names 
@@ -45,13 +47,13 @@ class XLite_Module_ProductOptions_Controller_Customer_Wishlist extends XLite_Mod
     /**
      * setProductOptions 
      * 
-     * @param XLite_Module_WishList_Model_WishListProduct $product current item
+     * @param \XLite\Module\WishList\Model\WishListProduct $product current item
      *  
      * @return void
      * @access protected
      * @since  3.0.0
      */
-    protected function setProductOptions(XLite_Module_WishList_Model_WishListProduct $product)
+    protected function setProductOptions(\XLite\Module\WishList\Model\WishListProduct $product)
     {
         $options = $this->getParam(self::PARAM_PRODUCT_OPTIONS);
 
@@ -72,14 +74,14 @@ class XLite_Module_ProductOptions_Controller_Customer_Wishlist extends XLite_Mod
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_PRODUCT_OPTIONS => new XLite_Model_WidgetParam_Collection('Product options', array()),
+            self::PARAM_PRODUCT_OPTIONS => new \XLite\Model\WidgetParam\Collection('Product options', array()),
         );
     }
 
     /**
      * getWishListProduct
      *
-     * @return XLite_Module_WishList_Model_WishListProduct
+     * @return \XLite\Module\WishList\Model\WishListProduct
      * @access protected
      * @since  3.0.0
      */
@@ -96,14 +98,14 @@ class XLite_Module_ProductOptions_Controller_Customer_Wishlist extends XLite_Mod
     /**
      * prepareWishListItem
      *
-     * @param XLite_Module_WishList_Model_WishListProduct $product item to prepare
+     * @param \XLite\Module\WishList\Model\WishListProduct $product item to prepare
      * @param bool                                        $status  if item exists or not
      *
      * @return void
      * @access protected
      * @since  3.0.0
      */
-    protected function prepareWishListItem(XLite_Module_WishList_Model_WishListProduct $product, $status)
+    protected function prepareWishListItem(\XLite\Module\WishList\Model\WishListProduct $product, $status)
     {
         parent::prepareWishListItem($product, $status);
 

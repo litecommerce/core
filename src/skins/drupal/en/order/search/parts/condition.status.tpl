@@ -14,6 +14,6 @@
 <tr class="status">
   <td>Status:</td>
   <td height="10">
-    <widget class="XLite_View_StatusSelect" field="status" value="{getCondition(#status#)}" allOption />
+    <widget class="\XLite\View\StatusSelect" field="status" value="{getCondition(#status#)}" allOption />
   </td>
 </tr>

@@ -19,7 +19,7 @@
 <table border=0 cellpadding=3 cellspacing=2>
 <tr valign=top>
     <td>Partner:</td>
-    <td><widget class="XLite_Module_Affiliate_View_PartnerSelect" allOption=0></td>
+    <td><widget class="\XLite\Module\Affiliate\View\PartnerSelect" allOption=0></td>
 </tr>
 <tr>
     <td>&nbsp;</td>

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Demo;
+
 /**
  * Demo module
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Demo_Main extends XLite_Module_AModule
+class Main extends \XLite\Module\AModule
 {
     /**
      * Module type
@@ -100,7 +102,7 @@ class XLite_Module_Demo_Main extends XLite_Module_AModule
         self::doForbidOperation($message);
 
         if (!$url) {
-            $url = XLite_Core_Converter::buildURL(XLite_Core_Request::getInstance()->target);
+            $url = \XLite\Core\Converter::buildURL(\XLite\Core\Request::getInstance()->target);
         }
 
         header('Location: ' . $url);
@@ -123,6 +125,6 @@ class XLite_Module_Demo_Main extends XLite_Module_AModule
             $message = 'You cannot do this in demo mode.';
         }
 
-        XLite_Core_TopMessage::getInstance()->add($message, XLite_Core_TopMessage::WARNING);
+        \XLite\Core\TopMessage::getInstance()->add($message, \XLite\Core\TopMessage::WARNING);
     }
 }

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,11 +35,11 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Controller_Admin_Test extends XLite_Controller_Admin_AAdmin
+class Test extends \XLite\Controller\Admin\AAdmin
 {
     function action_upload()
     {
-        $upload_test = isset(XLite_Core_Request::getInstance()->upload_test) ? basename(XLite_Core_Request::getInstance()->upload_test, ".txt") . ".txt" : "upload_test.txt";
+        $upload_test = isset(\XLite\Core\Request::getInstance()->upload_test) ? basename(\XLite\Core\Request::getInstance()->upload_test, ".txt") . ".txt" : "upload_test.txt";
         if (@is_readable($upload_test)) {
             @readfile($upload_test);
         } else {

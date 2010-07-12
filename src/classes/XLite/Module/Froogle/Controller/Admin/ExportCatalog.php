@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Froogle\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Froogle_Controller_Admin_ExportCatalog extends XLite_Controller_Admin_ExportCatalog implements XLite_Base_IDecorator
+class ExportCatalog extends \XLite\Controller\Admin\ExportCatalog implements \XLite\Base\IDecorator
 {
     public $fp = null;
 
@@ -49,7 +51,7 @@ class XLite_Module_Froogle_Controller_Admin_ExportCatalog extends XLite_Controll
         // switch to customer's zone context
         $this->_sessionData = $this->session->_data;
         $this->session->_data = array();
-        $cart = XLite_Model_Cart::getInstance();
+        $cart = \XLite\Model\Cart::getInstance();
         $cart = null;
 
         $this->goCustomer();
@@ -72,7 +74,7 @@ class XLite_Module_Froogle_Controller_Admin_ExportCatalog extends XLite_Controll
             $this->fp = fopen($ufile, "wb") or $this->doDie("FAILED: write failed for $ufile");
             ob_start(array($this, 'outputHandler'));
         }
-        $p = new XLite_Model_Product();
+        $p = new \XLite\Model\Product();
         $p->export('froogle', $delimiter = "\t", $where = 'price > 0', $orderby = "product_id", null);
         $this->goAdmin();
 
@@ -165,11 +167,11 @@ class XLite_Module_Froogle_Controller_Admin_ExportCatalog extends XLite_Controll
         $this->session->_data = array();
 
         // switch layout to customer's zone
-        $layout = XLite_Model_Layout::getInstance();
+        $layout = \XLite\Model\Layout::getInstance();
         $layout->set('skin', "default");
 
         // empty cart
-        $cart = XLite_Model_Cart::getInstance();
+        $cart = \XLite\Model\Cart::getInstance();
         $cart = null;
     }
 

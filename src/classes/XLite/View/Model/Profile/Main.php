@@ -26,15 +26,17 @@
  * @since      3.0.0
  */
 
+namespace XLite\View\Model\Profile;
+
 /**
- * XLite_View_Model_Profile_Main 
+ * \XLite\View\Model\Profile\Main 
  * 
  * @package    XLite
  * @subpackage ____sub_package____
  * @see        ____class_see____
  * @since      3.0.0
  */
-class XLite_View_Model_Profile_Main extends XLite_View_Model_Profile_AProfile
+class Main extends \XLite\View\Model\Profile\AProfile
 {
     /**
      * Form sections 
@@ -53,17 +55,17 @@ class XLite_View_Model_Profile_Main extends XLite_View_Model_Profile_AProfile
      */
     protected $mainSchema = array(
         'login' => array( 
-            self::SCHEMA_CLASS    => 'XLite_View_FormField_Input_Text',
+            self::SCHEMA_CLASS    => '\XLite\View\FormField\Input\Text',
             self::SCHEMA_LABEL    => 'E-mail',
             self::SCHEMA_REQUIRED => true,
         ),
         'password' => array(
-            self::SCHEMA_CLASS    => 'XLite_View_FormField_Input_Password',
+            self::SCHEMA_CLASS    => '\XLite\View\FormField\Input\Password',
             self::SCHEMA_LABEL    => 'Password',
             self::SCHEMA_REQUIRED => false,
         ),
         'password_conf' => array(
-            self::SCHEMA_CLASS    => 'XLite_View_FormField_Input_Password',
+            self::SCHEMA_CLASS    => '\XLite\View\FormField\Input\Password',
             self::SCHEMA_LABEL    => 'Confirm password',
             self::SCHEMA_REQUIRED => false,
         ),
@@ -78,17 +80,17 @@ class XLite_View_Model_Profile_Main extends XLite_View_Model_Profile_AProfile
      */
     protected $accessSchema = array(
         'access_level' => array(
-            self::SCHEMA_CLASS    => 'XLite_View_FormField_Select_AccessLevel',
+            self::SCHEMA_CLASS    => '\XLite\View\FormField\Select\AccessLevel',
             self::SCHEMA_LABEL    => 'Access level',
             self::SCHEMA_REQUIRED => true,
         ),
         'status' => array(
-            self::SCHEMA_CLASS    => 'XLite_View_FormField_Select_AccountStatus',
+            self::SCHEMA_CLASS    => '\XLite\View\FormField\Select\AccountStatus',
             self::SCHEMA_LABEL    => 'Account status',
             self::SCHEMA_REQUIRED => true,
         ),
         'membership' => array(
-            self::SCHEMA_CLASS    => 'XLite_View_FormField_Select_Membership',
+            self::SCHEMA_CLASS    => '\XLite\View\FormField\Select\Membership',
             self::SCHEMA_LABEL    => 'Membership',
             self::SCHEMA_REQUIRED => false,
         ),
@@ -104,7 +106,7 @@ class XLite_View_Model_Profile_Main extends XLite_View_Model_Profile_AProfile
      */
     protected function getFormClass()
     {
-        return 'XLite_View_Form_Profile_Main';
+        return '\XLite\View\Form\Profile\Main';
     }
 
     /**
@@ -164,7 +166,7 @@ class XLite_View_Model_Profile_Main extends XLite_View_Model_Profile_AProfile
     protected function setModelProperties(array $data)
     {
         if (isset($data['password'])) {
-            $data['password'] = XLite_Model_Auth::encryptPassword($data['password']);
+            $data['password'] = \XLite\Model\Auth::encryptPassword($data['password']);
         }
 
         parent::setModelProperties($data);
@@ -186,7 +188,7 @@ class XLite_View_Model_Profile_Main extends XLite_View_Model_Profile_AProfile
         if (isset($this->sections[self::SECTION_MAIN]) && (!empty($data['password']) || !empty($data['password_conf']))) {
 
             if (!($result = $data['password'] === $data['password_conf'])) {
-                XLite_Core_TopMessage::getInstance()->addError('Password and its confirmation do not match');
+                \XLite\Core\TopMessage::getInstance()->addError('Password and its confirmation do not match');
             }
 
         } else {
@@ -240,9 +242,9 @@ class XLite_View_Model_Profile_Main extends XLite_View_Model_Profile_AProfile
      */
     protected function postprocessErrorActionValidateInput()
     {
-        XLite_Core_TopMessage::getInstance()->add(
+        \XLite\Core\TopMessage::getInstance()->add(
             $this->getErrorActionValidateInputMessage($this->getRequestData('login')),
-            XLite_Core_TopMessage::ERROR
+            \XLite\Core\TopMessage::ERROR
         );
     }
 
@@ -256,8 +258,8 @@ class XLite_View_Model_Profile_Main extends XLite_View_Model_Profile_AProfile
      */
     protected function performActionCreate()
     {
-        // FIXME: Uncomment this after the "register" funcion of "XLite_Model_Auth" class will be refactored
-        // return !$this->checkPassword() ?: XLite_Model_Auth::getInstance()->register($this->getModelObject());
+        // FIXME: Uncomment this after the "register" funcion of "\XLite\Model\Auth" class will be refactored
+        // return !$this->checkPassword() ?: \XLite\Model\Auth::getInstance()->register($this->getModelObject());
 
         return $this->checkPassword() ? parent::performActionCreate() : false;
     }
@@ -283,8 +285,8 @@ class XLite_View_Model_Profile_Main extends XLite_View_Model_Profile_AProfile
      */
     protected function performActionDelete()
     {
-        // FIXME: Uncomment this after the "unregister" funcion of "XLite_Model_Auth" class will be refactored
-        // return XLite_Model_Auth::getInstance()->unregister($this->getModelObject());
+        // FIXME: Uncomment this after the "unregister" funcion of "\XLite\Model\Auth" class will be refactored
+        // return \XLite\Model\Auth::getInstance()->unregister($this->getModelObject());
 
         return parent::performActionDelete();
     }
@@ -300,7 +302,7 @@ class XLite_View_Model_Profile_Main extends XLite_View_Model_Profile_AProfile
     {
         $result = true;
 
-        $profile = new XLite_Model_Profile();
+        $profile = new \XLite\Model\Profile();
         if ($profile->findByLogin($this->getModelObject()->get('login'))) {
             $result = $profile->get('profile_id') === $this->getModelObject()->get('profile_id');
         }
@@ -319,7 +321,7 @@ class XLite_View_Model_Profile_Main extends XLite_View_Model_Profile_AProfile
      */
     public static function getRegisterMode()
     {
-        return XLite_Controller_Admin_Profile::getRegisterMode();
+        return \XLite\Controller\Admin\Profile::getRegisterMode();
     }
 
 
@@ -333,7 +335,7 @@ class XLite_View_Model_Profile_Main extends XLite_View_Model_Profile_AProfile
      */
     public function isRegisterMode()
     {
-        return self::getRegisterMode() === XLite_Core_Request::getInstance()->mode;
+        return self::getRegisterMode() === \XLite\Core\Request::getInstance()->mode;
     }
 
     /**

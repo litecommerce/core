@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\Affiliate\Controller\Customer;
+
 /**
  * ____description____
  * 
@@ -33,15 +35,15 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_Affiliate_Controller_Customer_ProductBanner extends XLite_Controller_AController
+class ProductBanner extends \XLite\Controller\AController
 {
     public $template = "modules/Affiliate/product_banner.tpl";
 
     function getProduct()
     {
         if (is_null($this->product)) {
-            $this->product = new XLite_Model_Product($this->product_id);
-            $stats = new XLite_Module_Affiliate_Model_BannerStats();
+            $this->product = new \XLite\Model\Product($this->product_id);
+            $stats = new \XLite\Module\Affiliate\Model\BannerStats();
             $stats->logView();
         }
         return $this->product;

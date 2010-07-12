@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\WholesaleTrading\Controller\Admin;
+
 /**
  * ____description____
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_WholesaleTrading_Controller_Admin_Order extends XLite_Controller_Admin_Order implements XLite_Base_IDecorator
+class Order extends \XLite\Controller\Admin\Order implements \XLite\Base\IDecorator
 {
     function isShowWholesalerFields()
     {

@@ -17,7 +17,7 @@ If you have an existing Gift certificate you can check its current amount and st
 <table border="0"><tr><td>
 Gift certificate:&nbsp;
 </td><td><INPUT type="text" size="25" maxlength="16" name="gcid" value="{foundgc.gcid:r}">
-</td><td><widget class="XLite_View_Button" label="Find" href="javascript: document.gccheckform.submit();">
+</td><td><widget class="\XLite\View\Button" label="Find" href="javascript: document.gccheckform.submit();">
 </td></tr></table>
 </FORM>
 

@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace XLite\Module\DrupalConnector\View;
+
 /**
  * 'Powered by' widget
  * 
@@ -33,7 +35,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite_Module_DrupalConnector_View_PoweredBy extends XLite_View_PoweredBy implements XLite_Base_IDecorator
+class PoweredBy extends \XLite\View\PoweredBy implements \XLite\Base\IDecorator
 {
     /**
      * Check - display widget as link or as box
@@ -45,7 +47,7 @@ class XLite_Module_DrupalConnector_View_PoweredBy extends XLite_View_PoweredBy i
      */
     public function isLink()
     {
-        if (XLite_Module_DrupalConnector_Handler::getInstance()->checkCurrentCMS()) {
+        if (\XLite\Module\DrupalConnector\Handler::getInstance()->checkCurrentCMS()) {
             $result = drupal_is_front_page();
 
         } else {
