@@ -76,7 +76,7 @@ class Config extends \XLite\Model\Repo\Base\I18n
 
         $list['category'] =array(
             self::TTL_CACHE_CELL   => self::INFINITY_TTL,
-            self::ATTRS_CACHE_CELL => array('category_name')
+            self::ATTRS_CACHE_CELL => array('category')
         );
 
         return $list;
@@ -194,14 +194,14 @@ class Config extends \XLite\Model\Repo\Base\I18n
         $data = null;
 
         if (!$force) {
-            $data = $this->getFromCache('category', array('category_name' => $category));
+            $data = $this->getFromCache('category', array('category' => $category));
         }
         
         if (!isset($data)) {
             $data = $this->defineByCategoryQuery($category)->getQuery()->getResult();
             if (!$doNotProcess) {
                 $data = $this->processOptions($data);
-                $this->saveToCache($data, 'category', array('category_name' => $category));
+                $this->saveToCache($data, 'category', array('category' => $category));
             }
         }
 
