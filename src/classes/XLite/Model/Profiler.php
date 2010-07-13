@@ -35,7 +35,7 @@ namespace XLite\Model;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Profiler extends \XLite\Base implements \XLite\Base\ISingleton
+class Profiler extends \XLite\Base implements \XLite\Base\ISingleton, \Doctrine\DBAL\Logging\SQLLogger
 {
     const QUERY_LIMIT_TIMES = 2;
     const QUERY_LIMIT_DURATION = 0.05;
@@ -536,6 +536,22 @@ HTML;
         }
 
         return $result;
+    }
+
+    /**
+     * Log SQL queries
+     * 
+     * @param strin $sql    Query
+     * @param array $params Query arguments
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function logSQL($sql, array $params = null)
+    {
+        $this->addQuery($sql);
     }
 
     /**
