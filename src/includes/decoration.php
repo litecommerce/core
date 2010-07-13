@@ -1453,6 +1453,15 @@ class Decorator
             // Collect patches to DB
             $this->collectPatches();
 
+            // Store files in APC
+            if (function_exists('apc_compile_file')) {
+                apc_clear_cache();
+                foreach ($this->classesInfo as $class => $info) {
+                    apc_compile_file(LC_CLASSES_CACHE_DIR . $this->getFileByClass($class));
+                }
+            }
+
+            // decoration shutdown
             if (
                 !defined('SILENT_CACHE_REBUILD')
                 && 'cli' != PHP_SAPI
