@@ -181,7 +181,7 @@ class ActionStatus extends \XLite\Base
             $this->message = $message;
             $this->code    = $code;
         } else {
-            $this->doDie('\XLite\Model\ActionStatus::__construct(): unallowed status - "' . strval($status) . '"');
+            $this->doDie('XLite\Model\ActionStatus::__construct(): unallowed status - "' . strval($status) . '"');
         }
     }
 }

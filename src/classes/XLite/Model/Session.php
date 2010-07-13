@@ -259,7 +259,7 @@ abstract class Session extends \XLite\Base implements \XLite\Base\ISingleton
      */
     public function get($name)
     {
-        $this->doDie('\XLite\Model\Session::get(): Trying to call the abstract method');
+        $this->doDie('XLite\Model\Session::get(): Trying to call the abstract method');
     }
 
     /**
@@ -275,7 +275,7 @@ abstract class Session extends \XLite\Base implements \XLite\Base\ISingleton
      */
     public function set($name, $value)
     {
-        $this->doDie('\XLite\Model\Session::set(): Trying to call the abstract method');
+        $this->doDie('XLite\Model\Session::set(): Trying to call the abstract method');
     }
 
     /**
