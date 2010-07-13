@@ -64,6 +64,8 @@ define('LC_TMP_DIR', LC_VAR_DIR . 'tmp' . LC_DS);
 
 define('LC_LOCALE_DIR', LC_VAR_DIR . 'locale');
 
+define('LC_DATACACHE_DIR', LC_VAR_DIR . 'datacache');
+
 // Skins directories
 define('LC_SKINS_DIR', LC_ROOT_DIR . 'skins' . LC_DS);
 define('LC_CUSTOMER_AREA_SKIN', LC_SKINS_DIR . 'default' . LC_DS . 'en' . LC_DS);

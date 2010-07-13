@@ -250,9 +250,17 @@ class Database extends \XLite\Base implements \XLite\Base\ISingleton
 
             $cache = new \Doctrine\Common\Cache\XcacheCache;
 
+        } elseif ('file' == $options['type']) {
+
+            $cache = new \XLite\Core\FileCache(LC_DATACACHE_DIR);
+
         } else {
 
             $cache = new \Doctrine\Common\Cache\ArrayCache;
+        }
+
+        if (isset($options['namespace']) && $options['namespace']) {
+            $cache->setNamespace($options['namespace']);
         }
 
         return $cache;
