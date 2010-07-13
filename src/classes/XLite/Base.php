@@ -62,11 +62,9 @@ class Base
         'db'       => '\XLite\Model\Database',
         'logger'   => '\XLite\Logger',
         'config'   => '\XLite\Core\Config',
-        'profiler' => '\XLite\Model\Profiler',
         'mm'       => '\XLite\Model\ModulesManager',
         'layout'   => '\XLite\Model\Layout',
     );
-
 
     /**
      * Protected constructor. It's empty now
@@ -362,7 +360,7 @@ class Base
      */
     public function t($name, array $arguments = array(), $code = null)
     {
-        return \XLite\Core\Translation::lbl($name, $arguments, $code);
+        return \XLite\Core\Translation::getInstance()->translate($name, $arguments, $code);
     }
 
 }

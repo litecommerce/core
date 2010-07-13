@@ -109,8 +109,8 @@ class Database extends \XLite\Base implements \XLite\Base\ISingleton
         // Initialize DB connection and entity manager
         self::$em = \Doctrine\ORM\EntityManager::create($this->getDSN(), $this->config);
 
-        if (\XLite\Model\Profiler::getInstance()->enabled) {
-            self::$em->getConnection()->getConfiguration()->setSQLLogger(\XLite\Model\Profiler::getInstance());
+        if (\XLite\Core\Profiler::getInstance()->enabled) {
+            self::$em->getConnection()->getConfiguration()->setSQLLogger(\XLite\Core\Profiler::getInstance());
         }
 
         // Bind events

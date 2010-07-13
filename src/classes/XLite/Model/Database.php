@@ -80,7 +80,7 @@ class Database extends \XLite\Base implements \XLite\Base\ISingleton
 
     public function __construct()
     {
-        $this->profiler = \XLite\Model\Profiler::getInstance();
+        $this->profiler = \XLite\Core\Profiler::getInstance();
         $this->profilerEnabled = $this->profiler->enabled;
 
         $this->connected || $this->connect();
