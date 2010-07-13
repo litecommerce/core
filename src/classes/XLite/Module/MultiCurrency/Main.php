@@ -44,7 +44,7 @@ class Main extends \XLite\Module\AModule
      * @access protected
      * @since  3.0
      */
-    public static function getType()
+    public static function getModuleType()
     {
         return self::MODULE_GENERAL;
     }
@@ -97,7 +97,7 @@ class Main extends \XLite\Module\AModule
     public function init()  
     {
         parent::init();
-        $this->xlite->set('MultiCurrencyEnabled',true);
+        \XLite::getInstance()->set('MultiCurrencyEnabled',true);
 
         $this->defaultCurrency = new \XLite\Module\MultiCurrency\Model\CurrencyCountries();
    		$found = $this->defaultCurrency->find("base = 1");
@@ -106,7 +106,7 @@ class Main extends \XLite\Module\AModule
             $this->defaultCurrency->set('code',"USD");
             $this->defaultCurrency->set('name',"US dollar");
             $this->defaultCurrency->set('exchange_rate',1);
-            $this->defaultCurrency->set('price_format',$this->config->General->price_format);
+            $this->defaultCurrency->set('price_format', \XLite\Core\Config::getInstance()->General->price_format);
             $this->defaultCurrency->set('base',1);
             $this->defaultCurrency->set('enabled',1);
             $this->defaultCurrency->set('countries',serialize(array()));

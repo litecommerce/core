@@ -81,23 +81,6 @@ class ModulesManager extends \XLite\Base implements \XLite\Base\ISingleton
      */
     protected $activeModules = null;
 
-
-    /**
-     * Instantiate moduel object
-     * 
-     * @return \XLite\Model\Module
-     * @access protected
-     * @since  1.0
-     */
-    protected function getModule()
-    {
-        if (!isset($this->module)) {
-            $this->module = new \XLite\Model\Module();
-        }
-
-        return $this->module;
-    }
-
     /**
      * Determines current mode 
      * 
@@ -109,9 +92,16 @@ class ModulesManager extends \XLite\Base implements \XLite\Base\ISingleton
     {
         $result = false;
 
-        if (\XLite::getInstance()->is('adminZone') && isset($_GET[self::PARAM_SAFE_MODE])) {
+        $safeMode = self::PARAM_SAFE_MODE;
+
+        if (\XLite::isAdminZone() && isset(\XLite\Core\Request::getInstance()->$safeMode)) {
             $authCode = \XLite::getInstance()->getOptions(array('installer_details', 'auth_code'));
-            $result = empty($authCode) xor (isset($_GET[self::PARAM_AUTH_CODE]) && ($authCode == $_GET[self::PARAM_AUTH_CODE]));
+            $authCodeName = self::PARAM_AUTH_CODE;
+            $result = empty($authCode)
+                xor (
+                    isset(\XLite\Core\Request::getInstance()->$authCodeName)
+                    && $authCode == \XLite\Core\Request::getInstance()->$authCodeName
+                );
         }
 
         return $result;
@@ -126,20 +116,16 @@ class ModulesManager extends \XLite\Base implements \XLite\Base\ISingleton
      */
     protected function initModules()
     {
-        foreach ($this->getModule()->findAll('enabled = \'1\'') as $module) {
-            $className = '\XLite\Module\\' . $module->get('name') . '\Main';
+        $list = \XLite\Core\Database::getRepo('XLite\Model\Module')->findAllEnabled();
+        foreach ($list as $module) {
+            $className = $module->getMainClassName();
             if (\XLite\Core\Operator::isClassExists($className)) {
                 $moduleObject = new $className();
                 $moduleObject->init();
                 $moduleObject = null;
-
-            } elseif ($this->getModule()->find('name = \'' . $module->get('name') . '\'')) {
-                $this->getModule()->delete();
-            
             }
         }
     }
-
 
     /**
      * Attempts to initialize the ModulesManager and all active modules
@@ -152,15 +138,21 @@ class ModulesManager extends \XLite\Base implements \XLite\Base\ISingleton
     {
         if ($this->isInSafeMode()) {
 
-            if ('on' == $_GET[self::PARAM_SAFE_MODE]) {
+            $safeMode = self::PARAM_SAFE_MODE;
+
+            if ('on' == \XLite\Core\Request::getInstance()->$safeMode) {
                 \XLite\Model\Session::getInstance()->setComplex(self::SESSION_VAR_SAFE_MODE, true);
                 $this->set('safeMode', true);
-            } elseif ('off' == $_GET[self::PARAM_SAFE_MODE]) {
+
+            } elseif ('off' == \XLite\Core\Request::getInstance()->$safeMode) {
                 \XLite\Model\Session::getInstance()->setComplex(self::SESSION_VAR_SAFE_MODE, null);
             }
         }
 
-        if ($this->config->General->safe_mode || \XLite\Model\Session::getInstance()->isRegistered('safe_mode')) {
+        if (
+            $this->config->General->safe_mode
+            || \XLite\Model\Session::getInstance()->isRegistered('safe_mode')
+        ) {
             \XLite::getInstance()->setCleanUpCacheFlag(true);
             $this->set('safeMode', true);
         }
@@ -168,9 +160,21 @@ class ModulesManager extends \XLite\Base implements \XLite\Base\ISingleton
         $this->initModules();
     }
 
+    /**
+     * Get modules by type or all list
+     * 
+     * @param integer $type Type
+     *  
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     public function getModules($type = null)
     {
-        return $this->getModule()->findAll(isset($type) ? 'type = \'' . $type . '\'' : '');
+        return isset($type)
+            ? \XLite\Core\Database::getRepo('XLite\Model\Module')->findByType($type)
+            : \XLite\Core\Database::getRepo('XLite\Model\Module')->findAllModules();
     }
 
     /**
@@ -183,15 +187,19 @@ class ModulesManager extends \XLite\Base implements \XLite\Base\ISingleton
      */
     public function updateModulesList()
     {
+        // Get modules from DB
         $names = array();
-        foreach ($this->getModule()->findAll() as $module) {
-            $names[$module->get('name')] = true;
+        foreach ($this->getModules() as $module) {
+            $names[$module->getName()] = true;
         }
 
+        // Search modules repositories
         foreach (glob(LC_MODULES_DIR . '*' . LC_DS . 'Main.php') as $f) {
             $parts = explode(LC_DS, $f);
             $name = $parts[count($parts) - 2];
             if (!isset($names[$name])) {
+
+                // Install new module
                 $this->registerModule($name);
 
             } else {
@@ -199,12 +207,14 @@ class ModulesManager extends \XLite\Base implements \XLite\Base\ISingleton
             }
         }
 
+        // Uninstall removed modules
         foreach ($names as $name => $tmp) {
-            if ($this->getModule()->find('name = \'' . $name . '\'')) {
-                $this->delete();
+            $module = \XLite\Core\Database::getRepo('XLite\Model\Module')->findOneByName($name);
+            if ($module) {
+                \XLite\Core\Database::getEM()->remove($module);
             }
         }
-
+        \XLite\Core\Database::getEM()->flush();
     }
 
     /**
@@ -219,18 +229,18 @@ class ModulesManager extends \XLite\Base implements \XLite\Base\ISingleton
      */
     protected function registerModule($name)
     {
-
-        require_once LC_MODULES_DIR . $name . LC_DS . 'Main.php';
-
-        $className = '\XLite\Module\\' . $name . '\Main';
-
         $module = new \XLite\Model\Module();
+        $module->setName($name);
 
-        $module->set('name', $name);
-        $module->set('mutual_modules', implode(',', $className::getMutualModules()));
-        $module->set('type', $className::getType());
+        $module->includeMainClass();
 
-        $module->create();
+        $className = $module->getMainClassName();
+
+        $module->setMutualModules($className::getMutualModulesList());
+        $module->setType($className::getModuleType());
+
+        \XLite\Core\Database::getEM()->persist($module);
+        \XLite\Core\Database::getEM()->flush();
 
         // Install SQL dump
         $installSQLPath = LC_MODULES_DIR . $name . LC_DS . 'install.sql';
@@ -248,8 +258,9 @@ class ModulesManager extends \XLite\Base implements \XLite\Base\ISingleton
     {
         if (!isset($this->activeModules)) {
             $this->activeModules = array();
-            foreach ($this->getModule()->findAll('enabled = \'1\'') as $module) {
-                $this->activeModules[$module->get('name')] = true;
+            $list = \XLite\Core\Database::getRepo('XLite\Model\Module')->findAllEnabled();
+            foreach ($list as $module) {
+                $this->activeModules[$module->getName()] = true;
             }
         }
 
@@ -263,38 +274,47 @@ class ModulesManager extends \XLite\Base implements \XLite\Base\ISingleton
 
     public function rebuildCache()
     {
-        $decorator = new Decorator();
-        $decorator->rebuildCache(true);
-        $decorator = null;
+        $iterator = new \RecursiveDirectoryIterator(LC_CLASSES_CACHE_DIR . LC_DS);
+        $iterator = new \RecursiveIteratorIterator($iterator, \RecursiveIteratorIterator::CHILD_FIRST);
+        $iterator = new \RegexIterator($iterator, '/\.php$/Ss');
+
+        foreach ($iterator as $f) {
+            require_once $f->getRealPath();
+        }
+
+        $this->cleanupCache();
     }
 
     public function cleanupCache()
     {
-        $decorator = new Decorator();
-        $decorator->cleanupCache();
+        $decorator = new \Decorator();
+        $decorator->cleanUpCache();
         $decorator = null;
     }
 
     public function changeModuleStatus($module, $status, $cleanupCache = false)
     {
         if (!($module instanceof \XLite\Model\Module)) {
-            $module = new \XLite\Model\Module($module);
+            $module = \XLite\Core\Database::getRepo('XLite\Model\Module')->findOneByName($module);
         }
 
-        $status ? $module->enable() : $module->disable();
-        $result = $module->update();
+        if ($module) {
+            $module->setEnabled((bool)$status);
+            \XLite\Core\Database::getEM()->persist($module);
+            \XLite\Core\Database::getEM()->flush();
 
-        if ($cleanupCache) {
-            \XLite::getInstance()->setCleanUpCacheFlag(true);
+            if ($cleanupCache) {
+                \XLite::getInstance()->setCleanUpCacheFlag(true);
+            }
         }
 
-        return $result;
+        return (bool)$module;
     }
 
     public function updateModules(array $moduleIDs, $type = null)
     {
         foreach ($this->getModules($type) as $module) {
-            $this->changeModuleStatus($module, in_array($module->get('module_id'), $moduleIDs));
+            $this->changeModuleStatus($module, in_array($module->getModuleId(), $moduleIDs));
         }
 
         $this->rebuildCache();

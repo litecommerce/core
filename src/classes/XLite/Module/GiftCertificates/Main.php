@@ -44,7 +44,7 @@ class Main extends \XLite\Module\AModule
      * @access public
      * @since  3.0.0
      */
-    public static function getType()
+    public static function getModuleType()
     {
         return self::MODULE_GENERAL;
     }
@@ -102,6 +102,6 @@ class Main extends \XLite\Module\AModule
         //\XLite\Model\Image::registerImageClass('ecard_thumbnail', 'e-Card thumbnails', 'ecards', 'thumbnail', 'ecard_id');
         //\XLite\Model\Image::registerImageClass('ecard_image', 'e-Card images', 'ecards', 'image', 'ecard_id');
 
-        $this->xlite->set('GiftCertificatesEnabled', true);
+        \XLite::getInstance()->set('GiftCertificatesEnabled', true);
     }
 }

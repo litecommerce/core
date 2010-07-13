@@ -44,7 +44,7 @@ class Main extends \XLite\Module\AModule
      * @access protected
      * @since  3.0
      */
-    public static function getType()
+    public static function getModuleType()
     {
         return self::MODULE_GENERAL;
     }
@@ -83,7 +83,7 @@ class Main extends \XLite\Module\AModule
     public function init()
     {
         parent::init();
-        $this->xlite->set('WishListEnabled', true);
+        \XLite::getInstance()->set('WishListEnabled', true);
     }
 
     /**

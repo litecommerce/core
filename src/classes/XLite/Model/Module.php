@@ -34,8 +34,10 @@ namespace XLite\Model;
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
+ * @Entity (repositoryClass="XLite\Model\Repo\Module")
+ * @Table (name="modules")
  */
-class Module extends AModel
+class Module extends AEntity
 {
     /**
      * Module types
@@ -49,50 +51,75 @@ class Module extends AModel
     const MODULE_GENERAL   = 5;
     const MODULE_3RD_PARTY = 6;
 
+
     /**
-     * Module properties 
+     * Module id 
      * 
-     * @var    array
+     * @var    integer
      * @access protected
-     * @since  1.0
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Id
+     * @GeneratedValue (strategy="AUTO")
+     * @Column (type="integer")
      */
-    protected $fields = array(
-        'module_id'      => 0,
-        'name'           => '',
-        'enabled'        => 0,
-        'dependencies'   => '', 
-        'mutual_modules' => '',
-        'type'           => self::MODULE_GENERAL,
-    );
+    protected $module_id;
+
+    /**
+     * Name 
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Column (type="string", length="64")
+     */
+    protected $name = '';
+
+    /**
+     * Enabled 
+     * 
+     * @var    boolean
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Column (type="boolean")
+     */
+    protected $enabled = false;
+
+    /**
+     * Dependencies 
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Column (type="string", length="1024")
+     */
+    protected $dependencies = '';
+
+    /**
+     * Mutual modules list
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Column (type="string", length="1024")
+     */
+    protected $mutual_modules = '';
+
+    /**
+     * Type 
+     * 
+     * @var    integer
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Column (type="integer")
+     */
+    protected $type = self::MODULE_GENERAL;
     
-    /**
-     * Contains alias for modules SQL database table 
-     * 
-     * @var    string
-     * @access protected
-     * @since  1.0
-     */
-    protected $alias = 'modules';
-
-    /**
-     * SQL table primary keys
-     * 
-     * @var    array
-     * @access protected
-     * @since  1.0
-     */
-    protected $primaryKey = array('name');
-
-    /**
-     * Default SQL ORDER clause 
-     * 
-     * @var    string
-     * @access public
-     * @since  1.0
-     */
-    public $defaultOrder = 'enabled DESC, name';
-
-
     /**
      * Overlay a template
      *
@@ -107,25 +134,6 @@ class Module extends AModel
         \XLite\Model\Layout::getInstance()->addLayout($oldTemplate, $newTemplate);
     }
 
-
-    /**
-     * Constructor
-     * 
-     * @param string $name module name
-     *
-     * @return void
-     * @access public
-     * @since  1.0
-     */
-    public function __construct($name = null)
-    {
-        parent::__construct($name);
-
-        if (isset($name)) {
-            $this->read();
-        }
-    }
-
     /**
      * Return link to settings form
      *
@@ -135,7 +143,58 @@ class Module extends AModel
      */
     public function getSettingsFormLink()
     {
-        return is_null($link = $this->__call('getSettingsForm')) ? 'admin.php?target=module&page=' . $this->get('name') : $link;
+        $link = $this->__call('getSettingsForm');
+
+        return is_null($link)
+            ? \XLite\Core\Converter::buildURL('module', '', array('page' => $this->getName()), 'admin.php')
+            : $link;
+    }
+
+    /**
+     * Get module Main class name 
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getMainClassName()
+    {
+        return '\XLite\Module\\' . $this->getName() . '\Main';
+    }
+
+    /**
+     * Include module Main class 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function includeMainClass()
+    {
+        $class = $this->getMainClassName();
+
+        if (!\XLite\Core\Operator::isClassExists($class)) {
+            require_once LC_CLASSES_DIR . str_replace('\\', LC_DS, $class) . '.php';
+        }
+    }
+
+    /**
+     * Set mutual modules list
+     * 
+     * @param mixed $modules Modules list (string or array)
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setMutualModules($modules)
+    {
+        $this->mutual_modules = is_string($modules)
+            ? $modules
+            : implode(',', $modules);
     }
 
     /**
@@ -151,30 +210,12 @@ class Module extends AModel
      */
     public function __call($method, array $args = array())
     {
-        $class = '\XLite\Module\\' . $this->get('name') . '\Main';
+        $this->includeMainClass();
+        $class = $this->getMainClassName();
 
-        if (\XLite\Core\Operator::isClassExists($class)) {
-
-            // Active module
-
-            $result = method_exists($class, $method)
-                ? call_user_func_array(array($class, $method), $args)
-                : parent::__call($method, $args);
-
-        } elseif (file_exists(LC_CLASSES_DIR . str_replace('\\', LC_DS, $class) . '.php')) {
-
-            // Disabled module
-
-            require_once LC_CLASSES_DIR . str_replace('\\', LC_DS, $class) . '.php';
-            $result = method_exists($class, $method)
-                ? call_user_func_array(array($class, $method), $args)
-                : parent::__call($method, $args);
-
-        } else {
-            $result = parent::__call($method, $args);
-        }
-
-        return $result;
+        return (\XLite\Core\Operator::isClassExists($class) && method_exists($class, $method))
+            ? call_user_func_array(array($class, $method), $args)
+            : parent::__call($method, $args);
 
     }
 }

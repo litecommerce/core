@@ -44,7 +44,7 @@ class Main extends \XLite\Module\AModule
      * @access public
      * @since  3.0
      */
-    public static function getType()
+    public static function getModuleType()
     {
         return self::MODULE_PAYMENT;
     }
@@ -134,8 +134,8 @@ class Main extends \XLite\Module\AModule
             default:
         }
 
-        $this->xlite->set('PayPalProEnabled', true);
-        $this->xlite->set('PayPalProSolution', $solution);
+        \XLite::getInstance()->set('PayPalProEnabled', true);
+        \XLite::getInstance()->set('PayPalProSolution', $solution);
 
         if ('standard' !== $solution) {
             \XLite::getInstance()->set(

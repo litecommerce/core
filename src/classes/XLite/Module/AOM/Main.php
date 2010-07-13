@@ -44,7 +44,7 @@ class Main extends \XLite\Module\AModule
      * @access protected
      * @since  3.0
      */
-    public static function getType()
+    public static function getModuleType()
     {
         return self::MODULE_GENERAL;
     }
@@ -99,13 +99,13 @@ class Main extends \XLite\Module\AModule
         $this->addLayout('common/invoice.tpl',"modules/AOM/order_info.tpl");
         $this->addLayout('common/print_invoice.tpl',"modules/AOM/order_info.tpl");
 
-        if ($this->xlite->is('adminZone')) {
+        if (\XLite::getInstance()->is('adminZone')) {
             $this->addLayout('common/select_status.tpl',"modules/AOM/common/select_status.tpl");
             $this->addLayout('order/search_form.tpl',"modules/AOM/search_form.tpl");
             $this->addLayout('order/order.tpl',"modules/AOM/order.tpl");
 
         }
 
-        $this->xlite->set('AOMEnabled',true);
+        \XLite::getInstance()->set('AOMEnabled',true);
     }
 }

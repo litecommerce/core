@@ -44,7 +44,7 @@ class Main extends \XLite\Module\AModule
      * @access protected
      * @since  3.0
      */
-    public static function getType()
+    public static function getModuleType()
     {
         return self::MODULE_GENERAL;
     }
@@ -96,14 +96,14 @@ class Main extends \XLite\Module\AModule
     public function init()
     {
         parent::init();
-        if ($this->xlite->is('adminZone')) {
-        	$this->xlite->set('BaseHasImprovedExport', $this->isImprovedExport());
+        if (\XLite::getInstance()->is('adminZone')) {
+        	\XLite::getInstance()->set('BaseHasImprovedExport', $this->isImprovedExport());
         }
     }
 
     function isImprovedExport()
     {
-    	$lcVersion = $this->config->Version->version;
+    	$lcVersion = \XLite\Core\Config::getInstance()->Version->version;
     	$lcVersion = str_replace(' build ', ".", $lcVersion);
         if (version_compare($lcVersion, "2.2") < 0) {
             $classMethods = array_map('strtolower', get_class_methods(get_parent_class(get_class($this))));

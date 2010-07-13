@@ -51,7 +51,7 @@ class Main extends \XLite\Module\AModule
      * @access protected
      * @since  3.0
      */
-    public static function getType()
+    public static function getModuleType()
     {
         return self::MODULE_GENERAL;
     }
@@ -109,27 +109,27 @@ class Main extends \XLite\Module\AModule
         $widgetMethods = array_map('strtolower', get_class_methods($w));
         if (!in_array('isarraypointernth', $widgetMethods)) {
         } else {
-            $this->xlite->set('PAPartialWidget', true);
+            \XLite::getInstance()->set('PAPartialWidget', true);
         }
-        if ($this->xlite->is('adminZone')) {
+        if (\XLite::getInstance()->is('adminZone')) {
         }*/
 
         /////////////////////////////////////
         // "RelatedProducts" section
-        if ($this->xlite->is('adminZone')) {
+        if (\XLite::getInstance()->is('adminZone')) {
         }
         /////////////////////////////////////
 
         /////////////////////////////////////
         // "Recently viewed" section
-        if ($this->xlite->is('adminZone')) {
+        if (\XLite::getInstance()->is('adminZone')) {
             $this->validateConfig('number_recently_viewed');
         }
         /////////////////////////////////////
 
         /////////////////////////////////////
         // "New Arrivals" section
-        if ($this->xlite->is('adminZone')) {
+        if (\XLite::getInstance()->is('adminZone')) {
             $this->validateConfig('number_new_arrivals');
             $this->validateConfig('period_new_arrivals');
         }
@@ -137,8 +137,8 @@ class Main extends \XLite\Module\AModule
 
         /////////////////////////////////////
         // "Product also buy" section
-        if ($this->xlite->is('adminZone')) {
-            if ($this->config->ProductAdviser->admin_products_also_buy_enabled != 'Y') {
+        if (\XLite::getInstance()->is('adminZone')) {
+            if (\XLite\Core\Config::getInstance()->ProductAdviser->admin_products_also_buy_enabled != 'Y') {
                 \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
                     array(
                         'category' => 'ProductAdviser',
@@ -152,9 +152,9 @@ class Main extends \XLite\Module\AModule
 
         /////////////////////////////////////
         // "Customer Notifications" section
-        if ($this->xlite->is('adminZone')) {
+        if (\XLite::getInstance()->is('adminZone')) {
             $this->validateConfig('number_notifications', 1);
-            $customer_notifications_enabled = ($this->config->ProductAdviser->customer_notifications_mode == '0') ? 'N' : 'Y';
+            $customer_notifications_enabled = (\XLite\Core\Config::getInstance()->ProductAdviser->customer_notifications_mode == '0') ? 'N' : 'Y';
             \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
                 array(
                     'category' => 'ProductAdviser',
@@ -166,19 +166,19 @@ class Main extends \XLite\Module\AModule
         /////////////////////////////////////
 
         $inventorySupport = \XLite\Core\Operator::isClassExists('\XLite\Module\InventoryTracking\Model\Inventory');
-        $this->xlite->set('PA_InventorySupport', $inventorySupport);
+        \XLite::getInstance()->set('PA_InventorySupport', $inventorySupport);
         if ($inventorySupport) {
-            if (!$this->xlite->is('adminZone')) {
+            if (!\XLite::getInstance()->is('adminZone')) {
             }
         }
-        if ($this->xlite->is('adminZone')) {
+        if (\XLite::getInstance()->is('adminZone')) {
         }
-        $this->xlite->set('ProductAdviserEnabled', true);
+        \XLite::getInstance()->set('ProductAdviserEnabled', true);
     }
 
     function validateConfig($option, $limit=0)
     {
-        $number_orig = $this->config->ProductAdviser->$option;
+        $number_orig = \XLite\Core\Config::getInstance()->ProductAdviser->$option;
         $number = intval($number_orig);
         $number_updated = false;
         if ($number < $limit) {

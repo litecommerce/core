@@ -44,7 +44,7 @@ class Main extends \XLite\Module\AModule
      * @access protected
      * @since  3.0
      */
-    public static function getType()
+    public static function getModuleType()
     {
         return self::MODULE_GENERAL;
     }
@@ -115,12 +115,12 @@ class Main extends \XLite\Module\AModule
         $params = $payment_method->get('params');
 
         if (!empty($params['disable_customer_notif'])) {
-            $this->xlite->set('gcheckout_disable_customer_notif', true);
+            \XLite::getInstance()->set('gcheckout_disable_customer_notif', true);
         }
 
-        if (!$this->xlite->is('adminZone')) {
+        if (!\XLite::getInstance()->is('adminZone')) {
             if (!empty($params['display_product_note']) && $payment_method->is('parent_enabled')) {
-                $this->xlite->set('gcheckout_display_product_note', true);
+                \XLite::getInstance()->set('gcheckout_display_product_note', true);
             }
 
             $currency = empty($params['currency']) ?: $params['currency'];
@@ -132,10 +132,10 @@ class Main extends \XLite\Module\AModule
                     $currency = "USD";
                 break;
             }
-            $this->xlite->set('gcheckout_currency', $currency);
-            $this->xlite->set('gcheckout_remove_discounts', !empty($params['remove_discounts']));
+            \XLite::getInstance()->set('gcheckout_currency', $currency);
+            \XLite::getInstance()->set('gcheckout_remove_discounts', !empty($params['remove_discounts']));
         }
 
-        $this->xlite->set('GoogleCheckoutEnabled',true);
+        \XLite::getInstance()->set('GoogleCheckoutEnabled',true);
     }
 }
