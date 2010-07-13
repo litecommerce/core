@@ -106,7 +106,12 @@ class Database extends \XLite\Base implements \XLite\Base\ISingleton
         $this->config->setProxyDir(LC_PROXY_CACHE_DIR);
         $this->config->setProxyNamespace(LC_MODEL_PROXY_NS);
 
+        // Initialize DB connection and entity manager
         self::$em = \Doctrine\ORM\EntityManager::create($this->getDSN(), $this->config);
+
+        if (\XLite\Model\Profiler::getInstance()->enabled) {
+            self::$em->getConnection()->getConfiguration()->setSQLLogger(\XLite\Model\Profiler::getInstance());
+        }
 
         // Bind events
         $events = array(\Doctrine\ORM\Events::loadClassMetadata);
@@ -285,7 +290,8 @@ class Database extends \XLite\Base implements \XLite\Base\ISingleton
             'dbname'      => 'database',
         );
         $dsnList = array(
-            'driver' => 'pdo_mysql',
+            'driver'       => 'pdo_mysql',
+            'wrapperClass' => 'XLite\Core\Connection',
         );
         $dsnString = array();
 
