@@ -528,12 +528,12 @@ abstract class AView extends \XLite\Core\Handler
         $cnt = \XLite\View\AView::$countDeep++;
         $cntLevel = \XLite\View\AView::$countLevel++;
         $markTemplates = \XLite\Logger::isMarkTemplates();
-        $profilerEnabled = \XLite\Model\Profiler::isTemplatesProfilingEnabled();
+        $profilerEnabled = \XLite\Core\Profiler::isTemplatesProfilingEnabled();
 
         if ($profilerEnabled) {
             $timePoint = str_repeat('+', $cntLevel) . '[TPL ' . str_repeat('0', 4 - strlen((string)$cnt)) . $cnt . '] '
                 . get_called_class() . ' :: ' . substr($original, strlen(LC_SKINS_DIR));
-            \XLite\Model\Profiler::getInstance()->log($timePoint);
+            \XLite\Core\Profiler::getInstance()->log($timePoint);
         }
 
         if ($markTemplates) {
@@ -556,7 +556,7 @@ abstract class AView extends \XLite\Core\Handler
         }
 
         if ($profilerEnabled) {
-            \XLite\Model\Profiler::getInstance()->log($timePoint);
+            \XLite\Core\Profiler::getInstance()->log($timePoint);
         }
 
         \XLite\View\AView::$countLevel--;
