@@ -32,8 +32,10 @@ table_pattern = "xlite_%s"
 ; ----------------------
 ;
 [cache]
-; Type of cache used. Can take memcache, apc, xcache values.
-type=
+; Type of cache used. Can take memcache, apc, xcache, file values.
+type=file
+; Cache namespace
+namespace=XLite
 ; List of memcache servers. Semicolon is used as a delimiter.
 ; Each server is specified with a host name and port number, divided
 ; by a colon. If the port is not specified, the default
