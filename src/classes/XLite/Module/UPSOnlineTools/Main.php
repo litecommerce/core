@@ -48,7 +48,7 @@ class Main extends \XLite\Module\AModule
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function getType()
+    public static function getModuleType()
     {
         return self::MODULE_SHIPPING;
     }
@@ -119,12 +119,12 @@ class Main extends \XLite\Module\AModule
 
         $this->registerShippingModule('ups');
 
-        $this->xlite->set('UPSOnlineToolsEnabled', true);
+        \XLite::getInstance()->set('UPSOnlineToolsEnabled', true);
 
         // Check UPS account activation
-        $options = $this->config->UPSOnlineTools;
+        $options = \XLite\Core\Config::getInstance()->UPSOnlineTools;
         if (!$options->UPS_username || !$options->UPS_password || !$options->UPS_accesskey) {
-            $this->config->UPSOnlineTools->av_status = 'N';
+            \XLite\Core\Config::getInstance()->UPSOnlineTools->av_status = 'N';
         }
     }
 

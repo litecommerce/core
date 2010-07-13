@@ -1026,7 +1026,7 @@ function doInstallDatabase($trigger, &$params, $silentMode = false)
                 include_once constant('LC_ROOT_DIR') . 'classes/XLite/Module/' . $dir . '/Main.php';
 
                 $class = 'XLite_Module_' . $dir . '_Main';
-                $_queries[] = 'REPLACE INTO xlite_modules SET name = \'' . $dir . '\', enabled = \'' . intval(in_array($dir, $lcSettings['enable_modules'])). '.\', mutual_modules = \'' . implode(',', call_user_func(array($class, 'getMutualModules'))) . '\', type = \'' . call_user_func(array($class, 'getType')). '\'';
+                $_queries[] = 'REPLACE INTO xlite_modules SET name = \'' . $dir . '\', enabled = \'' . intval(in_array($dir, $lcSettings['enable_modules'])). '.\', mutual_modules = \'' . implode(',', call_user_func(array($class, 'getMutualModulesList'))) . '\', type = \'' . call_user_func(array($class, 'getType')). '\'';
 
                 $_moduleSqlFile = 'classes/XLite/Module/' . $dir . '/install.sql';
 

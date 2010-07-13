@@ -44,7 +44,7 @@ class Main extends \XLite\Module\AModule
      * @access protected
      * @since  3.0
      */
-    public static function getType()
+    public static function getModuleType()
     {
         return self::MODULE_GENERAL;
     }
@@ -102,6 +102,6 @@ class Main extends \XLite\Module\AModule
         $this->addLayout('shopping_cart/delivery.tpl', "modules/Promotion/delivery.tpl");
         
         $this->registerPaymentMethod('bonus_points');
-        $this->xlite->set('PromotionEnabled',true);
+        \XLite::getInstance()->set('PromotionEnabled',true);
     }
 }

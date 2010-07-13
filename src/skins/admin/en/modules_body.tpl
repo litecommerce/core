@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * ____file_title____
+ * Modules list
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -62,9 +62,6 @@
 				<td>{module.getDescription()}</td>
 				<td align=center>{module.getVersion()}</td>
 			</tr>    
-			<tr IF="module.brokenDependencies">
-				<td colspan=4 class=ErrorMessage valign=top>&gt;&gt;Cannot initialize module {module.name:h}: dependency modules are not available<br>{foreach:module.brokenDependencies,idx,dep}<li> {dep:h}<br>{end:}</td>
-			</tr>
 			</tbody>
 
 		</table>

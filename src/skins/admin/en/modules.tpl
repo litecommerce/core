@@ -79,10 +79,6 @@ Use this section to manage add-on components of your online store.
 <br>
 </span>
 
-<span IF="xlite.mm.brokenDependencies">
-<p class="ErrorMessage">&gt;&gt; Cannot initialize some module(s): dependency modules are not available &lt;&lt;</p>
-</span>
-
 {if:xlite.mm.safeMode}
 <p>
 <font class="ErrorMessage">&gt;&gt; Modules information is not available in safe mode &lt;&lt;</font>

@@ -44,7 +44,7 @@ class Main extends \XLite\Module\AModule
      * @access public
      * @since  3.0.0
      */
-    public static function getType()
+    public static function getModuleType()
     {
         return self::MODULE_PAYMENT;
     }
@@ -115,6 +115,6 @@ class Main extends \XLite\Module\AModule
         
         $this->registerPaymentMethod('authorizenet_cc');
 
-        $this->xlite->set('AuthorizeNetEnabled', true);
+        \XLite::getInstance()->set('AuthorizeNetEnabled', true);
     }
 }

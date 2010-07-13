@@ -102,7 +102,7 @@ abstract class AModule extends \XLite\Model\Module
      * @access public
      * @since  3.0
      */
-    public static function getType()
+    public static function getModuleType()
     {
         return self::MODULE_3RD_PARTY;
     }
@@ -163,7 +163,7 @@ abstract class AModule extends \XLite\Model\Module
      * @access public
      * @since  3.0
      */
-    public static function getDependencies()
+    public static function getDependenciesList()
     {
         return array();
     }
@@ -189,7 +189,7 @@ abstract class AModule extends \XLite\Model\Module
      * @access public
      * @since  3.0
      */
-    public static function getMutualModules()
+    public static function getMutualModulesList()
     {
         return array();
     }

@@ -44,7 +44,7 @@ class Main extends \XLite\Module\AModule
      * @access protected
      * @since  3.0
      */
-    public static function getType()
+    public static function getModuleType()
     {
         return self::MODULE_SHIPPING;
     }
@@ -110,7 +110,7 @@ class Main extends \XLite\Module\AModule
 
         $this->registerShippingModule('aupost');
 
-        $this->xlite->set('AustraliaPostEnabled', true);
+        \XLite::getInstance()->set('AustraliaPostEnabled', true);
 
     }
 }
