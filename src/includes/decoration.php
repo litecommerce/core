@@ -489,23 +489,22 @@ class Decorator
      * @access protected
      * @since  3.0
      */
-    protected function parseClassFile(array $info)
+    protected function parseClassFile(array $info, $savePath)
     {
         $content = isset($info[self::INFO_FILE]) ? trim(file_get_contents(LC_CLASSES_DIR . $info[self::INFO_FILE])) : '';
 
-        if (!empty($info[self::INFO_IS_ROOT_CLASS]) && preg_match(self::CLASS_PATTERN, $content, $matches)) {
+        $namespace = explode(LC_DS, $savePath);
+        array_pop($namespace);
+        $namespace = implode('\\', $namespace);
 
-            $namespace = explode(LC_DS, $info[self::INFO_FILE]);
-            array_pop($namespace);
-            $namespace = implode('\\', $namespace);
+        if (!empty($info[self::INFO_IS_ROOT_CLASS]) && preg_match(self::CLASS_PATTERN, $content, $matches)) {
 
             // Top level class in decorator chain has an empty body
             $content = '<?php' . "\n\n"
                 . 'namespace ' . $namespace . ';' . "\n\n"
-                . 'use \Xlite;' . "\n\n"
                 . trim($info[self::INFO_CLASS_COMMENT]) . "\n"
                 . $matches[1] . 'class ' 
-                . (isset($info[self::INFO_CLASS]) ? $info[self::INFO_CLASS] : $matches[3])
+                . (isset($info[self::INFO_CLASS]) ? preg_replace('/^.+\\\([^\\\]+)$/Ss', '$1', $info[self::INFO_CLASS]) : $matches[3])
                 . (isset($info[self::INFO_EXTENDS]) && $info[self::INFO_EXTENDS] ? ' extends ' . $this->buildFullExtends($info[self::INFO_EXTENDS]) : '')
                 . (isset($matches[6]) ? $matches[6] : '') . "\n" . '{' . "\n" . '}' . "\n";
 
@@ -519,12 +518,7 @@ class Decorator
                 . '$6' . "\n" . '{';
             $content = preg_replace(self::CLASS_PATTERN, $replace, $content);
 
-            if (isset($info[self::INFO_CLASS]) && in_array($info[self::INFO_CLASS], $this->normalizedControllers)) {
-                $namespace = explode(LC_DS, $info[self::INFO_FILE]);
-                array_pop($namespace);
-                $namespace = implode('\\', $namespace);
-                $content = preg_replace('/^namespace (.+);/Sm', 'namespace ' . $namespace . ';', $content);
-            }
+            $content = preg_replace('/^namespace (.+);/Sm', 'namespace ' . $namespace . ';', $content);
 
             // Add MappedSuperclass attribute
             $parent = null;
@@ -1362,14 +1356,15 @@ class Decorator
      */
     protected function writeClassFile($class, $info)
     {
-        $fileName = LC_CLASSES_CACHE_DIR . $this->getFileByClass($class);
+        $fn = $this->getFileByClass($class);
+        $fileName = LC_CLASSES_CACHE_DIR . $fn;
         $dirName  = dirname($fileName);
 
         if (!file_exists($dirName) || !is_dir($dirName)) {
             mkdirRecursive($dirName, 0755);
         }
 
-        file_put_contents($fileName, $this->parseClassFile($info));
+        file_put_contents($fileName, $this->parseClassFile($info, $fn));
         chmod($fileName, 0644);
     }
 

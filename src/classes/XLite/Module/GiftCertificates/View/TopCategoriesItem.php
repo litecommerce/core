@@ -36,7 +36,7 @@ namespace XLite\Module\GiftCertificates\View;
  * @since   3.0.0
  * @ListChild (list="topCategories.childs")
  */
-class TopCategoriesItem extends Xlite_View_Abstract
+class TopCategoriesItem extends \XLite\View\AView
 {
     const PARAM_IS_SUBTREE   = 'is_subtree';
 

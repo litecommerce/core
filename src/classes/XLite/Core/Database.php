@@ -395,7 +395,7 @@ class Database extends \XLite\Base implements \XLite\Base\ISingleton
                 $classMetadata->setCustomRepositoryClass($class);
 
             } else {
-                $classMetadata->setCustomRepositoryClass('\XLite\Model\Repo\Base\Common');
+                $classMetadata->setCustomRepositoryClass('XLite\Model\Repo\Base\Common');
             }
         }
     }

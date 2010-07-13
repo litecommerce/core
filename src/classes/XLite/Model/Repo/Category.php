@@ -424,32 +424,32 @@ class Category extends \XLite\Model\Repo\Base\I18n
             $parentLpos = $parentCategory->lpos;
 
             // Increase lpos field for parent and all right nodes
-            $qb = \XLite\Core\Database::getQB();
-            $qb ->update('\XLite\Model\Category', 'n')
+            $qb = \XLite\Core\Database::getQB()
+                ->update('XLite\Model\Category', 'n')
                 ->set('n.lpos', 'n.lpos + :offset')
                 ->where(
                     $qb->expr()->gte('n.lpos', ':parentLpos')
                 )
-                ->setParameters(
+                ->setParameter(
                     array(
-                        'offset' => 2,
-                        'parentLpos' => $parentLpos
+                        'offset'     => 2,
+                        'parentLpos' => $parentLpos,
                     )
                 );
 
             $qb->getQuery()->execute();
 
             // Increase rpos field for parent and all right nodes
-            $qb = \XLite\Core\Database::getQB();
-            $qb ->update('\XLite\Model\Category', 'n')
+            $qb = \XLite\Core\Database::getQB()
+                ->update('XLite\Model\Category', 'n')
                 ->set('n.rpos', 'n.rpos + :offset')
                 ->where(
                     $qb->expr()->gte('n.rpos', ':parentLpos')
                 )
                 ->setParameters(
                     array(
-                        'offset' => 2,
-                        'parentLpos' => $parentLpos
+                        'offset'     => 2,
+                        'parentLpos' => $parentLpos,
                     )
                 );
             $qb->getQuery()->execute();
@@ -494,15 +494,15 @@ class Category extends \XLite\Model\Repo\Base\I18n
             $parentRpos = $parentCategory->rpos;
 
             // Increase lpos field for all right nodes
-            $qb = \XLite\Core\Database::getQB();
-            $qb ->update('\XLite\Model\Category', 'n')
+            $qb = \XLite\Core\Database::getQB()
+                ->update('XLite\Model\Category', 'n')
                 ->set('n.lpos', 'n.lpos + :offset')
                 ->where(
                     $qb->expr()->gt('n.lpos', ':parentRpos')
                 )
                 ->setParameters(
                     array(
-                        'offset' => 2,
+                        'offset'     => 2,
                         'parentRpos' => $parentRpos
                     )
                 );
@@ -510,7 +510,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
 
             // Increase rpos field for all right nodes
             $qb = \XLite\Core\Database::getQB();
-            $qb ->update('\XLite\Model\Category', 'n')
+            $qb ->update('XLite\Model\Category', 'n')
                 ->set('n.rpos', 'n.rpos + :offset')
                 ->where(
                     $qb->expr()->gt('n.rpos', ':parentRpos')
@@ -583,7 +583,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
 
             // Increase lpos field for all right nodes
             $qb = \XLite\Core\Database::getQB();
-            $qb ->update('\XLite\Model\Category', 'n')
+            $qb ->update('XLite\Model\Category', 'n')
                 ->set('n.lpos', 'n.lpos + :offset')
                 ->where(
                     $qb->expr()->gt('n.lpos', ':parentLpos')
@@ -599,7 +599,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
 
             // Increase rpos field for parent and all right nodes
             $qb = \XLite\Core\Database::getQB();
-            $qb ->update('\XLite\Model\Category', 'n')
+            $qb ->update('XLite\Model\Category', 'n')
                 ->set('n.rpos', 'n.rpos + :offset')
                 ->where(
                     $qb->expr()->gte('n.rpos', ':parentRpos')

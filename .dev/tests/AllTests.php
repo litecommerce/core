@@ -46,12 +46,18 @@ require_once PATH_TESTS . '/PHPUnit/TestCase.php';
 require_once PATH_TESTS . '/PHPUnit/MetricWriter.php';
 require_once PATH_TESTS . '/PHPUnit/SeleniumTestCase.php';
 
-// Tests specific autoloader
-
+// Tests-specific autoloader
 function __lc_autoload($className)
 {
     if (0 === strpos($className, 'XLite')) {
-        require LC_AUTOLOAD_DIR . str_replace('_', LC_DS, $className) . '.php';
+        $path = LC_AUTOLOAD_DIR . str_replace('\\', LC_DS, $className) . '.php';
+
+    } elseif (0 === strpos($className, '\XLite')) {
+        $path = LC_AUTOLOAD_DIR . str_replace('\\', LC_DS, substr($className, 1)) . '.php';
+    }
+
+    if (isset($path) && file_exists($path)) {
+        require_once $path;
     }
 }
 
