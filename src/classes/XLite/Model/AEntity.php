@@ -28,6 +28,9 @@
 
 namespace XLite\Model;
 
+use XLite\Core\Database as DB,
+    XLite\Core\Converter;
+
 /**
  * Abstract entity 
  * 
@@ -156,10 +159,10 @@ abstract class AEntity
         $class = get_called_class();
 
         if (!isset(self::$methodNames[$class])) {
-            self::$methodNames[$class] = array($name => \XLite\Core\Converter::convertToCamelCase($name));
+            self::$methodNames[$class] = array($name => Converter::convertToCamelCase($name));
 
         } elseif (!isset(self::$methodNames[$class][$name])) {
-            self::$methodNames[$class][$name] = \XLite\Core\Converter::convertToCamelCase($name);
+            self::$methodNames[$class][$name] = Converter::convertToCamelCase($name);
         }
 
         return self::$methodNames[$class][$name];
@@ -183,7 +186,7 @@ abstract class AEntity
 
         if (defined('LC_DECORATION') && preg_match('/^(get|set)([A-Z]\w+)$/Ss', $methodName, $matches)) {
 
-            $fieldName = \XLite\Core\Converter::convertFromCamelCase(lcfirst($matches[2]));
+            $fieldName = Converter::convertFromCamelCase(lcfirst($matches[2]));
 
             if ('get' == $matches[1]) {
                 $result = isset($this->$fieldName) ? $this->$fieldName : null;
@@ -211,8 +214,7 @@ abstract class AEntity
      */
     public function getRepository()
     {
-        return \XLite\Core\Database::getEntityManager()
-            ->getRepository(get_called_class());
+        return DB::getEntityManager()->getRepository(get_called_class());
     }
 
     /**

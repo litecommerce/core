@@ -28,6 +28,9 @@
 
 namespace XLite\Model\Repo;
 
+use XLite\Core\Database as DB,
+    XLite\Core\Converter;
+
 /**
  * Abstract repository
  * 
@@ -208,7 +211,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      */
     protected function assignQueryCache(\Doctrine\ORM\AbstractQuery $query, $name, array $params = array())
     {
-        if (\XLite\Core\Database::isCacheEnabled()) {
+        if (DB::isCacheEnabled()) {
             $cell = $this->getCacheCells($name);
             if ($cell) {
 
@@ -238,11 +241,11 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     {
         $result = null;
 
-        if (\XLite\Core\Database::isCacheEnabled()) {
+        if (DB::isCacheEnabled()) {
             $cell = $this->getCacheCells($name);
             if ($cell) {
 
-                $result = \XLite\Core\Database::getCacheDriver()->fetch(
+                $result = DB::getCacheDriver()->fetch(
                     $this->getCellHash($name, $cell, $params)
                 );
                 if (false === $result) {
@@ -268,13 +271,13 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      */
     protected function saveToCache($data, $name, array $params = array())
     {
-        if (\XLite\Core\Database::isCacheEnabled()) {
+        if (DB::isCacheEnabled()) {
             $cell = $this->getCacheCells($name);
             if ($cell) {
 
                 $hash = $this->getCellHash($name, $cell, $params);
 
-                \XLite\Core\Database::getCacheDriver()->save(
+                DB::getCacheDriver()->save(
                     $this->getCellHash($name, $cell, $params),
                     $data,
                     $cell[self::TTL_CACHE_CELL]
@@ -350,7 +353,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      */
     protected function getCacheHashGeneratorName($name)
     {
-        return 'getCacheHash' . \XLite\Core\Converter::convertToCamelCase($name);
+        return 'getCacheHash' . Converter::convertToCamelCase($name);
     }
 
     /**
@@ -365,7 +368,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      */
     protected function getCacheParamsConverterName($name)
     {
-        return 'convertRecordToParams' . \XLite\Core\Converter::convertToCamelCase($name);
+        return 'convertRecordToParams' . Converter::convertToCamelCase($name);
     }
 
     /**
@@ -378,7 +381,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      */
     public function hasCacheCells()
     {
-        return \XLite\Core\Database::isCacheEnabled()
+        return DB::isCacheEnabled()
             && $this->getCacheCells();
     }
 
@@ -413,8 +416,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
 
             $hash = $this->getCellHash($name, $cell, $params);
 
-            \XLite\Core\Database::getCacheDriver()
-                ->delete($hash);
+            DB::getCacheDriver()->delete($hash);
         }
     }
 
@@ -430,8 +432,8 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      */
     public function deleteCache($name = '')
     {
-        if (\XLite\Core\Database::isCacheEnabled()) {
-            \XLite\Core\Database::getCacheDriver()->deleteByPrefix($this->getTableHash($name) . '.');
+        if (DB::isCacheEnabled()) {
+            DB::getCacheDriver()->deleteByPrefix($this->getTableHash($name) . '.');
         }
     }
 
@@ -596,7 +598,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
         }
 
         $qb = $this->createQueryBuilder();
-        $keys = \XLite\Core\Database::buildInCondition($qb, $ids);
+        $keys = DB::buildInCondition($qb, $ids);
         $alias = $this->getMainAlias($qb);
         $qb->andWhere($alias . '.' . $this->_class->identifier[0] . ' IN (' . implode(', ', $keys) . ')');
 
