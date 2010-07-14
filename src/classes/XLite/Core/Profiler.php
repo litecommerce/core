@@ -378,9 +378,9 @@ class Profiler extends \XLite\Base implements \XLite\Base\ISingleton, \Doctrine\
             $sum = array_sum($d['time']);
             self::$queries[$q] = array(
                 'count' => $cnt,
-                'max'   => max($d['time']),
-                'min'   => min($d['time']),
-                'avg'   => $sum / $cnt,
+                'max'   => empty($d['time']) ? 0 : max($d['time']),
+                'min'   => empty($d['time']) ? 0 : min($d['time']),
+                'avg'   => (0 < $cnt) ? $sum / $cnt : 0,
                 'trace' => $d['trace'],
             );
             $totalQueriesTime += $sum;
