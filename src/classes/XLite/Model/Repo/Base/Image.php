@@ -49,7 +49,7 @@ abstract class Image extends \XLite\Model\Repo\ARepo
     {
         $class = get_called_class();
 
-        return str_replace('image', '', strtolower(substr($class, strrpos($class, '_') + 1)));
+        return str_replace('image', '', strtolower(substr($class, strrpos($class, '\\') + 1)));
     }
 
     /**

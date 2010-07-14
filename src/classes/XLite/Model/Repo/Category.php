@@ -201,7 +201,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
                 $right[] = $nd->rpos;
 
                 // Calculate the number of subcategorys
-                $dataTmp[$id]->subCategoriesCount = ($nd->rpos - $nd->lpos - 1) / 2;
+                $dataTmp[$id]->sub_categories_count = ($nd->rpos - $nd->lpos - 1) / 2;
             }
 
             $data = $dataTmp;

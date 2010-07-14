@@ -142,7 +142,7 @@
       <td IF="!categories">
         <input id="add" type="button" value="Add category" onClick="onAddClick()">
       </td>		
-      <td align="right" IF="category.subCategoriesCount|isRootCategories(categories)">
+      <td align="right" IF="category.sub_categories_count|isRootCategories(categories)">
         <input id="delete_all_button" type="button" value="Delete all" onClick="onDeleteClick({category.category_id})">
       </td>		
     </tr>
