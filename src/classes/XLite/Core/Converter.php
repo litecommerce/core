@@ -469,7 +469,7 @@ class Converter extends \XLite\Base implements \XLite\Base\ISingleton
     }
 
     /**
-     * Check - specified string is URL or not
+     * Check if specified string is URL or not
      * 
      * @param string $url URL
      *  
@@ -483,5 +483,20 @@ class Converter extends \XLite\Base implements \XLite\Base\ISingleton
         static $pattern = '(?:([a-z][a-z0-9\*\-\.]*):\/\/(?:(?:(?:[\w\.\-\+!$&\'\(\)*\+,;=]|%[0-9a-f]{2})+:)*(?:[\w\.\-\+%!$&\'\(\)*\+,;=]|%[0-9a-f]{2})+@)?(?:(?:[a-z0-9\-\.]|%[0-9a-f]{2})+|(?:\[(?:[0-9a-f]{0,4}:)*(?:[0-9a-f]{0,4})\]))(?::[0-9]+)?(?:[\/|\?](?:[\w#!:\.\?\+=&@!$\'~*,;\/\(\)\[\]\-]|%[0-9a-f]{2})*)?)';
 
         return is_string($url) && 0 < preg_match('/^' . $pattern . '$/Ss', $url);
+    }
+
+    /**
+     * Return class name without backslashes
+     * 
+     * @param XLite_Base $obj object to get class name from
+     *  
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getPlaneClassName(\XLite\Base $obj)
+    {
+        return str_replace('\\', '', get_class($obj));
     }
 }

@@ -261,7 +261,7 @@ abstract class AView extends \XLite\Core\Handler
      */
     protected function getSessionCell()
     {
-        return get_class($this);
+        return \XLite\Core\Converter::getPlaneClassName($this);
     }
 
     /**
