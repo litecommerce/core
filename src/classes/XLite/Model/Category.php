@@ -196,7 +196,7 @@ class Category extends \XLite\Model\Base\I18n
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $subCategoriesCount = 0;
+    protected $sub_categories_count = 0;
 
     /**
      * Check if category has image 
@@ -249,7 +249,7 @@ class Category extends \XLite\Model\Base\I18n
     {
         $data = \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategoryFromHash($this->category_id);
 
-        return ($data->subCategoriesCount > 0);
+        return ($data->sub_categories_count > 0);
     }
 
     /**
@@ -285,7 +285,7 @@ class Category extends \XLite\Model\Base\I18n
     {
         $data = \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategoryFromHash($this->category_id);
 
-        return (0 == $data->products_count && 0 == $data->subCategoriesCount);
+        return (0 == $data->products_count && 0 == $data->sub_categories_count);
     }
 
     /**

@@ -96,7 +96,7 @@ class Converter extends \XLite\Base implements \XLite\Base\ISingleton
      */
     public static function convertFromCamelCase($string)
     {
-        return str_replace(self::$to, self::$from, strval($string));
+        return str_replace(self::$to, self::$from, lcfirst(strval($string)));
     }
 
     public static function prepareMethodName($string)
