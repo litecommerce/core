@@ -10,11 +10,11 @@ UPDATE xlite_config SET value = 'a:3:{i:1;a:3:{s:7:\"orderby\";s:2:\"10\";s:10:\
 
 -- Enable demo modules
 UPDATE xlite_modules SET enabled = '1' WHERE name IN (
-	'AdvancedSearch',
+/*	'AdvancedSearch',
 	'AuthorizeNet',
 	'Bestsellers',
-	'DetailedImages',
-	'DrupalConnector',
+	'DetailedImages',*/
+	'DrupalConnector'/*,
 	'FeaturedProducts',
 	'GiftCertificates',
 	'GoogleCheckout',
@@ -27,7 +27,7 @@ UPDATE xlite_modules SET enabled = '1' WHERE name IN (
 	'UPSOnlineTools',
 	'USPS',
 	'WishList',
-	'WholesaleTrading'
+	'WholesaleTrading'*/
 );
 
 -- Test gift certificate

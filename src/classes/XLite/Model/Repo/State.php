@@ -163,7 +163,7 @@ class State extends ARepo
     public function findOneByStateId($stateId)
     {
         try {
-            $state = $this->defineOneByStateIdQuery()->getQuery()->getSingleResult();
+            $state = $this->defineOneByStateIdQuery($stateId)->getQuery()->getSingleResult();
 
         } catch (\Doctrine\ORM\NoResultException $exception) {
             $state = null;

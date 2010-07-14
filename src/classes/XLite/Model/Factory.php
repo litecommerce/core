@@ -46,7 +46,7 @@ class Factory extends \XLite\Base implements \XLite\Base\ISingleton
      * @access protected
      * @since  3.0.0
      */
-    protected static function isSingleton(ReflectionClass $handler)
+    protected static function isSingleton(\ReflectionClass $handler)
     {
         return $handler->implementsInterface('\XLite\Base\ISingleton');
     }
@@ -75,7 +75,7 @@ class Factory extends \XLite\Base implements \XLite\Base\ISingleton
      * @access protected
      * @since  3.0.0
      */
-    protected static function createObject(ReflectionClass $handler, array $args = array())
+    protected static function createObject(\ReflectionClass $handler, array $args = array())
     {
         return $handler->hasMethod('__construct') ? $handler->newInstanceArgs($args) : $handler->newInstance();
     }
