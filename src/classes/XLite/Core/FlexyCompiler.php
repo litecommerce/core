@@ -737,7 +737,7 @@ class FlexyCompiler extends \XLite\Base implements \XLite\Base\ISingleton
 
             if (isset($target)) {
                 $target = str_replace(',', '\',\'', preg_replace('/[^\w,]+/', '', $target));
-            } elseif (isset($class) && preg_match('/XLite_\w/i', $class)) {
+            } elseif (isset($class) && preg_match('/^\\\\?XLite\\\\/i', $class)) {
                 $target = implode('\',\'', $class::getAllowedTargets());
             }
 
