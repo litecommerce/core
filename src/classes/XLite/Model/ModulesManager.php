@@ -28,10 +28,6 @@
 
 namespace XLite\Model;
 
-define('MM_OK', 0);
-define('MM_ARCHIVE_CORRUPTED', 1);
-define('MM_BROKEN_DEPENDENCIES', 2);
-
 /**
  * Modules manager
  * 
