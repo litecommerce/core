@@ -142,8 +142,6 @@ class GetWidget extends ACustomer
      */
     public function getClass()
     {
-        $param = self::PARAM_AJAX_CLASS;
-
-        return \XLite\Core\Request::getInstance()->$param;
+        return \XLite\Core\Request::getInstance()->{self::PARAM_AJAX_CLASS};
     }
 }

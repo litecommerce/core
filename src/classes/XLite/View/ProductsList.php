@@ -282,7 +282,7 @@ abstract class ProductsList extends Container
     protected function getPagerParams()
     {
         return array(
-            self::PARAM_SESSION_CELL     => $this->getSessionCell(),
+            self::PARAM_SESSION_CELL      => $this->getSessionCell(),
             \XLite\View\Pager::PARAM_DATA => $this->getData()
         );
     }
@@ -540,7 +540,7 @@ abstract class ProductsList extends Container
         $result = array();
 
         foreach ($params as $name => $value) {
-            $result[] = $name . ': \'' . $value . '\'';
+            $result[] = $name . ': \'' . addslashes($value) . '\'';
         }
 
         return '{' . implode(', ', $result) . '}';
