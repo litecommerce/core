@@ -218,7 +218,7 @@ class Database extends \XLite\Base implements \XLite\Base\ISingleton
      */
     public static function getCacheDriverByOptions($options)
     {
-        if (!isset($options) || !is_array($options)) {
+        if (!isset($options) || !is_array($options) || !isset($options['type'])) {
             $options = array('type' => null);
         }
 
