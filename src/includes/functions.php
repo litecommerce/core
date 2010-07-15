@@ -413,10 +413,21 @@ function mkdirRecursive($dir, $mode = 0777)
     return $ret;
 }
 
+/**
+ * Remove directories tree recursive 
+ * 
+ * @param string $dir Directory path
+ *  
+ * @return boolean
+ * @see    ____func_see____
+ * @since  3.0.0
+ */
 function unlinkRecursive($dir)
 {
-    if (substr($dir,-1) == '/' || substr($dir,-1) == '\\') {
-        $dir = substr($dir, 0, strlen($dir)-1);
+    $status = false;
+
+    if (substr($dir, -1) == LC_DS) {
+        $dir = substr($dir, 0, -1);
     }
 
     if (@is_dir($dir)) { 
@@ -424,7 +435,7 @@ function unlinkRecursive($dir)
         if ($dh) { 
             while (($file = @readdir($dh)) !== false) { 
                 if ($file != '.' && $file != '..') {
-                    unlinkRecursive($dir . '/' . $file);
+                    $status = $status && unlinkRecursive($dir . LC_DS . $file);
                 }
             } 
             @closedir($dh); 
@@ -432,8 +443,10 @@ function unlinkRecursive($dir)
         @rmdir($dir);
 
     } elseif (@is_file($dir)) {
-        @unlink($dir);
+        $status = @unlink($dir);
     }
+
+    return $status;
 }
 
 /**

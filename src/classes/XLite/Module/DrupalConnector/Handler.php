@@ -238,7 +238,7 @@ class Handler extends \XLite\Core\CMSConnector
 
         );
 
-        if (\XLite\Model\ModulesManager::getInstance()->isActiveModule('WishList')) {
+        if (\XLite\Core\Database::getRepo('XLite\Model\Module')->isModuleActive('WishList')) {
             $this->portals['user/%/wishlist'] = array(
                 'menu'   => array(
                     'title'            => 'Wish list',

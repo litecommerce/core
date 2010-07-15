@@ -51,7 +51,7 @@ class Main extends \XLite\Module\AModule
      * @access protected
      * @since  3.0
      */
-    public static function getModuleType()
+    public function getModuleType()
     {
         return self::MODULE_GENERAL;
     }
@@ -63,7 +63,7 @@ class Main extends \XLite\Module\AModule
      * @access protected
      * @since  3.0
      */
-    public static function getVersion()
+    public function getVersion()
     {
         return '2.12.RC4';
     }
@@ -75,7 +75,7 @@ class Main extends \XLite\Module\AModule
      * @access protected
      * @since  3.0
      */
-    public static function getDescription()
+    public function getDescription()
     {
         return 'ProductAdviser add-on introduces multiple cross-selling features and a customer notification mechanism';
     }
@@ -87,7 +87,7 @@ class Main extends \XLite\Module\AModule
      * @access public
      * @since  3.0
      */
-    public static function showSettingsForm()
+    public function showSettingsForm()
     {
         return true;
     }

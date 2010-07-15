@@ -276,9 +276,9 @@ class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
      */
     public function hasOptions()
     {
-        return (!$this->mm->getActiveModules('ProductOptions') || !$this->getProduct())
-            ? false
-            : parent::hasOptions();
+        return (\XLite\Core\Database::getRepo('XLite\Model\Module')->isModuleActive('ProductOptions') && $this->getProduct())
+            ? parent::hasOptions()
+            : false;
     }
 
     /**

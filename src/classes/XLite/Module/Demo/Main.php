@@ -44,7 +44,7 @@ class Main extends \XLite\Module\AModule
      * @access public
      * @since  3.0.0
      */
-    public static function getModuleType()
+    public function getModuleType()
     {
         return self::MODULE_GENERAL;
     }
@@ -56,7 +56,7 @@ class Main extends \XLite\Module\AModule
      * @access public
      * @since  3.0.0
      */
-    public static function getVersion()
+    public function getVersion()
     {
         return '1.0';
     }
@@ -68,7 +68,7 @@ class Main extends \XLite\Module\AModule
      * @access public
      * @since  3.0.0
      */
-    public static function getDescription()
+    public function getDescription()
     {
         return 'Demo mode';
     }
@@ -97,7 +97,7 @@ class Main extends \XLite\Module\AModule
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function doForbidAction($message = null, $url = null)
+    public function doForbidAction($message = null, $url = null)
     {
         self::doForbidOperation($message);
 
@@ -119,7 +119,7 @@ class Main extends \XLite\Module\AModule
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function doForbidOperation($message = null)
+    public function doForbidOperation($message = null)
     {
         if (!$message) {
             $message = 'You cannot do this in demo mode.';

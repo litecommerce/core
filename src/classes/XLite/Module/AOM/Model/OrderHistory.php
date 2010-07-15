@@ -106,7 +106,12 @@ class OrderHistory extends \XLite\Model\AModel
             }
         }
 
-        if ( $this->xlite->config->AOM->cc_info_history && $this->xlite->mm->getComplex('activeModules.AdvancedSecurity') && $this->xlite->is('adminZone') && $this->config->AdvancedSecurity->gpg_crypt_db ) {
+        if (
+            $this->config->AOM->cc_info_history
+            && \XLite\Core\Database::getRepo('XLite\Model\Module')->isModuleActive('AdvancedSecurity')
+            && \XLite::isAdminZone()
+            && $this->config->AdvancedSecurity->gpg_crypt_db
+        ) {
             foreach ($value as $key=>$val) {
                 if ( is_array($val) ) {
                     foreach ($val as $k=>$v) {

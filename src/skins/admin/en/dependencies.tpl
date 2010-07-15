@@ -11,7 +11,7 @@
  * @since     3.0.0
  *}
 <p class="ErrorMessage">
-Unable to install module &quot;{xlite.mm.moduleName}&quot; because some modules which it depends on, have not been installed or activated yet
+Unable to install module &quot;{mm.moduleName}&quot; because some modules which it depends on, have not been installed or activated yet
 </p>
 <table border="0">
 <tr>
@@ -20,7 +20,7 @@ Please, make sure that the following modules are installed and enabled:
 	</td>
 	<td>
 	<table border="0">
-		<tr FOREACH="xlite.mm.dependencies,dependency">
+		<tr FOREACH="mm.dependencies,dependency">
 		<td>{dependency}</td>
 		</tr>
 	</table>

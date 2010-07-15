@@ -44,7 +44,7 @@ class Main extends \XLite\Module\AModule
      * @access protected
      * @since  3.0
      */
-    public static function getModuleType()
+    public function getModuleType()
     {
         return self::MODULE_GENERAL;
     }
@@ -56,7 +56,7 @@ class Main extends \XLite\Module\AModule
      * @access protected
      * @since  3.0
      */
-    public static function getVersion()
+    public function getVersion()
     {
         return '2.2';
     }
@@ -68,7 +68,7 @@ class Main extends \XLite\Module\AModule
      * @access protected
      * @since  3.0
      */
-    public static function getDescription()
+    public function getDescription()
     {
         return 'Allows to add detailed product images for better representation of the product';
     }

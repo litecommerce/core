@@ -40,7 +40,7 @@
     <input type="text" name="name" size="45" value="{product.name:r}">
   </td>
 </tr>  
-<tr IF="!xlite.mm.activeModules.MultiCategories">
+<tr IF="!mm.activeModules.MultiCategories">
 	<td>
 	<table border="0" cellpadding="0" cellspacing="0" width="100%">
 	<tr>

@@ -55,7 +55,7 @@ function setHeaderChecked()
       <th><input id="activate_products" type="checkbox" onClick="this.blur();setChecked('products_form','product_ids',this.checked);" /></th>
       <th>SKU</th>
       <th align=left>Product Name</th>
-      <th align=center IF="xlite.mm.activeModules.WholesaleTrading">Prod.#</th>
+      <th align=center IF="mm.activeModules.WholesaleTrading">Prod.#</th>
       <th>Category</th>
       <th>Pos.</th>
       <th nowrap>Price</th>
@@ -71,9 +71,9 @@ function setHeaderChecked()
         <td width=99%>
           <a href="admin.php?target=product&product_id={product.product_id}&backUrl={url:u}"><font class="ItemsList"><u>{product.name:h}</u></font></a><widget module="ProductAdviser" template="modules/ProductAdviser/product_list.tpl" product="{product}" />
         </td>
-        <td width=1% align=right IF="xlite.mm.activeModules.WholesaleTrading"><a href="admin.php?target=product&product_id={product.product_id}&backUrl={url:u}"><u>#{product.product_id:h}</u></a></td>
+        <td width=1% align=right IF="mm.activeModules.WholesaleTrading"><a href="admin.php?target=product&product_id={product.product_id}&backUrl={url:u}"><u>#{product.product_id:h}</u></a></td>
         <td nowrap>
-        {if:xlite.mm.activeModules.MultiCategories}
+        {if:mm.activeModules.MultiCategories}
         	{foreach:product.categories,cat}
           	{if:!catArraySize=#1#}&#8226;{else:}&nbsp;{end:}&nbsp;{cat.stringPath}&nbsp;<br>
          	{end:}

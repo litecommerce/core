@@ -44,7 +44,7 @@ class Main extends \XLite\Module\AModule
      * @access protected
      * @since  3.0
      */
-    public static function getModuleType()
+    public function getModuleType()
     {
         return self::MODULE_GENERAL;
     }
@@ -56,7 +56,7 @@ class Main extends \XLite\Module\AModule
      * @access protected
      * @since  3.0
      */
-    public static function getVersion()
+    public function getVersion()
     {
         return '2.9.RC4';
     }
@@ -68,7 +68,7 @@ class Main extends \XLite\Module\AModule
      * @access protected
      * @since  3.0
      */
-    public static function getDescription()
+    public function getDescription()
     {
         return 'Support for downloadable product sales (e-books, audio and video files, software and PIN codes)';
     }
@@ -79,7 +79,7 @@ class Main extends \XLite\Module\AModule
      * @access public
      * @since  3.0
      */
-    public static function showSettingsForm()
+    public function showSettingsForm()
     {
         return true;
     }

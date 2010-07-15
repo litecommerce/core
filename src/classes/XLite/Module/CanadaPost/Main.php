@@ -44,7 +44,7 @@ class Main extends \XLite\Module\AModule
      * @access protected
      * @since  3.0
      */
-    public static function getModuleType()
+    public function getModuleType()
     {
         return self::MODULE_SHIPPING;
     }
@@ -56,7 +56,7 @@ class Main extends \XLite\Module\AModule
      * @access protected
      * @since  3.0
      */
-    public static function getVersion()
+    public function getVersion()
     {
         return '2.4.RC1';
     }
@@ -68,7 +68,7 @@ class Main extends \XLite\Module\AModule
      * @access protected
      * @since  3.0
      */
-    public static function getDescription()
+    public function getDescription()
     {
         return 'This module introduces CanadaPost real-time shipping cost calculations';
     }
@@ -79,7 +79,7 @@ class Main extends \XLite\Module\AModule
      * @access public
      * @since  3.0
      */
-    public static function showSettingsForm()
+    public function showSettingsForm()
     {
         return true;
     }
@@ -91,7 +91,7 @@ class Main extends \XLite\Module\AModule
      * @access public
      * @since  3.0
      */
-    public static function getSettingsForm() 
+    public function getSettingsForm() 
     {
         return "admin.php?target=cps";
 

@@ -479,4 +479,63 @@ class Database extends \XLite\Base implements \XLite\Base\ISingleton
 
         return $keys;
     }
+
+    /**
+     * Import SQL 
+     * 
+     * @param string $sql SQL
+     *  
+     * @return integer Lines count
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function importSQL($sql)
+    {
+        $lines = 0;
+
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+
+        do {
+            // Required due to "MySQL has gone away!" issue
+            $stmt->fetch();
+            $stmt->closeCursor();
+
+            $lines++;
+        } while ($stmt->nextRowset());
+
+        return $lines;
+    }
+
+    /**
+     * Import SQL from file 
+     * 
+     * @param string $path File path
+     *  
+     * @return integer Lines count
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function importSQLFromFile($path)
+    {
+        $conn = static::$em->getConnection();
+
+        if (!file_exists($path)) {
+
+            throw new \InvalidArgumentException(
+                sprintf('SQL file \'%s\' does not exist.', $path)
+            );
+
+        } elseif (!is_readable($path)) {
+
+            throw new \InvalidArgumentException(
+                sprintf('SQL file \'%s\' does not have read permissions.', $path)
+            );
+
+        }
+
+        return $this->importSQL(file_get_contents($path));
+    }
 }

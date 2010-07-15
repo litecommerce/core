@@ -11,7 +11,7 @@
  * @since     3.0.0
  *}
 
-<span IF="product.hasOptions()&xlite.mm.activeModules.WholesaleTrading">
+<span IF="product.hasOptions()&mm.activeModules.WholesaleTrading">
 
   <form action="admin.php" method="POST" name="expansion_form">
 

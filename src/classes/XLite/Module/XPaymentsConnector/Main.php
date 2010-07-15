@@ -44,7 +44,7 @@ class Main extends \XLite\Module\AModule
      * @access public
      * @since  3.0.0
      */
-    public static function getModuleType()
+    public function getModuleType()
     {
         return self::MODULE_GENERAL;
     }
@@ -56,7 +56,7 @@ class Main extends \XLite\Module\AModule
      * @access public
      * @since  3.0.0
      */
-    public static function getVersion()
+    public function getVersion()
     {
         return '1.0';
     }
@@ -68,7 +68,7 @@ class Main extends \XLite\Module\AModule
      * @access public
      * @since  3.0.0
      */
-    public static function getDescription()
+    public function getDescription()
     {
         return 'X-Payments connector';
     }
@@ -80,7 +80,7 @@ class Main extends \XLite\Module\AModule
      * @access public
      * @since  3.0.0
      */
-    public static function showSettingsForm()
+    public function showSettingsForm()
     {
         return true;
     }
@@ -115,7 +115,7 @@ class Main extends \XLite\Module\AModule
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function isConfigured()
+    public function isConfigured()
     {
         $failed = false;
 
@@ -150,7 +150,7 @@ class Main extends \XLite\Module\AModule
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function checkRequirements()
+    public function checkRequirements()
     {
         $code = 0;
 

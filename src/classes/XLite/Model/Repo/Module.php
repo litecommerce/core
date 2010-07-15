@@ -51,6 +51,16 @@ class Module extends \XLite\Model\Repo\ARepo
     );
 
     /**
+     * Modules enabeld list (cache)
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $modules = null;
+
+    /**
      * Define cache cells 
      * 
      * @return array
@@ -63,6 +73,10 @@ class Module extends \XLite\Model\Repo\ARepo
         $list = parent::defineCacheCells();
 
         $list['all'] = array(
+            self::TTL_CACHE_CELL => self::INFINITY_TTL,
+        );
+
+        $list['names'] = array(
             self::TTL_CACHE_CELL => self::INFINITY_TTL,
         );
 
@@ -99,6 +113,60 @@ class Module extends \XLite\Model\Repo\ARepo
     protected function defineAllModulesQuery()
     {
         return $this->createQueryBuilder();
+    }
+
+    /**
+     * Find all modules as names list
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function findAllNames()
+    {
+        $data = $this->getFromCache('names');
+        if (!isset($data)) {
+            $data = $this->defineAllNamesQuery()->getQuery()->getResult();
+            $data = $this->postprocessAllNames($data);
+            $this->saveToCache($data, 'names');
+        }
+
+        return $data;
+    }
+
+    /**
+     * Define query builder for findAllNames()
+     * 
+     * @return \Doctrine\ORM\QueryBuilder
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineAllNamesQuery()
+    {
+        return $this->createQueryBuilder();
+    }
+
+    /**
+     * Postprocess all modules names list
+     * 
+     * @param array $data Initial data
+     *  
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function postprocessAllNames(array $data)
+    {
+        $result = array();
+
+        foreach ($data as $module) {
+            $result[] = $module->getName();
+        }
+
+        return array_unique($result);
     }
 
     /**
@@ -169,5 +237,205 @@ class Module extends \XLite\Model\Repo\ARepo
             ->andWhere('m.type = :type')
             ->setParameter('type', $type);
     }
+
+    /**
+     * Find all by names
+     * 
+     * @param array $names Modules names
+     *  
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function findAllByNames(array $names)
+    {
+        return $this->defineAllByNamesQuery($names)->getQuery()->getResult();
+    }
+
+    /**
+     * Define query builder for findAllByNames()
+     *
+     * @param array $names Modules names
+     *
+     * @return \Doctrine\ORM\QueryBuilder
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineAllByNamesQuery(array $names)
+    {
+        $qb = $this->createQueryBuilder();
+
+        $ids = \XLite\Core\Database::buildInCondition($qb, $names, 'name');
+
+        return $qb->andWhere('m.name IN (' . implode(', ', $ids) . ')');
+    }
+
+    /**
+     * Find all module by depend module name
+     * 
+     * @param string $depend Module name
+     *  
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function findAllByDepend($depend)
+    {
+        return $this->defineAllByDependQuery($depend)->getQuery()->getResult();
+    }
+
+    /**
+     * Define query builder for findByType()
+     *
+     * @param string $depend Depend module name
+     *
+     * @return \Doctrine\ORM\QueryBuilder
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineAllByDependQuery($depend)
+    {
+        return $this->createQueryBuilder()
+            ->andWhere('(m.dependencies LIKE :dbegin OR m.dependencies LIKE :dmiddle OR m.dependencies LIKE :dend OR m.dependencies = :depend)')
+            ->setParamater('depend', $depend)
+            ->setParamater('dbegin', $depend . ',')
+            ->setParamater('dmiddle', ',' . $depend . ',')
+            ->setParamater('dend', ',' . $depend);
+    }
+
+    /**
+     * Get enabled modules list
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getActiveModules()
+    {
+        if (!isset($this->modules)) {
+            $this->modules = array();
+            foreach ($this->findAllEnabled() as $module) {
+                $this->modules[$module->getName()] = $module;
+            }
+        }
+
+        return $this->modules;
+    }
+
+    /**
+     * Check - specified module is active or not
+     * 
+     * @param string $name Module name
+     *  
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isModuleActive($name)
+    {
+        $list = $this->getActiveModules();
+
+        return isset($list[$name]);
+    }
+
+    /**
+     * Initialize modules subsystem
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function initialize()
+    {
+        $changed = false;
+
+        foreach ($this->getActiveModules() as $name => $module) {
+            $mainClass = $module->getMainClass();
+            if (!$mainClass) {
+                $changed = true;
+                \XLite\Core\Database::getEM()->remove($module);
+
+            } else {
+
+                $module->getMainClass()->init();
+
+                if (false === $module->getMainClass()->check()) {
+                    $changed = true;
+                    $module->setEnabled(false);
+                    $module->disableDepended();
+                    \XLite\Core\Database::getEM()->persist($module);
+                }
+            }
+        }
+
+        if ($changed) {
+            \XLite\Core\Database::getEM()->flush();
+            \XLite::getInstance()->rebuildCacheEmergency();
+        }
+    }
+
+    /**
+     * Check new modules and delete removed
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function checkModules()
+    {
+        $list = $this->findAllNames();
+        $changed = false;
+        $needRebuild = false;
+
+        foreach (glob(LC_MODULES_DIR . '*' . LC_DS . 'Main.php') as $f) {
+            $parts = explode(LC_DS, $f);
+            $name = $parts[count($parts) - 2];
+            if (in_array($name, $list)) {
+                unset($list[array_search($name, $list)]);
+
+            } else {
+                $module = new \XLite\Model\Module();
+                $module->create($name);
+                if ($module::INSTALLED == $module->getInstalled()) {
+                    \XLite\Core\TopMessage::getInstance()->add($module->getMainClass()->getPostInstallationNotes());
+
+                } else {
+                    // TODO - add warning
+                }
+
+                \XLite\Core\Database::getEM()->persist($module);
+                $changed = true;
+            }
+        }
+
+        // Emergency modules uninstall
+        foreach ($list as $name) {
+            $module = $this->findOneByName($name);
+            if ($module) {
+                if ($module->getEnabled()) {
+                    $module->disableDepended();
+                    $needRebuild = true;
+                }
+                \XLite\Core\Database::getEM()->remove($module);
+                $changed = true;
+            }
+        }
+
+        if ($changed) {
+            \XLite\Core\Database::getEM()->flush();
+            if ($needRebuild) {
+                \XLite::rebuildCacheEmergency();
+            }
+        }
+    }
+
 }
 

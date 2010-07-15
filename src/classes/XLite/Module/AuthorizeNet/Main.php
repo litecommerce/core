@@ -44,7 +44,7 @@ class Main extends \XLite\Module\AModule
      * @access public
      * @since  3.0.0
      */
-    public static function getModuleType()
+    public function getModuleType()
     {
         return self::MODULE_PAYMENT;
     }
@@ -56,7 +56,7 @@ class Main extends \XLite\Module\AModule
      * @access public
      * @since  3.0.0
      */
-    public static function getVersion()
+    public function getVersion()
     {
         return '2.5';
     }
@@ -68,7 +68,7 @@ class Main extends \XLite\Module\AModule
      * @access public
      * @since  3.0.0
      */
-    public static function getDescription()
+    public function getDescription()
     {
         return 'Authorize.Net credit card payment processor';
     }
@@ -80,7 +80,7 @@ class Main extends \XLite\Module\AModule
      * @access public
      * @since  3.0.0
      */
-    public static function showSettingsForm()
+    public function showSettingsForm()
     {
         return true;
     }
@@ -92,7 +92,7 @@ class Main extends \XLite\Module\AModule
      * @access public
      * @since  3.0.0
      */
-    public static function getSettingsForm()
+    public function getSettingsForm()
     {
         return \XLite\Core\Converter::buildUrl(
             'payment_method',

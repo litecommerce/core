@@ -808,9 +808,13 @@ abstract class AView extends \XLite\Core\Handler
      */
     public function __get($name)
     {
-        $value = parent::__get($name);
+        $value = 'mm' == $name
+            ? \XLite\Core\Database::getRepo('XLite\Model\Module')
+            : parent::__get($name);
 
-        return isset($value) ? $value : \XLite::getController()->$name;
+        return isset($value)
+            ? $value
+            : \XLite::getController()->$name;
     }
 
     /**

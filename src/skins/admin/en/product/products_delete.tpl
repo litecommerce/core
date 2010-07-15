@@ -42,7 +42,7 @@
               <td width=1%>{product.sku}</td>
               <td width=99%><font class="ItemsList">{product.name:h}</font></td>
               <td nowrap>
-              {if:xlite.mm.activeModules.MultiCategories}
+              {if:mm.activeModules.MultiCategories}
               	{foreach:product.categories,cat}
                 	{if:!catArraySize=#1#}&#8226;{else:}&nbsp;{end:}&nbsp;{cat.stringPath}&nbsp;<br />
               	{end:}

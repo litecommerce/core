@@ -16,8 +16,8 @@
 	var i = 0;
 	modes[i++] = "products";
 	modes[i++] = "profile";
-	if ("{xlite.mm.ActiveModules.GiftCertificates}") modes[i++] = "gc";
-	if ("{xlite.mm.ActiveModules.Promotion}") modes[i++] = "dc";
+	if ("{mm.activeModules.GiftCertificates}") modes[i++] = "gc";
+	if ("{mm.activeModules.Promotion}") modes[i++] = "dc";
 	modes[i++] = "totals";
 	if ("{isCloneUpdated()&!cloneOrder.isEmpty()}") modes[i++] = "preview";
 
@@ -176,7 +176,7 @@
 	            </tr>   
             </table>
 		</td>
-        <td IF="xlite.mm.ActiveModules.GiftCertificates">
+        <td IF="mm.activeModules.GiftCertificates">
             <table border="0" width="100%" cellpadding="1" cellspacing="0">
                 <tr>
                     <td colspan="2" align="center" nowrap><a class="AomMenu" id="gc_label" href="javascript: changeMode('gc')" onClick="this.blur()">Gift Certificates</a></td>
@@ -194,7 +194,7 @@
                 </tr>   
             </table>
 		</td>
-        <td IF="xlite.mm.ActiveModules.Promotion">
+        <td IF="mm.activeModules.Promotion">
             <table border="0" width="100%" cellpadding="1" cellspacing="0">
                 <tr>
                     <td colspan="2" align="center" nowrap><a class="AomMenu" id="dc_label" href="javascript: changeMode('dc')" onClick="this.blur()">Discount Coupon</a></td>
