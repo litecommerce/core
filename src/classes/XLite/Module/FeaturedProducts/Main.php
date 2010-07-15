@@ -62,7 +62,7 @@ class Main extends \XLite\Module\AModule
      */
     public function getVersion()
     {
-        return '2.8';
+        return '3.0';
     }
 
     /**
