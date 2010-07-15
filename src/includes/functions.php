@@ -430,20 +430,21 @@ function unlinkRecursive($dir)
         $dir = substr($dir, 0, -1);
     }
 
-    if (@is_dir($dir)) { 
-        $dh = @opendir($dir);
+    if (is_dir($dir)) { 
+        $dh = opendir($dir);
         if ($dh) { 
-            while (($file = @readdir($dh)) !== false) { 
+            $status = true;
+            while ((false !== ($file = readdir($dh))) && $status) { 
                 if ($file != '.' && $file != '..') {
-                    $status = $status && unlinkRecursive($dir . LC_DS . $file);
+                    $status = unlinkRecursive($dir . LC_DS . $file);
                 }
-            } 
-            @closedir($dh); 
+            }
+            closedir($dh); 
         }
-        @rmdir($dir);
+        rmdir($dir);
 
-    } elseif (@is_file($dir)) {
-        $status = @unlink($dir);
+    } elseif (is_file($dir)) {
+        $status = unlink($dir);
     }
 
     return $status;
