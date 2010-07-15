@@ -45,7 +45,7 @@ class Main extends \XLite\Module\AModule
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function getModuleType()
+    public function getModuleType()
     {
         return self::MODULE_SHIPPING;
     }
@@ -58,7 +58,7 @@ class Main extends \XLite\Module\AModule
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function getVersion()
+    public function getVersion()
     {
         return '2.6.RC1';
     }
@@ -71,7 +71,7 @@ class Main extends \XLite\Module\AModule
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function getDescription()
+    public function getDescription()
     {
         return 'USPS real-time shipping calculation';
     }
@@ -84,7 +84,7 @@ class Main extends \XLite\Module\AModule
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function showSettingsForm()
+    public function showSettingsForm()
     {
         return true;
     }
@@ -97,7 +97,7 @@ class Main extends \XLite\Module\AModule
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function getSettingsForm()
+    public function getSettingsForm()
     {
         return \XLite\Core\Converter::buildUrl('usps', '', array(), \XLite::ADMIN_SELF);
     }

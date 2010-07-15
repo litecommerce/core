@@ -85,7 +85,10 @@ class Settings extends AAdmin
         $result = array();
 
         foreach ($this->getCaptchaPages() as $idx => $module) {
-            if (empty($module) || \XLite\Model\ModulesManager::getInstance()->isActiveModule($module)) {
+            if (
+                empty($module)
+                || \XLite\Core\Database::getRepo('XLite\Core\Module')->isModuleActive($module)
+            ) {
                 $result[$idx] = $module;
             }
         }

@@ -40,16 +40,14 @@ namespace XLite\Model;
 class Module extends AEntity
 {
     /**
-     * Module types
+     * Installed statuses
      */
 
-    const MODULE_UNKNOWN   = 0;
-    const MODULE_PAYMENT   = 1;
-    const MODULE_SHIPPING  = 2;
-    const MODULE_SKIN      = 3;
-    const MODULE_CONNECTOR = 4;
-    const MODULE_GENERAL   = 5;
-    const MODULE_3RD_PARTY = 6;
+    const NOT_INSTALLED     = 0;
+    const INSTALLED         = 1;
+    const INSTALLED_WO_SQL  = 2;
+    const INSTALLED_WO_PHP  = 3;
+    const INSTALLED_WO_CTRL = 4;
 
 
     /**
@@ -118,20 +116,88 @@ class Module extends AEntity
      * @since  3.0.0
      * @Column (type="integer")
      */
-    protected $type = self::MODULE_GENERAL;
-    
+    protected $type = \XLite\Module\AModule::MODULE_GENERAL;
+
     /**
-     * Overlay a template
-     *
-     * @param string $oldTemplate template to overlay
-     * @param string $newTemplate module-specific template
-     *
-     * @return void
-     * @since  1.0
+     * Installed status
+     * 
+     * @var    integer
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Column (type="integer")
      */
-    protected function addLayout($oldTemplate, $newTemplate)
+    protected $installed = self::NOT_INSTALLED;
+
+    /**
+     * Version
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Column (type="string", length="12")
+     */
+    protected $version = '1.0';
+
+    /**
+     * Main class 
+     * 
+     * @var    \Xite\Module\AModule
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $mainClass = null; 
+
+    /**
+     * Set enabled status
+     * 
+     * @param boolean $enabled Enabled status
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setEnabled($enabled)
     {
-        \XLite\Model\Layout::getInstance()->addLayout($oldTemplate, $newTemplate);
+        if (!$enabled || self::INSTALLED == $this->getInstalled()) {
+            $this->enabled = $enabled;
+        }
+    }
+
+    /**
+     * Get inverted dependencies 
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getInvertedDependencies()
+    {
+        return $this->getRepository()->findAllByDepend($this->getName());
+    }
+
+    /**
+     * Disable depended modules
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function disableDepended()
+    {
+        foreach ($this->getInvertedDependencies() as $module) {
+            if ($module->getEnabled()) {
+                $module->setEnabled(false);
+                \XLite\Core\Database::getEM()->persist($module);
+                \XLite\Core\Database::getEM()->flush();
+                $module->disableDepended();
+            }
+        }
     }
 
     /**
@@ -154,30 +220,70 @@ class Module extends AEntity
      * Get module Main class name 
      * 
      * @return string
-     * @access public
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getMainClassName()
+    protected function getMainClassName()
     {
         return '\XLite\Module\\' . $this->getName() . '\Main';
     }
 
     /**
-     * Include module Main class 
+     * Get module Main class
      * 
-     * @return void
+     * @return \XLite\Module\AModule
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function includeMainClass()
+    public function getMainClass()
+    {
+        if (!isset($this->mainClass) && $this->includeMainClass()) {
+            $class = $this->getMainClassName();
+            $this->mainClass = new $class;
+
+            if (!is_subclass_of($this->mainClass, '\XLite\Module\AModule')) {
+                $this->mainClass = null;
+            }
+        }
+
+        return $this->mainClass;
+    }
+
+    /**
+     * Include module Main class 
+     * 
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function includeMainClass()
     {
         $class = $this->getMainClassName();
 
-        if (!\XLite\Core\Operator::isClassExists($class)) {
+        if (
+            !\XLite\Core\Operator::isClassExists($class)
+            && file_exists(LC_CLASSES_DIR . str_replace('\\', LC_DS, $class) . '.php')
+        ) {
             require_once LC_CLASSES_DIR . str_replace('\\', LC_DS, $class) . '.php';
         }
+
+        return \XLite\Core\Operator::isClassExists($class);
+    }
+
+    /**
+     * Get mutual modules 
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getMutualModules()
+    {
+        return explode(',', $this->mutual_modules);
     }
 
     /**
@@ -198,6 +304,186 @@ class Module extends AEntity
     }
 
     /**
+     * Get dependencies modules 
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getDependencies()
+    { 
+        return $this->dependencies
+            ? explode(',', $this->dependencies)
+            : array();
+    }
+
+    /**
+     * Set dependencies modules list
+     * 
+     * @param mixed $modules Modules list (string or array)
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setDependencies($modules)
+    {
+        $this->dependencies = is_string($modules)
+            ? $modules
+            : implode(',', $modules);
+    }
+
+    /**
+     * Get dependencies modules 
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getDependenciesModules()
+    {
+        return $this->getDependencies()
+            ? $this->getRepository()->findAllByNames($this->getDependencies())
+            : array();
+    }
+
+    /**
+     * Check - can module enable or not
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function canEnable()
+    {
+        $status = true;
+
+        foreach ($this->getDependenciesModules() as $module) {
+            if (!$module->getEnabled()) {
+                $status = false;
+                break;
+            }
+        }
+
+        return $status;
+    }
+
+    /**
+     * Create module 
+     * 
+     * @param string $name Name
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function create($name)
+    {
+        // Seet common properties
+        $this->setName($name);
+        $this-setInstalled(self::NOT_INSTALLED);
+        $this-setEnabled(false);
+
+        $status = self::INSTALLED;
+
+        $mainClass = $this->getMainClass();
+
+        if ($mainClass) {
+
+            // Set properties
+            $this->setMutualModules($mainClass->getMutualModulesList());
+            $this->setDependencies($mainClass->getDependenciesList());
+            $this->setType($mainClass->getModuleType());
+            $this->setVersion($mainClass->getVersion());
+
+            // Install SQL dump
+            $installSQLPath = LC_MODULES_DIR . $name . LC_DS . 'install.sql';
+
+            if (file_exists($installSQLPath)) {
+                try {
+                    \XLite\Core\Database::getInstance()->importSQLFromFile($installSQLPath);
+
+                } catch (\InvalidArgumentException $exception) {
+
+                    \XLite\Logger::getInstance()->log($exception->getMessage(), PEAR_LOG_ERR);
+                    $status = self::INSTALLED_WO_SQL;
+
+                } catch (\PDOException $exception) {
+
+                    \XLite\Logger::getInstance()->log($exception->getMessage(), PEAR_LOG_ERR);
+                    $status = self::INSTALLED_WO_SQL;
+                }
+            }
+
+            // Run custom install code
+            if (false === $mainClass->installModule($this)) {
+                \XLite\Logger::getInstance()->log(
+                    sprintf('\'%s\' module custom installation error', $name),
+                    PEAR_LOG_ERR
+                );
+                $status = self::INSTALLED_WO_PHP;
+            }
+
+        } else {
+            $status = self::INSTALLED_WO_CTRL;
+        }
+
+        $module->setInstalled($status);
+        \XLite\Core\Database::getEM()->persist($module);
+        \XLite\Core\Database::getEM()->flush();
+    }
+
+    /**
+     * Uninstall module
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function uninstall()
+    {
+        $status = true;
+
+        // Uninstall SQL
+        $installSQLPath = LC_MODULES_DIR . $this->getName() . LC_DS . 'uninstall.sql';
+        if (file_exists($installSQLPath)) {
+            try {
+                \XLite\Core\Database::getInstance()->importSQLFromFile($installSQLPath);
+
+            } catch (\InvalidArgumentException $exception) {
+
+                \XLite\Logger::getInstance()->log($exception->getMessage(), PEAR_LOG_ERR);
+                $status = false;
+
+            } catch (\PDOException $exception) {
+
+                \XLite\Logger::getInstance()->log($exception->getMessage(), PEAR_LOG_ERR);
+                $status = false;
+            }
+        }
+
+        // Run custom uninstall code
+        if (false === $mainClass->uninstallModule($this)) {
+            \XLite\Logger::getInstance()->log(
+                sprintf('\'%s\' module custom deinstallation error', $name),
+                PEAR_LOG_ERR
+            );
+            $status = false;
+        }
+
+        // Remove repository
+        $status = $status && unlinkRecursive(LC_MODULES_DIR . $this->getName());
+
+        return $status;;
+    }
+
+    /**
      * It's possible to call methods of certain module directly
      * 
      * @param string $method method name
@@ -210,11 +496,8 @@ class Module extends AEntity
      */
     public function __call($method, array $args = array())
     {
-        $this->includeMainClass();
-        $class = $this->getMainClassName();
-
-        return (\XLite\Core\Operator::isClassExists($class) && method_exists($class, $method))
-            ? call_user_func_array(array($class, $method), $args)
+        return method_exists($this->getMainClass(), $method)
+            ? call_user_func_array(array($this->getMainClass(), $method), $args)
             : parent::__call($method, $args);
 
     }

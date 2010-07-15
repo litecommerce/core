@@ -47,7 +47,7 @@ class Main extends \XLite\Module\AModule
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function getModuleType()
+    public function getModuleType()
     {
         return self::MODULE_GENERAL;
     }
@@ -60,7 +60,7 @@ class Main extends \XLite\Module\AModule
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function getVersion()
+    public function getVersion()
     {
         return '2.8';
     }
@@ -73,7 +73,7 @@ class Main extends \XLite\Module\AModule
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function getDescription()
+    public function getDescription()
     {
         return 'This module enables featured products list';
     }
@@ -86,7 +86,7 @@ class Main extends \XLite\Module\AModule
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function showSettingsForm()
+    public function showSettingsForm()
     {
         return true;
     }

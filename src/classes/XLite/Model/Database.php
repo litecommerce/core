@@ -404,7 +404,7 @@ class Database extends \XLite\Base implements \XLite\Base\ISingleton
         $error = query_upload($file, $this->db->connection, true, true);
         // cleanup compiled cache
         echo "<br>\n";
-        \XLite\Model\ModulesManager::getInstance()->cleanupCache();
+        \XLite::getInstance()->rebuildCacheLazy();
         return $error;
     }
 

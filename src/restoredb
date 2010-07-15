@@ -53,25 +53,25 @@ _do_query_upload("sql/states_US.sql", $connection, true);
 _do_query_upload("sql/states_GB.sql", $connection, true);
 _do_query_upload("sql/states_CA.sql", $connection, true);
 
-require_once 'classes/XLite/Base.php';
-require_once 'classes/XLite/Model/AEntity.php';
-require_once 'classes/XLite/Model/AModel.php';
-require_once 'classes/XLite/Model/Module.php';
 require_once 'classes/XLite/Module/AModule.php';
 require_once 'classes/XLite/Base/IPatcher.php';
 
 // modules
-$modules = opendir("classes/XLite/Module");
+$modules = opendir('classes/XLite/Module');
 
 while (($dir = readdir($modules)) !== false) {
-	if ($dir{0}!='.' && is_dir("classes/XLite/Module/$dir")) {
+	if ($dir{0} != '.' && is_dir('classes/XLite/Module/' . $dir)) {
 
 		require_once 'classes/XLite/Module/' . $dir . '/Main.php';
 		$class = '\XLite\Module\\' . $dir . '\Main';
+		$obj = new $class();
 
-		mysql_query('REPLACE INTO xlite_modules SET name = \'' . $dir . '\', mutual_modules = \'' . implode(',', call_user_func(array($class, 'getMutualModulesList'))) . '\', type = \'' . call_user_func(array($class, 'getModuleType')). '\'');
+		mysql_query('REPLACE INTO xlite_modules SET name = \'' . $dir . '\', mutual_modules = \'' . implode(',', $obj->getMutualModulesList()) . '\', type = \'' . $obj->getModuleType(). '\', installed = 1, version = \'' . $obj->getVersion() . '\', dependencies = \'' . implode(',', $obj->getDependenciesList()) . '\'');
 
-		!file_exists($sqlFile = 'classes/XLite/Module/' . $dir . '/install.sql') || _do_query_upload($sqlFile, $connection, true);
+		$sqlFile = 'classes/XLite/Module/' . $dir . '/install.sql';
+		if (file_exists($sqlFile)) {
+			_do_query_upload($sqlFile, $connection, true);
+		}
 	}
 }
 

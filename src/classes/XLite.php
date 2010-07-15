@@ -237,7 +237,7 @@ class XLite extends \XLite\Base implements \XLite\Base\ISingleton
     public function __destruct()
     {
         if ($this->isNeedToCleanupCache) {
-            \XLite\Model\ModulesManager::getInstance()->cleanupCache();
+            self::rebuildCacheLazy();
         }
     }
 
@@ -370,7 +370,7 @@ class XLite extends \XLite\Base implements \XLite\Base\ISingleton
      */
     public function initModules()
     {
-        \XLite\Model\ModulesManager::getInstance()->init();
+        \XLite\Core\Database::getRepo('XLite\Model\Module')->initialize();
     }
 
     /**
@@ -431,6 +431,58 @@ class XLite extends \XLite\Base implements \XLite\Base\ISingleton
         }
 
         return $this;
+    }
+
+    /**
+     * Rebuild decoration cache in emergency mode
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function rebuildCacheEmergency()
+    {
+        $iterator = new \RecursiveDirectoryIterator(LC_CLASSES_CACHE_DIR . LC_DS . 'Core' . LC_DS);
+        $iterator = new \RecursiveIteratorIterator($iterator, \RecursiveIteratorIterator::CHILD_FIRST);
+        $iterator = new \RegexIterator($iterator, '/\.php$/Ss');
+
+        foreach ($iterator as $f) {
+            require_once $f->getRealPath();
+        }
+
+        $decorator = new \Decorator();
+        $decorator->cleanUpCache();
+
+        \XLite\Core\Operator::redirect($_SERVER['REQUEST_URI'], true);
+    }
+
+    /**
+     * Rebuild decoration cache in lazy mode (cache will be rebuild after next application start)
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function rebuildCacheLazy()
+    {
+        static $runned = false;
+
+        if (!$runned) {
+            $iterator = new \RecursiveDirectoryIterator(LC_CLASSES_CACHE_DIR . LC_DS);
+            $iterator = new \RecursiveIteratorIterator($iterator, \RecursiveIteratorIterator::CHILD_FIRST);
+            $iterator = new \RegexIterator($iterator, '/\.php$/Ss');
+
+            foreach ($iterator as $f) {
+                require_once $f->getRealPath();
+            }
+
+            $decorator = new \Decorator();
+            $decorator->cleanUpCache();
+
+            $runned = true;
+        }
     }
 }
 

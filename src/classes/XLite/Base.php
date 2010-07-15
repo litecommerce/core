@@ -62,7 +62,6 @@ class Base
         'db'       => '\XLite\Model\Database',
         'logger'   => '\XLite\Logger',
         'config'   => '\XLite\Core\Config',
-        'mm'       => '\XLite\Model\ModulesManager',
         'layout'   => '\XLite\Model\Layout',
     );
 
@@ -135,7 +134,9 @@ class Base
      */
     public function __get($name)
     {
-        return isset(self::$singletons[$name]) ? call_user_func(array(self::$singletons[$name], 'getInstance')) : null;
+        return isset(self::$singletons[$name])
+            ? call_user_func(array(self::$singletons[$name], 'getInstance'))
+            : null;
     }
 
     /**

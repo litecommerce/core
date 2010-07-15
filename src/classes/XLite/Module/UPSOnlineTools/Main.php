@@ -48,7 +48,7 @@ class Main extends \XLite\Module\AModule
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function getModuleType()
+    public function getModuleType()
     {
         return self::MODULE_SHIPPING;
     }
@@ -61,7 +61,7 @@ class Main extends \XLite\Module\AModule
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function getVersion()
+    public function getVersion()
     {
         return '2.1.RC13';
     }
@@ -74,7 +74,7 @@ class Main extends \XLite\Module\AModule
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function getDescription()
+    public function getDescription()
     {
         return 'This module enables the access to UPS OnLine Tools';
     }
@@ -87,7 +87,7 @@ class Main extends \XLite\Module\AModule
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function showSettingsForm()
+    public function showSettingsForm()
     {
         return true;
     }
@@ -100,7 +100,7 @@ class Main extends \XLite\Module\AModule
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function getSettingsForm()
+    public function getSettingsForm()
     {
         return \XLite\Core\Converter::buildUrl('ups_online_tool', '', array(), \XLite::ADMIN_SELF);
     }
@@ -136,7 +136,7 @@ class Main extends \XLite\Module\AModule
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function isGDLibValid()
+    public function isGDLibValid()
     {
         $functions = array(
             'imagecreate',

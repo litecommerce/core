@@ -726,7 +726,10 @@ class FlexyCompiler extends \XLite\Base implements \XLite\Base\ISingleton
     {
         $result = '';
 
-        if (!isset($module) || \XLite\Model\ModulesManager::getInstance()->isActiveModule($module)) {
+        if (
+            !isset($module)
+            || \XLite\Core\Database::getRepo('XLite\Model\Module')->isModuleActive($module)
+        ) {
 
             $class = isset($attrs['class']) ? $this->flexyAttribute($attrs['class'], false) : null;
 

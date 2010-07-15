@@ -35,8 +35,20 @@ namespace XLite\Module;
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class AModule extends \XLite\Model\Module
+abstract class AModule
 {
+    /**
+     * Module types
+     */
+
+    const MODULE_UNKNOWN   = 0;
+    const MODULE_PAYMENT   = 1;
+    const MODULE_SHIPPING  = 2;
+    const MODULE_SKIN      = 3;
+    const MODULE_CONNECTOR = 4;
+    const MODULE_GENERAL   = 5;
+    const MODULE_3RD_PARTY = 6;
+
     /**
      * Return module name by class name
      * 
@@ -46,8 +58,11 @@ abstract class AModule extends \XLite\Model\Module
      */
     protected function getModuleName()
     {
-        return preg_match('/XLite\\\Module\\\(\w+)\\\Main/', get_class($this), $matches) ?
-            $matches[1] : $this->doDie('Module class name is invalid - "' . get_class($this) . '"');
+        if (!preg_match('/XLite\\\Module\\\(\w+)\\\Main/S', get_class($this), $matches)) {
+            // TODO - add throw exception
+        }
+
+        return $matches[1];
     }
 
     /**
@@ -102,7 +117,7 @@ abstract class AModule extends \XLite\Model\Module
      * @access public
      * @since  3.0
      */
-    public static function getModuleType()
+    public function getModuleType()
     {
         return self::MODULE_3RD_PARTY;
     }
@@ -114,10 +129,7 @@ abstract class AModule extends \XLite\Model\Module
      * @access public
      * @since  3.0
      */
-    public static function getVersion()
-    {
-        return '1.0';
-    }
+    abstract public function getVersion();
 
     /**
      * Return module description 
@@ -126,10 +138,7 @@ abstract class AModule extends \XLite\Model\Module
      * @access public
      * @since  3.0
      */
-    public static function getDescription()
-    {
-        return '';
-    }
+    abstract public function getDescription();
 
     /**
      * Determines if we need to show settings form link
@@ -138,20 +147,19 @@ abstract class AModule extends \XLite\Model\Module
      * @access public
      * @since  3.0
      */
-    public static function showSettingsForm()
+    public function showSettingsForm()
     {
         return false;
     }
 
     /**
      * Return link to settings form.
-     * See Model/Module.php
      * 
      * @return mixed
      * @access public
      * @since  3.0
      */
-    public static function getSettingsForm()
+    public function getSettingsForm()
     {
         return null;
     }
@@ -163,23 +171,9 @@ abstract class AModule extends \XLite\Model\Module
      * @access public
      * @since  3.0
      */
-    public static function getDependenciesList()
+    public function getDependenciesList()
     {
         return array();
-    }
-
-    /**
-     * Check if current module depends on a passed one
-     *
-     * @param string $moduleName module to check
-     *
-     * @return bool
-     * @access public
-     * @since  1.0
-     */
-    public static function isDependsOn($moduleName)
-    {
-        return in_array($moduleName, self::getDependencies());
     }
 
     /**
@@ -189,8 +183,90 @@ abstract class AModule extends \XLite\Model\Module
      * @access public
      * @since  3.0
      */
-    public static function getMutualModulesList()
+    public function getMutualModulesList()
     {
         return array();
+    }
+
+    /**
+     * Get post-installation user notes
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getPostInstallationNotes()
+    {
+        return null;
+    }
+
+    /**
+     * Get post-deinstallation user notes
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getPostUninstallationNotes()
+    {
+        return null;
+    }
+
+    /**
+     * Check module
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function check()
+    {
+        return true;
+    }
+
+    /**
+     * Custom installation routine
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function installModule(\XLite\Model\Module $module)
+    {
+        return true;
+    }
+
+    /**
+     * Custom deinstallation routine
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function uninstallModule(\XLite\Model\Module $module)
+    {
+        return true;
+    }
+
+
+    /**
+     * Adds layout template file for the specified widget
+     * 
+     * @param string $widgetName   The widget name
+     * @param string $templateName The template file name
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function addLayout($widgetName, $templateName)
+    {
+        \XLite\Model\Layout::getInstance()->addLayout($widgetName, $templateName);
     }
 }
