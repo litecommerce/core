@@ -373,6 +373,36 @@ class Module extends AEntity
     }
 
     /**
+     * Get module hash 
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getHash()
+    {
+        $class = $this->getMainClassName();
+
+        $path = LC_CLASSES_DIR . $this->getName() . LC_DS;
+        $iterator = new \RecursiveDirectoryIterator($path);
+        $iterator = new \RecursiveIteratorIterator($iterator, \RecursiveIteratorIterator::CHILD_FIRST);
+
+        $list = array();
+        foreach ($iterator as $f) {
+            $list[] = $f->getRealPath();
+        }
+
+        sort($list);
+
+        foreach ($list as $k => $path) {
+            $list[$k] = hash_file('sha256', $path);
+        }
+
+        return hash('sh1512', implode('', $list));
+    }
+
+    /**
      * Create module 
      * 
      * @param string $name Name
