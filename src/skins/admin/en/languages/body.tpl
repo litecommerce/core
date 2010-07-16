@@ -101,7 +101,7 @@
       </div>
 
       <textarea name="current[{label.label_id}]"{if:isTranslatedLanguageSelected()} class="left"{end:} lang="{defaultLanguage.code}" xml:lang="{defaultLanguage.code}">{getLabelDefaultValue(label)}</textarea>
-      <textarea IF="isTranslatedLanguageSelected()" name="translated[{label.label_id}]" class="right" lang="{translatedLanguage.code}" xml:lang="{translatedLanguage.code}"{if:translatedLanguage.rtl} dir="rtl"{end:}>{getTranslation(label)}</textarea>
+      <textarea IF="isTranslatedLanguageSelected()" name="translated[{label.label_id}]" class="right" lang="{translatedLanguage.code}" xml:lang="{translatedLanguage.code}"{if:translatedLanguage.r2l} dir="rtl"{end:}>{getTranslation(label)}</textarea>
       <div class="clear"></div>
 
     </li>

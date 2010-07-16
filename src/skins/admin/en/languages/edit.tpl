@@ -29,7 +29,7 @@
 
       <li FOREACH="getAddedLanguages(),l">
         <label for="edit_label_{l.code}" class="language" style="background-image: url({l.flagURL});">{l.name}<span IF="isRequiredLanguage(l)"> ({t(#required#)})</span></label>
-        <textarea id="edit_label_{l.code}" name="label[{l.code}]"{if:isRequiredLanguage(l)} class="field-required"{end:} lang="{l.code}" xml:lang="{l.code}"{if:l.rtl} dir="rtl"{end:}>{getTranslation(l.code)}</textarea>
+        <textarea id="edit_label_{l.code}" name="label[{l.code}]"{if:isRequiredLanguage(l)} class="field-required"{end:} lang="{l.code}" xml:lang="{l.code}"{if:l.r2l} dir="rtl"{end:}>{getTranslation(l.code)}</textarea>
       </li>
 
     </ul>
