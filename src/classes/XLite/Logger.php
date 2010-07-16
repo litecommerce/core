@@ -126,7 +126,7 @@ class Logger extends Base implements \XLite\Base\ISingleton
      */
     public function __construct()
     {
-        require_once LC_EXT_LIB_DIR . 'Log.php';
+        require_once LC_LIB_DIR . 'Log.php';
 
         $this->options = array_merge(
             $this->options,

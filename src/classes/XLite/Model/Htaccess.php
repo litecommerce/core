@@ -57,7 +57,7 @@ class Htaccess extends AModel
                             "classes/.htaccess",
                             "compat/.htaccess",
                             "etc/.htaccess",
-                            "includes/.htaccess",
+                            "Includes/.htaccess",
                             "lib/.htaccess",
                             "schemas/.htaccess",
                             "skins/.htaccess",

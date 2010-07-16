@@ -46,26 +46,11 @@ require_once PATH_TESTS . '/PHPUnit/TestCase.php';
 require_once PATH_TESTS . '/PHPUnit/MetricWriter.php';
 require_once PATH_TESTS . '/PHPUnit/SeleniumTestCase.php';
 
-// Tests-specific autoloader
-function __lc_autoload($className)
-{
-    if (0 === strpos($className, 'XLite')) {
-        $path = LC_AUTOLOAD_DIR . str_replace('\\', LC_DS, $className) . '.php';
-
-    } elseif (0 === strpos($className, '\XLite')) {
-        $path = LC_AUTOLOAD_DIR . str_replace('\\', LC_DS, substr($className, 1)) . '.php';
-    }
-
-    if (isset($path) && file_exists($path)) {
-        require_once $path;
-    }
-}
-
 // Start X-Lite core
 
 chdir(PATH_SRC);
 
-require_once PATH_SRC . '/includes/prepend.php';
+require_once PATH_SRC . '/top.inc.php';
 
 if (!defined('SELENIUM_SOURCE_URL')) {
     $arr = explode('/', realpath(__DIR__ . '/../..'));

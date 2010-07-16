@@ -97,5 +97,4 @@ class CategoryProducts extends AEntity
      * @JoinColumn(name="product_id", referencedColumnName="product_id")
      */
     protected $products;
-
 }

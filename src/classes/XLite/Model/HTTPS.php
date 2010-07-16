@@ -346,7 +346,7 @@ class HTTPS extends \XLite\Base
      */
     public function __construct()
     {
-        require_once LC_EXT_LIB_DIR . 'Net' . LC_DS . 'URL2.php';
+        require_once LC_LIB_DIR . 'Net' . LC_DS . 'URL2.php';
     }
 
     /**

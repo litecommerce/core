@@ -567,10 +567,8 @@ class Module extends AEntity
             $status = false;
         }
 
-        // Remove repository
-        $status = $status && unlinkRecursive(LC_MODULES_DIR . $this->getName());
-
-        return $status;
+        // Remove repository (if needed)
+        return $status && unlinkRecursive(LC_MODULES_DIR . $this->getName());
     }
 
     /**

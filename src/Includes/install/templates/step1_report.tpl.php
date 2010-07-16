@@ -143,7 +143,7 @@ DIV.warning_div {
 }
 </STYLE>
 
-<?php include LC_ROOT_DIR . 'includes/install/templates/common_js_code.js.php'; ?>
+<?php include LC_ROOT_DIR . 'Includes/install/templates/common_js_code.js.php'; ?>
 
 <SCRIPT language="javascript">
 function ShowNotes(status)
