@@ -360,7 +360,7 @@ class Module extends \XLite\Model\Repo\ARepo
             $mainClass = $module->getMainClass();
             if (!$mainClass) {
                 $changed = true;
-                \XLite\Core\Database::getEM()->remove($module);
+                $this->uninstallEmergency($module);
 
             } else {
 
@@ -368,9 +368,7 @@ class Module extends \XLite\Model\Repo\ARepo
 
                 if (false === $module->getMainClass()->check()) {
                     $changed = true;
-                    $module->setEnabled(false);
-                    $module->disableDepended();
-                    \XLite\Core\Database::getEM()->persist($module);
+                    $this->disableEmergency($module);
                 }
             }
         }
@@ -405,10 +403,14 @@ class Module extends \XLite\Model\Repo\ARepo
                 $module = new \XLite\Model\Module();
                 $module->create($name);
                 if ($module::INSTALLED == $module->getInstalled()) {
-                    \XLite\Core\TopMessage::getInstance()->add($module->getMainClass()->getPostInstallationNotes());
+                    \XLite\Core\TopMessage::getInstance()->add(
+                        $module->getMainClass()->getPostInstallationNotes()
+                    );
 
                 } else {
-                    // TODO - add warning
+                    \XLite\Core\TopMessage::getInstance()->addError(
+                        'The X module has been installed incorrectly. Please see the logs for more information'
+                    );
                 }
 
                 \XLite\Core\Database::getEM()->persist($module);
@@ -424,7 +426,7 @@ class Module extends \XLite\Model\Repo\ARepo
                     $module->disableDepended();
                     $needRebuild = true;
                 }
-                \XLite\Core\Database::getEM()->remove($module);
+                $this->uninstallEmergency($module);
                 $changed = true;
             }
         }
@@ -435,6 +437,54 @@ class Module extends \XLite\Model\Repo\ARepo
                 \XLite::rebuildCacheEmergency();
             }
         }
+    }
+
+    /**
+     * Uninstall module emergency 
+     * 
+     * @param \XLite\Model\Module $module Module
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function uninstallEmergency(\XLite\Model\Module $module)
+    {
+        \XLite\Logger::getInstance()->log(
+            \XLite\Core\Translation::lbl(
+                'The X module has been uninstalled in an abnormal way',
+                array('module' => $module->getName())
+            ),
+            PEAR_LOG_ERR
+        );
+
+        \XLite\Core\Database::getEM()->remove($module);
+    }
+
+    /**
+     * Disable module emergency 
+     * 
+     * @param \XLite\Model\Module $module Module
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function disableEmergency(\XLite\Model\Module $module)
+    {
+        \XLite\Logger::getInstance()->log(
+            \XLite\Core\Translation::lbl(
+                'The X module has been disabled in an abnormal way',
+                array('module' => $module->getName())
+            ),
+            PEAR_LOG_ERR
+        );
+
+        $module->setEnabled(false);
+        $module->disableDepended();
+        \XLite\Core\Database::getEM()->persist($module);
     }
 
 }

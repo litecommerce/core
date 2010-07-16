@@ -658,4 +658,15 @@ INSERT INTO xlite_language_labels (label_id, name) VALUES (82, 'Edit label');
 INSERT INTO xlite_language_labels (label_id, name) VALUES (83, 'Please specify a pattern to find the required labels');
 INSERT INTO xlite_language_labels (label_id, name) VALUES (84, 'The language is enabled');
 INSERT INTO xlite_language_labels (label_id, name) VALUES (85, 'The language is disabled');
+INSERT INTO xlite_language_labels (label_id, name) VALUES (86, 'The module to uninstall has not been found');
+INSERT INTO xlite_language_labels (label_id, name) VALUES (87, 'The module has been uninstalled successfully');
+INSERT INTO xlite_language_labels (label_id, name) VALUES (88, 'The module has been partially uninstalled');
+INSERT INTO xlite_language_labels (label_id, name) VALUES (89, 'The X module has been installed successfully');
+INSERT INTO xlite_language_labels (label_id, name) VALUES (90, 'The X module has been installed with errors: the DB has not been modified correctly');
+INSERT INTO xlite_language_labels (label_id, name) VALUES (91, 'The X module has been installed incorrectly. Please see the logs for more information');
+INSERT INTO xlite_language_labels (label_id, name) VALUES (92, 'The X module has been installed, but the module has a wrong module control class');
+INSERT INTO xlite_language_labels (label_id, name) VALUES (93, 'The X module has been uninstalled in an abnormal way');
+INSERT INTO xlite_language_labels (label_id, name) VALUES (94, 'The modules have been updated');
+INSERT INTO xlite_language_labels (label_id, name) VALUES (95, 'The X module has been disabled in an abnormal way');
+
 
