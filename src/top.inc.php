@@ -54,3 +54,10 @@ require_once (LC_INCLUDES_DIR . 'Autoloader.php');
 
 // FIXME - to remove
 require_once (LC_INCLUDES_DIR . 'prepend.php');
+
+if (!defined('XLITE_INSTALL_MODE')) {
+    // Check and (if needed) rebild classes cache
+    $decorator = new \Includes\Decorator();
+    $decorator->rebuildCache();
+    $decorator = null;
+}

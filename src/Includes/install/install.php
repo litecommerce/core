@@ -1147,9 +1147,7 @@ function doInstallDatabase($trigger, &$params, $silentMode = false)
  */
 function doRebuildCache()
 {
-    require_once constant('LC_ROOT_DIR') . 'Includes/decoration.php';
-
-    $decorator = new Decorator;
+    $decorator = new \Includes\Decorator();
     $decorator->rebuildCache(true, false);
     $decorator = null;
 }

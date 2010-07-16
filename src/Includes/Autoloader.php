@@ -115,7 +115,7 @@ abstract class Autoloader
      */
     public static function __lc_autoload_includes($class)
     {
-        self::autoloadCommon('Includes', $class, LC_INCLUDES_DIR);
+        self::autoloadCommon('Includes', $class, LC_ROOT_DIR);
     }
 
 

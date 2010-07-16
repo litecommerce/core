@@ -96,14 +96,6 @@ ini_set('log_errors', 1);
 
 unset($path);
 
-if (!defined('XLITE_INSTALL_MODE')) {
-    // Check and (if needed) rebild classes cache
-    require_once (LC_ROOT_DIR . 'Includes' . LC_DS . 'decoration.php');
-    $decorator = new Decorator();
-    $decorator->rebuildCache();
-    $decorator = null;
-}
-
 // Set default memory limit
 func_set_memory_limit('32M');
 

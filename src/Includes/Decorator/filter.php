@@ -33,7 +33,7 @@
  * @see     ____class_see____
  * @since   3.0.0
  */
-class DecoratorFilesFilter extends FilterIterator
+class DecoratorFilesFilter extends \FilterIterator
 {
     /**
      * Check - accept or not item
