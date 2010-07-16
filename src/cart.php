@@ -15,7 +15,7 @@
  */
 
 
-include_once './includes/prepend.php';
+include_once './top.inc.php';
 
 XLite::getInstance()->run()->getViewer()->display();
 

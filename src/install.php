@@ -50,7 +50,7 @@ ini_set('display_startup_errors', true);
 
 umask(0);
 
-if (!file_exists($includeFuncsFile = realpath(dirname(__FILE__)) . '/includes/install/install.php')) {
+if (!file_exists($includeFuncsFile = realpath(dirname(__FILE__)) . '/Includes/install/install.php')) {
     die('Fatal error: Couldn\'t find file ' . $includeFuncsFile);
 }
 
@@ -239,7 +239,7 @@ if (isset($HTTP_GET_VARS['target']) && $HTTP_GET_VARS['target'] == 'install') {
 			$is_original = false;
         }
 
-        include_once LC_ROOT_DIR . 'includes/install/templates/step1_report.tpl.php';
+        include_once LC_ROOT_DIR . 'Includes/install/templates/step1_report.tpl.php';
 
 		die();
 	}
@@ -427,7 +427,7 @@ DIV.warning_div {
 }
 </STYLE>
 
-<?php include LC_ROOT_DIR . 'includes/install/templates/common_js_code.js.php'; ?>
+<?php include LC_ROOT_DIR . 'Includes/install/templates/common_js_code.js.php'; ?>
 
 <SCRIPT language="javascript">
 

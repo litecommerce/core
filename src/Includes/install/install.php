@@ -43,9 +43,9 @@ if (version_compare(phpversion(), '5.0.0') < 0) {
     die('LiteCommerce cannot start on PHP version earlier than 5.0.0 (' . phpversion(). ' is currently used)');
 }
 
-require_once realpath(dirname(__FILE__) . '/../..') . '/includes/prepend.php';
+require_once realpath(dirname(__FILE__) . '/../..') . '/top.inc.php';
 
-require_once constant('LC_ROOT_DIR') . 'includes/install/install_settings.php';
+require_once constant('LC_ROOT_DIR') . 'Includes/install/install_settings.php';
 
 if (version_compare(phpversion(), '5.3.0') >= 0) {
     error_reporting(E_ALL ^ E_DEPRECATED);
@@ -1147,7 +1147,7 @@ function doInstallDatabase($trigger, &$params, $silentMode = false)
  */
 function doRebuildCache()
 {
-    require_once constant('LC_ROOT_DIR') . 'includes/decoration.php';
+    require_once constant('LC_ROOT_DIR') . 'Includes/decoration.php';
 
     $decorator = new Decorator;
     $decorator->rebuildCache(true, false);
@@ -2738,7 +2738,7 @@ function module_default(&$params)
 {
     global $error;
 
-    include LC_ROOT_DIR . 'includes/install/templates/step0_copyright.tpl.php';
+    include LC_ROOT_DIR . 'Includes/install/templates/step0_copyright.tpl.php';
 
     return false;
 }
@@ -2827,7 +2827,7 @@ function module_check_cfg()
         )
     );
 
-    require_once LC_ROOT_DIR . 'includes/install/templates/step1_chkconfig.tpl.php';
+    require_once LC_ROOT_DIR . 'Includes/install/templates/step1_chkconfig.tpl.php';
 
     $error = $tryAgain = $errorsFound || $warningsFound;
 

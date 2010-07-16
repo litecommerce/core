@@ -73,8 +73,8 @@ class Intershipper extends \XLite\Model\Shipping\Online
         $ZipOrigination = $this->_normalizeZip($ZipOrigination);
         $ZipDestination = $this->_normalizeZip($ZipDestination);
 
-        require_once LC_EXT_LIB_DIR . 'PEAR.php';
-        require_once LC_EXT_LIB_DIR . 'HTTP' . LC_DS . 'Request2.php';
+        require_once LC_LIB_DIR . 'PEAR.php';
+        require_once LC_LIB_DIR . 'HTTP' . LC_DS . 'Request2.php';
 
         $http = new HTTP_Request2('http://www.intershipper.com/Interface/Intershipper/XML/v2.0/HTTP.jsp', HTTP_Request2::METHOD_POST);
         $http->setConfig('timeout', 5);

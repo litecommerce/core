@@ -1115,7 +1115,7 @@ class Image extends AModel
         );
         imagedestroy($image);
 
-        require_once LC_EXT_LIB_DIR . 'phpunsharpmask.php';
+        require_once LC_LIB_DIR . 'phpunsharpmask.php';
 
         $unsharpImage = UnsharpMask($newImage);
         if ($unsharpImage) {

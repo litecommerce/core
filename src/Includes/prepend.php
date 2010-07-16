@@ -26,35 +26,13 @@
  * @since      3.0.0
  */
 
-// Uncomment these lines for debug
-// error_reporting(E_ALL | E_STRICT);
-// ini_set('display_errors', true);
-
-// It's the feature of PHP 5. We need to explicitly define current time zone.
-// See also http://bugs.php.net/bug.php?id=48914
-@date_default_timezone_set(@date_default_timezone_get());
-
-define('LC_DS', DIRECTORY_SEPARATOR);
-
-// Paths
-define('LC_DIR', realpath(dirname(__FILE__) . DIRECTORY_SEPARATOR . '..'));
-
-define('LC_ROOT_DIR', rtrim(LC_DIR, LC_DS) . LC_DS);
-
-define('LC_EXT_LIB_DIR', LC_ROOT_DIR . 'lib' . LC_DS);
-
 define('LC_CONFIG_DIR', LC_ROOT_DIR . 'etc' . LC_DS);
 
-define('LC_CLASSES_DIR', LC_ROOT_DIR . 'classes' . LC_DS);
-define('LC_LIB_DIR', LC_CLASSES_DIR . 'XLite' . LC_DS);
-define('LC_MODULES_DIR', LC_LIB_DIR . 'Module' . LC_DS);
+define('LC_MODULES_DIR', LC_CLASSES_DIR . 'XLite' . LC_DS . 'Module' . LC_DS);
 
 // Temporary directories
-define('LC_VAR_DIR', LC_ROOT_DIR . 'var' . LC_DS);
 define('LC_VAR_URL', 'var');
 
-define('LC_COMPILE_DIR', LC_VAR_DIR . 'run' . LC_DS);
-define('LC_CLASSES_CACHE_DIR', LC_COMPILE_DIR . 'classes' . LC_DS);
 define('LC_SKINS_CACHE_DIR', LC_COMPILE_DIR . 'skins' . LC_DS);
 
 define('LC_MODEL_CACHE_DIR', LC_CLASSES_CACHE_DIR . 'XLite' . LC_DS . 'Model');
@@ -97,44 +75,11 @@ define('LC_EOL', 'cli' == PHP_SAPI ? "\n" : "<br />\n");
 
 set_include_path(
     get_include_path()
-    . PATH_SEPARATOR . LC_EXT_LIB_DIR
+    . PATH_SEPARATOR . LC_LIB_DIR
 );
 
 // Some common functions
-require_once (LC_ROOT_DIR . 'includes' . LC_DS . 'functions.php');
-
-// Doctrine 2 autoloading
-require_once (LC_EXT_LIB_DIR . 'Doctrine' . LC_DS . 'Common' . LC_DS . 'ClassLoader.php');
-
-$classLoader = new \Doctrine\Common\ClassLoader('Doctrine', LC_EXT_LIB_DIR);
-$classLoader->register();
-
-
-// Current dir for autoload
-// FIXME - installer must declare it's own autoloader
-define('LC_AUTOLOAD_DIR', defined('XLITE_INSTALL_MODE') ? LC_CLASSES_DIR : LC_CLASSES_CACHE_DIR);
-
-if (!function_exists('__lc_autoload')) {
-
-    /**
-     * Class autoload function
-     * 
-     * @param string $className class name to use
-     *  
-     * @return void
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    function __lc_autoload($className)
-    {
-        $className = ltrim($className, '\\');
-
-        if (0 === strpos($className, 'XLite')) {
-            require_once LC_AUTOLOAD_DIR . str_replace('\\', LC_DS, $className) . '.php';
-        }
-    }
-
-}
+require_once (LC_ROOT_DIR . 'Includes' . LC_DS . 'functions.php');
 
 // Common error reporting settings
 $path = LC_VAR_DIR . 'log' . LC_DS . 'php_errors.log.' . date('Y-m-d') . '.php';
@@ -153,7 +98,7 @@ unset($path);
 
 if (!defined('XLITE_INSTALL_MODE')) {
     // Check and (if needed) rebild classes cache
-    require_once (LC_ROOT_DIR . 'includes' . LC_DS . 'decoration.php');
+    require_once (LC_ROOT_DIR . 'Includes' . LC_DS . 'decoration.php');
     $decorator = new Decorator();
     $decorator->rebuildCache();
     $decorator = null;
@@ -162,4 +107,3 @@ if (!defined('XLITE_INSTALL_MODE')) {
 // Set default memory limit
 func_set_memory_limit('32M');
 
-spl_autoload_register('__lc_autoload');

@@ -376,7 +376,7 @@ class Converter extends \XLite\Base implements \XLite\Base\ISingleton
         );
         imagedestroy($imageResource);
 
-        require_once LC_EXT_LIB_DIR . 'phpunsharpmask.php';
+        require_once LC_LIB_DIR . 'phpunsharpmask.php';
 
         $unsharpImage = UnsharpMask($newImage);
         if ($unsharpImage) {

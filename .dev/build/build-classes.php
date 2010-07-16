@@ -6,7 +6,7 @@ if (php_sapi_name() != 'cli') {
 	exit (1);
 }
 
-require_once ('./includes/prepend.php');
+require_once ('./top.inc.php');
 
 $d = new Decorator();
 $d->rebuildCache(true);

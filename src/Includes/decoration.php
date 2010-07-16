@@ -1430,8 +1430,6 @@ class Decorator
 
             $this->restoreMaxExecutionTime();
 
-            spl_autoload_register('__lc_autoload');
-
             // Clear all cache
             $this->clearDoctrineCache();
 

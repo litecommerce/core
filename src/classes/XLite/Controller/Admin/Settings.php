@@ -638,8 +638,8 @@ class Settings extends AAdmin
 
         } else {
 
-            require_once LC_EXT_LIB_DIR . 'PEAR.php';
-            require_once LC_EXT_LIB_DIR . 'HTTP' . LC_DS . 'Request2.php';
+            require_once LC_LIB_DIR . 'PEAR.php';
+            require_once LC_LIB_DIR . 'HTTP' . LC_DS . 'Request2.php';
 
             $this->error = '';
 

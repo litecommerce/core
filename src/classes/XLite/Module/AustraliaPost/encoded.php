@@ -65,8 +65,8 @@ function Shipping_aupost_queryRates($_this, $options, $originalZipcode, $destina
     $php_last_errormsg = "";
     $_this->last_error = "";
 
-    require_once LC_EXT_LIB_DIR . 'PEAR.php';
-    require_once LC_EXT_LIB_DIR . 'HTTP' . LC_DS . 'Request2.php';
+    require_once LC_LIB_DIR . 'PEAR.php';
+    require_once LC_LIB_DIR . 'HTTP' . LC_DS . 'Request2.php';
 
     foreach ($stypes as $stype => $stype_name) {
         $_this->error = "";

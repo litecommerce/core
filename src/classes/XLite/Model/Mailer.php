@@ -249,7 +249,7 @@ class Mailer extends \XLite\View\AView
         $this->set('images', $imageParser->images);
 
         // Initialize PHPMailer
-        require_once LC_EXT_LIB_DIR . 'PHPMailer' . LC_DS . 'class.phpmailer.php';
+        require_once LC_LIB_DIR . 'PHPMailer' . LC_DS . 'class.phpmailer.php';
         $this->mail = new PHPMailer();
 
         $this->mail->SetLanguage(

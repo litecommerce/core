@@ -29,7 +29,8 @@ if (isset($argv[2])) {
 	$configFile = trim($argv[2]);
 }
 
-include $baseDir . "/includes/functions.php";
+// TODO[INCLUDES]
+include $baseDir . "/Includes/functions.php";
 
 error_reporting(E_ALL ^ E_NOTICE);
 $config = parse_ini_file($baseDir . '/etc/' . $configFile);
