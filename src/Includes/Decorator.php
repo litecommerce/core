@@ -26,6 +26,8 @@
  * @since      3.0.0
  */
 
+namespace Includes;
+
 /**
  * Decorator - classes cache builder
  * 
@@ -778,12 +780,12 @@ class Decorator
 
         // PDO flags using for connection
         $connectionParams = array(
-            PDO::ATTR_AUTOCOMMIT => true,
-            PDO::ATTR_ERRMODE    => PDO::ERRMODE_SILENT,
-            PDO::ATTR_PERSISTENT => false,
+            \PDO::ATTR_AUTOCOMMIT => true,
+            \PDO::ATTR_ERRMODE    => \PDO::ERRMODE_SILENT,
+            \PDO::ATTR_PERSISTENT => false,
         );
 
-        return new PDO(
+        return new \PDO(
             $this->getConnectionString($options),
             $user,
             $password,
@@ -968,7 +970,7 @@ class Decorator
 
             $this->mutualModules = $this->fetchAll(
                 'SELECT name, mutual_modules FROM xlite_modules WHERE enabled = \'1\' AND mutual_modules != \'\'',
-                PDO::FETCH_ASSOC | PDO::FETCH_GROUP | PDO::FETCH_UNIQUE | PDO::FETCH_COLUMN
+                \PDO::FETCH_ASSOC | \PDO::FETCH_GROUP | \PDO::FETCH_UNIQUE | \PDO::FETCH_COLUMN
             );
 
             foreach ($this->mutualModules as &$module) {
@@ -992,7 +994,7 @@ class Decorator
 
             $this->activeModules = $this->fetchAll(
                 'SELECT name, \'1\' FROM xlite_modules WHERE enabled = \'1\'',
-                PDO::FETCH_ASSOC | PDO::FETCH_GROUP | PDO::FETCH_UNIQUE | PDO::FETCH_COLUMN
+                \PDO::FETCH_ASSOC | \PDO::FETCH_GROUP | \PDO::FETCH_UNIQUE | \PDO::FETCH_COLUMN
             );
 
             $modulesToDisable = array();
@@ -1143,10 +1145,10 @@ class Decorator
         // Only check PHP files
         $fileNamePattern = '/^' . preg_quote(LC_CLASSES_DIR, '/') . '(.*)\.php$/i';
 
-        require_once __DIR__ . '/decoration/filter.php';
+        require_once __DIR__ . '/Decorator/filter.php';
 
-        $iterator = new DecoratorFilesFilter(
-            new RecursiveIteratorIterator(new RecursiveDirectoryIterator(LC_CLASSES_DIR))
+        $iterator = new \DecoratorFilesFilter(
+            new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator(LC_CLASSES_DIR))
         );
 
         foreach ($iterator as $fileInfo) {
@@ -1420,8 +1422,8 @@ class Decorator
                 $this->cleanUpCache();
             }
 
-            require_once __DIR__ . '/decoration/static.php';
-            $this->staticRoutinesHandler = new DecoratorStaticRoutines();
+            require_once __DIR__ . '/Decorator/static.php';
+            $this->staticRoutinesHandler = new \DecoratorStaticRoutines();
 
             // Write file to the cache directory
             foreach ($this->classesInfo as $class => $info) {
@@ -1506,7 +1508,7 @@ class Decorator
     protected function getDoctrineCacheDriver()
     {
         if (!isset($this->cacheDriver)) {
-            $this->cacheDriver = XLite\Core\Database::getCacheDriverByOptions($this->getConfigOptions('cache'));
+            $this->cacheDriver = \XLite\Core\Database::getCacheDriverByOptions($this->getConfigOptions('cache'));
         }
 
         return $this->cacheDriver;
@@ -2159,10 +2161,10 @@ DATA;
         $metadatas = $this->getEntityManager()->getMetadataFactory()->getAllMetadata();
 
         // Truncate old
-        foreach (XLite\Core\Database::getRepo('XLite\Model\ViewList')->findAll() as $l) {
-            XLite\Core\Database::getEM()->remove($l);
+        foreach (\XLite\Core\Database::getRepo('\XLite\Model\ViewList')->findAll() as $l) {
+            \XLite\Core\Database::getEM()->remove($l);
         }
-        XLite\Core\Database::getEM()->flush();
+        \XLite\Core\Database::getEM()->flush();
 
         $this->viewListPreprocessors = array();
 
@@ -2187,7 +2189,7 @@ DATA;
 
                 } else {
 
-                    XLite\Core\Database::getEM()->persist(
+                    \XLite\Core\Database::getEM()->persist(
                         $this->createViewList($list, $class)
                     );
                 }
@@ -2197,7 +2199,7 @@ DATA;
         // Assemble anniotaions from templates
         $this->assembleTemplateLists();
 
-        XLite\Core\Database::getEM()->flush();
+        \XLite\Core\Database::getEM()->flush();
 
         // Global modules preprocessing
         foreach (array_keys($this->classesInfo) as $class) {
@@ -2209,7 +2211,7 @@ DATA;
         // Static preprocessing
         foreach ($this->viewListPreprocessors as $class => $lists) {
             foreach ($lists as $list => $preprocessors) {
-                $data = XLite\Core\Database::getQB()
+                $data = \XLite\Core\Database::getQB()
                     ->select('v')
                     ->from('ViewList', 'v')
                     ->where('v.class = :class AND v.list = :list')
@@ -2225,7 +2227,7 @@ DATA;
             }
         }
 
-        XLite\Core\Database::getEM()->flush();
+        \XLite\Core\Database::getEM()->flush();
 
         $this->viewListPreprocessors = array();
     }
@@ -2247,7 +2249,7 @@ DATA;
             $list['class'] = '';
         }
 
-        $viewList = new XLite\Model\ViewList();
+        $viewList = new \XLite\Model\ViewList();
 
 
         $viewList->class = $list['class'];
@@ -2352,7 +2354,7 @@ DATA;
             . '(\w+)' . $sep
             . '/Ss';
 
-        $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(LC_SKINS_DIR));
+        $iterator = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator(LC_SKINS_DIR));
         foreach ($iterator as $fileInfo) {
             if ($fileInfo->isFile()) {
                 $pathInfo = pathinfo($fileInfo->getPathname());
@@ -2385,8 +2387,8 @@ DATA;
             $path = substr($path, strlen(LC_SKINS_DIR));
             $tmp = explode(LC_DS, $path);
             $zone = 'admin' == $tmp[0]
-                ? XLite\Model\ViewList::ADMIN_INTERFACE
-                : XLite\Model\ViewList::CUSTOMER_INTERFACE;
+                ? \XLite\Model\ViewList::ADMIN_INTERFACE
+                : \XLite\Model\ViewList::CUSTOMER_INTERFACE;
 
             foreach ($this->getListChildsByComment(trim($match[1])) as $list) {
 
@@ -2406,7 +2408,7 @@ DATA;
                     $viewList = $this->createViewList($list);
                     $viewList->tpl = $path;
 
-                    XLite\Core\Database::getEM()->persist($viewList);
+                    \XLite\Core\Database::getEM()->persist($viewList);
                 }
             }
         }
@@ -2521,10 +2523,10 @@ DATA;
     protected function collectPatches()
     {
         // Truncate old
-        foreach (XLite\Core\Database::getRepo('XLite\Model\TemplatePatch')->findAll() as $r) {
-            XLite\Core\Database::getEM()->remove($r);
+        foreach (\XLite\Core\Database::getRepo('\XLite\Model\TemplatePatch')->findAll() as $r) {
+            \XLite\Core\Database::getEM()->remove($r);
         }
-        XLite\Core\Database::getEM()->flush();
+        \XLite\Core\Database::getEM()->flush();
 
         // Create new
         foreach ($this->templatePatches as $class) {
@@ -2537,7 +2539,7 @@ DATA;
 
                 $valid = true;
 
-                $templatePatch = new XLite\Model\TemplatePatch();
+                $templatePatch = new \XLite\Model\TemplatePatch();
 
                 $templatePatch->patch_type = isset($patch[$class::PATCHER_CELL_TYPE])
                     ? $patch[$class::PATCHER_CELL_TYPE]
@@ -2587,11 +2589,11 @@ DATA;
                 }
 
                 if ($valid) {
-                    XLite\Core\Database::getEM()->persist($templatePatch);
+                    \XLite\Core\Database::getEM()->persist($templatePatch);
                 }
             }
 
-            XLite\Core\Database::getEM()->flush();
+            \XLite\Core\Database::getEM()->flush();
         }
     }
 
