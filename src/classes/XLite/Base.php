@@ -30,24 +30,14 @@ namespace XLite;
 
 /**
  * Base class
- * FIXME - must be abstract (see Model/Config.php)
+ * FIXME - must extends the Base\SuperClass
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Base
+abstract class Base extends Base\Singleton
 {
-    /**
-     * Array of instances for all derived classes
-     *
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0
-     */
-    protected static $instances = array();
-
     /**
      * Singletons accessible directly from each object (see the "__get" method)
      * 
@@ -65,16 +55,6 @@ class Base
         'layout'   => '\XLite\Model\Layout',
     );
 
-    /**
-     * Protected constructor. It's empty now
-     * 
-     * @return void
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function __construct() 
-    {
-    }
 
     /**
      * Stop script execution 
@@ -101,26 +81,6 @@ class Base
         die ($message);
     }
 
-
-    /**
-     * Method to access a singleton
-     *
-     * @return \XLite\Base
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function getInstance()
-    {
-        $className = get_called_class();
-
-        // Create new instance of the object (if it is not already created)
-        if (!isset(self::$instances[$className])) {
-            self::$instances[$className] = new $className();
-        }
-
-        return self::$instances[$className];
-    }
 
     /**
      * "Magic" getter. It's called when object property is not found
