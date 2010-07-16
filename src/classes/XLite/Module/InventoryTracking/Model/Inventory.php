@@ -35,7 +35,7 @@ namespace XLite\Module\InventoryTracking\Model;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Inventory extends \XLite\Model\AModel implements \XLite\Base\ISingleton
+class Inventory extends \XLite\Model\AModel
 {
     /**
     * @var string $alias The credit cards database table alias.

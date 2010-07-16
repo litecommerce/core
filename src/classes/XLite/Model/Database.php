@@ -37,12 +37,13 @@ define('SQL_UPLOAD_DIR', 'var/tmp/');
 
 /**
  * ____description____
+ * TODO[SINGLETON] - must extends the Base\Singleton
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Database extends \XLite\Base implements \XLite\Base\ISingleton
+class Database extends \XLite\Base
 {
     const DBTABLE_PREFIX = 'xlite_';
 

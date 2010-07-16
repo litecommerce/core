@@ -28,12 +28,13 @@
 
 /**
  * Application singleton
+ * TODO[SINGLETON] - lowest priority
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class XLite extends \XLite\Base implements \XLite\Base\ISingleton
+class XLite extends \XLite\Base
 {
     /**
      * Endpoints

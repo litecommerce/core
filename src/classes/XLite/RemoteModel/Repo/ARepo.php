@@ -35,7 +35,7 @@ namespace XLite\RemoteModel\Repo;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class ARepo extends \XLite\Base implements \XLite\Base\ISingleton
+class ARepo extends \XLite\Base\Singleton
 {
     /**
      * Map array to  remote model

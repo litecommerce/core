@@ -35,7 +35,7 @@ namespace XLite\Core;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class FlexyCompiler extends \XLite\Base implements \XLite\Base\ISingleton
+class FlexyCompiler extends \XLite\Base\Singleton
 {
     /**
      * Tag to define arrays in templates
@@ -71,6 +71,16 @@ class FlexyCompiler extends \XLite\Base implements \XLite\Base\ISingleton
      * @since  3.0.0
      */
     protected $urlRewrite = array();
+
+    /**
+     * patches 
+     * 
+     * @var    mixed
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $patches;
 
 
     /**
@@ -208,7 +218,7 @@ class FlexyCompiler extends \XLite\Base implements \XLite\Base\ISingleton
      */
     protected function getPatches($zone, $lang, $tpl)
     {
-        if (is_null($this->patches)) {
+        if (!isset($this->patches)) {
             $this->patches = \XLite\Core\Database::getRepo('XLite\Model\TemplatePatch')->findAllPatches();
         }
 
@@ -1073,16 +1083,16 @@ class FlexyCompiler extends \XLite\Base implements \XLite\Base\ISingleton
 
     function getXliteFormIDText()
     {
-        if (!isset($this->xlite->_xlite_form_id_text) || !isset($this->xlite->_xlite_form_id_text)) {
-            $this->xlite->_xlite_form_id_text = $this->flexyEcho("{session.getXliteFormID()}");
+        if (!isset(\XLite::getInstance()->_xlite_form_id_text) || !isset(\XLite::getInstance()->_xlite_form_id_text)) {
+            \XLite::getInstance()->_xlite_form_id_text = $this->flexyEcho("{session.getXliteFormID()}");
         }
 
-        return $this->xlite->_xlite_form_id_text;
+        return \XLite::getInstance()->_xlite_form_id_text;
     }
 
     function attachFormID($token_index)
     {
-        if (!$this->xlite->is('adminZone')) return;
+        if (!\XLite::isAdminZone()) return;
 
         $token = $this->tokens[$token_index];
         $token['name'] = empty($token['name']) ? '' : strtolower($token['name']);

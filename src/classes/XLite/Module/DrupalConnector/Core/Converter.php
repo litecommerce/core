@@ -37,7 +37,7 @@ namespace XLite\Module\DrupalConnector\Core;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Converter extends \XLite\Core\Converter implements \XLite\Base\IDecorator, \XLite\Base\ISingleton
+class Converter extends \XLite\Core\Converter implements \XLite\Base\IDecorator
 {
     /**
      * It's the the root part of Drupal nodes which are the imported LiteCommerce widgets

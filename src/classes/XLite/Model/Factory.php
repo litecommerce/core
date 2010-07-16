@@ -30,15 +30,18 @@ namespace XLite\Model;
 
 /**
  * ____description____
+ * TODO[SINGLETON] - must extends the Base\Singleton
+ * NOTE - check the "factory.<name>" tags in templates
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Factory extends \XLite\Base implements \XLite\Base\ISingleton
+class Factory extends \XLite\Base
 {
     /**
      * Check if class is a singleton 
+     * FIXME - must be revised or removed
      * 
      * @param ReflectionClass $handler class descriptor
      *  
@@ -48,7 +51,7 @@ class Factory extends \XLite\Base implements \XLite\Base\ISingleton
      */
     protected static function isSingleton(\ReflectionClass $handler)
     {
-        return $handler->implementsInterface('\XLite\Base\ISingleton');
+        return $handler->getConstructor()->isProtected();
     }
 
     /**

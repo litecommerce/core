@@ -35,7 +35,7 @@ namespace XLite\Core;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Operator extends \XLite\Base implements \XLite\Base\ISingleton
+class Operator extends \XLite\Base\Singleton
 {
     /**
      * Check if we need to perform a redirect or not 

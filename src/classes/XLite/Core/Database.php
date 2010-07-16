@@ -35,7 +35,7 @@ namespace XLite\Core;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Database extends \XLite\Base implements \XLite\Base\ISingleton
+class Database extends \XLite\Base\Singleton
 {
     /**
      * Doctrine config object
@@ -46,6 +46,17 @@ class Database extends \XLite\Base implements \XLite\Base\ISingleton
      * @since  3.0.0
      */
     protected $doctrineConfig = null;
+
+    /**
+     * connected 
+     * 
+     * @var    bool
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $connected;
+
 
     /**
      * Doctrine entity manager 
@@ -66,6 +77,7 @@ class Database extends \XLite\Base implements \XLite\Base\ISingleton
      * @since  3.0.0
      */
     protected static $cacheDriver = null;
+
 
     /**
      * Constructor

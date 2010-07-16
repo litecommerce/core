@@ -46,7 +46,6 @@ class Decorator
     const INFO_EXTENDS       = 'extends';
     const INFO_EXTENDS_ORIG  = 'extends_orig';
     const INFO_IS_DECORATOR  = 'is_decorator';
-    const INFO_IS_SINGLETON  = 'is_singleton';
     const INFO_IS_ROOT_CLASS = 'is_top_class';
     const INFO_CLASS_TYPE    = 'class_type';
     const INFO_ENTITY        = 'entity';
@@ -654,20 +653,6 @@ class Decorator
     }
 
     /**
-     * Check if current class implements the "ISingleton" interface
-     *
-     * @param array $implements list of implemented inerfaces
-     *
-     * @return bool
-     * @access protected
-     * @since  3.0
-     */
-    protected function isSingleton($implements)
-    {
-        return $this->isImplements('\XLite\Base\ISingleton', $implements);
-    }
-
-    /**
      * Check if current class implements the "XLite\Base\IViewChild" interface
      * 
      * @param string $comment Class comment
@@ -1199,7 +1184,6 @@ class Decorator
                     self::INFO_EXTENDS       => $e,
                     self::INFO_EXTENDS_ORIG  => $e,
                     self::INFO_IS_DECORATOR  => $this->isDecorator($implements),
-                    self::INFO_IS_SINGLETON  => $this->isSingleton($implements),
                     self::INFO_ENTITY        => $isEntity,
                     self::INFO_CLASS_COMMENT => $classComment,
                 );

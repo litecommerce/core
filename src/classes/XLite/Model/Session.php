@@ -32,12 +32,13 @@ define('SESSION_DEFAULT_ID', md5(uniqid(rand(), true)));
 
 /**
  * Session
+ * TODO[SINGLETON]
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class Session extends \XLite\Base implements \XLite\Base\ISingleton
+abstract class Session extends \XLite\Base
 {
     /**
      * Currently used form ID 

@@ -38,12 +38,13 @@ $_reReadProfiles = false;
 
 /**
  * Authorization routine
+ * TODO[SINGLETON] - must extends the Base\Singleton
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Auth extends \XLite\Base implements \XLite\Base\ISingleton
+class Auth extends \XLite\Base
 {
     /**
      * Integer codes for action results

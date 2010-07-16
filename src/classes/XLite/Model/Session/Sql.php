@@ -35,7 +35,7 @@ namespace XLite\Model\Session;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Sql extends \XLite\Model\Session implements \XLite\Base\ISingleton
+class Sql extends \XLite\Model\Session
 {
     /**
      * The database sql table to store session to 

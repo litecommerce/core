@@ -35,7 +35,7 @@ namespace XLite\Core;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Request extends \XLite\Base implements \XLite\Base\ISingleton
+class Request extends \XLite\Base\Singleton
 {
     /**
      * Cureent request method 

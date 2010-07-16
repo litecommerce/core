@@ -35,7 +35,7 @@ namespace XLite\Core;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class TopMessage extends \XLite\Base implements \XLite\Base\ISingleton
+class TopMessage extends \XLite\Base\Singleton
 {
     /**
      * Message types 
@@ -124,7 +124,7 @@ class TopMessage extends \XLite\Base implements \XLite\Base\ISingleton
                     self::FIELD_TYPE => $type,
                 );
                 $this->messages = $messages;
-                $this->session->set('topMessages', $messages);
+                \XLite\Model\Session::getInstance()->set('topMessages', $messages);
                 $result = true;
             }
         }
@@ -215,7 +215,7 @@ class TopMessage extends \XLite\Base implements \XLite\Base\ISingleton
      */
     public function getMessages()
     {
-        $messages = $this->session->get('topMessages');
+        $messages = \XLite\Model\Session::getInstance()->get('topMessages');
         if (!is_array($messages)) {
             $messages = array();
         }
@@ -246,6 +246,6 @@ class TopMessage extends \XLite\Base implements \XLite\Base\ISingleton
      */
     public function clear()
     {
-        $this->session->set('topMessages', array());
+        \XLite\Model\Session::getInstance()->set('topMessages', array());
     }
 }
