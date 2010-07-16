@@ -1164,6 +1164,10 @@ abstract class AView extends \XLite\Core\Handler
 
         foreach ($childs as $widget) {
 
+            if (isset($widgets[$widget->tpl])) {
+                continue;
+            }
+
             $w = false;
 
             if ($widget->child) {
@@ -1190,7 +1194,7 @@ abstract class AView extends \XLite\Core\Handler
             }
 
             if ($w) {
-                $widgets[] = $w;
+                $widgets[$widget->tpl] = $w;
             }
         }
 
