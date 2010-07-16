@@ -105,6 +105,7 @@ class Database extends \XLite\Base implements \XLite\Base\ISingleton
         // Set proxy settings
         $this->config->setProxyDir(LC_PROXY_CACHE_DIR);
         $this->config->setProxyNamespace(LC_MODEL_PROXY_NS);
+        $this->config->setAutoGenerateProxyClasses(false);
 
         // Initialize DB connection and entity manager
         self::$em = \Doctrine\ORM\EntityManager::create($this->getDSN(), $this->config);
