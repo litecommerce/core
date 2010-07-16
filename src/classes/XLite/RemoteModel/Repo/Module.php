@@ -35,7 +35,7 @@ namespace XLite\RemoteModel\Repo;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Module extends ARepo implements \XLite\Base\ISingleton
+class Module extends ARepo
 {
     const ALL_MODULES  = 0;
     const FREE_MODULES = 1;
