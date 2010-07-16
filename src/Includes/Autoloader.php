@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage ____sub_package____
+ * @subpackage Includes
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -33,7 +33,6 @@ namespace Includes;
  * NOTE - this class is abstract due to prevent its instantiation
  * 
  * @package    XLite
- * @subpackage ____sub_package____
  * @see        ____class_see____
  * @since      3.0.0
  */
