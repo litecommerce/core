@@ -84,6 +84,16 @@ INSERT INTO xlite_language_label_translations (id, code, label) VALUES (82, 'en'
 INSERT INTO xlite_language_label_translations (id, code, label) VALUES (83, 'en', 'Please specify a pattern to find the required labels');
 INSERT INTO xlite_language_label_translations (id, code, label) VALUES (84, 'en', 'The language is <span>enabled</span>');
 INSERT INTO xlite_language_label_translations (id, code, label) VALUES (85, 'en', 'The language is <span>disabled</span>');
+INSERT INTO xlite_language_label_translations (id, code, label) VALUES (86, 'en', 'The module to uninstall has not been found');
+INSERT INTO xlite_language_label_translations (id, code, label) VALUES (87, 'en', 'The module has been uninstalled successfully');
+INSERT INTO xlite_language_label_translations (id, code, label) VALUES (88, 'en', 'The module has been partially uninstalled');
+INSERT INTO xlite_language_label_translations (id, code, label) VALUES (89, 'en', 'The {{module}} module has been installed successfully');
+INSERT INTO xlite_language_label_translations (id, code, label) VALUES (90, 'en', 'The {{module}} module has been installed with errors: the DB has not been modified correctly');
+INSERT INTO xlite_language_label_translations (id, code, label) VALUES (91, 'en', 'The {{module}} module has been installed incorrectly. Please see the logs for more information');
+INSERT INTO xlite_language_label_translations (id, code, label) VALUES (92, 'en', 'The {{module}} module has been installed, but the module has a wrong module control class');
+INSERT INTO xlite_language_label_translations (id, code, label) VALUES (93, 'en', 'The {{module}} module has been uninstalled in an abnormal way');
+INSERT INTO xlite_language_label_translations (id, code, label) VALUES (94, 'en', 'The modules have been updated');
+INSERT INTO xlite_language_label_translations (id, code, label) VALUES (95, 'en', 'The {{module}} module has been disabled in an abnormal way');
 
 -- Language names
 INSERT INTO xlite_language_translations (code, id, name) VALUES ('en',1,'Afar');

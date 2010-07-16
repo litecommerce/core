@@ -155,16 +155,21 @@ class Module extends AEntity
      * 
      * @param boolean $enabled Enabled status
      *  
-     * @return void
+     * @return boolean
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
     public function setEnabled($enabled)
     {
-        if (!$enabled || self::INSTALLED == $this->getInstalled()) {
+        $result = false;
+
+        if (!$enabled || $this->canEnable()) {
             $this->enabled = $enabled;
+            $result = true;
         }
+
+        return $result;
     }
 
     /**
@@ -362,11 +367,24 @@ class Module extends AEntity
     {
         $status = true;
 
-        foreach ($this->getDependenciesModules() as $module) {
-            if (!$module->getEnabled()) {
-                $status = false;
-                break;
+        // Check installed status
+        if (self::INSTALLED != $this->getInstalled()) {
+            $status = false;
+        }
+
+        // Check dependencies
+        if ($status && $this->getDependencies()) {
+            foreach ($this->getDependenciesModules() as $module) {
+                if (!$module->getEnabled()) {
+                    $status = false;
+                    break;
+                }
             }
+        }
+
+        // Check internal enviroment checker
+        if ($status) {
+            $status = $this->getMainClass()->check();
         }
 
         return $status;
@@ -463,6 +481,48 @@ class Module extends AEntity
             $status = self::INSTALLED_WO_CTRL;
         }
 
+        switch ($status) {
+            case self::INSTALLED:
+                \XLite\Logger::getInstance()->log(
+                    \XLite\Core\Translation::lbl('The X module has been installed successfully', array('module' => $name)),
+                    PEAR_LOG_ERR
+                );
+                break;
+
+            case self::INSTALLED_WO_SQL:
+                \XLite\Logger::getInstance()->log(
+                    \XLite\Core\Translation::lbl(
+                        'The X module has been installed with errors: the DB has not been modified correctly',
+                        array('module' => $name)
+                    ),
+                    PEAR_LOG_ERR
+                );
+                break;
+
+            case self::INSTALLED_WO_PHP:
+                \XLite\Logger::getInstance()->log(
+                    \XLite\Core\Translation::lbl(
+                        'The X module has been installed incorrectly. Please see the logs for more information',
+                        array('module' => $name)
+                    ),
+                    PEAR_LOG_ERR
+                );
+                break;
+
+            case self::INSTALLED_WO_CTRL:
+                \XLite\Logger::getInstance()->log(
+                    \XLite\Core\Translation::lbl(
+                        'The X module has been installed, but the module has a wrong module control class',
+                        array('module' => $name)
+                    ),
+                    PEAR_LOG_ERR
+                );
+                break;
+
+
+
+        }
+
         $module->setInstalled($status);
         \XLite\Core\Database::getEM()->persist($module);
         \XLite\Core\Database::getEM()->flush();
@@ -510,7 +570,7 @@ class Module extends AEntity
         // Remove repository
         $status = $status && unlinkRecursive(LC_MODULES_DIR . $this->getName());
 
-        return $status;;
+        return $status;
     }
 
     /**
