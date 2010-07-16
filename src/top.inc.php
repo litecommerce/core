@@ -27,8 +27,8 @@
  */
 
 // Uncomment these lines for debug
-error_reporting(E_ALL | E_STRICT);
-ini_set('display_errors', true);
+// error_reporting(E_ALL | E_STRICT);
+// ini_set('display_errors', true);
 
 // It's the feature of PHP 5. We need to explicitly define current time zone.
 // See also http://bugs.php.net/bug.php?id=48914
@@ -50,6 +50,7 @@ define('LC_AUTOLOAD_DIR',      defined('XLITE_INSTALL_MODE') ? LC_CLASSES_DIR : 
 
 // Autoloading routines
 require_once (LC_INCLUDES_DIR . 'Autoloader.php');
+\Includes\Autoloader::registerAll();
 
 // FIXME - to remove
 require_once (LC_INCLUDES_DIR . 'prepend.php');

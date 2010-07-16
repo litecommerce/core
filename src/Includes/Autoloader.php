@@ -30,13 +30,14 @@ namespace Includes;
 
 /**
  * Autoloader 
+ * NOTE - this class is abstract due to prevent its instantiation
  * 
  * @package    XLite
  * @subpackage ____sub_package____
  * @see        ____class_see____
  * @since      3.0.0
  */
-class Autoloader
+abstract class Autoloader
 {
     /**
      * List of registerd autoload functions 
@@ -89,25 +90,6 @@ class Autoloader
 
 
     /**
-     * Add an autoload function to the list
-     * 
-     * @param string $method function name
-     *  
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function register($method)
-    {
-        if (false !== array_search($method, static::$functions[$method])) {
-            throw new Exception('Autoload function "' . $method . '" is already registered');
-        }
-
-        static::$functions[] = $method;
-    }
-
-    /**
      * Main LC autoloader
      * 
      * @param string $class name of the class to load
@@ -137,6 +119,26 @@ class Autoloader
         self::autoloadCommon('Includes', $class, LC_INCLUDES_DIR);
     }
 
+
+    /**
+     * Add an autoload function to the list
+     * 
+     * @param string $method function name
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function addFunction($method)
+    {
+        if (false !== array_search($method, static::$functions[$method])) {
+            throw new Exception('Autoload function "' . $method . '" is already registered');
+        }
+
+        static::$functions[] = $method;
+    }
+
     /**
      * Register autoload functions
      * 
@@ -145,7 +147,7 @@ class Autoloader
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function __constructStatic()
+    public static function registerAll()
     {
         foreach (static::$functions as $method) {
             spl_autoload_register(array('static', $method));
@@ -154,7 +156,3 @@ class Autoloader
         static::registerDoctrineAutoloader();
     }
 }
-
-// Register functions
-Autoloader::__constructStatic();
-
