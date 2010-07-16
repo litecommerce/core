@@ -30,12 +30,13 @@ namespace XLite\Model;
 
 /**
  * Cart 
+ * TODO[SINGLETON] - check how to resolve this issue
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Cart extends Order implements \XLite\Base\ISingleton
+class Cart extends Order
 {
     /**
      * Constructor

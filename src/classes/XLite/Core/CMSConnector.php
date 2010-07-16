@@ -35,7 +35,7 @@ namespace XLite\Core;
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class CMSConnector extends \XLite\Base implements \XLite\Base\ISingleton
+abstract class CMSConnector extends \XLite\Base\Singleton
 {
     /**
      * Name of the request param, which determines the redirect behaviour
@@ -499,7 +499,7 @@ abstract class CMSConnector extends \XLite\Base implements \XLite\Base\ISingleto
      */
     public function getSessionTtl()
     {
-        return $this->session->getTtl();
+        return \XLite\Model\Session::getInstance()->getTtl();
     }
 }
 

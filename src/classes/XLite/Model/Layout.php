@@ -30,12 +30,13 @@ namespace XLite\Model;
 
 /**
  * Layoue manager
+ * TODO[SINGLETON] - must extends the Base\Singleton
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Layout extends \XLite\Base implements \XLite\Base\ISingleton
+class Layout extends \XLite\Base
 {
     public $skin = null;
 

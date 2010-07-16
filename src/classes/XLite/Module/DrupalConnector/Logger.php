@@ -35,8 +35,7 @@ namespace XLite\Module\DrupalConnector;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Logger extends \XLite\Logger
-implements \XLite\Base\ISingleton, \XLite\Base\IDecorator
+class Logger extends \XLite\Logger implements \XLite\Base\IDecorator
 {
     /**
      * Constructor

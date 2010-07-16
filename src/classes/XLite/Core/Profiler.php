@@ -35,7 +35,7 @@ namespace XLite\Core;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Profiler extends \XLite\Base implements \XLite\Base\ISingleton, \Doctrine\DBAL\Logging\SQLLogger
+class Profiler extends \XLite\Base\Singleton implements \Doctrine\DBAL\Logging\SQLLogger
 {
     const QUERY_LIMIT_TIMES = 2;
     const QUERY_LIMIT_DURATION = 0.05;

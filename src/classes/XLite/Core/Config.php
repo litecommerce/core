@@ -35,7 +35,7 @@ namespace XLite\Core;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Config extends \XLite\Base implements \XLite\Base\ISingleton
+class Config extends \XLite\Base\Singleton
 {
     /**
      * Read config options

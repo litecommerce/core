@@ -35,7 +35,7 @@ namespace XLite\Core;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Converter extends \XLite\Base implements \XLite\Base\ISingleton
+class Converter extends \XLite\Base\Singleton
 {
     /**
      * Method name translation records
