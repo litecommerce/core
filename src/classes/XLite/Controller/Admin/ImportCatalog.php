@@ -71,7 +71,7 @@ class ImportCatalog extends AAdmin
         
         $name = "";
         if ($this->action == "import_products" || $this->action == "layout") {
-            if (!func_is_array_unique($this->product_layout, $name, "NULL")) {
+            if (!\Includes\Utils\ArrayManager::isArrayUnique($this->product_layout, $name, array("NULL"))) {
                 $this->set('valid', false);
                 $this->set('invalid_field_order', true);
                 $this->set('invalid_field_name', $name);
@@ -83,7 +83,7 @@ class ImportCatalog extends AAdmin
             }
         }
 
-        if ( ($this->action == "import_fields" || $this->action == "fields_layout") && !func_is_array_unique($this->fields_layout, $name, "NULL") ) {
+        if ( ($this->action == "import_fields" || $this->action == "fields_layout") && !\Includes\Utils\ArrayManager::isArrayUnique($this->fields_layout, $name, array("NULL")) ) {
             $this->set('valid', false);
             $this->set('invalid_field_order', true);
             $this->set('invalid_field_name', $name);

@@ -54,18 +54,18 @@ class ExportCatalog extends AAdmin
             ( 
                 ($this->action == "export_products" || $this->action == "layout")
                 && 
-                !func_is_array_unique($this->product_layout, $name, "NULL")
+                !\Includes\Utils\ArrayManager::isArrayUnique($this->product_layout, $name, array("NULL"))
             ) 
             || 
             ( 
                 ($this->action == "export_fields" || $this->action == "fields_layout")
                 && 
-                !func_is_array_unique($this->fields_layout, $name, "NULL")
+                !\Includes\Utils\ArrayManager::isArrayUnique($this->fields_layout, $name, array("NULL"))
             )
         ) {
             $this->set('valid', false);
             $this->set('invalid_field_order', true);
-            $this->set('invalid_field_name', $name);	// $name was filled in func_is_array_unique()
+            $this->set('invalid_field_name', $name);
         }
         
         parent::handleRequest();
