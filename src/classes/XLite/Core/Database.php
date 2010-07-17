@@ -409,10 +409,7 @@ class Database extends \XLite\Base\Singleton
 
         // Set table name prefix
         $classMetadata->setTableName(
-            sprintf(
-                \XLite::getInstance()->getOptions(array('database_details', 'table_pattern')),
-                $classMetadata->getTableName()
-            )
+            \XLite::getInstance()->getOptions(array('database_details', 'table_prefix')) . $classMetadata->getTableName()
         );
 
         // Set repository

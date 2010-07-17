@@ -26,8 +26,6 @@
  * @since      3.0.0
  */
 
-define('LC_CONFIG_DIR', LC_ROOT_DIR . 'etc' . LC_DS);
-
 define('LC_MODULES_DIR', LC_CLASSES_DIR . 'XLite' . LC_DS . 'Module' . LC_DS);
 
 // Temporary directories

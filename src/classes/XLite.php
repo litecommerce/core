@@ -79,15 +79,6 @@ class XLite extends \XLite\Base
     protected $isNeedToCleanupCache = false;
 
     /**
-     * Config options hash
-     * 
-     * @var    array
-     * @access protected
-     * @since  3.0.0
-     */
-    protected $options = null;
-
-    /**
      * TODO - check if it's realy needed 
      * 
      * @var    mixed
@@ -105,18 +96,6 @@ class XLite extends \XLite\Base
      */
     protected function __construct()
     {
-    }
-
-    /**
-     * Parse config file and return options list
-     * 
-     * @return array
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function parseConfigFile()
-    {
-        return funcParseConfgFile();
     }
 
     /**
@@ -200,32 +179,7 @@ class XLite extends \XLite\Base
      */
     public function getOptions($names = null)
     {
-        if (!isset($this->options)) {
-            $this->options = $this->parseConfigFile();
-            if (!is_array($this->options)) {
-                $this->doDie('Unable to read/parse configuration file(s)');
-            }
-
-            $this->options['host_details']['web_dir_wo_slash'] = rtrim($this->options['host_details']['web_dir'], '/');
-        }
-
-        $result = $this->options;
-
-        if (is_array($names)) {
-            while (!empty($names) && isset($result)) {
-                $key = array_shift($names);
-                if (!isset($key)) {
-                    break;
-                }
-
-                $result = isset($result[$key]) ? $result[$key] : null;
-            }
-
-        } elseif (isset($names)) {
-            $result = isset($result[$names]) ? $result[$names] : null;
-        }
-
-        return $result;
+        return \Includes\Utils\ConfigParser::getOptions($names);
     }
 
     /**
@@ -436,6 +390,7 @@ class XLite extends \XLite\Base
 
     /**
      * Rebuild decoration cache in emergency mode
+     * FIXME - to revise
      * 
      * @return void
      * @access public
@@ -444,22 +399,13 @@ class XLite extends \XLite\Base
      */
     public function rebuildCacheEmergency()
     {
-        $iterator = new \RecursiveDirectoryIterator(LC_CLASSES_CACHE_DIR . LC_DS . 'Core' . LC_DS);
-        $iterator = new \RecursiveIteratorIterator($iterator, \RecursiveIteratorIterator::CHILD_FIRST);
-        $iterator = new \RegexIterator($iterator, '/\.php$/Ss');
-
-        foreach ($iterator as $f) {
-            require_once $f->getRealPath();
-        }
-
-        $decorator = new \Decorator();
-        $decorator->cleanUpCache();
-
+        \Includes\Decorator::getInstance()->cleanUpCache();
         \XLite\Core\Operator::redirect($_SERVER['REQUEST_URI'], true);
     }
 
     /**
      * Rebuild decoration cache in lazy mode (cache will be rebuild after next application start)
+     * FIXME - to revise
      * 
      * @return void
      * @access public
@@ -471,17 +417,7 @@ class XLite extends \XLite\Base
         static $runned = false;
 
         if (!$runned) {
-            $iterator = new \RecursiveDirectoryIterator(LC_CLASSES_CACHE_DIR . LC_DS);
-            $iterator = new \RecursiveIteratorIterator($iterator, \RecursiveIteratorIterator::CHILD_FIRST);
-            $iterator = new \RegexIterator($iterator, '/\.php$/Ss');
-
-            foreach ($iterator as $f) {
-                require_once $f->getRealPath();
-            }
-
-            $decorator = new \Decorator();
-            $decorator->cleanUpCache();
-
+            \Includes\Decorator::getInstance()->cleanUpCache();
             $runned = true;
         }
     }

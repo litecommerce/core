@@ -1147,9 +1147,7 @@ function doInstallDatabase($trigger, &$params, $silentMode = false)
  */
 function doRebuildCache()
 {
-    $decorator = new \Includes\Decorator();
-    $decorator->rebuildCache(true, false);
-    $decorator = null;
+    \Includes\Decorator::getInstance()->rebuildCache();
 }
 
 /**

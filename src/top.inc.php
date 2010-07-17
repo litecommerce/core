@@ -43,6 +43,7 @@ define('LC_ROOT_DIR',          rtrim(LC_DIR, LC_DS) . LC_DS);
 define('LC_CLASSES_DIR',       LC_ROOT_DIR . 'classes' . LC_DS);
 define('LC_VAR_DIR',           LC_ROOT_DIR . 'var' . LC_DS);
 define('LC_LIB_DIR',           LC_ROOT_DIR . 'lib' . LC_DS);
+define('LC_CONFIG_DIR',        LC_ROOT_DIR . 'etc' . LC_DS);
 define('LC_INCLUDES_DIR',      LC_ROOT_DIR . 'Includes' . LC_DS);
 define('LC_COMPILE_DIR',       LC_VAR_DIR . 'run' . LC_DS);
 define('LC_CLASSES_CACHE_DIR', LC_COMPILE_DIR . 'classes' . LC_DS);
@@ -55,9 +56,7 @@ require_once (LC_INCLUDES_DIR . 'Autoloader.php');
 // FIXME - to remove
 require_once (LC_INCLUDES_DIR . 'prepend.php');
 
-if (!defined('XLITE_INSTALL_MODE')) {
-    // Check and (if needed) rebild classes cache
-    $decorator = new \Includes\Decorator();
-    $decorator->rebuildCache();
-    $decorator = null;
+// Check and (if needed) rebild classes cache
+if (\Includes\Decorator\Utils\CacheManager::isRebuildNeeded()) {
+    \Includes\Decorator::getInstance()->rebuildCache();
 }
