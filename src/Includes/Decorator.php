@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage Core
+ * @subpackage Includes
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -35,7 +35,7 @@ namespace Includes;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Decorator
+class Decorator extends Decorator\ADecorator
 {
     /**
      * Indexes in "classesInfo" array
@@ -154,15 +154,6 @@ class Decorator
         self::INFO_CLASS_ORIG   => 'class  ',
         self::INFO_EXTENDS_ORIG => 'extends',
     );
-
-    /**
-     * Settings retrieved from config files
-     * 
-     * @var    array
-     * @access protected
-     * @since  3.0
-     */
-    protected $configOptions = null;
 
     /**
      * PDO connection handler 
@@ -695,176 +686,6 @@ class Decorator
     }
 
     /**
-     * Return setting from config.ini file 
-     * 
-     * @param string $section name of section in config file
-     *  
-     * @return void
-     * @access protected
-     * @since  3.0
-     */
-    protected function getConfigOptions($section = '')
-    {
-        if (!isset($this->configOptions)) {
-            $this->configOptions = funcParseConfgFile();
-            if (!is_array($this->configOptions)) {
-                die ('Unable to read/parse configuration file(s)');
-            }
-        }
-
-        $options = $this->configOptions;
-        if ($section) {
-            $options = isset($options[$section]) ? $options[$section] : null;
-        }
-
-        return $options;
-    }
-
-    /**
-     * Prepare MySQL connection string
-     *
-     * @param array $options MySQL credentials
-     *
-     * @return string
-     * @access protected
-     * @since  3.0
-     */
-    protected function getConnectionString(array $options)
-    {
-        $dsnFields = array(
-            'host'        => 'hostspec',
-            'port'        => 'port',
-            'unix_socket' => 'socket',
-            'dbname'      => 'database',
-        );
-        $dsnString = array();
-
-        foreach ($dsnFields as $pdoOption => $lcOption) {
-
-            if (!empty($options[$lcOption])) {
-                $dsnString[] = $pdoOption . '=' . $options[$lcOption];
-            }
-        }
-
-        return 'mysql:' . implode(';', $dsnString);
-    }
-
-    /**
-     * Connect to database 
-     * 
-     * @return PDO
-     * @access protected
-     * @since  3.0
-     */
-    protected function connectToDb()
-    {
-        $options = $this->getConfigOptions('database_details');
-
-        $user     = isset($options['username']) ? $options['username'] : '';
-        $password = isset($options['password']) ? $options['password'] : '';
-
-        // PDO flags using for connection
-        $connectionParams = array(
-            \PDO::ATTR_AUTOCOMMIT => true,
-            \PDO::ATTR_ERRMODE    => \PDO::ERRMODE_SILENT,
-            \PDO::ATTR_PERSISTENT => false,
-        );
-
-        return new \PDO(
-            $this->getConnectionString($options),
-            $user,
-            $password,
-            $connectionParams
-        );
-    }
-
-    /**
-     * Return PDO database handler
-     * 
-     * @return PDO
-     * @access protected
-     * @since  3.0
-     */
-    protected function getDbHandler()
-    {
-        if (!isset($this->dbHandler)) {
-            $this->dbHandler = $this->connectToDb();
-        }
-
-        return $this->dbHandler;
-    }
-
-    /**
-     * Perform SQL query (return araay of records) 
-     * 
-     * @param string  $sql   SQL query to execute
-     * @param integer $flags PDO fetch option
-     *  
-     * @return array
-     * @access protected
-     * @since  3.0
-     */
-    protected function fetchAll($sql, $flags = PDO::FETCH_ASSOC)
-    {
-        return $this->getDbHandler()->query($sql)->fetchAll($flags);
-    }
-
-    /**
-     * Perform SQL query (single value)
-     *
-     * @param string $sql SQL query to execute
-     *
-     * @return string
-     * @access protected
-     * @since  3.0
-     */
-    protected function fetchColumn($sql)
-    {
-        return $this->getDbHandler()->query($sql)->fetchColumn();
-    }
-
-    /**
-     * Check if directory with cached PHP files is exists 
-     * 
-     * @return bool
-     * @access protected
-     * @since  3.0
-     */
-    protected function isCacheDirExists()
-    {
-        return file_exists(LC_CLASSES_CACHE_DIR)
-            && is_dir(LC_CLASSES_CACHE_DIR)
-            && is_readable(LC_CLASSES_CACHE_DIR);
-    }
-
-    /**
-     * Check if LiteCommerce is in so called "developer mode" (forced to rebuild cache)
-     *
-     * @return bool
-     * @access protected
-     * @since  3.0
-     */
-    protected function isDeveloperMode()
-    {
-        $query = 'SELECT value FROM xlite_config WHERE category = \'General\' AND name = \'developer_mode\'';
-
-        return ('Y' === $this->fetchColumn($query))
-            && empty($_REQUEST['action']);
-    }
-
-    /**
-     * Check if cache rebuild is required
-     * 
-     * @return bool
-     * @access protected
-     * @since  3.0
-     */
-    protected function isNeedRebuild()
-    {
-        return !$this->isCacheDirExists();
-    }
-
-    /**
      * Retrieve module name from class name 
      * 
      * @param string $className class name to parse
@@ -953,7 +774,7 @@ class Decorator
     {
         if (!isset($this->mutualModules)) {
 
-            $this->mutualModules = $this->fetchAll(
+            $this->mutualModules = \Includes\Utils\Database::fetchAll(
                 'SELECT name, mutual_modules FROM xlite_modules WHERE enabled = \'1\' AND mutual_modules != \'\'',
                 \PDO::FETCH_ASSOC | \PDO::FETCH_GROUP | \PDO::FETCH_UNIQUE | \PDO::FETCH_COLUMN
             );
@@ -977,7 +798,7 @@ class Decorator
     {
         if (!isset($this->activeModules)) {
 
-            $this->activeModules = $this->fetchAll(
+            $this->activeModules = \Includes\Utils\Database::fetchAll(
                 'SELECT name, \'1\' FROM xlite_modules WHERE enabled = \'1\'',
                 \PDO::FETCH_ASSOC | \PDO::FETCH_GROUP | \PDO::FETCH_UNIQUE | \PDO::FETCH_COLUMN
             );
@@ -995,7 +816,7 @@ class Decorator
                 $modulesToDisable = array_unique($modulesToDisable);
                 $query = 'UPDATE xlite_modules SET enabled = \'0\' WHERE name IN '
                     . '(' . implode(',', array_fill(0, count($modulesToDisable), '?')) . ')';
-                $this->getDbHandler()->prepare($query)->execute($modulesToDisable);
+                \Includes\Utils\Database::execute($query, $modulesToDisable);
             }
         }
 
@@ -1034,7 +855,7 @@ class Decorator
             foreach ($this->getActiveModules() as $module) {
 
                 // Fetch dependencies from db
-                $dependencies = $this->fetchColumn(
+                $dependencies = \Includes\Utils\Database::fetchColumn(
                     'SELECT dependencies FROM xlite_modules WHERE name = \'' . addslashes($module) . '\''
                 );
                 $this->moduleDependencies[$module] = empty($dependencies)
@@ -1370,97 +1191,92 @@ class Decorator
     /**
      * Check and (if needed) rebuild cache
      * 
-     * @param bool $force flag to force rebuild
-     *
      * @return void
      * @access public
      * @since  3.0
      */
-    public function rebuildCache($force = false)
+    public function rebuildCache()
     {
-        if ($this->isNeedRebuild() || $this->isDeveloperMode() || $force) {
+        if (!defined('LC_DECORATION')) {
+            define('LC_DECORATION', true);
+        }
 
-            if (!defined('LC_DECORATION')) {
-                define('LC_DECORATION', true);
+        if (!defined('SILENT_CACHE_REBUILD')) {
+            if ('cli' == PHP_SAPI) {
+                $this->showPlainTextBlock();
+
+            } elseif (isset($_REQUEST) && (!isset($_REQUEST['action']) || empty($_REQUEST['action']))) {
+                $this->showJavaScriptBlock();
             }
+        }
 
-            if (!defined('SILENT_CACHE_REBUILD')) {
-                if ('cli' == PHP_SAPI) {
-                    $this->showPlainTextBlock();
+        $this->setMaxExecutionTime();
 
-                } elseif (isset($_REQUEST) && (!isset($_REQUEST['action']) || empty($_REQUEST['action']))) {
-                    $this->showJavaScriptBlock();
-                }
-            }
+        // Prepare classes list
+        $this->createClassTree();
+        $this->normalizeModuleControllerNames();
+        $this->createDecoratorTree();
+        $this->mergeClassAndDecoratorTrees();
 
-            $this->setMaxExecutionTime();
+        // Remove old files
+        if (\Includes\Decorator\Utils\CacheManager::isCacheDirExists()) {
+            $this->cleanUpCache();
+        }
 
-            // Prepare classes list
-            $this->createClassTree();
-            $this->normalizeModuleControllerNames();
-            $this->createDecoratorTree();
-            $this->mergeClassAndDecoratorTrees();
+        require_once __DIR__ . '/Decorator/static.php';
+        $this->staticRoutinesHandler = new \DecoratorStaticRoutines();
 
-            // Remove old files
-            if ($this->isCacheDirExists()) {
-                $this->cleanUpCache();
-            }
+        // Write file to the cache directory
+        foreach ($this->classesInfo as $class => $info) {
+            $this->writeClassFile($class, $info);
+        }
 
-            require_once __DIR__ . '/Decorator/static.php';
-            $this->staticRoutinesHandler = new \DecoratorStaticRoutines();
+        $this->restoreMaxExecutionTime();
 
-            // Write file to the cache directory
+        // Clear all cache
+        $this->clearDoctrineCache();
+
+        // Create model proxies directory
+        mkdirRecursive(LC_PROXY_CACHE_DIR);
+
+        // Postbuild multilanguage classes
+        $this->buildMultilangs();
+
+        // Generate models
+        $this->generateModels();
+
+        // Generate model proxies
+        $this->generateModelProxies();
+
+        // Regenerate view lists
+        $this->regenerateViewLists();
+
+        // Collect patches to DB
+        $this->collectPatches();
+
+        // Store files in APC
+        if (function_exists('apc_compile_file')) {
+            apc_clear_cache();
             foreach ($this->classesInfo as $class => $info) {
-                $this->writeClassFile($class, $info);
+                apc_compile_file(LC_CLASSES_CACHE_DIR . $this->getFileByClass($class));
             }
+        }
 
-            $this->restoreMaxExecutionTime();
+        // decoration shutdown
+        if (
+            !defined('SILENT_CACHE_REBUILD')
+            && 'cli' != PHP_SAPI
+            && isset($_SERVER['HTTP_HOST'])
+            && isset($_SERVER['REQUEST_URI'])
+        ) {
 
-            // Clear all cache
-            $this->clearDoctrineCache();
+            $isHttps = (isset($_SERVER['HTTPS']) && in_array(strtolower($_SERVER['HTTPS']), array('on', '1')))
+                || (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == '443');
+            $redirectUrl = ($isHttps ? 'https://' : 'http://') . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
-            // Create model proxies directory
-            mkdirRecursive(LC_PROXY_CACHE_DIR);
-
-            // Postbuild multilanguage classes
-            $this->buildMultilangs();
-
-            // Generate models
-            $this->generateModels();
-
-            // Generate model proxies
-            $this->generateModelProxies();
-
-            // Regenerate view lists
-            $this->regenerateViewLists();
-
-            // Collect patches to DB
-            $this->collectPatches();
-
-            // Store files in APC
-            if (function_exists('apc_compile_file')) {
-                apc_clear_cache();
-                foreach ($this->classesInfo as $class => $info) {
-                    apc_compile_file(LC_CLASSES_CACHE_DIR . $this->getFileByClass($class));
-                }
-            }
-
-            // decoration shutdown
-            if (
-                !defined('SILENT_CACHE_REBUILD')
-                && 'cli' != PHP_SAPI
-                && isset($_SERVER['HTTP_HOST'])
-                && isset($_SERVER['REQUEST_URI'])
-            ) {
-
-                $isHttps = (isset($_SERVER['HTTPS']) && in_array(strtolower($_SERVER['HTTPS']), array('on', '1')))
-                    || (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == '443');
-                $redirectUrl = ($isHttps ? 'https://' : 'http://') . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-
-                if (@parse_url($redirectUrl) && empty($_REQUEST['action'])) {
-                    $this->showJavaScriptBlock($redirectUrl);
-                    die (0);
-                }
+            if (@parse_url($redirectUrl) && empty($_REQUEST['action'])) {
+                $this->showJavaScriptBlock($redirectUrl);
+                die (0);
             }
         }
     }
@@ -1492,7 +1308,9 @@ class Decorator
     protected function getDoctrineCacheDriver()
     {
         if (!isset($this->cacheDriver)) {
-            $this->cacheDriver = \XLite\Core\Database::getCacheDriverByOptions($this->getConfigOptions('cache'));
+            $this->cacheDriver = \XLite\Core\Database::getCacheDriverByOptions(
+                \Includes\Utils\ConfigParser::getOptions('cache')
+            );
         }
 
         return $this->cacheDriver;
@@ -1550,7 +1368,7 @@ class Decorator
      */
     protected function getDSN()
     {
-        $options = $this->getConfigOptions('database_details');
+        $options = \Includes\Utils\ConfigParser::getOptions('database_details');
 
         $dsnFields = array(
             'host'        => 'hostspec',
@@ -1569,7 +1387,7 @@ class Decorator
             }
         }
 
-        $dsnList['path'] = $this->getConnectionString($options);
+        $dsnList['path'] = \Includes\Utils\Database::getConnectionString($options);
         $dsnList['user'] = $options['username'];
         $dsnList['password'] = $options['password'];
 
@@ -2597,5 +2415,19 @@ DATA;
             $this->em->getConnection()->close();
             $this->em = null;
         }
+    }
+
+
+    /**
+     * Return self instance
+     * 
+     * @return Decorator
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getInstance()
+    {
+        return new static;
     }
 }

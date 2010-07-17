@@ -26,34 +26,6 @@
  * @since      3.0.0
  */
 
-
-/**
- * Parse config.ini files and return config options 
- * 
- * @return array
- * @since  3.0
- */
-function funcParseConfgFile()
-{
-    $options = parse_ini_file(LC_CONFIG_DIR . 'config.php', true);
-
-    if (is_array($options)) {
-
-        if (file_exists(LC_CONFIG_DIR . 'config.local.php')) {
-
-            $optionsLocal = parse_ini_file(LC_CONFIG_DIR . LC_DS . 'config.local.php', true);
-            if (is_array($optionsLocal)) {
-                $options = array_replace_recursive($options, $optionsLocal);
-            }
-        }
-
-    } else {
-        $options = null;
-    }
-
-    return $options;
-}
-
 function func_is_array_unique(array $arr, &$firstValue, $skipValue = '')
 {
     $result = true;

@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage Controller
+ * @subpackage Includes_Decorator_Utils
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -26,20 +26,15 @@
  * @since      3.0.0
  */
 
-namespace XLite\Controller\Admin;
+namespace Includes\Decorator\Utils;
 
 /**
- * ____description____
+ * AUtils 
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @package    XLite
+ * @see        ____class_see____
+ * @since      3.0.0
  */
-class CacheManagement extends AAdmin
+abstract class AUtils extends \Includes\Decorator\ADecorator
 {
-    public function action_rebuild()
-    {
-        \XLite::getInstance()->setCleanUpCacheFlag(true);
-        $this->setReturnUrl($this->buildURL());
-    }
 }

@@ -41,6 +41,7 @@ if (!(basename(__FILE__) === 'install.php')) { // is not install.php
 }
 
 define ('XLITE_INSTALL_MODE', 1);
+define('LC_DO_NOT_REBUILD_CACHE', true);
 
 error_reporting (E_ALL);
 ini_set('display_errors', true);

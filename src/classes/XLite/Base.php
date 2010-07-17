@@ -30,13 +30,14 @@ namespace XLite;
 
 /**
  * Base class
+ * FIXME - must be abstract
  * FIXME - must extends the Base\SuperClass
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class Base extends Base\Singleton
+class Base extends Base\Singleton
 {
     /**
      * Singletons accessible directly from each object (see the "__get" method)
