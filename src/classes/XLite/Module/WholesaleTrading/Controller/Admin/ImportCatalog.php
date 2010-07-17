@@ -70,54 +70,30 @@ class ImportCatalog extends \XLite\Controller\Admin\ImportCatalog implements \XL
     	}
     }
 
-    function isArrayUnique($arr, &$firstValue, $skipValue="")
-    {
-    	if (function_exists('func_is_array_unique')) {
-    		return func_is_array_unique($arr, $firstValue, $skipValue);
-    	}
-
-        if (!is_array($arr)) {
-        	return false;
-        }
-        for ($i = 0; $i < count($arr); $i++) {
-            if (strcmp($arr[$i], $skipValue) === 0) {
-            	continue;
-            }
-               
-            for ($j = 0; $j < count($arr); $j++) {
-                if ($i != $j && strcmp($arr[$i], $arr[$j]) === 0) {
-                    $firstValue = $arr[$i];
-                    return false;
-                }
-            }
-        }
-            
-        return true;
-    }
-
     function handleRequest()
     {
         $name = '';
-        if
-        (
-            (
-                $this->action == 'import_wholesale_pricing'
-                &&
-                !$this->isArrayUnique($this->wholesale_pricing_layout, $name, 'NULL')
-            )
-            ||
-            (
-                $this->action == 'import_product_access'
-                &&
-                !$this->isArrayUnique($this->product_access_layout, $name, 'NULL')
-            )
-            ||
-            (
-               $this->action == 'import_purchase_limit'
-                &&
-                !$this->isArrayUnique($this->purchase_limit_layout, $name, 'NULL')
-            )
-        ) {
+        $layout = '';
+
+        switch ($this->action) {
+
+            case 'import_wholesale_pricing':
+                $layout = 'wholesale_pricing_layout';
+                break;
+
+            case 'import_product_access':
+                $layout = 'product_access_layout';
+                break;
+
+            case 'import_purchase_limit':
+                $layout = 'purchase_limit_layout';
+                break;
+
+            default:
+                // ...
+        }
+
+        if (!\Includes\Utils\ArrayManager::isArrayUnique($this->$layout, $name, array('NULL'))) {
             $this->set('valid', false);
             $this->set('invalid_field_order', true);
             $this->set('invalid_field_name', $name);

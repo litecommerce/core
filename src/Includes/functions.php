@@ -26,26 +26,6 @@
  * @since      3.0.0
  */
 
-function func_is_array_unique(array $arr, &$firstValue, $skipValue = '')
-{
-    $result = true;
-
-    for ($i = 0; $i < count($arr) && $result; $i++) {
-        if (strcmp($arr[$i], $skipValue) === 0) { 
-            continue; 
-        }
-           
-        for ($j = 0; $j < count($arr) && $result; $j++) {
-            if ($i != $j && strcmp($arr[$i], $arr[$j]) === 0) {
-                $firstValue = $arr[$i];
-                $result = false;
-            }
-        }
-    }
-        
-    return $result;
-}
-
 /**
 * Flush output
 */
