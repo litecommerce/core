@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage ____sub_package____
+ * @subpackage Include_Utils
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -26,36 +26,33 @@
  * @since      3.0.0
  */
 
+namespace Includes\Utils;
+
 /**
- * Methods to preprocess static properties/functions
+ * FileFilter 
  * 
  * @package    XLite
  * @see        ____class_see____
  * @since      3.0.0
  */
-class DecoratorStaticRoutines
+class FileFilter extends AUtils
 {
     /**
-     * Pattern to check if "static constructor" is defined
-     */
-    const PATTERN_STATIC_CONSTRUCTOR = '^\s*(?:final\s+)?\s*(?:public\s+)?static\s+function\s+__constructStatic\s*\(\s*\)';
-
-
-    /**
-     * Check and (if found) add the static constructor call 
+     * Return the directory iterator
      * 
-     * @param string $class    class name
-     * @param string &$content class file content
+     * @param string $dir       folder to iterate
+     * @param string $extension file extension for use in filtering
      *  
-     * @return void
+     * @return \Includes\Utils\FileFilter\FilterIterator
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function checkForStaticConstructor($class, &$content)
+    public static function getIterator($dir, $extension)
     {
-        if (preg_match('/' . self::PATTERN_STATIC_CONSTRUCTOR . '/USism', $content)) {
-            $content .= "\n\n" . '// Call static constructor' . "\n" . '\\' . $class . '::__constructStatic();';
-        }
+        return new \Includes\Utils\FileFilter\FilterIterator(
+            new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($dir)),
+            $extension
+        );
     }
 }
