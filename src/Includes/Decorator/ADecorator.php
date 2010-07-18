@@ -37,4 +37,18 @@ namespace Includes\Decorator;
  */
 abstract class ADecorator
 {
+    /**
+     * Indexes in "classesInfo" array
+     */
+
+    const INFO_FILE          = 'file';
+    const INFO_CLASS         = 'class';
+    const INFO_CLASS_ORIG    = 'class_orig';
+    const INFO_EXTENDS       = 'extends';
+    const INFO_EXTENDS_ORIG  = 'extends_orig';
+    const INFO_IS_DECORATOR  = 'is_decorator';
+    const INFO_IS_ROOT_CLASS = 'is_top_class';
+    const INFO_CLASS_TYPE    = 'class_type';
+    const INFO_ENTITY        = 'entity';
+    const INFO_CLASS_COMMENT = 'class_comment';
 }

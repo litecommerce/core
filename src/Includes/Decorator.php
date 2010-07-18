@@ -38,21 +38,6 @@ namespace Includes;
 class Decorator extends Decorator\ADecorator
 {
     /**
-     * Indexes in "classesInfo" array
-     */
-    const INFO_FILE          = 'file';
-    const INFO_CLASS         = 'class';
-    const INFO_CLASS_ORIG    = 'class_orig';
-    const INFO_EXTENDS       = 'extends';
-    const INFO_EXTENDS_ORIG  = 'extends_orig';
-    const INFO_IS_DECORATOR  = 'is_decorator';
-    const INFO_IS_ROOT_CLASS = 'is_top_class';
-    const INFO_CLASS_TYPE    = 'class_type';
-    const INFO_ENTITY        = 'entity';
-    const INFO_CLASS_COMMENT = 'class_comment';
-
-
-    /**
      * Pattern to parse PHP files
      */
     const CLASS_PATTERN = '/\s*((?:abstract|final)\s+)?(class|interface)\s+([\w\\\]+)(\s+extends\s+([\w\\\]+))?(\s+implements\s+([\w\\\]+(?:\s*,\s*[\w\\\]+)*))?\s*(\/\*.*\*\/)?\s*{/USsi';
@@ -284,16 +269,6 @@ class Decorator extends Decorator\ADecorator
      * @since  3.0.0
      */
     protected $multilangs = array();
-
-    /**
-     * Class instance to handle the static properties/methods
-     * 
-     * @var    DecoratorStaticRoutines
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected $staticRoutinesHandler = null;
 
     /**
      * Optional class annotations attributes 
@@ -533,10 +508,7 @@ class Decorator extends Decorator\ADecorator
             }
 
             // Prepare static members
-            $this->staticRoutinesHandler->checkForStaticConstructor(
-                isset($info[self::INFO_CLASS]) ? $info[self::INFO_CLASS] : $info[self::INFO_CLASS_ORIG],
-                $content
-            );
+            \Includes\Decorator\Utils\StaticRoutines::checkForStaticConstructor($info, $content);
         }
 
         // Change name of normalized classes in PHP code
@@ -948,16 +920,7 @@ class Decorator extends Decorator\ADecorator
      */
     protected function createClassTree()
     {
-        // Only check PHP files
-        $fileNamePattern = '/^' . preg_quote(LC_CLASSES_DIR, '/') . '(.*)\.php$/i';
-
-        require_once __DIR__ . '/Decorator/filter.php';
-
-        $iterator = new \DecoratorFilesFilter(
-            new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator(LC_CLASSES_DIR))
-        );
-
-        foreach ($iterator as $fileInfo) {
+        foreach (\Includes\Utils\FileFilter::getIterator(LC_CLASSES_DIR, 'php') as $fileInfo) {
 
             $filePath = $fileInfo->getPathname();
 
@@ -978,7 +941,7 @@ class Decorator extends Decorator\ADecorator
             ) {
 
                 // Get path related to the "LC_CLASSES_DIR" directory
-                $relativePath = preg_replace($fileNamePattern, '$1.php', $filePath);
+                $relativePath = preg_replace('/^' . preg_quote(LC_CLASSES_DIR, '/') . '(.*)\.php$/i', '$1.php', $filePath);
 
                 // Class defined in current PHP file has a wrong name (not corresponded to file name)
                 if (isset($this->classesInfo[$key])) {
@@ -1222,9 +1185,6 @@ class Decorator extends Decorator\ADecorator
         if (\Includes\Decorator\Utils\CacheManager::isCacheDirExists()) {
             $this->cleanUpCache();
         }
-
-        require_once __DIR__ . '/Decorator/static.php';
-        $this->staticRoutinesHandler = new \DecoratorStaticRoutines();
 
         // Write file to the cache directory
         foreach ($this->classesInfo as $class => $info) {
