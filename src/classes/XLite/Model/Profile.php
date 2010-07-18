@@ -363,8 +363,8 @@ class Profile extends AModel
             echo "Creating user: ";
             $profile->create();
         }
-        echo  $login . "<br>\n";
-        func_flush();
+
+        \Includes\Utils\Operator::flush($login . '<br />' . "\n");
     }
 
     function _convertProperties(array &$p, $md5_import = '') 

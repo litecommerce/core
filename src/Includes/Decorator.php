@@ -383,7 +383,7 @@ class Decorator extends Decorator\ADecorator
                 . '<noscript><a href="' . $redirectUrl . '">Click here to redirect</a></noscript>';
         }
 
-        func_flush($code);
+        \Includes\Utils\Operator::flush($code);
     }
 
     /**
@@ -396,7 +396,7 @@ class Decorator extends Decorator\ADecorator
      */
     protected function showPlainTextBlock()
     {
-        func_flush('Re-building cache, please wait...' . "\n");
+        \Includes\Utils\Operator::flush('Re-building cache, please wait...' . "\n");
     }
 
     /**

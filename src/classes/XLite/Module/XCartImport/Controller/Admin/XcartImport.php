@@ -67,7 +67,7 @@ class XcartImport extends \XLite\Controller\Admin\AAdmin
                 if (substr($table, 0, 6) == 'xcart_') {
                     // drop table
                     echo "removing $table<br>\n";
-                    func_flush();
+                    \Includes\Utils\Operator::flush();
                     mysql_query("drop table $table");
                 }
             }
