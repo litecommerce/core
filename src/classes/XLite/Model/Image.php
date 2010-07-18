@@ -952,7 +952,7 @@ class Image extends AModel
             $n++;
             $image = new \XLite\Model\Image($this->imageClass, $row[$this->autoIncrement]);
             print ". ";
-            func_flush();
+            \Includes\Utils\Operator::flush();
 
             if ($from) {
                 // from filesystem to database
@@ -982,11 +982,11 @@ class Image extends AModel
                         $m ++;
                     } else {
                         print "<span class=ErrorMessage>Error: directory '".$image->getFilePath('.'). "' is not writable!</span><br>\n";
-                        func_flush();
+                        \Includes\Utils\Operator::flush();
                     }
                 } else {
                     print "<span class=ErrorMessage>Error: file '$filePath' is not writable!</span><br>\n";
-                    func_flush();
+                    \Includes\Utils\Operator::flush();
                 }
             }
         }
@@ -1002,7 +1002,7 @@ class Image extends AModel
                     print "<span class=ErrorMessage>Table optimization failed for '$row[Table]' ('$row[Msg_text]')!</span><br>\n";
                 }
             }
-            func_flush();
+            \Includes\Utils\Operator::flush();
         }
         $this->xlite->set('realyMovedImages', $m);
         return $n;

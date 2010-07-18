@@ -115,7 +115,7 @@ class ExportCatalog extends \XLite\Controller\Admin\ExportCatalog implements \XL
     function upload($fname)
     {
         $this->hasFTP() or $this->doDie("FAILED: FTP extension not found!");
-        func_flush();
+        \Includes\Utils\Operator::flush();
         // save buffered content to upload file
         $ufile = "var/tmp/".$fname;
         $fp = fopen($ufile, "rb");

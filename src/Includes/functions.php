@@ -27,26 +27,6 @@
  */
 
 /**
-* Flush output
-*/
-function func_flush($s = null)
-{
-    if (!is_null($s)) {
-        echo $s;
-    }
-
-    if (preg_match('/Apache(.*)Win/Ss', getenv('SERVER_SOFTWARE'))) {
-        echo str_repeat(' ', 2500);
-
-    } elseif (preg_match('/(.*)MSIE(.*)\)$/S', getenv('HTTP_USER_AGENT'))) {
-        echo str_repeat(' ', 256);
-    }
-
-    @ob_flush();
-    flush();
-}
-
-/**
 * Prints Javascript code to refresh the browser output page.
 */
 function func_refresh_start()

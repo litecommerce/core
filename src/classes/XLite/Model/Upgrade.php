@@ -417,6 +417,6 @@ Please correct errors above and click reload or click the button below to force 
     function print_msg($msg)
     {
         print "$msg\n";
-        func_flush();
+        \Includes\Utils\Operator::flush();
     }
 }
