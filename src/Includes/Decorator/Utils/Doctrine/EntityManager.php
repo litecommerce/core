@@ -110,6 +110,7 @@ class EntityManager extends ADoctrine
 
     /**
      * Perform some actions after creation of the ProxyFactory object
+     * NOTE - tt's the hack
      * 
      * @return void
      * @access protected
@@ -118,6 +119,16 @@ class EntityManager extends ADoctrine
      */
     protected static function prepareProxyFactory()
     {
+        $property = new \ReflectionProperty(static::$proxyFactory, '_proxyClassTemplate');
+
+        $property->setAccessible(true);
+        $property->setValue(
+            preg_replace(
+                '/throw\s+new\s+\\\Doctrine\\\ORM\\\EntityNotFoundException\(\s*\)\s*;/USsi',
+                'return;',
+                $property->getValue()
+            )
+        );
     }
 
     /**
