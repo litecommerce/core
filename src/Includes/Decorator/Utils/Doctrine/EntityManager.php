@@ -119,16 +119,7 @@ class EntityManager extends ADoctrine
      */
     protected static function prepareProxyFactory()
     {
-        $property = new \ReflectionProperty(static::$proxyFactory, '_proxyClassTemplate');
-
-        $property->setAccessible(true);
-        $property->setValue(
-            preg_replace(
-                '/throw\s+new\s+\\\Doctrine\\\ORM\\\EntityNotFoundException\(\s*\)\s*;/USsi',
-                'return;',
-                $property->getValue()
-            )
-        );
+        \Includes\Decorator\Utils\Doctrine\ProxyFactory::modifyCodeTemplate(static::$proxyFactory);
     }
 
     /**

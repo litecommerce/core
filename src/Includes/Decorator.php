@@ -1287,65 +1287,6 @@ class Decorator extends Decorator\ADecorator
     protected function generateModelProxies()
     {
         \Includes\Decorator\Utils\Doctrine\EntityManager::generateProxyClasses();
-        $this->postprocessProxies();
-    }
-
-    /**
-     * Postprocess model proxies 
-     * 
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function postprocessProxies()
-    {
-        $iterator = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator(LC_PROXY_CACHE_DIR));
-        foreach ($iterator as $f) {
-            if (!preg_match('/\.php$/Ss', $f->getRealPath())) {
-                continue;
-            }
-            $data = file_get_contents($f->getRealPath());
-
-            // Add property _entityClass
-            $data = str_replace("\n" . '{', "\n" . '{' . "\n" . '    private $_entityClass;', $data);
-
-            // Change constructor
-            if (preg_match('/ extends (\S+) implements /Ss', $data, $m)) {
-                $data = preg_replace('/(public function __construct.+)(    \})/USs', '$1        \$this->_entityClass = \'' . substr($m[1], 1). '\';' . "\n" . '$2', $data);
-            }
-
-            // Change __sleep function
-            $data = str_replace(
-                'throw new \RuntimeException("Not fully loaded proxy can not be serialized.");',
-                '',
-                $data
-            );
-            $data = preg_replace('/(function __sleep.+)return array\(([^\)]+)\)/USs', '$1return array($2, \'_identifier\', \'_entityClass\')', $data);
-            preg_replace('/__sleep/', '', $data);
-
-            // Add __wakeup function
-            $wakeup = <<<PHP
-
-
-    public function __wakeup()
-    {
-        if (isset(\$this->_identifier)) {
-            foreach (\$this->_identifier as \$k => \$v) {
-                \$this->\$k = \$v;
-            }
-
-            \Xlite\Core\Database::getEM()->getUnitOfWork()->removeFromIdentityMap(\$this);
-            \$this->_entityPersister = \XLite\Core\Database::getEM()->getUnitOfWork()->getEntityPersister(\$this->_entityClass);
-        }
-    }
-
-PHP;
-            $data = str_replace("\n" . '}', $wakeup . "\n" . '}', $data);
-
-            // Save
-            file_put_contents($f->getRealPath(), $data);
-        }
     }
 
     /**
