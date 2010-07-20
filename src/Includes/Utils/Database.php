@@ -49,6 +49,49 @@ class Database extends \Includes\Utils\AUtils
 
 
     /**
+     * Return name of database user 
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function getUsername()
+    {
+        return \Includes\Utils\ConfigParser::getOptions(array('database_details', 'username'));
+    }
+
+    /**
+     * Return password of database user 
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function getPassword()
+    {
+        return \Includes\Utils\ConfigParser::getOptions(array('database_details', 'password'));
+    }
+
+    /**
+     * Return list of the PDO connection options 
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function getConnectionFlags()
+    {
+        return array(
+            \PDO::ATTR_AUTOCOMMIT => true,
+            \PDO::ATTR_ERRMODE    => \PDO::ERRMODE_EXCEPTION,
+            \PDO::ATTR_PERSISTENT => false,
+        );
+    }
+
+    /**
      * Connect to database
      *
      * @return PDO
@@ -58,19 +101,12 @@ class Database extends \Includes\Utils\AUtils
      */
     protected static function connectToDb()
     {
-        $options = \Includes\Utils\ConfigParser::getOptions('database_details');
-
-        $user     = isset($options['username']) ? $options['username'] : '';
-        $password = isset($options['password']) ? $options['password'] : '';
-
-        // PDO flags using for connection
-        $params = array(
-            \PDO::ATTR_AUTOCOMMIT => true,
-            \PDO::ATTR_ERRMODE    => \PDO::ERRMODE_SILENT,
-            \PDO::ATTR_PERSISTENT => false,
+        return new \PDO(
+            static::getConnectionString(),
+            static::getUsername(),
+            static::getPassword(),
+            static::getConnectionFlags()
         );
-
-        return new \PDO(static::getConnectionString($options), $user, $password, $params);
     }
 
     /**
@@ -92,33 +128,51 @@ class Database extends \Includes\Utils\AUtils
 
 
     /**
-     * Prepare MySQL connection string
-     * FIXME - must be protected
-     *
-     * @param array $options MySQL credentials
-     *
-     * @return string
+     * Return array of credentials to connect to DB 
+     * 
+     * @param bool $fullList add or not the additional fields
+     *  
+     * @return array
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function getConnectionString(array $options)
+    public static function getConnectionParams($fullList = false)
     {
+        $options = \Includes\Utils\ConfigParser::getOptions('database_details');
+
         $dsnFields = array(
             'host'        => 'hostspec',
             'port'        => 'port',
             'unix_socket' => 'socket',
             'dbname'      => 'database',
         );
-        $dsnString = array();
 
         foreach ($dsnFields as $pdoOption => $lcOption) {
             if (!empty($options[$lcOption])) {
-                $dsnString[] = $pdoOption . '=' . $options[$lcOption];
-            }
+                $dsnFields[$pdoOption] = $options[$lcOption];
+            }   
         }
 
-        return 'mysql:' . implode(';', $dsnString);
+        if ($fullList) {
+            $dsnFields['username'] = static::getUsername();
+            $dsnFields['password'] = static::getPassword();
+        }
+
+        return $dsnFields;
+    }
+
+    /**
+     * Prepare MySQL connection string
+     *
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getConnectionString()
+    {
+        return 'mysql:' . \Includes\Utils\Converter::buildQuery(static::getConnectionParams(), '=', ';');
     }
 
     /**

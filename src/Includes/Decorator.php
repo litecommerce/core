@@ -1277,108 +1277,6 @@ class Decorator extends Decorator\ADecorator
     }
 
     /**
-     * Get entity manager 
-     * 
-     * @return Doctrine\ORM\EntityManager
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getEntityManager()
-    {
-        if (is_null($this->em)) {
-            $config = new \Doctrine\ORM\Configuration;
-
-/*
-            $chain = new \Doctrine\ORM\Mapping\Driver\DriverChain();
-            $chain->addDriver(
-                $config->newDefaultAnnotationDriver(LC_MODEL_CACHE_DIR),
-                LC_MODEL_NS
-            );
-
-            $config->setMetadataDriverImpl($chain);
-*/
-
-            $config->setMetadataDriverImpl(
-                $config->newDefaultAnnotationDriver(LC_MODEL_CACHE_DIR)
-            );
-
-
-            // Set proxy settings
-            $config->setProxyDir(LC_PROXY_CACHE_DIR);
-            $config->setProxyNamespace(LC_MODEL_PROXY_NS);
-
-            $cache = new \Doctrine\Common\Cache\ArrayCache;
-            $config->setMetadataCacheImpl($cache);
-            $config->setQueryCacheImpl($cache);
-
-            $this->em = \Doctrine\ORM\EntityManager::create($this->getDSN(), $config);
-        }
-
-        return $this->em;
-    }
-
-    /**
-     * Get Doctrine style DSN 
-     * 
-     * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getDSN()
-    {
-        $options = \Includes\Utils\ConfigParser::getOptions('database_details');
-
-        $dsnFields = array(
-            'host'        => 'hostspec',
-            'port'        => 'port',
-            'unix_socket' => 'socket',
-            'dbname'      => 'database',
-        );
-        $dsnList = array(
-            'driver' => 'pdo_mysql',
-        );
-
-        foreach ($dsnFields as $pdoOption => $lcOption) {
-
-            if (!empty($options[$lcOption])) {
-                $dsnList[$pdoOption] = $options[$lcOption];
-            }
-        }
-
-        $dsnList['path'] = \Includes\Utils\Database::getConnectionString($options);
-        $dsnList['user'] = $options['username'];
-        $dsnList['password'] = $options['password'];
-
-        return $dsnList;
-    }
-    
-    /**
-     * Get metadata list
-     * 
-     * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getMetadatas()
-    {
-        $em = $this->getEntityManager();
-
-        /*
-        $cmf = new \Doctrine\ORM\Tools\DisconnectedClassMetadataFactory($em);
-        $metadatas = $cmf->getAllMetadata();
-        */
-
-        $metadatas = $em->getMetadataFactory()->getAllMetadata();
-        // TODO - check - need or not?
-        //$metadatas = MetadataFilter::filter($metadatas, $input->getOption('filter'));
-
-        return $metadatas;
-    }
-
-    /**
      * Generate model proxies 
      * 
      * @return void
@@ -1388,10 +1286,7 @@ class Decorator extends Decorator\ADecorator
      */
     protected function generateModelProxies()
     {
-        $this->getEntityManager()
-            ->getProxyFactory()
-            ->generateProxyClasses($this->getMetadatas(), LC_PROXY_CACHE_DIR);
-
+        \Includes\Decorator\Utils\Doctrine\EntityManager::generateProxyClasses();
         $this->postprocessProxies();
     }
 
@@ -1472,7 +1367,7 @@ PHP;
         $entityGenerator->setNumSpaces(4);
         $entityGenerator->setClassToExtend('\XLite\Model\AEntity');
 
-        $entityGenerator->generate($this->getMetadatas(), LC_CLASSES_CACHE_DIR);
+        $entityGenerator->generate(\Includes\Decorator\Utils\Doctrine\EntityManager::getAllMetadata(), LC_CLASSES_CACHE_DIR);
 
         $this->postGenerateModels();
     }
@@ -1487,7 +1382,7 @@ PHP;
      */
     protected function postGenerateModels()
     {
-        foreach ($this->getMetadatas() as $metadata) {
+        foreach (\Includes\Decorator\Utils\Doctrine\EntityManager::getAllMetadata() as $metadata) {
             $path = LC_CLASSES_CACHE_DIR . DIRECTORY_SEPARATOR . str_replace('\\', DIRECTORY_SEPARATOR, $metadata->name) . '.php';
             $data = file_get_contents($path);
 
@@ -1920,7 +1815,7 @@ DATA;
      */
     protected function regenerateViewLists()
     {
-        $metadatas = $this->getEntityManager()->getMetadataFactory()->getAllMetadata();
+        $metadatas = \Includes\Decorator\Utils\Doctrine\EntityManager::getAllMetadata();
 
         // Truncate old
         foreach (\XLite\Core\Database::getRepo('\XLite\Model\ViewList')->findAll() as $l) {
