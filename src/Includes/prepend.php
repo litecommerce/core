@@ -33,9 +33,6 @@ define('LC_VAR_URL', 'var');
 
 define('LC_SKINS_CACHE_DIR', LC_COMPILE_DIR . 'skins' . LC_DS);
 
-define('LC_MODEL_CACHE_DIR', LC_CLASSES_CACHE_DIR . 'XLite' . LC_DS . 'Model');
-define('LC_PROXY_CACHE_DIR', LC_CLASSES_CACHE_DIR . 'XLite' . LC_DS . 'Model' . LC_DS . 'Proxy');
-
 define('LC_TMP_DIR', LC_VAR_DIR . 'tmp' . LC_DS);
 
 define('LC_LOCALE_DIR', LC_VAR_DIR . 'locale');
@@ -53,12 +50,6 @@ define('LC_IMAGES_CACHE_DIR', LC_VAR_DIR . 'images' . LC_DS);
 
 define('LC_IMAGES_URL', 'images');
 define('LC_IMAGES_CACHE_URL', LC_VAR_URL . '/images');
-
-
-// Namespaces
-define('LC_NAMESPACE', 'XLite');
-define('LC_MODEL_NS', LC_NAMESPACE . '\\' . 'Model');
-define('LC_MODEL_PROXY_NS', LC_MODEL_NS . '\\' . 'Proxy');
 
 // OS
 define('LC_OS_NAME', substr(PHP_OS, 0, strpos(PHP_OS,' ')));

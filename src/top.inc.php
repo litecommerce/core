@@ -47,7 +47,14 @@ define('LC_CONFIG_DIR',        LC_ROOT_DIR . 'etc' . LC_DS);
 define('LC_INCLUDES_DIR',      LC_ROOT_DIR . 'Includes' . LC_DS);
 define('LC_COMPILE_DIR',       LC_VAR_DIR . 'run' . LC_DS);
 define('LC_CLASSES_CACHE_DIR', LC_COMPILE_DIR . 'classes' . LC_DS);
+define('LC_MODEL_CACHE_DIR',   LC_CLASSES_CACHE_DIR . 'XLite' . LC_DS . 'Model' . LC_DS);
+define('LC_PROXY_CACHE_DIR',   LC_MODEL_CACHE_DIR . 'Proxy' . LC_DS);
 define('LC_AUTOLOAD_DIR',      defined('XLITE_INSTALL_MODE') ? LC_CLASSES_DIR : LC_CLASSES_CACHE_DIR);
+
+// Namespaces
+define('LC_NAMESPACE',      'XLite');
+define('LC_MODEL_NS',       LC_NAMESPACE . '\\' . 'Model');
+define('LC_MODEL_PROXY_NS', LC_MODEL_NS . '\\' . 'Proxy');
 
 // Autoloading routines
 require_once (LC_INCLUDES_DIR . 'Autoloader.php');
