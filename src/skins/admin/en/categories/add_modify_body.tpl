@@ -121,3 +121,44 @@
 
 </form>
 
+{if:category.category_id}
+<br /><br /><br />
+
+<b>Change category location</b>
+<hr />
+
+<br />
+
+
+<form name="move_form" action="admin.php" method="post">
+
+  <input type="hidden" name="target" value="categories" />
+  <input type="hidden" name="action" value="move_after" />
+  <input type="hidden" name="category_id" value="{category_id}" />
+
+  <table border="0" width="100%">
+
+    <tr>
+      <td width="15%" class="FormButton">Select category:</td>
+      <td width="85%">
+        <widget class="\XLite\View\CategorySelect" fieldName="moveTo" currentCategoryId={category.category_id} ignoreCurrentPath rootOption />
+      </td>
+    </tr>
+
+    <tr>
+      <td colspan="3">&nbsp;</td>
+    </tr>
+
+    <tr>
+      <td colspan="3">
+        <input type="button" onclick="javascript:document.forms['move_form'].submit();" value="Move after selected" />
+        &nbsp;&nbsp;&nbsp;
+        <input type="button" onclick="javascript:document.forms['move_form'].elements['action'].value='move_as_child';document.forms['move_form'].submit();" value="Make as child of selected" />
+      </td>
+    </tr>
+
+  </table>
+
+</form>
+{end:}
+

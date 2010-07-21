@@ -98,6 +98,18 @@ class Category extends \XLite\Model\Base\I18n
     protected $views_stats = 0;
 
     /**
+     * Node lock status:
+     * if set up to 1 then node is marked for moving within tree
+     * 
+     * @var    integer
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Column (type="integer", length="1", nullable=false)
+     */
+    protected $locked = 0;
+
+    /**
      * Node membership level
      * 
      * @var    string
@@ -131,14 +143,16 @@ class Category extends \XLite\Model\Base\I18n
     protected $clean_url = '';
 
     /**
-     * Many-to-many relation with products table
+     * One-to-many relation with products table
      * 
      * @var    \Doctrine\Common\Collections\ArrayCollection
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @OneToMany(targetEntity="XLite\Model\CategoryProducts", mappedBy="categories", cascade={"persist","remove"})
-     */
+     * OneToMany(targetEntity="XLite\Model\CategoryProducts", mappedBy="categories")
+     * @OneToMany(targetEntity="XLite\Model\CategoryProducts", mappedBy="categories")
+     * @JoinColumn(name="category_id", referencedColumnName="category_id")
+    */
     protected $products;
 
     /**
@@ -160,7 +174,7 @@ class Category extends \XLite\Model\Base\I18n
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @ManyToOne(targetEntity="XLite\Model\CategoryImage")
+     * @OneToOne(targetEntity="XLite\Model\CategoryImage")
      * @JoinColumn(name="category_id", referencedColumnName="id")
      */
     protected $image;
@@ -186,17 +200,6 @@ class Category extends \XLite\Model\Base\I18n
      * @since  3.0.0
      */
     protected $depth = 0;
-
-    /**
-     * The number of subcategories of the category
-     * (Real-time calculated)
-     * 
-     * @var    float
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected $sub_categories_count = 0;
 
     /**
      * Check if category has image 
@@ -235,6 +238,19 @@ class Category extends \XLite\Model\Base\I18n
     public function getSubcategories()
     {
         return \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategoriesPlainList($this->category_id);
+    }
+
+    /**
+     * Get the number of subcategories 
+     * 
+     * @return integer
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getSubCategoriesCount()
+    {
+        return ($this->rpos - $this->lpos - 1) / 2;
     }
 
     /**

@@ -230,6 +230,42 @@ class Categories extends AAdmin
     }
 
     /**
+     * 'move_after' action: Move category after other category
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function action_move_after()
+    {
+        $categoryId = \XLite\Core\Request::getInstance()->category_id;
+        $move2CategoryId = \XLite\Core\Request::getInstance()->moveTo;
+
+        \XLite\Core\Database::getRepo('XLite\Model\Category')->moveNode($categoryId, $move2CategoryId);
+
+        $this->redirect('admin.php?target=categories');
+    }
+
+    /**
+     * 'move_as_child' action: Make category child of other category
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function action_move_as_child()
+    {
+        $categoryId = \XLite\Core\Request::getInstance()->category_id;
+        $move2CategoryId = \XLite\Core\Request::getInstance()->moveTo;
+
+        \XLite\Core\Database::getRepo('XLite\Model\Category')->moveNode($categoryId, $move2CategoryId, true);
+
+        $this->redirect('admin.php?target=categories');
+    }
+
+    /**
      * Prepare location path from category path 
      * 
      * @return array
