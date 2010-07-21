@@ -35,7 +35,7 @@ namespace XLite\Controller\Admin;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Category extends AAdmin
+class Category extends \XLite\Controller\Admin\AAdmin
 {
     public $page = "category_modify";
     public $pages = array(
@@ -278,7 +278,7 @@ class Category extends AAdmin
             $code = $this->getCurrentLanguage();
 
             // update category
-            $category = \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategory($properties['category_id']);
+            $category = \XLite\Core\Database::getEM()->find('XLite\Model\Category', $properties['category_id']);
 
             $category->map($properties);
             $category->getTranslation($code)->name = $properties['name'];
@@ -289,6 +289,8 @@ class Category extends AAdmin
 
             \XLite\Core\Database::getEM()->persist($category);
             \XLite\Core\Database::getEM()->flush();
+
+            \XLite\Core\Database::getRepo('XLite\Model\Category')->cleanCache();
 
             // update category image
 //            $image = $category->get('image');
@@ -366,6 +368,8 @@ class Category extends AAdmin
 
                 \XLite\Core\Database::getEM()->persist($category);
                 \XLite\Core\Database::getEM()->flush();
+
+                \XLite\Core\Database::getRepo('XLite\Model\Category')->cleanCache();
             }
 
             $this->redirect('admin.php?target=categories&category_id=' . $category->category_id);
