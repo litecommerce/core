@@ -320,7 +320,22 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
             $hash = self::EMPTY_CACHE_CELL;
         }
 
-        return $this->_entityName . '.' . $name . '.' . $hash;
+        return $this->getHashPrefix($this->_entityName) . '.' . $name . '.' . $hash;
+    }
+
+    /**
+     * Get prefix for cache filenames
+     * 
+     * @param string $str Entity name (e.g. XLite\Model\Category)
+     *  
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getHashPrefix($str)
+    {
+        return preg_replace('|\\\|', '_', $str);
     }
 
     /**
@@ -336,7 +351,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      */
     protected function getTableHash($cellName = '', $key = '')
     {
-        return $this->_entityName
+        return $this->getHashPrefix($this->_entityName)
             . ($cellName ? '.' . $cellName : '')
             . ($key ? '.' . $key : '');
     }
@@ -432,8 +447,9 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      */
     public function deleteCache($name = '')
     {
-        if (DB::isCacheEnabled()) {
+    if (DB::isCacheEnabled()) {
             DB::getCacheDriver()->deleteByPrefix($this->getTableHash($name) . '.');
+
         }
     }
 
