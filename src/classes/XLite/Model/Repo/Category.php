@@ -443,7 +443,12 @@ class Category extends \XLite\Model\Repo\Base\I18n
 
             $data = $qb->getQuery()->getSingleScalarResult();
 
-            $this->saveToCache($data, $this->cachePrefix . '_MaxRightPos');
+            if (isset($data)) {
+                $this->saveToCache($data, $this->cachePrefix . '_MaxRightPos');
+            
+            } else {
+                $data = 0;
+            }
         }
 
         return $data;
@@ -537,7 +542,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
     {
         $this->ignoreCache = true;
 
-        $result = false;
+        $result = null;
 
         $parentCategory = $this->getNode($categoryId);
 
@@ -606,26 +611,17 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function addChild($categoryId)
+    public function addChild($categoryId = 0)
     {
         $this->ignoreCache = true;
 
-        $result = false;
+        $result = null;
+
+        $errorMsg = null;
         $skipUpdate = false;
 
-        if ($this->isCategoryLeafNode($categoryId)) {
-
-            $parentCategory = $this->getNode($categoryId);
-        
-            if ($parentCategory instanceof $this->className) {
-                // Add category as a child of a real category:
-                // get lpos and rpos from parent category
-                $parentLpos = $parentCategory->lpos;
-                $parentRpos = $parentCategory->rpos;
-            }
-
-        } else {
-            // Add category to the root level:
+        // If category_id is 0 then suppose that parent is root
+        if (0 === $categoryId) {
             // get lpos as 0 and rpos as a max(rpos)
             $parentLpos = 0;
             $parentRpos = $this->getMaxRightPos();
@@ -633,54 +629,76 @@ class Category extends \XLite\Model\Repo\Base\I18n
             if (0 === $parentRpos) {
                 $skipUpdate = true;
             }
+
+        } else {
+
+            // Check if category exists
+            $parentCategory = $this->getNode($categoryId);
+
+            if (isset($parentCategory) && $parentCategory instanceof $this->className) {
+                // get lpos and rpos from parent category
+                $parentLpos = $parentCategory->lpos;
+                $parentRpos = $parentCategory->rpos;
+            
+            // Category does not exist, return error
+            } else {
+                $errorMsg = 'The specified parent category is not exist';
+            }
         }
 
-        if (!$skipUpdate) {
 
-            // Increase lpos field for all right nodes
-            $qb = \XLite\Core\Database::getQB();
-            $qb ->update('XLite\Model\Category', 'n')
-                ->set('n.lpos', 'n.lpos + :offset')
-                ->where(
-                    $qb->expr()->gt('n.lpos', ':parentLpos')
-                )
-                ->setParameters(
-                    array(
-                        'offset' => 2,
-                        'parentLpos' => $parentLpos
+        if (!isset($errorMsg)) {
+
+            if (!$skipUpdate) {
+
+                // Increase lpos field for all right nodes
+                $qb = \XLite\Core\Database::getQB();
+                $qb ->update('XLite\Model\Category', 'n')
+                    ->set('n.lpos', 'n.lpos + :offset')
+                    ->where(
+                        $qb->expr()->gt('n.lpos', ':parentLpos')
                     )
-                );
+                    ->setParameters(
+                        array(
+                            'offset' => 2,
+                            'parentLpos' => $parentLpos
+                        )
+                    );
 
-            $qb->getQuery()->execute();
+                $qb->getQuery()->execute();
 
-            // Increase rpos field for parent and all right nodes
-            $qb = \XLite\Core\Database::getQB();
-            $qb ->update('XLite\Model\Category', 'n')
-                ->set('n.rpos', 'n.rpos + :offset')
-                ->where(
-                    $qb->expr()->gte('n.rpos', ':parentRpos')
-                )
-                ->setParameters(
-                    array(
-                        'offset' => 2,
-                        'parentRpos' => $parentRpos
+                // Increase rpos field for parent and all right nodes
+                $qb = \XLite\Core\Database::getQB();
+                $qb ->update('XLite\Model\Category', 'n')
+                    ->set('n.rpos', 'n.rpos + :offset')
+                    ->where(
+                        $qb->expr()->gt('n.rpos', ':parentLpos')
                     )
-                );
-            $qb->getQuery()->execute();
-        }
+                    ->setParameters(
+                        array(
+                            'offset' => 2,
+                            'parentLpos' => $parentLpos
+                        )
+                    );
+                $qb->getQuery()->execute();
+            }
 
-        $newCategory = new \XLite\Model\Category();
-        $newCategory->lpos = $parentLpos + 1;
-        $newCategory->rpos = $parentLpos + 2;
+            $newCategory = new \XLite\Model\Category();
+            $newCategory->lpos = $parentLpos + 1;
+            $newCategory->rpos = $parentLpos + 2;
 
-        \XLite\Core\Database::getEM()->persist($newCategory);
-        \XLite\Core\Database::getEM()->flush();
+            \XLite\Core\Database::getEM()->persist($newCategory);
+            \XLite\Core\Database::getEM()->flush();
 
-        $result = $newCategory;
+            $result = $newCategory;
 
-        if (is_null($result->category_id)) {
+            if (is_null($result->category_id)) {
+                $errorMsg = 'Error of a new category creation';
+            }
+        
+        } else {
             \XLite\Core\TopMessage::getInstance()->add(
-                'Error of a new category creation',
+                $errorMsg,
                 \XLite\Core\TopMessage::ERROR
             );
         }
