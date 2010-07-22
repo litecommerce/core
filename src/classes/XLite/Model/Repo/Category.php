@@ -218,7 +218,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param int $categoryId Node Id
      *  
      * @return array
-     * @access public
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -296,7 +296,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param int $categoryId Category Id
      *  
      * @return \XLite\Model\Category
-     * @access protected
+     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -304,6 +304,8 @@ class Category extends \XLite\Model\Repo\Base\I18n
     {
         $hash = ($this->ignoreCache) ? null : $this->getFromCache($this->cachePrefix . '_FullTreeHash');
         $data = $this->getFullTree();
+
+        $result = null;
 
         // Build hash if it isn't built yet
         if (!isset($hash) && is_array($data)) {
@@ -319,9 +321,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
 
         if (isset($hash) && isset($hash[$categoryId]) && isset($data[$hash[$categoryId]])) {
             $result = $data[$hash[$categoryId]];
-        
-        } else {
-            $result = new \XLite\Model\Category;
         }
 
         return $result;
@@ -333,7 +332,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param mixed $categoryId Node identifier
      *  
      * @return array
-     * @access public
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */

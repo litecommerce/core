@@ -265,7 +265,7 @@ class Category extends \XLite\Model\Base\I18n
     {
         $data = \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategoryFromHash($this->category_id);
 
-        return ($data->sub_categories_count > 0);
+        return (isset($data) ? $data->sub_categories_count > 0 : false);
     }
 
     /**
@@ -301,7 +301,7 @@ class Category extends \XLite\Model\Base\I18n
     {
         $data = \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategoryFromHash($this->category_id);
 
-        return (0 == $data->products_count && 0 == $data->sub_categories_count);
+        return (isset($data) ? 0 == $data->products_count && 0 == $data->sub_categories_count : true);
     }
 
     /**
@@ -329,7 +329,7 @@ class Category extends \XLite\Model\Base\I18n
     {
         $data = \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategoryFromHash($this->category_id);
 
-        return $data->products_count;
+        return (isset($data) ? $data->products_count : 0);
     }
 
     /**
@@ -347,7 +347,7 @@ class Category extends \XLite\Model\Base\I18n
     {
         if (!isset($this->depth)) {
             $data = \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategoryFromHash($this->category_id);
-            $depth = $data->depth;
+            $depth = isset($data) ? $data->depth : 1;
 
         } else {
             $depth = $this->depth;
