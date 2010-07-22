@@ -122,6 +122,11 @@ class Product extends Dialog
         $currentProduct = $this->getProduct();
         $found = false;
         $prev = false;
+
+        // FIXME - to remove: it's temporary fix
+        if (is_null($this->getCategory())) return;
+
+
         foreach ($this->getCategory()->getProducts() as $p) {
             if ($found) {
                 $this->nextProduct = $p;
