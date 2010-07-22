@@ -91,9 +91,12 @@
         </copy>
         <copy todir="${buildDir}/src">
             <fileset file="${srcDir}/restoredb" />
+		</copy>
+		<copy todir="${buildDir}/src/sql/">
+			<fileset file="${sourceDir}/src/sql/demo" />
         </copy>
 		<exec executable="/usr/local/php-530/bin/php" dir="${buildDir}/src" failonerror="on">
-			<arg line="${buildDir}/src/restoredb" />
+			<arg line="${buildDir}/src/restoredb demo" />
 		</exec>
         <exec executable="/usr/local/php-530/bin/php" dir="${buildDir}/src">
             <arg line="${sourceDir}/.dev/build/build-classes.php" />
