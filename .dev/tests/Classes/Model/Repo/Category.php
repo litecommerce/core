@@ -189,13 +189,14 @@ class XLite_Tests_Model_Repo_Category extends XLite_Tests_TestCase
 
         $category = \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategoryFromHash($categoryId);
 
-        $this->assertNotNull($category, 'Method returns null');
+        $this->assertNotNull($category, 'Null is returned on getCategoryFromHash(0), object is expected');
+
         $this->assertObjectHasAttribute('category_id', $category, 'Attribute not found');
         $this->assertEquals($categoryId, $category->getCategoryId(), 'Wrong category_id');
 
         $category = \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategoryFromHash(99991002);
 
-        $this->assertNull($category, 'Method did not return null');
+        $this->assertNull($category, 'Method did not return null on non-existing category_id');
     }
 
     public function testGetCategory()
