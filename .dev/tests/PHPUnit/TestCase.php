@@ -165,10 +165,10 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
         // Default request
         $request = array(
             'init_app'   => true,
-            'method'     => XLite_Transport_Request::GET,
-            'controller' => XLite_Transport_Router::CONTROLLER_ADMIN,
+            'method'     => 'GET',
+            'controller' => true, // true - admin, false - customer
             'data'       => array(
-                'target' => XLite_Transport_Router::TARGET_DEFAULT,
+                'target' => \XLite::TARGET_DEFAULT,
                 'action' => '',
             ),
             'cookies'    => array(),
@@ -204,10 +204,10 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
 
         // Instantiate singltons
         if ($this->needAppInit($request)) {
-            $this->app = XLite_Application::getInstance($request['controller']);
-            XLite_Core_Database::getInstance();
-            XLite_Core_Session::getInstance();
-            XLite_Core_Converter::getInstance();
+            $this->app = \XLite::getInstance()->run($request['controller']);
+//            \XLite\Core\Database::getInstance();
+//            \XLite\Core\Session::getInstance();
+//            \XLite\Core\Converter::getInstance();
         }
 
         // Memory usage
@@ -239,12 +239,12 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
         // Timing
         $this->end['time'] = microtime(true);
         
-        if ($this->needAppInit()) {
-            XLite_Core_Converter::getInstance()->__destruct();
-            XLite_Core_Session::getInstance()->__destruct();
-            XLite_Core_Database::getInstance()->__destruct();
-            $this->app->__destruct();
-        }
+//        if ($this->needAppInit()) {
+//            \XLite\Core\Converter::getInstance()->__destruct();
+//            \XLite\Core\Session::getInstance()->__destruct();
+//            \XLite\Core\Database::getInstance()->__destruct();
+//            $this->app->__destruct();
+//        }
 
         // Memory usage
         $this->end['memory'] += memory_get_usage();
@@ -305,7 +305,7 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
 
                 $f();
 
-            } catch (XLite_Core_Exception $exception) {
+            } catch (\XLite\Core\Exception $exception) {
 
                 $message = $this->getMessage('Check for the ' . $errorCode . ' exception:');
                 $this->assertEquals($errorCode, $exception->getName(), $message);
