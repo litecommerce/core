@@ -18,6 +18,15 @@
 
 class XLite_Tests_Model_Repo_Category extends XLite_Tests_TestCase
 {
+    /**
+     * categoryId 
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $categoryId = 'XLite_Tests_Model_Repo_Category_categoryId';
 
     /**
      * Test on cleanCache() method (file cache driver only!)
@@ -61,6 +70,109 @@ class XLite_Tests_Model_Repo_Category extends XLite_Tests_TestCase
     }
 
     /**
+     * Test on addChild() method
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function testAddChild()
+    {
+        $result = 0;
+
+        $newCategory = \XLite\Core\Database::getRepo('XLite\Model\Category')->addChild(9999999);
+
+        $this->assertNull($newCategory, 'Not null is returned on addAfter(9999999)');
+
+        $newCategory = \XLite\Core\Database::getRepo('XLite\Model\Category')->addChild(0);
+
+        $this->assertNotNull($newCategory, 'Null is returned on addChild(0), object is expected');
+
+        if (isset($newCategory)) {
+            $this->assertObjectHasAttribute('category_id', $newCategory, 'Attribute not found');
+            $this->assertObjectHasAttribute('lpos', $newCategory, 'Attribute not found');
+            $this->assertObjectHasAttribute('rpos', $newCategory, 'Attribute not found');
+
+            $this->assertEquals(array(1, 2), array($newCategory->getLpos(), $newCategory->getRpos()), 'lpos and rpos indexes are wrong');
+
+            $this->assertGreaterThan(0, $newCategory->getCategoryId(), 'category_id value must be a positive number');
+
+            $result = $newCategory->getCategoryId();
+        }
+
+        return $result;
+    }
+
+    /**
+     * Test on addAfter() method
+     * 
+     * @depends testAddChild
+     *
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function testAddAfter(integer $categoryId = null)
+    {
+        if (!isset($categoryId)) {
+            $categoryId = 14015;
+        }
+
+        $newCategory = \XLite\Core\Database::getRepo('XLite\Model\Category')->addAfter(0);
+
+        $this->assertNull($newCategory, 'Not null is returned on addAfter(0)');
+
+        $newCategory = \XLite\Core\Database::getRepo('XLite\Model\Category')->addChild(9999999);
+
+        $this->assertNull($newCategory, 'Not null is returned on addAfter(9999999)');
+
+        $newCategory = \XLite\Core\Database::getRepo('XLite\Model\Category')->addAfter($categoryId);
+
+        $this->assertNotNull($newCategory, 'Null is returned on addChild(' . $categoryId . '), object is expected');
+
+        if (isset($newCategory)) {
+            $this->assertObjectHasAttribute('category_id', $newCategory, 'Attribute not found');
+            $this->assertObjectHasAttribute('lpos', $newCategory, 'Attribute not found');
+            $this->assertObjectHasAttribute('rpos', $newCategory, 'Attribute not found');
+
+            $this->assertEquals($newCategory->getLpos() + 1, $newCategory->getRpos(), 'rpos index must be greater than lpos index on 1 (' . $newCategory->getLpos() . ',' . $newCategory->getRpos() . ')');
+
+            $this->assertGreaterThan(0, $newCategory->getCategoryId(), 'category_id value must be a positive number');
+
+        } else {
+            $this->markTestSkipped('Test skipped as valid category_id is not exists');
+        }
+    }
+
+    /**
+     * Test on addBefore() method
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function testAddBefore()
+    {
+        $this->markTestIncomplete('Test is incomplete');
+    }
+
+    /**
+     * Test on moveNode() method
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function testMoveNode()
+    {
+        $this->markTestIncomplete('Test is incomplete');
+    }
+
+    /**
      * Test on getCategoryFromHash() method
      * TODO: add database setup for this testcase as category #1002 may not exist
      * 
@@ -69,81 +181,65 @@ class XLite_Tests_Model_Repo_Category extends XLite_Tests_TestCase
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function testGetCategoryFromHash()
+    public function testGetCategoryFromHash(integer $categoryId = null)
     {
-        $category = \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategoryFromHash(1002);
+        if (!isset($categoryId)) {
+            $categoryId = 14015;
+        }
+
+        $category = \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategoryFromHash($categoryId);
 
         $this->assertNotNull($category, 'Method returns null');
         $this->assertObjectHasAttribute('category_id', $category, 'Attribute not found');
-        $this->assertEquals('1002', $category->category_id, 'Wrong category_id');
+        $this->assertEquals($categoryId, $category->getCategoryId(), 'Wrong category_id');
 
         $category = \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategoryFromHash(99991002);
 
         $this->assertNull($category, 'Method did not return null');
     }
 
-    public function testAddBefore()
-    {
-        $this->assertEquals(1, 1, 'what is wrong');
-    }
-
-    public function testAddAfter()
-    {
-        $this->assertEquals(1, 1, 'what is wrong');
-    }
-
-    public function testAddChild()
-    {
-        $this->assertEquals(1, 1, 'what is wrong');
-    }
-
-    public function testMoveNode()
-    {
-        $this->assertEquals(1, 1, 'what is wrong');
-    }
-
     public function testGetCategory()
     {
-        $this->assertEquals(1, 1, 'what is wrong');
+        $this->markTestIncomplete('Test is incomplete');
     }
 
     public function testGetCategories()
     {
-        $this->assertEquals(1, 1, 'what is wrong');
+        $this->markTestIncomplete('Test is incomplete');
     }
 
     public function testGetCategoriesPlainList()
     {
-        $this->assertEquals(1, 1, 'what is wrong');
+        $this->markTestIncomplete('Test is incomplete');
     }
 
     public function testGetCategoryPath()
     {
-        $this->assertEquals(1, 1, 'what is wrong');
+        $this->markTestIncomplete('Test is incomplete');
     }
 
     public function testGetParentCategory()
     {
-        $this->assertEquals(1, 1, 'what is wrong');
+        $this->markTestIncomplete('Test is incomplete');
     }
 
     public function testGetParentCategoryId()
     {
-        $this->assertEquals(1, 1, 'what is wrong');
+        $this->markTestIncomplete('Test is incomplete');
     }
 
     public function testIsCategoryLeafNode()
     {
-        $this->assertEquals(1, 1, 'what is wrong');
+        $this->markTestIncomplete('Test is incomplete');
     }
 
     public function testGetCategoryByCleanUrl()
     {
-        $this->assertEquals(1, 1, 'what is wrong');
+        $this->markTestIncomplete('Test is incomplete');
     }
 
     public function testDeleteCategory()
     {
-        $this->assertEquals(1, 1, 'what is wrong');
+        $this->markTestIncomplete('Test is incomplete');
     }
 }
