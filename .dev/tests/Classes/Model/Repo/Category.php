@@ -117,7 +117,7 @@ class XLite_Tests_Model_Repo_Category extends XLite_Tests_TestCase
     public function testAddAfter(integer $categoryId = null)
     {
         if (!isset($categoryId)) {
-            $categoryId = 14015;
+            $categoryId = 1002;
         }
 
         $newCategory = \XLite\Core\Database::getRepo('XLite\Model\Category')->addAfter(0);
@@ -184,7 +184,7 @@ class XLite_Tests_Model_Repo_Category extends XLite_Tests_TestCase
     public function testGetCategoryFromHash(integer $categoryId = null)
     {
         if (!isset($categoryId)) {
-            $categoryId = 14015;
+            $categoryId = 1002;
         }
 
         $category = \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategoryFromHash($categoryId);
