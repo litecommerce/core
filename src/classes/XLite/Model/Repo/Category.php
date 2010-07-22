@@ -237,7 +237,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
             foreach ($data as $id => $nd) {
 
                 $dataTmp[$id] = $nd = $nd[0];
-                $dataTmp[$id]->products_count = $data[$id]['products_count'];
+                $dataTmp[$id]->setProductsCount($data[$id]['products_count']);
 
                 if (count($right) > 0) {
                     while ($right[count($right) - 1] < $nd->rpos) {
@@ -271,13 +271,13 @@ class Category extends \XLite\Model\Repo\Base\I18n
      */
     protected function defineFullTreeQuery($categoryId)
     {
-        if (!is_null($categoryId)) {
+        if (isset($categoryId)) {
             $category = $this->getNode($categoryId);
         }
 
         $qb = $this->createQueryBuilder('c')
             ->addSelect('count(p.product_id) as products_count')
-            ->leftJoin('c.products', 'p')
+            ->leftJoin('c.category_products', 'p')
             ->groupBy('c.category_id')
             ->orderBy('c.lpos');
 
@@ -1002,7 +1002,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
      */
     public function getCategoryPath($categoryId)
     {
-        return $this->getNodePath($categoryId);
+        return $this->getNodePath($categoryId) ?: array();
     }
 
     /**
@@ -1108,7 +1108,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
     protected function defineCategoriesOfProduct($productId)
     {
         return $this->createQueryBuilder('c')
-            ->leftJoin('c.products', 'cp')
+            ->leftJoin('c.category_products', 'cp')
             ->where('cp.product_id = :productId')
             ->setParameter('productId', $productId);
     }
@@ -1236,6 +1236,27 @@ class Category extends \XLite\Model\Repo\Base\I18n
         }
 
         $this->ignoreCache = false;
+    }
+
+    /**
+     * Get categories list by product ID
+     * 
+     * @param int $productId product ID
+     *  
+     * @return \Doctrine\ORM\PersistentCollection
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function findAllByProductId($productId)
+    {
+        return $this->createQueryBuilder()
+            ->innerJoin('c.category_products', 'cp')
+            ->andWhere('cp.product_id = :productId')
+            ->setParameter('productId', $productId)
+            ->addOrderBy('cp.orderby', 'ASC')
+        ->getQuery()
+        ->getResult();
     }
 
 

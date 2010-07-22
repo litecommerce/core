@@ -35,9 +35,20 @@ namespace XLite\Controller\Admin;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Categories extends AAdmin
+class Categories extends Catalog
 {
-    public $params = array('target', 'category_id');
+    /**
+     * getModelObject
+     *
+     * @return \XLite\Model\AModel
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getModelObject()
+    {
+        return $this->getCategory();
+    }
+
 
     /**
      * category 
@@ -68,7 +79,7 @@ class Categories extends AAdmin
      */
     public function getCategories($categoryId = null)
     {
-        return \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategories(!is_null($categoryId) ? $categoryId : $this->getCategoryId());
+        return \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategories($categoryId ?: $this->getCategoryId());
     }
 
     /**
@@ -100,10 +111,10 @@ class Categories extends AAdmin
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getCategory($categoryId = 0)
+    public function getCategory($categoryId = null)
     {
         if (!isset($this->category[$categoryId])) {
-            $this->category[$categoryId] = \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategory((0 < $categoryId) ? $categoryId : $this->getCategoryId());
+            $this->category[$categoryId] = \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategory($categoryId ?: $this->getCategoryId());
         }
 
         return $this->category[$categoryId];
@@ -121,24 +132,12 @@ class Categories extends AAdmin
      */
     public function getParentCategory($categoryId = null)
     {
-        return \XLite\Core\Database::getRepo('XLite\Model\Category')->getParentCategory(!is_null($categoryId) ? $categoryId : $this->getCategoryId());
+        return \XLite\Core\Database::getRepo('XLite\Model\Category')->getParentCategory($categoryId ?: $this->getCategoryId());
     }
 
-    /**
-     * Return current category Id
-     *
-     * @return int
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getCategoryId()
+    public function isCategoryLeafNode($categoryId = null)
     {
-        return $this->getParam(self::PARAM_CATEGORY_ID);
-    }
-
-    public function isCategoryLeafNode($categoryId = 0)
-    {
-        return \XLite\Core\Database::getRepo('XLite\Model\Category')->isCategoryLeafNode($categoryId ? $categoryId : $this->getCategoryId());
+        return \XLite\Core\Database::getRepo('XLite\Model\Category')->isCategoryLeafNode($categoryId ?: $this->getCategoryId());
     }
 
     /**
@@ -164,7 +163,7 @@ class Categories extends AAdmin
 
             foreach($categories as $category) {
 
-                $counter += (1 == $category->depth ? 1 : 0);
+                $counter += (1 == $category->getDepth() ? 1 : 0);
 
                 if ($counter > 1) {
                     $result = true;
@@ -214,14 +213,14 @@ class Categories extends AAdmin
      */
     protected function deleteCategories($subcategoriesOnly = false)
     {
-        $categoryId = \XLite\Core\Request::getInstance()->category_id;
+        $categoryId = $this->getCategoryId();
 
         if ($subcategoriesOnly) {
             $redirectParam = '&category_id=' . $categoryId;
 
         } else {
             $parentCategory = \XLite\Core\Database::getRepo('XLite\Model\Category')->getParentCategory($categoryId);
-            $redirectParam = (!is_null($parentCategory->category_id) ? '&category_id=' . $parentCategory->category_id : '');
+            $redirectParam = (!is_null($parentCategory->getCategoryId()) ? '&category_id=' . $parentCategory->getCategoryId() : '');
         }
 
         \XLite\Core\Database::getRepo('XLite\Model\Category')->deleteCategory($categoryId, $subcategoriesOnly);
@@ -239,7 +238,7 @@ class Categories extends AAdmin
      */
     public function action_move_after()
     {
-        $categoryId = \XLite\Core\Request::getInstance()->category_id;
+        $categoryId = $this->getCategoryId();
         $move2CategoryId = \XLite\Core\Request::getInstance()->moveTo;
 
         \XLite\Core\Database::getRepo('XLite\Model\Category')->moveNode($categoryId, $move2CategoryId);
@@ -257,7 +256,7 @@ class Categories extends AAdmin
      */
     public function action_move_as_child()
     {
-        $categoryId = \XLite\Core\Request::getInstance()->category_id;
+        $categoryId = $this->getCategoryId();
         $move2CategoryId = \XLite\Core\Request::getInstance()->moveTo;
 
         \XLite\Core\Database::getRepo('XLite\Model\Category')->moveNode($categoryId, $move2CategoryId, true);
@@ -282,7 +281,7 @@ class Categories extends AAdmin
         if (is_array($categoryPath)) {
             
             foreach ($categoryPath as $category) {
-                $result[$category->name] = 'admin.php?target=categories&category_id=' . $category->category_id;
+                $result[$category->name] = 'admin.php?target=categories&category_id=' . $category->getCategoryId();
             }
         }
 

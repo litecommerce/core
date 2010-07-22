@@ -62,16 +62,18 @@ class Cart extends ACustomer
     /**
      * Get (and create) current cart item 
      * 
+     * @param \XLite\Model\Product $product product to add
+     *  
      * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getCurrentItem()
+    protected function getCurrentItem(\XLite\Model\Product $product)
     {
         if (!isset($this->currentItem)) {
             $this->currentItem = new \XLite\Model\OrderItem();
-            $this->currentItem->setProduct($this->getProduct());
+            $this->currentItem->setProduct($product);
         }
 
         return $this->currentItem;
@@ -88,12 +90,13 @@ class Cart extends ACustomer
     protected function action_add()
     {
         $result = false;
+        $product = \XLite\Core\Database::getRepo('\XLite\Model\Product')->find(\XLite\Core\Request::getInstance()->product_id);
 
-        if ($this->canAddProductToCart()) {
+        if (isset($product)) {
             $this->collectCartGarbage();
 
             // add product to the cart
-            if ($this->getCart()->addItem($this->getCurrentItem())) {
+            if ($this->getCart()->addItem($this->getCurrentItem($product))) {
                 $this->updateCart();
 
                 \XLite\Core\TopMessage::getInstance()->add('Product has been added to cart');
@@ -113,12 +116,8 @@ class Cart extends ACustomer
             } elseif ($this->session->get('productListURL')) {
                 $productListUrl = $this->session->get('productListURL');
 
-            } elseif ($this->getProduct()) {
-                $productListUrl = $this->buildUrl(
-                    'product',
-                    '',
-                    array('product_id' => $this->getProduct()->get('product_id'))
-                );
+            } else {
+                $productListUrl = $this->buildUrl('product', '', array('product_id' => $product->getProductId()));
             }
 
             if ($productListUrl) {
@@ -232,18 +231,6 @@ class Cart extends ACustomer
     function isSecure()
     {
         return $this->is('HTTPS') ? true : parent::isSecure();
-    }
-
-    function canAddProductToCart()
-    {
-        $result = true;
-
-        if (!$this->getProduct()->filter()) {
-            $this->set('valid', false);
-            $result = false;
-        }
-
-        return $result;
     }
 
     function collectCartGarbage()

@@ -221,7 +221,6 @@ abstract class AEntity
         $result = preg_match('/^(get|set)(\w+)$/i', $method, $matches) && !empty($matches[2]);
 
         if ($result) {
-            $property = \XLite\Core\Converter::convertFromCamelCase($matches[2]);
             $result = property_exists($this, $property = \XLite\Core\Converter::convertFromCamelCase($matches[2]));
         }
 

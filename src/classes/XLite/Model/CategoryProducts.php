@@ -46,6 +46,7 @@ class CategoryProducts extends AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     * 
      * @Id
      * @Column (type="integer", length="11", nullable=false)
      */
@@ -58,6 +59,7 @@ class CategoryProducts extends AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Id
      * @Column (type="integer", length="11", nullable=false)
      */
@@ -70,9 +72,11 @@ class CategoryProducts extends AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="integer", length="11", nullable=false)
      */
-    protected $orderby;
+    protected $orderby = 0;
+
 
     /**
      * Relation to a category entity
@@ -81,10 +85,11 @@ class CategoryProducts extends AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @ManyToOne(targetEntity="XLite\Model\Category", inversedBy="products")
-     * @JoinColumn(name="category_id", referencedColumnName="category_id")
+     *
+     * @ManyToOne  (targetEntity="XLite\Model\Category", inversedBy="category_products", fetch="LAZY")
+     * @JoinColumn (name="category_id", referencedColumnName="category_id")
      */
-    protected $categories;
+    protected $category;
 
     /**
      * Relation to a product entity
@@ -93,8 +98,9 @@ class CategoryProducts extends AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @ManyToOne(targetEntity="XLite\Model\Product", inversedBy="categories")
-     * @JoinColumn(name="product_id", referencedColumnName="product_id")
+     *
+     * @ManyToOne  (targetEntity="XLite\Model\Product", inversedBy="category_products", fetch="LAZY")
+     * @JoinColumn (name="product_id", referencedColumnName="product_id")
      */
-    protected $products;
+    protected $product;
 }

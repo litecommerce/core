@@ -111,7 +111,7 @@ class TopMessage extends \XLite\Base\Singleton
             if (0 < strlen($text)) {
 
                 if (!$rawText) {
-                    $text = \XLite\Core\Translation::lbl($text);
+                    $text = static::t($text);
                 }
 
                 if (!in_array($type, $this->types)) {
@@ -146,7 +146,7 @@ class TopMessage extends \XLite\Base\Singleton
      */
     public static function addInfo($text, array $arguments = array(), $code = null)
     {
-        static::getInstance()->add(\XLite\Core\Translation::lbl($text, $arguments, $code), self::INFO, true);
+        static::getInstance()->add(static::t($text, $arguments, $code), self::INFO, true);
     }
 
     /**
@@ -163,7 +163,7 @@ class TopMessage extends \XLite\Base\Singleton
      */
     public static function addWarning($text, array $arguments = array(), $code = null)
     {
-        static::getInstance()->add(\XLite\Core\Translation::lbl($text, $arguments, $code), self::WARNING, true);
+        static::getInstance()->add(static::t($text, $arguments, $code), self::WARNING, true);
     }
 
     /**
@@ -180,7 +180,7 @@ class TopMessage extends \XLite\Base\Singleton
      */
     public static function addError($text, array $arguments = array(), $code = null)
     {
-        static::getInstance()->add(\XLite\Core\Translation::lbl($text, $arguments, $code), self::ERROR, true);
+        static::getInstance()->add(static::t($text, $arguments, $code), self::ERROR, true);
     }
 
     /**

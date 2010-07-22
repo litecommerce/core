@@ -276,7 +276,7 @@ abstract class AView extends \XLite\Core\Handler
         if (!isset($this->sessionCellStatus)) {
 
             $paramName  = self::PARAM_SESSION_CELL;
-            $paramValue = $this->getWidgetParams(self::PARAM_SESSION_CELL)->value;
+            $paramValue = $this->widgetParams[self::PARAM_SESSION_CELL]->value;
 
             $this->sessionCellStatus = \XLite\Core\Request::getInstance()->$paramName == $paramValue;
         }
@@ -330,23 +330,6 @@ abstract class AView extends \XLite\Core\Handler
     }
 
     /**
-     * Return widget param value 
-     * 
-     * @param string $param param to fetch
-     *  
-     * @return mixed
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getParam($param)
-    {
-        // Trying to get param value from request (if it's the so called "request"-param)
-        $value = $this->isRequestParam($param) ? $this->getRequestParamValue($param) : null;
-
-        return isset($value) ? $value : parent::getParam($param);
-    }
-
-    /**
      * Fetch param value from current session
      *
      * @param string $param parameter name
@@ -361,7 +344,7 @@ abstract class AView extends \XLite\Core\Handler
 
             // Cache the session cell (variable) associatd with the current widget
             $this->savedRequestParams = \XLite\Model\Session::getInstance()->get(
-                $this->getWidgetParams(self::PARAM_SESSION_CELL)->value
+                $this->widgetParams[self::PARAM_SESSION_CELL]->value
             );
 
             // ... To avoid repeated initializations
@@ -572,6 +555,29 @@ abstract class AView extends \XLite\Core\Handler
     public function getRequestParams()
     {
         return $this->getParamsHash($this->requestParams);
+    }
+
+    /**
+     * Return widget parameters list (or a single object)
+     *
+     * @param string $param param name
+     *
+     * @return array
+     * @access public
+     * @since  3.0.0 EE
+     */
+    public function getWidgetParams($param = null)
+    {
+        $result = parent::getWidgetParams($param);
+
+        if ($this->isRequestParam($param) && isset($result)) {
+            $value = $this->getRequestParamValue($param);
+            if (isset($value)) {
+                $result->setValue($value);
+            }
+        }
+
+        return $result;
     }
 
     /**
@@ -866,13 +872,15 @@ abstract class AView extends \XLite\Core\Handler
      */
     protected function isSelected($val1, $val2, $val3 = null)
     {
-        return isset($val3) ? $val1->get($val2) == $val3 : $val1 == $val2;
+        return isset($val3)
+            ? $val1->{'get' . (($val1 instanceof \XLite\Model\AEntity) ? \XLite\Core\Converter::convertToCamelCase($val2) : '')}() == $val3
+            : $val1 == $val2;
     }
 
     /**
      * Truncates the baseObject property value to specified length 
      * 
-     * @param mixed  $baseObject string or object instance to get field value from
+     * @param mixed  $basei      string or object instance to get field value from
      * @param mixed  $field      string length or field to get value
      * @param int    $length     field length to truncate to
      * @param string $etc        string to add to truncated field value
@@ -882,14 +890,18 @@ abstract class AView extends \XLite\Core\Handler
      * @access protected
      * @since  3.0.0
      */
-    protected function truncate($baseObject, $field, $length = 0, $etc = '...', $breakWords = false)
+    protected function truncate($base, $field, $length = 0, $etc = '...', $breakWords = false)
     {
-        if (is_scalar($baseObject)) {
-            $string = $baseObject;
+        if (is_scalar($base)) {
+            $string = $base;
             $length = $field;
 
         } else {
-            $string = $baseObject->get($field);
+            if ($base instanceof \XLite\Model\AEntity) {
+                $string = $base->{'get' . \XLite\Core\Converter::convertToCamelCase($field)}();
+            } else {
+                $string = $base->get($field);
+            }
         }
 
         if (0 == $length) {
@@ -951,6 +963,7 @@ abstract class AView extends \XLite\Core\Handler
 
     /**
      * Format price 
+     * FIXME - to revise
      * 
      * @param mixed  $base          string or object instance to get field value from
      * @param string $field         field to get value
@@ -974,9 +987,17 @@ abstract class AView extends \XLite\Core\Handler
         $result = null;
 
         if (!is_null($base)) {
+            if (is_object($base)) {
+                if ($base instanceof \XLite\Model\AEntity) {
+                    $base = $base->{'get' . \XLite\Core\Converter::convertToCamelCase($field)}();
+                } else {
+                    $base = $base->get($field);
+                }
+            }
+
             $result = sprintf(
                 $this->config->General->price_format,
-                number_format(is_scalar($base) ? $base : $base->get($field), 2, $decimalDelim, $thousandDelim)
+                number_format($base, 2, $decimalDelim, $thousandDelim)
             );
         }
 

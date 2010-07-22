@@ -143,19 +143,6 @@ class Category extends \XLite\Model\Base\I18n
     protected $clean_url = '';
 
     /**
-     * One-to-many relation with products table
-     * 
-     * @var    \Doctrine\Common\Collections\ArrayCollection
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     * OneToMany(targetEntity="XLite\Model\CategoryProducts", mappedBy="categories")
-     * @OneToMany(targetEntity="XLite\Model\CategoryProducts", mappedBy="categories")
-     * @JoinColumn(name="category_id", referencedColumnName="category_id")
-    */
-    protected $products;
-
-    /**
      * Many-to-one relation with memberships table
      * 
      * @var    \Doctrine\Common\Collections\ArrayCollection
@@ -200,6 +187,20 @@ class Category extends \XLite\Model\Base\I18n
      * @since  3.0.0
      */
     protected $depth = 0;
+
+    /**
+     * Relation to a CategoryProducts entities
+     * 
+     * @var    \Doctrine\Common\Collections\ArrayCollection
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     *
+     * @OneToMany (targetEntity="XLite\Model\CategoryProducts", mappedBy="category", cascade={"persist","remove"}, fetch="LAZY")
+     * @OrderBy   ({"orderby" = "ASC"})
+     */
+    protected $category_products;
+
 
     /**
      * Check if category has image 
@@ -358,35 +359,15 @@ class Category extends \XLite\Model\Base\I18n
         return (is_null($str) ? $indentation : str_repeat($str, $indentation));
     }
 
-    // TODO: rewrite function - this should be based on \XLite\Model\Product
-    public function getProducts()
+
+    // NOTE - working on
+    public function getProducts($start = 0, $limit = 0)
     {
-        $query = \XLite\Core\Database::getQB()
-            ->select('cp.product_id')
-            ->from('XLite\Model\Category', 'c')
-            ->leftJoin('c.products', 'cp')
-            ->where('c.category_id = :categoryId')
-            ->setParameter('categoryId', $this->category_id);
-
-        $result = $query->getQuery()->getScalarResult();
-
-        $pids = array();
-        if (is_array($result)) {
-            foreach ($result as $item) {
-                if (isset($item['product_id'])) {
-                    $pids[] = $item['product_id'];
-                }
-            }
-        }
-
-        $return = null;
-
-        if (!empty($pids)) {
-            $product = new \XLite\Model\Product;
-            $return = $product->findAll("product_id IN (" . implode(',', $pids) . ")");
-        } 
-
-        return $return;
+        return \XLite\Core\Database::getRepo('\XLite\Model\Product')->search(
+            array(
+                \XLite\Model\Repo\Product::P_CATEGORY_ID => $this->getCategoryId(),
+                \XLite\Model\Repo\Product::P_LIMIT       => array($start, $limit),
+            )
+        );
     }
-
 }

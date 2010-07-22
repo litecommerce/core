@@ -48,8 +48,11 @@ class OrderItem extends AModel
      */
     protected function correctAmount(&$value)
     {
-        $product   = $this->getProduct();
         $origValue = $value;
+
+        if (!($product = $this->getProduct())) {
+            $product = new \XLite\Model\Product();
+        }
 
         $min = $product->getMinPurchaseLimit();
         $max = $product->getMaxPurchaseLimit();
@@ -103,6 +106,7 @@ class OrderItem extends AModel
 
     /**
      * A reference to the product object 
+     * TODO - add caching
      * 
      * @return \XLite\Model\Product
      * @access public
@@ -110,7 +114,7 @@ class OrderItem extends AModel
      */
     public function getProduct()
     {
-        return \XLite\Model\CachingFactory::getObject(__METHOD__ . $this->_uniqueKey, '\XLite\Model\Product', array($this->get('product_id')));
+        return \XLite\Core\Database::getRepo('\XLite\Model\Product')->find($this->get('product_id'));
     }
 
     /**
@@ -122,7 +126,7 @@ class OrderItem extends AModel
      */
     public function isShipped()
     {
-        return !$this->getProduct()->is('free_shipping');
+        return is_null($this->getProduct()) || !((bool) $this->getProduct()->getFreeShipping());
     }
 
 
@@ -151,19 +155,16 @@ class OrderItem extends AModel
     {
         $this->product = $product;
 
-        if (is_null($product)) {
-            $this->set('product_id', 0);
-
-        } else {
+        if (isset($product)) {
         	if ($this->config->Taxes->prices_include_tax) {
-        		$this->set('price', $this->formatCurrency($product->get('taxedPrice')));
+        		$this->set('price', $this->formatCurrency($product->getTaxedPrice()));
         	} else {
-            	$this->set('price', $product->get('price'));
+            	$this->set('price', $product->getPrice());
         	}
 
-            $this->set('product_id', $product->get('product_id'));
-            $this->set('product_name', $product->get('name'));
-            $this->set('product_sku', $product->get('sku'));
+            $this->set('product_id', $product->getProductId());
+            $this->set('product_name', $product->getName());
+            $this->set('product_sku', $product->getSku());
         }
     }
 
@@ -283,16 +284,10 @@ class OrderItem extends AModel
         return $this->getComplex('product.weight') * $this->get('amount');
     }
 
+    // FIXME - to remove
     function getRealProduct()
     {
-        $this->realProduct = null;
-    	$product = new \XLite\Model\Product();
-        $product->find("product_id='".$this->get('product_id')."'");
-    	if ($product->get('product_id') == $this->get('product_id')) {
-    		$this->realProduct = $product;
-            return true;
-        }
-        return false;
+        return $this->getProduct() ?: false;
     }
 
     /**
@@ -310,22 +305,11 @@ class OrderItem extends AModel
         $result = null;
 
         if (in_array($name, array('name', 'brief_description', 'description', 'sku'))) {
-            $product = $this->get('product');
-
-        	if (
-                is_object($product)
-                && $this->getRealProduct()
-                && (!isset($product->properties[$name]) || !$this->realProduct->get('enabled'))
-            ) {
-                $result = $this->realProduct->get($name);
-
+            if ($product = $this->getProduct()) {
+                $result = $this->getProduct()->{'get' . ucfirst($name)}();
             } elseif ($name == 'name' || $name == 'sku') {
                 $result = $this->get("product_$name");
-
-            } else {
-                $result = $this->getProduct()->get($name);
             }
-
         } else {
             $result = parent::get($name);
         }
@@ -416,13 +400,7 @@ class OrderItem extends AModel
     */
     function isValid()
     {
-        $product = $this->get('product');
-        if (is_object($product)) {
-            $res = $this->isComplex('product.exists') && $this->getComplex('product.product_id') && $this->get('amount')>0;
-        } else {
-            $res = $this->get('amount')>0;
-        }
-        return $res;
+        return 0 < $this->get('amount');
     }
 
     /**
@@ -444,13 +422,11 @@ class OrderItem extends AModel
      */
     public function getURL()
     {
-        return \XLite\Core\Converter::getInstance()->buildURL(
-            'product',
-            '',
-            array(
-                'product_id' => $this->getProduct()->get('product_id'),
-            )
-        );
+        $params = is_null($this->getProduct()) 
+            ? array() 
+            : array('product', '', array('product_id' => $this->getProduct()->getProductId()));
+
+        return call_user_func_array(array(\XLite\Core\Converter::getInstance(), 'buildURL'), $params);
     }
 
     public function hasOptions()

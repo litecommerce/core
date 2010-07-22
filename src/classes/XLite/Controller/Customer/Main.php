@@ -38,14 +38,16 @@ namespace XLite\Controller\Customer;
 class Main extends ACustomer
 {
     /**
-     * params 
-     * 
-     * @var    array
+     * Return current (or default) category object
+     *
+     * @return \XLite\Model\Category
      * @access public
-     * @see    ____var_see____
-     * @since  3.0.0
+     * @since  3.0.0 EE
      */
-    public $params = array('target', "page");
+    public function getCategory()
+    {
+        return new \XLite\Model\Category();
+    }
 
     /**
      * handleRequest 

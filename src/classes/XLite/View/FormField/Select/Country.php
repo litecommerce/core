@@ -111,7 +111,7 @@ class Country extends Regular
      */
     protected function getDefaultValue()
     {
-        return $this->config->General->default_country;
+        return \XLite\Core\Config::getInstance()->General->default_country;
     }
 
     /**

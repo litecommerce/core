@@ -118,12 +118,9 @@ class OrderList extends AAdmin
      */
     public function getDateValue($fieldName)
     {
-        $dateValue = null;
+        $dateValue = \XLite\Core\Request::getInstance()->$fieldName;;
 
-        if (isset(\XLite\Core\Request::getInstance()->$fieldName)) {
-            $dateValue = \XLite\Core\Request::getInstance()->get($fieldName);
-
-        } else {
+        if (!isset($dateValue)) {
             $nameDay   = $fieldName . 'Day';
             $nameMonth = $fieldName . 'Month';
             $nameYear  = $fieldName . 'Year';
@@ -134,9 +131,9 @@ class OrderList extends AAdmin
             {
                 $dateValue = mktime(
                     0, 0, 0,
-                    \XLite\Core\Request::getInstance()->get($nameMonth),
-                    \XLite\Core\Request::getInstance()->get($nameDay),
-                    \XLite\Core\Request::getInstance()->get($nameYear)
+                    \XLite\Core\Request::getInstance()->$nameMonth,
+                    \XLite\Core\Request::getInstance()->$nameDay,
+                    \XLite\Core\Request::getInstance()->$nameYear
                 );
             }
         }

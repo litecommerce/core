@@ -37,22 +37,6 @@ namespace XLite\Controller\Customer;
  */
 class Product extends Catalog
 {
-    protected $params = array('product_id');
-
-    /**
-     * Define widget parameters
-     *
-     * @return void
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function defineWidgetParams()
-    {
-        parent::defineWidgetParams();
-
-        $this->widgetParams[self::PARAM_PRODUCT_ID]->setVisibility(true);
-    }
-
     /**
      * Get product category id
      *
@@ -62,30 +46,7 @@ class Product extends Catalog
      */
     protected function getCategoryId()
     {
-        $categoryId = parent::getCategoryId();
-
-        if (!$categoryId) {
-            $productCategory = $this->getProductCategory();
-            if ($productCategory) {
-                $categoryId = $productCategory->get('category_id');
-            }
-        }
-
-        return $categoryId;
-    }
-
-    /**
-     * Return random product category 
-     * 
-     * @return \XLite\Model\Category
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getProductCategory()
-    {
-        $list = $this->getProduct()->getCategories();
-
-        return array_shift($list);
+        return ($categoryId = parent::getCategoryId()) ?: $this->getProduct()->getCategoryId();
     }
 
     /**
@@ -101,18 +62,6 @@ class Product extends Catalog
     }
 
     /**
-     * getModelObject
-     *
-     * @return \XLite\Model\AModel
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getModelObject()
-    {
-        return $this->getProduct();
-    }
-
-    /**
      * Common method to determine current location 
      * 
      * @return string
@@ -121,8 +70,21 @@ class Product extends Catalog
      */
     protected function getLocation()
     {
-        return $this->getProduct()->get('name');
+        return $this->getProduct()->getName();
     }
+
+    /**
+     * Return current product Id
+     *
+     * @return int
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getProductId()
+    {
+        return \XLite\Core\Request::getInstance()->product_id;
+    }
+
 
     /**
      * getDescription 
@@ -133,11 +95,7 @@ class Product extends Catalog
      */
     public function getDescription()
     {
-        $descr = parent::getDescription();
-
-        return $descr
-            ? $descr
-            : $this->getProduct()->get('brief_description');
+        return ($descr = parent::getDescription()) ?: $this->getProduct()->getBriefDescription();
     }
 
     /**
@@ -149,17 +107,40 @@ class Product extends Catalog
      */
     public function handleRequest()
     {
-        if ($this->getProduct()->isExists()) {
-            parent::handleRequest();
-
-        } elseif ($this->isCategoryAvailable()) {
-            $this->set(
-                'returnUrl',
-                $this->buildURL('category', '', array('category_id' => $this->getCategoryId()))
-            );
-
+        if (is_null($this->getProduct())) {
+            if (is_null($this->getCategory())) {
+                $this->setReturnUrl($this->buildURL());
+            } else {
+                $this->setReturnUrl($this->buildURL('category', '', array('category_id' => $this->getCategoryId())));
+            }
         } else {
-            $this->set('returnUrl', $this->buildURL());
+            parent::handleRequest();
         }
+    }
+
+    /**
+     * Return current (or default) product object
+     *
+     * @return \XLite\Model\Product
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getModelObject()
+    {
+        return $this->getProduct();
+    }
+
+    /**
+     * Alias
+     *
+     * @return \XLite\Model\Product
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getProduct()
+    {
+        return \XLite\Core\Database::getRepo('\XLite\Model\Product')->find($this->getProductId());
     }
 }

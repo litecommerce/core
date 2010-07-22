@@ -137,6 +137,57 @@ abstract class CMSConnector extends \XLite\Base\Singleton
         return $profile->get('profile_id');
     }
 
+    /**
+     * getCleanURLTargets 
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getCleanURLTargets()
+    {
+        return array('category', 'product');
+    }
+
+    /**
+     * getCategoryCleanURL
+     * 
+     * @param int $categoryId category ID
+     *  
+     * @return string|null
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getCategoryCleanURL($categoryId)
+    {
+        $category = \XLite\Core\Database::getRepo('\XLite\Model\Category')->find($categoryId);
+
+        return (isset($category) && $category->getCleanUrl())
+            ? preg_replace('/\/+$/Ss', '', $category->getCleanUrl()) . '/'
+            : null;
+    }
+
+    /**
+     * getProductCleanURL 
+     * 
+     * @param int $productId product ID
+     *  
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getProductCleanURL($productId)
+    {
+        $product = \XLite\Core\Database::getRepo('\XLite\Model\Product')->find($productId);
+
+        return (isset($product) && $product->getCleanUrl())
+            ? ($product->getCleanUrl() . (preg_match('/(\.html|\/htm)$/Ss', $url) ? '.html' : ''))
+            : null;
+    }
+
 
     /**
      * Return currently used CMS name
@@ -422,25 +473,12 @@ abstract class CMSConnector extends \XLite\Base\Singleton
     {
         $url = null;
 
-        if ('category' == $args['target'] && !empty($args['category_id'])) {
+        if (in_array($args['target'], $this->getCleanURLTargets())) {
+            $idParam = $args['target'] . '_id';
 
-            // Category
-            $category = new \XLite\Model\Category(intval($args['category_id']));
-            if ($category->isExists() && $category->get('clean_url')) {
-                $url = preg_replace('/\/+$/Ss', '', $category->get('clean_url')) . '/';
+            if (!empty($args[$idParam])) {
+                $url = $this->{'get' . ucfirst($args['target']) . 'CleanURL'}($args[$idParam]);
             }
-
-        } elseif ('product' == $args['target'] && !empty($args['product_id'])) {
-
-            // Product
-            $product = new \XLite\Model\Product(intval($args['product_id']));
-            if ($product->isExists() && $product->get('clean_url')) {
-                $url = $product->get('clean_url');
-                if (!preg_match('/(\.html|\/htm)$/Ss', $url)) {
-                    $url .= '.html';
-                }
-            }
-
         }
 
         return $url;
@@ -448,6 +486,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
 
     /**
      * Get canonical URL by clean URL 
+     * TODO - to improve
      * 
      * @param string $path Clean url
      *  
@@ -462,8 +501,10 @@ abstract class CMSConnector extends \XLite\Base\Singleton
 
         // By product
 
-        $product = new \XLite\Model\Product();
-        if ($product->findByCleanUrl(preg_replace('/(?:\.html|\.htm)$/Ss', '', $path))) {
+        $product = \XLite\Core\Database::getRepo('XLite\Model\Product')
+            ->findByCleanUrl(preg_replace('/(?:\.html|\.htm)$/Ss', '', $path));
+
+        if (isset($product)) {
             $cleanUrl = \XLite\Core\Converter::buildURL(
                 'product',
                 '',

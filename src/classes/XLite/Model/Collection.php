@@ -35,7 +35,7 @@ namespace XLite\Model;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Collection extends \XLite\Base
+class Collection extends \XLite\Base\SuperClass
 {
     /**
      * Start element
@@ -107,13 +107,13 @@ class Collection extends \XLite\Base
      * Insert new node before a certain node
      * 
      * @param string               $key  node key to search
-     * @param Xlite_Model_ListNode $node new node to insert
+     * @param \XLite\Model\ListNode $node new node to insert
      *  
      * @return void
      * @access public
      * @since  3.0.0
      */
-    public function insertBefore($key, Xlite_Model_ListNode $node)
+    public function insertBefore($key, \XLite\Model\ListNode $node)
     {
         $current = $this->findByKey($key);
         $prev = $current->getPrev();
@@ -134,13 +134,13 @@ class Collection extends \XLite\Base
      * Insert new node after a certain node
      *
      * @param string               $key  node key to search
-     * @param Xlite_Model_ListNode $node new node to insert
+     * @param \XLite\Model\ListNode $node new node to insert
      *
      * @return void
      * @access public
      * @since  3.0.0
      */
-    public function insertAfter($key, Xlite_Model_ListNode $node)
+    public function insertAfter($key, \XLite\Model\ListNode $node)
     {
         $current = $this->findByKey($key);
         $next = $current->getNext();
@@ -160,13 +160,13 @@ class Collection extends \XLite\Base
     /**
      * Add new node to the end of list
      * 
-     * @param Xlite_Model_ListNode $node node to add
+     * @param \XLite\Model\ListNode $node node to add
      *  
      * @return void
      * @access public
      * @since  3.0.0
      */
-    public function add(Xlite_Model_ListNode $node)
+    public function add(\XLite\Model\ListNode $node)
     {
         if ($this->isInitialized()) {
             $this->insertAfter($this->tail->getKey(), $node);
@@ -178,7 +178,7 @@ class Collection extends \XLite\Base
     /**
      * Return first element of the list
      * 
-     * @return Xlite_Model_ListNode
+     * @return \XLite\Model\ListNode
      * @access public
      * @since  3.0.0
      */
@@ -190,7 +190,7 @@ class Collection extends \XLite\Base
     /**
      * Return last element of the list
      *
-     * @return Xlite_Model_ListNode
+     * @return \XLite\Model\ListNode
      * @access public
      * @since  3.0.0
      */

@@ -46,7 +46,7 @@ class AddToCart extends AProduct
      */
     protected function getFormName()
     {
-        return 'add_to_cart_' . $this->getProduct()->get('product_id');
+        return 'add_to_cart_' . $this->getProduct()->getProductId();
     }
 
     /**
@@ -97,8 +97,8 @@ class AddToCart extends AProduct
     protected function getFormDefaultParams()
     {
         return array(
-            'product_id'  => $this->getProduct()->get('product_id'),
-            'category_id' => $this->getProduct()->get('category_id'),
+            'product_id'  => $this->getProduct()->getProductId(),
+            'category_id' => $this->getProduct()->getCategoryId(),
         );
     }
 }

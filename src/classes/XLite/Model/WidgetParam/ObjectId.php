@@ -107,29 +107,24 @@ abstract class ObjectId extends Int
     protected function getValidaionSchema($value)
     {
         $schema = parent::getValidaionSchema($value);
-
         $schema[] = $this->getIdValidCondition($value);
         $schema[] = $this->getObjectExistsCondition($value);
 
         return $schema;
     }
 
+
     /**
      * Return object with passed/predefined ID
      *
      * @param int $id object ID
      *
-     * @return \XLite\Base
+     * @return \XLite\Model\AEntity
      * @access public
      * @since  3.0.0
      */
     public function getObject($id = null)
     {
-        $id = $this->getId($id);
-
-        return \XLite\Model\CachingFactory::getObject(
-            __METHOD__ . $this->getClassName() . $id, $this->getClassName(), array($id)
-        );
+        return \XLite\Core\Database::getRepo($this->getClassName())->find($this->getId($id));
     }
 }
-

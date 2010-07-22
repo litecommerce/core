@@ -277,6 +277,51 @@ CREATE TABLE xlite_products (
   KEY clean_url(clean_url)
 ) TYPE=MyISAM;
 
+DROP TABLE IF EXISTS xlite_product_images;
+CREATE TABLE xlite_product_images (
+  image_id int(11) unsigned NOT NULL AUTO_INCREMENT,
+  id int(11) NOT NULL DEFAULT '0',
+  path varchar(512) NOT NULL DEFAULT '',
+  mime varchar(64) NOT NULL DEFAULT 'image/jpeg',
+  width int(11) NOT NULL DEFAULT '0',
+  height int(11) NOT NULL DEFAULT '0',
+  size int(11) NOT NULL DEFAULT '0',
+  date int(11) NOT NULL DEFAULT '0',
+  hash varchar(32) NOT NULL DEFAULT '',
+  PRIMARY KEY (image_id),
+  KEY id (id)
+) TYPE=MyISAM;
+
+DROP TABLE IF EXISTS xlite_product_thumbnails;
+CREATE TABLE xlite_product_thumbnails (
+  image_id int(11) unsigned NOT NULL AUTO_INCREMENT,
+  id int(11) NOT NULL DEFAULT '0',
+  path varchar(512) NOT NULL DEFAULT '',
+  mime varchar(64) NOT NULL DEFAULT 'image/jpeg',
+  width int(11) NOT NULL DEFAULT '0',
+  height int(11) NOT NULL DEFAULT '0',
+  size int(11) NOT NULL DEFAULT '0',
+  date int(11) NOT NULL DEFAULT '0',
+  hash varchar(32) NOT NULL DEFAULT '',
+  PRIMARY KEY (image_id),
+  KEY id (id)
+) TYPE=MyISAM;
+
+DROP TABLE IF EXISTS xlite_product_translations;
+CREATE TABLE xlite_product_translations (
+  label_id int(11) NOT NULL AUTO_INCREMENT,
+  code char(2) NOT NULL,
+  id int(11) NOT NULL DEFAULT '0',
+  name char(255) NOT NULL,
+  description text NOT NULL,
+  meta_tags varchar(255) NOT NULL DEFAULT '',
+  meta_desc text NOT NULL,
+  meta_title varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (label_id),
+  KEY ci (code,id),
+  KEY i (id)
+) TYPE=MyISAM;
+
 DROP TABLE IF EXISTS xlite_extra_fields;
 CREATE TABLE xlite_extra_fields (
   field_id int(11) NOT NULL auto_increment,

@@ -44,7 +44,6 @@ namespace XLite\Model;
  */
 class Config extends \XLite\Model\Base\I18n
 {
-
     /**
      * Option unique name
      * 
@@ -78,7 +77,7 @@ class Config extends \XLite\Model\Base\I18n
      * @since  3.0.0
      * @Column (type="string", length="32", nullable=false)
      */
-    protected $category = '';
+    protected $category;
 
     /**
      * Option type
@@ -112,6 +111,5 @@ class Config extends \XLite\Model\Base\I18n
      * @since  3.0.0
      * @Column (type="text", nullable=false)
      */
-    protected $value = '';
-
+    protected $value;
 }

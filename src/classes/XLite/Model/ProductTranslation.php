@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage Controller
+ * @subpackage Model
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -26,43 +26,22 @@
  * @since      3.0.0
  */
 
-namespace XLite\Controller\Customer;
+namespace XLite\Model;
 
 /**
- * Category
+ * Product multilingual data
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
+ * @Entity
+ * @Table (name="product_translations",
+ *         indexes={
+ *              @Index(name="code_id", columns={"code", "id"}),
+ *              @Index(name="id", columns={"id"})
+ *         }
+ * )
  */
-class Category extends Catalog
+class ProductTranslation extends \XLite\Model\Base\Translation
 {
-    /**
-     * getModelObject
-     *
-     * @return \XLite\Model\AModel
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getModelObject()
-    {
-        return $this->getCategory();
-    }
-
-
-    /**
-     * handleRequest 
-     * 
-     * @return void
-     * @access public
-     * @since  3.0.0
-     */
-    public function handleRequest()
-    {
-        if (is_null($this->getCategory())) {
-            $this->setReturnUrl();
-        } else {
-            parent::handleRequest();
-        }
-    }
 }

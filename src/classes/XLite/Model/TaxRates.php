@@ -558,12 +558,12 @@ array("condition" => "state=District of Columbia", "action" => array(
     public function setOrderItem(\XLite\Model\OrderItem $item)
     {
         if (!is_null($item->getProduct())) {
-            $this->_conditionValues['product class'] = $item->getProduct()->get('tax_class');
+            $this->_conditionValues['product class'] = $item->getProduct()->getTaxClass();
 
             // categories
             $categories = array();
-            foreach ($item->getProduct()->get('categories') as $category) {
-                $categories[] = $category->get('category_id');
+            foreach ($item->getProduct()->getCategories() as $category) {
+                $categories[] = $category->getCategoryId();
             }
 
             $this->_conditionValues['category'] = implode(',', $categories);

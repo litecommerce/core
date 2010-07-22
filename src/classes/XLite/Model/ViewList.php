@@ -131,5 +131,4 @@ class ViewList extends AEntity
      * @Column (type="string", length="255", nullable=false)
      */
     protected $tpl = '';
-
 }
