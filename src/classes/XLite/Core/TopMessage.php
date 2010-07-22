@@ -111,7 +111,7 @@ class TopMessage extends \XLite\Base\Singleton
             if (0 < strlen($text)) {
 
                 if (!$rawText) {
-                    $text = $this->t($text);
+                    $text = \XLite\Core\Translation::lbl($text);
                 }
 
                 if (!in_array($type, $this->types)) {
