@@ -68,7 +68,9 @@ class SaveMark extends AView
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_PRODUCT => new \XLite\Model\WidgetParam\Object('Product', null, false, '\XLite\Model\Product'),
+            self::PARAM_PRODUCT => new \XLite\Model\WidgetParam\Object(
+                'Product', null, false, '\XLite\Model\Product'
+            ),
         );
     }
 
@@ -86,6 +88,6 @@ class SaveMark extends AView
 
         return parent::isVisible()
             && $this->config->General->enable_sale_price
-            && $product->get('sale_price') > $product->get('listPrice');
+            && ($product->getSalePrice() > $product->getListPrice());
     }
 }

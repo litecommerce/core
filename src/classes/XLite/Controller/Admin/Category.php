@@ -35,8 +35,22 @@ namespace XLite\Controller\Admin;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Category extends \XLite\Controller\Admin\AAdmin
+class Category extends Catalog
 {
+    /**
+     * getModelObject
+     *
+     * @return \XLite\Model\AModel
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getModelObject()
+    {
+        return $this->getCategory();
+    }
+
+
+
     public $page = "category_modify";
     public $pages = array(
         "category_modify" => "Add/Modify category",
@@ -133,19 +147,6 @@ class Category extends \XLite\Controller\Admin\AAdmin
         }
 
         return $this->category;
-    }
-
-    /**
-     * Return current category Id 
-     * 
-     * @return int
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getCategoryId()
-    {
-        return $this->getParam(self::PARAM_CATEGORY_ID);
     }
 
     /**

@@ -49,14 +49,6 @@ abstract class AController extends \XLite\Core\Handler
     const PARAM_RETURN_URL    = 'returnUrl';
     const PARAM_REDIRECT_CODE = 'redirectCode';
 
-    /**
-     * Controller params
-     * FIXME - must be moved to the low-level controllers
-     */
-
-    const PARAM_CATEGORY_ID = 'category_id';
-    const PARAM_PRODUCT_ID  = 'product_id';
-
 
     /**
      * Object to keep action status
@@ -230,11 +222,6 @@ abstract class AController extends \XLite\Core\Handler
         );
 
         $this->widgetParams += array(
-            self::PARAM_CATEGORY_ID => new \XLite\Model\WidgetParam\ObjectId\Category('Category Id', 0),
-            self::PARAM_PRODUCT_ID  => new \XLite\Model\WidgetParam\ObjectId\Product('Product Id', 0),
-        );
-
-        $this->widgetParams += array(
             self::PARAM_RETURN_URL    => new \XLite\Model\WidgetParam\String('Return URL', $this->getDefaultReturnURL()),
             self::PARAM_REDIRECT_CODE => new \XLite\Model\WidgetParam\Int('Redirect code', $this->getDefaultRedirectCode()),
         );
@@ -276,32 +263,6 @@ abstract class AController extends \XLite\Core\Handler
         }
 
         return $result;
-    }
-
-    /**
-     * Return current category Id
-     * FIXME - must be moved to the low-level controllers
-     *
-     * @return int
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getCategoryId()
-    {
-        return $this->getParam(self::PARAM_CATEGORY_ID);
-    }
-
-    /**
-     * Return current product Id
-     * FIXME - must be moved to the low-level controllers
-     *
-     * @return int
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getProductId()
-    {
-        return $this->getParam(self::PARAM_PRODUCT_ID);
     }
 
     /**
@@ -511,36 +472,6 @@ abstract class AController extends \XLite\Core\Handler
      */
     public function postprocess()
     {
-    }
-
-    /**
-     * Return current (or default) category object
-     * FIXME - must be moved to the low-level controllers
-     * 
-     * @return \XLite\Model\Category
-     * @access public
-     * @since  3.0.0 EE
-     */
-    public function getCategory()
-    {
-        return \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategory($this->getCategoryId());
-    }
-
-    /**
-     * Return current (or default) product object
-     * FIXME - must be moved to the low-level controllers
-     * 
-     * @return \XLite\Model\Product
-     * @access public
-     * @since  3.0.0 EE
-     */
-    public function getProduct()
-    {
-        return \XLite\Model\CachingFactory::getObject(
-            __METHOD__,
-            '\XLite\Model\Product',
-            array(intval($this->getProductId()))
-        );
     }
 
     /**

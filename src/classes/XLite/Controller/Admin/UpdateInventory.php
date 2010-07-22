@@ -63,7 +63,9 @@ class UpdateInventory extends AAdmin
 
     function handleRequestPricing()
     {
-        $this->inventory = \XLite\Model\ProductInventory::getInstance();
+        if (!isset($this->inventory)) {
+            $this->inventory = new \XLite\Model\ProductInventory();
+        }
     }
 
     function action_export()

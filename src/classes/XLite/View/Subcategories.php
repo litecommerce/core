@@ -125,7 +125,10 @@ class Subcategories extends Dialog
      */
     public function getCSSFiles()
     {
-        return array('subcategories/subcategories.css');
+        $list = parent::getCSSFiles();
+        $list[] = 'subcategories/subcategories.css';
+
+        return $list;
     }
 
     /**

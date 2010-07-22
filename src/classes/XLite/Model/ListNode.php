@@ -106,13 +106,13 @@ class ListNode extends \XLite\Base
     /**
      * Set link to previous list element 
      * 
-     * @param Xlite_Model_ListNode $node node link to set
+     * @param \XLite\Model\ListNode $node node link to set
      *  
      * @return void
      * @access public
      * @since  3.0.0
      */
-    public function setPrev(Xlite_Model_ListNode $node = null)
+    public function setPrev(\XLite\Model\ListNode $node = null)
     {
         $this->prev = $node;
     }
@@ -120,13 +120,13 @@ class ListNode extends \XLite\Base
     /**
      * Set link to next list element
      *
-     * @param Xlite_Model_ListNode $node node link to set
+     * @param \XLite\Model\ListNode $node node link to set
      *
      * @return void
      * @access public
      * @since  3.0.0
      */
-    public function setNext(Xlite_Model_ListNode $node = null)
+    public function setNext(\XLite\Model\ListNode $node = null)
     {
         $this->next = $node;
     }

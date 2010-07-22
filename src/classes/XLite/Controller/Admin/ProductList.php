@@ -39,96 +39,49 @@ namespace XLite\Controller\Admin;
 class ProductList extends AAdmin
 {
     /**
-     * params 
-     * 
-     * @var    string
-     * @access public
-     * @see    ____var_see____
-     * @since  3.0.0
+     * Search mode 
      */
-    public $params = array('target', 'mode', 'search_productsku', 'substring', 'search_category', 'subcategory_search', 'pageID', 'status');
+    const MODE_SEARCH = 'search';
+
 
     /**
-     * productsList 
+     * Return params for product search 
      * 
-     * @var    mixed
+     * @return array
      * @access protected
-     * @see    ____var_see____
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    protected $productsList = null;
+    protected function getSearchParams()
+    {
+        $request = \XLite\Core\Request::getInstance();
+
+        return array(
+            \XLite\Model\Repo\Product::P_SUBSTRING => $request->substring,
+        );
+    }
+
 
     /**
-     * productsFound 
+     * getOrderBy 
      * 
-     * @var    float
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected $productsFound = 0;
-
-    /**
-     * init 
-     * 
-     * @return void
+     * @param \XLite\Model\Product $product current product
+     *  
+     * @return int
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function init() 
+    public function getOrderBy(\XLite\Model\Product $product)
     {
-        parent::init();
-        $this->set('mode', \XLite\Core\Request::getInstance()->mode);
+        return $product->getOrderBy(\XLite\Core\Request::getInstance()->search_category);
     }
 
     /**
-     * _getExtraParams 
+     * Search products 
+     * TODO - add caching here
      * 
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function _getExtraParams()
-    {
-    	return array('search_productsku', 'substring', 'search_category', 'subcategory_search', 'status');
-    }
-
-    /**
-     * getExtraParams 
-     * 
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getExtraParams()
-    {
-    	$form_params = $this->_getExtraParams();
-
-        $result = parent::getAllParams();
-
-        if (is_array($result)) {
-
-            foreach ($result as $param => $name) {
-
-                if (in_array($param, $form_params)) {
-
-        			if (isset($result[$param])) {
-        				unset($result[$param]);
-        			}
-        		}
-            }
-        }
-
-        return $result;
-    }
-
-    /**
-     * getProducts 
-     * 
-     * @return void
+     * @return \Doctrine\ORM\PersistentCollection
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -137,9 +90,15 @@ class ProductList extends AAdmin
     {
         $result = null;
 
-    	if ('search' == \XLite\Core\Request::getInstance()->mode) {
+    	if (self::MODE_SEARCH === \XLite\Core\Request::getInstance()->mode) {
+            $result = \XLite\Core\Database::getRepo('\XLite\Model\Product')->search($this->getSearchParams());
+        }
 
-        	if (is_null($this->productsList)) {
+        return $result;
+
+
+
+/*        	if (!isset($this->productsList)) {
                 $p = new \XLite\Model\Product();
                 $p->collectGarbage();
     			$this->productsList = $p->advancedSearch(
@@ -156,7 +115,7 @@ class ProductList extends AAdmin
             $result = $this->productsList;
         }
 
-        return $result;
+        return $result;*/
     }
 
     /**

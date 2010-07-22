@@ -57,6 +57,19 @@ class CategoryProducts extends ProductsList
     }
 
     /**
+     * getCategory 
+     * 
+     * @return XLite\Model\Category
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getCategory()
+    {
+        return $this->getWidgetParams(self::PARAM_CATEGORY_ID)->getObject();
+    }
+
+    /**
      * Define widget parameters
      *
      * @return void
@@ -95,7 +108,7 @@ class CategoryProducts extends ProductsList
      */
     protected function getData()
     {
-        return $this->getCategory()->getProducts(null, $this->getOrderByCondition());
+        return ($category = $this->getCategory()) ? $category->getProducts(null, $this->getOrderByCondition()) : null;
     }
 
     /**

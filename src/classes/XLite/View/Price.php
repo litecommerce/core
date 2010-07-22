@@ -34,7 +34,6 @@ namespace XLite\View;
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
- * @ListChild (list="productDetails.main", weight="40")
  */
 class Price extends AView
 {
@@ -69,16 +68,29 @@ class Price extends AView
     {
         parent::defineWidgetParams();
 
-        $product = method_exists(\XLite::getController(), 'getProduct')
-            ? \XLite::getController()->getProduct()
-            : null;
-        
-
         $this->widgetParams += array(
-            self::PARAM_PRODUCT            => new \XLite\Model\WidgetParam\Object('Product', $product, false, '\XLite\Model\Product'),
-            self::PARAM_DISPLAY_ONLY_PRICE => new \XLite\Model\WidgetParam\Bool('Only price', false),
+            self::PARAM_PRODUCT            => new \XLite\Model\WidgetParam\Object(
+                'Product', null, false, '\XLite\Model\Product'
+            ),
+            self::PARAM_DISPLAY_ONLY_PRICE => new \XLite\Model\WidgetParam\Bool(
+                'Only price', false
+            ),
         );
     }
+
+    /**
+     * getProduct 
+     * 
+     * @return \XLite\Model\Product
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getProduct()
+    {
+        return $this->getParam(self::PARAM_PRODUCT);
+    }
+
 
     /**
      * Check widget visibility
@@ -104,7 +116,7 @@ class Price extends AView
     public function isSalePriceEnabled()
     {
         return $this->config->General->enable_sale_price
-            && $this->getProduct()->get('sale_price') > $this->getProduct()->get('listPrice');
+            && $this->getProduct()->getSalePrice() > $this->getProduct()->getListPrice();
     }
 
     /**
@@ -117,8 +129,7 @@ class Price extends AView
      */
     public function isSaveEnabled()
     {
-        return $this->config->General->you_save != 'N'
-            && $this->getSaveValuePercent() > 0;
+        return ('N' !== $this->config->General->you_save) && (0 < $this->getSaveValuePercent());
     }
 
     /**
@@ -133,7 +144,7 @@ class Price extends AView
     {
         $product = $this->getProduct();
 
-        return $this->price_format($product->get('sale_price') - $product->get('listPrice'));
+        return $this->price_format($product->getSalePrice() - $product->getListPrice());
     }
 
     /**
@@ -148,20 +159,7 @@ class Price extends AView
     {
         $product = $this->getProduct();
 
-        return round(($product->get('sale_price') - $product->get('listPrice')) / $product->get('sale_price') * 100, 0);
-    }
-
-    /**
-     * Get product 
-     * 
-     * @return \XLite\Model\Product
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getProduct()
-    {
-        return $this->getParam(self::PARAM_PRODUCT);
+        return round(($product->getSalePrice() - $product->getListPrice()) / $product->getSalePrice() * 100, 0);
     }
 
     /**

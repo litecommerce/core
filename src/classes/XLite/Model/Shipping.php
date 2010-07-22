@@ -318,6 +318,8 @@ class Shipping extends AModel
      */
     public static function getModules()
     {
+        static::registerDefaultModules();
+
         return self::$registeredShippingModules;
     }
 

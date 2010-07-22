@@ -46,7 +46,7 @@ class Product extends Dialog
      */
     protected function getHead()
     {
-        return $this->getProduct()->get('name');
+        return $this->getProduct()->getName();
     }
 
     /**
@@ -127,7 +127,7 @@ class Product extends Dialog
                 $this->nextProduct = $p;
                 break;
             }
-            if ($currentProduct->get('product_id') == $p->get('product_id')) {
+            if ($currentProduct->getProductId() == $p->getProductId()) {
                 $this->previousProduct = $prev;
                 $found = true;
             }

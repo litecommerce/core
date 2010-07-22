@@ -55,7 +55,7 @@ function setHeaderChecked()
       <th><input id="activate_products" type="checkbox" onClick="this.blur();setChecked('products_form','product_ids',this.checked);" /></th>
       <th>SKU</th>
       <th align=left>Product Name</th>
-      <th align=center IF="mm.activeModules.WholesaleTrading">Prod.#</th>
+      <th align=center IF="mm.isModuleActive(#WholesaleTrading#)">Prod.#</th>
       <th>Category</th>
       <th>Pos.</th>
       <th nowrap>Price</th>
@@ -71,18 +71,18 @@ function setHeaderChecked()
         <td width=99%>
           <a href="admin.php?target=product&product_id={product.product_id}&backUrl={url:u}"><font class="ItemsList"><u>{product.name:h}</u></font></a><widget module="ProductAdviser" template="modules/ProductAdviser/product_list.tpl" product="{product}" />
         </td>
-        <td width=1% align=right IF="mm.activeModules.WholesaleTrading"><a href="admin.php?target=product&product_id={product.product_id}&backUrl={url:u}"><u>#{product.product_id:h}</u></a></td>
+        <td width=1% align=right IF="mm.isModuleActive(#WholesaleTrading#)"><a href="admin.php?target=product&product_id={product.product_id}&backUrl={url:u}"><u>#{product.product_id:h}</u></a></td>
         <td nowrap>
-        {if:mm.activeModules.MultiCategories}
-        	{foreach:product.categories,cat}
-          	{if:!catArraySize=#1#}&#8226;{else:}&nbsp;{end:}&nbsp;{cat.stringPath}&nbsp;<br>
-         	{end:}
+        {if:mm.isModuleActive(#MultiCategories#)}
+               {foreach:product.categories,cat}
+               {if:!catArraySize=#1#}&#8226;{else:}&nbsp;{end:}&nbsp;{cat.stringPath}&nbsp;<br>
+               {end:}
         {else:}
           &nbsp;{product.category.stringPath}&nbsp;
         {end:}
         </td>
         <td nowrap align="right">
-          <input type="text" size=4 maxlength=4 value="{product.order_by}" name="product_orderby[{product.product_id}]" />
+          <input type="text" size=4 maxlength=4 value="{getOrderBy(product)}" name="product_orderby[{product.product_id}]" />
         </td>
         <td nowrap align=right>
           <input type="text" size="7" value="{product.price}" name="product_price[{product.product_id}]" />

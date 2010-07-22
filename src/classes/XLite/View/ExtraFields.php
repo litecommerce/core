@@ -129,7 +129,7 @@ class ExtraFields extends AView
         	$extraFields_root = array();
             $ids = array();
             foreach ($product_categories as $cat) {
-                $ids[] = $cat->get('category_id');
+                $ids[] = $cat->getCategoryId();
             }
 
             foreach ($this->extraFields as $idx => $extraField) {

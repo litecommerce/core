@@ -267,10 +267,7 @@ abstract class AModel extends \XLite\View\Dialog
      */
     protected function getDefaultModelObject()
     {
-        return \XLite\Model\Factory::create(
-            $this->getDefaultModelObjectClass(),
-            $this->getDefaultModelObjectKeys()
-        );
+        return \XLite\Model\Factory::create($this->getDefaultModelObjectClass(), $this->getDefaultModelObjectKeys());
     }
 
     /**
@@ -636,6 +633,7 @@ abstract class AModel extends \XLite\View\Dialog
 
     /**
      * getFieldBySchema
+     * TODO - should use the Factory class
      *
      * @param string $name field name
      * @param array  $data field description
@@ -647,7 +645,9 @@ abstract class AModel extends \XLite\View\Dialog
      */
     protected function getFieldBySchema($name, array $data)
     {
-        return \XLite\Model\Factory::create($data[self::SCHEMA_CLASS], array($this->getFieldSchemaArgs($name, $data)));
+        $class = $data[self::SCHEMA_CLASS];
+
+        return new $class($this->getFieldSchemaArgs($name, $data));
     }
 
     /**

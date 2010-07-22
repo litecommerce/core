@@ -35,8 +35,63 @@ namespace XLite\Controller\Admin;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Product extends AAdmin
+class Product extends Catalog
 {
+    /**
+     * Get product category id
+     *
+     * @return int
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getCategoryId()
+    {
+        return ($categoryId = parent::getCategoryId()) ?: $this->getProduct()->getCategoryId();
+    }
+
+    /**
+     * Return current product Id
+     *
+     * @return int
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getProductId()
+    {
+        return \XLite\Core\Request::getInstance()->product_id;
+    }
+
+
+    /**
+     * Return current (or default) product object
+     *
+     * @return \XLite\Model\Product
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getModelObject()
+    {
+        return $this->getProduct();
+    }
+
+    /**
+     * Alias
+     * TODO - add extrafields
+     *
+     * @return \XLite\Model\Product
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getProduct()
+    {
+        return \XLite\Core\Database::getRepo('\XLite\Model\Product')->find($this->getProductId());
+    }
+
+
+
+
     public $params = array('target', 'product_id', 'page', 'backUrl');
     public $page = "info";
     public $backUrl = "admin.php?target=product_list";
@@ -56,7 +111,7 @@ class Product extends AAdmin
         'default' => 'product/info.tpl'
     );
 
-    function getProduct()
+    /*function getProduct()
     {
         if (is_null($this->product)) {
             $this->product = new \XLite\Model\Product($this->product_id);
@@ -78,7 +133,7 @@ class Product extends AAdmin
             $this->extraFields = $ef->findAll("product_id=".$this->get('product_id'));
         }
         return $this->extraFields;
-    }
+    }*/
 
     function action_add_field()
     {

@@ -50,4 +50,22 @@ abstract class SuperClass
     protected function __construct()
     {
     }
+
+
+    /**
+     * Language label translation short method
+     *
+     * @param string $name      label name
+     * @param array  $arguments substitution arguments
+     * @param string $code      language code
+     *
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function t($name, array $arguments = array(), $code = null)
+    {
+        return \XLite\Core\Translation::getInstance()->translate($name, $arguments, $code);
+    }
 }

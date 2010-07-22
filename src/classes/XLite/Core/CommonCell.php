@@ -49,6 +49,21 @@ class CommonCell
 
 
     /**
+     * Constructor 
+     * 
+     * @param array $data data to set
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function __construct(array $data = null)
+    {
+        !isset($data) ?: $this->setData($data);
+    }
+
+    /**
      * Get property by name
      * 
      * @param string $name property name
@@ -107,5 +122,33 @@ class CommonCell
     public function __unset($name)
     {
         unset($this->properties[$name]);
+    }
+
+    /**
+     * Return all properties
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getData()
+    {
+        return $this->properties;
+    }
+
+    /**
+     * Append data 
+     * 
+     * @param array $data data to set
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setData(array $data)
+    {
+        $this->properties = array_replace_recursive($this->properties, $data);
     }
 }

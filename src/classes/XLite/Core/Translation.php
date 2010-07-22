@@ -131,12 +131,12 @@ class Translation extends \XLite\Base\Singleton
      */
     public function translate($name, array $arguments = array(), $code = null)
     {
-        if (is_null($code)) {
+        if (!isset($code)) {
             $code = \XLite\Model\Session::getInstance()->getLanguage()->code;
         }
 
         $translated = $this::getInstance()->getDriver()->translate($name, $code);
-        if (is_null($translated)) {
+        if (!isset($translated)) {
             $translated = $name;
         }
 
@@ -179,7 +179,7 @@ class Translation extends \XLite\Base\Singleton
      */
     protected function getDriver()
     {
-        if (is_null($this->driver)) {
+        if (!isset($this->driver)) {
             $this->driver = $this->defineDriver();
         }
 
@@ -206,13 +206,12 @@ class Translation extends \XLite\Base\Singleton
             $driver = null;
         }
 
-        if (is_null($driver)) {
+        if (!isset($driver)) {
             // TODO - add throw exception
-            $this->doDie('Can not found translation driver!');
+            $this->doDie('Unable to find a translation driver!');
         }
 
         return $driver;
     }
-
 }
 

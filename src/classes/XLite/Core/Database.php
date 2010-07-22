@@ -182,7 +182,7 @@ class Database extends \XLite\Base\Singleton
      */
     public static function getRepo($repository)
     {
-        return self::getEntityManager()->getRepository($repository);
+        return self::getEntityManager()->getRepository(ltrim($repository, '\\'));
     }
 
     /**

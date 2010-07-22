@@ -34,6 +34,7 @@ namespace XLite\Model\Base;
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
+ *
  * @MappedSuperclass
  */
 abstract class Image extends \XLite\Model\AEntity
@@ -45,6 +46,7 @@ abstract class Image extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Id
      * @GeneratedValue (strategy="AUTO")
      * @Column (type="integer", length="11", nullable=false)
@@ -58,6 +60,7 @@ abstract class Image extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="integer", length="11", nullable=false)
      */
     protected $id;
@@ -69,6 +72,7 @@ abstract class Image extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="string", length="512", nullable=false)
      */
     protected $path;
@@ -80,6 +84,7 @@ abstract class Image extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="string", length="64", nullable=false)
      */
     protected $mime = 'image/jpeg';
@@ -91,6 +96,7 @@ abstract class Image extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="integer")
      */
     protected $width;
@@ -102,6 +108,7 @@ abstract class Image extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="integer")
      */
     protected $height;
@@ -113,6 +120,7 @@ abstract class Image extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="integer")
      */
     protected $size;
@@ -124,6 +132,7 @@ abstract class Image extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="integer")
      */
     protected $date = 0;
@@ -135,9 +144,11 @@ abstract class Image extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="string", length="32")
      */
     protected $hash = '';
+
 
     /**
      * Get image body 
