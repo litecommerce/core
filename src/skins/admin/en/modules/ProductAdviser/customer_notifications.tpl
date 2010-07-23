@@ -421,7 +421,7 @@ function SaveFilters()
 
 <br>
 
-<widget class="\XLite\View\Pager" data="{notifications}" name="pager" itemsPerPage="{xlite.config.ProductAdviser.number_notifications}">
+<widget class="\XLite\View\PagerOrig" data="{notifications}" name="pager" itemsPerPage="{xlite.config.ProductAdviser.number_notifications}">
 
 <table IF="namedWidgets.pager.pageData" border=0 cellpadding=1 cellspacing=3>
 

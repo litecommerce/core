@@ -10,7 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<widget class="\XLite\View\Pager" data="{products}" name="pager" itemsPerPage="{config.General.products_per_page}">
+<widget class="\XLite\View\PagerOrig" data="{products}" name="pager" itemsPerPage="{config.General.products_per_page}">
 
 <table border=0 width="100%">
 <tbody FOREACH="pager.pageData,pidx,product">
@@ -39,4 +39,4 @@
 </tbody>
 </table>
 
-<widget class="\XLite\View\Pager" data="{products}" name="pager">
+<widget class="\XLite\View\PagerOrig" data="{products}" name="pager">

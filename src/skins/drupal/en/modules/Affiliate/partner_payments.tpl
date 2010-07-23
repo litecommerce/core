@@ -50,7 +50,7 @@
 
 <table IF="search&payments" border=0 cellpadding=5 cellspacing=1>
 <tr>
-    <td colspan=2><widget class="\XLite\View\Pager" data="{payments}" name="pager"></td>
+    <td colspan=2><widget class="\XLite\View\PagerOrig" data="{payments}" name="pager"></td>
 </tr>
 <tr class=TableHead>
     <td align=center><b>Date</b></td>

@@ -26,7 +26,7 @@
  * @since      3.0.0
  */
 
-namespace XLite\View\Pager;
+namespace XLite\View\PagerOrig;
 
 /**
  * Simple pager

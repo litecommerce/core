@@ -26,7 +26,7 @@
  * @since      3.0.0
  */
 
-namespace XLite\View\Pager;
+namespace XLite\View\PagerOrig;
 
 /**
  * Pager 
@@ -35,7 +35,7 @@ namespace XLite\View\Pager;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class ProductsList extends \XLite\View\Pager
+class ProductsList extends \XLite\View\PagerOrig
 {
     /**
      * Page short names

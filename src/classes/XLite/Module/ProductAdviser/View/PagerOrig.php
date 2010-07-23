@@ -35,7 +35,7 @@ namespace XLite\Module\ProductAdviser\View;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Pager extends \XLite\View\Pager
+class Pager extends \XLite\View\PagerOrig
 {
     function initView()
     {

@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage View
+ * @subpackage ____sub_package____
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -26,34 +26,43 @@
  * @since      3.0.0
  */
 
-namespace XLite\View\Pager;
+namespace XLite\Module\DrupalConnector\View\Pager;
 
 /**
- * Pager 
+ * List pager for Orders list
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class OrdersList extends Common
+class OrdersList extends \XLite\View\PagerOrig\OrdersList
+implements \XLite\Base\IDecorator
 {
     /**
-     * Return list of page URL params
+     * Build page URL by page ID
      *
      * @param int $pageId page ID
      *
-     * @return void
+     * @return string
      * @access protected
      * @since  3.0.0
      */
-    protected function getPageURLParams($pageId)
+    protected function buildUrlByPageId($pageId)
     {
-        $list = parent::getPageURLParams($pageId);
+        $url = parent::buildUrlByPageId($pageId);
 
-        $list['target'] = 'order_list';
+        if (preg_match_all('/((pageId|sessionCell)-([^\/]*))(?:\/|$)/S', $url, $matches)) {
+            $args = array();
+            foreach ($matches[1] as $k => $v) {
+                $url = str_replace($v, '', $url);
+                $args[] = $matches[2][$k] . '=' . $matches[3][$k];
+            }
 
-        return $list;
+            $url = preg_replace('/\/+$/Ss', '', $url);
+            $url .= (strpos($url, '?') ? '&' : '?') .  implode('&', $args);
+        }
+
+        return $url;
     }
 
 }
-
