@@ -148,7 +148,7 @@ class Db extends AAdmin
         $mode = "file";
 
         // check whether to restore from file upload
-        mkdirRecursive(SQL_UPLOAD_DIR);
+        \Includes\Utils\FileManager::mkdirRecursive(SQL_UPLOAD_DIR);
         if (!isset(\XLite\Core\Request::getInstance()->local_file))
         {
             $upload = new \XLite\Model\Upload($_FILES['userfile']);

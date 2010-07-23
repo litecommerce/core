@@ -40,7 +40,7 @@ class MediatorHtmlStorage extends \XLite\Base
     function save($file, $content)
     {
         $file = HTML_BUILDER_PATH . $file;
-        mkdirRecursive(dirname($file));
+        \Includes\Utils\FileManager::mkdirRecursive(dirname($file));
         $fd = fopen($file, "wb");
         fwrite($fd, $content);
         fclose($fd);

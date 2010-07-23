@@ -112,7 +112,7 @@ class Gettext extends ATranslationDriver
 
         if ($result) {
             if (!file_exists(LC_LOCALE_DIR)) {
-                mkdirRecursive(LC_LOCALE_DIR);
+                \Includes\Utils\FileManager::mkdirRecursive(LC_LOCALE_DIR);
             }
 
             $result = file_exists(LC_LOCALE_DIR)
@@ -134,7 +134,8 @@ class Gettext extends ATranslationDriver
      */
     public function reset()
     {
-        unlinkRecursive(LC_LOCALE_DIR);
+        \Includes\Utils\FileManager::unlinkRecursive(LC_LOCALE_DIR);
+
         $this->domains = array();
         $this->lastLanguage = null;
     }
@@ -231,7 +232,7 @@ class Gettext extends ATranslationDriver
     {
         $path = LC_LOCALE_DIR . LC_DS . $this->getLocaleByCode($code) . LC_DS . self::CATEGORY;
         if (!file_exists($path)) {
-            mkdirRecursive($path);
+            \Includes\Utils\FileManager::mkdirRecursive($path);
         }
 
         $path .= LC_DS . $this->getDomain($code) . '.mo';

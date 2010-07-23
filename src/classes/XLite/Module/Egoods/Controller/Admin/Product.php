@@ -73,7 +73,7 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
     		
     		if ($_POST['new_remote'] == "Y") {
     			$path = $this->config->Egoods->egoods_store_dir . '/' . $df->get('file_id');
-    			mkdirRecursive($path);
+    			\Includes\Utils\FileManager::mkdirRecursive($path);
     			$file_name = $path . '/' . $_FILES['new_remote_file']['name'];
     			if (is_uploaded_file($_FILES['new_remote_file']['tmp_name'])) {
     				move_uploaded_file($_FILES['new_remote_file']['tmp_name'], $file_name);
@@ -100,7 +100,7 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
     		
     		if ($_POST['remote'] == 'Y') {
     			$path = $this->config->Egoods->egoods_store_dir . '/' . $df->get('file_id');
-    			mkdirRecursive($path);
+    			\Includes\Utils\FileManager::mkdirRecursive($path);
     			$file_name = $path . '/' . $_FILES['remote_file']['name'];
     			if (is_uploaded_file($_FILES['remote_file']['tmp_name'])) {
     				@unlink($df->get('data'));

@@ -390,7 +390,7 @@ class Image extends AModel
 
             if (!file_exists($path) || 0 == filesize($path)) {
                 if (!file_exists($dirName)) {
-                    mkdirRecursive($dirName);
+                    \Includes\Utils\FileManager::mkdirRecursive($dirName);
                 }
                 $resizedImage = $this->resize($neww, $newh);
                 if ($resizedImage) {
@@ -604,7 +604,7 @@ class Image extends AModel
             $this->_shouldProcessUpload = true;
             $upload = new \XLite\Model\Upload($_FILES[$image_field]);
             if (!file_exists(LC_TMP_DIR)) {
-                mkdirRecursive(LC_TMP_DIR);
+                \Includes\Utils\FileManager::mkdirRecursive(LC_TMP_DIR);
             }
 
             $dest_file = LC_TMP_DIR . $upload->getName();

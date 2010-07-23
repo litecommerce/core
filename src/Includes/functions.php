@@ -250,7 +250,7 @@ function copyFile($from, $to, $mode = 0666)
     if (@is_file($from)) {
         $result = @copy($from, $to);
         if (!$result) {
-            mkdirRecursive(dirname($to));
+            \Includes\Utils\FileManager::mkdirRecursive(dirname($to));
             $result = @copy($from, $to);
         }
         @umask(0000);
@@ -290,7 +290,7 @@ function copyRecursive($from, $to, $mode = 0666, $dir_mode = 0777)
             @umask(0000);
             $attempts = 5;
             while (!@mkdir($to, $dir_mode)) {
-                @unlinkRecursive($to);
+                \Includes\Utils\FileManager::unlinkRecursive($to);
                 $attempts --; 
                 if ($attempts < 0) {
                     if($_REQUEST['target'] == "wysiwyg") {
@@ -316,70 +316,6 @@ function copyRecursive($from, $to, $mode = 0666, $dir_mode = 0777)
     } else {
         return 1;
     }
-}
-
-function mkdirRecursive($dir, $mode = 0777)
-{
-    $dirstack = array();
-    while (!@is_dir($dir) && $dir != '/') {
-        array_unshift($dirstack, $dir);
-        $dir = @dirname($dir);
-    }
-    $ret = true;
-    while ($newdir = array_shift($dirstack)) {
-        if (substr($newdir, -2) == '..') {
-            continue;
-        }
-
-        @umask(0000);
-        $attempts = 5;
-        while (!@mkdir($newdir, $mode)) {
-            @unlinkRecursive($newdir);
-            $attempts --; 
-            if (0 > $attempts) {
-                die("Can't create directory $newdir: permission denied");
-            }
-        }
-    }
-
-    return $ret;
-}
-
-/**
- * Remove directories tree recursive 
- * 
- * @param string $dir Directory path
- *  
- * @return boolean
- * @see    ____func_see____
- * @since  3.0.0
- */
-function unlinkRecursive($dir)
-{
-    $status = false;
-
-    if (substr($dir, -1) == LC_DS) {
-        $dir = substr($dir, 0, -1);
-    }
-
-    if (is_dir($dir)) { 
-        $dh = opendir($dir);
-        if ($dh) { 
-            $status = true;
-            while ((false !== ($file = readdir($dh))) && $status) { 
-                if ($file != '.' && $file != '..') {
-                    $status = unlinkRecursive($dir . LC_DS . $file);
-                }
-            }
-            closedir($dh); 
-        }
-        rmdir($dir);
-
-    } elseif (is_file($dir)) {
-        $status = unlink($dir);
-    }
-
-    return $status;
 }
 
 /**
@@ -590,55 +526,6 @@ function func_starts_with($str, $start)
     return 0 === strncmp($str, $start, strlen($start));
 }
 
-// FIXME - to remove?
-/*function func_cleanup_cache($cache, $verbose = false) {
-    $cacheDir = "var/run";
-    if ($verbose) {
-        echo "Cleaning up $cache cache ";
-    }
-    if ($cache == "classes") {
-        $options = XLite::getInstance()->getOptions();
-        $cacheDir = $options["decorator_details"]["compileDir"];
-        // remove last '/'
-        if ($cacheDir{strlen($cacheDir)-1} == '/') {
-            $cacheDir = substr($cacheDir, 0, strlen($cacheDir)-1);
-        }
-        $cache = "";
-    }
-
-    clearstatcache();
-
-    if (is_dir("$cacheDir/$cache") || 
-        (($cache == "skins") && (file_exists("$cacheDir/cart.html.php") || file_exists("$cacheDir/cart.html.init.php")))) {
-
-        if (func_is_locked("cache") || ($_lock_cache = func_lock("cache"))) {
-            unlinkRecursive("$cacheDir/$cache");
-            sleep(3);
-            $endlessCounter = 0;
-            while (file_exists("$cacheDir/$cache")) {
-                unlinkRecursive("$cacheDir/$cache");
-                sleep(3);
-                $endlessCounter ++;
-                if ($endlessCounter > 10) {
-                    break;
-                }
-            }
-            if ($cache == "skins") {
-                unlinkRecursive("$cacheDir/cart.html.php");
-                unlinkRecursive("$cacheDir/cart.html.init.php");
-            }
-            if (!empty($_lock_cache)) {
-                func_unlock("cache");
-            }
-        }
-        if ($verbose) {
-            echo "$cacheDir/$cache ... [<font color=green>OK</font>]<br>";
-        }
-    } elseif ($verbose) {
-        echo "$cacheDir/$cache ... [<font color=red>NOT FOUND</font>]<br>";
-    }
-}*/
-
 //
 // This function create file lock in temporaly directory
 // It will return file descriptor, or false.
@@ -663,7 +550,7 @@ function func_lock($lockname, $ttl = 15, $cycle_limit = 0)
         $lockDir = substr($lockDir, 0, strlen($lockDir)-1);
     }
     if (!is_dir($lockDir)) {
-        if (!mkdirRecursive($lockDir, 0755)) return false;
+        \Includes\Utils\FileManager::mkdirRecursive($lockDir);
     }
     $fname = $lockDir."/".$lockname.".lock";
 
@@ -726,7 +613,7 @@ function func_unlock($lockname) {
         $lockDir = substr($lockDir, 0, strlen($lockDir)-1);
     }
     if (!is_dir($lockDir)) {
-        if (!mkdirRecursive($lockDir, 0755)) return false;
+        \Includes\Utils\FileManager::mkdirRecursive($lockDir);
     }
     $fname = $lockDir."/".$lockname.".lock";
     if (!file_exists($fname)) {
