@@ -114,23 +114,26 @@ class XLite_Tests_Model_Repo_Category extends XLite_Tests_TestCase
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function testAddAfter(integer $categoryId = null)
+    public function testAddSibling(integer $categoryId = null)
     {
         if (!isset($categoryId)) {
             $categoryId = 1002;
         }
 
-        $newCategory = \XLite\Core\Database::getRepo('XLite\Model\Category')->addAfter(0);
+        // Test of add after root category
+        $newCategory = \XLite\Core\Database::getRepo('XLite\Model\Category')->addSibling(0, false);
 
-        $this->assertNull($newCategory, 'Not null is returned on addAfter(0)');
+        $this->assertNull($newCategory, 'Not null is returned on add after #0');
 
-        $newCategory = \XLite\Core\Database::getRepo('XLite\Model\Category')->addChild(9999999);
+        // Test of add after unexisting category
+        $newCategory = \XLite\Core\Database::getRepo('XLite\Model\Category')->addSibling(9999999, false);
 
-        $this->assertNull($newCategory, 'Not null is returned on addAfter(9999999)');
+        $this->assertNull($newCategory, 'Not null is returned on add after #9999999');
 
-        $newCategory = \XLite\Core\Database::getRepo('XLite\Model\Category')->addAfter($categoryId);
+        // Test of add after existing category
+        $newCategory = \XLite\Core\Database::getRepo('XLite\Model\Category')->addSibling($categoryId, false);
 
-        $this->assertNotNull($newCategory, 'Null is returned on addChild(' . $categoryId . '), object is expected');
+        $this->assertNotNull($newCategory, 'Null is returned on add after #' . $categoryId . ', object is expected');
 
         if (isset($newCategory)) {
             $this->assertObjectHasAttribute('category_id', $newCategory, 'Attribute not found');
@@ -142,21 +145,37 @@ class XLite_Tests_Model_Repo_Category extends XLite_Tests_TestCase
             $this->assertGreaterThan(0, $newCategory->getCategoryId(), 'category_id value must be a positive number');
 
         } else {
-            $this->markTestSkipped('Test skipped as valid category_id is not exists');
+            $this->markTestSkipped('Test skipped as valid category #' . $categoryId . ' is not exists');
         }
-    }
 
-    /**
-     * Test on addBefore() method
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function testAddBefore()
-    {
-        $this->markTestIncomplete('Test is incomplete');
+
+        // Test of add before root category
+        $newCategory = \XLite\Core\Database::getRepo('XLite\Model\Category')->addSibling(0);
+
+        $this->assertNull($newCategory, 'Not null is returned on add before #0');
+
+        // Test of add before unexisting category
+        $newCategory = \XLite\Core\Database::getRepo('XLite\Model\Category')->addSibling(9999999);
+
+        $this->assertNull($newCategory, 'Not null is returned on add before #9999999');
+
+        // Test of add before existing category
+        $newCategory = \XLite\Core\Database::getRepo('XLite\Model\Category')->addSibling($categoryId);
+
+        $this->assertNotNull($newCategory, 'Null is returned on add before #' . $categoryId . ', object is expected');
+
+        if (isset($newCategory)) {
+            $this->assertObjectHasAttribute('category_id', $newCategory, 'Attribute not found');
+            $this->assertObjectHasAttribute('lpos', $newCategory, 'Attribute not found');
+            $this->assertObjectHasAttribute('rpos', $newCategory, 'Attribute not found');
+
+            $this->assertEquals($newCategory->getLpos() + 1, $newCategory->getRpos(), 'rpos index must be greater than lpos index on 1 (' . $newCategory->getLpos() . ',' . $newCategory->getRpos() . ')');
+
+            $this->assertGreaterThan(0, $newCategory->getCategoryId(), 'category_id value must be a positive number');
+
+        } else {
+            $this->markTestSkipped('Test skipped as valid category #' . $categoryId . ' is not exists');
+        }
     }
 
     /**

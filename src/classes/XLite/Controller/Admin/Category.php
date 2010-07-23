@@ -309,7 +309,7 @@ class Category extends Catalog
      */
     public function action_add_child()
     {
-        $this->addCategory('addChild');
+        $this->addCategory('child');
     }
 
     /**
@@ -322,7 +322,7 @@ class Category extends Catalog
      */
     public function action_add_before()
     {
-        $this->addCategory('addBefore');
+        $this->addCategory('before');
     }
 
     /**
@@ -335,28 +335,34 @@ class Category extends Catalog
      */
     public function action_add_after()
     {
-        $this->addCategory('addAfter');
+        $this->addCategory('after');
     }
 
     /**
      * Add category common action
      * 
-     * @param string $funcName Name of method
+     * @param string $operation Name of method
      *  
      * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function addCategory($funcName)
+    protected function addCategory($operation)
     {
-        if (in_array($funcName, array('addChild', 'addBefore', 'addAfter'))) {
+        if (in_array($operation, array('child', 'before', 'after'))) {
 
             if ($properties = $this->validateCategoryData(true)) {
 
-                // update category
-                $category = \XLite\Core\Database::getRepo('XLite\Model\Category')->$funcName($this->getCategoryId());
+                // create category
+                if ('child' == $operation) {
+                    $category = \XLite\Core\Database::getRepo('XLite\Model\Category')->addChild($this->getCategoryId());
 
+                } else {
+                    $category = \XLite\Core\Database::getRepo('XLite\Model\Category')->addSibling($this->getCategoryId(), ('before' == $operation));
+                }
+
+                // Add category properties
                 $category->map($properties);
 
                 $code = $this->getCurrentLanguage();
