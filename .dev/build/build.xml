@@ -92,8 +92,9 @@
         <copy todir="${buildDir}/src">
             <fileset file="${srcDir}/restoredb" />
 		</copy>
-		<copy todir="${buildDir}/src/sql/">
-			<fileset file="${sourceDir}/src/sql/demo" />
+		<mkdir dir="${buildDir}/src/sql/demo" />
+		<copy todir="${buildDir}/src/sql/demo">
+			<fileset file="${sourceDir}/src/sql/demo/*.sql" />
         </copy>
 		<exec executable="/usr/local/php-530/bin/php" dir="${buildDir}/src" failonerror="on">
 			<arg line="${buildDir}/src/restoredb demo" />
