@@ -426,9 +426,9 @@ class Mediator extends \XLite\Base
     
     function export($templates)
     {
-        unlinkRecursive(HTML_BUILDER_PATH);
+        \Includes\Utils\FileManager::unlinkRecursive(HTML_BUILDER_PATH);
         // put cart.php as a redirect
-        mkdirRecursive(HTML_BUILDER_PATH);
+        \Includes\Utils\FileManager::mkdirRecursive(HTML_BUILDER_PATH);
         if (($fd = @fopen(HTML_BUILDER_PATH . "/cart.php", "wb"))) {
             $url = $this->xlite->getShopUrl('cart.php');
             @fwrite($fd, <<<EOT

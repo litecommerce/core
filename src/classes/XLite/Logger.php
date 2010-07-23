@@ -550,7 +550,7 @@ class Logger extends Base\Singleton
     protected function checkLogSecurityHeader($path)
     {
         if (!file_exists(dirname($path))) {
-            mkdirRecursive(dirname($path));
+            \Includes\Utils\FileManager::mkdirRecursive(dirname($path));
         }
 
         if (!file_exists($path) || $this->securityHeader > filesize($path)) {

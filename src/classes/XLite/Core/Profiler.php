@@ -212,7 +212,7 @@ class Profiler extends \XLite\Base\Singleton implements \Doctrine\DBAL\Logging\S
                 : 0;
 
         } else {
-            $result = parent::__get($name);
+            $result = null;
         }
 
         return $result;

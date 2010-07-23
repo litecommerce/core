@@ -499,7 +499,7 @@ abstract class AView extends \XLite\Core\Handler
             // Create directory for compiled template (if not exists)
             $dir = dirname($compiled);
             if (!file_exists($dir)) {
-                mkdirRecursive($dir, 0755);
+                \Includes\Utils\FileManager::mkdirRecursive($dir, 0755);
             }
 
             // Save compiled data and checng file access time to prevent repeated compiling

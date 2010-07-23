@@ -1131,7 +1131,7 @@ class Decorator extends Decorator\ADecorator
         $dirName  = dirname($fileName);
 
         if (!file_exists($dirName) || !is_dir($dirName)) {
-            mkdirRecursive($dirName, 0755);
+            \Includes\Utils\FileManager::mkdirRecursive($dirName, 0755);
         }
 
         file_put_contents($fileName, $this->parseClassFile($info, $fn));
@@ -1464,7 +1464,7 @@ PHP;
         if (!$path) {
             $path = LC_VAR_DIR . 'log' . LC_DS . sprintf($this->errorLogFilename, date('Y-m-d'));
             if (!file_exists(dirname($path))) {
-                mkdirRecursive(dirname($path));
+                \Includes\Utils\FileManager::mkdirRecursive(dirname($path));
             }
 
             if (!file_exists($path) || 16 > filesize($path)) {

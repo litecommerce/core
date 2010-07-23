@@ -123,7 +123,7 @@ class FileNode extends \XLite\Base
         if ($this->isLeaf()) {
             @unlink($this->path);
         } else {
-            unlinkRecursive($this->path);
+            \Includes\Utils\FileManager::unlinkRecursive($this->path);
         }
     }
 

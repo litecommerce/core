@@ -104,7 +104,7 @@ class FileCache extends \Doctrine\Common\Cache\AbstractCache
 	{
 		if (is_string($path)) {
 			if (!file_exists($path)) {
-				mkdirRecursive($path);
+				\Includes\Utils\FileManager::mkdirRecursive($path);
 			}
 
             if (file_exists($path) && is_dir($path)) {

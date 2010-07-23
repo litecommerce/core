@@ -73,7 +73,7 @@ require_once (LC_ROOT_DIR . 'Includes' . LC_DS . 'functions.php');
 // Common error reporting settings
 $path = LC_VAR_DIR . 'log' . LC_DS . 'php_errors.log.' . date('Y-m-d') . '.php';
 if (!file_exists(dirname($path))) {
-    mkdirRecursive(dirname($path));
+    \Includes\Utils\FileManager::mkdirRecursive(dirname($path));
 }
 
 if (!file_exists($path) || 16 > filesize($path)) {
