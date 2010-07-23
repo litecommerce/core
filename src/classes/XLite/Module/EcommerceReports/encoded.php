@@ -7,7 +7,9 @@ function func_EcommerceReports_getRawProducts(&$dlg)
         $categories = (array)$dlg->get('selected_categories');
         $products_from_categories = array(); // products from selected categories
         if (!empty($categories)) {
-            $ids = implode(",", $categories);
+			$ids = implode(",", $categories);
+
+			// TODO: rewrite on CategoryProducts model
             $pc = new \XLite\Model\ProductFromCategory();
             $productTable = $pc->db->getTableByAlias('products');
             $linkTable = $dlg->db->getTableByAlias('product_links');
