@@ -40,6 +40,39 @@ class FileFilter extends AUtils
     /**
      * Return the directory iterator
      * 
+     * @param string $dir  folder to iterate
+     * @param int    $mode iteration mode
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function getUnfilteredIterator($dir, $mode)
+    {
+        return new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($dir), $mode);
+    }
+
+
+    /**
+     * Return the directory iterator
+     * 
+     * @param string $dir  folder to iterate
+     * @param int    $mode iteration mode
+     *  
+     * @return \Includes\Utils\FileFilter\FilterIterator
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getIterator($dir, $mode = \RecursiveIteratorIterator::LEAVES_ONLY)
+    {
+        return new \Includes\Utils\FileFilter\FilterIterator(static::getUnfilteredIterator($dir, $mode));
+    }
+
+    /**
+     * Return the directory iterator filtered by file extension
+     * 
      * @param string $dir       folder to iterate
      * @param string $extension file extension for use in filtering
      *  
@@ -48,11 +81,8 @@ class FileFilter extends AUtils
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function getIterator($dir, $extension)
+    public static function filterByExtension($dir, $extension)
     {
-        return new \Includes\Utils\FileFilter\FilterIterator(
-            new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($dir)),
-            $extension
-        );
+        return static::getIterator($dir)->addFilter('byExtension', array($extension));
     }
 }

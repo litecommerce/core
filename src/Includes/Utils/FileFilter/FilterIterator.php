@@ -35,17 +35,17 @@ namespace Includes\Utils\FileFilter;
  * @see        ____class_see____
  * @since      3.0.0
  */
-class FilterIterator extends \FilterIterator
+final class FilterIterator extends \FilterIterator
 {
     /**
-     * File extension to use for filtering
+     * List of filter functions
      * 
-     * @var    string
+     * @var    array
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $extension;
+    protected $filterCallbacks = array();
 
 
     /**
@@ -62,16 +62,37 @@ class FilterIterator extends \FilterIterator
     }
 
     /**
-     * Check file extension 
+     * Execute passed filter function
      * 
+     * @param array $filter callback and params
+     *  
      * @return bool
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function checkFileExtension()
+    protected function executeCallbackFunction($filter)
     {
-        return $this->extension === strtolower(pathinfo($this->getFileInfo(), PATHINFO_EXTENSION));
+        list($callback, $params) = $filter;
+
+        return (bool) call_user_func_array($callback, $params);
+    }
+
+
+    /**
+     * Check file extension
+     * 
+     * @param string $extension extension to compare with
+     *  
+     * @return bool
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function filterByExtension($extension)
+    {
+        return !$this->getFileInfo()->isFile()
+            || ($extension !== strtolower(pathinfo($this->getFileInfo()->getBasename(), PATHINFO_EXTENSION)));
     }
 
 
@@ -85,24 +106,25 @@ class FilterIterator extends \FilterIterator
      */
     public function accept()
     {
-        return $this->getFileInfo()->isFile() && $this->checkFileExtension();
+        return !((bool) array_filter($this->filterCallbacks, array($this, 'executeCallbackFunction')));
     }
 
     /**
-     * Constructor 
+     * Add function to filter 
      * 
-     * @param Iterator $iterator  iterator that is being filtered
-     * @param string   $extension file extension to use for filtering
+     * @param mixed $callback callback function
+     * @param array $params   call params
      *  
-     * @return void
+     * @return self
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function __construct(\Iterator $iterator, $extension)
+    public function addFilter($callback, array $params = array())
     {
-        parent::__construct($iterator);
+        $callback = is_array($callback) ? $callback : array($this, 'filter' . ucfirst($callback));
+        $this->filterCallbacks[] = array($callback, $params);
 
-        $this->extension = $extension;
+        return $this;
     }
 }

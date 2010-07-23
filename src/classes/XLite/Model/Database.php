@@ -405,7 +405,7 @@ class Database extends \XLite\Base
         $error = query_upload($file, $this->db->connection, true, true);
         // cleanup compiled cache
         echo "<br>\n";
-        \XLite::getInstance()->rebuildCacheLazy();
+        \XLite::setCleanUpCacheFlag(true);
         return $error;
     }
 

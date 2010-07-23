@@ -920,7 +920,7 @@ class Decorator extends Decorator\ADecorator
      */
     protected function createClassTree()
     {
-        foreach (\Includes\Utils\FileFilter::getIterator(LC_CLASSES_DIR, 'php') as $fileInfo) {
+        foreach (\Includes\Utils\FileFilter::filterByExtension(LC_CLASSES_DIR, 'php') as $fileInfo) {
 
             $filePath = $fileInfo->getPathname();
 
@@ -1139,26 +1139,13 @@ class Decorator extends Decorator\ADecorator
     }
 
     /**
-     * Delete the directory with compiled classes 
-     * @return void
-     * @access public
-     * @since  3.0
-     */
-    public function cleanUpCache()
-    {
-        unlinkRecursive(LC_CLASSES_CACHE_DIR);
-        unlinkRecursive(LC_SKINS_CACHE_DIR);
-        unlinkRecursive(LC_LOCALE_DIR);
-    }
-
-    /**
      * Check and (if needed) rebuild cache
      * 
      * @return void
      * @access public
      * @since  3.0
      */
-    public function rebuildCache()
+    public function buildCache()
     {
         if (!defined('LC_DECORATION')) {
             define('LC_DECORATION', true);
@@ -1181,11 +1168,6 @@ class Decorator extends Decorator\ADecorator
         $this->createDecoratorTree();
         $this->mergeClassAndDecoratorTrees();
 
-        // Remove old files
-        if (\Includes\Decorator\Utils\CacheManager::isCacheDirExists()) {
-            $this->cleanUpCache();
-        }
-
         // Write file to the cache directory
         foreach ($this->classesInfo as $class => $info) {
             $this->writeClassFile($class, $info);
@@ -1196,17 +1178,11 @@ class Decorator extends Decorator\ADecorator
         // Clear all cache
         $this->clearDoctrineCache();
 
-        // Create model proxies directory
-        mkdirRecursive(LC_PROXY_CACHE_DIR);
-
         // Postbuild multilanguage classes
         $this->buildMultilangs();
 
         // Generate models
         $this->generateModels();
-
-        // Generate model proxies
-        $this->generateModelProxies();
 
         // Regenerate view lists
         $this->regenerateViewLists();
@@ -1274,19 +1250,6 @@ class Decorator extends Decorator\ADecorator
         }
 
         return $this->cacheDriver;
-    }
-
-    /**
-     * Generate model proxies 
-     * 
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function generateModelProxies()
-    {
-        \Includes\Decorator\Utils\Doctrine\EntityManager::generateProxyClasses();
     }
 
     /**

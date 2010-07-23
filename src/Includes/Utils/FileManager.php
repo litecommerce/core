@@ -126,4 +126,45 @@ class FileManager extends AUtils
     {
         return static::isDir($file) && static::isReadable($file);
     }
+
+    /**
+     * Create directories tree recursive
+     * 
+     * @param string $dir directory path
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function mkdirRecursive($dir, $mode = 0755)
+    {
+        mkdir($dir, $mode, true);
+    }
+
+    /**
+     * Remove directories tree recursive
+     * 
+     * @param string $dir directory path
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function unlinkRecursive($dir)
+    {
+        if (static::isDir($dir)) {
+            $iterator = \Includes\Utils\FileFilter::getIterator(
+                $dir,
+                \RecursiveIteratorIterator::CHILD_FIRST
+            );
+
+            foreach ($iterator as $file) {
+                $file->isDir() ? rmdir($file->getPathname()) : unlink($file->getPathname());
+            }
+
+            rmdir($dir);
+        }
+    }
 }

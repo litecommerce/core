@@ -38,6 +38,21 @@ namespace Includes\Decorator\Utils;
 class CacheManager extends \Includes\Decorator\Utils\AUtils
 {
     /**
+     * List of cache directories 
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected static $cacheDirs = array(
+        LC_CLASSES_CACHE_DIR,
+        LC_SKINS_CACHE_DIR,
+        LC_LOCALE_DIR,
+    );
+
+
+    /**
      * Query to select the "developer_mode" param mode from config 
      * 
      * @return string
@@ -50,16 +65,15 @@ class CacheManager extends \Includes\Decorator\Utils\AUtils
         return 'SELECT value FROM xlite_config WHERE category = \'General\' AND name = \'developer_mode\'';
     }
 
-
     /**
      * Check if so called "devloper mode" is enabled
      * 
      * @return bool
-     * @access public
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function isDeveloperMode()
+    protected static function isDeveloperMode()
     {
         return ('Y' === \Includes\Utils\Database::fetchColumn(self::getDevmodeQuery())) && empty($_REQUEST['action']);
     }
@@ -68,11 +82,11 @@ class CacheManager extends \Includes\Decorator\Utils\AUtils
      * Check if classes cache directory exists
      *
      * @return bool
-     * @access public
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function isCacheDirExists()
+    protected static function isCacheDirExists()
     {
         return \Includes\Utils\FileManager::isDirReadable(LC_CLASSES_CACHE_DIR);
     }
@@ -81,12 +95,94 @@ class CacheManager extends \Includes\Decorator\Utils\AUtils
      * Check if we need to rebuild classes cache
      * 
      * @return bool
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function isRebuildNeeded()
+    {
+        return (!static::isCacheDirExists() || static::isDeveloperMode()) && !defined('LC_DO_NOT_REBUILD_CACHE');
+    }
+
+    /**
+     * Check id the Doctrine proxy classes are already generated 
+     * 
+     * @return bool
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function isDoctrineProxiesExist()
+    {
+        return \Includes\Utils\FileManager::isDirReadable(LC_PROXY_CACHE_DIR);
+    }
+
+    /**
+     * Build LC classes cache.
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function buildLCCache()
+    {
+        // Delete cache folders
+        static::cleanupCache();
+        // Create classes tree
+        \Includes\Decorator::getInstance()->buildCache();
+        // Perform redirect (needed for two-step cache generation)
+        \Includes\Utils\Operator::redirect($_SERVER['REQUEST_URI']);
+    }
+
+    /**
+     * Build the Doctrine proxy classes 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function buildDoctrineProxies()
+    {
+        // Create the proxies folder
+        \Includes\Utils\FileManager::mkdirRecursive(LC_PROXY_CACHE_DIR);
+        // Create model proxy classes (second step of cache generation)
+        \Includes\Decorator\Utils\Doctrine\EntityManager::generateProxyClasses();
+    }
+
+
+    /**
+     * Rebuild classes cache 
+     * 
+     * @param bool $force flag to force cache rebuild
+     *  
+     * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function isRebuildNeeded()
+    public static function rebuildCache($force = false)
     {
-        return (!static::isCacheDirExists() || static::isDeveloperMode()) && !defined('LC_DO_NOT_REBUILD_CACHE');
+        if (static::isRebuildNeeded() || $force) {
+            static::buildLCCache();
+        }
+
+        if (!static::isDoctrineProxiesExist()) {
+            static::buildDoctrineProxies();
+        }
+    }
+
+    /**
+     * Clean up the cache 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function cleanupCache()
+    {
+        array_walk(static::$cacheDirs, array('\Includes\Utils\FileManager', 'unlinkRecursive'));
     }
 }

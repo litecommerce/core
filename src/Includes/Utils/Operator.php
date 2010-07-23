@@ -38,6 +38,23 @@ namespace Includes\Utils;
 class Operator extends AUtils
 {
     /**
+     * Redirect 
+     * 
+     * @param string $location URL
+     * @param int    $code     operation code
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function redirect($location, $code = 302)
+    {
+        header('Location: ' . $location, true, $code);
+        exit (0);
+    }
+
+    /**
      * Flush output 
      * 
      * @param string $message text to display

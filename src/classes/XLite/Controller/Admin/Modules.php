@@ -113,13 +113,13 @@ class Modules extends AAdmin
         $this->set('returnUrl', $this->buildUrl('modules'));
 
         foreach (\XLite\Core\Database::getRepo('XLite\Model\Module')->findByType($moduleType) as $module) {
-            $module->setEnabled(in_array($module->getModuleId(), $moduleIDs));
+            $module->setEnabled(in_array($module->getModuleId(), $activeModules));
             $module->disableDepended();
             \XLite\Core\Database::getEM()->persist($module);
         }
-        \XLite\Core\Database::getEM()->flush();
 
-        \XLite::getInstance()->rebuildCacheEmergency();
+        \XLite\Core\Database::getEM()->flush();
+        \XLite::setCleanUpCacheFlag(true);
     }
 
     /**
@@ -145,7 +145,7 @@ class Modules extends AAdmin
 
             $module->disableDepended();
 
-            \XLite::getInstance()->rebuildCacheLazy();
+            \XLite::setCleanUpCacheFlag(true);
 
             $status = $module->uninstall();
 

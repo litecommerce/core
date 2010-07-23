@@ -1139,6 +1139,7 @@ function doInstallDatabase($trigger, &$params, $silentMode = false)
 
 /**
  * Rebuild LiteCommerce cache 
+ * FIXME - the rebuildCache() method should not be called directly
  * 
  * @return void
  * @access public
@@ -1147,7 +1148,7 @@ function doInstallDatabase($trigger, &$params, $silentMode = false)
  */
 function doRebuildCache()
 {
-    \Includes\Decorator::getInstance()->rebuildCache();
+    \Includes\Decorator\Utils\CacheManager::rebuildCache(true);
 }
 
 /**

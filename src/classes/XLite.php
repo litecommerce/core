@@ -76,7 +76,7 @@ class XLite extends \XLite\Base
      * @access protected
      * @since  3.0
      */
-    protected $isNeedToCleanupCache = false;
+    protected static $isNeedToCleanupCache = false;
 
     /**
      * TODO - check if it's realy needed 
@@ -191,23 +191,9 @@ class XLite extends \XLite\Base
      */
     public function __destruct()
     {
-        if ($this->isNeedToCleanupCache) {
-            self::rebuildCacheLazy();
+        if (static::$isNeedToCleanupCache) {
+            \Includes\Decorator\Utils\CacheManager::cleanupCache();
         }
-    }
-
-    /**
-     * Ability to provoke cache cleanup (or to prevent it)
-     * 
-     * @param bool $flag if it's needed to cleanup cache or not
-     *  
-     * @return void
-     * @access public
-     * @since  3.0.0
-     */
-    public function setCleanUpCacheFlag($flag)
-    {
-        $this->isNeedToCleanupCache = (true === $flag);
     }
 
     /**
@@ -259,6 +245,21 @@ class XLite extends \XLite\Base
     public function getFactory()
     {
         return \XLite\Model\Factory::getInstance();
+    }
+
+
+    /**
+     * Ability to provoke cache cleanup (or to prevent it)
+     * 
+     * @param bool $flag if it's needed to cleanup cache or not
+     *  
+     * @return void
+     * @access public
+     * @since  3.0.0
+     */
+    public static function setCleanUpCacheFlag($flag)
+    {
+        static::$isNeedToCleanupCache = (true === $flag);
     }
 
     /**
@@ -387,39 +388,4 @@ class XLite extends \XLite\Base
 
         return $this;
     }
-
-    /**
-     * Rebuild decoration cache in emergency mode
-     * FIXME - to revise
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function rebuildCacheEmergency()
-    {
-        \Includes\Decorator::getInstance()->cleanUpCache();
-        \XLite\Core\Operator::redirect($_SERVER['REQUEST_URI'], true);
-    }
-
-    /**
-     * Rebuild decoration cache in lazy mode (cache will be rebuild after next application start)
-     * FIXME - to revise
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function rebuildCacheLazy()
-    {
-        static $runned = false;
-
-        if (!$runned) {
-            \Includes\Decorator::getInstance()->cleanUpCache();
-            $runned = true;
-        }
-    }
 }
-
