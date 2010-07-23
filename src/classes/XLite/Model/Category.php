@@ -212,7 +212,7 @@ class Category extends \XLite\Model\Base\I18n
      */
     public function hasImage()
     {
-        return !is_null(\XLite\Core\Database::getRepo('XLite\Model\CategoryImage')->getImageById($this->category_id));
+        return !is_null(\XLite\Core\Database::getRepo('XLite\Model\CategoryImage')->getImageById($this->getCategoryId()));
     }
 
     /**
@@ -225,7 +225,7 @@ class Category extends \XLite\Model\Base\I18n
      */
     public function getImage()
     {
-        return \XLite\Core\Database::getRepo('XLite\Model\CategoryImage')->getImageById($this->category_id);
+        return \XLite\Core\Database::getRepo('XLite\Model\CategoryImage')->getImageById($this->getCategoryId());
     }
 
     /**
@@ -238,7 +238,7 @@ class Category extends \XLite\Model\Base\I18n
      */
     public function getSubcategories()
     {
-        return \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategoriesPlainList($this->category_id);
+        return \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategoriesPlainList($this->getCategoryId());
     }
 
     /**
@@ -251,7 +251,7 @@ class Category extends \XLite\Model\Base\I18n
      */
     public function getSubCategoriesCount()
     {
-        return ($this->rpos - $this->lpos - 1) / 2;
+        return ($this->getRpos() - $this->getLpos() - 1) / 2;
     }
 
     /**
@@ -264,9 +264,9 @@ class Category extends \XLite\Model\Base\I18n
      */
     public function hasSubcategories()
     {
-        $data = \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategoryFromHash($this->category_id);
+        $data = \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategoryFromHash($this->getCategoryId());
 
-        return (isset($data) ? $data->sub_categories_count > 0 : false);
+        return (isset($data) ? $data->getSubCategoriesCount() > 0 : false);
     }
 
     /**
@@ -279,7 +279,7 @@ class Category extends \XLite\Model\Base\I18n
      */
     public function getStringPath()
     {
-        $path = \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategoryPath($this->category_id);
+        $path = \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategoryPath($this->getCategoryId());
 
         $location = "";
 
@@ -300,9 +300,9 @@ class Category extends \XLite\Model\Base\I18n
      */
     public function isEmpty()
     {
-        $data = \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategoryFromHash($this->category_id);
+        $data = \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategoryFromHash($this->getCategoryId());
 
-        return (isset($data) ? 0 == $data->products_count && 0 == $data->sub_categories_count : true);
+        return (isset($data) ? 0 == $data->getProductsCount() && 0 == $data->getSubCategoriesCount() : true);
     }
 
     /**
@@ -315,7 +315,7 @@ class Category extends \XLite\Model\Base\I18n
      */
     public function isExists()
     {
-        isset($this->category_id);
+        return ($this->getCategoryId() > 0);
     }
 
     /**
@@ -328,9 +328,9 @@ class Category extends \XLite\Model\Base\I18n
      */
     public function getProductsNumber()
     {
-        $data = \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategoryFromHash($this->category_id);
+        $data = \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategoryFromHash($this->getCategoryId());
 
-        return (isset($data) ? $data->products_count : 0);
+        return (isset($data) ? $data->getProductsCount() : 0);
     }
 
     /**
@@ -346,12 +346,12 @@ class Category extends \XLite\Model\Base\I18n
      */
     public function getIndentation($multiplier = 0, $str = null)
     {
-        if (!isset($this->depth)) {
-            $data = \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategoryFromHash($this->category_id);
-            $depth = isset($data) ? $data->depth : 1;
+        if ($this->getDepth() > 0) {
+            $depth = $this->getDepth();
 
         } else {
-            $depth = $this->depth;
+            $data = \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategoryFromHash($this->getCategoryId());
+            $depth = isset($data) ? $data->getDepth() : 1;
         }
 
         $indentation = ($depth - 1) * $multiplier;

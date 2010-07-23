@@ -203,13 +203,11 @@ class Category extends \XLite\Model\Repo\Base\I18n
             ->addSelect('m', 'i')
             ->leftJoin('c.membership', 'm')
             ->leftJoin('c.image', 'i')
-            ->where('c.category_id = :categoryId')
+            ->andWhere('c.category_id = :categoryId')
             ->setMaxResults(1)
             ->setParameter('categoryId', $categoryId);
 
-        $this->addEnabledCondition($qb, 'c');
-
-        return $qb;
+        return $this->addEnabledCondition($qb, 'c');
     }
 
     /**
@@ -240,15 +238,15 @@ class Category extends \XLite\Model\Repo\Base\I18n
                 $dataTmp[$id]->setProductsCount($data[$id]['products_count']);
 
                 if (count($right) > 0) {
-                    while ($right[count($right) - 1] < $nd->rpos) {
+                    while ($right[count($right) - 1] < $nd->getRpos()) {
                         array_pop($right);
                     }
 
                 }
 
-                $dataTmp[$id]->depth = count($right);
+                $dataTmp[$id]->setDepth(count($right));
 
-                $right[] = $nd->rpos;
+                $right[] = $nd->getRpos();
             }
 
             $data = $dataTmp;
@@ -282,12 +280,10 @@ class Category extends \XLite\Model\Repo\Base\I18n
             ->orderBy('c.lpos');
 
         if (isset($category) && $category instanceof $this->className) {
-            $qb->where($qb->expr()->between('c.lpos', $category->lpos, $category->rpos));
+            $qb->andWhere($qb->expr()->between('c.lpos', $category->getLpos(), $category->getRpos()));
         }
 
-        $this->addEnabledCondition($qb, 'c');
-
-        return $qb;
+        return $this->addEnabledCondition($qb, 'c');
     }
 
     /**
@@ -303,6 +299,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
     public function getCategoryFromHash($categoryId)
     {
         $hash = ($this->ignoreCache) ? null : $this->getFromCache($this->cachePrefix . '_FullTreeHash');
+
         $data = $this->getFullTree();
 
         $result = null;
@@ -313,12 +310,13 @@ class Category extends \XLite\Model\Repo\Base\I18n
             $hash = array();
 
             foreach ($data as $index => $category) {
-                $hash[$category->category_id] = $index;
+                $hash[$category->getCategoryId()] = $index;
             }
 
             $this->saveToCache($hash, $this->cachePrefix . '_FullTreeHash');
         }
 
+        // Gathering needed category object from hash
         if (isset($hash) && isset($hash[$categoryId]) && isset($data[$hash[$categoryId]])) {
             $result = $data[$hash[$categoryId]];
         }
@@ -373,12 +371,8 @@ class Category extends \XLite\Model\Repo\Base\I18n
 
             $qb = $this->createQueryBuilder('n');
 
-            $qb->where(
-                $qb->expr()->andx(
-                    $qb->expr()->lte('n.lpos', $category->lpos),
-                    $qb->expr()->gte('n.rpos', $category->rpos)
-                )
-            );
+            $qb ->andWhere($qb->expr()->lte('n.lpos', $category->getLpos()))
+                ->andWhere($qb->expr()->gte('n.rpos', $category->getRpos()));
 
             $qb->orderby('n.lpos');
         }
@@ -420,7 +414,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
     protected function defineLeafNodesQuery()
     {
         return $this->createQueryBuilder('n')
-            ->where('n.rpos = n.lpos+1');
+            ->andWhere('n.rpos = n.lpos+1');
     }
 
     /**
@@ -455,92 +449,21 @@ class Category extends \XLite\Model\Repo\Base\I18n
     }
 
     /**
-     * Add node into the tree before specified node
+     * Add node into the tree before or after specified node on the same level
      * 
-     * @param int $categoryId Node Id
+     * @param int $categoryId   Node Id
+     * @param bool $placeBefore Flag: true - place new node before specified, false - place after
      *  
-     * @return \XLite\Model\Category or false
+     * @return \XLite\Model\Category
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function addBefore($categoryId)
+    public function addSibling($categoryId, $placeBefore = true)
     {
         $this->ignoreCache = true;
 
-        $result = false;
-
-        $parentCategory = $this->getNode($categoryId);
-
-        if ($parentCategory instanceof $this->className) {
-
-            $parentLpos = $parentCategory->lpos;
-
-            // Increase lpos field for parent and all right nodes
-            $qb = \XLite\Core\Database::getQB();
-            $qb ->update('XLite\Model\Category', 'n')
-                ->set('n.lpos', 'n.lpos + :offset')
-                ->where(
-                    $qb->expr()->gte('n.lpos', ':parentLpos')
-                )
-                ->setParameters(
-                    array(
-                        'offset'     => 2,
-                        'parentLpos' => $parentLpos,
-                    )
-                );
-
-            $qb->getQuery()->execute();
-
-            // Increase rpos field for parent and all right nodes
-            $qb = \XLite\Core\Database::getQB();
-            $qb ->update('XLite\Model\Category', 'n')
-                ->set('n.rpos', 'n.rpos + :offset')
-                ->where(
-                    $qb->expr()->gte('n.rpos', ':parentLpos')
-                )
-                ->setParameters(
-                    array(
-                        'offset'     => 2,
-                        'parentLpos' => $parentLpos,
-                    )
-                );
-            $qb->getQuery()->execute();
-
-            $newCategory = new \XLite\Model\Category();
-            $newCategory->lpos = $parentLpos;
-            $newCategory->rpos = $parentLpos + 1;
-            \XLite\Core\Database::getEM()->persist($newCategory);
-            \XLite\Core\Database::getEM()->flush();
-
-            $result = $newCategory;
-
-            if (is_null($result->category_id)) {
-                \XLite\Core\TopMessage::getInstance()->add(
-                    'Error of a new category creation',
-                    \XLite\Core\TopMessage::ERROR
-                );
-            }
-        }
-
-        $this->ignoreCache = false;
-
-        return $result;
-    }
-
-    /**
-     * Add node into the tree after specified node
-     * 
-     * @param int $categoryId Node Id
-     *  
-     * @return \XLite\Model\Category or false
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function addAfter($categoryId)
-    {
-        $this->ignoreCache = true;
+        $errorMsg = null;
 
         $result = null;
 
@@ -548,52 +471,39 @@ class Category extends \XLite\Model\Repo\Base\I18n
 
         if ($parentCategory instanceof $this->className) {
 
-            $parentRpos = $parentCategory->rpos;
+            if ($placeBefore) {
+                $relatedIndex = $parentCategory->getLpos();
+                $equalFlag = true;
+                $newLpos = $relatedIndex;
+                $newRpos = $relatedIndex + 1;
 
-            // Increase lpos field for all right nodes
-            $qb = \XLite\Core\Database::getQB();
-            $qb ->update('XLite\Model\Category', 'n')
-                ->set('n.lpos', 'n.lpos + :offset')
-                ->where(
-                    $qb->expr()->gt('n.lpos', ':parentRpos')
-                )
-                ->setParameters(
-                    array(
-                        'offset'     => 2,
-                        'parentRpos' => $parentRpos
-                    )
-                );
-            $qb->getQuery()->execute();
-
-            // Increase rpos field for all right nodes
-            $qb = \XLite\Core\Database::getQB();
-            $qb ->update('XLite\Model\Category', 'n')
-                ->set('n.rpos', 'n.rpos + :offset')
-                ->where(
-                    $qb->expr()->gt('n.rpos', ':parentRpos')
-                )
-                ->setParameters(
-                    array(
-                        'offset' => 2,
-                        'parentRpos' => $parentRpos
-                    )
-                );
-            $qb->getQuery()->execute();
-
-            $newCategory = new \XLite\Model\Category();
-            $newCategory->lpos = $parentRpos + 1;
-            $newCategory->rpos = $parentRpos + 2;
-            \XLite\Core\Database::getEM()->persist($newCategory);
-            \XLite\Core\Database::getEM()->flush();
-
-            $result = $newCategory;
-
-            if (is_null($result->category_id)) {
-                \XLite\Core\TopMessage::getInstance()->add(
-                    'Error of a new category creation',
-                    \XLite\Core\TopMessage::ERROR
-                );
+            } else {
+                $relatedIndex = $parentCategory->getRpos();
+                $equalFlag = false;
+                $newLpos = $relatedIndex + 1;
+                $newRpos = $relatedIndex + 2;
             }
+
+            // Increase lpos field for parent and all right nodes
+            $qb = $this->defineUpdateIndexesQuery('lpos', 2, $relatedIndex, $equalFlag);
+            $qb->getQuery()->execute();
+
+            // Increase rpos field for parent and all right nodes
+            $qb = $this->defineUpdateIndexesQuery('rpos', 2, $relatedIndex, $equalFlag);
+            $qb->getQuery()->execute();
+
+            // Create an empty category node in the database
+            $result = $this->createNode($newLpos, $newRpos, $errorMsg);
+
+        } else {
+            $errorMsg = 'The specified category is not exist';
+        }
+
+        if (isset($errorMsg)) {
+            \XLite\Core\TopMessage::getInstance()->add(
+                $errorMsg,
+                \XLite\Core\TopMessage::ERROR
+            );
         }
 
         $this->ignoreCache = false;
@@ -606,7 +516,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * 
      * @param int $categoryId Node Id
      *  
-     * @return \XLite\Model\Category or false
+     * @return \XLite\Model\Category
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -615,18 +525,19 @@ class Category extends \XLite\Model\Repo\Base\I18n
     {
         $this->ignoreCache = true;
 
+        $errorMsg = null;
+
         $result = null;
 
-        $errorMsg = null;
         $skipUpdate = false;
 
         // If category_id is 0 then suppose that parent is root
-        if (0 === $categoryId) {
+        if (0 == $categoryId) {
             // get lpos as 0 and rpos as a max(rpos)
             $parentLpos = 0;
             $parentRpos = $this->getMaxRightPos();
 
-            if (0 === $parentRpos) {
+            if (0 == $parentRpos) {
                 $skipUpdate = true;
             }
 
@@ -637,8 +548,8 @@ class Category extends \XLite\Model\Repo\Base\I18n
 
             if (isset($parentCategory) && $parentCategory instanceof $this->className) {
                 // get lpos and rpos from parent category
-                $parentLpos = $parentCategory->lpos;
-                $parentRpos = $parentCategory->rpos;
+                $parentLpos = $parentCategory->getLpos();
+                $parentRpos = $parentCategory->getRpos();
             
             // Category does not exist, return error
             } else {
@@ -652,51 +563,19 @@ class Category extends \XLite\Model\Repo\Base\I18n
             if (!$skipUpdate) {
 
                 // Increase lpos field for all right nodes
-                $qb = \XLite\Core\Database::getQB();
-                $qb ->update('XLite\Model\Category', 'n')
-                    ->set('n.lpos', 'n.lpos + :offset')
-                    ->where(
-                        $qb->expr()->gt('n.lpos', ':parentLpos')
-                    )
-                    ->setParameters(
-                        array(
-                            'offset' => 2,
-                            'parentLpos' => $parentLpos
-                        )
-                    );
-
+                $qb = $this->defineUpdateIndexesQuery('lpos', 2, $parentLpos);
                 $qb->getQuery()->execute();
 
                 // Increase rpos field for parent and all right nodes
-                $qb = \XLite\Core\Database::getQB();
-                $qb ->update('XLite\Model\Category', 'n')
-                    ->set('n.rpos', 'n.rpos + :offset')
-                    ->where(
-                        $qb->expr()->gt('n.rpos', ':parentLpos')
-                    )
-                    ->setParameters(
-                        array(
-                            'offset' => 2,
-                            'parentLpos' => $parentLpos
-                        )
-                    );
+                $qb = $this->defineUpdateIndexesQuery('rpos', 2, $parentLpos);
                 $qb->getQuery()->execute();
             }
 
-            $newCategory = new \XLite\Model\Category();
-            $newCategory->lpos = $parentLpos + 1;
-            $newCategory->rpos = $parentLpos + 2;
-
-            \XLite\Core\Database::getEM()->persist($newCategory);
-            \XLite\Core\Database::getEM()->flush();
-
-            $result = $newCategory;
-
-            if (is_null($result->category_id)) {
-                $errorMsg = 'Error of a new category creation';
-            }
-        
-        } else {
+            // Create an empty category node in the database
+            $result = $this->createNode($parentLpos + 1, $parentLpos + 2, $errorMsg);
+        }
+               
+        if (isset($errorMsg)) {
             \XLite\Core\TopMessage::getInstance()->add(
                 $errorMsg,
                 \XLite\Core\TopMessage::ERROR
@@ -705,6 +584,73 @@ class Category extends \XLite\Model\Repo\Base\I18n
 
         $this->ignoreCache = false;
 
+        return $result;
+    }
+
+    /**
+     * defineUpdateIndexesQuery 
+     * 
+     * @param string $index        Index to update: 'lpos' or 'rpos'
+     * @param int    $offset       Offset value
+     * @param int    $relatedIndex Related index value
+     * @param bool   $orEqualFlag  Flag for condition function choosing
+     *  
+     * @return \Doctrine\ORM\QueryBuilder
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineUpdateIndexesQuery($index, $offset, $relatedIndex, $orEqualFlag = false)
+    {
+        $gtFunc = 'gt' . ($orEqualFlag ? 'e' : '');
+        $alias = 'c';
+        $column = $alias . '.' . $index;
+
+        $qb = \XLite\Core\Database::getQB();
+        $qb ->update('XLite\Model\Category', $alias)
+            ->set($column, $column . ' + :offset')
+            ->andWhere(
+                $qb->expr()->$gtFunc($column, ':relatedIndex')
+            )
+            ->setParameters(
+                array(
+                    'offset'     => $offset,
+                    'relatedIndex' => $relatedIndex
+                )
+            );
+
+        return $qb;
+    }
+
+    /**
+     * Create a node of category in the database
+     * 
+     * @param int $lpos        lpos value
+     * @param int $rpos        rpos value
+     * @param string $errorMsg Variable for error message
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function createNode($lpos, $rpos, &$errorMsg)
+    {
+        $node = new \XLite\Model\Category();
+        $node->setLpos($lpos);
+        $node->setRpos($rpos);
+
+        \XLite\Core\Database::getEM()->persist($node);
+        \XLite\Core\Database::getEM()->flush();
+
+        if ($node->getCategoryId() > 0) {
+            $result = $node;
+
+        } else {
+            $result = null;
+            $errorMsg = 'Error of a category creation: object could not be created in the database.';
+        }
+        
         return $result;
     }
 
@@ -729,12 +675,12 @@ class Category extends \XLite\Model\Repo\Base\I18n
         // Get source node data
         $srcNode = $this->getNode($nodeId);
 
-        if ($srcNode->category_id > 0) {
+        if ($srcNode->getCategoryId() > 0) {
 
             $src = $dst = array();
 
-            $src['lpos'] = $srcNode->lpos;
-            $src['rpos'] = $srcNode->rpos;
+            $src['lpos'] = $srcNode->getLpos();
+            $src['rpos'] = $srcNode->getRpos();
 
             $dst['rpos'] = $dst['lpos'] = 0;
 
@@ -742,9 +688,9 @@ class Category extends \XLite\Model\Repo\Base\I18n
                 // Get destination node data
                 $destNode = $this->getNode($destNodeId);
 
-                if ($destNode->category_id > 0) {
-                    $dst['lpos'] = $destNode->lpos;
-                    $dst['rpos'] = $destNode->rpos;
+                if ($destNode->getCategoryId() > 0) {
+                    $dst['lpos'] = $destNode->getLpos();
+                    $dst['rpos'] = $destNode->getRpos();
                 
                 } else {
                     $errorMsg = sprintf('Destination category (%d) specified incorrectly', $destNodeId);
@@ -924,10 +870,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
     {
         $category = $this->getNode($categoryId);
 
-        if (empty($category)) {
-            $category = new \XLite\Model\Category;    
-        }
-
         return $category;
     }
 
@@ -965,9 +907,9 @@ class Category extends \XLite\Model\Repo\Base\I18n
         }
 
         if (!empty($cat)) {
-            $depth = $cat->depth + 1;
-            $lpos = $cat->lpos;
-            $rpos = $cat->rpos;
+            $depth = $cat->getDepth() + 1;
+            $lpos = $cat->getLpos();
+            $rpos = $cat->getRpos();
 
         } else {
             $depth = 1;
@@ -981,7 +923,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
 
             foreach($categories as $category) {
 
-                if ($category->depth == $depth && $category->lpos > $lpos && $category->rpos < $rpos) {
+                if ($category->getDepth() == $depth && $category->getLpos() > $lpos && $category->getRpos() < $rpos) {
                     $result[] = $category;
                 }
             }
@@ -1034,7 +976,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
     public function getParentCategoryId($categoryId)
     {
         $result = $this->getParentCategory($categoryId);
-        return $result->category_id;
+        return $result->getCategoryId();
     }
 
     /**
@@ -1055,7 +997,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
 
         if (is_array($leafNodes)) {
             foreach ($leafNodes as $node) {
-                if ($node->category_id == $categoryId) {
+                if ($node->getCategoryId() == $categoryId) {
                     $result = true;
                     break;
                 }
@@ -1109,7 +1051,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
     {
         return $this->createQueryBuilder('c')
             ->leftJoin('c.category_products', 'cp')
-            ->where('cp.product_id = :productId')
+            ->andWhere('cp.product_id = :productId')
             ->setParameter('productId', $productId);
     }
 
@@ -1153,9 +1095,11 @@ class Category extends \XLite\Model\Repo\Base\I18n
      */
     protected function defineCategoryByCleanUrl($cleanUrl)
     {
-        return $this->createQueryBuilder('c')
-            ->where('c.clean_url = :cleanUrl')
+        $qb = $this->createQueryBuilder('c')
+            ->andWhere('c.clean_url = :cleanUrl')
             ->setParameter('cleanUrl', $cleanUrl);
+
+        return $this->addEnabledCondition($qb, 'c');
     }
 
     /**
@@ -1185,11 +1129,11 @@ class Category extends \XLite\Model\Repo\Base\I18n
 
             foreach ($categoriesToDelete as $category) {
 
-                if (!($subcatsOnly && $categoryId == $category->category_id)) {
+                if (!($subcatsOnly && $categoryId == $category->getCategoryId())) {
 
                     // Calculate left and right indexes of the removed tree
-                    $lpos = ($category->lpos < $lpos) ? $category->lpos : $lpos;
-                    $rpos = ($category->rpos > $rpos) ? $category->rpos : $rpos;
+                    $lpos = ($category->getLpos() < $lpos) ? $category->getLpos() : $lpos;
+                    $rpos = ($category->getRpos() > $rpos) ? $category->getRpos() : $rpos;
 
                     \XLite\Core\Database::getEM()->remove($category);
                 }
@@ -1200,34 +1144,12 @@ class Category extends \XLite\Model\Repo\Base\I18n
             // If nodes were removed - recalculate indexes 
             if ($rpos > 0) {
 
-                // Increase lpos field for all right nodes
-                $qb = \XLite\Core\Database::getQB();
-                $qb ->update('XLite\Model\Category', 'n')
-                    ->set('n.lpos', 'n.lpos - :offset')
-                    ->where(
-                        $qb->expr()->gt('n.lpos', ':lpos')
-                    )
-                    ->setParameters(
-                        array(
-                            'offset' => $offset,
-                            'lpos' => $lpos
-                        )
-                    );
+                // Decrease lpos fields for all right nodes
+                $qb = $this->defineUpdateIndexesQuery('lpos', -$offset, $lpos);
                 $qb->getQuery()->execute();
  
-                // Increase rpos field for parent and all right nodes
-                $qb = \XLite\Core\Database::getQB();
-                $qb ->update('XLite\Model\Category', 'n')
-                    ->set('n.rpos', 'n.rpos - :offset')
-                    ->where(
-                        $qb->expr()->gt('n.rpos', ':rpos')
-                    )
-                    ->setParameters(
-                        array(
-                            'offset' => $offset,
-                            'rpos' => $rpos
-                        )
-                    );
+                // Decrease rpos fields for all right nodes
+                $qb = $this->defineUpdateIndexesQuery('rpos', -$offset, $rpos);
                 $qb->getQuery()->execute();
 
                 // Clean common cache

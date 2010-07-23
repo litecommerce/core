@@ -11,7 +11,7 @@
  * @since     3.0.0
  *}
 
-<table border="0" width="100%" IF="category.category_id">
+<table border="0" width="100%" IF="category">
 
   <tr>
 
