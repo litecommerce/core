@@ -43,6 +43,7 @@ class Product extends \XLite\Model\Repo\Base\I18n
 
     const P_CATEGORY_ID = 'categoryId';
     const P_SUBSTRING   = 'substring';
+    const P_ORDER_BY    = 'orderBy';
     const P_LIMIT       = 'limit';
     
 
@@ -59,6 +60,7 @@ class Product extends \XLite\Model\Repo\Base\I18n
         return array(
             self::P_CATEGORY_ID,
             self::P_SUBSTRING,
+            self::P_ORDER_BY,
             self::P_LIMIT,
         );
     }
@@ -95,7 +97,8 @@ class Product extends \XLite\Model\Repo\Base\I18n
         $queryBuilder
             ->innerJoin('p.category_products', 'cp')
             ->andWhere('cp.category_id = :categoryId')
-            ->setParameter('categoryId', $value);
+            ->setParameter('categoryId', $value)
+            ->addOrderBy('cp.orderby');
     }
 
     /**
@@ -117,9 +120,25 @@ class Product extends \XLite\Model\Repo\Base\I18n
             $cnd->add('p.' . $field . ' LIKE :substring');
         }
 
-        $queryBuilder
-            ->andWhere($cnd)
-            ->setParameter('substring', '%' . $value , '%');
+        $queryBuilder->andWhere($cnd)->setParameter('substring', '%' . $value , '%');
+    }
+
+    /**
+     * Prepare certain search condition
+     *
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder query builder to prepare
+     * @param  array                     $value        condition data
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function prepareSearchConditionOrderBy(\Doctrine\ORM\QueryBuilder $queryBuilder, array $value)
+    {
+        list($sort, $order) = $value;
+
+        $queryBuilder->addOrderBy($sort, $order);
     }
 
     /**
@@ -170,7 +189,7 @@ class Product extends \XLite\Model\Repo\Base\I18n
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function searchCommon(\XLite\Core\CommonCell $cnd)
+    public function search(\XLite\Core\CommonCell $cnd)
     {
         $queryBuilder = $this->createQueryBuilder();
         $cnd = $cnd->getData();
@@ -178,21 +197,6 @@ class Product extends \XLite\Model\Repo\Base\I18n
         array_walk($cnd, array($this, 'callSearchConditionHandler'), $queryBuilder);
 
         return $queryBuilder->getQuery()->getResult();
-    }
-
-    /**
-     * Common search
-     * 
-     * @param array $params search params hash
-     *  
-     * @return \Doctrine\ORM\PersistentCollection
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function search(array $params = array())
-    {
-        return $this->searchCommon(new \XLite\Core\CommonCell($params));
     }
 
 
