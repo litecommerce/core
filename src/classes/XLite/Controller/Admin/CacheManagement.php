@@ -37,9 +37,19 @@ namespace XLite\Controller\Admin;
  */
 class CacheManagement extends AAdmin
 {
+    /**
+     * action_rebuild 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     public function action_rebuild()
     {
-        \XLite::getInstance()->setCleanUpCacheFlag(true);
+        \XLite::setCleanUpCacheFlag(true);
+
+        // To avoid the infinite loop
         $this->setReturnUrl($this->buildURL());
     }
 }

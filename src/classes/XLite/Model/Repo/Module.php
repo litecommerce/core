@@ -301,10 +301,10 @@ class Module extends \XLite\Model\Repo\ARepo
     {
         return $this->createQueryBuilder()
             ->andWhere('(m.dependencies LIKE :dbegin OR m.dependencies LIKE :dmiddle OR m.dependencies LIKE :dend OR m.dependencies = :depend)')
-            ->setParamater('depend', $depend)
-            ->setParamater('dbegin', $depend . ',')
-            ->setParamater('dmiddle', ',' . $depend . ',')
-            ->setParamater('dend', ',' . $depend);
+            ->setParameter('depend', $depend)
+            ->setParameter('dbegin', $depend . ',')
+            ->setParameter('dmiddle', ',' . $depend . ',')
+            ->setParameter('dend', ',' . $depend);
     }
 
     /**
@@ -375,7 +375,7 @@ class Module extends \XLite\Model\Repo\ARepo
 
         if ($changed) {
             \XLite\Core\Database::getEM()->flush();
-            \XLite::getInstance()->rebuildCacheEmergency();
+            \XLite::setCleanUpCacheFlag(true);
         }
     }
 
@@ -434,7 +434,7 @@ class Module extends \XLite\Model\Repo\ARepo
         if ($changed) {
             \XLite\Core\Database::getEM()->flush();
             if ($needRebuild) {
-                \XLite::rebuildCacheEmergency();
+                \XLite::setCleanUpCacheFlag(true);
             }
         }
     }

@@ -106,8 +106,8 @@ if (file_exists('sql/local/xlite_local_demo.sql')) {
 
 echo "Remove directory var/run\n\n";
 
-unlinkRecursive('var/run');
-unlinkRecursive('var/locale');
+\Includes\Utils\FileManager::unlinkRecursive('var/run');
+\Includes\Utils\FileManager::unlinkRecursive('var/locale');
 
 mysql_close($connection);
 

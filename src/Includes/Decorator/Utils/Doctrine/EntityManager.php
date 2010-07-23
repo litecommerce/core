@@ -82,6 +82,21 @@ class EntityManager extends ADoctrine
     }
 
     /**
+     * Set metadata driver for Doctrine config
+     * 
+     * @param \Doctrine\ORM\Configuration $config config object
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function setMetadataDriver(\Doctrine\ORM\Configuration $config)
+    {
+        $config->setMetadataDriverImpl($config->newDefaultAnnotationDriver(LC_MODEL_CACHE_DIR));
+    }
+
+    /**
      * Return the Doctrine config object
      * 
      * @return Doctrine\ORM\Configuration
@@ -91,17 +106,15 @@ class EntityManager extends ADoctrine
      */
     protected static function getConfig()
     {
-        $config = new \Doctrine\ORM\Configuration;
+        $config = new \Doctrine\ORM\Configuration();
 
-        $config->setMetadataDriverImpl(
-            $config->newDefaultAnnotationDriver(LC_MODEL_CACHE_DIR)
-        );
+        static::setMetadataDriver($config);
 
         // Set proxy settings
         $config->setProxyDir(LC_PROXY_CACHE_DIR);
         $config->setProxyNamespace(LC_MODEL_PROXY_NS);
 
-        $cache = new \Doctrine\Common\Cache\ArrayCache;
+        $cache = new \Doctrine\Common\Cache\ArrayCache();
         $config->setMetadataCacheImpl($cache);
         $config->setQueryCacheImpl($cache);
 

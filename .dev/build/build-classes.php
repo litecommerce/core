@@ -7,7 +7,7 @@ if (php_sapi_name() != 'cli') {
 }
 
 require_once ('./top.inc.php');
-\Includes\Decorator::getInstance()->rebuildCache();
+\Includes\Decorator\Utils\CacheManager::rebuildCache(true);
 
 $duration = microtime(true) - OPERATION_START_TIME;
 echo ('Operation duration time: ' . round($duration, 3) . ' sec.' . "\n");
