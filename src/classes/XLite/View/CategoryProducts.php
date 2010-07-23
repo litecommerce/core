@@ -88,15 +88,43 @@ class CategoryProducts extends ProductsList
     }
 
     /**
-     * getOrderByCondition 
+     * getSortBy 
      * 
      * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getSortBy()
+    {
+        return $this->getParam(self::PARAM_SORT_BY);
+    }
+
+    /**
+     * getSortOrder 
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getSortOrder()
+    {
+        return strtoupper($this->getParam(self::PARAM_SORT_ORDER));
+    }
+
+    /**
+     * getOrderByCondition 
+     * 
+     * @return array
      * @access protected
      * @since  3.0.0
      */
     protected function getOrderByCondition()
     {
-        return $this->getParam(self::PARAM_SORT_BY) . ' ' . strtoupper($this->getParam(self::PARAM_SORT_ORDER));
+        return new \XLite\Core\CommonCell(
+            array(\XLite\Model\Repo\Product::P_ORDER_BY => array($this->getSortBy(), $this->getSortOrder()))
+        );
     }
 
     /**
@@ -108,7 +136,7 @@ class CategoryProducts extends ProductsList
      */
     protected function getData()
     {
-        return ($category = $this->getCategory()) ? $category->getProducts(null, $this->getOrderByCondition()) : null;
+        return ($category = $this->getCategory()) ? $category->getProducts($this->getOrderByCondition()) : null;
     }
 
     /**

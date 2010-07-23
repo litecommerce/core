@@ -90,10 +90,10 @@ abstract class ProductsList extends Container
      * Allowed sort criterions
      */
 
-    const SORT_BY_MODE_DEFAULT = 'order_by';
-    const SORT_BY_MODE_PRICE   = 'price';
-    const SORT_BY_MODE_NAME    = 'name';
-    const SORT_BY_MODE_SKU     = 'sku';
+    const SORT_BY_MODE_DEFAULT = 'cp.orderby';
+    const SORT_BY_MODE_PRICE   = 'p.price';
+    const SORT_BY_MODE_NAME    = 'p.name';
+    const SORT_BY_MODE_SKU     = 'p.sku';
 
     /**
      * SQL orederby directions

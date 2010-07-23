@@ -56,8 +56,10 @@ class ProductList extends AAdmin
     {
         $request = \XLite\Core\Request::getInstance();
 
-        return array(
-            \XLite\Model\Repo\Product::P_SUBSTRING => $request->substring,
+        return new \XLite\Core\CommonCell(
+            array(
+                \XLite\Model\Repo\Product::P_SUBSTRING => $request->substring,
+            )
         );
     }
 

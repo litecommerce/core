@@ -361,13 +361,13 @@ class Category extends \XLite\Model\Base\I18n
 
 
     // NOTE - working on
-    public function getProducts($start = 0, $limit = 0)
+    public function getProducts(\XLite\Core\CommonCell $cnd = null)
     {
-        return \XLite\Core\Database::getRepo('\XLite\Model\Product')->search(
-            array(
-                \XLite\Model\Repo\Product::P_CATEGORY_ID => $this->getCategoryId(),
-                \XLite\Model\Repo\Product::P_LIMIT       => array($start, $limit),
-            )
-        );
+        if (!isset($cnd)) {
+            $cnd = new \XLite\Core\CommonCell();
+        }
+        $cnd->{\XLite\Model\Repo\Product::P_CATEGORY_ID} = $this->getCategoryId();
+
+        return \XLite\Core\Database::getRepo('\XLite\Model\Product')->search($cnd);
     }
 }
