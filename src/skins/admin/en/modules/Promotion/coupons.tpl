@@ -139,7 +139,7 @@ No coupons found.
 {else:}
 <b>{couponsNumber}</b> coupon{if:!couponsNumber=#1#}s are{else:} is{end:} found.
 {end:}
-<widget class="\XLite\View\Pager" name="pager" data="{coupons}" itemsPerPage="{config.Promotion.coupons_per_page}">
+<widget class="\XLite\View\PagerOrig" name="pager" data="{coupons}" itemsPerPage="{config.Promotion.coupons_per_page}">
 <table width="100%" border="0" IF="coupons">
 <form action="admin.php" method="POST" name="coupons_form">
 <input type="hidden" name="target" value="DiscountCoupons">

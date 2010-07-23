@@ -40,7 +40,7 @@ function setHeaderChecked()
 
 <p class="SuccessMessage" IF="status=#cloned#">&gt;&gt;&nbsp;Products have been cloned successfully.&nbsp;&lt;&lt;</p>
 
-<widget class="\XLite\View\Pager" data="{products}" name="pager" itemsPerPage="{config.General.products_per_page_admin}" />
+<widget class="\XLite\View\PagerOrig" data="{products}" name="pager" itemsPerPage="{config.General.products_per_page_admin}" />
 
 <br />
 

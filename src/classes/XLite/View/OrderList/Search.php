@@ -103,7 +103,7 @@ class Search extends AOrderList
                     'data'   => $this->getOrders(),
                     'pageId' => $this->getPageId(),
                 ),
-                '\XLite\View\Pager\OrdersList',
+                '\XLite\View\PagerOrig\OrdersList',
                 'pager'
             );
         }

@@ -31,7 +31,7 @@
 <body LEFTMARGIN=0 TOPMARGIN=0 RIGHTMARGIN=0 BOTTOMMARGIN=0 MARGINWIDTH=0 MARGINHEIGHT=0 onLoad="showReloaded();">
 <widget template="common/dialog.tpl" head="Search users" body="modules/AOM/common/users_form.tpl">
 <br>
-<widget class="\XLite\View\Pager" data="{users}" name="pager" itemsPerPage="{config.General.users_per_page}">
+<widget class="\XLite\View\PagerOrig" data="{users}" name="pager" itemsPerPage="{config.General.users_per_page}">
 <br>
 <form name="users_form" action="admin.php" method="POST">
 	<input type="hidden" name="target" value="{target}">

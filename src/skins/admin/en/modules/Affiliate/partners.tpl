@@ -75,7 +75,7 @@
 
 <tr IF="search&partners">
     <td colspan=3>
-        <widget class="\XLite\View\Pager" data="{partners}" name="pager" itemsPerPage="{itemsPerPage}">
+        <widget class="\XLite\View\PagerOrig" data="{partners}" name="pager" itemsPerPage="{itemsPerPage}">
     </td>
     <td colspan=2 align=right>
         Items on page:&nbsp;

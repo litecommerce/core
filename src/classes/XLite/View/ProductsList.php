@@ -195,7 +195,7 @@ abstract class ProductsList extends Container
     /**
      * pager
      *
-     * @var    \XLite\View\Pager
+     * @var    \XLite\View\PagerOrig
      * @access protected
      * @since  3.0.0
      */
@@ -257,7 +257,7 @@ abstract class ProductsList extends Container
      */
     protected function getPagerClass()
     {
-        return '\XLite\View\Pager\ProductsList';
+        return '\XLite\View\PagerOrig\ProductsList';
     }
 
     /**
@@ -283,14 +283,14 @@ abstract class ProductsList extends Container
     {
         return array(
             self::PARAM_SESSION_CELL      => $this->getSessionCell(),
-            \XLite\View\Pager::PARAM_DATA => $this->getData()
+            \XLite\View\PagerOrig::PARAM_DATA => $this->getData()
         );
     }
 
     /**
      * Get pager 
      * 
-     * @return \XLite\View\Pager
+     * @return \XLite\View\PagerOrig
      * @access protected
      * @since  3.0.0
      */

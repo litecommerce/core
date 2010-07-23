@@ -98,7 +98,7 @@
 </tr>
 </form>
 </table>
-<widget class="\XLite\View\Pager" data="{pinCodes}" name="pager" itemsPerPage="{config.Egoods.pincodes_per_page}">
+<widget class="\XLite\View\PagerOrig" data="{pinCodes}" name="pager" itemsPerPage="{config.Egoods.pincodes_per_page}">
 <table border="0" cellpadding="1" cellspacing="3">
 <form name="edit_pins" action="admin.php" method="POST">
 <input FOREACH="allparams,_name,_val" type="hidden" name="{_name}" value="{_val}"/>

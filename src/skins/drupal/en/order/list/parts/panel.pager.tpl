@@ -11,4 +11,4 @@
  * @since     3.0.0
  * @ListChild (list="orders.panel", weight="10")
  *}
-<widget class="\XLite\View\Pager\OrdersList" data="{getOrders()}" name="pager" pageId="{getPageId()}" />
+<widget class="\XLite\View\PagerOrig\OrdersList" data="{getOrders()}" name="pager" pageId="{getPageId()}" />

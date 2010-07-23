@@ -78,7 +78,7 @@
     <widget class="\XLite\View\LanguagesModify\Button\AddNewLanguage" page="{getPage()}" style="add-new-language" />
   </div>
   <div IF="countLabels()" class="right">
-    <widget class="\XLite\View\Pager\Simple" pages="{getPages()}" page="{getPage()}" url="{getPagerURL()}" />
+    <widget class="\XLite\View\PagerOrig\Simple" pages="{getPages()}" page="{getPage()}" url="{getPagerURL()}" />
     (<strong>{t(#N items#,_ARRAY_(#n#^countLabels()))}</strong> total)
   </div>
 </div>
