@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage Controller
+ * @subpackage View
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -26,39 +26,27 @@
  * @since      3.0.0
  */
 
-namespace XLite\Controller\Customer;
+namespace XLite\View\Pager\ProductsList;
 
 /**
- * Category
+ * Abstract pager class fo the ProductsList widget
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @package    XLite
+ * @see        ____class_see____
+ * @since      3.0.0
  */
-class Category extends Catalog
+abstract class AProductsList extends \XLite\View\Pager\APager
 {
     /**
-     * getModelObject
+     * Return number of items per page
      *
-     * @return \XLite\Model\AModel
+     * @return int
      * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getModelObject()
+    protected function getItemsPerPage()
     {
-        return $this->getCategory();
-    }
-
-
-    /**
-     * handleRequest 
-     * 
-     * @return void
-     * @access public
-     * @since  3.0.0
-     */
-    public function handleRequest()
-    {
-        is_null($this->getCategory()) ? $this->setReturnUrl($this->buildURL('main')) : parent::handleRequest();
+        return \XLite\Core\Config::getInstance()->General->products_per_page;
     }
 }
