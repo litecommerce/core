@@ -45,6 +45,19 @@ class CategoryProducts extends ProductsList
 
 
     /**
+     * Return class name for the list pager
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getPagerClass()
+    {
+        return '\XLite\View\Pager\ProductsList\CategoryProducts';
+    }
+
+    /**
      * Return title
      *
      * @return string

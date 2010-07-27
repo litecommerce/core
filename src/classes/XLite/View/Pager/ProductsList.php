@@ -26,27 +26,18 @@
  * @since      3.0.0
  */
 
-namespace XLite\View\Pager\ProductsList;
+namespace XLite\View\Pager;
+
+// TODO - required the multiple inheritance
+// TODO - must extend the "\XLite\View\Pager" and "ProductsList\AProductsList" classes
 
 /**
- * Abstract pager class for the ProductsList widget
+ * Common pager for the ProductsList widget
  * 
  * @package    XLite
  * @see        ____class_see____
  * @since      3.0.0
  */
-abstract class AProductsList extends \XLite\View\Pager\APager
+class ProductsList extends \XLite\View\Pager
 {
-    /**
-     * Return number of items per page
-     *
-     * @return int
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getItemsPerPageDefault()
-    {
-        return \XLite\Core\Config::getInstance()->General->products_per_page;
-    }
 }

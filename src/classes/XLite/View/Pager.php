@@ -26,36 +26,23 @@
  * @since      3.0.0
  */
 
-namespace XLite\View\Pager\ProductsList;
+namespace XLite\View;
 
 /**
- * Pager for the category products page
+ * Common pager 
  * 
  * @package    XLite
  * @see        ____class_see____
  * @since      3.0.0
  */
-class CategoryProducts extends AProductsList
+class Pager extends \XLite\View\Pager\APager
 {
     /**
      * Widget parameter names
      */
 
-    const PARAM_CATEGORY_ID = 'category_id';
+    const PARAM_DATA = 'data';
 
-
-    /**
-     * Return current category model object
-     *
-     * @return \XLite\Model\Category
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getCategory()
-    {
-        return $this->getWidgetParams(self::PARAM_CATEGORY_ID)->getObject();
-    }
 
     /**
      * Define widget parameters
@@ -68,14 +55,10 @@ class CategoryProducts extends AProductsList
     protected function defineWidgetParams()
     {
         parent::defineWidgetParams();
-        
+
         $this->widgetParams += array(
-            self::PARAM_CATEGORY_ID => new \XLite\Model\WidgetParam\ObjectId\Category(
-                'Category ID', null
-            ),  
-        );  
-        
-        $this->requestParams[] = self::PARAM_CATEGORY_ID;
+            self::PARAM_DATA => new \XLite\Model\WidgetParam\Collection('Data', array()),
+        );
     }
 
     /**
@@ -91,6 +74,6 @@ class CategoryProducts extends AProductsList
      */
     protected function getDataFrame($start, $count)
     {
-        return $this->getCategory()->getProducts(\XLite\Model\Repo\Base\Searchable::addLimitCondition($start, $count));
+        return $this->getParam(self::PARAM_DATA);
     }
 }

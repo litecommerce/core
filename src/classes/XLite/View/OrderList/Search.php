@@ -108,7 +108,7 @@ class Search extends AOrderList
             );
         }
 
-        return $this->namedWidgets['pager']->getPageData();
+        return $this->namedWidgets['pager']->getData();
     }
 
     /**
