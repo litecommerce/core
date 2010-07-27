@@ -37,8 +37,8 @@ namespace XLite\Model;
  * @Entity (repositoryClass="XLite\Model\Repo\Config")
  * @Table (name="config",
  *         indexes={
- *              @Index(name="orderby", columns={"orderby"}),
- *              @Index(name="type", columns={"type"})
+ *              @Index (name="orderby", columns={"orderby"}),
+ *              @Index (name="type", columns={"type"})
  *         }
  * )
  */

@@ -74,7 +74,7 @@ class Config extends \XLite\Model\Repo\Base\I18n
             self::TTL_CACHE_CELL => self::INFINITY_TTL,
         );
 
-        $list['category'] =array(
+        $list['category'] = array(
             self::TTL_CACHE_CELL   => self::INFINITY_TTL,
             self::ATTRS_CACHE_CELL => array('category')
         );
@@ -374,7 +374,8 @@ class Config extends \XLite\Model\Repo\Base\I18n
             }
 
             if (!isset($config->General->defaultLanguage)) {
-                $config->General->defaultLanguage = \XLite\Core\Database::getRepo('XLite\Model\Language')->getDefaultLanguage();
+                $config->General->defaultLanguage = \XLite\Core\Database::getRepo('XLite\Model\Language')
+                    ->getDefaultLanguage();
             }
 
         }
@@ -394,7 +395,9 @@ class Config extends \XLite\Model\Repo\Base\I18n
      */
     protected function isValidOptionType($optionType)
     {
-        return in_array($optionType, array(
+        return in_array(
+            $optionType, 
+            array(
                 '',
                 'text',
                 'textarea',
@@ -411,20 +414,14 @@ class Config extends \XLite\Model\Repo\Base\I18n
     /**
      * Create new option / Update option value
      * 
-     * @param string  $category       Option category name
-     * @param string  $name           Option name
-     * @param mixed   $value          Option value
-     * @param string  $type           Option type
-     * @param string  $option_name    Option comment
-     * @param string  $option_comment Option comment
-     * @param integer $orderby        Option orderby
+     * @param array $data Option data in the following format
      *  
      * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function createOption($data) // $category, $name, $value, $type = null, $option_name = null, $option_comment = null, $orderby = null) 
+    public function createOption($data)
     {
         // Array of allowed fields and flag required/optional
         $fields = array(
@@ -447,7 +444,10 @@ class Config extends \XLite\Model\Repo\Base\I18n
         }
 
         if (!empty($errorFields)) {
-            throw new Exception('createOptions() failed: The following required fields are missed: ' . implode(', ', $errorFields));
+            throw new Exception(
+                'createOptions() failed: The following required fields are missed: ' . 
+                implode(', ', $errorFields)
+            );
         }
 
         if (isset($fields['type']) && !$this->isValidOptionType($fields['type'])) {
@@ -461,11 +461,10 @@ class Config extends \XLite\Model\Repo\Base\I18n
             unset($fields['name']);
             unset($fields['category']);
 
-        // Create a new option
         } else {
+            // Create a new option
             $option = new \XLite\Model\Config();
         }
-
 
         $option->map($fields);
         \XLite\Core\Database::getEM()->persist($option);
