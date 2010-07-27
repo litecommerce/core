@@ -20,7 +20,7 @@
         {truncate(item.brief_description,#300#):h}<br>
         <br>
         
-        <widget module="ProductOptions" template="modules/ProductOptions/selected_options.tpl" visible="{item&item.hasOptions()}" item="{item}">
+        <widget module="ProductOptions" template="modules/ProductOptions/selected_options.tpl" IF="{item&item.hasOptions()}" item="{item}">
 
         <FONT IF="{item.sku}" class="ProductDetails">SKU: {item.sku}</FONT><br>
 
@@ -32,7 +32,7 @@
         <input type="text" name="amount[{cart_id}]" value="{item.amount}" size="3" maxlength="6">
         <FONT class="ProductPriceConverting">&nbsp;=&nbsp;</FONT>
         <FONT class="ProductPrice">{price_format(item.total):h}</FONT>
-		<widget module="ProductAdviser" template="modules/ProductAdviser/OutOfStock/cart_item.tpl" visible="{xlite.PA_InventorySupport}">
+		<widget module="ProductAdviser" template="modules/ProductAdviser/OutOfStock/cart_item.tpl" IF="{xlite.PA_InventorySupport}">
         <br>
         <br>
 		<table><tr><td>

@@ -66,7 +66,7 @@
 <widget class="\XLite\View\ModulesModify" />
 <widget target="module" template="common/dialog.tpl" head="Module {page} settings" body="general_settings.tpl">
 
-<widget name="categoriesWidget" target="categories" template="common/dialog.tpl" head="Manage categories" body="categories/body.tpl" visible="{!getRequestParamValue(#mode#)=#delete#}">
+<widget name="categoriesWidget" target="categories" template="common/dialog.tpl" head="Manage categories" body="categories/body.tpl" IF="{!getRequestParamValue(#mode#)=#delete#}">
 <widget module="FeaturedProducts" template="common/dialog.tpl" head="Featured products" body="modules/FeaturedProducts/featuredProducts.tpl" IF="{namedWidgets.categoriesWidget.visible}">
 <widget target="category" class="\XLite\View\Tabber" body="{getPageTemplate()}" switch="page">
 <widget target="categories" template="common/dialog.tpl" body="categories/delete_confirmation.tpl" head="Confirmation" mode="delete">
@@ -97,8 +97,8 @@
 <widget target="profile" class="\XLite\View\RegisterForm" head="Add new user" name="registerForm" IF="{getRequestParamValue(#mode#)=#register#}" />*}
 
 <widget target="order_list,order,advanced_security" module="AdvancedSecurity" template="modules/AdvancedSecurity/advanced_security.tpl">
-<widget module="AntiFraud" target='order'  visible="{mode}" mode="{mode}" template="common/dialog.tpl" body="modules/AntiFraud/tracking/message.tpl" head="AntiFraud Service Notification">
-<widget module="AntiFraud" target='order' template="common/dialog.tpl" body="modules/AntiFraud/order.tpl" head="AntiFraud Service" visible="{order.details.af_result}">
+<widget module="AntiFraud" target='order' IF="{mode}" mode="{mode}" template="common/dialog.tpl" body="modules/AntiFraud/tracking/message.tpl" head="AntiFraud Service Notification">
+<widget module="AntiFraud" target='order' template="common/dialog.tpl" body="modules/AntiFraud/order.tpl" head="AntiFraud Service" IF="{order.details.af_result}">
 <widget target="currencies" module="MultiCurrency" template="common/dialog.tpl" body="modules/MultiCurrency/currencies.tpl">
 <widget target="advanced_search" module="AdvancedSearch" template="common/dialog.tpl" body="modules/AdvancedSearch/config.tpl">
 <widget target="order_list" template="order/search.tpl">

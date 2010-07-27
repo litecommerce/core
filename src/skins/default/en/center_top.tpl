@@ -17,7 +17,7 @@
 
 <!-- [main] {{{ -->
 <widget target="main" mode="accessDenied" template="access_denied.tpl">
-<widget module="GreetVisitor" target="main" mode="" template="modules/GreetVisitor/greet_visitor.tpl" visible="{greetVisitor&!page}">
+<widget module="GreetVisitor" target="main" mode="" template="modules/GreetVisitor/greet_visitor.tpl" IF="{greetVisitor&!page}">
 <widget class="\XLite\View\Welcome" name="welcome" />
 <widget target="main" template="pages.tpl">
 <!-- [/main] }}} -->
@@ -51,7 +51,7 @@
 <widget class="\XLite\View\Checkout" />
 
 <widget target="checkoutSuccess" template="checkout/success.tpl" />
-<widget module="GoogleCheckout" template="common/dialog.tpl" body="modules/GoogleCheckout/google_checkout_dialog.tpl" head="Google Checkout payment module" visible="{target=#googlecheckout#&!valid}" />
+<widget module="GoogleCheckout" template="common/dialog.tpl" body="modules/GoogleCheckout/google_checkout_dialog.tpl" head="Google Checkout payment module" IF="{target=#googlecheckout#&!valid}" />
 <!-- [/checkout] }}} -->
 
 <!-- [order] {{{ -->

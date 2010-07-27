@@ -10,6 +10,6 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<widget template="modules/InventoryTracking/tracking_selection.tpl" visible="{product.productOptions}">
-<widget template="modules/InventoryTracking/inventory_tracking.tpl" visible="{!product.tracking}">
-<widget module="ProductOptions" template="modules/ProductOptions/inventory_tracking.tpl" visible="{product.tracking}">
+<widget template="modules/InventoryTracking/tracking_selection.tpl" IF="{product.productOptions}">
+<widget template="modules/InventoryTracking/inventory_tracking.tpl" IF="{!product.tracking}">
+<widget module="ProductOptions" template="modules/ProductOptions/inventory_tracking.tpl" IF="{product.tracking}">

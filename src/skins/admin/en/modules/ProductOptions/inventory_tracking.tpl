@@ -35,7 +35,7 @@
     <td valign=top>Quantity in stock</td>
     <td valign=top> <input type="text" name="optdata[amount]" value="{ivt.amount}"></td>
 </tr>
-<widget module="ProductAdviser" template="modules/ProductAdviser/inventory_changed.tpl" visible="{isNotifyPresent(ivt.inventory_id)}" dialog="{dialog}" inventory="{ivt}">
+<widget module="ProductAdviser" template="modules/ProductAdviser/inventory_changed.tpl" IF="{isNotifyPresent(ivt.inventory_id)}" dialog="{dialog}" inventory="{ivt}">
 <tr>
     <td valign=top>Low stock limit *</td>
     <td valign=top><input type="text" name="optdata[low_avail_limit]" value="{ivt.low_avail_limit}"></td>

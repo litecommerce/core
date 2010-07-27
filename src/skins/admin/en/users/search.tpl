@@ -15,5 +15,5 @@
 
 <span IF="getRequestParamValue(#mode#)=#search#|getRequestParamValue(#mode#)=#list#">{count} account(s) found
   <br />
-  <widget template="common/dialog.tpl" head="Search results" body="users/search_results.tpl" visible="{count}" />
+  <widget template="common/dialog.tpl" head="Search results" body="users/search_results.tpl" IF="{count}" />
 </span>

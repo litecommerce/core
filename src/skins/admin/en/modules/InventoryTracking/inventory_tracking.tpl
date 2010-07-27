@@ -21,7 +21,7 @@
         <input type="text" name="inventory_data[amount]" size="18" value="{inventory.amount}">
     </td>
 </tr>
-<widget module="ProductAdviser" template="modules/ProductAdviser/inventory_changed.tpl" visible="{isNotifyPresent(inventory.inventory_id)}" dialog="{dialog}" inventory="{inventory}">
+<widget module="ProductAdviser" template="modules/ProductAdviser/inventory_changed.tpl" IF="{isNotifyPresent(inventory.inventory_id)}" dialog="{dialog}" inventory="{inventory}">
 <tr>
     <td valign="middle" class=ProductDetails>
 	Low stock limit *

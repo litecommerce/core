@@ -273,7 +273,7 @@
 				<tr FOREACH="cloneOrder.items,item" valign="top">
 				   	<td class="ProductDetailsTitle">{item.product_name}<br>	
 						<table cellspacing="5">	
-					    	<widget module="ProductOptions" template="modules/AOM/invoice_options.tpl" item="{item}" visible="{item.hasOptions()}">
+					    	<widget module="ProductOptions" template="modules/AOM/invoice_options.tpl" item="{item}" IF="{item.hasOptions()}">
 			    		    <widget module="Egoods" template="modules/Egoods/invoice.tpl">
 						</table>
 					</td>

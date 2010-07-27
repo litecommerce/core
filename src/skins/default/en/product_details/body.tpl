@@ -33,7 +33,7 @@ function isValid()
           <span>{product.sku}</span>
         </div>
 
-        <widget module="InventoryTracking" template="modules/InventoryTracking/stock_label.tpl" visible="{product.inventory.found}" />
+        <widget module="InventoryTracking" template="modules/InventoryTracking/stock_label.tpl" IF="{product.inventory.found}" />
 
         <widget class="\XLite\View\Price" product="{product}" />
 

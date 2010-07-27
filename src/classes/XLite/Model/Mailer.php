@@ -250,7 +250,7 @@ class Mailer extends \XLite\View\AView
 
         // Initialize PHPMailer
         require_once LC_LIB_DIR . 'PHPMailer' . LC_DS . 'class.phpmailer.php';
-        $this->mail = new PHPMailer();
+        $this->mail = new \PHPMailer();
 
         $this->mail->SetLanguage(
             $this->get('langLocale'),

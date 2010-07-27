@@ -40,4 +40,4 @@
 
 <widget name="cart_form" end />
 
-<widget module="ProductAdviser" template="modules/ProductAdviser/OutOfStock/notify_form.tpl" visible="{xlite.PA_InventorySupport}">
+<widget module="ProductAdviser" template="modules/ProductAdviser/OutOfStock/notify_form.tpl" IF="{xlite.PA_InventorySupport}">

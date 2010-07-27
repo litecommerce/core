@@ -41,7 +41,7 @@
       <font class="ProductPriceConverting">&nbsp;=&nbsp;</font>
       <font class="ProductPrice">{price_format(item,#total#):h}</font>
 
-      <widget module="ProductAdviser" template="modules/ProductAdviser/OutOfStock/cart_item.tpl" visible="{xlite.PA_InventorySupport}">
+      <widget module="ProductAdviser" template="modules/ProductAdviser/OutOfStock/cart_item.tpl" IF="{xlite.PA_InventorySupport}">
       <br />
       <br />
 

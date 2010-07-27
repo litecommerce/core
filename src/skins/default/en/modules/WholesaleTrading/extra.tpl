@@ -10,6 +10,6 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<widget template="modules/WholesaleTrading/purchase_limit.tpl" visible="{product.purchaseLimit.min|product.purchaseLimit.max}" IF="product.purchaseLimit" />
-<widget template="modules/WholesaleTrading/wholesale_pricing.tpl" visible="{product.isPriceAvailable()&product.hasWholesalePricing()}">
-<widget template="modules/WholesaleTrading/amount.tpl" visible="product.isPriceAvailable()">
+<widget template="modules/WholesaleTrading/purchase_limit.tpl" IF="{product.purchaseLimit.min|product.purchaseLimit.max}" IF="product.purchaseLimit" />
+<widget template="modules/WholesaleTrading/wholesale_pricing.tpl" IF="{product.isPriceAvailable()&product.hasWholesalePricing()}">
+<widget template="modules/WholesaleTrading/amount.tpl" IF="product.isPriceAvailable()">

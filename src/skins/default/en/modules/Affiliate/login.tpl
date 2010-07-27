@@ -53,8 +53,8 @@
     <td width="15">&nbsp;</td>
     <td valign="top">
 <!-- [center] -->
-<widget target="partner_login" template="modules/Affiliate/welcome.tpl" visible="{action=##&mode=##}">
-<widget target="partner_login" template="modules/Affiliate/dialog.tpl" body="modules/Affiliate/authentication_error.tpl" head="Authentication" visible="{action=#login#}">
+<widget target="partner_login" template="modules/Affiliate/welcome.tpl" IF="{action=##&mode=##}">
+<widget target="partner_login" template="modules/Affiliate/dialog.tpl" body="modules/Affiliate/authentication_error.tpl" head="Authentication" IF="{action=#login#}">
 <widget target="partner_profile" template="modules/Affiliate/location.tpl" name="partnerLocationWidget">
 <widget IF="config.Affiliate.registration_enabled" target="partner_profile" mode="register" class="\XLite\View\RegisterForm" template="modules/Affiliate/dialog.tpl" body="modules/Affiliate/register_form.tpl" head="A new partner" name="registerForm"/>
 <widget IF="!config.Affiliate.registration_enabled" target="partner_profile" mode="register" template="modules/Affiliate/dialog.tpl" body="modules/Affiliate/register_closed.tpl" head="Registration closed"/>

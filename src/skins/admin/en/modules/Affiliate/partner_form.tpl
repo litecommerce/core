@@ -119,7 +119,7 @@ This page allows you to configure partner registration form <a href="#default_fi
 <table border=0>
 <tr><td colspan=3 class=AdminTitle>Add field</td</tr>
 <tr><td colspan=3 class=AdminTitle>&nbsp;</td</tr>
-<tr><td>Field name</td><td class=Star width=10 align=center>*</td><td><input type=text size=32 name="name" value="{name:r}"> <widget class="\XLite\Validator\RequiredValidator" field="name" visible="{action=#add_field#}"></td></tr>
+<tr><td>Field name</td><td class=Star width=10 align=center>*</td><td><input type=text size=32 name="name" value="{name:r}"> <widget class="\XLite\Validator\RequiredValidator" field="name" IF="{action=#add_field#}"></td></tr>
 <tr valign=top><td>Field value(s)</td><td>&nbsp;</td><td><textarea name=value cols=40 rows=7>{value:r}</textarea></td></tr>
 <tr>
     <td>Field type</td>

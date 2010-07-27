@@ -63,7 +63,7 @@ If you are a registered customer, please <a href="{buildURL(#profile#,##,_ARRAY_
     </td>
     <td>
         &nbsp;
-        <widget class="\XLite\Validator\RequiredValidator" field="password" visible="{!allowAnonymous}">
+        <widget class="\XLite\Validator\RequiredValidator" field="password" IF="{!allowAnonymous}">
     </td>
 </tr>
 <tr valign="middle">
@@ -74,8 +74,8 @@ If you are a registered customer, please <a href="{buildURL(#profile#,##,_ARRAY_
     </td>
     <td>
         &nbsp;
-        <widget class="\XLite\Validator\RequiredValidator" field="confirm_password" visible="{!allowAnonymous}">
-        <widget class="\XLite\Validator\PasswordValidator" field="confirm_password" passwordField="password" visible="{!allowAnonymous}">
+        <widget class="\XLite\Validator\RequiredValidator" field="confirm_password" IF="{!allowAnonymous}">
+        <widget class="\XLite\Validator\PasswordValidator" field="confirm_password" passwordField="password" IF="{!allowAnonymous}">
     </td>
 </tr>
 <tr>
