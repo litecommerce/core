@@ -212,7 +212,7 @@ class Category extends \XLite\Model\Base\I18n
      */
     public function hasImage()
     {
-        return isset(\XLite\Core\Database::getRepo('XLite\Model\CategoryImage')->getImageById($this->getCategoryId()));
+        return !is_null(\XLite\Core\Database::getRepo('XLite\Model\CategoryImage')->getImageById($this->getCategoryId()));
     }
 
     /**
