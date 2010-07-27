@@ -68,7 +68,7 @@ class AdvBlock extends AView
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function isVisible()
+    protected function isVisible()
     {
         // TODO - remove is stable version
         return false;

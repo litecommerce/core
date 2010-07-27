@@ -57,9 +57,9 @@ class Location extends AView
      * @access public
      * @since  3.0.0
      */
-    public function isVisible()
+    protected function isVisible()
     {
-        return parent::isVisible() && !$this->getWidget(array(), '\XLite\View\Welcome', 'welcome')->isVisible();
+        return parent::isVisible() && !$this->getWidget(array(), '\XLite\View\Welcome', 'welcome')->checkVisibility();
     }
 }
 

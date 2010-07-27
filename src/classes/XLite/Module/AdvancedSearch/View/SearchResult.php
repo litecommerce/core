@@ -78,7 +78,7 @@ class SearchResult extends \XLite\View\SearchResult implements \XLite\Base\IDeco
      * @access public
      * @since  3.0.0
      */
-    public function isVisible()
+    protected function isVisible()
     {
         return parent::isVisible()
             && ('advanced_search' != \XLite\Core\Request::getInstance()->target || 'found' == \XLite\Core\Request::getInstance()->submode);

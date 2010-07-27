@@ -452,7 +452,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
         );
 
         $result = $controller->checkAccess()
-            && $this->getViewer()->isVisible();
+            && $this->getViewer()->checkVisibility();
 
         $this->getApplication()->setController($oldController);
 

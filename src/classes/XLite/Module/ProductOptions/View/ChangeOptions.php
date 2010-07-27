@@ -91,7 +91,7 @@ class ChangeOptions extends \XLite\View\AView
      * @access public
      * @since  3.0.0
      */
-    public function isVisible()
+    protected function isVisible()
     {
         $result = parent::isVisible() && \XLite::getController()->getItem();
 

@@ -117,7 +117,7 @@ class RelatedProducts extends \XLite\View\ProductsList
      * @access protected
      * @since  3.0.0
      */
-    public function isVisible()
+    protected function isVisible()
     {
         return parent::isVisible() && $this->config->ProductAdviser->related_products_enabled;
     }

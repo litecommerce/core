@@ -106,7 +106,7 @@ class ProductAlsoBuy extends \XLite\View\ProductsList
      * @access protected
      * @since  3.0.0
      */
-    public function isVisible()
+    protected function isVisible()
     {
         return parent::isVisible() && $this->config->ProductAdviser->products_also_buy_enabled;
     }

@@ -79,7 +79,7 @@ class Send extends \XLite\View\Form\AForm
      * @access protected
      * @since  3.0.0
      */
-    public function isVisible()
+    protected function isVisible()
     {
         return parent::isVisible()
             && $this->getParam(self::PARAM_WISHLIST);

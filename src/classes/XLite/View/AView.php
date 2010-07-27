@@ -479,6 +479,19 @@ abstract class AView extends \XLite\Core\Handler
     }
 
     /**
+     * Check if widget is visible
+     *
+     * @return bool
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isVisible()
+    {
+        return $this->checkTarget() && $this->checkMode();
+    }
+
+    /**
      * Compile and display a template
      *
      * @return void
@@ -630,14 +643,15 @@ abstract class AView extends \XLite\Core\Handler
 
     /**
      * Check if widget is visible
-     *
+     * 
      * @return bool
      * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    public function isVisible()
+    public function checkVisibility()
     {
-        return $this->checkTarget() && $this->checkMode();
+        return $this->isCloned || $this->isVisible();
     }
 
     /**
@@ -649,12 +663,10 @@ abstract class AView extends \XLite\Core\Handler
      */
     public function display()
     {
-        if ($this->isCloned) {
+        if ($this->checkVisibility()) {
+            $this->isCloned ?: $this->initView();
             $this->includeCompiledFile();
-        } elseif ($this->isVisible()) {
-            $this->initView();
-            $this->includeCompiledFile();
-            $this->closeView();
+            $this->isCloned ?: $this->closeView();
         }
     }
 
@@ -1145,7 +1157,7 @@ abstract class AView extends \XLite\Core\Handler
 
         $result = array();
         foreach ($this->viewLists[$list] as $widget) {
-            if ($widget->isVisible()) {
+            if ($widget->checkVisibility()) {
                 $result[] = $widget;
             }
         }

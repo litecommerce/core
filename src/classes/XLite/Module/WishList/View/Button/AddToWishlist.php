@@ -88,7 +88,7 @@ class AddToWishlist extends \XLite\View\Button\Regular
      * @access protected
      * @since  3.0.0
      */
-    public function isVisible()
+    protected function isVisible()
     {
         return parent::isVisible()
             && !$this->config->General->add_on_mode

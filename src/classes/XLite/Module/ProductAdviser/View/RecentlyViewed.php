@@ -159,7 +159,7 @@ class RecentlyViewed extends \XLite\View\ProductsList
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function isVisible()
+    protected function isVisible()
     {
         if (
             self::WIDGET_TYPE_CENTER == $this->getParam(self::PARAM_WIDGET_TYPE)

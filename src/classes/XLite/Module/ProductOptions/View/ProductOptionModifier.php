@@ -83,7 +83,7 @@ class ProductOptionModifier extends \XLite\View\AView
      * @access public
      * @since  3.0.0
      */
-    public function isVisible()
+    protected function isVisible()
     {
         return parent::isVisible() && $this->getParam(self::PARAM_OPTION)->modifyParams;
     }
