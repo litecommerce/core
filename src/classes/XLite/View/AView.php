@@ -1327,7 +1327,7 @@ abstract class AView extends \XLite\Core\Handler
      */
     protected function getViewListContentAsNodes($list)
     {
-        $d = new DOMDocument();
+        $d = new \DOMDocument();
         $content = $this->getViewListContent($list);
         $result = null;
         if ($content && @$d->loadHTML($content)) {
@@ -1377,7 +1377,7 @@ abstract class AView extends \XLite\Core\Handler
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function applyXpathPatches(DOMNamedNodeMap $places, DOMNamedNodeMap $patches, $baseInsertType)
+    protected function applyXpathPatches(\DOMNamedNodeMap $places, \DOMNamedNodeMap $patches, $baseInsertType)
     {
         foreach ($places as $place) {
 
