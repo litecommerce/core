@@ -60,6 +60,7 @@ includes/install.pgsql.inc
 sites/all/modules/litecommerce_com
 sites/all/modules/private_download
 sites/all/modules/views_datasource
+sites/all/modules/taxonomy_redirect
 sites/default/files
 themes/lccms/templates/overrides/node-marketplace_listing.tpl.php
 "
