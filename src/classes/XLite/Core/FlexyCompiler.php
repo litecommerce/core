@@ -287,7 +287,7 @@ class FlexyCompiler extends \XLite\Base\Singleton
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function applyXpathPatches(DOMNamedNodeMap $places, DOMNamedNodeMap $patches, $baseInsertType)
+    protected function applyXpathPatches(\DOMNamedNodeMap $places, \DOMNamedNodeMap $patches, $baseInsertType)
     {
         foreach ($places as $place) {
 
