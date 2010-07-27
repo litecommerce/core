@@ -60,10 +60,29 @@ class Categories extends Catalog
      */
     protected $category = array();
 
-    public function init() {
+    /**
+     * Controller initialization
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function init()
+    {
         if ('delete' == \XLite\Core\Request::getInstance()->mode) {
             $deleteMode = 'delete' . ('1' == \XLite\Core\Request::getInstance()->subcats ? '_subcats' : '');
             $this->set('deleteMode', $deleteMode);
+        }
+
+        $errorData = array();
+        $integritySuccess = \XLite\Core\Database::getRepo('XLite\Model\Category')->checkTreeIntegrity($errorData);
+
+        if (!$integritySuccess) {
+            \XLite\Core\TopMessage::getInstance()->add(
+                'Categories tree integrity has broken (' . $errorData['msg'] . ')',
+                \XLite\Core\TopMessage::ERROR
+            );
         }
     }
 

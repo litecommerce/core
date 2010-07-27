@@ -12,8 +12,8 @@
  *}
 <ul class="menu menu-tree">
   <li FOREACH="getCategories(rootId),idx,_category" class="{assembleItemClassName(idx,_categoryArraySize,_category)}">
-    <a href="{buildURL(#category#,##,_ARRAY_(#category_id#^_category.category_id))}" class="{assembleLinkClassName(idx,_categoryArraySize,_category)}">{_category.name}</a>
-    <widget template="{getBody()}" rootId="{_category.category_id}" IF="_category.sub_categories_count" is_subtree />
+    <a href="{buildURL(#category#,##,_ARRAY_(#category_id#^_category.getCategoryId()))}" class="{assembleLinkClassName(idx,_categoryArraySize,_category)}">{_category.getName()}</a>
+    <widget template="{getBody()}" rootId="{_category.getCategoryId()}" IF="_category.GetSubCategoriesCount()" is_subtree />
   </li>
   <li FOREACH="getViewList(#topCategories.childs#,_ARRAY_(#rootId#^getParam(#rootId#),#is_subtree#^getParam(#is_subtree#))),idx,w" class="{assembleListItemClassName(idx,wArraySize,w)}">
     {w.display()}

@@ -125,17 +125,20 @@ class Category extends \XLite\Model\Repo\Base\I18n
      */
     public function cleanCache()
     {
-        $keys = array(
-            '_Details',
-            '_FullTree',
-            '_FullTreeHash',
-            '_NodePath',
-            '_LeafNodes',
-            '_MaxRightPos'
-        );
+        if (\XLite\Core\Database::isCacheEnabled()) {
+    
+            $keys = array(
+                '_Details',
+                '_FullTree',
+                '_FullTreeHash',
+                '_NodePath',
+                '_LeafNodes',
+                '_MaxRightPos'
+            );
 
-        foreach ($keys as $key) {
-            $this->deleteCache($this->cachePrefix . $key);
+            foreach ($keys as $key) {
+                $this->deleteCache($this->cachePrefix . $key);
+            }
         }
     }
 
@@ -171,6 +174,8 @@ class Category extends \XLite\Model\Repo\Base\I18n
      */
     protected function getNode($categoryId)
     {
+        $categoryId = intval($categoryId);
+
         $data = ($this->ignoreCache) ? null : $this->getFromCache($this->cachePrefix . '_Details', array('category_id' => $categoryId));
 
         if (!isset($data)) {
@@ -179,9 +184,13 @@ class Category extends \XLite\Model\Repo\Base\I18n
 
             if (!empty($data)) {
                 $data = array_shift($data);
-            }
 
-            $this->saveToCache($data, $this->cachePrefix . '_Details', array('category_id' => $categoryId));
+                if (isset($data)) {
+                    $this->saveToCache($data, $this->cachePrefix . '_Details', array('category_id' => $categoryId));
+                }
+            } else {
+                $data = null;
+            }
         }
 
         return $data;
@@ -199,6 +208,8 @@ class Category extends \XLite\Model\Repo\Base\I18n
      */
     protected function defineNodeQuery($categoryId)
     {
+        $categoryId = intval($categoryId);
+
         $qb = $this->createQueryBuilder('c')
             ->addSelect('m', 'i')
             ->leftJoin('c.membership', 'm')
@@ -222,34 +233,54 @@ class Category extends \XLite\Model\Repo\Base\I18n
      */
     protected function getFullTree($categoryId = 0)
     {
+        $categoryId = intval($categoryId);
+
         $data = ($this->ignoreCache) ? null : $this->getFromCache($this->cachePrefix . '_FullTree', array('category_id' => $categoryId));
 
         if (!isset($data)) {
 
-            $data = $this->defineFullTreeQuery($categoryId)->getQuery()->getResult();
+            $validParent = true;
 
-            $right = array($this->getMaxRightPos());
-            $dataTmp = array();
+            if ($categoryId > 0) {
 
-            // Calculate categorys depth
-            foreach ($data as $id => $nd) {
+                $parentCategory = $this->getNode($categoryId);
 
-                $dataTmp[$id] = $nd = $nd[0];
-                $dataTmp[$id]->setProductsCount($data[$id]['products_count']);
-
-                if (count($right) > 0) {
-                    while ($right[count($right) - 1] < $nd->getRpos()) {
-                        array_pop($right);
-                    }
-
+                if (!isset($parentCategory)) {
+                    $validParent = false;
                 }
-
-                $dataTmp[$id]->setDepth(count($right));
-
-                $right[] = $nd->getRpos();
             }
 
-            $data = $dataTmp;
+            if ($validParent) {
+
+                $data = $this->defineFullTreeQuery($categoryId)->getQuery()->getResult();
+
+                $right = array($this->getMaxRightPos());
+                $dataTmp = array();
+
+                // Calculate categorys depth
+                foreach ($data as $id => $nd) {
+
+                    $dataTmp[$id] = $nd = $nd[0];
+                    $dataTmp[$id]->setProductsCount($data[$id]['products_count']);
+
+                    if (count($right) > 0) {
+                        while ($right[count($right) - 1] < $nd->getRpos()) {
+                            array_pop($right);
+                        }
+
+                    }
+
+                    $dataTmp[$id]->setDepth(count($right));
+
+                    $right[] = $nd->getRpos();
+                }
+
+                $data = $dataTmp;
+
+            // The specified category does not exists
+            } else {
+                $data = array();
+            }
 
             $this->saveToCache($data, $this->cachePrefix . '_FullTree', array('category_id' => $categoryId));
         }
@@ -269,7 +300,9 @@ class Category extends \XLite\Model\Repo\Base\I18n
      */
     protected function defineFullTreeQuery($categoryId)
     {
-        if (isset($categoryId)) {
+        $categoryId = intval($categoryId);
+
+        if ($categoryId > 0) {
             $category = $this->getNode($categoryId);
         }
 
@@ -298,6 +331,8 @@ class Category extends \XLite\Model\Repo\Base\I18n
      */
     public function getCategoryFromHash($categoryId)
     {
+        $categoryId = intval($categoryId);
+
         $hash = ($this->ignoreCache) ? null : $this->getFromCache($this->cachePrefix . '_FullTreeHash');
 
         $data = $this->getFullTree();
@@ -336,11 +371,24 @@ class Category extends \XLite\Model\Repo\Base\I18n
      */
     protected function getNodePath($categoryId)
     {
+        $categoryId = intval($categoryId);
+
         $data = ($this->ignoreCache) ? null : $this->getFromCache($this->cachePrefix . '_NodePath', array('category_id' => $categoryId));
 
-        if (!isset($data) && !is_null($qb = $this->defineNodePathQuery($categoryId))) {
+        if (!isset($data)) {
 
-            $data = $qb->getQuery()->getResult();
+            if ($categoryId > 0) {
+
+                $category = $this->getNode($categoryId);
+
+                if (isset($category)) {
+                    $data = $this->defineNodePathQuery($categoryId)->getQuery()->getResult();
+                }
+            }
+
+            if (!isset($data)) {
+                $data = array();
+            }
 
             $this->saveToCache($data, $this->cachePrefix . '_NodePath', array('category_id' => $categoryId));
 
@@ -361,11 +409,9 @@ class Category extends \XLite\Model\Repo\Base\I18n
      */
     protected function defineNodePathQuery($categoryId)
     {
-        $qb = null;
+        $categoryId = intval($categoryId);
 
-        if (!is_null($categoryId)) {
-            $category = $this->getNode($categoryId);
-        }
+        $category = $this->getNode($categoryId);
 
         if (isset($category) && $category instanceof $this->className) {
 
@@ -467,6 +513,8 @@ class Category extends \XLite\Model\Repo\Base\I18n
 
         $result = null;
 
+        $categoryId = intval($categoryId);
+
         $parentCategory = $this->getNode($categoryId);
 
         if ($parentCategory instanceof $this->className) {
@@ -530,6 +578,8 @@ class Category extends \XLite\Model\Repo\Base\I18n
         $result = null;
 
         $skipUpdate = false;
+
+        $categoryId = intval($categoryId);
 
         // If category_id is 0 then suppose that parent is root
         if (0 == $categoryId) {
@@ -642,6 +692,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
 
         \XLite\Core\Database::getEM()->persist($node);
         \XLite\Core\Database::getEM()->flush();
+        \XLite\Core\Database::getEM()->clear();
 
         if ($node->getCategoryId() > 0) {
             $result = $node;
@@ -672,6 +723,9 @@ class Category extends \XLite\Model\Repo\Base\I18n
 
         $errorMsg = '';
 
+        $nodeId = intval($nodeId);
+        $destNodeId = intval($destNodeId);
+
         // Get source node data
         $srcNode = $this->getNode($nodeId);
 
@@ -698,7 +752,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
             }
 
             if (!$attachAsChild && $src['lpos'] - $dst['rpos'] == 1) {
-                $errorMsg = sprintf('Category #%d is already located after category #%d', $nodeId, $destNodeId);
+                $errorMsg = sprintf('Category #%d (%d, %d) is already located after category #%d (%d, %d)', $nodeId, $src['lpos'], $src['rpos'], $destNodeId, $dst['lpos'], $dst['rpos']);
             }
 
             if (empty($errorMsg)) {
@@ -803,6 +857,9 @@ class Category extends \XLite\Model\Repo\Base\I18n
                 $qb3->getQuery()->execute();
                 $qb4->getQuery()->execute();
 
+                \XLite\Core\Database::getEM()->flush();
+                \XLite\Core\Database::getEM()->clear();
+
                 // Clean common cache
                 $this->cleanCache();
             }
@@ -816,9 +873,8 @@ class Category extends \XLite\Model\Repo\Base\I18n
         if (!empty($errorMsg)) {
             \XLite\Core\TopMessage::getInstance()->add(
                 $errorMsg,
-                XLite\Core\TopMessage::ERROR
+                \XLite\Core\TopMessage::ERROR
             );
-
         }
 
         $this->ignoreCache = false;
@@ -868,6 +924,8 @@ class Category extends \XLite\Model\Repo\Base\I18n
      */
     public function getCategory($categoryId)
     {
+        $categoryId = intval($categoryId);
+
         $category = $this->getNode($categoryId);
 
         return $category;
@@ -883,7 +941,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getCategories($categoryId = null)
+    public function getCategories($categoryId = 0)
     {
         return $this->getFullTree($categoryId);
     }
@@ -898,11 +956,13 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getCategoriesPlainList($categoryId = null)
+    public function getCategoriesPlainList($categoryId = 0)
     {
         $result = array();
 
-        if (!is_null($categoryId)) {
+        $categoryId = intval($categoryId);
+
+        if ($categoryId > 0) {
             $cat = $this->getNode($categoryId);
         }
 
@@ -944,7 +1004,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
      */
     public function getCategoryPath($categoryId)
     {
-        return $this->getNodePath($categoryId) ?: array();
+        return $this->getNodePath($categoryId);
     }
 
     /**
@@ -960,7 +1020,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
     public function getParentCategory($categoryId)
     {
         $path = $this->getNodePath($categoryId);
-        return (count($path) > 1) ? $path[count($path)-2] : new \XLite\Model\Category();
+        return count($path) > 1 ? $path[count($path)-2] : null;
     }
 
     /**
@@ -976,7 +1036,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
     public function getParentCategoryId($categoryId)
     {
         $result = $this->getParentCategory($categoryId);
-        return $result->getCategoryId();
+        return isset($result) ? $result->getCategoryId() : null;
     }
 
     /**
@@ -1076,8 +1136,13 @@ class Category extends \XLite\Model\Repo\Base\I18n
             $data = $this->defineCategoryByCleanUrl($cleanUrl)->getQuery()->getResult();
 
             if (!empty($data)) {
-                $this->saveToCache($data, $this->cachePrefix . '_ByCleanUrl', array('clean_url' => $key));
+                $data = array_shift($data);
+
+            } else {
+                $data = null;
             }
+            
+            $this->saveToCache($data, $this->cachePrefix . '_ByCleanUrl', array('clean_url' => $key));
         }
 
         return $data;
@@ -1181,6 +1246,118 @@ class Category extends \XLite\Model\Repo\Base\I18n
         ->getResult();
     }
 
+    /**
+     * Check categories tree integrity 
+     * 
+     * @return bool
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function checkTreeIntegrity(&$errorData)
+    {       
+        $result = true;
+        $errorData = array();
+
+        $this->ignoreCache = true;
+
+        // Get full tree
+        $categories = $this->getFullTree();
+
+        if (!empty($categories)) {
+
+            $hashLpos = $hashRpos = array();
+            $maxIndex = count($categories) * 2;
+
+            // Scan categories tree and generate hashes of indexes
+            foreach ($categories as $category) {
+
+                // Fail if on of indexes exceeds the maximum allowed index value
+                if (($lpos = $category->getLpos()) > $maxIndex || ($rpos = $category->getRpos()) > $maxIndex) {
+                    $result = false;
+                    $errorData = array(
+                        'category_id' => $category->getCategoryId(),
+                        'lpos'        => $lpos,
+                        'rpos'        => $rpos,
+                        'msg'         => 'One of indexes exceeds the maximum allowed index value (' . $maxIndex . ')'
+                    );
+                    break;
+                }
+
+                // Generate hashes
+                if (!isset($hashLpos[$lpos])) {
+                    $hashLpos[$lpos] = ($catId = $category->getCategoryId());
+
+                    if (!isset($hashRpos[$rpos])) {
+                        $hashRpos[$rpos] = $catId;
+
+                    // Fail if duplicate of rpos found
+                    } else {
+                        $result = false;
+                        $errorData = array(
+                            'category_id' => $catId,
+                            'lpos'        => $lpos,
+                            'rpos'        => $rpos,
+                            'msg'         => 'duplicate of rpos found (#' . $hashRpos[$rpos] . ')'
+                        );
+                        break;
+                    }
+
+                // Fail if duplicate of lpos found
+                } else {
+                    $result = false;
+                    $errorData = array(
+                        'category_id' => $category->getCategoryId(),
+                        'lpos'        => $lpos,
+                        'rpos'        => $rpos,
+                        'msg'         => 'duplicate of lpos found (#' . $hashLpos[$lpos] . ')'
+                    );
+                    break;
+                }
+            }
+
+            // Check if indexes are consistent
+            if ($result && count($hashLpos) == count($hashRpos)) {
+
+                $index = 0;
+
+                // Launch index from 0 to max value while hashes are not empty
+                while($result && $index <= $maxIndex && !empty($hashLpos) && !empty($hashRpos)) {
+
+                    $index++;
+
+                    // Empty hashes on index value if hash for this index found
+                    if (isset($hashLpos[$index])) {
+                        unset($hashLpos[$index]);
+
+                    } elseif (isset($hashRpos[$index])) {
+                        unset($hashRpos[$index]);
+
+                    // Fail if index not found in both hashes
+                    } else {
+                        $result = false;
+                        $errorData = array(
+                            'index' => $index,
+                            'msg'   => 'index not found in lpos neither rpos'
+                        );
+                    }
+                }
+
+            // Fail if hashes have different count of elements
+            } elseif ($result) {
+                $result = false;
+                $errorData = array(
+                    'count(lpos)' => count($hashLpos),
+                    'count(rpos)' => count($hashRpos),
+                    'msg' => 'the number of unique lpos and rpos indexes differs'
+                );
+            }
+        }
+
+        $this->ignoreCache = false;
+
+        return $result;
+    }
 
     //TODO: All methods below must be rewied and refactored
 
