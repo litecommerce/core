@@ -122,7 +122,12 @@ class XLite_Sniffs_PHP_Commenting_ClassVarCommentSniff extends XLite_TagsSniff
             'required'       => false,
             'allow_multiple' => false,
             'order_text'     => 'follows @Column',
-        ),
+		),
+        'OrderBy'      => array(
+            'required'       => false,
+            'allow_multiple' => false,
+            'order_text'     => 'follows @Column',
+		),
 	);
 
     protected $reqCodeRequire = array('REQ.PHP.4.6.3');

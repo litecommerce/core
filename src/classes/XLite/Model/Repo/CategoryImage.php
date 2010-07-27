@@ -63,7 +63,7 @@ class CategoryImage extends \XLite\Model\Repo\Base\Image
      * @param integer $categoryId Node identifier
      *  
      * @return object
-     * @access protected
+     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */

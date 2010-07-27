@@ -149,8 +149,8 @@ class Category extends \XLite\Model\Base\I18n
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @ManyToOne(targetEntity="XLite\Model\Membership")
-     * @JoinColumn(name="membership_id", referencedColumnName="membership_id")
+     * @ManyToOne (targetEntity="XLite\Model\Membership")
+     * @JoinColumn (name="membership_id", referencedColumnName="membership_id")
      */
     protected $membership;
 
@@ -161,8 +161,8 @@ class Category extends \XLite\Model\Base\I18n
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @OneToOne(targetEntity="XLite\Model\CategoryImage")
-     * @JoinColumn(name="category_id", referencedColumnName="id")
+     * @OneToOne (targetEntity="XLite\Model\CategoryImage")
+     * @JoinColumn (name="category_id", referencedColumnName="id")
      */
     protected $image;
 
@@ -212,7 +212,7 @@ class Category extends \XLite\Model\Base\I18n
      */
     public function hasImage()
     {
-        return !is_null(\XLite\Core\Database::getRepo('XLite\Model\CategoryImage')->getImageById($this->getCategoryId()));
+        return isset(\XLite\Core\Database::getRepo('XLite\Model\CategoryImage')->getImageById($this->getCategoryId()));
     }
 
     /**
@@ -283,8 +283,8 @@ class Category extends \XLite\Model\Base\I18n
 
         $location = "";
 
-        for ($i = 0; $i < count($path); $i++) {
-            $location .= ($i > 0 ? '/' : '') . $path[$i]->name;
+        foreach ($path as $p) {
+            $location .= ($location ? '/' : '') . $p->name;
         }
 
         return $location;
@@ -359,8 +359,16 @@ class Category extends \XLite\Model\Base\I18n
         return (is_null($str) ? $indentation : str_repeat($str, $indentation));
     }
 
-
-    // NOTE - working on
+    /**
+     * getProducts NOTE - working on
+     * 
+     * @param \XLite\Core\CommonCell $cnd ____param_comment____
+     *  
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     public function getProducts(\XLite\Core\CommonCell $cnd = null)
     {
         if (!isset($cnd)) {
