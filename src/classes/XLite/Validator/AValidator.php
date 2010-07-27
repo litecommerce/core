@@ -59,7 +59,7 @@ abstract class AValidator extends \XLite\View\AView
      */
     public function display()
     {
-        if ($this->isVisible()) {
+        if ($this->checkVisibility()) {
             $class = strtolower(get_class($this));
      		echo '<input type="hidden" name="VALIDATE[' . $class . '][' . $this->get('field') . ']" value="1" />' . "\n";
         }

@@ -686,7 +686,7 @@ abstract class AModel extends \XLite\View\Dialog
             // Second dimension - fields
             foreach ($data[self::SECTION_PARAM_FIELDS] as $index => $field) {
 
-                if (!$field->isVisible()) {
+                if (!$field->checkVisibility()) {
                     // Exclude field from list if it's not visible
                     unset($data[self::SECTION_PARAM_FIELDS][$index]);
                 } else {
@@ -1086,7 +1086,7 @@ abstract class AModel extends \XLite\View\Dialog
      * @access public
      * @since  3.0.0
      */
-    public function isVisible()
+    protected function isVisible()
     {
         return parent::isVisible() || $this->isExported();
     }

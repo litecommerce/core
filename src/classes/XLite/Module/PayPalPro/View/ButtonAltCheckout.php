@@ -71,7 +71,7 @@ class ButtonAltCheckout extends \XLite\View\Button\Image
      * @access public
      * @since  3.0.0
      */
-    public function isVisible()
+    protected function isVisible()
     {
         $result = parent::isVisible();
 

@@ -84,7 +84,7 @@ class BuyNow extends AView
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function isVisible()
+    protected function isVisible()
     {
         return parent::isVisible() && $this->config->General->buynow_button_enabled;
     }

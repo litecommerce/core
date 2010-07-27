@@ -143,7 +143,7 @@ class NewArrivals extends \XLite\View\ProductsList
      * @access public
      * @since  3.0.0
      */
-    public function isVisible()
+    protected function isVisible()
     {
         $visibility = parent::isVisible()
             && $this->checkProductsToDisplay();
