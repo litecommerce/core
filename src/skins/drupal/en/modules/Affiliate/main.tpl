@@ -47,10 +47,10 @@
 <tr>
     <td width="150" valign="top">
 <!-- [left] -->
-<widget template="modules/Affiliate/sidebar_box.tpl" dir="modules/Affiliate/management" name="managementWidget" head="Management" visible="{auth.logged}">
-<widget template="modules/Affiliate/sidebar_box.tpl" dir="modules/Affiliate/profile" name="profileWidget" head="Your profile" visible="{auth.logged}">
-<widget template="modules/Affiliate/sidebar_box.tpl" dir="modules/Affiliate/authentication" name="authenticationWidget" head="Authentication" visible="{auth.logged}">
-<widget template="modules/Affiliate/sidebar_box.tpl" dir="modules/Affiliate/login" head="Authentication" visible="{!auth.logged}">
+<widget template="modules/Affiliate/sidebar_box.tpl" dir="modules/Affiliate/management" name="managementWidget" head="Management" IF="{auth.logged}">
+<widget template="modules/Affiliate/sidebar_box.tpl" dir="modules/Affiliate/profile" name="profileWidget" head="Your profile" IF="{auth.logged}">
+<widget template="modules/Affiliate/sidebar_box.tpl" dir="modules/Affiliate/authentication" name="authenticationWidget" head="Authentication" IF="{auth.logged}">
+<widget template="modules/Affiliate/sidebar_box.tpl" dir="modules/Affiliate/login" head="Authentication" IF="{!auth.logged}">
 <widget template="modules/Affiliate/sidebar_box.tpl" head="Help" dir="modules/Affiliate/help">
 <!-- [/left] -->
     </td>

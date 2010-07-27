@@ -16,4 +16,4 @@
   <td IF="{!product.inventory.amount}" class="ErrorMessage" nowrap>- out of stock -</td>
 </tr>
 
-<widget module="ProductAdviser" template="modules/ProductAdviser/OutOfStock/product_quantity.tpl" visible="{xlite.PA_InventorySupport}">
+<widget module="ProductAdviser" template="modules/ProductAdviser/OutOfStock/product_quantity.tpl" IF="{xlite.PA_InventorySupport}">

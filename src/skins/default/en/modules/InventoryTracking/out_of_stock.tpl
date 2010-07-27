@@ -10,4 +10,4 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<table border=0 align=center><tr align=center><td class="OutOfStock"> &gt;&gt; Product is out of stock! &lt;&lt; <p class="ErrorMessage">Please try to select another product options</td></tr><widget module="ProductAdviser" template="modules/ProductAdviser/OutOfStock/add_to_cart.tpl" visible="{xlite.PA_InventorySupport}"><tr><td>&nbsp;</td></tr></table>
+<table border=0 align=center><tr align=center><td class="OutOfStock"> &gt;&gt; Product is out of stock! &lt;&lt; <p class="ErrorMessage">Please try to select another product options</td></tr><widget module="ProductAdviser" template="modules/ProductAdviser/OutOfStock/add_to_cart.tpl" IF="{xlite.PA_InventorySupport}"><tr><td>&nbsp;</td></tr></table>

@@ -85,7 +85,7 @@ Mandatory fields are marked with an asterisk (<font class="Star">*</font>).
       </td>
       <td>
 	    	&nbsp;
-        <widget class="\XLite\Validator\RequiredValidator" field="password" visible="{mode=#register#}" />
+        <widget class="\XLite\Validator\RequiredValidator" field="password" IF="{mode=#register#}" />
       </td>
     </tr>
 
@@ -97,8 +97,8 @@ Mandatory fields are marked with an asterisk (<font class="Star">*</font>).
       </td>
       <td>
         &nbsp;
-        <widget class="\XLite\Validator\RequiredValidator" field="confirm_password" visible="{mode=#register#}" />
-        <widget class="\XLite\Validator\PasswordValidator" field="confirm_password" passwordField="password" visible="{mode=#register#}" />
+        <widget class="\XLite\Validator\RequiredValidator" field="confirm_password" IF="{mode=#register#}" />
+        <widget class="\XLite\Validator\PasswordValidator" field="confirm_password" passwordField="password" IF="{mode=#register#}" />
       </td>
     </tr>
 

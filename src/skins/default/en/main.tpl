@@ -66,8 +66,8 @@
 <widget if="!cart.empty" template="common/tab.tpl" label="Your Cart" href="cart.php?target=cart" active="cart"/>
 </TD>
 <TD>
-<widget module="WishList" visible="{auth.logged&wishlist.products}" template="common/tab.tpl" label="Wish list" href="cart.php?target=wishlist" img="modules/WishList/wish_list_icon.gif" active="wishlist">
-<widget module="WishList" visible="{auth.logged&!wishlist.products}" template="common/tab.tpl" label="Wish list" href="cart.php?target=wishlist" img="modules/WishList/wish_list_icon_empty.gif" active="wishlist">
+<widget module="WishList" IF="{auth.logged&wishlist.products}" template="common/tab.tpl" label="Wish list" href="cart.php?target=wishlist" img="modules/WishList/wish_list_icon.gif" active="wishlist">
+<widget module="WishList" IF="{auth.logged&!wishlist.products}" template="common/tab.tpl" label="Wish list" href="cart.php?target=wishlist" img="modules/WishList/wish_list_icon_empty.gif" active="wishlist">
 </TD>
 <TD>
 <widget if="auth.logged" template="common/tab.tpl" label="Your Account" href="cart.php?target=profile&amp;mode=account" active="profile"/>

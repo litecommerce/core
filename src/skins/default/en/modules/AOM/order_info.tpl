@@ -354,7 +354,7 @@
 				<tr FOREACH="order.items,item" valign="top">
 				   	<td class="AomProductDetailsTitle"><span IF="item.product.product_id"><a href="{xlite.getShopUrl(#cart.php#)}?target=product&product_id={item.product.product_id}">{truncate(item,#name#,#40#):h}</a></span><span IF="!item.product.product_id">{truncate(item,#name#,#40#):h}</span><br>	
 						<table cellspacing="5">	
-					    	<widget module="ProductOptions" template="modules/AOM/invoice_options.tpl" item="{item}" visible="{item.hasOptions()}">
+					    	<widget module="ProductOptions" template="modules/AOM/invoice_options.tpl" item="{item}" IF="{item.hasOptions()}">
 			    		    <widget module="Egoods" template="modules/Egoods/invoice.tpl">
 						</table>
 					</td>

@@ -139,7 +139,7 @@
 		</tr>
 
         <widget module="GiftCertificates" template="modules/GiftCertificates/invoice_item.tpl">
-        <widget module="ProductOptions" template="modules/ProductOptions/invoice_options.tpl" visible="{item.hasOptions()}">
+        <widget module="ProductOptions" template="modules/ProductOptions/invoice_options.tpl" IF="{item.hasOptions()}">
 		<widget module="Egoods" template="modules/Egoods/invoice.tpl">
 
 		<tr>

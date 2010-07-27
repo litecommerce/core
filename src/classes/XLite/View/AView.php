@@ -49,7 +49,6 @@ abstract class AView extends \XLite\Core\Handler
      */
 
     const PARAM_TEMPLATE     = 'template';
-    const PARAM_VISIBLE      = 'visible';
     const PARAM_SESSION_CELL = 'sessionCell';
 
 
@@ -309,7 +308,6 @@ abstract class AView extends \XLite\Core\Handler
 
         $this->widgetParams += array(
             self::PARAM_TEMPLATE     => new \XLite\Model\WidgetParam\File('Template', $this->getDefaultTemplate()),
-            self::PARAM_VISIBLE      => new \XLite\Model\WidgetParam\Bool('Visible', true),
             self::PARAM_MODE         => new \XLite\Model\WidgetParam\Collection('Modes', $this->getDefaultModes()),
             self::PARAM_SESSION_CELL => new \XLite\Model\WidgetParam\String('Session cell', $this->getSessionCell()),
         );
@@ -639,7 +637,7 @@ abstract class AView extends \XLite\Core\Handler
      */
     public function isVisible()
     {
-        return $this->getParam(self::PARAM_VISIBLE) && $this->checkTarget() && $this->checkMode();
+        return $this->checkTarget() && $this->checkMode();
     }
 
     /**
@@ -651,14 +649,12 @@ abstract class AView extends \XLite\Core\Handler
      */
     public function display()
     {
-        if ($this->isVisible()) {
-            if ($this->isCloned) {
-                $this->includeCompiledFile();
-            } else {
-                $this->initView();
-                $this->includeCompiledFile();
-                $this->closeView();
-            }
+        if ($this->isCloned) {
+            $this->includeCompiledFile();
+        } elseif ($this->isVisible()) {
+            $this->initView();
+            $this->includeCompiledFile();
+            $this->closeView();
         }
     }
 

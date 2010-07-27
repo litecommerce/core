@@ -42,7 +42,7 @@
 		</tr>
 	    <tr id="description">
 		    <td colspan=3>
-				<widget module="ProductOptions" template="modules/ProductOptions/selected_options.tpl" visible="{item.hasOptions()}" item="{item}">
+				<widget module="ProductOptions" template="modules/ProductOptions/selected_options.tpl" IF="{item.hasOptions()}" item="{item}">
 		    </td>
 		</tr>
 		<tr>

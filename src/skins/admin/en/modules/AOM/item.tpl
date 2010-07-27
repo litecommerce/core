@@ -86,7 +86,7 @@
 		</table>
 		<table>	
 			<tr>
-				<td colspan="2">{if:clone}<widget module="ProductOptions" item="{item}" template="modules/AOM/product_options.tpl" visible="{item.hasOptions()}">{else:}<widget module="ProductOptions" item="{item}" template="modules/AOM/selected_options.tpl" visible="{item.hasOptions()}">{end:}</td>
+				<td colspan="2">{if:clone}<widget module="ProductOptions" item="{item}" template="modules/AOM/product_options.tpl" IF="{item.hasOptions()}">{else:}<widget module="ProductOptions" item="{item}" template="modules/AOM/selected_options.tpl" IF="{item.hasOptions()}">{end:}</td>
 			</tr>
 			<tr>
 		    	<td colspan="2">&nbsp;</td>

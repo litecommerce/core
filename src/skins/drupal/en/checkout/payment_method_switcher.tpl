@@ -12,4 +12,4 @@
  *}
 <widget template="{cart.paymentMethod.formTemplate}" IF="cart.paymentMethod.formTemplate" />
 
-<widget module="GoogleCheckout" template="modules/GoogleCheckout/google_checkout.tpl" visible="{cart.paymentMethod.payment_method=#google_checkout#}">
+<widget module="GoogleCheckout" template="modules/GoogleCheckout/google_checkout.tpl" IF="{cart.paymentMethod.payment_method=#google_checkout#}">

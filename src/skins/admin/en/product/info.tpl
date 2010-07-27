@@ -70,7 +70,7 @@
     <input type="text" name="price" size="18" value="{product.price}">
   </td>
 </tr>
-<widget module="ProductAdviser" template="modules/ProductAdviser/price_changed.tpl" visible="{priceNotifyPresent}" dialog="{dialog}">
+<widget module="ProductAdviser" template="modules/ProductAdviser/price_changed.tpl" IF="{priceNotifyPresent}" dialog="{dialog}">
 
 <tbody IF="{config.General.enable_sale_price}">
 <tr>

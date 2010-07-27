@@ -23,7 +23,7 @@
 
 </span>
 
-<widget template="common/dialog.tpl" head="Search results" body="product/product_list.tpl" visible="{products&mode=#search#}" />
+<widget template="common/dialog.tpl" head="Search results" body="product/product_list.tpl" IF="{products&mode=#search#}" />
 
 {else:}
 

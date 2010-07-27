@@ -89,7 +89,7 @@ function setHeaderChecked()
         </td>
       </tr>
 
-      <widget module="ProductAdviser" template="modules/ProductAdviser/price_list_changed.tpl" visible="{isNotifyPresent(product.product_id)}" dialog="{dialog}" product="{product}" />
+      <widget module="ProductAdviser" template="modules/ProductAdviser/price_list_changed.tpl" IF="{isNotifyPresent(product.product_id)}" dialog="{dialog}" product="{product}" />
 
     </tbody>
 
