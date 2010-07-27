@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage View
+ * @subpackage Model
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -26,27 +26,40 @@
  * @since      3.0.0
  */
 
-namespace XLite\View\Pager\ProductsList;
+namespace XLite\Model\Repo\Base;
+
+// TODO - must be a parent of the Repo classes
+// TODO - must be completely revised after the multiple inheritance will be added
 
 /**
- * Abstract pager class for the ProductsList widget
+ * Searchable 
  * 
  * @package    XLite
  * @see        ____class_see____
  * @since      3.0.0
  */
-abstract class AProductsList extends \XLite\View\Pager\APager
+abstract class Searchable extends \XLite\Base\SuperClass
 {
     /**
-     * Return number of items per page
-     *
-     * @return int
-     * @access protected
+     * Prepare the "LIMIT" SQL condition
+     * 
+     * @param int                    $start first item index
+     * @param int                    $count items per frame
+     * @param \XLite\Core\CommonCell $cnd   condition object to use
+     *  
+     * @return \XLite\Core\CommonCell
+     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getItemsPerPageDefault()
+    public static function addLimitCondition($start, $count, \XLite\Core\CommonCell $cnd = null)
     {
-        return \XLite\Core\Config::getInstance()->General->products_per_page;
+        if (!isset($cnd)) {
+            $cnd = new \XLite\Core\CommonCell();
+        }
+        // TODO - must be "self::P_LIMIT"
+        $cnd->{\XLite\Model\Repo\Product::P_LIMIT} = array($start, $count);
+
+        return $cnd;
     }
 }

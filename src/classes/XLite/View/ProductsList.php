@@ -249,15 +249,16 @@ abstract class ProductsList extends Container
     }
 
     /**
-     * getPagerClass 
+     * Return class name for the list pager
      * 
      * @return string
      * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getPagerClass()
     {
-        return '\XLite\View\PagerOrig\ProductsList';
+        return '\XLite\View\Pager\ProductsList';
     }
 
     /**
@@ -336,7 +337,7 @@ abstract class ProductsList extends Container
      */
     protected function getPageData()
     {
-        return $this->isPagerVisible() ? $this->getPager()->getPageData() : $this->getData();
+        return $this->isPagerVisible() ? $this->getPager()->getData() : $this->getData();
     }
 
     /**
