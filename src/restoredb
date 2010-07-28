@@ -108,6 +108,8 @@ echo "Remove directory var/run\n\n";
 
 \Includes\Utils\FileManager::unlinkRecursive('var/run');
 \Includes\Utils\FileManager::unlinkRecursive('var/locale');
+\Includes\Utils\FileManager::unlinkRecursive('var/images');
+\Includes\Utils\FileManager::unlinkRecursive('var/datacache');
 
 mysql_close($connection);
 
