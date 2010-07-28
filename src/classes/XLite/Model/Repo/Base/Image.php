@@ -45,12 +45,7 @@ abstract class Image extends \XLite\Model\Repo\ARepo
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getStorageName()
-    {
-        $class = get_called_class();
-
-        return str_replace('image', '', strtolower(substr($class, strrpos($class, '\\') + 1)));
-    }
+    abstract public function getStorageName();
 
     /**
      * Get file system images storage root path

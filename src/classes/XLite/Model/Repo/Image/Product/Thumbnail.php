@@ -37,4 +37,16 @@ namespace XLite\Model\Repo\Image\Product;
  */
 class Thumbnail extends \XLite\Model\Repo\Base\Image
 {
+    /**
+     * Returns the name of the directory within 'root/images' where images stored
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getStorageName()
+    {
+        return 'product_thumbnails';
+    }
 }

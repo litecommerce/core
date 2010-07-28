@@ -26,7 +26,7 @@
  * @since      3.0.0
  */
 
-namespace XLite\Model\Repo;
+namespace XLite\Model\Repo\Image\Category;
 
 /**
  * Category
@@ -35,8 +35,21 @@ namespace XLite\Model\Repo;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class CategoryImage extends \XLite\Model\Repo\Base\Image
+class Image extends \XLite\Model\Repo\Base\Image
 {
+    /**
+     * Returns the name of the directory within 'root/images' where images stored
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getStorageName()
+    {
+        return 'category';
+    }
+
     /**
      * Define cache cells 
      * 

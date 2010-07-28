@@ -44,4 +44,76 @@ namespace XLite\Model;
  */
 class ProductTranslation extends \XLite\Model\Base\Translation
 {
+    /**
+     * Product name
+     *
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     *
+     * @Column (type="string", length="255", nullable=false)
+     */
+    protected $name;
+
+    /**
+     * Product description
+     *
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     *
+     * @Column (type="text", nullable=false)
+     */
+    protected $description;
+
+    /**
+     * Product brief description
+     *
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     *
+     * @Column (type="text", nullable=false)
+     */
+    protected $brief_description;
+
+    /**
+     * Meta tags
+     *
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     *
+     * @Column (type="string", length="255", nullable=false)
+     */
+    protected $meta_tags;
+
+    /**
+     * Product meta description
+     *
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     *
+     * @Column (type="text", nullable=false)
+     */
+    protected $meta_desc;
+
+    /**
+     * Meta title
+     *
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     *
+     * @Column (type="string", length="255", nullable=false)
+     */
+    protected $meta_title;
+
 }
