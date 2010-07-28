@@ -631,7 +631,7 @@ EOT;
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function saveInternationalRates(DOMNodeList $services)
+    protected function saveInternationalRates(\DOMNodeList $services)
     {
         foreach ($services as $service) {
             $this->buildRate(
@@ -652,7 +652,7 @@ EOT;
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function saveNationalRates(DOMNodeList $services)
+    protected function saveNationalRates(\DOMNodeList $services)
     {
         foreach ($services as $service) {
             if ($this->xpath->query('Error', $service)->length) {
@@ -680,7 +680,7 @@ EOT;
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function saveNationalRatesOld(DOMNodeList $services)
+    protected function saveNationalRatesOld(\DOMNodeList $services)
     {
         foreach ($services as $service) {
             if ($this->xpath->query('Error', $service)->length) {
