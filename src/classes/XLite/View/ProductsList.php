@@ -92,7 +92,7 @@ abstract class ProductsList extends Container
 
     const SORT_BY_MODE_DEFAULT = 'cp.orderby';
     const SORT_BY_MODE_PRICE   = 'p.price';
-    const SORT_BY_MODE_NAME    = 'p.name';
+    const SORT_BY_MODE_NAME    = 'translations.name';
     const SORT_BY_MODE_SKU     = 'p.sku';
 
     /**
@@ -204,12 +204,32 @@ abstract class ProductsList extends Container
 
     /**
      * Return products list
-     *
-     * @return array
+     * 
+     * @param \XLite\Core\CommonCell $cnd       search condition
+     * @param bool                   $countOnly return items list or only its size
+     *  
+     * @return array|int
      * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    abstract protected function getData();
+    abstract protected function getData(\XLite\Core\CommonCell $cnd, $countOnly = false);
+
+
+    /**
+     * Return number of items in products list
+     * 
+     * @param \XLite\Core\CommonCell $cnd search condition
+     *  
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getDataCount(\XLite\Core\CommonCell $cnd)
+    {
+        return $this->getData($cnd, true);
+    }
 
 
     /**
@@ -226,6 +246,7 @@ abstract class ProductsList extends Container
 
     /**
      * Return default template
+     * See setWidgetParams()
      *
      * @return string
      * @access protected
@@ -283,8 +304,8 @@ abstract class ProductsList extends Container
     protected function getPagerParams()
     {
         return array(
-            self::PARAM_SESSION_CELL      => $this->getSessionCell(),
-            \XLite\View\PagerOrig::PARAM_DATA => $this->getData()
+            self::PARAM_SESSION_CELL => $this->getSessionCell(),
+            \XLite\View\Pager\APager::PARAM_ITEMS_COUNT => $this->getDataCount($this->getSearchCondition()),
         );
     }
 
@@ -329,6 +350,19 @@ abstract class ProductsList extends Container
     }
 
     /**
+     * getSearchCondition 
+     * 
+     * @return \XLite\Core\CommonCell
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getSearchCondition()
+    {
+        return new \XLite\Core\CommonCell();
+    }
+
+    /**
      * getPageData 
      * 
      * @return array
@@ -337,7 +371,7 @@ abstract class ProductsList extends Container
      */
     protected function getPageData()
     {
-        return $this->isPagerVisible() ? $this->getPager()->getData() : $this->getData();
+        return $this->getData($this->getPager()->getLimitCondition(null, null, $this->getSearchCondition()));
     }
 
     /**
@@ -369,6 +403,19 @@ abstract class ProductsList extends Container
     }
 
     /**
+     * getSidebarMaxItems 
+     * 
+     * @return int
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getSidebarMaxItems()
+    {
+        return $this->getParam(self::PARAM_SIDEBAR_MAX_ITEMS);
+    }
+
+    /**
      * Get products list for sidebar widget 
      * 
      * @return void
@@ -378,7 +425,7 @@ abstract class ProductsList extends Container
      */
     protected function getSideBarData()
     {
-        return array_slice($this->getData(), 0, $this->getParam(self::PARAM_SIDEBAR_MAX_ITEMS));
+        return $this->getData($this->getPager()->getLimitCondition(0, $this->getSidebarMaxItems()));
     }
 
     /**
@@ -932,8 +979,4 @@ abstract class ProductsList extends Container
     {
         return $this->getParam(self::PARAM_ICON_MAX_HEIGHT);
     }
-
-
-
-
 }

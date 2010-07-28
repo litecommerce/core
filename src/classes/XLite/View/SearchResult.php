@@ -83,14 +83,17 @@ class SearchResult extends ProductsList
     }
 
     /**
-     * Get products list
-     *
-     * @return array
-     * @access public
+     * Return products list
+     * 
+     * @param \XLite\Core\CommonCell $cnd       search condition
+     * @param bool                   $countOnly return items list or only its size
+     *  
+     * @return array|int
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getData()
+    protected function getData(\XLite\Core\CommonCell $cnd, $countOnly = false)
     {
         if (is_null($this->data)) {
             $this->data = array();

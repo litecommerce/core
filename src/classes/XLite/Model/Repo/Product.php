@@ -28,6 +28,9 @@
 
 namespace XLite\Model\Repo;
 
+// TODO - reuires the multiple inheritance
+// TODO - must also extends the \XLite\Model\Repo\Base\Searchable
+
 /**
  * The "product" model repository
  * 
@@ -117,7 +120,7 @@ class Product extends \XLite\Model\Repo\Base\I18n
         $cnd = new \Doctrine\ORM\Query\Expr\Orx();
 
         foreach (array('name', 'brief_description', 'description', 'sku') as $field) {
-            $cnd->add('p.' . $field . ' LIKE :substring');
+            $cnd->add('translations.' . $field . ' LIKE :substring');
         }
 
         $queryBuilder->andWhere($cnd)->setParameter('substring', '%' . $value , '%');
@@ -181,22 +184,27 @@ class Product extends \XLite\Model\Repo\Base\I18n
 
     /**
      * Common search
-     *
-     * @param \XLite\Core\CommonCell $cnd search condition
-     *
-     * @return \Doctrine\ORM\PersistentCollection
-     * @access public
+     * 
+     * @param \XLite\Core\CommonCell $cnd       search condition
+     * @param bool                   $countOnly return items list or only its size
+     *  
+     * @return \Doctrine\ORM\PersistentCollection|int
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function search(\XLite\Core\CommonCell $cnd)
+    public function search(\XLite\Core\CommonCell $cnd, $countOnly = false)
     {
         $queryBuilder = $this->createQueryBuilder();
         $cnd = $cnd->getData();
 
         array_walk($cnd, array($this, 'callSearchConditionHandler'), $queryBuilder);
 
-        return $queryBuilder->getQuery()->getResult();
+        if ($countOnly) {
+            $queryBuilder->select('COUNT(p.product_id)');
+        }
+
+        return $queryBuilder->getQuery()->{'get' . ($countOnly ? 'SingleScalar' : '') . 'Result'}();
     }
 
 
