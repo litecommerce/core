@@ -34,7 +34,7 @@ if (file_exists(PATH_ROOT . '/src')) {
 set_include_path(
     get_include_path()
     . PATH_SEPARATOR . '/usr/local/share/pear/'
-    . PATH_SEPARATOR . PATH_SRC . '/lib'
+    . PATH_SEPARATOR . PATH_SRC . '/classes'
     . PATH_SEPARATOR . PATH_SRC . '/var/run/classes'
 );
 
@@ -47,8 +47,6 @@ require_once PATH_TESTS . '/PHPUnit/MetricWriter.php';
 require_once PATH_TESTS . '/PHPUnit/SeleniumTestCase.php';
 
 // Start X-Lite core
-
-chdir(PATH_SRC);
 
 require_once PATH_SRC . '/top.inc.php';
 
