@@ -142,7 +142,7 @@ class Checkout extends \XLite\View\Model\Profile\Checkout implements \XLite\Base
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function prepareLCProfile(stdClass $user)
+    protected function prepareLCProfile(\stdClass $user)
     {
         $this->getModelObject()->set('cms_profile_id', $user->uid);
         $this->setPasswords($user->password);
@@ -232,7 +232,7 @@ class Checkout extends \XLite\View\Model\Profile\Checkout implements \XLite\Base
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function loginDrupalProfile(stdClass $user)
+    protected function loginDrupalProfile(\stdClass $user)
     {
         return user_authenticate(array('name' => $user->name, 'pass' => $user->password));
     }

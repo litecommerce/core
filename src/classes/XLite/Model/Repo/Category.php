@@ -704,7 +704,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
 
         \XLite\Core\Database::getEM()->persist($node);
         \XLite\Core\Database::getEM()->flush();
-        \XLite\Core\Database::getEM()->clear();
 
         if ($node->getCategoryId() > 0) {
             $result = $node;
