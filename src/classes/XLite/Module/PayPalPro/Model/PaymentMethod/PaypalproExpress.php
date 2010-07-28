@@ -236,7 +236,7 @@ class PaypalproExpress extends \XLite\Model\PaymentMethod\CreditCard
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function processFinalizeResponse(DOMNode $response, \XLite\Model\Cart $cart)
+    protected function processFinalizeResponse(\DOMNode $response, \XLite\Model\Cart $cart)
     {
         $details = $this->xpath->query('base:DoExpressCheckoutPaymentResponseDetails', $response)->item(0);
 
