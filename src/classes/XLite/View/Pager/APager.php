@@ -43,8 +43,7 @@ abstract class APager extends \XLite\View\AView
 
     const PARAM_PAGE_ID        = 'pageId';
     const PARAM_ITEMS_PER_PAGE = 'itemsPerPage';
-    const PARAM_DATA           = 'data';
-
+    const PARAM_ITEMS_COUNT    = 'itemsCount';
     const PARAM_SHOW_ITEMS_PER_PAGE_SELECTOR = 'showItemsPerPageSelector';
 
     /**
@@ -78,15 +77,6 @@ abstract class APager extends \XLite\View\AView
      * @since  3.0.0
      */
     protected $pageId;
-
-    /**
-     * itemsTotal 
-     * 
-     * @var    int
-     * @access protected
-     * @since  3.0.0
-     */
-    protected $itemsTotal;
 
     /**
      * itemsPerPage 
@@ -126,20 +116,6 @@ abstract class APager extends \XLite\View\AView
 
 
     /**
-     * Return list of items to display on the current page 
-     * 
-     * @param int $start index of the first item on the page
-     * @param int $count number of items per page
-     *  
-     * @return array|\Doctrine\ORM\PersistentCollection
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    abstract protected function getDataFrame($start, $count);
-
-
-    /**
      * Return widget default template
      *
      * @return string
@@ -160,11 +136,7 @@ abstract class APager extends \XLite\View\AView
      */
     protected function getItemsTotal()
     {
-        if (!isset($this->itemsTotal)) {
-            $this->itemsTotal = count($this->getParam(self::PARAM_DATA));
-        }
-
-        return $this->itemsTotal;
+        return $this->getParam(self::PARAM_ITEMS_COUNT);
     }
 
     /**
@@ -190,7 +162,7 @@ abstract class APager extends \XLite\View\AView
     protected function getItemsPerPage()
     {
         if (!isset($this->itemsPerPage)) {
-            $current = intval($this->getParam(self::PARAM_ITEMS_PER_PAGE));
+            $current = $this->getParam(self::PARAM_ITEMS_PER_PAGE);
             $this->itemsPerPage = max(
                 min(self::ITEMS_PER_PAGE_MAX, $current),
                 max(self::ITEMS_PER_PAGE_MIN, $current)
@@ -235,8 +207,8 @@ abstract class APager extends \XLite\View\AView
             self::PARAM_ITEMS_PER_PAGE => new \XLite\Model\WidgetParam\Int(
                 'Items per page', $this->getItemsPerPageDefault(), true
             ),
-            self::PARAM_DATA => new \XLite\Model\WidgetParam\Collection(
-                'Data', array()
+            self::PARAM_ITEMS_COUNT => new \XLite\Model\WidgetParam\Int(
+                'Items number', 0
             ),
             self::PARAM_SHOW_ITEMS_PER_PAGE_SELECTOR => new \XLite\Model\WidgetParam\Checkbox(
                 'Show "Items per page" selector', true, true
@@ -481,7 +453,6 @@ abstract class APager extends \XLite\View\AView
         return min($this->getBeginRecordNumber() + $this->getItemsPerPage() - 1, $this->getItemsTotal());
     }
 
-
     /**
      * Check if widget is visible
      *
@@ -491,8 +462,9 @@ abstract class APager extends \XLite\View\AView
      */
     protected function isVisible()
     {
-        return parent::isVisible() && $this->getData();
+        return parent::isVisible() && (1 < $this->getPagesCount());
     }
+
 
     /**
      * Register CSS files
@@ -510,15 +482,27 @@ abstract class APager extends \XLite\View\AView
     }
 
     /**
-     * Return page data 
+     * Return SQL condition with limits
      * 
+     * @param int                    $start index of the first item on the page
+     * @param int                    $count number of items per page
+     * @param \XLite\Core\CommonCell $cnd   search condition
+     *  
      * @return array|\Doctrine\ORM\PersistentCollection
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getData()
+    public function getLimitCondition($start = null, $count = null, \XLite\Core\CommonCell $cnd = null)
     {
-        return $this->getDataFrame($this->getStartItem(), $this->getItemsPerPage());
+        if (!isset($start)) {
+            $start = $this->getStartItem();
+        }
+
+        if (!isset($count)) {
+            $count = $this->getItemsPerPage();
+        }
+
+        return \XLite\Model\Repo\Base\Searchable::addLimitCondition($start, $count, $cnd);
     }
 }

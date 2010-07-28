@@ -360,22 +360,23 @@ class Category extends \XLite\Model\Base\I18n
     }
 
     /**
-     * getProducts NOTE - working on
+     * Return products list
      * 
-     * @param \XLite\Core\CommonCell $cnd ____param_comment____
+     * @param \XLite\Core\CommonCell $cnd       search condition
+     * @param bool                   $countOnly return items list or only its size
      *  
-     * @return array
-     * @access public
+     * @return array|int
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getProducts(\XLite\Core\CommonCell $cnd = null)
+    public function getProducts(\XLite\Core\CommonCell $cnd = null, $countOnly = false)
     {
         if (!isset($cnd)) {
             $cnd = new \XLite\Core\CommonCell();
         }
         $cnd->{\XLite\Model\Repo\Product::P_CATEGORY_ID} = $this->getCategoryId();
 
-        return \XLite\Core\Database::getRepo('\XLite\Model\Product')->search($cnd);
+        return \XLite\Core\Database::getRepo('\XLite\Model\Product')->search($cnd, $countOnly);
     }
 }

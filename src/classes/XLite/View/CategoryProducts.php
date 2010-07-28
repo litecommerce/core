@@ -127,29 +127,42 @@ class CategoryProducts extends ProductsList
     }
 
     /**
-     * getOrderByCondition 
+     * addOrderByCondition 
      * 
+     * @param \XLite\Core\CommonCell $cnd search condition
+     *  
      * @return array
      * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getOrderByCondition()
+    protected function addOrderByCondition(\XLite\Core\CommonCell $cnd)
     {
-        return new \XLite\Core\CommonCell(
-            array(\XLite\Model\Repo\Product::P_ORDER_BY => array($this->getSortBy(), $this->getSortOrder()))
-        );
+        $cnd->{\XLite\Model\Repo\Product::P_ORDER_BY} =  array($this->getSortBy(), $this->getSortOrder());
+
+        return $cnd;
     }
 
     /**
-     * Get products 
+     * Return products list
      * 
-     * @return array
+     * @param \XLite\Core\CommonCell $cnd       search condition
+     * @param bool                   $countOnly return items list or only its size
+     *  
+     * @return array|int
      * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getData()
+    protected function getData(\XLite\Core\CommonCell $cnd, $countOnly = false)
     {
-        return ($category = $this->getCategory()) ? $category->getProducts($this->getOrderByCondition()) : null;
+        $result = null;
+
+        if ($category = $this->getCategory()) {
+            $result = $category->getProducts($this->addOrderByCondition($cnd), $countOnly);
+        }
+
+        return $result;
     }
 
     /**
