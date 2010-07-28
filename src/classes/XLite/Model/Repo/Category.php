@@ -1138,6 +1138,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
 
     /**
      * Get category by clean_url
+     * FIXME
      * 
      * @param string $cleanUrl Clean URL value
      *  
@@ -1148,7 +1149,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
      */
     public function getCategoryByCleanUrl($cleanUrl)
     {
-        $key = base64_encode($cleanUrl);
+        $key = md5($cleanUrl);
 
         $data = ($this->ignoreCache) ? 
             null : 
