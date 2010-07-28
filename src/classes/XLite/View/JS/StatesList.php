@@ -47,7 +47,7 @@ class StatesList extends AJS
      */
     protected function getCountriesStates()
     {
-        return \XLite\Core\Database::getRepo('XLite\Model\Country')->findCountriesStates(); 
+        return \XLite\Core\Database::getRepo('XLite\Model\Country')->cache('findCountriesStates'); 
     }
 
     /**

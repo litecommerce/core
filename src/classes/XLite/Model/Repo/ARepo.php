@@ -139,6 +139,17 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     protected $defaultAlias = null;
 
     /**
+     * cachePrefix
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $cachePrefix;
+
+
+    /**
      * Define cache cells 
      * 
      * @return array
@@ -284,6 +295,48 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
                 );
             }
         }
+    }
+
+    /**
+     * getCachePrefix 
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getCachePrefix()
+    {
+        if (!isset($this->cachePrefix)) {
+            $this->cachePrefix = get_called_class();
+        }
+
+        return $this->cachePrefix;
+    }
+
+
+    /**
+     * cache 
+     * 
+     * @param string $method method to call
+     * @param array  $params call params
+     *  
+     * @return mixed
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function cache($method, array $params = array())
+    {
+        $name = $this->getCachePrefix() . '_' . $method;
+        $data = $this->getFromCache($name, $params);
+
+        if (!isset($data)) {
+            $data = call_user_func_array(array($this, $method), $params);
+            $this->saveToCache($data, $name, $params);
+        }
+
+        return $data;
     }
 
 
