@@ -83,8 +83,8 @@
     <table border=0 cellspacing=0 cellpadding=15 width="100%" class="Center">
     <tr>
       <td>
-            <widget template="welcome.tpl" mode="">
-            <widget template="access_denied.tpl" mode="access_denied">
+            <widget template="welcome.tpl" mode="" />
+            <widget template="access_denied.tpl" mode="access_denied" />
 
             <p align=center style="font-size: 11px" class="tabDefault">
               <strong>Please identify yourself with a username and a password to access the Administrator Zone</strong>

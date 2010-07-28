@@ -154,6 +154,16 @@ class Categories extends Catalog
         return \XLite\Core\Database::getRepo('XLite\Model\Category')->getParentCategory($categoryId ?: $this->getCategoryId());
     }
 
+    /**
+     * Check if category is a leaf node 
+     * 
+     * @param int $categoryId Category Id
+     *  
+     * @return bool
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     public function isCategoryLeafNode($categoryId = null)
     {
         return \XLite\Core\Database::getRepo('XLite\Model\Category')->isCategoryLeafNode($categoryId ?: $this->getCategoryId());
@@ -172,6 +182,16 @@ class Categories extends Catalog
         return \XLite\Core\Database::getRepo('XLite\Model\Membership')->findAllMemberships();
     }
 
+    /**
+     * Check if categories are on the root level 
+     * 
+     * @param array $categories Array of \XLite\Model\Category objects
+     *  
+     * @return bool
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     public function isRootCategories($categories)
     {
         $result = false;
@@ -239,7 +259,7 @@ class Categories extends Catalog
 
         } else {
             $parentCategory = \XLite\Core\Database::getRepo('XLite\Model\Category')->getParentCategory($categoryId);
-            $redirectParam = (!is_null($parentCategory->getCategoryId()) ? '&category_id=' . $parentCategory->getCategoryId() : '');
+            $redirectParam = (!is_null($parentCategory) ? '&category_id=' . $parentCategory->getCategoryId() : '');
         }
 
         \XLite\Core\Database::getRepo('XLite\Model\Category')->deleteCategory($categoryId, $subcategoriesOnly);
@@ -306,6 +326,4 @@ class Categories extends Catalog
 
         return $result;
     }
-
-
 }

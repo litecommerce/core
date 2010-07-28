@@ -103,7 +103,7 @@ implements \XLite\Base\IDecorator
         if (
             isset($language)
             && is_object($language)
-            && $language instanceof stdClass
+            && $language instanceof \stdClass
             && \XLite\Core\Database::getRepo('XLite\Model\Language')->findOneByCode($language->language)
         ) {
             $result = $language->language;
