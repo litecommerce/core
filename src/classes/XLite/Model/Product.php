@@ -37,23 +37,12 @@ namespace XLite\Model;
  * @Entity (repositoryClass="XLite\Model\Repo\Product")
  * @Table (name="products",
  *         indexes={
- *              @Index(name="order_by", columns={"order_by"}),
- *              @Index(name="name", columns={"name"}),
- *              @Index(name="description", columns={"description"}),
- *              @Index(name="brief_description", columns={"brief_description"}),
- *              @Index(name="meta_tags", columns={"meta_tags"}),
  *              @Index(name="price", columns={"price"}),
  *              @Index(name="sku", columns={"sku"}),
- *              @Index(name="thumbnail_source", columns={"thumbnail_source"}),
- *              @Index(name="thumbnail_type", columns={"thumbnail_type"}),
- *              @Index(name="image_source", columns={"image_source"}),
- *              @Index(name="image_type", columns={"image_type"}),
  *              @Index(name="enabled", columns={"enabled"}),
  *              @Index(name="weight", columns={"weight"}),
  *              @Index(name="tax_class", columns={"tax_class"}),
  *              @Index(name="free_shipping", columns={"free_shipping"}),
- *              @Index(name="meta_desc", columns={"meta_desc"}),
- *              @Index(name="meta_title", columns={"meta_title"}),
  *              @Index(name="clean_url", columns={"clean_url"})
  *         }
  * )
@@ -73,54 +62,6 @@ class Product extends \XLite\Model\Base\I18n
      * @Column         (type="integer", length="11", nullable=false)
      */
     protected $product_id;
-
-    /**
-     * Product name
-     *
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     *
-     * @Column (type="string", length="255", nullable=false)
-     */
-    protected $name;
-
-    /**
-     * Product description
-     *
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     *
-     * @Column (type="text", nullable=false)
-     */
-    protected $description;
-
-    /**
-     * Product brief description
-     *
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     *
-     * @Column (type="text", nullable=false)
-     */
-    protected $brief_description;
-
-    /**
-     * Meta tags
-     *
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     *
-     * @Column (type="string", length="255", nullable=false)
-     */
-    protected $meta_tags;
 
     /**
      * Product price
@@ -207,30 +148,6 @@ class Product extends \XLite\Model\Base\I18n
     protected $free_shipping = false;
 
     /**
-     * Product meta description
-     *
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     *
-     * @Column (type="text", nullable=false)
-     */
-    protected $meta_desc;
-
-    /**
-     * Meta title
-     *
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     *
-     * @Column (type="string", length="255", nullable=false)
-     */
-    protected $meta_title;
-
-    /**
      * Clean URL
      * 
      * @var    string
@@ -241,7 +158,6 @@ class Product extends \XLite\Model\Base\I18n
      * @Column (type="string", length="255", nullable=false)
      */
     protected $clean_url;
-
 
     /**
      * Relation to a CategoryProducts entities

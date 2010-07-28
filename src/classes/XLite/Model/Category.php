@@ -161,7 +161,7 @@ class Category extends \XLite\Model\Base\I18n
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @OneToOne (targetEntity="XLite\Model\CategoryImage")
+     * @OneToOne (targetEntity="XLite\Model\Image\Category\Image")
      * @JoinColumn (name="category_id", referencedColumnName="id")
      */
     protected $image;
@@ -212,7 +212,7 @@ class Category extends \XLite\Model\Base\I18n
      */
     public function hasImage()
     {
-        return !is_null(\XLite\Core\Database::getRepo('XLite\Model\CategoryImage')->getImageById($this->getCategoryId()));
+        return !is_null(\XLite\Core\Database::getRepo('XLite\Model\Image\Category\Image')->getImageById($this->getCategoryId()));
     }
 
     /**
@@ -225,7 +225,7 @@ class Category extends \XLite\Model\Base\I18n
      */
     public function getImage()
     {
-        return \XLite\Core\Database::getRepo('XLite\Model\CategoryImage')->getImageById($this->getCategoryId());
+        return \XLite\Core\Database::getRepo('XLite\Model\Image\Category\Image')->getImageById($this->getCategoryId());
     }
 
     /**
