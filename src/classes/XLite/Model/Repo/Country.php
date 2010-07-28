@@ -47,6 +47,7 @@ class Country extends ARepo
      */
     protected $defaultOrderBy = 'country';
 
+
     /**
      * Define cache cells 
      * 
@@ -59,11 +60,11 @@ class Country extends ARepo
     {
         $list = parent::defineCacheCells();
 
-        $list['all'] = array(
+        $list[$this->getCachePrefix() . '_findAllCountries'] = array(
             self::TTL_CACHE_CELL => self::INFINITY_TTL,
         );
 
-        $list['countries_states'] = array(
+        $list[$this->getCachePrefix() . '_findCountriesStates'] = array(
             self::TTL_CACHE_CELL => self::INFINITY_TTL,
         );
 
@@ -80,13 +81,7 @@ class Country extends ARepo
      */
     public function findAllCountries()
     {
-        $data = $this->getFromCache('all');
-        if (is_null($data)) {
-            $data = $this->defineAllCountriesQuery()->getQuery()->getResult();
-            $this->saveToCache($data, 'all');
-        }
-
-        return $data;
+        return $this->defineAllCountriesQuery()->getQuery()->getResult();
     }
 
     /**
@@ -112,14 +107,7 @@ class Country extends ARepo
      */
     public function findCountriesStates()
     {
-        $data = $this->getFromCache('countries_states');
-        if (is_null($data)) {
-            $data = $this->defineCountriesStatesQuery()->getQuery()->getResult();
-            $data = $this->postprocessCountriesStates($data);
-            $this->saveToCache($data, 'countries_states');
-        }
-
-        return $data;
+        return $this->postprocessCountriesStates($this->defineCountriesStatesQuery()->getQuery()->getResult());
     }
 
     /**
