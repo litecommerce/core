@@ -119,7 +119,8 @@
 	<target name="phpunit">
         <copy todir="${buildDir}">
             <fileset file="${sourceDir}/.dev/tests/PHPUnit/phpunit_coverage.php" />
-        </copy>
+		</copy>
+		<mkdir dir="${buildDir}/logs/coverage" />
 		<exec executable="phpunit" dir="${buildDir}" failonerror="on" output="${buildDir}/reports/phpunit.txt">
 			<arg line="--log-xml ${buildDir}/logs/phpunit.xml --coverage-html ${buildDir}/logs/coverage xliteAllTests ${buildDir}/.dev/tests/AllTests.php" />
 		</exec>
@@ -131,7 +132,8 @@
     <target name="phpunit-cc">
         <copy todir="${buildDir}">
             <fileset file="${sourceDir}/.dev/tests/PHPUnit/phpunit_coverage.php" />
-        </copy>
+		</copy>
+		<mkdir dir="${buildDir}/coverage" />
         <exec executable="/u/xcart/bin/phpunit-xlite" dir="${buildDir}" failonerror="on">
             <arg line="--log-xml ${buildDir}/logs/phpunit.xml --log-pmd ${buildDir}/logs/phpunit.pmd.xml --log-metrics ${buildDir}/logs/phpunit.metrics.xml --coverage-xml ${buildDir}/logs/phpunit.coverage.xml --coverage-html ${buildDir}/coverage xliteAllTests ${buildDir}/.dev/tests/AllTests.php" />
         </exec>
