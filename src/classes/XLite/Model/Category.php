@@ -75,6 +75,17 @@ class Category extends \XLite\Model\Base\I18n
     protected $rpos;
 
     /**
+     * Node depth within categories tree
+     * 
+     * @var    float
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Column (type="integer", length="11", nullable=false)
+     */
+    protected $depth = 0;
+
+    /**
      * Node status
      * 1 - enabled, 0 - disabled
      * 
@@ -178,17 +189,6 @@ class Category extends \XLite\Model\Base\I18n
     protected $products_count = 0;
 
     /**
-     * Category depth within categories tree
-     * (Real-time calculated)
-     * 
-     * @var    float
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected $depth = 0;
-
-    /**
      * Relation to a CategoryProducts entities
      * 
      * @var    \Doctrine\Common\Collections\ArrayCollection
@@ -212,20 +212,7 @@ class Category extends \XLite\Model\Base\I18n
      */
     public function hasImage()
     {
-        return !is_null(\XLite\Core\Database::getRepo('XLite\Model\Image\Category\Image')->getImageById($this->getCategoryId()));
-    }
-
-    /**
-     * Get category image object
-     * 
-     * @return \XLite\Model\CategoryImage
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getImage()
-    {
-        return \XLite\Core\Database::getRepo('XLite\Model\Image\Category\Image')->getImageById($this->getCategoryId());
+        return !is_null($this->getImage());
     }
 
     /**
@@ -366,7 +353,7 @@ class Category extends \XLite\Model\Base\I18n
      * @param bool                   $countOnly return items list or only its size
      *  
      * @return array|int
-     * @access protected
+     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */

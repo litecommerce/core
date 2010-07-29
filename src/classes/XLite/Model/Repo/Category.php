@@ -258,24 +258,12 @@ class Category extends \XLite\Model\Repo\Base\I18n
 
                 $data = $this->defineFullTreeQuery($categoryId)->getQuery()->getResult();
 
-                $right = array($this->getMaxRightPos());
                 $dataTmp = array();
 
-                // Calculate categorys depth
                 foreach ($data as $id => $nd) {
-
-                    $dataTmp[$id] = $nd = $nd[0];
-                    $dataTmp[$id]->setProductsCount($data[$id]['products_count']);
-
-                    if (count($right) > 0) {
-                        while ($right[count($right) - 1] < $nd->getRpos()) {
-                            array_pop($right);
-                        }
-                    }
-
-                    $dataTmp[$id]->setDepth(count($right));
-
-                    $right[] = $nd->getRpos();
+                    $node = $nd[0];
+                    $node->setProductsCount($nd['products_count']);
+                    $dataTmp[$id] = $node;
                 }
 
                 $data = $dataTmp;
@@ -310,8 +298,10 @@ class Category extends \XLite\Model\Repo\Base\I18n
         }
 
         $qb = $this->createQueryBuilder('c')
+            ->addSelect('i')
             ->addSelect('count(p.product_id) as products_count')
             ->leftJoin('c.category_products', 'p')
+            ->leftJoin('c.image', 'i')
             ->groupBy('c.category_id')
             ->orderBy('c.lpos');
 
@@ -543,6 +533,8 @@ class Category extends \XLite\Model\Repo\Base\I18n
                 $newRpos = $relatedIndex + 2;
             }
 
+            $newDepth = $parentCategory->getDepth();
+
             // Increase lpos field for parent and all right nodes
             $qb = $this->defineUpdateIndexesQuery('lpos', 2, $relatedIndex, $equalFlag);
             $qb->getQuery()->execute();
@@ -552,7 +544,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
             $qb->getQuery()->execute();
 
             // Create an empty category node in the database
-            $result = $this->createNode($newLpos, $newRpos, $errorMsg);
+            $result = $this->createNode($newLpos, $newRpos, $newDepth, $errorMsg);
 
         } else {
             $errorMsg = 'The specified category is not exist';
@@ -597,6 +589,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
             // get lpos as 0 and rpos as a max(rpos)
             $parentLpos = 0;
             $parentRpos = $this->getMaxRightPos();
+            $parentDepth = 0;
 
             if (0 == $parentRpos) {
                 $skipUpdate = true;
@@ -611,6 +604,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
                 // get lpos and rpos from parent category
                 $parentLpos = $parentCategory->getLpos();
                 $parentRpos = $parentCategory->getRpos();
+                $parentDepth = $parentCategory->getDepth();
             
             } else {
                 // Category does not exist, return error
@@ -633,7 +627,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
             }
 
             // Create an empty category node in the database
-            $result = $this->createNode($parentLpos + 1, $parentLpos + 2, $errorMsg);
+            $result = $this->createNode($parentLpos + 1, $parentLpos + 2, $parentDepth + 1, $errorMsg);
         }
                
         if (isset($errorMsg)) {
@@ -689,6 +683,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * 
      * @param int    $lpos      lpos value
      * @param int    $rpos      rpos value
+     * @param int    $depth     depth value
      * @param string &$errorMsg Variable for error message
      *  
      * @return \XLite\Model\Category
@@ -696,11 +691,12 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function createNode($lpos, $rpos, &$errorMsg)
+    protected function createNode($lpos, $rpos, $depth, &$errorMsg)
     {
         $node = new \XLite\Model\Category();
         $node->setLpos($lpos);
         $node->setRpos($rpos);
+        $node->setDepth($depth);
 
         \XLite\Core\Database::getEM()->persist($node);
         \XLite\Core\Database::getEM()->flush();
@@ -746,8 +742,9 @@ class Category extends \XLite\Model\Repo\Base\I18n
 
             $src['lpos'] = $srcNode->getLpos();
             $src['rpos'] = $srcNode->getRpos();
+            $src['depth'] = $srcNode->getDepth();
 
-            $dst['rpos'] = $dst['lpos'] = 0;
+            $dst['rpos'] = $dst['lpos'] = $dst['depth'] = 0;
 
             if (0 < $destNodeId) {
                 // Get destination node data
@@ -756,6 +753,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
                 if ($destNode->getCategoryId() > 0) {
                     $dst['lpos'] = $destNode->getLpos();
                     $dst['rpos'] = $destNode->getRpos();
+                    $dst['depth'] = $destNode->getDepth();
                 
                 } else {
                     $errorMsg = sprintf('Destination category (%d) specified incorrectly', $destNodeId);
@@ -794,11 +792,17 @@ class Category extends \XLite\Model\Repo\Base\I18n
                 // Offset for applying to the affected nodes excluding nodes within moving subtree
                 $adjustmentOffset = ($srcNode->getSubCategoriesCount() + 1) * 2;
 
+                // Depth offset between source and destination nodes
+                $depthOffset = $dst['depth'] - $src['depth'];
+
                 // Attach source node to the destination node as a first child
                 if ($attachAsChild) {
 
                     // Offset for applying to the nodes within moving subtree
                     $nodeOffset = $dst['lpos'] + 1 - $src['lpos'];
+
+                    // Increase the depth offset
+                    $depthOffset ++;
 
                     // If source node the left of destination node...
                     if ($src['lpos'] < $dst['lpos']) {
@@ -867,7 +871,9 @@ class Category extends \XLite\Model\Repo\Base\I18n
                 $qb4 = $this->defineLockNodesQuery($src['lpos'], $src['rpos'], 0);
                 $qb4->set('c.lpos', 'c.lpos + :offset')
                     ->set('c.rpos', 'c.rpos + :offset')
-                    ->setParameter('offset', $nodeOffset);
+                    ->set('c.depth', 'c.depth + :depthOffset')
+                    ->setParameter('offset', $nodeOffset)
+                    ->setParameter('depthOffset', $depthOffset);
 
                 // Execute queries
                 $qb1->getQuery()->execute();

@@ -35,7 +35,7 @@ namespace XLite\Controller\Admin;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Category extends Catalog
+class Category extends \XLite\Controller\Admin\Catalog
 {
     /**
      * getModelObject
@@ -202,7 +202,7 @@ class Category extends Catalog
         );
 
         if (!$isNewObject) {
-            $fieldsSet[] = 'category_id';
+            $data['category_id'] = intval($postedData['category_id']);
         }
 
         foreach ($fieldsSet as $field) {
@@ -216,7 +216,7 @@ class Category extends Catalog
 
                 $data['clean_url'] = $this->sanitizeCleanURL($data['clean_url']);
 
-                if (!empty($data['clean_url']) && !$this->isCleanURLUnique($data['clean_url'])) {
+                if (!empty($data['clean_url']) && !$this->isCleanURLUnique($data['clean_url'], (!$isNewObject ? $data['category_id'] : null))) {
 
                     \XLite\Core\TopMessage::getInstance()->add(
                         'The Clean URL you specified is already in use. Please specify another Clean URL',
@@ -258,10 +258,11 @@ class Category extends Catalog
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function isCleanURLUnique($cleanURL)
+    protected function isCleanURLUnique($cleanURL, $categoryId = null)
     {
         $result = \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategoryByCleanUrl($cleanURL);
-        return empty($result);
+
+        return !isset($result) || (!is_null($categoryId) && intval($categoryId ) == intval($result->getCategoryId()));
     }
 
     /**

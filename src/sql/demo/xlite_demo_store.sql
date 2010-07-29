@@ -1,13 +1,13 @@
 
 -- Categories [7]
 
-INSERT INTO `xlite_categories` VALUES (3002,3,4,0,0,0,1,1,'downloadables');
-INSERT INTO `xlite_categories` VALUES (1004,5,14,0,0,0,1,1,'toys');
-INSERT INTO `xlite_categories` VALUES (4004,10,11,0,0,0,1,1,'puzzles');
-INSERT INTO `xlite_categories` VALUES (1003,6,7,0,0,0,1,1,'cube-goodies');
-INSERT INTO `xlite_categories` VALUES (4003,8,9,0,0,0,1,1,'science-toys');
-INSERT INTO `xlite_categories` VALUES (4002,12,13,0,0,0,1,1,'rc-toys');
-INSERT INTO `xlite_categories` VALUES (1002,1,2,0,0,0,1,1,'apparel');
+INSERT INTO `xlite_categories` VALUES (3002,3,4,1,0,0,0,1,1,'downloadables');
+INSERT INTO `xlite_categories` VALUES (1004,5,14,1,0,0,0,1,1,'toys');
+INSERT INTO `xlite_categories` VALUES (4004,10,11,2,0,0,0,1,1,'puzzles');
+INSERT INTO `xlite_categories` VALUES (1003,6,7,2,0,0,0,1,1,'cube-goodies');
+INSERT INTO `xlite_categories` VALUES (4003,8,9,2,0,0,0,1,1,'science-toys');
+INSERT INTO `xlite_categories` VALUES (4002,12,13,2,0,0,0,1,1,'rc-toys');
+INSERT INTO `xlite_categories` VALUES (1002,1,2,1,0,0,0,1,1,'apparel');
 
 INSERT INTO `xlite_category_images` VALUES (101,3002,'demo_store_c3002.jpeg','image/jpeg',154,160,10267,1278412215,'');
 INSERT INTO `xlite_category_images` VALUES (102,1004,'demo_store_c1004.jpeg','image/jpeg',140,160,12860,1278412215,'');
