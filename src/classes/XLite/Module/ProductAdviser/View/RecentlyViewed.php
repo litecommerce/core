@@ -185,7 +185,7 @@ class RecentlyViewed extends \XLite\View\ProductsList
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getData()
+    protected function getData(\XLite\Core\CommonCell $cnd, $countOnly = false)
     {
         return $this->getRecentliesProducts();
     }

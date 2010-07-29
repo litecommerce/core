@@ -109,13 +109,14 @@ class Bestsellers extends \XLite\View\ProductsList
 
     /**
      * Return products list
+     * TODO - rework
      * 
      * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getData()
+    protected function getData(\XLite\Core\CommonCell $cnd, $countOnly = false)
     {
         $args = array($this->getNumberOfBestsellers(), $this->getRootId());
 

@@ -96,7 +96,7 @@ class RelatedProducts extends \XLite\View\ProductsList
      * @access protected
      * @since  3.0.0
      */
-    protected function getData()
+    protected function getData(\XLite\Core\CommonCell $cnd, $countOnly = false)
     {
         $products = array();
         $relatedProducts = $this->getProduct()->getRelatedProducts();

@@ -96,7 +96,7 @@ class FeaturedProducts extends \XLite\View\ProductsList
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getData()
+    protected function getData(\XLite\Core\CommonCell $cnd, $countOnly = false)
     {
         $featuredProducts = $this->getCategory()->getFeaturedProducts();
         $products = array();
