@@ -94,7 +94,7 @@ class ProductAlsoBuy extends \XLite\View\ProductsList
      * @access protected
      * @since  3.0.0
      */
-    protected function getData()
+    protected function getData(\XLite\Core\CommonCell $cnd, $countOnly = false)
     {
         return $this->getProduct()->getProductsAlsoBuy();
     }

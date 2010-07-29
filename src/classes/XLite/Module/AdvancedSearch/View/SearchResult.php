@@ -55,7 +55,7 @@ class SearchResult extends \XLite\View\SearchResult implements \XLite\Base\IDeco
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getData()
+    public function getData(\XLite\Core\CommonCell $cnd, $countOnly = false)
     {
         if (is_null($this->data)) {
             $this->data = array();
