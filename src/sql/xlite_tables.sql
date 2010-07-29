@@ -3,6 +3,7 @@ CREATE TABLE xlite_categories (
   category_id int(11) unsigned NOT NULL AUTO_INCREMENT,
   lpos int(11) NOT NULL DEFAULT '0',
   rpos int(11) NOT NULL DEFAULT '0',
+  depth int(11) NOT NULL DEFAULT '0',
   views_stats int(11) NOT NULL DEFAULT '0',
   locked int(1) NOT NULL DEFAULT '0',
   membership_id int(11) DEFAULT '0',
