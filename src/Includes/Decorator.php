@@ -79,6 +79,10 @@ class Decorator extends Decorator\ADecorator
     const UNDEFINED_CLASS_MSG       = 'Decorator: undefined class - "%s"';
     const CLASS_ALREADY_DEFINED_MSG = 'Class "%s" is already defined in file "%s"';
 
+    /*
+     * The name of file-indicator of successful cache building
+     */
+    const LC_CACHE_BUILD_INDICATOR = '.cache_done';
 
     /**
      * Error log filename pattern
@@ -1197,6 +1201,8 @@ class Decorator extends Decorator\ADecorator
                 apc_compile_file(LC_CLASSES_CACHE_DIR . $this->getFileByClass($class));
             }
         }
+
+        file_put_contents(LC_CLASSES_CACHE_DIR . self::LC_CACHE_BUILD_INDICATOR, date('r'));
 
         // decoration shutdown
         if (

@@ -88,7 +88,7 @@ class CacheManager extends \Includes\Decorator\Utils\AUtils
      */
     protected static function isCacheDirExists()
     {
-        return \Includes\Utils\FileManager::isDirReadable(LC_CLASSES_CACHE_DIR);
+        return \Includes\Utils\FileManager::isFileReadable(LC_CLASSES_CACHE_DIR . \Includes\Decorator::LC_CACHE_BUILD_INDICATOR);
     }
 
     /**
