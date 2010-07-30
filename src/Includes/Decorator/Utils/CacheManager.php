@@ -101,7 +101,7 @@ class CacheManager extends \Includes\Decorator\Utils\AUtils
      */
     protected static function isRebuildNeeded()
     {
-        return (!static::isCacheDirExists() || static::isDeveloperMode()) && !defined('LC_DO_NOT_REBUILD_CACHE');
+        return !defined('LC_DO_NOT_REBUILD_CACHE') && (!static::isCacheDirExists() || static::isDeveloperMode());
     }
 
     /**

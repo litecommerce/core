@@ -118,6 +118,20 @@ abstract class Autoloader
         self::autoloadCommon('Includes', $class, LC_ROOT_DIR);
     }
 
+    /**
+     * Autoloader for the installation script
+     * 
+     * @param string $class name of the class to load
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function __lc_autoload_install($class)
+    {
+        self::autoloadCommon('XLite', $class, LC_CLASSES_DIR);
+    }
 
     /**
      * Add an autoload function to the list
@@ -131,7 +145,7 @@ abstract class Autoloader
      */
     public static function addFunction($method)
     {
-        if (false !== array_search($method, static::$functions[$method])) {
+        if (false !== array_search($method, static::$functions)) {
             throw new Exception('Autoload function "' . $method . '" is already registered');
         }
 
