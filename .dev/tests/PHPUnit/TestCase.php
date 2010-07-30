@@ -455,5 +455,20 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
 
         return $emails;
     }
+
+    /**
+     * Do SQL query 
+     * 
+     * @param sql $sql SQL query
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function query($sql)
+    {
+        \XLite\Core\Database::getEM()->getConnection()->executeQuery($sql, array());
+    }
 }
 
