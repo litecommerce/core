@@ -736,7 +736,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
         // Get source node data
         $srcNode = $this->getNode($nodeId);
 
-        if ($srcNode->getCategoryId() > 0) {
+        if (isset($srcNode) && $srcNode->getCategoryId() > 0) {
 
             $src = $dst = array();
 
@@ -750,7 +750,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
                 // Get destination node data
                 $destNode = $this->getNode($destNodeId);
 
-                if ($destNode->getCategoryId() > 0) {
+                if (isset($destNode) && $destNode->getCategoryId() > 0) {
                     $dst['lpos'] = $destNode->getLpos();
                     $dst['rpos'] = $destNode->getRpos();
                     $dst['depth'] = $destNode->getDepth();
@@ -1212,6 +1212,8 @@ class Category extends \XLite\Model\Repo\Base\I18n
     {
         $this->ignoreCache = true;
 
+        $result = true;
+
         $categoriesToDelete = $this->getFullTree($categoryId);
 
         if (!empty($categoriesToDelete)) {
@@ -1236,6 +1238,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
             }
 
             \XLite\Core\Database::getEM()->flush();
+            \XLite\Core\Database::getEM()->clear();
 
             // If nodes were removed - recalculate indexes 
             if (0 < $rpos) {
@@ -1248,12 +1251,19 @@ class Category extends \XLite\Model\Repo\Base\I18n
                 $qb = $this->defineUpdateIndexesQuery('rpos', -$offset, $rpos);
                 $qb->getQuery()->execute();
 
+                \XLite\Core\Database::getEM()->flush();
+
                 // Clean common cache
                 $this->cleanCache();
             }
+        
+        } else {
+            $result = false;
         }
 
         $this->ignoreCache = false;
+
+        return $result;
     }
 
     /**
