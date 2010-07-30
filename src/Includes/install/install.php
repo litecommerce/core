@@ -44,6 +44,7 @@ if (version_compare(phpversion(), '5.0.0') < 0) {
 }
 
 require_once realpath(dirname(__FILE__) . '/../..') . '/top.inc.php';
+\Includes\Autoloader::addFunction('__lc_autoload_install');
 
 require_once constant('LC_ROOT_DIR') . 'Includes/install/install_settings.php';
 
@@ -913,7 +914,7 @@ function checkHttpsBouncer(&$errorMsg, &$value)
 {
     $result = false;
 
-    $https = new XLite_Model_HTTPS();
+    $https = new \XLite\Model\HTTPS();
     $httpsBouncer = $https->detectSoftware();
 
     if ($httpsBouncer !== false) {
@@ -1025,8 +1026,8 @@ function doInstallDatabase($trigger, &$params, $silentMode = false)
 
                 include_once constant('LC_ROOT_DIR') . 'classes/XLite/Module/' . $dir . '/Main.php';
 
-                $class = 'XLite_Module_' . $dir . '_Main';
-                $_queries[] = 'REPLACE INTO xlite_modules SET name = \'' . $dir . '\', enabled = \'' . intval(in_array($dir, $lcSettings['enable_modules'])). '.\', mutual_modules = \'' . implode(',', call_user_func(array($class, 'getMutualModulesList'))) . '\', type = \'' . call_user_func(array($class, 'getType')). '\'';
+                $class = '\\XLite\\Module\\' . $dir . '\\Main';
+                $_queries[] = 'REPLACE INTO xlite_modules SET name = \'' . $dir . '\', enabled = \'' . intval(in_array($dir, $lcSettings['enable_modules'])). '.\', mutual_modules = \'' . implode(',', call_user_func(array($class, 'getMutualModulesList'))) . '\', type = \'' . call_user_func(array($class, 'getModuleType')). '\'';
 
                 $_moduleSqlFile = 'classes/XLite/Module/' . $dir . '/install.sql';
 
