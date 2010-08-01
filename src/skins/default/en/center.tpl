@@ -29,7 +29,7 @@
 
 <!-- [catalog] {{{ -->
 <widget class="\XLite\View\Subcategories" />
-<widget class="\XLite\View\ProductsList\Customer\CategoryProducts" />
+<widget class="\XLite\View\ItemsList\Product\Customer\Category" />
 <widget class="\XLite\View\CategoryEmpty" />
 <!-- [/catalog] }}} -->
 

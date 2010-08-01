@@ -26,27 +26,15 @@
  * @since      3.0.0
  */
 
-namespace XLite\View\ProductsList\Admin;
+namespace XLite\View\ItemsList;
 
 /**
- * AAdmin 
+ * Base class for all lists 
  * 
  * @package    XLite
  * @see        ____class_see____
  * @since      3.0.0
  */
-abstract class AAdmin extends \XLite\View\ProductsList\AProductsList
+abstract class AItemsList extends \XLite\View\Container
 {
-    /**
-     * Return dir which contains the page body template
-     *
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getPageBodyDir()
-    {
-        return 'table';
-    }
 }

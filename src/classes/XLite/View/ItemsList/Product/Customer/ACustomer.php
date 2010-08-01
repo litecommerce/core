@@ -20,13 +20,13 @@
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    SVN: $Id$
+ * @version    SVN: $Id: ACustomer.php 3650 2010-08-01 14:39:12Z vvs $
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      3.0.0
  */
 
-namespace XLite\View\ProductsList\Customer;
+namespace XLite\View\ItemsList\Product\Customer;
 
 /**
  * ACustomer 
@@ -35,7 +35,7 @@ namespace XLite\View\ProductsList\Customer;
  * @see        ____class_see____
  * @since      3.0.0
  */
-abstract class ACustomer extends \XLite\View\ProductsList\AProductsList
+abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
 {
     /**
      * Widget param names
