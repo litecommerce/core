@@ -124,6 +124,19 @@ class SearchResult extends \XLite\View\ItemsList\Product\AProduct
     }
 
     /**
+     * Return class name for the list pager
+     *
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getPagerClass()
+    {
+        return null;
+    }
+
+    /**
      * Get data count 
      * 
      * @return integer
