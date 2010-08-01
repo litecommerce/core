@@ -758,6 +758,13 @@ class FlexyCompiler extends \XLite\Base\Singleton
                 $conditions[] = '$this->isDisplayRequired(array(\'' . $target . '\'))';
             }
 
+            if (!empty($attrs['mode'])) {
+                $modes = str_replace(',', '\',\'', preg_replace('/[^\w,]+/', '', $attrs['mode']));
+                $conditions[] = '$this->isDisplayRequiredForMode(array(\'' . $modes . '\'))';
+                // TODO - uncomment
+                // unset($attrs['mode']);
+            }
+
             if (isset($attrs['IF'])) {
                 $attrs['IF'] = $this->flexyCondition($attrs['IF']);
                 if (!empty($conditions)) {
