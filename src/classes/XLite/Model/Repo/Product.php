@@ -83,6 +83,24 @@ class Product extends \XLite\Model\Repo\Base\I18n
         return in_array($param, $this->getAllowedSearchParams());
     }
 
+    /**
+     * List of fields to use in search by substring
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getSubstringSearchFields()
+    {
+        return array(
+            'translations.name',
+            'translations.brief_description',
+            'translations.description',
+            'p.sku',
+        );
+    }
+
 
     /**
      * Prepare certain search condition 
@@ -117,13 +135,15 @@ class Product extends \XLite\Model\Repo\Base\I18n
      */
     protected function prepareSearchConditionSubstring(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
-        $cnd = new \Doctrine\ORM\Query\Expr\Orx();
+        if (!empty($value)) {
+            $cnd = new \Doctrine\ORM\Query\Expr\Orx();
 
-        foreach (array('name', 'brief_description', 'description', 'sku') as $field) {
-            $cnd->add('translations.' . $field . ' LIKE :substring');
+            foreach ($this->getSubstringSearchFields() as $field) {
+                $cnd->add($field . ' LIKE :substring');
+            }
+
+            $queryBuilder->andWhere($cnd)->setParameter('substring', '%' . $value . '%');
         }
-
-        $queryBuilder->andWhere($cnd)->setParameter('substring', '%' . $value , '%');
     }
 
     /**
