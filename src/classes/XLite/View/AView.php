@@ -440,10 +440,9 @@ abstract class AView extends \XLite\Core\Handler
      */
     protected function checkMode()
     {
-        $allowedModes = $this->getParam(self::PARAM_MODE);
+        $modes = $this->getParam(self::PARAM_MODE);
 
-        return empty($allowedModes)
-            || in_array(\XLite\Core\Request::getInstance()->mode, $allowedModes);
+        return empty($modes) || $this->isDisplayRequiredForMode($modes);
     }
 
     /**
@@ -780,6 +779,21 @@ abstract class AView extends \XLite\Core\Handler
     public function isDisplayRequired(array $targets)
     {
         return in_array(\XLite\Core\Request::getInstance()->target, $targets);
+    }
+
+    /**
+     * Check for current mode
+     *
+     * @param array $modes list of allowed modes
+     *
+     * @return bool
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isDisplayRequiredForMode(array $modes)
+    {
+        return in_array(\XLite\Core\Request::getInstance()->mode, $modes);
     }
 
     /**
