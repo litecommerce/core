@@ -37,7 +37,7 @@ namespace XLite\Module\ProductAdviser\View;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class ProductAlsoBuy extends \XLite\View\ProductsList
+class ProductAlsoBuy extends \XLite\View\ProductsList\AProductsList
 {
     /**
      *  Widget parameter names

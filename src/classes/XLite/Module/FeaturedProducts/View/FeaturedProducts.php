@@ -35,7 +35,7 @@ namespace XLite\Module\FeaturedProducts\View;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class FeaturedProducts extends \XLite\View\ProductsList
+class FeaturedProducts extends \XLite\View\ProductsList\AProductsList
 {
     /**
      *  Widget parameter names

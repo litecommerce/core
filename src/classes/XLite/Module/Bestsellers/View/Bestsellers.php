@@ -36,7 +36,7 @@ namespace XLite\Module\Bestsellers\View;
  * @see        ____class_see____
  * @since   3.0.0
  */
-class Bestsellers extends \XLite\View\ProductsList
+class Bestsellers extends \XLite\View\ProductsList\AProductsList
 {
     /**
      * Widget parameter names
