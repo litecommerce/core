@@ -35,7 +35,7 @@ namespace XLite\Module\WholesaleTrading\View;
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class ProductsList extends \XLite\View\ProductsList implements \XLite\Base\IDecorator
+abstract class ProductsList extends \XLite\View\ProductsList\AProductsList implements \XLite\Base\IDecorator
 {
     /**
      * Check - show Add to cart button or not
@@ -48,8 +48,7 @@ abstract class ProductsList extends \XLite\View\ProductsList implements \XLite\B
      */
     protected function isShowAdd2Cart(\XLite\Model\Product $product)
     {
-        return parent::isShowAdd2Cart($product)
-            && $product->is('saleAvailable');
+        return parent::isShowAdd2Cart($product) && $product->is('saleAvailable');
     }
 }
 

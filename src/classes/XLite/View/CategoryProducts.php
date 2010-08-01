@@ -35,7 +35,7 @@ namespace XLite\View;
  * @see     ____class_see____
  * @since   3.0
  */
-class CategoryProducts extends ProductsList
+class CategoryProducts extends \XLite\View\ProductsList\AProductsList
 {
     /**
      * Widget parameter names

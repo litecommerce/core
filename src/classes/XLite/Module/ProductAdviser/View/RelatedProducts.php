@@ -38,7 +38,7 @@ namespace XLite\Module\ProductAdviser\View;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class RelatedProducts extends \XLite\View\ProductsList
+class RelatedProducts extends \XLite\View\ProductsList\AProductsList
 {
     /**
      *  Widget parameter names

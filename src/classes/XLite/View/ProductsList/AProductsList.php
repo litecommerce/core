@@ -26,7 +26,7 @@
  * @since      3.0.0
  */
 
-namespace XLite\View;
+namespace XLite\View\ProductsList;
 
 /**
  * Abstract product list
@@ -35,7 +35,7 @@ namespace XLite\View;
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class ProductsList extends Container
+abstract class AProductsList extends \XLite\View\Container
 {
     /**
      * Widget param names
