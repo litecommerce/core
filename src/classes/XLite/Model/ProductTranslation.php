@@ -115,5 +115,4 @@ class ProductTranslation extends \XLite\Model\Base\Translation
      * @Column (type="string", length="255", nullable=false)
      */
     protected $meta_title;
-
 }
