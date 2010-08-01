@@ -56,6 +56,19 @@ class SearchResult extends \XLite\View\ProductsList\AProductsList
     }
 
     /**
+     * Return dir which contains the page body template
+     *
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getPageBodyDir()
+    {
+        return null;
+    }
+
+    /**
      * Return widget default template
      *
      * @return string

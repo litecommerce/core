@@ -64,7 +64,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
         '\XLite\View\TopCategories'    => 'Categories list',
         '\XLite\View\Minicart'         => 'Minicart',
         '\XLite\View\Subcategories'    => 'Subcategories',
-        '\XLite\View\CategoryProducts' => 'Category products list',
+        '\XLite\View\ProductsList\Customer\CategoryProducts' => 'Category products list',
         '\XLite\View\ProductBox'       => 'Product block',
         '\XLite\View\PoweredBy'        => '\'Powered by\' block',
     );
