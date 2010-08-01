@@ -35,7 +35,7 @@ namespace XLite\Module\ProductAdviser\View;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class RecentlyViewed extends \XLite\View\ProductsList\AProductsList
+class RecentlyViewed extends \XLite\View\ItemsList\Product\Customer\ACustomer
 {
     /*
      * Parameter specifies that widget is displayed as a page content

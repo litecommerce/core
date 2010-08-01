@@ -35,7 +35,7 @@ namespace XLite\Module\DrupalConnector\View\ProductsList;
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class AProductsList extends \XLite\View\ProductsList\AProductsList implements \XLite\Base\IDecorator
+abstract class AProductsList extends \XLite\View\ItemsList\Product\Customer\ACustomer implements \XLite\Base\IDecorator
 {
     /**
      * Input arguments (AJAX) 

@@ -20,35 +20,33 @@
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    SVN: $Id$
+ * @version    SVN: $Id: AAdmin.php 3650 2010-08-01 14:39:12Z vvs $
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      3.0.0
  */
 
-namespace XLite\Module\WholesaleTrading\View;
+namespace XLite\View\ItemsList\Product\Admin;
 
 /**
- * Products list
+ * AAdmin 
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @package    XLite
+ * @see        ____class_see____
+ * @since      3.0.0
  */
-abstract class ProductsList extends \XLite\View\ItemsList\Product\Customer\ACustomer implements \XLite\Base\IDecorator
+abstract class AAdmin extends \XLite\View\ItemsList\Product\AProduct
 {
     /**
-     * Check - show Add to cart button or not
+     * Return dir which contains the page body template
      *
-     * @param \XLite\Model\Product $product Product
-     *
-     * @return boolean
+     * @return string
      * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function isShowAdd2Cart(\XLite\Model\Product $product)
+    protected function getPageBodyDir()
     {
-        return parent::isShowAdd2Cart($product) && $product->is('saleAvailable');
+        return 'table';
     }
 }
-
