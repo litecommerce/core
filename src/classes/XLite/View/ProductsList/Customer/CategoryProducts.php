@@ -26,7 +26,7 @@
  * @since      3.0.0
  */
 
-namespace XLite\View;
+namespace XLite\View\ProductsList\Customer;
 
 /**
  * Category products list widget
@@ -35,7 +35,7 @@ namespace XLite\View;
  * @see     ____class_see____
  * @since   3.0
  */
-class CategoryProducts extends \XLite\View\ProductsList\AProductsList
+class CategoryProducts extends \XLite\View\ProductsList\Customer\ACustomer
 {
     /**
      * Widget parameter names

@@ -41,50 +41,8 @@ abstract class AProductsList extends \XLite\View\Container
      * Widget param names
      */
 
-    const PARAM_WIDGET_TYPE  = 'widgetType';
-    const PARAM_DISPLAY_MODE = 'displayMode';
-    const PARAM_GRID_COLUMNS = 'gridColumns';
     const PARAM_SORT_BY      = 'sortBy';
     const PARAM_SORT_ORDER   = 'sortOrder';
-
-    const PARAM_SHOW_DESCR     = 'showDescription';
-    const PARAM_SHOW_PRICE     = 'showPrice';
-    const PARAM_SHOW_THUMBNAIL = 'showThumbnail';
-    const PARAM_SHOW_ADD2CART  = 'showAdd2Cart';
-
-    const PARAM_SHOW_ALL_ITEMS_PER_PAGE    = 'showAllItemsPerPage';
-    const PARAM_SHOW_DISPLAY_MODE_SELECTOR = 'showDisplayModeSelector';
-    const PARAM_SHOW_SORT_BY_SELECTOR      = 'showSortBySelector';
-
-    const PARAM_ICON_MAX_WIDTH = 'iconWidth';
-    const PARAM_ICON_MAX_HEIGHT = 'iconHeight';
-
-    /*
-     * The maximum number of items (products) displayed in the sidebar widget
-     */
-
-    const PARAM_SIDEBAR_MAX_ITEMS = 'sidebarMaxItems';
-
-    /*
-     * Allowed widget types
-     */
-
-    const WIDGET_TYPE_SIDEBAR = 'sidebar';
-    const WIDGET_TYPE_CENTER  = 'center';
-
-    /**
-     * Allowed display modes
-     */
-
-    const DISPLAY_MODE_LIST  = 'list';
-    const DISPLAY_MODE_GRID  = 'grid';
-    const DISPLAY_MODE_TABLE = 'table';
-
-    /**
-     * A special option meaning that a CSS layout is to be used
-     */
-
-    const DISPLAY_GRID_CSS_LAYOUT = 'css-defined';
 
     /**
      * Allowed sort criterions
@@ -103,49 +61,11 @@ abstract class AProductsList extends \XLite\View\Container
     const SORT_ORDER_DESC = 'desc';
 
     /**
-     * Columns number range
-     */
-
-    const GRID_COLUMNS_MIN = 1;
-    const GRID_COLUMNS_MAX = 5;
-
-    /**
      * Top-level directory with widget templates
      */
 
     const TEMPLATES_DIR = 'products_list';
 
-    /**
-     * Template to use for sidebars
-     */
-
-    const TEMPLATE_SIDEBAR = 'common/sidebar_box.tpl';
-
-
-    /**
-     * Widget types 
-     * 
-     * @var    array
-     * @access protected
-     * @since  3.0.0
-     */
-    protected $widgetTypes = array(
-        self::WIDGET_TYPE_SIDEBAR  => 'Sidebar',
-        self::WIDGET_TYPE_CENTER   => 'Center',
-    );
-
-    /**
-     * Display modes
-     *
-     * @var    array
-     * @access protected
-     * @since  3.0.0
-     */
-    protected $displayModes = array(
-        self::DISPLAY_MODE_GRID  => 'Grid',
-        self::DISPLAY_MODE_LIST  => 'List',
-        self::DISPLAY_MODE_TABLE => 'Table',
-    );
 
     /**
      * sortByModes 
@@ -203,6 +123,16 @@ abstract class AProductsList extends \XLite\View\Container
 
 
     /**
+     * Return dir which contains the page body template
+     *
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    abstract protected function getPageBodyDir();
+
+    /**
      * Return products list
      * 
      * @param \XLite\Core\CommonCell $cnd       search condition
@@ -231,19 +161,6 @@ abstract class AProductsList extends \XLite\View\Container
         return $this->getData($cnd, true);
     }
 
-
-    /**
-     * getDisplayMode 
-     * 
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getDisplayMode()
-    {
-        return $this->getParam(self::PARAM_DISPLAY_MODE);
-    }
-
     /**
      * Return default template
      * See setWidgetParams()
@@ -266,7 +183,7 @@ abstract class AProductsList extends \XLite\View\Container
      */
     protected function getPageBodyTemplate()
     {
-        return $this->getDir() . '/' . ($this->isSideBarBox() ? 'sidebar' : $this->getDisplayMode()) . '/body.tpl';
+        return $this->getDir() . '/' . $this->getPageBodyDir() . '/body.tpl';
     }
 
     /**
@@ -326,18 +243,6 @@ abstract class AProductsList extends \XLite\View\Container
     }
 
     /**
-     * Check - pager control row is visible or not
-     *
-     * @return bool
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function isPagerVisible()
-    {
-        return !$this->getParam(self::PARAM_SHOW_ALL_ITEMS_PER_PAGE) && !$this->isSideBarBox();
-    }
-
-    /**
      * Check - pages list is visible or not
      *
      * @return bool
@@ -375,99 +280,6 @@ abstract class AProductsList extends \XLite\View\Container
     }
 
     /**
-     * Return products split into rows
-     * 
-     * @return array
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getProductRows()
-    {
-        $rows = array_chunk($this->getPageData(), $this->getParam(self::PARAM_GRID_COLUMNS));
-        $last = count($rows)-1;
-        $rows[$last] = array_pad($rows[$last], $this->getParam(self::PARAM_GRID_COLUMNS), false);
-
-        return $rows;
-    }
-
-    /**
-     * Check whether a CSS layout should be used for "Grid" mode
-     * 
-     * @return void
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function isCSSLayout()
-    {
-        return ($this->getParam(self::PARAM_GRID_COLUMNS) == self::DISPLAY_GRID_CSS_LAYOUT);
-    }
-
-    /**
-     * getSidebarMaxItems 
-     * 
-     * @return int
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getSidebarMaxItems()
-    {
-        return $this->getParam(self::PARAM_SIDEBAR_MAX_ITEMS);
-    }
-
-    /**
-     * Get products list for sidebar widget 
-     * 
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getSideBarData()
-    {
-        return $this->getData($this->getPager()->getLimitCondition(0, $this->getSidebarMaxItems()));
-    }
-
-    /**
-     * Check status of 'More...' link for sidebar list
-     * 
-     * @return bool
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function isShowMoreLink()
-    {
-        return false;
-    }
-
-    /**
-     * Get 'More...' link URL for sidebar list
-     * 
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getMoreLinkURL()
-    {
-        return null;
-    }
-
-    /**
-     * Get 'More...' link text for sidebar list
-     * 
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getMoreLinkText()
-    {
-        return 'More...';
-    }
-
-    /**
      * Get widget templates directory
      *
      * @return string
@@ -478,23 +290,6 @@ abstract class AProductsList extends \XLite\View\Container
     protected function getDir()
     {
         return self::TEMPLATES_DIR;
-    }
-
-    /**
-     * Get grid columns range 
-     * 
-     * @return array
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getGridColumnsRange()
-    {
-        $range = array_merge(
-            array(self::DISPLAY_GRID_CSS_LAYOUT => self::DISPLAY_GRID_CSS_LAYOUT),
-            range(self::GRID_COLUMNS_MIN, self::GRID_COLUMNS_MAX)
-        );
-
-        return array_combine($range, $range);
     }
 
     /**
@@ -509,69 +304,16 @@ abstract class AProductsList extends \XLite\View\Container
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_WIDGET_TYPE => new \XLite\Model\WidgetParam\Set(
-                'Widget type', self::WIDGET_TYPE_CENTER, true, $this->widgetTypes
-            ),
-            self::PARAM_DISPLAY_MODE => new \XLite\Model\WidgetParam\Set(
-                'Display mode', self::DISPLAY_MODE_GRID, true, $this->displayModes
-            ),
-            self::PARAM_GRID_COLUMNS => new \XLite\Model\WidgetParam\Set(
-                'Number of columns (for Grid mode only)', 3, true, $this->getGridColumnsRange()
-            ),
-            self::PARAM_SHOW_DESCR => new \XLite\Model\WidgetParam\Checkbox(
-                'Show product description (for List mode only)', true, true
-            ),
-            self::PARAM_SHOW_PRICE => new \XLite\Model\WidgetParam\Checkbox(
-                'Show product price', true, true
-            ),
-            self::PARAM_SHOW_THUMBNAIL => new \XLite\Model\WidgetParam\Checkbox(
-                'Show product thumbnail', true, true
-            ),
-            self::PARAM_SHOW_ADD2CART => new \XLite\Model\WidgetParam\Checkbox(
-                'Show \'Add to Cart\' button', true, true
-            ),
-            self::PARAM_SIDEBAR_MAX_ITEMS => new \XLite\Model\WidgetParam\Int(
-                'The maximum number of products displayed in sidebar', 5, true
-            ),
-            self::PARAM_ICON_MAX_WIDTH => new \XLite\Model\WidgetParam\Int(
-                'Maximal icon width', 90, true
-            ),
-            self::PARAM_ICON_MAX_HEIGHT => new \XLite\Model\WidgetParam\Int(
-                'Maximal icon height', 90, true
-            ),
             self::PARAM_SORT_BY => new \XLite\Model\WidgetParam\Set(
                 'Sort by', self::SORT_BY_MODE_DEFAULT, false, $this->sortByModes
             ),
             self::PARAM_SORT_ORDER => new \XLite\Model\WidgetParam\Set(
                 'Sort order', 'asc', false, $this->sortOrderModes
             ),
-            self::PARAM_SHOW_ALL_ITEMS_PER_PAGE => new \XLite\Model\WidgetParam\Checkbox(
-                'Display all items on one page', false, true
-            ),
-            self::PARAM_SHOW_DISPLAY_MODE_SELECTOR => new \XLite\Model\WidgetParam\Checkbox(
-                'Show "Display mode" selector', true, true
-            ),
-            self::PARAM_SHOW_SORT_BY_SELECTOR => new \XLite\Model\WidgetParam\Checkbox(
-                'Show "Sort by" selector', true, true
-            ),
-
         );
 
-        $this->requestParams[] = self::PARAM_DISPLAY_MODE;
         $this->requestParams[] = self::PARAM_SORT_BY;
         $this->requestParams[] = self::PARAM_SORT_ORDER;
-    }
-
-    /**
-     * isSideBarBox 
-     * 
-     * @return bool
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function isSideBarBox()
-    {
-        return self::WIDGET_TYPE_SIDEBAR == $this->getParam(self::PARAM_WIDGET_TYPE);
     }
 
     /**
@@ -689,20 +431,6 @@ abstract class AProductsList extends \XLite\View\Container
     }
 
     /**
-     * isDisplayModeSelected 
-     * 
-     * @param string $displayMode value to check
-     *  
-     * @return bool
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function isDisplayModeSelected($displayMode)
-    {
-        return $this->getParam(self::PARAM_DISPLAY_MODE) == $displayMode;
-    }
-
-    /**
      * isSortByModeSelected 
      * 
      * @param string $sortByMode value to check
@@ -729,81 +457,6 @@ abstract class AProductsList extends \XLite\View\Container
     }
 
     /**
-     * isShowThumbnail 
-     * 
-     * @return bool
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function isShowThumbnails()
-    {
-        return $this->config->General->show_thumbnails
-            && $this->getParam(self::PARAM_SHOW_THUMBNAIL);
-    }
-
-    /**
-     * isDisplayModeAdjustable 
-     * 
-     * @return bool
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function isDisplayModeAdjustable()
-    {
-        return $this->getParam(self::PARAM_SHOW_DISPLAY_MODE_SELECTOR) && !$this->isSideBarBox();
-    }
-
-    /**
-     * isSortBySelectorVisible 
-     * 
-     * @return bool
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function isSortBySelectorVisible()
-    {
-        return $this->getParam(self::PARAM_SHOW_SORT_BY_SELECTOR) && !$this->isSideBarBox();
-    }
-
-    /**
-     * Check - show product price or not
-     *
-     * @return boolean
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function isShowPrice()
-    {
-        return $this->getParam(self::PARAM_SHOW_PRICE);
-    }
-
-    /**
-     * Check - show Add to cart button or not
-     *
-     * @param \XLite\Model\Product $product Product
-     *
-     * @return boolean
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function isShowAdd2Cart(\XLite\Model\Product $product)
-    {
-        return $this->getParam(self::PARAM_SHOW_ADD2CART);
-    }
-
-    /**
-     * Check - show product description or not
-     *
-     * @return boolean
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function isShowDescription()
-    {
-        return $this->getParam(self::PARAM_SHOW_DESCR);
-    }
-
-    /**
      * getSortOrderToChange
      *
      * @return string
@@ -814,52 +467,6 @@ abstract class AProductsList extends \XLite\View\Container
     {
         return $this->isSortOrderAsc() ? self::SORT_ORDER_DESC : self::SORT_ORDER_ASC;
     }
-
-    /**
-     * Get display mode link class name
-     * TODO - simplify
-     *
-     * @param string $displayMode Display mode
-     *
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getDisplayModeLinkClassName($displayMode)
-    {
-        $classes = array(
-            'list-type-' . $displayMode
-        );
-
-        if ('grid' == $displayMode) {
-            $classes[] = 'first';
-        }
-
-        if ('table' == $displayMode) {
-            $classes[] = 'last';
-        }
-
-        if ($this->isDisplayModeSelected($displayMode)) {
-            $classes[] = 'selected';
-        }
-
-        return implode(' ', $classes);
-    }
-
-    /**
-     * checkSideBarParams 
-     * 
-     * @param array $params params to check
-     *  
-     * @return bool
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function checkSideBarParams(array $params)
-    {
-        return isset($params[self::PARAM_WIDGET_TYPE]) && self::WIDGET_TYPE_SIDEBAR == $params[self::PARAM_WIDGET_TYPE];
-    }
-
 
     /**
      * Check if widget is visible
@@ -884,7 +491,7 @@ abstract class AProductsList extends \XLite\View\Container
     {
         return array_merge(
             parent::getCSSFiles(), 
-            array(self::TEMPLATES_DIR . '/products_list.css'),
+            array($this->getDir() . '/products_list.css'),
             $this->getPager()->getCSSFiles()
         );
     }
@@ -900,7 +507,7 @@ abstract class AProductsList extends \XLite\View\Container
     {
         return array_merge(
             parent::getJSFiles(),
-            array(self::TEMPLATES_DIR . '/products_list.js', 'popup/jquery.blockUI.js'),
+            array($this->getDir() . '/products_list.js', 'popup/jquery.blockUI.js'),
             $this->getPager()->getJSFiles()
         );
     }
@@ -918,65 +525,8 @@ abstract class AProductsList extends \XLite\View\Container
     {
         parent::setWidgetParams($params);
 
-        // FIXME - not a good idea, but I don't see a better way
-        if ($this->isWrapper() && $this->checkSideBarParams($params)) {
-            $this->defaultTemplate = self::TEMPLATE_SIDEBAR;
-            $this->widgetParams[self::PARAM_TEMPLATE]->setValue($this->getDefaultTemplate());
-        }
-
         // Do not change call order
         $this->widgetParams += $this->getPager()->getWidgetParams();
         $this->requestParams = array_merge($this->requestParams, array_keys($this->getPager()->getRequestParams()));
-    }
-
-    /**
-     * Get table columns count 
-     * 
-     * @return integer
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getTableColumnsCount()
-    {
-        return 2 + ($this->isShowPrice() ? 1 : 0) + ($this->isShowAdd2Cart() ? 1 : 0);
-    }
-
-    /** 
-     * Get grid item width (percent) 
-     * 
-     * @return integer 
-     * @access protected 
-     * @since  3.0.0 
-     */ 
-    protected function getGridItemWidth() 
-    {
-        return floor(100 / $this->getParam(self::PARAM_GRID_COLUMNS)) - 6;
-    }
-
-    /**
-     * Return the maximal icon width
-     * 
-     * @return integer
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getIconWidth()
-    {
-        return $this->getParam(self::PARAM_ICON_MAX_WIDTH);
-    }
-
-    /**
-     * Return the maximal icon height
-     * 
-     * @return integer
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getIconHeight()
-    {
-        return $this->getParam(self::PARAM_ICON_MAX_HEIGHT);
     }
 }
