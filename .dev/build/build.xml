@@ -170,7 +170,7 @@
 		</exec>
 		<mkdir dir="${buildDir}/reports/statsvn" />
         <exec executable="java" dir="${sourceDir}" output="/dev/null">
-            <arg line="-jar ${sourceDir}/.dev/build/statsvn/statsvn.jar -title LiteCommerce -output-dir ${buildDir}/reports/statsvn ${buildDir}/reports/xlite-svn.log ${sourceDir}" />
+            <arg line="-mx128m -jar ${sourceDir}/.dev/build/statsvn/statsvn.jar -title LiteCommerce -output-dir ${buildDir}/reports/statsvn ${buildDir}/reports/xlite-svn.log ${sourceDir}" />
         </exec>
         <delete>
             <fileset file="${buildDir}/reports/xlite-svn.log" />
