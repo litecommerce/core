@@ -58,6 +58,20 @@ class ProductAlsoBuy extends \XLite\View\ItemsList\Product\Customer\ACustomer
     }
 
     /**
+     * Return class name for the list pager
+     *
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getPagerClass()
+    {
+        // TODO - rework
+        return null;
+    }
+
+    /**
      * Define widget parameters
      *
      * @return void
