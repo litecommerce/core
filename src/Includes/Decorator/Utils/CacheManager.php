@@ -132,7 +132,9 @@ class CacheManager extends \Includes\Decorator\Utils\AUtils
         // Create classes tree
         \Includes\Decorator::getInstance()->buildCache();
         // Perform redirect (needed for two-step cache generation)
-        \Includes\Utils\Operator::redirect($_SERVER['REQUEST_URI']);
+        if (isset($_SERVER['REQUEST_URI'])) {
+            \Includes\Utils\Operator::redirect($_SERVER['REQUEST_URI']);
+        }
     }
 
     /**

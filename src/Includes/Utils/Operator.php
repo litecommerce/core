@@ -50,7 +50,10 @@ class Operator extends AUtils
      */
     public static function redirect($location, $code = 302)
     {
-        header('Location: ' . $location, true, $code);
+        if (!headers_sent()) {
+            header('Location: ' . $location, true, $code);
+        }
+
         exit (0);
     }
 
@@ -77,7 +80,7 @@ class Operator extends AUtils
             echo str_repeat(' ', 256);
         }
 
-        ob_flush();
+        @ob_flush();
         flush();
     }
 }
