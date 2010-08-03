@@ -209,30 +209,20 @@ class XLite extends \XLite\Base
     }
 
     /**
-     * Return full URL for the resource 
+     * Return full URL for the resource
      * 
-     * @param string $url    resource relative URL
-     * @param bool   $secure HTTP/HTTPS flag
+     * @param string $url      url part to add
+     * @param bool   $isSecure use HTTP or HTTPS
+     * @param array  $params   optional URL params
      *  
      * @return string
      * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getShopUrl($url = '', $secure = false)
+    public function getShopUrl($url = '', $isSecure = false, array $params = array())
     {
-        $proto  = ($secure ? 'https' : 'http') . '://';
-        $host   = $this->getOptions(array('host_details', ($secure ? 'https_host' : 'http_host')));
-
-        if ('/' != substr($url, 0, 1)) {
-            $url = rtrim($this->getOptions(array('host_details', 'web_dir')), '/') . '/' . $url;
-        }
-
-        if ($secure) {
-            $session = \XLite\Model\Session::getInstance();
-            $url .= (false !== strpos($url, '?') ? '&' : '?') . $session->getName() . '=' . $session->getID();
-        }
-
-        return $proto . $host . $url;
+        return \Includes\Utils\URLManager::getShopURL($url, $isSecure, $params);
     }
 
     /**

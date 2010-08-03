@@ -38,6 +38,12 @@ namespace Includes\Decorator\Utils;
 class CacheManager extends \Includes\Decorator\Utils\AUtils
 {
     /**
+     * Text to display while working with cache 
+     */
+    const MESSAGE = 'Re-building cache, please wait...';
+
+
+    /**
      * List of cache directories 
      * 
      * @var    array
@@ -75,7 +81,7 @@ class CacheManager extends \Includes\Decorator\Utils\AUtils
      */
     protected static function isDeveloperMode()
     {
-        return ('Y' === \Includes\Utils\Database::fetchColumn(self::getDevmodeQuery())) && empty($_REQUEST['action']);
+        return 'Y' === \Includes\Utils\Database::fetchColumn(self::getDevmodeQuery());
     }
 
     /**
@@ -118,6 +124,65 @@ class CacheManager extends \Includes\Decorator\Utils\AUtils
     }
 
     /**
+     * Get plain text notice block
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function getPlainMessage()
+    {
+        return self::MESSAGE . "\n";
+    }
+
+    /**
+     * getHTMLMessageContent 
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function getHTMLMessageContent()
+    {
+        return '<table><tr><td><img src="'
+            . \Includes\Utils\URLManager::getShopURL('skins/progress_indicator.gif')
+            . '" alt="" /></td><td>' . self::MESSAGE . '</td></tr></table>';
+    }
+
+    /**
+     * Get HTML notice block
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function getHTMLMessage()
+    {
+        return '<script type="text/javascript">document.write(\''
+            . static::getHTMLMessageContent() . '\');</script>' . "\n"
+            . '<html>' . "\n" . '<body>' . "\n"
+            . '<noscript>' . static::getHTMLMessageContent() . '</noscript>' . "\n";
+    }
+
+    /**
+     * Text to display while working with cache
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function showMessage()
+    {
+        \Includes\Utils\Operator::flush(
+            ('cli' == PHP_SAPI) ? static::getPlainMessage() : static::getHTMLMessage()
+        );
+    }
+
+    /**
      * Build LC classes cache.
      *
      * @return void
@@ -127,10 +192,15 @@ class CacheManager extends \Includes\Decorator\Utils\AUtils
      */
     protected static function buildLCCache()
     {
+        // Show the "Please wait" message
+        static::showMessage();
+
         // Delete cache folders
         static::cleanupCache();
+
         // Create classes tree
         \Includes\Decorator::getInstance()->buildCache();
+
         // Perform redirect (needed for two-step cache generation)
         if (isset($_SERVER['REQUEST_URI'])) {
             \Includes\Utils\Operator::redirect($_SERVER['REQUEST_URI']);
@@ -149,6 +219,7 @@ class CacheManager extends \Includes\Decorator\Utils\AUtils
     {
         // Create the proxies folder
         \Includes\Utils\FileManager::mkdirRecursive(LC_PROXY_CACHE_DIR);
+
         // Create model proxy classes (second step of cache generation)
         \Includes\Decorator\Utils\Doctrine\EntityManager::generateProxyClasses();
     }
