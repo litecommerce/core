@@ -744,7 +744,8 @@ class Category extends \XLite\Model\Repo\Base\I18n
             $src['rpos'] = $srcNode->getRpos();
             $src['depth'] = $srcNode->getDepth();
 
-            $dst['rpos'] = $dst['lpos'] = $dst['depth'] = 0;
+            $dst['rpos'] = $dst['lpos'] = 0;
+            $dst['depth'] = 1;
 
             if (0 < $destNodeId) {
                 // Get destination node data
@@ -802,7 +803,9 @@ class Category extends \XLite\Model\Repo\Base\I18n
                     $nodeOffset = $dst['lpos'] + 1 - $src['lpos'];
 
                     // Increase the depth offset
-                    $depthOffset ++;
+                    if (0 < $destNodeId) {
+                        $depthOffset++;
+                    }
 
                     // If source node the left of destination node...
                     if ($src['lpos'] < $dst['lpos']) {
@@ -1406,208 +1409,375 @@ class Category extends \XLite\Model\Repo\Base\I18n
 
     //TODO: All methods below must be rewied and refactored
 
-
-
-    /* 
-        Parse $data due to the following grammar:
-    
-            NAME_CHAR ::= ( [^/] | "//" | "||")
-            CATEGORY_NAME ::= NAME_CHAR CATEGORY_NAME | NAME_CHAR
-            CATEGORY_PATH ::= CATEGORY_NAME "/" CATEGORY_PATH | CATEGORY_NAME
-        
-        If $allowMiltyCategories == true, then
-
-            DATA ::= CATEGORY_PATH "|" DATA | CATEGORY_PATH
-        
-        If $allowMiltyCategories == false, then
-
-            DATA ::= CATEGORY_PATH
-
-    */
-    function parseCategoryField($data, $allowMiltyCategories) 
+    /**
+     * Parse $data due to the following grammar:
+     *
+     *   NAME_CHAR ::= ( [^/] | "//" | "||")
+     *   CATEGORY_NAME ::= NAME_CHAR CATEGORY_NAME | NAME_CHAR
+     *   CATEGORY_PATH ::= CATEGORY_NAME "/" CATEGORY_PATH | CATEGORY_NAME
+     *   
+     * If $allowMultyCategories == true, then
+     *
+     *   DATA ::= CATEGORY_PATH "|" DATA | CATEGORY_PATH
+     *   
+     * If $allowMultyCategories == false, then
+     *
+     *   DATA ::= CATEGORY_PATH
+     *
+     * @param array $data                 Array od data
+     * @param bool  $allowMultyCategories Flag of multicategories
+     *  
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function parseCategoryField($data, $allowMultyCategories) 
     {
         $i = 0;
-        $state = "S";
+        $state = 'S';
         $path = array();
         $list = array();
         $lastSlash = -1;
         $lastDiv = -1;
-        $word = "";
-        for ($i=0; $i<=strlen($data); $i++) {
-            if ($i == strlen($data)) $char = "";
-            else $char = $data{$i};
-            if ($char == "/") {
-                if ($state == "/") {
-                    $word .= "/";
-                    $state = "S";
-                } else {
-                    $state = "/";
-                }
-            } else if ($char == "|") {
-                if ($state == "|") {
-                    $word .= "|";
-                    $state = "S";
-                } else {
-                    $state = "|";
-                }
+        $word = '';
+
+        for ($i = 0; strlen($data) >= $i; $i++) {
+
+            if (strlen($data) == $i) {
+                $char = '';
+
             } else {
-                if ($state == "/") {
-                    $path[] = $word;
-                    $word = $char;
-                    $state = "S";
-                } else if ($state == "|" || $char == "") {
-                    $path[] = $word;
-                    if ($allowMiltyCategories) {
-                        $list[] = $path;
-                        $path = array();
-                    }
-                    $word = $char;
-                    $state = "S";
+                $char = $data{$i};
+            }
+
+            if ('/' == $char) {
+
+                if ('/' == $state) {
+                    $word .= '/';
+                    $state = 'S';
+
                 } else {
-                    $word .= $char;
+                    $state = '/';
+                }
+
+            } else {
+               
+                if ('|' == $char) {
+
+                    if ('|' == $state) {
+                        $word .= '|';
+                        $state = 'S';
+
+                    } else {
+                        $state = '|';
+                    }
+
+                } else {
+                    
+                    if ('/' == $state) {
+                        $path[] = $word;
+                        $word = $char;
+                        $state = 'S';
+
+                    } else {
+                       
+                        if ('|' == $state || '' == $char) {
+
+                            $path[] = $word;
+
+                            if ($allowMultyCategories) {
+                                $list[] = $path;
+                                $path = array();
+                            }
+
+                            $word = $char;
+                            $state = 'S';
+
+                        } else {
+                            $word .= $char;
+                        }
+                    }
                 }
             }
         }
-        if ($allowMiltyCategories) 
-            return $list;
-        else
-            return $path;
+
+        if ($allowMultyCategories) {
+            $result = $list;
+        
+        } else {
+            $result = $path;
+        }
+
+        return $result;
     }
 
-    /* if $categorySet is an array, creates the string in c1|c2|...|cn format
-    due to the specification given above. If $categorySet is a single category,
-    creates an export string for the single category in format component1/...
-    */
-    function createCategoryField($categorySet) 
+    /**
+     * createCategoryField
+     *
+     * if $categorySet is an array, creates the string in c1|c2|...|cn format
+     * due to the specification given above. If $categorySet is a single category,
+     * creates an export string for the single category in format component1/...
+     *
+     * @param mixed $categorySet ____param_comment____
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function createCategoryField($categorySet) 
     {
         if (is_array($categorySet)) {
+
             $paths = array();
+
             foreach ($categorySet as $category) {
                 $paths[] = $this->createCategoryField($category);
             }
-            return implode("|", $paths);
+
+            $result =  implode('|', $paths);
+
+        } else {
+
+            $path = $this->getNodePath($categorySet->getCategoryId());
+
+            for ($i = 0; count($path) > $i; $i++) {
+                $path[$i] = str_replace('/', '//', str_replace('|', '||', $path[$i]->name));
+            }
+
+            $result = implode('/', $path);
         }
-        $path = $categorySet->get('path');
-        for ($i = 0; $i<count($path); $i++) {
-            $path[$i] = str_replace('/', "//", str_replace("|", "||", $path[$i]->get('name')));
-        }
-        return implode('/', $path);
+
+        return $result;
     }
     
-    function createRecursive($name) 
+    /**
+     * createRecursive 
+     * 
+     * @param mixed $name ____param_comment____
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function createRecursive($name) 
     {
         if (!is_array($name)) {
             $path = $this->parseCategoryField($name, false);
+
         } else {
             $path = $name;
         }
+
         $topID = $this->getComplex('topCategory.category_id');
-        $category_id = $topID;
+        $categoryId = $topID;
+
         foreach ($path as $n) {
+
             $category = new \XLite\Model\Category();
-            if ($category->find("name='".addslashes($n)."' AND parent=$category_id")) {
-                $category_id = $category->get('category_id');
+
+            if ($category->find('name=\'' . addslashes($n) . '\' AND parent=' . $categoryId)) {
+                $categoryId = $category->getCategoryId();
                 continue;
             }
+
             $category->set('name', $n);
-            $category->set('parent', $category_id);
+            $category->set('parent', $categoryId);
             $category->create();
-            $category_id = $category->get('category_id');
+            $categoryId = $category->getCategoryId();
         }
-        return new \XLite\Model\Category($category_id);
+
+        return new \XLite\Model\Category($categoryId);
     }
 
-    function findCategory($path) 
+    /**
+     * findCategory 
+     * 
+     * @param mixed $path ____param_comment____
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function findCategory($path) 
     {
         if (!is_array($path)) {
             $path = $this->parseCategoryField($path, false);
         }
+
         $topID = $this->getComplex('topCategory.category_id');
-        $category_id = $topID;
+        $categoryId = $topID;
+        $notFound = false;
+
         foreach ($path as $n) {
+
             $category = new \XLite\Model\Category();
-            if ($category->find("name='".addslashes($n)."' AND parent=$category_id")) {
-                $category_id = $category->get('category_id');
+
+            if ($category->find('name=\'' . addslashes($n) . '\' AND parent=' . $categoryId)) {
+                $categoryId = $category->getCategoryId();
                 continue;
+
+            } else {
+                $notFound = true;
+                break;
             }
-            return null;
         }
-        return new \XLite\Model\Category($category_id);
+
+        return $notFound ? null : new \XLite\Model\Category($categoryId);
     }
 
-    function filterRule()
+    /**
+     * filterRule 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function filterRule()
     {
         $result = true;
 
         if ($this->auth->is('logged')) {
             $membership = $this->auth->getComplex('profile.membership');
+
         } else {
             $membership = '';
         }
-        if (!$this->is('enabled') || trim($this->get('name')) == "" || !$this->_compareMembership($this->get('membership'), $membership)) {
+
+        if (
+            !$this->is('enabled') 
+            || '' == trim($this->get('name')) 
+            || !$this->_compareMembership($this->get('membership'), $membership)
+            ) {
+
             $result = false;
         }
 
         return $result;
     }
 
-    function filter() 
+    /**
+     * filter 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function filter() 
     {
         $result = parent::filter(); // default
+
         if ($result && !$this->xlite->is('adminZone')) {
+
+            $foundResult = false;
+
             if ($this->db->cacheEnabled) {
+
                 global $categoriesFiltered;
+
                 if (!isset($categoriesFiltered) || (isset($categoriesFiltered) && !is_array($categoriesFiltered))) {
                     $categoriesFiltered = array();
                 }
 
                 $cid = $this->get('category_id');
+
                 if (isset($categoriesFiltered[$cid])) {
-                    return $categoriesFiltered[$cid];
+                    $foundResult = $categoriesFiltered[$cid];
                 }
             }
 
-            $result = $this->filterRule();
-            if ($result) {
-                // check parent categories
-                $parent = $this->getParentCategory();
-                if (isset($parent)) {
-                    $result = $result && \XLite\Model\CachingFactory::getObjectFromCallback(
-                        __METHOD__ . $parent->get('category_id'), $parent, 'filter'
-                    );
-                }
-            }
+            if (!$foundResult) {
 
-            if ($this->db->cacheEnabled) {
-                $categoriesFiltered[$cid] = $result;
+                $result = $this->filterRule();
+
+                if ($result) {
+
+                    // check parent categories
+                    $parent = $this->getParentCategory();
+
+                    if (isset($parent)) {
+                        $result = $result && \XLite\Model\CachingFactory::getObjectFromCallback(
+                            __METHOD__ . $parent->get('category_id'), $parent, 'filter'
+                        );
+                    }
+                }
+
+                if ($this->db->cacheEnabled) {
+                    $categoriesFiltered[$cid] = $result;
+                }
+
+            } else {
+                $result = $foundResult;
             }
         }
+
         return $result;
     }
     
-    function _compareMembership($categoryMembership, $userMembership) 
+    /**
+     * _compareMembership 
+     * 
+     * @param mixed $categoryMembership ____param_comment____
+     * @param mixed $userMembership     ____param_comment____
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function _compareMembership($categoryMembership, $userMembership) 
     {
-        return $categoryMembership == 'all' || $categoryMembership == '%' || $categoryMembership == '_%' && $userMembership || $categoryMembership == $userMembership;
+        return 'all' == $categoryMembership 
+            || '%' == $categoryMembership 
+            || '_%' == $categoryMembership 
+            && $userMembership 
+            || $categoryMembership == $userMembership;
     }
 
-    function toXML() 
+    /**
+     * toXML 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function toXML() 
     {
-        $id = "category_" . $this->get('category_id');
+        $id = 'category_' . $this->get('category_id');
         $xml = parent::toXML();
+
         return "<category id=\"$id\">\n$xml\n</category>\n";
     }
     
-    function fieldsToXML() 
+    /**
+     * fieldsToXML 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function fieldsToXML() 
     {
-        $xml = "";
+        $xml = '';
+
         if ($this->hasImage()) {
+
             // include image in XML dump
             $image = $this->getImage();
-            if ($image->get('source') == "D") {
-                $xml .= "<image><![CDATA[".base64_encode($image->get('data'))."]]></image>";
+
+            if ('D' == $image->get('source')) {
+                $xml .= '<image><![CDATA[' . base64_encode($image->get('data')) . ']]></image>';
                 
             }
         }
+
         return parent::fieldsToXML() . $xml;
     }
 }

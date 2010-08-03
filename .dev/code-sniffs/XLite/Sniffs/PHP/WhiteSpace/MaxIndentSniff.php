@@ -39,6 +39,13 @@ class XLite_Sniffs_PHP_WhiteSpace_MaxIndentSniff extends XLite_ReqCodesSniff
      */
     protected $indent = 4;
 
+	/*
+	 * Max allowed indents
+	 *
+	 * @var int
+	 */
+	protected $maxIndents = 7;
+
    /**
      * Returns an array of tokens this test wants to listen for.
      *
@@ -65,12 +72,12 @@ class XLite_Sniffs_PHP_WhiteSpace_MaxIndentSniff extends XLite_ReqCodesSniff
 
 		if (
 			preg_match('/^[ ]+$/Ss', $tokens[$stackPtr]['content'])
-			&& strlen($tokens[$stackPtr]['content']) > $this->indent * 5
+			&& strlen($tokens[$stackPtr]['content']) > $this->indent * $this->maxIndents
 			&& $tokens[$stackPtr - 1]['code'] === T_WHITESPACE
 			&& $tokens[$stackPtr - 1]['content'] === "\n"
 		) {
             $phpcsFile->addWarning(
-				$this->getReqPrefix('WRN.PHP.2.4.1') . 'Рекомендуется делать не более 5 уровней отступов',
+				$this->getReqPrefix('WRN.PHP.2.4.1') . 'Рекомендуется делать не более ' . $this->maxIndents . ' уровней отступов',
 				$stackPtr
 			);
 		}
