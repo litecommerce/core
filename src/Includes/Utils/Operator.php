@@ -38,6 +38,50 @@ namespace Includes\Utils;
 class Operator extends AUtils
 {
     /**
+     * Javascript code to perform redirect
+     * 
+     * @param string $location URL to redirect to
+     *  
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function getJSRedirectCode($location)
+    {
+        return '<script type="text/javascript">self.location=\'' . $location . '\';</script>'
+            . '<noscript><a href="' . $location . '">Click here to redirect</a></noscript><br /><br />';
+    }
+
+    /**
+     * Return length of the "dummy" buffer for flush
+     * 
+     * @return int
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function getDummyBufferLength()
+    {
+        return 256;
+    }
+
+    /**
+     * Perform the "flush" itself
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function flushBuffers()
+    {
+        @ob_flush();
+        flush();
+    }
+
+
+    /**
      * Redirect 
      * 
      * @param string $location URL
@@ -50,7 +94,9 @@ class Operator extends AUtils
      */
     public static function redirect($location, $code = 302)
     {
-        if (!headers_sent()) {
+        if (headers_sent()) {
+            static::flush(static::getJSRedirectCode($location));
+        } else {
             header('Location: ' . $location, true, $code);
         }
 
@@ -58,29 +104,26 @@ class Operator extends AUtils
     }
 
     /**
-     * Flush output 
+     * Echo message and flush output 
      * 
-     * @param string $message text to display
+     * @param string $message    text to display
+     * @param bool   $dummyFlush output extra spaces or not
      *  
      * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function flush($message = null)
+    public static function flush($message, $dummyFlush = true)
     {
-        if (isset($message)) {
-            echo $message;
-        }
-    
-        if (preg_match('/Apache(.*)Win/Ss', getenv('SERVER_SOFTWARE'))) {
-            echo str_repeat(' ', 2500);
+        // Print message
+        echo $message;
 
-        } elseif (preg_match('/(.*)MSIE(.*)\)$/S', getenv('HTTP_USER_AGENT'))) {
-            echo str_repeat(' ', 256);
+        // Send extra whitespace before flushing
+        if ($dummyFlush) {
+            echo str_repeat(' ', static::getDummyBufferLength());
         }
 
-        @ob_flush();
-        flush();
+        static::flushBuffers();
     }
 }

@@ -44,6 +44,19 @@ class Content extends AView
 
 
     /**
+     * getBufferSize 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getOutputChunkSize()
+    {
+        return self::BUFFER_SIZE;
+    }
+
+    /**
      * Return widget default template
      *
      * @return string
@@ -66,7 +79,7 @@ class Content extends AView
      */
     protected function echoChunk(&$chunk)
     {
-        echo $chunk;
+        \Includes\Utils\Operator::flush($chunk, false);
     }
 
     /**
@@ -78,7 +91,7 @@ class Content extends AView
      */
     protected function echoContent()
     {
-        array_map(array($this, 'echoChunk'), str_split(\XLite\View\Controller::$bodyContent, self::BUFFER_SIZE));
+        array_map(array($this, 'echoChunk'), str_split(\XLite\View\Controller::$bodyContent, $this->getOutputChunkSize()));
     }
 
 

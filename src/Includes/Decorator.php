@@ -366,44 +366,6 @@ class Decorator extends Decorator\ADecorator
     }
 
     /**
-     * Show javascript notice block 
-     * 
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0 EE
-     */
-    protected function showJavaScriptBlock($redirectUrl = null)
-    {
-        if (is_null($redirectUrl)) {
-            $code = '<table id="rebuild_cache_block"><tr>'
-                . '<td><img src="skins/progress_indicator.gif" alt="" /></td>'
-                . '<td>Re-building cache, please wait...</td>'
-                . '</tr></table>';
-            $code = '<script type="text/javascript">document.write(\'' . $code . '\');</script>' . "\n";
-
-        } else {
-            $code = '<script type="text/javascript">self.location=\'' . $redirectUrl . '\';</script>'
-                . '<noscript><a href="' . $redirectUrl . '">Click here to redirect</a></noscript>';
-        }
-
-        \Includes\Utils\Operator::flush($code);
-    }
-
-    /**
-     * Show plain text notice block 
-     * 
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0 EE
-     */
-    protected function showPlainTextBlock()
-    {
-        \Includes\Utils\Operator::flush('Re-building cache, please wait...' . "\n");
-    }
-
-    /**
      * Return class name by class file path 
      * 
      * @param string $path PHP file path
@@ -1151,19 +1113,6 @@ class Decorator extends Decorator\ADecorator
      */
     public function buildCache()
     {
-        if (!defined('LC_DECORATION')) {
-            define('LC_DECORATION', true);
-        }
-
-        if (!defined('SILENT_CACHE_REBUILD')) {
-            if ('cli' == PHP_SAPI) {
-                $this->showPlainTextBlock();
-
-            } elseif (isset($_REQUEST) && (!isset($_REQUEST['action']) || empty($_REQUEST['action']))) {
-                $this->showJavaScriptBlock();
-            }
-        }
-
         $this->setMaxExecutionTime();
 
         // Prepare classes list
@@ -1203,24 +1152,6 @@ class Decorator extends Decorator\ADecorator
         }
 
         file_put_contents(LC_CLASSES_CACHE_DIR . self::LC_CACHE_BUILD_INDICATOR, date('r'));
-
-        // decoration shutdown
-        if (
-            !defined('SILENT_CACHE_REBUILD')
-            && 'cli' != PHP_SAPI
-            && isset($_SERVER['HTTP_HOST'])
-            && isset($_SERVER['REQUEST_URI'])
-        ) {
-
-            $isHttps = (isset($_SERVER['HTTPS']) && in_array(strtolower($_SERVER['HTTPS']), array('on', '1')))
-                || (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == '443');
-            $redirectUrl = ($isHttps ? 'https://' : 'http://') . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-
-            if (@parse_url($redirectUrl) && empty($_REQUEST['action'])) {
-                $this->showJavaScriptBlock($redirectUrl);
-                die (0);
-            }
-        }
     }
 
     /**
