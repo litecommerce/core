@@ -35,7 +35,7 @@ namespace XLite\View\Pager;
  * @see        ____class_see____
  * @since      3.0.0
  */
-abstract class APager extends \XLite\View\AView
+abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
 {
     /**
      * Widget parameter names

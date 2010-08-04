@@ -30,12 +30,14 @@ namespace XLite\View;
 
 /**
  * Abstract container widget
+ * TODO:  waiting for the multiple inheritance
+ * FIXME: must extend the AView class
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class Container extends AView
+abstract class Container extends \XLite\View\RequestHandler\ARequestHandler
 {
     /**
      * Return title 

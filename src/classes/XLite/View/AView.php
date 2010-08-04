@@ -48,8 +48,7 @@ abstract class AView extends \XLite\Core\Handler
      * Common widget parameter names
      */
 
-    const PARAM_TEMPLATE     = 'template';
-    const PARAM_SESSION_CELL = 'sessionCell';
+    const PARAM_TEMPLATE = 'template';
 
 
     /**
@@ -110,24 +109,6 @@ abstract class AView extends \XLite\Core\Handler
      * @since  3.0.0
      */
     protected $namedWidgets = array();
-
-    /**
-     * List of so called "request" params - which take values from request (if passed)
-     * 
-     * @var    array
-     * @access protected
-     * @since  3.0.0
-     */
-    protected $requestParams;
-
-    /**
-     * Request param values saved in session
-     *
-     * @var    array
-     * @access protected
-     * @since  3.0.0
-     */
-    protected $savedRequestParams;
 
     /**
      * View lists (cache)
@@ -243,32 +224,6 @@ abstract class AView extends \XLite\Core\Handler
     }
 
     /**
-     * getSessionCell
-     *
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getSessionCell()
-    {
-        return \XLite\Core\Converter::getPlaneClassName($this);
-    }
-
-    /**
-     * checkSessionCell 
-     * 
-     * @return bool
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function checkSessionCell()
-    {
-        $cell = \XLite\Core\Request::getInstance()->{self::PARAM_SESSION_CELL};
-
-        return empty($cell) || $this->getSessionCell() === $cell;
-    }
-
-    /**
      * Return list of the modes allowed by default
      * 
      * @return array
@@ -381,11 +336,6 @@ abstract class AView extends \XLite\Core\Handler
     {
         // Add widget resources to the static array
         $this->registerResources();
-
-        // Save all "request" parameters in session
-        if ($this->checkSessionCell()) {
-            \XLite\Model\Session::getInstance()->set($this->getSessionCell(), $this->getRequestParamsHash());
-        }
     }
 
     /**
@@ -477,124 +427,6 @@ abstract class AView extends \XLite\Core\Handler
         \XLite\View\AView::$countLevel--;
     }
 
-    /**
-     * Define so called "request" parameters
-     * 
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function defineRequestParams()
-    {
-        $this->requestParams = array();
-    }
-
-    /**
-     * getRequestParams 
-     * 
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getRequestParams()
-    {
-        if (!isset($this->requestParams)) {
-            $this->defineRequestParams();
-        }
-
-        return $this->requestParams;
-    }
-
-    /**
-     * getRequestParamsHash 
-     * 
-     * @return array
-     * @access public
-     * @since  3.0.0
-     */
-    public function getRequestParamsHash()
-    {
-        return $this->getParamsHash($this->getRequestParams());
-    }
-
-    /**
-     * Fetch param value from current session
-     *
-     * @param string $param parameter name
-     *
-     * @return mixed
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getSavedRequestParam($param)
-    {
-        if (!isset($this->savedRequestParams)) {
-
-            // Cache the session cell (variable) associatd with the current widget
-            $this->savedRequestParams = \XLite\Model\Session::getInstance()->get(
-                $this->getSessionCell()
-            );
-
-            // ... To avoid repeated initializations
-            if (!isset($this->savedRequestParams)) {
-                $this->savedRequestParams = array();
-            }
-        }
-
-        return isset($this->savedRequestParams[$param]) ? $this->savedRequestParams[$param] : null;
-    }
-
-    /**
-     * Set param values using the request or session
-     * 
-     * @param array $params param values to modify
-     *  
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function setWidgetRequestParamValues(array &$params)
-    {
-        foreach ($this->getRequestParams() as $name) {
-            // First, check the request
-            $value = \XLite\Core\Request::getInstance()->$name;
-
-            if (isset($value)) {
-                // If the param is passed in the request - use it
-                $params[$name] = $value;
-
-            } else {
-                // Else trying to fetch param saved value
-                $value = $this->getSavedRequestParam($name);
-
-                // If the value is found - use it
-                if (isset($value)) {
-                    $params[$name] = $value;
-                }
-            }
-        }
-    }
-
-    /**
-     * Set widget params
-     *
-     * @param array $params handler params
-     *
-     * @return void
-     * @access public
-     * @since  3.0.0
-     */
-    public function setWidgetParams(array $params)
-    {
-        if ($this->getRequestParams() && $this->checkSessionCell()) {
-            $this->setWidgetRequestParamValues($params);
-        }
-
-        parent::setWidgetParams($params);
-    }
 
     /**
      * Return list of widget resources 
@@ -1523,7 +1355,7 @@ abstract class AView extends \XLite\Core\Handler
 
     /**
      * So called "static constructor".
-     * NOTE: do not call the "parent::__constructStatic()": it will be called automatically
+     * NOTE: do not call the "parent::__constructStatic()" explicitly: it will be called automatically
      * 
      * @return void
      * @access public
