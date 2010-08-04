@@ -41,22 +41,17 @@ use XLite\Core\Database as DB,
 abstract class ARepo extends \Doctrine\ORM\EntityRepository
 {
     /**
-     * Cache TTL predefined values 
+     * Cache default TTL (1 year)
      */
-    const INFINITY_TTL = 2592000;
-    const LONG_TTL     = 86400;
-    const SHORT_TTL    = 3600;
-
-
-    const DEFAULT_TTL = self::SHORT_TTL;
+    const CACHE_DEFAULT_TTL = 2592000;
 
 
     /**
      * Cache cell fields names
      */
-    const TTL_CACHE_CELL      = 'ttl';
     const KEY_TYPE_CACHE_CELL = 'keyType';
     const ATTRS_CACHE_CELL    = 'attrs';
+    const RELATION_CACHE_CELL = 'relation';
 
 
     /**
@@ -85,40 +80,6 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     protected $cacheCells = null;
 
     /**
-     * Finder method name translation patterns
-     *
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected static $from = array(
-        'Q', 'W', 'E', 'R', 'T',
-        'Y', 'U', 'I', 'O', 'P',
-        'A', 'S', 'D', 'F', 'G',
-        'H', 'J', 'K', 'L', 'Z',
-        'X', 'C', 'V', 'B', 'N',
-        'M',
-    );
-
-    /**
-     * Finder method name translation records
-     * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected static $to = array(
-        '_q', '_w', '_e', '_r', '_t',
-        '_y', '_u', '_i', '_o', '_p',
-        '_a', '_s', '_d', '_f', '_g',
-        '_h', '_j', '_k', '_l', '_z',
-        '_x', '_c', '_v', '_b', '_n',
-        '_m',
-    );
-
-    /**
      * Default 'order by' field name
      * 
      * @var    string
@@ -137,17 +98,6 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * @since  3.0.0
      */
     protected $defaultAlias = null;
-
-    /**
-     * cachePrefix
-     * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected $cachePrefix;
-
 
     /**
      * Define cache cells 
@@ -175,32 +125,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     protected function getCacheCells($key = null)
     {
         if (!isset($this->cacheCells)) {
-            $this->cacheCells = $this->defineCacheCells();
-
-            // Normalize cache cells
-            foreach ($this->cacheCells as $name => $cell) {
-                if (!isset($cell[self::TTL_CACHE_CELL])) {
-                    $this->cacheCells[$name][self::TTL_CACHE_CELL] = self::DEFAULT_TTL;
-                }
-
-                if (!isset($cell[self::KEY_TYPE_CACHE_CELL])) {
-                    $this->cacheCells[$name][self::KEY_TYPE_CACHE_CELL] = self::DEFAULT_KEY_TYPE;
-                }
-
-                if (!isset($cell[self::ATTRS_CACHE_CELL])) {
-                    $this->cacheCells[$name][self::ATTRS_CACHE_CELL] = null;
-                }
-
-                $method = $this->getCacheParamsConverterName($name);
-                $this->cacheCells[$name][self::CONVERTER_CACHE_CELL] = method_exists($this, $method)
-                    ? $method
-                    : false;
-
-                if (self::CACHE_ATTR_KEY == $this->cacheCells[$name][self::KEY_TYPE_CACHE_CELL]) {
-                    $this->cacheCells[$name][self::GENERATOR_CACHE_CELL] = $this->getCacheHashGeneratorName($name);
-                }
-
-            }
+            $this->cacheCells = $this->restoreCacheCells();
         }
 
         return $key
@@ -209,32 +134,145 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     }
 
     /**
-     * Assign cache options to query
+     * Restore cache cells info from cache
      * 
-     * @param \Doctrine\ORM\AbstractQuery $query  Query
-     * @param string                     $name   Cell name
-     * @param array                      $params Cell parameters
-     *  
-     * @return \Doctrine\ORM\AbstractQuery
+     * @return array
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function assignQueryCache(\Doctrine\ORM\AbstractQuery $query, $name, array $params = array())
+    protected function restoreCacheCells()
     {
-        if (DB::isCacheEnabled()) {
-            $cell = $this->getCacheCells($name);
-            if ($cell) {
+        $key = $this->getHashPrefix('cells');
 
-                $query->useResultCache(
-                    true,
-                    $cell[self::TTL_CACHE_CELL],
-                    $this->getCellHash($name, $cell, $params)
-                );
+        $cacheCells = DB::getCacheDriver()->fetch($key);
+
+        if (!is_array($cacheCells)) {
+
+            $cacheCells = $this->defineCacheCells();
+
+            list($cacheCells, $relations) = $this->postprocessCacheCells($cacheCells);
+
+            DB::getCacheDriver()->save($key, $cacheCells, self::CACHE_DEFAULT_TTL);
+
+            // Save relations to current model cache cells from related models
+            foreach ($relations as $model => $cells) {
+                DB::getRepo($model)->addCacheRelations($cells);
             }
         }
 
-        return $query;
+        return $cacheCells;
+    }
+
+    /**
+     * Postprocess cache cells info
+     * 
+     * @param array $cacheCells Cache cells
+     *  
+     * @return array (cache cells & relations data)
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function postprocessCacheCells(array $cacheCells)
+    {
+
+        $relations = array();
+
+        // Normalize cache cells
+        foreach ($cacheCells as $name => $cell) {
+
+            // Set default cell type
+            if (!isset($cell[self::KEY_TYPE_CACHE_CELL])) {
+                $cell[self::KEY_TYPE_CACHE_CELL] = self::DEFAULT_KEY_TYPE;
+            }
+
+            // Set default cell attributes list
+            if (!isset($cell[self::ATTRS_CACHE_CELL])) {
+                $cell[self::ATTRS_CACHE_CELL] = null;
+            }
+
+            // Set default cell relations list
+            if (!isset($cell[self::RELATION_CACHE_CELL])) {
+                $cell[self::RELATION_CACHE_CELL] = array();
+            }
+
+            // Collect related models
+            foreach ($cell[self::RELATION_CACHE_CELL] as $model) {
+                if (!isset($relations[$model])) {
+                    $relations[$model] = array($this->_entityName => array($name));
+
+                } elseif (!isset($relations[$model][$this->_entityName])) {
+                    $relations[$model][$this->_entityName] = array($name);
+
+                } else {
+                    $relations[$model][$this->_entityName][] = $name;
+                }
+            }
+
+            // Set cell attributes converter method name
+            $method = $this->getCacheParamsConverterName($name);
+            $cell[self::CONVERTER_CACHE_CELL] = method_exists($this, $method)
+                ? $method
+                : false;
+
+            // Set cell hash generator method name
+            if (self::CACHE_CUSTOM_KEY == $this->cacheCells[$name][self::KEY_TYPE_CACHE_CELL]) {
+                $cell[self::GENERATOR_CACHE_CELL] = $this->getCacheHashGeneratorName($name);
+            }
+
+            $cacheCells[$name] = $cell;
+        }
+
+        return array($cacheCells, $relations);
+    }
+
+    /**
+     * Add cache relations
+     * 
+     * @param array $externalCells External cells
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function addCacheRelations(array $externalCells)
+    {
+        $key = $this->getHashPrefix('externalCells');
+
+        $cacheCells = DB::getCacheDriver()->fetch($key);
+        if (!is_array($cacheCells)) {
+            $cacheCells = array();
+        }
+
+        foreach ($externalCells as $model => $cells) {
+            if (isset($cacheCells[$model])) {
+                $cacheCells[$model] = array_merge($cacheCells[$model], $cells);
+
+            } else {
+                $cacheCells[$model] = $cells;
+            }
+        }
+
+        DB::getCacheDriver()->save($key, $cacheCells, self::CACHE_DEFAULT_TTL);
+    }
+
+    /**
+     * Get related cache cells 
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getRelatedCacheCells()
+    {
+        $cacheCells = DB::getCacheDriver()->fetch(
+            $this->getHashPrefix('externalCells')
+        );
+
+        return is_array($cacheCells) ? $cacheCells : array();
     }
 
     /**
@@ -252,24 +290,22 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     {
         $result = null;
 
-        if (DB::isCacheEnabled()) {
-            $cell = $this->getCacheCells($name);
-            if ($cell) {
+        $cell = $this->getCacheCells($name);
+        if ($cell) {
 
-                $result = DB::getCacheDriver()->fetch(
-                    $this->getCellHash($name, $cell, $params)
-                );
-                if (false === $result) {
-                    $result = null;
-                }
-            }
+            $result = DB::getCacheDriver()->fetch(
+                $this->getCellHash($name, $cell, $params)
+            );
+
+        } else {
+            // TODO - add throw exception
         }
 
-        return $result;
+        return (isset($result) && false !== $result) ? $result : null;
     }
 
     /**
-     * Savet data to cache 
+     * Save data to cache 
      * 
      * @param mixed  $data   Data
      * @param string $name   Cache cell name
@@ -282,63 +318,28 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      */
     protected function saveToCache($data, $name, array $params = array())
     {
-        if (DB::isCacheEnabled()) {
-            $cell = $this->getCacheCells($name);
-            if ($cell) {
+        $cell = $this->getCacheCells($name);
+        if ($cell) {
 
-                $hash = $this->getCellHash($name, $cell, $params);
+            $hash = $this->getCellHash($name, $cell, $params);
 
-                DB::getCacheDriver()->save(
-                    $this->getCellHash($name, $cell, $params),
-                    $data,
-                    $cell[self::TTL_CACHE_CELL]
-                );
+            if ($data instanceof \ArrayAccess) {
+                $this->detachList($data);
+
+            } elseif ($data instanceof \XLite\Model\AEntity) {
+                $data->detach();
             }
+
+            DB::getCacheDriver()->save(
+                $this->getCellHash($name, $cell, $params),
+                $data,
+                self::CACHE_DEFAULT_TTL
+            );
+
+        } else {
+            // TODO - add throw exception
         }
     }
-
-    /**
-     * getCachePrefix 
-     * 
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getCachePrefix()
-    {
-        if (!isset($this->cachePrefix)) {
-            $this->cachePrefix = get_called_class();
-        }
-
-        return $this->cachePrefix;
-    }
-
-
-    /**
-     * cache 
-     * 
-     * @param string $method method to call
-     * @param array  $params call params
-     *  
-     * @return mixed
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function cache($method, array $params = array())
-    {
-        $name = $this->getCachePrefix() . '_' . $method;
-        $data = $this->getFromCache($name, $params);
-
-        if (!isset($data)) {
-            $data = call_user_func_array(array($this, $method), $params);
-            $this->saveToCache($data, $name, $params);
-        }
-
-        return $data;
-    }
-
 
     /**
      * Get cell hash 
@@ -364,7 +365,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
 
             $hash = md5(implode('.', $params));
 
-        } elseif (self::CACHE_ATTR_KEY == $cell[self::KEY_TYPE_CACHE_CELL]) {
+        } elseif (self::CACHE_CUSTOM_KEY == $cell[self::KEY_TYPE_CACHE_CELL]) {
 
             $hash = $this->{$cell[self::GENERATOR_CACHE_CELL]}($params);
         }
@@ -373,40 +374,22 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
             $hash = self::EMPTY_CACHE_CELL;
         }
 
-        return $this->getHashPrefix($this->_entityName) . '.' . $name . '.' . $hash;
+        return $this->getHashPrefix() . '.' . $name . '.' . $hash;
     }
 
     /**
-     * Get prefix for cache filenames
+     * Get prefix for cache key
+     *
+     * @param strin $suffix Cache subsection name
      * 
-     * @param string $str Entity name (e.g. XLite\Model\Category)
-     *  
      * @return string
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getHashPrefix($str)
+    protected function getHashPrefix($suffix = 'data')
     {
-        return preg_replace('|\\\|', '_', $str);
-    }
-
-    /**
-     * Get full cache key 
-     * 
-     * @param string $cellName Cell name
-     * @param string $key      Cell key
-     *  
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getTableHash($cellName = '', $key = '')
-    {
-        return $this->getHashPrefix($this->_entityName)
-            . ($cellName ? '.' . $cellName : '')
-            . ($key ? '.' . $key : '');
+        return str_replace('\\', '_', substr($this->_entityName, 6)) . '.' . $suffix;
     }
 
     /**
@@ -449,8 +432,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      */
     public function hasCacheCells()
     {
-        return DB::isCacheEnabled()
-            && $this->getCacheCells();
+        return $this->getCacheCells();
     }
 
     /**
@@ -466,6 +448,8 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     public function deleteCacheByEntity(\XLite\Model\AEntity $entity)
     {
         foreach ($this->getCacheCells() as $name => $cell) {
+
+            // Get cell arguments
             if ($cell[self::CONVERTER_CACHE_CELL]) {
                    $params = $this->{$cell[self::CONVERTER_CACHE_CELL]}($entity);
 
@@ -482,9 +466,18 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
                 $params = array();
             }
 
-            $hash = $this->getCellHash($name, $cell, $params);
+            // Delete cell
+            DB::getCacheDriver()->delete(
+                $this->getCellHash($name, $cell, $params)
+            );
+        }
 
-            DB::getCacheDriver()->delete($hash);
+        // Delete related cache cells
+        foreach ($this->getRelatedCacheCells() as $model => $cells) {
+            $repo = DB::getRepo($model);
+            foreach ($cells as $cell) {
+                $repo->deleteCache($cell);
+            }
         }
     }
 
@@ -500,17 +493,14 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      */
     public function deleteCache($name = '')
     {
-    if (DB::isCacheEnabled()) {
-            DB::getCacheDriver()->deleteByPrefix($this->getTableHash($name) . '.');
-
-        }
+        DB::getCacheDriver()->deleteByPrefix($this->getHashPrefix() . '.' . $name);
     }
 
     /**
      * Assign default orderBy 
      * 
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder
-     * @param string                    $alias        Table short alias in query builder
+     * @param string                     $alias        Table short alias in query builder
      *  
      * @return \Doctrine\ORM\QueryBuilder
      * @access public
@@ -712,8 +702,8 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * Assign frame to query builder
      * 
      * @param \Doctrine\ORM\QueryBuilder $qb    Query builder
-     * @param int                       $start Start offset
-     * @param int                       $limit Frame length
+     * @param int                        $start Start offset
+     * @param int                        $limit Frame length
      *  
      * @return \Doctrine\ORM\QueryBuilder
      * @access protected
@@ -760,6 +750,46 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     }
 
     /**
+     * Detach entities list
+     * 
+     * @param array $data Entites list
+     *  
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function detachList(array $data)
+    {
+        foreach ($data as $item) {
+            $item->detach();
+        }
+
+        return $data;
+    }
+
+    /**
+     * Finds an entity by its primary key / identifier and resturn entity detached
+     * 
+     * @param mixed $id The identifier.
+     *  
+     * @return XLite\Model\AEntity or null
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function findDetached($id)
+    {
+        $entity = parent::find($id);
+
+        if ($entity) {
+            $this->_em->detach($entity);
+        }
+
+        return $entity;
+    }
+
+    /**
      * Adds support for magic finders
      * 
      * @param string $method    Method name
@@ -783,8 +813,8 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
 
         } else {
             throw new \BadMethodCallException(
-                'Undefined method \'' . $method . '\'. The method name must start with '.
-                'either findBy or findOneBy!'
+                'Undefined method \'' . $method . '\'. The method name must start with '
+                . 'either findBy or findOneBy!'
             );
         }
 
@@ -792,7 +822,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
             throw \Doctrine\ORM\ORMException::findByRequiresParameter($method . $by);
         }
 
-        $fieldName = str_replace(self::$from, self::$to, lcfirst($by));
+        $fieldName = \XLite\Core\Converter::convertFromCamelCase($by);
 
         if (!$this->_class->hasField($fieldName)) {
             throw \Doctrine\ORM\ORMException::invalidFindByCall(
@@ -802,6 +832,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
             );
         }
 
+        // Method name is findBy or findOneBy
         return $this->$method(array($fieldName => $arguments[0]));
     }
 

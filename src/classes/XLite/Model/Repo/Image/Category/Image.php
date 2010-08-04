@@ -63,7 +63,6 @@ class Image extends \XLite\Model\Repo\Base\Image
         $list = parent::defineCacheCells();
 
         $list['category_image'] = array(
-            self::TTL_CACHE_CELL   => self::INFINITY_TTL,
             self::ATTRS_CACHE_CELL => array('category_id')
         );
 

@@ -59,11 +59,9 @@ class State extends ARepo
     {
         $list = parent::defineCacheCells();
 
-        $list['all'] = array(
-            self::TTL_CACHE_CELL => self::INFINITY_TTL,
-        );
+        $list['all'] = array();
+
         $list['szone'] = array(
-            self::TTL_CACHE_CELL   => self::INFINITY_TTL,
             self::ATTRS_CACHE_CELL => array('shipping_zone'),
         );
 
@@ -164,6 +162,7 @@ class State extends ARepo
     {
         try {
             $state = $this->defineOneByStateIdQuery($stateId)->getQuery()->getSingleResult();
+            $state->detach();
 
         } catch (\Doctrine\ORM\NoResultException $exception) {
             $state = null;
@@ -202,8 +201,13 @@ class State extends ARepo
      */
     public function findAllStates()
     {
-        return $this->assignQueryCache($this->defineAllStatesQuery()->getQuery(), 'all')
-            ->getResult();
+        $data = $this->getFromCache('all');
+        if (!isset($data)) {
+            $data = $this->defineAllStatesQuery()->getQuery()->getResult();
+            $this->saveToCache($data, 'all');
+        }
+
+        return $data;
     }
 
     /**
@@ -233,12 +237,13 @@ class State extends ARepo
      */
     public function findByShippingZone($shippingZone)
     {
-        return $this->assignQueryCache(
-            $this->defineByShippingZoneQuery($shippingZone)->getQuery(),
-            'szone',
-            array('shipping_zone' => $shippingZone)
-        )
-            ->getResult();
+        $data = $this->getFromCache('szone', array('shipping_zone' => $shippingZone));
+        if (!isset($data)) {
+            $data = $this->defineByShippingZoneQuery($shippingZone)->getQuery()->getResult();
+            $this->saveToCache($data, 'szone', array('shipping_zone' => $shippingZone));
+        }
+
+        return $data;
     }
 
     /**

@@ -64,7 +64,6 @@ class ViewList extends ARepo
         $list = parent::defineCacheCells();
 
         $list['class_list'] = array(
-            self::TTL_CACHE_CELL => self::INFINITY_TTL,
             self::ATTRS_CACHE_CELL => array('class', 'list', 'zone'),
         );
 
@@ -85,13 +84,13 @@ class ViewList extends ARepo
      */
     public function findClassList($class, $list, $zone = \XLite\Model\ViewList::CUSTOMER_INTERFACE)
     {
-        $qb = $this->assignQueryCache(
-            $this->defineClassListQuery($class, $list, $zone)->getQuery(),
-            'class_list',
-            array('class' => $class, 'list' => $list, 'zone' => $zone)
-        );
+        $data = $this->getFromCache('class_list', array('class' => $class, 'list' => $list, 'zone' => $zone));
+        if (!isset($data)) {
+            $data = $this->defineClassListQuery($class, $list, $zone)->getQuery()->getResult();
+            $this->saveToCache($data, 'class_list', array('class' => $class, 'list' => $list, 'zone' => $zone));
+        }
 
-        return $qb->getResult();
+        return $data;
     }
 
     /**

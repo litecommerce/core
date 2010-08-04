@@ -62,9 +62,7 @@ class TemplatePatch extends ARepo
     {
         $list = parent::defineCacheCells();
 
-        $list['all'] = array(
-            self::TTL_CACHE_CELL => self::INFINITY_TTL,
-        );
+        $list['all'] = array();
 
         return $list;
     }

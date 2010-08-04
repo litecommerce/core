@@ -70,12 +70,9 @@ class Config extends \XLite\Model\Repo\Base\I18n
     {
         $list = parent::defineCacheCells();
 
-        $list['all'] = array(
-            self::TTL_CACHE_CELL => self::INFINITY_TTL,
-        );
+        $list['all'] = array();
 
         $list['category'] = array(
-            self::TTL_CACHE_CELL   => self::INFINITY_TTL,
             self::ATTRS_CACHE_CELL => array('category')
         );
 
@@ -278,6 +275,7 @@ class Config extends \XLite\Model\Repo\Base\I18n
         
         if (!isset($data)) {
             $data = $this->defineAllOptionsQuery()->getQuery()->getResult();
+            $data = $this->detachList($data);
             $data = $this->processOptions($data);
             $this->saveToCache($data, 'all');
         }
@@ -356,7 +354,7 @@ class Config extends \XLite\Model\Repo\Base\I18n
         // Add human readable store country and state names for Company options
         if (isset($config->Company)) {
             $config->Company->locationCountry = \XLite\Core\Database::getRepo('XLite\Model\Country')
-                ->find($config->Company->location_country);
+                ->findDetached($config->Company->location_country);
 
             $config->Company->locationState = \XLite\Core\Database::getRepo('XLite\Model\State')
                 ->findById($config->Company->location_state, $config->Company->location_custom_state);
@@ -365,7 +363,7 @@ class Config extends \XLite\Model\Repo\Base\I18n
         // Add human readable default country name for General options
         if (isset($config->General)) {
             $config->General->defaultCountry = \XLite\Core\Database::getRepo('XLite\Model\Country')
-                ->find($config->General->default_country);
+                ->findDetached($config->General->default_country);
 
             // Get default language object
             if (isset($config->General->default_language)) {
@@ -376,6 +374,10 @@ class Config extends \XLite\Model\Repo\Base\I18n
             if (!isset($config->General->defaultLanguage)) {
                 $config->General->defaultLanguage = \XLite\Core\Database::getRepo('XLite\Model\Language')
                     ->getDefaultLanguage();
+            }
+
+            if ($config->General->defaultLanguage) {
+                $config->General->defaultLanguage->detach();
             }
 
         }
