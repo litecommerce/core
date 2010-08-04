@@ -138,8 +138,18 @@ class XLite_Sniffs_PHP_Classes_ClassDeclarationSniff extends XLite_ReqCodesSniff
 		}
 
 		$prevEOL = $phpcsFile->findPrevious(T_WHITESPACE, $stackPtr - 1, null, false, "\n");
-		$posPrev = $phpcsFile->findPrevious(array(T_WHITESPACE, T_COMMENT, T_OPEN_TAG, T_DOC_COMMENT, T_NAMESPACE, T_SEMICOLON, T_STRING, T_NS_SEPARATOR), $prevEOL - 1, null, true);
-		$posNext = $phpcsFile->findNext(array(T_WHITESPACE, T_COMMENT, T_CLOSE_TAG, T_DOC_COMMENT), $tokens[$stackPtr]['scope_closer'] + 1, null, true);
+		$posPrev = $phpcsFile->findPrevious(
+			array(T_WHITESPACE, T_COMMENT, T_OPEN_TAG, T_DOC_COMMENT, T_NAMESPACE, T_SEMICOLON, T_STRING, T_NS_SEPARATOR, T_COMMA, T_AS, T_USE),
+			$prevEOL - 1,
+			null,
+			true
+		);
+		$posNext = $phpcsFile->findNext(
+			array(T_WHITESPACE, T_COMMENT, T_CLOSE_TAG, T_DOC_COMMENT),
+			$tokens[$stackPtr]['scope_closer'] + 1,
+			null,
+			true
+		);
 
 		$error = 'Размещение дополнительно кода в файле с классом не рекомендуется';
 
