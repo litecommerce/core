@@ -80,37 +80,28 @@ class Category extends \XLite\Model\Repo\Base\I18n
         $list = parent::defineCacheCells();
 
         $list[$this->cachePrefix . '_Details'] = array(
-            self::TTL_CACHE_CELL   => self::INFINITY_TTL,
             self::ATTRS_CACHE_CELL => array('category_id')
         );
 
         $list[$this->cachePrefix . '_FullTree'] = array(
-            self::TTL_CACHE_CELL   => self::INFINITY_TTL,
             self::ATTRS_CACHE_CELL => array('category_id')
         );
 
         $list[$this->cachePrefix . '_FullTreeHash'] = array(
-            self::TTL_CACHE_CELL   => self::INFINITY_TTL,
             self::ATTRS_CACHE_CELL => array('category_id')
         );
 
         $list[$this->cachePrefix . '_NodePath'] = array(
-            self::TTL_CACHE_CELL   => self::INFINITY_TTL,
             self::ATTRS_CACHE_CELL => array('category_id')
         );
 
         $list[$this->cachePrefix . '_ByCleanUrl'] = array(
-            self::TTL_CACHE_CELL   => self::INFINITY_TTL,
             self::ATTRS_CACHE_CELL => array('clean_url')
         );
 
-        $list[$this->cachePrefix . '_LeafNodes'] = array(
-            self::TTL_CACHE_CELL   => self::INFINITY_TTL
-        );
+        $list[$this->cachePrefix . '_LeafNodes'] = array();
 
-        $list[$this->cachePrefix . '_MaxRightPos'] = array(
-            self::TTL_CACHE_CELL   => self::INFINITY_TTL
-        );
+        $list[$this->cachePrefix . '_MaxRightPos'] = array();
 
         return $list;
     }
@@ -125,20 +116,17 @@ class Category extends \XLite\Model\Repo\Base\I18n
      */
     public function cleanCache()
     {
-        if (\XLite\Core\Database::isCacheEnabled()) {
-    
-            $keys = array(
-                '_Details',
-                '_FullTree',
-                '_FullTreeHash',
-                '_NodePath',
-                '_LeafNodes',
-                '_MaxRightPos'
-            );
+        $keys = array(
+            '_Details',
+            '_FullTree',
+            '_FullTreeHash',
+            '_NodePath',
+            '_LeafNodes',
+            '_MaxRightPos'
+        );
 
-            foreach ($keys as $key) {
-                $this->deleteCache($this->cachePrefix . $key);
-            }
+        foreach ($keys as $key) {
+            $this->deleteCache($this->cachePrefix . $key);
         }
     }
 

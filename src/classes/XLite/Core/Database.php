@@ -208,15 +208,11 @@ class Database extends \XLite\Base\Singleton
      */
     protected function setDoctrineCache()
     {
-        $cache = self::getCacheDriverByOptions(\XLite::getInstance()->getOptions('cache'));
+        self::$cacheDriver = self::getCacheDriverByOptions(\XLite::getInstance()->getOptions('cache'));
 
-        if ($cache) {
-            self::$cacheDriver = $cache;
-        }
-
-        $this->config->setMetadataCacheImpl($cache);
-        $this->config->setQueryCacheImpl($cache);
-        $this->config->setResultCacheImpl($cache);
+        $this->config->setMetadataCacheImpl(self::$cacheDriver);
+        $this->config->setQueryCacheImpl(self::$cacheDriver);
+        $this->config->setResultCacheImpl(self::$cacheDriver);
     }
 
     /**
@@ -240,7 +236,7 @@ class Database extends \XLite\Base\Singleton
             // APC
             $cache = new \Doctrine\Common\Cache\ApcCache;
 
-        } elseif ('memcache' == $options['type'] && isset($options['servers'])) {
+        } elseif ('memcache' == $options['type'] && isset($options['servers']) && class_exists('Memcache', false)) {
 
             // Memcache
             $servers = explode(';', $options['servers']);
@@ -268,13 +264,11 @@ class Database extends \XLite\Base\Singleton
 
             $cache = new \Doctrine\Common\Cache\XcacheCache;
 
-        } elseif ('file' == $options['type']) {
-
-            $cache = new \XLite\Core\FileCache(LC_DATACACHE_DIR);
-
         } else {
 
-            $cache = new \Doctrine\Common\Cache\ArrayCache;
+            // Default cache - file system cache
+            $cache = new \XLite\Core\FileCache(LC_DATACACHE_DIR);
+
         }
 
         if (isset($options['namespace']) && $options['namespace']) {
@@ -321,19 +315,6 @@ class Database extends \XLite\Base\Singleton
         $dsnList['password'] = $options['password'];
 
         return $dsnList;
-    }
-
-    /**
-     * Check - cache is enabled or not
-     * 
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function isCacheEnabled()
-    {
-        return isset(self::$cacheDriver);
     }
 
     /**

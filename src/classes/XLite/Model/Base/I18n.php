@@ -256,4 +256,22 @@ abstract class I18n extends \XLite\Model\AEntity
 
         return self::$languagesQuery;
     }
+
+    /**
+     * Detach self 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function detach()
+    {
+        parent::detach();
+
+        foreach ($this->translations as $t) {
+            $t->detach();
+        }
+    }
+
 }

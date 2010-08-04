@@ -60,12 +60,15 @@ class Country extends ARepo
     {
         $list = parent::defineCacheCells();
 
-        $list[$this->getCachePrefix() . '_findAllCountries'] = array(
-            self::TTL_CACHE_CELL => self::INFINITY_TTL,
+        $list['all'] = array(
+            self::RELATION_CACHE_CELL => array(
+                'XLite\Model\State',
+            ),
         );
-
-        $list[$this->getCachePrefix() . '_findCountriesStates'] = array(
-            self::TTL_CACHE_CELL => self::INFINITY_TTL,
+        $list['states'] = array(
+            self::RELATION_CACHE_CELL => array(
+                'XLite\Model\State',
+            ),
         );
 
         return $list;
@@ -81,7 +84,15 @@ class Country extends ARepo
      */
     public function findAllCountries()
     {
-        return $this->defineAllCountriesQuery()->getQuery()->getResult();
+        $data = $this->getFromCache('all');
+        if (!isset($data)) {
+            $data = $this->defineAllCountriesQuery()
+                ->getQuery()
+                ->getResult();
+            $this->saveToCache($data, 'all');
+        }
+
+        return $data;
     }
 
     /**
@@ -94,7 +105,9 @@ class Country extends ARepo
      */
     protected function defineAllCountriesQuery()
     {
-        return $this->createQueryBuilder();
+        return $this->createQueryBuilder()
+            ->addSelect('s')
+            ->leftJoin('c.states', 's');
     }
 
     /**
@@ -107,7 +120,16 @@ class Country extends ARepo
      */
     public function findCountriesStates()
     {
-        return $this->postprocessCountriesStates($this->defineCountriesStatesQuery()->getQuery()->getResult());
+        $data = $this->getFromCache('states');
+        if (!isset($data)) {
+            $data = $this->defineCountriesStatesQuery()
+                ->getQuery()
+                ->getResult();
+            $data = $this->postprocessCountriesStates($data);
+            $this->saveToCache($data, 'states');
+        }
+
+        return $data;
     }
 
     /**
@@ -125,7 +147,6 @@ class Country extends ARepo
             ->leftJoin('c.states', 's')
             ->where('c.enabled = :enabled')
             ->setParameter('enabled', true);
-
     }
 
     /**

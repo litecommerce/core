@@ -137,24 +137,28 @@ class Main extends \XLite\Module\AModule
 
         /////////////////////////////////////
         // "Product also buy" section
-        if (\XLite::getInstance()->is('adminZone')) {
-            if (\XLite\Core\Config::getInstance()->ProductAdviser->admin_products_also_buy_enabled != 'Y') {
-                \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
-                    array(
-                        'category' => 'ProductAdviser',
-                        'name'     => 'products_also_buy_enabled',
-                        'value'    => 'N'
-                    )
-                );
-            }
+        /* TODO - rework
+        if (
+            \XLite::getInstance()->isAdminZone()
+            && \XLite\Core\Config::getInstance()->ProductAdviser->admin_products_also_buy_enabled != 'Y'
+        ) {
+            \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
+                array(
+                    'category' => 'ProductAdviser',
+                    'name'     => 'products_also_buy_enabled',
+                    'value'    => 'N'
+                )
+            );
         }
+        */
         /////////////////////////////////////
 
         /////////////////////////////////////
         // "Customer Notifications" section
-        if (\XLite::getInstance()->is('adminZone')) {
+        if (\XLite::getInstance()->isAdminZone()) {
             $this->validateConfig('number_notifications', 1);
             $customer_notifications_enabled = (\XLite\Core\Config::getInstance()->ProductAdviser->customer_notifications_mode == '0') ? 'N' : 'Y';
+            /* TODO - rework
             \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
                 array(
                     'category' => 'ProductAdviser',
@@ -162,6 +166,7 @@ class Main extends \XLite\Module\AModule
                     'value'    => $customer_notifications_enabled
                 )
             );
+            */
         }
         /////////////////////////////////////
 
@@ -184,11 +189,11 @@ class Main extends \XLite\Module\AModule
         if ($number < $limit) {
             $number = $limit;
             $number_updated = true;
-        } else {
-            if (strval($number) != strval($number_orig)) {
-            	$number_updated = true;
-            }
+
+        } elseif (strval($number) != strval($number_orig)) {
+          	$number_updated = true;
         }
+
         if ($number_updated) {
             \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
                 array(

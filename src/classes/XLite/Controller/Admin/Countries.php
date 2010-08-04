@@ -141,6 +141,6 @@ class Countries extends AAdmin
      */
     public function getCountries()
     {
-        return \XLite\Core\Database::getRepo('XLite\Model\Country')->cache('findAllCountries');
+        return \XLite\Core\Database::getRepo('XLite\Model\Country')->findAllCountries();
     }
 }

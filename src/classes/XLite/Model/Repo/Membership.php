@@ -59,12 +59,9 @@ class Membership extends \XLite\Model\Repo\Base\I18n
     {
         $list = parent::defineCacheCells();
 
-        $list['all'] = array(
-            self::TTL_CACHE_CELL => self::INFINITY_TTL,
-        );
+        $list['all'] = array();
 
         $list['active'] = array(
-            self::TTL_CACHE_CELL   => self::INFINITY_TTL,
             self::ATTRS_CACHE_CELL => array('active'),
         );
 
@@ -81,7 +78,13 @@ class Membership extends \XLite\Model\Repo\Base\I18n
      */
     public function findAllMemberships()
     {
-        return $this->assignQueryCache($this->defineAllMembershipsQuery()->getQuery(), 'all')->getResult();
+        $data = $this->getFromCache('all');
+        if (!isset($data)) {
+            $data = $this->defineAllMembershipsQuery()->getQuery()->getResult();
+            $this->saveToCache($data, 'all');
+        }
+
+        return $data;
     }
 
     /**
@@ -107,12 +110,17 @@ class Membership extends \XLite\Model\Repo\Base\I18n
      */
     public function findActiveMemberships()
     {
-        return $this->assignQueryCache($this->defineActiveMembershipsQuery()->getQuery(), 'active', array('active' => true))
-            ->getResult();
+        $data = $this->getFromCache('active', array('active' => true));
+        if (!isset($data)) {
+            $data = $this->defineActiveMembershipsQuery($shippingZone)->getQuery()->getResult();
+            $this->saveToCache($data, 'active', array('active' => true));
+        }
+
+        return $data;
     }
 
     /**
-     * Define query builder for findAllMemberships()
+     * Define query builder for findActiveMemberships()
      * 
      * @return \Doctrine\ORM\QueryBuilder
      * @access protected

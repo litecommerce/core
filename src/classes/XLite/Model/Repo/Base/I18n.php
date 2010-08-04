@@ -122,5 +122,6 @@ abstract class I18n extends \XLite\Model\Repo\ARepo
         return $this->addTranslationsSubquery(parent::createQueryBuilder($alias), $alias);
 
     }
+
 }
 

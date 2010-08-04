@@ -233,45 +233,39 @@ OUT;
      */
     public function testCleanCache()
     {
-        if (\XLite\Core\Database::isCacheEnabled()) {
-            
-            $keys = array(
-                '_Details',
-                '_FullTree',
-                '_FullTreeHash',
-                '_NodePath',
-                '_LeafNodes',
-                '_MaxRightPos'
-            );
+        $keys = array(
+            '_Details',
+            '_FullTree',
+            '_FullTreeHash',
+            '_NodePath',
+            '_LeafNodes',
+            '_MaxRightPos'
+        );
 
-            $cachePrefix = 'Category';
+        $cachePrefix = 'Category';
 
-            $cellPrefix = 'XLite_Model_Category.Category';
-            $cellSuffix = '.testcase';
+        $cellPrefix = 'XLite_Model_Category.Category';
+        $cellSuffix = '.testcase';
 
-            $cacheDriver = \XLite\Core\Database::getCacheDriver();
+        $cacheDriver = \XLite\Core\Database::getCacheDriver();
 
-            // Save test data into the cache
-            foreach ($keys as $key) {
-                $cacheDriver->save($cellPrefix . $key . $cellSuffix, array('test'));
-            }
-
-            // Clean cache
-            \XLite\Core\Database::getRepo('XLite\Model\Category')->cleanCache();
-
-            // Check if data were removed from the cache
-            $result = array();
-            foreach ($keys as $key) {
-                if ($cacheDriver->contains($cellPrefix . $key . $cellSuffix)) {
-                    $result[] = $key;
-                }
-            }
-
-            $this->assertTrue(empty($result), 'The following cache cells left: ' . implode(', ', $result));
-
-        } else { // Cache is disabled
-            $this->markTestSkipped();
+        // Save test data into the cache
+        foreach ($keys as $key) {
+            $cacheDriver->save($cellPrefix . $key . $cellSuffix, array('test'));
         }
+
+        // Clean cache
+        \XLite\Core\Database::getRepo('XLite\Model\Category')->cleanCache();
+
+        // Check if data were removed from the cache
+        $result = array();
+        foreach ($keys as $key) {
+            if ($cacheDriver->contains($cellPrefix . $key . $cellSuffix)) {
+                $result[] = $key;
+            }
+        }
+
+        $this->assertTrue(empty($result), 'The following cache cells left: ' . implode(', ', $result));
     }
 
     /**

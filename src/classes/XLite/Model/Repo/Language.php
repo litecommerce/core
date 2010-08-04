@@ -69,12 +69,9 @@ class Language extends \XLite\Model\Repo\Base\I18n
     {
         $list = parent::defineCacheCells();
 
-        $list['all'] = array(
-            self::TTL_CACHE_CELL => self::INFINITY_TTL,
-        );
+        $list['all'] = array();
 
         $list['status'] = array(
-            self::TTL_CACHE_CELL   => self::INFINITY_TTL,
             self::ATTRS_CACHE_CELL => array('status'),
         );
 
@@ -91,7 +88,13 @@ class Language extends \XLite\Model\Repo\Base\I18n
      */
     public function findAllLanguages()
     {
-        return $this->assignQueryCache($this->defineAllLanguagesQuery()->getQuery(), 'all')->getResult();
+        $data = $this->getFromCache('all');
+        if (!isset($data)) {
+            $data = $this->defineAllLanguagesQuery()->getQuery()->getResult();
+            $this->saveToCache($data, 'all');
+        }
+
+        return $data;
     }
 
     /**
@@ -117,11 +120,16 @@ class Language extends \XLite\Model\Repo\Base\I18n
      */
     public function findActiveLanguages()
     {
-        return $this->assignQueryCache(
-            $this->defineByStatusQuery(\XLite\Model\Language::ENABLED)->getQuery(),
-            'status',
-            array('status' => \XLite\Model\Language::ENABLED)
-        )->getResult();
+        $data = $this->getFromCache('status', array('status' => \XLite\Model\Language::ENABLED));
+        if (!isset($data)) {
+            $data = $this->defineByStatusQuery(\XLite\Model\Language::ENABLED)->getQuery()->getResult();
+            foreach ($data as $item) {
+                $this->_em->detach($item);
+            }
+            $this->saveToCache($data, 'status', array('status' => \XLite\Model\Language::ENABLED));
+        }
+
+        return $data;
     }
 
     /**

@@ -72,16 +72,9 @@ class Module extends \XLite\Model\Repo\ARepo
     {
         $list = parent::defineCacheCells();
 
-        $list['all'] = array(
-            self::TTL_CACHE_CELL => self::INFINITY_TTL,
-        );
-
-        $list['names'] = array(
-            self::TTL_CACHE_CELL => self::INFINITY_TTL,
-        );
-
+        $list['all'] = array();
+        $list['names'] = array();
         $list['enabled'] = array(
-            self::TTL_CACHE_CELL => self::INFINITY_TTL,
             self::ATTRS_CACHE_CELL => array('enabled'),
         );
 
@@ -98,8 +91,13 @@ class Module extends \XLite\Model\Repo\ARepo
      */
     public function findAllModules()
     {
-        return $this->assignQueryCache($this->defineAllModulesQuery()->getQuery(), 'all')
-            ->getResult();
+        $data = $this->getFromCache('all');
+        if (!isset($data)) {
+            $data = $this->defineAllModulesQuery()->getQuery()->getResult();
+            $this->saveToCache($data, 'all');
+        }
+
+        return $data;
     }
 
     /**
@@ -181,12 +179,13 @@ class Module extends \XLite\Model\Repo\ARepo
      */
     public function findAllEnabled($enabled = true)
     {
-        return $this->assignQueryCache(
-            $this->defineAllEnabledQuery($enabled)->getQuery(),
-            'enabled',
-            array('enabled' => $enabled)
-        )
-            ->getResult();
+        $data = $this->getFromCache('enabled', array('enabled' => $enabled));
+        if (!isset($data)) {
+            $data = $this->defineAllEnabledQuery($enabled)->getQuery()->getResult();
+            $this->saveToCache($data, 'enabled', array('enabled' => $enabled));
+        }
+
+        return $data;
     }
 
     /**

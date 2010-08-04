@@ -49,13 +49,8 @@ class LanguageLabel extends \XLite\Model\Repo\Base\I18n
     {
         $list = parent::defineCacheCells();
 
-        $list['all'] = array(
-            self::TTL_CACHE_CELL => self::INFINITY_TTL,
-        );
-
-        $list['all_by_code'] = array(
-            self::TTL_CACHE_CELL => self::INFINITY_TTL,
-        );
+        $list['all'] = array();
+        $list['all_by_code'] = array();
 
         return $list;
     }
