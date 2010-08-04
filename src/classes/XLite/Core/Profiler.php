@@ -43,6 +43,10 @@ class Profiler extends \XLite\Base\Singleton implements \Doctrine\DBAL\Logging\S
     const TRACE_BEGIN = 3;
     const TRACE_LENGTH = 8;
 
+    const DEC_POINT     = '.';
+    const THOUSANDS_SEP = ' ';
+
+
     /**
      * List of executed queries 
      * 
@@ -386,35 +390,36 @@ class Profiler extends \XLite\Base\Singleton implements \Doctrine\DBAL\Logging\S
             $totalQueriesTime += $sum;
         }
 
-        $execTime = number_format($this->stop_time - $this->start_time, 4);
+        $execTime = number_format($this->stop_time - $this->start_time, 4, self::DEC_POINT, self::THOUSANDS_SEP);
         $memoryPeak = round(memory_get_peak_usage() / 1024 / 1024, 3);
         $totalQueries = count(self::$queries);
-        $totalQueriesTime = number_format($totalQueriesTime, 4);
-        $dbConnectTime = number_format($this->dbConnectTime, 4);
+        $totalQueriesTime = number_format($totalQueriesTime, 4, self::DEC_POINT, self::THOUSANDS_SEP);
+        $dbConnectTime = number_format($this->dbConnectTime, 4, self::DEC_POINT, self::THOUSANDS_SEP);
+        $unitOfWorkSize = \XLite\Core\Database::getEM()->getUnitOfWork()->size();
 
         $this->includedFilesTotal = round($this->includedFilesTotal / 1024, 3);
 
         $html = <<<HTML
 <table cellspacing="0" cellpadding="3" style="width: auto;">
     <tr>
-        <td><strong>EXECUTION TIME</strong></td>
+        <td><strong>Execution time</strong></td>
         <td>$execTime</td>
     </tr>
     <tr>
-        <td><strong>MEMORY PEAK USAGE</strong></td>
+        <td><strong>Memory usage (peak)</strong></td>
         <td>$memoryPeak Mb</td>
     </tr>
     <tr>
-        <td><strong>TOTAL QUERIES</strong></td>
+        <td><strong>SQL queries count</strong></td>
         <td>$totalQueries</td>
     </tr>
     <tr>
-        <td><strong>TOTAL QUERIES TIME</strong></td>
-        <td>$totalQueriesTime</td>
+        <td><strong>SQL queries duration</strong></td>
+        <td>$totalQueriesTime sec.</td>
     </tr>
 
     <tr>
-        <td><strong>Included files</strong></td>
+        <td><strong>Included files count</strong></td>
         <td>$this->includedFilesCount</td>
     </tr>
 
@@ -428,10 +433,15 @@ class Profiler extends \XLite\Base\Singleton implements \Doctrine\DBAL\Logging\S
         <td>$dbConnectTime sec.</td>
     </tr>
 
+    <tr>
+        <td><strong>Doctrine UnitOfWork final size</strong></td>
+        <td>$unitOfWorkSize models</td>
+    </tr>
+
 </table>
 
 <table cellspacing="0" cellpadding="3" border="1" style="width: auto;">
-    <caption>Queries log</caption>
+    <caption style="font-weight: bold; text-align: left;">Queries log</caption>
     <tr>
         <th>Times</th>
         <th>Max. duration, sec.</th>
@@ -453,7 +463,7 @@ HTML;
                 . $d['count']
                 . '</td>'
                 . '<td style="vertical-align: top;' . $durationLimit . '">'
-                . number_format($d['max'], 4)
+                . number_format($d['max'], 4, self::DEC_POINT, self::THOUSANDS_SEP)
                 . '</td><td style="white-space: nowrap;">'
                 . $query . '<br />'
                 . implode(' << ', $d['trace'])
@@ -466,7 +476,7 @@ HTML;
         if (self::$memoryPoints) {
             $html = <<<HTML
 <table cellspacing="0" cellpadding="3" border="1" style="width: auto;">
-    <caption>Memory points</caption>
+    <caption style="font-weight: bold; text-align: left;">Memory points</caption>
     <tr>
         <th nowrap="nowrap">Memory, Mbytes</th>
         <th nowrap="nowrap">Changes, Mbytes</th>
@@ -480,8 +490,8 @@ HTML;
                 $diff = $d['memory'] - $lastMem;
                 echo (
                     '<tr>'
-                    . '<td>' . number_format(round($d['memory'] / 1024 / 1024, 3), 3) . '</td>'
-                    . '<td>' . number_format(round($diff / 1024 / 1024, 3), 3) . '</td>'
+                    . '<td>' . number_format(round($d['memory'] / 1024 / 1024, 3), 3, self::DEC_POINT, self::THOUSANDS_SEP) . '</td>'
+                    . '<td>' . number_format(round($diff / 1024 / 1024, 3), 3, self::DEC_POINT, self::THOUSANDS_SEP) . '</td>'
                     . '<td>' . implode(' << ', $d['trace']) . '</td>'
                     . '</tr>'
                 );
@@ -494,7 +504,7 @@ HTML;
         if ($this->points) {
             $html = <<<HTML
 <table cellspacing="0" cellpadding="3" border="1" style="width: auto;">
-    <caption>Log points</caption>
+    <caption style="font-weight: bold; text-align: left;">Log points</caption>
     <tr>
         <th>Duration, sec.</th>
         <th>Point name</th>
@@ -505,7 +515,7 @@ HTML;
             foreach ($this->points as $name => $d) {
                 echo (
                     '<tr><td>'
-                    . number_format($d['time'], 4)
+                    . number_format($d['time'], 4, self::DEC_POINT, self::THOUSANDS_SEP)
                     . '</td><td>'
                     . $name
                     . '</td></tr>'
