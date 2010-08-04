@@ -109,7 +109,10 @@ class ViewList extends ARepo
     {
         return $this->createQueryBuilder()
             ->where('v.class IN (:class, :empty) AND v.list = :list AND v.zone IN (:zone, :empty)')
-            ->setParameters(array('class' => $class, 'empty' => '', 'list' => $list, 'zone' => $zone));
+            ->setParameter('class', $class)
+            ->setParameter('empty', '')
+            ->setParameter('list', $list)
+            ->setParameter('zone', $zone);
     }
 }
 
