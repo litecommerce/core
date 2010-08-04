@@ -77,23 +77,10 @@ class Options extends \XLite\View\AView
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_LNG_ID => new \XLite\Model\WidgetParam\Int('Language id', null),
+            self::PARAM_LNG_ID => new \XLite\Model\WidgetParam\Int(
+                'Language id', \XLite\Core\Request::getInstance()->{self::PARAM_LNG_ID}
+            ),
         );
-    }
-
-    /**
-     * Define so called "request" parameters
-     *
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function defineRequestParams()
-    {
-        parent::defineRequestParams();
-
-        $this->requestParams[] = self::PARAM_LNG_ID;
     }
 
     /**
