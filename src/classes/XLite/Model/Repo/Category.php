@@ -48,16 +48,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
     protected $className = '\XLite\Model\Category';
 
     /**
-     * cachePrefix 
-     * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected $cachePrefix = 'Category';
-
-    /**
      * Flag to ignore cache when gathering data
      * 
      * @var    bool
@@ -79,7 +69,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
     {
         $list = parent::defineCacheCells();
 
-        $list[$this->cachePrefix . '_Details'] = array(
+        $list['Details'] = array(
             self::ATTRS_CACHE_CELL    => array('category_id'),
             self::RELATION_CACHE_CELL => array(
                 'XLite\Model\Membership',
@@ -87,7 +77,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
             ),
         );
 
-        $list[$this->cachePrefix . '_FullTree'] = array(
+        $list['FullTree'] = array(
             self::ATTRS_CACHE_CELL    => array('category_id'),
             self::RELATION_CACHE_CELL => array(
                 'XLite\Model\CategoryProducts',
@@ -95,7 +85,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
             ),
         );
 
-        $list[$this->cachePrefix . '_FullTreeHash'] = array(
+        $list['FullTreeHash'] = array(
             self::ATTRS_CACHE_CELL => array('category_id'),
             self::RELATION_CACHE_CELL => array(
                 'XLite\Model\CategoryProducts',
@@ -103,7 +93,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
             ),
         );
 
-        $list[$this->cachePrefix . '_NodePath'] = array(
+        $list['NodePath'] = array(
             self::ATTRS_CACHE_CELL    => array('category_id'),
             self::RELATION_CACHE_CELL => array(
                 'XLite\Model\Membership',
@@ -111,7 +101,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
             ),
         );
 
-        $list[$this->cachePrefix . '_ByCleanUrl'] = array(
+        $list['ByCleanUrl'] = array(
             self::ATTRS_CACHE_CELL    => array('clean_url'),
             self::RELATION_CACHE_CELL => array(
                 'XLite\Model\Membership',
@@ -119,9 +109,9 @@ class Category extends \XLite\Model\Repo\Base\I18n
             ),
         );
 
-        $list[$this->cachePrefix . '_LeafNodes'] = array();
+        $list['LeafNodes'] = array();
 
-        $list[$this->cachePrefix . '_MaxRightPos'] = array();
+        $list['MaxRightPos'] = array();
 
         return $list;
     }
@@ -137,16 +127,16 @@ class Category extends \XLite\Model\Repo\Base\I18n
     public function cleanCache()
     {
         $keys = array(
-            '_Details',
-            '_FullTree',
-            '_FullTreeHash',
-            '_NodePath',
-            '_LeafNodes',
-            '_MaxRightPos'
+            'Details',
+            'FullTree',
+            'FullTreeHash',
+            'NodePath',
+            'LeafNodes',
+            'MaxRightPos'
         );
 
         foreach ($keys as $key) {
-            $this->deleteCache($this->cachePrefix . $key);
+            $this->deleteCache($key);
         }
     }
 
@@ -186,7 +176,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
 
         $data = ($this->ignoreCache) ?
             null :
-            $this->getFromCache($this->cachePrefix . '_Details', array('category_id' => $categoryId));
+            $this->getFromCache('Details', array('category_id' => $categoryId));
 
         if (!isset($data)) {
 
@@ -196,7 +186,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
                 $data = array_shift($data);
 
                 if (isset($data)) {
-                    $this->saveToCache($data, $this->cachePrefix . '_Details', array('category_id' => $categoryId));
+                    $this->saveToCache($data, 'Details', array('category_id' => $categoryId));
                 }
             } else {
                 $data = null;
@@ -247,7 +237,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
 
         $data = ($this->ignoreCache) ?
             null :
-            $this->getFromCache($this->cachePrefix . '_FullTree', array('category_id' => $categoryId));
+            $this->getFromCache('FullTree', array('category_id' => $categoryId));
 
         if (!isset($data)) {
 
@@ -281,7 +271,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
                 $data = array();
             }
 
-            $this->saveToCache($data, $this->cachePrefix . '_FullTree', array('category_id' => $categoryId));
+            $this->saveToCache($data, 'FullTree', array('category_id' => $categoryId));
         }
 
         return $data;
@@ -336,7 +326,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
 
         $hash = ($this->ignoreCache) ? 
             null : 
-            $this->getFromCache($this->cachePrefix . '_FullTreeHash');
+            $this->getFromCache('FullTreeHash');
 
         $data = $this->getFullTree();
 
@@ -351,7 +341,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
                 $hash[$category->getCategoryId()] = $index;
             }
 
-            $this->saveToCache($hash, $this->cachePrefix . '_FullTreeHash');
+            $this->saveToCache($hash, 'FullTreeHash');
         }
 
         // Gathering needed category object from hash
@@ -378,7 +368,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
 
         $data = ($this->ignoreCache) ? 
             null : 
-            $this->getFromCache($this->cachePrefix . '_NodePath', array('category_id' => $categoryId));
+            $this->getFromCache('NodePath', array('category_id' => $categoryId));
 
         if (!isset($data)) {
 
@@ -395,7 +385,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
                 $data = array();
             }
 
-            $this->saveToCache($data, $this->cachePrefix . '_NodePath', array('category_id' => $categoryId));
+            $this->saveToCache($data, 'NodePath', array('category_id' => $categoryId));
 
         }
 
@@ -443,13 +433,13 @@ class Category extends \XLite\Model\Repo\Base\I18n
     {
         $data = ($this->ignoreCache) ? 
             null : 
-            $this->getFromCache($this->cachePrefix . '_LeafNodes');
+            $this->getFromCache('LeafNodes');
 
         if (!isset($data)) {
 
             $data = $this->defineLeafNodesQuery()->getQuery()->getResult();
 
-            $this->saveToCache($data, $this->cachePrefix . '_LeafNodes');
+            $this->saveToCache($data, 'LeafNodes');
 
         }
 
@@ -482,7 +472,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
     {
         $data = ($this->ignoreCache) ? 
             null : 
-            $this->getFromCache($this->cachePrefix . '_MaxRightPos');
+            $this->getFromCache('MaxRightPos');
 
         if (!isset($data)) {
 
@@ -493,7 +483,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
             $data = $qb->getQuery()->getSingleScalarResult();
 
             if (isset($data)) {
-                $this->saveToCache($data, $this->cachePrefix . '_MaxRightPos');
+                $this->saveToCache($data, 'MaxRightPos');
             
             } else {
                 $data = 0;
@@ -1119,7 +1109,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
     {
         $data = ($this->ignoreCache) ? 
             null : 
-            $this->getFromCache($this->cachePrefix . '_categories_of_product', array('product_id' => $productId));
+            $this->getFromCache('categories_of_product', array('product_id' => $productId));
 
         if (!isset($data)) {
 
@@ -1129,7 +1119,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
                 $data = array_shift($data);
             }
 
-            $this->saveToCache($data, $this->cachePrefix . '_categories_of_product', array('product_id' => $productId));
+            $this->saveToCache($data, 'categories_of_product', array('product_id' => $productId));
         }
 
         return $data;
@@ -1170,7 +1160,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
 
         $data = ($this->ignoreCache) ? 
             null : 
-            $this->getFromCache($this->cachePrefix . '_ByCleanUrl', array('clean_url' => $key));
+            $this->getFromCache('ByCleanUrl', array('clean_url' => $key));
 
         if (!isset($data)) {
 
@@ -1183,7 +1173,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
                 $data = null;
             }
             
-            $this->saveToCache($data, $this->cachePrefix . '_ByCleanUrl', array('clean_url' => $key));
+            $this->saveToCache($data, 'ByCleanUrl', array('clean_url' => $key));
         }
 
         return $data;

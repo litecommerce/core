@@ -234,17 +234,15 @@ OUT;
     public function testCleanCache()
     {
         $keys = array(
-            '_Details',
-            '_FullTree',
-            '_FullTreeHash',
-            '_NodePath',
-            '_LeafNodes',
-            '_MaxRightPos'
+            'Details',
+            'FullTree',
+            'FullTreeHash',
+            'NodePath',
+            'LeafNodes',
+            'MaxRightPos'
         );
 
-        $cachePrefix = 'Category';
-
-        $cellPrefix = 'XLite_Model_Category.Category';
+        $cellPrefix = 'XLiteModel_Category.data.';
         $cellSuffix = '.testcase';
 
         $cacheDriver = \XLite\Core\Database::getCacheDriver();

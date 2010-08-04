@@ -136,7 +136,7 @@ abstract class Catalog extends ACustomer
      */
     public function getCategory()
     {
-        return \XLite\Core\Database::getRepo('\XLite\Model\Category')->find($this->getCategoryId());
+        return \XLite\Core\Database::getRepo('\XLite\Model\Category')->getCategory($this->getCategoryId());
     }
 
     /**
