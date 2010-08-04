@@ -102,6 +102,21 @@ class ProductAlsoBuy extends \XLite\View\ItemsList\Product\Customer\ACustomer
     }
 
     /**
+     * Define so called "request" parameters
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineRequestParams()
+    {
+        parent::defineRequestParams();
+        
+        $this->requestParams[] = self::PARAM_PRODUCT_ID;
+    }
+
+    /**
      * Get products list 
      * 
      * @return array

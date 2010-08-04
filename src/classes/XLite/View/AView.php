@@ -118,7 +118,7 @@ abstract class AView extends \XLite\Core\Handler
      * @access protected
      * @since  3.0.0
      */
-    protected $requestParams = array(self::PARAM_SESSION_CELL);
+    protected $requestParams;
 
     /**
      * Request param values saved in session
@@ -127,16 +127,7 @@ abstract class AView extends \XLite\Core\Handler
      * @access protected
      * @since  3.0.0
      */
-    protected $savedRequestParams = null;
-
-    /**
-     * Flag; determines if passed name of session cell is match for the current widget
-     * 
-     * @var    bool
-     * @access protected
-     * @since  3.0.0
-     */
-    protected $sessionCellStatus = null;
+    protected $savedRequestParams;
 
     /**
      * View lists (cache)
@@ -272,15 +263,9 @@ abstract class AView extends \XLite\Core\Handler
      */
     protected function checkSessionCell()
     {
-        if (!isset($this->sessionCellStatus)) {
+        $cell = \XLite\Core\Request::getInstance()->{self::PARAM_SESSION_CELL};
 
-            $paramName  = self::PARAM_SESSION_CELL;
-            $paramValue = $this->widgetParams[self::PARAM_SESSION_CELL]->value;
-
-            $this->sessionCellStatus = \XLite\Core\Request::getInstance()->$paramName == $paramValue;
-        }
-
-        return $this->sessionCellStatus;
+        return empty($cell) || $this->getSessionCell() === $cell;
     }
 
     /**
@@ -307,69 +292,9 @@ abstract class AView extends \XLite\Core\Handler
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_TEMPLATE     => new \XLite\Model\WidgetParam\File('Template', $this->getDefaultTemplate()),
-            self::PARAM_MODE         => new \XLite\Model\WidgetParam\Collection('Modes', $this->getDefaultModes()),
-            self::PARAM_SESSION_CELL => new \XLite\Model\WidgetParam\String('Session cell', $this->getSessionCell()),
+            self::PARAM_TEMPLATE => new \XLite\Model\WidgetParam\File('Template', $this->getDefaultTemplate()),
+            self::PARAM_MODE     => new \XLite\Model\WidgetParam\Collection('Modes', $this->getDefaultModes()),
         );
-    }
-
-    /**
-     * Check if we should try to take widget param value from request
-     * 
-     * @param string $param param name
-     *  
-     * @return bool
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function isRequestParam($param)
-    {
-        return in_array($param, $this->requestParams);
-    }
-
-    /**
-     * Fetch param value from current session
-     *
-     * @param string $param parameter name
-     *
-     * @return mixed
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getSavedRequestParam($param)
-    {
-        if (!isset($this->savedRequestParams)) {
-
-            // Cache the session cell (variable) associatd with the current widget
-            $this->savedRequestParams = \XLite\Model\Session::getInstance()->get(
-                $this->widgetParams[self::PARAM_SESSION_CELL]->value
-            );
-
-            // ... To avoid repeated initializations
-            if (!$this->savedRequestParams) {
-                $this->savedRequestParams = array();
-            }
-        }
-
-        return isset($this->savedRequestParams[$param]) ? $this->savedRequestParams[$param] : null;
-    }
-
-    /**
-     * Get the value of the so called "request" params
-     * 
-     * @param string $param parameter name
-     *  
-     * @return mixed
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getRequestParamValue($param)
-    {
-        // Get value from session only if it's not passed in the request, or f it's associated for another widget.
-        // For this, we check if "session cell" param is not passed or is not equal to the current one
-        $value = $this->checkSessionCell() ? null : $this->getSavedRequestParam($param);
-
-        return isset($value) ? $value : \XLite\Core\Request::getInstance()->$param;
     }
 
     /**
@@ -459,10 +384,7 @@ abstract class AView extends \XLite\Core\Handler
 
         // Save all "request" parameters in session
         if ($this->checkSessionCell()) {
-            \XLite\Model\Session::getInstance()->set(
-                $this->getParam(self::PARAM_SESSION_CELL),
-                $this->getRequestParams()
-            );
+            \XLite\Model\Session::getInstance()->set($this->getSessionCell(), $this->getRequestParamsHash());
         }
     }
 
@@ -556,38 +478,122 @@ abstract class AView extends \XLite\Core\Handler
     }
 
     /**
+     * Define so called "request" parameters
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineRequestParams()
+    {
+        $this->requestParams = array();
+    }
+
+    /**
      * getRequestParams 
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getRequestParams()
+    {
+        if (!isset($this->requestParams)) {
+            $this->defineRequestParams();
+        }
+
+        return $this->requestParams;
+    }
+
+    /**
+     * getRequestParamsHash 
      * 
      * @return array
      * @access public
      * @since  3.0.0
      */
-    public function getRequestParams()
+    public function getRequestParamsHash()
     {
-        return $this->getParamsHash($this->requestParams);
+        return $this->getParamsHash($this->getRequestParams());
     }
 
     /**
-     * Return widget parameters list (or a single object)
+     * Fetch param value from current session
      *
-     * @param string $param param name
+     * @param string $param parameter name
      *
-     * @return array
-     * @access public
-     * @since  3.0.0 EE
+     * @return mixed
+     * @access protected
+     * @since  3.0.0
      */
-    public function getWidgetParams($param = null)
+    protected function getSavedRequestParam($param)
     {
-        $result = parent::getWidgetParams($param);
+        if (!isset($this->savedRequestParams)) {
 
-        if ($this->isRequestParam($param) && isset($result)) {
-            $value = $this->getRequestParamValue($param);
-            if (isset($value)) {
-                $result->setValue($value);
+            // Cache the session cell (variable) associatd with the current widget
+            $this->savedRequestParams = \XLite\Model\Session::getInstance()->get(
+                $this->getSessionCell()
+            );
+
+            // ... To avoid repeated initializations
+            if (!isset($this->savedRequestParams)) {
+                $this->savedRequestParams = array();
             }
         }
 
-        return $result;
+        return isset($this->savedRequestParams[$param]) ? $this->savedRequestParams[$param] : null;
+    }
+
+    /**
+     * Set param values using the request or session
+     * 
+     * @param array $params param values to modify
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function setWidgetRequestParamValues(array &$params)
+    {
+        foreach ($this->getRequestParams() as $name) {
+            // First, check the request
+            $value = \XLite\Core\Request::getInstance()->$name;
+
+            if (isset($value)) {
+                // If the param is passed in the request - use it
+                $params[$name] = $value;
+
+            } else {
+                // Else trying to fetch param saved value
+                $value = $this->getSavedRequestParam($name);
+
+                // If the value is found - use it
+                if (isset($value)) {
+                    $params[$name] = $value;
+                }
+            }
+        }
+    }
+
+    /**
+     * Set widget params
+     *
+     * @param array $params handler params
+     *
+     * @return void
+     * @access public
+     * @since  3.0.0
+     */
+    public function setWidgetParams(array $params)
+    {
+        if ($this->getRequestParams() && $this->checkSessionCell()) {
+            $this->setWidgetRequestParamValues($params);
+        }
+
+        parent::setWidgetParams($params);
     }
 
     /**

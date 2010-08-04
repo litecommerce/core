@@ -55,16 +55,18 @@ class ProductsList extends \XLite\View\PagerOrig
      */
     protected $pagesPerFrame = 5;
 
+
     /**
-     * Define widget parameters
+     * Define so called "request" parameters
      *
      * @return void
      * @access protected
-     * @since  1.0.0
+     * @see    ____func_see____
+     * @since  3.0.0
      */
-    protected function defineWidgetParams()
+    protected function defineRequestParams()
     {
-        parent::defineWidgetParams();
+        parent::defineRequestParams();
 
         $this->requestParams[] = self::PARAM_ITEMS_PER_PAGE;
     }

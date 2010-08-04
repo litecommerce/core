@@ -115,9 +115,6 @@ class NewArrivals extends \XLite\View\ItemsList\Product\Customer\ACustomer
             self::PARAM_CATEGORY_ID => new \XLite\Model\WidgetParam\ObjectId\Category('Category ID', 0, false),
         );
 
-        $this->requestParams[] = self::PARAM_PRODUCT_ID;
-        $this->requestParams[] = self::PARAM_CATEGORY_ID;
-
         $this->widgetParams[self::PARAM_WIDGET_TYPE]->setValue($this->config->ProductAdviser->new_arrivals_type);
         $this->widgetParams[self::PARAM_DISPLAY_MODE]->setValue(self::DISPLAY_MODE_LIST);
         $this->widgetParams[self::PARAM_GRID_COLUMNS]->setValue(3);
@@ -135,6 +132,22 @@ class NewArrivals extends \XLite\View\ItemsList\Product\Customer\ACustomer
         $this->widgetParams[self::PARAM_SORT_ORDER]->setValue('asc');
 
         $this->widgetParams[self::PARAM_PAGE_CONTENT]->setValue(false);
+    }
+
+    /**
+     * Define so called "request" parameters
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineRequestParams()
+    {
+        parent::defineRequestParams();
+
+        $this->requestParams[] = self::PARAM_CATEGORY_ID;
+        $this->requestParams[] = self::PARAM_PRODUCT_ID;
     }
 
     /**

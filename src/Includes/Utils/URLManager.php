@@ -38,6 +38,21 @@ namespace Includes\Utils;
 class URLManager extends AUtils
 {
     /**
+     * Remove trailing slashes from URL 
+     * 
+     * @param string $url URL to prepare
+     *  
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function trimTrailingSlashes($url)
+    {
+        return rtrim($url, '/');
+    }
+
+    /**
      * Return full URL for the resource
      * 
      * @param string $url      url part to add

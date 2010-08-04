@@ -67,7 +67,7 @@ abstract class Handler extends \XLite\Base
      * @access protected
      * @since  3.0.0 EE
      */
-    protected $widgetParams = null;
+    protected $widgetParams;
 
 
     /**
@@ -159,7 +159,7 @@ abstract class Handler extends \XLite\Base
     }
 
     /**
-     * setWidgetParams
+     * Set widget params
      *
      * @param array $params handler params
      *
@@ -199,13 +199,9 @@ abstract class Handler extends \XLite\Base
             $this->defineWidgetParams();
         }
 
-        if (isset($param)) {
-            $result = isset($this->widgetParams[$param]) ? $this->widgetParams[$param] : null;
-        } else {
-            $result = $this->widgetParams;
-        }
-
-        return $result;
+        return isset($param)
+            ? (isset($this->widgetParams[$param]) ? $this->widgetParams[$param] : null)
+            : $this->widgetParams;
     }
 
     /**
@@ -217,15 +213,12 @@ abstract class Handler extends \XLite\Base
      */
     public function getWidgetSettings()
     {
-        $result = array();
-
-        foreach ($this->getWidgetParams() as $name => $param) {
-            if ($param->isSetting) {
-                $result[$name] = $param;
+        return array_filter(
+            $this->getWidgetParams(),
+            function (\XLite\Model\WidgetParam\AWidgetParam $param) {
+                return $param->isSetting;
             }
-        }
-
-        return $result;
+        );
     }
 
     /**
