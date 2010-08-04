@@ -128,6 +128,30 @@ class Converter extends \XLite\Base\Singleton
     }
 
     /**
+     * Parse string into array
+     *
+     * @param array  $params    params list
+     * @param string $glue      char to agglutinate "name" and "value"
+     * @param string $separator char to agglutinate <"name", "value"> pairs
+     * @param string $quotes    char to quote the "value" param
+     *
+     * @return string
+     * @access public
+     * @since  3.0
+     */
+    public static function parseQuery($query, $glue = '=', $separator = '&', $quotes = '')
+    {
+        $result = array();
+
+        foreach (explode($separator, $query) as $part) {
+            list($key, $value) = explode($glue, $part);
+            $result[$key] = $quotes . $value . $quotes;
+        }
+
+        return $result;
+    }
+
+    /**
      * Compose controller class name using target
      * 
      * @param string $target current target

@@ -214,6 +214,19 @@ abstract class APager extends \XLite\View\AView
                 'Show "Items per page" selector', true, true
             ),
         );
+    }
+
+    /**
+     * Define so called "request" parameters
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineRequestParams()
+    {
+        parent::defineRequestParams();
 
         $this->requestParams[] = self::PARAM_PAGE_ID;
         $this->requestParams[] = self::PARAM_ITEMS_PER_PAGE;

@@ -152,22 +152,27 @@ abstract class CMSConnector extends \XLite\Base\Singleton
     }
 
     /**
-     * getCategoryCleanURL
+     * getCategoryCleanURL 
      * 
-     * @param int $categoryId category ID
+     * @param int   $id     category ID
+     * @param array $params URL params
      *  
      * @return string|null
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getCategoryCleanURL($categoryId)
+    protected function getCategoryCleanURL($id, array $params = array())
     {
-        $category = \XLite\Core\Database::getRepo('\XLite\Model\Category')->find($categoryId);
+        $url = null;
+        $category = \XLite\Core\Database::getRepo('\XLite\Model\Category')->find($id);
 
-        return (isset($category) && $category->getCleanUrl())
-            ? preg_replace('/\/+$/Ss', '', $category->getCleanUrl()) . '/'
-            : null;
+        if (isset($category) && $category->getCleanUrl()) {
+            $url =  \Includes\Utils\URLManager::trimTrailingSlashes($category->getCleanUrl());
+            $url .= '/' . \XLite\Core\Converter::buildQuery($params, '-', '/');
+        }
+
+        return $url;
     }
 
     /**
@@ -474,11 +479,21 @@ abstract class CMSConnector extends \XLite\Base\Singleton
     {
         $url = null;
 
-        if (in_array($args['target'], $this->getCleanURLTargets())) {
-            $idParam = $args['target'] . '_id';
+        $target = $args['target'];
+        unset($args['target']);
 
-            if (!empty($args[$idParam])) {
-                $url = $this->{'get' . ucfirst($args['target']) . 'CleanURL'}($args[$idParam]);
+        if (in_array($target, $this->getCleanURLTargets())) {
+
+            if (!empty($args[$target . '_id'])) {
+
+                $id = $args[$target . '_id'];
+                unset($args[$target . '_id']);
+
+                if (empty($args['action'])) {
+                    unset($args['action']);
+                }
+
+                $url = $this->{'get' . ucfirst($target) . 'CleanURL'}($id, $args);
             }
         }
 
@@ -514,18 +529,18 @@ abstract class CMSConnector extends \XLite\Base\Singleton
         }
 
         // By category
-
         if (!$cleanUrl) {
+            $parts = preg_split('\'/\'', $path, 2,  PREG_SPLIT_NO_EMPTY);
+            $category = \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategoryByCleanUrl($parts[0]);
 
-            $category = \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategoryByCleanUrl(preg_replace('/\/+$/Ss', '', $path));
             if ($category) {
-                $cleanUrl = \XLite\Core\Converter::buildURL(
-                    'category',
-                    '',
-                    array('category_id' => $category->category_id)
-                );
-            }
+                $params  = array('category_id' => $category->getCategoryId());
+                if (!empty($parts[1])) {
+                    $params += \XLite\Core\Converter::parseQuery($parts[1], '-', '/');
+                }
 
+                $cleanUrl = \XLite\Core\Converter::buildURL('category', '', $params);
+            }
         }
 
         return $cleanUrl;

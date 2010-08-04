@@ -226,7 +226,8 @@ class ConfigParser extends AUtils
      */
     protected static function setWedDirWOSlash()
     {
-        static::$options['host_details']['web_dir_wo_slash'] = rtrim(static::$options['host_details']['web_dir'], '/');
+        static::$options['host_details']['web_dir_wo_slash'] 
+            = \Includes\Utils\URLManager::trimTrailingSlashes(static::$options['host_details']['web_dir']);
     }
 
 

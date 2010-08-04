@@ -196,6 +196,19 @@ class PagerOrig extends AView
                 'Show "Items per page" selector', true, true
             ),
         );
+    }
+
+    /**
+     * Define so called "request" parameters
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineRequestParams()
+    {
+        parent::defineRequestParams();
 
         $this->requestParams[] = self::PARAM_PAGE_ID;
     }

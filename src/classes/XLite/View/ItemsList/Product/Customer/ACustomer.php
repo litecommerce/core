@@ -172,6 +172,19 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
                 'The maximum number of products displayed in sidebar', 5, true
             ),
         );
+    }
+
+    /**
+     * Define so called "request" parameters
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineRequestParams()
+    {
+        parent::defineRequestParams();
 
         $this->requestParams[] = self::PARAM_DISPLAY_MODE;
     }

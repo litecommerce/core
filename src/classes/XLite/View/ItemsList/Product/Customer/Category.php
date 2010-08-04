@@ -96,6 +96,19 @@ class Category extends \XLite\View\ItemsList\Product\Customer\ACustomer
         $this->widgetParams += array(
             self::PARAM_CATEGORY_ID => new \XLite\Model\WidgetParam\ObjectId\Category('Category ID', 0),
         );
+    }
+
+    /**
+     * Define so called "request" parameters
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineRequestParams()
+    {
+        parent::defineRequestParams();
 
         $this->requestParams[] = self::PARAM_CATEGORY_ID;
     }
@@ -138,7 +151,7 @@ class Category extends \XLite\View\ItemsList\Product\Customer\ACustomer
      */
     protected function addOrderByCondition(\XLite\Core\CommonCell $cnd)
     {
-        $cnd->{\XLite\Model\Repo\Product::P_ORDER_BY} =  array($this->getSortBy(), $this->getSortOrder());
+        $cnd->{\XLite\Model\Repo\Product::P_ORDER_BY} = array($this->getSortBy(), $this->getSortOrder());
 
         return $cnd;
     }
@@ -164,24 +177,6 @@ class Category extends \XLite\View\ItemsList\Product\Customer\ACustomer
 
         return $result;
     }
-
-    /**
-     * Fetch param value from current session
-     * FIXME - need a common approach to manage such situations
-     *
-     * @param string $param parameter name
-     *
-     * @return mixed
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getSavedRequestParam($param)
-    {
-        return self::PARAM_CATEGORY_ID == $param
-            ? \XLite\Core\Request::getInstance()->$param
-            : parent::getSavedRequestParam($param);
-    }
-
 
     /**
      * Return list of targets allowed for this widget

@@ -86,8 +86,6 @@ class FeaturedProducts extends \XLite\View\ItemsList\Product\Customer\ACustomer
             self::PARAM_CATEGORY_ID => new \XLite\Model\WidgetParam\ObjectId\Category('Category ID', 0, false),
         );
 
-        $this->requestParams[] = self::PARAM_CATEGORY_ID;
-
         $this->widgetParams[self::PARAM_DISPLAY_MODE]->setValue($this->config->FeaturedProducts->featured_products_look);
 
         $this->widgetParams[self::PARAM_GRID_COLUMNS]->setValue(3);
@@ -100,6 +98,21 @@ class FeaturedProducts extends \XLite\View\ItemsList\Product\Customer\ACustomer
         $this->widgetParams[self::PARAM_SHOW_DISPLAY_MODE_SELECTOR]->setValue(false);
         $this->widgetParams[self::PARAM_SHOW_ALL_ITEMS_PER_PAGE]->setValue(true);
         $this->widgetParams[self::PARAM_SHOW_SORT_BY_SELECTOR]->setValue(false);
+    }
+
+    /**
+     * Define so called "request" parameters
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineRequestParams()
+    {
+        parent::defineRequestParams();
+
+        $this->requestParams[] = self::PARAM_CATEGORY_ID;
     }
 
     /**

@@ -79,6 +79,19 @@ class EditLabel extends \XLite\View\AView
         $this->widgetParams += array(
             self::PARAM_LABEL_ID => new \XLite\Model\WidgetParam\Int('Label id', null),
         );
+    }
+
+    /**
+     * Define so called "request" parameters
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineRequestParams()
+    {
+        parent::defineRequestParams();
 
         $this->requestParams[] = self::PARAM_LABEL_ID;
     }

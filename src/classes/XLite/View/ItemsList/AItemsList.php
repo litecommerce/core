@@ -176,7 +176,6 @@ abstract class AItemsList extends \XLite\View\Container
     protected function getPagerParams()
     {
         return array(
-            self::PARAM_SESSION_CELL => $this->getSessionCell(),
             \XLite\View\Pager\APager::PARAM_ITEMS_COUNT => $this->getDataCount($this->getSearchCondition()),
         );
     }
@@ -310,9 +309,6 @@ abstract class AItemsList extends \XLite\View\Container
                     'Sort order', $this->getSortOrderModeDefault(), false, $this->getSortOrderModes()
                 ),
             );
-
-            $this->requestParams[] = self::PARAM_SORT_BY;
-            $this->requestParams[] = self::PARAM_SORT_ORDER;
         }
     }
 
@@ -346,7 +342,7 @@ abstract class AItemsList extends \XLite\View\Container
     protected function getCommonParams()
     {
         if (!isset($this->commonParams)) {
-            $this->commonParams = array('action' => '') + $this->getRequestParams();
+            $this->commonParams = array('action' => '') + $this->getRequestParamsHash();
         }
 
         return $this->commonParams;
@@ -480,30 +476,22 @@ abstract class AItemsList extends \XLite\View\Container
         return parent::isVisible() && $this->getPageData();
     }
 
-
     /**
-     * Get a list of CSS files required to display the widget properly
+     * Define so called "request" parameters
      *
-     * @return array
-     * @access public
+     * @return void
+     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getCSSFiles()
+    protected function defineRequestParams()
     {
-        return array_merge(parent::getCSSFiles(), $this->getPager()->getCSSFiles());
+        parent::defineRequestParams();
+
+        $this->requestParams[] = self::PARAM_SORT_BY;
+        $this->requestParams[] = self::PARAM_SORT_ORDER;
     }
 
-    /**
-     * Get a list of JavaScript files required to display the widget properly
-     *
-     * @return array
-     * @access public
-     * @since  3.0.0
-     */
-    public function getJSFiles()
-    {
-        return array_merge(parent::getJSFiles(), array('popup/jquery.blockUI.js'), $this->getPager()->getJSFiles());
-    }
 
     /**
      * Initialize widget (set attributes)
@@ -520,6 +508,21 @@ abstract class AItemsList extends \XLite\View\Container
 
         // Do not change call order
         $this->widgetParams += $this->getPager()->getWidgetParams();
-        $this->requestParams = array_merge($this->requestParams, array_keys($this->getPager()->getRequestParams()));
+        $this->requestParams = array_merge($this->requestParams, $this->getPager()->getRequestParams());
+    }
+
+    /**
+     * Get a list of JavaScript files required to display the widget properly
+     *
+     * @return array
+     * @access public
+     * @since  3.0.0
+     */
+    public function getJSFiles()
+    {
+        $list = parent::getJSFiles();
+        $list[] = 'popup/jquery.blockUI.js';
+
+        return $list;
     }
 }

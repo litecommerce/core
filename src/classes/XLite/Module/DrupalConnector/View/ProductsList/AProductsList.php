@@ -62,7 +62,22 @@ abstract class AProductsList extends \XLite\View\ItemsList\Product\Customer\ACus
                     'Block delta', ''
                 ),
             );
+        }
+    }
 
+    /**
+     * Define so called "request" parameters
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineRequestParams()
+    {
+        parent::defineRequestParams();
+
+        if (\XLite\Module\DrupalConnector\Handler::getInstance()->checkCurrentCMS()) {
             $this->requestParams[] = self::PARAM_BLOCK_DELTA;
         }
     }

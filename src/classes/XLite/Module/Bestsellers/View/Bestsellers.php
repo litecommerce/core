@@ -98,8 +98,6 @@ class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
             ),
         );
 
-        $this->requestParams[] = self::PARAM_CATEGORY_ID;
-
         $this->widgetParams[self::PARAM_WIDGET_TYPE]->setValue(
             $this->config->Bestsellers->bestsellers_menu
             ? self::WIDGET_TYPE_SIDEBAR
@@ -119,6 +117,21 @@ class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
         $this->widgetParams[self::PARAM_SHOW_SORT_BY_SELECTOR]->setValue(false);
         $this->widgetParams[self::PARAM_SORT_BY]->setValue('Name');
         $this->widgetParams[self::PARAM_SORT_ORDER]->setValue('asc');
+    }
+
+    /**
+     * Define so called "request" parameters
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineRequestParams()
+    {
+        parent::defineRequestParams();
+
+        $this->requestParams[] = self::PARAM_CATEGORY_ID;
     }
 
     /**

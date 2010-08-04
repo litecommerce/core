@@ -88,8 +88,6 @@ class RelatedProducts extends \XLite\View\ItemsList\Product\Customer\ACustomer
             self::PARAM_PRODUCT_ID => new \XLite\Model\WidgetParam\ObjectId\Product('Product ID', 0, false),
         );
 
-        $this->requestParams[] = self::PARAM_PRODUCT_ID;
-
         $this->widgetParams[self::PARAM_DISPLAY_MODE]->setValue($this->config->ProductAdviser->rp_template);
         $this->widgetParams[self::PARAM_GRID_COLUMNS]->setValue($this->config->ProductAdviser->rp_columns);
         $this->widgetParams[self::PARAM_SHOW_DESCR]->setValue($this->config->ProductAdviser->rp_show_descr);
@@ -101,6 +99,21 @@ class RelatedProducts extends \XLite\View\ItemsList\Product\Customer\ACustomer
         $this->widgetParams[self::PARAM_SHOW_SORT_BY_SELECTOR]->setValue(false);
         $this->widgetParams[self::PARAM_SORT_BY]->setValue('Name');
         $this->widgetParams[self::PARAM_SORT_ORDER]->setValue('asc');
+    }
+
+    /** 
+     * Define so called "request" parameters
+     *  
+     * @return void
+     * @access protected                                                             
+     * @see    ____func_see____                                                      
+     * @since  3.0.0
+     */             
+    protected function defineRequestParams()
+    {
+        parent::defineRequestParams();
+        
+        $this->requestParams[] = self::PARAM_PRODUCT_ID;
     }
 
     /**
