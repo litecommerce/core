@@ -242,7 +242,7 @@ OUT;
             'MaxRightPos'
         );
 
-        $cellPrefix = 'XLiteModel_Category.data.';
+        $cellPrefix = 'Model_Category.data.';
         $cellSuffix = '.testcase';
 
         $cacheDriver = \XLite\Core\Database::getCacheDriver();
