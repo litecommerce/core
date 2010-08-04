@@ -58,32 +58,6 @@ class Base extends Base\Singleton
 
 
     /**
-     * Stop script execution 
-     * 
-     * @param string $message text to display
-     *  
-     * @return void
-     * @access protected
-     * @since  3.0
-     */
-    protected function doDie($message)
-    {
-        if (!($this instanceof \XLite\Logger)) {
-            \XLite\Logger::getInstance()->log($message, PEAR_LOG_ERR);
-        }
-
-        if (
-            $this instanceof XLite
-            || \XLite::getInstance()->getOptions(array('log_details', 'suppress_errors'))
-        ) {
-            $message = 'Internal error. Contact the site administrator.';
-        }
-
-        die ($message);
-    }
-
-
-    /**
      * "Magic" getter. It's called when object property is not found
      * FIXME - backward compatibility
      * 

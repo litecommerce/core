@@ -48,7 +48,21 @@ abstract class AProduct extends \XLite\View\ItemsList\AItemsList
 
 
     /**
+     * Return name of the base widgets list
+     *
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getListName()
+    {
+        return parent::getListName() . '.product';
+    }
+
+    /**
      * Get widget templates directory
+     * NOTE: do not use "$this" pointer here (see "get[CSS/JS]Files()")
      *
      * @return string
      * @access protected
@@ -57,7 +71,7 @@ abstract class AProduct extends \XLite\View\ItemsList\AItemsList
      */
     protected function getDir()
     {
-        return 'products_list';
+        return parent::getDir() . '/product';
     }
 
     /**
@@ -91,6 +105,7 @@ abstract class AProduct extends \XLite\View\ItemsList\AItemsList
         return self::SORT_BY_MODE_DEFAULT;
     }
 
+
     /**
      * Get a list of CSS files required to display the widget properly
      *
@@ -101,7 +116,9 @@ abstract class AProduct extends \XLite\View\ItemsList\AItemsList
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
-        $list[] = $this->getDir() . '/products_list.css';
+
+        // Static call of the non-static function
+        $list[] = self::getDir() . '/products_list.css';
 
         return $list;
     }
@@ -116,7 +133,9 @@ abstract class AProduct extends \XLite\View\ItemsList\AItemsList
     public function getJSFiles()
     {
         $list = parent::getJSFiles();
-        $list[] = $this->getDir() . '/products_list.js';
+
+        // Static call of the non-static function
+        $list[] = self::getDir() . '/products_list.js';
 
         return $list;
     }

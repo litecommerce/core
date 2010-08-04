@@ -121,6 +121,19 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
 
 
     /**
+     * Return name of the base widgets list
+     *
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getListName()
+    {
+        return parent::getListName() . '.customer.' . $this->getDisplayMode();
+    }
+
+    /**
      * Define widget parameters
      *
      * @return void
@@ -216,30 +229,6 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
     }
 
     /**
-     * isDisplayModeAdjustable
-     *
-     * @return bool
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function isDisplayModeAdjustable()
-    {
-        return $this->getParam(self::PARAM_SHOW_DISPLAY_MODE_SELECTOR) && !$this->isSideBarBox();
-    }
-
-    /**
-     * isSortBySelectorVisible
-     *
-     * @return bool
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function isSortBySelectorVisible()
-    {
-        return $this->getParam(self::PARAM_SHOW_SORT_BY_SELECTOR) && !$this->isSideBarBox();
-    }
-
-    /**
      * Return dir which contains the page body template
      *
      * @return string
@@ -261,7 +250,49 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      */
     protected function isPagerVisible()
     {
-        return !$this->getParam(self::PARAM_SHOW_ALL_ITEMS_PER_PAGE) && !$this->isSideBarBox();
+        return parent::isPagerVisible() 
+            && !$this->getParam(self::PARAM_SHOW_ALL_ITEMS_PER_PAGE) 
+            && !$this->isSideBarBox();
+    }
+
+    /**
+     * isDisplayModeSelectorVisible
+     * 
+     * @return bool
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isDisplayModeSelectorVisible()
+    {
+        return $this->getParam(self::PARAM_SHOW_DISPLAY_MODE_SELECTOR);
+    }
+
+    /**
+     * isSortBySelectorVisible
+     * 
+     * @return bool
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isSortBySelectorVisible()
+    {
+        return $this->getParam(self::PARAM_SHOW_SORT_BY_SELECTOR);
+    }
+
+    /**
+     * isHeaderVisisble
+     *
+     * @return bool
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isHeaderVisisble()
+    {
+        return !$this->isSideBarBox()
+            && ($this->isDisplayModeSelectorVisible() || $this->isSortBySelectorVisible());
     }
 
     /**
@@ -531,6 +562,19 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
     protected function getMoreLinkText()
     {
         return 'More...';
+    }
+
+    /**
+     * getJSHandlerClassName
+     *
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getJSHandlerClassName()
+    {
+        return 'ProductsList';
     }
 
 
