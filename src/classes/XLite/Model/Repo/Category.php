@@ -80,23 +80,43 @@ class Category extends \XLite\Model\Repo\Base\I18n
         $list = parent::defineCacheCells();
 
         $list[$this->cachePrefix . '_Details'] = array(
-            self::ATTRS_CACHE_CELL => array('category_id')
+            self::ATTRS_CACHE_CELL    => array('category_id'),
+            self::RELATION_CACHE_CELL => array(
+                'XLite\Model\Membership',
+                'XLite\Model\Image\Category\Image',
+            ),
         );
 
         $list[$this->cachePrefix . '_FullTree'] = array(
-            self::ATTRS_CACHE_CELL => array('category_id')
+            self::ATTRS_CACHE_CELL    => array('category_id'),
+            self::RELATION_CACHE_CELL => array(
+                'XLite\Model\CategoryProducts',
+                'XLite\Model\Image\Category\Image',
+            ),
         );
 
         $list[$this->cachePrefix . '_FullTreeHash'] = array(
-            self::ATTRS_CACHE_CELL => array('category_id')
+            self::ATTRS_CACHE_CELL => array('category_id'),
+            self::RELATION_CACHE_CELL => array(
+                'XLite\Model\CategoryProducts',
+                'XLite\Model\Image\Category\Image',
+            ),
         );
 
         $list[$this->cachePrefix . '_NodePath'] = array(
-            self::ATTRS_CACHE_CELL => array('category_id')
+            self::ATTRS_CACHE_CELL    => array('category_id'),
+            self::RELATION_CACHE_CELL => array(
+                'XLite\Model\Membership',
+                'XLite\Model\Image\Category\Image',
+            ),
         );
 
         $list[$this->cachePrefix . '_ByCleanUrl'] = array(
-            self::ATTRS_CACHE_CELL => array('clean_url')
+            self::ATTRS_CACHE_CELL    => array('clean_url'),
+            self::RELATION_CACHE_CELL => array(
+                'XLite\Model\Membership',
+                'XLite\Model\Image\Category\Image',
+            ),
         );
 
         $list[$this->cachePrefix . '_LeafNodes'] = array();
@@ -447,7 +467,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
     protected function defineLeafNodesQuery()
     {
         return $this->createQueryBuilder('n')
-            ->andWhere('n.rpos = n.lpos+1');
+            ->andWhere('n.rpos = n.lpos + 1');
     }
 
     /**
