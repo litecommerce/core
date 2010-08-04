@@ -210,7 +210,7 @@ class ConfigParser extends AUtils
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected static function exceuteMutators()
+    protected static function executeMutators()
     {
         foreach (static::$mutators as $method) {
             static::$method();
@@ -245,7 +245,7 @@ class ConfigParser extends AUtils
     {
         if (!isset(static::$options)) {
             static::$options = array_replace_recursive(static::parseMainFile(), static::parseLocalFile());
-            static::exceuteMutators();
+            static::executeMutators();
         }
 
         return static::getOptionsByNames(is_array($names) ? $names : array($names), static::$options);

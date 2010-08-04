@@ -888,6 +888,19 @@ abstract class AView extends \XLite\Core\Handler
 
 
     /**
+     * concat 
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function concat()
+    {
+        return implode('', func_get_args());
+    }
+
+    /**
      * Compares two values 
      * 
      * @param mixed $val1 value 1
@@ -1460,6 +1473,35 @@ abstract class AView extends \XLite\Core\Handler
             sprintf($replace, $this->getViewListContent($list)),
             $content
         );
+    }
+
+    /**
+     * Return current list name
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getListName()
+    {
+        return null;
+    }
+
+    /**
+     * displayListPart 
+     * 
+     * @param string $part   list part name
+     * @param array  $params widget params
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function displayListPart($part, array $params = array())
+    {
+        $this->displayViewListContent($this->getListName() . '.' . $part, $params);
     }
 
     /**

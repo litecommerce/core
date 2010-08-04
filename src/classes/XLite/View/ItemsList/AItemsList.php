@@ -115,6 +115,46 @@ abstract class AItemsList extends \XLite\View\Container
 
 
     /**
+     * Return name of the base widgets list
+     *
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getListName()
+    {
+        return 'itemsList';
+    }
+
+    /**
+     * Get widget templates directory
+     * NOTE: do not use "$this" pointer here (see "getBody()" and "get[CSS/JS]Files()")
+     *
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getDir()
+    {
+        return 'items_list';
+    }
+
+    /**
+     * Return file name for the center part template
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getBody()
+    {
+        // Static call of the non-static function
+        return self::getDir() . LC_DS . $this->getBodyTemplate();
+    }
+
+    /**
      * Return default template
      * See setWidgetParams()
      *
@@ -155,18 +195,6 @@ abstract class AItemsList extends \XLite\View\Container
     }
 
     /**
-     * getPagerName
-     *
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getPagerName()
-    {
-        return 'pager';
-    }
-
-    /**
      * Get pager parameters list
      *
      * @return array
@@ -177,14 +205,16 @@ abstract class AItemsList extends \XLite\View\Container
     {
         return array(
             \XLite\View\Pager\APager::PARAM_ITEMS_COUNT => $this->getDataCount($this->getSearchCondition()),
+            \XLite\View\Pager\APager::PARAM_LIST_REQUEST_PARAMS => $this->getCommonParams(),
         );
     }
 
     /**
      * Get pager
-     *
+     * 
      * @return \XLite\View\PagerOrig
      * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getPager()
@@ -194,18 +224,6 @@ abstract class AItemsList extends \XLite\View\Container
         }
 
         return $this->pager;
-    }
-
-    /**
-     * Check - pages list is visible or not
-     *
-     * @return bool
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function isPagesListVisible()
-    {
-        return 1 < $this->getPager()->getPagesCount();
     }
 
     /**
@@ -300,7 +318,6 @@ abstract class AItemsList extends \XLite\View\Container
         parent::defineWidgetParams();
 
         if ($this->getSortByModes()) {
-
             $this->widgetParams += array(
                 self::PARAM_SORT_BY => new \XLite\Model\WidgetParam\Set(
                     'Sort by', $this->getSortByModeDefault(), false, $this->getSortByModes()
@@ -310,6 +327,19 @@ abstract class AItemsList extends \XLite\View\Container
                 ),
             );
         }
+    }
+
+    /**
+     * getJSHandlerClassName 
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getJSHandlerClassName()
+    {
+        return 'ItemsList';
     }
 
     /**
@@ -342,7 +372,10 @@ abstract class AItemsList extends \XLite\View\Container
     protected function getCommonParams()
     {
         if (!isset($this->commonParams)) {
-            $this->commonParams = array('action' => '') + $this->getRequestParamsHash();
+            $this->commonParams = array(
+                'action' => '',
+                self::PARAM_SESSION_CELL => $this->getSessionCell()
+            ) + $this->getRequestParamsHash();
         }
 
         return $this->commonParams;
@@ -477,6 +510,33 @@ abstract class AItemsList extends \XLite\View\Container
     }
 
     /**
+     * isHeaderVisisble 
+     * 
+     * @return bool
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isHeaderVisisble()
+    {
+        return false;
+    }
+
+    /**
+     * isFooterVisisble 
+     * 
+     * @return bool
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isFooterVisisble()
+    {
+        return false;
+    }
+
+
+    /**
      * Define so called "request" parameters
      *
      * @return void
@@ -522,6 +582,24 @@ abstract class AItemsList extends \XLite\View\Container
     {
         $list = parent::getJSFiles();
         $list[] = 'popup/jquery.blockUI.js';
+        // Static call of the non-static function
+        $list[] = self::getDir() . '/items_list.js';
+
+        return $list;
+    }
+
+    /**
+     * Get a list of CSS files required to display the widget properly
+     *
+     * @return array
+     * @access public
+     * @since  3.0.0
+     */
+    public function getCSSFiles()
+    {
+        $list = parent::getCSSFiles();
+        // Static call of the non-static function
+        $list[] = self::getDir() . '/items_list.css';
 
         return $list;
     }

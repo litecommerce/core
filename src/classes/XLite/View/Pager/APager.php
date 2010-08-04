@@ -41,23 +41,10 @@ abstract class APager extends \XLite\View\AView
      * Widget parameter names
      */
 
-    const PARAM_PAGE_ID        = 'pageId';
-    const PARAM_ITEMS_PER_PAGE = 'itemsPerPage';
-    const PARAM_ITEMS_COUNT    = 'itemsCount';
-    const PARAM_SHOW_ITEMS_PER_PAGE_SELECTOR = 'showItemsPerPageSelector';
-
-    /**
-     * Items-per-page range
-     */
-
-    const ITEMS_PER_PAGE_MIN = 1;
-    const ITEMS_PER_PAGE_MAX = 100;
-
-    /**
-     * It's the defeult valueof items to display per page 
-     */
-
-    const ITEMS_PER_PAGE_DEFAULT = 10;
+    const PARAM_PAGE_ID             = 'pageId';
+    const PARAM_ITEMS_COUNT         = 'itemsCount';
+    const PARAM_ONLY_PAGES          = 'onlyPages';
+    const PARAM_LIST_REQUEST_PARAMS = 'listRequestParams';
 
     /**
      * Page short names
@@ -79,15 +66,6 @@ abstract class APager extends \XLite\View\AView
     protected $pageId;
 
     /**
-     * itemsPerPage 
-     * 
-     * @var    int
-     * @access protected
-     * @since  3.0.0
-     */
-    protected $itemsPerPage;
-
-    /**
      * pagesCount 
      * 
      * @var    int
@@ -105,15 +83,53 @@ abstract class APager extends \XLite\View\AView
      */
     protected $pageURLs;
 
+
     /**
-     * pagesPerFrame 
+     * Return number of items per page
      * 
-     * @var    int
+     * @return int
      * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    protected $pagesPerFrame = 5;
+    abstract protected function getItemsPerPage();
 
+    /**
+     * Return number of pages to display
+     * 
+     * @return int
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    abstract protected function getPagesPerFrame();
+
+
+    /**
+     * Return current list name
+     *
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getListName()
+    {
+        return 'pager';
+    }
+
+    /**
+     * getDir 
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getDir()
+    {
+        return 'pager';
+    }
 
     /**
      * Return widget default template
@@ -124,7 +140,7 @@ abstract class APager extends \XLite\View\AView
      */
     protected function getDefaultTemplate()
     {
-        return 'common/pager.tpl';
+        return $this->getDir() . '/body.tpl';
     }
 
     /**
@@ -139,52 +155,19 @@ abstract class APager extends \XLite\View\AView
         return $this->getParam(self::PARAM_ITEMS_COUNT);
     }
 
-    /**
-     * getItemsPerPageDefault 
-     * 
-     * @return int
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getItemsPerPageDefault()
-    {
-        return self::ITEMS_PER_PAGE_DEFAULT;
-    }
-
-    /**
-     * getItemsPerPage 
-     * 
-     * @return int
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getItemsPerPage()
-    {
-        if (!isset($this->itemsPerPage)) {
-            $current = $this->getParam(self::PARAM_ITEMS_PER_PAGE);
-            $this->itemsPerPage = max(
-                min(self::ITEMS_PER_PAGE_MAX, $current),
-                max(self::ITEMS_PER_PAGE_MIN, $current)
-            );
-        }
-
-        return $this->itemsPerPage;
-    }
-
-    /**
+    /**     
      * Get pages count 
      * 
      * @return integer
-     * @access public
+     * @access protected
      * @since  3.0.0
      */
-    public function getPagesCount()
+    protected function getPagesCount()
     {
         if (!isset($this->pagesCount)) {
             $this->pagesCount = ceil($this->getItemsTotal() / $this->getItemsPerPage());
         }
-    
+
         return $this->pagesCount;
     }
 
@@ -204,14 +187,14 @@ abstract class APager extends \XLite\View\AView
             self::PARAM_PAGE_ID => new \XLite\Model\WidgetParam\Int(
                 'Page ID', 0
             ),
-            self::PARAM_ITEMS_PER_PAGE => new \XLite\Model\WidgetParam\Int(
-                'Items per page', $this->getItemsPerPageDefault(), true
-            ),
             self::PARAM_ITEMS_COUNT => new \XLite\Model\WidgetParam\Int(
                 'Items number', 0
             ),
-            self::PARAM_SHOW_ITEMS_PER_PAGE_SELECTOR => new \XLite\Model\WidgetParam\Checkbox(
-                'Show "Items per page" selector', true, true
+            self::PARAM_ONLY_PAGES => new \XLite\Model\WidgetParam\Bool(
+                'Only display pages list', false
+            ),
+            self::PARAM_LIST_REQUEST_PARAMS => new \XLite\Model\WidgetParam\Collection(
+                'Parent list request params', array()
             ),
         );
     }
@@ -229,19 +212,6 @@ abstract class APager extends \XLite\View\AView
         parent::defineRequestParams();
 
         $this->requestParams[] = self::PARAM_PAGE_ID;
-        $this->requestParams[] = self::PARAM_ITEMS_PER_PAGE;
-    }
-
-    /**
-     * isItemsPerPageSelectorVisible 
-     * 
-     * @return bool
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function isItemsPerPageSelectorVisible()
-    {
-        return $this->getParam(self::PARAM_SHOW_ITEMS_PER_PAGE_SELECTOR);
     }
 
     /**
@@ -276,7 +246,9 @@ abstract class APager extends \XLite\View\AView
      */
     protected function getPageURLParams($pageId)
     {
-        return array(self::PARAM_PAGE_ID => $pageId) + $this->getRequestParams();
+        return array(self::PARAM_PAGE_ID => $pageId) 
+            + $this->getRequestParamsHash() 
+            + $this->getParam(self::PARAM_LIST_REQUEST_PARAMS);
     }
 
     /**
@@ -302,7 +274,7 @@ abstract class APager extends \XLite\View\AView
      */
     protected function getFrameStartPage()
     {
-        $pageId = $this->getPageId() - ceil($this->pagesPerFrame / 2);
+        $pageId = $this->getPageId() - ceil($this->getPagesPerFrame() / 2);
 
         return (0 > $pageId) ? 0 : $pageId;
     }
@@ -320,7 +292,7 @@ abstract class APager extends \XLite\View\AView
             $this->pageURLs[$i] = $this->buildUrlByPageId($i);
         }
 
-        $this->pageURLs = array_slice($this->pageURLs, $this->getFrameStartPage(), $this->pagesPerFrame, true);
+        $this->pageURLs = array_slice($this->pageURLs, $this->getFrameStartPage(), $this->getPagesPerFrame(), true);
     }
 
     /**
@@ -467,15 +439,53 @@ abstract class APager extends \XLite\View\AView
     }
 
     /**
-     * Check if widget is visible
+     * Check if pages list is visible or not
      *
      * @return bool
-     * @access public
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function isPagesListVisible()
+    {
+        return 1 < $this->getPagesCount();
+    }
+
+    /**
+     * isItemsPerPageVisible
+     * 
+     * @return bool
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isItemsPerPageVisible()
+    {
+        return !((bool) $this->getParam(self::PARAM_ONLY_PAGES));
+    }
+
+    /**
+     * isItemsPerPageSelectorVisible
+     *
+     * @return bool
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function isItemsPerPageSelectorVisible()
+    {
+        return true;
+    }
+
+    /**
+     * isVisible 
+     * 
+     * @return bool
+     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function isVisible()
     {
-        return parent::isVisible() && (1 < $this->getPagesCount());
+        return $this->isPagesListVisible() || $this->isItemsPerPageVisible();
     }
 
 
@@ -489,7 +499,7 @@ abstract class APager extends \XLite\View\AView
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
-        $list[] = 'common/pager.css';
+        $list[] = $this->getDir() . '/pager.css';
 
         return $list;
     }

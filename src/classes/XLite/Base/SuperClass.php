@@ -53,6 +53,32 @@ abstract class SuperClass
 
 
     /**
+     * Stop script execution
+     * FIXME - must be static
+     *
+     * @param string $message text to display
+     *
+     * @return void
+     * @access protected
+     * @since  3.0
+     */
+    protected function doDie($message)
+    {
+        if (!($this instanceof \XLite\Logger)) {
+            \XLite\Logger::getInstance()->log($message, PEAR_LOG_ERR);
+        }
+
+        if (
+            $this instanceof XLite
+            || \XLite::getInstance()->getOptions(array('log_details', 'suppress_errors'))
+        ) {
+            $message = 'Internal error. Contact the site administrator.';
+        }
+
+        die ($message);
+    }
+
+    /**
      * Language label translation short method
      *
      * @param string $name      label name

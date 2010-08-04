@@ -38,6 +38,19 @@ namespace XLite\View\ItemsList\Product\Admin;
 abstract class AAdmin extends \XLite\View\ItemsList\Product\AProduct
 {
     /**
+     * Return name of the base widgets list
+     *
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getListName()
+    {
+        return parent::getListName() . '.admin';
+    }
+
+    /**
      * Return dir which contains the page body template
      *
      * @return string

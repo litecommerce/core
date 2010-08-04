@@ -54,7 +54,7 @@ class Category extends \XLite\View\ItemsList\Product\Customer\ACustomer
      */
     protected function getPagerClass()
     {
-        return '\XLite\View\Pager\ProductsList\CategoryProducts';
+        return '\XLite\View\Pager\Customer\Product\Category';
     }
 
     /**
