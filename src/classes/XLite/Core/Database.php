@@ -272,7 +272,8 @@ class Database extends \XLite\Base\Singleton
         }
 
         if (isset($options['namespace']) && $options['namespace']) {
-            $cache->setNamespace($options['namespace']);
+            // TODO - namespace temporary is empty - bug into Doctrine\Common\Cache\AbstractCache::deleteByPrefix()
+            //$cache->setNamespace($options['namespace']);
         }
 
         return $cache;
