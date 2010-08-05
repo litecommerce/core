@@ -1238,7 +1238,10 @@ class Decorator extends Decorator\ADecorator
         $entityGenerator->setNumSpaces(4);
         $entityGenerator->setClassToExtend('\XLite\Model\AEntity');
 
-        $entityGenerator->generate(\Includes\Decorator\Utils\Doctrine\EntityManager::getAllMetadata(), LC_CLASSES_CACHE_DIR);
+        $entityGenerator->generate(
+            \Includes\Decorator\Utils\Doctrine\EntityManager::getAllMetadata(),
+            LC_CLASSES_CACHE_DIR
+        );
 
         $this->postGenerateModels();
     }

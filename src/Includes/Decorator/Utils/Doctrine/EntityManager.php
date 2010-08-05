@@ -93,7 +93,17 @@ class EntityManager extends ADoctrine
      */
     protected static function setMetadataDriver(\Doctrine\ORM\Configuration $config)
     {
-        $config->setMetadataDriverImpl($config->newDefaultAnnotationDriver(LC_MODEL_CACHE_DIR));
+        $chain = new \Doctrine\ORM\Mapping\Driver\DriverChain();
+        $chain->addDriver(
+            $config->newDefaultAnnotationDriver(LC_MODEL_CACHE_DIR),
+            'XLite\Model'
+        );
+        $chain->addDriver(
+            $config->newDefaultAnnotationDriver(LC_CLASSES_CACHE_DIR . 'XLite' . LC_DS . 'Module'),
+            'XLite\Module'
+        );
+
+        $config->setMetadataDriverImpl($chain);
     }
 
     /**
