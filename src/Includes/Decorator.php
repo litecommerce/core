@@ -422,7 +422,7 @@ class Decorator extends Decorator\ADecorator
      * @access protected
      * @since  3.0
      */
-    protected function parseClassFile(array $info, $savePath)
+    protected function parseClassFile(array $info, $savePath, $class)
     {
         $content = isset($info[self::INFO_FILE]) ? trim(file_get_contents(LC_CLASSES_DIR . $info[self::INFO_FILE])) : '';
 
@@ -454,22 +454,18 @@ class Decorator extends Decorator\ADecorator
             $content = preg_replace('/^namespace (.+);/Sm', 'namespace ' . $namespace . ';', $content);
 
             // Add MappedSuperclass attribute
-            $parent = null;
-            foreach (array(self::INFO_EXTENDS_ORIG, self::INFO_CLASS_ORIG) as $index) {
-                if (!empty($info[$index])) {
-                    $parent = $info[$index];
-                    break;
-                }
-            }
-
-            if ($parent && isset($this->classesInfo[$parent]) && $this->classesInfo[$parent][self::INFO_ENTITY]) {
+            if ($this->isDecoratedEntity($info[self::INFO_CLASS_ORIG])) {
                 $comment = $this->getClassComment($content);
                 if ($comment) {
                     $newComment = $this->modifyParentEntityClassComment($comment);
                     $content = str_replace($comment, $newComment, $content);
 
                 } elseif (preg_match(self::CLASS_PATTERN, $content, $matches)) {
-                    $content = str_replace($matches[0], '/** @MappedSuperclass */' . "\n" . $matches[0], $content);
+                    $content = str_replace(
+                        $matches[0],
+                        '/**' . "\n" . ' * @MappedSuperclass' . "\n" . ' */' . "\n" . $matches[0],
+                        $content
+                    );
                 }
             }
 
@@ -502,7 +498,35 @@ class Decorator extends Decorator\ADecorator
     }
 
     /**
-     * Modify class comment (if class - entity parent)
+     * Check - is class decorated entity or not
+     * 
+     * @param string $class Class name
+     *  
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isDecoratedEntity($class)
+    {
+        static $cache = null;
+
+        if (!isset($cache)) {
+            $cache = array();
+
+            foreach ($this->classDecorators as $root => $list) {
+                if (isset($this->classesInfo[$root]) && $this->classesInfo[$root][self::INFO_ENTITY]) {
+                    $cache[] = $root;
+                    $cache = array_merge($cache, array_keys($list));
+                }
+            }
+        }
+
+        return in_array($class, $cache);
+    }
+
+    /**
+     * Modify class comment (insert MappedSuperclass attribute)
      * 
      * @param string $comment Comment
      *  
@@ -513,15 +537,21 @@ class Decorator extends Decorator\ADecorator
      */
     protected function modifyParentEntityClassComment($comment)
     {
-        $newComment = preg_replace(
-            '/^ \* @(?:' . implode('|', $this->doctrineClassAttributes) . ').*$/UiSm',
+        $comment = preg_replace(
+            '/^ \* @(?:' . implode('|', $this->doctrineClassAttributes) . ')(?:\s+\(?:.+\))?\s*$/UiSm',
             '',
             $comment
         );
-        $newComment = preg_replace('/' . "\n" . '{2,999}/Ss', "\n", $newComment);
-        $newComment = preg_replace('/ \*\//Ssi', ' * @MappedSuperclass' . "\n" . '$0', $newComment);
+        $comment = preg_replace(
+            '/ \* @(?:' . implode('|', $this->doctrineClassAttributes) . ')\s+\(.+ \* \)/UiSs',
+            '',
+            $comment
+        );
 
-        return $newComment;
+        $comment = preg_replace('/' . "\n" . '{2,999}/Ss', "\n", $comment);
+        $comment = preg_replace('/ \*\//Ssi', ' * @MappedSuperclass' . "\n" . '$0', $comment);
+
+        return $comment;
     }
 
     /**
@@ -1100,7 +1130,7 @@ class Decorator extends Decorator\ADecorator
             \Includes\Utils\FileManager::mkdirRecursive($dirName, 0755);
         }
 
-        file_put_contents($fileName, $this->parseClassFile($info, $fn));
+        file_put_contents($fileName, $this->parseClassFile($info, $fn, $class));
         chmod($fileName, 0644);
     }
 
