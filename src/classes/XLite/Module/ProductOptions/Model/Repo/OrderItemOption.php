@@ -26,20 +26,16 @@
  * @since      3.0.0
  */
 
-namespace XLite\Module\ProductOptions\Model;
+namespace XLite\Module\ProductOptions\Model\Repo;
 
 /**
- * ____description____
+ * Orer item option repository
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Category extends \XLite\Model\Category implements \XLite\Base\IDecorator
+class OrderItemOption extends \XLite\Model\ARepo
 {
-    function getStringPath() 
-    {
-        $path = parent::getStringPath();
-        return (string) $path;
-    }
 }
+

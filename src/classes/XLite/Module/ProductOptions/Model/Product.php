@@ -38,6 +38,17 @@ namespace XLite\Module\ProductOptions\Model;
 class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
 {
     /**
+     * Option groups (relation)
+     * 
+     * @var    \Doctrine\Common\Collections\ArrayCollection
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @OneToMany (targetEntity="XLite\Module\ProductOptions\Model\OptionGroup", mappedBy="product", cascade={"persist","remove"})
+     */
+    protected $optionGroups;
+
+    /**
      * Product options list (cache)
      * 
      * @var    array

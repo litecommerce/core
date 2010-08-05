@@ -350,14 +350,48 @@ INSERT INTO xlite_product_thumbnails VALUES (63,4063,'demo_store_t4063.jpeg','im
 
 -- OLD PRODUCTS
 
-INSERT INTO xlite_inventories SET `inventory_id` = '4003', `amount` = '496', `enabled` = '1', `low_avail_limit` = '0';
-INSERT INTO xlite_product_options SET `product_id` = '4003', `optclass` = 'Size', `opttext` = 'Size', `categories` = 'Radio button', `options` = 'S\nM\nL\nXL';
-INSERT INTO xlite_inventories SET `inventory_id` = '4004', `amount` = '965', `enabled` = '1', `low_avail_limit` = '50';
-INSERT INTO xlite_product_options SET `product_id` = '4004', `optclass` = 'Size', `opttext` = 'Size', `categories` = 'Radio button', `options` = 'S\nM\nL\nXL\nXXL';
+--INSERT INTO xlite_inventories SET `inventory_id` = '4003', `amount` = '496', `enabled` = '1', `low_avail_limit` = '0';
+INSERT INTO xlite_option_groups SET group_id = 4000, `product_id` = 4003, `view_type` = 'r', enabled = 1;
+INSERT INTO xlite_option_group_translations (id, code, name) VALUES (4000, 'en', 'Size');
+INSERT INTO xlite_options SET option_id = 4000, group_id = 4000, enabled = 1;
+INSERT INTO xlite_option_translations (id, code, name) VALUES (4000, 'en', 'S');
+INSERT INTO xlite_options SET option_id = 4001, group_id = 4000, enabled = 1;
+INSERT INTO xlite_option_translations (id, code, name) VALUES (4001, 'en', 'M');
+INSERT INTO xlite_options SET option_id = 4002, group_id = 4000, enabled = 1;
+INSERT INTO xlite_option_translations (id, code, name) VALUES (4002, 'en', 'L');
+INSERT INTO xlite_options SET option_id = 4003, group_id = 4000, enabled = 1;
+INSERT INTO xlite_option_translations (id, code, name) VALUES (4003, 'en', 'XL');
+
+--INSERT INTO xlite_inventories SET `inventory_id` = '4004', `amount` = '965', `enabled` = '1', `low_avail_limit` = '50';
+INSERT INTO xlite_option_groups SET group_id = 4001, `product_id` = 4004, `view_type` = 'r', enabled = 1;
+INSERT INTO xlite_option_group_translations (id, code, name) VALUES (4001, 'en', 'Size');
+INSERT INTO xlite_options SET option_id = 4004, group_id = 4001, enabled = 1;
+INSERT INTO xlite_option_translations (id, code, name) VALUES (4004, 'en', 'S');
+INSERT INTO xlite_options SET option_id = 4005, group_id = 4001, enabled = 1;
+INSERT INTO xlite_option_translations (id, code, name) VALUES (4005, 'en', 'M');
+INSERT INTO xlite_options SET option_id = 4006, group_id = 4001, enabled = 1;
+INSERT INTO xlite_option_translations (id, code, name) VALUES (4006, 'en', 'L');
+INSERT INTO xlite_options SET option_id = 4007, group_id = 4001, enabled = 1;
+INSERT INTO xlite_option_translations (id, code, name) VALUES (4007, 'en', 'XL');
+INSERT INTO xlite_options SET option_id = 4008, group_id = 4001, enabled = 1;
+INSERT INTO xlite_option_translations (id, code, name) VALUES (4008, 'en', 'XXL');
+
 INSERT INTO xlite_images SET `product_id` = '4004', `alt` = 'Front', `order_by` = '0', `image` = 'demo_store_d4004_1.jpeg', `image_height` = '355', `image_width` = '220', `image_type` = 'image/jpeg', `image_size` = '14696', `image_source` = 'F';
 INSERT INTO xlite_images SET `product_id` = '4004', `image` = 'demo_store_p4004.jpeg', `image_type` = 'image/jpeg', `image_width` = '489', `image_height` = '500', `image_size` = '115220', `image_source` = 'F', `is_zoom` = 'Y', `order_by` = '-1';
-INSERT INTO xlite_inventories SET `inventory_id` = '4009', `amount` = '172', `enabled` = '1', `low_avail_limit` = '150';
-INSERT INTO xlite_product_options SET `product_id` = '4009', `optclass` = 'Size', `opttext` = 'Size', `categories` = 'Radio button', `options` = 'S\nM\nL\nXL\nXXL=-10';
+
+--INSERT INTO xlite_inventories SET `inventory_id` = '4009', `amount` = '172', `enabled` = '1', `low_avail_limit` = '150';
+INSERT INTO xlite_option_groups SET group_id = 4002, `product_id` = 4009, `view_type` = 'r', enabled = 1;
+INSERT INTO xlite_option_group_translations (id, code, name) VALUES (4002, 'en', 'Size');
+INSERT INTO xlite_options SET option_id = 4009, group_id = 4002, enabled = 1;
+INSERT INTO xlite_option_translations (id, code, name) VALUES (4009, 'en', 'S');
+INSERT INTO xlite_options SET option_id = 4010, group_id = 4002, enabled = 1;
+INSERT INTO xlite_option_translations (id, code, name) VALUES (4010, 'en', 'M');
+INSERT INTO xlite_options SET option_id = 4011, group_id = 4002, enabled = 1;
+INSERT INTO xlite_option_translations (id, code, name) VALUES (4011, 'en', 'L');
+INSERT INTO xlite_options SET option_id = 4012, group_id = 4002, enabled = 1;
+INSERT INTO xlite_option_translations (id, code, name) VALUES (4012, 'en', 'XL');
+INSERT INTO xlite_options SET option_id = 4013, group_id = 4002, enabled = 1, price_modifier = -10, modifier_type = '$';
+INSERT INTO xlite_option_translations (id, code, name) VALUES (4013, 'en', 'XXL');
 INSERT INTO xlite_images SET `product_id` = '4009', `alt` = 'Close up', `order_by` = '0', `image` = 'demo_store_d4009_1.jpeg', `image_height` = '283', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '23325', `image_source` = 'F';
 INSERT INTO xlite_images SET `product_id` = '4009', `alt` = 'In use', `order_by` = '1', `image` = 'demo_store_d4009_2.jpeg', `image_height` = '491', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '23816', `image_source` = 'F';
 INSERT INTO xlite_images SET `product_id` = '4009', `image` = 'demo_store_p4009.gif', `image_type` = 'image/gif', `image_width` = '400', `image_height` = '473', `image_size` = '111939', `image_source` = 'F', `is_zoom` = 'Y', `order_by` = '-1';
@@ -382,24 +416,127 @@ INSERT INTO xlite_images SET `product_id` = '4042', `alt` = 'In packaging', `ord
 INSERT INTO xlite_images SET `product_id` = '4042', `image` = 'demo_store_p4042.jpeg', `image_type` = 'image/jpeg', `image_width` = '400', `image_height` = '323', `image_size` = '65760', `image_source` = 'F', `is_zoom` = 'Y', `order_by` = '-1';
 INSERT INTO xlite_images SET `product_id` = '4045', `alt` = 'Pyramid Power!', `order_by` = '0', `image` = 'demo_store_d4045_1.jpeg', `image_height` = '279', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '20764', `image_source` = 'F';
 INSERT INTO xlite_images SET `product_id` = '4045', `image` = 'demo_store_p4045.jpeg', `image_type` = 'image/jpeg', `image_width` = '400', `image_height` = '408', `image_size` = '51049', `image_source` = 'F', `is_zoom` = 'Y', `order_by` = '-1';
-INSERT INTO xlite_product_options SET `product_id` = '159702', `optclass` = 'Color', `opttext` = 'Color', `categories` = 'Radio button', `options` = 'White\nBlack\nRetro Red\nRetro Silver';
+
+INSERT INTO xlite_option_groups SET group_id = 4003, `product_id` = 159702, `view_type` = 'r', enabled = 1;
+INSERT INTO xlite_option_group_translations (id, code, name) VALUES (4003, 'en', 'Color');
+INSERT INTO xlite_options SET option_id = 4014, group_id = 4003, enabled = 1;
+INSERT INTO xlite_option_translations (id, code, name) VALUES (4014, 'en', 'White');
+INSERT INTO xlite_options SET option_id = 4015, group_id = 4003, enabled = 1;
+INSERT INTO xlite_option_translations (id, code, name) VALUES (4015, 'en', 'Black');
+INSERT INTO xlite_options SET option_id = 4016, group_id = 4003, enabled = 1;
+INSERT INTO xlite_option_translations (id, code, name) VALUES (4016, 'en', 'Retro Red');
+INSERT INTO xlite_options SET option_id = 4017, group_id = 4003, enabled = 1;
+INSERT INTO xlite_option_translations (id, code, name) VALUES (4017, 'en', 'Retro Silver');
+
 INSERT INTO xlite_images SET `product_id` = '159702', `order_by` = '0', `image` = 'demo_store_d159702_1.jpeg', `image_height` = '140', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '15801', `image_source` = 'F';
 INSERT INTO xlite_images SET `product_id` = '159702', `alt` = 'Autonomous navigation', `order_by` = '1', `image` = 'demo_store_d159702_2.jpeg', `image_height` = '266', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '24827', `image_source` = 'F';
 INSERT INTO xlite_images SET `product_id` = '159702', `image` = 'demo_store_p159702.jpeg', `image_type` = 'image/jpeg', `image_width` = '400', `image_height` = '274', `image_size` = '29414', `image_source` = 'F', `is_zoom` = 'Y', `order_by` = '-1';
 INSERT INTO xlite_images SET `product_id` = '4049', `alt` = 'Actual size', `order_by` = '0', `image` = 'demo_store_d4049_1.jpeg', `image_height` = '400', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '22224', `image_source` = 'F';
 INSERT INTO xlite_images SET `product_id` = '4049', `image` = 'demo_store_p4049.jpeg', `image_type` = 'image/jpeg', `image_width` = '400', `image_height` = '392', `image_size` = '22506', `image_source` = 'F', `is_zoom` = 'Y', `order_by` = '-1';
-INSERT INTO xlite_product_options SET `product_id` = '4005', `optclass` = 'Size', `opttext` = 'Size', `categories` = 'Radio button', `options` = 'S\nM\nL\nXL\nXXL';
-INSERT INTO xlite_product_options SET `product_id` = '4008', `optclass` = 'Size', `opttext` = 'Size', `categories` = 'Radio button', `options` = 'S\nM\nL\nXL\nXXL=+1';
-INSERT INTO xlite_product_options SET `product_id` = '4010', `optclass` = 'Size', `opttext` = 'Size', `categories` = 'Radio button', `options` = 'S\nM\nXL';
-INSERT INTO xlite_product_options SET `product_id` = '4007', `optclass` = 'Sleeve', `opttext` = 'Sleeve', `categories` = 'Radio button', `options` = 'Short\nLong=+3';
-INSERT INTO xlite_product_options SET `product_id` = '4007', `optclass` = 'Size', `opttext` = 'Size', `categories` = 'Radio button', `options` = 'S\nM\nL\nXL\nXXL=+1\nXXXL=+2';
-INSERT INTO xlite_inventories SET `inventory_id` = '4006', `amount` = '1994', `enabled` = '1', `low_avail_limit` = '50';
-INSERT INTO xlite_product_options SET `product_id` = '4006', `optclass` = 'Size', `opttext` = 'Size', `categories` = 'Radio button', `options` = 'S\nM\nL\nXL\nXXL=+1\nXXXL=+2';
-INSERT INTO xlite_product_options SET `product_id` = '3002', `optclass` = 'Color', `opttext` = 'Color', `categories` = 'Radio button', `options` = 'Bimini\nStorm Blue';
-INSERT INTO xlite_product_options SET `product_id` = '3002', `optclass` = 'Size', `opttext` = 'Size', `categories` = 'Radio button', `options` = 'S\nM\nL\nXL\nXXL';
+
+INSERT INTO xlite_option_groups SET group_id = 4004, `product_id` = 4005, `view_type` = 'r', enabled = 1;
+INSERT INTO xlite_option_group_translations (id, code, name) VALUES (4004, 'en', 'Size');
+INSERT INTO xlite_options SET option_id = 4018, group_id = 4004, enabled = 1;
+INSERT INTO xlite_option_translations (id, code, name) VALUES (4018, 'en', 'S');
+INSERT INTO xlite_options SET option_id = 4019, group_id = 4004, enabled = 1;
+INSERT INTO xlite_option_translations (id, code, name) VALUES (4019, 'en', 'M');
+INSERT INTO xlite_options SET option_id = 4020, group_id = 4004, enabled = 1;
+INSERT INTO xlite_option_translations (id, code, name) VALUES (4020, 'en', 'L');
+INSERT INTO xlite_options SET option_id = 4021, group_id = 4004, enabled = 1;
+INSERT INTO xlite_option_translations (id, code, name) VALUES (4021, 'en', 'XL');
+INSERT INTO xlite_options SET option_id = 4022, group_id = 4004, enabled = 1;
+INSERT INTO xlite_option_translations (id, code, name) VALUES (4022, 'en', 'XXL');
+
+INSERT INTO xlite_option_groups SET group_id = 4005, `product_id` = 4008, `view_type` = 'r', enabled = 1;
+INSERT INTO xlite_option_group_translations (id, code, name) VALUES (4005, 'en', 'Size');
+INSERT INTO xlite_options SET option_id = 4023, group_id = 4005, enabled = 1;
+INSERT INTO xlite_option_translations (id, code, name) VALUES (4023, 'en', 'S');
+INSERT INTO xlite_options SET option_id = 4024, group_id = 4005, enabled = 1;
+INSERT INTO xlite_option_translations (id, code, name) VALUES (4024, 'en', 'M');
+INSERT INTO xlite_options SET option_id = 4025, group_id = 4005, enabled = 1;
+INSERT INTO xlite_option_translations (id, code, name) VALUES (4025, 'en', 'L');
+INSERT INTO xlite_options SET option_id = 4026, group_id = 4005, enabled = 1;
+INSERT INTO xlite_option_translations (id, code, name) VALUES (4026, 'en', 'XL');
+INSERT INTO xlite_options SET option_id = 4027, group_id = 4005, enabled = 1, price_modifier = 1, modifier_type = '$';
+INSERT INTO xlite_option_translations (id, code, name) VALUES (4027, 'en', 'XXL');
+
+INSERT INTO xlite_option_groups SET group_id = 4006, `product_id` = 4010, `view_type` = 'r', enabled = 1;
+INSERT INTO xlite_option_group_translations (id, code, name) VALUES (4006, 'en', 'Size');
+INSERT INTO xlite_options SET option_id = 4028, group_id = 4006, enabled = 1;
+INSERT INTO xlite_option_translations (id, code, name) VALUES (4028, 'en', 'S');
+INSERT INTO xlite_options SET option_id = 4029, group_id = 4006, enabled = 1;
+INSERT INTO xlite_option_translations (id, code, name) VALUES (4029, 'en', 'M');
+INSERT INTO xlite_options SET option_id = 4030, group_id = 4006, enabled = 1;
+INSERT INTO xlite_option_translations (id, code, name) VALUES (4030, 'en', 'XL');
+
+INSERT INTO xlite_option_groups SET group_id = 4007, `product_id` = 4007, `view_type` = 'r', enabled = 1;
+INSERT INTO xlite_option_group_translations (id, code, name) VALUES (4007, 'en', 'Sleeve');
+INSERT INTO xlite_options SET option_id = 4031, group_id = 4007, enabled = 1;
+INSERT INTO xlite_option_translations (id, code, name) VALUES (4031, 'en', 'Short');
+INSERT INTO xlite_options SET option_id = 4032, group_id = 4007, enabled = 1, price_modifier = 3, modifier_type = '$';
+INSERT INTO xlite_option_translations (id, code, name) VALUES (4032, 'en', 'Long');
+
+INSERT INTO xlite_option_groups SET group_id = 4008, `product_id` = 4007, `view_type` = 'r', enabled = 1;
+INSERT INTO xlite_option_group_translations (id, code, name) VALUES (4008, 'en', 'Size');
+INSERT INTO xlite_options SET option_id = 4033, group_id = 4008, enabled = 1;
+INSERT INTO xlite_option_translations (id, code, name) VALUES (4033, 'en', 'S');
+INSERT INTO xlite_options SET option_id = 4034, group_id = 4008, enabled = 1;
+INSERT INTO xlite_option_translations (id, code, name) VALUES (4034, 'en', 'M');
+INSERT INTO xlite_options SET option_id = 4035, group_id = 4008, enabled = 1;
+INSERT INTO xlite_option_translations (id, code, name) VALUES (4035, 'en', 'L');
+INSERT INTO xlite_options SET option_id = 4036, group_id = 4008, enabled = 1;
+INSERT INTO xlite_option_translations (id, code, name) VALUES (4036, 'en', 'XL');
+INSERT INTO xlite_options SET option_id = 4037, group_id = 4008, enabled = 1, price_modifier = 1, modifier_type = '$';
+INSERT INTO xlite_option_translations (id, code, name) VALUES (4037, 'en', 'XXL');
+INSERT INTO xlite_options SET option_id = 4038, group_id = 4008, enabled = 1, price_modifier = 2, modifier_type = '$';
+INSERT INTO xlite_option_translations (id, code, name) VALUES (4038, 'en', 'XXXL');
+
+--INSERT INTO xlite_inventories SET `inventory_id` = '4006', `amount` = '1994', `enabled` = '1', `low_avail_limit` = '50';
+INSERT INTO xlite_option_groups SET group_id = 4009, `product_id` = 4006, `view_type` = 'r', enabled = 1;
+INSERT INTO xlite_option_group_translations (id, code, name) VALUES (4009, 'en', 'Size');
+INSERT INTO xlite_options SET option_id = 4039, group_id = 4009, enabled = 1;
+INSERT INTO xlite_option_translations (id, code, name) VALUES (4039, 'en', 'S');
+INSERT INTO xlite_options SET option_id = 4040, group_id = 4009, enabled = 1;
+INSERT INTO xlite_option_translations (id, code, name) VALUES (4040, 'en', 'M');
+INSERT INTO xlite_options SET option_id = 4041, group_id = 4009, enabled = 1;
+INSERT INTO xlite_option_translations (id, code, name) VALUES (4041, 'en', 'L');
+INSERT INTO xlite_options SET option_id = 4042, group_id = 4009, enabled = 1;
+INSERT INTO xlite_option_translations (id, code, name) VALUES (4042, 'en', 'XL');
+INSERT INTO xlite_options SET option_id = 4043, group_id = 4009, enabled = 1, price_modifier = 1, modifier_type = '$';
+INSERT INTO xlite_option_translations (id, code, name) VALUES (4043, 'en', 'XXL');
+INSERT INTO xlite_options SET option_id = 4044, group_id = 4009, enabled = 1, price_modifier = 2, modifier_type = '$';
+INSERT INTO xlite_option_translations (id, code, name) VALUES (4044, 'en', 'XXXL');
+
+INSERT INTO xlite_option_groups SET group_id = 4010, `product_id` = 3002, `view_type` = 'r', enabled = 1;
+INSERT INTO xlite_option_group_translations (id, code, name) VALUES (4010, 'en', 'Color');
+INSERT INTO xlite_options SET option_id = 4045, group_id = 4010, enabled = 1;
+INSERT INTO xlite_option_translations (id, code, name) VALUES (4045, 'en', 'Bimini');
+INSERT INTO xlite_options SET option_id = 4046, group_id = 4010, enabled = 1;
+INSERT INTO xlite_option_translations (id, code, name) VALUES (4046, 'en', 'Storm Blue');
+
+INSERT INTO xlite_option_groups SET group_id = 4011, `product_id` = 3002, `view_type` = 'r', enabled = 1;
+INSERT INTO xlite_option_group_translations (id, code, name) VALUES (4011, 'en', 'Size');
+INSERT INTO xlite_options SET option_id = 4047, group_id = 4011, enabled = 1;
+INSERT INTO xlite_option_translations (id, code, name) VALUES (4047, 'en', 'S');
+INSERT INTO xlite_options SET option_id = 4048, group_id = 4011, enabled = 1;
+INSERT INTO xlite_option_translations (id, code, name) VALUES (4048, 'en', 'M');
+INSERT INTO xlite_options SET option_id = 4049, group_id = 4011, enabled = 1;
+INSERT INTO xlite_option_translations (id, code, name) VALUES (4049, 'en', 'L');
+INSERT INTO xlite_options SET option_id = 4050, group_id = 4011, enabled = 1;
+INSERT INTO xlite_option_translations (id, code, name) VALUES (4050, 'en', 'XL');
+INSERT INTO xlite_options SET option_id = 4051, group_id = 4011, enabled = 1;
+INSERT INTO xlite_option_translations (id, code, name) VALUES (4051, 'en', 'XXL');
+
 INSERT INTO xlite_images SET `product_id` = '159704', `order_by` = '0', `image` = 'demo_store_d159704_1.gif', `image_height` = '428', `image_width` = '400', `image_type` = 'image/gif', `image_size` = '794960', `image_source` = 'F';
 INSERT INTO xlite_images SET `product_id` = '159704', `image` = 'demo_store_p159704.jpeg', `image_type` = 'image/jpeg', `image_width` = '378', `image_height` = '500', `image_size` = '80309', `image_source` = 'F', `is_zoom` = 'Y', `order_by` = '-1';
-INSERT INTO xlite_product_options SET `product_id` = '4052', `optclass` = 'Color', `opttext` = 'Color', `categories` = 'Radio button', `options` = 'Blue LED\nRed LED';
+
+INSERT INTO xlite_option_groups SET group_id = 4012, `product_id` = 4052, `view_type` = 'r', enabled = 1;
+INSERT INTO xlite_option_group_translations (id, code, name) VALUES (4012, 'en', 'Color');
+INSERT INTO xlite_options SET option_id = 4052, group_id = 4012, enabled = 1;
+INSERT INTO xlite_option_translations (id, code, name) VALUES (4052, 'en', 'Blue LED');
+INSERT INTO xlite_options SET option_id = 4053, group_id = 4012, enabled = 1;
+INSERT INTO xlite_option_translations (id, code, name) VALUES (4053, 'en', 'Red LED');
+
 INSERT INTO xlite_images SET `product_id` = '4052', `alt` = 'Precise control', `order_by` = '0', `image` = 'demo_store_d4052_1.jpeg', `image_height` = '303', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '21087', `image_source` = 'F';
 INSERT INTO xlite_images SET `product_id` = '4052', `alt` = 'Smallest 3-channel copter', `order_by` = '1', `image` = 'demo_store_d4052_2.jpeg', `image_height` = '295', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '17109', `image_source` = 'F';
 INSERT INTO xlite_images SET `product_id` = '4052', `image` = 'demo_store_p4052.jpeg', `image_type` = 'image/jpeg', `image_width` = '388', `image_height` = '500', `image_size` = '65497', `image_source` = 'F', `is_zoom` = 'Y', `order_by` = '-1';
@@ -411,7 +548,14 @@ INSERT INTO xlite_images SET `product_id` = '4033', `alt` = 'Various Shapes', `o
 INSERT INTO xlite_images SET `product_id` = '4033', `image` = 'demo_store_p4033.jpeg', `image_type` = 'image/jpeg', `image_width` = '400', `image_height` = '412', `image_size` = '57091', `image_source` = 'F', `is_zoom` = 'Y', `order_by` = '-1';
 INSERT INTO xlite_images SET `product_id` = '4050', `alt` = 'Mario Kart on your desk!', `order_by` = '0', `image` = 'demo_store_d4050_1.jpeg', `image_height` = '272', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '66432', `image_source` = 'F';
 INSERT INTO xlite_images SET `product_id` = '4050', `image` = 'demo_store_p4050.jpeg', `image_type` = 'image/jpeg', `image_width` = '400', `image_height` = '300', `image_size` = '76513', `image_source` = 'F', `is_zoom` = 'Y', `order_by` = '-1';
-INSERT INTO xlite_product_options SET `product_id` = '4053', `optclass` = 'Scale', `opttext` = 'Scale', `categories` = 'Radio button', `options` = '1/24 Green\n1/16 Gray=+50';
+
+INSERT INTO xlite_option_groups SET group_id = 4013, `product_id` = 4053, `view_type` = 'r', enabled = 1;
+INSERT INTO xlite_option_group_translations (id, code, name) VALUES (4013, 'en', 'Scale');
+INSERT INTO xlite_options SET option_id = 4054, group_id = 4013, enabled = 1;
+INSERT INTO xlite_option_translations (id, code, name) VALUES (4054, 'en', '1/24 Green');
+INSERT INTO xlite_options SET option_id = 4055, group_id = 4013, enabled = 1, price_modifier = 50, modifier_type = '$';
+INSERT INTO xlite_option_translations (id, code, name) VALUES (4055, 'en', '1/16 Gray');
+
 INSERT INTO xlite_images SET `product_id` = '4053', `alt` = 'ammo', `order_by` = '0', `image` = 'demo_store_d4053_1.jpeg', `image_height` = '300', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '11206', `image_source` = 'F';
 INSERT INTO xlite_images SET `product_id` = '4053', `alt` = 'Tank Dude, Ammo In Background', `order_by` = '1', `image` = 'demo_store_d4053_2.jpeg', `image_height` = '300', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '13482', `image_source` = 'F';
 INSERT INTO xlite_images SET `product_id` = '4053', `alt` = 'Ammo Load Zone', `order_by` = '2', `image` = 'demo_store_d4053_3.jpeg', `image_height` = '300', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '19442', `image_source` = 'F';
@@ -431,7 +575,16 @@ INSERT INTO xlite_images SET `product_id` = '4048', `image` = 'demo_store_p4048.
 INSERT INTO xlite_images SET `product_id` = '4039', `alt` = 'Pour the solution . . . grow the crystals!', `order_by` = '0', `image` = 'demo_store_d4039_1.jpeg', `image_height` = '400', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '24886', `image_source` = 'F';
 INSERT INTO xlite_images SET `product_id` = '4039', `alt` = 'All the parts', `order_by` = '1', `image` = 'demo_store_d4039_2.jpeg', `image_height` = '400', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '55213', `image_source` = 'F';
 INSERT INTO xlite_images SET `product_id` = '4039', `image` = 'demo_store_p4039.jpeg', `image_type` = 'image/jpeg', `image_width` = '400', `image_height` = '300', `image_size` = '24107', `image_source` = 'F', `is_zoom` = 'Y', `order_by` = '-1';
-INSERT INTO xlite_product_options SET `product_id` = '4040', `optclass` = 'Choice', `opttext` = 'Choice', `categories` = 'Radio button', `options` = 'Basic Hamacron=+40\nT-Rex\nTriceratops';
+
+INSERT INTO xlite_option_groups SET group_id = 4014, `product_id` = 4040, `view_type` = 'r', enabled = 1;
+INSERT INTO xlite_option_group_translations (id, code, name) VALUES (4014, 'en', 'Choice');
+INSERT INTO xlite_options SET option_id = 4056, group_id = 4014, enabled = 1, price_modifier = 40, modifier_type = '$';
+INSERT INTO xlite_option_translations (id, code, name) VALUES (4056, 'en', 'Basic Hamacron');
+INSERT INTO xlite_options SET option_id = 4057, group_id = 4014, enabled = 1;
+INSERT INTO xlite_option_translations (id, code, name) VALUES (4057, 'en', 'T-Rex');
+INSERT INTO xlite_options SET option_id = 4058, group_id = 4014, enabled = 1;
+INSERT INTO xlite_option_translations (id, code, name) VALUES (4058, 'en', 'Triceratops');
+
 INSERT INTO xlite_images SET `product_id` = '4040', `alt` = 'Boxes', `order_by` = '0', `image` = 'demo_store_d4040_1.jpeg', `image_height` = '147', `image_width` = '500', `image_type` = 'image/jpeg', `image_size` = '69498', `image_source` = 'F';
 INSERT INTO xlite_images SET `product_id` = '4040', `image` = 'demo_store_p4040.jpeg', `image_type` = 'image/jpeg', `image_width` = '400', `image_height` = '349', `image_size` = '18863', `image_source` = 'F', `is_zoom` = 'Y', `order_by` = '-1';
 INSERT INTO xlite_images SET `product_id` = '4041', `alt` = 'Parts', `order_by` = '0', `image` = 'demo_store_d4041_1.jpeg', `image_height` = '265', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '21708', `image_source` = 'F';
@@ -440,11 +593,25 @@ INSERT INTO xlite_images SET `product_id` = '4044', `alt` = 'What You Get', `ord
 INSERT INTO xlite_images SET `product_id` = '4044', `alt` = 'Two-Player Action!', `order_by` = '1', `image` = 'demo_store_d4044_2.jpeg', `image_height` = '322', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '24819', `image_source` = 'F';
 INSERT INTO xlite_images SET `product_id` = '4044', `alt` = 'Screenshot', `order_by` = '2', `image` = 'demo_store_d4044_3.jpeg', `image_height` = '247', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '6002', `image_source` = 'F';
 INSERT INTO xlite_images SET `product_id` = '4044', `image` = 'demo_store_p4044.jpeg', `image_type` = 'image/jpeg', `image_width` = '400', `image_height` = '383', `image_size` = '31441', `image_source` = 'F', `is_zoom` = 'Y', `order_by` = '-1';
-INSERT INTO xlite_product_options SET `product_id` = '4035', `optclass` = 'Choice', `opttext` = 'Choice', `categories` = 'Radio button', `options` = 'Music Box Kit\nRefill Pack=-8';
+
+INSERT INTO xlite_option_groups SET group_id = 4015, `product_id` = 4035, `view_type` = 'r', enabled = 1;
+INSERT INTO xlite_option_group_translations (id, code, name) VALUES (4015, 'en', 'Choice');
+INSERT INTO xlite_options SET option_id = 4059, group_id = 4015, enabled = 1;
+INSERT INTO xlite_option_translations (id, code, name) VALUES (4059, 'en', 'Music Box Kit');
+INSERT INTO xlite_options SET option_id = 4060, group_id = 4015, enabled = 1, price_modifier = -8, modifier_type = '$';
+INSERT INTO xlite_option_translations (id, code, name) VALUES (4060, 'en', 'Refill Pack');
+
 INSERT INTO xlite_images SET `product_id` = '4027', `alt` = 'Don\'t Eat My Brains!', `order_by` = '0', `image` = 'demo_store_d4027_1.jpeg', `image_height` = '313', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '21024', `image_source` = 'F';
 INSERT INTO xlite_images SET `product_id` = '4027', `alt` = 'DOMOKUN!!', `order_by` = '1', `image` = 'demo_store_d4027_2.jpeg', `image_height` = '300', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '19813', `image_source` = 'F';
 INSERT INTO xlite_images SET `product_id` = '4027', `image` = 'demo_store_p4027.jpeg', `image_type` = 'image/jpeg', `image_width` = '400', `image_height` = '247', `image_size` = '17379', `image_source` = 'F', `is_zoom` = 'Y', `order_by` = '-1';
-INSERT INTO xlite_product_options SET `product_id` = '4014', `optclass` = 'Size', `opttext` = 'Size', `categories` = 'Radio button', `options` = '4\'\' (Silver)\n8\'\'=+30';
+
+INSERT INTO xlite_option_groups SET group_id = 4016, `product_id` = 4014, `view_type` = 'r', enabled = 1;
+INSERT INTO xlite_option_group_translations (id, code, name) VALUES (4016, 'en', 'Size');
+INSERT INTO xlite_options SET option_id = 4061, group_id = 4016, enabled = 1;
+INSERT INTO xlite_option_translations (id, code, name) VALUES (4061, 'en', '4\'\' (Silver)');
+INSERT INTO xlite_options SET option_id = 4062, group_id = 4016, enabled = 1, price_modifier = 30, modifier_type = '$';
+INSERT INTO xlite_option_translations (id, code, name) VALUES (4062, 'en', '8\'\'');
+
 INSERT INTO xlite_images SET `product_id` = '4014', `alt` = 'Truly Levitating!', `order_by` = '0', `image` = 'demo_store_d4014_1.jpeg', `image_height` = '400', `image_width` = '367', `image_type` = 'image/jpeg', `image_size` = '17515', `image_source` = 'F';
 INSERT INTO xlite_images SET `product_id` = '4014', `alt` = 'Closeup Of 4\" Globe', `order_by` = '1', `image` = 'demo_store_d4014_2.jpeg', `image_height` = '500', `image_width` = '313', `image_type` = 'image/jpeg', `image_size` = '18645', `image_source` = 'F';
 INSERT INTO xlite_images SET `product_id` = '4014', `alt` = '4\" Globe Detail', `order_by` = '2', `image` = 'demo_store_d4014_3.jpeg', `image_height` = '400', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '38573', `image_source` = 'F';
@@ -457,11 +624,39 @@ INSERT INTO xlite_images SET `product_id` = '4028', `image` = 'demo_store_p4028.
 INSERT INTO xlite_images SET `product_id` = '4015', `alt` = 'Robot Oil (Bare Metal Bender)', `order_by` = '0', `image` = 'demo_store_d4015_1.jpeg', `image_height` = '164', `image_width` = '220', `image_type` = 'image/jpeg', `image_size` = '6701', `image_source` = 'F';
 INSERT INTO xlite_images SET `product_id` = '4015', `alt` = 'Chest Opens! (Bare Metal Bender)', `order_by` = '1', `image` = 'demo_store_d4015_2.jpeg', `image_height` = '173', `image_width` = '220', `image_type` = 'image/jpeg', `image_size` = '9345', `image_source` = 'F';
 INSERT INTO xlite_images SET `product_id` = '4015', `image` = 'demo_store_p4015.jpeg', `image_type` = 'image/jpeg', `image_width` = '297', `image_height` = '500', `image_size` = '59276', `image_source` = 'F', `is_zoom` = 'Y', `order_by` = '-1';
-INSERT INTO xlite_product_options SET `product_id` = '4023', `optclass` = 'Choice', `opttext` = 'Choice', `categories` = 'Radio button', `options` = '1-pack\n2-pack=+9\n3-pack=+15';
+
+INSERT INTO xlite_option_groups SET group_id = 4017, `product_id` = 4023, `view_type` = 'r', enabled = 1;
+INSERT INTO xlite_option_group_translations (id, code, name) VALUES (4017, 'en', 'Choice');
+INSERT INTO xlite_options SET option_id = 4063, group_id = 4017, enabled = 1;
+INSERT INTO xlite_option_translations (id, code, name) VALUES (4063, 'en', '1-pack');
+INSERT INTO xlite_options SET option_id = 4064, group_id = 4017, enabled = 1, price_modifier = 9, modifier_type = '$';
+INSERT INTO xlite_option_translations (id, code, name) VALUES (4064, 'en', '2-pack');
+INSERT INTO xlite_options SET option_id = 4065, group_id = 4017, enabled = 1, price_modifier = 15, modifier_type = '$';
+INSERT INTO xlite_option_translations (id, code, name) VALUES (4065, 'en', '3-pack');
+
 INSERT INTO xlite_images SET `product_id` = '4023', `alt` = 'What you get', `order_by` = '0', `image` = 'demo_store_d4023_1.jpeg', `image_height` = '588', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '30120', `image_source` = 'F';
 INSERT INTO xlite_images SET `product_id` = '4023', `alt` = 'How to Mix Drinks', `order_by` = '1', `image` = 'demo_store_d4023_2.jpeg', `image_height` = '300', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '32712', `image_source` = 'F';
 INSERT INTO xlite_images SET `product_id` = '4023', `image` = 'demo_store_p4023.jpeg', `image_type` = 'image/jpeg', `image_width` = '263', `image_height` = '500', `image_size` = '49640', `image_source` = 'F', `is_zoom` = 'Y', `order_by` = '-1';
-INSERT INTO xlite_product_options SET `product_id` = '4032', `optclass` = 'Choice', `opttext` = 'Choice', `categories` = 'Radio button', `options` = 'Solar Blue\nDark Matter\nAtmosphere\nAliene Ooze\nMartian Sea\nSunburst\nOil Slick\nTwilight';
+
+INSERT INTO xlite_option_groups SET group_id = 4018, `product_id` = 4032, `view_type` = 'r', enabled = 1;
+INSERT INTO xlite_option_group_translations (id, code, name) VALUES (4018, 'en', 'Choice');
+INSERT INTO xlite_options SET option_id = 4066, group_id = 4018, enabled = 1;
+INSERT INTO xlite_option_translations (id, code, name) VALUES (4066, 'en', 'Solar Blue');
+INSERT INTO xlite_options SET option_id = 4067, group_id = 4018, enabled = 1;
+INSERT INTO xlite_option_translations (id, code, name) VALUES (4067, 'en', 'Dark Matter');
+INSERT INTO xlite_options SET option_id = 4068, group_id = 4018, enabled = 1;
+INSERT INTO xlite_option_translations (id, code, name) VALUES (4068, 'en', 'Atmosphere');
+INSERT INTO xlite_options SET option_id = 4069, group_id = 4018, enabled = 1;
+INSERT INTO xlite_option_translations (id, code, name) VALUES (4069, 'en', 'Aliene Ooze');
+INSERT INTO xlite_options SET option_id = 4070, group_id = 4018, enabled = 1;
+INSERT INTO xlite_option_translations (id, code, name) VALUES (4070, 'en', 'Martian Sea');
+INSERT INTO xlite_options SET option_id = 4071, group_id = 4018, enabled = 1;
+INSERT INTO xlite_option_translations (id, code, name) VALUES (4071, 'en', 'Sunburst');
+INSERT INTO xlite_options SET option_id = 4072, group_id = 4018, enabled = 1;
+INSERT INTO xlite_option_translations (id, code, name) VALUES (4072, 'en', 'Oil Slick');
+INSERT INTO xlite_options SET option_id = 4073, group_id = 4018, enabled = 1;
+INSERT INTO xlite_option_translations (id, code, name) VALUES (4073, 'en', 'Twilight');
+
 INSERT INTO xlite_images SET `product_id` = '4032', `alt` = 'Alien Ooze (Inert!)', `order_by` = '0', `image` = 'demo_store_d4032_1.jpeg', `image_height` = '379', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '4637', `image_source` = 'F';
 INSERT INTO xlite_images SET `product_id` = '4032', `alt` = 'Alien Ooze (Glowing!)', `order_by` = '1', `image` = 'demo_store_d4032_2.jpeg', `image_height` = '400', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '9811', `image_source` = 'F';
 INSERT INTO xlite_images SET `product_id` = '4032', `alt` = 'Atmosphere', `order_by` = '2', `image` = 'demo_store_d4032_3.jpeg', `image_height` = '379', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '15392', `image_source` = 'F';

@@ -29,51 +29,35 @@
 namespace XLite\Module\ProductOptions\Model;
 
 /**
- * Product option exception
+ * Option group translations
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
- * @Entity (repositoryClass="XLite\Module\ProductOptions\Model\Repo\OptionException")
- * @Table (name="option_exceptions")
+ * @Entity
+ * @Table (name="option_group_translations")
  */
-class OptionException extends \XLite\Model\AEntity
+class OptionGroupTranslation extends \XLite\Model\Base\Translation
 {
-
     /**
-     * Option unique id 
+     * Group name
      * 
-     * @var    integer
+     * @var    string
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @Id
-     * @Column (type="integer")
+     * @Column (type="string", length="255")
      */
-    protected $option_id;
+    protected $name;
 
     /**
-     * Exception unique id 
+     * Full group name
      * 
-     * @var    integer
+     * @var    string
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @Id
-     * @Column (type="integer")
+     * @Column (type="string", length="65536")
      */
-    protected $exception_id;
-
-    /**
-     * Option (relation)
-     * 
-     * @var    \XLite\Module\ProductOptions\Model\Option
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     * @ManyToOne (targetEntity="XLite\Module\ProductOptions\Model\Option", inversedBy="exceptions")
-     * @JoinColumn (name="option_id", referencedColumnName="option_id")
-     */
-    protected $option;
-
+    protected $fullname = '';
 }

@@ -239,6 +239,7 @@ CREATE TABLE xlite_products (
   tax_class varchar(32) NOT NULL default '',
   free_shipping int(11) NOT NULL default '0',
   clean_url varchar(255) NOT NULL default '',
+  javascript text NOT NULL,
   PRIMARY KEY (product_id),
   KEY order_by (order_by),
   KEY price (price),

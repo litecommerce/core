@@ -160,6 +160,18 @@ class Product extends \XLite\Model\Base\I18n
     protected $clean_url;
 
     /**
+     * Custom javascript code
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     *
+     * @Column (type="string", length="65535")
+     */
+    protected $javascript = '';
+
+    /**
      * Relation to a CategoryProducts entities
      *
      * @var    \Doctrine\ORM\PersistentCollection
