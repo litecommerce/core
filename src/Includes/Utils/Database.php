@@ -202,7 +202,9 @@ class Database extends \Includes\Utils\AUtils
         foreach ($dsnFields as $pdoOption => $lcOption) {
             if (!empty($options[$lcOption])) {
                 $dsnFields[$pdoOption] = $options[$lcOption];
-            }   
+            } else {
+                unset($dsnFields[$pdoOption]);
+            }
         }
 
         if ($fullList) {
