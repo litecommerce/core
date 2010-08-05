@@ -266,15 +266,16 @@ class Category extends \XLite\Model\Base\I18n
      */
     public function getStringPath()
     {
-        $path = \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategoryPath($this->getCategoryId());
+        $path = \XLite\Core\Database::getRepo('XLite\Model\Category')
+            ->getCategoryPath($this->getCategoryId());
 
-        $location = "";
+        $location = array();
 
         foreach ($path as $p) {
-            $location .= ($location ? '/' : '') . $p->name;
+            $location[] = $p->name;
         }
 
-        return $location;
+        return implode('/', $location);
     }
 
     /**
@@ -287,9 +288,10 @@ class Category extends \XLite\Model\Base\I18n
      */
     public function isEmpty()
     {
-        $data = \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategoryFromHash($this->getCategoryId());
+        $data = \XLite\Core\Database::getRepo('XLite\Model\Category')
+            ->getCategoryFromHash($this->getCategoryId());
 
-        return (isset($data) ? 0 == $data->getProductsCount() && 0 == $data->getSubCategoriesCount() : true);
+        return !isset($data) || (0 == $data->getProductsCount() && 0 == $data->getSubCategoriesCount());
     }
 
     /**
@@ -302,7 +304,7 @@ class Category extends \XLite\Model\Base\I18n
      */
     public function isExists()
     {
-        return ($this->getCategoryId() > 0);
+        return 0 < $this->getCategoryId();
     }
 
     /**
@@ -315,9 +317,10 @@ class Category extends \XLite\Model\Base\I18n
      */
     public function getProductsNumber()
     {
-        $data = \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategoryFromHash($this->getCategoryId());
+        $data = \XLite\Core\Database::getRepo('XLite\Model\Category')
+            ->getCategoryFromHash($this->getCategoryId());
 
-        return (isset($data) ? $data->getProductsCount() : 0);
+        return isset($data) ? $data->getProductsCount() : 0;
     }
 
     /**
@@ -333,17 +336,18 @@ class Category extends \XLite\Model\Base\I18n
      */
     public function getIndentation($multiplier = 0, $str = null)
     {
-        if ($this->getDepth() > 0) {
+        if (0 < $this->getDepth()) {
             $depth = $this->getDepth();
 
         } else {
-            $data = \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategoryFromHash($this->getCategoryId());
+            $data = \XLite\Core\Database::getRepo('XLite\Model\Category')
+                ->getCategoryFromHash($this->getCategoryId());
             $depth = isset($data) ? $data->getDepth() : 1;
         }
 
         $indentation = ($depth - 1) * $multiplier;
 
-        return (is_null($str) ? $indentation : str_repeat($str, $indentation));
+        return is_null($str) ? $indentation : str_repeat($str, $indentation);
     }
 
     /**

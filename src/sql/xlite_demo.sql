@@ -64,17 +64,40 @@ INSERT INTO `xlite_product_thumbnails` (`image_id`, `id`, `path`, `mime`, `width
 INSERT INTO `xlite_product_thumbnails` (`image_id`, `id`, `path`, `mime`, `width`, `height`, `size`, `date`, `hash`) VALUES (8,15091,'demo_t15091.jpeg','image/jpeg',160,160,9412,1280314462,'');
 INSERT INTO `xlite_product_thumbnails` (`image_id`, `id`, `path`, `mime`, `width`, `height`, `size`, `date`, `hash`) VALUES (9,15067,'demo_t15067.jpeg','image/jpeg',106,160,6487,1280314462,'');
 
+-- Product options
+INSERT INTO xlite_option_groups SET group_id = 1, `product_id` = 15090, `view_type` = 'r', enabled = 1;
+INSERT INTO xlite_options SET option_id = 1, group_id = 1, enabled = 1;
+INSERT INTO xlite_options SET option_id = 2, group_id = 1, enabled = 1;
+INSERT INTO xlite_options SET option_id = 3, group_id = 1, enabled = 1;
 
-INSERT INTO xlite_product_options SET `product_id` = '15090', `optclass` = 'Color', `opttext` = 'Color', `categories` = 'Radio button', `options` = 'Red\nGreen\nYellow';
-INSERT INTO xlite_product_options SET `product_id` = '15090', `optclass` = 'Size', `opttext` = 'Size', `categories` = 'Radio button', `options` = 'Small\nBig';
-INSERT INTO xlite_inventories SET `inventory_id` = '15121', `amount` = '2000', `enabled` = '1', `low_avail_limit` = '50';
-INSERT INTO xlite_product_options SET `product_id` = '15121', `optclass` = 'Size', `opttext` = 'Size', `categories` = 'Radio button', `options` = 'Small\nBig';
-INSERT INTO xlite_product_options SET `product_id` = '15123', `optclass` = 'Choice', `opttext` = 'Choice', `categories` = 'Radio button', `options` = 'Garden\nWild=+3';
-INSERT INTO xlite_product_options SET `product_id` = '15068', `optclass` = 'Size', `opttext` = 'Size', `categories` = 'Radio button', `options` = 'Small\nMedium\nBig';
-INSERT INTO xlite_inventories SET `inventory_id` = '15091', `amount` = '1000', `enabled` = '1', `low_avail_limit` = '50';
-INSERT INTO xlite_product_options SET `product_id` = '15091', `optclass` = 'Size', `opttext` = 'Size', `categories` = 'Radio button', `options` = 'Small\nMedium\nBig';
-INSERT INTO xlite_inventories SET `inventory_id` = '15067', `amount` = '500', `enabled` = '1', `low_avail_limit` = '0';
-INSERT INTO xlite_product_options SET `product_id` = '15067', `optclass` = 'Size', `opttext` = 'Size', `categories` = 'Radio button', `options` = 'Small\nBig';
+INSERT INTO xlite_option_groups SET group_id = 2, `product_id` = 15090, `view_type` = 'r', enabled = 1;
+INSERT INTO xlite_options SET option_id = 4, group_id = 2, enabled = 1;
+INSERT INTO xlite_options SET option_id = 5, group_id = 2, enabled = 1;
+
+--INSERT INTO xlite_inventories SET `inventory_id` = '15121', `amount` = '2000', `enabled` = '1', `low_avail_limit` = '50';
+INSERT INTO xlite_option_groups SET group_id = 3, `product_id` = 15121, `view_type` = 'r', enabled = 1;
+INSERT INTO xlite_options SET option_id = 6, group_id = 3, enabled = 1;
+INSERT INTO xlite_options SET option_id = 7, group_id = 3, enabled = 1;
+
+INSERT INTO xlite_option_groups SET group_id = 4, `product_id` = 15123, `view_type` = 'r', enabled = 1;
+INSERT INTO xlite_options SET option_id = 8, group_id = 4, enabled = 1;
+INSERT INTO xlite_options SET option_id = 9, group_id = 4, enabled = 1, price_modifier = 3;
+
+INSERT INTO xlite_option_groups SET group_id = 5, `product_id` = 15068, `view_type` = 'r', enabled = 1;
+INSERT INTO xlite_options SET option_id = 10, group_id = 5, enabled = 1;
+INSERT INTO xlite_options SET option_id = 11, group_id = 5, enabled = 1;
+INSERT INTO xlite_options SET option_id = 12, group_id = 5, enabled = 1;
+
+--INSERT INTO xlite_inventories SET `inventory_id` = '15091', `amount` = '1000', `enabled` = '1', `low_avail_limit` = '50';
+INSERT INTO xlite_option_groups SET group_id = 6, `product_id` = 15091, `view_type` = 'r', enabled = 1;
+INSERT INTO xlite_options SET option_id = 13, group_id = 6, enabled = 1;
+INSERT INTO xlite_options SET option_id = 14, group_id = 6, enabled = 1;
+INSERT INTO xlite_options SET option_id = 15, group_id = 6, enabled = 1;
+
+--INSERT INTO xlite_inventories SET `inventory_id` = '15067', `amount` = '500', `enabled` = '1', `low_avail_limit` = '0';
+INSERT INTO xlite_option_groups SET group_id = 7, `product_id` = 15067, `view_type` = 'r', enabled = 1;
+INSERT INTO xlite_options SET option_id = 16, group_id = 7, enabled = 1;
+INSERT INTO xlite_options SET option_id = 17, group_id = 7, enabled = 1;
 
 -- Orders [7]
 
