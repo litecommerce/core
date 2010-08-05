@@ -805,13 +805,11 @@ function checkFilePermissions(&$errorMsg, &$value)
  * @see    ____func_see____
  * @since  3.0.0
  */
-function checkMysqlVersion(&$errorMsg, &$value)
+function checkMysqlVersion(&$errorMsg, &$value, $isConnected = false)
 {
     $result = true;
     $value = 'unknown';
     $pdoErrorMsg = '';
-
-    $isConnected = false;
 
     $version = false;
 
@@ -828,12 +826,13 @@ function checkMysqlVersion(&$errorMsg, &$value)
 
         $isConnected = dbConnect($data, $pdoErrorMsg);
 
-    } else {
-        // Suppose to use existing connection
-        $isConnected = true;
+        if (!$isConnected) {
+            $errorMsg = 'Can\'t conenct to MySQL server' . (!empty($pdoErrorMsg) ? ': ' . $pdoErrorMsg : '');
+            $result = false;
+        }
     }
 
-    if ($isConnected) {
+    if ($result && $isConnected) {
 
         try {
             $version = \Includes\Utils\Database::getDbVersion();
@@ -858,10 +857,6 @@ function checkMysqlVersion(&$errorMsg, &$value)
             $errorMsg = 'Cannot get the MySQL server version' . (!empty($pdoErrorMsg) ? ' : ' . $pdoErrorMsg : '.') . '<br />Please make sure that MySQL version must be ' . constant('LC_MYSQL_VERSION_MIN') . ' as a minimum. If you use a lower MySQL version, loading the SQL dump to the database may become impossible.';
             $result = false;
         }
-
-    } else {
-        $result = false;
-        $errorMsg = 'Cannot connect to MySQL server' . (!empty($pdoErrorMsg) ? ' : ' . $pdoErrorMsg : '.');
     }
 
     $value = $version;
@@ -2825,7 +2820,7 @@ OUT;
                 // Check MySQL version
                 $mysqlVersionErr = $currentMysqlVersion = '';
 
-                if (!checkMysqlVersion($mysqlVersionErr, $currentMysqlVersion)) {
+                if (!checkMysqlVersion($mysqlVersionErr, $currentMysqlVersion, true)) {
                     warning_error($mysqlVersionErr . (!empty($currentMysqlVersion) ? '<br />(current version is ' . $currentMysqlVersion . ')' : ''));
                 }
 
