@@ -36,21 +36,26 @@
  */
 
 
-if (!(basename(__FILE__) === 'install.php')) { // is not install.php
+if (!(basename(__FILE__) === 'install.php')) { // it is not install.php file
     die();
 }
 
 define ('XLITE_INSTALL_MODE', 1);
 define('LC_DO_NOT_REBUILD_CACHE', true);
 
-error_reporting (E_ALL);
-ini_set('display_errors', true);
-ini_set('display_startup_errors', true);
+if (version_compare(phpversion(), '5.0.0') < 0) {
+    die('LiteCommerce cannot start on PHP version earlier than 5.0.0 (' . phpversion(). ' is currently used)');
+}
 
-@set_time_limit(300);
+// Init installation process
+if (!file_exists($includeFuncsFile = realpath(dirname(__FILE__)) . '/Includes/install/init.php')) {
+    die('Fatal error: Couldn\'t find file ' . $includeFuncsFile);
+}
 
-umask(0);
+require_once $includeFuncsFile;
 
+
+// Include script with main installation functions
 if (!file_exists($includeFuncsFile = realpath(dirname(__FILE__)) . '/Includes/install/install.php')) {
     die('Fatal error: Couldn\'t find file ' . $includeFuncsFile);
 }
