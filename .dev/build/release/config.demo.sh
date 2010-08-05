@@ -20,6 +20,7 @@ Demo
 XLITE_FILES_TODELETE="
 install.php
 restoredb
+sql/xlite_lng_de.sql
 sql/local
 "
 

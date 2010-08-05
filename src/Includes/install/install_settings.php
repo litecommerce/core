@@ -39,7 +39,7 @@ if (!defined('XLITE_INSTALL_MODE')) {
 }
 
 // Current LiteCommerce version
-define('LC_VERSION', '3.0.0');
+define('LC_VERSION', '3.x-dev');
 
 // Minimum PHP version supported
 define('LC_PHP_VERSION_MIN', '5.2.0');
@@ -104,7 +104,8 @@ $lcSettings = array(
     'sql_files' => array(
         'base' => array(
             'sql/xlite_tables.sql',
-            'sql/xlite_data.sql'
+            'sql/xlite_data.sql',
+            'sql/xlite_lng_en.sql',
         ),
         'demo' => array(
             'sql/xlite_demo.sql'
@@ -112,7 +113,7 @@ $lcSettings = array(
         'states' => array(
             'CA' => 'sql/states_CA.sql',
             'GB' => 'sql/states_GB.sql',
-            'US' => 'sql/states_US.sql'
+            'US' => 'sql/states_US.sql',
         )
     ),
 

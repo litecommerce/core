@@ -48,6 +48,7 @@ WholesaleTrading
 # LiteCommerce files that must be removed from all distributives
 XLITE_FILES_TODELETE="
 restoredb
+sql/xlite_lng_de.sql
 sql/local
 sql/demo
 "
