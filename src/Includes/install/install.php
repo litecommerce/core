@@ -39,28 +39,6 @@ if (!defined('XLITE_INSTALL_MODE')) {
     die('Incorrect call of the script. Stopping.');
 }
 
-if (version_compare(phpversion(), '5.0.0') < 0) {
-    die('LiteCommerce cannot start on PHP version earlier than 5.0.0 (' . phpversion(). ' is currently used)');
-}
-
-require_once realpath(dirname(__FILE__) . '/../..') . '/top.inc.php';
-\Includes\Autoloader::addFunction('__lc_autoload_install');
-
-require_once constant('LC_ROOT_DIR') . 'Includes/install/install_settings.php';
-
-if (version_compare(phpversion(), '5.3.0') >= 0) {
-    error_reporting(E_ALL ^ E_DEPRECATED);
-
-} else {
-    error_reporting(E_ALL);
-}
-
-ini_set('display_errors', true);
-
-// suphp mode
-define('LC_SUPHP_MODE', get_php_execution_mode());
-
-
 /*
  * Checking requirements section
  */
@@ -827,46 +805,66 @@ function checkFilePermissions(&$errorMsg, &$value)
  * @see    ____func_see____
  * @since  3.0.0
  */
-function checkMysqlVersion(&$errorMsg, &$value, $connection = null)
+function checkMysqlVersion(&$errorMsg, &$value)
 {
     $result = true;
     $value = 'unknown';
+    $pdoErrorMsg = '';
 
-    $_connection = $connection;
+    $isConnected = false;
 
-    if (!is_resource($_connection) && defined('DB_URL') && constant('DB_URL')) {
+    $version = false;
+
+    if (defined('DB_URL') && constant('DB_URL')) {
+        // Connect via PDO and get DB version
 
         $url = parse_url(constant('DB_URL'));
 
-        $host = urldecode($url['host']);
-        $port = isset($url['port']) ? ':' . urldecode($url['port']) : '';
-        $user = urldecode($url['user']);
-        $pass = isset($url['pass']) ? urldecode($url['pass']) : NULL;
+        $data['mysqlhost'] = urldecode($url['host']);
+        $data['mysqlport'] = isset($url['port']) ? ':' . urldecode($url['port']) : '';
+        $data['mysqluser'] = urldecode($url['user']);
+        $data['mysqlpass'] = isset($url['pass']) ? urldecode($url['pass']) : NULL;
+        $data['mysqlbase'] = ltrim(urldecode($url['path']), '/');
 
-        $_connection = @mysql_connect($host . $port, $user, $pass);
+        $isConnected = dbConnect($data, $pdoErrorMsg);
+
+    } else {
+        // Suppose to use existing connection
+        $isConnected = true;
     }
 
-    if (is_resource($_connection)) {
+    if ($isConnected) {
 
-        $version = @mysql_get_server_info($_connection);
+        try {
+            $version = \Includes\Utils\Database::getDbVersion();
 
-        if (strpos($version, '-') !== false) {
-            $value = $version = substr($version, 0, strpos($version, "-"));
+        } catch (Exception $e) {
+            $pdoErrorMsg = $e->getMessage();
         }
 
-        if (version_compare($version, constant('LC_MYSQL_VERSION_MIN')) < 0) {
-            $result = false;
-            $errorMsg = 'MySQL version must be ' . constant('LC_MYSQL_VERSION_MIN') . ' as a minimum';
+        // Check version
+        if ($version) {
 
-        } elseif ((version_compare($version, "5.0.50") >= 0 && version_compare($version, "5.0.52") < 0)) {
+            if (version_compare($version, constant('LC_MYSQL_VERSION_MIN')) < 0) {
+                $result = false;
+                $errorMsg = 'MySQL version must be ' . constant('LC_MYSQL_VERSION_MIN') . ' as a minimum. If you use the current MySQL version, loading the SQL dump to the database may become impossible.';
+
+            } elseif ((version_compare($version, "5.0.50") >= 0 && version_compare($version, "5.0.52") < 0)) {
+                $result = false;
+                $errorMsg = 'The version of MySQL which is currently used (' . $version . ') contains known bugs, that is why LiteCommerce may operate incorrectly. It is recommended to update MySQL to a more stable version. If you use the current MySQL version, loading the SQL dump to the database may become impossible.';
+            }
+
+        } else {
+            $errorMsg = 'Cannot get the MySQL server version' . (!empty($pdoErrorMsg) ? ' : ' . $pdoErrorMsg : '.') . '<br />Please make sure that MySQL version must be ' . constant('LC_MYSQL_VERSION_MIN') . ' as a minimum. If you use a lower MySQL version, loading the SQL dump to the database may become impossible.';
             $result = false;
-            $errorMsg = 'The version of MySQL which is currently used (' . $version . ') contains known bugs, that is why LiteCommerce may operate incorrectly. It is recommended to update MySQL to a more stable version.';
         }
 
-    } elseif (is_resource($connection)) {
+    } else {
         $result = false;
-        $errorMsg = 'Cannot connect to MySQL server.';
+        $errorMsg = 'Cannot connect to MySQL server' . (!empty($pdoErrorMsg) ? ' : ' . $pdoErrorMsg : '.');
     }
+
+    $value = $version;
 
     return $result;
 }
@@ -990,6 +988,8 @@ function doInstallDatabase($trigger, &$params, $silentMode = false)
 
     $result = false;
 
+    $pdoErrorMsg = '';
+
     if (!in_array($trigger, array('base', 'demo', 'all'))) {
         $errMsg = (!$silentMode ? 'Internal error: wrong trigger parameter. Stopped' : '');
         die($errMsg);
@@ -997,7 +997,7 @@ function doInstallDatabase($trigger, &$params, $silentMode = false)
 
     $configUpdated = true;
 
-    $isConnected = ($connection = @mysql_connect($params['mysqlhost'] . (!empty($params['mysqlport']) ? ':' . $params['mysqlport'] : ''), $params['mysqluser'], $params['mysqlpass'])) && ($dbSelected = @mysql_select_db($params['mysqlbase']));
+    $isConnected = dbConnect($params, $pdoErrorMsg);
 
     if ($isConnected) {
 
@@ -1035,7 +1035,7 @@ function doInstallDatabase($trigger, &$params, $silentMode = false)
                     $_sql[] = $_moduleSqlFile;
                 }
             }
-        
+
             // Write parameters into the config file
             if (@is_writable(LC_CONFIG_DIR . constant('LC_CONFIG_FILE'))) {
 
@@ -1074,13 +1074,11 @@ function doInstallDatabase($trigger, &$params, $silentMode = false)
                echo "<br /><b>Updating database... </b><br />\n"; flush();
             }
 
-            @mysql_query('SET sql_mode="MYSQL40"');
-
             foreach ($_sql as $_sqlFile) {
 
                 $output = 'Uploading ' . $_sqlFile . '...';
                 ob_start();
-                $result = query_upload(constant('LC_ROOT_DIR') . $_sqlFile, $connection, false);
+                $result = uploadQuery(constant('LC_ROOT_DIR') . $_sqlFile, false);
                 $output .= (!$result ? ob_get_contents() : '<br />');
                 ob_end_clean();
 
@@ -1101,13 +1099,14 @@ function doInstallDatabase($trigger, &$params, $silentMode = false)
                 }
 
                 foreach ($_queries as $_query) {
-                    ob_start();
-                    mysql_query($_query, $connection);
-                    $myerr = mysql_error();
 
-                    if (!empty($myerr)) {
+                    ob_start();
+
+                    dbExecute($_query, $pdoErrorMsg);
+
+                    if (!empty($pdoErrorMsg)) {
                         $result = false;
-                        query_upload_error($myerr, false);
+                        showQueryStatus($pdoErrorMsg, false);
                     }
 
                     $output = ob_get_contents();
@@ -1126,30 +1125,10 @@ function doInstallDatabase($trigger, &$params, $silentMode = false)
         }
 
     } elseif (!$silentMode) {
-
-        if (!$connection) {
-            fatal_error('Cannot connect to MySQL server. This unexpected error has canceled the installation. To install the software, please correct the problem and start the installation again.');
-
-        } elseif (!$dbSelected) {
-            fatal_error('Cannot find database "' . $params['mysqlbase'] . '". This unexpected error has canceled the installation. To install the software, please correct the problem and start the installation again.');
-        }
+        fatal_error('Cannot connect to MySQL server' . (!empty($pdoErrorMsg) ? ': ' . $pdoErrorMsg : '') . '.<br />This unexpected error has canceled the installation. To install the software, please correct the problem and start the installation again.');
     }
 
     return $result;
-}
-
-/**
- * Rebuild LiteCommerce cache 
- * FIXME - the rebuildCache() method should not be called directly
- * 
- * @return void
- * @access public
- * @see    ____func_see____
- * @since  3.0.0
- */
-function doRebuildCache()
-{
-    \Includes\Decorator\Utils\CacheManager::rebuildCache(true);
 }
 
 /**
@@ -1207,46 +1186,6 @@ function doInstallDirs($params, $silentMode = false)
 }
 
 /**
- * Moving the images to file system (directory 'images')
- * 
- * @param array  $params     Database access data and other parameters
- * @param bool   $silentMode Do not display any output during installing
- *  
- * @return bool
- * @access public
- * @see    ____func_see____
- * @since  3.0.0
- */
-function doMoveImagesToFs(&$params, $silentMode = false)
-{
-    $result = true;
-
-    if (!empty($params['images_to_fs'])) {
-
-        if ($silentMode) {
-            ob_start();
-        }
-
-        echo '<br /><b>Moving product images to the file system...</b><br />';
-        move_images_to_fs('xlite_products', 'product_id', 'image', 'pi_');
-
-
-        echo '<br /><b>Moving product thumbnails to the file system...</b><br />';
-        move_images_to_fs('xlite_products', 'product_id', 'thumbnail', 'pt_');
-
-
-        echo '<br /><b>Moving category images to the file system...</b><br />';
-        move_images_to_fs('xlite_categories', 'category_id', 'image', 'ci_');
-
-        if ($silentMode) {
-            ob_end_clean();
-        }
-    }
-
-    return $result;
-}
-
-/**
  * Create an administrator account
  *
  * @param array  $params     Database access data and other parameters
@@ -1278,73 +1217,51 @@ function doCreateAdminAccount(&$params, $silentMode = false)
         $password = md5($password);
     }
 
-    $data = @parse_ini_file(LC_CONFIG_DIR . constant('LC_CONFIG_FILE'));
-
-    if (empty($data['port'])) {
-        $data['port'] = (!empty($data['socket']) ? $data['socket'] : '');
-    }
-
-    if ($result && ($mylink = @mysql_connect($data['hostspec'] . (!empty($data['port']) ? ':' . $data['port'] : ''), $data['username'], $data['password'])) && mysql_select_db($data['database'])) {
-
-        @mysql_query("SET sql_mode='MYSQL40'");
+    // Connect to database via config.php file
+    if (dbConnect(null, $pdoErrorMsg)) {
 
         // check for profile
-        $sql = "SELECT COUNT(*) FROM xlite_profiles WHERE login = '$login'";
         $query = '';
 
-        if ($res = @mysql_query($sql)) {
+        $profileId = dbFetchColumn('SELECT profile_id FROM xlite_profiles WHERE login = \'' . $login .'\'', $pdoErrorMsg);
 
-            $data = mysql_fetch_row($res);
+        if (empty($pdoErrorMsg)) {
 
-            // Account already exists
-            if ($data[0]) {
+            if ($profileId) {
+                // Account already exists
 
-                $sql = "SELECT profile_id FROM xlite_profiles WHERE login='$login'";
+                $query = "UPDATE xlite_profiles SET password='$password', access_level='100', order_id='0', status='E' WHERE profile_id='$profile_id'";
 
-                if ($res = @mysql_query($sql)) {
+                echo "<BR><B>Updating primary administrator profile...</B><BR>\n";
 
-                    $data = mysql_fetch_row($res);
-
-                    // update profile
-                    if ($data[0]) {  // account already exists
-                        $profile_id = $data[0];
-                        $query = "UPDATE xlite_profiles SET password='$password', access_level='100', order_id='0', status='E' WHERE profile_id='$profile_id'";
-
-                    } else {
-                        $query = "UPDATE xlite_profiles SET password='$password', access_level='100', order_id='0', status='E' WHERE login='$login'";
-                    }
-
-                    echo "<BR><B>Updating primary administrator profile...</B><BR>\n";
-
-                } else {
-                    $result = false;
-                    $errorMsg = fatal_error("Invalid SQL query: $sql");
-                }
-
-            // Register default admin account
             } else {
+                // Register default admin account
+
                 $query = "INSERT INTO xlite_profiles (login, password, access_level, status) VALUES ('$login', '$password', 100, 'E')";
+
                 echo "<BR><B>Registering primary administrator profile...</B><BR>";
             }
-        
-            if (@mysql_query($query)) {
-                echo "<FONT color=green>[OK]</FONT>";
+            
+            dbExecute($query, $pdoErrorMsg);
+
+            if (empty($pdoErrorMsg)) {
+                echo '<FONT color="green">[OK]</FONT>';
 
             } else {
                 // an error has occured
-                echo "<FONT color=red>[FAILED]</FONT>";
+                echo '<FONT color="red">[FAILED]</FONT>';
                 $result = false;
-                $errorMsg = fatal_error("Invalid SQL query: $sql");
+                $errorMsg = fatal_error('ERROR: ' . $pdoErrorMsg);
             }
 
         } else {
             $result = false;
-            $errorMsg = fatal_error("Invalid SQL query: $sql");
+            $errorMsg = fatal_error('ERROR: ' . $pdoErrorMsg);
         }
 
     } else {
         $result = false;
-        $errorMsg = fatal_error("Can't connect to MySQL server or select database you specified. Press 'BACK' button and review MySQL server settings you provided.");
+        $errorMsg = fatal_error('Can\'t connect to MySQL server or select database you specified' . (!empty($pdoErrorMsg) ? ': ' . $pdoErrorMsg : '') . '.<br />Press \'BACK\' button and review MySQL server settings you provided.');
     }
 
     if ($silentMode) {
@@ -1917,123 +1834,6 @@ function get_info()
 }
 
 /**
- * Move images from required field to the filesystem 
- * 
- * @param string $table       
- * @param string $id          
- * @param string $prefix      
- * @param string $file_prefix 
- * @param string $path        
- *  
- * @return bool
- * @access public
- * @see    ____func_see____
- * @since  3.0.0
- */
-function move_images_to_fs($table, $id, $prefix, $file_prefix, $path = 'images/')
-{
-    $result = true;
-
-    if (!@file_exists(constant('LC_ROOT_DIR') . $path)) {
-        $result = @mkdir(constant('LC_ROOT_DIR') . $path, 0777);
-    }
-
-    if ($result) {
-
-        $data = @parse_ini_file(LC_CONFIG_DIR . constant('LC_CONFIG_FILE'));
-
-        if (empty($data['port'])) {
-            $data['port'] = (!empty($data['socket']) ? $data['socket'] : '');
-        }
-
-        if (@mysql_connect($data['hostspec'] . (!empty($data['port']) ? ':' . $data['port'] : ''), $data['username'], $data['password']) && mysql_select_db($data['database'])) {
-
-            @mysql_query("SET sql_mode='MYSQL40'");
-            $my_query = mysql_query("SELECT $id, {$prefix}_type, $prefix FROM $table WHERE {$prefix}_source = 'D'");
-
-            // Fetch rows
-            $iteration = 0;
-
-            while($row = @mysql_fetch_array($my_query, MYSQL_ASSOC))
-            {
-                $fileName = $file_prefix . $row[$id] . '.' . get_image_extension($row[$prefix . '_type']);
-                $filePath = constant('LC_ROOT_DIR') . $path . $fileName;
-
-                $content = $row[$prefix];
-
-                if (empty($content))
-                    continue;
-
-                // put image content to the file
-                if (($fd = fopen($filePath, "wb"))) {
-                    fwrite($fd, $content);
-                    fclose($fd);
-
-                } else {
-                    continue;
-                }
-
-                $sql = "UPDATE $table SET $prefix ='$fileName', {$prefix}_source = 'F' WHERE $id ='{$row[$id]}'";
-                @mysql_query($sql);
-
-                if ($iteration++ % 2) {
-                    echo '.';
-                    flush();
-                }
-            }
-
-        } else {
-            $result = false;
-        }
-    }
-
-    if (!$result) {
-        status($result);
-    }
-
-    return $result;
-}
-
-/**
- * Get image extension
- * 
- * @param string $type
- *  
- * @return string
- * @access public
- * @see    ____func_see____
- * @since  3.0.0
- */
-function get_image_extension($type)
-{
-    $image_type = "gif";
-
-    $image_types = array(
-        "gif"  => "image/gif",
-        "jpeg" => "image/jpeg",
-        "png"  => "image/png",
-        "swf"  => "image/swf",
-        "psd"  => "image/psd",
-        "bmp"  => "image/bmp",
-        "tiff" => "image/tiff",
-        "jpc"  => "image/jpc",
-        "jp2"  => "image/jp2",
-        "jpx"  => "image/jpx",
-        "swc"  => "image/swc",
-        "iff"  => "image/iff"
-    );
-
-    foreach ($image_types as $k => $v) {
-        if ($v == $type) {
-            $image_type = $k;
-            break;
-        }
-    }
-
-    return $image_type;
-}
-
-/**
  * Do an HTTP request to the install.php
  * 
  * @param string $action_str 
@@ -2360,7 +2160,7 @@ function fatal_error($txt) {
 ?>
 <CENTER>
 <P>
- <B><FONT color=red>Fatal error: <?php echo $txt ?>.<BR>Please correct the error(s) before proceeding to the next step.</FONT></B>
+ <B><FONT color=red>Fatal error: <?php echo $txt ?><BR>Please correct the error(s) before proceeding to the next step.</FONT></B>
 </P>
 </CENTER>
 <?php
@@ -2380,7 +2180,7 @@ function warning_error($txt) {
 ?>
 <CENTER>
 <P>
- <B><FONT color=red>Warning: <?php echo $txt ?>.</FONT></B>
+ <B><FONT color=red>Warning: <?php echo $txt ?></FONT></B>
 </P>
 </CENTER>
 <?php
@@ -2847,6 +2647,9 @@ function module_cfg_install_db(&$params)
 {
     global $error, $lcSettings; 
     global $report_uid, $reportFName;
+    global $checkRequirements;
+
+    $pdoErrorMsg = '';
 
     $clrNumber = 2;
 
@@ -3015,15 +2818,15 @@ OUT;
                 }
             }
  
-            $connection = @mysql_connect($params['mysqlhost'] . (!empty($params['mysqlport']) ? ':' . $params['mysqlport'] : ''), $params['mysqluser'], $params['mysqlpass']);
+            $connection = dbConnect($params, $pdoErrorMsg);
 
             if ($connection) {
 
                 // Check MySQL version
                 $mysqlVersionErr = $currentMysqlVersion = '';
 
-                if (!checkMysqlVersion($mysqlVersionErr, $currentMysqlVersion, $connection)) {
-                    warning_error($mysqlVersionErr);
+                if (!checkMysqlVersion($mysqlVersionErr, $currentMysqlVersion)) {
+                    warning_error($mysqlVersionErr . (!empty($currentMysqlVersion) ? '<br />(current version is ' . $currentMysqlVersion . ')' : ''));
                 }
 
                 // Check if config.php file is writeable
@@ -3032,41 +2835,26 @@ OUT;
                     $checkError = true;
 
                 } else {
+                    // Check if LiteCommerce tables is already exists
 
-                    if (!@mysql_select_db($params['mysqlbase'])) {
+                    $mystring = '';
+                    $first = true;
+         
+                    $res = dbFetchAll('SHOW TABLES LIKE \'xlite_%\'');
 
-                        @mysql_query('SET sql_mode="MYSQL40"');
+                    if (is_array($res)) {
 
-                        if (!@mysql_query('CREATE DATABASE ' . $params['mysqlbase'])) {
-                            fatal_error('Installer couldn\'t create database "' . $params['mysqlbase'] . '". Please create it manually or ask your hosting provider to do it for you.');
-                            $checkError = true;
-
-                        }
-            
-                    } else {
-            
-                        @mysql_query('SET sql_mode="MYSQL40"');
-                        $mystring = '';
-                        $first = true;
-            
-                        $res = @mysql_list_tables($params['mysqlbase']);
-
-                        while ($row = @mysql_fetch_row($res)) {
-
-                            $ctable = $row[0];
-
-                            if ($ctable == 'xlite_products') {
+                        foreach ($res as $row) {
+                            if (in_array('xlite_products', $row)) {
                                 warning_error('Installation Wizard has detected that the specified database has existing LiteCommerce tables. If you continue with the instalaltion, the tables will be purged.');
                                 break;
                             }
                         }
-
-                        @mysql_close ($mylink);
                     }
                 }
 
             } else {
-                fatal_error('Can\'t connect to MySQL server specified. Press \'BACK\' button and review MySQL server settings you provided.');
+                fatal_error('Can\'t connect to MySQL server specified' . (!empty($pdoErrorMsg) ? ': ' . $pdoErrorMsg : '') . '<br /> Press \'BACK\' button and review MySQL server settings you provided.');
                 $checkError = true;
             }
         } 
@@ -3235,10 +3023,6 @@ function module_install_db(&$params)
 <?php
 
     $result = doInstallDatabase('all', $params);
-
-    if ($result) {
-        $result = doMoveImagesToFs($params);
-    }
 
 ?>
 
@@ -3528,6 +3312,253 @@ function module_install_done(&$params)
     doFinishInstallation($params);
 
     return false;
+}
+
+/**
+ * Do connection to the database with params user specified
+ * 
+ * @return bool
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
+ */
+function dbConnect ($data = null, &$errorMsg = null)
+{
+    $result = true;
+
+    if (!empty($data) && is_array($data)) {
+
+        $fields = array(
+            'hostspec' => 'mysqlhost',
+            'port'     => 'mysqlport',
+            'socket'   => 'mysqlsock',
+            'username' => 'mysqluser',
+            'password' => 'mysqlpass',
+            'database' => 'mysqlbase',
+        );
+
+        $dbParams = array();
+
+        foreach ($fields as $key => $value) {
+            if (isset($data[$value])) {
+                $dbParams[$key] = $data[$value];
+            }
+        }
+
+        if (!empty($dbParams['port'])) {
+            if (!is_numeric($dbParams['port'])) {
+                $dbParams['socket'] = $dbParams['port'];
+                $dbParams['port'] = '';
+            }
+        }
+
+        // Set db options
+        try {
+            $connect = \Includes\Utils\Database::setDbOptions($dbParams);
+
+        } catch (Exception $e) {
+            $errorMsg = $e->getMessage();
+        }
+
+        $result = isset($connect);
+    
+    } else {
+        // Reset db options
+        \Includes\Utils\Database::resetDbOptions();
+    }
+
+    return $result;
+}
+
+/**
+ * Execute SQL query and return the first column of first row of the result 
+ * 
+ * @return mixed
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
+ */
+function dbFetchColumn($sql, &$errorMsg = null)
+{
+    $result = null;
+
+    try {
+        $result = \Includes\Utils\Database::fetchColumn($sql);
+
+    } catch (Exception $e) {
+        $errorMsg = $e->getMessage();
+    }
+
+    return $result;
+}
+
+/**
+ * Execute SQL query and return the result as an associated array
+ * 
+ * @return array
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
+ */
+function dbFetchAll($sql, &$errorMsg = null)
+{
+    $result = null;
+
+    try {
+        $result = \Includes\Utils\Database::fetchAll($sql);
+
+    } catch (Exception $e) {
+        $errorMsg = $e->getMessage();
+    }
+
+    return $result;
+}
+
+/**
+ * Execute SQL query
+ * 
+ * @return int
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
+ */
+function dbExecute($sql, &$errorMsg = null)
+{
+    $result = null;
+
+    try {
+        $result = \Includes\Utils\Database::execute($sql);
+
+    } catch (Exception $e) {
+        $errorMsg = $e->getMessage();
+    }
+
+    return $result;
+}
+
+/**
+ * Execute a set of SQL queries from file
+ * 
+ * @param string $fileName     The name of file which contains SQL queries
+ * @param bool   $ignoreErrors Ignore errors flag
+ * @param bool   $is_restore   ?
+ *
+ * @return bool
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
+ */
+function uploadQuery($fileName, $ignoreErrors = false, $is_restore = false)
+{
+    $fp = @fopen($fileName, 'rb');
+
+    if (!$fp) {
+        echo '<font color="red">[Failed to open ' . $fileName . ']</font></pre>' . "\n";
+        return false;
+    }
+
+    $command = '';
+    $counter = 1;
+
+    while (!feof($fp)) {
+
+        $c = '';
+
+        // read SQL statement from file
+        do {
+            $c .= fgets($fp, 1024);
+            $endPos = strlen($c) - 1;
+        } while (substr($c, $endPos) != "\n" && !feof($fp));
+
+        $c = chop($c);
+
+        // skip comments
+        if (substr($c, 0, 1) == '#' || substr($c, 0, 2) == '--') {
+            continue;
+        }
+
+        // parse SQL statement
+
+        $command .= $c;
+
+        if (substr($command, -1) == ';') {
+
+            $command = substr($command, 0, strlen($command)-1);
+            $table_name = '';
+
+            if (preg_match('/^CREATE TABLE ([_a-zA-Z0-9]*)/i', $command, $matches)) {
+                $table_name = $matches[1];
+                echo 'Creating table [' . $table_name . '] ... ';
+            
+            } elseif (preg_match('/^ALTER TABLE ([_a-zA-Z0-9]*)/i', $command, $matches)) {
+                $table_name = $matches[1];
+                echo 'Altering table [' . $table_name . '] ... ';
+            
+            } elseif (preg_match('/^DROP TABLE IF EXISTS ([_a-zA-Z0-9]*)/i', $command, $matches)) {
+                $table_name = $matches[1];
+                echo 'Deleting table [' . $table_name . '] ... ';
+            
+            } else {
+                $counter ++;
+            }    
+
+            // Execute SQL query
+            dbExecute($command, $myerr);
+    
+            // check for errors
+            if (!empty($myerr)) {
+
+                showQueryStatus($myerr, $ignoreErrors);
+
+                if (!$ignoreErrors) {
+                    break;
+                }    
+
+            } elseif ($table_name != "") {
+                echo '<font color="green">[OK]</font><br />' . "\n";
+            
+            } elseif (!($counter % 20)) {
+                echo '.';
+            }
+
+            $command = '';
+
+            flush();
+        }
+    }
+
+    fclose($fp);
+
+    if ($counter>20) {
+        print "\n";
+    }
+
+    return (!$is_restore && $ignoreErrors) ? true : empty($myerr);
+}
+
+/**
+ * Show a error status
+ *
+ * @param string $myerr        Error message
+ * @param bool   $ignoreErrors Ignore errors flag
+ *
+ * @return void
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
+ */
+function showQueryStatus($myerr, $ignoreErrors)
+{
+    if (empty($myerr)) {
+        echo "\n";
+        echo '<font color="green">[OK]</font>' . "\n";
+
+    } elseif ($ignoreErrors) {
+        echo '<font color="blue">[NOTE: ' . $myerr . ']</font>' . "\n";
+
+    } else {
+        echo '<font color="red">[FAILED: ' . $myerr . ']</font>' . "\n";
+    }
 }
 
 /*

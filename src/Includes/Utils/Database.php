@@ -47,6 +47,58 @@ class Database extends \Includes\Utils\AUtils
      */
     protected static $handler;
 
+    /**
+     * Database connection options 
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected static $dbOptions;
+
+    /**
+     * Setter method for $dbOptions. Once tries to connect and return connection object
+     * 
+     * @return PDO
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function setDbOptions($options)
+    {
+        static::$dbOptions = $options;
+
+        return static::getHandler();
+    }
+
+    /**
+     * Getter method for $this->dbOptions
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function getDbOptions($name = null)
+    {
+        $options = isset(static::$dbOptions) ? static::$dbOptions : \Includes\Utils\ConfigParser::getOptions(array('database_details'));
+
+        return isset($name) ? (isset($options[$name]) ? $options[$name] : null) : $options;
+    }
+
+    /**
+     * Reset method for $this->dbOptions
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function resetDbOptions()
+    {
+        static::$dbOptions = null;
+    }
 
     /**
      * Return name of database user 
@@ -58,7 +110,7 @@ class Database extends \Includes\Utils\AUtils
      */
     protected static function getUsername()
     {
-        return \Includes\Utils\ConfigParser::getOptions(array('database_details', 'username'));
+        return static::getDbOptions('username');
     }
 
     /**
@@ -71,7 +123,7 @@ class Database extends \Includes\Utils\AUtils
      */
     protected static function getPassword()
     {
-        return \Includes\Utils\ConfigParser::getOptions(array('database_details', 'password'));
+        return static::getDbOptions('password');
     }
 
     /**
@@ -126,7 +178,6 @@ class Database extends \Includes\Utils\AUtils
         return static::$handler;
     }
 
-
     /**
      * Return array of credentials to connect to DB 
      * 
@@ -139,7 +190,7 @@ class Database extends \Includes\Utils\AUtils
      */
     public static function getConnectionParams($fullList = false)
     {
-        $options = \Includes\Utils\ConfigParser::getOptions('database_details');
+        $options = static::getDbOptions();
 
         $dsnFields = array(
             'host'        => 'hostspec',
@@ -186,7 +237,7 @@ class Database extends \Includes\Utils\AUtils
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function fetchAll($sql, $flags = PDO::FETCH_ASSOC)
+    public static function fetchAll($sql, $flags = \PDO::FETCH_ASSOC)
     {
         return static::getHandler()->query($sql)->fetchAll($flags);
     }
@@ -220,5 +271,18 @@ class Database extends \Includes\Utils\AUtils
     public static function execute($sql, array $params = array())
     {
         return static::getHandler()->prepare($sql)->execute($params);
+    }
+
+    /**
+     * Get the database version
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getDbVersion()
+    {
+        return static::getHandler()->getAttribute(\PDO::ATTR_SERVER_VERSION);
     }
 }
