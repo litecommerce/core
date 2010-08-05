@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Product options
+ * Custom javascript
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -9,12 +9,16 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
+ * @ListChild (list="productDetails.base", weight="1000")
  *}
-<ul class="product-options">
-  <li FOREACH="getOptions(),option" class="product-option">
-    <strong class="subtitle">{option.getDisplayName():h}</strong>
-    <widget template="{getTemplateNameByOption(option)}" option="{option}" />
-  </li>
-</ul>
-
-<widget template="modules/ProductOptions/options_exception.tpl" />
+<script IF="product.getJavascript()" type="text/javascript">
+$(document).ready(
+  function() {
+    $('form[name="add_to_cart"]').submit(
+      function() {
+        {product.getJavascript()}
+      }
+    );
+  }
+);
+</script>

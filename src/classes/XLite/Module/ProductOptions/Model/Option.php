@@ -134,5 +134,40 @@ class Option extends \XLite\Model\Base\I18n
      */
     protected $exceptions;
 
+    public function isAbsoluteModifier()
+    {
+        return self::ABSOLUTE_MODIFIER == $this->getModifierType();
+    }
 
+    public function isRelativeModifier()
+    {
+        return self::PERCENT_MODIFIER == $this->getModifierType();
+    }
+
+    public function getSurchanrgeSign()
+    {
+        return 0 > $this->getPriceModifier() ? '-' : '+';
+    }
+
+    public function getDisplaySurcharge()
+    {
+        $surcharge = 0;
+
+        if (0 != $this->getPriceModifier()) {
+            switch ($this->getModifierType()) {
+                case self::PERCENT_MODIFIER:
+                    $surcharge = $this->getGroup()->getProduct()->getPrice() * $this->getPriceModifier() / 100;
+                    break;
+ 
+                case self::ABSOLUTE_MODIFIER:
+                    $surcharge = $this->getPriceModifier();
+                    break;
+
+                default:
+                    $surcharge = 0;
+            }
+        }
+
+        return $surcharge;
+    }
 }

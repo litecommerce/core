@@ -10,6 +10,4 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-({if:isShowPrice()}{if:option.absolute}{option.surcharge_sign} {price_format(optionGroup.modifiedPrice(option,1)):h}{else:}{option.surcharge_sign}{option.surcharge_abs}%{end:}{if:option.weight_percent|option.weight_absolute}, {end:}{end:}
-{if:option.weight_percent}{option.weight_modifier_sign}{option.weight_modifier_abs}%{end:}
-{if:option.weight_absolute}{option.weight_modifier_sign}{option.weight_modifier_abs} {config.General.weight_symbol}{end:})
+({option.getSurchanrgeSign()} {price_format(option.getDisplaySurcharge()):h})

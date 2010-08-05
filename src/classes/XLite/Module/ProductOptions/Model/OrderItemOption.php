@@ -117,11 +117,11 @@ class OrderItemOption extends \XLite\Model\AEntity
     /**
      * Option group (relation)
      * 
-     * @var    \XLite\Module\ProductyOptions\Model\OptionGroup
+     * @var    \XLite\Module\ProductOptions\Model\OptionGroup
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @OneToOne (targetEntity="XLite\Module\ProductyOptions\Model\OptionGroup")
+     * @OneToOne (targetEntity="XLite\Module\ProductOptions\Model\OptionGroup")
      * @JoinColumn (name="group_id", referencedColumnName="group_id")
      */
     protected $optionGroup;
@@ -129,11 +129,11 @@ class OrderItemOption extends \XLite\Model\AEntity
     /**
      * Option (relation)
      * 
-     * @var    \XLite\Module\ProductyOptions\Model\Option
+     * @var    \XLite\Module\ProductOptions\Model\Option
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @OneToOne (targetEntity="XLite\Module\ProductyOptions\Model\Option")
+     * @OneToOne (targetEntity="XLite\Module\ProductOptions\Model\Option")
      * @JoinColumn (name="option_id", referencedColumnName="option_id")
      */
     protected $option;

@@ -37,5 +37,70 @@ namespace XLite\Module\ProductOptions\Model\Repo;
  */
 class OptionGroup extends \XLite\Model\Repo\Base\I18n
 {
+    /**
+     * Find all active option groups by product id 
+     * 
+     * @param integer $productId Product id
+     *  
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function findActiveByProductId($productId)
+    {
+        $data = $this->defineActiveByProductIdQuery(intval($productId))
+            ->getQuery()
+            ->getResult();
+
+        $data = $this->postprocessActiveByProductId($data, intval($productId));
+
+        return $data;
+    }
+
+    /**
+     * Define query for findActiveByProductId() method
+     * 
+     * @param integer $productId Product id
+     *  
+     * @return \Doctrine\ORM\QueryBuilder
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineActiveByProductIdQuery($productId)
+    {
+        return $this->createQueryBuilder()
+            ->addSelect('options')
+            ->leftJoin('o.options', 'options', 'WITH', 'options.enabled = :true')
+            ->andWhere('o.product_id = :productId AND o.enabled = :true')
+            ->setParameter('productId', $productId)
+            ->setParameter('true', true);
+    }
+
+    /**
+     * Postprocessing for findActiveByProductId() method
+     * 
+     * @param array   $data      Data
+     * @param integer $productId Product id
+     *  
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function postprocessActiveByProductId(array $data, $productId)
+    {
+        foreach ($data as $i => $item) {
+            if (
+                $item->getType() == \XLite\Module\ProductOptions\Model\OptionGroup::GROUP_TYPE
+                && 0 == count($item->getOptions())
+            ) {
+                unset($data[$i]);
+            }
+        }
+
+        return $data;
+    }
 }
 

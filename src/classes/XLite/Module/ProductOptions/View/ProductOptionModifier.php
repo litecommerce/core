@@ -42,8 +42,6 @@ class ProductOptionModifier extends \XLite\View\AView
      */
 
     const PARAM_OPTION       = 'option';
-    const PARAM_OPTION_GROUP = 'optionGroup';
-    const PARAM_PRODUCT      = 'product';
 
 
     /**
@@ -70,9 +68,12 @@ class ProductOptionModifier extends \XLite\View\AView
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_PRODUCT      => new \XLite\Model\WidgetParam\Object('Product', null, false, '\XLite\Model\Product'),
-            self::PARAM_OPTION       => new \XLite\Model\WidgetParam\Object('Option', null, false, 'stdClass'),
-            self::PARAM_OPTION_GROUP => new \XLite\Model\WidgetParam\Object('Option group', null, false, '\XLite\Module\ProductOptions\Model\ProductOption'),
+            self::PARAM_OPTION       => new \XLite\Model\WidgetParam\Object(
+                'Option',
+                null,
+                false,
+                '\XLite\Module\ProductOptions\Model\Option'
+            ),
         );
     }
 
@@ -85,20 +86,9 @@ class ProductOptionModifier extends \XLite\View\AView
      */
     protected function isVisible()
     {
-        return parent::isVisible() && $this->getParam(self::PARAM_OPTION)->modifyParams;
+        return parent::isVisible()
+            && $this->getParam(self::PARAM_OPTION)->getPriceModifier();
     }
 
-    /**
-     * Check - show price or not 
-     * 
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function isShowPrice()
-    {
-        return $this->getParam(self::PARAM_PRODUCT)->isDisplayPriceModifier() && !$this->getParam(self::PARAM_OPTION)->isZero;
-    }
 }
 

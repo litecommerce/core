@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Product options
+ * Display text-absed product option as textareax
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -10,11 +10,4 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<ul class="product-options">
-  <li FOREACH="getOptions(),option" class="product-option">
-    <strong class="subtitle">{option.getDisplayName():h}</strong>
-    <widget template="{getTemplateNameByOption(option)}" option="{option}" />
-  </li>
-</ul>
-
-<widget template="modules/ProductOptions/options_exception.tpl" />
+<textarea {if:option.getCols()} cols="{option.getCols()}"{end:} {if:option.getRows()} rows="{option.getRows()}"{end:} name="product_options[{option.getGroupId()}]">{getOptionText(option)}</textarea>
