@@ -363,7 +363,7 @@ INSERT INTO xlite_options SET option_id = 4003, group_id = 4000, enabled = 1;
 INSERT INTO xlite_option_translations (id, code, name) VALUES (4003, 'en', 'XL');
 
 --INSERT INTO xlite_inventories SET `inventory_id` = '4004', `amount` = '965', `enabled` = '1', `low_avail_limit` = '50';
-INSERT INTO xlite_option_groups SET group_id = 4001, `product_id` = 4004, `view_type` = 'r', enabled = 1;
+INSERT INTO xlite_option_groups SET group_id = 4001, `product_id` = 4004, `view_type` = 's', enabled = 1;
 INSERT INTO xlite_option_group_translations (id, code, name) VALUES (4001, 'en', 'Size');
 INSERT INTO xlite_options SET option_id = 4004, group_id = 4001, enabled = 1;
 INSERT INTO xlite_option_translations (id, code, name) VALUES (4004, 'en', 'S');

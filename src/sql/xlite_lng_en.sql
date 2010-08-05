@@ -384,30 +384,3 @@ INSERT INTO `xlite_config_translations` VALUES (224,'en',299,'Enable \"save\" la
 INSERT INTO xlite_membership_translations (id, code, name) VALUES (1, 'en', 'Gold');
 INSERT INTO xlite_membership_translations (id, code, name) VALUES (2, 'en', 'Platinum');
 INSERT INTO xlite_membership_translations (id, code, name) VALUES (3, 'en', 'Wholesaler');
-
--- Product option groups
-INSERT INTO xlite_option_group_translations (id, code, name) VALUES (1, 'en', 'Color');
-INSERT INTO xlite_option_translations (id, code, name) VALUES (1, 'en', 'Red');
-INSERT INTO xlite_option_translations (id, code, name) VALUES (2, 'en', 'Green');
-INSERT INTO xlite_option_translations (id, code, name) VALUES (3, 'en', 'Yellow');
-INSERT INTO xlite_option_group_translations (id, code, name) VALUES (2, 'en', 'Size');
-INSERT INTO xlite_option_translations (id, code, name) VALUES (4, 'en', 'Small');
-INSERT INTO xlite_option_translations (id, code, name) VALUES (5, 'en', 'Big');
-INSERT INTO xlite_option_group_translations (id, code, name) VALUES (3, 'en', 'Size');
-INSERT INTO xlite_option_translations (id, code, name) VALUES (6, 'en', 'Small');
-INSERT INTO xlite_option_translations (id, code, name) VALUES (7, 'en', 'Big');
-INSERT INTO xlite_option_group_translations (id, code, name) VALUES (4, 'en', 'Choice');
-INSERT INTO xlite_option_translations (id, code, name) VALUES (8, 'en', 'Garden');
-INSERT INTO xlite_option_translations (id, code, name) VALUES (9, 'en', 'Wild');
-INSERT INTO xlite_option_group_translations (id, code, name) VALUES (5, 'en', 'Size');
-INSERT INTO xlite_option_translations (id, code, name) VALUES (10, 'en', 'Small');
-INSERT INTO xlite_option_translations (id, code, name) VALUES (11, 'en', 'Medium');
-INSERT INTO xlite_option_translations (id, code, name) VALUES (12, 'en', 'Big');
-INSERT INTO xlite_option_group_translations (id, code, name) VALUES (6, 'en', 'Size');
-INSERT INTO xlite_option_translations (id, code, name) VALUES (13, 'en', 'Small');
-INSERT INTO xlite_option_translations (id, code, name) VALUES (14, 'en', 'Medium');
-INSERT INTO xlite_option_translations (id, code, name) VALUES (15, 'en', 'Big');
-INSERT INTO xlite_option_group_translations (id, code, name) VALUES (7, 'en', 'Size');
-INSERT INTO xlite_option_translations (id, code, name) VALUES (16, 'en', 'Small');
-INSERT INTO xlite_option_translations (id, code, name) VALUES (17, 'en', 'Big');
-

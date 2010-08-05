@@ -35,7 +35,7 @@ namespace XLite\Module\ProductOptions\Model\Repo;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class OptionException extends \XLite\Model\ARepo
+class OptionException extends \XLite\Model\Repo\ARepo
 {
 }
 

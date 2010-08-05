@@ -59,6 +59,53 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
     protected $productOptions = null;
 
     /**
+     * Check - has product options list or not
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function hasOptions()
+    {
+        return 0 < count($this->optionGroups);
+    }
+
+    /**
+     * Get product options list
+     * 
+     * @return array of \XLite\Module\ProductOptions\Model\ProductOption
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getActiveOptions()
+    {
+        if (!isset($this->productOptions)) {
+            $this->productOptions = \XLite\Core\Database::getRepo('XLite\Module\ProductOptions\Model\OptionGroup')
+                ->findActiveByProductId($this->getProductId());
+        }
+
+        return $this->productOptions;
+    }
+
+    /**
+     * Check - display price modifier or not
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isDisplayPriceModifier()
+    {
+        return true;
+    }
+
+
+    ///////////////////////////////////////// OLD METHODS
+
+    /**
      * Constructor
      * 
      * @param mixed $id Object id
@@ -75,24 +122,6 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
         $this->fields['expansion_limit'] = 0;
     }
     
-    /**
-     * Get product options list
-     * 
-     * @return array of \XLite\Module\ProductOptions\Model\ProductOption
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getProductOptions()
-    {
-        if (is_null($this->productOptions)) {
-            $po = new \XLite\Module\ProductOptions\Model\ProductOption();
-            $this->productOptions = $po->findAll('product_id = \'' . $this->get('product_id') . '\'');
-        }
-
-        return $this->productOptions;
-    }
-
     /**
      * Get default product options 
      * 
@@ -139,20 +168,6 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
         return is_array($list) ? count($list) : 0;
     }
 
-    /**
-     * Check - has product options list or not
-     * 
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function hasOptions()
-    {
-        $po = new \XLite\Module\ProductOptions\Model\ProductOption();
-        return $po->hasOptions($this->get('product_id'));
-    }
-
     function getOptionExceptions()
     {
         $pe = new \XLite\Module\ProductOptions\Model\OptionException();
@@ -163,26 +178,6 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
     {
         $pe = new \XLite\Module\ProductOptions\Model\OptionException();
         return $pe->hasExceptions($this->get('product_id'));
-    }
-
-    function hasOptionValidator()
-    {
-        $pv = new \XLite\Module\ProductOptions\Model\OptionValidator();
-        $pv->set('product_id', $this->get('product_id'));
-        return strlen(trim($pv->get('javascript_code')));
-    }
-
-    function getOptionValidator()
-    {
-        $pv = new \XLite\Module\ProductOptions\Model\OptionValidator();
-        $pv->set('product_id', $this->get('product_id'));
-
-        return $pv->get('javascript_code');
-    }
-
-    function isDisplayPriceModifier()
-    {
-        return $this->xlite->get('WholesaleTradingEnabled') ? $this->is('priceAvailable') : true;
     }
 
     function delete()

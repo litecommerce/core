@@ -83,7 +83,57 @@ class ProductOptions extends \XLite\View\AView
      */
     protected function isVisible()
     {
-        return parent::isVisible() && $this->getParam(self::PARAM_PRODUCT)->hasOptions();
+        return parent::isVisible()
+            && $this->getParam(self::PARAM_PRODUCT)->hasOptions();
+    }
+
+    /**
+     * Get product options 
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getOptions()
+    {
+        return $this->getParam(self::PARAM_PRODUCT)->getActiveOptions();
+    }
+
+    /**
+     * Get template name by option group
+     * 
+     * @param \XLite\Module\ProductOptions\Model\OptionGroup $option Option group
+     *  
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getTemplateNameByOption(\XLite\Module\ProductOptions\Model\OptionGroup $option)
+    {
+        switch ($option->getType() . $option->getViewType()) {
+            case $option::GROUP_TYPE . $option::SELECT_VISIBLE:
+                $tpl = 'modules/ProductOptions/display/select.tpl';
+                break;
+
+            case $option::GROUP_TYPE . $option::RADIO_VISIBLE:
+                $tpl = 'modules/ProductOptions/display/radio.tpl';
+                break;
+
+            case $option::TEXT_TYPE . $option::TEXTAREA_VISIBLE:
+                $tpl = 'modules/ProductOptions/display/textarea.tpl';
+                break;
+
+            case $option::TEXT_TYPE . $option::INPUT_VISIBLE:
+                $tpl = 'modules/ProductOptions/display/input.tpl';
+                break;
+
+            default:
+                // TODO - add throw exception
+        }
+
+        return $tpl;
     }
 
     /**
@@ -106,32 +156,33 @@ class ProductOptions extends \XLite\View\AView
     /**
      * Check - option is selected or not
      * 
-     * @param \XLite\Module\ProductOptions\Model\ProductOption $option   Option class
-     * @param integer                                         $optionId Option id
+     * @param \XLite\Module\ProductOptions\Model\Option $option Option class
      *  
      * @return boolean
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function isOptionSelected(\XLite\Module\ProductOptions\Model\ProductOption $option, $optionId)
+    public function isOptionSelected(\XLite\Module\ProductOptions\Model\Option $option)
     {
-        return intval($option->get('selectedValue')) == $optionId;
+        $options = $option->getGroup()->getOptions();
+
+        return $options[0]->getOptionId() == $option->getOptionId();
     }
 
     /**
      * Get option text 
      * 
-     * @param \XLite\Module\ProductOptions\Model\ProductOption $option Option class
+     * @param \XLite\Module\ProductOptions\Model\OptionGroup $option Option class
      *  
      * @return string
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getOptionText(\XLite\Module\ProductOptions\Model\ProductOption $option)
+    public function getOptionText(\XLite\Module\ProductOptions\Model\OptionGroup $option)
     {
-        return strval($option->get('selectedValue'));
+        return '';
     }
 }
 

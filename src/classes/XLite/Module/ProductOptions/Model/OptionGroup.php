@@ -165,4 +165,18 @@ class OptionGroup extends \XLite\Model\Base\I18n
      * @OneToMany (targetEntity="XLite\Module\ProductOptions\Model\Option", mappedBy="group", cascade={"persist","remove"})
      */
     protected $options;
+
+    /**
+     * Get display name 
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getDisplayName()
+    {
+        return $this->getFullname() ?: $this->getName();
+    }
+
 }

@@ -99,6 +99,33 @@ INSERT INTO xlite_option_groups SET group_id = 7, `product_id` = 15067, `view_ty
 INSERT INTO xlite_options SET option_id = 16, group_id = 7, enabled = 1;
 INSERT INTO xlite_options SET option_id = 17, group_id = 7, enabled = 1;
 
+-- Product options translations
+INSERT INTO xlite_option_group_translations (id, code, name) VALUES (1, 'en', 'Color');
+INSERT INTO xlite_option_translations (id, code, name) VALUES (1, 'en', 'Red');
+INSERT INTO xlite_option_translations (id, code, name) VALUES (2, 'en', 'Green');
+INSERT INTO xlite_option_translations (id, code, name) VALUES (3, 'en', 'Yellow');
+INSERT INTO xlite_option_group_translations (id, code, name) VALUES (2, 'en', 'Size');
+INSERT INTO xlite_option_translations (id, code, name) VALUES (4, 'en', 'Small');
+INSERT INTO xlite_option_translations (id, code, name) VALUES (5, 'en', 'Big');
+INSERT INTO xlite_option_group_translations (id, code, name) VALUES (3, 'en', 'Size');
+INSERT INTO xlite_option_translations (id, code, name) VALUES (6, 'en', 'Small');
+INSERT INTO xlite_option_translations (id, code, name) VALUES (7, 'en', 'Big');
+INSERT INTO xlite_option_group_translations (id, code, name) VALUES (4, 'en', 'Choice');
+INSERT INTO xlite_option_translations (id, code, name) VALUES (8, 'en', 'Garden');
+INSERT INTO xlite_option_translations (id, code, name) VALUES (9, 'en', 'Wild');
+INSERT INTO xlite_option_group_translations (id, code, name) VALUES (5, 'en', 'Size');
+INSERT INTO xlite_option_translations (id, code, name) VALUES (10, 'en', 'Small');
+INSERT INTO xlite_option_translations (id, code, name) VALUES (11, 'en', 'Medium');
+INSERT INTO xlite_option_translations (id, code, name) VALUES (12, 'en', 'Big');
+INSERT INTO xlite_option_group_translations (id, code, name) VALUES (6, 'en', 'Size');
+INSERT INTO xlite_option_translations (id, code, name) VALUES (13, 'en', 'Small');
+INSERT INTO xlite_option_translations (id, code, name) VALUES (14, 'en', 'Medium');
+INSERT INTO xlite_option_translations (id, code, name) VALUES (15, 'en', 'Big');
+INSERT INTO xlite_option_group_translations (id, code, name) VALUES (7, 'en', 'Size');
+INSERT INTO xlite_option_translations (id, code, name) VALUES (16, 'en', 'Small');
+INSERT INTO xlite_option_translations (id, code, name) VALUES (17, 'en', 'Big');
+
+
 -- Orders [7]
 
 INSERT INTO xlite_orders SET `order_id` = '1', `profile_id` = '2001', `payment_method` = 'PhoneOrdering', `status` = 'Q', `subtotal` = '8.43', `tax` = '0.0', `date` = '1248425590', `total` = '8.43', `orig_profile_id` = '2';
