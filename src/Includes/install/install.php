@@ -840,15 +840,15 @@ function checkMysqlVersion(&$errorMsg, &$value, $isConnected = false)
 
             if (version_compare($version, constant('LC_MYSQL_VERSION_MIN')) < 0) {
                 $result = false;
-                $errorMsg = 'MySQL version must be ' . constant('LC_MYSQL_VERSION_MIN') . ' as a minimum. If you use the current MySQL version, loading the SQL dump to the database may become impossible.';
+                $errorMsg = 'MySQL version must be ' . constant('LC_MYSQL_VERSION_MIN') . ' as a minimum.';
 
             } elseif ((version_compare($version, "5.0.50") >= 0 && version_compare($version, "5.0.52") < 0)) {
                 $result = false;
-                $errorMsg = 'The version of MySQL which is currently used (' . $version . ') contains known bugs, that is why LiteCommerce may operate incorrectly. It is recommended to update MySQL to a more stable version. If you use the current MySQL version, loading the SQL dump to the database may become impossible.';
+                $errorMsg = 'The version of MySQL which is currently used (' . $version . ') contains known bugs, that is why LiteCommerce may operate incorrectly. It is recommended to update MySQL to a more stable version.';
             }
 
         } else {
-            $errorMsg = 'Cannot get the MySQL server version' . (!empty($pdoErrorMsg) ? ' : ' . $pdoErrorMsg : '.') . '<br />Please make sure that MySQL version must be ' . constant('LC_MYSQL_VERSION_MIN') . ' as a minimum. If you use a lower MySQL version, loading the SQL dump to the database may become impossible.';
+            $errorMsg = 'Cannot get the MySQL server version' . (!empty($pdoErrorMsg) ? ' : ' . $pdoErrorMsg : '.');
             $result = false;
         }
     }
@@ -1944,17 +1944,21 @@ function copy_files($source_dir, $parent_dir, $destination_dir)
  * @see    ____func_see____
  * @since  3.0.0
  */
-function change_config(&$params) {
+function change_config(&$params)
+{
     global $installation_auth_code;
 
     // check whether config file is writable
     clearstatcache();
+
     if (!@is_readable(LC_CONFIG_DIR . constant('LC_CONFIG_FILE')) || !@is_writable(LC_CONFIG_DIR . constant('LC_CONFIG_FILE'))) {
         return false;
     }
 
     // read file content
-    if (!$config = file(LC_CONFIG_DIR . constant('LC_CONFIG_FILE'))) return false;
+    if (!$config = file(LC_CONFIG_DIR . constant('LC_CONFIG_FILE'))) {
+        return false;
+    }
 
     // fixing the empty xlite_https_host value
     if (!isset($params['xlite_https_host']) || $params['xlite_https_host'] == '') {
@@ -1962,6 +1966,10 @@ function change_config(&$params) {
     }
 
     $_params = $params;
+
+    if (!isset($_params['mysqlport'])) {
+        $_params['mysqlport'] = '';
+    }
 
     // check whether the authcode is set in params. 
 
@@ -3084,7 +3092,8 @@ OUT;
                 $mysqlVersionErr = $currentMysqlVersion = '';
 
                 if (!checkMysqlVersion($mysqlVersionErr, $currentMysqlVersion, true)) {
-                    warning_error($mysqlVersionErr . (!empty($currentMysqlVersion) ? '<br />(current version is ' . $currentMysqlVersion . ')' : ''));
+                    fatal_error($mysqlVersionErr . (!empty($currentMysqlVersion) ? '<br />(current version is ' . $currentMysqlVersion . ')' : ''));
+                    $checkError = true;
                 }
 
                 // Check if config.php file is writeable
