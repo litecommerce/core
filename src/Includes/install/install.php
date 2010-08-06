@@ -813,17 +813,11 @@ function checkMysqlVersion(&$errorMsg, &$value, $isConnected = false)
 
     $version = false;
 
-    if (defined('DB_URL') && constant('DB_URL')) {
+    if (defined('DB_URL')) {
         // Connect via PDO and get DB version
 
-        $url = parse_url(constant('DB_URL'));
-
-        $data['mysqlhost'] = urldecode($url['host']);
-        $data['mysqlport'] = isset($url['port']) ? ':' . urldecode($url['port']) : '';
-        $data['mysqluser'] = urldecode($url['user']);
-        $data['mysqlpass'] = isset($url['pass']) ? urldecode($url['pass']) : NULL;
-        $data['mysqlbase'] = ltrim(urldecode($url['path']), '/');
-
+        $data = parseDbUrl(constant('DB_URL'));
+        
         $isConnected = dbConnect($data, $pdoErrorMsg);
 
         if (!$isConnected) {
@@ -1043,7 +1037,9 @@ function doInstallDatabase($trigger, &$params, $silentMode = false)
             } else {
                 $configUpdated = false;
             }
-            
+
+            \Includes\Utils\FileManager::unlinkRecursive(LC_COMPILE_DIR);
+
             if ($configUpdated !== true && !$silentMode) {
                 fatal_error('Cannot open configuration file "' . constant('LC_CONFIG_FILE') . '" for writing. This unexpected error has canceled the installation. To install the software, please correct the problem and start the installation again.');
             }
@@ -1419,6 +1415,293 @@ PLEASE WRITE THIS CODE DOWN UNLESS YOU ARE GOING TO REMOVE "<?php echo $install_
 
 
 /**
+ * Parse database access string
+ * 
+ * @param string $dbUrl Database Url string (e.g. mysql://username:password@localhost/databasename)
+ *  
+ * @return array
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
+ */
+function parseDbUrl($dbUrl)
+{    
+    $data = array();
+
+    $url = parse_url($dbUrl);
+
+    if (is_array($url)) {
+
+        $data['mysqlhost'] = urldecode($url['host']);
+
+        if (isset($url['port'])) {
+            $data['mysqlport'] = urldecode($url['port']);
+
+        } else {
+
+            $hostData = parse_url($data['mysqlhost']);
+
+            if (isset($hostData['host'])) {
+                $data['mysqlhost'] = $hostData['host'];
+                $data['mysqlport'] = isset($hostData['port']) ? $hostData['port'] : '';
+                $data['mysqlsock'] = isset($hostData['path']) ? $hostData['path'] : '';
+
+            } elseif (isset($hostData['scheme'])) {
+                $data['mysqlhost'] = $hostData['scheme'];
+                $data['mysqlport'] = isset($hostData['port']) ? $hostData['port'] : '';
+                $data['mysqlsock'] = isset($hostData['path']) ? $hostData['path'] : '';
+            }
+        }
+
+        $data['mysqluser'] = urldecode($url['user']);
+        $data['mysqlpass'] = isset($url['pass']) ? urldecode($url['pass']) : NULL;
+        $data['mysqlbase'] = ltrim(urldecode($url['path']), '/');
+    }
+
+    return $data;
+}
+
+/**
+ * Do connection to the database with params user specified
+ * 
+ * @return bool
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
+ */
+function dbConnect ($data = null, &$errorMsg = null)
+{
+    $result = true;
+
+    if (!empty($data) && is_array($data)) {
+
+        $fields = array(
+            'hostspec' => 'mysqlhost',
+            'port'     => 'mysqlport',
+            'socket'   => 'mysqlsock',
+            'username' => 'mysqluser',
+            'password' => 'mysqlpass',
+            'database' => 'mysqlbase',
+        );
+
+        $dbParams = array();
+
+        foreach ($fields as $key => $value) {
+            if (isset($data[$value])) {
+                $dbParams[$key] = $data[$value];
+            }
+        }
+
+        // Set db options
+        try {
+            $connect = \Includes\Utils\Database::setDbOptions($dbParams);
+
+        } catch (Exception $e) {
+            $errorMsg = $e->getMessage();
+        }
+
+        $result = isset($connect);
+    
+    } else {
+        // Reset db options
+        \Includes\Utils\Database::resetDbOptions();
+    }
+
+    return $result;
+}
+
+/**
+ * Execute SQL query and return the first column of first row of the result 
+ * 
+ * @return mixed
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
+ */
+function dbFetchColumn($sql, &$errorMsg = null)
+{
+    $result = null;
+
+    try {
+        $result = \Includes\Utils\Database::fetchColumn($sql);
+
+    } catch (Exception $e) {
+        $errorMsg = $e->getMessage();
+    }
+
+    return $result;
+}
+
+/**
+ * Execute SQL query and return the result as an associated array
+ * 
+ * @return array
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
+ */
+function dbFetchAll($sql, &$errorMsg = null)
+{
+    $result = null;
+
+    try {
+        $result = \Includes\Utils\Database::fetchAll($sql);
+
+    } catch (Exception $e) {
+        $errorMsg = $e->getMessage();
+    }
+
+    return $result;
+}
+
+/**
+ * Execute SQL query
+ * 
+ * @return int
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
+ */
+function dbExecute($sql, &$errorMsg = null)
+{
+    $result = null;
+
+    try {
+        $result = \Includes\Utils\Database::execute($sql);
+
+    } catch (Exception $e) {
+        $errorMsg = $e->getMessage();
+    }
+
+    return $result;
+}
+
+/**
+ * Execute a set of SQL queries from file
+ * 
+ * @param string $fileName     The name of file which contains SQL queries
+ * @param bool   $ignoreErrors Ignore errors flag
+ * @param bool   $is_restore   ?
+ *
+ * @return bool
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
+ */
+function uploadQuery($fileName, $ignoreErrors = false, $is_restore = false)
+{
+    $fp = @fopen($fileName, 'rb');
+
+    if (!$fp) {
+        echo '<font color="red">[Failed to open ' . $fileName . ']</font></pre>' . "\n";
+        return false;
+    }
+
+    $command = '';
+    $counter = 1;
+
+    while (!feof($fp)) {
+
+        $c = '';
+
+        // read SQL statement from file
+        do {
+            $c .= fgets($fp, 1024);
+            $endPos = strlen($c) - 1;
+        } while (substr($c, $endPos) != "\n" && !feof($fp));
+
+        $c = chop($c);
+
+        // skip comments
+        if (substr($c, 0, 1) == '#' || substr($c, 0, 2) == '--') {
+            continue;
+        }
+
+        // parse SQL statement
+
+        $command .= $c;
+
+        if (substr($command, -1) == ';') {
+
+            $command = substr($command, 0, strlen($command)-1);
+            $table_name = '';
+
+            if (preg_match('/^CREATE TABLE ([_a-zA-Z0-9]*)/i', $command, $matches)) {
+                $table_name = $matches[1];
+                echo 'Creating table [' . $table_name . '] ... ';
+            
+            } elseif (preg_match('/^ALTER TABLE ([_a-zA-Z0-9]*)/i', $command, $matches)) {
+                $table_name = $matches[1];
+                echo 'Altering table [' . $table_name . '] ... ';
+            
+            } elseif (preg_match('/^DROP TABLE IF EXISTS ([_a-zA-Z0-9]*)/i', $command, $matches)) {
+                $table_name = $matches[1];
+                echo 'Deleting table [' . $table_name . '] ... ';
+            
+            } else {
+                $counter ++;
+            }    
+
+            // Execute SQL query
+            dbExecute($command, $myerr);
+    
+            // check for errors
+            if (!empty($myerr)) {
+
+                showQueryStatus($myerr, $ignoreErrors);
+
+                if (!$ignoreErrors) {
+                    break;
+                }    
+
+            } elseif ($table_name != "") {
+                echo '<font color="green">[OK]</font><br />' . "\n";
+            
+            } elseif (!($counter % 20)) {
+                echo '.';
+            }
+
+            $command = '';
+
+            flush();
+        }
+    }
+
+    fclose($fp);
+
+    if ($counter>20) {
+        print "\n";
+    }
+
+    return (!$is_restore && $ignoreErrors) ? true : empty($myerr);
+}
+
+/**
+ * Show a error status
+ *
+ * @param string $myerr        Error message
+ * @param bool   $ignoreErrors Ignore errors flag
+ *
+ * @return void
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
+ */
+function showQueryStatus($myerr, $ignoreErrors)
+{
+    if (empty($myerr)) {
+        echo "\n";
+        echo '<font color="green">[OK]</font>' . "\n";
+
+    } elseif ($ignoreErrors) {
+        echo '<font color="blue">[NOTE: ' . $myerr . ']</font>' . "\n";
+
+    } else {
+        echo '<font color="red">[FAILED: ' . $myerr . ']</font>' . "\n";
+    }
+}
+
+/**
  * Create directories 
  * 
  * @param array $dirs Array of directory names
@@ -1679,22 +1962,6 @@ function change_config(&$params) {
     }
 
     $_params = $params;
-
-    if (!isset($_params['mysqlport'])) {
-        $_params['mysqlport'] = '';
-
-    } elseif (!is_numeric($_params['mysqlport']) && empty($_params['mysqlsock'])) {
-        $_params['mysqlsock'] = $_params['mysqlport'];
-        $_params['mysqlport'] = '';
-    }
-
-    if (!isset($_params['mysqlsock'])) {
-        $_params['mysqlsock'] = '';
-
-    } elseif (is_numeric($_params['mysqlsock']) && empty($_params['mysqlport'])) {
-        $_params['mysqlport'] = $_params['mysqlsock'];
-        $_params['mysqlsock'] = '';
-    }
 
     // check whether the authcode is set in params. 
 
@@ -2681,7 +2948,13 @@ function module_cfg_install_db(&$params)
         ),
         'mysqlport'        => array(
             'title'       => 'MySQL server port',
-            'description' => 'If your database server is listening to a non-standard port, specify its number.',
+            'description' => 'If your database server is listening to a non-standard port, specify its number (e.g. 3306).',
+            'def_value'   => '',
+            'required'    => false
+        ),
+        'mysqlsock'        => array(
+            'title'       => 'MySQL server socket',
+            'description' => 'If your database server is used a non-standard socket, specify it (e.g. /tmp/mysql-5.1.34.sock).',
             'def_value'   => '',
             'required'    => false
         ),
@@ -2803,16 +3076,6 @@ OUT;
         // Check if database settings provided are valid
         } else {
 
-            // Check if port specified in the host name
-            if (preg_match('/^([^:]+):(.*)$/', $params['mysqlhost'], $match)) {
-
-                $params['mysqlhost'] = $match[1];
-
-                if (empty($params['mysqlport'])) {
-                    $params['mysqlport'] = $match[2];
-                }
-            }
- 
             $connection = dbConnect($params, $pdoErrorMsg);
 
             if ($connection) {
@@ -3309,254 +3572,9 @@ function module_install_done(&$params)
     return false;
 }
 
-/**
- * Do connection to the database with params user specified
- * 
- * @return bool
- * @access public
- * @see    ____func_see____
- * @since  3.0.0
- */
-function dbConnect ($data = null, &$errorMsg = null)
-{
-    $result = true;
-
-    if (!empty($data) && is_array($data)) {
-
-        $fields = array(
-            'hostspec' => 'mysqlhost',
-            'port'     => 'mysqlport',
-            'socket'   => 'mysqlsock',
-            'username' => 'mysqluser',
-            'password' => 'mysqlpass',
-            'database' => 'mysqlbase',
-        );
-
-        $dbParams = array();
-
-        foreach ($fields as $key => $value) {
-            if (isset($data[$value])) {
-                $dbParams[$key] = $data[$value];
-            }
-        }
-
-        if (!empty($dbParams['port'])) {
-            if (!is_numeric($dbParams['port'])) {
-                $dbParams['socket'] = $dbParams['port'];
-                $dbParams['port'] = '';
-            }
-        }
-
-        // Set db options
-        try {
-            $connect = \Includes\Utils\Database::setDbOptions($dbParams);
-
-        } catch (Exception $e) {
-            $errorMsg = $e->getMessage();
-        }
-
-        $result = isset($connect);
-    
-    } else {
-        // Reset db options
-        \Includes\Utils\Database::resetDbOptions();
-    }
-
-    return $result;
-}
-
-/**
- * Execute SQL query and return the first column of first row of the result 
- * 
- * @return mixed
- * @access public
- * @see    ____func_see____
- * @since  3.0.0
- */
-function dbFetchColumn($sql, &$errorMsg = null)
-{
-    $result = null;
-
-    try {
-        $result = \Includes\Utils\Database::fetchColumn($sql);
-
-    } catch (Exception $e) {
-        $errorMsg = $e->getMessage();
-    }
-
-    return $result;
-}
-
-/**
- * Execute SQL query and return the result as an associated array
- * 
- * @return array
- * @access public
- * @see    ____func_see____
- * @since  3.0.0
- */
-function dbFetchAll($sql, &$errorMsg = null)
-{
-    $result = null;
-
-    try {
-        $result = \Includes\Utils\Database::fetchAll($sql);
-
-    } catch (Exception $e) {
-        $errorMsg = $e->getMessage();
-    }
-
-    return $result;
-}
-
-/**
- * Execute SQL query
- * 
- * @return int
- * @access public
- * @see    ____func_see____
- * @since  3.0.0
- */
-function dbExecute($sql, &$errorMsg = null)
-{
-    $result = null;
-
-    try {
-        $result = \Includes\Utils\Database::execute($sql);
-
-    } catch (Exception $e) {
-        $errorMsg = $e->getMessage();
-    }
-
-    return $result;
-}
-
-/**
- * Execute a set of SQL queries from file
- * 
- * @param string $fileName     The name of file which contains SQL queries
- * @param bool   $ignoreErrors Ignore errors flag
- * @param bool   $is_restore   ?
- *
- * @return bool
- * @access public
- * @see    ____func_see____
- * @since  3.0.0
- */
-function uploadQuery($fileName, $ignoreErrors = false, $is_restore = false)
-{
-    $fp = @fopen($fileName, 'rb');
-
-    if (!$fp) {
-        echo '<font color="red">[Failed to open ' . $fileName . ']</font></pre>' . "\n";
-        return false;
-    }
-
-    $command = '';
-    $counter = 1;
-
-    while (!feof($fp)) {
-
-        $c = '';
-
-        // read SQL statement from file
-        do {
-            $c .= fgets($fp, 1024);
-            $endPos = strlen($c) - 1;
-        } while (substr($c, $endPos) != "\n" && !feof($fp));
-
-        $c = chop($c);
-
-        // skip comments
-        if (substr($c, 0, 1) == '#' || substr($c, 0, 2) == '--') {
-            continue;
-        }
-
-        // parse SQL statement
-
-        $command .= $c;
-
-        if (substr($command, -1) == ';') {
-
-            $command = substr($command, 0, strlen($command)-1);
-            $table_name = '';
-
-            if (preg_match('/^CREATE TABLE ([_a-zA-Z0-9]*)/i', $command, $matches)) {
-                $table_name = $matches[1];
-                echo 'Creating table [' . $table_name . '] ... ';
-            
-            } elseif (preg_match('/^ALTER TABLE ([_a-zA-Z0-9]*)/i', $command, $matches)) {
-                $table_name = $matches[1];
-                echo 'Altering table [' . $table_name . '] ... ';
-            
-            } elseif (preg_match('/^DROP TABLE IF EXISTS ([_a-zA-Z0-9]*)/i', $command, $matches)) {
-                $table_name = $matches[1];
-                echo 'Deleting table [' . $table_name . '] ... ';
-            
-            } else {
-                $counter ++;
-            }    
-
-            // Execute SQL query
-            dbExecute($command, $myerr);
-    
-            // check for errors
-            if (!empty($myerr)) {
-
-                showQueryStatus($myerr, $ignoreErrors);
-
-                if (!$ignoreErrors) {
-                    break;
-                }    
-
-            } elseif ($table_name != "") {
-                echo '<font color="green">[OK]</font><br />' . "\n";
-            
-            } elseif (!($counter % 20)) {
-                echo '.';
-            }
-
-            $command = '';
-
-            flush();
-        }
-    }
-
-    fclose($fp);
-
-    if ($counter>20) {
-        print "\n";
-    }
-
-    return (!$is_restore && $ignoreErrors) ? true : empty($myerr);
-}
-
-/**
- * Show a error status
- *
- * @param string $myerr        Error message
- * @param bool   $ignoreErrors Ignore errors flag
- *
- * @return void
- * @access public
- * @see    ____func_see____
- * @since  3.0.0
- */
-function showQueryStatus($myerr, $ignoreErrors)
-{
-    if (empty($myerr)) {
-        echo "\n";
-        echo '<font color="green">[OK]</font>' . "\n";
-
-    } elseif ($ignoreErrors) {
-        echo '<font color="blue">[NOTE: ' . $myerr . ']</font>' . "\n";
-
-    } else {
-        echo '<font color="red">[FAILED: ' . $myerr . ']</font>' . "\n";
-    }
-}
-
 /*
  * End of Modules section
  */
+
+
 
