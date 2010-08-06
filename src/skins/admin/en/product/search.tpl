@@ -43,7 +43,7 @@
     		<td class="FormButton" noWrap height=10>In category</td>
     		<td width=10 height=10><font class="ErrorMessage">*</font></td>
     		<td height=10>
-          <widget class="\XLite\View\CategorySelect" fieldName="search_category" selectedCategoryId="{search_category}" allOption />
+          <widget class="\XLite\View\CategorySelect" fieldName="category_id" selectedCategoryId="{category_id}" allOption />
         </td>
   	  </tr>
 

@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Products list page template
+ * ____file_title____
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -11,13 +11,4 @@
  * @since     3.0.0
  *}
 
-{if:!mode=#confirmation#}
-
-  <widget template="common/dialog.tpl" head="Search product" body="product/search.tpl" />
-  <widget class="\XLite\View\ItemsList\Product\Admin\Search" />
-
-{else:}
-
-  <widget template="common/dialog.tpl" head="Confirmation" body="product/products_delete.tpl" />
-
-{end:}
+test

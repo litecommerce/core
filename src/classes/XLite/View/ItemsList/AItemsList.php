@@ -68,7 +68,7 @@ abstract class AItemsList extends \XLite\View\Container
      * @access protected
      * @since  3.0.0
      */
-    protected $commonParams = null;
+    protected $commonParams;
 
     /**
      * pager
@@ -77,7 +77,40 @@ abstract class AItemsList extends \XLite\View\Container
      * @access protected
      * @since  3.0.0
      */
-    protected $pager = null;
+    protected $pager;
+
+    /**
+     * itemsCount 
+     * 
+     * @var    int
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $itemsCount;
+
+    /**
+     * sortByModes
+     *
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $sortByModes = array();
+
+    /**
+     * sortOrderModes 
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $sortOrderModes = array(
+        self::SORT_ORDER_ASC  => 'Ascending',
+        self::SORT_ORDER_DESC => 'Descending',
+    );
 
 
     /**
@@ -117,16 +150,18 @@ abstract class AItemsList extends \XLite\View\Container
     /**
      * Return number of items in products list
      *
-     * @param \XLite\Core\CommonCell $cnd search condition
-     *
      * @return array
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getDataCount(\XLite\Core\CommonCell $cnd)
+    protected function getItemsCount()
     {
-        return $this->getData($cnd, true);
+        if (!isset($this->itemsCount)) {
+            $this->itemsCount = $this->getData($this->getSearchCondition(), true);
+        }
+
+        return $this->itemsCount;
     }
 
     /**
@@ -204,7 +239,7 @@ abstract class AItemsList extends \XLite\View\Container
     protected function getPagerParams()
     {
         return array(
-            \XLite\View\Pager\APager::PARAM_ITEMS_COUNT => $this->getDataCount($this->getSearchCondition()),
+            \XLite\View\Pager\APager::PARAM_ITEMS_COUNT => $this->getItemsCount(),
             \XLite\View\Pager\APager::PARAM_LIST        => $this,
         );
     }
@@ -227,7 +262,7 @@ abstract class AItemsList extends \XLite\View\Container
     }
 
     /**
-     * getSearchCondition
+     * Return params list to use for search
      *
      * @return \XLite\Core\CommonCell
      * @access protected
@@ -249,35 +284,6 @@ abstract class AItemsList extends \XLite\View\Container
     protected function getPageData()
     {
         return $this->getData($this->getPager()->getLimitCondition(null, null, $this->getSearchCondition()));
-    }
-
-    /**
-     * getSortOrderModes 
-     * 
-     * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getSortOrderModes()
-    {
-        return array(
-            self::SORT_ORDER_ASC  => 'Ascending',
-            self::SORT_ORDER_DESC => 'Descending',
-        );
-    }
-
-    /**
-     * getSortByModes 
-     * 
-     * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getSortByModes()
-    {
-        return array();
     }
 
     /**
@@ -307,6 +313,32 @@ abstract class AItemsList extends \XLite\View\Container
     }
 
     /**
+     * getSortBy
+     *
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getSortBy()
+    {
+        return $this->getParam(self::PARAM_SORT_BY);
+    }
+
+    /**
+     * getSortOrder
+     *
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getSortOrder()
+    {
+        return $this->getParam(self::PARAM_SORT_ORDER);
+    }
+
+    /**
      * Define widget parameters
      *
      * @return void
@@ -317,13 +349,14 @@ abstract class AItemsList extends \XLite\View\Container
     {
         parent::defineWidgetParams();
 
-        if ($this->getSortByModes()) {
+        if (!empty($this->sortByModes)) {
+
             $this->widgetParams += array(
                 self::PARAM_SORT_BY => new \XLite\Model\WidgetParam\Set(
-                    'Sort by', $this->getSortByModeDefault(), false, $this->getSortByModes()
+                    'Sort by', $this->getSortByModeDefault(), false, $this->sortByModes
                 ),
                 self::PARAM_SORT_ORDER => new \XLite\Model\WidgetParam\Set(
-                    'Sort order', $this->getSortOrderModeDefault(), false, $this->getSortOrderModes()
+                    'Sort order', $this->getSortOrderModeDefault(), false, $this->sortOrderModes
                 ),
             );
         }
@@ -495,7 +528,7 @@ abstract class AItemsList extends \XLite\View\Container
      */
     protected function isVisible()
     {
-        return parent::isVisible() && $this->getPageData();
+        return parent::isVisible() && 0 < $this->getItemsCount();
     }
 
     /**

@@ -41,10 +41,9 @@ abstract class AProduct extends \XLite\View\ItemsList\AItemsList
      * Allowed sort criterions
      */
 
-    const SORT_BY_MODE_DEFAULT = 'cp.orderby';
-    const SORT_BY_MODE_PRICE   = 'p.price';
-    const SORT_BY_MODE_NAME    = 'translations.name';
-    const SORT_BY_MODE_SKU     = 'p.sku';
+    const SORT_BY_MODE_PRICE = 'p.price';
+    const SORT_BY_MODE_NAME  = 'translations.name';
+    const SORT_BY_MODE_SKU   = 'p.sku';
 
 
     /**
@@ -75,24 +74,6 @@ abstract class AProduct extends \XLite\View\ItemsList\AItemsList
     }
 
     /**
-     * getSortByModes
-     *
-     * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getSortByModes()
-    {
-        return array(
-            self::SORT_BY_MODE_DEFAULT => 'Default',
-            self::SORT_BY_MODE_PRICE   => 'Price',
-            self::SORT_BY_MODE_NAME    => 'Name',
-            self::SORT_BY_MODE_SKU     => 'SKU',
-        );
-    }
-
-    /**
      * getSortByModeDefault
      *
      * @return string
@@ -102,7 +83,23 @@ abstract class AProduct extends \XLite\View\ItemsList\AItemsList
      */
     protected function getSortByModeDefault()
     {
-        return self::SORT_BY_MODE_DEFAULT;
+        return self::SORT_BY_MODE_NAME;
+    }
+
+    /**
+     * Return params list to use for search
+     *
+     * @return \XLite\Core\CommonCell
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getSearchCondition()
+    {
+        $result = parent::getSearchCondition();
+        $result->{\XLite\Model\Repo\Product::P_ORDER_BY} = array($this->getSortBy(), $this->getSortOrder());
+
+        return $result;
     }
 
 
@@ -138,5 +135,25 @@ abstract class AProduct extends \XLite\View\ItemsList\AItemsList
         $list[] = self::getDir() . '/products_list.js';
 
         return $list;
+    }
+
+    /**
+     * Define and set widget attributes; initialize widget
+     *
+     * @param array $params widget params
+     *
+     * @return void
+     * @access public
+     * @since  3.0.0
+     */
+    public function __construct(array $params = array())
+    {
+        $this->sortByModes += array(
+            self::SORT_BY_MODE_PRICE => 'Price',
+            self::SORT_BY_MODE_NAME  => 'Name',
+            self::SORT_BY_MODE_SKU   => 'SKU',
+        );
+
+        parent::__construct($params);
     }
 }

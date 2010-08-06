@@ -43,6 +43,12 @@ class Category extends \XLite\View\ItemsList\Product\Customer\ACustomer
 
     const PARAM_CATEGORY_ID = 'category_id';
 
+    /**
+     * Allowed sort criterions
+     */
+
+    const SORT_BY_MODE_DEFAULT = 'cp.orderby';
+
 
     /**
      * Return class name for the list pager
@@ -55,18 +61,6 @@ class Category extends \XLite\View\ItemsList\Product\Customer\ACustomer
     protected function getPagerClass()
     {
         return '\XLite\View\Pager\Customer\Product\Category';
-    }
-
-    /**
-     * Return title
-     *
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getHead()
-    {
-        return 'Catalog';
     }
 
     /**
@@ -114,46 +108,16 @@ class Category extends \XLite\View\ItemsList\Product\Customer\ACustomer
     }
 
     /**
-     * getSortBy 
-     * 
+     * getSortByModeDefault
+     *
      * @return string
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getSortBy()
+    protected function getSortByModeDefault()
     {
-        return $this->getParam(self::PARAM_SORT_BY);
-    }
-
-    /**
-     * getSortOrder 
-     * 
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getSortOrder()
-    {
-        return strtoupper($this->getParam(self::PARAM_SORT_ORDER));
-    }
-
-    /**
-     * addOrderByCondition 
-     * 
-     * @param \XLite\Core\CommonCell $cnd search condition
-     *  
-     * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function addOrderByCondition(\XLite\Core\CommonCell $cnd)
-    {
-        $cnd->{\XLite\Model\Repo\Product::P_ORDER_BY} = array($this->getSortBy(), $this->getSortOrder());
-
-        return $cnd;
+        return self::SORT_BY_MODE_DEFAULT;
     }
 
     /**
@@ -169,14 +133,26 @@ class Category extends \XLite\View\ItemsList\Product\Customer\ACustomer
      */
     protected function getData(\XLite\Core\CommonCell $cnd, $countOnly = false)
     {
-        $result = null;
-
-        if ($category = $this->getCategory()) {
-            $result = $category->getProducts($this->addOrderByCondition($cnd), $countOnly);
-        }
-
-        return $result;
+        return ($category = $this->getCategory()) ? $category->getProducts($cnd, $countOnly) : null;
     }
+
+
+    /**
+     * Define and set widget attributes; initialize widget
+     *
+     * @param array $params widget params
+     *
+     * @return void
+     * @access public
+     * @since  3.0.0
+     */
+    public function __construct(array $params = array())
+    {
+        $this->sortByModes = array(self::SORT_BY_MODE_DEFAULT => 'Default') + $this->sortByModes;
+
+        parent::__construct($params);
+    }
+
 
     /**
      * Return list of targets allowed for this widget
