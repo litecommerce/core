@@ -49,4 +49,4 @@ abstract class AAdmin extends \XLite\View\Pager\APager
     {
         return 20;
     }
-]
+}
