@@ -66,10 +66,10 @@
 <widget class="\XLite\View\ModulesModify" />
 <widget target="module" template="common/dialog.tpl" head="Module {page} settings" body="general_settings.tpl" />
 
-<widget name="categoriesWidget" target="categories" template="common/dialog.tpl" head="Manage categories" body="categories/body.tpl" IF="{!getRequestParamValue(#mode#)=#delete#}" />
+<widget name="categoriesWidget" target="categories" template="common/dialog.tpl" head="Manage categories" body="categories/body.tpl" IF="!mode=#delete#" />
 <widget module="FeaturedProducts" template="common/dialog.tpl" head="Featured products" body="modules/FeaturedProducts/featuredProducts.tpl" IF="{namedWidgets.categoriesWidget.visible}" />
 <widget target="category" class="\XLite\View\Tabber" body="{getPageTemplate()}" switch="page" />
-<widget target="categories" template="common/dialog.tpl" body="categories/delete_confirmation.tpl" head="Confirmation" mode="delete" IF="{getRequestParamValue(#mode#)=#delete#}" />
+<widget target="categories" template="common/dialog.tpl" body="categories/delete_confirmation.tpl" head="Confirmation" mode="delete" IF="mode=#delete#" />
 
 <widget target="settings" class="\XLite\View\Tabber" body="general_settings.tpl" switch="page">
 
@@ -86,7 +86,7 @@
 <widget target="add_product" mode="" template="common/dialog.tpl" body="product/add.tpl" head="Add New Product">
 <widget target="add_product" mode="notification" template="common/dialog.tpl" body="product/add_notification.tpl" head="Notification">
 
-<widget target="profile" template="common/dialog.tpl" head="Delete profile - Confirmation" body="profile/confirm_delete.tpl" IF="{getRequestParamValue(#mode#)=#delete#}" />
+<widget target="profile" template="common/dialog.tpl" head="Delete profile - Confirmation" body="profile/confirm_delete.tpl" IF="mode=#delete#" />
 {*
 <widget target="wysiwyg" template="common/dialog.tpl" head="HTML design import/export" body="wysiwyg.tpl" />
 *}
