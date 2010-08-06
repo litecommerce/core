@@ -57,7 +57,6 @@ class Database extends \XLite\Base\Singleton
      */
     protected $connected;
 
-
     /**
      * Doctrine entity manager 
      * 
@@ -77,7 +76,6 @@ class Database extends \XLite\Base\Singleton
      * @since  3.0.0
      */
     protected static $cacheDriver = null;
-
 
     /**
      * Constructor
@@ -391,7 +389,8 @@ class Database extends \XLite\Base\Singleton
 
         // Set table name prefix
         $classMetadata->setTableName(
-            \XLite::getInstance()->getOptions(array('database_details', 'table_prefix')) . $classMetadata->getTableName()
+            \XLite::getInstance()->getOptions(array('database_details', 'table_prefix'))
+            . $classMetadata->getTableName()
         );
 
         // Set repository
@@ -453,8 +452,8 @@ class Database extends \XLite\Base\Singleton
      * Build IN () condition 
      * 
      * @param \Doctrine\ORM\QueryBuilder $qb     Query builder
-     * @param array                     $data   Hash array
-     * @param string                    $prefix Placeholder prefix
+     * @param array                      $data   Hash array
+     * @param string                     $prefix Placeholder prefix
      *  
      * @return array keys for IN () function
      * @access public
