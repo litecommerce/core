@@ -46,7 +46,7 @@ class XLite_NameSniff extends XLite_ReqCodesSniff
 	);
 
 	protected $reservedMethodNames = array(
-		'postUpdate', 'postRemove',
+		'postUpdate', 'postRemove', 'postPersist',
 	);
 
     public function register()
