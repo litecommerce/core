@@ -130,7 +130,9 @@ $modules = array (
                 'mysqlhost',
                 'mysqlbase',
                 'mysqluser',
-                'mysqlpass'
+                'mysqlpass',
+                'mysqlport',
+                'mysqlsock',
             )
 		),
 	array( // 2
