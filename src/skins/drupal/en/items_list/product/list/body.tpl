@@ -16,7 +16,7 @@
     {displayListPart(#body#,_ARRAY_(#product#^product))}
   </li>
 
-  <li FOREACH="getViewList(#itemsList.product.customer.list.items#),w" class="item additional-item">
+  <li FOREACH="getViewList(#itemsList.product.list.customer.items#),w" class="item additional-item">
     {w.display()}
   </li>
 

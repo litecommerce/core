@@ -9,6 +9,6 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- * @ListChild (list="itemsList.product.customer.table.info", weight="30")
+ * @ListChild (list="itemsList.product.table.customer.info", weight="30")
  *}
 <td IF="isShowPrice()" class="product-price-column"><widget class="\XLite\View\Price" product="{product}" displayOnlyPrice="true" /></td>

@@ -9,7 +9,7 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- * @ListChild (list="itemsList.product.customer.table.info", weight="40")
+ * @ListChild (list="itemsList.product.table.customer.info", weight="40")
  *}
 <td IF="isShowAdd2Cart(product)" class="product-button-column">
   {displayListPart(#buttons#,_ARRAY_(#product#^product))}

@@ -1,0 +1,126 @@
+/* vim: set ts=2 sw=2 sts=2 et: */
+
+/**
+ * ____file_title____
+ *  
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   SVN: $Id$
+ * @link      http://www.litecommerce.com/
+ * @since     3.0.0
+ */
+
+ul.pager {
+  padding: 0;
+  margin: 0;
+  display: inline;
+  list-style: none;
+}
+
+ul.pager li {
+  margin: 0;
+  padding: 0;
+  border: none;
+  display: inline;
+  list-style: none;
+}
+
+ul.pager li a {
+  border: 0;
+  text-decoration: none;
+  margin: 0;  
+  padding: 2px 7px;
+  font-weight: normal;
+  display: inline-block;
+  border: 1px solid #fff;
+}
+
+ul.pager li a:hover,
+ul.pager li a:visited:hover {
+  border-width: 1px;
+  border-color: black;
+  background: #f3f3f3 none;
+}
+
+ul.pager li.pager-current,
+ul.pager li.selected
+{
+  font-weight: bold;
+}
+
+ul.pager li.pager-current a,
+ul.pager li.pager-current a:hover,
+ul.pager li.selected a,
+ul.pager li.selected a:hover
+{
+  background: #869cb1 none;
+  color: #fff;
+  cursor: text;
+  border-color: #fff;
+}
+
+ul.pager .first img,
+ul.pager .previous img,
+ul.pager .next img, 
+ul.pager .last img
+{
+  height: 7px;
+  width: 9px;
+  background: transparent url(../images/pager_arrows.gif) no-repeat left top;
+}
+
+ul.pager .previous img,
+ul.pager .next img {
+  width: 5px;
+}
+
+ul.pager .previous img { 
+  background-position: -9px top;
+} 
+
+ul.pager .next img { 
+  background-position: -14px top;
+} 
+
+ul.pager .last img { 
+  background-position: -19px top;
+}
+
+ul.pager li.disabled a {
+  cursor: text;
+}
+
+ul.pager li.disabled a:hover,
+ul.pager li.disabled a:visited:hover
+{
+  background: transparent none;
+  border-color: #fff;
+}
+
+ul.pager .first-disabled img {
+  background-position: left -7px;
+}
+
+ul.pager .previous-disabled img {
+  background-position: -9px -7px;
+}
+
+ul.pager .next-disabled img {
+  background-position: -14px -7px;
+}
+
+ul.pager .last-disabled img { 
+  background-position: -19px -7px;
+}
+
+div.pager-items-total
+{
+  float: right;
+}
+
+div.pager-items-total input.page-length
+{
+  width: 2em;
+  text-align: right;
+}

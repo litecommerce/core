@@ -9,6 +9,6 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- * @ListChild (list="itemsList.product.customer.table.info", weight="20")
+ * @ListChild (list="itemsList.product.table.customer.info", weight="20")
  *}
 <td class="product-name-column"><a href="{buildURL(#product#,##,_ARRAY_(#product_id#^product.product_id,#category_id#^category_id))}" class="url fn product-name">{product.name:h}</a></td>

@@ -9,7 +9,7 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- * @ListChild (list="itemsList.product.customer.list.body", weight="40")
+ * @ListChild (list="itemsList.product.list.customer.body", weight="40")
  *}
 
 <div class="body">

@@ -16,7 +16,7 @@
     {displayListPart(#info#,_ARRAY_(#product#^product))}
   </tr>
 
-  <tr FOREACH="getViewList(#itemsList.product.customer.table.info.items#),w">
+  <tr FOREACH="getViewList(#itemsList.product.table.customer.items#),w">
     {w.display()}
   </tr>
 

@@ -9,6 +9,6 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- * @ListChild (list="itemsList.product.customer.table.buttons", weight="10")
+ * @ListChild (list="itemsList.product.table.customer.buttons", weight="10")
  *}
 <widget class="\XLite\View\BuyNow" product="{product}" style="aux-button add-to-cart" />

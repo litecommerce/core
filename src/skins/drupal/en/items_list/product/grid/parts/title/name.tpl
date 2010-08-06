@@ -9,6 +9,6 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- * @ListChild (list="itemsList.product.customer.grid.title", weight="40")
+ * @ListChild (list="itemsList.product.grid.customer.title", weight="40")
  *}
 <a href="{buildURL(#product#,##,_ARRAY_(#product_id#^product.product_id,#category_id#^category_id))}" class="url fn product-name">{product.name:h}</a>

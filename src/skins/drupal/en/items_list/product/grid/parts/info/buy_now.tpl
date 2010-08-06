@@ -9,6 +9,6 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- * @ListChild (list="itemsList.product.customer.grid.info", weight="20")
+ * @ListChild (list="itemsList.product.grid.customer.info", weight="20")
  *}
 <widget class="\XLite\View\BuyNow" product="{product}" IF="isShowAdd2Cart(product)" style="aux-button add-to-cart" />

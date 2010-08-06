@@ -44,6 +44,19 @@ class SearchResult extends \XLite\View\ItemsList\Product\AProduct
 
 
     /**
+     * Return current display mode
+     *
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getDisplayMode()
+    {
+        return null;
+    }
+
+    /**
      * Return title 
      * 
      * @return string

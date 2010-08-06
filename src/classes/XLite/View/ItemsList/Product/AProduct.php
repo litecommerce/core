@@ -47,6 +47,17 @@ abstract class AProduct extends \XLite\View\ItemsList\AItemsList
 
 
     /**
+     * Return current display mode
+     *
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    abstract protected function getDisplayMode();
+
+
+    /**
      * Return name of the base widgets list
      *
      * @return string
@@ -56,7 +67,7 @@ abstract class AProduct extends \XLite\View\ItemsList\AItemsList
      */
     protected function getListName()
     {
-        return parent::getListName() . '.product';
+        return parent::getListName() . '.product.' . $this->getDisplayMode();
     }
 
     /**
@@ -71,6 +82,19 @@ abstract class AProduct extends \XLite\View\ItemsList\AItemsList
     protected function getDir()
     {
         return parent::getDir() . '/product';
+    }
+
+    /**
+     * Return dir which contains the page body template
+     *
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getPageBodyDir()
+    {
+        return $this->getDisplayMode();
     }
 
     /**
