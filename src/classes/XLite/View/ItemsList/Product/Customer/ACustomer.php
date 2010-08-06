@@ -121,6 +121,18 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
 
 
     /**
+     * Return title
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getHead()
+    {
+        return 'Catalog';
+    }
+
+    /**
      * Return name of the base widgets list
      *
      * @return string

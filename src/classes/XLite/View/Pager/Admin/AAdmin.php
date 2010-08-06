@@ -38,6 +38,19 @@ namespace XLite\View\Pager\Admin;
 abstract class AAdmin extends \XLite\View\Pager\APager
 {
     /**
+     * getItemsPerPageDefault
+     *
+     * @return int
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getItemsPerPageDefault()
+    {
+        return 30;
+    }
+
+    /**
      * Return number of pages to display
      *
      * @return int

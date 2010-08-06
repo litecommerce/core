@@ -47,6 +47,6 @@ abstract class AProduct extends \XLite\View\Pager\Customer\ACustomer
      */
     protected function getItemsPerPageDefault()
     {
-        return \XLite\Core\Config::getInstance()->General->products_per_page;
+        return intval(\XLite\Core\Config::getInstance()->General->products_per_page);
     }
 }

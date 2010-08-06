@@ -26,19 +26,19 @@
  * @since      3.0.0
  */
 
-namespace XLite\View\Pager\Customer;
+namespace XLite\View\Pager\Admin\Product;
 
 /**
- * ACustomer 
+ * Abstract pager class for the ProductsList widget
  * 
  * @package    XLite
  * @see        ____class_see____
  * @since      3.0.0
  */
-abstract class ACustomer extends \XLite\View\Pager\APager
+abstract class AProduct extends \XLite\View\Pager\Admin\AAdmin
 {
     /**
-     * getItemsPerPageDefault
+     * Return number of items per page
      *
      * @return int
      * @access protected
@@ -47,19 +47,6 @@ abstract class ACustomer extends \XLite\View\Pager\APager
      */
     protected function getItemsPerPageDefault()
     {
-        return 10;
-    }
-
-    /**
-     * Return number of pages to display
-     *
-     * @return int
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getPagesPerFrame()
-    {
-        return 5;
+        return intval(\XLite\Core\Config::getInstance()->General->products_per_page_admin);
     }
 }
