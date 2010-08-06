@@ -144,6 +144,23 @@ class Option extends \XLite\Model\Base\I18n
     }
 
     /**
+     * Check - has option action surcharge with specified type
+     * 
+     * @param string $type Type
+     *  
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function hasActiveSurcharge($type)
+    {
+        $surcharge = $this->getSurcharge($type);
+
+        return $surcharge && !$surcharge->isEmpty();
+    }
+
+    /**
      * Check - is option product attributes modifier or not
      * 
      * @return boolean

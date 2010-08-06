@@ -170,16 +170,21 @@ class OrderItem extends AModel
 
     function create()
     {
-        $this->set('item_id', $this->get('key'));
+        $this->set('item_id', $this->getKey());
         parent::create();
     }
     
     /**
-    * Returns a scalar key value used to identify items in shopping cart
-    */
-    function getKey()
+     * Get item unique key
+     *
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getKey()
     {
-        return $this->get('product_id'); // . product_options
+        return strval($this->get('product_id'));
     }
 
     function updateAmount($amount)

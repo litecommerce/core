@@ -224,10 +224,15 @@ class OptionSurcharge extends \XLite\Model\AEntity
      */
     protected function getSurchargeBasePrice()
     {
-        return $this->getOption()
+        $product = $this->getOption()
             ->getGroup()
-            ->getProduct()
-            ->getPrice();
+            ->getProduct();
+
+        // TODO - rework this
+
+        global $calcAllTaxesInside;
+
+        return $calcAllTaxesInside ? $product->getListPrice() : $product->getPrice();
     }
 
     /**

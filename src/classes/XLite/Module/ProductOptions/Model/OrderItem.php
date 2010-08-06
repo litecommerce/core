@@ -37,7 +37,15 @@ namespace XLite\Module\ProductOptions\Model;
  */
 class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
 {
-    public $options = array();
+    /**
+     * Options (cache)
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $options;
 
     /**
      * Option subproperty names 
@@ -51,21 +59,6 @@ class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
         'price'  => 'calculateSurcharge',
         'weight' => 'calculateWeight',
     );
-
-    /**
-     * Constructor
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function __construct()
-    {
-        parent::__construct();
-
-        $this->fields['options'] = '';
-    }
 
     /**
      * Check - has item product options or not
@@ -85,7 +78,7 @@ class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
     /**
      * Set item product options 
      * 
-     * @param array $options Options (from request)
+     * @param array $options Options (prepared, from request)
      *  
      * @return boolean
      * @access public
@@ -96,73 +89,53 @@ class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
     {
         $result = false;
 
-        $this->options = array();
-
-        $resolved_options = array();
-        foreach ($options as $key => $option) {
-            $resolved_options[stripslashes($key)] = stripslashes($option);
-        }
-        
-        $options = $resolved_options;
-
-        // remove empty options
-        foreach ($options as $k => $v) {
-            if (strlen(trim($options[$k]))) {
-                $options[$k] = nl2br($options[$k]);
-
-            } elseif (isset($options[$k])) {
-                  unset($options[$k]);
+        // Check options
+        if ($this->getProduct()->checkOptionsException($options)) {
+            $itemId = $this->get('item_id');
+            if (!$itemId) {
+                $itemId = $this->getKey();
             }
-        }
 
-        // get product options, change option indexes to option values
-        $product_options = $this->getProduct()->getProductOptions();
-        foreach ($product_options as $product_option) {
-            $class = $product_option->get('optclass');
-            if (isset($options[$class])) {
-                $option_values = $product_option->getProductOptions();
+            // Erase cached options
+            $this->options = $options ? array() : null;
 
-                if (!empty($option_values)) {
-                    foreach ($option_values as $opt) {
-                        if (strcmp($options[$class], $opt->option_id) == 0) {
-                            $resolved_options[$class] = $opt->option;
-                            $this->options[] = $opt;
-                        }
-                    }
+            // Remove old options
+            $oldOptions = \XLite\Core\Database::getRepo('XLite\Module\ProductOptions\Model\OrderItemOption')
+                ->findByItemId($itemId);
+
+            foreach ($oldOptions as $o) {
+                \XLite\Core\Database::getEM()->remove($o);
+            }
+
+            // Save new options
+            foreach ($options as $groupId => $data) {
+                $group = \XLite\Core\Database::getRepo('XLite\Module\ProductOptions\Model\OptionGroup')
+                    ->find($groupId);
+                $o = new \XLite\Module\ProductOptions\Model\OrderItemOption();
+                $o->setItemId($itemId);
+                $o->setGroup($group);
+                $o->setName($group->getName());
+                if (isset($data['option'])) {
+                    $o->setOption($data['option']);
+                    $o->setValue($data['option']->getName());
 
                 } else {
-                    $this->options[] = (object) array(
-                        'class' => $class,
-                        'option' => $options[$class],
-                        'surcharge' => '0'
-                    );
+                    $o->setValue($data['value']);
                 }
-            }
-        }
+                \XLite\Core\Database::getEM()->persist($o);
 
-        // check for option exceptions
-        foreach ($this->getProduct()->get('optionExceptions') as $k => $v) {
-
-            $ex_found = 0;
-            foreach (explode(';', $v->get('exception')) as $subvalue) {
-                $exception = explode ('=', $subvalue, 2);
-                $subkey = trim($exception[0]);
-
-                if ($resolved_options[$subkey] == trim($exception[1])) {
-                    $ex_found++;
-                }
+                $this->options[] = $o;
             }
 
-            // exception for options found
+            // Refresh item id
+            foreach ($this->options as $o) {
+                $o->setItemId($this->getKey());
+            }
+
+            \XLite\Core\Database::getEM()->flush();
+
             $result = true;
-            if (0 < $ex_found && $ex_found == count($exceptions)) {
-                // fill the options array from request with resolved values
-                $this->set('invalidOptions', $resolved_options);
-                $result = false;
-            }
         }
-
-        $this->set('options', serialize($this->options));
 
         return $result;
     }
@@ -177,9 +150,13 @@ class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
      */
     public function getProductOptions()
     {
-        $options = $this->get('options');
+        if (!isset($this->options)) {
+            $itemId = $this->get('item_id');
+            $this->options = \XLite\Core\Database::getRepo('XLite\Module\ProductOptions\Model\OrderItemOption')
+                ->findByItemId($itemId);
+        }
 
-        return empty($options) ? array() : unserialize($options);
+        return $this->options;
     }
     
     /**
@@ -196,9 +173,14 @@ class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
     {
         $_opt = parent::get($name);
 
-        if (isset($this->options_names[$name]) && $this->get('options')) {
+        // Calculate order item price and weight with options
+        if (
+            isset($this->options_names[$name])
+            && is_object($this->getProduct())
+            && $this->getProductOptions()
+        ) {
             $func_name = $this->options_names[$name];
-            foreach (unserialize($this->get('options')) as $option) {
+            foreach ($this->getProductOptions() as $option) {
                 $_opt += $this->$func_name($option);
             }
         }
@@ -206,96 +188,75 @@ class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
         return $_opt;
     }
 
-    function getKey()
+    /**
+     * Get item unique key 
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getKey()
     {
-        // calculate item key based on options
         $option_keys = array(parent::getKey());
-        $options = $this->get('options');
-        if (!empty($options)) {
-            foreach (unserialize($options) as $option) {
-                $option_keys[] = sprintf('%s:%s', $option->class, $option->option);
-            }
+
+        // Add to key option group name and selected option name
+        foreach ($this->getProductOptions() as $option) {
+            $option_keys[] = sprintf(
+                '%s:%s',
+                $option->getName(),
+                $option->getValue()
+            );
         }
 
         return implode('|', $option_keys);
     }
 
-    function calculateSurcharge($option)
+    /**
+     * Calculate price surcharge 
+     * 
+     * @param \XLite\Module\ProductOptions\Model\OrderItemOption $option Order item option_
+     *  
+     * @return float
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function calculateSurcharge(\XLite\Module\ProductOptions\Model\OrderItemOption $option)
     {
-        global $calcAllTaxesInside;
-
         $surcharge = 0;
 
-        if ($option->surcharge != 0 && !$calcAllTaxesInside) {
+        // TODO - rework this with tax susbsystem and Wholesale trading module
 
-            $product = $this->getProduct();
-            if (is_object($product)) {
-                $po = new \XLite\Module\ProductOptions\Model\ProductOption();
-                $po->set('product_id', $product->get('product_id'));
-
-                $originalPrice = $product->get('listPrice');
-
-                $full_price = null;
-                if ($this->xlite->get('WholesaleTradingEnabled')) {
-                    $p = new \XLite\Model\Product($this->get('product_id'));
-                    $full_price = $p->getFullPrice($this->get('amount'));
-                    if (doubleval($full_price) == $full_price) {
-                        $originalPrice = $full_price;
-                        if ($this->config->Taxes->prices_include_tax) {
-                            $full_price = $p->get('price'); // restore product full price without taxes
-                        }
-                    }
-                }
-
-                $surcharge = $po->_modifiedPrice($option, false, $full_price) - $originalPrice;
-            }
-
-        } elseif ($option->surcharge != 0) {
-            $price = parent::get('price');
-
-            if ($this->xlite->get('WholesaleTradingEnabled')) {
-                $p = new \XLite\Model\Product($this->get('product_id'));
-                $full_price = $p->getFullPrice($this->get('amount'));
-                if (doubleval($full_price) == $full_price) {
-                    if ($this->config->Taxes->prices_include_tax) {
-                        $full_price = $p->get('price'); // restore product full price without taxes
-                    }
-
-                    $price = $full_price;
-                }
-            }
-
-            if (isset($option->percent)) {
-
-                // calculate percent surcharge
-                $surcharge = $price / 100 * $option->surcharge;
-
-            } elseif (isset($option->absolute)) {
-
-                // calculate absolute surcharge
-                $surcharge = $option->surcharge;
-            }
+        if (
+            $option->getOption()
+            && $option->getOption()->hasActiveSurcharge('price')
+        ) {
+            $surcharge = $option->getOption()->getSurcharge('price')->getAbsoluteValue();
         }
 
         return $surcharge;
     }
     
-    function calculateWeight($option)
+    /**
+     * Calculate weight surcharge
+     * 
+     * @param \XLite\Module\ProductOptions\Model\OrderItemOption $option Order item option
+     *  
+     * @return integer
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function calculateWeight(\XLite\Module\ProductOptions\Model\OrderItemOption $option)
     {
         $subweight = 0;
 
-        if ($option->weight_modifier != 0) {
-            if (isset($option->weight_percent)) {
-
-                // calculate percent surcharge
-                $subweight = parent::get('weight') / 100 * $option->weight_modifier;
-
-            } elseif (isset($option->weight_absolute)) {
-
-                // calculate absolute surcharge
-                $subweight = $option->weight_modifier * $this->get('amount');
-
-            }
+        if (
+            $option->getOption()
+            && $option->getOption()->hasActiveSurcharge('weight')
+        ) {
+            $subweight = $option->getOption()->getSurcharge('weight')->getAbsoluteValue();
         }
 
         return $subweight;

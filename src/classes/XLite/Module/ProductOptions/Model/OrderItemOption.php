@@ -35,7 +35,7 @@ namespace XLite\Module\ProductOptions\Model;
  * @see     ____class_see____
  * @since   3.0.0
  * @Entity (repositoryClass="XLite\Module\ProductOptions\Model\Repo\OrderItemOption")
- * @Table (name="options")
+ * @Table (name="order_item_options")
  */
 class OrderItemOption extends \XLite\Model\AEntity
 {
@@ -70,8 +70,6 @@ class OrderItemOption extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @Id
-     * @GeneratedValue (strategy="AUTO")
      * @Column (type="integer")
      */
     protected $option_id = 0;
@@ -105,9 +103,9 @@ class OrderItemOption extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @Column (type="string", length="65535")
+     * @Column (type="string", length="65535", nullable="false")
      */
-    protected $value;
+    protected $value = '';
 
     /**
      * @OneToOne(targetEntity="Shipping")
@@ -124,7 +122,7 @@ class OrderItemOption extends \XLite\Model\AEntity
      * @OneToOne (targetEntity="XLite\Module\ProductOptions\Model\OptionGroup")
      * @JoinColumn (name="group_id", referencedColumnName="group_id")
      */
-    protected $optionGroup;
+    protected $group;
 
     /**
      * Option (relation)

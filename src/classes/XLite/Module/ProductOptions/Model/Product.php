@@ -102,6 +102,139 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
         return true;
     }
 
+    /**
+     * Prepare options 
+     * 
+     * @param array $options Request-based selected options
+     *  
+     * @return array or null
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function prepareOptions(array $options)
+    {
+        $prepared = array();
+        foreach ($options as $groupId => $data) {
+            $optionGroup = \XLite\Core\Database::getRepo('XLite\Module\ProductOptions\Model\OptionGroup')
+                ->findOneByGroupIdAndProductId($groupId, $this->getProductId());
+
+            if (!isset($optionGroup)) {
+                $prepared = null;
+                break;
+            }
+
+            if ($optionGroup->getType() == $optionGroup::GROUP_TYPE) {
+                $option = \XLite\Core\Database::getRepo('XLite\Module\ProductOptions\Model\Option')
+                    ->find(intval($data));
+                if (
+                    !$option
+                    || $option->getGroupId() != $optionGroup->getGroupId()
+                ) {
+                    $prepared = null;
+                    break;
+                }
+
+                $prepared[$optionGroup->getGroupId()] = array(
+                    'option' => $option,
+                    'value'  => intval($data),
+                );
+
+            } else {
+                $prepared[$optionGroup->getGroupId()] = array(
+                    'option' => null,
+                    'value'  => $data,
+                );
+            }
+        }
+
+        // Update list from default list
+        if (is_array($prepared)) {
+            foreach ($this->getDefaultProductOptions() as $groupId => $data) {
+                if (!isset($prepared[$groupId])) {
+                    $prepared[$groupId] = $data;
+                }
+            }
+        }
+
+        return $prepared;
+    }
+
+    /**
+     * Get default product options 
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getDefaultProductOptions()
+    {
+        $list = $this->getActiveOptions();
+        $ids = array();
+        foreach ($list as $optionGroup) {
+            if ($optionGroup::GROUP_TYPE == $optionGroup->getType()) {
+                $ids[$optionGroup->getGroupId()] = array(
+                    'start' => 0,
+                    'limit' => count($optionGroup->getActiveOptions()) - 1,
+                );
+            }
+        }
+
+        $cnt = 0;
+        do {
+            $cntCurrent = $cnt;
+            foreach ($ids as $i => $id) {
+                if ($id['limit'] > $cntCurrent) {
+                    $ids[$i]['start'] = $cntCurrent;
+                    $cntCurrent = 0;
+
+                } else {
+                    $ids[$i]['start'] = $id['limit'];
+                    $cntCurrent -= $id['limit'];
+                }
+            }
+
+            $options = array();
+            foreach ($list as $optionGroup) {
+                $option = $optionGroup::GROUP_TYPE == $optionGroup->getType()
+                    ? $optionGroup->getDefaultOption($ids[$optionGroup->getGroupId()]['start'])
+                    : null;
+                $options[$optionGroup->getGroupId()] = array(
+                    'option' => $option,
+                    'value'  => $optionGroup->getDefaultPlainValue()
+                );
+            }
+            $cnt++;
+
+        } while (!$this->checkOptionsException($options));
+
+        return $options;
+    }
+
+    /**
+     * Check options exception 
+     * 
+     * @param array $options Prepared array
+     *  
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function checkOptionsException(array $options)
+    {
+        $ids = array();
+
+        foreach ($options as $groupId => $data) {
+            if (isset($data['option'])) {
+                $ids[] = $data['option']->getOptionId();
+            }
+        }
+
+        return \XLite\Core\Database::getRepo('XLite\Module\ProductOptions\Model\OptionException')
+            ->checkOptions($ids);
+    }
 
     ///////////////////////////////////////// OLD METHODS
 
@@ -120,37 +253,6 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
         parent::__construct($id);
 
         $this->fields['expansion_limit'] = 0;
-    }
-    
-    /**
-     * Get default product options 
-     * 
-     * @return array (pairs optclass => option_id)
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getDefaultProductOptions()
-    {
-        $options = array();
-
-        foreach ($this->getProductOptions() as $option) {
-            if (
-                $option->get('opttype') == 'SelectBox'
-                || $option->get('opttype') == 'Radio button'
-            ) {
-                foreach ($option->getProductOptions() as $opt) {
-                    $options[$option->get('optclass')] = $opt->option_id;
-                    break;
-                }
-            }
-        }
-
-        if ($this->hasExceptions()) {
-            // TODO - add exception checking
-        }
-
-        return $options;
     }
 
     /**

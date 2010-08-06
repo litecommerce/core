@@ -37,5 +37,56 @@ namespace XLite\Module\ProductOptions\Model\Repo;
  */
 class OptionException extends \XLite\Model\Repo\ARepo
 {
+
+    public function checkOptions(array $ids)
+    {
+        $count = 0;
+        if (!empty($ids)) {
+            try {
+                $count = $this->defineCheckExceptionQuery($ids)
+                    ->getSingleScalarResult();
+                $count = intval($count);
+
+            } catch (\Doctrine\ORM\NoResultException $exception) {
+            } catch (\Doctrine\ORM\NonUniqueResultException $exception) {
+                $count = 1;
+            }
+        }
+
+        return $count == 0;
+    }
+
+    protected function defineCheckExceptionQuery(array $ids)
+    {
+        $rsm = new \Doctrine\ORM\Query\ResultSetMapping;
+        $rsm->addScalarResult('cnt', 'cnt');
+
+        $keys = array();
+        $parameters = array();
+        foreach ($ids as $id) {
+            $keys[] = ':id' . $id;
+            $parameters['id' . $id] = $id;
+        }
+
+        $query = $this->_em ->createNativeQuery(
+            'SELECT COUNT(e1.option_id) as cnt, e1.exception_id as rel '
+            . 'FROM xlite_option_exceptions as e1 '
+            . 'WHERE e1.option_id IN (' . implode(', ', $keys). ') '
+            . 'GROUP BY e1.exception_id '
+            . 'HAVING cnt = ('
+            . 'SELECT COUNT(e2.option_id) '
+            . 'FROM xlite_option_exceptions as e2 '
+            . 'WHERE e2.exception_id = rel '
+            . 'GROUP BY e2.exception_id'
+            . ') '
+            . 'LIMIT 1',
+            $rsm
+        );
+        foreach ($parameters as $key => $value) {
+            $query->setParameter($key, $value);
+        }
+
+        return $query;
+    }
 }
 

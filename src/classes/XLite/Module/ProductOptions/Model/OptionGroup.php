@@ -179,4 +179,43 @@ class OptionGroup extends \XLite\Model\Base\I18n
         return $this->getFullname() ?: $this->getName();
     }
 
+    public function getActiveOptions()
+    {
+        $result = array();
+
+        foreach ($this->getOptions() as $option) {
+            if ($option->getEnabled()) {
+                $result[] = $option;
+            }
+        }
+
+        return $result;
+    }
+
+    public function getDefaultOption($startIdx = 0)
+    {
+        $list = $this->getActiveOptions();
+
+        return isset($list[$startIdx]) ? $list[$startIdx] : null;
+    }
+
+    public function getDefaultPlainValue()
+    {
+        switch ($this->getType()) {
+            case self::GROUP_TYPE:
+                $option = $this->getDefaultOption();
+                $result = $option ? $option->getOptionId() : null;
+                break;
+
+            case self::TEXT_TYPE:
+                $result = '';
+                break;
+
+            default:
+                $result = null;
+        }
+
+        return $result;
+    }
+
 }
