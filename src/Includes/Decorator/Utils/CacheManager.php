@@ -239,10 +239,10 @@ class CacheManager extends \Includes\Decorator\Utils\AUtils
     {
         if (static::isRebuildNeeded() || $force) {
             static::buildLCCache();
+        }
 
-            if (!static::isDoctrineProxiesExist()) {
-                static::buildDoctrineProxies();
-            }
+        if (!defined('LC_DO_NOT_REBUILD_CACHE') && !static::isDoctrineProxiesExist()) {
+            static::buildDoctrineProxies();
         }
     }
 
