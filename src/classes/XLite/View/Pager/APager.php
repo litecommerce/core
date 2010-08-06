@@ -41,10 +41,10 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
      * Widget parameter names
      */
 
-    const PARAM_PAGE_ID             = 'pageId';
-    const PARAM_ITEMS_COUNT         = 'itemsCount';
-    const PARAM_ONLY_PAGES          = 'onlyPages';
-    const PARAM_LIST_REQUEST_PARAMS = 'listRequestParams';
+    const PARAM_PAGE_ID     = 'pageId';
+    const PARAM_ITEMS_COUNT = 'itemsCount';
+    const PARAM_ONLY_PAGES  = 'onlyPages';
+    const PARAM_LIST        = 'list';
 
     /**
      * Page short names
@@ -144,6 +144,19 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
     }
 
     /**
+     * getList 
+     * 
+     * @return \XLite\View\ItemsList\AItemsList
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getList()
+    {
+        return $this->getParam(self::PARAM_LIST);
+    }
+
+    /**
      * getItemsTotal 
      * 
      * @return int
@@ -193,8 +206,8 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
             self::PARAM_ONLY_PAGES => new \XLite\Model\WidgetParam\Bool(
                 'Only display pages list', false
             ),
-            self::PARAM_LIST_REQUEST_PARAMS => new \XLite\Model\WidgetParam\Collection(
-                'Parent list request params', array()
+            self::PARAM_LIST => new \XLite\Model\WidgetParam\Object(
+                'List object', null, false, '\XLite\View\ItemsList\AItemsList'
             ),
         );
     }
@@ -236,22 +249,6 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
     }
 
     /**
-     * Return list of page URL params 
-     * 
-     * @param int $pageId page ID
-     *  
-     * @return void
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getPageURLParams($pageId)
-    {
-        return array(self::PARAM_PAGE_ID => $pageId) 
-            + $this->getRequestParamsHash() 
-            + $this->getParam(self::PARAM_LIST_REQUEST_PARAMS);
-    }
-
-    /**
      * Build page URL by page ID
      *
      * @param int $pageId page ID
@@ -262,7 +259,7 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
      */
     protected function buildUrlByPageId($pageId)
     {
-        return $this->getUrl($this->getPageURLParams($this->getPageIdByNotation($pageId)));
+        return $this->getList()->getActionURL(array(self::PARAM_PAGE_ID => $this->getPageIdByNotation($pageId)));
     }
 
     /**

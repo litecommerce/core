@@ -115,6 +115,21 @@ abstract class AItemsList extends \XLite\View\Container
 
 
     /**
+     * Return number of items in products list
+     *
+     * @param \XLite\Core\CommonCell $cnd search condition
+     *
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getDataCount(\XLite\Core\CommonCell $cnd)
+    {
+        return $this->getData($cnd, true);
+    }
+
+    /**
      * Return name of the base widgets list
      *
      * @return string
@@ -168,21 +183,6 @@ abstract class AItemsList extends \XLite\View\Container
     }
 
     /**
-     * Return number of items in products list
-     *
-     * @param \XLite\Core\CommonCell $cnd search condition
-     *
-     * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getDataCount(\XLite\Core\CommonCell $cnd)
-    {
-        return $this->getData($cnd, true);
-    }
-
-    /**
      * getPageBodyTemplate
      *
      * @return string
@@ -205,7 +205,7 @@ abstract class AItemsList extends \XLite\View\Container
     {
         return array(
             \XLite\View\Pager\APager::PARAM_ITEMS_COUNT => $this->getDataCount($this->getSearchCondition()),
-            \XLite\View\Pager\APager::PARAM_LIST_REQUEST_PARAMS => $this->getCommonParams(),
+            \XLite\View\Pager\APager::PARAM_LIST        => $this,
         );
     }
 
@@ -375,7 +375,10 @@ abstract class AItemsList extends \XLite\View\Container
             $this->commonParams = array(
                 'action' => '',
                 self::PARAM_SESSION_CELL => $this->getSessionCell()
-            ) + $this->getRequestParamsHash();
+            );
+        
+            $this->commonParams += $this->getRequestParamsHash();
+            $this->commonParams += $this->getPager()->getRequestParamsHash();
         }
 
         return $this->commonParams;
@@ -443,20 +446,6 @@ abstract class AItemsList extends \XLite\View\Container
     protected function getURLAJAXParamsJS()
     {
         return $this->getJSArray($this->getURLAJAXParams());
-    }
-
-    /**
-     * getActionURL
-     *
-     * @param array $params params to modify
-     *
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getActionURL(array $params = array())
-    {
-        return $this->getUrl($params + $this->getURLParams());
     }
 
     /**
@@ -569,6 +558,20 @@ abstract class AItemsList extends \XLite\View\Container
         // Do not change call order
         $this->widgetParams += $this->getPager()->getWidgetParams();
         $this->requestParams = array_merge($this->requestParams, $this->getPager()->getRequestParams());
+    }
+
+    /**
+     * getActionURL
+     *
+     * @param array $params params to modify
+     *
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getActionURL(array $params = array())
+    {
+        return $this->getUrl($params + $this->getURLParams());
     }
 
     /**
