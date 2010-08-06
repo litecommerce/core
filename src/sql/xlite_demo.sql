@@ -64,68 +64,6 @@ INSERT INTO `xlite_product_thumbnails` (`image_id`, `id`, `path`, `mime`, `width
 INSERT INTO `xlite_product_thumbnails` (`image_id`, `id`, `path`, `mime`, `width`, `height`, `size`, `date`, `hash`) VALUES (8,15091,'demo_t15091.jpeg','image/jpeg',160,160,9412,1280314462,'');
 INSERT INTO `xlite_product_thumbnails` (`image_id`, `id`, `path`, `mime`, `width`, `height`, `size`, `date`, `hash`) VALUES (9,15067,'demo_t15067.jpeg','image/jpeg',106,160,6487,1280314462,'');
 
--- Product options
-INSERT INTO xlite_option_groups SET group_id = 1, `product_id` = 15090, `view_type` = 'r', enabled = 1;
-INSERT INTO xlite_options SET option_id = 1, group_id = 1, enabled = 1;
-INSERT INTO xlite_options SET option_id = 2, group_id = 1, enabled = 1;
-INSERT INTO xlite_options SET option_id = 3, group_id = 1, enabled = 1;
-
-INSERT INTO xlite_option_groups SET group_id = 2, `product_id` = 15090, `view_type` = 'r', enabled = 1;
-INSERT INTO xlite_options SET option_id = 4, group_id = 2, enabled = 1;
-INSERT INTO xlite_options SET option_id = 5, group_id = 2, enabled = 1;
-
---INSERT INTO xlite_inventories SET `inventory_id` = '15121', `amount` = '2000', `enabled` = '1', `low_avail_limit` = '50';
-INSERT INTO xlite_option_groups SET group_id = 3, `product_id` = 15121, `view_type` = 'r', enabled = 1;
-INSERT INTO xlite_options SET option_id = 6, group_id = 3, enabled = 1;
-INSERT INTO xlite_options SET option_id = 7, group_id = 3, enabled = 1;
-
-INSERT INTO xlite_option_groups SET group_id = 4, `product_id` = 15123, `view_type` = 'r', enabled = 1;
-INSERT INTO xlite_options SET option_id = 8, group_id = 4, enabled = 1;
-INSERT INTO xlite_options SET option_id = 9, group_id = 4, enabled = 1;
-INSERT INTO xlite_option_surcharges SET option_id = 9, `type` = 'price', modifier = 3,  modifier_type = '$';
-
-INSERT INTO xlite_option_groups SET group_id = 5, `product_id` = 15068, `view_type` = 'r', enabled = 1;
-INSERT INTO xlite_options SET option_id = 10, group_id = 5, enabled = 1;
-INSERT INTO xlite_options SET option_id = 11, group_id = 5, enabled = 1;
-INSERT INTO xlite_options SET option_id = 12, group_id = 5, enabled = 1;
-
---INSERT INTO xlite_inventories SET `inventory_id` = '15091', `amount` = '1000', `enabled` = '1', `low_avail_limit` = '50';
-INSERT INTO xlite_option_groups SET group_id = 6, `product_id` = 15091, `view_type` = 'r', enabled = 1;
-INSERT INTO xlite_options SET option_id = 13, group_id = 6, enabled = 1;
-INSERT INTO xlite_options SET option_id = 14, group_id = 6, enabled = 1;
-INSERT INTO xlite_options SET option_id = 15, group_id = 6, enabled = 1;
-
---INSERT INTO xlite_inventories SET `inventory_id` = '15067', `amount` = '500', `enabled` = '1', `low_avail_limit` = '0';
-INSERT INTO xlite_option_groups SET group_id = 7, `product_id` = 15067, `view_type` = 'r', enabled = 1;
-INSERT INTO xlite_options SET option_id = 16, group_id = 7, enabled = 1;
-INSERT INTO xlite_options SET option_id = 17, group_id = 7, enabled = 1;
-
--- Product options translations
-INSERT INTO xlite_option_group_translations (id, code, name) VALUES (1, 'en', 'Color');
-INSERT INTO xlite_option_translations (id, code, name) VALUES (1, 'en', 'Red');
-INSERT INTO xlite_option_translations (id, code, name) VALUES (2, 'en', 'Green');
-INSERT INTO xlite_option_translations (id, code, name) VALUES (3, 'en', 'Yellow');
-INSERT INTO xlite_option_group_translations (id, code, name) VALUES (2, 'en', 'Size');
-INSERT INTO xlite_option_translations (id, code, name) VALUES (4, 'en', 'Small');
-INSERT INTO xlite_option_translations (id, code, name) VALUES (5, 'en', 'Big');
-INSERT INTO xlite_option_group_translations (id, code, name) VALUES (3, 'en', 'Size');
-INSERT INTO xlite_option_translations (id, code, name) VALUES (6, 'en', 'Small');
-INSERT INTO xlite_option_translations (id, code, name) VALUES (7, 'en', 'Big');
-INSERT INTO xlite_option_group_translations (id, code, name) VALUES (4, 'en', 'Choice');
-INSERT INTO xlite_option_translations (id, code, name) VALUES (8, 'en', 'Garden');
-INSERT INTO xlite_option_translations (id, code, name) VALUES (9, 'en', 'Wild');
-INSERT INTO xlite_option_group_translations (id, code, name) VALUES (5, 'en', 'Size');
-INSERT INTO xlite_option_translations (id, code, name) VALUES (10, 'en', 'Small');
-INSERT INTO xlite_option_translations (id, code, name) VALUES (11, 'en', 'Medium');
-INSERT INTO xlite_option_translations (id, code, name) VALUES (12, 'en', 'Big');
-INSERT INTO xlite_option_group_translations (id, code, name) VALUES (6, 'en', 'Size');
-INSERT INTO xlite_option_translations (id, code, name) VALUES (13, 'en', 'Small');
-INSERT INTO xlite_option_translations (id, code, name) VALUES (14, 'en', 'Medium');
-INSERT INTO xlite_option_translations (id, code, name) VALUES (15, 'en', 'Big');
-INSERT INTO xlite_option_group_translations (id, code, name) VALUES (7, 'en', 'Size');
-INSERT INTO xlite_option_translations (id, code, name) VALUES (16, 'en', 'Small');
-INSERT INTO xlite_option_translations (id, code, name) VALUES (17, 'en', 'Big');
-
 
 -- Orders [7]
 
@@ -133,10 +71,7 @@ INSERT INTO xlite_orders SET `order_id` = '1', `profile_id` = '2001', `payment_m
 INSERT INTO xlite_profiles SET `profile_id` = '2001', `order_id` = '1', `login` = 'demo@litecommerce.com', `shipping_city` = 'Buffalo', `shipping_country` = 'US', `shipping_firstname` = 'Peter', `shipping_lastname` = 'Pan', `shipping_phone` = '1-877-358-2669', `shipping_zipcode` = '14202', `shipping_state` = 'NY', `shipping_address` = '17 Court St', `billing_city` = 'Buffalo', `billing_country` = 'US', `billing_firstname` = 'Peter', `billing_lastname` = 'Pan', `billing_phone` = '1-877-358-2669', `billing_zipcode` = '14202', `billing_state` = 'NY', `billing_address` = '17 Court St';
 INSERT INTO xlite_order_items SET `order_id` = '1', `product_id` = '16280', `price` = '3.45', `product_name` = 'Pea', `product_sku` = '00006', `amount` = '1', `item_id` = '16280';
 INSERT INTO xlite_order_items SET `order_id` = '1', `product_id` = '15068', `price` = '2.99', `product_name` = 'Orange', `product_sku` = '00003', `amount` = '1', `item_id` = '15068|Size:Medium';
-INSERT INTO xlite_order_item_options SET item_id = '15068|Size:Medium', group_id = 5, option_id = 11, name = 'Size', value = 'Medium';
 INSERT INTO xlite_order_items SET `order_id` = '1', `product_id` = '15090', `price` = '1.99', `product_name` = 'Apple', `product_sku` = '00000', `amount` = '1', `item_id` = '15090|Color:Red|Size:Big';
-INSERT INTO xlite_order_item_options SET item_id = '15090|Color:Red|Size:Big', group_id = 1, option_id = 1, name = 'Color', value = 'Red';
-INSERT INTO xlite_order_item_options SET item_id = '15090|Color:Red|Size:Big', group_id = 2, option_id = 5, name = 'Size', value = 'Big';
 INSERT INTO xlite_orders SET `order_id` = '2', `profile_id` = '2002', `payment_method` = 'PhoneOrdering', `status` = 'Q', `subtotal` = '36.91', `tax` = '0.0', `date` = '1248425687', `total` = '36.91', `orig_profile_id` = '2';
 INSERT INTO xlite_profiles SET `profile_id` = '2002', `order_id` = '2', `login` = 'demo@litecommerce.com', `shipping_city` = 'Washington', `shipping_country` = 'US', `shipping_firstname` = 'Wendy', `shipping_lastname` = 'Darling', `shipping_phone` = '1-571-527-1011', `shipping_zipcode` = '20024', `shipping_state` = 'DC', `shipping_address` = '425 3rd St SW', `billing_city` = 'Washington', `billing_country` = 'US', `billing_firstname` = 'Wendy', `billing_lastname` = 'Darling', `billing_phone` = '1-571-527-1011', `billing_zipcode` = '20024', `billing_state` = 'DC', `billing_address` = '425 3rd St SW';
 INSERT INTO xlite_order_items SET `order_id` = '2', `product_id` = '15091', `price` = '8.99', `product_name` = 'Peach', `product_sku` = '00002', `amount` = '1', `item_id` = '15091|Size:Medium';
