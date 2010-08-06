@@ -24,7 +24,7 @@ database = ""
 username = ""
 password = ""
 persistent = Off
-table_prefix = "xlite_"
+table_pattern = "xlite_%s"
 
 ;
 ; ----------------------
