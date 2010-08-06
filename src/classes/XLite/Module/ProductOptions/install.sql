@@ -28,10 +28,18 @@ CREATE TABLE xlite_options (
   option_id int(11) NOT NULL auto_increment PRIMARY KEY,
   group_id int(11) NOT NULL default 0,
   orderby int(11) NOT NULL default 0,
-  price_modifier decimal(16,4) NOT NULL default '0.0000',
-  modifier_type char(1) NOT NULL default '%',
   enabled tinyint(1) unsigned NOT NULL default 0,
   KEY grp (group_id, enabled, orderby)
+) TYPE=MyISAM;
+
+DROP TABLE IF EXISTS xlite_option_surcharges;
+CREATE TABLE xlite_option_surcharges (
+  `surcharge_id` int(11) NOT NULL auto_increment PRIMARY KEY,
+  `option_id` int(11) NOT NULL default 0,
+  `type` varchar(32) NOT NULL default 'price',
+  `modifier` decimal(16,4) NOT NULL default '0.0000',
+  `modifier_type` char(1) NOT NULL default '%',
+  UNIQUE KEY ot (`option_id`, `type`)
 ) TYPE=MyISAM;
 
 DROP TABLE IF EXISTS xlite_option_translations;

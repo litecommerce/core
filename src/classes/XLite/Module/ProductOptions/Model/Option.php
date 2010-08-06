@@ -39,10 +39,6 @@ namespace XLite\Module\ProductOptions\Model;
  */
 class Option extends \XLite\Model\Base\I18n
 {
-    const PERCENT_MODIFIER  = '%';
-    const ABSOLUTE_MODIFIER = '$';
-
-
     /**
      * Option unique id 
      * 
@@ -79,28 +75,6 @@ class Option extends \XLite\Model\Base\I18n
     protected $orderby = 0;
 
     /**
-     * Price modifier 
-     * 
-     * @var    float
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     * @Column (type="decimal", precision="4", scale="12")
-     */
-    protected $price_modifier = 0.0000;
-
-    /**
-     * Price modifier type 
-     * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     * @Column (type="string", length="1")
-     */
-    protected $modifier_type = self::PERCENT_MODIFIER;
-
-    /**
      * Enabled 
      * 
      * @var    boolean
@@ -134,40 +108,76 @@ class Option extends \XLite\Model\Base\I18n
      */
     protected $exceptions;
 
-    public function isAbsoluteModifier()
+    /**
+     * Surcharges (relation)
+     *
+     * @var    \Doctrine\Common\Collections\ArrayCollection
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @OneToMany (targetEntity="XLite\Module\ProductOptions\Model\OptionSurcharge", mappedBy="option", cascade={"persist","remove"})
+     */
+    protected $surcharges;
+
+    /**
+     * Get surcharge by type
+     * 
+     * @param string $type Type
+     *  
+     * @return \XLite\Module\ProductOptions\Model\OptionSurcharge or null
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getSurcharge($type)
     {
-        return self::ABSOLUTE_MODIFIER == $this->getModifierType();
-    }
+        $result = null;
 
-    public function isRelativeModifier()
-    {
-        return self::PERCENT_MODIFIER == $this->getModifierType();
-    }
-
-    public function getSurchanrgeSign()
-    {
-        return 0 > $this->getPriceModifier() ? '-' : '+';
-    }
-
-    public function getDisplaySurcharge()
-    {
-        $surcharge = 0;
-
-        if (0 != $this->getPriceModifier()) {
-            switch ($this->getModifierType()) {
-                case self::PERCENT_MODIFIER:
-                    $surcharge = $this->getGroup()->getProduct()->getPrice() * $this->getPriceModifier() / 100;
-                    break;
- 
-                case self::ABSOLUTE_MODIFIER:
-                    $surcharge = $this->getPriceModifier();
-                    break;
-
-                default:
-                    $surcharge = 0;
+        foreach ($this->getSurcharges() as $surcharge) {
+            if ($surcharge->getType() == $type) {
+                $result = $surcharge;
+                break;
             }
         }
 
-        return $surcharge;
+        return $result;
+    }
+
+    /**
+     * Check - is option product attributes modifier or not
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isModifier()
+    {
+        return 0 < count($this->getNotEmptyModifiers());
+    }
+
+    /**
+     * Get not empty modifiers 
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getNotEmptyModifiers()
+    {
+        $types = \XLite\Core\Database::getRepo('XLite\Module\ProductOptions\Model\OptionSurcharge')
+            ->getSurchargeTypes();
+
+        $result = array();
+
+        foreach ($this->getSurcharges() as $surcharge) {
+            if (in_array($surcharge->getType(), $types) && !$surcharge->isEmpty()) {
+                $result[] = $surcharge;
+            }
+        }
+
+        return $result;
+
     }
 }
