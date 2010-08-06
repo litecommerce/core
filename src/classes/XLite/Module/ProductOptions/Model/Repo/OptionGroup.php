@@ -102,5 +102,39 @@ class OptionGroup extends \XLite\Model\Repo\Base\I18n
 
         return $data;
     }
+
+    public function findOneByGroupIdAndProductId($groupId, $productId)
+    {
+        try {
+            $group = $this->defineOneByGroupIdAndProductIdQuery($groupId, $productId)
+                ->getQuery()
+                ->getSingleResult();
+
+        } catch (\Doctrine\ORM\NoResultException $exception) {
+            $group = null;
+        }
+
+        return $group;
+    }
+
+    /**
+     * Define query for findActiveByProductId() method
+     *
+     * @param integer $groupId   Option group id
+     * @param integer $productId Product id
+     *
+     * @return \Doctrine\ORM\QueryBuilder
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineOneByGroupIdAndProductIdQuery($groupId, $productId)
+    {
+        return $this->createQueryBuilder()
+            ->andWhere('o.group_id = :groupId AND o.product_id = :productId')
+            ->setParameter('groupId', $groupId)
+            ->setParameter('productId', $productId)
+            ->setMaxResults(1);
+    }
 }
 

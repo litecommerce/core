@@ -38,36 +38,54 @@ namespace XLite\Module\ProductOptions\Controller\Customer;
 class Cart extends \XLite\Controller\Customer\Cart implements \XLite\Base\IDecorator
 {
     /**
+     * Options invalid flag
+     * 
+     * @var    boolean
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $optionInvalid = false;
+
+    /**
      * Get (and create) current cart item
+     *
+     * @param \XLite\Model\Product $product product to add
      *
      * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getCurrentItem()
+    protected function getCurrentItem(\XLite\Model\Product $product)
     {
-        if (is_null($this->currentItem)) {
-            parent::getCurrentItem();
+        if (!isset($this->currentItem)) {
+            parent::getCurrentItem($product);
 
             // set item options if present
             if (
-                !is_null($this->getProduct())
-                && $this->getProduct()->hasOptions()
+                is_object($this->currentItem->getProduct())
+                && $this->currentItem->getProduct()->hasOptions()
             ) {
 
-                $options = array();
-
                 if (isset(\XLite\Core\Request::getInstance()->product_options)) {
-                    $options = \XLite\Core\Request::getInstance()->product_options;
+                    $options = $this->currentItem->getProduct()
+                        ->prepareOptions(\XLite\Core\Request::getInstance()->product_options);
+                    if (!$this->currentItem->getProduct()->checkOptionsException($options)) {
+                        $options = null;
+                    }
 
                 } else {
-                    foreach ($this->getProduct()->getDefaultProductOptions() as $class => $oid) {
-                        $options[addslashes($class)] = addslashes($oid);
-                    }
+                    $options = $this->currentItem->getProduct()
+                        ->getDefaultProductOptions();
                 }
 
-                $this->currentItem->setProductOptions($options);
+                if (is_array($options)) {
+                    $this->currentItem->setProductOptions($options);
+
+                } else {
+                    $this->optionInvalid = true;
+                }
             }
         }
 
@@ -82,37 +100,46 @@ class Cart extends \XLite\Controller\Customer\Cart implements \XLite\Base\IDecor
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function action_add()
+    protected function doActionAdd()
     {
-        parent::action_add();
+        parent::doActionAdd();
 
         // check for valid ProductOptions
-        if (!is_null($this->getCurrentItem()->get('invalidOptions'))) {
+        if ($this->optionInvalid) {
 
-            // got exception (invalid options combination)
+            // Save wrong options set
+            $this->session->set(
+                'saved_invalid_options',
+                array(
+                    \XLite\Core\Request::getInstance()->product_id => \XLite\Core\Request::getInstance()->product_options,
+                )
+            );
 
-            // build invalid options URL
-            /* TODO - change to top message
-            $io = $this->getCurrentItem()->get('invalidOptions');
-            $invalid_options = "";
-            foreach ($io as $i => $o) {
-                $invalid_options .= "&" . urlencode("invalid_options[$i]") . "=" . urlencode($o);
-            }
-            */
-
-            // delete item from cart and switch back to product details
-            $key = $this->getCurrentItem()->get('key');
-            foreach ($this->getCart()->getIitems() as $i) {
-                if ($i->get('key') == $key) {
+            // Delete item from cart and switch back to product details
+            $key = $this->getCurrentItem()->getKey();
+            foreach ($this->getCart()->getItems() as $i) {
+                if ($i->getKey() == $key) {
                     $this->cart->deleteItem($i);
                     break;
                 }
             }
             $this->updateCart();
 
-            // TODO - add top message
+            \XLite\Core\TopMessage::getInstance()->add(
+                'Product has not been added to cart',
+                \XLite\Core\TopMessage::ERROR
+            );
 
-            $this->set('returnUrl', $this->buildUrl('product', '', array('product_id' => \XLite\Core\Request::getInstance()->product_id)));
+            $this->setReturnUrl(
+                $this->buildUrl(
+                    'product',
+                    '',
+                    array('product_id' => \XLite\Core\Request::getInstance()->product_id)
+                )
+            );
+
+        } else {
+            $this->session->set('saved_invalid_options', null);
         }
     }
 }

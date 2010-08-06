@@ -108,9 +108,16 @@ class Database extends \XLite\Base\Singleton
         $this->setDoctrineCache();
 
         // Set metadata driver
-        $this->config->setMetadataDriverImpl(
-            $this->config->newDefaultAnnotationDriver(LC_MODEL_CACHE_DIR)
+        $chain = new \Doctrine\ORM\Mapping\Driver\DriverChain();
+        $chain->addDriver(
+            $this->config->newDefaultAnnotationDriver(LC_MODEL_CACHE_DIR),
+            'XLite\Model'
         );
+        $chain->addDriver(
+            $this->config->newDefaultAnnotationDriver(LC_CLASSES_CACHE_DIR . 'XLite' . LC_DS . 'Module'),
+            'XLite\Module'
+        );
+        $this->config->setMetadataDriverImpl($chain);
 
         // Set proxy settings
         $this->config->setProxyDir(LC_PROXY_CACHE_DIR);

@@ -11,7 +11,7 @@
  * @since     3.0.0
  *}
 <span class="item-option" FOREACH="item.getProductOptions(),option">
-  {option.class:h}: {option.option:h}<span IF="optionArrayPointer<optionArraySize">, </span>
+  {option.getName():h}: {option.getValue():h}<span IF="optionArrayPointer<optionArraySize">, </span>
 </span>
 
 <span IF="getParam(#source#)" class="item-change-options">

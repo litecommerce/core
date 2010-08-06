@@ -37,5 +37,18 @@ namespace XLite\Module\ProductOptions\Model\Repo;
  */
 class OrderItemOption extends \XLite\Model\Repo\ARepo
 {
+    public function findByItemId($itemId)
+    {
+        return $this->defineByItemIdQuery($itemId)
+            ->getQuery()
+            ->getResult();
+    }
+
+    protected function defineByItemIdQuery($itemId)
+    {
+        return $this->createQueryBuilder()
+            ->andWhere('o.item_id = :itemId')
+            ->setParameter('itemId', $itemId);
+    }
 }
 

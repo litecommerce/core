@@ -87,10 +87,11 @@ class Cart extends ACustomer
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function action_add()
+    protected function doActionAdd()
     {
         $result = false;
-        $product = \XLite\Core\Database::getRepo('\XLite\Model\Product')->find(\XLite\Core\Request::getInstance()->product_id);
+        $product = \XLite\Core\Database::getRepo('\XLite\Model\Product')
+            ->find(\XLite\Core\Request::getInstance()->product_id);
 
         if (isset($product)) {
             $this->collectCartGarbage();

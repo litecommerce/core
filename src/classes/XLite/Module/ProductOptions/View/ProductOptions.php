@@ -165,9 +165,23 @@ class ProductOptions extends \XLite\View\AView
      */
     public function isOptionSelected(\XLite\Module\ProductOptions\Model\Option $option)
     {
-        $options = $option->getGroup()->getOptions();
+        $saved = $this->session->get('saved_invalid_options');
+        if (is_array($saved)) {
+            $productId = $option->getGroup()->getProduct()->getProductId();
+            if (
+                isset($saved[$productId])
+                && isset($saved[$productId][$option->getGroup()->getGroupId()])
+            ) {
+                $optionId = $saved[$productId][$option->getGroup()->getGroupId()];
+            }
+        }
 
-        return $options[0]->getOptionId() == $option->getOptionId();
+        if (!isset($optionId)) {
+            $options = $option->getGroup()->getOptions();
+            $optionId = $options[0]->getOptionId();
+        }
+
+        return $optionId == $option->getOptionId();
     }
 
     /**
@@ -182,7 +196,20 @@ class ProductOptions extends \XLite\View\AView
      */
     public function getOptionText(\XLite\Module\ProductOptions\Model\OptionGroup $option)
     {
-        return '';
+        $result = '';
+
+        $saved = $this->session->get('saved_invalid_options');
+        if (is_array($saved)) {
+            $productId = $option->getProduct()->getProductId();
+            if (
+                isset($saved[$productId])
+                && isset($saved[$productId][$option->getGroupId()])
+            ) {
+                $result = $saved[$productId][$option->getGroupId()];
+            }
+        }
+
+        return $result;
     }
 }
 
