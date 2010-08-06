@@ -9,9 +9,9 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- * @ListChild (list="itemsList.product.customer.grid.info", weight="20")
- * @ListChild (list="itemsList.product.customer.grid.title", weight="20")
- * @ListChild (list="itemsList.product.customer.list.info", weight="20")
- * @ListChild (list="itemsList.product.customer.list.body", weight="20")
+ * @ListChild (list="itemsList.product.grid.customer.info", weight="20")
+ * @ListChild (list="itemsList.product.grid.customer.title", weight="20")
+ * @ListChild (list="itemsList.product.list.customer.info", weight="20")
+ * @ListChild (list="itemsList.product.list.customer.body", weight="20")
  *}
 <span class="draggable-mark">Drag me to the cart</span>

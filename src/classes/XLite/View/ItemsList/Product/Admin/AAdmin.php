@@ -51,14 +51,13 @@ abstract class AAdmin extends \XLite\View\ItemsList\Product\AProduct
     }
 
     /**
-     * Return dir which contains the page body template
+     * getDisplayMode
      *
      * @return string
      * @access protected
-     * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getPageBodyDir()
+    protected function getDisplayMode()
     {
         return 'table';
     }

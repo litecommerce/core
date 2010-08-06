@@ -9,6 +9,6 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- * @ListChild (list="itemsList.product.customer.list.info", weight="20")
+ * @ListChild (list="itemsList.product.list.customer.info", weight="20")
  *}
 <div IF="isShowDescription()" class="description product-description">{truncate(product,#brief_description#,#300#):h}</div>

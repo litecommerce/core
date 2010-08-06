@@ -9,7 +9,7 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- * @ListChild (list="itemsList.product.customer.table.info", weight="10")
+ * @ListChild (list="itemsList.product.table.customer.info", weight="10")
  *}
 <td IF="product.sku">{product.sku}</td>
 <td IF="!product.sku">&nbsp;</td>

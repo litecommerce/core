@@ -142,7 +142,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      */
     protected function getListName()
     {
-        return parent::getListName() . '.customer.' . $this->getDisplayMode();
+        return parent::getListName() . '.customer';
     }
 
     /**
@@ -250,7 +250,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      */
     protected function getPageBodyDir()
     {
-        return $this->isSideBarBox() ? 'sidebar' : $this->getDisplayMode();
+        return $this->isSideBarBox() ? 'sidebar' : parent::getPageBodyDir();
     }
 
     /**
