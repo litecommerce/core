@@ -41,7 +41,7 @@ class ProductOptionModifier extends \XLite\View\AView
      * Widget parameter names
      */
 
-    const PARAM_OPTION       = 'option';
+    const PARAM_OPTION = 'option';
 
 
     /**
@@ -68,7 +68,7 @@ class ProductOptionModifier extends \XLite\View\AView
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_OPTION       => new \XLite\Model\WidgetParam\Object(
+            self::PARAM_OPTION => new \XLite\Model\WidgetParam\Object(
                 'Option',
                 null,
                 false,
@@ -87,8 +87,35 @@ class ProductOptionModifier extends \XLite\View\AView
     protected function isVisible()
     {
         return parent::isVisible()
-            && $this->getParam(self::PARAM_OPTION)->getPriceModifier();
+            && $this->getParam(self::PARAM_OPTION)->isModifier();
     }
 
+    /**
+     * Get modifiers 
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getModifiers()
+    {
+        return $this->getParam(self::PARAM_OPTION)->getNotEmptyModifiers();
+    }
+
+    /**
+     * Get modifier personal template 
+     * 
+     * @param \XLite\Module\ProductOptions\Model\OptionSurcharge $surcharge Modifier
+     *  
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getModifierTemplate(\XLite\Module\ProductOptions\Model\OptionSurcharge $surcharge)
+    {
+        return 'modules/ProductOptions/display/modifier/' . $surcharge->getType() . '.tpl';
+    }
 }
 

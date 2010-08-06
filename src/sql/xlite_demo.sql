@@ -81,7 +81,8 @@ INSERT INTO xlite_options SET option_id = 7, group_id = 3, enabled = 1;
 
 INSERT INTO xlite_option_groups SET group_id = 4, `product_id` = 15123, `view_type` = 'r', enabled = 1;
 INSERT INTO xlite_options SET option_id = 8, group_id = 4, enabled = 1;
-INSERT INTO xlite_options SET option_id = 9, group_id = 4, enabled = 1, price_modifier = 3;
+INSERT INTO xlite_options SET option_id = 9, group_id = 4, enabled = 1;
+INSERT INTO xlite_option_surcharges SET option_id = 9, `type` = 'price', modifier = 3,  modifier_type = '$';
 
 INSERT INTO xlite_option_groups SET group_id = 5, `product_id` = 15068, `view_type` = 'r', enabled = 1;
 INSERT INTO xlite_options SET option_id = 10, group_id = 5, enabled = 1;
