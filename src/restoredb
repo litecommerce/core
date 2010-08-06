@@ -2,14 +2,14 @@
 <?php
 
 function _do_query_upload($sqlfile, $connection = null, $ignoreErrors = false) {
-	echo "+++ $sqlfile\n";
+	echo '+++ ' . $sqlfile . PHP_EOL;
 	ob_start();
 	query_upload($sqlfile, $connection, $ignoreErrors);
 	$output = ob_get_contents();
 	ob_end_clean();
 	$output = strip_tags($output);
-	if (!empty($output) && preg_match("/\[NOTE:/", $output)) {
-		echo "\n$output\n";
+	if (!empty($output) && preg_match('/\[NOTE:/', $output)) {
+		echo PHP_EOL . $output . PHP_EOL;
 	}
 }
 
@@ -34,25 +34,25 @@ OUT;
 chdir(dirname(__FILE__));
 
 define('LC_DO_NOT_REBUILD_CACHE', true);
-require_once "./top.inc.php";
+require_once './top.inc.php';
 
 set_time_limit(0);
 error_reporting(E_ALL ^ E_NOTICE);
-$config = parse_ini_file("etc/config.local.php");
+$config = parse_ini_file('etc/config.local.php');
 
 $config['hostspec'] .= empty($config['socket'])
 	? (empty($config['port']) ? '' : ':' . $config['port'])
 	: ':' . $config['socket'];
-$connection = mysql_connect($config["hostspec"], $config["username"], $config["password"]);
-mysql_select_db($config["database"]);
+$connection = mysql_connect($config['hostspec'], $config['username'], $config['password']);
+mysql_select_db($config['database']);
 
-_do_query_upload("sql/xlite_tables.sql", $connection, true);
-_do_query_upload("sql/xlite_data.sql", $connection, true);
-_do_query_upload("sql/xlite_lng_en.sql", $connection, true);
-_do_query_upload("sql/xlite_lng_de.sql", $connection, true);
-_do_query_upload("sql/states_US.sql", $connection, true);
-_do_query_upload("sql/states_GB.sql", $connection, true);
-_do_query_upload("sql/states_CA.sql", $connection, true);
+_do_query_upload('sql/xlite_tables.sql', $connection, true);
+_do_query_upload('sql/xlite_data.sql', $connection, true);
+_do_query_upload('sql/xlite_lng_en.sql', $connection, true);
+_do_query_upload('sql/xlite_lng_de.sql', $connection, true);
+_do_query_upload('sql/states_US.sql', $connection, true);
+_do_query_upload('sql/states_GB.sql', $connection, true);
+_do_query_upload('sql/states_CA.sql', $connection, true);
 
 require_once 'classes/XLite/Module/AModule.php';
 require_once 'classes/XLite/Base/IPatcher.php';
@@ -78,33 +78,33 @@ while (($dir = readdir($modules)) !== false) {
 
 closedir($modules);
 
-if (!isset($argv[1]) || $argv[1] != "demo") {
-	_do_query_upload("sql/xlite_demo.sql", $connection, true);
+if (!isset($argv[1]) || $argv[1] != 'demo') {
+	_do_query_upload('sql/xlite_demo.sql', $connection, true);
 }
 
-_do_query_upload("sql/demo/xlite_demo_user.sql", $connection, true);
+_do_query_upload('sql/demo/xlite_demo_user.sql', $connection, true);
 
-if (isset($argv[1]) && $argv[1] == "demo") {
+if (isset($argv[1]) && $argv[1] == 'demo') {
 
-    _do_query_upload("sql/demo/xlite_demo_data.sql", $connection, true);
-	_do_query_upload("sql/demo/xlite_demo_store.sql", $connection, true);
-	_do_query_upload("sql/local/xlite_test_accounts.sql", $connection, true);
+    _do_query_upload('sql/demo/xlite_demo_data.sql', $connection, true);
+	_do_query_upload('sql/demo/xlite_demo_store.sql', $connection, true);
+	_do_query_upload('sql/local/xlite_test_accounts.sql', $connection, true);
 
 	if (isset($argv[2]) && $argv[2] == 'all') {
-		_do_query_upload("sql/local/xlite_all_modules.sql", $connection, true);
+		_do_query_upload('sql/local/xlite_all_modules.sql', $connection, true);
 	}
 
 } elseif (isset($argv[1]) && in_array($argv[1], array('standalone', 'st', 's', 'stand'))) {
-	_do_query_upload("sql/local/xlite_modules_standalone.sql", $connection, true);
+	_do_query_upload('sql/local/xlite_modules_standalone.sql', $connection, true);
 } else {
-	_do_query_upload("sql/local/xlite_modules_drupal.sql", $connection, true);
+	_do_query_upload('sql/local/xlite_modules_drupal.sql', $connection, true);
 }
 
 if (file_exists('sql/local/xlite_local_demo.sql')) {
 	_do_query_upload('sql/local/xlite_local_demo.sql', $connection, true);
 }
 
-echo "Remove directory var/run\n\n";
+echo 'Remove directory var/run' . PHP_EOL . PHP_EOL;
 
 \Includes\Utils\FileManager::unlinkRecursive('var/run');
 \Includes\Utils\FileManager::unlinkRecursive('var/locale');
