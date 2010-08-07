@@ -41,7 +41,6 @@ abstract class Handler extends \XLite\Base
      * Common handler params
      */
 
-    const PARAM_MODE        = 'mode';
     const PARAM_IS_EXPORTED = 'isExported';
 
     /**

@@ -91,6 +91,19 @@ class Search extends \XLite\View\ItemsList\Product\Admin\AAdmin
     }
 
     /**
+     * Get URL common parameters
+     *
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getCommonParams()
+    {
+        return parent::getCommonParams() + array('mode' => 'search');
+    }
+
+    /**
      * Return products list
      *
      * @param \XLite\Core\CommonCell $cnd       search condition

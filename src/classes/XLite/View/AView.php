@@ -49,6 +49,7 @@ abstract class AView extends \XLite\Core\Handler
      */
 
     const PARAM_TEMPLATE = 'template';
+    const PARAM_MODE     = 'mode';
 
 
     /**
@@ -425,6 +426,21 @@ abstract class AView extends \XLite\Core\Handler
         }
 
         \XLite\View\AView::$countLevel--;
+    }
+
+    /**
+     * FIXME - must be removed
+     * 
+     * @param string $name param name
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getRequestParamValue($name)
+    {
+        return \XLite\Core\Request::getInstance()->$name;
     }
 
 

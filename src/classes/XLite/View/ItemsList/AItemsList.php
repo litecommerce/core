@@ -382,6 +382,7 @@ abstract class AItemsList extends \XLite\View\Container
      *
      * @return string
      * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getJSArray(array $params)
@@ -400,6 +401,7 @@ abstract class AItemsList extends \XLite\View\Container
      *
      * @return array
      * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getCommonParams()
