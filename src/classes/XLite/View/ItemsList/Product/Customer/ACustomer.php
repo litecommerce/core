@@ -577,20 +577,6 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
     }
 
     /**
-     * getJSHandlerClassName
-     *
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getJSHandlerClassName()
-    {
-        return 'ProductsList';
-    }
-
-
-    /**
      * Initialize widget (set attributes)
      *
      * @param array $params widget params

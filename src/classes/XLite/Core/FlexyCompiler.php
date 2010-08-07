@@ -973,6 +973,14 @@ class FlexyCompiler extends \XLite\Base\Singleton
             $str = substr($str, $pos+1);
             return $result;
         }
+        if (substr($str, 0, 1) == "%") {
+            // find next #
+            $pos = strpos($str, "%", 1);
+            if ($pos===false) $this->error("No closing %");
+            $result = substr($str, 1, $pos-1);
+            $str = substr($str, $pos+1);
+            return $result;
+        }
         if (substr($str, 0, 1)>='0' && substr($str, 0, 1) <='9' || substr($str, 0, 1) == '-' || substr($str, 0, 1) == '.') { // numeric constant
             $len = strspn($str, '0123456789-.');
             $result = substr($str, 0, $len);

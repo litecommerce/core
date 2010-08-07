@@ -28,6 +28,11 @@
   text-decoration: underline;
 }
 
+.items-list .table a.name:hover
+{
+  text-decoration: none;
+}
+
 .items-list .table th
 {
   padding: 5px;
@@ -40,11 +45,3 @@
   width: 100%;
 }
 
-.items-list .table th a.sort-order
-{
-}
-
-.items-list .table th a.sort-order.selected
-{
-  text-decoration: underline;
-}

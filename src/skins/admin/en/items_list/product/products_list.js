@@ -21,16 +21,10 @@ function ProductsList(cell, URLParams, URLAJAXParams)
   this.constructor.prototype.constructor(cell, URLParams, URLAJAXParams);
 }
 
-// Set new display mode
-ItemsList.prototype.changeDisplayMode = function(handler)
-{
-  return this.constructor.prototype.process('displayMode', $(handler).attr('class'));
-}
-
 // Change sort criterion
 ItemsList.prototype.changeSortByMode = function(handler)
 {
-  return this.process('sortBy', handler.options[handler.selectedIndex].value);
+  return this.process('sortBy', $(handler).attr('class'));
 }
 
 // Change sort order
@@ -39,18 +33,9 @@ ItemsList.prototype.changeSortOrder = function()
   return this.process('sortOrder', ('asc' == this.URLParams.sortOrder) ? 'desc' : 'asc');
 }
 
-ItemsList.prototype.listeners.displayModes = function(handler)
-{
-  $('.display-modes a', handler.container).click(
-    function() {
-      return !handler.changeDisplayMode(this);
-    }
-  );
-}
-
 ItemsList.prototype.listeners.sortByModes = function(handler)
 {
-  $('select.sort-crit', handler.container).change(
+  $('.sort-order .part.sort-crit a', handler.container).click(
     function() {
       return !handler.changeSortByMode(this);
     }
@@ -59,7 +44,7 @@ ItemsList.prototype.listeners.sortByModes = function(handler)
 
 ItemsList.prototype.listeners.sortOrderModes = function(handler)
 {
-  $('a.sort-order', handler.container).click(
+  $('.sort-order .part.order-by a', handler.container).click(
     function() {
       return !handler.changeSortOrder();
     }

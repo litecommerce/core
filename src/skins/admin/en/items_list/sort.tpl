@@ -11,5 +11,10 @@
  * @since     3.0.0
  *}
 
-<a IF="isSortByModeSelected(sortBy)" class="sort-order selected" href="{getActionUrl(_ARRAY_(#sortOrder#^getSortOrderToChange()))}">{title:h}&nbsp;{if:isSortOrderAsc()}&darr;{else:}&uarr{end:}</a>
-<a IF="!isSortByModeSelected(sortBy)" class="sort-order" href="{getActionUrl(_ARRAY_(#sortBy#^sortBy))}">{title:h}</a>
+<div class="sort-order">
+  {if:isSortByModeSelected(sortByColumn)}
+    <div class="part order-by"><a href="{getActionUrl(_ARRAY_(%static::PARAM_SORT_ORDER%^getSortOrderToChange()))}"><span class="selected">{title:h}</span>&nbsp;{if:isSortOrderAsc()}&darr;{else:}&uarr{end:}</a></div>
+  {else:}
+    <div class="part sort-crit"><a class="{sortByColumn}" href="{getActionUrl(_ARRAY_(%static::PARAM_SORT_BY%^sortByColumn))}">{title:h}</a></div>
+  {end:}
+</div>
