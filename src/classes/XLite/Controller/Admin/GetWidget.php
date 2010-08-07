@@ -26,12 +26,12 @@
  * @since      3.0.0
  */
 
-namespace XLite\Controller\Customer;
+namespace XLite\Controller\Admin;
 
 /**
  * Get widget (AJAX)
  * TODO: multiple inheritance required; 
- * class must also extends the \XLite\Controller\Customer\ACustomer
+ * class must also extends the \XLite\Controller\Admin\AAdmin
  * 
  * @package XLite
  * @see     ____class_see____
