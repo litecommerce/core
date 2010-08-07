@@ -170,39 +170,16 @@ abstract class AController extends \XLite\Core\Handler
     }
 
     /**
-     * Return template for standalone shop 
-     * 
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getRegularTemplate()
-    {
-        return 'main.tpl';
-    }
-
-    /**
-     * Return template to use in a CMS
-     * 
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getCMSTemplate()
-    {
-        return 'center_top.tpl';
-    }
-
-    /**
      * Select template to use
      * 
      * @return string
      * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getViewerTemplate()
     {
-        return $this->getParam(self::PARAM_IS_EXPORTED) ? $this->getCMSTemplate() : $this->getRegularTemplate();
+        return 'main.tpl';
     }
 
     /**
