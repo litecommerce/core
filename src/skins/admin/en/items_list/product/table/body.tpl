@@ -13,6 +13,10 @@
 
 <table cellspacing="0">
 
+  <tr>
+    {displayListPart(#header#,_ARRAY_(#product#^product))}
+  </tr>
+
   <tr FOREACH="getPageData(),product">
     {displayListPart(#columns#,_ARRAY_(#product#^product))}
   </tr>
