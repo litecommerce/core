@@ -14,3 +14,17 @@
 .items-list
 {
 }
+
+.items-list .sort-order
+{
+}
+
+.items-list .sort-order span.selected
+{
+  text-decoration: underline;
+}
+
+.items-list .sort-order div.part
+{
+  display: inline;
+}

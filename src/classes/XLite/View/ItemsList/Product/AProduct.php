@@ -126,6 +126,19 @@ abstract class AProduct extends \XLite\View\ItemsList\AItemsList
         return $result;
     }
 
+    /**
+     * getJSHandlerClassName
+     *
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getJSHandlerClassName()
+    {
+        return 'ProductsList';
+    }
+
 
     /**
      * Get a list of CSS files required to display the widget properly
