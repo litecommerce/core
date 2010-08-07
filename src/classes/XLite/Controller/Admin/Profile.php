@@ -82,7 +82,7 @@ class Profile extends AAdmin
 
             // Create new: getID of created profile or return to register page
             $params = $this->isActionError()
-                ? array(self::PARAM_MODE => self::getRegisterMode())
+                ? array('mode' => self::getRegisterMode())
                 : array('profile_id' => $this->getModelForm()->getProfileId(false));
         }
 

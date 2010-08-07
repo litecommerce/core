@@ -112,7 +112,7 @@ class Membership extends \XLite\Model\Repo\Base\I18n
     {
         $data = $this->getFromCache('active', array('active' => true));
         if (!isset($data)) {
-            $data = $this->defineActiveMembershipsQuery($shippingZone)->getQuery()->getResult();
+            $data = $this->defineActiveMembershipsQuery()->getQuery()->getResult();
             $this->saveToCache($data, 'active', array('active' => true));
         }
 

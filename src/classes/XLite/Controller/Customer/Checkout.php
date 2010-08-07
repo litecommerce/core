@@ -493,7 +493,7 @@ class Checkout extends Cart
 
             $this->actionPostprocess(null);
             $url = isset($step)
-                ? $this->buildURL('checkout', '', array(\XLite\View\AView::PARAM_MODE => $step->getMode()))
+                ? $this->buildURL('checkout', '', array('mode' => $step->getMode()))
                 : $this->buildURL('cart');
 
             $this->setReturnUrl($url);

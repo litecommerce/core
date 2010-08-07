@@ -504,3 +504,20 @@ function closeWaitBar()
     $(window._waitBar).dialog('close');
   }
 }
+
+// Check for the AJAX support
+function hasAJAXSupport()
+{
+  if (typeof(window.ajaxSupport) == 'undefined') {
+    window.ajaxSupport = false;
+    try {
+
+      var xhr = window.ActiveXObject ? new ActiveXObject('Microsoft.XMLHTTP') : new XMLHttpRequest();
+      window.ajaxSupport = xhr ? true : false;
+
+    } catch(e) { }
+  }
+
+  return window.ajaxSupport;
+}
+
