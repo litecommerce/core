@@ -9,7 +9,7 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- * @ListChild (list="itemsList.product.table.admin.search.columns", weight="30")
+ * @ListChild (list="itemsList.product.table.admin.search.header", weight="20")
  *}
 
-<td><a class="name" href="{buildURL(#product#,##,_ARRAY_(#product_id#^product.getProductId()))}">{product.getName():h}</a></td>
+<th>SKU</th>

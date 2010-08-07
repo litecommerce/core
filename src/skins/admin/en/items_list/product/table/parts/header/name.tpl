@@ -9,7 +9,7 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- * @ListChild (list="itemsList.product.table.admin.search.header", weight="20")
+ * @ListChild (list="itemsList.product.table.admin.search.header", weight="30")
  *}
 
-<th>Name</th>
+<th class="name"><widget template="items_list/sort.tpl" title="Name" sortBy="p.name" /></th>

@@ -124,3 +124,8 @@ div.pager-items-total input.page-length
   width: 2em;
   text-align: right;
 }
+
+div.pager-items-total span.records-count
+{
+  font-weight: bold;
+}

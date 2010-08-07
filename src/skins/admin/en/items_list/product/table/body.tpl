@@ -11,13 +11,13 @@
  * @since     3.0.0
  *}
 
-<table cellspacing="0">
+<table class="items-list table">
 
   <tr>
     {displayListPart(#header#,_ARRAY_(#product#^product))}
   </tr>
 
-  <tr FOREACH="getPageData(),product">
+  <tr FOREACH="getPageData(),idx,product" class="{getRowClass(idx,##,#TableRow#)}">
     {displayListPart(#columns#,_ARRAY_(#product#^product))}
   </tr>
 
