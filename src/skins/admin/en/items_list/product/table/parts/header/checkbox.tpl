@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Item SKU
+ * Column with checkboxes
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -9,7 +9,7 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- * @ListChild (list="itemsList.product.table.admin.search.columns", weight="20")
+ * @ListChild (list="itemsList.product.table.admin.search.header", weight="10")
  *}
 
-<td>{product.getSku():h}</td>
+<th class="checkboxes"><input type="checkbox" class="check-all" /></th>

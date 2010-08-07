@@ -33,6 +33,12 @@ ItemsList.prototype.changeSortOrder = function()
   return this.process('sortOrder', ('asc' == this.URLParams.sortOrder) ? 'desc' : 'asc');
 }
 
+// Check all checkboxes in list
+ItemsList.prototype.checkAll = function(handler)
+{
+  return this.container.find('input:checkbox.checkbox').attr('checked', $(handler).attr('checked') ? 'checked' : '');
+}
+
 ItemsList.prototype.listeners.sortByModes = function(handler)
 {
   $('.sort-order .part.sort-crit a', handler.container).click(
@@ -50,6 +56,15 @@ ItemsList.prototype.listeners.sortOrderModes = function(handler)
     }
   );
 
+}
+
+ItemsList.prototype.listeners.checboxes = function(handler)
+{
+  $('input:checkbox.check-all', handler.container).click(
+    function() {
+      return handler.checkAll(this);
+    }
+  );
 }
 
 

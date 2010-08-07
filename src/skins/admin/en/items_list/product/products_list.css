@@ -19,7 +19,8 @@
 
 .items-list .table td
 {
-  padding: 5px;
+  padding: 3px;
+  white-space: nowrap;
 }
 
 .items-list .table a.name
@@ -28,7 +29,7 @@
   text-decoration: underline;
 }
 
-.items-list .table a.name:hover
+.items-list .table a:hover
 {
   text-decoration: none;
 }
@@ -37,7 +38,13 @@
 {
   padding: 5px;
   font-size: 1.3em;
+  font-weight: normal;
   background-color: #e5ebef;
+}
+
+.items-list .table a
+{
+  text-decoration: underline;
 }
 
 .items-list .table th.name
