@@ -44,10 +44,12 @@ class Product extends \XLite\Model\Repo\Base\I18n
      * Allowable search params 
      */
 
-    const P_CATEGORY_ID = 'categoryId';
-    const P_SUBSTRING   = 'substring';
-    const P_ORDER_BY    = 'orderBy';
-    const P_LIMIT       = 'limit';
+    const P_SKU               = 'SKU';
+    const P_CATEGORY_ID       = 'categoryId';
+    const P_SUBSTRING         = 'substring';
+    const P_SEARCH_IN_SUBCATS = 'searchInSubcats';
+    const P_ORDER_BY          = 'orderBy';
+    const P_LIMIT             = 'limit';
     
 
     /**
@@ -61,8 +63,10 @@ class Product extends \XLite\Model\Repo\Base\I18n
     protected function getAllowedSearchParams()
     {
         return array(
+            self::P_SKU,
             self::P_CATEGORY_ID,
             self::P_SUBSTRING,
+            self::P_SEARCH_IN_SUBCATS,
             self::P_ORDER_BY,
             self::P_LIMIT,
         );
@@ -97,10 +101,25 @@ class Product extends \XLite\Model\Repo\Base\I18n
             'translations.name',
             'translations.brief_description',
             'translations.description',
-            'p.sku',
         );
     }
 
+
+    /**
+     * Prepare certain search condition
+     *
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder query builder to prepare
+     * @param mixed                      $value        condition data
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function prepareSearchConditionSKU(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
+    {
+        $queryBuilder->andWhere('p.sku LIKE :sku')->setParameter('sku', '%' . $value . '%');
+    }
 
     /**
      * Prepare certain search condition 
@@ -120,6 +139,22 @@ class Product extends \XLite\Model\Repo\Base\I18n
             ->andWhere('cp.category_id = :categoryId')
             ->setParameter('categoryId', $value)
             ->addOrderBy('cp.orderby');
+    }
+
+    /**
+     * Prepare certain search condition
+     *
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder query builder to prepare
+     * @param mixed                      $value        condition data
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function prepareSearchConditionSearchInSubcats(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
+    {
+        // TODO
     }
 
     /**

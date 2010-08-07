@@ -38,6 +38,16 @@ namespace XLite\View\ItemsList\Product\Admin;
 class Search extends \XLite\View\ItemsList\Product\Admin\AAdmin
 {
     /**
+     * Widget param names 
+     */
+
+    const PARAM_SUBSTRING         = 'substring';
+    const PARAM_CATEGORY_ID       = 'categoryId';
+    const PARAM_SKU               = 'sku';
+    const PARAM_SEARCH_IN_SUBCATS = 'searchInSubcats';
+
+
+    /**
      * Return title
      *
      * @return string
@@ -101,6 +111,85 @@ class Search extends \XLite\View\ItemsList\Product\Admin\AAdmin
     protected function getCommonParams()
     {
         return parent::getCommonParams() + array('mode' => 'search');
+    }
+
+    /**
+     * getSearchParams 
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getSearchParams()
+    {
+        return array(
+            \XLite\Model\Repo\Product::P_SUBSTRING         => self::PARAM_SUBSTRING,
+            \XLite\Model\Repo\Product::P_CATEGORY_ID       => self::PARAM_CATEGORY_ID,
+            \XLite\Model\Repo\Product::P_SKU               => self::PARAM_SKU,
+            \XLite\Model\Repo\Product::P_SEARCH_IN_SUBCATS => self::PARAM_SEARCH_IN_SUBCATS,
+        );
+    }
+
+    /**
+     * Define widget parameters
+     *
+     * @return void
+     * @access protected
+     * @since  1.0.0
+     */
+    protected function defineWidgetParams()
+    {
+        parent::defineWidgetParams();
+
+        $this->widgetParams += array(
+            self::PARAM_SUBSTRING => new \XLite\Model\WidgetParam\String(
+                'Substring', ''
+            ),
+            self::PARAM_CATEGORY_ID => new \XLite\Model\WidgetParam\Int(
+                'Category ID', 0
+            ),
+            self::PARAM_SKU => new \XLite\Model\WidgetParam\String(
+                'SKU', ''
+            ),
+            self::PARAM_SEARCH_IN_SUBCATS => new \XLite\Model\WidgetParam\Checkbox(
+                'Search in subcategories', 0
+            ),
+        );
+    }
+
+    /**
+     * Define so called "request" parameters
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineRequestParams()
+    {
+        parent::defineRequestParams();
+
+        $this->requestParams = array_merge($this->requestParams, $this->getSearchParams());
+    }
+
+    /**
+     * Return params list to use for search
+     *
+     * @return \XLite\Core\CommonCell
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getSearchCondition()
+    {
+        $result = parent::getSearchCondition();
+
+        foreach ($this->getSearchParams() as $modelParam => $requestParam) {
+            $result->$modelParam = $this->getParam($requestParam);
+        }
+
+        return $result;
     }
 
     /**

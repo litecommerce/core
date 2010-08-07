@@ -18,3 +18,4 @@
   &ndash;
   <span class="end-record-number">{getEndRecordNumber()}</span> of <span class="records-count">{getItemsTotal()}</span><span IF="isItemsPerPageSelectorVisible()">, <input type="text" value="{getItemsPerPage()}" class="page-length" /> per page</span>
 </div>
+<div class="clear"></div>
