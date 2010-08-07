@@ -38,16 +38,6 @@ namespace XLite\Controller\Customer;
 class GetWidget extends ACustomer
 {
     /**
-     * Current page template 
-     * 
-     * @var    string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected $template = 'get_widget.tpl';
-
-
-    /**
      * These params from AJAX request will be translated into the corresponding ones  
      * 
      * @return array
@@ -110,15 +100,16 @@ class GetWidget extends ACustomer
     }
 
     /**
-     * getCMSTemplate
+     * Select template to use
      *
      * @return string
      * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getCMSTemplate()
+    protected function getViewerTemplate()
     {
-        return $this->template;
+        return 'get_widget.tpl';
     }
 
     /**
