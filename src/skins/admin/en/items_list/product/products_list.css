@@ -11,3 +11,40 @@
  * @since     3.0.0
  */
 
+.items-list .table
+{
+  padding: 5px;
+  width: 100%;
+}
+
+.items-list .table td
+{
+  padding: 5px;
+}
+
+.items-list .table a.name
+{
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.items-list .table th
+{
+  padding: 5px;
+  font-size: 1.3em;
+  background-color: #e5ebef;
+}
+
+.items-list .table th.name
+{
+  width: 100%;
+}
+
+.items-list .table th a.sort-order
+{
+}
+
+.items-list .table th a.sort-order.selected
+{
+  text-decoration: underline;
+}
