@@ -40,20 +40,20 @@ class Order extends AAdmin
     public $params = array('target', "order_id");
 
     /**
-     * getRegularTemplate 
+     * getViewerTemplate
      * 
      * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getRegularTemplate()
+    protected function getViewerTemplate()
     {
         if ('invoice' == \XLite\Core\Request::getInstance()->mode) {
             $return = "common/print_invoice.tpl";
 
         } else {
-            $return = parent::getRegularTemplate();
+            $return = parent::getViewerTemplate();
         }
 
         return $return;
