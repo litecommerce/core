@@ -174,6 +174,21 @@ class Search extends \XLite\View\ItemsList\Product\Admin\AAdmin
     }
 
     /**
+     * Fetch param value from current session
+     *
+     * @param string $param parameter name
+     *
+     * @return mixed
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected function getSavedRequestParam($param)
+    {
+        return (self::PARAM_SEARCH_IN_SUBCATS === $param) ? null : parent::getSavedRequestParam($param);
+    }
+
+    /**
      * Return params list to use for search
      *
      * @return \XLite\Core\CommonCell

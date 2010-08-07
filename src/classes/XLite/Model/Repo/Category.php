@@ -151,7 +151,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function addEnabledCondition($qb, $alias = 'c')
+    protected function addEnabledCondition(\Doctrine\ORM\QueryBuilder $qb, $alias = 'c')
     {
         if (!\XLite::getInstance()->isAdminZone()) {
             $qb->andWhere($alias . '.enabled = 1');
@@ -289,12 +289,6 @@ class Category extends \XLite\Model\Repo\Base\I18n
      */
     protected function defineFullTreeQuery($categoryId)
     {
-        $categoryId = intval($categoryId);
-
-        if (0 < $categoryId) {
-            $category = $this->getNode($categoryId);
-        }
-
         $qb = $this->createQueryBuilder('c')
             ->addSelect('i')
             ->addSelect('count(p.product_id) as products_count')
@@ -302,6 +296,25 @@ class Category extends \XLite\Model\Repo\Base\I18n
             ->leftJoin('c.image', 'i')
             ->groupBy('c.category_id')
             ->orderBy('c.lpos');
+
+        return $this->addSubTreeCondition($qb, $categoryId);
+    }
+
+    /**
+     * Add the conditions for the current subtree
+     * NOTE: function is public since it's needed to the Product model repository
+     * 
+     * @param \Doctrine\ORM\QueryBuilder $qb         query builder to modify
+     * @param int                        $categoryId current category ID
+     *  
+     * @return \Doctrine\ORM\QueryBuilder
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function addSubTreeCondition(\Doctrine\ORM\QueryBuilder $qb, $categoryId)
+    {
+        $category = $this->getNode($categoryId);
 
         if (isset($category) && $category instanceof $this->className) {
             $qb->andWhere($qb->expr()->between('c.lpos', $category->getLpos(), $category->getRpos()));

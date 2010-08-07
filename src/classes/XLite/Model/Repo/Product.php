@@ -53,20 +53,30 @@ class Product extends \XLite\Model\Repo\Base\I18n
     
 
     /**
-     * Return list of possible search params 
+     * currentSearchCnd 
+     * 
+     * @var    \XLite\Core\CommonCell
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $currentSearchCnd = null;
+   
+
+    /**
+     * Return list of handling search params 
      * 
      * @return array
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getAllowedSearchParams()
+    protected function getHandlingSearchParams()
     {
         return array(
             self::P_SKU,
             self::P_CATEGORY_ID,
             self::P_SUBSTRING,
-            self::P_SEARCH_IN_SUBCATS,
             self::P_ORDER_BY,
             self::P_LIMIT,
         );
@@ -82,9 +92,9 @@ class Product extends \XLite\Model\Repo\Base\I18n
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function isSearchParamAllowed($param)
+    protected function isSearchParamHasHandler($param)
     {
-        return in_array($param, $this->getAllowedSearchParams());
+        return in_array($param, $this->getHandlingSearchParams());
     }
 
     /**
@@ -104,7 +114,6 @@ class Product extends \XLite\Model\Repo\Base\I18n
         );
     }
 
-
     /**
      * Prepare certain search condition
      *
@@ -116,7 +125,7 @@ class Product extends \XLite\Model\Repo\Base\I18n
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function prepareSearchConditionSKU(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
+    protected function prepareCndSKU(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
         $queryBuilder->andWhere('p.sku LIKE :sku')->setParameter('sku', '%' . $value . '%');
     }
@@ -132,29 +141,22 @@ class Product extends \XLite\Model\Repo\Base\I18n
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function prepareSearchConditionCategoryId(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
+    protected function prepareCndCategoryId(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
         $queryBuilder
             ->innerJoin('p.category_products', 'cp')
-            ->andWhere('cp.category_id = :categoryId')
-            ->setParameter('categoryId', $value)
             ->addOrderBy('cp.orderby');
-    }
 
-    /**
-     * Prepare certain search condition
-     *
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder query builder to prepare
-     * @param mixed                      $value        condition data
-     *
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function prepareSearchConditionSearchInSubcats(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
-    {
-        // TODO
+        if (empty($this->currentSearchCnd->{self::P_SEARCH_IN_SUBCATS})) {
+            $queryBuilder
+                ->andWhere('cp.category_id = :categoryId')
+                ->setParameter('categoryId', $value);
+        } else {
+            $queryBuilder
+                ->innerJoin('cp.category', 'c');
+
+            \XLite\Core\Database::getRepo('XLite\Model\Category')->addSubTreeCondition($queryBuilder, $value);
+        }
     }
 
     /**
@@ -168,7 +170,7 @@ class Product extends \XLite\Model\Repo\Base\I18n
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function prepareSearchConditionSubstring(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
+    protected function prepareCndSubstring(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
         if (!empty($value)) {
             $cnd = new \Doctrine\ORM\Query\Expr\Orx();
@@ -192,7 +194,7 @@ class Product extends \XLite\Model\Repo\Base\I18n
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function prepareSearchConditionOrderBy(\Doctrine\ORM\QueryBuilder $queryBuilder, array $value)
+    protected function prepareCndOrderBy(\Doctrine\ORM\QueryBuilder $queryBuilder, array $value)
     {
         list($sort, $order) = $value;
 
@@ -210,7 +212,7 @@ class Product extends \XLite\Model\Repo\Base\I18n
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function prepareSearchConditionLimit(\Doctrine\ORM\QueryBuilder $queryBuilder, array $value)
+    protected function prepareCndLimit(\Doctrine\ORM\QueryBuilder $queryBuilder, array $value)
     {
         call_user_func_array(array($this, 'assignFrame'), array_merge(array($queryBuilder), $value)); 
     }
@@ -229,8 +231,8 @@ class Product extends \XLite\Model\Repo\Base\I18n
      */
     protected function callSearchConditionHandler($value, $key, \Doctrine\ORM\QueryBuilder $queryBuilder)
     {
-        if ($this->isSearchParamAllowed($key)) {
-            $this->{'prepareSearchCondition' . ucfirst($key)}($queryBuilder, $value);
+        if ($this->isSearchParamHasHandler($key)) {
+            $this->{'prepareCnd' . ucfirst($key)}($queryBuilder, $value);
         } else {
             // TODO - add logging here
         }
@@ -251,9 +253,11 @@ class Product extends \XLite\Model\Repo\Base\I18n
     public function search(\XLite\Core\CommonCell $cnd, $countOnly = false)
     {
         $queryBuilder = $this->createQueryBuilder();
-        $cnd = $cnd->getData();
+        $this->currentSearchCnd = $cnd;
 
-        array_walk($cnd, array($this, 'callSearchConditionHandler'), $queryBuilder);
+        foreach ($this->currentSearchCnd as $key => $value) {
+            $this->callSearchConditionHandler($value, $key, $queryBuilder);
+        }
 
         if ($countOnly) {
             $queryBuilder->select('COUNT(p.product_id)');
