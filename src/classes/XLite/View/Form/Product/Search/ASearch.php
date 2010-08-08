@@ -26,54 +26,52 @@
  * @since      3.0.0
  */
 
-namespace XLite\View\Form\Search\Product;
+namespace XLite\View\Form\Product\Search;
 
 /**
- * Simple product search form
- * FIXME - to remove
+ * ASearch 
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @package    XLite
+ * @see        ____class_see____
+ * @since      3.0.0
  */
-class Simple extends \XLite\View\Form\AForm
+abstract class ASearch extends \XLite\View\Form\Product\AProduct
 {
     /**
-     * Current form name 
-     * 
+     * Return form name
+     *
      * @return string
      * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getFormName()
     {
-        return 'search_form';
+        return 'search_products';
     }
 
     /**
-     * getDefaultTarget 
-     * 
+     * getDefaultFormMethod
+     *
      * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getDefaultFormMethod()
+    {
+        return 'get';
+    }
+
+    /**
+     * getDefaultParams
+     *
+     * @return array
      * @access protected
      * @since  3.0.0
      */
-    protected function getDefaultTarget()
+    protected function getDefaultParams()
     {
-        return 'search';
-    }
-
-    /** 
-     * Define widget parameters
-     *
-     * @return void
-     * @access protected
-     * @since  1.0.0
-     */
-    protected function defineWidgetParams()
-    {
-        parent::defineWidgetParams();
-
-        $this->widgetParams[self::PARAM_FORM_METHOD]->setValue('GET');
+        return parent::getDefaultParams() + array('mode' => 'search');
     }
 }
-

@@ -41,10 +41,9 @@ abstract class AButton extends \XLite\View\AView
      * Widget parameter names
      */
 
-    const PARAM_LABEL     = 'label';
-    const PARAM_RAW_LABEL = 'rawLabel';
-    const PARAM_STYLE     = 'style';
-    const PARAM_DISABLED  = 'disabled';
+    const PARAM_LABEL    = 'label';
+    const PARAM_STYLE    = 'style';
+    const PARAM_DISABLED = 'disabled';
 
 
     /**
@@ -79,9 +78,7 @@ abstract class AButton extends \XLite\View\AView
      */
     protected function getButtonLabel()
     {
-        return is_null($this->getParam(self::PARAM_RAW_LABEL))
-            ? $this->t($this->getParam(self::PARAM_LABEL))
-            : $this->getParam(self::PARAM_RAW_LABEL);
+        return $this->t($this->getParam(self::PARAM_LABEL));
     }
 
     /** 
@@ -96,10 +93,9 @@ abstract class AButton extends \XLite\View\AView
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_LABEL     => new \XLite\Model\WidgetParam\String('Label', $this->getDefaultLabel(), true),
-            self::PARAM_RAW_LABEL => new \XLite\Model\WidgetParam\String('Raw label', null, true),
-            self::PARAM_STYLE     => new \XLite\Model\WidgetParam\String('Button style', ''),
-            self::PARAM_DISABLED  => new \XLite\Model\WidgetParam\Bool('Disabled', 0),
+            self::PARAM_LABEL    => new \XLite\Model\WidgetParam\String('Label', $this->getDefaultLabel(), true),
+            self::PARAM_STYLE    => new \XLite\Model\WidgetParam\String('Button style', ''),
+            self::PARAM_DISABLED => new \XLite\Model\WidgetParam\Bool('Disabled', 0),
         );
     }
 
@@ -125,7 +121,10 @@ abstract class AButton extends \XLite\View\AView
      */
     public function getCSSFiles()
     {
-        return array_merge(parent::getCSSFiles(), array('button/button.css'));
+        $list = parent::getCSSFiles();
+        $list[] = 'button/button.css';
+
+        return $list;
     }
 
     /**
@@ -137,7 +136,10 @@ abstract class AButton extends \XLite\View\AView
      */
     public function getJSFiles()
     {
-        return array_merge(parent::getJSFiles(), array('button/button.js'));
+        $list = parent::getJSFiles();
+        $list[] = 'button/button.js';
+
+        return $list;
     }
 }
 

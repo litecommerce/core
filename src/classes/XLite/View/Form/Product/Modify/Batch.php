@@ -26,54 +26,39 @@
  * @since      3.0.0
  */
 
-namespace XLite\View\Form\Search\Product;
+namespace XLite\View\Form\Product\Modify;
 
 /**
- * Simple product search form
- * FIXME - to remove
+ * List 
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @package    XLite
+ * @see        ____class_see____
+ * @since      3.0.0
  */
-class Simple extends \XLite\View\Form\AForm
+class Batch extends \XLite\View\Form\Product\Modify\AModify
 {
     /**
-     * Current form name 
-     * 
+     * Return form name
+     *
      * @return string
      * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getFormName()
     {
-        return 'search_form';
+        return 'modify_products';
     }
 
     /**
-     * getDefaultTarget 
-     * 
+     * getDefaultTarget
+     *
      * @return string
      * @access protected
      * @since  3.0.0
      */
     protected function getDefaultTarget()
     {
-        return 'search';
-    }
-
-    /** 
-     * Define widget parameters
-     *
-     * @return void
-     * @access protected
-     * @since  1.0.0
-     */
-    protected function defineWidgetParams()
-    {
-        parent::defineWidgetParams();
-
-        $this->widgetParams[self::PARAM_FORM_METHOD]->setValue('GET');
+        return 'product_list';
     }
 }
-

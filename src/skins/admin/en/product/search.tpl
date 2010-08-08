@@ -11,21 +11,9 @@
  * @since     3.0.0
  *}
 
-<form name="search_form" action="admin.php" method="GET">
-
-{if:extraParams=##}
-  <input FOREACH="allParams,key,val" type="hidden" name="{key}" value="{val:r}" />
-{else:}
-  <input FOREACH="extraParams,key,val" type="hidden" name="{key}" value="{val:r}" />
-{end:}
-
-  <input type="hidden" name="mode" value="search" />
-
-{extra_parameters:h}
+<widget class="\XLite\View\Form\Product\Search\Admin\Main" name="search_form" />
 
   <table border=0>
-
-    <tbody>
 
     	<tr>
     		<td class="FormButton" noWrap height=10>Product SKU</td>
@@ -68,11 +56,9 @@
     		<td colspan=3><input type="submit" value=" Search " /></td>
       </tr>
 
-    </tbody>
-
   </table>
 
-</form>
+<widget name="search_form" end />
 
 <br />
 
