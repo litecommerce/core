@@ -199,6 +199,19 @@ abstract class AForm extends \XLite\View\AView
     }
 
     /**
+     * getDefaultFormMethod 
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getDefaultFormMethod()
+    {
+        return 'post';
+    }
+
+    /**
      * getDefaultClassName 
      * 
      * @return string
@@ -227,12 +240,24 @@ abstract class AForm extends \XLite\View\AView
             self::PARAM_START => new \XLite\Model\WidgetParam\Bool('Is start', true),
             self::PARAM_END   => new \XLite\Model\WidgetParam\Bool('Is end', false),
 
-            self::PARAM_FORM_TARGET => new \XLite\Model\WidgetParam\String('Target', $this->getDefaultTarget()),
-            self::PARAM_FORM_ACTION => new \XLite\Model\WidgetParam\String('Action', $this->getDefaultAction()),
-            self::PARAM_FORM_NAME   => new \XLite\Model\WidgetParam\String('Name', ''),
-            self::PARAM_FORM_PARAMS => new \XLite\Model\WidgetParam\Collection('Params', $this->getDefaultParams()),
-            self::PARAM_FORM_METHOD => new \XLite\Model\WidgetParam\Set('Request method', 'post', array('post', 'get')),
-            self::PARAM_CLASS_NAME  => new \XLite\Model\WidgetParam\String('Class name', $this->getDefaultClassName()),
+            self::PARAM_FORM_TARGET => new \XLite\Model\WidgetParam\String(
+                'Target', $this->getDefaultTarget()
+            ),
+            self::PARAM_FORM_ACTION => new \XLite\Model\WidgetParam\String(
+                'Action', $this->getDefaultAction()
+            ),
+            self::PARAM_FORM_NAME => new \XLite\Model\WidgetParam\String(
+                'Name', ''
+            ),
+            self::PARAM_FORM_PARAMS => new \XLite\Model\WidgetParam\Collection(
+                'Params', $this->getDefaultParams()
+            ),
+            self::PARAM_FORM_METHOD => new \XLite\Model\WidgetParam\Set(
+                'Request method', $this->getDefaultFormMethod(), array('post', 'get')
+            ),
+            self::PARAM_CLASS_NAME => new \XLite\Model\WidgetParam\String(
+                'Class name', $this->getDefaultClassName()
+            ),
         );
     }
 
