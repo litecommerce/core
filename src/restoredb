@@ -104,12 +104,13 @@ if (file_exists('sql/local/xlite_local_demo.sql')) {
 	_do_query_upload('sql/local/xlite_local_demo.sql', $connection, true);
 }
 
-echo 'Remove directory var/run' . PHP_EOL . PHP_EOL;
+echo 'Remove the var/* sub-directories' . PHP_EOL . PHP_EOL;
 
 \Includes\Utils\FileManager::unlinkRecursive('var/run');
 \Includes\Utils\FileManager::unlinkRecursive('var/locale');
 \Includes\Utils\FileManager::unlinkRecursive('var/images');
 \Includes\Utils\FileManager::unlinkRecursive('var/datacache');
+\Includes\Utils\FileManager::unlinkRecursive('var/log');
 
 mysql_close($connection);
 
