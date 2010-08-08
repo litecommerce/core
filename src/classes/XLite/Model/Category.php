@@ -34,6 +34,7 @@ namespace XLite\Model;
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
+ *
  * @Entity
  * @Table (name="categories")
  */
@@ -46,6 +47,7 @@ class Category extends \XLite\Model\Base\I18n
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Id
      * @GeneratedValue (strategy="AUTO")
      * @Column (type="integer", length="11", nullable=false)
@@ -59,6 +61,7 @@ class Category extends \XLite\Model\Base\I18n
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="integer", length="11", nullable=false)
      */
     protected $lpos;
@@ -70,6 +73,7 @@ class Category extends \XLite\Model\Base\I18n
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="integer", length="11", nullable=false)
      */
     protected $rpos;
@@ -81,6 +85,7 @@ class Category extends \XLite\Model\Base\I18n
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="integer", length="11", nullable=false)
      */
     protected $depth = 0;
@@ -93,6 +98,7 @@ class Category extends \XLite\Model\Base\I18n
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="integer", length="1", nullable=false)
      */
     protected $enabled = 0;
@@ -104,6 +110,7 @@ class Category extends \XLite\Model\Base\I18n
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="integer", length="11", nullable=false)
      */
     protected $views_stats = 0;
@@ -116,6 +123,7 @@ class Category extends \XLite\Model\Base\I18n
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="integer", length="1", nullable=false)
      */
     protected $locked = 0;
@@ -127,6 +135,7 @@ class Category extends \XLite\Model\Base\I18n
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="integer", nullable=false)
      */
     protected $membership_id = 0;
@@ -138,6 +147,7 @@ class Category extends \XLite\Model\Base\I18n
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="integer", length="11", nullable=false)
      */
     protected $threshold_bestsellers = 1;
@@ -149,6 +159,7 @@ class Category extends \XLite\Model\Base\I18n
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="string", length="255", nullable=false)
      */
     protected $clean_url = '';
@@ -160,6 +171,7 @@ class Category extends \XLite\Model\Base\I18n
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @ManyToOne (targetEntity="XLite\Model\Membership")
      * @JoinColumn (name="membership_id", referencedColumnName="membership_id")
      */
@@ -172,21 +184,11 @@ class Category extends \XLite\Model\Base\I18n
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @OneToOne (targetEntity="XLite\Model\Image\Category\Image")
+     *
+     * @ManyToOne (targetEntity="XLite\Model\Image\Category\Image")
      * @JoinColumn (name="category_id", referencedColumnName="id")
      */
     protected $image;
-
-    /**
-     * The number of products assigned to the category
-     * (Real-time calculated)
-     * 
-     * @var    float
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected $products_count = 0;
 
     /**
      * Relation to a CategoryProducts entities
@@ -200,6 +202,18 @@ class Category extends \XLite\Model\Base\I18n
      * @OrderBy   ({"orderby" = "ASC"})
      */
     protected $category_products;
+
+
+    /**
+     * The number of products assigned to the category
+     * (Real-time calculated)
+     *
+     * @var    float
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $products_count = 0;
 
 
     /**
@@ -347,7 +361,7 @@ class Category extends \XLite\Model\Base\I18n
 
         $indentation = ($depth - 1) * $multiplier;
 
-        return is_null($str) ? $indentation : str_repeat($str, $indentation);
+        return isset($str) ? str_repeat($str, $indentation) : $indentation;
     }
 
     /**
