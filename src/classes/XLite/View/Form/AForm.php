@@ -41,16 +41,16 @@ abstract class AForm extends \XLite\View\AView
      * Widget parameter names
      */
 
+    const PARAM_START = 'start';
+    const PARAM_END   = 'end';
+
     const PARAM_FORM_TARGET = 'formTarget';
     const PARAM_FORM_ACTION = 'formAction';
     const PARAM_FORM_NAME   = 'formName';
     const PARAM_FORM_PARAMS = 'formParams';
     const PARAM_FORM_METHOD = 'formMethod';
+    const PARAM_CLASS_NAME  = 'className';
 
-    const PARAM_START = 'start';
-    const PARAM_END   = 'end';
-
-    const PARAM_CLASS_NAME = 'className';
 
     /**
      * Form arguments plain list
@@ -61,6 +61,17 @@ abstract class AForm extends \XLite\View\AView
      * @since  3.0.0
      */
     protected $plainList = null;
+
+
+    /**
+     * Each form must define its own name
+     *
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    abstract protected function getFormName();
 
 
     /**
@@ -124,57 +135,6 @@ abstract class AForm extends \XLite\View\AView
     protected function getFormParams()
     {
         return $this->getCommonFormParams() + $this->getParam(self::PARAM_FORM_PARAMS);
-    }
-
-    /**
-     * Return list of additional params 
-     * 
-     * @return array
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getFormParamsAsPlainList()
-    {
-        if (is_null($this->plainList)) {
-            $this->plainList = array();
-
-            if ('post' == $this->getParam(self::PARAM_FORM_METHOD)) {
-                foreach ($this->getFormParams() as $key => $value) {
-                    if (is_array($value)) {
-                        $this->addChain2PlainList($key, $value);
-
-                    } else {
-                        $this->plainList[$key] = $value;
-                    }
-                }
-            }
-        }
-
-        return $this->plainList;
-    }
-
-    /**
-     * Add array branch to plain parameters list 
-     * 
-     * @param string $prefix Branch prefix
-     * @param array  $list   Branch
-     *  
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function addChain2PlainList($prefix, array $list)
-    {
-        foreach ($list as $key => $value) {
-            $key = $prefix . '[' . $key . ']';
-            if (is_array($value)) {
-                $this->addChain2PlainList($key, $value);
-
-            } else {
-                $this->plainList[$key] = $value;
-            }
-        }
     }
 
     /**
@@ -256,7 +216,8 @@ abstract class AForm extends \XLite\View\AView
      *
      * @return void
      * @access protected
-     * @since  1.0.0
+     * @see    ____func_see____
+     * @since  3.0.0
      */
     protected function defineWidgetParams()
     {
@@ -271,14 +232,13 @@ abstract class AForm extends \XLite\View\AView
             self::PARAM_FORM_NAME   => new \XLite\Model\WidgetParam\String('Name', ''),
             self::PARAM_FORM_PARAMS => new \XLite\Model\WidgetParam\Collection('Params', $this->getDefaultParams()),
             self::PARAM_FORM_METHOD => new \XLite\Model\WidgetParam\Set('Request method', 'post', array('post', 'get')),
-
             self::PARAM_CLASS_NAME  => new \XLite\Model\WidgetParam\String('Class name', $this->getDefaultClassName()),
         );
     }
 
 
     /**
-     * getCurrentForm 
+     * Return current form reference
      * 
      * @return \XLite\View\Model\AModel
      * @access protected
@@ -289,15 +249,5 @@ abstract class AForm extends \XLite\View\AView
     {
         return \XLite\View\Model\AModel::getCurrentForm();
     }
-
-
-    /**
-     * Each form must define its own name 
-     * 
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    abstract protected function getFormName();
 }
 
