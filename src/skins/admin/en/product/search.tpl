@@ -50,7 +50,7 @@
     	<tr>
     		<td class="FormButton" noWrap height=10 colspan="3">
     			Search in subcategories
-    			<input type="checkbox" name="searchInSubcats" checked="{!mode=#search#|searchInSubcats}" value="1">
+    			<input type="checkbox" name="searchInSubcats" checked="{searchInSubcats|!mode=#search#}" value="1">
     		</td>
       </tr>
 

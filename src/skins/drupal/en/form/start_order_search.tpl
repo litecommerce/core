@@ -2,6 +2,7 @@
 
 {**
  * Form start (order search)
+ * FIXME
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -12,5 +13,5 @@
  *}
 
 <form action="{getFormAction()}" method="{getParam(#formMethod#)}" name="{getFormName()}" onsubmit="javascript: {getJSOnSubmitCode()}" class="search-orders" style="display: none;">
-<input FOREACH="getFormParamsAsPlainList(),paramName,paramValue" type="hidden" name="{paramName}" value="{paramValue}" />
+<input FOREACH="getFormParams(),paramName,paramValue" type="hidden" name="{paramName}" value="{paramValue}" />
 
