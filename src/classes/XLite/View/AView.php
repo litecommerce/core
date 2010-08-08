@@ -331,6 +331,7 @@ abstract class AView extends \XLite\Core\Handler
      *
      * @return void
      * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function initView()
@@ -1366,6 +1367,38 @@ abstract class AView extends \XLite\Core\Handler
     public function displayViewListContent($list, array $arguments = array())
     {
         echo ($this->getViewListContent($list, $arguments));
+    }
+
+
+    /**
+     * getNamePostedData 
+     * 
+     * @param string $field field name
+     * @param int    $id    model object ID
+     *  
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getNamePostedData($field, $id = null)
+    {
+        return $this->getPrefixPostedData() . (isset($id) ? '[' . $id . ']' : '') . '[' . $field . ']';
+    }
+
+    /**
+     * getNameToDelete
+     *
+     * @param int $id model object ID
+     *
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getNameToDelete($id)
+    {
+        return $this->getPrefixToDelete() . '[' . $id . ']';
     }
 
 

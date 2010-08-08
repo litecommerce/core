@@ -35,13 +35,52 @@ namespace XLite\View\Button;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class DeleteSelected extends Regular
+class DeleteSelected extends \XLite\View\Button\Regular
 {
     /**
      * Widget parameter names
      */
 
     const PARAM_CONFIRMATION = 'confirm';
+
+
+    /**
+     * getDefaultLabel
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultLabel()
+    {
+        return 'Delete selected';
+    }
+
+    /**
+     * getDefaultAction
+     *
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getDefaultAction()
+    {
+        return 'delete';
+    }
+
+    /**
+     * getDefaultConfirmationText 
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getDefaultConfirmationText()
+    {
+        return 'Do you really want to delete selected items?';
+    }
 
     /**
      * Define widget parameters
@@ -55,11 +94,10 @@ class DeleteSelected extends Regular
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_CONFIRMATION => new \XLite\Model\WidgetParam\String('Confirmation text', '', true),
+            self::PARAM_CONFIRMATION => new \XLite\Model\WidgetParam\String(
+                'Confirmation text', $this->getDefaultConfirmationText(), true
+            ),
         );
-
-        $this->widgetParams[self::PARAM_ACTION]->setValue('delete');
-        $this->widgetParams[self::PARAM_LABEL]->setValue('Delete selected');
     }
 
     /**

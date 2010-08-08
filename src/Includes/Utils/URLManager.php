@@ -82,4 +82,17 @@ class URLManager extends AUtils
 
         return $proto . $host . $url;
     }
+
+    /**
+     * Return current URL
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getSelfURL()
+    {
+        return isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : null;
+    }
 }

@@ -836,4 +836,179 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
         return $this->$method(array($fieldName => $arguments[0]));
     }
 
+
+    /**
+     * Search entity by key.
+     * If it's not found, the exception will be thrown
+     * 
+     * @param int $id entity ID
+     *  
+     * @return \XLite\Model\AEntity
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getById($id)
+    {
+        if (!($entity = $this->find($id))) {
+            throw new Exception(get_called_class() . '::updateBuId() - unknow ID (' . $id . ')');
+        }
+
+        return $entity;
+    }
+
+    /**
+     * Flushes all changes to objects that have been queued up to now to the database
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function flushChanges()
+    {
+        $this->getEntityManager()->flush();
+    }
+
+    /**
+     * Common method to perform actions (insert/update/delete)
+     * 
+     * @param string $action       action name
+     * @param int    $id           entity ID
+     * @param array  $data         data to use in action
+     * @param bool   $flushChanges flush chages or not
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function performActionById($action, $id, array $data = array(), $flushChanges = true)
+    {
+        $this->{'perform' . ucfirst($action) . 'ById'}($id, $data);
+
+        if ($flushChanges) {
+            $this->flushChanges();
+        }
+    }
+
+    /**
+     * Common method to perform batch actions (insert/update/delete)
+     * 
+     * @param string $action action name
+     * @param array  $data   data to use in action
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function performActionInBatch($action, array $data)
+    {
+        foreach ($data as $id => $fields) {
+            $this->performActionById($action, $id, $fields, false);
+        }
+
+        $this->flushChanges();
+    }
+
+
+    /**
+     * Update single entity 
+     * 
+     * @param int   $id   entity ID
+     * @param array $data data to use in action
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function performUpdateById($id, array $data)
+    {
+        $this->getById($id)->map($data);
+    }
+
+    /**
+     * Delete single entity
+     *
+     * @param int $id entity ID
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function performDeleteById($id)
+    {
+        $this->getEntityManager()->remove($this->getById($id));
+    }
+
+
+    /**
+     * Update single entity
+     *
+     * NOTE: do not override this method: it will not affect the "updateInBatch()" one.
+     * Override the "performUpdateById()" instead
+     *
+     * @param int   $id   entity ID
+     * @param array $data data to use in action
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    final public function updateBuId($id, array $data)
+    {
+        $this->performActionById('update', $id, array($data));
+    }
+
+    /**
+     * Delete single entity
+     *
+     * NOTE: do not override this method: it will not affect the "deleteInBatch()" one.
+     * Override the "performDeleteById()" instead
+     *
+     * @param int $id entity ID
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * 
+     */
+    final public function deleteById($id)
+    {
+        $this->performActionById('delete', $id);
+    }
+
+    /**
+     * Update several items at once
+     * 
+     * @param array $data data to save
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function updateInBatch(array $data)
+    {
+        $this->performActionInBatch('update', $data);
+    }
+
+    /**
+     * Delete several items at once
+     *
+     * @param array $data data to save
+     *
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function deleteInBatch(array $data)
+    {
+        $this->performActionInBatch('delete', $data);
+    }
 }

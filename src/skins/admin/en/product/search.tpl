@@ -53,7 +53,7 @@
       </tr>
 
     	<tr>
-    		<td colspan=3><input type="submit" value=" Search " /></td>
+    		<td colspan=3><widget class="\XLite\View\Button\Submit" label="Search" /></td>
       </tr>
 
   </table>

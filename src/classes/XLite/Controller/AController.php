@@ -46,8 +46,12 @@ abstract class AController extends \XLite\Core\Handler
     const PARAM_TARGET = 'target';
     const PARAM_ACTION = 'action';
 
-    const PARAM_RETURN_URL    = 'returnUrl';
     const PARAM_REDIRECT_CODE = 'redirectCode';
+
+    /**
+     * Request param to pass URLs to return
+     */
+    const RETURN_URL = 'returnURL';
 
 
     /**
@@ -57,7 +61,7 @@ abstract class AController extends \XLite\Core\Handler
      * @access protected
      * @since  3.0.0
      */
-    protected $actionStatus = null;
+    protected $actionStatus;
 
     /**
      * Breadcrumbs 
@@ -66,7 +70,17 @@ abstract class AController extends \XLite\Core\Handler
      * @access protected
      * @since  3.0.0
      */
-    protected $locationPath = null;
+    protected $locationPath;
+
+    /**
+     * returnUrl 
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $returnUrl;
 
 
     /**
@@ -199,7 +213,6 @@ abstract class AController extends \XLite\Core\Handler
         );
 
         $this->widgetParams += array(
-            self::PARAM_RETURN_URL    => new \XLite\Model\WidgetParam\String('Return URL', $this->getDefaultReturnURL()),
             self::PARAM_REDIRECT_CODE => new \XLite\Model\WidgetParam\Int('Redirect code', $this->getDefaultRedirectCode()),
         );
     }
@@ -338,7 +351,6 @@ abstract class AController extends \XLite\Core\Handler
 
     /**
      * Get return URL
-     * FIXME - backward compatibility
      *
      * @return string
      * @access public
@@ -346,14 +358,17 @@ abstract class AController extends \XLite\Core\Handler
      */
     public function getReturnUrl()
     {
-        return $this->getParam(self::PARAM_RETURN_URL) ? $this->getParam(self::PARAM_RETURN_URL) : $this->returnUrl;
+        if (!isset($this->returnUrl)) {
+            $this->returnUrl = \XLite\Core\Request::getInstance()->{self::RETURN_URL};
+        }
+
+        return $this->returnUrl;
     }
 
     /**
      * Set return URL
-     * FIXME - backward compatibility
      *
-     * @param mixed $url URL to set
+     * @param string $url URL to set
      *
      * @return void
      * @access public
@@ -361,7 +376,6 @@ abstract class AController extends \XLite\Core\Handler
      */
     public function setReturnUrl($url)
     {
-        $this->getWidgetParams(self::PARAM_RETURN_URL)->setValue($url);
         $this->returnUrl = $url;
     }
 
@@ -541,8 +555,6 @@ abstract class AController extends \XLite\Core\Handler
     protected $params = array('target');
 
     protected $pageTemplates = array();
-
-    protected $returnUrlAbsolute = false;
 
     /**
      * Validity flag
@@ -874,5 +886,37 @@ abstract class AController extends \XLite\Core\Handler
             $htaccess->checkFiles();
         }
     }
-}
 
+
+    /**
+     * Common prefix for editable elements in lists
+     *
+     * NOTE: this method is requered for the GetWidget and AAdmin classes
+     * TODO: after the multiple inheritance should be moved to the AAdmin class
+     *
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getPrefixPostedData()
+    {
+        return 'postedData';
+    }
+
+    /**
+     * Common prefix for the "delete" checkboxes in lists
+     *
+     * NOTE: this method is requered for the GetWidget and AAdmin classes
+     * TODO: after the multiple inheritance should be moved to the AAdmin class
+     *
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getPrefixToDelete()
+    {
+        return 'toDelete';
+    }
+}

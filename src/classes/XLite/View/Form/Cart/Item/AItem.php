@@ -68,20 +68,6 @@ abstract class AItem extends \XLite\View\Form\AForm
         return 'cart';
     }
 
-    /**
-     * getDefaultParams
-     *
-     * @return array
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getDefaultParams()
-    {
-        return parent::getDefaultParams() + array(
-            \XLite\Controller\AController::PARAM_RETURN_URL => $this->buildURL($this->getTarget()),
-        );
-    }
-
 
     /**
      * Define widget parameters

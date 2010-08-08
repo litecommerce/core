@@ -75,7 +75,6 @@ abstract class AEntity
 
     /**
      * Map data to entity columns
-     * TODO - check if it's really needed
      * 
      * @param array $data Data
      *  
