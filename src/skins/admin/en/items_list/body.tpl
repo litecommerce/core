@@ -15,13 +15,13 @@
 
   <div class="list-pager">{pager.display()}</div>
 
-  <div IF="isHeaderVisisble()" class="list-header">{displayViewListContent(#itemsList.header#)}</div>
+  <div IF="isHeaderVisisble()" class="list-header">{displayViewListContent(#itemsList.admin.header#)}</div>
 
   <widget template="{getPageBodyTemplate()}" />
 
   <div class="list-pager">{pager.display()}</div>
 
-  <div IF="isFooterVisisble()" class="list-footer">{displayViewListContent(#itemsList.footer#)}</div>
+  <p /><div IF="isFooterVisisble()" class="list-footer">{displayViewListContent(#itemsList.admin.footer#)}</div>
 
 </div>
 

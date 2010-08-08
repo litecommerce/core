@@ -39,102 +39,6 @@ namespace XLite\Controller\Admin;
 class ProductList extends AAdmin
 {
     /**
-     * Search mode 
-     */
-    const MODE_SEARCH = 'search';
-
-
-    /**
-     * Return params for product search 
-     * 
-     * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getSearchParams()
-    {
-        $request = \XLite\Core\Request::getInstance();
-
-        return new \XLite\Core\CommonCell(
-            array(
-                \XLite\Model\Repo\Product::P_SUBSTRING => $request->substring,
-            )
-        );
-    }
-
-
-    /**
-     * getOrderBy 
-     * 
-     * @param \XLite\Model\Product $product current product
-     *  
-     * @return int
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getOrderBy(\XLite\Model\Product $product)
-    {
-        return $product->getOrderBy(\XLite\Core\Request::getInstance()->search_category);
-    }
-
-    /**
-     * Search products 
-     * TODO - add caching here
-     * 
-     * @return \Doctrine\ORM\PersistentCollection
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getProducts()
-    {
-        $result = null;
-
-    	if (self::MODE_SEARCH === \XLite\Core\Request::getInstance()->mode) {
-            $result = \XLite\Core\Database::getRepo('\XLite\Model\Product')->search($this->getSearchParams());
-        }
-
-        return $result;
-
-
-
-/*        	if (!isset($this->productsList)) {
-                $p = new \XLite\Model\Product();
-                $p->collectGarbage();
-    			$this->productsList = $p->advancedSearch(
-    				$this->substring,
-    				$this->search_productsku,
-    				$this->search_category,
-    				$this->subcategory_search,
-    				false,
-    				false
-    			);
-                $this->productsFound = count($this->productsList);
-            }
-
-            $result = $this->productsList;
-        }
-
-        return $result;*/
-    }
-
-    /**
-     * getProductsFound 
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getProductsFound()
-    {
-        $this->getProducts();
-        return $this->productsFound;
-    }
-
-    /**
      * doActionUpdate 
      * 
      * @return void
@@ -144,14 +48,7 @@ class ProductList extends AAdmin
      */
     protected function doActionUpdate()
     {
-        foreach ($this->product_orderby as $product_id => $order_by) {
-            $p = new \XLite\Model\Product($product_id);
-            $p->set('order_by', $order_by);
-            $p->set('price', $this->product_price[$product_id]);
-            $p->update();
-        }
-
-        $this->set('status', 'updated');
+        \XLite\Core\Database::getRepo('\XLite\Model\Product')->updateInBatch($this->getPostedData());
     }
 
     /**
@@ -164,50 +61,19 @@ class ProductList extends AAdmin
      */
     protected function doActionDelete()
     {
-        $productIds = (isset(\XLite\Core\Request::getInstance()->product_ids) && is_array(\XLite\Core\Request::getInstance()->product_ids) ? \XLite\Core\Request::getInstance()->product_ids : null);
-
-        if (!empty($productIds)) {
-
-            if (isset(\XLite\Core\Request::getInstance()->confirmed)) {
-
-                $this->set('mode', 'search');
-
-    			if (!\XLite\Core\Request::getInstance()->confirmed) {
-    				return;
-    			}
-
-                foreach ($productIds as $productId) {
-        			$p = new \XLite\Model\Product($productId);
-                    $p->delete();
-                }
-
-                $this->set('status', 'deleted');
- 
-            } else {
-
-        		$this->set('valid', false);
-                $this->set('mode', 'confirmation');
-
-                $products = array();
-
-                foreach ($productIds as $idx => $productId) {
-                    $products[$idx] = new \XLite\Model\Product($productId);
-                }
-
-                $this->set('product_ids', $products);
-            }
-        }
+        \XLite\Core\Database::getRepo('\XLite\Model\Product')->deleteInBatch($this->getToDelete());
     }
 
     /**
      * doActionClone 
+     * FIXME - to revise
      * 
      * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function doActionClone()
+    /*protected function doActionClone()
     {
         if (isset(\XLite\Core\Request::getInstance()->product_ids) && is_array(\XLite\Core\Request::getInstance()->product_ids)) {
 
@@ -224,6 +90,6 @@ class ProductList extends AAdmin
                 $this->set('status', 'cloned');
             }
         }
-    }
+    }*/
 }
 

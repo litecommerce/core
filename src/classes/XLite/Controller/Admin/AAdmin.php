@@ -436,5 +436,51 @@ EOT;
         return $viewer;
     }
 
-}
 
+    /**
+     * getRequestDataByPrefix 
+     * 
+     * @param string $prefix index in the request array
+     *  
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getRequestDataByPrefix($prefix)
+    {
+        $data = \XLite\Core\Request::getInstance()->$prefix;
+
+        if (!is_array($data)) {
+            $data = array();
+        }
+
+        return $data;
+    }
+
+    /**
+     * getPostedData 
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getPostedData()
+    {
+        return $this->getRequestDataByPrefix($this->getPrefixPostedData());
+    }
+
+    /**
+     * getToDelete 
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getToDelete()
+    {
+        return $this->getRequestDataByPrefix($this->getPrefixToDelete());
+    }
+}

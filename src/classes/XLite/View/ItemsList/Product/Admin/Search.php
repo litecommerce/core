@@ -73,6 +73,41 @@ class Search extends \XLite\View\ItemsList\Product\Admin\AAdmin
     }
 
     /**
+     * Define view list
+     *
+     * @param string $list List name
+     *
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineViewList($list)
+    {
+        $result = parent::defineViewList($list);
+
+        if ('itemsList.admin.footer' === $list) {
+            $result[] = $this->getWidget(array('label' => 'Update'), '\XLite\View\Button\Submit');
+            $result[] = $this->getWidget(array(), '\XLite\View\Button\DeleteSelected');
+        }
+
+        return $result;
+    }
+
+    /**
+     * isFooterVisisble
+     *
+     * @return bool
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isFooterVisisble()
+    {
+        return true;
+    }
+
+    /**
      * Return list of the modes allowed by default
      *
      * @return array

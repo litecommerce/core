@@ -542,13 +542,13 @@ class Languages extends AAdmin
     }
 
     /**
-     * Default URL to redirect
+     * Get return URL
      *
      * @return string
-     * @access protected
+     * @access public
      * @since  3.0.0
      */
-    protected function getDefaultReturnURL()
+    public function getReturnUrl()
     {
         if (\XLite\Core\Request::getInstance()->action) {
             $url = $this->buildUrl(
@@ -561,7 +561,7 @@ class Languages extends AAdmin
             );
 
         } else {
-            $url = parent::getDefaultReturnURL();
+            $url = parent::getReturnURL();
         }
 
         return $url;

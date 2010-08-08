@@ -75,9 +75,7 @@ ItemsList.prototype.changePageLength = function(handler)
     handler.value = count;
   }
 
-  this.process('itemsPerPage', count);
-
-  return true;
+  return this.process('itemsPerPage', count);
 }
 
 // Add event listeners

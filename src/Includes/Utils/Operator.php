@@ -104,6 +104,19 @@ class Operator extends AUtils
     }
 
     /**
+     * Refresh current page
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function refresh()
+    {
+        static::redirect(\Includes\Utils\URLManager::getSelfURL());
+    }
+
+    /**
      * Echo message and flush output 
      * 
      * @param string $message    text to display

@@ -12,4 +12,4 @@
  * @ListChild (list="itemsList.product.table.admin.search.columns", weight="60")
  *}
 
-<td><input class="price" size="10" value="{product.getPrice():r}" /></td>
+<td><input class="price" size="10" value="{product.getPrice():r}" name="{getNamePostedData(#price#,product.getProductId())}" /></td>

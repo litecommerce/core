@@ -60,6 +60,19 @@ class Regular extends AButton
     }
 
     /**
+     * getDefaultAction 
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getDefaultAction()
+    {
+        return null;
+    }
+
+    /**
      * Define widget parameters
      *
      * @return void
@@ -71,7 +84,7 @@ class Regular extends AButton
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_ACTION      => new \XLite\Model\WidgetParam\String('LC action', null, true),
+            self::PARAM_ACTION      => new \XLite\Model\WidgetParam\String('LC action', $this->getDefaultAction(), true),
             self::PARAM_JS_CODE     => new \XLite\Model\WidgetParam\String('JS code', '', true),
             self::PARAM_FORM_PARAMS => new \XLite\Model\WidgetParam\Collection('Form params to modify', array(), true),
         );
