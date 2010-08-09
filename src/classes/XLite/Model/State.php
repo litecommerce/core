@@ -55,7 +55,7 @@ class State extends AEntity
     /**
      * State name
      * 
-     * @var    srting
+     * @var    string
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
@@ -66,7 +66,7 @@ class State extends AEntity
     /**
      * State code
      * 
-     * @var    srting
+     * @var    string
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
@@ -77,7 +77,7 @@ class State extends AEntity
     /**
      * Country code
      * 
-     * @var    srting
+     * @var    string
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0

@@ -55,7 +55,7 @@ class TemplatePatch extends AEntity
     /**
      * Zone
      * 
-     * @var    srting
+     * @var    string
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
@@ -66,7 +66,7 @@ class TemplatePatch extends AEntity
     /**
      * Language code
      * 
-     * @var    srting
+     * @var    string
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
@@ -77,7 +77,7 @@ class TemplatePatch extends AEntity
     /**
      * Template
      * 
-     * @var    srting
+     * @var    string
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0

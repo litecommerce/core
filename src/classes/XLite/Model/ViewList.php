@@ -69,7 +69,7 @@ class ViewList extends AEntity
     /**
      * Class name
      * 
-     * @var    srting
+     * @var    string
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
@@ -80,7 +80,7 @@ class ViewList extends AEntity
     /**
      * Class list name
      * 
-     * @var    srting
+     * @var    string
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
@@ -91,7 +91,7 @@ class ViewList extends AEntity
     /**
      * List interface
      * 
-     * @var    srting
+     * @var    string
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
@@ -102,7 +102,7 @@ class ViewList extends AEntity
     /**
      * Child class name
      * 
-     * @var    srting
+     * @var    string
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
@@ -124,7 +124,7 @@ class ViewList extends AEntity
     /**
      * Template relative path
      * 
-     * @var    srting
+     * @var    string
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
