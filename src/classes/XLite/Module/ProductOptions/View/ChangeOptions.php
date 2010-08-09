@@ -83,7 +83,6 @@ class ChangeOptions extends \XLite\View\AView
         );
     }
 
-
     /**
      * Check widget visibility 
      * 
@@ -105,38 +104,26 @@ class ChangeOptions extends \XLite\View\AView
     }
 
     /**
-     * Get product 
+     * Get selected options 
      * 
-     * @return \XLite\Model\Product
+     * @return array
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getProduct()
+    public function getSelectedOptions()
     {
-        if (is_null($this->product)) {
-            $this->product = $this->getParam(self::PARAM_ITEM)->getProduct();
+        $options = array();
 
-            foreach ($this->product->getProductOptions() as $option) {
-                foreach ($this->getParam(self::PARAM_ITEM)->getProductOptions() as $selected) {
-                    if ($option->get('optclass') == $selected->class) {
-                        if (
-                            $option->get('opttype') == 'Radio button'
-                            || $option->get('opttype') == 'SelectBox'
-                        ) {
-                            $option->set('selectedValue', $selected->option_id);
-
-                        } else {
-                            $option->set('selectedValue', $selected->option);
-                        }
-                    }
-                }
-            }
+        foreach ($this->getParam(self::PARAM_ITEM)->getProductOptions() as $option)
+        {
+            $options[$option->getGroupId()] = $option->getOption()
+                ? $option->getOption()->getOptionId()
+                : $option->getValue();
         }
 
-        return $this->product;
+        return $options;
     }
-
 
     /**
      * Return list of targets allowed for this widget
@@ -149,6 +136,7 @@ class ChangeOptions extends \XLite\View\AView
     public static function getAllowedTargets()
     {
         $result = parent::getAllowedTargets();
+
         $result[] = 'change_options';
     
         return $result;

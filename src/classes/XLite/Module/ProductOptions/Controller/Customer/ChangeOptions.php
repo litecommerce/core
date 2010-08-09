@@ -118,11 +118,12 @@ class ChangeOptions extends \XLite\Controller\Customer\ACustomer
     protected function doActionChange()
     {
         if (\XLite\Core\Request::getInstance()->source == 'cart') {
-            $this->getItem()->setProductOptions(\XLite\Core\Request::getInstance()->product_options);
+            $options = $this->getItem()
+                ->getProduct()
+                ->prepareOptions(\XLite\Core\Request::getInstance()->product_options);
 
-            $invalidOptions = $this->getItem()->get('invalidOptions');
-
-            if (is_null($invalidOptions)) {
+            if (is_array($options) && $this->getItem()->getProduct()->checkOptionsException($options)) {
+                $this->getItem()->setProductOptions($options);
                 $this->getCart()->updateItem($this->getItem());
                 $this->getItem()->update();
                 $this->updateCart();
@@ -131,7 +132,11 @@ class ChangeOptions extends \XLite\Controller\Customer\ACustomer
 
             } else {
 
-                \XLite\Core\TopMessage::getInstance()->add('Invalid options', \XLite\Core\TopMessage::ERROR);
+                \XLite\Core\TopMessage::getInstance()->add(
+                    'The product options you have selected are not valid or fall into an exception.'
+                    . ' Please select other product options',
+                    \XLite\Core\TopMessage::ERROR
+                );
                 $this->getWidgetParams(self::PARAM_REDIRECT_CODE)->setValue(279);
 
                 $this->set(
@@ -182,4 +187,18 @@ class ChangeOptions extends \XLite\Controller\Customer\ACustomer
 
         return $this->item;
     }
+
+    /**
+     * Get product 
+     * 
+     * @return \XLite\Model\Product
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getProduct()
+    {
+        return $this->getItem()->getProduct();
+    }
+
 }

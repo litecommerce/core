@@ -125,8 +125,10 @@ class Cart extends \XLite\Controller\Customer\Cart implements \XLite\Base\IDecor
             }
             $this->updateCart();
 
+            \XLite\Core\TopMessage::getInstance()->clear();
             \XLite\Core\TopMessage::getInstance()->add(
-                'The product options you have selected are not valid or fall into an exception. Please select other product options and add the product to cart once again.',
+                'The product options you have selected are not valid or fall into an exception.'
+                . ' Please select other product options and add the product to cart once again.',
                 \XLite\Core\TopMessage::ERROR
             );
 

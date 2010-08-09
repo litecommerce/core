@@ -11,9 +11,9 @@
  * @since     3.0.0
  *}
 <span class="item-option" FOREACH="item.getProductOptions(),option">
-  {option.getName():h}: {option.getValue():h}<span IF="optionArrayPointer<optionArraySize">, </span>
+  {option.getActualName():h}: {option.getActualValue():h}<span IF="optionArrayPointer<optionArraySize">, </span>
 </span>
 
 <span IF="getParam(#source#)" class="item-change-options">
-  <a href="{buildUrl(#change_options#,##,_ARRAY_(#source#^getParam(#source#),#storage_id#^getParam(#storage_id#),#item_id#^getParam(#item_id#),#isPopup#^#1#))}" onclick="javascript: return changeOption.call(this);">Change options</a>
+  <a href="{getChangeOptionsLink()}" onclick="javascript: return changeOption.call(this);">Change options</a>
 </span>
