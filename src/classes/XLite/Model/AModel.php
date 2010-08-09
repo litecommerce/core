@@ -176,7 +176,7 @@ class AModel extends \XLite\Base
      * Returns the SQL database table name for this object. Uses "alias"
      * property as a key. 
      * 
-     * @return srting
+     * @return string
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
