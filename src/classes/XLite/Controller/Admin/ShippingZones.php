@@ -37,6 +37,12 @@ namespace XLite\Controller\Admin;
  */
 class ShippingZones extends ShippingSettings
 {
+    public function getShippingZones()
+    {
+        $zone = new \XLite\Model\Zone();
+        return $zone->getShippingZones();
+    }
+
     function getPageTemplate()
     {
         return "shipping/zones.tpl";
