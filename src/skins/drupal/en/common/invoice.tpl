@@ -15,7 +15,6 @@
 
 {*
 <widget module="GiftCertificates" template="modules/GiftCertificates/invoice_item.tpl">
-<widget module="ProductOptions" template="modules/ProductOptions/invoice_options.tpl" IF="{item.hasOptions()}">
 <widget module="Egoods" template="modules/Egoods/invoice.tpl">
 <widget module=WholesaleTrading template="modules/WholesaleTrading/wholesaler_details.tpl" profile={order.profile}>
 <widget module="WholesaleTrading" template="modules/WholesaleTrading/invoice.tpl">

@@ -22,7 +22,7 @@
   </tr>
 
   <tr FOREACH="order.getItems(),item">
-    <td class="name"><a href="{item.getUrl()}">{item.name}</a></td>
+    <td class="name">{displayViewListContent(#invoice.item.name#,_ARRAY_(#item#^item))}</td>
     <td class="sku">{item.sku}</td>
     <td class="price">{price_format(item,#price#):h}</td>
     <td class="qty">{item.amount}</td>
