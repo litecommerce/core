@@ -62,6 +62,32 @@ class Pager extends \XLite\View\Pager\APager
     }
 
     /**
+     * Return number of items per page
+     * 
+     * @return int
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getItemsPerPageDefault()
+    {
+        return 20;
+    }
+
+    /**
+     * Return number of pages to display
+     * 
+     * @return int
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getPagesPerFrame()
+    {
+        return 5;
+    }
+
+    /**
      * Return list of items to display on the current page
      *
      * @param int $start index of the first item on the page
