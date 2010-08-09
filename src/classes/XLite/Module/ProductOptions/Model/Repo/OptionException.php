@@ -70,12 +70,12 @@ class OptionException extends \XLite\Model\Repo\ARepo
 
         $query = $this->_em ->createNativeQuery(
             'SELECT COUNT(e1.option_id) as cnt, e1.exception_id as rel '
-            . 'FROM xlite_option_exceptions as e1 '
+            . 'FROM ' . $this->_class->getTableName() . ' as e1 '
             . 'WHERE e1.option_id IN (' . implode(', ', $keys). ') '
             . 'GROUP BY e1.exception_id '
             . 'HAVING cnt = ('
             . 'SELECT COUNT(e2.option_id) '
-            . 'FROM xlite_option_exceptions as e2 '
+            . 'FROM ' . $this->_class->getTableName() . ' as e2 '
             . 'WHERE e2.exception_id = rel '
             . 'GROUP BY e2.exception_id'
             . ') '

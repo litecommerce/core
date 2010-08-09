@@ -108,10 +108,11 @@ class Cart extends \XLite\Controller\Customer\Cart implements \XLite\Base\IDecor
         if ($this->optionInvalid) {
 
             // Save wrong options set
+            $request = \XLite\Core\Request::getInstance();
             $this->session->set(
                 'saved_invalid_options',
                 array(
-                    \XLite\Core\Request::getInstance()->product_id => \XLite\Core\Request::getInstance()->product_options,
+                    $request->product_id => $request->product_options,
                 )
             );
 

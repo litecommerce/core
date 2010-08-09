@@ -368,11 +368,14 @@ class AModel extends \XLite\Base
     function _beforeSave() {}
 
     /**
-    * Deletes the database record for this object.
-    *
-    * @access public
-    */
-    function delete() 
+     * Deletes the database record for this object
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function delete() 
     {
         // delete if object is persistent
         if ($this->isPersistent) {
@@ -380,10 +383,12 @@ class AModel extends \XLite\Base
             $this->db->query($this->sql);
             $this->isPersistent = false;
             $this->isRead = false;
-            return;
+
+        } else {
+
+            // die otherwise
+            $this->doDie('Unable to delete unspecified row from ' . $this->alias);
         }
-        // die otherwise
-        $this->doDie("Unable to delete unspecified row from " . $this->alias);
     }
 
     /**

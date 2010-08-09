@@ -162,9 +162,18 @@ class OptionSurcharge extends \XLite\Model\AEntity
     {
         $methodName = $this->getCalculator();
 
+        // methodName defined in getCalculator() method
         return $this->postprocessSurcharge($this->$methodName());
     }
 
+    /**
+     * Get surcharge calculator method
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     protected function getCalculator()
     {
         switch ($this->getModifierType()) {
@@ -179,18 +188,34 @@ class OptionSurcharge extends \XLite\Model\AEntity
         return $name;
     }
 
+    /**
+     * Calculate absolute surcharge type
+     * 
+     * @return mixed
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     protected function calculateAbsolute()
     {
         return $this->getModifier();
     }
 
+    /**
+     * Calculate relative surcharge type
+     * 
+     * @return mixed
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     protected function calculateRelative()
     {
         return doubleval($this->getSurchargeBase()) * $this->getModifier() / 100;
     }
 
     /**
-     * Get surcharge base  value
+     * Get surcharge base value
      * 
      * @return float
      * @access protected
@@ -251,6 +276,16 @@ class OptionSurcharge extends \XLite\Model\AEntity
             ->getWeight();
     }
 
+    /**
+     * Postprocess surcharge 
+     * 
+     * @param float $surcharge Surcharge
+     *  
+     * @return mixed
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     protected function postprocessSurcharge($surcharge)
     {
         static $methodNames = array();
@@ -268,14 +303,34 @@ class OptionSurcharge extends \XLite\Model\AEntity
             : $surcharge;
     }
 
+    /**
+     * Postprocess pruice surcharge 
+     * 
+     * @param float $surcharge Surcharge
+     *  
+     * @return float
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     protected function postprocessSurchargePrice($surcharge)
     {
         return round($surcharge, 2);
     }
 
+    /**
+     * Postprocess weight surcharge
+     * 
+     * @param float $surcharge Surcharge
+     *  
+     * @return integer
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     protected function postprocessSurchargeWeight($surcharge)
     {
-        return round($surcharge, 0);
+        return intval(round($surcharge, 0));
     }
 
 }

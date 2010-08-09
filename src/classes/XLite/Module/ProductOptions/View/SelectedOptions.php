@@ -94,7 +94,7 @@ class SelectedOptions extends \XLite\View\AView
      * Check widget visibility 
      * 
      * @return bool
-     * @access public
+     * @access protected
      * @since  3.0.0
      */
     protected function isVisible()

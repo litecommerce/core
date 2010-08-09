@@ -171,7 +171,7 @@ class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
      */
     public function get($name)
     {
-        $_opt = parent::get($name);
+        $opt = parent::get($name);
 
         // Calculate order item price and weight with options
         if (
@@ -179,13 +179,14 @@ class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
             && is_object($this->getProduct())
             && $this->getProductOptions()
         ) {
-            $func_name = $this->options_names[$name];
+            $func = $this->options_names[$name];
             foreach ($this->getProductOptions() as $option) {
-                $_opt += $this->$func_name($option);
+                // $func defined in options_names property
+                $opt += $this->$func($option);
             }
         }
 
-        return $_opt;
+        return $opt;
     }
 
     /**
@@ -198,18 +199,18 @@ class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
      */
     public function getKey()
     {
-        $option_keys = array(parent::getKey());
+        $keys = array(parent::getKey());
 
         // Add to key option group name and selected option name
         foreach ($this->getProductOptions() as $option) {
-            $option_keys[] = sprintf(
+            $keys[] = sprintf(
                 '%s:%s',
                 $option->getName(),
                 $option->getValue()
             );
         }
 
-        return implode('|', $option_keys);
+        return implode('|', $keys);
     }
 
     /**
@@ -260,5 +261,28 @@ class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
         }
 
         return $subweight;
+    }
+
+
+    /**
+     * Deletes the database record for this object
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function delete()
+    {
+        parent::delete();
+
+        if ($this->getProductOptions()) {
+            foreach ($this->getProductOptions() as $option) {
+                \XLite\Code\Database::getEM()->remove($option);
+            }
+
+            \XLite\Code\Database::getEM()->flush();
+            $this->options = array();
+        }
     }
 }

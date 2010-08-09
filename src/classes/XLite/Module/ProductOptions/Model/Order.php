@@ -29,7 +29,7 @@
 namespace XLite\Module\ProductOptions\Model;
 
 /**
- * ____description____
+ * Order
  * 
  * @package XLite
  * @see     ____class_see____
@@ -37,9 +37,18 @@ namespace XLite\Module\ProductOptions\Model;
  */
 class Order extends \XLite\Model\Order implements \XLite\Base\IDecorator
 {
-    function calcAllTaxes()
+    /**
+     * Calculates the Order taxes
+     * TODO - rework
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function calcAllTaxes()
     {
-    	global $calcAllTaxesInside;
+        global $calcAllTaxesInside;
 
         $calcAllTaxesInside = true;
         $result = parent::calcAllTaxes();
