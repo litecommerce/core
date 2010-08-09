@@ -34,7 +34,6 @@ namespace XLite\Module\ProductOptions\View;
  * @package XLite
  * @see     ____class_see____
  * @since   3.0
- * @ListChild (list="productDetails.main", weight="70")
  */
 class ProductOptions extends \XLite\View\AView
 {
@@ -42,7 +41,8 @@ class ProductOptions extends \XLite\View\AView
      * Widget parameter names
      */
 
-    const PARAM_PRODUCT = 'product';
+    const PARAM_PRODUCT          = 'product';
+    const PARAM_SELECTED_OPTIONS = 'selectedOptions';
 
 
     /**
@@ -69,10 +69,19 @@ class ProductOptions extends \XLite\View\AView
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_PRODUCT => new \XLite\Model\WidgetParam\Object('Product', $this->getProduct(), false, '\XLite\Model\Product'),
+            self::PARAM_PRODUCT          => new \XLite\Model\WidgetParam\Object(
+                'Product',  
+                $this->getProduct(),
+                false,
+                '\XLite\Model\Product'
+            ),
+            self::PARAM_SELECTED_OPTIONS => new \XLite\Model\WidgetParam\Collection(
+                'Selected options',
+                array(),
+                false
+            ),
         );
     }
-
 
     /**
      * Check widget visibility 
@@ -165,20 +174,15 @@ class ProductOptions extends \XLite\View\AView
      */
     public function isOptionSelected(\XLite\Module\ProductOptions\Model\Option $option)
     {
-        $saved = $this->session->get('saved_invalid_options');
-        if (is_array($saved)) {
-            $productId = $option->getGroup()->getProduct()->getProductId();
-            if (
-                isset($saved[$productId])
-                && isset($saved[$productId][$option->getGroup()->getGroupId()])
-            ) {
-                $optionId = $saved[$productId][$option->getGroup()->getGroupId()];
-            }
+        $selected = $this->getParam(self::PARAM_SELECTED_OPTIONS);
+
+        if (is_array($selected) && isset($selected[$option->getGroup()->getGroupId()])) {
+            $optionId = $selected[$option->getGroup()->getGroupId()];
         }
 
         if (!isset($optionId)) {
             $options = $option->getGroup()->getOptions();
-            $optionId = $options[0]->getOptionId();
+            $optionId = 0 < count($options) ? $options[0]->getOptionId() : 0;
         }
 
         return $optionId == $option->getOptionId();
@@ -196,20 +200,11 @@ class ProductOptions extends \XLite\View\AView
      */
     public function getOptionText(\XLite\Module\ProductOptions\Model\OptionGroup $option)
     {
-        $result = '';
+        $selected = $this->getParam(self::PARAM_SELECTED_OPTIONS);
 
-        $saved = $this->session->get('saved_invalid_options');
-        if (is_array($saved)) {
-            $productId = $option->getProduct()->getProductId();
-            if (
-                isset($saved[$productId])
-                && isset($saved[$productId][$option->getGroupId()])
-            ) {
-                $result = $saved[$productId][$option->getGroupId()];
-            }
-        }
-
-        return $result;
+        return (is_array($selected) && isset($selected[$option->getGroupId()]))
+            ? $selected[$option->getGroupId()]
+            : '';
     }
 }
 

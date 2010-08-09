@@ -11,12 +11,12 @@
  * @since     3.0.0
  *}
 <ul class="item-options">
-  <li FOREACH="getOptions(),option">{option.getName():h}: {option.getValue():h}</li>
+  <li FOREACH="getOptions(),option">{option.getActualName():h}: {option.getActualValue():h}</li>
 </ul>
 {if:isLimitEnabled()}
   <a class="item-all-options" href="{buildUrl(#cart#)}" rel="ul.item-all-options.item-{getParam(#cartId#)}">all options</a>
   <br />
   <ul class="item-all-options item-{getParam(#cartId#)}" style="display: none;">
-    <li FOREACH="getAllOptions(),option">{option.getName():h}: {option.getValue():h}</li>
+    <li FOREACH="getAllOptions(),option">{option.getActualName():h}: {option.getActualValue():h}</li>
   </ul>
 {end:}

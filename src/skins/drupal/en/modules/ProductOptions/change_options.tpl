@@ -14,7 +14,7 @@
 
   <h1>Edit options</h1>
 
-  <widget module="ProductOptions" class="\XLite\Module\ProductOptions\View\ProductOptions" product="{getProduct()}" />
+  <widget module="ProductOptions" class="\XLite\Module\ProductOptions\View\ProductOptions" product="{getProduct()}" selectedOptions="{getSelectedOptions()}" />
 
   <widget class="\XLite\View\Button\Submit" label="Update" />
 

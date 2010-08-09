@@ -139,5 +139,26 @@ class SelectedOptions extends \XLite\View\AView
         return $list;
     }
 
+    /**
+     * Get Change options link URL
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getChangeOptionsLink()
+    {
+        return $this->buildUrl(
+            'change_options',
+            '',
+            array(
+                'source'     => $this->getParam('source'),
+                'storage_id' => $this->getParam('storage_id'),
+                'item_id'    => $this->getParam('item_id'),
+                'isPopup'    => 1,
+            )
+        );
+    }
 }
 

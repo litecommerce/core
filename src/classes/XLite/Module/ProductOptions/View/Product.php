@@ -46,6 +46,7 @@ class Product extends \XLite\View\Product implements \XLite\Base\IDecorator
      */
     public function isAvailableForSale()
     {
+        /* TODO - rework
         if ($this->xlite->get('InventoryTrackingEnabled')) {
             $product = $this->getProduct();
             if ($product->getComplex('inventory.found') && !$product->get('tracking')) {
@@ -53,6 +54,25 @@ class Product extends \XLite\View\Product implements \XLite\Base\IDecorator
             }
         }
 
-        return isset($result) ? $result : parent::isAvailableForSale();
+        return isset($result) ? $result : 
+        */    
+        return parent::isAvailableForSale();
+    }
+
+    /**
+     * Get selected options 
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getSelectedOptions()
+    {
+        $saved = $this->session->get('saved_invalid_options');
+
+        return is_array($saved) && isset($saved[$this->getProduct()->getProductId()])
+            ? $saved[$this->getProduct()->getProductId()]
+            : array();
     }
 }

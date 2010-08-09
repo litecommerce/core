@@ -136,4 +136,33 @@ class OrderItemOption extends \XLite\Model\AEntity
      */
     protected $option;
 
+    /**
+     * Get actual selected option name 
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getActualName()
+    {
+        return $this->getGroup()
+            ? $this->getGroup()->getName()
+            : $this->getName();
+    }
+
+    /**
+     * Get actual selected option value 
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getActualValue()
+    {
+        return $this->getOption()
+            ? $this->getOption()->getName()
+            : $this->getValue();
+    }
 }
