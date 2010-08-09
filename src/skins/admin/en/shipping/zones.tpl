@@ -33,7 +33,7 @@ Select a country or a state from a list, specify the zone where the country or s
 <hr>
 
 <table border=0 cellpadding=5>
-<tbody FOREACH="xlite.factory.\XLite\Model\ShippingZone.findAll(),zone">
+<tbody FOREACH="getShippingZones(),zone">
 <form action="admin.php" method="POST" name="shipping_zone_{zone.shipping_zone}">
 <input type="hidden" name="target" value="shipping_zones">
 <input type="hidden" name="action" value="">
@@ -41,24 +41,24 @@ Select a country or a state from a list, specify the zone where the country or s
 <tr>
     <td class=AdminHead colspan=2>
     {zone.name}
-    <span IF="zone.hasCountries()"> (countries)</span>
-    <span IF="zone.hasStates()"> (states)</span>
+    <span IF="zone.getCountries()"> (countries)</span>
+    <span IF="zone.getStates()"> (states)</span>
     </td>
 </tr>
 <tr>
-<td valign=top IF="zone.hasCountries()">
+<td valign=top IF="zone.getCountries()">
 	<select name="countries[]" multiple size=20 style="width:140pt">
 		<option FOREACH="zone.countries,country" value="{country.code}">{country.country}</option>
 	</select>
 </td>
-<td valign=top IF="zone.hasStates()">
+<td valign=top IF="zone.getStates()">
 	<select name="states[]" multiple size=20 style="width:140pt">
 		<option FOREACH="zone.states,state" value="{state.state_id}">{if:state.country_code}{state.country_code}/{end:}{state.state}</option>
 	</select>
 </td>
 </tr>
 <tr>
-<td IF="zone.hasCountries()">
+<td IF="zone.getCountries()">
 Move selected countries to:<br>
 <select name="target_country_zone">
 <option value="new">New zone</option>
@@ -66,7 +66,7 @@ Move selected countries to:<br>
 </select><br>
 <input type=button value=" Apply " onClick="shipping_zone_{zone.shipping_zone}.action.value='update_countries';shipping_zone_{zone.shipping_zone}.submit()">
 </td>
-<td IF="zone.hasStates()">
+<td IF="zone.getStates()">
 Move selected states to:<br>
 <select name="target_state_zone">
 <option value="new">New zone</option>
