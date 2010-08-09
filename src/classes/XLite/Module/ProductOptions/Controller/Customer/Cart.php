@@ -126,7 +126,7 @@ class Cart extends \XLite\Controller\Customer\Cart implements \XLite\Base\IDecor
             $this->updateCart();
 
             \XLite\Core\TopMessage::getInstance()->add(
-                'Product has not been added to cart',
+                'The product options you have selected are not valid or fall into an exception. Please select other product options and add the product to cart once again.',
                 \XLite\Core\TopMessage::ERROR
             );
 
