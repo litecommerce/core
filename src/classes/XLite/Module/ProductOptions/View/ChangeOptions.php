@@ -87,7 +87,7 @@ class ChangeOptions extends \XLite\View\AView
      * Check widget visibility 
      * 
      * @return bool
-     * @access public
+     * @access protected
      * @since  3.0.0
      */
     protected function isVisible()
@@ -115,8 +115,7 @@ class ChangeOptions extends \XLite\View\AView
     {
         $options = array();
 
-        foreach ($this->getParam(self::PARAM_ITEM)->getProductOptions() as $option)
-        {
+        foreach ($this->getParam(self::PARAM_ITEM)->getProductOptions() as $option) {
             $options[$option->getGroupId()] = $option->getOption()
                 ? $option->getOption()->getOptionId()
                 : $option->getValue();

@@ -179,6 +179,14 @@ class OptionGroup extends \XLite\Model\Base\I18n
         return $this->getFullname() ?: $this->getName();
     }
 
+    /**
+     * Get active options list
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     public function getActiveOptions()
     {
         $result = array();
@@ -192,6 +200,16 @@ class OptionGroup extends \XLite\Model\Base\I18n
         return $result;
     }
 
+    /**
+     * Get default option 
+     * 
+     * @param integer $startIdx Start scan index
+     *  
+     * @return \XLite\Module\ProductOptions\Model\Options or null
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     public function getDefaultOption($startIdx = 0)
     {
         $list = $this->getActiveOptions();
@@ -199,6 +217,14 @@ class OptionGroup extends \XLite\Model\Base\I18n
         return isset($list[$startIdx]) ? $list[$startIdx] : null;
     }
 
+    /**
+     * Get default plain value (option id or text or null)
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     public function getDefaultPlainValue()
     {
         switch ($this->getType()) {

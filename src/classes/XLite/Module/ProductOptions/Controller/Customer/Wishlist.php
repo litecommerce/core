@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage ____sub_package____
+ * @subpackage Controller
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -99,7 +99,7 @@ class Wishlist extends \XLite\Module\WishList\Controller\Customer\Wishlist imple
      * prepareWishListItem
      *
      * @param \XLite\Module\WishList\Model\WishListProduct $product item to prepare
-     * @param bool                                        $status  if item exists or not
+     * @param bool                                         $status  if item exists or not
      *
      * @return void
      * @access protected
