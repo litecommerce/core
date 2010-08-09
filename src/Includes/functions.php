@@ -823,45 +823,61 @@ function func_htmlspecialchars($str) {
 /**
  * Check if LiteCommerce installed
  * 
+ * @param string $dbUrl Database Url string (e.g. mysql://username:password@localhost/databasename)
+ *  
  * @return bool
- * @since  3.0
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
  */
-function isLiteCommerceInstalled()
+function isLiteCommerceInstalled($dbUrl = null)
 {
+    $errorMsg = null;
+
+    // Check by template and config.php file
     $checkResult = file_exists(LC_SKINS_DIR . 'admin/en/welcome.tpl')
         && file_exists(LC_CONFIG_DIR . 'config.php');
 
     if ($checkResult) {
 
-        $data = XLite::getInstance()->getOptions('database_details');
+        // Get database options from config.php
+        $configData = XLite::getInstance()->getOptions('database_details');
 
-        if (is_array($data)) {
-            $checkResult = !empty($data['hostspec'])
-                && !empty($data['database'])
-                && !empty($data['username']);
+        if (is_array($configData)) {
+
+            // Check if host, dbname and username is not empty
+            $checkResult = !empty($configData['hostspec'])
+                && !empty($configData['database'])
+                && !empty($configData['username']);
 
             if ($checkResult) {
 
-                if (!empty($data['socket'])) {
-                    $host = $data['hostspec'] . ':' . $data['socket'];
+                if (isset($dbUrl)) {
 
-                } elseif (!empty($data['port'])) {
-                    $host = $data['hostspec'] . ':' . $data['port'];
+                    $data = parseDbUrl($dbUrl);
+
+                    if (!empty($data)) {
+
+                        // Compare database options from config and from parameter
+                        $checkResult = $configData['hostspec'] == $data['mysqlhost']
+                            && $configData['username'] == $data['mysqluser']
+                            && $configData['password'] == $data['mysqlpass']
+                            && $configData['database'] == $data['mysqlbase']
+                            && (!isset($data['mysqlport']) || $configData['port'] == $data['mysqlport'])
+                            && (!isset($data['mysqlsock']) || $configData['socket'] == $data['mysqlsock']);
+                    }
 
                 } else {
-                    $host = $data['hostspec'];
+                    $data = null;
                 }
 
-                $checkResult = @mysql_connect($host, $data['username'], $data['password']) 
-                    && @mysql_select_db($data['database']);
-
                 if ($checkResult) {
-                    if ($res = @mysql_query('SELECT login from xlite_profiles LIMIT 1')) {
-                        $data = mysql_fetch_row($res);
-                        $checkResult = !empty($data[0]);
+                    // Check if connection works
+                    $checkResult = dbConnect($data, $errorMsg);
 
-                    } else {
-                        $checkResult = false;
+                    if ($checkResult) {
+                        $res = dbFetchColumn('SELECT login from xlite_profiles LIMIT 1', $errorMsg);
+                        $checkResult = !empty($res);
                     }
                 }
             }
@@ -870,3 +886,298 @@ function isLiteCommerceInstalled()
     
     return $checkResult;
 }
+
+/**
+ * Parse database access string
+ * 
+ * @param string $dbUrl Database Url string
+ * examples:
+ *   mysql://username:password@localhost/databasename
+ *   mysql://username:password@localhost:3306/databasename
+ *   mysql://username:password@host%3A3306%2Ftmp%2Fmysql.sock/databasename
+ *   mysql://username:password@host%3A%2Ftmp%2Fmysql.sock/databasename
+ *   (host must be urlencoded if mysql works via non-standard socket)
+ *  
+ * @return array
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
+ */
+function parseDbUrl($dbUrl)
+{    
+    $data = array();
+
+    $url = parse_url($dbUrl);
+
+    if (is_array($url)) {
+
+        $data['mysqlhost'] = urldecode($url['host']);
+
+        if (isset($url['port'])) {
+            $data['mysqlport'] = urldecode($url['port']);
+
+        } else {
+
+            $hostData = parse_url($data['mysqlhost']);
+
+            if (isset($hostData['host'])) {
+                $data['mysqlhost'] = $hostData['host'];
+                $data['mysqlport'] = isset($hostData['port']) ? $hostData['port'] : '';
+                $data['mysqlsock'] = isset($hostData['path']) ? $hostData['path'] : '';
+
+            } elseif (isset($hostData['scheme'])) {
+                $data['mysqlhost'] = $hostData['scheme'];
+                $data['mysqlport'] = isset($hostData['port']) ? $hostData['port'] : '';
+                $data['mysqlsock'] = isset($hostData['path']) ? $hostData['path'] : '';
+            }
+        }
+
+        $data['mysqluser'] = urldecode($url['user']);
+        $data['mysqlpass'] = isset($url['pass']) ? urldecode($url['pass']) : NULL;
+        $data['mysqlbase'] = ltrim(urldecode($url['path']), '/');
+    }
+
+    return $data;
+}
+
+/**
+ * Do connection to the database with params user specified
+ * 
+ * @return bool
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
+ */
+function dbConnect ($data = null, &$errorMsg = null)
+{
+    $result = true;
+
+    if (!empty($data) && is_array($data)) {
+
+        $fields = array(
+            'hostspec' => 'mysqlhost',
+            'port'     => 'mysqlport',
+            'socket'   => 'mysqlsock',
+            'username' => 'mysqluser',
+            'password' => 'mysqlpass',
+            'database' => 'mysqlbase',
+        );
+
+        $dbParams = array();
+
+        foreach ($fields as $key => $value) {
+            if (isset($data[$value])) {
+                $dbParams[$key] = $data[$value];
+            }
+        }
+
+        // Set db options
+        try {
+            $connect = \Includes\Utils\Database::setDbOptions($dbParams);
+
+        } catch (Exception $e) {
+            $errorMsg = $e->getMessage();
+        }
+
+        $result = isset($connect);
+    
+    } else {
+        // Reset db options
+        \Includes\Utils\Database::resetDbOptions();
+    }
+
+    return $result;
+}
+
+/**
+ * Execute SQL query and return the first column of first row of the result 
+ * 
+ * @return mixed
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
+ */
+function dbFetchColumn($sql, &$errorMsg = null)
+{
+    $result = null;
+
+    try {
+        $result = \Includes\Utils\Database::fetchColumn($sql);
+
+    } catch (Exception $e) {
+        $errorMsg = $e->getMessage();
+    }
+
+    return $result;
+}
+
+/**
+ * Execute SQL query and return the result as an associated array
+ * 
+ * @return array
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
+ */
+function dbFetchAll($sql, &$errorMsg = null)
+{
+    $result = null;
+
+    try {
+        $result = \Includes\Utils\Database::fetchAll($sql);
+
+    } catch (Exception $e) {
+        $errorMsg = $e->getMessage();
+    }
+
+    return $result;
+}
+
+/**
+ * Execute SQL query
+ * 
+ * @return int
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
+ */
+function dbExecute($sql, &$errorMsg = null)
+{
+    $result = null;
+
+    try {
+        $result = \Includes\Utils\Database::execute($sql);
+
+    } catch (Exception $e) {
+        $errorMsg = $e->getMessage();
+    }
+
+    return $result;
+}
+
+/**
+ * Execute a set of SQL queries from file
+ * 
+ * @param string $fileName     The name of file which contains SQL queries
+ * @param bool   $ignoreErrors Ignore errors flag
+ * @param bool   $is_restore   ?
+ *
+ * @return bool
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
+ */
+function uploadQuery($fileName, $ignoreErrors = false, $is_restore = false)
+{
+    $fp = @fopen($fileName, 'rb');
+
+    if (!$fp) {
+        echo '<font color="red">[Failed to open ' . $fileName . ']</font></pre>' . "\n";
+        return false;
+    }
+
+    $command = '';
+    $counter = 1;
+
+    while (!feof($fp)) {
+
+        $c = '';
+
+        // read SQL statement from file
+        do {
+            $c .= fgets($fp, 1024);
+            $endPos = strlen($c) - 1;
+        } while (substr($c, $endPos) != "\n" && !feof($fp));
+
+        $c = chop($c);
+
+        // skip comments
+        if (substr($c, 0, 1) == '#' || substr($c, 0, 2) == '--') {
+            continue;
+        }
+
+        // parse SQL statement
+
+        $command .= $c;
+
+        if (substr($command, -1) == ';') {
+
+            $command = substr($command, 0, strlen($command)-1);
+            $table_name = '';
+
+            if (preg_match('/^CREATE TABLE ([_a-zA-Z0-9]*)/i', $command, $matches)) {
+                $table_name = $matches[1];
+                echo 'Creating table [' . $table_name . '] ... ';
+            
+            } elseif (preg_match('/^ALTER TABLE ([_a-zA-Z0-9]*)/i', $command, $matches)) {
+                $table_name = $matches[1];
+                echo 'Altering table [' . $table_name . '] ... ';
+            
+            } elseif (preg_match('/^DROP TABLE IF EXISTS ([_a-zA-Z0-9]*)/i', $command, $matches)) {
+                $table_name = $matches[1];
+                echo 'Deleting table [' . $table_name . '] ... ';
+            
+            } else {
+                $counter ++;
+            }    
+
+            // Execute SQL query
+            dbExecute($command, $myerr);
+    
+            // check for errors
+            if (!empty($myerr)) {
+
+                showQueryStatus($myerr, $ignoreErrors);
+
+                if (!$ignoreErrors) {
+                    break;
+                }    
+
+            } elseif ($table_name != "") {
+                echo '<font color="green">[OK]</font><br />' . "\n";
+            
+            } elseif (!($counter % 20)) {
+                echo '.';
+            }
+
+            $command = '';
+
+            flush();
+        }
+    }
+
+    fclose($fp);
+
+    if ($counter>20) {
+        print "\n";
+    }
+
+    return (!$is_restore && $ignoreErrors) ? true : empty($myerr);
+}
+
+/**
+ * Show a error status
+ *
+ * @param string $myerr        Error message
+ * @param bool   $ignoreErrors Ignore errors flag
+ *
+ * @return void
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
+ */
+function showQueryStatus($myerr, $ignoreErrors)
+{
+    if (empty($myerr)) {
+        echo "\n";
+        echo '<font color="green">[OK]</font>' . "\n";
+
+    } elseif ($ignoreErrors) {
+        echo '<font color="blue">[NOTE: ' . $myerr . ']</font>' . "\n";
+
+    } else {
+        echo '<font color="red">[FAILED: ' . $myerr . ']</font>' . "\n";
+    }
+}
+
+
