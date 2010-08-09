@@ -103,6 +103,17 @@ class OptionGroup extends \XLite\Model\Repo\Base\I18n
         return $data;
     }
 
+    /**
+     * Find one group by group id and product id 
+     * 
+     * @param integer $groupId   Option group id
+     * @param integer $productId Product id
+     *  
+     * @return \XLite\Module\ProductOptions\Model\OptionGroup or null
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     public function findOneByGroupIdAndProductId($groupId, $productId)
     {
         try {

@@ -38,6 +38,16 @@ namespace XLite\Module\ProductOptions\Model\Repo;
 class OptionException extends \XLite\Model\Repo\ARepo
 {
 
+    /**
+     * Check options ids list
+     * 
+     * @param array $ids Option id list
+     *  
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     public function checkOptions(array $ids)
     {
         $count = 0;
@@ -53,9 +63,19 @@ class OptionException extends \XLite\Model\Repo\ARepo
             }
         }
 
-        return $count == 0;
+        return 0 == $count;
     }
 
+    /**
+     * Define check exception query 
+     * 
+     * @param array $ids Option ids list
+     *  
+     * @return \Doctrine\ORM\NativeQuery
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     protected function defineCheckExceptionQuery(array $ids)
     {
         $rsm = new \Doctrine\ORM\Query\ResultSetMapping;
@@ -68,10 +88,10 @@ class OptionException extends \XLite\Model\Repo\ARepo
             $parameters['id' . $id] = $id;
         }
 
-        $query = $this->_em ->createNativeQuery(
+        $query = $this->_em->createNativeQuery(
             'SELECT COUNT(e1.option_id) as cnt, e1.exception_id as rel '
             . 'FROM ' . $this->_class->getTableName() . ' as e1 '
-            . 'WHERE e1.option_id IN (' . implode(', ', $keys). ') '
+            . 'WHERE e1.option_id IN (' . implode(', ', $keys) . ') '
             . 'GROUP BY e1.exception_id '
             . 'HAVING cnt = ('
             . 'SELECT COUNT(e2.option_id) '

@@ -59,9 +59,20 @@ class OrderItemOption extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @Column (type="integer")
+     * @Column (type="string", length="255")
      */
     protected $item_id;
+
+    /**
+     * Order unique id 
+     * 
+     * @var    integer
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Column (type="integer")
+     */
+    protected $order_id;
 
     /**
      * Option unique id 

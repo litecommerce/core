@@ -84,11 +84,14 @@ class Cart extends Order
     }
 
     /**
-    * Saves the shopping cart content to session.
-    *
-    * @access public
-    */
-    function create()
+     * Saves the shopping cart content to session 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function create()
     {
         $this->set('date', time());
         $this->set('status', "T");

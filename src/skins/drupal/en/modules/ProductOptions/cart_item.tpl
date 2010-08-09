@@ -12,5 +12,5 @@
  * @ListChild (list="cart.item.info", weight="40")
  *}
 <p class="item-options">
-  <widget module="ProductOptions" class="\XLite\Module\ProductOptions\View\SelectedOptions" item="{item}" source="cart" item_id="{cart_id}" />
+  <widget class="\XLite\Module\ProductOptions\View\SelectedOptions" item="{item}" source="cart" item_id="{cart_id}" />
 </p>

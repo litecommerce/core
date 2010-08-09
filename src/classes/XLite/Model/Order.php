@@ -160,7 +160,6 @@ class Order extends AModel
         }
     }
 
-
     /**
      * Get shipping rates 
      * FIXME - see the "calcShippingRates()" method

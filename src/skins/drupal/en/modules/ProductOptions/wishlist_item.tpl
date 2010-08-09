@@ -12,5 +12,5 @@
  * @ListChild (list="wishlist.item.info", weight="40")
  *}
 <p class="item-options">
-  <widget module="ProductOptions" class="\XLite\Module\ProductOptions\View\SelectedOptions" item="{item}" source="wishlist" item_id="{item.item_id}" storage_id="{item.wishlist_id}" />
+  <widget class="\XLite\Module\ProductOptions\View\SelectedOptions" item="{item}" source="wishlist" item_id="{item.item_id}" storage_id="{item.wishlist_id}" />
 </p>
