@@ -48,6 +48,16 @@ class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
     protected $options;
 
     /**
+     * Temporary item key 
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $temporaryKey;
+
+    /**
      * Option subproperty names 
      * 
      * @var    array
@@ -101,7 +111,7 @@ class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
 
             // Remove old options
             $oldOptions = \XLite\Core\Database::getRepo('XLite\Module\ProductOptions\Model\OrderItemOption')
-                ->findByItemId($itemId);
+                ->findByItemIdAndOrderId($itemId, $this->get('order_id'));
 
             foreach ($oldOptions as $o) {
                 \XLite\Core\Database::getEM()->remove($o);
@@ -113,6 +123,7 @@ class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
                     ->find($groupId);
                 $o = new \XLite\Module\ProductOptions\Model\OrderItemOption();
                 $o->setItemId($itemId);
+                $o->setOrderId($this->get('order_id'));
                 $o->setGroup($group);
                 $o->setName($group->getName());
                 if (isset($data['option'])) {
@@ -130,6 +141,10 @@ class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
             // Refresh item id
             foreach ($this->options as $o) {
                 $o->setItemId($this->getKey());
+            }
+
+            if (!$this->isPersistent) {
+                $this->temporaryKey = $this->getKey();
             }
 
             \XLite\Core\Database::getEM()->flush();
@@ -151,9 +166,19 @@ class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
     public function getProductOptions()
     {
         if (!isset($this->options)) {
-            $itemId = $this->get('item_id');
+            if ($this->isPersistent) {
+                $itemId = $this->get('item_id');
+                $orderId = $this->get('order_id');
+
+            } else {
+                $itemId = $this->temporaryKey
+                    ? $this->temporaryKey
+                    : $this->get('item_id');
+                $orderId = 0;
+            }
+
             $this->options = \XLite\Core\Database::getRepo('XLite\Module\ProductOptions\Model\OrderItemOption')
-                ->findByItemId($itemId);
+                ->findByItemIdAndOrderId($this->get('item_id'), $this->get('order_id'));
         }
 
         return $this->options;
@@ -278,11 +303,35 @@ class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
 
         if ($this->getProductOptions()) {
             foreach ($this->getProductOptions() as $option) {
-                \XLite\Code\Database::getEM()->remove($option);
+                \XLite\Core\Database::getEM()->remove($option);
             }
 
-            \XLite\Code\Database::getEM()->flush();
+            \XLite\Core\Database::getEM()->flush();
             $this->options = array();
+        }
+    }
+
+    /**
+     * Create order item
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function create()
+    {
+        $options = $this->getProductOptions();
+
+        parent::create();
+
+        // Renew options order id
+        if ($options) {
+            foreach ($options as $option) {
+                $option->setOrderId($this->get('order_id'));
+                \XLite\Core\Database::getEM()->persist($option);
+            }
+            \XLite\Core\Database::getEM()->flush();
         }
     }
 }

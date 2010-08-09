@@ -37,18 +37,41 @@ namespace XLite\Module\ProductOptions\Model\Repo;
  */
 class OrderItemOption extends \XLite\Model\Repo\ARepo
 {
-    public function findByItemId($itemId)
+    /**
+     * Find selected options by order item id and order id 
+     * 
+     * @param string  $itemId  Order item id
+     * @param integer $orderId Order id
+     *  
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function findByItemIdAndOrderId($itemId, $orderId)
     {
-        return $this->defineByItemIdQuery($itemId)
+        return $this->defineByItemIdAndOrderIdQuery($itemId, $orderId)
             ->getQuery()
             ->getResult();
     }
 
-    protected function defineByItemIdQuery($itemId)
+    /**
+     * Define query for findByItemIdAndOrderId() method
+     * 
+     * @param string  $itemId  Order item id
+     * @param integer $orderId Order id
+     *  
+     * @return \Doctrine\ORM\QueryBuilder
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineByItemIdAndOrderIdQuery($itemId, $orderId)
     {
         return $this->createQueryBuilder()
-            ->andWhere('o.item_id = :itemId')
-            ->setParameter('itemId', $itemId);
+            ->andWhere('o.item_id = :itemId AND o.order_id = :orderId')
+            ->setParameter('itemId', $itemId)
+            ->setParameter('orderId', $orderId);
     }
 }
 

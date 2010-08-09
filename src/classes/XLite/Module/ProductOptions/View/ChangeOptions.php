@@ -34,6 +34,7 @@ namespace XLite\Module\ProductOptions\View;
  * @package XLite
  * @see     ____class_see____
  * @since   3.0
+ * @ListChild (list="center")
  */
 class ChangeOptions extends \XLite\View\AView
 {

@@ -168,7 +168,15 @@ class OrderItem extends AModel
         }
     }
 
-    function create()
+    /**
+     * Create order item
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function create()
     {
         $this->set('item_id', $this->getKey());
         parent::create();

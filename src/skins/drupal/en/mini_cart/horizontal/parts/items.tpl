@@ -20,9 +20,7 @@
   <div class="items-list">
     <ul>
       <li FOREACH="getItemsList(),item">
-        <span class="item-name"><a href="{item.getUrl()}">{item.name}</a></span>
-        <widget module="ProductOptions" class="\XLite\Module\ProductOptions\View\MinicartSelectedOptions" item="{item}" />
-        <span class="item-price">{price_format(item,#price#):h}</span><span class="delimiter">x</span><span class="item-qty">{item.amount}</span>
+        {displayViewListContent(#minicart.horizontal.item#,_ARRAY_(#item#^item))}
       </li>
     </ul>
     <p class="other-items"><a href="{buildURL(#cart#)}">View cart</a></p>

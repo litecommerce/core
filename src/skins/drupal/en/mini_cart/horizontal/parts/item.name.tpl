@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Cart
+ * Display horizontal minicart item name
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -9,11 +9,6 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
+ * @ListChild (list="minicart.horizontal.item", weight="10")
  *}
-<div id="shopping-cart" class="checkout-cart">
-
-  {displayViewListContent(#checkout.cart#)}
-
-</div>
-
-<div class="clear">&nbsp;</div>
+<span class="item-name"><a href="{item.getUrl()}">{item.name}</a></span>

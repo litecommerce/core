@@ -225,7 +225,7 @@ A:active  {
 	<tbody FOREACH="order.items,item">
 		<tr>
 			<td><b>{item.name:h}</b><BR>
-				<table><widget module="ProductOptions" template="modules/ProductOptions/invoice_options.tpl">
+				<table>
 <widget module="Egoods" template="modules/Egoods/invoice.tpl"></table></td>
 			<td align="center">{item.sku:h}&nbsp;</td>
 			<td align="center">{item.amount:h}</td>
