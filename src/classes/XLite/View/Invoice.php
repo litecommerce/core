@@ -112,11 +112,11 @@ class Invoice extends Dialog
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
+
         $list[] = 'order/invoice/style.css';
 
         return $list;
     }
-
 
     /**
      * Return list of targets allowed for this widget
