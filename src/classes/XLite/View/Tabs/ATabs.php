@@ -334,7 +334,7 @@ abstract class ATabs extends \XLite\View\AView
         $pagesTitlesTotalLength = 0;
 
         foreach ($pages as $page) {
-            $pagesTitlesTotalLength += strlen($page->title);
+            $pagesTitlesTotalLength += strlen($page['title']);
         }
 
         // Split tabs into {$splitParameter} arrays
@@ -346,7 +346,7 @@ abstract class ATabs extends \XLite\View\AView
 
         foreach ($pages as $page) {
 
-            $pagesCurrentLength += strlen($page->title);
+            $pagesCurrentLength += strlen($page['title']);
 
             if ($pagesCurrentLength > $splitParameter) {
                 break;
@@ -369,7 +369,7 @@ abstract class ATabs extends \XLite\View\AView
 
             foreach ($pagesArray as $page) {
 
-                $pagesTitlesLength += (is_null($page) ? 0 : strlen($page->title));
+                $pagesTitlesLength += (is_null($page) ? 0 : strlen($page['title']));
 
                 if ($pagesTitlesLength > $pagesTitlesLengthMax) {
                     $pagesTitlesLengthMax = $pagesTitlesLength;
