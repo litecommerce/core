@@ -89,6 +89,24 @@ class Product extends Catalog
     }
 
     /**
+     * Set error
+     * 
+     * @param string $cleanURL Clean URL
+     *  
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function setCleanURLError($cleanURL)
+    {
+        \XLite\Core\TopMessage::addError(
+            'The "{{clean_url}}" clean URL is already defined',
+            array('clean_url' => $data['clean_url'])
+        );
+    }
+
+    /**
      * Check if specified clean URL is unique or not
      * 
      * @param string $cleanURL Clean URL
@@ -101,8 +119,13 @@ class Product extends Catalog
     protected function checkCleanURL($cleanURL)
     {
         $entity = \XLite\Core\Database::getRepo('\XLite\Model\Product')->findOneByCleanUrl($cleanURL);
+        $result = !isset($entity) || $entity->getProductId() === $this->getProductId();
 
-        return !isset($entity) || $entity->getProductId() === $this->getProductId();
+        if (!$result) {
+            $this->setCleanURLError($cleanURL);
+        }
+
+        return $result;
     }
 
 
@@ -118,15 +141,7 @@ class Product extends Catalog
     {
         $data = $this->getPostedData();
 
-        if (!empty($data['clean_url']) && !$this->checkCleanURL($data['clean_url'])) {
-
-            \XLite\Core\TopMessage::addError(
-                'The "{{clean_url}}" clean URL is already defined',
-                array('clean_url' => $data['clean_url'])
-            );
-
-        } else {
-
+        if (empty($data['clean_url']) || $this->checkCleanURL($data['clean_url'])) {
             $this->isNew() ? $this->doActionAdd() : $this->doActionUpdate();
         }
     }
@@ -141,6 +156,13 @@ class Product extends Catalog
      */
     protected function doActionAdd()
     {
+        $id = \XLite\Core\Database::getRepo('\XLite\Model\Product')->insert(
+            $this->getPostedData()
+        )->getProductId();
+
+        if (!empty($id)) {
+            $this->setReturnUrl($this->buildURL('product', '', array('product_id' => $id)));
+        }
     }
 
     /**

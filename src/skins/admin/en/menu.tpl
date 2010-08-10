@@ -36,7 +36,7 @@ From this page, you can build and maintain the store in a very easy way!
             <td colspan=5>&nbsp;</td>
         </tr>
         <tr>
-            <widget template="menu_item.tpl" href="admin.php?target=product_list" icon="menu/icon_products.gif" text="<span class='MainMenuItemHeader'>Products</span><br>Manage your product inventory<br><br><a href='admin.php?target=add_product' style='color:blue;'><u>Add product</u></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='admin.php?target=extra_fields' style='color:blue;'><u>Global extra fields</u></a>">
+            <widget template="menu_item.tpl" href="admin.php?target=product_list" icon="menu/icon_products.gif" text="<span class='MainMenuItemHeader'>Products</span><br>Manage your product inventory<br><br><a href='admin.php?target=product' style='color:blue;'><u>Add product</u></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='admin.php?target=extra_fields' style='color:blue;'><u>Global extra fields</u></a>">
             <td width="1%">&nbsp;&nbsp;</td>
             <widget template="menu_item.tpl" href="admin.php?target=modules" icon="menu/icon_modules.gif" text="<span class='MainMenuItemHeader'>Modules</span><br>Expand the functionality of your store by installing and using add-on modules">
         </tr>

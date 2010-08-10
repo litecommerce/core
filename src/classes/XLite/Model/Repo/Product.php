@@ -144,7 +144,7 @@ class Product extends \XLite\Model\Repo\Base\I18n
     protected function prepareCndCategoryId(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
         $queryBuilder
-            ->innerJoin('p.category_products', 'cp')
+            ->leftJoin('p.category_products', 'cp')
             ->addOrderBy('cp.orderby');
 
         if (empty($this->currentSearchCnd->{self::P_SEARCH_IN_SUBCATS})) {
@@ -153,7 +153,7 @@ class Product extends \XLite\Model\Repo\Base\I18n
                 ->setParameter('categoryId', $value);
         } else {
             $queryBuilder
-                ->innerJoin('cp.category', 'c');
+                ->leftJoin('cp.category', 'c');
 
             \XLite\Core\Database::getRepo('XLite\Model\Category')->addSubTreeCondition($queryBuilder, $value);
         }
