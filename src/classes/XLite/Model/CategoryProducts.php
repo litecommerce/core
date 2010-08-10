@@ -40,6 +40,20 @@ namespace XLite\Model;
 class CategoryProducts extends AEntity
 {
     /**
+     * Primary key
+     *
+     * @var    int
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     *
+     * @Id
+     * @GeneratedValue (strategy="AUTO")
+     * @Column         (type="integer", length="11", nullable=false)
+     */
+    protected $id;
+
+    /**
      * Category Id 
      * 
      * @var    integer
@@ -47,7 +61,6 @@ class CategoryProducts extends AEntity
      * @see    ____var_see____
      * @since  3.0.0
      * 
-     * @Id
      * @Column (type="integer", length="11", nullable=false)
      */
     protected $category_id;
@@ -60,7 +73,6 @@ class CategoryProducts extends AEntity
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @Id
      * @Column (type="integer", length="11", nullable=false)
      */
     protected $product_id;
