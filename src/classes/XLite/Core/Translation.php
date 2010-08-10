@@ -158,7 +158,8 @@ class Translation extends \XLite\Base\Singleton
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function processSubstitute($string, array $args) {
+    protected function processSubstitute($string, array $args)
+    {
         $keys = array();
         $values = array();
         foreach ($args as $k => $v) {

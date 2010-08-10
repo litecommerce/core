@@ -857,7 +857,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     protected function getById($id)
     {
         if (!($entity = $this->find($id))) {
-            throw new Exception(get_called_class() . '::updateBuId() - unknow ID (' . $id . ')');
+            throw new Exception(get_called_class() . '::updateById() - unknow ID (' . $id . ')');
         }
 
         return $entity;
@@ -965,9 +965,9 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * @see    ____func_see____
      * @since  3.0.0
      */
-    final public function updateBuId($id, array $data)
+    final public function updateById($id, array $data)
     {
-        $this->performActionById('update', $id, array($data));
+        $this->performActionById('update', $id, $data);
     }
 
     /**

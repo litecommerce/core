@@ -29,13 +29,13 @@
 namespace XLite\View\Form\Product\Modify;
 
 /**
- * List 
+ * Details 
  * 
  * @package    XLite
  * @see        ____class_see____
  * @since      3.0.0
  */
-class Batch extends \XLite\View\Form\Product\Modify\AModify
+class Single extends \XLite\View\Form\Product\Modify\AModify
 {
     /**
      * Return form name
@@ -47,7 +47,7 @@ class Batch extends \XLite\View\Form\Product\Modify\AModify
      */
     protected function getFormName()
     {
-        return 'modify_products';
+        return 'modify_product';
     }
 
     /**
@@ -59,7 +59,7 @@ class Batch extends \XLite\View\Form\Product\Modify\AModify
      */
     protected function getDefaultTarget()
     {
-        return 'product_list';
+        return 'product';
     }
 
     /**
@@ -71,6 +71,31 @@ class Batch extends \XLite\View\Form\Product\Modify\AModify
      */
     protected function getDefaultAction()
     {
-        return 'update';
+        return 'modify';
+    }
+
+    /**
+     * getDefaultParams 
+     * 
+     * @return array
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultParams()
+    {
+        return parent::getDefaultParams() + array('product_id' => $this->getProductId());
+    }
+
+    /**
+     * Ability to add the 'enctype="multipart/form-data"' form attribute
+     * 
+     * @return bool
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isMultipart()
+    {
+        return false;
     }
 }

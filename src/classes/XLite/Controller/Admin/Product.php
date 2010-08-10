@@ -29,11 +29,11 @@
 namespace XLite\Controller\Admin;
 
 /**
- * ____description____
+ * Product 
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @package    XLite
+ * @see        ____class_see____
+ * @since      3.0.0
  */
 class Product extends Catalog
 {
@@ -46,19 +46,13 @@ class Product extends Catalog
      */
     protected function getCategoryId()
     {
-        return ($categoryId = parent::getCategoryId()) ?: $this->getProduct()->getCategoryId();
-    }
+        $categoryId = parent::getCategoryId();
 
-    /**
-     * Return current product Id
-     *
-     * @return int
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getProductId()
-    {
-        return \XLite\Core\Request::getInstance()->product_id;
+        if (empty($categoryId) && !$this->isNew()) {
+            $categoryId = $this->getProduct()->getCategoryId();
+        }
+
+        return $categoryId;
     }
 
 
@@ -66,51 +60,181 @@ class Product extends Catalog
      * Return current (or default) product object
      *
      * @return \XLite\Model\Product
-     * @access public
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getModelObject()
+    protected function getModelObject()
     {
         return $this->getProduct();
     }
 
     /**
      * Alias
-     * TODO - add extrafields
      *
      * @return \XLite\Model\Product
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getProduct()
+    {
+        $result = \XLite\Core\Database::getRepo('\XLite\Model\Product')->find($this->getProductId());
+
+        if (!isset($result)) {
+            $result = new \XLite\Model\Product();
+        }
+
+        return $result;
+    }
+
+    /**
+     * Check if specified clean URL is unique or not
+     * 
+     * @param string $cleanURL Clean URL
+     *  
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function checkCleanURL($cleanURL)
+    {
+        $entity = \XLite\Core\Database::getRepo('\XLite\Model\Product')->findOneByCleanUrl($cleanURL);
+
+        return !isset($entity) || $entity->getProductId() === $this->getProductId();
+    }
+
+
+    /**
+     * doActionModify 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionModify()
+    {
+        $data = $this->getPostedData();
+
+        if (!empty($data['clean_url']) && !$this->checkCleanURL($data['clean_url'])) {
+
+            \XLite\Core\TopMessage::addError(
+                'The "{{clean_url}}" clean URL is already defined',
+                array('clean_url' => $data['clean_url'])
+            );
+
+        } else {
+
+            $this->isNew() ? $this->doActionAdd() : $this->doActionUpdate();
+        }
+    }
+
+    /**
+     * doActionAdd 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionAdd()
+    {
+    }
+
+    /**
+     * doActionUpdate 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionUpdate()
+    {
+        \XLite\Core\Database::getRepo('\XLite\Model\Product')->updateById(
+            $this->getProductId(),
+            $this->getPostedData()
+        );
+    }
+
+
+    /**
+     * Return current product Id
+     * 
+     * NOTE: this function is public since it's neede for widgets
+     *
+     * @return int
+     * @access public
+     * @since  3.0.0
+     */
+    public function getProductId()
+    {
+        return intval(\XLite\Core\Request::getInstance()->product_id);
+    }
+
+    /**
+     * Check if we need to create new product or modify an existsing one
+     *
+     * NOTE: this function is public since it's neede for widgets
+     * 
+     * @return bool
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getProduct()
+    public function isNew()
     {
-        return \XLite\Core\Database::getRepo('\XLite\Model\Product')
-            ->find($this->getProductId());
+        return 0 >= $this->getProduct()->getProductId();
     }
 
 
 
+    /**
+     * FIXME- backward compatibility
+     * 
+     * @var    string
+     * @access public
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    public $page = 'info';
 
-    public $params = array('target', 'product_id', 'page', 'backUrl');
-    public $page = "info";
-    public $backUrl = "admin.php?target=product_list";
-
-    public $pages = array
-    (
-    	'info'  => 'Product info',
+    /**
+     * FIXME- backward compatibility
+     * 
+     * @var    array
+     * @access public
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    public $pages = array(
+    	'info'         => 'Product info',
         'extra_fields' => 'Extra fields',
-        'links' => 'HTML links',
     );
 
-    public $pageTemplates = array
-    (
-    	'info'    => 'product/info.tpl',
+    /**
+     * FIXME- backward compatibility 
+     * 
+     * @var    array
+     * @access public
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    public $pageTemplates = array(
+    	'info'         => 'product/info.tpl',
         'extra_fields' => 'product/extra_fields_form.tpl',
-        'links'   => 'product/links.tpl',
-        'default' => 'product/info.tpl'
+        'default'      => 'product/info.tpl'
     );
+
+
+
+
+
+
+
+
 
     /*function getProduct()
     {
@@ -136,7 +260,7 @@ class Product extends Catalog
         return $this->extraFields;
     }*/
 
-    function action_add_field()
+    /*function action_add_field()
     {
         $ef = new \XLite\Model\ExtraField();
         $ef->set('properties', \XLite\Core\Request::getInstance()->getData());
@@ -238,23 +362,5 @@ class Product extends Catalog
         $product->set('name', $product->get('name') . " (CLONE)");
         $product->update();
         $this->set('returnUrl', 'admin.php?target=product&product_id=' . $product->get('product_id'));
-    }
-
-    /**
-     * Check - specified clean URL unique or not
-     * 
-     * @param string $cleanURL Clean URL
-     *  
-     * @return boolean
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function checkCleanURLUnique($cleanURL)
-    {
-        $product = new \XLite\Model\Product();
-
-        return !$product->find('clean_url = \'' . $cleanURL . '\'');
-    }
-
+    }*/
 }

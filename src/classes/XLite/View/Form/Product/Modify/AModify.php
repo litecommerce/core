@@ -37,15 +37,4 @@ namespace XLite\View\Form\Product\Modify;
  */
 abstract class AModify extends \XLite\View\Form\Product\AProduct
 {
-    /**
-     * getDefaultAction
-     *
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getDefaultAction()
-    {
-        return 'update';
-    }
 }
