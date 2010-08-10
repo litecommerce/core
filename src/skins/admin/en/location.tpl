@@ -24,7 +24,7 @@
 <span IF="target=#settings#">&nbsp;::&nbsp;<a href="admin.php?target=settings" class="NavigationPath">General Settings</a></span>
 <span IF="target=#users#">&nbsp;::&nbsp;<a href="admin.php?target=users" class="NavigationPath">Users</a></span>
 <span IF="target=#extra_fields#">&nbsp;::&nbsp;Global extra fields</span>
-<span IF="target=#add_product#">&nbsp;::&nbsp;Add new product</span>
+<span IF="target=#product#">&nbsp;::&nbsp;Add new product</span>
 <span IF="target=#product#">&nbsp;::&nbsp;<a href="{backUrl:r}" class="NavigationPath">Product list</a>&nbsp;::&nbsp;Edit product "{product.name:h}"</span>
 <span IF="target=#catalog#">&nbsp;::&nbsp;HTML Catalog</span>
 <span IF="target=#autoupdate_catalog#">&nbsp;::&nbsp;Confirm HTML catalog update</span>

@@ -11,4 +11,4 @@
  * @since     3.0.0
  * @ListChild (list="menu.catalog", weight="30")
  *}
-<a href="admin.php?target=add_product">Add product</a>
+<a href="admin.php?target=product">Add product</a>

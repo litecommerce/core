@@ -262,7 +262,7 @@ class Product extends \XLite\Model\Base\I18n
             ? $this->getCategoryProducts()->first()
             : $this->findLinkByCategoryId($categoryId);
 
-        if (!isset($result)) {
+        if (empty($result)) {
             $result = new \XLite\Model\CategoryProducts();
         }
 
@@ -373,7 +373,13 @@ class Product extends \XLite\Model\Base\I18n
      */
     public function getCategory($categoryId = null)
     {
-        return $this->getLink($categoryId)->getCategory();
+        $result = $this->getLink($categoryId)->getCategory();
+
+        if (empty($result)) {
+            $result = new \XLite\Model\Category();
+        }
+
+        return $result;
     }
 
     /**
