@@ -35,10 +35,12 @@ CREATE TABLE xlite_category_images (
 
 DROP TABLE IF EXISTS xlite_category_products;
 CREATE TABLE xlite_category_products (
+  id int(11) unsigned NOT NULL AUTO_INCREMENT,
   product_id int(11) NOT NULL DEFAULT '0',
   category_id int(11) NOT NULL DEFAULT '0',
   orderby int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (category_id,product_id),
+  PRIMARY KEY (id),
+  UNIQUE KEY (category_id,product_id),
   KEY xlite_product_links_product (product_id),
   KEY orderby (orderby),
   KEY xlite_product_links_category (category_id)
