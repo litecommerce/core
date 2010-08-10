@@ -115,9 +115,10 @@
 <span IF="xlite.AOMEnabled">
 <widget module="AOM" template="modules/AOM/main.tpl">
 </span>
-<widget target="shipping_methods" class="\XLite\View\Tabber" body="{pageTemplate}" switch="target">
-<widget target="shipping_rates" class="\XLite\View\Tabber" body="{pageTemplate}" switch="target">
-<widget target="shipping_zones" class="\XLite\View\Tabber" body="{pageTemplate}" switch="target">
+
+<widget class="\XLite\View\Tabs\ShippingSettings">
+
+
 <widget module="GoogleCheckout" template="modules/GoogleCheckout/main.tpl">
 
 <widget template="stats.tpl">
