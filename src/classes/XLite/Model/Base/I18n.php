@@ -48,17 +48,20 @@ abstract class I18n extends \XLite\Model\AEntity
      */
     protected static $languagesQuery = null;
 
+
     /**
      * Constructor
-     * 
+     *
+     * @param array $data entity properties
+     *
      * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function __construct()
+    public function __construct(array $data = array())
     {
-        parent::__construct();
+        parent::__construct($data);
 
         $this->translations = new \Doctrine\Common\Collections\ArrayCollection();
     }

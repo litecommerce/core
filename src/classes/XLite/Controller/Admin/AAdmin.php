@@ -441,13 +441,14 @@ EOT;
      * getRequestDataByPrefix 
      * 
      * @param string $prefix index in the request array
+     * @param string $field  name of the field to retrieve
      *  
      * @return array
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getRequestDataByPrefix($prefix)
+    protected function getRequestDataByPrefix($prefix, $field = null)
     {
         $data = \XLite\Core\Request::getInstance()->$prefix;
 
@@ -455,20 +456,22 @@ EOT;
             $data = array();
         }
 
-        return $data;
+        return isset($field) ? (isset($data[$field]) ? $data[$field] : null) : $data;
     }
 
     /**
      * getPostedData 
      * 
-     * @return array
+     * @param string $field name of the field to retrieve
+     *  
+     * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getPostedData()
+    protected function getPostedData($field = null)
     {
-        return $this->getRequestDataByPrefix($this->getPrefixPostedData());
+        return $this->getRequestDataByPrefix($this->getPrefixPostedData(), $field);
     }
 
     /**

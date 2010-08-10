@@ -39,7 +39,7 @@
     <input type="text" name="{getNamePostedData(#name#)}" size="45" value="{product.name:r}">
   </td>
 </tr>  
-<tr IF="!mm.isModuleActive(#MultiCategories#)">
+<tr>
 	<td>
 	<table border="0" cellpadding="0" cellspacing="0" width="100%">
 	<tr>
@@ -49,12 +49,11 @@
 	</table>
 	</td>
 	<td> 
-        <widget class="\XLite\View\CategorySelect" fieldName="category_id" selectedCategoryId="{product.categories.0.category_id}">
-		<widget class="\XLite\Validator\RequiredValidator" field="category_id">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr><widget class="\XLite\View\FormField\Select\Categories" fieldName="{getNamePostedData(##,#category_ids#)}" value="{product.getCategories()}" /></tr>
+    </table>
     </td>
 </tr>
-
-<widget module="MultiCategories" class="\XLite\View\CategorySelect" template="modules/MultiCategories/additionalCategories.tpl" product="{product}" allOption fieldName="category_id">
 
 <tr>
   <td>
