@@ -83,7 +83,7 @@
 
 	<target name="tests" depends="plint,php-codesniffer,phpunit,jmeter,pdepend" />
 
-	<target name="tests-cc" depends="prepare-db,plint,php-codesniffer-cc,phpunit-cc,jmeter,pdepend" />
+	<target name="tests-cc" depends="prepare-db,plint,php-codesniffer-cc,phpunit-cc,jmeter" />
 
 	<target name="prepare-db">
         <copy todir="${buildDir}/src/etc">
