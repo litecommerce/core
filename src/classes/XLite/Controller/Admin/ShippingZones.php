@@ -35,7 +35,7 @@ namespace XLite\Controller\Admin;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class ShippingZones extends ShippingSettings
+class ShippingZones extends AAdmin
 {
     public function getShippingZones()
     {

@@ -48,7 +48,7 @@ function setHeaderChecked(class_name)
 Use this section to define your store's shipping methods.
 <hr>
 <p>
-{foreach:xlite.factory.\XLite\Model\Shipping.getModules(),module}
+{foreach:getShippingModules(),module}
 <script language="Javascript">CheckBoxes["{module.class}"] = new Array();</script>
 <table cellpadding="0" cellspacing="0" border="0">
 <form action="admin.php" name="shipping_method_{module.class}" method="POST">
