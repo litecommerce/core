@@ -86,7 +86,8 @@ class Product extends Catalog
      */
     public function getProduct()
     {
-        return \XLite\Core\Database::getRepo('\XLite\Model\Product')->find($this->getProductId());
+        return \XLite\Core\Database::getRepo('\XLite\Model\Product')
+            ->find($this->getProductId());
     }
 
 

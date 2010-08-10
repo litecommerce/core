@@ -252,6 +252,15 @@ table.data-table td.center {
   text-align: center;
 }
 
+table.data-table a {
+  text-decoration: underline;
+  color: #0055bd;
+}
+
+table.data-table a:hover {
+  text-decoration: none;
+}
+
 input.orderby {
   width: 4em;
   text-align: right;

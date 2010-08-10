@@ -658,12 +658,18 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
             // TODO - add throw exception
         }
 
-        $qb = $this->createQueryBuilder();
-        $keys = DB::buildInCondition($qb, $ids);
-        $alias = $this->getMainAlias($qb);
-        $qb->andWhere($alias . '.' . $this->_class->identifier[0] . ' IN (' . implode(', ', $keys) . ')');
+        $result = array();
 
-        return $qb->getQuery()->getResult();
+        if ($ids) {
+            $qb = $this->createQueryBuilder();
+            $keys = DB::buildInCondition($qb, $ids);
+            $alias = $this->getMainAlias($qb);
+            $qb->andWhere($alias . '.' . $this->_class->identifier[0] . ' IN (' . implode(', ', $keys) . ')');
+
+            $result = $qb->getQuery()->getResult();
+        }
+
+        return $result;
     }
 
     /**
