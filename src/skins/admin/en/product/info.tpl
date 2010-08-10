@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * ____file_title____
+ * TODO: the View\Model should be used instead
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -10,11 +10,10 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
+
 <p>Mandatory fields are marked with an asterisk (<font class="Star">*</font>).<br><br>
 
-<form name="modify_form" action="admin.php" method="POST" enctype="multipart/form-data">
-<input FOREACH="allparams,name,val" type="hidden" name="{name}" value="{val}"/>
-<input type="hidden" name="action" value="info">
+<widget class="XLite\View\Form\Product\Modify\Single" name="modify_form" />
 
 <table border=0 cellpadding="0">
 <tr>
@@ -24,7 +23,7 @@
 <tr>
   <td class="FormButton" nowrap>SKU</td>
   <td class=ProductDetails>
-    <input type="text" name="sku" size="20" value="{product.sku:r}">
+    <input type="text" name="{getNamePostedData(#sku#)}" size="20" value="{product.sku:r}">
   </td>
 </tr>
 <tr>
@@ -37,7 +36,7 @@
 	</table>
   </td>
   <td class=ProductDetails>
-    <input type="text" name="name" size="45" value="{product.name:r}">
+    <input type="text" name="{getNamePostedData(#name#)}" size="45" value="{product.name:r}">
   </td>
 </tr>  
 <tr IF="!mm.isModuleActive(#MultiCategories#)">
@@ -67,7 +66,7 @@
 	</table>
   </td>
   <td valign="middle">
-    <input type="text" name="price" size="18" value="{product.price}">
+    <input type="text" name="{getNamePostedData(#price#)}" size="18" value="{product.price}">
   </td>
 </tr>
 <widget module="ProductAdviser" template="modules/ProductAdviser/price_changed.tpl" IF="{priceNotifyPresent}" dialog="{dialog}">
@@ -83,7 +82,7 @@
 	</table>
   </td>
   <td valign="middle">
-    <input type="text" name="sale_price" size="18" value="{product.sale_price}">
+    <input type="text" name="{getNamePostedData(#sale_price#)}" size="18" value="{product.sale_price}">
   </td>
 </tr>
 </tbody>
@@ -93,7 +92,7 @@
     <i>You can specify tax classes in Settings/Taxes/add rate/condition dialog</i>
   </td>
   <td valign="middle">
-    <select name="tax_class">
+    <select name="{getNamePostedData(#tax_class#)}">
         <option value="">None</option>
     	<option FOREACH="xlite.factory.\XLite\Model\TaxRates.productClasses,_tax_class" selected="product.tax_class=_tax_class">{_tax_class}</option>
 	</select>
@@ -103,13 +102,13 @@
 <tr>
   <td valign=middle class=Text><font class="FormButton">Weight</font> ({config.General.weight_symbol:h})</td>
   <td valign="middle">
-    <input type="text" name="weight" size="18" value="{product.weight}">
+    <input type="text" name="{getNamePostedData(#weight#)}" size="18" value="{product.weight}">
   </td>
 </tr>
 <tr>
   <td valign="middle" class="FormButton">Free shipping</td>
   <td valign="middle" class=ProductDetails>
-   <select name=free_shipping>
+   <select name="{getNamePostedData(#free_shipping#)}">
         <option value=1 selected="{isSelected(product,#free_shipping#,#1#)}">Yes</option>
         <option value=0 selected="{isSelected(product,#free_shipping#,#0#)}">No</option>
     </select> 
@@ -125,7 +124,7 @@
 	</table>
   </td>
   <td valign="middle" class=ProductDetails>
-   <select name=enabled>
+   <select name="{getNamePostedData(#enabled#)}">
         <option value=1 selected="{isSelected(product,#enabled#,#1#)}">Yes</option>
         <option value=0 selected="{isSelected(product,#enabled#,#0#)}">No</option>
     </select> 
@@ -159,39 +158,41 @@
 
 <tr>
     <td class="FormButton">Product page title </td>
-	<td><input name="meta_title" value="{product.meta_title}" size=50></td>
+	<td><input name="{getNamePostedData(#meta_title#)}" value="{product.meta_title}" size=50></td>
 </tr>
 
 <tr>
   <td valign="top" class="FormButton">Brief Description</td>
   <td valign="top" class=ProductDetails>
-    <textarea name="brief_description" cols="45" rows="6">{product.brief_description:h}</textarea>
+    <textarea name="{getNamePostedData(#brief_description#)}" cols="45" rows="6">{product.brief_description:h}</textarea>
   </td>
 </tr>
 
 <tr>
   <td valign="top" class="FormButton">Detailed Description</td>
   <td valign="top" class=ProductDetails>
-    <textarea name="description" cols="45" rows="6">{product.description:h}</textarea>
+    <textarea name="{getNamePostedData(#description#)}" cols="45" rows="6">{product.description:h}</textarea>
   </td>
 </tr>
 
 <tr>
     <td class="FormButton">Meta keywords</td>
-    <td><input name="meta_tags" value="{product.meta_tags}" size=50></td>
+    <td><input name="{getNamePostedData(#meta_tags#)}" value="{product.meta_tags}" size=50></td>
 </tr>
 <tr>
     <td class="FormButton">Meta description</td>
-    <td><input name="meta_desc" value="{product.meta_desc}" size=50></td>
+    <td><input name="{getNamePostedData(#meta_desc#)}" value="{product.meta_desc}" size=50></td>
 </tr>
 <tr>
     <td class="FormButton">Clean URL</td>
-    <td><input name="clean_url" value="{product.clean_url}" size="50" /></td>
+    <td><input name="{getNamePostedData(#clean_url#)}" value="{product.clean_url}" size="50" /></td>
 </tr>
-<tr>
+
+{* Will be revised later *}
+{*<tr>
   <td valign=middle class="FormButton">Pos.</td>
-  <td valign="middle"><input type="text" name="order_by" size="5" value="{product.order_by}"></td>
-</tr>
+  <td valign="middle"><input type="text" name="{getNamePostedData(#order_by#)}" size="5" value="{product.order_by}"></td>
+</tr>*}
 
 {*extraFields*}
 <widget module="GoogleCheckout" template="modules/GoogleCheckout/product/info.tpl">
@@ -206,13 +207,18 @@
 
 <tr>
 <td>
-<input type="submit" value=" Update " class="DialogMainButton">
-&nbsp;
-<input type="button" value=" Clone " onClick="document.modify_form.action.value='clone'; document.modify_form.submit();">
+
+<widget class="\XLite\View\Button\Submit" label="Add" IF="isNew()" />
+<widget class="\XLite\View\Button\Submit" label="Update" IF="!isNew()" />
+
+{* Will be revised later *}
+{*&nbsp;
+<input type="button" value=" Clone " onClick="document.modify_form.action.value='clone'; document.modify_form.submit();">*}
 </td> 
 
 <td>&nbsp;</td>
 </tr>
 
 </table>
-</form>
+
+<widget name="modify_form" end />

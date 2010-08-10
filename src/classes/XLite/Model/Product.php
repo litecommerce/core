@@ -171,6 +171,7 @@ class Product extends \XLite\Model\Base\I18n
      */
     protected $javascript = '';
 
+
     /**
      * Relation to a CategoryProducts entities
      *
@@ -426,7 +427,7 @@ class Product extends \XLite\Model\Base\I18n
      */
     public function getMaxPurchaseLimit()
     {
-        return \XLite\Core\Config::getInstance()->General->default_purchase_limit;
+        return intval(\XLite\Core\Config::getInstance()->General->default_purchase_limit);
     }
 
     /**

@@ -762,9 +762,18 @@ abstract class AView extends \XLite\Core\Handler
      */
     protected function isSelected($val1, $val2, $val3 = null)
     {
-        return isset($val3)
-            ? $val1->{'get' . (($val1 instanceof \XLite\Model\AEntity) ? \XLite\Core\Converter::convertToCamelCase($val2) : '')}() == $val3
-            : $val1 == $val2;
+        if (isset($val1) && isset($val3)) {
+            $method = 'get';
+            if ($val1 instanceof \XLite\Model\AEntity) {
+                $method .= \XLite\Core\Converter::convertToCamelCase($val2);
+            }
+
+            $result = $val1->$method() == $val3;
+        } else {
+            $result = $val1 == $val2;
+        }
+
+        return $result;
     }
 
     /**

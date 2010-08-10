@@ -113,7 +113,7 @@ abstract class Catalog extends AAdmin
      */
     protected function getCategoryId()
     {
-        return \XLite\Core\Request::getInstance()->category_id;
+        return intval(\XLite\Core\Request::getInstance()->category_id);
     }
 
 

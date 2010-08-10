@@ -286,6 +286,19 @@ abstract class AForm extends \XLite\View\AView
         );
     }
 
+    /**
+     * Ability to add the 'enctype="multipart/form-data"' form attribute
+     * 
+     * @return bool
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isMultipart()
+    {
+        return false;
+    }
+
 
     /**
      * Return current form reference
