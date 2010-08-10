@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage ____sub_package____
+ * @subpackage View
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -27,34 +27,16 @@
  */
 
 namespace XLite\View\FormField\Select;
-
+ 
 /**
- * Form abstract selector
+ * Category selector
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class ASelect extends \XLite\View\FormField\AFormField
+class Categories extends \XLite\View\FormField\Select\Multiple
 {
-    /**
-     * Widget param names 
-     */
-
-    const PARAM_OPTIONS = 'options';
-
-    
-    /**
-     * Return default options list
-     * 
-     * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    abstract protected function getDefaultOptions();
-
-
     /**
      * Return field template
      *
@@ -64,48 +46,35 @@ abstract class ASelect extends \XLite\View\FormField\AFormField
      */
     protected function getFieldTemplate()
     {
-        return 'select.tpl';
+        return 'select_category.tpl';
     }
 
     /**
-     * getOptions 
+     * Return default options list
      * 
      * @return array
      * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getOptions()
+    protected function getDefaultOptions()
     {
-        return $this->getParam(self::PARAM_OPTIONS);
+        return \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategories();
     }
 
     /**
-     * Define widget params
-     *
-     * @return void
+     * isCategorySelected 
+     * 
+     * @param int $categoryId cateory ID to check
+     *  
+     * @return bool
      * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function defineWidgetParams()
+    protected function isCategorySelected($categoryId)
     {
-        parent::defineWidgetParams();
-
-        $this->widgetParams += array(
-            self::PARAM_OPTIONS => new \XLite\Model\WidgetParam\Collection('Options', $this->getDefaultOptions(), false),
-        );
-    }
-
-
-    /**
-     * Return field type
-     *
-     * @return string
-     * @access public
-     * @since  3.0.0
-     */
-    public function getFieldType()
-    {
-        return self::FIELD_TYPE_SELECT;
+        return (bool) \Includes\Utils\Doctrine\Entity::searchInArray($this->getValue(), 'category_id', $categoryId);
     }
 }
 

@@ -28,8 +28,7 @@
 
 namespace XLite\Model;
 
-use XLite\Core\Database as DB,
-    XLite\Core\Converter;
+use XLite\Core\Database as DB, XLite\Core\Converter;
 
 /**
  * Abstract entity 
@@ -61,20 +60,24 @@ abstract class AEntity
     protected static $methodNames = array();
 
 
-    /**
-     * Dump constructor
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function __construct()
-    {
+    /**                                                                           
+     * Constructor                                                                
+     *                                                                            
+     * @param array $data entity properties                                       
+     *                                                                            
+     * @return void                                                               
+     * @access public                                                             
+     * @see    ____func_see____                                                   
+     * @since  3.0.0                                                              
+     */                                                                           
+    public function __construct(array $data = array())                            
+    {                                                                             
+        empty($data) ?: $this->map($data);                                        
     }
 
     /**
      * Map data to entity columns
+     * FIXME
      * 
      * @param array $data Data
      *  
@@ -86,7 +89,9 @@ abstract class AEntity
     public function map(array $data)
     {
         foreach ($data as $key => $value) {
-            $this->__set($key, $value);
+            if (method_exists($this, $method = 'set' . $this->getMethodName($key))) {
+                $this->$method($value);
+            }
         }
     }
 
@@ -157,9 +162,10 @@ abstract class AEntity
         $class = get_called_class();
 
         if (!isset(self::$methodNames[$class])) {
-            self::$methodNames[$class] = array($name => Converter::convertToCamelCase($name));
+            self::$methodNames[$class] = array();
+        }
 
-        } elseif (!isset(self::$methodNames[$class][$name])) {
+        if (!isset(self::$methodNames[$class][$name])) {
             self::$methodNames[$class][$name] = Converter::convertToCamelCase($name);
         }
 

@@ -1295,8 +1295,8 @@ PHP;
             // Constructor update
             if ($relations) {
                 $relationsInit = '        $this->'
-                    . implode(' = new \Doctrine\Common\Collections\ArrayCollection;' . "\n" . '        $this->', $relations)
-                    . ' = new \Doctrine\Common\Collections\ArrayCollection;' . "\n";
+                    . implode(' = new \Doctrine\Common\Collections\ArrayCollection();' . "\n" . '        $this->', $relations)
+                    . ' = new \Doctrine\Common\Collections\ArrayCollection();' . "\n";
 
                 $pos = strpos(' __construct(', $data);
                 if (false !== $pos) {
@@ -1310,14 +1310,18 @@ PHP;
     /**
      * Constructor
      *
+     * @param array \$data entity properties
+     *
      * @return void
      * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
      */
-    public function __construct()
+    public function __construct(array \$data = array())
     {
-        parent::__construct();
-
 $relationsInit
+
+        parent::__construct(\$data);
     }
 PHP;
 

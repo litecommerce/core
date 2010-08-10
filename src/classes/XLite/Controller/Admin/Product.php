@@ -89,6 +89,33 @@ class Product extends Catalog
     }
 
     /**
+     * Return list of the CategoryProduct entities
+     * 
+     * @param int $productId product ID to map
+     *  
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getCategoryProducts($productId)
+    {
+        $data = array();
+        $product =  new \XLite\Model\Product(array('product_id' => $productId));
+
+        foreach ($this->getPostedData('category_ids') as $categoryId) {
+            $data[] = new \XLite\Model\CategoryProducts(
+                array(
+                    'category' => new \XLite\Model\Category(array('category_id' => $categoryId)),
+                    'product'  => $product,
+                )
+            );
+        }
+
+        return new \Doctrine\Common\Collections\ArrayCollection($data);
+    }
+
+    /**
      * Set error
      * 
      * @param string $cleanURL Clean URL
@@ -118,11 +145,15 @@ class Product extends Catalog
      */
     protected function checkCleanURL($cleanURL)
     {
-        $entity = \XLite\Core\Database::getRepo('\XLite\Model\Product')->findOneByCleanUrl($cleanURL);
-        $result = !isset($entity) || $entity->getProductId() === $this->getProductId();
+        $result = empty($cleanURL);
 
         if (!$result) {
-            $this->setCleanURLError($cleanURL);
+            $entity = \XLite\Core\Database::getRepo('\XLite\Model\Product')->findOneByCleanUrl($cleanURL);
+            $result = !isset($entity) || $entity->getProductId() === $this->getProductId();
+
+            if (!$result) {
+                $this->setCleanURLError($cleanURL);
+            }
         }
 
         return $result;
@@ -141,7 +172,7 @@ class Product extends Catalog
     {
         $data = $this->getPostedData();
 
-        if (empty($data['clean_url']) || $this->checkCleanURL($data['clean_url'])) {
+        if ($this->checkCleanURL($this->getPostedData('clean_url'))) {
             $this->isNew() ? $this->doActionAdd() : $this->doActionUpdate();
         }
     }
@@ -177,7 +208,7 @@ class Product extends Catalog
     {
         \XLite\Core\Database::getRepo('\XLite\Model\Product')->updateById(
             $this->getProductId(),
-            $this->getPostedData()
+            $this->getPostedData() + array('category_products' => $this->getCategoryProducts($this->getProductId()))
         );
     }
 

@@ -236,14 +236,7 @@ class Product extends \XLite\Model\Base\I18n
      */
     protected function findLinkByCategoryId($categoryId)
     {
-        $list = array_filter(
-            $this->getCategoryProducts()->toArray(),
-            function ($var) use ($categoryId) {
-                return $var->getCategoryId() == $categoryId;
-            }
-        );
-
-        return empty($list) ? null : reset($list);
+        return \Includes\Utils\Doctrine\Entity::searchInArray($this->getCategoryProducts()->toArray(), 'category_id', $categoryId);
     }
 
     /**

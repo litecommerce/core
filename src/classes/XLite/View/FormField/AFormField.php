@@ -304,6 +304,19 @@ abstract class AFormField extends \XLite\View\AView
     }
 
     /**
+     * getDefaultAttributes 
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getDefaultAttributes()
+    {
+        return array();
+    }
+
+    /**
      * Define widget params 
      * 
      * @return void
@@ -320,7 +333,7 @@ abstract class AFormField extends \XLite\View\AView
             self::PARAM_LABEL      => new \XLite\Model\WidgetParam\String('Label', $this->getDefaultLabel()),
             self::PARAM_REQUIRED   => new \XLite\Model\WidgetParam\Bool('Required', false),
             self::PARAM_COMMENT    => new \XLite\Model\WidgetParam\String('Comment', null),
-            self::PARAM_ATTRIBUTES => new \XLite\Model\WidgetParam\Collection('Attributes', array()),
+            self::PARAM_ATTRIBUTES => new \XLite\Model\WidgetParam\Collection('Attributes', $this->getDefaultAttributes()),
 
             self::PARAM_IS_ALLOWED_FOR_CUSTOMER => new \XLite\Model\WidgetParam\Bool(
                 'Is allowed for customer',
