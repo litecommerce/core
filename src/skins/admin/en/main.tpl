@@ -125,8 +125,6 @@
 
 <widget target="payment_method" body="{pm.configurationTemplate}" template="common/dialog.tpl" head="{pm.processorName} settings">
 
-<widget target="global_product_options" module="ProductOptions" template="common/dialog.tpl" head="Global product options" body="modules/ProductOptions/global_product_options.tpl">
-
 <widget target="css_edit" template="common/dialog.tpl" body="css_editor/css_edit.tpl" head="CSS Editor">
 <widget target="image_edit" template="common/dialog.tpl" body="image_editor/edit.tpl" head="Image Editor">
 {*
@@ -176,7 +174,7 @@
 <widget module="WishList" target="wishlists" template="modules/WishList/wishlists.tpl" head="Wish Lists">
 <widget module="WishList" target="wishlist" template="common/dialog.tpl" body="modules/WishList/wishlist.tpl" head="Wish List">
 <widget module="WholesaleTrading" template="modules/WholesaleTrading/main.tpl"> 
-{displayViewListContent(#center#)}
+{displayViewListContent(#admin.center#)}
 <!-- [/center] -->
     </td>
     <td width="10">&nbsp;</td>

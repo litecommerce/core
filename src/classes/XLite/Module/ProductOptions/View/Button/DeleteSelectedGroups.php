@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage Model
+ * @subpackage ____sub_package____
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -26,24 +26,27 @@
  * @since      3.0.0
  */
 
-namespace XLite\Module\ProductOptions\Model\Repo;
+namespace \XLite\Module\ProductOptions\View\Button;
 
 /**
- * Option repository
+ * Delete slected option groups button
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Option extends \XLite\Model\Repo\Base\I18n
+class DeleteSelectedGroups extends \XLite\View\Button\DeleteSelected
 {
     /**
-     * Default 'order by' field name
+     * getDefaultAction
      *
-     * @var    string
+     * @return string
      * @access protected
-     * @see    ____var_see____
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    protected $defaultOrderBy = 'orderby';
+    protected function getDefaultAction()
+    {
+        return 'delete_option_groups';
+    }
 }

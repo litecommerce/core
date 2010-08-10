@@ -38,6 +38,16 @@ namespace XLite\Module\ProductOptions\Model\Repo;
 class OptionGroup extends \XLite\Model\Repo\Base\I18n
 {
     /**
+     * Default 'order by' field name
+     *
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $defaultOrderBy = 'orderby';
+
+    /**
      * Find all active option groups by product id 
      * 
      * @param integer $productId Product id
