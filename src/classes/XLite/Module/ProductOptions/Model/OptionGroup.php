@@ -67,17 +67,6 @@ class OptionGroup extends \XLite\Model\Base\I18n
     protected $group_id;
 
     /**
-     * Group product unique id 
-     * 
-     * @var    integer
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     * @Column (type="integer")
-     */
-    protected $product_id;
-
-    /**
      * Sort position
      * 
      * @var    integer
@@ -183,7 +172,11 @@ class OptionGroup extends \XLite\Model\Base\I18n
         $types = $this->getRepository()->getOptionGroupTypes();
 
         if (isset($types[$type])) {
-            $this->type = $type;
+            if ($this->type != $type) {
+                $this->type = $type;
+                $views = array_keys($types[$this->type]['views']);
+                $this->view_type = array_shift($views);
+            }
             $result = true;
         }
 
@@ -288,7 +281,7 @@ class OptionGroup extends \XLite\Model\Base\I18n
                 break;
 
             default:
-                $result = null;
+                // TODO - add throw exception
         }
 
         return $result;
