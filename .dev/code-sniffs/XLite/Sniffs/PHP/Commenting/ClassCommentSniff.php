@@ -91,6 +91,11 @@ class XLite_Sniffs_PHP_Commenting_ClassCommentSniff extends XLite_Sniffs_PHP_Com
             'allow_multiple' => false,
             'order_text'     => 'follows @Column',
 		),
+        'ListChild' => array(
+            'required'       => false,
+            'allow_multiple' => true,
+            'order_text'     => 'any place',
+        ),
 	);
 
     protected $reqCodeRequire = 'REQ.PHP.4.4.3';
