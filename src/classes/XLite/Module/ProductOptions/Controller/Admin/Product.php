@@ -162,37 +162,37 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
 
         if (!isset($group)) {
             \XLite\Core\TopMessage::getInstance()->add(
-                '1',
+                'The modified option group has not been found',
                 \XLite\Core\TopMessage::ERROR
             );
 
         } elseif (!$this->getProduct()) {
             \XLite\Core\TopMessage::getInstance()->add(
-                '2',
+                'The modified product has not been found',
                 \XLite\Core\TopMessage::ERROR
             );
 
         } elseif (!is_array($data)) {
             \XLite\Core\TopMessage::getInstance()->add(
-                '3',
+                'The modified option group data has not been found',
                 \XLite\Core\TopMessage::ERROR
             );
 
         } elseif (!isset($data['name']) || !$data['name']) {
             \XLite\Core\TopMessage::getInstance()->add(
-                '4',
+                'The modified option group must have a name',
                 \XLite\Core\TopMessage::ERROR
             );
 
         } elseif (!$group->setType($data['type'])) {
             \XLite\Core\TopMessage::getInstance()->add(
-                '5',
+                'The modified option group has a wrong type',
                 \XLite\Core\TopMessage::ERROR
             );
 
         } elseif (!$group->setViewType($data['view_type'])) {
             \XLite\Core\TopMessage::getInstance()->add(
-                '6',
+                'The option must have a name',
                 \XLite\Core\TopMessage::ERROR
             );
 
