@@ -304,7 +304,7 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
 
         if (!$data['name']) {
             \XLite\Core\TopMessage::getInstance()->add(
-                '7',
+                'The modified option group has a wrong display type',
                 \XLite\Core\TopMessage::ERROR
             );
 
