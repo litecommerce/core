@@ -91,7 +91,11 @@ abstract class ASelect extends \XLite\View\FormField\AFormField
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_OPTIONS => new \XLite\Model\WidgetParam\Collection('Options', $this->getDefaultOptions(), false),
+            self::PARAM_OPTIONS => new \XLite\Model\WidgetParam\Collection(
+                'Options',
+                $this->getDefaultOptions(),
+                false
+            ),
         );
     }
 

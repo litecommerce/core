@@ -11,7 +11,7 @@
  * @since     3.0.0
  *}
 <select name="product_options[{option.getGroupId()}]">
-  <option FOREACH="option.getOptions(),opt" value="{opt.getOptionId()}" selected="{isOptionSelected(opt)}" >
+  <option FOREACH="option.getActiveOptions(),opt" value="{opt.getOptionId()}" selected="{isOptionSelected(opt)}" >
     {opt.getName():h}
     <widget class="\XLite\Module\ProductOptions\View\ProductOptionModifier" option="{opt}" />
   </option>

@@ -167,6 +167,56 @@ class OptionGroup extends \XLite\Model\Base\I18n
     protected $options;
 
     /**
+     * SetT type 
+     * 
+     * @param string $type Option group type
+     *  
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setType($type)
+    {
+        $result = false;
+
+        $types = $this->getRepository()->getOptionGroupTypes();
+
+        if (isset($types[$type])) {
+            $this->type = $type;
+            $result = true;
+        }
+
+        return $result;
+    }
+
+    /**
+     * Set view type 
+     * 
+     * @param string $type Option group view type
+     *  
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setViewType($type)
+    {
+        $types = $this->getRepository()->getOptionGroupTypes();
+        $views = $types[$this->type]['views'];
+
+        $result = false;
+
+        if (isset($views[$type])) {
+            $this->view_type = $type;
+            $result = true;
+        }
+
+        return $result;
+
+    }
+
+    /**
      * Get display name 
      * 
      * @return string
