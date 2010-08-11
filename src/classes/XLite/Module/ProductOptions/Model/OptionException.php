@@ -39,6 +39,18 @@ namespace XLite\Module\ProductOptions\Model;
  */
 class OptionException extends \XLite\Model\AEntity
 {
+    /**
+     * Exception record unique id 
+     * 
+     * @var    integer
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Id
+     * @GeneratedValue (strategy="AUTO")
+     * @Column (type="integer")
+     */
+    protected $id;
 
     /**
      * Option unique id 
@@ -47,7 +59,6 @@ class OptionException extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @Id
      * @Column (type="integer")
      */
     protected $option_id;
@@ -59,7 +70,6 @@ class OptionException extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @Id
      * @Column (type="integer")
      */
     protected $exception_id;

@@ -201,6 +201,7 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
             $data['orderby'] = abs(intval($data['orderby']));
             $data['enabled'] = isset($data['enabled']) && $data['enabled'];
 
+            $group->setEditLanguageCode($this->getCurrentLanguage());
             $group->map($data);
 
             $result = true;
@@ -288,6 +289,91 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
     }
 
     /**
+     * Update option groups exceptions 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionUpdateOptionGroupsExceptions()
+    {
+        $exceptions = \XLite\Core\Request::getInstance()->exceptions;
+
+        if (!is_array($exceptions) || !$exceptions) {
+            \XLite\Core\TopMessage::getInstance()->add(
+                'The modified exceptions data has not been found',
+                \XLite\Core\TopMessage::ERROR
+            );
+
+        } else {
+
+            foreach ($exceptions as $eid => $data) {
+                if ($eid) {
+                    $old = \XLite\Core\Database::getRepo('XLite\Module\ProductOptions\Model\OptionException')
+                        ->findByExceptionId($eid);
+                    if (!$old) {
+                        continue;
+                    }
+
+                    foreach ($old as $e) {
+                        $e->getOption()->setExceptions(array());
+                        \XLite\Core\Database::getEM()->remove($e);
+                    }
+                    \XLite\Core\Database::getEM()->flush();
+
+                } else {
+                    $eid = \XLite\Core\Database::getRepo('XLite\Module\ProductOptions\Model\OptionException')
+                        ->getNextExceptionId();
+                }
+
+                $this->saveException($eid, $data);
+                \XLite\Core\Database::getEM()->flush();
+            }
+
+            \XLite\Core\TopMessage::getInstance()->add(
+                'The exceptions have been successfully updated'
+            );
+
+        }
+
+    }
+
+    /**
+     * Delete option groups exceptions 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionDeleteOptionGroupsExceptions()
+    {
+        $mark = \XLite\Core\Request::getInstance()->mark;
+
+        $exceptions = \XLite\Core\Database::getRepo('XLite\Module\ProductOptions\Model\OptionException')
+            ->findByExceptionIds($mark);
+
+        if ($exceptions) {
+            foreach ($exceptions as $exception) {
+                \XLite\Core\Database::getEM()->remove($exception);
+            }
+
+            \XLite\Core\Database::getEM()->flush();
+
+            \XLite\Core\TopMessage::getInstance()->add(
+                'The exceptions have been deleted'
+            );
+
+        } else {
+            \XLite\Core\TopMessage::getInstance()->add(
+                'The exceptions have not been deleted',
+                \XLite\Core\TopMessage::ERROR
+            );
+        }
+    }
+
+    /**
      * Save option 
      * 
      * @param \XLite\Module\ProductOptions\Model\Option $option Option
@@ -340,6 +426,7 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
                 unset($data['modifiers']);
             }
 
+            $option->setEditLanguageCode($this->getCurrentLanguage());
             $option->map($data);
 
             \XLite\Core\Database::getEM()->persist($option);
@@ -349,6 +436,35 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
         }
 
         return $result;
+    }
+
+    /**
+     * Save exception 
+     * 
+     * @param integer $eid Exception id
+     * @param array  $data Exception cell data
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function saveException($eid, array $data)
+    {
+        foreach ($data as $groupId => $optionId) {
+            if ($optionId) {
+                $option = \XLite\Core\Database::getRepo('XLite\Module\ProductOptions\Model\Option')
+                    ->find($optionId);
+
+                if ($option) {
+                    $exception = new \XLite\Module\ProductOptions\Model\OptionException();
+                    $exception->setExceptionId($eid);
+                    $exception->setOption($option);
+                    $option->addExceptions($exception);
+                    \XLite\Core\Database::getEM()->persist($exception);
+                }
+            }
+        }
     }
 
 }

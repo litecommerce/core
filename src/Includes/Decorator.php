@@ -1568,7 +1568,7 @@ DATA;
      */
     public function get$prefix()
     {
-        return \$this->getSoftTranslation()->$field;
+        return \$this->getSoftTranslation()->get$prefix();
     }
 
     /**
@@ -1582,7 +1582,7 @@ DATA;
      */
     public function set$prefix(\$value)
     {
-        \$this->getTranslation()->$field = \$value;
+        \$this->getTranslation(\$this->editLanguage)->set$prefix(\$value);
     }
 
 DATA;
