@@ -69,9 +69,6 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
      */
     protected $end = array('time' => 0, 'memory' => 0);
 
-
-
-
     /**
      * Return test execution time  
      * 
@@ -85,7 +82,7 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
         $time    = number_format($this->end['time'] - $this->start['time'], 4);
         $message = $this->getMessage('', get_called_class(), $this->name);
 
-        return sprintf('%\'.-50s', trim($message)) . ' ' . sprintf('%8s', $time) . ' sec .....';
+        return sprintf('%\'.-70s', trim($message)) . ' ' . sprintf('%8s', $time) . ' sec .....';
     }
 
     /**
