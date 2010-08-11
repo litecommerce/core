@@ -138,8 +138,8 @@
 			<td>{item.amount}</td>
 		</tr>
 
-        <widget module="GiftCertificates" template="modules/GiftCertificates/invoice_item.tpl">
-        <widget module="ProductOptions" template="modules/ProductOptions/invoice_options.tpl" IF="{item.hasOptions()}">
+    {displayViewListContent(#admin.invoice.item#,_ARRAY_(#item#^item))}
+    <widget module="GiftCertificates" template="modules/GiftCertificates/invoice_item.tpl">
 		<widget module="Egoods" template="modules/Egoods/invoice.tpl">
 
 		<tr>

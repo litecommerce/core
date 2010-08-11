@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * ____file_title____
+ * Order invoice additional info
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -9,10 +9,13 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
+ * @ListChild (list="admin.invoice.item")
  *}
+{if:item.getProductOptions()}
 <tr>
-    <td colspan="2">Selected options:</td>
+  <td colspan="2">Selected options:</td>
 </tr>
-<tr FOREACH="item.productOptions,option">
-    <td colspan="2">&nbsp;&nbsp;&nbsp;{option.class:h}: {option.option:h}<br></td>
+<tr FOREACH="item.getProductOptions(),option">
+  <td colspan="2" style="padding-left: 20px;">{option.getName():h}: {option.getValue():h}</td>
 </tr>
+{end:}
