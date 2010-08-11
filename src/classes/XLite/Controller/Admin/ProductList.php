@@ -63,33 +63,5 @@ class ProductList extends AAdmin
     {
         \XLite\Core\Database::getRepo('\XLite\Model\Product')->deleteInBatch($this->getToDelete());
     }
-
-    /**
-     * doActionClone 
-     * FIXME - to revise
-     * 
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    /*protected function doActionClone()
-    {
-        if (isset(\XLite\Core\Request::getInstance()->product_ids) && is_array(\XLite\Core\Request::getInstance()->product_ids)) {
-
-            foreach (\XLite\Core\Request::getInstance()->product_ids as $product_id) {
-    			$p = new \XLite\Model\Product($product_id);
-                $product = $p->cloneObject();
-
-    			foreach ($p->get('categories') as $category) {
-    				$product->addCategory($category);
-                }
-
-    			$product->set('name', $product->get('name') . ' (CLONE)');
-    			$product->update();
-                $this->set('status', 'cloned');
-            }
-        }
-    }*/
 }
 
