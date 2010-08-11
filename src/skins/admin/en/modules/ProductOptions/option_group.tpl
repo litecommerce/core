@@ -41,7 +41,7 @@
     </li>
 
     <li>
-      <label for="data_view_type">Visualisation type</label>
+      <label for="data_view_type">Display type</label>
       <select name="data[view_type]" id="data_view_type">
         <option FOREACH="getOptionGroupViewTypes(),type,name" value="{type}" selected="{isSelected(group.getViewType(),type)}">{name}</option>
       </select>
