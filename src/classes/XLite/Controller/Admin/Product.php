@@ -101,18 +101,20 @@ class Product extends Catalog
     protected function getCategoryProducts($productId)
     {
         $data = array();
-        $product =  new \XLite\Model\Product(array('product_id' => $productId));
+        $product = \XLite\Core\Database::getRepo('\XLite\Model\Product')->find($productId);
 
         foreach ($this->getPostedData('category_ids') as $categoryId) {
             $data[] = new \XLite\Model\CategoryProducts(
                 array(
-                    'category' => new \XLite\Model\Category(array('category_id' => $categoryId)),
-                    'product'  => $product,
+                    'product_id'  => $productId,
+                    'category_id' => $categoryId,
+                    'category'    => \XLite\Core\Database::getRepo('\XLite\Model\Category')->find($categoryId),
+                    'product'     => $product,
                 )
             );
         }
 
-        return new \Doctrine\Common\Collections\ArrayCollection($data);
+        return array('category_products' => new \Doctrine\Common\Collections\ArrayCollection($data));
     }
 
     /**
@@ -170,8 +172,6 @@ class Product extends Catalog
      */
     protected function doActionModify()
     {
-        $data = $this->getPostedData();
-
         if ($this->checkCleanURL($this->getPostedData('clean_url'))) {
             $this->isNew() ? $this->doActionAdd() : $this->doActionUpdate();
         }
@@ -192,6 +192,9 @@ class Product extends Catalog
         )->getProductId();
 
         if (!empty($id)) {
+            // Create associations with categories
+            \XLite\Core\Database::getRepo('\XLite\Model\Product')->update($id, $this->getCategoryProducts($id));
+
             $this->setReturnUrl($this->buildURL('product', '', array('product_id' => $id)));
         }
     }
@@ -206,9 +209,9 @@ class Product extends Catalog
      */
     protected function doActionUpdate()
     {
-        \XLite\Core\Database::getRepo('\XLite\Model\Product')->updateById(
+        \XLite\Core\Database::getRepo('\XLite\Model\Product')->update(
             $this->getProductId(),
-            $this->getPostedData() + array('category_products' => $this->getCategoryProducts($this->getProductId()))
+            $this->getPostedData() + $this->getCategoryProducts($this->getProductId())
         );
     }
 

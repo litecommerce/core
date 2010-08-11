@@ -843,49 +843,10 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     }
 
 
-    /**
-     * Search entity by key.
-     * If it's not found, the exception will be thrown
-     * 
-     * @param int $id entity ID
-     *  
-     * @return \XLite\Model\AEntity
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getByIdRough($id)
-    {
-        if (!($entity = $this->find($id))) {
-            throw new Exception(get_called_class() . '::updateById() - unknow ID (' . $id . ')');
-        }
-
-        return $entity;
-    }
-
-    /**
-     * Search entity by key.
-     * If it's not found, new object will be created
-     * 
-     * @param int $id entity ID
-     *  
-     * @return \XLite\Model\AEntity
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getByIdSoft($id)
-    {
-        if (!($entity = $this->find($id))) {
-            $entity = new $this->_entityName;
-        }
-
-        return $entity;
-    }
 
     /**
      * Flushes all changes to objects that have been queued up to now to the database
-     * 
+     *
      * @return void
      * @access protected
      * @see    ____func_see____
@@ -897,62 +858,36 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     }
 
     /**
-     * Common method to perform actions (insert/update/delete)
-     * 
-     * @param string $method       method to execute
-     * @param int    $id           entity ID
-     * @param array  $data         data to use in action
-     * @param bool   $flushChanges flush chages or not
-     *  
-     * @return void
+     * Search entity by key.
+     * If it's not found, the exception will be thrown
+     *
+     * @param int $id entity ID
+     *
+     * @return \XLite\Model\AEntity
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function performAction($method, $id, array $data = array(), $flushChanges = true)
+    protected function getById($id)
     {
-        $result = $this->{'perform' . ucfirst($method)}($id, $data);
-
-        if ($flushChanges) {
-            $this->flushChanges();
+        if (!($entity = $this->find($id))) {
+            throw new \Exception(get_class($this) . '::updateById() - unknow ID (' . $id . ')');
         }
 
-        return $result;
+        return $entity;
     }
 
     /**
-     * Common method to perform batch actions (insert/update/delete)
-     * 
-     * @param string $method       method to execute
-     * @param array  $data   data to use in action
-     *  
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function performActionInBatch($method, array $data)
-    {
-        foreach ($data as $id => $fields) {
-            $this->performAction($method, $id, $fields, false);
-        }
-
-        $this->flushChanges();
-    }
-
-
-    /**
-     * Insert single entity 
-     * 
-     * @param int   $id   fake parameter
+     * Insert single entity
+     *
      * @param array $data data to use in action
-     *  
+     *
      * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function performInsert($id, array $data)
+    protected function performInsert(array $data)
     {
         $entity = new $this->_entityName;
         $entity->map($data);
@@ -963,34 +898,49 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     }
 
     /**
-     * Update single entity 
-     * 
+     * Update single entity
+     *
      * @param int   $id   entity ID
      * @param array $data data to use in action
-     *  
+     *
      * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function performUpdateById($id, array $data)
+    protected function performUpdate($id, array $data)
     {
-        return $this->getByIdRough($id)->map($data);
+        $this->getById($id)->map($data);
     }
 
     /**
-     * Delete single entity
+     * Remove single entity
+     *
+     * @param \XLite\Model\AEntity $entity entity to detach
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function performRemove(\XLite\Model\AEntity $entity)
+    {
+        $this->getEntityManager()->remove($entity);
+    }
+
+    /**
+     * Delete single entity by ID
      *
      * @param int $id entity ID
      *
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  3.0.0
+     *
      */
-    protected function performDeleteById($id)
+    protected function performDelete($id)
     {
-        return $this->getEntityManager()->remove($this->getByIdRough($id));
+        $this->performRemove($this->getById($id));
     }
 
 
@@ -1007,16 +957,19 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * @see    ____func_see____
      * @since  3.0.0
      */
-    final public function insert(array $data)
+    public function insert(array $data)
     {
-        return $this->performAction(__FUNCTION__, null, $data);
+        $result = $this->performInsert($data);
+        $this->flushChanges();
+
+        return $result;
     }
 
     /**
      * Update single entity
      *
      * NOTE: do not override this method: it will not affect the "updateInBatch()" one.
-     * Override the "performUpdateById()" instead
+     * Override the "performUpdate()" instead
      *
      * @param int   $id   entity ID
      * @param array $data data to use in action
@@ -1026,34 +979,55 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * @see    ____func_see____
      * @since  3.0.0
      */
-    final public function updateById($id, array $data)
+    public function update($id, array $data)
     {
-        return $this->performAction(__FUNCTION__, $id, $data);
+        $this->performUpdate($id, $data);
+        $this->flushChanges();
     }
 
     /**
-     * Delete single entity
+     * Remove single entity
+     *
+     * NOTE: do not override this method: it will not affect the "removeInBatch()" one.
+     * Override the "performRemove()" instead
+     * 
+     * @param \XLite\Model\AEntity $entity entity to detach
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function remove(\XLite\Model\AEntity $entity)
+    {
+        $this->performRemove(); 
+        $this->flushChanges();
+    }
+
+    /**
+     * Delete single entity by ID
      *
      * NOTE: do not override this method: it will not affect the "deleteInBatch()" one.
-     * Override the "performDeleteById()" instead
+     * Override the "performDelete()" instead
      *
      * @param int $id entity ID
      *
      * @return void
      * @access protected
      * @see    ____func_see____
-     * 
+     *
      */
-    final public function deleteById($id)
+    public function delete($id)
     {
-        return $this->performAction(__FUNCTION__, $id);
+        $this->performDelete($id);
+        $this->flushChanges();
     }
 
     /**
      * Insert several items at once
-     * 
+     *
      * @param array $data data to save
-     *  
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -1061,14 +1035,14 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      */
     public function insertInBatch(array $data)
     {
-        return $this->performActionInBatch('insert', $data);
+        // TODO: check if it's really needed
     }
 
     /**
      * Update several items at once
-     * 
+     *
      * @param array $data data to save
-     *  
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -1076,36 +1050,48 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      */
     public function updateInBatch(array $data)
     {
-        return $this->performActionInBatch('updateById', $data);
+        foreach ($data as $id => $fields) {
+            $this->performUpdate($id, $fields);
+        }
+
+        $this->flushChanges();
     }
 
     /**
-     * Delete several items at once
+     * Remove several items at once
      *
-     * @param array $data IDs to use
+     * @param \Doctrine\Common\Collections\Collection $entities entities to remove
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function removeInBatch(\Doctrine\Common\Collections\Collection $entities)
+    {
+        foreach ($entities as $entity) {
+            $this->performRemove($entity);
+        }
+
+        $this->flushChanges();
+    }
+
+    /**
+     * Delete several items at once (by ID)
+     *
+     * @param array $ids IDs to use
      *
      * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function deleteInBatch(array $data)
+    public function deleteInBatch(array $ids)
     {
-        return $this->performActionInBatch('deleteById', $data);
-    }
+        foreach ($ids as $id) {
+            $this->performDelete($id);
+        }
 
-    /**
-     * Alias
-     * 
-     * @param int $id entity ID
-     *  
-     * @return \XLite\Model\AEntity
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getById($id)
-    {
-        return $this->getByIdSoft($id);
-    } 
+        $this->flushChanges();
+    }
 }

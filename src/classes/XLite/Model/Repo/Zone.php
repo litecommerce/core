@@ -186,12 +186,12 @@ class Zone extends ARepo
         $this->doDie("find() not applicable on ShippingZone");
     }
 
-    function update()
+    function update($id, array $data)
     {
         $this->doDie("update() not applicable on ShippingZone");
     }
 
-    function delete()
+    function delete($id)
     {
         $this->doDie('Not implemented');
     }

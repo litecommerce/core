@@ -1286,6 +1286,7 @@ class Decorator extends Decorator\ADecorator
      */
     public function set$methodName(\\Doctrine\\Common\\Collections\\Collection \$$varName)
     {
+        \$this->getRepository()->removeInBatch(\$this->$an);
         \$this->$an = \$$varName;
     }
 PHP;
