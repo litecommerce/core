@@ -374,9 +374,9 @@ class OrderList extends AAdmin
     /**
      * columnCount 
      * 
-     * @param mixed $order ____param_comment____
+     * @param mixed $order Order
      *  
-     * @return void
+     * @return integer
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

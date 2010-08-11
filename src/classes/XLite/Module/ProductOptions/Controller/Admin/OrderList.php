@@ -29,7 +29,7 @@
 namespace XLite\Module\ProductOptions\Controller\Admin;
 
 /**
- * ____description____
+ * Order list
  * 
  * @package XLite
  * @see     ____class_see____
@@ -37,8 +37,18 @@ namespace XLite\Module\ProductOptions\Controller\Admin;
  */
 class OrderList extends \XLite\Controller\Admin\OrderList implements \XLite\Base\IDecorator
 {
-    function columnCount($order)
+    /**
+     * Columns count
+     *
+     * @param mixed $order Order
+     *
+     * @return integer
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function columnCount($order)
     {
-        return parent::columnCount($order) + 1; // + options column
+        return parent::columnCount($order) + 1;
     }
 }
