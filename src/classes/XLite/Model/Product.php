@@ -312,7 +312,7 @@ class Product extends \XLite\Model\Base\I18n
      */
     public function hasThumbnail()
     {
-        return !is_null($this->getThumbnail());
+        return !is_null($this->getThumbnail()) && $this->getThumbnail()->isPersistent();
     }
 
     /**
@@ -325,7 +325,7 @@ class Product extends \XLite\Model\Base\I18n
      */
     public function hasImage()
     {
-        return !is_null($this->getImage());
+        return !is_null($this->getImage()) && $this->getImage()->isPersistent();
     }
 
     /**

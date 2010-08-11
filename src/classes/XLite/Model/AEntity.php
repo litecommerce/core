@@ -266,4 +266,17 @@ abstract class AEntity
 
         return $return;
     }
+
+    /**
+     * Check if entity is persistent
+     * 
+     * @return bool
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isPersistent()
+    {
+        return (bool) $this->{'get' . $this->getMethodName($this->getRepository()->getPrimaryKeyField())}();
+    }
 }
