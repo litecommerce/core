@@ -266,6 +266,11 @@ input.orderby {
   text-align: right;
 }
 
+input.price {
+  width: 8em;
+  text-align: right;
+}
+
 ul.form {
   margin: 0px;
   padding: 0px;

@@ -52,5 +52,20 @@ class OptionSurcharge extends \XLite\Model\Repo\ARepo
             'weight',
         );
     }
-}
 
+    /**
+     * Get modifier types 
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getModifierTypes()
+    {
+        return array(
+            \XLite\Module\ProductOptions\Model\OptionSurcharge::PERCENT_MODIFIER  => 'Percent',
+            \XLite\Module\ProductOptions\Model\OptionSurcharge::ABSOLUTE_MODIFIER => 'Absolute',
+        );
+    }
+}

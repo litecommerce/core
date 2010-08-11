@@ -116,6 +116,30 @@ class OptionSurcharge extends \XLite\Model\AEntity
     protected $option;
 
     /**
+     * Set modifier type 
+     * 
+     * @param string $type Modifier type code
+     *  
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setModifierType($type)
+    {
+        $types = $this->getRepository()->getModifierTypes();
+
+        $result = false;
+
+        if (isset($types[$type])) {
+            $this->modifier_type = $type;
+            $result = true;
+        }
+
+        return $result;
+    }
+
+    /**
      * Get surcharge sign 
      * 
      * @return string

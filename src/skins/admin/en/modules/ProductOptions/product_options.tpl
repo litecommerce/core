@@ -42,6 +42,9 @@
   <div class="buttons">
     <widget class="\XLite\View\Button\Submit" label="Update" />
     <widget class="\XLite\Module\ProductOptions\View\Button\DeleteSelectedGroups" />
+    <widget class="\XLite\Module\ProductOptions\View\Button\AddGroup" />
   </div>
 
 </form>
+
+<widget class="\XLite\Module\ProductOptions\View\ModifyOptionGroup" />

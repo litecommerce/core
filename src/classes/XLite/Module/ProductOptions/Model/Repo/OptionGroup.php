@@ -157,5 +157,43 @@ class OptionGroup extends \XLite\Model\Repo\Base\I18n
             ->setParameter('productId', $productId)
             ->setMaxResults(1);
     }
+
+    /**
+     * Get option group types 
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getOptionGroupTypes()
+    {
+        return array(
+            \XLite\Module\ProductOptions\Model\OptionGroup::GROUP_TYPE => array(
+                'name'  => 'Options group',
+                'views' => array(
+                    \XLite\Module\ProductOptions\Model\OptionGroup::SELECT_VISIBLE => array(
+                        'name' => 'Select box',
+                    ),
+                    \XLite\Module\ProductOptions\Model\OptionGroup::RADIO_VISIBLE => array(
+                        'name' => 'Radio buttons list',
+                    ),
+                ),
+            ),
+            \XLite\Module\ProductOptions\Model\OptionGroup::TEXT_TYPE => array(
+                'name' => 'Text option',
+                'views' => array(
+                    \XLite\Module\ProductOptions\Model\OptionGroup::TEXTAREA_VISIBLE => array(
+                        'name' => 'Text area',
+                    ),
+                    \XLite\Module\ProductOptions\Model\OptionGroup::INPUT_VISIBLE => array(
+                        'name' => 'Input box',
+                    ),
+                ),
+            ),
+        );
+    }
+
+
 }
 

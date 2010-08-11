@@ -52,6 +52,8 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     const KEY_TYPE_CACHE_CELL = 'keyType';
     const ATTRS_CACHE_CELL    = 'attrs';
     const RELATION_CACHE_CELL = 'relation';
+    const CONVERTER_CACHE_CELL = 'converter';
+    const GENERATOR_CACHE_CELL = 'generator';
 
 
     /**
@@ -60,8 +62,6 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     const CACHE_ATTR_KEY       = 'attributesKey';
     const CACHE_HASH_KEY       = 'hashKey';
     const CACHE_CUSTOM_KEY     = 'customKey';
-    const CONVERTER_CACHE_CELL = 'converter';
-    const GENERATOR_CACHE_CELL = 'generator';
 
 
     const DEFAULT_KEY_TYPE = self::CACHE_ATTR_KEY;

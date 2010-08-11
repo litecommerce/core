@@ -79,7 +79,9 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
             if ($options) {
                 foreach ($options as $option) {
                     $cell = $data[$option->getGroupId()];
+
                     $cell['enabled'] = isset($cell['enabled']) && $cell['enabled'];
+                    $cell['orderby'] = abs(intval($cell['orderby']));
 
                     $option->map($cell);
 
@@ -135,4 +137,218 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
             );
         }
     }
+
+    /**
+     * Update option group 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function doActionUpdateOptionGroup()
+    {
+        if ('0' === \XLite\Core\Request::getInstance()->groupId) {
+            $group = new \XLite\Module\ProductOptions\Model\OptionGroup;
+            $group->setProduct($this->getProduct());
+            $this->getProduct()->addOptionGroups($group);
+
+        } else {
+            $group = \XLite\Core\Database::getRepo('XLite\Module\ProductOptions\Model\OptionGroup')
+                ->find(\XLite\Core\Request::getInstance()->groupId);
+        }
+
+        $data = \XLite\Core\Request::getInstance()->data;
+
+        if (!isset($group)) {
+            \XLite\Core\TopMessage::getInstance()->add(
+                '1',
+                \XLite\Core\TopMessage::ERROR
+            );
+
+        } elseif (!$this->getProduct()) {
+            \XLite\Core\TopMessage::getInstance()->add(
+                '2',
+                \XLite\Core\TopMessage::ERROR
+            );
+
+        } elseif (!is_array($data)) {
+            \XLite\Core\TopMessage::getInstance()->add(
+                '3',
+                \XLite\Core\TopMessage::ERROR
+            );
+
+        } elseif (!isset($data['name']) || !$data['name']) {
+            \XLite\Core\TopMessage::getInstance()->add(
+                '4',
+                \XLite\Core\TopMessage::ERROR
+            );
+
+        } elseif (!$group->setType($data['type'])) {
+            \XLite\Core\TopMessage::getInstance()->add(
+                '5',
+                \XLite\Core\TopMessage::ERROR
+            );
+
+        } elseif (!$group->setViewType($data['view_type'])) {
+            \XLite\Core\TopMessage::getInstance()->add(
+                '6',
+                \XLite\Core\TopMessage::ERROR
+            );
+
+        } else {
+
+            $data['orderby'] = abs(intval($data['orderby']));
+            $data['enabled'] = isset($data['enabled']) && $data['enabled'];
+
+            $group->map($data);
+
+            $result = true;
+
+            // Update options
+            $options = \XLite\Core\Request::getInstance()->options;
+            if ($options && \XLite\Core\Request::getInstance()->groupId) {
+                foreach ($options as $optionId => $data) {
+                    $option = \XLite\Core\Database::getRepo('XLite\Module\ProductOptions\Model\Option')
+                        ->find($optionId);
+
+                    if ($option && !$this->saveOption($option, $data)) {
+                        $result = false;
+                        break;
+                    }
+                }
+            }
+
+            // Save new option
+            $newOption = \XLite\Core\Request::getInstance()->newOption;
+            if ($newOption['name']) {
+                $option = new \XLite\Module\ProductOptions\Model\Option();
+                $option->setGroup($group);
+                $group->addOptions($option);
+
+                if (!$this->saveOption($option, $newOption)) {
+                    $result = false;
+                }
+            }
+
+            if ($result) {
+                \XLite\Core\Database::getEM()->persist($group);
+                \XLite\Core\Database::getEM()->flush();
+
+                if ('0' === \XLite\Core\Request::getInstance()->groupId) {
+                    \XLite\Core\TopMessage::getInstance()->add(
+                        'The product option group has been successfully added'
+                    );
+
+                } else {
+                    \XLite\Core\TopMessage::getInstance()->add(
+                        'The product option group has been successfully updated'
+                    );
+                }
+            }
+
+        }
+    }
+
+    /**
+     * Delete selected options
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionDeleteOptions()
+    {
+        $mark = \XLite\Core\Request::getInstance()->mark;
+
+        if (is_array($mark) && $mark) {
+            $options = \XLite\Core\Database::getRepo('XLite\Module\ProductOptions\Model\Option')
+                ->findByIds($mark);
+
+            if ($options) {
+                foreach ($options as $option) {
+                    \XLite\Core\Database::getEM()->remove($option);
+                }
+
+                \XLite\Core\Database::getEM()->flush();
+
+                \XLite\Core\TopMessage::getInstance()->add(
+                    'The options have been deleted'
+                );
+            }
+        }
+
+        if (!isset($options) || !$options) {
+            \XLite\Core\TopMessage::getInstance()->add(
+                'The options have not been deleted',
+                \XLite\Core\TopMessage::ERROR
+            );
+        }
+    }
+
+    /**
+     * Save option 
+     * 
+     * @param \XLite\Module\ProductOptions\Model\Option $option Option
+     * @param array                                     $data   Data
+     *  
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function saveOption(\XLite\Module\ProductOptions\Model\Option $option, array $data)
+    {
+        $result = false;
+
+        if (!$data['name']) {
+            \XLite\Core\TopMessage::getInstance()->add(
+                '7',
+                \XLite\Core\TopMessage::ERROR
+            );
+
+        } else {
+
+            $data['orderby'] = abs(intval($data['orderby']));
+            $data['enabled'] = isset($data['enabled']) && $data['enabled'];
+
+            if (isset($data['modifiers'])) {
+                foreach ($data['modifiers'] as $type => $m) {
+                    $m['modifier'] = round($m['modifier'], 4);
+
+                    if (0 != $m['modifier']) {
+                        $surcharge = $option->getSurcharge($type);
+                        if (!$surcharge) {
+                            $surcharge = new \XLite\Module\ProductOptions\Model\OptionSurcharge();
+                            $surcharge->setOption($option);
+                            $option->addSurcharges($surcharge);
+                            $surcharge->setType($type);
+                        }
+
+                        $surcharge->map($m);
+                        \XLite\Core\Database::getEM()->persist($surcharge);
+
+                    } elseif ($option->getSurcharge($type)) {
+                        $surcharge = $option->getSurcharge($type);
+                        $option->getSurcharges()->removeElement($surcharge);
+                        $surcharge->setOption(null);
+                        \XLite\Core\Database::getEM()->remove($surcharge);
+                    }
+                }
+
+                unset($data['modifiers']);
+            }
+
+            $option->map($data);
+
+            \XLite\Core\Database::getEM()->persist($option);
+
+            $result = true;
+
+        }
+
+        return $result;
+    }
+
 }

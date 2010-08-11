@@ -81,18 +81,23 @@ abstract class AEntity
      * 
      * @param array $data Data
      *  
-     * @return void
+     * @return boolean
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
     public function map(array $data)
     {
+        $result = true;
+
         foreach ($data as $key => $value) {
-            if (method_exists($this, $method = 'set' . $this->getMethodName($key))) {
-                $this->$method($value);
+            $method = 'set' . $this->getMethodName($key);
+            if (method_exists($this, $method) && false === $this->$method($value)) {
+                $result = false;
             }
         }
+
+        return $result;
     }
 
     /**
@@ -119,7 +124,7 @@ abstract class AEntity
      * @param string $name  Property name
      * @param mixed  $value Property value
      *  
-     * @return void
+     * @return mixed
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -127,7 +132,7 @@ abstract class AEntity
     public function __set($name, $value)
     {
         // Mutator name assembled into getMutator() method
-        $this->{'set' . $this->getMethodName($name)}($value);
+        return $this->{'set' . $this->getMethodName($name)}($value);
     }
 
     /**

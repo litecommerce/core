@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage Core
+ * @subpackage View
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -26,62 +26,27 @@
  * @since      3.0.0
  */
 
-namespace XLite\Module\ProductOptions;
+namespace \XLite\Module\ProductOptions\View\Button;
 
 /**
- * Module manager
+ * Delete selected options button
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Main extends \XLite\Module\AModule
+class DeleteSelectedOptions extends \XLite\View\Button\DeleteSelected
 {
     /**
-     * Module type
-     *
-     * @return integer
-     * @access public
-     * @since  3.0
-     */
-    public function getModuleType()
-    {
-        return self::MODULE_GENERAL;
-    }
-
-    /**
-     * Module version
+     * Get default action
      *
      * @return string
-     * @access public
-     * @since  3.0
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
      */
-    public function getVersion()
+    protected function getDefaultAction()
     {
-        return '3.0';
-    }
-
-    /**
-     * Module description
-     *
-     * @return string
-     * @access public
-     * @since  3.0
-     */
-    public function getDescription()
-    {
-        return 'Support for product options, enabling you to provide customers with a choice of product variants';
-    }
-
-    /**
-     * Determines if we need to show settings form link
-     *
-     * @return bool
-     * @access public
-     * @since  3.0
-     */
-    public function showSettingsForm()
-    {
-        return true;
+        return 'delete_options';
     }
 }

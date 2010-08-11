@@ -110,15 +110,15 @@ abstract class AAdmin extends \XLite\Controller\AController
      * Get current language code
      * 
      * @return string
-     * @access protected
+     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getCurrentLanguage()
+    public function getCurrentLanguage()
     {
         $currentCode = \XLite\Core\Request::getInstance()->language;
 
-        return $currentCode ? $currentCode : \XLite\Core\Translation::getCurrentLanguageCode();;
+        return $currentCode ? $currentCode : \XLite\Core\Translation::getCurrentLanguageCode();
     }
 
 
