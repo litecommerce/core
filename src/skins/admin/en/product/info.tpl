@@ -187,6 +187,11 @@
     <td><input name="{getNamePostedData(#clean_url#)}" value="{product.clean_url}" size="50" /></td>
 </tr>
 
+<tr>
+    <td class="FormButton">Custom Javascript code</td>
+    <td><textarea name="{getNamePostedData(#javascript#)}" cols="45" rows="6">{product.javascript}</textarea></td>
+</tr>
+
 {* Will be revised later *}
 {*<tr>
   <td valign=middle class="FormButton">Pos.</td>
