@@ -158,7 +158,7 @@ class ModifyOptionGroup extends \XLite\View\AView
      */
     public function getTranslation()
     {
-        return $this->getGroup()->getTranslation(
+        return $this->getGroup()->getSoftTranslation(
             \XLite::getController()->getCurrentLanguage()
         );
     }
@@ -193,7 +193,7 @@ class ModifyOptionGroup extends \XLite\View\AView
      */
     public function getOptionTranslation(\XLite\Module\ProductOptions\Model\Option $option, $field)
     {
-        return $option->getTranslation(\XLite::getController()->getCurrentLanguage())
+        return $option->getSoftTranslation(\XLite::getController()->getCurrentLanguage())
             ->$field;
     }
 

@@ -55,9 +55,10 @@ CREATE TABLE xlite_option_translations (
 
 DROP TABLE IF EXISTS xlite_option_exceptions;
 CREATE TABLE xlite_option_exceptions (
+  id int(11) NOT NULL auto_increment PRIMARY KEY,
   option_id int(11) NOT NULL default 0,
   exception_id int(11) NOT NULL default 0,
-  PRIMARY KEY (option_id, exception_id)
+  UNIQUE KEY (option_id, exception_id)
 ) TYPE=MyISAM;
 
 DROP TABLE IF EXISTS xlite_order_item_options;

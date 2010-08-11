@@ -48,6 +48,15 @@ abstract class I18n extends \XLite\Model\AEntity
      */
     protected static $languagesQuery = null;
 
+    /**
+     * Edit language code
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $editLanguage;
 
     /**
      * Constructor
@@ -175,22 +184,18 @@ abstract class I18n extends \XLite\Model\AEntity
     }
 
     /**
-     * Map translations batch data
+     * Set edit language code 
      * 
-     * @param array $data Data
+     * @param string $code Language code
      *  
      * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function mapTranslations(array $data)
+    public function setEditLanguageCode($code = null)
     {
-        foreach ($data as $lng => $fields) {
-            foreach ($fields as $name => $value) {
-                $this->getTranslation($lng)->$name = $value;
-            }
-        }
+        $this->editLanguage = $code;
     }
 
     /**

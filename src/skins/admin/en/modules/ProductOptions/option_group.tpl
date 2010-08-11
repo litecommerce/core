@@ -13,7 +13,7 @@
 <h3 IF="isNew()">Add new option group</h3>
 <h3 IF="!isNew()">Modify '{group.getName()}' option group</h3>
 
-<form action="admin.php" method="POST" name="update_option_group_form">
+<form action="admin.php" method="POST" name="update_option_group_form" class="options-group-modify">
   <input type="hidden" name="target" value="product">
   <input type="hidden" name="action" value="update_option_group">
   <input type="hidden" name="page" value="product_options">
@@ -23,9 +23,9 @@
 
   <ul class="form">
 
-    <li>
+    <li class="required">
       <label for="data_name">Name</label>
-      <input type="text" id="data_name" name="data[name]" value="{translation.getName()}" />
+      <input type="text" id="data_name" name="data[name]" value="{translation.getName()}" class="field-required" />
     </li>
 
     <li>
@@ -50,7 +50,7 @@
 
     <li>
       <label for="data_orderby">Position</label>
-      <input type="text" id="data_orderby" class="orderby" name="data[orderby]" value="{group.getOrderby()}" />
+      <input type="text" id="data_orderby" name="data[orderby]" value="{group.getOrderby()}" class="orderby field-integer" />
     </li>
 
     <li>
@@ -76,10 +76,10 @@
       <tr FOREACH="getOptions(),i,option" class="{getRowClass(i,#highlight#)}">
 
         <td class="center"><input type="checkbox" name="mark[]" value="{option.getOptionId()}" /></td>
-        <td><input type="input" name="options[{option.getOptionId()}][name]" value="{getOptionTranslation(option,#name#)}" /></td>
+        <td><input type="input" name="options[{option.getOptionId()}][name]" value="{getOptionTranslation(option,#name#)}" class="extender field-required" /></td>
 
         {foreach:getOptionModifiers(option),key,modifier}
-          <td><input type="input" name="options[{option.getOptionId()}][modifiers][{key}][modifier]" value="{modifier.getModifier()}" class="price" /></td>
+          <td><input type="input" name="options[{option.getOptionId()}][modifiers][{key}][modifier]" value="{modifier.getModifier()}" class="price field-float" /></td>
           <td>
             <select name="options[{option.getOptionId()}][modifiers][{key}][modifier_type]">
               <option FOREACH="getOptionSurchargeModifierTypes(),type,name" value="{type}" selected="{isSelected(modifier.getModifierType(),type)}">{name}</option>
@@ -87,7 +87,7 @@
           </td>
         {end:}
 
-        <td><input type="input" name="options[{option.getOptionId()}][orderby]" value="{option.getOrderby()}" class="orderby" /></td>
+        <td><input type="input" name="options[{option.getOptionId()}][orderby]" value="{option.getOrderby()}" class="orderby field-integer" /></td>
         <td class="center"><input type="checkbox" name="options[{option.getOptionId()}][enabled]" value="1" checked="{option.getEnabled()}" /></td>
 
       </tr>
@@ -95,10 +95,10 @@
       <tr>
 
         <td class="center">&nbsp;</td>
-        <td><input type="input" name="newOption[name]" value="" /></td>
+        <td><input type="input" name="newOption[name]" value="" class="extender" /></td>
 
         {foreach:getOptionModifiers(),key,modifier}
-          <td><input type="input" name="newOption[modifiers][{key}][modifier]" value="{modifier.getModifier()}" class="price" /></td>
+          <td><input type="input" name="newOption[modifiers][{key}][modifier]" value="{modifier.getModifier()}" class="price field-float" /></td>
           <td>
             <select name="newOption[modifiers][{key}][modifier_type]">
               <option FOREACH="getOptionSurchargeModifierTypes(),type,name" value="{type}" selected="{isSelected(modifier.getModifierType(),type)}">{name}</option>
@@ -106,7 +106,7 @@
           </td>
         {end:}
 
-        <td><input type="input" name="newOption[orderby]" value="" class="orderby" /></td>
+        <td><input type="input" name="newOption[orderby]" value="" class="orderby field-integer" /></td>
         <td class="center"><input type="checkbox" name="newOption[enabled]" value="1" /></td>
 
       </tr>

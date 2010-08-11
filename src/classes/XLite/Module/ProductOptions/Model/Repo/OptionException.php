@@ -108,5 +108,113 @@ class OptionException extends \XLite\Model\Repo\ARepo
 
         return $query;
     }
+
+    /**
+     * Get next free exception id 
+     * 
+     * @return integer
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getNextExceptionId()
+    {
+        try {
+            $max = $this->defineNextExceptionIdQuery()
+                ->getQuery()
+                ->getSingleScalarResult();
+            $max = intval($max);
+
+        } catch (\Doctrine\ORM\NonUniqueResultException $exception) {
+            $max = 0;
+        }
+
+        return $max + 1;
+    }
+
+    /**
+     * Define query builder for getNextExceptionId() method
+     * 
+     * @return \Doctrine\ORM\QueryBuilder
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineNextExceptionIdQuery()
+    {
+        return $this->createQueryBuilder()
+            ->select('MAX(o.exception_id)');
+    }
+
+    /**
+     * Find exceptions by exception id 
+     * 
+     * @param integer $exceptionId Exception id
+     *  
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function findByExceptionId($exceptionId)
+    {
+        return $this->defineByExceptionIdQuery($exceptionId)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * Define query builder for findByExceptionId() method
+     * 
+     * @param integer $exceptionId Exception id
+     *  
+     * @return \Doctrine\ORM\QueryBuilder
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineByExceptionIdQuery($exceptionId)
+    {
+        return $this->createQueryBuilder()
+            ->andWhere('o.exception_id = :exceptionId')
+            ->setParameter('exceptionId', $exceptionId);
+    }
+
+    /**
+     * Find exceptions by exception ids list 
+     * 
+     * @param array $exceptionIds Exception ids list
+     *  
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function findByExceptionIds(array $exceptionIds)
+    {
+        return $this->defineByExceptionIdsQuery($exceptionIds)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * Define query builder for findByExceptionIds() method
+     * 
+     * @param array $exceptionId Exception ids list
+     *  
+     * @return \Doctrine\ORM\QueryBuilder
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineByExceptionIdsQuery(array $exceptionIds)
+    {
+        $qb = $this->createQueryBuilder();
+
+        $keys = \XLite\Core\Database::buildInCondition($qb);
+
+        return $qb->andWhere('o.exception_id IN (' . implode(', ', $keys) . ')');
+    }
+
 }
 
