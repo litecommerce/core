@@ -1094,4 +1094,19 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
 
         $this->flushChanges();
     }
+
+
+    /**
+     * Return name of the primary key field.
+     * This method is used to determine entity persistence
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getPrimaryKeyField()
+    {
+        return $this->getClassMetadata()->getSingleIdentifierFieldName();
+    }
 }
