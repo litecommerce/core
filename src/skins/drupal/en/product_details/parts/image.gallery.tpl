@@ -11,11 +11,11 @@
  * @since     3.0.0
  *}
 <ul class="di-gallery">
-  <li FOREACH="product.getDetailedImages(),image">
-    <div><a href="{image.imageURL}"><widget class="\XLite\Module\DetailedImages\View\Image" image="{image.image}" maxWidth="50" maxHeight="40" /></a></div>
+  <li FOREACH="product.getActiveDetailedImages(),image">
+    <div><a href="{image.getFrontURL()}"><widget class="\XLite\Module\DetailedImages\View\Image" image="{image}" alt="{image.getAlt()}" maxWidth="50" maxHeight="40" /></a></div>
   </li>
 </ul>
-<a href="javascript:void(0);" onclick="javascript: $('.di-gallery a').eq(0).trigger('click')">See all images ({product.getDetailedImagesCount()})</a>
+<a href="javascript:void(0);" onclick="javascript: $('.di-gallery a').eq(0).trigger('click')">See all images ({product.countDetailedImagesCount()})</a>
 <script type="text/javascript">
 var lightBoxImagesDir = '{getLightBoxImagesDir()}';
 </script>

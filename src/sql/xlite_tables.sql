@@ -297,6 +297,7 @@ CREATE TABLE xlite_product_detailed_images (
   `alt` varchar(255) NOT NULL default '',
   `orderby` int(11) NOT NULL DEFAULT 0,
   `is_zoom` tinyint(1) NOT NULL DEFAULT 0,
+  `enabled` tinyint(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (image_id),
   KEY id (id)
 ) TYPE=MyISAM;

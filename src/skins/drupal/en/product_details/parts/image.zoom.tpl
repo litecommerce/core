@@ -10,8 +10,8 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<a href="{product.zoomImage.imageURL}" class="product-thumbnail">
-  <widget class="\XLite\View\Image" image="{product.getImage()}" className="photo product-thumbnail" id="product_image_{product.product_id}" maxWidth="100" centerImage />
+<a href="{getZoomImageURL()}" class="product-thumbnail">
+  <widget class="\XLite\View\Image" image="{product.getImage()}" className="photo product-thumbnail" id="product_image_{product.getProductId()}" maxWidth="100" centerImage />
   <widget class="\XLite\View\SaveMark" product="{product}" />
 </a>
 <script type="text/javascript">

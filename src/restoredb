@@ -65,7 +65,11 @@ require_once 'classes/XLite/Base/IPatcher.php';
 $modules = opendir('classes/XLite/Module');
 
 while (($dir = readdir($modules)) !== false) {
-	if ($dir{0} != '.' && is_dir('classes/XLite/Module/' . $dir)) {
+	if (
+		substr($dir, 0, 1) != '.'
+		&& is_dir('classes/XLite/Module/' . $dir)
+		&& file_exists('classes/XLite/Module/' . $dir . '/Main.php')
+	) {
 
 		require_once 'classes/XLite/Module/' . $dir . '/Main.php';
 		$class = '\XLite\Module\\' . $dir . '\Main';

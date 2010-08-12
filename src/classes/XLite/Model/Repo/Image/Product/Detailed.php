@@ -49,4 +49,45 @@ class Detailed extends \XLite\Model\Repo\Base\Image
     {
         return 'product_detailed_images';
     }
+
+    /**
+     * Find all active detailed images by product id
+     *
+     * @param integer $productId Product id
+     *
+     * @return \Doctrine\Common\Collection\ArrayCollection
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function findActiveByProductId($productId)
+    {
+        $data = $this->defineActiveByProductIdQuery(intval($productId))
+            ->getQuery()
+            ->getResult();
+
+        $this->detachList($data);
+
+        return $data;
+    }
+
+    /**
+     * Define query for findActiveByProductId() method
+     * 
+     * @param integer $productId Product id
+     *  
+     * @return \Doctrine\ORM\QueryBuilder
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineActiveByProductIdQuery($productId)
+    {
+        return $this->createQueryBuilder()
+            ->addSelect('p')
+            ->innerJoin('o.product', 'p', 'WITH', 'p.product_id = :productId')
+            ->andWhere('o.enabled = :true')
+            ->setParameter('productId', $productId)
+            ->setParameter('true', true);
+    }
 }

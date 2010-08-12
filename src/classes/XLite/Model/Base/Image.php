@@ -243,7 +243,6 @@ abstract class Image extends \XLite\Model\AEntity
         return (!$this->getRepository()->isCheckImage() || $this->checkImageHash())
             ? $this->getURL()
             : null;
-
     }
 
     /**
@@ -462,8 +461,17 @@ abstract class Image extends \XLite\Model\AEntity
         return array($path, $isTempFile);
     }
 
+    /**
+     * Check - image is exists in DB or not
+     * TODO - remove - old method
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     public function isExists()
     {
-        return !is_null($this->image_id);
+        return isset($this->image_id);
     }
 }

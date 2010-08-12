@@ -758,17 +758,19 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     /**
      * Detach entities list
      * 
-     * @param array $data Entites list
+     * @param mixed $data Entites list
      *  
      * @return array
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function detachList(array $data)
+    protected function detachList($data)
     {
-        foreach ($data as $item) {
-            $item->detach();
+        if (is_array($data) || $data instanceof \ArrayAccess) {
+            foreach ($data as $item) {
+                $item->detach();
+            }
         }
 
         return $data;

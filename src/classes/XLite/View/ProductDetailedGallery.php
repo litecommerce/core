@@ -26,17 +26,17 @@
  * @since      3.0.0
  */
 
-namespace XLite\Module\DetailedImages\View;
+namespace XLite\View;
 
 /**
- * Zoomer
- * 
+ * Product images gallery widget
+ *
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
- * @ListChild (list="productDetails.image", weight="20")
+ * @since   3.0
+ * @ListChild (list="productDetails.image", weight="30")
  */
-class Zoom extends \XLite\View\AView
+class Gallery extends \XLite\View\AView
 {
     /**
      * Widget parameter names
@@ -54,7 +54,7 @@ class Zoom extends \XLite\View\AView
      */
     protected function getDefaultTemplate()
     {
-        return 'modules/DetailedImages/zoom.tpl';
+        return 'product_details/parts/image.gallery.tpl';
     }
 
     /**
@@ -69,10 +69,29 @@ class Zoom extends \XLite\View\AView
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_PRODUCT => new \XLite\Model\WidgetParam\Object('Product', $this->getProduct(), false, '\XLite\Model\Product'),
+            self::PARAM_PRODUCT => new \XLite\Model\WidgetParam\Object(
+                'Product',
+                $this->getProduct(),
+                false,
+                '\XLite\Model\Product'
+            ),
         );
     }
 
+    /**
+     * Get LightBox library images directory 
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getLightBoxImagesDir()
+    {
+        return \XLite::getInstance()->getShopUrl(
+            \XLite\Model\Layout::getInstance()->getPath() . 'images/lightbox'
+        );
+    }
 
     /**
      * Check visibility
@@ -85,8 +104,7 @@ class Zoom extends \XLite\View\AView
     protected function isVisible()
     {
         return parent::isVisible()
-            && $this->getParam(self::PARAM_PRODUCT)->get('detailedImages')
-            && $this->getParam(self::PARAM_PRODUCT)->getHasZoom();
+            && $this->getParam(self::PARAM_PRODUCT)->getActiveDetailedImages();
     }
 
     /**
@@ -101,7 +119,8 @@ class Zoom extends \XLite\View\AView
     {
         $list = parent::getJSFiles();
 
-        $list[] = 'modules/DetailedImages/js/jquery.jqzoom1.0.1.js';
+        $list[] = 'js/jquery.lightbox-0.5.min.js';
+        $list[] = 'product_details/parts/image.gallery.js';
 
         return $list;
     }
@@ -118,7 +137,7 @@ class Zoom extends \XLite\View\AView
     {
         $list = parent::getCSSFiles();
 
-        $list[] = 'modules/DetailedImages/css/jqzoom.css';
+        $list[] = 'css/jquery.lightbox-0.5.css';
 
         return $list;
     }

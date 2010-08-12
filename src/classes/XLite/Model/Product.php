@@ -233,6 +233,15 @@ class Product extends \XLite\Model\Base\I18n
      */
     protected $extra_fields = array();
 
+    /**
+     * Active detailed images (cache)
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $activeDetailedImages;
 
     /**
      * Return certain Product <--> Category association
@@ -452,5 +461,72 @@ class Product extends \XLite\Model\Base\I18n
     public function getOrderBy($categoryId = null)
     {
         return $this->getLink($categoryId)->getOrderBy();
+    }
+
+    /**
+     * Get active detailed images 
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getActiveDetailedImages()
+    {
+        if (!isset($this->activeDetailedImages)) {
+            $this->activeDetailedImages = \XLite\COre\Database::getRepo('XLite\Model\Image\Product\Detailed')
+                ->findActiveByProductId($this->getProductId());
+        }
+
+        return $this->activeDetailedImages;
+    }
+
+    /**
+     * Count active detailed images 
+     * 
+     * @return integer
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function countActiveDetailedImages()
+    {
+        return count($this->getActiveDetailedImages());
+    }
+
+
+    /**
+     * Check - has product zoom image or not
+     *
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function hasZoomImage()
+    {
+        return isset($this->getZoomImage());
+    }
+
+    /**
+     * Get zoom image 
+     * 
+     * @return \XLite\Model\Image\Product\Detailed
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getZoomImage()
+    {
+        $result = null;
+
+        foreach ($this->getActiveDetailedImages() as $image) {
+            if ($image->getIsZoom()) {
+                $result = $image;
+                break;
+            }
+        }
+
+        return $result;
     }
 }
