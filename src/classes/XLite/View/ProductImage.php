@@ -26,7 +26,7 @@
  * @since      3.0.0
  */
 
-namespace XLite\Module\DetailedImages\View;
+namespace XLite\View;
 
 /**
  * Product image
@@ -36,7 +36,7 @@ namespace XLite\Module\DetailedImages\View;
  * @since   3.0.0
  * @ListChild (list="productDetails.image", weight="10")
  */
-class ProductImage extends \XLite\View\AView
+class ProductImage extends AView
 {
     /**
      * Widget parameter names
