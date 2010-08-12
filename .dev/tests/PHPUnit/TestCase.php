@@ -27,6 +27,8 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
     const IMAP_USER = 'rnd_tester';
     const IMAP_PASS = '7qnDjKzVoc6Qcb7b';
 
+    protected static $messageLength = 70;
+
     /**
      * IMAP mailbox resource
      * 
@@ -80,9 +82,14 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
     private function getExecTime()
     {
         $time    = number_format($this->end['time'] - $this->start['time'], 4);
-        $message = $this->getMessage('', get_called_class(), $this->name);
+        $message = trim($this->getMessage('', get_called_class(), $this->name));
 
-        return sprintf('%\'.-70s', trim($message)) . ' ' . sprintf('%8s', $time) . ' sec .....';
+        if (strlen($message) > self::$messageLength) {
+            self::$messageLength = strlen($message) + 1;
+        }
+
+        return sprintf('%\'.-' . self::$messageLength. 's', trim($message))
+            . ' ' . sprintf('%8s', $time) . ' sec .....';
     }
 
     /**
