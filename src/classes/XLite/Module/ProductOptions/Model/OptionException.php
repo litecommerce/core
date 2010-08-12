@@ -53,17 +53,6 @@ class OptionException extends \XLite\Model\AEntity
     protected $id;
 
     /**
-     * Option unique id 
-     * 
-     * @var    integer
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     * @Column (type="integer")
-     */
-    protected $option_id;
-
-    /**
      * Exception unique id 
      * 
      * @var    integer
