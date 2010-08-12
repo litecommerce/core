@@ -441,8 +441,8 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
     /**
      * Save exception 
      * 
-     * @param integer $eid Exception id
-     * @param array  $data Exception cell data
+     * @param integer $eid  Exception id
+     * @param array   $data Exception cell data
      *  
      * @return void
      * @access protected
