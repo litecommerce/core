@@ -83,10 +83,10 @@ class Detailed extends \XLite\Model\Repo\Base\Image
      */
     protected function defineActiveByProductIdQuery($productId)
     {
-        return $this->createQueryBuilder()
+        return $this->createQueryBuilder('i')
             ->addSelect('p')
-            ->innerJoin('o.product', 'p', 'WITH', 'p.product_id = :productId')
-            ->andWhere('o.enabled = :true')
+            ->innerJoin('i.product', 'p', 'WITH', 'p.product_id = :productId')
+            ->andWhere('i.enabled = :true')
             ->setParameter('productId', $productId)
             ->setParameter('true', true);
     }

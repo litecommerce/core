@@ -474,7 +474,7 @@ class Product extends \XLite\Model\Base\I18n
     public function getActiveDetailedImages()
     {
         if (!isset($this->activeDetailedImages)) {
-            $this->activeDetailedImages = \XLite\COre\Database::getRepo('XLite\Model\Image\Product\Detailed')
+            $this->activeDetailedImages = \XLite\Core\Database::getRepo('XLite\Model\Image\Product\Detailed')
                 ->findActiveByProductId($this->getProductId());
         }
 
@@ -505,7 +505,7 @@ class Product extends \XLite\Model\Base\I18n
      */
     public function hasZoomImage()
     {
-        return isset($this->getZoomImage());
+        return !is_null($this->getZoomImage());
     }
 
     /**
