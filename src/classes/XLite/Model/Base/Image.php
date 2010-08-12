@@ -292,6 +292,41 @@ abstract class Image extends \XLite\Model\AEntity
     }
 
     /**
+     * Load from request 
+     * 
+     * @param string $key Key in $_FILES service array
+     *  
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function loadFromRequest($key, $subkey = null)
+    {
+        $result = false;
+
+        $cell = isset($_FILES[$key]) ? $_FILES[$key] : null;
+        if ($cell && (!$subkey || isset($cell['name'][$subkey]))) {
+            $error = $subkey ? $cell['error'][$subkey] : $cell['error'];
+            if ($error == UPLOAD_ERR_OK) {
+                $tmp = $subkey ? $cell['tmp_name'][$subkey] : $cell['tmp_name'];
+                $basename = $subkey ? $cell['name'][$subkey] : $cell['name'];
+
+                $root = $this->getRepository()->getFileSystemRoot();
+
+                $path = \Includes\Utils\FileManager::getUniquePath($root, $basename);
+                if (move_uploaded_file($tmp, $path)) {
+                    $this->path = basename($path);
+                    $result = $this->renewImageParameters();
+                }
+            }
+        
+        }
+
+        return $result;
+    }
+
+    /**
      * Load image from local file 
      * 
      * @param string $path Absolute path

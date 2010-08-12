@@ -291,6 +291,105 @@ class Product extends Catalog
         );
     }
 
+    /**
+     * Add detailed image
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionAddDetailedImage()
+    {
+        $img = new \XLite\Model\Image\Product\Detailed();
+
+        if ($img->loadFromRequest('postedData', 'image')) {
+
+            $data = \XLite\Core\Request::getInstance()->getData();
+            $data['is_zoom'] = isset($data['is_zoom']) && $data['is_zoom'];
+
+            $img->map($data);
+
+            $img->setProduct($this->getProduct());
+            $this->getProduct()->getDetailedImages()->add($img);
+
+            \XLite\Core\Database::getEM()->persist($img);
+            \XLite\Core\Database::getEM()->flush();
+
+            \XLite\Core\TopMessage::getInstance()->add(
+                'The detailed image has been successfully added'
+            );
+
+        } else {
+            \XLite\Core\TopMessage::getInstance()->add(
+                'The detailed image has not been successfully added'
+            );
+        }
+    }
+
+    /**
+     * Delete detailed image
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionDeleteDetailedImage()
+    {
+        $img = \XLite\Core\Database::getRepo('XLite\Model\Image\Product\Detailed')
+            ->find(\XLite\Core\Request::getInstance()->image_id);
+
+        if ($img) {
+            $img->getProduct()->getDetailedImages()->removeElement($img);
+            \XLite\Core\Database::getEM()->remove($img);
+            \XLite\Core\Database::getEM()->flush();
+
+            \XLite\Core\TopMessage::getInstance()->add(
+                'The detailed image has been deleted'
+            );
+
+        } else {
+
+            \XLite\Core\TopMessage::getInstance()->add(
+                'The detailed image has not been deleted',
+                \XLite\Core\TopMessage::ERROR
+            );
+        }
+    }
+
+    /**
+     * Update detailed image
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionUpdateDetailedImages()
+    {
+        foreach (\XLite\Core\Request::getInstance()->alt as $imageId => $alt) {
+            $img = \XLite\Core\Database::getRepo('XLite\Model\Image\Product\Detailed')
+                ->find($imageId);
+
+            if ($img) {
+                $img->setAlt($alt);
+                $img->setOrderBy(\XLite\Core\Request::getInstance()->orderby[$imageId]);
+                $img->setIsZoom(
+                    isset(\XLite\Core\Request::getInstance()->is_zoom)
+                    && isset(\XLite\Core\Request::getInstance()->is_zoom[$imageId])
+                );
+
+                \XLite\Core\Database::getEM()->persist($img);
+            }
+        }
+
+        \XLite\Core\Database::getEM()->flush();
+
+        \XLite\Core\TopMessage::getInstance()->add(
+            'The detailed images have been successfully updated'
+        );
+    }
 
     /**
      * Return current product Id
@@ -342,8 +441,9 @@ class Product extends Catalog
      * @since  3.0.0
      */
     public $pages = array(
-    	'info'         => 'Product info',
-        'extra_fields' => 'Extra fields',
+    	'info'            => 'Product info',
+        'extra_fields'    => 'Extra fields',
+        'detailed_images' => 'Detailed images',
     );
 
     /**
@@ -355,9 +455,10 @@ class Product extends Catalog
      * @since  3.0.0
      */
     public $pageTemplates = array(
-    	'info'         => 'product/info.tpl',
-        'extra_fields' => 'product/extra_fields_form.tpl',
-        'default'      => 'product/info.tpl'
+    	'info'            => 'product/info.tpl',
+        'extra_fields'    => 'product/extra_fields_form.tpl',
+        'default'         => 'product/info.tpl',
+        'detailed_images' => 'product/detailed_images.tpl',
     );
 
 
