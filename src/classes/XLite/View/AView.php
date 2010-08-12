@@ -1082,9 +1082,11 @@ abstract class AView extends \XLite\Core\Handler
             . \XLite\Model\Layout::getInstance()->locale . LC_DS;
         $pathLength = strlen($path);
 
+        $hash = array();
+
         foreach ($childs as $widget) {
 
-            if (isset($widgets[$widget->tpl])) {
+            if ($widget->tpl && isset($hash[$widget->tpl])) {
                 continue;
             }
 
@@ -1114,7 +1116,10 @@ abstract class AView extends \XLite\Core\Handler
             }
 
             if ($w) {
-                $widgets[$widget->tpl] = $w;
+                $widgets[] = $w;
+                if ($widget->tpl) {
+                    $hash[$widget->tpl] = true;
+                }
             }
         }
 

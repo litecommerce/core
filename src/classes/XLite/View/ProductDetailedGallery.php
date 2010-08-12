@@ -34,9 +34,9 @@ namespace XLite\View;
  * @package XLite
  * @see     ____class_see____
  * @since   3.0
- * @ListChild (list="productDetails.image", weight="30")
+ * @ListChild (list="productDetails.image", weight="20")
  */
-class ProductDetailedGallery extends \XLite\View\AView
+class ProductDetailedGallery extends AView
 {
     /**
      * Widget parameter names
