@@ -11,22 +11,22 @@
  * @since     3.0.0
  *}
 
-<p class="ErrorMessage" IF="!product.detailedImages">There are no detailed images for this product</p>
+<p class="ErrorMessage" IF="!product.getDetailedImages()">There are no detailed images for this product</p>
 
 <br />
 
-<form IF="product.detailedImages" action="admin.php" name="images_form" method="POST">
+<form IF="product.getDetailedImages()" action="admin.php" name="images_form" method="POST">
 
   <input FOREACH="allparams,_name,_val" type="hidden" name="{_name}" value="{_val}" />
   <input type="hidden" name="action" value="update_detailed_images" />
   <input type="hidden" name="image_id" value="" />
 
-  <div FOREACH="product.detailedImages,id,image" class="Text">
+  <div FOREACH="product.getDetailedImages(),id,image" class="Text">
     <p>
       <font class="AdminHead">Detailed image #{inc(id)}</font><br />
       <strong>Note:</strong> Image border will not be displayed in customer's frontend
     </p>
-    <img src="{image.imageURL}" style="border: 1px solid #b2b2b3;" alt="" />
+    <img src="{image.getURL()}" style="border: 1px solid #b2b2b3;" alt="" />
     <br />
     <br />
 
@@ -34,17 +34,17 @@
 
         <tr>
         	<td align="right">Alternative text:</td>
-	        <td><input type="text" name="alt[{image.image_id}]" value="{image.alt:r}" size="55" /></td>
+	        <td><input type="text" name="alt[{image.getImageId()}]" value="{image.alt:r}" size="55" /></td>
         </tr>
 
         <tr>
 	        <td align="right">Position:</td>
-	        <td><input type="text" name="order_by[{image.image_id}]" value="{image.order_by:r}" size="3" /></td>
+	        <td><input type="text" name="order_by[{image.getImageId()}]" value="{image.order_by:r}" size="3" /></td>
         </tr>
 
         <tr>
           <td align="right">It's zoom:</td>
-          <td><input type="checkbox" name="is_zoom[{image.image_id}]" value="Y" {if:image.is_zoom=#Y#}checked="checked"{end:} /></td>
+          <td><input type="checkbox" name="is_zoom[{image.getImageId()}]" value="Y" checked="{image.getIsZoom()}" /></td>
         </tr>
 
         <tr>
@@ -52,7 +52,7 @@
         	<td>
             <input type="submit" value=" Update ">
             &nbsp;
-		        <input type="button" Value=" Delete the image " onclick="images_form.image_id.value='{image.image_id}'; images_form.action.value='delete_detailed_image'; images_form.submit()">
+		        <input type="button" Value=" Delete the image " onclick="images_form.image_id.value='{image.getImageId()}'; images_form.action.value='delete_detailed_image'; images_form.submit()">
 	        </td>
         </tr>
 
@@ -89,7 +89,7 @@
 
     <tr>
     	<td>Position:</td>
-    	<td><input type="text" name="order_by" size="3" value="1" /></td>
+    	<td><input type="text" name="orderby" size="3" value="1" /></td>
     </tr>
 
     <tr>
@@ -105,7 +105,7 @@
     </tr>
 
     <tr>
-    	<td colspan="2"><input type="submit" value=" Add " /></td>
+    	<td colspan="2"><input type="submit" value="Add" /></td>
     </tr>	
 
   </table>
