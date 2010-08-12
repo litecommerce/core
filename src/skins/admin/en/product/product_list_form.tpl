@@ -11,24 +11,16 @@
  * @since     3.0.0
  *}
 
-{if:!mode=#confirmation#}
+<widget template="common/dialog.tpl" head="Search product" body="product/search.tpl" />
 
-  <widget template="common/dialog.tpl" head="Search product" body="product/search.tpl" />
+{* Open <form ...> tag *}
+<widget class="\XLite\View\Form\Product\Modify\Batch" name="products_form" />
 
-  {* Open <form ...> tag *}
-  <widget class="\XLite\View\Form\Product\Modify\Batch" name="products_form" />
+  {* List of products *}
+  <widget class="\XLite\View\ItemsList\Product\Admin\Search" />
 
-    {* List of products *}
-    <widget class="\XLite\View\ItemsList\Product\Admin\Search" />
+  {* Operation buttons *}
+  {* <widget class="\XLite\View\Button\Submit" label="Update" />*}
 
-    {* Operation buttons *}
-    {* <widget class="\XLite\View\Button\Submit" label="Update" />*}
-
-  {* Close </form> tag *}
-  <widget name="products_form" end />
-
-{else:}
-
-  <widget template="common/dialog.tpl" head="Confirmation" body="product/products_delete.tpl" />
-
-{end:}
+{* Close </form> tag *}
+<widget name="products_form" end />
