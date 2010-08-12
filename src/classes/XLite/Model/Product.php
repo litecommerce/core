@@ -210,6 +210,18 @@ class Product extends \XLite\Model\Base\I18n
     protected $image;
 
     /**
+     * Product detailed images
+     *
+     * @var    \XLite\Mode\Image\Product\Image
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     *
+     * @OneToMany (targetEntity="XLite\Model\Image\Product\Detailed", mappedBy="product", cascade={"persist","remove"})
+     */
+    protected $detailedImages;
+
+    /**
      * Product extra fields 
      * 
      * @var    \Doctrine\ORM\PersistentCollection
