@@ -210,10 +210,9 @@ class OptionException extends \XLite\Model\Repo\ARepo
     {
         $qb = $this->createQueryBuilder();
 
-        $keys = \XLite\Core\Database::buildInCondition($exceptionIds);
+        $keys = \XLite\Core\Database::buildInCondition($qb, $exceptionIds);
 
         return $qb->andWhere('o.exception_id IN (' . implode(', ', $keys) . ')');
     }
 
 }
-
