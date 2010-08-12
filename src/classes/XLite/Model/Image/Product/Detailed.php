@@ -41,6 +41,50 @@ namespace XLite\Model\Image\Product;
 class Detailed extends \XLite\Model\Base\Image
 {
     /**
+     * Alternative image text
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Column (type="string", length="255")
+     */
+    protected $alt = '';
+
+    /**
+     * Image position 
+     * 
+     * @var    integer
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Column (type="integer")
+     */
+    protected $orderby = 0;
+
+    /**
+     * Zoom flag 
+     * 
+     * @var    boolean
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Column (type="boolean")
+     */
+    protected $is_zoom = false;
+
+    /**
+     * Enabled 
+     * 
+     * @var    boolean
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Column (type="boolean")
+     */
+    protected $enabled = false;
+
+    /**
      * Relation to a product entity
      *
      * @var    \Doctrine\Common\Collections\ArrayCollection

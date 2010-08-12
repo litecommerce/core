@@ -29,14 +29,14 @@
 namespace XLite\Module\DetailedImages\View;
 
 /**
- * Product images gallery widget
- *
+ * Zoomer
+ * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0
- * @ListChild (list="productDetails.image", weight="30")
+ * @since   3.0.0
+ * @ListChild (list="productDetails.image", weight="10")
  */
-class Gallery extends \XLite\View\AView
+class Zoom extends \XLite\View\AView
 {
     /**
      * Widget parameter names
@@ -54,7 +54,21 @@ class Gallery extends \XLite\View\AView
      */
     protected function getDefaultTemplate()
     {
-        return 'modules/DetailedImages/gallery.tpl';
+        return 'product_details/parts/image.box.tpl';
+    }
+
+    /**
+     * Return current template
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getTemplate()
+    {
+        return $this->getParam(self::PARAM_PRODUCT)->hasZoomImage()
+            ? 'product_details/parts/image.zoom.tpl'
+            : $this->getDefaultTemplate();
     }
 
     /**
@@ -69,37 +83,26 @@ class Gallery extends \XLite\View\AView
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_PRODUCT => new \XLite\Model\WidgetParam\Object('Product', $this->getProduct(), false, '\XLite\Model\Product'),
+            self::PARAM_PRODUCT => new \XLite\Model\WidgetParam\Object(
+                'Product',
+                $this->getProduct(),
+                false,
+                '\XLite\Model\Product'
+            ),
         );
     }
 
-
     /**
-     * Get LightBox library images directory 
+     * Get zoom image 
      * 
      * @return string
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getLightBoxImagesDir()
+    public function getZoomImageURL()
     {
-        return \XLite::getInstance()->getShopUrl(
-            \XLite\Model\Layout::getInstance()->getPath() . 'modules/DetailedImages/images'
-        );
-    }
-
-    /**
-     * Check visibility
-     * 
-     * @return bolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function isVisible()
-    {
-        return parent::isVisible() && $this->getParam(self::PARAM_PRODUCT)->getDetailedImages();
+        return $this->getParam(self::PARAM_PRODUCT)->getZoomImage()->getURL();
     }
 
     /**
@@ -114,8 +117,7 @@ class Gallery extends \XLite\View\AView
     {
         $list = parent::getJSFiles();
 
-        $list[] = 'modules/DetailedImages/js/jquery.lightbox-0.5.min.js';
-        $list[] = 'modules/DetailedImages/gallery.js';
+        $list[] = 'js/jquery.jqzoom1.0.1.js';
 
         return $list;
     }
@@ -132,7 +134,7 @@ class Gallery extends \XLite\View\AView
     {
         $list = parent::getCSSFiles();
 
-        $list[] = 'modules/DetailedImages/css/jquery.lightbox-0.5.css';
+        $list[] = 'css/jqzoom.css';
 
         return $list;
     }

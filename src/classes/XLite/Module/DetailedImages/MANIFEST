@@ -1,6 +1,0 @@
-module_id=700
-name=DetailedImages
-description=Allows to add detailed product images for better representation of the product
-enabled=1
-version=2.2
-dependencies=
