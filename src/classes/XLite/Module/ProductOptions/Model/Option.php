@@ -53,17 +53,6 @@ class Option extends \XLite\Model\Base\I18n
     protected $option_id;
 
     /**
-     * Group option unique id 
-     * 
-     * @var    integer
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     * @Column (type="integer")
-     */
-    protected $group_id;
-
-    /**
      * Sort position
      * 
      * @var    integer
