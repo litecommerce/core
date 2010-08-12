@@ -29,14 +29,14 @@
 namespace XLite\Module\DetailedImages\View;
 
 /**
- * Zoomer
+ * Product image
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  * @ListChild (list="productDetails.image", weight="10")
  */
-class Zoom extends \XLite\View\AView
+class ProductImage extends \XLite\View\AView
 {
     /**
      * Widget parameter names
