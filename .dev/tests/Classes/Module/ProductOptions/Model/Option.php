@@ -174,6 +174,12 @@ class XLite_Tests_Module_ProductOptions_Model_Option extends XLite_Tests_TestCas
         $list = $option->getTranslations();
 
         $this->assertEquals(2, count($list), 'check translations length again');
+
+        $t = $option->getTranslation('de');
+
+        $this->assertNotEquals($t->getLabelId(), $option->getOptionId(), 'check translation label id');
+        $this->assertEquals($t->getOwner()->getOptionId(), $option->getOptionId(), 'check translation owner id (again)');
+
     }
 
     public function testGetSurcharge()
