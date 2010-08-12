@@ -89,16 +89,18 @@ class XLite_Tests_Module_ProductOptions_Model_OptionGroup extends XLite_Tests_Te
 
         $this->assertEquals($group::TEXT_TYPE, $group->getType(), 'Check new type');
 
+        $group = \XLite\Core\Database::getRepo('XLite\Module\ProductOptions\Model\OptionGroup')
+            ->find($group->getGroupId());
+
         $list = $group->getOptions();
         $option = new \XLite\Module\ProductOptions\Model\Option();
         $option->setGroup($group);
-        $list->add($option);
-        $group->setOptions($list);
+        $list[] = $option;
 
         $option->map($this->testOption);
         $option->setName('o5');
 
-        \XLite\Core\Database::getEM()->persist($group);
+        \XLite\Core\Database::getEM()->persist($option);
         \XLite\Core\Database::getEM()->flush();
 
         $this->assertEquals(2, count($group->getOptions()), 'Check options count');
