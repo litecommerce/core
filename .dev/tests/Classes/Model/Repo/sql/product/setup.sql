@@ -25,10 +25,10 @@ INSERT INTO `xlite_category_products` SET product_id = '15067', category_id = '1
 INSERT INTO `xlite_products` (`product_id`, `price`, `sale_price`, `sku`, `order_by`, `enabled`, `weight`, `tax_class`, `free_shipping`, `clean_url`) VALUES (15090,'1.99','1.99','00000',0,1,'0.32','',0,'');
 INSERT INTO `xlite_products` (`product_id`, `price`, `sale_price`, `sku`, `order_by`, `enabled`, `weight`, `tax_class`, `free_shipping`, `clean_url`) VALUES (16281,'1.15','1.15','00007',0,1,'0.31','',0,'');
 INSERT INTO `xlite_products` (`product_id`, `price`, `sale_price`, `sku`, `order_by`, `enabled`, `weight`, `tax_class`, `free_shipping`, `clean_url`) VALUES (16280,'3.45','3.45','00006',0,1,'0.55','',0,'');
-INSERT INTO `xlite_products` (`product_id`, `price`, `sale_price`, `sku`, `order_by`, `enabled`, `weight`, `tax_class`, `free_shipping`, `clean_url`) VALUES (16282,'1.12','1.12','00008',0,1,'0.35','',0,'');
+INSERT INTO `xlite_products` (`product_id`, `price`, `sale_price`, `sku`, `order_by`, `enabled`, `weight`, `tax_class`, `free_shipping`, `clean_url`) VALUES (16282,'1.12','1.12','00008',0,1,'0.35','',0,'test');
 INSERT INTO `xlite_products` (`product_id`, `price`, `sale_price`, `sku`, `order_by`, `enabled`, `weight`, `tax_class`, `free_shipping`, `clean_url`) VALUES (15121,'5.99','5.99','00004',0,1,'0.32','',0,'');
 INSERT INTO `xlite_products` (`product_id`, `price`, `sale_price`, `sku`, `order_by`, `enabled`, `weight`, `tax_class`, `free_shipping`, `clean_url`) VALUES (15123,'1.99','1.99','00005',0,1,'0.32','',0,'');
-INSERT INTO `xlite_products` (`product_id`, `price`, `sale_price`, `sku`, `order_by`, `enabled`, `weight`, `tax_class`, `free_shipping`, `clean_url`) VALUES (15068,'2.99','2.99','00003',0,1,'0.32','',0,'');
+INSERT INTO `xlite_products` (`product_id`, `price`, `sale_price`, `sku`, `order_by`, `enabled`, `weight`, `tax_class`, `free_shipping`, `clean_url`) VALUES (15068,'2.99','2.99','00003',0,0,'0.32','',0,'disabled');
 INSERT INTO `xlite_products` (`product_id`, `price`, `sale_price`, `sku`, `order_by`, `enabled`, `weight`, `tax_class`, `free_shipping`, `clean_url`) VALUES (15091,'8.99','8.99','00002',0,1,'0.32','',0,'');
 INSERT INTO `xlite_products` (`product_id`, `price`, `sale_price`, `sku`, `order_by`, `enabled`, `weight`, `tax_class`, `free_shipping`, `clean_url`) VALUES (15067,'2.49','2.49','00001',0,1,'0.32','',0,'');
 
