@@ -263,16 +263,18 @@ class OptionGroup extends \XLite\Model\Base\I18n
     /**
      * Get default plain value (option id or text or null)
      * 
+     * @param integer $startIdx Start scan index
+     * 
      * @return string
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getDefaultPlainValue()
+    public function getDefaultPlainValue($startIdx = 0)
     {
         switch ($this->getType()) {
             case self::GROUP_TYPE:
-                $option = $this->getDefaultOption();
+                $option = $this->getDefaultOption($startIdx);
                 $result = $option ? $option->getOptionId() : null;
                 break;
 
