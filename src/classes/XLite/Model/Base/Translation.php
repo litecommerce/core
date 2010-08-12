@@ -52,17 +52,6 @@ abstract class Translation extends \XLite\Model\AEntity
     protected $label_id;
 
     /**
-     * Object unique id 
-     * 
-     * @var    integer
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     * @Column (type="integer", length="11", nullable=false)
-     */
-    protected $id;
-
-    /**
      * Label language code 
      * 
      * @var    string
