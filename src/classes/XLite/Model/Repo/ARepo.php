@@ -795,53 +795,6 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
         return $entity;
     }
 
-    /**
-     * Adds support for magic finders
-     * 
-     * @param string $method    Method name
-     * @param array  $arguments Arguments list
-     *  
-     * @return array|object The found entity/entities
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function __call($method, $arguments)
-    {
-        if (0 === strncmp($method, 'findBy', 6)) {
-            $by = substr($method, 6);
-            $method = 'findBy';
-
-        } elseif (0 === strncmp($method, 'findOneBy', 9)) {
-
-            $by = substr($method, 9);
-            $method = 'findOneBy';
-
-        } else {
-            throw new \BadMethodCallException(
-                'Undefined method \'' . $method . '\'. The method name must start with '
-                . 'either findBy or findOneBy!'
-            );
-        }
-
-        if (!isset($arguments[0])) {
-            throw \Doctrine\ORM\ORMException::findByRequiresParameter($method . $by);
-        }
-
-        $fieldName = \XLite\Core\Converter::convertFromCamelCase($by);
-
-        if (!$this->_class->hasField($fieldName)) {
-            throw \Doctrine\ORM\ORMException::invalidFindByCall(
-                $this->_entityName,
-                $fieldName, 
-                $method . $by
-            );
-        }
-
-        // Method name is findBy or findOneBy
-        return $this->$method(array($fieldName => $arguments[0]));
-    }
-
 
 
     /**
@@ -871,16 +824,42 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     protected function getById($id)
     {
         if (!($entity = $this->find($id))) {
-            throw new \Exception(get_class($this) . '::updateById() - unknow ID (' . $id . ')');
+            throw new \Exception(get_class($this) . '::getById() - unknow ID (' . $id . ')');
         }
 
         return $entity;
     }
 
     /**
+     * getAllowedModifiers 
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getAllowedModifiers()
+    {
+        return array('insert', 'update', 'delete');
+    }
+
+    /**
+     * Pattern to check called method names
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getModifierPattern()
+    {
+        return '/(' . implode('|', $this->getAllowedModifiers()) . ')(InBatch)?(ById)?/Si';
+    }
+
+    /**
      * Insert single entity
      *
-     * @param array $data data to use in action
+     * @param array $data data to save
      *
      * @return void
      * @access protected
@@ -900,21 +879,21 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     /**
      * Update single entity
      *
-     * @param int   $id   entity ID
-     * @param array $data data to use in action
+     * @param \XLite\Model\AEntity $entity entity to use
+     * @param array                $data   data to save
      *
      * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function performUpdate($id, array $data)
+    protected function performUpdate(\XLite\Model\AEntity $entity, array $data)
     {
-        $this->getById($id)->map($data);
+        $entity->map($data);
     }
 
     /**
-     * Remove single entity
+     * Delete single entity
      *
      * @param \XLite\Model\AEntity $entity entity to detach
      *
@@ -923,176 +902,74 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function performRemove(\XLite\Model\AEntity $entity)
+    protected function performDelete(\XLite\Model\AEntity $entity)
     {
         $this->getEntityManager()->remove($entity);
     }
 
-    /**
-     * Delete single entity by ID
-     *
-     * @param int $id entity ID
-     *
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     *
-     */
-    protected function performDelete($id)
-    {
-        $this->performRemove($this->getById($id));
-    }
-
 
     /**
-     * Insert single entity
-     *
-     * NOTE: do not override this method: it will not affect the "insertInBatch()" one.
-     * Override the "performInsert()" instead
-     *
-     * @param array $data data to use in action
-     *
-     * @return void
-     * @access protected
+     * Perform some common operations to modify records
+     * Possible functions "(insert|update|delete)(InBatch)(ById)"
+     * 
+     * @param string $method method to call
+     * @param array  $args   call arguments
+     *  
+     * @return mixed
+     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function insert(array $data)
+    public function __call($method, $args)
     {
-        $result = $this->performInsert($data);
-        $this->flushChanges();
+        $result = null;
+
+        if (preg_match($this->getModifierPattern(), $method, $matches)) {
+
+            // Common method
+            $method = 'perform' . $matches[1];
+
+            // First passed variable: 
+            // - for "*()": entity
+            // - for "*InBatch()": entities array
+            // - for "*InBatchById()": array with the <id,(array)data> pairs
+            $commonArg = $args[0];
+
+            // Check if the batch processing is requred ($matches[2] == {''|'InBatch'})
+            if (empty($matches[2])) {
+
+                // Get entity by ID (if needed: $matches[3] == {''|'ById'}) 
+                $entity = empty($matches[3]) ? $commonArg : $this->getById($commonArg);
+
+                // Check arguments. Some methods (e.g. "delete()") don't use the second argument
+                $data = isset($args[1]) ? $args[1] : null;
+
+                // Perform action
+                $result = $this->$method($entity, $data);
+
+            } else {
+
+                // Batch processing: iterate over the first argument.
+                // "*InBatch*()" methods don't pass any other args
+                foreach ($commonArg as $id => $data) {
+
+                    // Get entity by ID (if needed: $matches[3] == {''|'ById'})
+                    $entity = empty($matches[3]) ? $data : $this->getById($id);
+
+                    // Perform action
+                    $result = $this->$method($entity, $data);
+                }
+            }
+
+            // Execute queries and save changes
+            $this->flushChanges();
+
+        } else {
+
+            $result = parent::__call($method, $args);
+        }
 
         return $result;
-    }
-
-    /**
-     * Update single entity
-     *
-     * NOTE: do not override this method: it will not affect the "updateInBatch()" one.
-     * Override the "performUpdate()" instead
-     *
-     * @param int   $id   entity ID
-     * @param array $data data to use in action
-     *
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function update($id, array $data)
-    {
-        $this->performUpdate($id, $data);
-        $this->flushChanges();
-    }
-
-    /**
-     * Remove single entity
-     *
-     * NOTE: do not override this method: it will not affect the "removeInBatch()" one.
-     * Override the "performRemove()" instead
-     * 
-     * @param \XLite\Model\AEntity $entity entity to detach
-     *  
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function remove(\XLite\Model\AEntity $entity)
-    {
-        $this->performRemove(); 
-        $this->flushChanges();
-    }
-
-    /**
-     * Delete single entity by ID
-     *
-     * NOTE: do not override this method: it will not affect the "deleteInBatch()" one.
-     * Override the "performDelete()" instead
-     *
-     * @param int $id entity ID
-     *
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     *
-     */
-    public function delete($id)
-    {
-        $this->performDelete($id);
-        $this->flushChanges();
-    }
-
-    /**
-     * Insert several items at once
-     *
-     * @param array $data data to save
-     *
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function insertInBatch(array $data)
-    {
-        // TODO: check if it's really needed
-    }
-
-    /**
-     * Update several items at once
-     *
-     * @param array $data data to save
-     *
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function updateInBatch(array $data)
-    {
-        foreach ($data as $id => $fields) {
-            $this->performUpdate($id, $fields);
-        }
-
-        $this->flushChanges();
-    }
-
-    /**
-     * Remove several items at once
-     *
-     * @param \Doctrine\Common\Collections\Collection $entities entities to remove
-     *  
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function removeInBatch(\Doctrine\Common\Collections\Collection $entities)
-    {
-        foreach ($entities as $entity) {
-            $this->performRemove($entity);
-        }
-
-        $this->flushChanges();
-    }
-
-    /**
-     * Delete several items at once (by ID)
-     *
-     * @param array $ids IDs to use
-     *
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function deleteInBatch(array $ids)
-    {
-        foreach ($ids as $id) {
-            $this->performDelete($id);
-        }
-
-        $this->flushChanges();
     }
 
 

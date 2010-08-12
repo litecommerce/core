@@ -79,7 +79,9 @@ class Product extends Catalog
      */
     protected function getProduct()
     {
-        $result = \XLite\Core\Database::getRepo('\XLite\Model\Product')->find($this->getProductId());
+        if (!$this->isNew()) {
+            $result = \XLite\Core\Database::getRepo('\XLite\Model\Product')->find($this->getProductId());
+        }
 
         if (!isset($result)) {
             $result = new \XLite\Model\Product();
@@ -89,24 +91,39 @@ class Product extends Catalog
     }
 
     /**
-     * Return list of the CategoryProduct entities
+     * Return list of product image types
      * 
-     * @param int $productId product ID to map
-     *  
      * @return array
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getCategoryProducts($productId)
+    protected function getImageTypes()
+    {
+        return array(
+            'thumbnail' => '\XLite\Model\Image\Product\Thumbnail',
+            'image'     => '\XLite\Model\Image\Product\Image',
+        );
+    }
+
+    /**
+     * Return list of the CategoryProduct entities
+     *
+     * @param \XLite\Model\Product $product current product
+     *
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getCategoryProducts(\XLite\Model\Product $product)
     {
         $data = array();
-        $product = \XLite\Core\Database::getRepo('\XLite\Model\Product')->find($productId);
 
-        foreach ($this->getPostedData('category_ids') as $categoryId) {
+        foreach ((array) $this->getPostedData('category_ids') as $categoryId) {
             $data[] = new \XLite\Model\CategoryProducts(
                 array(
-                    'product_id'  => $productId,
+                    'product_id'  => $product->getProductId(),
                     'category_id' => $categoryId,
                     'category'    => \XLite\Core\Database::getRepo('\XLite\Model\Category')->find($categoryId),
                     'product'     => $product,
@@ -115,6 +132,55 @@ class Product extends Catalog
         }
 
         return array('category_products' => new \Doctrine\Common\Collections\ArrayCollection($data));
+    }
+
+    /**
+     * Return list of the Image/Thumbnail entities
+     *
+     * @param \XLite\Model\Product $product current product
+     *  
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getProductImages(\XLite\Model\Product $product)
+    {
+        $data = array();
+
+        foreach ($this->getImageTypes() as $type => $class) {
+
+            if (!empty($_FILES[$this->getPrefixPostedData()]['tmp_name'][$type])) {
+
+                // Retrieve product thumbnail/image using the __get() method
+                $image = $product->$type;
+
+                // Check if it's a new image
+                // NOTE: the "isPersistent()" check is required for the proxies
+                if (isset($image) && $image->isPersistent()) {
+                    // Persistent image for existsing product.
+                    // Do not fill the "data" array, but only populate data
+                    // into existsing entity (see below)
+                    $reference = $image;
+                } else {
+                    // New image. Save it in the "data" array.
+                    // It will be automatically persisted (added to the DB),
+                    // since the "Product" model defines the "cascade" options
+                    // for the image fields
+                    $reference = $data[$type] = new $class(
+                        array('id' => $product->getProductId(), 'product' => $product)
+                    );
+                }
+
+                // Set image properties and copy its file
+                $reference->loadFromLocalFile(
+                    $_FILES[$this->getPrefixPostedData()]['tmp_name'][$type],
+                    $_FILES[$this->getPrefixPostedData()]['name'][$type]
+                );
+            }
+        }
+
+        return $data;
     }
 
     /**
@@ -187,15 +253,17 @@ class Product extends Catalog
      */
     protected function doActionAdd()
     {
-        $id = \XLite\Core\Database::getRepo('\XLite\Model\Product')->insert(
-            $this->getPostedData()
-        )->getProductId();
+        // Insert record into main table
+        if ($product = \XLite\Core\Database::getRepo('\XLite\Model\Product')->insert($this->getPostedData())) {
 
-        if (!empty($id)) {
-            // Create associations with categories
-            \XLite\Core\Database::getRepo('\XLite\Model\Product')->update($id, $this->getCategoryProducts($id));
+            // Create associations (categories and images)
+            \XLite\Core\Database::getRepo('\XLite\Model\Product')->update(
+                $product,
+                $this->getCategoryProducts($product) + $this->getProductImages($product)
+            );
 
-            $this->setReturnUrl($this->buildURL('product', '', array('product_id' => $id)));
+            // Add the ID of created product to the return URL
+            $this->setReturnUrl($this->buildURL('product', '', array('product_id' => $product->getProductId())));
         }
     }
 
@@ -209,9 +277,17 @@ class Product extends Catalog
      */
     protected function doActionUpdate()
     {
+        $product = $this->getProduct();
+
+        // Clear all category associates
+        \XLite\Core\Database::getRepo('\XLite\Model\Product')->deleteInBatch(
+            $product->getCategoryProducts()
+        );
+
+        // Update all data
         \XLite\Core\Database::getRepo('\XLite\Model\Product')->update(
-            $this->getProductId(),
-            $this->getPostedData() + $this->getCategoryProducts($this->getProductId())
+            $product,
+            $this->getCategoryProducts($product) + $this->getProductImages($product)
         );
     }
 
@@ -242,7 +318,7 @@ class Product extends Catalog
      */
     public function isNew()
     {
-        return 0 >= $this->getProduct()->getProductId();
+        return 0 >= $this->getProductId();
     }
 
 

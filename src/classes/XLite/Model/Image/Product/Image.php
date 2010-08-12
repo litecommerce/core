@@ -40,4 +40,16 @@ namespace XLite\Model\Image\Product;
  */
 class Image extends \XLite\Model\Base\Image
 {
+    /**
+     * Relation to a product entity
+     *
+     * @var    \Doctrine\Common\Collections\ArrayCollection
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     *
+     * @OneToOne   (targetEntity="XLite\Model\Product", inversedBy="image", fetch="LAZY")
+     * @JoinColumn (name="id", referencedColumnName="product_id")
+     */
+    protected $product;
 }

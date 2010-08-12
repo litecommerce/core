@@ -57,6 +57,22 @@ class Converter extends AUtils
             $result[] = $name . $glue . $value;
         }
 
-        return implode ($separator, $result);
+        return implode($separator, $result);
+    }
+
+    /**
+     * Remove trailing characters from string
+     *
+     * @param string $string string to prepare
+     * @param string $chars  charlist to remove
+     *
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function trimTrailingChars($string, $chars)
+    {
+        return rtrim($string, $chars);
     }
 }

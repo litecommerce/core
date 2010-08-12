@@ -167,4 +167,43 @@ class FileManager extends AUtils
             rmdir($dir);
         }
     }
+
+    /**
+     * Return hash of the file
+     *
+     * @param string $path file path
+     *
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getHash($path)
+    {
+        return static::isFileReadable($path) ? md5_file($path) : null;
+    }
+
+    /**
+     * Get unique file name in the certain directory
+     * 
+     * @param string $dir  directory name
+     * @param string $file file name
+     *  
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getUniquePath($dir, $file)
+    {
+        $dir = \Includes\Utils\Converter::trimTrailingChars($dir, LC_DS) . LC_DS;
+        $pathinfo = pathinfo($file);
+        $counter = 1;
+
+        while (static::isFile($path = $dir . $file)) {
+            $file = $pathinfo['filename'] . '_' . $counter++ . '.' . $pathinfo['extension'];
+        }
+
+        return $path;
+    }
 }

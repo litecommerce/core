@@ -49,7 +49,7 @@ class URLManager extends AUtils
      */
     public static function trimTrailingSlashes($url)
     {
-        return rtrim($url, '/');
+        return \Includes\Utils\Converter::trimTrailingChars($url, '/');
     }
 
     /**
