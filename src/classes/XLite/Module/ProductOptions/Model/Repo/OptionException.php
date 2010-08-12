@@ -37,7 +37,6 @@ namespace XLite\Module\ProductOptions\Model\Repo;
  */
 class OptionException extends \XLite\Model\Repo\ARepo
 {
-
     /**
      * Check options ids list
      * 
@@ -89,14 +88,14 @@ class OptionException extends \XLite\Model\Repo\ARepo
         }
 
         $query = $this->_em->createNativeQuery(
-            'SELECT COUNT(e1.option_id) as cnt, e1.exception_id as rel '
+            'SELECT COUNT(e1.option_id) as cnt '
             . 'FROM ' . $this->_class->getTableName() . ' as e1 '
             . 'WHERE e1.option_id IN (' . implode(', ', $keys) . ') '
             . 'GROUP BY e1.exception_id '
             . 'HAVING cnt = ('
             . 'SELECT COUNT(e2.option_id) '
             . 'FROM ' . $this->_class->getTableName() . ' as e2 '
-            . 'WHERE e2.exception_id = rel '
+            . 'WHERE e2.exception_id = e1.exception_id '
             . 'GROUP BY e2.exception_id'
             . ') '
             . 'LIMIT 1',
@@ -211,7 +210,7 @@ class OptionException extends \XLite\Model\Repo\ARepo
     {
         $qb = $this->createQueryBuilder();
 
-        $keys = \XLite\Core\Database::buildInCondition($qb);
+        $keys = \XLite\Core\Database::buildInCondition($exceptionIds);
 
         return $qb->andWhere('o.exception_id IN (' . implode(', ', $keys) . ')');
     }
