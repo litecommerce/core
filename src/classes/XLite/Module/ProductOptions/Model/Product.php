@@ -129,7 +129,7 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
                     ->find(intval($data));
                 if (
                     !$option
-                    || $option->getGroupId() != $optionGroup->getGroupId()
+                    || $option->getGroup()->getGroupId() != $optionGroup->getGroupId()
                 ) {
                     $prepared = null;
                     break;
@@ -200,9 +200,14 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
                 $option = $optionGroup::GROUP_TYPE == $optionGroup->getType()
                     ? $optionGroup->getDefaultOption($ids[$optionGroup->getGroupId()]['start'])
                     : null;
+
+                $value = $optionGroup->getDefaultPlainValue(
+                    isset($ids[$optionGroup->getGroupId()]) ? $ids[$optionGroup->getGroupId()]['start'] : 0
+                );
+
                 $options[$optionGroup->getGroupId()] = array(
                     'option' => $option,
-                    'value'  => $optionGroup->getDefaultPlainValue()
+                    'value'  => $value,
                 );
             }
             $cnt++;
