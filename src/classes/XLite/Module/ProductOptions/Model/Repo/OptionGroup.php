@@ -83,7 +83,8 @@ class OptionGroup extends \XLite\Model\Repo\Base\I18n
         return $this->createQueryBuilder()
             ->addSelect('options')
             ->leftJoin('o.options', 'options', 'WITH', 'options.enabled = :true')
-            ->andWhere('o.product_id = :productId AND o.enabled = :true')
+            ->innerJoin('o.product', 'p', 'WITH', 'p.product_id = :productId')
+            ->andWhere('o.enabled = :true')
             ->setParameter('productId', $productId)
             ->setParameter('true', true);
     }
@@ -139,7 +140,7 @@ class OptionGroup extends \XLite\Model\Repo\Base\I18n
     }
 
     /**
-     * Define query for findActiveByProductId() method
+     * Define query for findOneByGroupIdAndProductId() method
      *
      * @param integer $groupId   Option group id
      * @param integer $productId Product id
@@ -152,7 +153,8 @@ class OptionGroup extends \XLite\Model\Repo\Base\I18n
     protected function defineOneByGroupIdAndProductIdQuery($groupId, $productId)
     {
         return $this->createQueryBuilder()
-            ->andWhere('o.group_id = :groupId AND o.product_id = :productId')
+            ->innerJoin('o.product', 'p', 'WITH', 'p.product_id = :productId')
+            ->andWhere('o.group_id = :groupId')
             ->setParameter('groupId', $groupId)
             ->setParameter('productId', $productId)
             ->setMaxResults(1);
