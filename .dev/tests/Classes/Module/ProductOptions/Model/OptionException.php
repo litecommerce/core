@@ -124,6 +124,11 @@ class XLite_Tests_Module_ProductOptions_Model_OptionException extends XLite_Test
             $this->getProduct()->getOptionGroups()->get(1)->getOptions()->get(1)->getOptionId(),
             'equals option id'
         );
+
+        $this->assertNotNull(
+            $this->getProduct()->getOptionGroups()->get(1)->getOptions()->get(1)->getExceptions()->get(0)->getId(),
+            'check id'
+        );
     }
 
     public function testUpdate()
