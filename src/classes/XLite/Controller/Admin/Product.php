@@ -423,6 +423,16 @@ class Product extends Catalog
 
 
     /**
+     * FIXME- backward compatibility 
+     * 
+     * @var    array
+     * @access public
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    public $params = array('target', 'product_id', 'page', 'backUrl');
+
+    /**
      * FIXME- backward compatibility
      * 
      * @var    string
