@@ -199,7 +199,7 @@ class OptionException extends \XLite\Model\Repo\ARepo
     /**
      * Define query builder for findByExceptionIds() method
      * 
-     * @param array $exceptionId Exception ids list
+     * @param array $exceptionIds Exception ids list
      *  
      * @return \Doctrine\ORM\QueryBuilder
      * @access protected
