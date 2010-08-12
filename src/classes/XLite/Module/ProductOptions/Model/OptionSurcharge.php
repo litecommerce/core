@@ -60,17 +60,6 @@ class OptionSurcharge extends \XLite\Model\AEntity
     protected $surcharge_id;
 
     /**
-     * Option unique id 
-     * 
-     * @var    integer
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     * @Column (type="integer")
-     */
-    protected $option_id;
-
-    /**
      * Type
      * 
      * @var    string
