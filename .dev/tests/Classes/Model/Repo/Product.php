@@ -16,7 +16,9 @@
  * @since      3.0.0
  */
 
-class XLite_Tests_Model_Repo_Product extends XLite_Tests_TestCase
+include_once dirname(__DIR__) . '/AProduct.php';
+
+class XLite_Tests_Model_Repo_Product extends XLite_Tests_Model_AProduct
 {
    /**
      * Return data needed to start application.
@@ -35,38 +37,6 @@ class XLite_Tests_Model_Repo_Product extends XLite_Tests_TestCase
         $request['controller'] = ('testSearchDisabledItems' === $this->name);
 
         return $request;
-    }
-
-    /**
-     * setUp 
-     * 
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function setUp()
-    {
-        parent::setUp();
-
-        $this->query(file_get_contents(__DIR__ . '/sql/product/setup.sql'));
-        \XLite\Core\Database::getEM()->flush();
-    }
-
-    /**
-     * tearDown 
-     * 
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function tearDown()
-    {
-        parent::tearDown();
-
-        // $this->query(file_get_contents(__DIR__ . 'sql/product/restore.sql'));
-        // \XLite\Core\Database::getEM()->flush();
     }
 
     /**
