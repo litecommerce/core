@@ -376,8 +376,8 @@ INSERT INTO xlite_option_translations (id, code, name) VALUES (4007, 'en', 'XL')
 INSERT INTO xlite_options SET option_id = 4008, group_id = 4001, enabled = 1;
 INSERT INTO xlite_option_translations (id, code, name) VALUES (4008, 'en', 'XXL');
 
-INSERT INTO xlite_images SET `product_id` = '4004', `alt` = 'Front', `order_by` = '0', `image` = 'demo_store_d4004_1.jpeg', `image_height` = '355', `image_width` = '220', `image_type` = 'image/jpeg', `image_size` = '14696', `image_source` = 'F';
-INSERT INTO xlite_images SET `product_id` = '4004', `image` = 'demo_store_p4004.jpeg', `image_type` = 'image/jpeg', `image_width` = '489', `image_height` = '500', `image_size` = '115220', `image_source` = 'F', `is_zoom` = 'Y', `order_by` = '-1';
+INSERT INTO xlite_product_detailed_images SET `id` = '4004', `alt` = 'Front', `orderby` = '0', `path` = 'demo_store_d4004_1.jpeg', `height` = '355', `width` = '220', `mime` = 'image/jpeg', `size` = '14696';
+INSERT INTO xlite_product_detailed_images SET `id` = '4004', `path` = 'demo_store_p4004.jpeg', `mime` = 'image/jpeg', `width` = '489', `height` = '500', `size` = '115220', `is_zoom` = 1, `orderby` = '-1';
 
 --INSERT INTO xlite_inventories SET `inventory_id` = '4009', `amount` = '172', `enabled` = '1', `low_avail_limit` = '150';
 INSERT INTO xlite_option_groups SET group_id = 4002, `product_id` = 4009, `view_type` = 'r', enabled = 1;
@@ -393,30 +393,30 @@ INSERT INTO xlite_option_translations (id, code, name) VALUES (4012, 'en', 'XL')
 INSERT INTO xlite_options SET option_id = 4013, group_id = 4002, enabled = 1;
 INSERT INTO xlite_option_translations (id, code, name) VALUES (4013, 'en', 'XXL');
 INSERT INTO xlite_option_surcharges SET option_id = 4013, `type` = 'price', modifier = -10,  modifier_type = '$';
-INSERT INTO xlite_images SET `product_id` = '4009', `alt` = 'Close up', `order_by` = '0', `image` = 'demo_store_d4009_1.jpeg', `image_height` = '283', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '23325', `image_source` = 'F';
-INSERT INTO xlite_images SET `product_id` = '4009', `alt` = 'In use', `order_by` = '1', `image` = 'demo_store_d4009_2.jpeg', `image_height` = '491', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '23816', `image_source` = 'F';
-INSERT INTO xlite_images SET `product_id` = '4009', `image` = 'demo_store_p4009.gif', `image_type` = 'image/gif', `image_width` = '400', `image_height` = '473', `image_size` = '111939', `image_source` = 'F', `is_zoom` = 'Y', `order_by` = '-1';
-INSERT INTO xlite_images SET `product_id` = '4030', `alt` = 'Ninja warning issued', `order_by` = '0', `image` = 'demo_store_d4030_1.jpeg', `image_height` = '326', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '25880', `image_source` = 'F';
-INSERT INTO xlite_images SET `product_id` = '4030', `image` = 'demo_store_p4030.jpeg', `image_type` = 'image/jpeg', `image_width` = '400', `image_height` = '278', `image_size` = '10810', `image_source` = 'F', `is_zoom` = 'Y', `order_by` = '-1';
-INSERT INTO xlite_images SET `product_id` = '4031', `alt` = 'Stack Pack 3-Pack', `order_by` = '0', `image` = 'demo_store_d4031_1.jpeg', `image_height` = '551', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '24679', `image_source` = 'F';
-INSERT INTO xlite_images SET `product_id` = '4031', `image` = 'demo_store_p4031.jpeg', `image_type` = 'image/jpeg', `image_width` = '298', `image_height` = '500', `image_size` = '53557', `image_source` = 'F', `is_zoom` = 'Y', `order_by` = '-1';
-INSERT INTO xlite_images SET `product_id` = '4013', `alt` = 'On Desk', `order_by` = '0', `image` = 'demo_store_d4013_1.jpeg', `image_height` = '318', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '25319', `image_source` = 'F';
-INSERT INTO xlite_images SET `product_id` = '4013', `alt` = 'Maintaining the Servers', `order_by` = '1', `image` = 'demo_store_d4013_2.jpeg', `image_height` = '300', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '28271', `image_source` = 'F';
-INSERT INTO xlite_images SET `product_id` = '4013', `image` = 'demo_store_p4013.jpeg', `image_type` = 'image/jpeg', `image_width` = '355', `image_height` = '500', `image_size` = '48991', `image_source` = 'F', `is_zoom` = 'Y', `order_by` = '-1';
-INSERT INTO xlite_images SET `product_id` = '4016', `alt` = 'Where a geek hangs his hat', `order_by` = '0', `image` = 'demo_store_d4016_1.jpeg', `image_height` = '276', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '18074', `image_source` = 'F';
-INSERT INTO xlite_images SET `product_id` = '4016', `image` = 'demo_store_p4016.jpeg', `image_type` = 'image/jpeg', `image_width` = '233', `image_height` = '500', `image_size` = '50409', `image_source` = 'F', `is_zoom` = 'Y', `order_by` = '-1';
-INSERT INTO xlite_images SET `product_id` = '4022', `alt` = 'Mug Henge!', `order_by` = '0', `image` = 'demo_store_d4022_1.jpeg', `image_height` = '300', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '21329', `image_source` = 'F';
-INSERT INTO xlite_images SET `product_id` = '4022', `image` = 'demo_store_p4022.jpeg', `image_type` = 'image/jpeg', `image_width` = '400', `image_height` = '280', `image_size` = '25544', `image_source` = 'F', `is_zoom` = 'Y', `order_by` = '-1';
-INSERT INTO xlite_images SET `product_id` = '4021', `alt` = 'On desk', `order_by` = '0', `image` = 'demo_store_d4021_1.jpeg', `image_height` = '300', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '30401', `image_source` = 'F';
-INSERT INTO xlite_images SET `product_id` = '4021', `image` = 'demo_store_p4021.jpeg', `image_type` = 'image/jpeg', `image_width` = '400', `image_height` = '424', `image_size` = '23118', `image_source` = 'F', `is_zoom` = 'Y', `order_by` = '-1';
-INSERT INTO xlite_images SET `product_id` = '4012', `alt` = 'Retro Packaging', `order_by` = '0', `image` = 'demo_store_d4012_1.jpeg', `image_height` = '370', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '28746', `image_source` = 'F';
-INSERT INTO xlite_images SET `product_id` = '4012', `alt` = 'It\'s fun', `order_by` = '1', `image` = 'demo_store_d4012_2.jpeg', `image_height` = '377', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '27496', `image_source` = 'F';
-INSERT INTO xlite_images SET `product_id` = '4012', `image` = 'demo_store_p4012.jpeg', `image_type` = 'image/jpeg', `image_width` = '400', `image_height` = '297', `image_size` = '33532', `image_source` = 'F', `is_zoom` = 'Y', `order_by` = '-1';
-INSERT INTO xlite_images SET `product_id` = '4042', `alt` = 'Solar car in hand', `order_by` = '0', `image` = 'demo_store_d4042_1.jpeg', `image_height` = '277', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '59968', `image_source` = 'F';
-INSERT INTO xlite_images SET `product_id` = '4042', `alt` = 'In packaging', `order_by` = '1', `image` = 'demo_store_d4042_2.jpeg', `image_height` = '257', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '54455', `image_source` = 'F';
-INSERT INTO xlite_images SET `product_id` = '4042', `image` = 'demo_store_p4042.jpeg', `image_type` = 'image/jpeg', `image_width` = '400', `image_height` = '323', `image_size` = '65760', `image_source` = 'F', `is_zoom` = 'Y', `order_by` = '-1';
-INSERT INTO xlite_images SET `product_id` = '4045', `alt` = 'Pyramid Power!', `order_by` = '0', `image` = 'demo_store_d4045_1.jpeg', `image_height` = '279', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '20764', `image_source` = 'F';
-INSERT INTO xlite_images SET `product_id` = '4045', `image` = 'demo_store_p4045.jpeg', `image_type` = 'image/jpeg', `image_width` = '400', `image_height` = '408', `image_size` = '51049', `image_source` = 'F', `is_zoom` = 'Y', `order_by` = '-1';
+INSERT INTO xlite_product_detailed_images SET `id` = '4009', `alt` = 'Close up', `path` = 'demo_store_d4009_1.jpeg', `height` = '283', `width` = '400', `mime` = 'image/jpeg', `size` = '23325';
+INSERT INTO xlite_product_detailed_images SET `id` = '4009', `alt` = 'In use', `orderby` = '1', `path` = 'demo_store_d4009_2.jpeg', `height` = '491', `width` = '400', `mime` = 'image/jpeg', `size` = '23816';
+INSERT INTO xlite_product_detailed_images SET `id` = '4009', `path` = 'demo_store_p4009.gif', `mime` = 'image/gif', `width` = '400', `height` = '473', `size` = '111939', `is_zoom` = 1, `orderby` = '-1';
+INSERT INTO xlite_product_detailed_images SET `id` = '4030', `alt` = 'Ninja warning issued', `path` = 'demo_store_d4030_1.jpeg', `height` = '326', `width` = '400', `mime` = 'image/jpeg', `size` = '25880';
+INSERT INTO xlite_product_detailed_images SET `id` = '4030', `path` = 'demo_store_p4030.jpeg', `mime` = 'image/jpeg', `width` = '400', `height` = '278', `size` = '10810', `is_zoom` = 1, `orderby` = '-1';
+INSERT INTO xlite_product_detailed_images SET `id` = '4031', `alt` = 'Stack Pack 3-Pack', `path` = 'demo_store_d4031_1.jpeg', `height` = '551', `width` = '400', `mime` = 'image/jpeg', `size` = '24679';
+INSERT INTO xlite_product_detailed_images SET `id` = '4031', `path` = 'demo_store_p4031.jpeg', `mime` = 'image/jpeg', `width` = '298', `height` = '500', `size` = '53557', `is_zoom` = 1, `orderby` = '-1';
+INSERT INTO xlite_product_detailed_images SET `id` = '4013', `alt` = 'On Desk', `path` = 'demo_store_d4013_1.jpeg', `height` = '318', `width` = '400', `mime` = 'image/jpeg', `size` = '25319';
+INSERT INTO xlite_product_detailed_images SET `id` = '4013', `alt` = 'Maintaining the Servers', `orderby` = '1', `path` = 'demo_store_d4013_2.jpeg', `height` = '300', `width` = '400', `mime` = 'image/jpeg', `size` = '28271';
+INSERT INTO xlite_product_detailed_images SET `id` = '4013', `path` = 'demo_store_p4013.jpeg', `mime` = 'image/jpeg', `width` = '355', `height` = '500', `size` = '48991', `is_zoom` = 1, `orderby` = '-1';
+INSERT INTO xlite_product_detailed_images SET `id` = '4016', `alt` = 'Where a geek hangs his hat', `path` = 'demo_store_d4016_1.jpeg', `height` = '276', `width` = '400', `mime` = 'image/jpeg', `size` = '18074';
+INSERT INTO xlite_product_detailed_images SET `id` = '4016', `path` = 'demo_store_p4016.jpeg', `mime` = 'image/jpeg', `width` = '233', `height` = '500', `size` = '50409', `is_zoom` = 1, `orderby` = '-1';
+INSERT INTO xlite_product_detailed_images SET `id` = '4022', `alt` = 'Mug Henge!', `path` = 'demo_store_d4022_1.jpeg', `height` = '300', `width` = '400', `mime` = 'image/jpeg', `size` = '21329';
+INSERT INTO xlite_product_detailed_images SET `id` = '4022', `path` = 'demo_store_p4022.jpeg', `mime` = 'image/jpeg', `width` = '400', `height` = '280', `size` = '25544', `is_zoom` = 1, `orderby` = '-1';
+INSERT INTO xlite_product_detailed_images SET `id` = '4021', `alt` = 'On desk', `path` = 'demo_store_d4021_1.jpeg', `height` = '300', `width` = '400', `mime` = 'image/jpeg', `size` = '30401';
+INSERT INTO xlite_product_detailed_images SET `id` = '4021', `path` = 'demo_store_p4021.jpeg', `mime` = 'image/jpeg', `width` = '400', `height` = '424', `size` = '23118', `is_zoom` = 1, `orderby` = '-1';
+INSERT INTO xlite_product_detailed_images SET `id` = '4012', `alt` = 'Retro Packaging', `path` = 'demo_store_d4012_1.jpeg', `height` = '370', `width` = '400', `mime` = 'image/jpeg', `size` = '28746';
+INSERT INTO xlite_product_detailed_images SET `id` = '4012', `alt` = 'It\'s fun', `orderby` = '1', `path` = 'demo_store_d4012_2.jpeg', `height` = '377', `width` = '400', `mime` = 'image/jpeg', `size` = '27496';
+INSERT INTO xlite_product_detailed_images SET `id` = '4012', `path` = 'demo_store_p4012.jpeg', `mime` = 'image/jpeg', `width` = '400', `height` = '297', `size` = '33532', `is_zoom` = 1, `orderby` = '-1';
+INSERT INTO xlite_product_detailed_images SET `id` = '4042', `alt` = 'Solar car in hand', `path` = 'demo_store_d4042_1.jpeg', `height` = '277', `width` = '400', `mime` = 'image/jpeg', `size` = '59968';
+INSERT INTO xlite_product_detailed_images SET `id` = '4042', `alt` = 'In packaging', `orderby` = '1', `path` = 'demo_store_d4042_2.jpeg', `height` = '257', `width` = '400', `mime` = 'image/jpeg', `size` = '54455';
+INSERT INTO xlite_product_detailed_images SET `id` = '4042', `path` = 'demo_store_p4042.jpeg', `mime` = 'image/jpeg', `width` = '400', `height` = '323', `size` = '65760', `is_zoom` = 1, `orderby` = '-1';
+INSERT INTO xlite_product_detailed_images SET `id` = '4045', `alt` = 'Pyramid Power!', `path` = 'demo_store_d4045_1.jpeg', `height` = '279', `width` = '400', `mime` = 'image/jpeg', `size` = '20764';
+INSERT INTO xlite_product_detailed_images SET `id` = '4045', `path` = 'demo_store_p4045.jpeg', `mime` = 'image/jpeg', `width` = '400', `height` = '408', `size` = '51049', `is_zoom` = 1, `orderby` = '-1';
 
 INSERT INTO xlite_option_groups SET group_id = 4003, `product_id` = 159702, `view_type` = 'r', enabled = 1;
 INSERT INTO xlite_option_group_translations (id, code, name) VALUES (4003, 'en', 'Color');
@@ -429,11 +429,11 @@ INSERT INTO xlite_option_translations (id, code, name) VALUES (4016, 'en', 'Retr
 INSERT INTO xlite_options SET option_id = 4017, group_id = 4003, enabled = 1;
 INSERT INTO xlite_option_translations (id, code, name) VALUES (4017, 'en', 'Retro Silver');
 
-INSERT INTO xlite_images SET `product_id` = '159702', `order_by` = '0', `image` = 'demo_store_d159702_1.jpeg', `image_height` = '140', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '15801', `image_source` = 'F';
-INSERT INTO xlite_images SET `product_id` = '159702', `alt` = 'Autonomous navigation', `order_by` = '1', `image` = 'demo_store_d159702_2.jpeg', `image_height` = '266', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '24827', `image_source` = 'F';
-INSERT INTO xlite_images SET `product_id` = '159702', `image` = 'demo_store_p159702.jpeg', `image_type` = 'image/jpeg', `image_width` = '400', `image_height` = '274', `image_size` = '29414', `image_source` = 'F', `is_zoom` = 'Y', `order_by` = '-1';
-INSERT INTO xlite_images SET `product_id` = '4049', `alt` = 'Actual size', `order_by` = '0', `image` = 'demo_store_d4049_1.jpeg', `image_height` = '400', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '22224', `image_source` = 'F';
-INSERT INTO xlite_images SET `product_id` = '4049', `image` = 'demo_store_p4049.jpeg', `image_type` = 'image/jpeg', `image_width` = '400', `image_height` = '392', `image_size` = '22506', `image_source` = 'F', `is_zoom` = 'Y', `order_by` = '-1';
+INSERT INTO xlite_product_detailed_images SET `id` = '159702', `path` = 'demo_store_d159702_1.jpeg', `height` = '140', `width` = '400', `mime` = 'image/jpeg', `size` = '15801';
+INSERT INTO xlite_product_detailed_images SET `id` = '159702', `alt` = 'Autonomous navigation', `orderby` = '1', `path` = 'demo_store_d159702_2.jpeg', `height` = '266', `width` = '400', `mime` = 'image/jpeg', `size` = '24827';
+INSERT INTO xlite_product_detailed_images SET `id` = '159702', `path` = 'demo_store_p159702.jpeg', `mime` = 'image/jpeg', `width` = '400', `height` = '274', `size` = '29414', `is_zoom` = 1, `orderby` = '-1';
+INSERT INTO xlite_product_detailed_images SET `id` = '4049', `alt` = 'Actual size', `path` = 'demo_store_d4049_1.jpeg', `height` = '400', `width` = '400', `mime` = 'image/jpeg', `size` = '22224';
+INSERT INTO xlite_product_detailed_images SET `id` = '4049', `path` = 'demo_store_p4049.jpeg', `mime` = 'image/jpeg', `width` = '400', `height` = '392', `size` = '22506', `is_zoom` = 1, `orderby` = '-1';
 
 INSERT INTO xlite_option_groups SET group_id = 4004, `product_id` = 4005, `view_type` = 'r', enabled = 1;
 INSERT INTO xlite_option_group_translations (id, code, name) VALUES (4004, 'en', 'Size');
@@ -534,8 +534,8 @@ INSERT INTO xlite_option_translations (id, code, name) VALUES (4050, 'en', 'XL')
 INSERT INTO xlite_options SET option_id = 4051, group_id = 4011, enabled = 1;
 INSERT INTO xlite_option_translations (id, code, name) VALUES (4051, 'en', 'XXL');
 
-INSERT INTO xlite_images SET `product_id` = '159704', `order_by` = '0', `image` = 'demo_store_d159704_1.gif', `image_height` = '428', `image_width` = '400', `image_type` = 'image/gif', `image_size` = '794960', `image_source` = 'F';
-INSERT INTO xlite_images SET `product_id` = '159704', `image` = 'demo_store_p159704.jpeg', `image_type` = 'image/jpeg', `image_width` = '378', `image_height` = '500', `image_size` = '80309', `image_source` = 'F', `is_zoom` = 'Y', `order_by` = '-1';
+INSERT INTO xlite_product_detailed_images SET `id` = '159704', `path` = 'demo_store_d159704_1.gif', `height` = '428', `width` = '400', `mime` = 'image/gif', `size` = '794960';
+INSERT INTO xlite_product_detailed_images SET `id` = '159704', `path` = 'demo_store_p159704.jpeg', `mime` = 'image/jpeg', `width` = '378', `height` = '500', `size` = '80309', `is_zoom` = 1, `orderby` = '-1';
 
 INSERT INTO xlite_option_groups SET group_id = 4012, `product_id` = 4052, `view_type` = 'r', enabled = 1;
 INSERT INTO xlite_option_group_translations (id, code, name) VALUES (4012, 'en', 'Color');
@@ -544,17 +544,17 @@ INSERT INTO xlite_option_translations (id, code, name) VALUES (4052, 'en', 'Blue
 INSERT INTO xlite_options SET option_id = 4053, group_id = 4012, enabled = 1;
 INSERT INTO xlite_option_translations (id, code, name) VALUES (4053, 'en', 'Red LED');
 
-INSERT INTO xlite_images SET `product_id` = '4052', `alt` = 'Precise control', `order_by` = '0', `image` = 'demo_store_d4052_1.jpeg', `image_height` = '303', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '21087', `image_source` = 'F';
-INSERT INTO xlite_images SET `product_id` = '4052', `alt` = 'Smallest 3-channel copter', `order_by` = '1', `image` = 'demo_store_d4052_2.jpeg', `image_height` = '295', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '17109', `image_source` = 'F';
-INSERT INTO xlite_images SET `product_id` = '4052', `image` = 'demo_store_p4052.jpeg', `image_type` = 'image/jpeg', `image_width` = '388', `image_height` = '500', `image_size` = '65497', `image_source` = 'F', `is_zoom` = 'Y', `order_by` = '-1';
-INSERT INTO xlite_images SET `product_id` = '4054', `alt` = 'Keep tight reigns on your tiny subject', `order_by` = '0', `image` = 'demo_store_d4054_1.jpeg', `image_height` = '447', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '23671', `image_source` = 'F';
-INSERT INTO xlite_images SET `product_id` = '4054', `image` = 'demo_store_p4054.jpeg', `image_type` = 'image/jpeg', `image_width` = '400', `image_height` = '391', `image_size` = '29629', `image_source` = 'F', `is_zoom` = 'Y', `order_by` = '-1';
-INSERT INTO xlite_images SET `product_id` = '4038', `order_by` = '0', `image` = 'demo_store_d4038_1.jpeg', `image_height` = '308', `image_width` = '550', `image_type` = 'image/jpeg', `image_size` = '79007', `image_source` = 'F';
-INSERT INTO xlite_images SET `product_id` = '4038', `image` = 'demo_store_p4038.jpeg', `image_type` = 'image/jpeg', `image_width` = '400', `image_height` = '305', `image_size` = '31425', `image_source` = 'F', `is_zoom` = 'Y', `order_by` = '-1';
-INSERT INTO xlite_images SET `product_id` = '4033', `alt` = 'Various Shapes', `order_by` = '0', `image` = 'demo_store_d4033_1.jpeg', `image_height` = '457', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '51747', `image_source` = 'F';
-INSERT INTO xlite_images SET `product_id` = '4033', `image` = 'demo_store_p4033.jpeg', `image_type` = 'image/jpeg', `image_width` = '400', `image_height` = '412', `image_size` = '57091', `image_source` = 'F', `is_zoom` = 'Y', `order_by` = '-1';
-INSERT INTO xlite_images SET `product_id` = '4050', `alt` = 'Mario Kart on your desk!', `order_by` = '0', `image` = 'demo_store_d4050_1.jpeg', `image_height` = '272', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '66432', `image_source` = 'F';
-INSERT INTO xlite_images SET `product_id` = '4050', `image` = 'demo_store_p4050.jpeg', `image_type` = 'image/jpeg', `image_width` = '400', `image_height` = '300', `image_size` = '76513', `image_source` = 'F', `is_zoom` = 'Y', `order_by` = '-1';
+INSERT INTO xlite_product_detailed_images SET `id` = '4052', `alt` = 'Precise control', `path` = 'demo_store_d4052_1.jpeg', `height` = '303', `width` = '400', `mime` = 'image/jpeg', `size` = '21087';
+INSERT INTO xlite_product_detailed_images SET `id` = '4052', `alt` = 'Smallest 3-channel copter', `orderby` = '1', `path` = 'demo_store_d4052_2.jpeg', `height` = '295', `width` = '400', `mime` = 'image/jpeg', `size` = '17109';
+INSERT INTO xlite_product_detailed_images SET `id` = '4052', `path` = 'demo_store_p4052.jpeg', `mime` = 'image/jpeg', `width` = '388', `height` = '500', `size` = '65497', `is_zoom` = 1, `orderby` = '-1';
+INSERT INTO xlite_product_detailed_images SET `id` = '4054', `alt` = 'Keep tight reigns on your tiny subject', `path` = 'demo_store_d4054_1.jpeg', `height` = '447', `width` = '400', `mime` = 'image/jpeg', `size` = '23671';
+INSERT INTO xlite_product_detailed_images SET `id` = '4054', `path` = 'demo_store_p4054.jpeg', `mime` = 'image/jpeg', `width` = '400', `height` = '391', `size` = '29629', `is_zoom` = 1, `orderby` = '-1';
+INSERT INTO xlite_product_detailed_images SET `id` = '4038', `path` = 'demo_store_d4038_1.jpeg', `height` = '308', `width` = '550', `mime` = 'image/jpeg', `size` = '79007';
+INSERT INTO xlite_product_detailed_images SET `id` = '4038', `path` = 'demo_store_p4038.jpeg', `mime` = 'image/jpeg', `width` = '400', `height` = '305', `size` = '31425', `is_zoom` = 1, `orderby` = '-1';
+INSERT INTO xlite_product_detailed_images SET `id` = '4033', `alt` = 'Various Shapes', `path` = 'demo_store_d4033_1.jpeg', `height` = '457', `width` = '400', `mime` = 'image/jpeg', `size` = '51747';
+INSERT INTO xlite_product_detailed_images SET `id` = '4033', `path` = 'demo_store_p4033.jpeg', `mime` = 'image/jpeg', `width` = '400', `height` = '412', `size` = '57091', `is_zoom` = 1, `orderby` = '-1';
+INSERT INTO xlite_product_detailed_images SET `id` = '4050', `alt` = 'Mario Kart on your desk!', `path` = 'demo_store_d4050_1.jpeg', `height` = '272', `width` = '400', `mime` = 'image/jpeg', `size` = '66432';
+INSERT INTO xlite_product_detailed_images SET `id` = '4050', `path` = 'demo_store_p4050.jpeg', `mime` = 'image/jpeg', `width` = '400', `height` = '300', `size` = '76513', `is_zoom` = 1, `orderby` = '-1';
 
 INSERT INTO xlite_option_groups SET group_id = 4013, `product_id` = 4053, `view_type` = 'r', enabled = 1;
 INSERT INTO xlite_option_group_translations (id, code, name) VALUES (4013, 'en', 'Scale');
@@ -564,25 +564,25 @@ INSERT INTO xlite_options SET option_id = 4055, group_id = 4013, enabled = 1;
 INSERT INTO xlite_option_translations (id, code, name) VALUES (4055, 'en', '1/16 Gray');
 INSERT INTO xlite_option_surcharges SET option_id = 4055, `type` = 'price', modifier = 50,  modifier_type = '$';
 
-INSERT INTO xlite_images SET `product_id` = '4053', `alt` = 'ammo', `order_by` = '0', `image` = 'demo_store_d4053_1.jpeg', `image_height` = '300', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '11206', `image_source` = 'F';
-INSERT INTO xlite_images SET `product_id` = '4053', `alt` = 'Tank Dude, Ammo In Background', `order_by` = '1', `image` = 'demo_store_d4053_2.jpeg', `image_height` = '300', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '13482', `image_source` = 'F';
-INSERT INTO xlite_images SET `product_id` = '4053', `alt` = 'Ammo Load Zone', `order_by` = '2', `image` = 'demo_store_d4053_3.jpeg', `image_height` = '300', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '19442', `image_source` = 'F';
-INSERT INTO xlite_images SET `product_id` = '4053', `alt` = 'Remote', `order_by` = '3', `image` = 'demo_store_d4053_4.jpeg', `image_height` = '400', `image_width` = '286', `image_type` = 'image/jpeg', `image_size` = '8530', `image_source` = 'F';
-INSERT INTO xlite_images SET `product_id` = '4053', `order_by` = '4', `image` = 'demo_store_d4053_5.jpeg', `image_height` = '632', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '42121', `image_source` = 'F';
-INSERT INTO xlite_images SET `product_id` = '4053', `image` = 'demo_store_p4053.jpeg', `image_type` = 'image/jpeg', `image_width` = '410', `image_height` = '300', `image_size` = '69309', `image_source` = 'F', `is_zoom` = 'Y', `order_by` = '-1';
-INSERT INTO xlite_images SET `product_id` = '4055', `alt` = 'Interface', `order_by` = '0', `image` = 'demo_store_d4055_1.jpeg', `image_height` = '527', `image_width` = '382', `image_type` = 'image/jpeg', `image_size` = '60774', `image_source` = 'F';
-INSERT INTO xlite_images SET `product_id` = '4055', `alt` = 'Office Moon mission', `order_by` = '1', `image` = 'demo_store_d4055_2.jpeg', `image_height` = '278', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '17385', `image_source` = 'F';
-INSERT INTO xlite_images SET `product_id` = '4055', `image` = 'demo_store_p4055.jpeg', `image_type` = 'image/jpeg', `image_width` = '400', `image_height` = '417', `image_size` = '24232', `image_source` = 'F', `is_zoom` = 'Y', `order_by` = '-1';
-INSERT INTO xlite_images SET `product_id` = '4051', `alt` = 'Amazing tiny size!', `order_by` = '0', `image` = 'demo_store_d4051_1.jpeg', `image_height` = '536', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '29007', `image_source` = 'F';
-INSERT INTO xlite_images SET `product_id` = '4051', `alt` = 'Alien invasion!', `order_by` = '1', `image` = 'demo_store_d4051_2.jpeg', `image_height` = '261', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '14372', `image_source` = 'F';
-INSERT INTO xlite_images SET `product_id` = '4051', `image` = 'demo_store_p4051.jpeg', `image_type` = 'image/jpeg', `image_width` = '381', `image_height` = '500', `image_size` = '57396', `image_source` = 'F', `is_zoom` = 'Y', `order_by` = '-1';
-INSERT INTO xlite_images SET `product_id` = '4046', `alt` = 'Rotating a Quadrant', `order_by` = '0', `image` = 'demo_store_d4046_1.jpeg', `image_height` = '396', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '29017', `image_source` = 'F';
-INSERT INTO xlite_images SET `product_id` = '4046', `image` = 'demo_store_p4046.jpeg', `image_type` = 'image/jpeg', `image_width` = '400', `image_height` = '330', `image_size` = '21372', `image_source` = 'F', `is_zoom` = 'Y', `order_by` = '-1';
-INSERT INTO xlite_images SET `product_id` = '4048', `alt` = 'On desk', `order_by` = '0', `image` = 'demo_store_d4048_1.jpeg', `image_height` = '282', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '54926', `image_source` = 'F';
-INSERT INTO xlite_images SET `product_id` = '4048', `image` = 'demo_store_p4048.gif', `image_type` = 'image/gif', `image_width` = '400', `image_height` = '374', `image_size` = '179960', `image_source` = 'F', `is_zoom` = 'Y', `order_by` = '-1';
-INSERT INTO xlite_images SET `product_id` = '4039', `alt` = 'Pour the solution . . . grow the crystals!', `order_by` = '0', `image` = 'demo_store_d4039_1.jpeg', `image_height` = '400', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '24886', `image_source` = 'F';
-INSERT INTO xlite_images SET `product_id` = '4039', `alt` = 'All the parts', `order_by` = '1', `image` = 'demo_store_d4039_2.jpeg', `image_height` = '400', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '55213', `image_source` = 'F';
-INSERT INTO xlite_images SET `product_id` = '4039', `image` = 'demo_store_p4039.jpeg', `image_type` = 'image/jpeg', `image_width` = '400', `image_height` = '300', `image_size` = '24107', `image_source` = 'F', `is_zoom` = 'Y', `order_by` = '-1';
+INSERT INTO xlite_product_detailed_images SET `id` = '4053', `alt` = 'ammo', `path` = 'demo_store_d4053_1.jpeg', `height` = '300', `width` = '400', `mime` = 'image/jpeg', `size` = '11206';
+INSERT INTO xlite_product_detailed_images SET `id` = '4053', `alt` = 'Tank Dude, Ammo In Background', `orderby` = '1', `path` = 'demo_store_d4053_2.jpeg', `height` = '300', `width` = '400', `mime` = 'image/jpeg', `size` = '13482';
+INSERT INTO xlite_product_detailed_images SET `id` = '4053', `alt` = 'Ammo Load Zone', `orderby` = '2', `path` = 'demo_store_d4053_3.jpeg', `height` = '300', `width` = '400', `mime` = 'image/jpeg', `size` = '19442';
+INSERT INTO xlite_product_detailed_images SET `id` = '4053', `alt` = 'Remote', `orderby` = '3', `path` = 'demo_store_d4053_4.jpeg', `height` = '400', `width` = '286', `mime` = 'image/jpeg', `size` = '8530';
+INSERT INTO xlite_product_detailed_images SET `id` = '4053', `orderby` = '4', `path` = 'demo_store_d4053_5.jpeg', `height` = '632', `width` = '400', `mime` = 'image/jpeg', `size` = '42121';
+INSERT INTO xlite_product_detailed_images SET `id` = '4053', `path` = 'demo_store_p4053.jpeg', `mime` = 'image/jpeg', `width` = '410', `height` = '300', `size` = '69309', `is_zoom` = 1, `orderby` = '-1';
+INSERT INTO xlite_product_detailed_images SET `id` = '4055', `alt` = 'Interface', `path` = 'demo_store_d4055_1.jpeg', `height` = '527', `width` = '382', `mime` = 'image/jpeg', `size` = '60774';
+INSERT INTO xlite_product_detailed_images SET `id` = '4055', `alt` = 'Office Moon mission', `orderby` = '1', `path` = 'demo_store_d4055_2.jpeg', `height` = '278', `width` = '400', `mime` = 'image/jpeg', `size` = '17385';
+INSERT INTO xlite_product_detailed_images SET `id` = '4055', `path` = 'demo_store_p4055.jpeg', `mime` = 'image/jpeg', `width` = '400', `height` = '417', `size` = '24232', `is_zoom` = 1, `orderby` = '-1';
+INSERT INTO xlite_product_detailed_images SET `id` = '4051', `alt` = 'Amazing tiny size!', `path` = 'demo_store_d4051_1.jpeg', `height` = '536', `width` = '400', `mime` = 'image/jpeg', `size` = '29007';
+INSERT INTO xlite_product_detailed_images SET `id` = '4051', `alt` = 'Alien invasion!', `orderby` = '1', `path` = 'demo_store_d4051_2.jpeg', `height` = '261', `width` = '400', `mime` = 'image/jpeg', `size` = '14372';
+INSERT INTO xlite_product_detailed_images SET `id` = '4051', `path` = 'demo_store_p4051.jpeg', `mime` = 'image/jpeg', `width` = '381', `height` = '500', `size` = '57396', `is_zoom` = 1, `orderby` = '-1';
+INSERT INTO xlite_product_detailed_images SET `id` = '4046', `alt` = 'Rotating a Quadrant', `path` = 'demo_store_d4046_1.jpeg', `height` = '396', `width` = '400', `mime` = 'image/jpeg', `size` = '29017';
+INSERT INTO xlite_product_detailed_images SET `id` = '4046', `path` = 'demo_store_p4046.jpeg', `mime` = 'image/jpeg', `width` = '400', `height` = '330', `size` = '21372', `is_zoom` = 1, `orderby` = '-1';
+INSERT INTO xlite_product_detailed_images SET `id` = '4048', `alt` = 'On desk', `path` = 'demo_store_d4048_1.jpeg', `height` = '282', `width` = '400', `mime` = 'image/jpeg', `size` = '54926';
+INSERT INTO xlite_product_detailed_images SET `id` = '4048', `path` = 'demo_store_p4048.gif', `mime` = 'image/gif', `width` = '400', `height` = '374', `size` = '179960', `is_zoom` = 1, `orderby` = '-1';
+INSERT INTO xlite_product_detailed_images SET `id` = '4039', `alt` = 'Pour the solution . . . grow the crystals!', `path` = 'demo_store_d4039_1.jpeg', `height` = '400', `width` = '400', `mime` = 'image/jpeg', `size` = '24886';
+INSERT INTO xlite_product_detailed_images SET `id` = '4039', `alt` = 'All the parts', `orderby` = '1', `path` = 'demo_store_d4039_2.jpeg', `height` = '400', `width` = '400', `mime` = 'image/jpeg', `size` = '55213';
+INSERT INTO xlite_product_detailed_images SET `id` = '4039', `path` = 'demo_store_p4039.jpeg', `mime` = 'image/jpeg', `width` = '400', `height` = '300', `size` = '24107', `is_zoom` = 1, `orderby` = '-1';
 
 INSERT INTO xlite_option_groups SET group_id = 4014, `product_id` = 4040, `view_type` = 'r', enabled = 1;
 INSERT INTO xlite_option_group_translations (id, code, name) VALUES (4014, 'en', 'Choice');
@@ -594,14 +594,14 @@ INSERT INTO xlite_option_translations (id, code, name) VALUES (4057, 'en', 'T-Re
 INSERT INTO xlite_options SET option_id = 4058, group_id = 4014, enabled = 1;
 INSERT INTO xlite_option_translations (id, code, name) VALUES (4058, 'en', 'Triceratops');
 
-INSERT INTO xlite_images SET `product_id` = '4040', `alt` = 'Boxes', `order_by` = '0', `image` = 'demo_store_d4040_1.jpeg', `image_height` = '147', `image_width` = '500', `image_type` = 'image/jpeg', `image_size` = '69498', `image_source` = 'F';
-INSERT INTO xlite_images SET `product_id` = '4040', `image` = 'demo_store_p4040.jpeg', `image_type` = 'image/jpeg', `image_width` = '400', `image_height` = '349', `image_size` = '18863', `image_source` = 'F', `is_zoom` = 'Y', `order_by` = '-1';
-INSERT INTO xlite_images SET `product_id` = '4041', `alt` = 'Parts', `order_by` = '0', `image` = 'demo_store_d4041_1.jpeg', `image_height` = '265', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '21708', `image_source` = 'F';
-INSERT INTO xlite_images SET `product_id` = '4041', `image` = 'demo_store_p4041.jpeg', `image_type` = 'image/jpeg', `image_width` = '400', `image_height` = '398', `image_size` = '28252', `image_source` = 'F', `is_zoom` = 'Y', `order_by` = '-1';
-INSERT INTO xlite_images SET `product_id` = '4044', `alt` = 'What You Get', `order_by` = '0', `image` = 'demo_store_d4044_1.jpeg', `image_height` = '287', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '24787', `image_source` = 'F';
-INSERT INTO xlite_images SET `product_id` = '4044', `alt` = 'Two-Player Action!', `order_by` = '1', `image` = 'demo_store_d4044_2.jpeg', `image_height` = '322', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '24819', `image_source` = 'F';
-INSERT INTO xlite_images SET `product_id` = '4044', `alt` = 'Screenshot', `order_by` = '2', `image` = 'demo_store_d4044_3.jpeg', `image_height` = '247', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '6002', `image_source` = 'F';
-INSERT INTO xlite_images SET `product_id` = '4044', `image` = 'demo_store_p4044.jpeg', `image_type` = 'image/jpeg', `image_width` = '400', `image_height` = '383', `image_size` = '31441', `image_source` = 'F', `is_zoom` = 'Y', `order_by` = '-1';
+INSERT INTO xlite_product_detailed_images SET `id` = '4040', `alt` = 'Boxes', `path` = 'demo_store_d4040_1.jpeg', `height` = '147', `width` = '500', `mime` = 'image/jpeg', `size` = '69498';
+INSERT INTO xlite_product_detailed_images SET `id` = '4040', `path` = 'demo_store_p4040.jpeg', `mime` = 'image/jpeg', `width` = '400', `height` = '349', `size` = '18863', `is_zoom` = 1, `orderby` = '-1';
+INSERT INTO xlite_product_detailed_images SET `id` = '4041', `alt` = 'Parts', `path` = 'demo_store_d4041_1.jpeg', `height` = '265', `width` = '400', `mime` = 'image/jpeg', `size` = '21708';
+INSERT INTO xlite_product_detailed_images SET `id` = '4041', `path` = 'demo_store_p4041.jpeg', `mime` = 'image/jpeg', `width` = '400', `height` = '398', `size` = '28252', `is_zoom` = 1, `orderby` = '-1';
+INSERT INTO xlite_product_detailed_images SET `id` = '4044', `alt` = 'What You Get', `path` = 'demo_store_d4044_1.jpeg', `height` = '287', `width` = '400', `mime` = 'image/jpeg', `size` = '24787';
+INSERT INTO xlite_product_detailed_images SET `id` = '4044', `alt` = 'Two-Player Action!', `orderby` = '1', `path` = 'demo_store_d4044_2.jpeg', `height` = '322', `width` = '400', `mime` = 'image/jpeg', `size` = '24819';
+INSERT INTO xlite_product_detailed_images SET `id` = '4044', `alt` = 'Screenshot', `orderby` = '2', `path` = 'demo_store_d4044_3.jpeg', `height` = '247', `width` = '400', `mime` = 'image/jpeg', `size` = '6002';
+INSERT INTO xlite_product_detailed_images SET `id` = '4044', `path` = 'demo_store_p4044.jpeg', `mime` = 'image/jpeg', `width` = '400', `height` = '383', `size` = '31441', `is_zoom` = 1, `orderby` = '-1';
 
 INSERT INTO xlite_option_groups SET group_id = 4015, `product_id` = 4035, `view_type` = 'r', enabled = 1;
 INSERT INTO xlite_option_group_translations (id, code, name) VALUES (4015, 'en', 'Choice');
@@ -611,9 +611,9 @@ INSERT INTO xlite_options SET option_id = 4060, group_id = 4015, enabled = 1;
 INSERT INTO xlite_option_translations (id, code, name) VALUES (4060, 'en', 'Refill Pack');
 INSERT INTO xlite_option_surcharges SET option_id = 4060, `type` = 'price', modifier = -8,  modifier_type = '$';
 
-INSERT INTO xlite_images SET `product_id` = '4027', `alt` = 'Don\'t Eat My Brains!', `order_by` = '0', `image` = 'demo_store_d4027_1.jpeg', `image_height` = '313', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '21024', `image_source` = 'F';
-INSERT INTO xlite_images SET `product_id` = '4027', `alt` = 'DOMOKUN!!', `order_by` = '1', `image` = 'demo_store_d4027_2.jpeg', `image_height` = '300', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '19813', `image_source` = 'F';
-INSERT INTO xlite_images SET `product_id` = '4027', `image` = 'demo_store_p4027.jpeg', `image_type` = 'image/jpeg', `image_width` = '400', `image_height` = '247', `image_size` = '17379', `image_source` = 'F', `is_zoom` = 'Y', `order_by` = '-1';
+INSERT INTO xlite_product_detailed_images SET `id` = '4027', `alt` = 'Don\'t Eat My Brains!', `path` = 'demo_store_d4027_1.jpeg', `height` = '313', `width` = '400', `mime` = 'image/jpeg', `size` = '21024';
+INSERT INTO xlite_product_detailed_images SET `id` = '4027', `alt` = 'DOMOKUN!!', `orderby` = '1', `path` = 'demo_store_d4027_2.jpeg', `height` = '300', `width` = '400', `mime` = 'image/jpeg', `size` = '19813';
+INSERT INTO xlite_product_detailed_images SET `id` = '4027', `path` = 'demo_store_p4027.jpeg', `mime` = 'image/jpeg', `width` = '400', `height` = '247', `size` = '17379', `is_zoom` = 1, `orderby` = '-1';
 
 INSERT INTO xlite_option_groups SET group_id = 4016, `product_id` = 4014, `view_type` = 'r', enabled = 1;
 INSERT INTO xlite_option_group_translations (id, code, name) VALUES (4016, 'en', 'Size');
@@ -623,18 +623,18 @@ INSERT INTO xlite_options SET option_id = 4062, group_id = 4016, enabled = 1;
 INSERT INTO xlite_option_translations (id, code, name) VALUES (4062, 'en', '8\'\'');
 INSERT INTO xlite_option_surcharges SET option_id = 4062, `type` = 'price', modifier = 30,  modifier_type = '$';
 
-INSERT INTO xlite_images SET `product_id` = '4014', `alt` = 'Truly Levitating!', `order_by` = '0', `image` = 'demo_store_d4014_1.jpeg', `image_height` = '400', `image_width` = '367', `image_type` = 'image/jpeg', `image_size` = '17515', `image_source` = 'F';
-INSERT INTO xlite_images SET `product_id` = '4014', `alt` = 'Closeup Of 4\" Globe', `order_by` = '1', `image` = 'demo_store_d4014_2.jpeg', `image_height` = '500', `image_width` = '313', `image_type` = 'image/jpeg', `image_size` = '18645', `image_source` = 'F';
-INSERT INTO xlite_images SET `product_id` = '4014', `alt` = '4\" Globe Detail', `order_by` = '2', `image` = 'demo_store_d4014_3.jpeg', `image_height` = '400', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '38573', `image_source` = 'F';
-INSERT INTO xlite_images SET `product_id` = '4014', `alt` = 'Closeup of 8\" Globe', `order_by` = '3', `image` = 'demo_store_d4014_4.jpeg', `image_height` = '520', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '33856', `image_source` = 'F';
-INSERT INTO xlite_images SET `product_id` = '4014', `alt` = '8\" Globe on Desk', `order_by` = '4', `image` = 'demo_store_d4014_5.jpeg', `image_height` = '400', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '31115', `image_source` = 'F';
-INSERT INTO xlite_images SET `product_id` = '4014', `alt` = '8\" Globe Detail', `order_by` = '5', `image` = 'demo_store_d4014_6.jpeg', `image_height` = '478', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '35479', `image_source` = 'F';
-INSERT INTO xlite_images SET `product_id` = '4014', `image` = 'demo_store_p4014.jpeg', `image_type` = 'image/jpeg', `image_width` = '220', `image_height` = '223', `image_size` = '10082', `image_source` = 'F', `is_zoom` = 'Y', `order_by` = '-1';
-INSERT INTO xlite_images SET `product_id` = '4028', `alt` = 'It goes in your hand!', `order_by` = '0', `image` = 'demo_store_d4028_1.jpeg', `image_height` = '316', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '19497', `image_source` = 'F';
-INSERT INTO xlite_images SET `product_id` = '4028', `image` = 'demo_store_p4028.jpeg', `image_type` = 'image/jpeg', `image_width` = '400', `image_height` = '452', `image_size` = '34363', `image_source` = 'F', `is_zoom` = 'Y', `order_by` = '-1';
-INSERT INTO xlite_images SET `product_id` = '4015', `alt` = 'Robot Oil (Bare Metal Bender)', `order_by` = '0', `image` = 'demo_store_d4015_1.jpeg', `image_height` = '164', `image_width` = '220', `image_type` = 'image/jpeg', `image_size` = '6701', `image_source` = 'F';
-INSERT INTO xlite_images SET `product_id` = '4015', `alt` = 'Chest Opens! (Bare Metal Bender)', `order_by` = '1', `image` = 'demo_store_d4015_2.jpeg', `image_height` = '173', `image_width` = '220', `image_type` = 'image/jpeg', `image_size` = '9345', `image_source` = 'F';
-INSERT INTO xlite_images SET `product_id` = '4015', `image` = 'demo_store_p4015.jpeg', `image_type` = 'image/jpeg', `image_width` = '297', `image_height` = '500', `image_size` = '59276', `image_source` = 'F', `is_zoom` = 'Y', `order_by` = '-1';
+INSERT INTO xlite_product_detailed_images SET `id` = '4014', `alt` = 'Truly Levitating!', `path` = 'demo_store_d4014_1.jpeg', `height` = '400', `width` = '367', `mime` = 'image/jpeg', `size` = '17515';
+INSERT INTO xlite_product_detailed_images SET `id` = '4014', `alt` = 'Closeup Of 4\" Globe', `orderby` = '1', `path` = 'demo_store_d4014_2.jpeg', `height` = '500', `width` = '313', `mime` = 'image/jpeg', `size` = '18645';
+INSERT INTO xlite_product_detailed_images SET `id` = '4014', `alt` = '4\" Globe Detail', `orderby` = '2', `path` = 'demo_store_d4014_3.jpeg', `height` = '400', `width` = '400', `mime` = 'image/jpeg', `size` = '38573';
+INSERT INTO xlite_product_detailed_images SET `id` = '4014', `alt` = 'Closeup of 8\" Globe', `orderby` = '3', `path` = 'demo_store_d4014_4.jpeg', `height` = '520', `width` = '400', `mime` = 'image/jpeg', `size` = '33856';
+INSERT INTO xlite_product_detailed_images SET `id` = '4014', `alt` = '8\" Globe on Desk', `orderby` = '4', `path` = 'demo_store_d4014_5.jpeg', `height` = '400', `width` = '400', `mime` = 'image/jpeg', `size` = '31115';
+INSERT INTO xlite_product_detailed_images SET `id` = '4014', `alt` = '8\" Globe Detail', `orderby` = '5', `path` = 'demo_store_d4014_6.jpeg', `height` = '478', `width` = '400', `mime` = 'image/jpeg', `size` = '35479';
+INSERT INTO xlite_product_detailed_images SET `id` = '4014', `path` = 'demo_store_p4014.jpeg', `mime` = 'image/jpeg', `width` = '220', `height` = '223', `size` = '10082', `is_zoom` = 1, `orderby` = '-1';
+INSERT INTO xlite_product_detailed_images SET `id` = '4028', `alt` = 'It goes in your hand!', `path` = 'demo_store_d4028_1.jpeg', `height` = '316', `width` = '400', `mime` = 'image/jpeg', `size` = '19497';
+INSERT INTO xlite_product_detailed_images SET `id` = '4028', `path` = 'demo_store_p4028.jpeg', `mime` = 'image/jpeg', `width` = '400', `height` = '452', `size` = '34363', `is_zoom` = 1, `orderby` = '-1';
+INSERT INTO xlite_product_detailed_images SET `id` = '4015', `alt` = 'Robot Oil (Bare Metal Bender)', `path` = 'demo_store_d4015_1.jpeg', `height` = '164', `width` = '220', `mime` = 'image/jpeg', `size` = '6701';
+INSERT INTO xlite_product_detailed_images SET `id` = '4015', `alt` = 'Chest Opens! (Bare Metal Bender)', `orderby` = '1', `path` = 'demo_store_d4015_2.jpeg', `height` = '173', `width` = '220', `mime` = 'image/jpeg', `size` = '9345';
+INSERT INTO xlite_product_detailed_images SET `id` = '4015', `path` = 'demo_store_p4015.jpeg', `mime` = 'image/jpeg', `width` = '297', `height` = '500', `size` = '59276', `is_zoom` = 1, `orderby` = '-1';
 
 INSERT INTO xlite_option_groups SET group_id = 4017, `product_id` = 4023, `view_type` = 'r', enabled = 1;
 INSERT INTO xlite_option_group_translations (id, code, name) VALUES (4017, 'en', 'Choice');
@@ -647,9 +647,9 @@ INSERT INTO xlite_options SET option_id = 4065, group_id = 4017, enabled = 1;
 INSERT INTO xlite_option_translations (id, code, name) VALUES (4065, 'en', '3-pack');
 INSERT INTO xlite_option_surcharges SET option_id = 4065, `type` = 'price', modifier = 15,  modifier_type = '$';
 
-INSERT INTO xlite_images SET `product_id` = '4023', `alt` = 'What you get', `order_by` = '0', `image` = 'demo_store_d4023_1.jpeg', `image_height` = '588', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '30120', `image_source` = 'F';
-INSERT INTO xlite_images SET `product_id` = '4023', `alt` = 'How to Mix Drinks', `order_by` = '1', `image` = 'demo_store_d4023_2.jpeg', `image_height` = '300', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '32712', `image_source` = 'F';
-INSERT INTO xlite_images SET `product_id` = '4023', `image` = 'demo_store_p4023.jpeg', `image_type` = 'image/jpeg', `image_width` = '263', `image_height` = '500', `image_size` = '49640', `image_source` = 'F', `is_zoom` = 'Y', `order_by` = '-1';
+INSERT INTO xlite_product_detailed_images SET `id` = '4023', `alt` = 'What you get', `path` = 'demo_store_d4023_1.jpeg', `height` = '588', `width` = '400', `mime` = 'image/jpeg', `size` = '30120';
+INSERT INTO xlite_product_detailed_images SET `id` = '4023', `alt` = 'How to Mix Drinks', `orderby` = '1', `path` = 'demo_store_d4023_2.jpeg', `height` = '300', `width` = '400', `mime` = 'image/jpeg', `size` = '32712';
+INSERT INTO xlite_product_detailed_images SET `id` = '4023', `path` = 'demo_store_p4023.jpeg', `mime` = 'image/jpeg', `width` = '263', `height` = '500', `size` = '49640', `is_zoom` = 1, `orderby` = '-1';
 
 INSERT INTO xlite_option_groups SET group_id = 4018, `product_id` = 4032, `view_type` = 'r', enabled = 1;
 INSERT INTO xlite_option_group_translations (id, code, name) VALUES (4018, 'en', 'Choice');
@@ -670,27 +670,25 @@ INSERT INTO xlite_option_translations (id, code, name) VALUES (4072, 'en', 'Oil 
 INSERT INTO xlite_options SET option_id = 4073, group_id = 4018, enabled = 1;
 INSERT INTO xlite_option_translations (id, code, name) VALUES (4073, 'en', 'Twilight');
 
-INSERT INTO xlite_images SET `product_id` = '4032', `alt` = 'Alien Ooze (Inert!)', `order_by` = '0', `image` = 'demo_store_d4032_1.jpeg', `image_height` = '379', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '4637', `image_source` = 'F';
-INSERT INTO xlite_images SET `product_id` = '4032', `alt` = 'Alien Ooze (Glowing!)', `order_by` = '1', `image` = 'demo_store_d4032_2.jpeg', `image_height` = '400', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '9811', `image_source` = 'F';
-INSERT INTO xlite_images SET `product_id` = '4032', `alt` = 'Atmosphere', `order_by` = '2', `image` = 'demo_store_d4032_3.jpeg', `image_height` = '379', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '15392', `image_source` = 'F';
-INSERT INTO xlite_images SET `product_id` = '4032', `alt` = 'Atomic Bronze', `order_by` = '3', `image` = 'demo_store_d4032_4.jpeg', `image_height` = '379', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '18272', `image_source` = 'F';
-INSERT INTO xlite_images SET `product_id` = '4032', `alt` = 'Dark Matter', `order_by` = '4', `image` = 'demo_store_d4032_5.jpeg', `image_height` = '379', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '10766', `image_source` = 'F';
-INSERT INTO xlite_images SET `product_id` = '4032', `alt` = 'Martian Sea', `order_by` = '5', `image` = 'demo_store_d4032_6.jpeg', `image_height` = '413', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '19117', `image_source` = 'F';
-INSERT INTO xlite_images SET `product_id` = '4032', `alt` = 'Oil Slick', `order_by` = '6', `image` = 'demo_store_d4032_7.jpeg', `image_height` = '379', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '15285', `image_source` = 'F';
-INSERT INTO xlite_images SET `product_id` = '4032', `alt` = 'Solar Blue', `order_by` = '7', `image` = 'demo_store_d4032_8.jpeg', `image_height` = '379', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '13070', `image_source` = 'F';
-INSERT INTO xlite_images SET `product_id` = '4032', `alt` = 'Sunburst (Morphs from Orange to Yellow)', `order_by` = '8', `image` = 'demo_store_d4032_9.jpeg', `image_height` = '355', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '13097', `image_source` = 'F';
-INSERT INTO xlite_images SET `product_id` = '4032', `alt` = 'Twilight (Morphs from Lt Blue to Dark Purple)', `order_by` = '9', `image` = 'demo_store_d4032_10.jpeg', `image_height` = '355', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '15065', `image_source` = 'F';
-INSERT INTO xlite_images SET `product_id` = '4032', `image` = 'demo_store_p4032.jpeg', `image_type` = 'image/jpeg', `image_width` = '401', `image_height` = '500', `image_size` = '36485', `image_source` = 'F', `is_zoom` = 'Y', `order_by` = '-1';
-INSERT INTO xlite_images SET `product_id` = '4025', `alt` = 'Your Pencil, Master!', `order_by` = '0', `image` = 'demo_store_d4025_1.jpeg', `image_height` = '264', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '11389', `image_source` = 'F';
-INSERT INTO xlite_images SET `product_id` = '4025', `alt` = 'Sharpening a Pencil', `order_by` = '1', `image` = 'demo_store_d4025_2.jpeg', `image_height` = '351', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '19008', `image_source` = 'F';
-INSERT INTO xlite_images SET `product_id` = '4025', `alt` = 'Brain (Pencil Shavings)', `order_by` = '2', `image` = 'demo_store_d4025_3.jpeg', `image_height` = '397', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '91365', `image_source` = 'F';
-INSERT INTO xlite_images SET `product_id` = '4025', `order_by` = '3', `image` = 'demo_store_d4025_4.gif', `image_height` = '137', `image_width` = '200', `image_type` = 'image/gif', `image_size` = '78383', `image_source` = 'F';
-INSERT INTO xlite_images SET `product_id` = '4025', `image` = 'demo_store_p4025.jpeg', `image_type` = 'image/jpeg', `image_width` = '400', `image_height` = '432', `image_size` = '23147', `image_source` = 'F', `is_zoom` = 'Y', `order_by` = '-1';
-INSERT INTO xlite_images SET `product_id` = '4024', `alt` = 'Jedi Training', `order_by` = '0', `image` = 'demo_store_d4024_1.jpeg', `image_height` = '507', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '38153', `image_source` = 'F';
-INSERT INTO xlite_images SET `product_id` = '4024', `alt` = 'Zippered Backpack', `order_by` = '1', `image` = 'demo_store_d4024_2.jpeg', `image_height` = '428', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '25557', `image_source` = 'F';
-INSERT INTO xlite_images SET `product_id` = '4024', `alt` = 'Close Up', `order_by` = '2', `image` = 'demo_store_d4024_3.jpeg', `image_height` = '395', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '31686', `image_source` = 'F';
-INSERT INTO xlite_images SET `product_id` = '4024', `alt` = 'Jedi Gettin\' Tough', `order_by` = '3', `image` = 'demo_store_d4024_4.jpeg', `image_height` = '402', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '60090', `image_source` = 'F';
-INSERT INTO xlite_images SET `product_id` = '4024', `alt` = 'Stuffed Backpack', `order_by` = '4', `image` = 'demo_store_d4024_5.jpeg', `image_height` = '421', `image_width` = '400', `image_type` = 'image/jpeg', `image_size` = '26850', `image_source` = 'F';
-INSERT INTO xlite_images SET `product_id` = '4024', `image` = 'demo_store_p4024.jpeg', `image_type` = 'image/jpeg', `image_width` = '400', `image_height` = '454', `image_size` = '26961', `image_source` = 'F', `is_zoom` = 'Y', `order_by` = '-1';
-
-
+INSERT INTO xlite_product_detailed_images SET `id` = '4032', `alt` = 'Alien Ooze (Inert!)', `path` = 'demo_store_d4032_1.jpeg', `height` = '379', `width` = '400', `mime` = 'image/jpeg', `size` = '4637';
+INSERT INTO xlite_product_detailed_images SET `id` = '4032', `alt` = 'Alien Ooze (Glowing!)', `orderby` = '1', `path` = 'demo_store_d4032_2.jpeg', `height` = '400', `width` = '400', `mime` = 'image/jpeg', `size` = '9811';
+INSERT INTO xlite_product_detailed_images SET `id` = '4032', `alt` = 'Atmosphere', `orderby` = '2', `path` = 'demo_store_d4032_3.jpeg', `height` = '379', `width` = '400', `mime` = 'image/jpeg', `size` = '15392';
+INSERT INTO xlite_product_detailed_images SET `id` = '4032', `alt` = 'Atomic Bronze', `orderby` = '3', `path` = 'demo_store_d4032_4.jpeg', `height` = '379', `width` = '400', `mime` = 'image/jpeg', `size` = '18272';
+INSERT INTO xlite_product_detailed_images SET `id` = '4032', `alt` = 'Dark Matter', `orderby` = '4', `path` = 'demo_store_d4032_5.jpeg', `height` = '379', `width` = '400', `mime` = 'image/jpeg', `size` = '10766';
+INSERT INTO xlite_product_detailed_images SET `id` = '4032', `alt` = 'Martian Sea', `orderby` = '5', `path` = 'demo_store_d4032_6.jpeg', `height` = '413', `width` = '400', `mime` = 'image/jpeg', `size` = '19117';
+INSERT INTO xlite_product_detailed_images SET `id` = '4032', `alt` = 'Oil Slick', `orderby` = '6', `path` = 'demo_store_d4032_7.jpeg', `height` = '379', `width` = '400', `mime` = 'image/jpeg', `size` = '15285';
+INSERT INTO xlite_product_detailed_images SET `id` = '4032', `alt` = 'Solar Blue', `orderby` = '7', `path` = 'demo_store_d4032_8.jpeg', `height` = '379', `width` = '400', `mime` = 'image/jpeg', `size` = '13070';
+INSERT INTO xlite_product_detailed_images SET `id` = '4032', `alt` = 'Sunburst (Morphs from Orange to Yellow)', `orderby` = '8', `path` = 'demo_store_d4032_9.jpeg', `height` = '355', `width` = '400', `mime` = 'image/jpeg', `size` = '13097';
+INSERT INTO xlite_product_detailed_images SET `id` = '4032', `alt` = 'Twilight (Morphs from Lt Blue to Dark Purple)', `orderby` = '9', `path` = 'demo_store_d4032_10.jpeg', `height` = '355', `width` = '400', `mime` = 'image/jpeg', `size` = '15065';
+INSERT INTO xlite_product_detailed_images SET `id` = '4032', `path` = 'demo_store_p4032.jpeg', `mime` = 'image/jpeg', `width` = '401', `height` = '500', `size` = '36485', `is_zoom` = 1, `orderby` = '-1';
+INSERT INTO xlite_product_detailed_images SET `id` = '4025', `alt` = 'Your Pencil, Master!', `path` = 'demo_store_d4025_1.jpeg', `height` = '264', `width` = '400', `mime` = 'image/jpeg', `size` = '11389';
+INSERT INTO xlite_product_detailed_images SET `id` = '4025', `alt` = 'Sharpening a Pencil', `orderby` = '1', `path` = 'demo_store_d4025_2.jpeg', `height` = '351', `width` = '400', `mime` = 'image/jpeg', `size` = '19008';
+INSERT INTO xlite_product_detailed_images SET `id` = '4025', `alt` = 'Brain (Pencil Shavings)', `orderby` = '2', `path` = 'demo_store_d4025_3.jpeg', `height` = '397', `width` = '400', `mime` = 'image/jpeg', `size` = '91365';
+INSERT INTO xlite_product_detailed_images SET `id` = '4025', `orderby` = '3', `path` = 'demo_store_d4025_4.gif', `height` = '137', `width` = '200', `mime` = 'image/gif', `size` = '78383';
+INSERT INTO xlite_product_detailed_images SET `id` = '4025', `path` = 'demo_store_p4025.jpeg', `mime` = 'image/jpeg', `width` = '400', `height` = '432', `size` = '23147', `is_zoom` = 1, `orderby` = '-1';
+INSERT INTO xlite_product_detailed_images SET `id` = '4024', `alt` = 'Jedi Training', `path` = 'demo_store_d4024_1.jpeg', `height` = '507', `width` = '400', `mime` = 'image/jpeg', `size` = '38153';
+INSERT INTO xlite_product_detailed_images SET `id` = '4024', `alt` = 'Zippered Backpack', `orderby` = '1', `path` = 'demo_store_d4024_2.jpeg', `height` = '428', `width` = '400', `mime` = 'image/jpeg', `size` = '25557';
+INSERT INTO xlite_product_detailed_images SET `id` = '4024', `alt` = 'Close Up', `orderby` = '2', `path` = 'demo_store_d4024_3.jpeg', `height` = '395', `width` = '400', `mime` = 'image/jpeg', `size` = '31686';
+INSERT INTO xlite_product_detailed_images SET `id` = '4024', `alt` = 'Jedi Gettin\' Tough', `orderby` = '3', `path` = 'demo_store_d4024_4.jpeg', `height` = '402', `width` = '400', `mime` = 'image/jpeg', `size` = '60090';
+INSERT INTO xlite_product_detailed_images SET `id` = '4024', `alt` = 'Stuffed Backpack', `orderby` = '4', `path` = 'demo_store_d4024_5.jpeg', `height` = '421', `width` = '400', `mime` = 'image/jpeg', `size` = '26850';
+INSERT INTO xlite_product_detailed_images SET `id` = '4024', `path` = 'demo_store_p4024.jpeg', `mime` = 'image/jpeg', `width` = '400', `height` = '454', `size` = '26961', `is_zoom` = 1, `orderby` = '-1';

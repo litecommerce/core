@@ -283,6 +283,24 @@ CREATE TABLE xlite_product_thumbnails (
   KEY id (id)
 ) TYPE=MyISAM;
 
+DROP TABLE IF EXISTS xlite_product_detailed_images;
+CREATE TABLE xlite_product_detailed_images (
+  `image_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL DEFAULT '0',
+  `path` varchar(512) NOT NULL DEFAULT '',
+  `mime` varchar(64) NOT NULL DEFAULT 'image/jpeg',
+  `width` int(11) NOT NULL DEFAULT '0',
+  `height` int(11) NOT NULL DEFAULT '0',
+  `size` int(11) NOT NULL DEFAULT '0',
+  `date` int(11) NOT NULL DEFAULT '0',
+  `hash` varchar(32) NOT NULL DEFAULT '',
+  `alt` varchar(255) NOT NULL default '',
+  `orderby` int(11) NOT NULL DEFAULT 0,
+  `is_zoom` tinyint(1) NOT NULL DEFAULT 0,
+  PRIMARY KEY (image_id),
+  KEY id (id)
+) TYPE=MyISAM;
+
 DROP TABLE IF EXISTS xlite_product_translations;
 CREATE TABLE xlite_product_translations (
   label_id int(11) NOT NULL AUTO_INCREMENT,
