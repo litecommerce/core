@@ -136,7 +136,6 @@ $lcSettings = array(
         'FeaturedProducts',
         'GiftCertificates',
         'InventoryTracking',
-        'MultiCategories',
         'ProductAdviser',
         'ProductOptions',
         'WholesaleTrading',

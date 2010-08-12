@@ -9,6 +9,7 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
+ * @ListChild (list="itemsList.product.table.admin.search.header", weight="25")
  *}
 <span IF="!product.newArrival=#0#">
 <span IF="product.newArrival=#1#">

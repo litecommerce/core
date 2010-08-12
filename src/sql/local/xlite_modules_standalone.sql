@@ -8,7 +8,6 @@ UPDATE xlite_modules SET enabled=1 WHERE name IN (
 'GiftCertificates',
 'GoogleCheckout',
 'InventoryTracking',
-'MultiCategories',
 'PayPalPro',
 'ProductAdviser',
 'ProductOptions',

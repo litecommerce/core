@@ -319,7 +319,7 @@ INSERT INTO `xlite_config_translations` VALUES (69,'en',91,'Display check number
 INSERT INTO `xlite_config_translations` VALUES (76,'en',100,'Enable anonymous checkout','');
 INSERT INTO `xlite_config_translations` VALUES (77,'en',101,'Enable extra fields in the category management dialogue','');
 INSERT INTO `xlite_config_translations` VALUES (78,'en',102,'Validate credit cards','');
-INSERT INTO `xlite_config_translations` VALUES (79,'en',103,'Enable products to inherit extra fields from disabled categories (for MultiCategories)','');
+INSERT INTO `xlite_config_translations` VALUES (79,'en',103,'Enable products to inherit extra fields from disabled categories','');
 INSERT INTO `xlite_config_translations` VALUES (80,'en',104,'E-mail order details to the sales department after order placement','');
 INSERT INTO `xlite_config_translations` VALUES (81,'en',105,'E-mail order details to customers after order placement','');
 INSERT INTO `xlite_config_translations` VALUES (83,'en',107,'Enable \"Market price\" feature','');

@@ -35,7 +35,6 @@ FeaturedProducts
 GiftCertificates
 GoogleCheckout
 InventoryTracking
-MultiCategories
 PayPalPro
 ProductAdviser
 ProductOptions
