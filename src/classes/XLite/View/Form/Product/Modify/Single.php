@@ -96,6 +96,6 @@ class Single extends \XLite\View\Form\Product\Modify\AModify
      */
     protected function isMultipart()
     {
-        return false;
+        return true;
     }
 }

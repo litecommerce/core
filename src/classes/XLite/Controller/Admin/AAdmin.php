@@ -484,6 +484,6 @@ EOT;
      */
     protected function getToDelete()
     {
-        return array_keys($this->getRequestDataByPrefix($this->getPrefixToDelete()));
+        return $this->getRequestDataByPrefix($this->getPrefixToDelete());
     }
 }

@@ -293,7 +293,7 @@ abstract class Image extends \XLite\Model\AEntity
     }
 
     /**
-     * Lload image from local file 
+     * Load image from local file 
      * 
      * @param string $path Absolute path
      *  
@@ -302,7 +302,7 @@ abstract class Image extends \XLite\Model\AEntity
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function loadFromLocalFile($path)
+    public function loadFromLocalFile($path, $basename = null)
     {
         $result = true;
 
@@ -315,8 +315,7 @@ abstract class Image extends \XLite\Model\AEntity
         } else {
 
             // Move file
-            $fn = basename($path);
-            $newPath = \XLite\Core\Operator::getUniquePath($root . $fn);
+            $newPath = \Includes\Utils\FileManager::getUniquePath($root, $basename ?: basename($path));
             if (!copy($path, $newPath)) {
                 $result = false;
             }
@@ -324,7 +323,7 @@ abstract class Image extends \XLite\Model\AEntity
         }
 
         if ($result) {
-            $this->path = $path;
+            $this->path = basename($path);
             $this->renewImageParameters();
         }
 
@@ -386,6 +385,8 @@ abstract class Image extends \XLite\Model\AEntity
             $this->height = $data[1];
             $this->mime = $data['mime'];
             $this->hash = md5_file($path);
+            $this->size = intval(filesize($path));
+            $this->date = time();
 
             $result = true;
         }
@@ -465,5 +466,4 @@ abstract class Image extends \XLite\Model\AEntity
     {
         return !is_null($this->image_id);
     }
-
 }

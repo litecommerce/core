@@ -48,7 +48,7 @@ class ProductList extends AAdmin
      */
     protected function doActionUpdate()
     {
-        \XLite\Core\Database::getRepo('\XLite\Model\Product')->updateInBatch($this->getPostedData());
+        \XLite\Core\Database::getRepo('\XLite\Model\Product')->updateInBatchById($this->getPostedData());
     }
 
     /**
@@ -61,7 +61,7 @@ class ProductList extends AAdmin
      */
     protected function doActionDelete()
     {
-        \XLite\Core\Database::getRepo('\XLite\Model\Product')->deleteInBatch($this->getToDelete());
+        \XLite\Core\Database::getRepo('\XLite\Model\Product')->deleteInBatchById($this->getToDelete());
     }
 }
 

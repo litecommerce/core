@@ -180,7 +180,7 @@ class Product extends \XLite\Model\Base\I18n
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @OneToMany (targetEntity="XLite\Model\CategoryProducts", mappedBy="product", cascade={"persist","remove"}, fetch="LAZY")
+     * @OneToMany (targetEntity="XLite\Model\CategoryProducts", mappedBy="product", cascade={"persist","remove"})
      * @OrderBy   ({"orderby" = "ASC"})
      */
     protected $category_products;
@@ -193,8 +193,7 @@ class Product extends \XLite\Model\Base\I18n
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @ManyToOne  (targetEntity="XLite\Model\Image\Product\Thumbnail")
-     * @JoinColumn (name="product_id", referencedColumnName="id")
+     * @OneToOne (targetEntity="XLite\Model\Image\Product\Thumbnail", mappedBy="product", cascade={"persist","remove"})
      */
     protected $thumbnail;
 
@@ -206,8 +205,7 @@ class Product extends \XLite\Model\Base\I18n
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @ManyToOne  (targetEntity="XLite\Model\Image\Product\Image")
-     * @JoinColumn (name="product_id", referencedColumnName="id")
+     * @OneToOne (targetEntity="XLite\Model\Image\Product\Image", mappedBy="product", cascade={"persist","remove"})
      */
     protected $image;
 

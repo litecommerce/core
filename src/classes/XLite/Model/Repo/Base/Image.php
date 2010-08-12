@@ -128,6 +128,4 @@ abstract class Image extends \XLite\Model\Repo\ARepo
     {
         return false;
     }
-
-
 }
