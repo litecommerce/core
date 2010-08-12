@@ -144,13 +144,16 @@ class XLite_Tests_Module_ProductOptions_Model_OptionGroup extends XLite_Tests_Te
 
         $this->assertEquals(3, count($list), 'check translations length');
 
+        \XLite\Core\Database::getEM()->remove($t);
         $list->removeElement($t);
 
-        $group->setTranslations($list);
         \XLite\Core\Database::getEM()->persist($group);
         \XLite\Core\Database::getEM()->flush();
 
-        $list = $group->getTranslations();
+        $t = $group->getTranslation('de');
+
+        $this->assertNotEquals($t->getLabelId(), $group->getGroupId(), 'check translation label id');
+        $this->assertEquals($t->getOwner()->getGroupId(), $group->getGroupId(), 'check translation owner id (again)');
 
         $this->assertEquals(2, count($list), 'check translations length again');
     }
