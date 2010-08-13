@@ -76,8 +76,6 @@ class Detailed extends \XLite\Model\Repo\Base\Image
             ->getQuery()
             ->getResult();
 
-        $this->detachList($data);
-
         return $data;
     }
 

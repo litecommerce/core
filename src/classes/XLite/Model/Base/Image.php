@@ -54,18 +54,6 @@ abstract class Image extends \XLite\Model\AEntity
     protected $image_id;
 
     /**
-     * Image-owner unique id 
-     * 
-     * @var    integer
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     *
-     * @Column (type="integer", length="11", nullable=false)
-     */
-    protected $id;
-
-    /**
      * Image path (URL or file name in images storage directory)
      * 
      * @var    string
@@ -149,6 +137,110 @@ abstract class Image extends \XLite\Model\AEntity
      */
     protected $hash = '';
 
+    /**
+     * Set width (forbidden operation)
+     *
+     * @param mixed $value Value
+     * 
+     * @return false
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setWidth($value)
+    {
+        return false;
+    }
+
+    /**
+     * Set height (forbidden operation)
+     *
+     * @param mixed $value Value
+     *
+     * @return false
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setHeight($value)
+    {
+        return false;
+    }
+
+    /**
+     * Set size (forbidden operation)
+     *
+     * @param mixed $value Value
+     *
+     * @return false
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setSize($value)
+    {
+        return false;
+    }
+
+    /**
+     * Set MIME type (forbidden operation)
+     *
+     * @param mixed $value Value
+     *
+     * @return false
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setMime($value)
+    {
+        return false;
+    }
+
+    /**
+     * Set date (forbidden operation)
+     *
+     * @param mixed $value Value
+     *
+     * @return false
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setDate($value)
+    {
+        return false;
+    }
+
+    /**
+     * Set hash (forbidden operation)
+     *
+     * @param mixed $value Value
+     *
+     * @return false
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setHash($value)
+    {
+        return false;
+    }
+
+    /**
+     * Set path (forbidden operation)
+     *
+     * @param mixed $value Value
+     *
+     * @return false
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setPath($value)
+    {
+        return false;
+    }
 
     /**
      * Get image body 
