@@ -47,6 +47,8 @@
 
 </form>
 
+<widget IF="!getOptions()" class="\XLite\Module\ProductOptions\View\Button\AddGroup" />
+
 <widget class="\XLite\Module\ProductOptions\View\ModifyOptionGroup" />
 
 <widget class="\XLite\Module\ProductOptions\View\ModifyExceptions" />

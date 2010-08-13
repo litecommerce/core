@@ -127,6 +127,9 @@ class ModifyProductOptions extends \XLite\View\AView
     {
         if (!isset($this->options)) {
             $this->options = $this->getParam(self::PARAM_PRODUCT)->getOptionGroups();
+            if (is_object($this->options)) {
+                $this->options = $this->options->toArray();
+            }
         }
 
         return $this->options;

@@ -103,11 +103,16 @@ class OptionGroup extends \XLite\Model\Repo\Base\I18n
     protected function postprocessActiveByProductId(array $data, $productId)
     {
         foreach ($data as $i => $item) {
-            if (
-                $item->getType() == \XLite\Module\ProductOptions\Model\OptionGroup::GROUP_TYPE
-                && 0 == count($item->getOptions())
-            ) {
-                unset($data[$i]);
+            if ($item->getType() == \XLite\Module\ProductOptions\Model\OptionGroup::GROUP_TYPE) {
+                foreach ($item->getOptions() as $option) {
+                    if (!$option->getEnabled()) {
+                        $item->getOptions()->removeElement($option);
+                    }
+                }
+
+                if (0 == $item->getOptions()->count()) {
+                    unset($data[$i]);
+                }
             }
         }
 
