@@ -38,6 +38,16 @@ namespace XLite\Model\Repo\Image\Product;
 class Detailed extends \XLite\Model\Repo\Base\Image
 {
     /**
+     * Default 'order by' field name
+     *
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $defaultOrderBy = 'orderby';
+
+    /**
      * Returns the name of the directory within 'root/images' where images stored
      * 
      * @return string

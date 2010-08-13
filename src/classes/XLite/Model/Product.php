@@ -218,6 +218,7 @@ class Product extends \XLite\Model\Base\I18n
      * @since  3.0.0
      *
      * @OneToMany (targetEntity="XLite\Model\Image\Product\Detailed", mappedBy="product", cascade={"persist","remove"})
+     * @OrderBy ({"orderby" = "ASC"})
      */
     protected $detailedImages;
 

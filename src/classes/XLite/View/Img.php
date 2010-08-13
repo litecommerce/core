@@ -215,7 +215,7 @@ class Img extends AView
 
             $url = $this->getParam(self::PARAM_USE_CACHE)
                 ? $this->resizedURL
-                : $this->getParam(self::PARAM_IMAGE)->getURL();
+                : $this->getParam(self::PARAM_IMAGE)->getFrontURL();
 
         } elseif ($this->getParam(self::PARAM_USE_DEFAULT_IMAGE)) {
 

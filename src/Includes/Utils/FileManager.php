@@ -139,7 +139,9 @@ class FileManager extends AUtils
      */
     public static function mkdirRecursive($dir, $mode = 0755)
     {
-        mkdir($dir, $mode, true);
+        if (!file_exists($dir)) {
+            mkdir($dir, $mode, true);   
+        }
     }
 
     /**
@@ -200,8 +202,10 @@ class FileManager extends AUtils
         $pathinfo = pathinfo($file);
         $counter = 1;
 
-        while (static::isFile($path = $dir . $file)) {
+        $path = $dir . $file;
+        while (static::isFile($path)) {
             $file = $pathinfo['filename'] . '_' . $counter++ . '.' . $pathinfo['extension'];
+            $path = $dir . $file;
         }
 
         return $path;
