@@ -54,6 +54,19 @@ abstract class Image extends \XLite\Model\AEntity
     protected $image_id;
 
     /**
+     * Image-owner id
+     * TODO - remove - backward compatibility
+     *
+     * @var    integer
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     *
+     * @Column (type="integer")
+     */
+    protected $id;
+
+    /**
      * Image path (URL or file name in images storage directory)
      * 
      * @var    string
