@@ -318,6 +318,9 @@ abstract class Image extends \XLite\Model\AEntity
                 if (move_uploaded_file($tmp, $path)) {
                     $this->path = basename($path);
                     $result = $this->renewImageParameters();
+                    if (!$result) {
+                        unlink($path);
+                    }
                 }
             }
         

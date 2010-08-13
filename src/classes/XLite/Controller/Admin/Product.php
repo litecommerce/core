@@ -310,6 +310,15 @@ class Product extends Catalog
 
             $img->map($data);
 
+            if ($img->getIsZoom()) {
+                foreach ($this->getProduct()->getDetailedImages() as $i) {
+                    if ($i->getIsZoom()) {
+                        $i->setIsZoom(false);
+                        \XLite\Core\Database::getEM()->persist($i);
+                    }
+                }
+            }
+
             $img->setProduct($this->getProduct());
             $this->getProduct()->getDetailedImages()->add($img);
 
@@ -322,7 +331,8 @@ class Product extends Catalog
 
         } else {
             \XLite\Core\TopMessage::getInstance()->add(
-                'The detailed image has not been successfully added'
+                'The detailed image has not been successfully added',
+                 \XLite\Core\TopMessage::ERROR
             );
         }
     }
@@ -368,16 +378,23 @@ class Product extends Catalog
      */
     protected function doActionUpdateDetailedImages()
     {
+        $zoomId = 0;
+        if (isset(\XLite\Core\Request::getInstance()->is_zoom)) {
+            $keys = array_keys(\XLite\Core\Request::getInstance()->is_zoom);
+            $zoomId = array_shift($keys);
+        }
+
         foreach (\XLite\Core\Request::getInstance()->alt as $imageId => $alt) {
             $img = \XLite\Core\Database::getRepo('XLite\Model\Image\Product\Detailed')
                 ->find($imageId);
 
             if ($img) {
                 $img->setAlt($alt);
-                $img->setOrderBy(\XLite\Core\Request::getInstance()->orderby[$imageId]);
-                $img->setIsZoom(
-                    isset(\XLite\Core\Request::getInstance()->is_zoom)
-                    && isset(\XLite\Core\Request::getInstance()->is_zoom[$imageId])
+                $img->setOrderby(\XLite\Core\Request::getInstance()->orderby[$imageId]);
+                $img->setIsZoom($zoomId == $imageId);
+                $img->setEnabled(
+                    isset(\XLite\Core\Request::getInstance()->enabled[$imageId])
+                    && \XLite\Core\Request::getInstance()->enabled[$imageId]
                 );
 
                 \XLite\Core\Database::getEM()->persist($img);

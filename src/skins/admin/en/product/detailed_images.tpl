@@ -34,12 +34,17 @@
 
         <tr>
         	<td align="right">Alternative text:</td>
-	        <td><input type="text" name="alt[{image.getImageId()}]" value="{image.alt:r}" size="55" /></td>
+	        <td><input type="text" name="alt[{image.getImageId()}]" value="{image.getAlt():r}" size="55" /></td>
         </tr>
 
         <tr>
 	        <td align="right">Position:</td>
-	        <td><input type="text" name="order_by[{image.getImageId()}]" value="{image.order_by:r}" size="3" /></td>
+	        <td><input type="text" name="orderby[{image.getImageId()}]" value="{image.getOrderby():r}" class="orderby field-integer" /></td>
+        </tr>
+
+        <tr>
+          <td align="right">Enabled:</td>
+          <td><input type="checkbox" name="enabled[{image.getImageId()}]" value="1" checked="{image.getEnabled()}" /></td>
         </tr>
 
         <tr>
@@ -50,9 +55,9 @@
         <tr>
 	        <td>&nbsp;</td>
         	<td>
-            <input type="submit" value=" Update ">
+            <input type="submit" value="Update">
             &nbsp;
-		        <input type="button" Value=" Delete the image " onclick="images_form.image_id.value='{image.getImageId()}'; images_form.action.value='delete_detailed_image'; images_form.submit()">
+		        <input type="button" value="Delete the image" onclick="images_form.image_id.value='{image.getImageId()}'; images_form.action.value='delete_detailed_image'; images_form.submit()">
 	        </td>
         </tr>
 
@@ -89,12 +94,17 @@
 
     <tr>
     	<td>Position:</td>
-    	<td><input type="text" name="orderby" size="3" value="1" /></td>
+    	<td><input type="text" name="orderby" class="orderby field-integer" /></td>
     </tr>
 
     <tr>
       <td>It's zoom:</td>
       <td><input type="checkbox" name="is_zoom" value="Y" /></td>
+    </tr>
+
+    <tr>
+      <td>Enabled:</td>
+      <td><input type="checkbox" name="enabled" value="1" /></td>
     </tr>
 
     <tr>	
