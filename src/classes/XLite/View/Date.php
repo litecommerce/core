@@ -36,7 +36,7 @@ namespace XLite\View;
  * @see        ____class_see____
  * @since   3.0.0
  */
-class Date extends FormField
+class Date extends \XLite\View\FormField
 {
     /*
      * Names of the widget parameters

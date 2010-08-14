@@ -35,7 +35,7 @@ namespace XLite\Validator;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class ShippingMethodValidator extends RequiredValidator
+class ShippingMethodValidator extends \XLite\Validator\RequiredValidator
 {
     public $template = "common/shipping_method_validator.tpl";
     

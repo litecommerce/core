@@ -29,7 +29,7 @@
 namespace XLite\Model\Repo;
 
 // TODO - reuires the multiple inheritance
-// TODO - must also extends the \XLite\Model\Repo\Base\Searchable
+// TODO - must also extends \XLite\Model\Repo\the \XLite\Model\Repo\Base\Searchable
 
 /**
  * The "product" model repository

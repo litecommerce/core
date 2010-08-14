@@ -35,7 +35,7 @@ namespace XLite\RemoteModel;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Module extends AModel
+class Module extends \XLite\RemoteModel\AModel
 {
     const NO_EXISTS = 0;
     const EXISTS    = 1;

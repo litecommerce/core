@@ -35,7 +35,7 @@ namespace XLite\Core\TranslationDriver;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Db extends ATranslationDriver
+class Db extends \XLite\Core\TranslationDriver\ATranslationDriver
 {
     /**
      * Translations 

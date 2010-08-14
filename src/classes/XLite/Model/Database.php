@@ -37,7 +37,7 @@ define('SQL_UPLOAD_DIR', 'var/tmp/');
 
 /**
  * ____description____
- * TODO[SINGLETON] - must extends the Base\Singleton
+ * TODO[SINGLETON] - must extends \XLite\Model\the Base\Singleton
  * 
  * @package XLite
  * @see     ____class_see____

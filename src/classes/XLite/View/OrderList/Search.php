@@ -36,7 +36,7 @@ namespace XLite\View\OrderList;
  * @since   3.0.0
  * @ListChild (list="orders.search.base", weight="30")
  */
-class Search extends AOrderList
+class Search extends \XLite\View\OrderList\AOrderList
 {
     /**
      * Widget class name

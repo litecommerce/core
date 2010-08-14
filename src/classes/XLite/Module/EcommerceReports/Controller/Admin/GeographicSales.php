@@ -35,7 +35,7 @@ namespace XLite\Module\EcommerceReports\Controller\Admin;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class GeographicSales extends ProductSales
+class GeographicSales extends \XLite\Module\EcommerceReports\Controller\Admin\ProductSales
 {
     function getGeoSales() 
     {

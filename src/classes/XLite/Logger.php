@@ -35,7 +35,7 @@ namespace XLite;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Logger extends Base\Singleton
+class Logger extends \XLite\Base\Singleton
 {
     /**
      * Logger defaults 
