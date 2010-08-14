@@ -139,4 +139,30 @@ class Operator extends AUtils
 
         static::flushBuffers();
     }
+
+    /**
+     * Set custom value for the "max_execution_time" INI setting, and execute some function
+     * 
+     * @param int   $time     time (in seconds) to set
+     * @param mixed $callback function to execute
+     * @param array $args     call arguments
+     *  
+     * @return mixed
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function executeWithCustomMaxExecTime($time, $callback, array $args = array())
+    {
+        $savedValue = @ini_get('max_execution_time');
+        @set_time_limit($time);
+
+        $result = call_user_func_array($callback, $args);
+
+        if (!empty($savedValue)) {
+            @set_time_limit($savedValue);
+        }
+
+        return $result;
+    }
 }

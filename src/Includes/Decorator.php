@@ -73,7 +73,7 @@ class Decorator extends Decorator\ADecorator
     const DECORATOR_IDENTIFIER = '____DECORATOR____';
 
     /**
-     *  Messages
+     * Messages
      */
     const CONTROLLER_ERR_MSG        = 'Module "%s" has defined controller class "%s" which does not decorate any other one and has an ambigous name';
     const UNDEFINED_CLASS_MSG       = 'Decorator: undefined class - "%s"';
@@ -317,53 +317,6 @@ class Decorator extends Decorator\ADecorator
         '_x', '_c', '_v', '_b', '_n',
         '_m',
     );
-
-    /**
-     * Return current value of the "max_execution_time" INI setting 
-     * 
-     * @return int|string
-     * @access protected
-     * @since  3.0
-     */
-    protected function getMaxExecutionTime()
-    {
-        if (!isset($this->maxExecutionTime)) {
-            $this->maxExecutionTime = @ini_get('max_execution_time');
-        }
-
-        return $this->maxExecutionTime;
-    }
-
-    /**
-     * Set value for the "max_execution_time" INI setting
-     *
-     * @return void
-     * @access protected
-     * @since  3.0
-     */
-    protected function setMaxExecutionTime()
-    {
-        // Save original value
-        $this->getMaxExecutionTime();
-
-        @set_time_limit(180);
-    }
-
-    /**
-     * Restore original value of the "max_execution_time" INI setting
-     *
-     * @return void
-     * @access protected
-     * @since  3.0
-     */
-    protected function restoreMaxExecutionTime()
-    {
-        $time = $this->getMaxExecutionTime();
-
-        if (!empty($time)) {
-            @set_time_limit($time);
-        }
-    }
 
     /**
      * Return class name by class file path 
@@ -1143,8 +1096,6 @@ class Decorator extends Decorator\ADecorator
      */
     public function buildCache()
     {
-        $this->setMaxExecutionTime();
-
         // Prepare classes list
         $this->createClassTree();
         $this->normalizeModuleControllerNames();
@@ -1155,8 +1106,6 @@ class Decorator extends Decorator\ADecorator
         foreach ($this->classesInfo as $class => $info) {
             $this->writeClassFile($class, $info);
         }
-
-        $this->restoreMaxExecutionTime();
 
         // Clear all cache
         $this->clearDoctrineCache();

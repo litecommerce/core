@@ -42,6 +42,11 @@ class CacheManager extends \Includes\Decorator\Utils\AUtils
      */
     const MESSAGE = 'Re-building cache, please wait...';
 
+    /**
+     * Time limit to build cache 
+     */
+    const TIME_LIMIT = 180;
+
 
     /**
      * List of cache directories 
@@ -198,8 +203,11 @@ class CacheManager extends \Includes\Decorator\Utils\AUtils
         // Delete cache folders
         static::cleanupCache();
 
-        // Create classes tree
-        \Includes\Decorator::getInstance()->buildCache();
+        // Main procedure: instantiate and run Decorator here
+        \Includes\Utils\Operator::executeWithCustomMaxExecTime(
+            self::TIME_LIMIT,
+            array(\Includes\Decorator::getInstance(), 'buildCache')
+        );
 
         // Perform redirect (needed for two-step cache generation)
         \Includes\Utils\Operator::refresh();
