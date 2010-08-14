@@ -35,7 +35,7 @@ namespace XLite\Controller\Customer;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Category extends Catalog
+class Category extends \XLite\Controller\Customer\Catalog
 {
     /**
      * getModelObject

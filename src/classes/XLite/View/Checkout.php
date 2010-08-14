@@ -35,7 +35,7 @@ namespace XLite\View;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Checkout extends Dialog
+class Checkout extends \XLite\View\Dialog
 {
     /**
      * Indexes in step data array 

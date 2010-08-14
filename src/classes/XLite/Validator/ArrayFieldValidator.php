@@ -35,7 +35,7 @@ namespace XLite\Validator;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class ArrayFieldValidator extends AValidator
+class ArrayFieldValidator extends \XLite\Validator\AValidator
 {
     public $template = "common/required_validator.tpl";
 

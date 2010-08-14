@@ -35,7 +35,7 @@ namespace XLite\Controller\Admin;
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class Catalog extends AAdmin
+abstract class Catalog extends \XLite\Controller\Admin\AAdmin
 {
     /**
      * Determines if we need to return categoty link or not 

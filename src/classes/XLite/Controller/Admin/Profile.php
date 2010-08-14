@@ -35,7 +35,7 @@ namespace XLite\Controller\Admin;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Profile extends AAdmin
+class Profile extends \XLite\Controller\Admin\AAdmin
 {
     /**
      * Class name for the \XLite\View\Model\ form (optional)

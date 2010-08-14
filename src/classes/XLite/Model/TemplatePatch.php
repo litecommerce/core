@@ -37,7 +37,7 @@ namespace XLite\Model;
  * @Entity (repositoryClass="XLite\Model\Repo\TemplatePatch")
  * @Table (name="template_patches", indexes={@index(name="zlt", columns={"zone", "lang", "tpl"})})
  */
-class TemplatePatch extends AEntity
+class TemplatePatch extends \XLite\Model\AEntity
 {
     /**
      * Patch id 

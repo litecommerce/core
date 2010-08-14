@@ -35,7 +35,7 @@ namespace XLite\Controller\Admin;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class AddIp extends AAdmin
+class AddIp extends \XLite\Controller\Admin\AAdmin
 {
     public $template = "add_ip.tpl";
 

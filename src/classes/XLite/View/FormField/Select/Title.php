@@ -35,7 +35,7 @@ namespace XLite\View\FormField\Select;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Title extends Regular
+class Title extends \XLite\View\FormField\Select\Regular
 {
     /**
      * getDefaultOptions

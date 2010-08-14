@@ -35,7 +35,7 @@ namespace XLite\Model;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class ProductInventory extends Product
+class ProductInventory extends \XLite\Model\Product
 {	
     public $importFields = array(
             "NULL"  => false,

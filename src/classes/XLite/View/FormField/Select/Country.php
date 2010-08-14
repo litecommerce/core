@@ -35,7 +35,7 @@ namespace XLite\View\FormField\Select;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Country extends Regular
+class Country extends \XLite\View\FormField\Select\Regular
 {
     /**
      * Widget param names

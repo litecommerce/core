@@ -40,7 +40,7 @@ define(
  * @see     ____class_see____
  * @since   3.0.0
  */
-class AdminIPValidator extends AValidator
+class AdminIPValidator extends \XLite\Validator\AValidator
 {
     public $template = "common/ip_validator.tpl";
 

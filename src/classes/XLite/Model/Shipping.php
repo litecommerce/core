@@ -35,7 +35,7 @@ namespace XLite\Model;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Shipping extends AModel
+class Shipping extends \XLite\Model\AModel
 {
     /**
      * Db table fields

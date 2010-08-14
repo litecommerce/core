@@ -35,7 +35,7 @@ namespace XLite\Controller\Customer;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Drupal extends ACustomer
+class Drupal extends \XLite\Controller\Customer\ACustomer
 {
     /**
      * Do not perform any action 

@@ -35,7 +35,7 @@ namespace XLite\Model;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class PaymentMethod extends AModel
+class PaymentMethod extends \XLite\Model\AModel
 {
     /**
      * Values returned by habdleRequest($order)

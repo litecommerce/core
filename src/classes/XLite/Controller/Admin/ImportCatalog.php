@@ -35,7 +35,7 @@ namespace XLite\Controller\Admin;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class ImportCatalog extends AAdmin
+class ImportCatalog extends \XLite\Controller\Admin\AAdmin
 {
     public $params = array('target', "page", "import_error");
     public $page = "products"; // the default import page	

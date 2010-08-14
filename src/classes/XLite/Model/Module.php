@@ -37,7 +37,7 @@ namespace XLite\Model;
  * @Entity (repositoryClass="XLite\Model\Repo\Module")
  * @Table (name="modules")
  */
-class Module extends AEntity
+class Module extends \XLite\Model\AEntity
 {
     /**
      * Installed statuses

@@ -36,7 +36,7 @@ namespace XLite\View\Tabs;
  * @see        ____class_see____
  * @since      3.0.0
  */
-class ShippingSettings extends ATabs
+class ShippingSettings extends \XLite\View\Tabs\ATabs
 {
 
     /**

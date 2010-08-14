@@ -35,7 +35,7 @@ namespace XLite\Validator;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class RangeValidator extends AValidator
+class RangeValidator extends \XLite\Validator\AValidator
 {
     public $template = "common/range_validator.tpl";
     

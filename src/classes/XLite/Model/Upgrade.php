@@ -42,7 +42,7 @@ define('MAIL_SKINS', 'mail');
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Upgrade extends AModel
+class Upgrade extends \XLite\Model\AModel
 {
     public $fields = array(
         "from_ver" => "",

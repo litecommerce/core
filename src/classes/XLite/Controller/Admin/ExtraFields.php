@@ -35,7 +35,7 @@ namespace XLite\Controller\Admin;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class ExtraFields extends AAdmin
+class ExtraFields extends \XLite\Controller\Admin\AAdmin
 {
     public $_categories = null;
 

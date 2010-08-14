@@ -35,7 +35,7 @@ namespace XLite\Model\Repo;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Zone extends ARepo
+class Zone extends \XLite\Model\Repo\ARepo
 {
     /**
      * Define cache cells 

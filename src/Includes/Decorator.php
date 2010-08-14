@@ -865,7 +865,8 @@ class Decorator extends Decorator\ADecorator
      * 
      * @return void
      * @access protected
-     * @since  3.0
+     * @see    ____func_see____
+     * @since  3.0.0
      */
     protected function createClassTree()
     {
@@ -898,17 +899,8 @@ class Decorator extends Decorator\ADecorator
                     die (4);
                 }
 
-                $e = '';
-
-                if (0 === strpos($extends, '\Doctrine\\')) {
-                    $e = $extends;
-
-                } elseif (0 === strpos($extends, '\XLite\\')) {
-                    $e = substr($extends, 1);
-
-                } elseif ($extends) {
-                    $e = ($namespace ? $namespace : 'XLite') . '\\' . $extends;
-                }
+                // FIXME
+                $e = (0 === strpos($extends, '\XLite\\')) ? substr($extends, 1) : $extends;
 
                 // Save data
                 $this->classesInfo[$key] = array(
@@ -1098,6 +1090,8 @@ class Decorator extends Decorator\ADecorator
     {
         // Prepare classes list
         $this->createClassTree();
+
+
         $this->normalizeModuleControllerNames();
         $this->createDecoratorTree();
         $this->mergeClassAndDecoratorTrees();

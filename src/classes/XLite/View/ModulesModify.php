@@ -35,7 +35,7 @@ namespace XLite\View;
  * @see     ____class_see____
  * @since   3.0
  */
-class ModulesModify extends Dialog
+class ModulesModify extends \XLite\View\Dialog
 {
     /**
      * Return title

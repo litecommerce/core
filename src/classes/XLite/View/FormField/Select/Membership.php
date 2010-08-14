@@ -35,7 +35,7 @@ namespace XLite\View\FormField\Select;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Membership extends Regular
+class Membership extends \XLite\View\FormField\Select\Regular
 {
     /**
      * Determines if this field is visible for customers or not 

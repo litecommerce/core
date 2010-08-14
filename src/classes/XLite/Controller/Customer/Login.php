@@ -35,7 +35,7 @@ namespace XLite\Controller\Customer;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Login extends ACustomer
+class Login extends \XLite\Controller\Customer\ACustomer
 {
     /**
      * Index in request array; the secret token used for authorization

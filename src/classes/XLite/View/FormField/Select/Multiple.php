@@ -35,7 +35,7 @@ namespace XLite\View\FormField\Select;
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class Multiple extends ASelect
+abstract class Multiple extends \XLite\View\FormField\Select\ASelect
 {
     /**
      * getDefaultAttributes 

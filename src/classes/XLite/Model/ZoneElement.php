@@ -37,7 +37,7 @@ namespace XLite\Model;
  * @Entity (repositoryClass="XLite\Model\Repo\Zone")
  * @Table (name="zones")
  */
-class ZoneElement extends AEntity
+class ZoneElement extends \XLite\Model\AEntity
 {
     /**
      * Zone unique id 

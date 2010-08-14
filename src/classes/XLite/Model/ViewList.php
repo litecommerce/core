@@ -37,7 +37,7 @@ namespace XLite\Model;
  * @Entity (repositoryClass="XLite\Model\Repo\ViewList")
  * @Table (name="view_lists", indexes={@index(name="clzw", columns={"class", "list", "zone", "weight"})})
  */
-class ViewList extends AEntity
+class ViewList extends \XLite\Model\AEntity
 {
     /**
      * Predefined weights 

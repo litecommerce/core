@@ -36,7 +36,7 @@ namespace XLite\View;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class CategorySelect extends AView
+class CategorySelect extends \XLite\View\AView
 {
     const PARAM_ALL_OPTION           = 'allOption';
     const PARAM_NONE_OPTION          = 'noneOption';

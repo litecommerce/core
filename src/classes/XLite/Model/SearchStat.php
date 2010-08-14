@@ -37,7 +37,7 @@ define('QUERY_SEARCH_STAT_LENGTH', 64);
  * @see     ____class_see____
  * @since   3.0.0
  */
-class SearchStat extends AModel
+class SearchStat extends \XLite\Model\AModel
 {
     public $fields = array(
         "query" => "",

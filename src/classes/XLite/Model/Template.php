@@ -35,7 +35,7 @@ namespace XLite\Model;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Template extends FileNode
+class Template extends \XLite\Model\FileNode
 {
     public $file; // file name	
     public $comment; // template comment (null if not available)	

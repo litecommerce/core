@@ -35,7 +35,7 @@ namespace XLite\Controller\Admin;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Languages extends AAdmin
+class Languages extends \XLite\Controller\Admin\AAdmin
 {
     /**
      * Controller parameters

@@ -35,7 +35,7 @@ namespace XLite\Controller\Admin;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class ImportUsers extends AAdmin
+class ImportUsers extends \XLite\Controller\Admin\AAdmin
 {
     public $import_error = false;
 

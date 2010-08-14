@@ -35,8 +35,7 @@ namespace XLite\Module\DrupalConnector\Model;
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class Session extends \XLite\Model\Session
-implements \XLite\Base\IDecorator
+abstract class Session extends \XLite\Model\Session implements \XLite\Base\IDecorator
 {
     /**
      * Return path for cookies

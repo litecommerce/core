@@ -35,7 +35,7 @@ namespace XLite\Controller\Admin;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Test extends AAdmin
+class Test extends \XLite\Controller\Admin\AAdmin
 {
     function action_upload()
     {

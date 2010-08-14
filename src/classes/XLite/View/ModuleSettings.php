@@ -35,7 +35,7 @@ namespace XLite\View;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class ModuleSettings extends AView
+class ModuleSettings extends \XLite\View\AView
 {
     /**
      * Widget param names 

@@ -36,7 +36,7 @@ namespace XLite\View;
  * @see        ____class_see____
  * @since   3.0.0
  */
-class EditorLanguageSelector extends AView
+class EditorLanguageSelector extends \XLite\View\AView
 {
     /**
      * Current language code 
