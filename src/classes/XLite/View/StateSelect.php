@@ -37,7 +37,7 @@ namespace XLite\View;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class StateSelect extends FormField
+class StateSelect extends \XLite\View\FormField
 {
     /**
      * Widget param names

@@ -31,7 +31,7 @@ namespace XLite;
 /**
  * Base class
  * FIXME - must be abstract
- * FIXME - must extends the Base\SuperClass
+ * FIXME - must extends \XLite\the Base\SuperClass
  * 
  * @package XLite
  * @see     ____class_see____

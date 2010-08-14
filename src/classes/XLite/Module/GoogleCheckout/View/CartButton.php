@@ -36,7 +36,7 @@ namespace XLite\Module\GoogleCheckout\View;
  * @since   3.0.0
  * @ListChild (list="cart.buttons.checkout", weight="30")
  */
-class CartButton extends ButtonAltCheckout
+class CartButton extends \XLite\Module\GoogleCheckout\View\ButtonAltCheckout
 {
     /**
      * Return widget default template

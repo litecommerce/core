@@ -30,7 +30,7 @@ namespace XLite\Model;
 
 /**
  * ____description____
- * TODO[SINGLETON] - must extends the Base\Singleton
+ * TODO[SINGLETON] - must extends \XLite\Model\the Base\Singleton
  * NOTE - check the "factory.<name>" tags in templates
  * 
  * @package XLite

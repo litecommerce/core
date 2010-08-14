@@ -36,7 +36,7 @@ namespace XLite\View\Button;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class GoBack extends Regular
+class GoBack extends \XLite\View\Button\Regular
 {
     /**
      * getDefaultLabel

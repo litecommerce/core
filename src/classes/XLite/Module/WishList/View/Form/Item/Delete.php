@@ -35,7 +35,7 @@ namespace XLite\Module\WishList\View\Form\Item;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Delete extends AItem
+class Delete extends \XLite\Module\WishList\View\Form\Item\AItem
 {
     /**
      * Current form name 

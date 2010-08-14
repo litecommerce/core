@@ -36,7 +36,7 @@ namespace XLite\View\Model\Profile;
  * @see        ____class_see____
  * @since      3.0.0
  */
-class Main extends AProfile
+class Main extends \XLite\View\Model\Profile\AProfile
 {
     /**
      * Form sections 

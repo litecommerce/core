@@ -35,7 +35,7 @@ namespace XLite\Module\Affiliate\Controller\Admin;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class BannerStats extends PartnerStats
+class BannerStats extends \XLite\Module\Affiliate\Controller\Admin\PartnerStats
 {
     public $statsTotal = array("views" => 0, "click" => 0, "rate" => 0);
 

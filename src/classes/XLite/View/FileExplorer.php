@@ -36,7 +36,7 @@ namespace XLite\View;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class FileExplorer extends ColumnList
+class FileExplorer extends \XLite\View\ColumnList
 {
     /*
      * Widget parameters names

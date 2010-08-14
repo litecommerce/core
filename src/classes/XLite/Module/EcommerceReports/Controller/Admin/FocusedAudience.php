@@ -35,7 +35,7 @@ namespace XLite\Module\EcommerceReports\Controller\Admin;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class FocusedAudience extends EcommerceReports
+class FocusedAudience extends \XLite\Module\EcommerceReports\Controller\Admin\EcommerceReports
 {
     public $crlf = "\r\n";
 
