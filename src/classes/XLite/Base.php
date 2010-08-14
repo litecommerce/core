@@ -37,7 +37,7 @@ namespace XLite;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Base extends Base\Singleton
+class Base extends \XLite\Base\Singleton
 {
     /**
      * Singletons accessible directly from each object (see the "__get" method)

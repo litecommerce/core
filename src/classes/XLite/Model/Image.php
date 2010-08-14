@@ -35,7 +35,7 @@ namespace XLite\Model;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Image extends AModel
+class Image extends \XLite\Model\AModel
 {
     const IMAGES_DIR = 'images';
     const IMAGES_CACHE_DIR = 'cache';

@@ -35,7 +35,7 @@ namespace XLite\Controller\Customer;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class RecoverPassword extends ACustomer
+class RecoverPassword extends \XLite\Controller\Customer\ACustomer
 {
     public $params = array('target', "mode", "email", "link_mailed");
 

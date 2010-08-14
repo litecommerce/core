@@ -35,7 +35,7 @@ namespace XLite\View;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class TopCategories extends SideBarBox
+class TopCategories extends \XLite\View\SideBarBox
 {
     /**
      * Widget parameter names

@@ -35,7 +35,7 @@ namespace XLite\Validator;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class MembershipValidator extends AValidator
+class MembershipValidator extends \XLite\Validator\AValidator
 {
     public $template = "common/membership_validator.tpl";
     

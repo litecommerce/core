@@ -37,7 +37,7 @@ namespace XLite\View;
  * @ListChild (list="productsList.gridItem.title", weight="10")
  * @ListChild (list="productsList.listItem.info", weight="10")
  */
-class AddedToCartMark extends AView
+class AddedToCartMark extends \XLite\View\AView
 {
     /**
      * Widget parameter names

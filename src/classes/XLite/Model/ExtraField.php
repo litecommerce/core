@@ -35,7 +35,7 @@ namespace XLite\Model;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class ExtraField extends AModel
+class ExtraField extends \XLite\Model\AModel
 {
     public $fields = array(
             "field_id" => 0,    // primary key

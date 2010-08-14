@@ -35,7 +35,7 @@ namespace XLite\View;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Image extends AView
+class Image extends \XLite\View\AView
 {
     /**
      * Widget arguments names 

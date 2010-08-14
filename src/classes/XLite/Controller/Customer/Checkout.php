@@ -35,7 +35,7 @@ namespace XLite\Controller\Customer;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Checkout extends Cart
+class Checkout extends \XLite\Controller\Customer\Cart
 {
     /**
      * Avaliable checkout steps (modes)

@@ -35,7 +35,7 @@ namespace XLite\Model\Repo;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class TemplatePatch extends ARepo
+class TemplatePatch extends \XLite\Model\Repo\ARepo
 {
     /**
      * Default 'order by' field name
@@ -61,7 +61,6 @@ class TemplatePatch extends ARepo
     protected function defineCacheCells()
     {
         $list = parent::defineCacheCells();
-
         $list['all'] = array();
 
         return $list;

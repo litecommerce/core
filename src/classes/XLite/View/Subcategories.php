@@ -35,7 +35,7 @@ namespace XLite\View;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Subcategories extends Dialog
+class Subcategories extends \XLite\View\Dialog
 {
     /**
      * Widget parameter names

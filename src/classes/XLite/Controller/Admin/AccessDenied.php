@@ -35,6 +35,6 @@ namespace XLite\Controller\Admin;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class AccessDenied extends AAdmin
+class AccessDenied extends \XLite\Controller\Admin\AAdmin
 {
 }

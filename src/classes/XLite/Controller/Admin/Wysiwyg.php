@@ -35,7 +35,7 @@ namespace XLite\Controller\Admin;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Wysiwyg extends AAdmin
+class Wysiwyg extends \XLite\Controller\Admin\AAdmin
 {
     public $builder = null;
     public $exportTemplates = array('main.tpl', "common/print_invoice.tpl");

@@ -35,7 +35,7 @@ namespace XLite\Base;
  * @see        ____class_see____
  * @since      3.0.0
  */
-abstract class Singleton extends SuperClass
+abstract class Singleton extends \XLite\Base\SuperClass
 {
     /**
      * Array of instances for all derived classes

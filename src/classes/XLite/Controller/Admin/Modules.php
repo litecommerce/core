@@ -35,7 +35,7 @@ namespace XLite\Controller\Admin;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Modules extends AAdmin
+class Modules extends \XLite\Controller\Admin\AAdmin
 {
     /**
      * Modules list (cache)

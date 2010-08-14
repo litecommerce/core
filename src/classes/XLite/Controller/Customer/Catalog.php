@@ -35,7 +35,7 @@ namespace XLite\Controller\Customer;
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class Catalog extends ACustomer
+abstract class Catalog extends \XLite\Controller\Customer\ACustomer
 {
     /**
      * Determines if we need to return categoty link or not 

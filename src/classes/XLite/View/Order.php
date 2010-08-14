@@ -35,7 +35,7 @@ namespace XLite\View;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Order extends Dialog
+class Order extends \XLite\View\Dialog
 {
     /**
      * Order (cache)

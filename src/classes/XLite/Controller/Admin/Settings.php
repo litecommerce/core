@@ -35,7 +35,7 @@ namespace XLite\Controller\Admin;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Settings extends AAdmin
+class Settings extends \XLite\Controller\Admin\AAdmin
 {
 
     /**

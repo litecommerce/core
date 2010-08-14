@@ -35,7 +35,7 @@ namespace XLite\Controller\Admin;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class ImageFiles extends AAdmin
+class ImageFiles extends \XLite\Controller\Admin\AAdmin
 {
     function getImagesDir()
     {

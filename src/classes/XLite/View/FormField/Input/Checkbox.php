@@ -36,7 +36,7 @@ namespace XLite\View\FormField\Input;
  * @see        ____class_see____
  * @since      3.0.0
  */
-class Checkbox extends AInput
+class Checkbox extends \XLite\View\FormField\Input\AInput
 {
     /**
      * Widget param names 

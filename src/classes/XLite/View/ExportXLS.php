@@ -35,7 +35,7 @@ namespace XLite\View;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class ExportXLS extends AView
+class ExportXLS extends \XLite\View\AView
 {
     /**
      * Return widget default template

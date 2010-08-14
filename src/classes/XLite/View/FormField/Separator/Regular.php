@@ -36,7 +36,7 @@ namespace XLite\View\FormField\Separator;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Regular extends ASeparator
+class Regular extends \XLite\View\FormField\Separator\ASeparator
 {
     /**
      * Return field template

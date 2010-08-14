@@ -35,7 +35,7 @@ namespace XLite\Controller\Admin;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class UpdateInventory extends AAdmin
+class UpdateInventory extends \XLite\Controller\Admin\AAdmin
 {
     public $params = array('target', 'page');
     public $pages = array('pricing' => 'Update pricing');

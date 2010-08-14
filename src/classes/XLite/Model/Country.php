@@ -37,7 +37,7 @@ namespace XLite\Model;
  * @Entity (repositoryClass="XLite\Model\Repo\Country")
  * @Table (name="countries")
  */
-class Country extends AEntity
+class Country extends \XLite\Model\AEntity
 {
 
     /**

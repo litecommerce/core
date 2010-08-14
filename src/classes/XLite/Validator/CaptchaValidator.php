@@ -35,7 +35,7 @@ namespace XLite\Validator;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class CaptchaValidator extends AValidator
+class CaptchaValidator extends \XLite\Validator\AValidator
 {
     public $template = "common/captcha_validator.tpl";
     public $validation_required = array( // array: target => array(action, option_name);

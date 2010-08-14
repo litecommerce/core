@@ -35,7 +35,7 @@ namespace XLite\Controller\Customer;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Main extends ACustomer
+class Main extends \XLite\Controller\Customer\ACustomer
 {
     /**
      * Return current (or default) category object

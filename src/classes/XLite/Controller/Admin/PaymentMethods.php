@@ -35,7 +35,7 @@ namespace XLite\Controller\Admin;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class PaymentMethods extends AAdmin
+class PaymentMethods extends \XLite\Controller\Admin\AAdmin
 {
     protected $configurableMethods = null;
 

@@ -35,7 +35,7 @@ namespace XLite\View;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Invoice extends Dialog
+class Invoice extends \XLite\View\Dialog
 {
     /**
      * Order (cache)

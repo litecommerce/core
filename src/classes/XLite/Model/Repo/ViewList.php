@@ -35,7 +35,7 @@ namespace XLite\Model\Repo;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class ViewList extends ARepo
+class ViewList extends \XLite\Model\Repo\ARepo
 {
     /**
      * Default 'order by' field name

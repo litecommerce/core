@@ -28,7 +28,6 @@
 
 namespace XLite\View\FormField\Input;
 
-
 /**
  * \XLite\View\FormField\Input\Text 
  * 
@@ -36,7 +35,7 @@ namespace XLite\View\FormField\Input;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Text extends AInput
+class Text extends \XLite\View\FormField\Input\AInput
 {
     /**
      * Return field type

@@ -35,7 +35,7 @@ namespace XLite\View\Form\Cart\Item;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Delete extends AItem
+class Delete extends \XLite\View\Form\Cart\Item\AItem
 {
     /**
      * Current form name 

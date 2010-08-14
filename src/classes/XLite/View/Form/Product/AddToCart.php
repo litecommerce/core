@@ -35,7 +35,7 @@ namespace XLite\View\Form\Product;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class AddToCart extends AProduct
+class AddToCart extends \XLite\View\Form\Product\AProduct
 {
     /**
      * Current form name
