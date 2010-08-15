@@ -87,7 +87,7 @@ class Memberships extends \XLite\View\Dialog
      */
     public function getMemberships()
     {
-        $list = \XLite\Core\Database::getRepo('XLite\Model\Membership')->findAllMemberships();
+        $list = \XLite\Core\Database::getRepo('\XLite\Model\Membership')->findAllMemberships();
 
         // TODO - add linked profiles calculataion
 

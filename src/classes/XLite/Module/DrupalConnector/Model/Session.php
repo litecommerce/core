@@ -103,7 +103,7 @@ abstract class Session extends \XLite\Model\Session implements \XLite\Base\IDeco
             isset($language)
             && is_object($language)
             && $language instanceof \stdClass
-            && \XLite\Core\Database::getRepo('XLite\Model\Language')->findOneByCode($language->language)
+            && \XLite\Core\Database::getRepo('\XLite\Model\Language')->findOneByCode($language->language)
         ) {
             $result = $language->language;
         }

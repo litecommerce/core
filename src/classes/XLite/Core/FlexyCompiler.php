@@ -219,7 +219,7 @@ class FlexyCompiler extends \XLite\Base\Singleton
     protected function getPatches($zone, $lang, $tpl)
     {
         if (!isset($this->patches)) {
-            $this->patches = \XLite\Core\Database::getRepo('XLite\Model\TemplatePatch')->findAllPatches();
+            $this->patches = \XLite\Core\Database::getRepo('\XLite\Model\TemplatePatch')->findAllPatches();
         }
 
         $result = array();
@@ -738,7 +738,7 @@ class FlexyCompiler extends \XLite\Base\Singleton
 
         if (
             !isset($module)
-            || \XLite\Core\Database::getRepo('XLite\Model\Module')->isModuleActive($module)
+            || \XLite\Core\Database::getRepo('\XLite\Model\Module')->isModuleActive($module)
         ) {
 
             $class = isset($attrs['class']) ? $this->flexyAttribute($attrs['class'], false) : null;

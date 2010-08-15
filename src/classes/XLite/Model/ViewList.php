@@ -34,7 +34,7 @@ namespace XLite\Model;
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
- * @Entity (repositoryClass="XLite\Model\Repo\ViewList")
+ * @Entity (repositoryClass="\XLite\Model\Repo\ViewList")
  * @Table (name="view_lists", indexes={@index(name="clzw", columns={"class", "list", "zone", "weight"})})
  */
 class ViewList extends \XLite\Model\AEntity

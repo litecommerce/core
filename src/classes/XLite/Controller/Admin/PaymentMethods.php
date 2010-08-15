@@ -70,7 +70,7 @@ class PaymentMethods extends \XLite\Controller\Admin\AAdmin
 
             if ($data['payment_method'] == $default_offline_payment && !$data['enabled']) {
 
-                \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
+                \XLite\Core\Database::getRepo('\XLite\Model\Config')->createOption(
                     array(
                         'category' =>'Payments',
                         'name'     => 'default_offline_payment',
@@ -88,7 +88,7 @@ class PaymentMethods extends \XLite\Controller\Admin\AAdmin
 
     function action_default_payment()
     {
-        \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
+        \XLite\Core\Database::getRepo('\XLite\Model\Config')->createOption(
             array(
                 'category' => 'Payments',
                 'name'     => 'default_offline_payment',
@@ -96,7 +96,7 @@ class PaymentMethods extends \XLite\Controller\Admin\AAdmin
             )
         );
 
-        \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
+        \XLite\Core\Database::getRepo('\XLite\Model\Config')->createOption(
             array(
                 'category' => 'Payments',
                 'name'     => 'default_select_payment',

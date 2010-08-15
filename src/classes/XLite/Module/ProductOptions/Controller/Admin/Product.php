@@ -73,7 +73,7 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
         $data = \XLite\Core\Request::getInstance()->data;
 
         if (is_array($data) && $data) {
-            $options = \XLite\Core\Database::getRepo('XLite\Module\ProductOptions\Model\OptionGroup')
+            $options = \XLite\Core\Database::getRepo('\XLite\Module\ProductOptions\Model\OptionGroup')
                 ->findByIds(array_keys($data));
 
             if ($options) {
@@ -115,7 +115,7 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
     {
         $mark = \XLite\Core\Request::getInstance()->mark;
         if (is_array($mark) && $mark) {
-            $options = \XLite\Core\Database::getRepo('XLite\Module\ProductOptions\Model\OptionGroup')
+            $options = \XLite\Core\Database::getRepo('\XLite\Module\ProductOptions\Model\OptionGroup')
                 ->findByIds($mark);
             if ($options) {
                 foreach ($options as $option) {
@@ -154,7 +154,7 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
             $this->getProduct()->addOptionGroups($group);
 
         } else {
-            $group = \XLite\Core\Database::getRepo('XLite\Module\ProductOptions\Model\OptionGroup')
+            $group = \XLite\Core\Database::getRepo('\XLite\Module\ProductOptions\Model\OptionGroup')
                 ->find(\XLite\Core\Request::getInstance()->groupId);
         }
 
@@ -210,7 +210,7 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
             $options = \XLite\Core\Request::getInstance()->options;
             if ($options && \XLite\Core\Request::getInstance()->groupId) {
                 foreach ($options as $optionId => $data) {
-                    $option = \XLite\Core\Database::getRepo('XLite\Module\ProductOptions\Model\Option')
+                    $option = \XLite\Core\Database::getRepo('\XLite\Module\ProductOptions\Model\Option')
                         ->find($optionId);
 
                     if ($option && !$this->saveOption($option, $data)) {
@@ -264,7 +264,7 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
         $mark = \XLite\Core\Request::getInstance()->mark;
 
         if (is_array($mark) && $mark) {
-            $options = \XLite\Core\Database::getRepo('XLite\Module\ProductOptions\Model\Option')
+            $options = \XLite\Core\Database::getRepo('\XLite\Module\ProductOptions\Model\Option')
                 ->findByIds($mark);
 
             if ($options) {
@@ -310,7 +310,7 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
 
             foreach ($exceptions as $eid => $data) {
                 if ($eid) {
-                    $old = \XLite\Core\Database::getRepo('XLite\Module\ProductOptions\Model\OptionException')
+                    $old = \XLite\Core\Database::getRepo('\XLite\Module\ProductOptions\Model\OptionException')
                         ->findByExceptionId($eid);
                     if (!$old) {
                         continue;
@@ -323,7 +323,7 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
                     \XLite\Core\Database::getEM()->flush();
 
                 } else {
-                    $eid = \XLite\Core\Database::getRepo('XLite\Module\ProductOptions\Model\OptionException')
+                    $eid = \XLite\Core\Database::getRepo('\XLite\Module\ProductOptions\Model\OptionException')
                         ->getNextExceptionId();
                 }
 
@@ -351,7 +351,7 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
     {
         $mark = \XLite\Core\Request::getInstance()->mark;
 
-        $exceptions = \XLite\Core\Database::getRepo('XLite\Module\ProductOptions\Model\OptionException')
+        $exceptions = \XLite\Core\Database::getRepo('\XLite\Module\ProductOptions\Model\OptionException')
             ->findByExceptionIds($mark);
 
         if ($exceptions) {
@@ -453,7 +453,7 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
     {
         foreach ($data as $groupId => $optionId) {
             if ($optionId) {
-                $option = \XLite\Core\Database::getRepo('XLite\Module\ProductOptions\Model\Option')
+                $option = \XLite\Core\Database::getRepo('\XLite\Module\ProductOptions\Model\Option')
                     ->find($optionId);
 
                 if ($option) {

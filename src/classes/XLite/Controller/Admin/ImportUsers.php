@@ -76,7 +76,7 @@ class ImportUsers extends \XLite\Controller\Admin\AAdmin
     function change_layout($layout_name = "user_layout")
     {
         $layout = implode(',', \XLite\Core\Request::getInstance()->$layout_name);
-        \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
+        \XLite\Core\Database::getRepo('\XLite\Model\Config')->createOption(
             array(
                 'category' => 'ImportExport',
                 'name'     => $layout_name,

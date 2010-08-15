@@ -34,7 +34,7 @@ namespace XLite\Model;
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
- * @Entity (repositoryClass="XLite\Model\Repo\Zone")
+ * @Entity (repositoryClass="\XLite\Model\Repo\Zone")
  * @Table (name="zones")
  */
 class ZoneElement extends \XLite\Model\AEntity

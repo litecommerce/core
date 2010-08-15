@@ -142,7 +142,7 @@ class Main extends \XLite\Module\AModule
             \XLite::getInstance()->isAdminZone()
             && \XLite\Core\Config::getInstance()->ProductAdviser->admin_products_also_buy_enabled != 'Y'
         ) {
-            \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
+            \XLite\Core\Database::getRepo('\XLite\Model\Config')->createOption(
                 array(
                     'category' => 'ProductAdviser',
                     'name'     => 'products_also_buy_enabled',
@@ -159,7 +159,7 @@ class Main extends \XLite\Module\AModule
             $this->validateConfig('number_notifications', 1);
             $customer_notifications_enabled = (\XLite\Core\Config::getInstance()->ProductAdviser->customer_notifications_mode == '0') ? 'N' : 'Y';
             /* TODO - rework
-            \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
+            \XLite\Core\Database::getRepo('\XLite\Model\Config')->createOption(
                 array(
                     'category' => 'ProductAdviser',
                     'name'     => 'customer_notifications_enabled',
@@ -195,7 +195,7 @@ class Main extends \XLite\Module\AModule
         }
 
         if ($number_updated) {
-            \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
+            \XLite\Core\Database::getRepo('\XLite\Model\Config')->createOption(
                 array(
                     'category' => 'ProductAdviser',
                     'name'     => $option,

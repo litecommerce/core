@@ -110,7 +110,7 @@ class Order extends \XLite\Model\Order implements \XLite\Base\IDecorator
 
     function getLocationState() 
     {
-        $state = \XLite\Core\Database::getEM()->find('XLite\Model\State', $this->config->Company->location_state);
+        $state = \XLite\Core\Database::getEM()->find('\XLite\Model\State', $this->config->Company->location_state);
         return $state;
     }
     

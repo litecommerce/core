@@ -53,8 +53,8 @@ class StateValidator extends \XLite\Validator\AValidator
         $field = $this->field;
         $countryField = $this->countryField;
         if (isset($_POST[$field]) && isset($_POST[$countryField]) && $_POST[$field] != '') {
-            $state = \XLite\Core\Database::getEM()->find('XLite\Model\State', $_POST[$field]);
-            $country = \XLite\Core\Database::getEM()->find('XLite\Model\Country', $_POST[$countryField]);
+            $state = \XLite\Core\Database::getEM()->find('\XLite\Model\State', $_POST[$field]);
+            $country = \XLite\Core\Database::getEM()->find('\XLite\Model\Country', $_POST[$countryField]);
             return !$state
                 || $state->country_code == ''
                 || ($country && $state->country_code == $country->code);

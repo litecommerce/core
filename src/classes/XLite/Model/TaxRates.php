@@ -478,7 +478,7 @@ array("condition" => "state=District of Columbia", "action" => array(
                     $optionType = 'serialized';
                 }
 
-                \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
+                \XLite\Core\Database::getRepo('\XLite\Model\Config')->createOption(
                     array(
                         'category' => 'Taxes',
                         'name'     => $name,
@@ -499,7 +499,7 @@ array("condition" => "state=District of Columbia", "action" => array(
             $this->set('profile', $profile);
         } else {
             if ($this->config->General->def_calc_shippings_taxes) {
-                $default_country = \XLite\Core\Database::getEM()->find('XLite\Model\Country', $this->config->General->default_country);
+                $default_country = \XLite\Core\Database::getEM()->find('\XLite\Model\Country', $this->config->General->default_country);
                 $this->_conditionValues['country'] = $default_country->code;
                 /* TODO - rework
                 if ($default_country->eu_memeber) {
@@ -535,13 +535,13 @@ array("condition" => "state=District of Columbia", "action" => array(
         }
 
         /* TODO - rework
-        $c = \XLite\Core\Database::getEM()->find('XLite\Model\Country', $this->_conditionValues['country']);
+        $c = \XLite\Core\Database::getEM()->find('\XLite\Model\Country', $this->_conditionValues['country']);
         if ($c->eu_memeber) {
             $this->_conditionValues['country'] .= ",EU country";
         }
         */
 
-        $m = \XLite\Core\Database::getRepo('XLite\Model\Membership')->find($profile->get('membership'));
+        $m = \XLite\Core\Database::getRepo('\XLite\Model\Membership')->find($profile->get('membership'));
         $this->_conditionValues['membership'] = $m ? $m->membership_id : 0;
     }
 
@@ -995,7 +995,7 @@ array("condition" => "state=District of Columbia", "action" => array(
             }
         }
 
-        \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
+        \XLite\Core\Database::getRepo('\XLite\Model\Config')->createOption(
             array(
                 'category' => 'Taxes',
                 'name'     => 'schemas',

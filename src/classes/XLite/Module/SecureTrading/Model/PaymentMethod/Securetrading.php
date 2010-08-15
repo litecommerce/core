@@ -50,11 +50,11 @@ class Securetrading extends \XLite\Model\PaymentMethod\CreditCard
         return $cart->get('total')*100;
     }
     function getBillingState($cart) {
-        $state = \XLite\Core\Database::getEM()->find('XLite\Model\State', $cart->getComplex('profile.billing_state'));
+        $state = \XLite\Core\Database::getEM()->find('\XLite\Model\State', $cart->getComplex('profile.billing_state'));
         return $state ? $state->state : '';
     }
     function getCountry($cart)	{
-        $country = \XLite\Core\Database::getEM()->find('XLite\Model\Country', $cart->getComplex('profile.billing_country'));
+        $country = \XLite\Core\Database::getEM()->find('\XLite\Model\Country', $cart->getComplex('profile.billing_country'));
         return $country ? $country->country : '';
     }
     function getMerchantEmail() {

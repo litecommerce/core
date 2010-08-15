@@ -102,8 +102,8 @@ class CountrySelect extends \XLite\View\FormField
     protected function getCountries()
     {
         return $this->isEnabledOnly()
-            ? \XLite\Core\Database::getRepo('XLite\Model\Country')->findByEnabled(true)
-            : \XLite\Core\Database::getRepo('XLite\Model\Country')->findAll();
+            ? \XLite\Core\Database::getRepo('\XLite\Model\Country')->findByEnabled(true)
+            : \XLite\Core\Database::getRepo('\XLite\Model\Country')->findAll();
     }
 }
 

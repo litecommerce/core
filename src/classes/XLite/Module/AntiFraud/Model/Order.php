@@ -171,7 +171,7 @@ class Order extends \XLite\Model\Order implements \XLite\Base\IDecorator
     		
     		$result['total_trust_score'] = $result['total_trust_score'] * $risk_factor_multiplier;
 
-            $country = \XLite\Core\Database::getEM()->find('XLite\Model\Country', $profile->get('billing_country'));
+            $country = \XLite\Core\Database::getEM()->find('\XLite\Model\Country', $profile->get('billing_country'));
             if ($country->isRiskCountry()) {
                 $result['total_trust_score'] +=  $this->config->AntiFraud->risk_country_multiplier;
             }

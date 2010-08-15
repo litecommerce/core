@@ -59,7 +59,7 @@ class AddLanguage extends \XLite\View\AView
      */
     public function getInactiveLanguages()
     {
-        return \XLite\Core\Database::getRepo('XLite\Model\Language')
+        return \XLite\Core\Database::getRepo('\XLite\Model\Language')
             ->findInactiveLanguages();
     }
 

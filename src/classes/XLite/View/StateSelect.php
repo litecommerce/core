@@ -101,7 +101,7 @@ class StateSelect extends \XLite\View\FormField
      */
     protected function getStates()
     {
-        return \XLite\Core\Database::getRepo('XLite\Model\State')->findAllStates();
+        return \XLite\Core\Database::getRepo('\XLite\Model\State')->findAllStates();
     }
 
     /**
@@ -129,7 +129,7 @@ class StateSelect extends \XLite\View\FormField
     {
         self::$statesDefined = true;
 
-        return \XLite\Core\Database::getRepo('XLite\Model\Country')->findCountriesStates();
+        return \XLite\Core\Database::getRepo('\XLite\Model\Country')->findCountriesStates();
     }
 
     /**

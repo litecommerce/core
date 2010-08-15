@@ -322,7 +322,7 @@ If you are not redirected automatically, <a href="<?php echo $url; ?>">click on 
         $pm->update();
 
         // dublicate "default_shipping_cost" in config
-        \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
+        \XLite\Core\Database::getRepo('\XLite\Model\Config')->createOption(
             array(
                 'category' => 'GoogleCheckout',
                 'name'     => 'default_shipping_cost',

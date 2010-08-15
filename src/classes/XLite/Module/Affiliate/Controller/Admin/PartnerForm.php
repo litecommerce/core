@@ -67,7 +67,7 @@ class PartnerForm extends \XLite\Controller\Admin\AAdmin
     {
         $fields = $this->get('default_fields');
         if (is_array($fields)) {
-            \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
+            \XLite\Core\Database::getRepo('\XLite\Model\Config')->createOption(
                 array(
                     'category' => 'Miscellaneous',
                     'name'     => 'partner_profile',

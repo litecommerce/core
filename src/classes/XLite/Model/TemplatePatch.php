@@ -34,7 +34,7 @@ namespace XLite\Model;
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
- * @Entity (repositoryClass="XLite\Model\Repo\TemplatePatch")
+ * @Entity (repositoryClass="\XLite\Model\Repo\TemplatePatch")
  * @Table (name="template_patches", indexes={@index(name="zlt", columns={"zone", "lang", "tpl"})})
  */
 class TemplatePatch extends \XLite\Model\AEntity

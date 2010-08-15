@@ -113,7 +113,7 @@ class WaitingIP extends \XLite\Model\AModel
             $list[] = array('ip' => $ip, 'comment' => '');
         }
 
-        \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
+        \XLite\Core\Database::getRepo('\XLite\Model\Config')->createOption(
             array(
                 'category' => 'SecurityIP',
                 'name'     => 'allow_admin_ip',

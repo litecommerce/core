@@ -34,7 +34,7 @@ namespace XLite\Model;
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
- * @Entity (repositoryClass="XLite\Model\Repo\Zone")
+ * @Entity (repositoryClass="\XLite\Model\Repo\Zone")
  * @Table (name="zones")
  */
 class Zone extends \XLite\Model\AEntity
@@ -110,7 +110,7 @@ class Zone extends \XLite\Model\AEntity
      */
     public function getCountries()
     {
-        return \XLite\Core\Database::getRepo('XLite\Model\Zone')
+        return \XLite\Core\Database::getRepo('\XLite\Model\Zone')
             ->getElements($this->getZoneId(), self::ZONE_ELEMENT_COUNTRY);
     }
 
@@ -124,7 +124,7 @@ class Zone extends \XLite\Model\AEntity
      */
     public function getStates()
     {
-        return \XLite\Core\Database::getRepo('XLite\Model\Zone')
+        return \XLite\Core\Database::getRepo('\XLite\Model\Zone')
             ->getElements($this->getZoneId(), self::ZONE_ELEMENT_STATE);
     }
 
@@ -138,7 +138,7 @@ class Zone extends \XLite\Model\AEntity
      */
     public function getCities()
     {
-        return \XLite\Core\Database::getRepo('XLite\Model\Zone')
+        return \XLite\Core\Database::getRepo('\XLite\Model\Zone')
             ->getElements($this->getZoneId(), self::ZONE_ELEMENT_TOWN);
     }
 
@@ -152,7 +152,7 @@ class Zone extends \XLite\Model\AEntity
      */
     public function getZipCodes()
     {
-        return \XLite\Core\Database::getRepo('XLite\Model\Zone')
+        return \XLite\Core\Database::getRepo('\XLite\Model\Zone')
             ->getElements($this->getZoneId(), self::ZONE_ELEMENT_ZIPCODE);
     }
 
@@ -166,7 +166,7 @@ class Zone extends \XLite\Model\AEntity
      */
     public function getAddresses()
     {
-        return \XLite\Core\Database::getRepo('XLite\Model\Zone')
+        return \XLite\Core\Database::getRepo('\XLite\Model\Zone')
             ->getElements($this->getZoneId(), self::ZONE_ELEMENT_ADDRESS);
     }
 
@@ -180,7 +180,7 @@ class Zone extends \XLite\Model\AEntity
      */
     public function getShippingZones()
     {
-        return \XLite\Core\Database::getRepo('XLite\Model\Zone')
+        return \XLite\Core\Database::getRepo('\XLite\Model\Zone')
             ->getZones(self::ZONE_SHIPPING);
     }
 
@@ -194,7 +194,7 @@ class Zone extends \XLite\Model\AEntity
      */
     public function getTaxZones()
     {
-        return \XLite\Core\Database::getRepo('XLite\Model\Zone')
+        return \XLite\Core\Database::getRepo('\XLite\Model\Zone')
             ->getZones(self::ZONE_TAX);
     }
 

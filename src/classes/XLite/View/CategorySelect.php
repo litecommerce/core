@@ -111,13 +111,13 @@ class CategorySelect extends \XLite\View\AView
      */
     public function getCategories()
     {
-        $this->categories = \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategories();
+        $this->categories = \XLite\Core\Database::getRepo('\XLite\Model\Category')->getCategories();
 
         $categoryId = $this->getParam(self::PARAM_CURRENT_CATEGORY_ID);
 
         if (!empty($this->categories) && $categoryId > 0 && $this->getParam(self::PARAM_IGNORE_CURRENT_PATH)) {
 
-            $currentCategory = \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategoryFromHash($categoryId);
+            $currentCategory = \XLite\Core\Database::getRepo('\XLite\Model\Category')->getCategoryFromHash($categoryId);
 
             $categories = array();
 

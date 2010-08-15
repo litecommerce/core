@@ -34,7 +34,7 @@ namespace XLite\Module\ProductOptions\Model;
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
- * @Entity (repositoryClass="XLite\Module\ProductOptions\Model\Repo\OptionException")
+ * @Entity (repositoryClass="\XLite\Module\ProductOptions\Model\Repo\OptionException")
  * @Table (name="option_exceptions")
  */
 class OptionException extends \XLite\Model\AEntity

@@ -86,6 +86,6 @@ class AddNewLanguage extends \XLite\View\Button\Regular
     protected function isVisible()
     {
         return parent::isVisible()
-            && \XLite\Core\Database::getRepo('XLite\Model\Language')->findInactiveLanguages();
+            && \XLite\Core\Database::getRepo('\XLite\Model\Language')->findInactiveLanguages();
     }
 }

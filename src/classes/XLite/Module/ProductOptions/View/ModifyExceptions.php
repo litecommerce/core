@@ -70,7 +70,7 @@ class ModifyExceptions extends \XLite\View\AView
     protected function isVisible()
     {
         return parent::isVisible()
-            && \XLite\Core\Database::getRepo('XLite\Model\Product')
+            && \XLite\Core\Database::getRepo('\XLite\Model\Product')
                 ->find($this->getProductId())
                 ->getOptionGroups()->count();
     }
@@ -98,7 +98,7 @@ class ModifyExceptions extends \XLite\View\AView
      */
     public function getGroups()
     {
-        $list = \XLite\Core\Database::getRepo('XLite\Model\Product')
+        $list = \XLite\Core\Database::getRepo('\XLite\Model\Product')
             ->find($this->getProductId())
             ->getOptionGroups();
 

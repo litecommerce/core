@@ -304,7 +304,7 @@ class Database extends \XLite\Base\Singleton
         );
         $dsnList = array(
             'driver'       => 'pdo_mysql',
-            'wrapperClass' => 'XLite\Core\Connection',
+            'wrapperClass' => '\XLite\Core\Connection',
         );
         $dsnString = array();
 
@@ -407,7 +407,7 @@ class Database extends \XLite\Base\Singleton
                 $classMetadata->setCustomRepositoryClass($class);
 
             } else {
-                $classMetadata->setCustomRepositoryClass('XLite\Model\Repo\Base\Common');
+                $classMetadata->setCustomRepositoryClass('\XLite\Model\Repo\Base\Common');
             }
         }
     }

@@ -239,7 +239,7 @@ class Category extends \XLite\Model\Base\I18n
      */
     public function getSubcategories()
     {
-        return \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategoriesPlainList($this->getCategoryId());
+        return \XLite\Core\Database::getRepo('\XLite\Model\Category')->getCategoriesPlainList($this->getCategoryId());
     }
 
     /**
@@ -265,7 +265,7 @@ class Category extends \XLite\Model\Base\I18n
      */
     public function hasSubcategories()
     {
-        $data = \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategoryFromHash($this->getCategoryId());
+        $data = \XLite\Core\Database::getRepo('\XLite\Model\Category')->getCategoryFromHash($this->getCategoryId());
 
         return (isset($data) ? $data->getSubCategoriesCount() > 0 : false);
     }
@@ -280,7 +280,7 @@ class Category extends \XLite\Model\Base\I18n
      */
     public function getStringPath()
     {
-        $path = \XLite\Core\Database::getRepo('XLite\Model\Category')
+        $path = \XLite\Core\Database::getRepo('\XLite\Model\Category')
             ->getCategoryPath($this->getCategoryId());
 
         $location = array();
@@ -302,7 +302,7 @@ class Category extends \XLite\Model\Base\I18n
      */
     public function isEmpty()
     {
-        $data = \XLite\Core\Database::getRepo('XLite\Model\Category')
+        $data = \XLite\Core\Database::getRepo('\XLite\Model\Category')
             ->getCategoryFromHash($this->getCategoryId());
 
         return !isset($data) || (0 == $data->getProductsCount() && 0 == $data->getSubCategoriesCount());
@@ -331,7 +331,7 @@ class Category extends \XLite\Model\Base\I18n
      */
     public function getProductsNumber()
     {
-        $data = \XLite\Core\Database::getRepo('XLite\Model\Category')
+        $data = \XLite\Core\Database::getRepo('\XLite\Model\Category')
             ->getCategoryFromHash($this->getCategoryId());
 
         return isset($data) ? $data->getProductsCount() : 0;
@@ -354,7 +354,7 @@ class Category extends \XLite\Model\Base\I18n
             $depth = $this->getDepth();
 
         } else {
-            $data = \XLite\Core\Database::getRepo('XLite\Model\Category')
+            $data = \XLite\Core\Database::getRepo('\XLite\Model\Category')
                 ->getCategoryFromHash($this->getCategoryId());
             $depth = isset($data) ? $data->getDepth() : 1;
         }

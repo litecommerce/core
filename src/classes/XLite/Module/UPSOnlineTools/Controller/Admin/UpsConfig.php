@@ -106,7 +106,7 @@ class UpsConfig extends \XLite\Controller\Admin\AAdmin
                     $optionType = 'serialized';
                 }
 
-                \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
+                \XLite\Core\Database::getRepo('\XLite\Model\Config')->createOption(
                     array(
                         'category' => 'UPSOnlineTools',
                         'name'     => $name,
@@ -177,7 +177,7 @@ class UpsConfig extends \XLite\Controller\Admin\AAdmin
         // Get company state
         $state_id = $this->config->Company->location_state;
         if ($state_id != -1) {
-            $state = \XLite\Core\Database::getEM()->find('XLite\Model\State', $state_id);
+            $state = \XLite\Core\Database::getEM()->find('\XLite\Model\State', $state_id);
             $originState = $state ? $state->code : '';
             unset($state);
 
@@ -188,7 +188,7 @@ class UpsConfig extends \XLite\Controller\Admin\AAdmin
         // Get destination state
         $state_id = \XLite\Core\Request::getInstance()->destination_state;
         if ($state_id != -1) {
-            $state = \XLite\Core\Database::getEM()->find('XLite\Model\State', $state_id);
+            $state = \XLite\Core\Database::getEM()->find('\XLite\Model\State', $state_id);
             $destinationState = $state ? $state->code : '';
             unset($state);
 

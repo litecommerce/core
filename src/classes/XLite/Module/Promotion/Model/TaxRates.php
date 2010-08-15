@@ -74,7 +74,7 @@ class TaxRates extends \XLite\Model\TaxRates implements \XLite\Base\IDecorator
                 $schemas[$name]['discounts_after_taxes'] = 'N';
             }
 
-            \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
+            \XLite\Core\Database::getRepo('\XLite\Model\Config')->createOption(
                 array(
                     'category' => 'Taxes',
                     'name'     => 'schemas',

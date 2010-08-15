@@ -34,7 +34,7 @@ namespace XLite\Model;
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
- * @Entity (repositoryClass="XLite\Model\Repo\Country")
+ * @Entity (repositoryClass="\XLite\Model\Repo\Country")
  * @Table (name="countries")
  */
 class Country extends \XLite\Model\AEntity

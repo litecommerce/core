@@ -55,7 +55,7 @@ class ExtraFields extends \XLite\Controller\Admin\AAdmin
     
     function getCategories() 
     {
-        return \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategories(!is_null($categoryId) ? $categoryId : $this->getCategoryId());
+        return \XLite\Core\Database::getRepo('\XLite\Model\Category')->getCategories(!is_null($categoryId) ? $categoryId : $this->getCategoryId());
     }
 
     function getExtraFields()

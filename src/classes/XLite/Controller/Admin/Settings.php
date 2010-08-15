@@ -87,7 +87,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
         foreach ($this->getCaptchaPages() as $idx => $module) {
             if (
                 empty($module)
-                || \XLite\Core\Database::getRepo('XLite\Core\Module')->isModuleActive($module)
+                || \XLite\Core\Database::getRepo('\XLite\Core\Module')->isModuleActive($module)
             ) {
                 $result[$idx] = $module;
             }
@@ -158,7 +158,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      */
     public function getOptions()
     {
-        return \XLite\Core\Database::getRepo('XLite\Model\Config')
+        return \XLite\Core\Database::getRepo('\XLite\Model\Config')
             ->findByCategoryAndVisible($this->page);
     }
     
@@ -756,7 +756,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
         if (!empty($optionsToUpdate)) {
 
             foreach ($optionsToUpdate as $option) {
-                \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
+                \XLite\Core\Database::getRepo('\XLite\Model\Config')->createOption(
                     array(
                         'category' => $option->category,
                         'name'     => $option->name,
@@ -859,7 +859,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
     {
         if ($fromDB) {
 
-            $ipsListOption = \XLite\Core\Database::getRepo('XLite\Model\Config')->findOneBy(array('category' => 'SecurityIP', 'name' => 'allow_admin_ip'));
+            $ipsListOption = \XLite\Core\Database::getRepo('\XLite\Model\Config')->findOneBy(array('category' => 'SecurityIP', 'name' => 'allow_admin_ip'));
 
              if (!is_null($ipsListOption)) {
                  $ipsList = unserialize($ipsListOption->value);
@@ -904,7 +904,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
 
         if (!$ipIsAlreadyListed) {
             $ipsList[] = array('ip' => $ip, 'comment' => $comment);
-            \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
+            \XLite\Core\Database::getRepo('\XLite\Model\Config')->createOption(
                 array(
                     'category' => 'SecurityIP',
                     'name'     => 'allow_admin_ip',
@@ -948,7 +948,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
                 $newList[] = array('ip' => $adminIp, 'comment' => 'Default admin IP');
             }
 
-            \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
+            \XLite\Core\Database::getRepo('\XLite\Model\Config')->createOption(
                 array(
                     'category' => 'SecurityIP',
                     'name'     => 'allow_admin_ip',
@@ -985,7 +985,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
             }
 
             if ($needUpdate) {
-                \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
+                \XLite\Core\Database::getRepo('\XLite\Model\Config')->createOption(
                     array(
                         'category' => 'SecurityIP',
                         'name'     => 'allow_admin_ip',

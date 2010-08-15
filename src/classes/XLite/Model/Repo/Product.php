@@ -155,7 +155,7 @@ class Product extends \XLite\Model\Repo\Base\I18n
             $queryBuilder
                 ->leftJoin('cp.category', 'c');
 
-            \XLite\Core\Database::getRepo('XLite\Model\Category')->addSubTreeCondition($queryBuilder, $value);
+            \XLite\Core\Database::getRepo('\XLite\Model\Category')->addSubTreeCondition($queryBuilder, $value);
         }
     }
 
@@ -294,7 +294,7 @@ class Product extends \XLite\Model\Repo\Base\I18n
      * 
      * @param string $url Clean URL
      *  
-     * @return XLite_Model_Product
+     * @return \XLite_Model_Product
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

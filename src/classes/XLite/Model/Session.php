@@ -109,7 +109,7 @@ abstract class Session extends \XLite\Base
     public function getLanguage()
     {
         if (is_null($this->language)) {
-            $this->language = \XLite\Core\Database::getRepo('XLite\Model\Language')
+            $this->language = \XLite\Core\Database::getRepo('\XLite\Model\Language')
                 ->findOneByCode($this->getCurrentLanguage());
         }
 
@@ -194,7 +194,7 @@ abstract class Session extends \XLite\Base
         $idx = 999999;
         $found = false;
         $first = false;
-        foreach (\XLite\Core\Database::getRepo('XLite\Model\Language')->findActiveLanguages() as $lng) {
+        foreach (\XLite\Core\Database::getRepo('\XLite\Model\Language')->findActiveLanguages() as $lng) {
             if (!$first) {
                 $first = $lng->code;
             }
@@ -260,7 +260,7 @@ abstract class Session extends \XLite\Base
      */
     public function get($name)
     {
-        $this->doDie('XLite\Model\Session::get(): Trying to call the abstract method');
+        $this->doDie('\XLite\Model\Session::get(): Trying to call the abstract method');
     }
 
     /**
@@ -276,7 +276,7 @@ abstract class Session extends \XLite\Base
      */
     public function set($name, $value)
     {
-        $this->doDie('XLite\Model\Session::set(): Trying to call the abstract method');
+        $this->doDie('\XLite\Model\Session::set(): Trying to call the abstract method');
     }
 
     /**

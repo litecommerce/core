@@ -67,7 +67,7 @@ class ModifyProductOptions extends \XLite\View\AView
         $this->widgetParams += array(
             self::PARAM_PRODUCT => new \XLite\Model\WidgetParam\Object(
                 'Product',
-                \XLite\Core\Database::getRepo('XLite\Model\Product')->find(
+                \XLite\Core\Database::getRepo('\XLite\Model\Product')->find(
                     \XLite\Core\Request::getInstance()->product_id
                 ),
                 false,

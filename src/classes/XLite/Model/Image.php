@@ -905,7 +905,7 @@ class Image extends \XLite\Model\AModel
             $this->config->Images->defaultSources[$key] = $source;
         }
 
-        \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
+        \XLite\Core\Database::getRepo('\XLite\Model\Config')->createOption(
             array(
                 'category' => 'Images',
                 'name'     => 'defaultSources',

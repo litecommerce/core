@@ -152,7 +152,7 @@ class GPG extends \XLite\Base
 
         if ($cmd_file) {
             $valid_names[$key] = $cmd_file;
-            \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
+            \XLite\Core\Database::getRepo('\XLite\Model\Config')->createOption(
                 array(
                     'category' => 'AdvancedSecurity',
                     'name'     => 'executable_cache',

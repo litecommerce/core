@@ -128,7 +128,7 @@ class Shipping extends \XLite\Model\AModel
     {
         if (!($zone = $order->getComplex('profile.shippingState.shipping_zone'))) {
             if (!($zone = $order->getComplex('profile.shippingCountry.shipping_zone'))) {
-                $defaultCountry = \XLite\Core\Database::getEM()->find('XLite\Model\Country', $this->config->General->default_country);
+                $defaultCountry = \XLite\Core\Database::getEM()->find('\XLite\Model\Country', $this->config->General->default_country);
                 if (!($zone = $defaultCountry->shipping_zone)) {
                     $zone = 0;
                 }
@@ -216,7 +216,7 @@ class Shipping extends \XLite\Model\AModel
             !isset(self::$registeredShippingModules[$name])
             || !(self::$registeredShippingModules[$name] instanceof self)
         ) {
-            $class = 'XLite\\' . $class;
+            $class = '\XLite\\' . $class;
             if (\XLite\Core\Operator::isClassExists($class)) {
                 self::$registeredShippingModules[$name] = new $class();
                 self::$registeredShippingModules[$name]->set('class', $name);

@@ -67,7 +67,7 @@ class Modules extends \XLite\Controller\Admin\AAdmin
      */
     public function handleRequest()
     {
-        \XLite\Core\Database::getRepo('XLite\Model\Module')->checkModules();
+        \XLite\Core\Database::getRepo('\XLite\Model\Module')->checkModules();
 
         parent::handleRequest();
     }
@@ -86,7 +86,7 @@ class Modules extends \XLite\Controller\Admin\AAdmin
     {
         if (is_null($this->modules) || $type !== $this->currentModuleType) {
             $this->currentModuleType = $type;
-            $this->modules = \XLite\Core\Database::getRepo('XLite\Model\Module')->findByType($type);
+            $this->modules = \XLite\Core\Database::getRepo('\XLite\Model\Module')->findByType($type);
         }
 
         return $this->modules;
@@ -112,7 +112,7 @@ class Modules extends \XLite\Controller\Admin\AAdmin
 
         $this->set('returnUrl', $this->buildUrl('modules'));
 
-        foreach (\XLite\Core\Database::getRepo('XLite\Model\Module')->findByType($moduleType) as $module) {
+        foreach (\XLite\Core\Database::getRepo('\XLite\Model\Module')->findByType($moduleType) as $module) {
             $module->setEnabled(in_array($module->getModuleId(), $activeModules));
             $module->disableDepended();
             \XLite\Core\Database::getEM()->persist($module);
@@ -132,7 +132,7 @@ class Modules extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionUninstall()
     {
-        $module = \XLite\Core\Database::getRepo('XLite\Model\Module')->find(
+        $module = \XLite\Core\Database::getRepo('\XLite\Model\Module')->find(
             \XLite\Core\Request::getInstance()->module_id
         );
 

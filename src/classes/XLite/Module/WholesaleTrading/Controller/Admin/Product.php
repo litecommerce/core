@@ -193,6 +193,6 @@ class Product extends \XLite\Controller\Admin\Product implements \XLite\Base\IDe
      */
     public function getMemberships()
     {
-        return \XLite\Core\Database::getRepo('XLite\Model\Membership')->findActiveMemberships();
+        return \XLite\Core\Database::getRepo('\XLite\Model\Membership')->findActiveMemberships();
     }
 }

@@ -163,7 +163,7 @@ class GiftCertificate extends \XLite\Model\AModel
     public function getRecipientState()
     {
         if (is_null($this->recipientState)) {
-            $this->recipientState = \XLite\Core\Database::getEM()->find('XLite\Model\State', $this->get('recipient_state'));
+            $this->recipientState = \XLite\Core\Database::getEM()->find('\XLite\Model\State', $this->get('recipient_state'));
         }
 
         return $this->recipientState;
@@ -180,7 +180,7 @@ class GiftCertificate extends \XLite\Model\AModel
     public function getRecipientCountry()
     {
         if (is_null($this->recipientCountry)) {
-            $this->recipientCountry = \XLite\Core\Database::getEM()->find('XLite\Model\Country', $this->get('recipient_country'));
+            $this->recipientCountry = \XLite\Core\Database::getEM()->find('\XLite\Model\Country', $this->get('recipient_country'));
         }
 
         return $this->recipientCountry;

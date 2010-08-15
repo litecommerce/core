@@ -259,7 +259,7 @@ class Gettext extends \XLite\Core\TranslationDriver\ATranslationDriver
      */
     protected function createIndexFile($path, $code)
     {
-        $list = \XLite\Core\Database::getRepo('XLite\Model\LanguageLabel')->findLabelsByCode($code);
+        $list = \XLite\Core\Database::getRepo('\XLite\Model\LanguageLabel')->findLabelsByCode($code);
 
         // .mo-file format source: http://www.gnu.org/software/gettext/manual/gettext.html#MO-Files
         $fp = @fopen($path, 'wb');
@@ -322,7 +322,7 @@ class Gettext extends \XLite\Core\TranslationDriver\ATranslationDriver
      */
     protected function createIndexFileBin($path, $code)
     {
-        $list = \XLite\Core\Database::getRepo('XLite\Model\LanguageLabel')->findLabelsByCode($code);
+        $list = \XLite\Core\Database::getRepo('\XLite\Model\LanguageLabel')->findLabelsByCode($code);
 
         $poPath = LC_TMP_DIR . 'translate.' . $code . '.po';
         $fp = @fopen($poPath, 'wb');

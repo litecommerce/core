@@ -55,7 +55,7 @@ class CcCert extends \XLite\Controller\Admin\AAdmin
 
     function saveParam($name, $value)
     {
-        \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
+        \XLite\Core\Database::getRepo('\XLite\Model\Config')->createOption(
             array(
                 'category' => $this->get('cc_processor'),
                 'name'     => $name,

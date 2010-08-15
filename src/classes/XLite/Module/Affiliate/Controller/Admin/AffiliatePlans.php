@@ -41,7 +41,7 @@ class AffiliatePlans extends \XLite\Controller\Admin\AAdmin
     {
         $ap = $this->get('affiliatePlan');
         if ($ap->get('plan_id') == $this->config->Affiliate->default_plan) {
-            \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
+            \XLite\Core\Database::getRepo('\XLite\Model\Config')->createOption(
                 array(
                     'category' => 'Affiliate',
                     'name'     => 'default_plan',
@@ -57,7 +57,7 @@ class AffiliatePlans extends \XLite\Controller\Admin\AAdmin
         $ap = $this->get('affiliatePlan');
         $ap->update();
         if ($ap->get('plan_id') == $this->config->Affiliate->default_plan && !$ap->get('enabled')) {
-            \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
+            \XLite\Core\Database::getRepo('\XLite\Model\Config')->createOption(
                 array(
                     'category' => 'Affiliate',
                     'name'     => 'default_plan',

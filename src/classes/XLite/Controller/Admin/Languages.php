@@ -82,7 +82,7 @@ class Languages extends \XLite\Controller\Admin\AAdmin
     protected function doActionActive()
     {
         $id = intval(\XLite\Core\Request::getInstance()->lng_id);
-        $language = \XLite\Core\Database::getRepo('XLite\Model\Language')->find($id);
+        $language = \XLite\Core\Database::getRepo('\XLite\Model\Language')->find($id);
 
         if (!$language) {
 
@@ -121,7 +121,7 @@ class Languages extends \XLite\Controller\Admin\AAdmin
     protected function doActionDelete()
     {
         $id = intval(\XLite\Core\Request::getInstance()->lng_id);
-        $language = \XLite\Core\Database::getRepo('XLite\Model\Language')->find($id);
+        $language = \XLite\Core\Database::getRepo('\XLite\Model\Language')->find($id);
 
         if (!$language) {
 
@@ -129,7 +129,7 @@ class Languages extends \XLite\Controller\Admin\AAdmin
                 'The language you want to delete has not been found'
             );
 
-        } elseif ($language->code == \XLite\Core\Database::getRepo('XLite\Model\Language')->getDefaultLanguage()->code) {
+        } elseif ($language->code == \XLite\Core\Database::getRepo('\XLite\Model\Language')->getDefaultLanguage()->code) {
 
             \XLite\Core\TopMessage::addError(
                 'The language you want to delete is the default application language and cannot be deleted'
@@ -166,7 +166,7 @@ class Languages extends \XLite\Controller\Admin\AAdmin
     protected function doActionSwitch()
     {
         $id = intval(\XLite\Core\Request::getInstance()->lng_id);
-        $language = \XLite\Core\Database::getRepo('XLite\Model\Language')->find($id);
+        $language = \XLite\Core\Database::getRepo('\XLite\Model\Language')->find($id);
 
 
         if (!$language) {
@@ -226,7 +226,7 @@ class Languages extends \XLite\Controller\Admin\AAdmin
         if (is_array($current) && $current) {
             $this->saveLabels(
                 $current,
-                \XLite\Core\Database::getRepo('XLite\Model\Language')->getDefaultLanguage()->code
+                \XLite\Core\Database::getRepo('\XLite\Model\Language')->getDefaultLanguage()->code
             );
         }
         unset($current);
@@ -245,7 +245,7 @@ class Languages extends \XLite\Controller\Admin\AAdmin
                 $translateFail = true;
 
             } elseif (
-                \XLite\Core\Database::getRepo('XLite\Model\Language')->getDefaultLanguage()->code == $language
+                \XLite\Core\Database::getRepo('\XLite\Model\Language')->getDefaultLanguage()->code == $language
             ) {
 
                 \XLite\Core\TopMessage::addWarning(
@@ -253,7 +253,7 @@ class Languages extends \XLite\Controller\Admin\AAdmin
                 );
                 $translateFail = true;
 
-            } elseif (!\XLite\Core\Database::getRepo('XLite\Model\Language')->findOneByCode($language)) {
+            } elseif (!\XLite\Core\Database::getRepo('\XLite\Model\Language')->findOneByCode($language)) {
 
                 \XLite\Core\TopMessage::addWarning(
                     'Text labels have not been updated successfully: the translation language has not been found'
@@ -287,7 +287,7 @@ class Languages extends \XLite\Controller\Admin\AAdmin
     {
         $ids = \XLite\Core\Request::getInstance()->mark;
         if ($ids && is_array($ids)) {
-            $labels = \XLite\Core\Database::getRepo('XLite\Model\LanguageLabel')->findByIds($ids);
+            $labels = \XLite\Core\Database::getRepo('\XLite\Model\LanguageLabel')->findByIds($ids);
             foreach ($labels as $label) {
                 \XLite\Core\Database::getEM()->remove($label);
             }
@@ -323,7 +323,7 @@ class Languages extends \XLite\Controller\Admin\AAdmin
     {
         $id = \XLite\Core\Request::getInstance()->label_id;
         if ($id) {
-            $label = \XLite\Core\Database::getRepo('XLite\Model\LanguageLabel')->find($id);
+            $label = \XLite\Core\Database::getRepo('\XLite\Model\LanguageLabel')->find($id);
             if ($label) {
                 \XLite\Core\Database::getEM()->remove($label);
                 \XLite\Core\Database::getEM()->flush();
@@ -353,7 +353,7 @@ class Languages extends \XLite\Controller\Admin\AAdmin
     {
         $name = \XLite\Core\Request::getInstance()->name;
         $label = \XLite\Core\Request::getInstance()->label;
-        $codeDefault = \XLite\Core\Database::getRepo('XLite\Model\Language')->getDefaultLanguage()->code;
+        $codeDefault = \XLite\Core\Database::getRepo('\XLite\Model\Language')->getDefaultLanguage()->code;
         $codeInterface = \XLite\Core\Config::getInstance()->General->defaultLanguage->code;
 
         if (!$name) {
@@ -362,7 +362,7 @@ class Languages extends \XLite\Controller\Admin\AAdmin
                 'The text label has not been added, because its name has not been specified'
             );
 
-        } elseif (\XLite\Core\Database::getRepo('XLite\Model\LanguageLabel')->findOneByName($name)) {
+        } elseif (\XLite\Core\Database::getRepo('\XLite\Model\LanguageLabel')->findOneByName($name)) {
 
             \XLite\Core\TopMessage::addError('The text label has not been added, because such a text label already exists');
 
@@ -412,9 +412,9 @@ class Languages extends \XLite\Controller\Admin\AAdmin
     {
         $label = \XLite\Core\Request::getInstance()->label;
         $labelId = intval(\XLite\Core\Request::getInstance()->label_id);
-        $codeDefault = \XLite\Core\Database::getRepo('XLite\Model\Language')->getDefaultLanguage()->code;
+        $codeDefault = \XLite\Core\Database::getRepo('\XLite\Model\Language')->getDefaultLanguage()->code;
         $codeInterface = \XLite\Core\Config::getInstance()->General->defaultLanguage->code;
-        $lbl = \XLite\Core\Database::getRepo('XLite\Model\LanguageLabel')->find($labelId);
+        $lbl = \XLite\Core\Database::getRepo('\XLite\Model\LanguageLabel')->find($labelId);
 
         if (!$lbl) {
 
@@ -463,10 +463,10 @@ class Languages extends \XLite\Controller\Admin\AAdmin
     protected function doActionUpdateLanguage()
     {
         $lngId = intval(\XLite\Core\Request::getInstance()->lng_id);
-        $lng = \XLite\Core\Database::getRepo('XLite\Model\Language')->find($lngId);
+        $lng = \XLite\Core\Database::getRepo('\XLite\Model\Language')->find($lngId);
         $names = \XLite\Core\Request::getInstance()->name;
 
-        $codeDefault = \XLite\Core\Database::getRepo('XLite\Model\Language')->getDefaultLanguage()->code;
+        $codeDefault = \XLite\Core\Database::getRepo('\XLite\Model\Language')->getDefaultLanguage()->code;
 
         if (!$lng) {
 
@@ -497,7 +497,7 @@ class Languages extends \XLite\Controller\Admin\AAdmin
                 && \XLite\Core\Request::getInstance()->default
                 && \XLite\Core\Config::getInstance()->General->defaultLanguage->code != $lng->code
             ) {
-                \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
+                \XLite\Core\Database::getRepo('\XLite\Model\Config')->createOption(
                     array(
                         'name'     => 'default_language',
                         'category' => 'General',
@@ -523,7 +523,7 @@ class Languages extends \XLite\Controller\Admin\AAdmin
      */
     protected function saveLabels(array $values, $code)
     {
-        $labels = \XLite\Core\Database::getRepo('XLite\Model\LanguageLabel')->findByIds(
+        $labels = \XLite\Core\Database::getRepo('\XLite\Model\LanguageLabel')->findByIds(
             array_keys($values)
         );
 

@@ -692,7 +692,7 @@ abstract class AView extends \XLite\Core\Handler
     public function __get($name)
     {
         $value = 'mm' == $name
-            ? \XLite\Core\Database::getRepo('XLite\Model\Module')
+            ? \XLite\Core\Database::getRepo('\XLite\Model\Module')
             : parent::__get($name);
 
         return isset($value)
@@ -1073,7 +1073,7 @@ abstract class AView extends \XLite\Core\Handler
             ? \XLite\Model\ViewList::ADMIN_INTERFACE
             : \XLite\Model\ViewList::CUSTOMER_INTERFACE;
 
-        $childs = \XLite\Core\Database::getRepo('XLite\Model\ViewList')
+        $childs = \XLite\Core\Database::getRepo('\XLite\Model\ViewList')
             ->findClassList($class, $list, $zone);
 
         $widgets = array();

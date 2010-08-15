@@ -512,7 +512,7 @@ class Converter extends \XLite\Base\Singleton
     /**
      * Return class name without backslashes
      * 
-     * @param XLite_Base $obj object to get class name from
+     * @param \XLite_Base $obj object to get class name from
      *  
      * @return string
      * @access public

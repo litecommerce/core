@@ -120,7 +120,7 @@ class TopCategories extends \XLite\View\SideBarBox
             $categoryId = $category ? $category->getCategoryId() : 0;
         }
 
-        return \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategoriesPlainList($categoryId);
+        return \XLite\Core\Database::getRepo('\XLite\Model\Category')->getCategoriesPlainList($categoryId);
     }
 
     /**
@@ -163,7 +163,7 @@ class TopCategories extends \XLite\View\SideBarBox
 
             $this->pathIds = array();
 
-            $categoriesPath = \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategoryPath(\XLite\Core\Request::getInstance()->category_id);
+            $categoriesPath = \XLite\Core\Database::getRepo('\XLite\Model\Category')->getCategoryPath(\XLite\Core\Request::getInstance()->category_id);
 
             if (is_array($categoriesPath)) {
                 foreach ($categoriesPath as $c) {

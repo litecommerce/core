@@ -84,7 +84,7 @@ class ConfirmDeletion extends \XLite\View\AView
      */
     public function getConfirmLanguage()
     {
-        return \XLite\Core\Database::getRepo('XLite\Model\Language')
+        return \XLite\Core\Database::getRepo('\XLite\Model\Language')
             ->find($this->getParam(self::PARAM_LNG_ID));
     }
 

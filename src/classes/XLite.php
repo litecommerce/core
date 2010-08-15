@@ -316,7 +316,7 @@ class XLite extends \XLite\Base
      */
     public function initModules()
     {
-        \XLite\Core\Database::getRepo('XLite\Model\Module')->initialize();
+        \XLite\Core\Database::getRepo('\XLite\Model\Module')->initialize();
     }
 
     /**

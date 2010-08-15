@@ -782,7 +782,7 @@ class Auth extends \XLite\Base
         ) {
             $admin_ip = serialize(array(array('ip' => $admin_ip, 'comment' => 'Default admin IP')));
 
-            \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
+            \XLite\Core\Database::getRepo('\XLite\Model\Config')->createOption(
                 array(
                     'category' => 'SecurityIP',
                     'name'     => 'allow_admin_ip',

@@ -59,7 +59,7 @@ class AddLabel extends \XLite\View\AView
      */
     public function getDefaultLanguage()
     {
-        return \XLite\Core\Database::getRepo('XLite\Model\Language')->getDefaultLanguage();
+        return \XLite\Core\Database::getRepo('\XLite\Model\Language')->getDefaultLanguage();
     }
 
     /**
@@ -87,7 +87,7 @@ class AddLabel extends \XLite\View\AView
      */
     public function getAddedLanguages()
     {
-        return \XLite\Core\Database::getRepo('XLite\Model\Language')->findAddedLanguages();
+        return \XLite\Core\Database::getRepo('\XLite\Model\Language')->findAddedLanguages();
     }
 
 }

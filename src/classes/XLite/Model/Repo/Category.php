@@ -72,40 +72,40 @@ class Category extends \XLite\Model\Repo\Base\I18n
         $list['Details'] = array(
             self::ATTRS_CACHE_CELL    => array('category_id'),
             self::RELATION_CACHE_CELL => array(
-                'XLite\Model\Membership',
-                'XLite\Model\Image\Category\Image',
+                '\XLite\Model\Membership',
+                '\XLite\Model\Image\Category\Image',
             ),
         );
 
         $list['FullTree'] = array(
             self::ATTRS_CACHE_CELL    => array('category_id'),
             self::RELATION_CACHE_CELL => array(
-                'XLite\Model\CategoryProducts',
-                'XLite\Model\Image\Category\Image',
+                '\XLite\Model\CategoryProducts',
+                '\XLite\Model\Image\Category\Image',
             ),
         );
 
         $list['FullTreeHash'] = array(
             self::ATTRS_CACHE_CELL => array('category_id'),
             self::RELATION_CACHE_CELL => array(
-                'XLite\Model\CategoryProducts',
-                'XLite\Model\Image\Category\Image',
+                '\XLite\Model\CategoryProducts',
+                '\XLite\Model\Image\Category\Image',
             ),
         );
 
         $list['NodePath'] = array(
             self::ATTRS_CACHE_CELL    => array('category_id'),
             self::RELATION_CACHE_CELL => array(
-                'XLite\Model\Membership',
-                'XLite\Model\Image\Category\Image',
+                '\XLite\Model\Membership',
+                '\XLite\Model\Image\Category\Image',
             ),
         );
 
         $list['ByCleanUrl'] = array(
             self::ATTRS_CACHE_CELL    => array('clean_url'),
             self::RELATION_CACHE_CELL => array(
-                'XLite\Model\Membership',
-                'XLite\Model\Image\Category\Image',
+                '\XLite\Model\Membership',
+                '\XLite\Model\Image\Category\Image',
             ),
         );
 
@@ -673,7 +673,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
         $column = $alias . '.' . $index;
 
         $qb = \XLite\Core\Database::getQB();
-        $qb ->update('XLite\Model\Category', $alias)
+        $qb ->update('\XLite\Model\Category', $alias)
             ->set($column, $column . ' + :offset')
             ->andWhere(
                 // $gtFunc: 'gt' or 'gte'
@@ -791,13 +791,13 @@ class Category extends \XLite\Model\Repo\Base\I18n
 
                 // Modify lpos value for affected nodes excluding locked nodes
                 $qb2 = \XLite\Core\Database::getQB();
-                $qb2->update('XLite\Model\Category', 'c')
+                $qb2->update('\XLite\Model\Category', 'c')
                     ->set('c.lpos', 'c.lpos + :offset')
                     ->andwhere('c.locked = 0');
 
                 // Modify rpos value for affected nodes excluding locked nodes
                 $qb3 = \XLite\Core\Database::getQB();
-                $qb3->update('XLite\Model\Category', 'c')
+                $qb3->update('\XLite\Model\Category', 'c')
                     ->set('c.rpos', 'c.rpos + :offset')
                     ->andwhere('c.locked = 0');
 
@@ -935,7 +935,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
     protected function defineLockNodesQuery($lpos, $rpos, $lockStatus = 1)
     {
         $qb = \XLite\Core\Database::getQB();
-        $qb ->update('XLite\Model\Category', 'c')
+        $qb ->update('\XLite\Model\Category', 'c')
             ->set('c.locked', $lockStatus ? 1 : 0)
             ->andwhere($qb->expr()->gte('c.lpos', ':lpos'))
             ->andWhere($qb->expr()->lte('c.rpos', ':rpos'))

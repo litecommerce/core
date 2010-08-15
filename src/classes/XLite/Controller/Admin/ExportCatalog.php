@@ -122,7 +122,7 @@ class ExportCatalog extends \XLite\Controller\Admin\AAdmin
     {
         $layout_name = "fields_layout";
         $layout = implode(',', \XLite\Core\Request::getInstance()->$layout_name);
-        \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
+        \XLite\Core\Database::getRepo('\XLite\Model\Config')->createOption(
             array(
                 'category' => 'ImportExport',
                 'name'     => $layout_name,

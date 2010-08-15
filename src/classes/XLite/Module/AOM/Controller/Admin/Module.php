@@ -59,7 +59,7 @@ class Module extends \XLite\Controller\Admin\Module implements \XLite\Base\IDeco
         if ($this->page == 'AOM') {
             $value = (is_array($_REQUEST['order_update_notification'])) ? $_REQUEST['order_update_notification'] : array();
 
-            \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
+            \XLite\Core\Database::getRepo('\XLite\Model\Config')->createOption(
                 array(
                     'category' => 'AOM',
                     'name'     => 'order_update_notification',

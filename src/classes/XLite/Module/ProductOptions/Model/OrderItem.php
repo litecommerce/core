@@ -110,7 +110,7 @@ class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
             $this->options = $options ? array() : null;
 
             // Remove old options
-            $oldOptions = \XLite\Core\Database::getRepo('XLite\Module\ProductOptions\Model\OrderItemOption')
+            $oldOptions = \XLite\Core\Database::getRepo('\XLite\Module\ProductOptions\Model\OrderItemOption')
                 ->findByItemIdAndOrderId($itemId, $this->get('order_id'));
 
             foreach ($oldOptions as $o) {
@@ -119,7 +119,7 @@ class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
 
             // Save new options
             foreach ($options as $groupId => $data) {
-                $group = \XLite\Core\Database::getRepo('XLite\Module\ProductOptions\Model\OptionGroup')
+                $group = \XLite\Core\Database::getRepo('\XLite\Module\ProductOptions\Model\OptionGroup')
                     ->find($groupId);
                 $o = new \XLite\Module\ProductOptions\Model\OrderItemOption();
                 $o->setItemId($itemId);
@@ -177,7 +177,7 @@ class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
                 $orderId = 0;
             }
 
-            $this->options = \XLite\Core\Database::getRepo('XLite\Module\ProductOptions\Model\OrderItemOption')
+            $this->options = \XLite\Core\Database::getRepo('\XLite\Module\ProductOptions\Model\OrderItemOption')
                 ->findByItemIdAndOrderId($this->get('item_id'), $this->get('order_id'));
         }
 

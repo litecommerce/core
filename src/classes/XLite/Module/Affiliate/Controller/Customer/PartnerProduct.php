@@ -85,7 +85,7 @@ class PartnerProduct extends \XLite\Module\Affiliate\Controller\Partner
             }
 
             if (!is_null($this->get('update'))) {
-                \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
+                \XLite\Core\Database::getRepo('\XLite\Model\Config')->createOption(
                     array(
                         'category' => 'Miscellaneous',
                         'name'     => 'partner_product_banner',
