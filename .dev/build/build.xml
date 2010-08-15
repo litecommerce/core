@@ -95,7 +95,11 @@
 		<mkdir dir="${buildDir}/src/sql/demo" />
 		<copy todir="${buildDir}/src/sql/demo">
 			<fileset file="${sourceDir}/src/sql/demo/*.sql" />
-        </copy>
+		</copy>
+		<mkdir dir="${buildDir}/src/sql/local" />
+		<copy todir="${buildDir}/src/sql/local">
+			<fileset file="${sourceDir}/src//sql/local/xlite_all_modules.sql" />
+		</copy>
 		<exec executable="/usr/local/php-530/bin/php" dir="${buildDir}/src" failonerror="on">
 			<arg line="${buildDir}/src/restoredb demo all" />
 		</exec>
