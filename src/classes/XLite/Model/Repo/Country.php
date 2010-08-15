@@ -62,12 +62,12 @@ class Country extends \XLite\Model\Repo\ARepo
 
         $list['all'] = array(
             self::RELATION_CACHE_CELL => array(
-                'XLite\Model\State',
+                '\XLite\Model\State',
             ),
         );
         $list['states'] = array(
             self::RELATION_CACHE_CELL => array(
-                'XLite\Model\State',
+                '\XLite\Model\State',
             ),
         );
 

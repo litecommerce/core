@@ -82,6 +82,18 @@ abstract class Autoloader
      */
     protected static function autoloadCommon($namespace, $class, $dir)
     {
+        // NOTE: it's the PHP bug: in some cases it adds or remove the trailng slash. Examples:
+        // 
+        // 1. For static call "\Includes\Decorator\Utils\CacheManager::rebuildCache()" it will remove 
+        // the trailnig slash, and class name, passed in this function, will be "Includes\Decorator\Utils\CacheManager".
+        // 
+        // 2. Pass class name as a string into the functions, e.g. "is_subclass_of()". Then the class name will be passed
+        // into the autoloader with the leading slash - "\Includes\Decorator\Utils\CacheManager"
+        //
+        // Remove the "ltrim()" call when this issue will be resolved
+        // 
+        // May be this issue is related: http://bugs.php.net/50731
+        //
         if (0 === strpos($class = ltrim($class, '\\'), $namespace)) {
             require_once ($dir . str_replace('\\', LC_DS, $class) . '.php');
         }

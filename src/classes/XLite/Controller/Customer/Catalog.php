@@ -95,7 +95,7 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
     {
         parent::addBaseLocation();
 
-        $categoryPath = \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategoryPath(\XLite\Core\Request::getInstance()->category_id);
+        $categoryPath = \XLite\Core\Database::getRepo('\XLite\Model\Category')->getCategoryPath(\XLite\Core\Request::getInstance()->category_id);
 
         foreach ($categoryPath as $category) {
             if (0 < $category->category_id) {

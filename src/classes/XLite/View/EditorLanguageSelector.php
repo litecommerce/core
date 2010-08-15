@@ -72,7 +72,7 @@ class EditorLanguageSelector extends \XLite\View\AView
     {
         $list = array();
 
-        foreach (\XLite\Core\Database::getRepo('XLite\Model\Language')->findActiveLanguages() as $l) {
+        foreach (\XLite\Core\Database::getRepo('\XLite\Model\Language')->findActiveLanguages() as $l) {
             $list[$l->code] = $l->name;
         }
 

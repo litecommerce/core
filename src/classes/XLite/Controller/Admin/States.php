@@ -68,7 +68,7 @@ class States extends \XLite\Controller\Admin\AAdmin
         if (is_null($this->states)) {
             $this->states = \XLite\Core\Database::getQB()
                 ->select('s')
-                ->from('XLite\Model\State', 's')
+                ->from('\XLite\Model\State', 's')
                 ->where('s.country_code = :code')
                 ->setParameter('code', $this->get('country_code'))
                 ->getQuery()
@@ -90,7 +90,7 @@ class States extends \XLite\Controller\Admin\AAdmin
             }
         }
 
-        $country = \XLite\Core\Database::getRepo('XLite\Model\Country')->find($postData['country_code']);
+        $country = \XLite\Core\Database::getRepo('\XLite\Model\Country')->find($postData['country_code']);
 
         if (!$country) {
             $this->set('valid', false);
@@ -112,7 +112,7 @@ class States extends \XLite\Controller\Admin\AAdmin
 
         $state = \XLite\Core\Database::getQB()
             ->select('COUNT(s.state_id)')
-            ->from('XLite\Model\State', 's')
+            ->from('\XLite\Model\State', 's')
             ->where('s.state = :state AND s.code = :code')
             ->setParameters(array('state' => $postData['state'], 'code' => $postData['code']))
             ->getQuery()
@@ -142,7 +142,7 @@ class States extends \XLite\Controller\Admin\AAdmin
 
         // use POST'ed data to modify state properties
         foreach ($stateData as $state_id => $state_data) {
-            $state = \XLite\Core\Database::getEM()->find('XLite\Model\State', $state_id);
+            $state = \XLite\Core\Database::getEM()->find('\XLite\Model\State', $state_id);
             $state->map($state_data);
             \XLite\Core\Database::getEM()->persist($state);
         }
@@ -158,7 +158,7 @@ class States extends \XLite\Controller\Admin\AAdmin
             $states = \XLite\Core\Request::getInstance()->delete_states;
         }
         foreach ($states as $id => $state_id) {
-            $state = \XLite\Core\Database::getEM()->find('XLite\Model\State', $state_id);
+            $state = \XLite\Core\Database::getEM()->find('\XLite\Model\State', $state_id);
             if ($state) {
                 \XLite\Core\Database::getEM()->remove($state);
             }

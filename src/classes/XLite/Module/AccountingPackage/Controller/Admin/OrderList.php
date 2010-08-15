@@ -67,7 +67,7 @@ class OrderList extends \XLite\Controller\Admin\OrderList implements \XLite\Base
         foreach (func_get_args() as $name) {
             if (isset($this->$name)) {
                 $value = $this->$name;
-                \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
+                \XLite\Core\Database::getRepo('\XLite\Model\Config')->createOption(
                     array(
                         'category' => 'ImportExport',
                         'name'     => $name,

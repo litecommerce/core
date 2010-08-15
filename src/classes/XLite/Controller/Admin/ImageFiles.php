@@ -87,7 +87,7 @@ class ImageFiles extends \XLite\Controller\Admin\AAdmin
         $images = $this->get('imageClasses');
         $images_directory = ($images_directory != "") ? $images_directory : \XLite\Model\Image::IMAGES_DIR;
 
-        \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
+        \XLite\Core\Database::getRepo('\XLite\Model\Config')->createOption(
             array(
                 'category' => 'Images',
                 'name'     => 'images_directory',

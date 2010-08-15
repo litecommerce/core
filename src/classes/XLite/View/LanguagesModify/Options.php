@@ -95,7 +95,7 @@ class Options extends \XLite\View\AView
     {
         if (!isset($this->label)) {
             if ($this->getParam(self::PARAM_LNG_ID)) {
-                $this->editLanguage = \XLite\Core\Database::getRepo('XLite\Model\Language')->find($this->getParam(self::PARAM_LNG_ID));
+                $this->editLanguage = \XLite\Core\Database::getRepo('\XLite\Model\Language')->find($this->getParam(self::PARAM_LNG_ID));
 
             } else {
                 $this->editLanguage = false;
@@ -128,7 +128,7 @@ class Options extends \XLite\View\AView
      */
     public function getDefaultLanguage()
     {
-        return \XLite\Core\Database::getRepo('XLite\Model\Language')->getDefaultLanguage();
+        return \XLite\Core\Database::getRepo('\XLite\Model\Language')->getDefaultLanguage();
     }
 
     /**

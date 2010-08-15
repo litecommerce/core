@@ -60,12 +60,12 @@ class State extends \XLite\Model\Repo\ARepo
         $list = parent::defineCacheCells();
 
         $list['all'] = array(
-            self::RELATION_CACHE_CELL => array('XLite\Model\Country'),
+            self::RELATION_CACHE_CELL => array('\XLite\Model\Country'),
         );
 
         $list['szone'] = array(
             self::ATTRS_CACHE_CELL    => array('shipping_zone'),
-            self::RELATION_CACHE_CELL => array('XLite\Model\Country'),
+            self::RELATION_CACHE_CELL => array('\XLite\Model\Country'),
         );
 
         return $list;

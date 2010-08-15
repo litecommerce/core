@@ -82,7 +82,7 @@ class Order extends \XLite\Controller\Admin\Order implements \XLite\Base\IDecora
         }
 
         $order = $this->get('order');
-        $this->country = \XLite\Core\Database::getEM()->find('XLite\Model\Country', $order->getComplex('profile.billing_country'));
+        $this->country = \XLite\Core\Database::getEM()->find('\XLite\Model\Country', $order->getComplex('profile.billing_country'));
 
         // TODO - WTF? Cuntry has not 'order' field. Rework it
         //$this->country->set('order', $order);

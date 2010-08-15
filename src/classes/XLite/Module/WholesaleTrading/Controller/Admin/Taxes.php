@@ -57,7 +57,7 @@ class Taxes extends \XLite\Controller\Admin\Taxes implements \XLite\Base\IDecora
     {
         parent::doActionUpdateOptions();
 
-        \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
+        \XLite\Core\Database::getRepo('\XLite\Model\Config')->createOption(
             array(
                 'category' => 'Taxes',
                 'name'     => 'discounts_after_taxes',

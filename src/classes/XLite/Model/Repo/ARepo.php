@@ -28,8 +28,7 @@
 
 namespace XLite\Model\Repo;
 
-use XLite\Core\Database as DB,
-    XLite\Core\Converter;
+use XLite\Core\Database as DB, XLite\Core\Converter;
 
 /**
  * Abstract repository
@@ -781,7 +780,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * 
      * @param mixed $id The identifier.
      *  
-     * @return XLite\Model\AEntity or null
+     * @return \XLite\Model\AEntity or null
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

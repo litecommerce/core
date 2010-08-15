@@ -34,7 +34,7 @@ namespace XLite\Model;
  * @package    XLite
  * @see        ____class_see____
  * @since      3.0.0
- * @Entity (repositoryClass="XLite\Model\Repo\Product")
+ * @Entity (repositoryClass="\XLite\Model\Repo\Product")
  * @Table (name="products",
  *         indexes={
  *              @Index(name="price", columns={"price"}),
@@ -379,7 +379,7 @@ class Product extends \XLite\Model\Base\I18n
      *
      * @param int|null $categoryId category ID
      * 
-     * @return XLite\Model\Category
+     * @return \XLite\Model\Category
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -475,7 +475,7 @@ class Product extends \XLite\Model\Base\I18n
     public function getActiveDetailedImages()
     {
         if (!isset($this->activeDetailedImages)) {
-            $this->activeDetailedImages = \XLite\Core\Database::getRepo('XLite\Model\Image\Product\Detailed')
+            $this->activeDetailedImages = \XLite\Core\Database::getRepo('\XLite\Model\Image\Product\Detailed')
                 ->findActiveByProductId($this->getProductId());
         }
 

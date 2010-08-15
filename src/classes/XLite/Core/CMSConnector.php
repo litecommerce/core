@@ -303,7 +303,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
      * 
      * @param string $applicationId cache key
      *  
-     * @return XLite
+     * @return \XLite
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -517,7 +517,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
 
         // By product
 
-        $product = \XLite\Core\Database::getRepo('XLite\Model\Product')
+        $product = \XLite\Core\Database::getRepo('\XLite\Model\Product')
             ->findByCleanUrl(preg_replace('/(?:\.html|\.htm)$/Ss', '', $path));
 
         if (isset($product)) {
@@ -531,7 +531,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
         // By category
         if (!$cleanUrl) {
             $parts = preg_split('\'/\'', $path, 2,  PREG_SPLIT_NO_EMPTY);
-            $category = \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategoryByCleanUrl($parts[0]);
+            $category = \XLite\Core\Database::getRepo('\XLite\Model\Category')->getCategoryByCleanUrl($parts[0]);
 
             if ($category) {
                 $params  = array('category_id' => $category->getCategoryId());

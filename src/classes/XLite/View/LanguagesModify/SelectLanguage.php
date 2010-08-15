@@ -69,7 +69,7 @@ class SelectLanguage extends \XLite\View\AView
      */
     public function getAddedLanguages()
     {
-        return \XLite\Core\Database::getRepo('XLite\Model\Language')->findAddedLanguages();
+        return \XLite\Core\Database::getRepo('\XLite\Model\Language')->findAddedLanguages();
     }
 
     /**
@@ -113,7 +113,7 @@ class SelectLanguage extends \XLite\View\AView
      */
     public function getDefaultLanguage()
     {
-        return \XLite\Core\Database::getRepo('XLite\Model\Language')->getDefaultLanguage();
+        return \XLite\Core\Database::getRepo('\XLite\Model\Language')->getDefaultLanguage();
     }
 
     /**
@@ -162,7 +162,7 @@ class SelectLanguage extends \XLite\View\AView
     {
 		if (!isset($this->translateLanguage)) {
 	        if (\XLite\Core\Request::getInstance()->language) {
-    	        $this->translateLanguage = \XLite\Core\Database::getRepo('XLite\Model\Language')->findOneByCode(
+    	        $this->translateLanguage = \XLite\Core\Database::getRepo('\XLite\Model\Language')->findOneByCode(
         	        \XLite\Core\Request::getInstance()->language
             	);
 	            if (!$this->translateLanguage || !$this->translateLanguage->added) {
@@ -184,7 +184,7 @@ class SelectLanguage extends \XLite\View\AView
      */
     public function getInactiveLanguages()
     {
-        return \XLite\Core\Database::getRepo('XLite\Model\Language')
+        return \XLite\Core\Database::getRepo('\XLite\Model\Language')
             ->findInactiveLanguages();
     }
 

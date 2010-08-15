@@ -274,7 +274,7 @@ class Dialog extends \XLite\View\Dialog
      */
     public function isAnotherLanguagesAdded()
     {
-        $languages = \XLite\Core\Database::getRepo('XLite\Model\Language')->findAddedLanguages();
+        $languages = \XLite\Core\Database::getRepo('\XLite\Model\Language')->findAddedLanguages();
 
         foreach ($languages as $k => $l) {
             if ($l->code == $this->getDefaultLanguage()->code) {
@@ -296,7 +296,7 @@ class Dialog extends \XLite\View\Dialog
      */
     public function getDefaultLanguage()
     {
-        return \XLite\Core\Database::getRepo('XLite\Model\Language')->getDefaultLanguage();
+        return \XLite\Core\Database::getRepo('\XLite\Model\Language')->getDefaultLanguage();
     }
 
     /**
@@ -326,7 +326,7 @@ class Dialog extends \XLite\View\Dialog
             $this->translateLanguage = false;
 
             if (\XLite\Core\Request::getInstance()->language) {
-                $language = \XLite\Core\Database::getRepo('XLite\Model\Language')->findOneByCode(
+                $language = \XLite\Core\Database::getRepo('\XLite\Model\Language')->findOneByCode(
                     \XLite\Core\Request::getInstance()->language
                 );
                 if ($language && $language->added) {
@@ -404,11 +404,11 @@ class Dialog extends \XLite\View\Dialog
 
 				// Get total count
 				if (isset($data['name'])) {
-					$this->labelsCount = \XLite\Core\Database::getRepo('XLite\Model\LanguageLabel')
+					$this->labelsCount = \XLite\Core\Database::getRepo('\XLite\Model\LanguageLabel')
 						->countByName($data['name']);
 
 				} else {
-					$this->labelsCount = \XLite\Core\Database::getRepo('XLite\Model\LanguageLabel')->count();
+					$this->labelsCount = \XLite\Core\Database::getRepo('\XLite\Model\LanguageLabel')->count();
 				}
 
                 $page = \XLite\Core\Request::getInstance()->page
@@ -427,11 +427,11 @@ class Dialog extends \XLite\View\Dialog
 					$this->labels = array();
 
 				} elseif (isset($data['name'])) {
-					$this->labels = \XLite\Core\Database::getRepo('XLite\Model\LanguageLabel')
+					$this->labels = \XLite\Core\Database::getRepo('\XLite\Model\LanguageLabel')
 						->findLikeName($data['name'], $start, $this->limit);
 
 				} else {
-					$this->labels = \XLite\Core\Database::getRepo('XLite\Model\LanguageLabel')
+					$this->labels = \XLite\Core\Database::getRepo('\XLite\Model\LanguageLabel')
                         ->findFrame($start, $this->limit);
 				}
 

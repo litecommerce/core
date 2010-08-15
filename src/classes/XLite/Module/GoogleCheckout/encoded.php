@@ -324,7 +324,7 @@ EOT;
         $_this->config->General->default_country = $addr["COUNTRY-CODE"];
 
         // state
-		$state = \XLite\Core\Dtabase::getRepo('XLite\Model\State')->finOneByCode($addr['REGION']);
+		$state = \XLite\Core\Dtabase::getRepo('\XLite\Model\State')->finOneByCode($addr['REGION']);
 		$state_id = $state ? $state->state_id : 0;
 
         $profile->set('shipping_state', $state_id);
@@ -578,7 +578,7 @@ if ($is_new_profile) {
     $profile->set('billing_country', $billing_addr["COUNTRY-CODE"]);
     $profile->set('billing_zipcode', $billing_addr["POSTAL-CODE"]);
 
-    $state = \XLite\Core\Dtabase::getRepo('XLite\Model\State')->finOneByCode(trim($billing_addr['REGION']));
+    $state = \XLite\Core\Dtabase::getRepo('\XLite\Model\State')->finOneByCode(trim($billing_addr['REGION']));
     if ($state) {
         $profile->set('billing_state', $state->state_id);
 
@@ -598,7 +598,7 @@ if ($is_new_profile) {
     $profile->set('shipping_country', $shipping_addr["COUNTRY-CODE"]);
     $profile->set('shipping_zipcode', $shipping_addr["POSTAL-CODE"]);
 
-    $state = \XLite\Core\Dtabase::getRepo('XLite\Model\State')->finOneByCode(trim($shipping_addr['REGION']));
+    $state = \XLite\Core\Dtabase::getRepo('\XLite\Model\State')->finOneByCode(trim($shipping_addr['REGION']));
     if ($state) {
         $profile->set('shipping_state', $state->state_id);
     } else {

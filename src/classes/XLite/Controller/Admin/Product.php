@@ -347,7 +347,7 @@ class Product extends \XLite\Controller\Admin\Catalog
      */
     protected function doActionDeleteDetailedImage()
     {
-        $img = \XLite\Core\Database::getRepo('XLite\Model\Image\Product\Detailed')
+        $img = \XLite\Core\Database::getRepo('\XLite\Model\Image\Product\Detailed')
             ->find(\XLite\Core\Request::getInstance()->image_id);
 
         if ($img) {
@@ -385,7 +385,7 @@ class Product extends \XLite\Controller\Admin\Catalog
         }
 
         foreach (\XLite\Core\Request::getInstance()->alt as $imageId => $alt) {
-            $img = \XLite\Core\Database::getRepo('XLite\Model\Image\Product\Detailed')
+            $img = \XLite\Core\Database::getRepo('\XLite\Model\Image\Product\Detailed')
                 ->find($imageId);
 
             if ($img) {

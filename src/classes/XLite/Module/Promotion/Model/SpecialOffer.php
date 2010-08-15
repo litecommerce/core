@@ -970,7 +970,7 @@ class SpecialOffer extends \XLite\Model\AModel
 
     function checkCountry($code)
     {
-        $c = \XLite\Core\Database::getEM()->find('XLite\Model\Country', $code);
+        $c = \XLite\Core\Database::getEM()->find('\XLite\Model\Country', $code);
         $name = $c->get('country');
         $countries = explode(',', $this->get('bonusCountries'));
         foreach ($countries as $c) {

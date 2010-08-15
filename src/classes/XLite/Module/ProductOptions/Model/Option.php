@@ -34,7 +34,7 @@ namespace XLite\Module\ProductOptions\Model;
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
- * @Entity (repositoryClass="XLite\Module\ProductOptions\Model\Repo\Option")
+ * @Entity (repositoryClass="\XLite\Module\ProductOptions\Model\Repo\Option")
  * @Table (name="options")
  */
 class Option extends \XLite\Model\Base\I18n
@@ -172,7 +172,7 @@ class Option extends \XLite\Model\Base\I18n
      */
     public function getNotEmptyModifiers()
     {
-        $types = \XLite\Core\Database::getRepo('XLite\Module\ProductOptions\Model\OptionSurcharge')
+        $types = \XLite\Core\Database::getRepo('\XLite\Module\ProductOptions\Model\OptionSurcharge')
             ->getSurchargeTypes();
 
         $result = array();

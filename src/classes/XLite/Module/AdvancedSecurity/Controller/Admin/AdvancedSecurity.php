@@ -109,7 +109,7 @@ class AdvancedSecurity extends \XLite\Controller\Admin\AAdmin
 
     function getSecurityOptions() 
     {
-        return \XLite\Core\Database::getRepo('XLite\Model\Config')->getByCategory('AdvancedSecurity', true, true);
+        return \XLite\Core\Database::getRepo('\XLite\Model\Config')->getByCategory('AdvancedSecurity', true, true);
     }
     
     function action_options() 
@@ -140,7 +140,7 @@ class AdvancedSecurity extends \XLite\Controller\Admin\AAdmin
                 }
             }
 
-            \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
+            \XLite\Core\Database::getRepo('\XLite\Model\Config')->createOption(
                 array(
                     'category' => 'AdvancedSecurity',
                     'name'     => $name,

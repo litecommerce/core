@@ -674,7 +674,7 @@ class CustomerNotifications extends \XLite\Controller\Admin\AAdmin
             }
         }
 
-        \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
+        \XLite\Core\Database::getRepo('\XLite\Model\Config')->createOption(
             array(
                 'category' => 'ProductAdviser',
                 'name'     => 'filters_preferences',

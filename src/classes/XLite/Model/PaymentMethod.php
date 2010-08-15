@@ -320,7 +320,7 @@ class PaymentMethod extends \XLite\Model\AModel
             die ('Payment method "' . $name . '" is not registered');
         }
 
-        $className = 'XLite\\' . self::$registeredPaymentMethods[$name];
+        $className = '\XLite\\' . self::$registeredPaymentMethods[$name];
 
         return new $className($name);
     }

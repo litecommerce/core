@@ -34,7 +34,7 @@ namespace XLite\Module\ProductOptions\Model;
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
- * @Entity (repositoryClass="XLite\Module\ProductOptions\Model\Repo\OptionGroup")
+ * @Entity (repositoryClass="\XLite\Module\ProductOptions\Model\Repo\OptionGroup")
  * @Table (name="option_groups")
  */
 class OptionGroup extends \XLite\Model\Base\I18n

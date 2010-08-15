@@ -82,7 +82,7 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
     public function getActiveOptions()
     {
         if (!isset($this->productOptions)) {
-            $this->productOptions = \XLite\Core\Database::getRepo('XLite\Module\ProductOptions\Model\OptionGroup')
+            $this->productOptions = \XLite\Core\Database::getRepo('\XLite\Module\ProductOptions\Model\OptionGroup')
                 ->findActiveByProductId($this->getProductId());
         }
 
@@ -116,7 +116,7 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
     {
         $prepared = array();
         foreach ($options as $groupId => $data) {
-            $optionGroup = \XLite\Core\Database::getRepo('XLite\Module\ProductOptions\Model\OptionGroup')
+            $optionGroup = \XLite\Core\Database::getRepo('\XLite\Module\ProductOptions\Model\OptionGroup')
                 ->findOneByGroupIdAndProductId($groupId, $this->getProductId());
 
             if (!isset($optionGroup)) {
@@ -125,7 +125,7 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
             }
 
             if ($optionGroup->getType() == $optionGroup::GROUP_TYPE) {
-                $option = \XLite\Core\Database::getRepo('XLite\Module\ProductOptions\Model\Option')
+                $option = \XLite\Core\Database::getRepo('\XLite\Module\ProductOptions\Model\Option')
                     ->find(intval($data));
                 if (
                     !$option
@@ -237,7 +237,7 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
             }
         }
 
-        return \XLite\Core\Database::getRepo('XLite\Module\ProductOptions\Model\OptionException')
+        return \XLite\Core\Database::getRepo('\XLite\Module\ProductOptions\Model\OptionException')
             ->checkOptions($ids);
     }
 }

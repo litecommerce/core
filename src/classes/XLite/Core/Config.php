@@ -49,7 +49,7 @@ class Config extends \XLite\Base\Singleton
      */
     public function readConfig($force = false)
     {
-        return \XLite\Core\Database::getRepo('XLite\Model\Config')->getAllOptions($force);
+        return \XLite\Core\Database::getRepo('\XLite\Model\Config')->getAllOptions($force);
     }
 
     /**

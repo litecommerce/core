@@ -59,7 +59,7 @@ class Categories extends \XLite\View\FormField\Select\Multiple
      */
     protected function getDefaultOptions()
     {
-        return \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategories();
+        return \XLite\Core\Database::getRepo('\XLite\Model\Category')->getCategories();
     }
 
     /**

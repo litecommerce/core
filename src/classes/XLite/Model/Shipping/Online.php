@@ -72,7 +72,7 @@ class Online extends \XLite\Model\Shipping
                 $name = $field;
                 $value = $options->$field;
 
-                \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
+                \XLite\Core\Database::getRepo('\XLite\Model\Config')->createOption(
                     array(
                         'category' => $category,
                         'name'     => $name,

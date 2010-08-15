@@ -58,7 +58,7 @@ class State extends \XLite\View\FormField\Select\Regular
      */
     protected function getDefaultOptions()
     {
-        return \XLite\Core\Database::getRepo('XLite\Model\State')->findAllStates();
+        return \XLite\Core\Database::getRepo('\XLite\Model\State')->findAllStates();
     }
 }
 

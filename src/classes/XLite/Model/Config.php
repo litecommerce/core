@@ -34,7 +34,7 @@ namespace XLite\Model;
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
- * @Entity (repositoryClass="XLite\Model\Repo\Config")
+ * @Entity (repositoryClass="\XLite\Model\Repo\Config")
  * @Table (name="config",
  *         indexes={
  *              @Index (name="orderby", columns={"orderby"}),

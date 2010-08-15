@@ -34,7 +34,7 @@ namespace XLite\Module\ProductOptions\Model;
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
- * @Entity (repositoryClass="XLite\Module\ProductOptions\Model\Repo\OptionSurcharge")
+ * @Entity (repositoryClass="\XLite\Module\ProductOptions\Model\Repo\OptionSurcharge")
  * @Table (name="option_surcharges")
  */
 class OptionSurcharge extends \XLite\Model\AEntity

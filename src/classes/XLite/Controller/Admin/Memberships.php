@@ -67,7 +67,7 @@ class Memberships extends \XLite\Controller\Admin\AAdmin
 
             $code = $this->getCurrentLanguage();
             foreach ($data as $id => $row) {
-                $m = \XLite\Core\Database::getRepo('XLite\Model\Membership')->find($id);
+                $m = \XLite\Core\Database::getRepo('\XLite\Model\Membership')->find($id);
 
                 if (!$m) {
                     // TODO - add top message
@@ -75,7 +75,7 @@ class Memberships extends \XLite\Controller\Admin\AAdmin
                 }
 
                 try {
-                    $duplicate = \XLite\Core\Database::getRepo('XLite\Model\Membership')->createQueryBuilder()
+                    $duplicate = \XLite\Core\Database::getRepo('\XLite\Model\Membership')->createQueryBuilder()
                         ->andWhere('translations.name = :name', 'm.membership_id != :id')
                         ->setParameter('name', $row['membership'])
                         ->setParameter('id', $id)
@@ -114,7 +114,7 @@ class Memberships extends \XLite\Controller\Admin\AAdmin
 
         if (is_array($ids) && $ids) {
             list($keys, $data) = \XLite\Core\Database::prepareArray($ids, 'id');
-            $list = \XLite\Core\Database::getRepo('XLite\Model\Membership')->createQueryBuilder()
+            $list = \XLite\Core\Database::getRepo('\XLite\Model\Membership')->createQueryBuilder()
                 ->where('m.membership_id IN (' . implode(', ', $keys). ')')
                 ->setParameters($data)
                 ->getQuery()
@@ -148,7 +148,7 @@ class Memberships extends \XLite\Controller\Admin\AAdmin
 
             // TODO - add top message
 
-        } elseif (\XLite\Core\Database::getRepo('XLite\Model\Membership')->findOneByName($data['membership'], false)) {
+        } elseif (\XLite\Core\Database::getRepo('\XLite\Model\Membership')->findOneByName($data['membership'], false)) {
 
             // TODO - add top message
 

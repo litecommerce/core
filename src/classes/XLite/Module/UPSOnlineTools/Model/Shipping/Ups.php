@@ -123,7 +123,7 @@ class Ups extends \XLite\Model\Shipping\Online
         $version = $this->config->Version->version;
 
         if (is_numeric($userinfo['state'])) {
-            $userinfo['state'] = \XLite\Core\Database::getRepo('XLite\Model\State')->getCodeById($userinfo['state']);
+            $userinfo['state'] = \XLite\Core\Database::getRepo('\XLite\Model\State')->getCodeById($userinfo['state']);
         }
 
         $request = <<<EOT
@@ -266,7 +266,7 @@ EOT;
             $value = $this->encode($value);
         }
 
-        \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
+        \XLite\Core\Database::getRepo('\XLite\Model\Config')->createOption(
             array(
                 'category' => 'UPSOnlineTools',
                 'name'     => $name,
@@ -315,7 +315,7 @@ EOT;
         // Define company state
         $state_id = $this->config->Company->location_state;
         if ($state_id != -1) {
-            $originState = \XLite\Core\Database::getRepo('XLite\Model\State')->getCodeById($state_id);
+            $originState = \XLite\Core\Database::getRepo('\XLite\Model\State')->getCodeById($state_id);
 
         } else {
             $originState = $this->config->Company->location_custom_state;
@@ -337,7 +337,7 @@ EOT;
             // Define destination state
             $state_id = $order->getProfile()->get('shipping_state');
             if ($state_id != -1) {
-                $destinationState = \XLite\Core\Database::getRepo('XLite\Model\State')->getCodeById($state_id);
+                $destinationState = \XLite\Core\Database::getRepo('\XLite\Model\State')->getCodeById($state_id);
 
             } else {
                 $destinationState = $order->getProfile()->get('shipping_custom_state');
@@ -1058,7 +1058,7 @@ EOT;
                 break;
 
             default:
-                $country = \XLite\Core\Database::getEM()->find('XLite\Model\Country', $originCountry);
+                $country = \XLite\Core\Database::getEM()->find('\XLite\Model\Country', $originCountry);
                 $origin = $country->isEUMember() ? 'EU' : 'OTHER_ORIGINS';
                 break;
         }
@@ -1092,7 +1092,7 @@ EOT;
         if ($options->av_status == 'Y' && $shipping_country == 'US') {
 
             if ($shipping_state > 0) {
-                $state_code = \XLite\Core\Database::getRepo('XLite\Model\State')->getCodeById($shipping_state);
+                $state_code = \XLite\Core\Database::getRepo('\XLite\Model\State')->getCodeById($shipping_state);
 
             } else {
                 $state_code = $shipping_custom_state;

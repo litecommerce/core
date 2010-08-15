@@ -84,7 +84,7 @@ class StaticRoutines extends AUtils
     public static function checkForStaticConstructor(array &$info, &$content)
     {
         if (preg_match(static::getConstructorPattern(), $content)) {
-            $content .= "\n\n" . '// Call static constructor' . "\n" . '\\' 
+            $content .= "\n\n" . '// Call static constructor' . "\n" 
                 . (isset($info[self::INFO_CLASS]) ? $info[self::INFO_CLASS] : $info[self::INFO_CLASS_ORIG]) 
                 . '::' . static::getConstructorName() . '();';
         }

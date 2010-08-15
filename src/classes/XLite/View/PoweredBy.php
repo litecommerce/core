@@ -126,7 +126,7 @@ class PoweredBy extends \XLite\View\AView
             ) {
                 $index = mt_rand(0, count($this->phrases) - 1);
 
-                \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
+                \XLite\Core\Database::getRepo('\XLite\Model\Config')->createOption(
                     array(
                         'category' => 'Internal',
                         'name'     => 'prnotice_index',

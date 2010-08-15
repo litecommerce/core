@@ -262,7 +262,7 @@ class Profile extends \XLite\Model\AModel
 
     function getBillingState() 
     {
-        return \XLite\Core\Database::getRepo('XLite\Model\State')->findById(
+        return \XLite\Core\Database::getRepo('\XLite\Model\State')->findById(
             $this->get('billing_state'),
             $this->get('billing_custom_state')
         );
@@ -270,7 +270,7 @@ class Profile extends \XLite\Model\AModel
 
     function getShippingState() 
     {
-        return \XLite\Core\Database::getRepo('XLite\Model\State')->findById(
+        return \XLite\Core\Database::getRepo('\XLite\Model\State')->findById(
             $this->get('shipping_state'),
             $this->get('shipping_custom_state')
         );
@@ -278,11 +278,11 @@ class Profile extends \XLite\Model\AModel
 
     function getBillingCountry() 
     {
-        return \XLite\Core\Database::getEM()->find('XLite\Model\Country', $this->get('billing_country'));
+        return \XLite\Core\Database::getEM()->find('\XLite\Model\Country', $this->get('billing_country'));
     }
     function getShippingCountry() 
     {
-        return \XLite\Core\Database::getEM()->find('XLite\Model\Country', $this->get('shipping_country'));
+        return \XLite\Core\Database::getEM()->find('\XLite\Model\Country', $this->get('shipping_country'));
     }
 
     function enable() 
@@ -332,7 +332,7 @@ class Profile extends \XLite\Model\AModel
 
         $properties = $options['properties'];
         if (isset($properties['membership']) && $properties['membership']) {
-            $membership = \XLite\Core\Database::getRepo('XLite\Model\Membership')->findOneByName($properties['membership'], false);
+            $membership = \XLite\Core\Database::getRepo('\XLite\Model\Membership')->findOneByName($properties['membership'], false);
             if (!$membership) {
                 $membership = new \XLite\Model\Membership();
                 $membership->name = $properties['membership'];
@@ -399,14 +399,14 @@ class Profile extends \XLite\Model\AModel
 
     function _convertState($value)
     {
-        $state = \XLite\Core\Database::getRepo('XLite\Model\State')->findOneByCode($value);
+        $state = \XLite\Core\Database::getRepo('\XLite\Model\State')->findOneByCode($value);
 
         if (!$state) {
-            $state = \XLite\Core\Database::getRepo('XLite\Model\State')->findOneByState($value);
+            $state = \XLite\Core\Database::getRepo('\XLite\Model\State')->findOneByState($value);
         }
 
         if (!$state) {
-            $state = \XLite\Core\Database::getRepo('XLite\Model\State')->find(intval($value));
+            $state = \XLite\Core\Database::getRepo('\XLite\Model\State')->find(intval($value));
         }
 
 
@@ -415,9 +415,9 @@ class Profile extends \XLite\Model\AModel
 
     function _convertCountry($value)
     {
-        $country = \XLite\Core\Database::getRepo('XLite\Model\Country')->find($value);
+        $country = \XLite\Core\Database::getRepo('\XLite\Model\Country')->find($value);
         if (!$country) {
-            $country = \XLite\Core\Database::getRepo('XLite\Model\Country')->findOneByCountry($value);
+            $country = \XLite\Core\Database::getRepo('\XLite\Model\Country')->findOneByCountry($value);
         }
 
         return $country ? $country->code : '';

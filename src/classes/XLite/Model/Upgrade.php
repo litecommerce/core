@@ -127,7 +127,7 @@ Please correct errors above and click reload or click the button below to force 
             }
 
             // set current version in config->Version->version
-            \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
+            \XLite\Core\Database::getRepo('\XLite\Model\Config')->createOption(
                 array(
                     'category' => 'Version',
                     'name'     => 'version',

@@ -417,7 +417,7 @@ function func_SagePay_getState($profile, $field, $customField)
     	return '';
     }
 
-    $state = \XLite\Core\Database::getRepo('XLite\Model\State')->find($profile->get($field));
+    $state = \XLite\Core\Database::getRepo('\XLite\Model\State')->find($profile->get($field));
     return $state ? $state->code : $profile->get($customField);
 }
 

@@ -96,7 +96,7 @@ class EditLabel extends \XLite\View\AView
     {
         if (!isset($this->label)) {
             if ($this->getParam(self::PARAM_LABEL_ID)) {
-                $this->label = \XLite\Core\Database::getRepo('XLite\Model\LanguageLabel')->find($this->getParam(self::PARAM_LABEL_ID));
+                $this->label = \XLite\Core\Database::getRepo('\XLite\Model\LanguageLabel')->find($this->getParam(self::PARAM_LABEL_ID));
 
             } else {
                 $this->label = false;
@@ -131,7 +131,7 @@ class EditLabel extends \XLite\View\AView
      */
     public function getAddedLanguages()
     {
-        return \XLite\Core\Database::getRepo('XLite\Model\Language')->findAddedLanguages();
+        return \XLite\Core\Database::getRepo('\XLite\Model\Language')->findAddedLanguages();
     }
 
     /**
@@ -172,7 +172,7 @@ class EditLabel extends \XLite\View\AView
      */
     public function getDefaultLanguage()
     {
-        return \XLite\Core\Database::getRepo('XLite\Model\Language')->getDefaultLanguage();
+        return \XLite\Core\Database::getRepo('\XLite\Model\Language')->getDefaultLanguage();
     }
 
 }

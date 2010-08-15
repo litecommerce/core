@@ -116,7 +116,7 @@ class ImportCatalog extends \XLite\Controller\Admin\AAdmin
     function action_layout($layout_name = "product_layout")
     {
         $layout = implode(',', \XLite\Core\Request::getInstance()->$layout_name);
-        \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
+        \XLite\Core\Database::getRepo('\XLite\Model\Config')->createOption(
             array(
                 'category' => 'ImportExport',
                 'name'     => $layout_name,
@@ -145,7 +145,7 @@ class ImportCatalog extends \XLite\Controller\Admin\AAdmin
     {
         $layout_name = "fields_layout";
         $layout = implode(',', \XLite\Core\Request::getInstance()->$layout_name);
-        \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
+        \XLite\Core\Database::getRepo('\XLite\Model\Config')->createOption(
             array(
                 'category' => 'ImportExport',
                 'name'     => $layout_name,

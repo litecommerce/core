@@ -267,7 +267,7 @@ class Module extends \XLite\RemoteModel\AModel
     public function getModel($overrideCache = false)
     {
         if (!isset($this->model) || $overrideCache) {
-            $this->model = \Xlite\Core\Database::getRepo('XLite\Model\Module')->findByName($this->getName());
+            $this->model = \Xlite\Core\Database::getRepo('\XLite\Model\Module')->findByName($this->getName());
             if (!$this->model) {
                 $this->model = false;
             }

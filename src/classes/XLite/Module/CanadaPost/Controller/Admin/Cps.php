@@ -71,7 +71,7 @@ class Cps extends \XLite\Controller\Admin\ShippingSettings
             $this->destinationZipcode = $this->config->Company->location_zipcode;
         if (empty($this->destinationCountry)) 
             $this->destinationCountry = $this->config->Company->location_country;
-        $state = \XLite\Core\Database::getEM()->find('XLite\Model\State', $this->destinationState);
+        $state = \XLite\Core\Database::getEM()->find('\XLite\Model\State', $this->destinationState);
         $state = $state ? $state->code : 'Other';
  
         $this->cps = new \XLite\Module\CanadaPost\Model\Shipping\Cps();

@@ -257,7 +257,7 @@ abstract class I18n extends \XLite\Model\AEntity
     {
         if (is_null(self::$languagesQuery)) {
             self::$languagesQuery = array_fill_keys(
-                \XLite\Core\Database::getRepo('XLite\Model\Language')->getLanguagesQuery(),
+                \XLite\Core\Database::getRepo('\XLite\Model\Language')->getLanguagesQuery(),
                 false
             );
         }

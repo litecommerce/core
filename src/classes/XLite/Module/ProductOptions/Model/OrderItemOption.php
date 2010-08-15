@@ -34,7 +34,7 @@ namespace XLite\Module\ProductOptions\Model;
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
- * @Entity (repositoryClass="XLite\Module\ProductOptions\Model\Repo\OrderItemOption")
+ * @Entity (repositoryClass="\XLite\Module\ProductOptions\Model\Repo\OrderItemOption")
  * @Table (name="order_item_options")
  */
 class OrderItemOption extends \XLite\Model\AEntity

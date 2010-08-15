@@ -107,7 +107,7 @@ class Main extends \XLite\Module\AModule
             try {
                 $list = \XLite\Core\Database::getQB()
                     ->select('v')
-                    ->from('XLite\Model\ViewList', 'v')
+                    ->from('\XLite\Model\ViewList', 'v')
                     ->where('v.tpl LIKE :tpl AND v.list = :list')
                     ->setParameters(array('tpl' => '%' . $tpl, 'list' => 'cart.item.info'))
                     ->getQuery()

@@ -91,7 +91,7 @@ X-Cart data has been removed.<br>
         $this->startDump();
 
         // remeber parameters
-        \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
+        \XLite\Core\Database::getRepo('\XLite\Model\Config')->createOption(
             array(
                 'category' => 'XCartImport',
                 'name'     => 'params',
@@ -121,7 +121,7 @@ X-Cart data has been removed.<br>
             // save memberships
             $ms = array_keys($this->memberships);
             // TODO: update membership saving - they must be saved in the separate table, not in the config table
-            \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
+            \XLite\Core\Database::getRepo('\XLite\Model\Config')->createOption(
                 array(
                     'category' => 'Memberships',
                     'name'     => 'memberships',
@@ -429,9 +429,9 @@ You might want to remove X-Cart tables from your X-Cart database. To do this, tu
                     } else {
 
                         // for LC version lower than 2.2
-                        $state = \XLite\Core\Database::getRepo('XLite\Model\State')->findByCode($val);
+                        $state = \XLite\Core\Database::getRepo('\XLite\Model\State')->findByCode($val);
                         if (!$state) {
-                            $state = \XLite\Core\Database::getRepo('XLite\Model\State')->findByState($val);
+                            $state = \XLite\Core\Database::getRepo('\XLite\Model\State')->findByState($val);
                         }
         
                         $state_code = $state ? $state->state_id : -1;

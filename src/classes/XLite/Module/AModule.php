@@ -59,7 +59,7 @@ abstract class AModule
     protected function getModuleName()
     {
         if (!preg_match('/XLite\\\Module\\\(\w+)\\\Main/S', get_class($this), $matches)) {
-            // TODO - add throw exception
+            // TODO - throw exception
         }
 
         return $matches[1];

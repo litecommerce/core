@@ -34,7 +34,7 @@ namespace XLite\Model;
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
- * @Entity (repositoryClass="XLite\Model\Repo\LanguageLabel")
+ * @Entity (repositoryClass="\XLite\Model\Repo\LanguageLabel")
  * @Table (name="language_labels")
  */
 class LanguageLabel extends \XLite\Model\Base\I18n

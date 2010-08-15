@@ -66,7 +66,7 @@ class Category extends \XLite\View\ItemsList\Product\Customer\ACustomer
     /**
      * getCategory 
      * 
-     * @return XLite\Model\Category
+     * @return \XLite\Model\Category
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0

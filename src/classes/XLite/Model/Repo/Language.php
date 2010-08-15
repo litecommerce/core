@@ -260,7 +260,7 @@ class Language extends \XLite\Model\Repo\Base\I18n
     public function getDefaultLanguage()
     {
         if (!isset($this->defaultLanguage)) {
-            $this->defaultLanguage = \XLite\Core\Database::getRepo('XLite\Model\Language')
+            $this->defaultLanguage = \XLite\Core\Database::getRepo('\XLite\Model\Language')
                 ->findOneByCode('en');
 
             if (!$this->defaultLanguage) {

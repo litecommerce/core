@@ -72,7 +72,7 @@ class ModifyOptionGroup extends \XLite\View\AView
     /**
      * Get option group 
      * 
-     * @return XLite\Module\ProductOptions\Model\OptionGroup
+     * @return \XLite\Module\ProductOptions\Model\OptionGroup
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -81,7 +81,7 @@ class ModifyOptionGroup extends \XLite\View\AView
     {
         if (!isset($this->group)) {
             if (\XLite\Core\Request::getInstance()->groupId) {
-                $this->group = \XLite\Core\Database::getRepo('XLite\Module\ProductOptions\Model\OptionGroup')
+                $this->group = \XLite\Core\Database::getRepo('\XLite\Module\ProductOptions\Model\OptionGroup')
                     ->find(\XLite\Core\Request::getInstance()->groupId);
             }
 

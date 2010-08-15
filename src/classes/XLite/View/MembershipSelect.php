@@ -87,7 +87,7 @@ class MembershipSelect extends \XLite\View\FormField
      */
     public function getMemberships()
     {
-        return \XLite\Core\Database::getRepo('XLite\Model\Membership')->findActiveMemberships();
+        return \XLite\Core\Database::getRepo('\XLite\Model\Membership')->findActiveMemberships();
     }
 
 }

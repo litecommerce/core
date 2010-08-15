@@ -76,7 +76,7 @@ class Categories extends \XLite\Controller\Admin\Catalog
         }
 
         $errorData = array();
-        $integritySuccess = \XLite\Core\Database::getRepo('XLite\Model\Category')->checkTreeIntegrity($errorData);
+        $integritySuccess = \XLite\Core\Database::getRepo('\XLite\Model\Category')->checkTreeIntegrity($errorData);
 
         if (!$integritySuccess) {
             \XLite\Core\TopMessage::getInstance()->add(
@@ -98,7 +98,7 @@ class Categories extends \XLite\Controller\Admin\Catalog
      */
     public function getCategories($categoryId = null)
     {
-        return \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategories($categoryId ?: $this->getCategoryId());
+        return \XLite\Core\Database::getRepo('\XLite\Model\Category')->getCategories($categoryId ?: $this->getCategoryId());
     }
 
     /**
@@ -133,7 +133,7 @@ class Categories extends \XLite\Controller\Admin\Catalog
     public function getCategory($categoryId = null)
     {
         if (!isset($this->category[$categoryId])) {
-            $this->category[$categoryId] = \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategory($categoryId ?: $this->getCategoryId());
+            $this->category[$categoryId] = \XLite\Core\Database::getRepo('\XLite\Model\Category')->getCategory($categoryId ?: $this->getCategoryId());
         }
 
         return $this->category[$categoryId];
@@ -151,7 +151,7 @@ class Categories extends \XLite\Controller\Admin\Catalog
      */
     public function getParentCategory($categoryId = null)
     {
-        return \XLite\Core\Database::getRepo('XLite\Model\Category')->getParentCategory($categoryId ?: $this->getCategoryId());
+        return \XLite\Core\Database::getRepo('\XLite\Model\Category')->getParentCategory($categoryId ?: $this->getCategoryId());
     }
 
     /**
@@ -166,7 +166,7 @@ class Categories extends \XLite\Controller\Admin\Catalog
      */
     public function isCategoryLeafNode($categoryId = null)
     {
-        return \XLite\Core\Database::getRepo('XLite\Model\Category')->isCategoryLeafNode($categoryId ?: $this->getCategoryId());
+        return \XLite\Core\Database::getRepo('\XLite\Model\Category')->isCategoryLeafNode($categoryId ?: $this->getCategoryId());
     }
 
     /**
@@ -179,7 +179,7 @@ class Categories extends \XLite\Controller\Admin\Catalog
      */
     public function getMemberships()
     {
-        return \XLite\Core\Database::getRepo('XLite\Model\Membership')->findAllMemberships();
+        return \XLite\Core\Database::getRepo('\XLite\Model\Membership')->findAllMemberships();
     }
 
     /**
@@ -258,11 +258,11 @@ class Categories extends \XLite\Controller\Admin\Catalog
             $redirectParam = '&category_id=' . $categoryId;
 
         } else {
-            $parentCategory = \XLite\Core\Database::getRepo('XLite\Model\Category')->getParentCategory($categoryId);
+            $parentCategory = \XLite\Core\Database::getRepo('\XLite\Model\Category')->getParentCategory($categoryId);
             $redirectParam = (!is_null($parentCategory) ? '&category_id=' . $parentCategory->getCategoryId() : '');
         }
 
-        \XLite\Core\Database::getRepo('XLite\Model\Category')->deleteCategory($categoryId, $subcategoriesOnly);
+        \XLite\Core\Database::getRepo('\XLite\Model\Category')->deleteCategory($categoryId, $subcategoriesOnly);
 
         $this->redirect('admin.php?target=categories' . $redirectParam);
     }
@@ -280,7 +280,7 @@ class Categories extends \XLite\Controller\Admin\Catalog
         $categoryId = $this->getCategoryId();
         $move2CategoryId = \XLite\Core\Request::getInstance()->moveTo;
 
-        \XLite\Core\Database::getRepo('XLite\Model\Category')->moveNode($categoryId, $move2CategoryId);
+        \XLite\Core\Database::getRepo('\XLite\Model\Category')->moveNode($categoryId, $move2CategoryId);
 
         $this->redirect('admin.php?target=categories');
     }
@@ -298,7 +298,7 @@ class Categories extends \XLite\Controller\Admin\Catalog
         $categoryId = $this->getCategoryId();
         $move2CategoryId = \XLite\Core\Request::getInstance()->moveTo;
 
-        \XLite\Core\Database::getRepo('XLite\Model\Category')->moveNode($categoryId, $move2CategoryId, true);
+        \XLite\Core\Database::getRepo('\XLite\Model\Category')->moveNode($categoryId, $move2CategoryId, true);
 
         $this->redirect('admin.php?target=categories');
     }
@@ -315,7 +315,7 @@ class Categories extends \XLite\Controller\Admin\Catalog
     {
         $result = array();
 
-        $categoryPath = \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategoryPath($this->getCategoryId());
+        $categoryPath = \XLite\Core\Database::getRepo('\XLite\Model\Category')->getCategoryPath($this->getCategoryId());
 
         if (is_array($categoryPath)) {
             

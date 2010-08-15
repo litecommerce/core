@@ -108,7 +108,7 @@ class OrderHistory extends \XLite\Model\AModel
 
         if (
             $this->config->AOM->cc_info_history
-            && \XLite\Core\Database::getRepo('XLite\Model\Module')->isModuleActive('AdvancedSecurity')
+            && \XLite\Core\Database::getRepo('\XLite\Model\Module')->isModuleActive('AdvancedSecurity')
             && \XLite::isAdminZone()
             && $this->config->AdvancedSecurity->gpg_crypt_db
         ) {

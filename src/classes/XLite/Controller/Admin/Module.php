@@ -57,7 +57,7 @@ class Module extends \XLite\Controller\Admin\AAdmin
      */
     public function getOptions()
     {
-        return \XLite\Core\Database::getRepo('XLite\Model\Config')->getByCategory($this->page, true, true);
+        return \XLite\Core\Database::getRepo('\XLite\Model\Config')->getByCategory($this->page, true, true);
     }
 
     /**
@@ -88,7 +88,7 @@ class Module extends \XLite\Controller\Admin\AAdmin
                     $value = trim($value);
             }
 
-            \XLite\Core\Database::getRepo('XLite\Model\Config')->createOption(
+            \XLite\Core\Database::getRepo('\XLite\Model\Config')->createOption(
                 array(
                     'category' => $this->page,
                     'name'     => $name,
