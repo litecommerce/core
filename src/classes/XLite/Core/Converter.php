@@ -258,25 +258,6 @@ class Converter extends \XLite\Base\Singleton
     }
 
     /**
-     * Return array elements having the corresponded keys
-     * 
-     * @param array $data   array to filter
-     * @param array $keys   keys (filter rule)
-     * @param bool  $invert flag; determines which function to use: "diff" or "intersect"
-     *  
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function filterArrayByKeys(array $data, array $keys, $invert = false)
-    {
-        $function = 'array_' . ($invert ? 'diff' : 'intersect') . '_key';
-
-        return $function($data, array_fill_keys($keys, true));
-    }
-
-    /**
      * Generate random token (32 chars)
      * 
      * @return string
