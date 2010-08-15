@@ -172,15 +172,6 @@ class Decorator extends Decorator\ADecorator
     protected $classDecorators = array();
 
     /**
-     * List of active modules 
-     * 
-     * @var    array
-     * @access protected
-     * @since  3.0
-     */
-    protected $activeModules = null;
-
-    /**
      * List of module dependencies 
      * 
      * @var    array
@@ -598,22 +589,6 @@ class Decorator extends Decorator\ADecorator
     }
 
     /**
-     * Retrieve module name from class name 
-     * 
-     * @param string $className class name to parse
-     *  
-     * @return string|null
-     * @access protected
-     * @since  3.0
-     */
-    protected function getModuleNameByClassName($className)
-    {
-        return (preg_match('/\\\XLite\\\Module\\\(\w+)(\\\|$)/Ss', $className, $matches) && 'AModule' !== $matches[1])
-            ? $matches[1]
-            : null;
-    }
-
-    /**
      * Parse class file and return class info 
      * 
      * @param string $filePath file name and path
@@ -638,10 +613,11 @@ class Decorator extends Decorator\ADecorator
             $result[3] = (bool)preg_match(self::CLASS_ENTITY_PATTERN, $result[4]);
 
             // Namespace
-            if (preg_match('/^namespace (\S+);/Sm', $data, $m)) {
-                $result[5] = substr($m[1], 0, 1) == '\\'
-                    ? substr($m[1], 1)
-                    : $m[1];
+            if (!empty($result[0]) && preg_match('/^namespace (\S+);/Sm', $data, $m)) {
+                $namespace = substr($m[1], 0, 1) == '\\' ? substr($m[1], 1) : $m[1];
+                if (!empty($namespace)) {
+                    $result[0] = '\\' . $namespace . '\\' . $result[0];
+                }
             }
         }
 
@@ -676,82 +652,6 @@ class Decorator extends Decorator\ADecorator
     }
 
     /**
-     * Return list of modules whitch are not allowed to be enbled at one time
-     * 
-     * @return array
-     * @access protected
-     * @since  3.0
-     */
-    protected function getMutualModules()
-    {
-        if (!isset($this->mutualModules)) {
-
-            $this->mutualModules = \Includes\Utils\Database::fetchAll(
-                'SELECT name, mutual_modules FROM xlite_modules WHERE enabled = \'1\' AND mutual_modules != \'\'',
-                \PDO::FETCH_ASSOC | \PDO::FETCH_GROUP | \PDO::FETCH_UNIQUE | \PDO::FETCH_COLUMN
-            );
-
-            foreach ($this->mutualModules as &$module) {
-                $module = explode(',', $module);
-            }
-        }
-
-        return $this->mutualModules;
-    }
-
-    /**
-     * Return list of active modules 
-     * 
-     * @return array
-     * @access protected
-     * @since  3.0
-     */
-    protected function getActiveModules($moduleName = null)
-    {
-        if (!isset($this->activeModules)) {
-
-            $this->activeModules = \Includes\Utils\Database::fetchAll(
-                'SELECT name, \'1\' FROM xlite_modules WHERE enabled = \'1\'',
-                \PDO::FETCH_ASSOC | \PDO::FETCH_GROUP | \PDO::FETCH_UNIQUE | \PDO::FETCH_COLUMN
-            );
-
-            $modulesToDisable = array();
-
-            foreach ($this->getMutualModules() as $module => $dependencies) {
-                if (isset($this->activeModules[$module])) {
-                    $this->activeModules = array_diff_key($this->activeModules, array_flip($dependencies));
-                    $modulesToDisable = array_merge($modulesToDisable, array_values($dependencies));
-                }
-            }
-
-            if (!empty($modulesToDisable)) {
-                $modulesToDisable = array_unique($modulesToDisable);
-                $query = 'UPDATE xlite_modules SET enabled = \'0\' WHERE name IN '
-                    . '(' . implode(',', array_fill(0, count($modulesToDisable), '?')) . ')';
-                \Includes\Utils\Database::execute($query, $modulesToDisable);
-            }
-        }
-
-        return isset($moduleName)
-            ? isset($this->activeModules[$moduleName])
-            : $this->activeModules;
-    }
-
-    /**
-     * Check if module is active 
-     * 
-     * @param string $moduleName module to check
-     *  
-     * @return bool
-     * @access protected
-     * @since  3.0
-     */
-    protected function isActiveModule($moduleName)
-    {
-        return !isset($moduleName) || $this->getActiveModules($moduleName);
-    }
-
-    /**
      * Return list of <module_name> => <dependend_module_1>, <dependend_module_2>, ..., <dependend_module_N>
      * 
      * @return array
@@ -764,7 +664,7 @@ class Decorator extends Decorator\ADecorator
 
             $this->moduleDependencies = array();
 
-            foreach ($this->getActiveModules() as $module) {
+            foreach (\Includes\Decorator\Utils\ModulesManager::getActiveModules() as $module) {
 
                 // Fetch dependencies from db
                 $dependencies = \Includes\Utils\Database::fetchColumn(
@@ -866,34 +766,25 @@ class Decorator extends Decorator\ADecorator
             $filePath = $fileInfo->getPathname();
 
             // Parse file and get class info
-            list($class, $extends, $implements, $isEntity, $classComment, $namespace) = $this->getClassInfo($filePath);
-
-            $key = $class;
-            if ($namespace) {
-                $key = '\\' . $namespace . '\\' . $key;
-            }
+            list($class, $extends, $implements, $isEntity, $classComment) = $this->getClassInfo($filePath);
 
             // Check classes for active modules only
             // Do not include class into cache if parent defined in currently disabled module
-            if (
-                !empty($class)
-                && $this->isActiveModule($this->getModuleNameByClassName($key))
-                && (empty($extends) || $this->isActiveModule($this->getModuleNameByClassName($extends)))
-            ) {
+            if (\Includes\Decorator\Utils\ModulesManager::checkClass($class, $extends)) {
 
                 // Get path related to the "LC_CLASSES_DIR" directory
                 $relativePath = preg_replace('/^' . preg_quote(LC_CLASSES_DIR, '/') . '(.*)\.php$/i', '$1.php', $filePath);
 
                 // Class defined in current PHP file has a wrong name (not corresponded to file name)
-                if (isset($this->classesInfo[$key])) {
-                    echo (sprintf(self::CLASS_ALREADY_DEFINED_MSG, $key, $relativePath));
+                if (isset($this->classesInfo[$class])) {
+                    echo (sprintf(self::CLASS_ALREADY_DEFINED_MSG, $class, $relativePath));
                     die (4);
                 }
 
                 // Save data
-                $this->classesInfo[$key] = array(
+                $this->classesInfo[$class] = array(
                     self::INFO_FILE          => $relativePath,
-                    self::INFO_CLASS_ORIG    => $key,
+                    self::INFO_CLASS_ORIG    => $class,
                     self::INFO_EXTENDS       => $extends,
                     self::INFO_EXTENDS_ORIG  => $extends,
                     self::INFO_IS_DECORATOR  => $this->isDecorator($implements),
@@ -902,15 +793,15 @@ class Decorator extends Decorator\ADecorator
                 );
 
                 if ($this->isViewChild($classComment)) {
-                    $this->viewListChilds[$relativePath] = $key;
+                    $this->viewListChilds[$relativePath] = $class;
                 }
 
                 if ($this->isPatcher($implements)) {
-                    $this->templatePatches[] = $key;
+                    $this->templatePatches[] = $class;
                 }
 
                 if ($this->isMultilang($extends)) {
-                    $this->multilangs[] = $key;
+                    $this->multilangs[] = $class;
                 }
     
                 if ($classComment || !preg_match(self::INTERFACE_COMMENT_PATTERN, file_get_contents($filePath))) {
@@ -944,7 +835,7 @@ class Decorator extends Decorator\ADecorator
 
                 // Error - such controller is already defined in LC core or in other module
                 if (isset($this->classesInfo[$newClass])) {
-                    echo (sprintf(self::CONTROLLER_ERR_MSG, $this->getModuleNameByClassName($class), $class));
+                    echo (sprintf(self::CONTROLLER_ERR_MSG, \Includes\Decorator\Utils\ModulesManager::getModuleNameByClassName($class), $class));
                     die (1);
                 }
 
@@ -985,7 +876,7 @@ class Decorator extends Decorator\ADecorator
 
                 // Save class name and its priority (equals to module priority)
                 $this->classDecorators[$info[self::INFO_EXTENDS]][$class] = $this->getModulePriority(
-                    $this->getModuleNameByClassName($class)
+                    \Includes\Decorator\Utils\ModulesManager::getModuleNameByClassName($class)
                 );
             }
 
@@ -1830,7 +1721,7 @@ DATA;
                 if (
                     !empty($pathInfo['extension'])
                     && 'tpl' === strtolower($pathInfo['extension'])
-                    && (!preg_match($pattern, $fileInfo->getPathname(), $match) || $this->getActiveModules($match[1]))
+                    && (!preg_match($pattern, $fileInfo->getPathname(), $match) || \Includes\Decorator\Utils\ModulesManager::getActiveModules($match[1]))
                 ) {
                     $this->collectTemplateLists($fileInfo->getPathname());
                 }

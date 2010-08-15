@@ -39,6 +39,7 @@ class ArrayManager extends AUtils
 {
     /**
      * Check if passed has no duplicate elements (except of the "skip" ones)
+     * TODO:  to improve
      * 
      * @param array  $array       array to check
      * @param string &$firstValue first duplicated value
@@ -64,5 +65,25 @@ class ArrayManager extends AUtils
         }
 
         return $result;
+    }
+
+    /**
+     * Return array elements having the corresponded keys
+     *
+     * @param array $data   array to filter
+     * @param array $keys   keys (filter rule)
+     * @param bool  $invert flag; determines which function to use: "diff" or "intersect"
+     *
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function filterArrayByKeys(array $data, array $keys, $invert = false)
+    {
+        return call_user_func_array(
+            'array_' . ($invert ? 'diff' : 'intersect') . '_key',
+            array($data, array_fill_keys($keys, true))
+        );
     }
 }

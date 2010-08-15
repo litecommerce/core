@@ -43,21 +43,37 @@ class Converter extends AUtils
      * @param array  $data      data to use
      * @param string $glue      string to add between param name and value
      * @param string $separator string to separate <name,value> pairs
+     * @param string $quotes    char (string) to quote the value
      *  
      * @return string
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function buildQuery(array $data, $glue = '=', $separator = '&')
+    public static function buildQuery(array $data, $glue = '=', $separator = '&', $quotes = '')
     {
         $result = array();
 
         foreach ($data as $name => $value) {
-            $result[] = $name . $glue . $value;
+            $result[] = $name . $glue . $quotes . $value . $quotes;
         }
 
         return implode($separator, $result);
+    }
+
+    /**
+     * Generate SQL query string
+     *
+     * @param array  $data      data to use
+     *
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function buildSQLQuery(array $data)
+    {
+        return static::buildQuery($data, '=', ',', '\'');
     }
 
     /**
