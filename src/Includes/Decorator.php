@@ -666,6 +666,8 @@ class Decorator extends Decorator\ADecorator
 
             foreach (\Includes\Decorator\Utils\ModulesManager::getActiveModules() as $module) {
 
+                $module = $module['name'];
+
                 // Fetch dependencies from db
                 $dependencies = \Includes\Utils\Database::fetchColumn(
                     'SELECT dependencies FROM xlite_modules WHERE name = \'' . addslashes($module) . '\''
