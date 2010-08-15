@@ -54,7 +54,8 @@ class ShippingSettings extends \XLite\View\Tabs\ATabs
         ),
         'shipping_zones' => array(
             'title' => 'Zones',
-            'template' => 'shipping/zones.tpl',
+            'template' => 'shipping/zones/main.tpl',
+            'jsFiles' => 'zone_edit.js'
         ),
         'shipping_rates' => array(
             'title' => 'Rates',
@@ -101,7 +102,6 @@ class ShippingSettings extends \XLite\View\Tabs\ATabs
         return $this->_shippings;
     }
 
-
     /**
      * Returns a list of modules defining shipping methods
      * 
@@ -115,5 +115,46 @@ class ShippingSettings extends \XLite\View\Tabs\ATabs
         return \XLite\Model\Shipping::getModules();
     }
 
+    /**
+     * Check if zone details page should be displayed
+     * 
+     * @return bool
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isDisplayZoneDetails()
+    {
+        return 'add' == \XLite\Core\Request::getInstance()->mode
+            || isset(\XLite\Core\Request::getInstance()->zoneid);
+    }
+
+    /**
+     * getZone 
+     * 
+     * @return \XLite\Model\Zone
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getZone()
+    {
+        if (isset(\XLite\Core\Request::getInstance()->zoneid)) {
+            $zone = \XLite\Core\Database::getRepo('XLite\Model\Zone')
+                ->getZone(\XLite\Core\Request::getInstance()->zoneid);
+
+            if (!isset($zone)) {
+                \XLite\Core\TopMessage::getInstance()->add(
+                    'Requested zone does not exists',
+                    \XLite\Core\TopMessage::ERROR
+                );
+            }
+
+        } else {
+            $zone = new \XLite\Model\Zone();
+        }
+
+        return $zone;
+    }
 
 }

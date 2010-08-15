@@ -32,13 +32,27 @@ UPDATE xlite_modules SET enabled = '1' WHERE name IN (
 -- Test gift certificate
 INSERT INTO xlite_giftcerts VALUES ('TESTGIFT',1,'Mr. Guest Guest','123','E','demo@litecommerce.com','','','','','0','','','','','','50.00','50.00','A',1270203328,1332411328,0,'','','no_border',NULL);
 
--- Featured products
-INSERT INTO xlite_featured_products VALUES (4006,0,10);
-INSERT INTO xlite_featured_products VALUES (3002,0,20);
-INSERT INTO xlite_featured_products VALUES (4059,0,30);
-INSERT INTO xlite_featured_products VALUES (4043,0,40);
-INSERT INTO xlite_featured_products VALUES (4020,0,50);
+INSERT INTO xlite_zones VALUES (1,'United States area');
+INSERT INTO xlite_zone_elements VALUES (1,1,'US','C');
 
+INSERT INTO xlite_zones VALUES (2,'New York area');
+INSERT INTO xlite_zone_elements VALUES (2,2,'US','C');
+INSERT INTO xlite_zone_elements VALUES (3,2,'US_NY','S');
+INSERT INTO xlite_zone_elements VALUES (4,2,'New York','T');
+INSERT INTO xlite_zone_elements VALUES (5,2,'NY','T');
+INSERT INTO xlite_zone_elements VALUES (6,2,'101%','Z');
+INSERT INTO xlite_zone_elements VALUES (7,2,'102%','Z');
 
+INSERT INTO xlite_zones VALUES (3,'California area');
+INSERT INTO xlite_zone_elements VALUES (8,3,'US','C');
+INSERT INTO xlite_zone_elements VALUES (9,3,'US_CA','S');
+INSERT INTO xlite_zone_elements VALUES (10,3,'9%','Z');
 
+INSERT INTO xlite_zones VALUES (4,'Europe');
+INSERT INTO xlite_zone_elements VALUES (11,4,'DE','C');
+INSERT INTO xlite_zone_elements VALUES (12,4,'GB','C');
+INSERT INTO xlite_zone_elements VALUES (13,4,'FR','C');
+INSERT INTO xlite_zone_elements VALUES (14,4,'ES','C');
+
+INSERT INTO xlite_zones VALUES (5,'Atlantida');
 

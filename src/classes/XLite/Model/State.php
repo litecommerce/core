@@ -86,17 +86,6 @@ class State extends \XLite\Model\AEntity
     protected $country_code;
 
     /**
-     * Shipping zone id
-     * 
-     * @var    integer
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     * @Column (type="integer", length="11", nullable=false)
-     */
-    protected $shipping_zone = 0;
-
-    /**
      * Country (relation)
      * 
      * @var    \XLite\Model\Country

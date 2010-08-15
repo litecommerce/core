@@ -46,7 +46,7 @@
 			<td>
 				<select name="rate[{k}][shipping_zone]">
 				<option value="-1">All shipping zones</option>
-				<option FOREACH="xlite.factory.\XLite\Model\ShippingZone.findAll(),zone" value="{zone.shipping_zone}" selected="{rate.shipping_zone=zone.shipping_zone}">{zone.name}</option>
+				<option FOREACH="getShippingZones(),zone" value="{zone.getZoneId()}" selected="{rate.shipping_zone=zone.getZoneId()}">{zone.getZoneName()}</option>
 				</select>
 			</td>
 			<td>Order total<br><input name="rate[{k}][min_total]" size="9" value="{rate.min_total}">&nbsp;-&nbsp;<input name="rate[{k}][max_total]" size="9" value="{rate.max_total}"></td>
@@ -104,7 +104,7 @@
 		<td>
 			<select name="shipping_zone">
 			<option value="-1">All shipping zones</option>
-			<option FOREACH="xlite.factory.\XLite\Model\ShippingZone.findAll(),zone" value="{zone.shipping_zone}">{zone.name}</option>
+			<option FOREACH="getShippingZones(),zone" value="{zone.getZoneId()}">{zone.getZoneName()}</option>
 			</select>
 		</td>
 		<td>Order total<br><input name="min_total" size="9" value="0">&nbsp;-&nbsp;<input name="max_total" size="9" value="999999"></td>

@@ -47,6 +47,29 @@ class ShippingRates extends \XLite\Controller\Admin\AAdmin
         return "shipping/charges.tpl";
     }
 
+    /**
+     * getShippingZones 
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getShippingZones()
+    {
+        if (!isset($this->zones)) {
+    
+            $this->zones = \XLite\Core\Database::getRepo('XLite\Model\Zone')->getZones();
+
+            $defaultZone = new \XLite\Model\Zone();
+            $defaultZone->setZoneName('Default zone');
+
+            array_unshift($this->zones, $defaultZone);
+        }
+
+        return $this->zones;
+    }
+
     function getShippingRates()
     {
         // read select condition from the request

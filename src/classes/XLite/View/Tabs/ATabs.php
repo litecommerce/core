@@ -250,6 +250,33 @@ abstract class ATabs extends \XLite\View\AView
     }
 
     /**
+     * Register JS files
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getJSFiles()
+    {
+        $list = parent::getJSFiles();
+
+        $tab = $this->getSelectedTab();
+
+        if (isset($tab) && isset($tab['jsFiles']) && !empty($tab['jsFiles'])) {
+            if (is_array($tab['jsFiles'])) {
+                $list = array_merge($list, $tab['jsFiles']);
+
+            } else {
+                $list[] = $tab['jsFiles'];
+            }
+        }
+
+        return $list;
+    }
+
+
+    /**
      * Checks whether no widget class is specified for the selected tab
      * 
      * @return boolean
