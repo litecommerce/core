@@ -119,14 +119,12 @@ CREATE TABLE xlite_countries (
   charset varchar(32) NOT NULL default 'iso-8859-1',
   enabled int(1) NOT NULL default '1',
   eu_member char(1) NOT NULL default 'N',
-  shipping_zone int(11) NOT NULL default '0',
   PRIMARY KEY  (code),
   KEY country (country),
   KEY language (language),
   KEY charset (charset),
   KEY enabled (enabled),
-  KEY eu_member (eu_member),
-  KEY shipping_zone (shipping_zone)
+  KEY eu_member (eu_member)
 ) TYPE=MyISAM;
 
 DROP TABLE IF EXISTS xlite_log;
@@ -491,12 +489,10 @@ CREATE TABLE xlite_states (
   state_id int(11) NOT NULL auto_increment,
   state varchar(32) NOT NULL default '',
   code varchar(32) NOT NULL default '',
-  shipping_zone int(11) NOT NULL default '0',
   country_code char(2) NOT NULL default '',
   PRIMARY KEY  (state_id),
   KEY code (code,country_code),
-  KEY state (state),
-  KEY shipping_zone (shipping_zone)
+  KEY state (state)
 ) TYPE=MyISAM;
 
 DROP TABLE IF EXISTS xlite_upgrades;
@@ -614,4 +610,24 @@ CREATE TABLE xlite_membership_translations (
   KEY ci (code, id),
   KEY i (id)
 ) TYPE=MyISAM;
+
+DROP TABLE IF EXISTS xlite_zones;
+CREATE TABLE xlite_zones (
+  zone_id int(11) NOT NULL auto_increment,
+  zone_name varchar(64) NOT NULL default '',
+  PRIMARY KEY  (zone_id),
+  KEY zone_name (zone_name)
+) TYPE=MyISAM;
+
+DROP TABLE IF EXISTS xlite_zone_elements;
+CREATE TABLE xlite_zone_elements (
+  element_id int(11) NOT NULL auto_increment,
+  zone_id int(11) NOT NULL default '0',
+  element_value varchar(255) NOT NULL default '',
+  element_type char(1) NOT NULL default '',
+  PRIMARY KEY  (element_id),
+  KEY type_value (element_type,element_value),
+  KEY id_type (zone_id,element_type)
+) TYPE=MyISAM;
+
 

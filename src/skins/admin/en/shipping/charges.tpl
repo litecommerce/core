@@ -95,7 +95,7 @@ and cannot be edited.
 		<td>
 			<select name="shipping_zone_range" onChange="document.charges_methods.submit();">
 			<option value="">All shipping zones</option>
-			<option FOREACH="xlite.factory.\XLite\Model\ShippingZone.findAll(),zone" value="{zone.shipping_zone}" selected="{isSelected(zone,#shipping_zone#,shipping_zone_range)}">{zone.name}</option>
+			<option FOREACH="getShippingZones(),zone" value="{zone.getZoneId()}" selected="{isSelected(zone,#shipping_zone#,shipping_zone_range)}">{zone.getZoneName()}</option>
 			</select>
 		</td>
 	</tr>

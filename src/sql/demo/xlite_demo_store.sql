@@ -692,3 +692,11 @@ INSERT INTO xlite_product_detailed_images SET `id` = '4024', `alt` = 'Close Up',
 INSERT INTO xlite_product_detailed_images SET `id` = '4024', `alt` = 'Jedi Gettin\' Tough', `orderby` = '3', `path` = 'demo_store_d4024_4.jpeg', `height` = '402', `width` = '400', `mime` = 'image/jpeg', `size` = '60090', `enabled` = 1;
 INSERT INTO xlite_product_detailed_images SET `id` = '4024', `alt` = 'Stuffed Backpack', `orderby` = '4', `path` = 'demo_store_d4024_5.jpeg', `height` = '421', `width` = '400', `mime` = 'image/jpeg', `size` = '26850', `enabled` = 1;
 INSERT INTO xlite_product_detailed_images SET `id` = '4024', `path` = 'demo_store_p4024.jpeg', `mime` = 'image/jpeg', `width` = '400', `height` = '454', `size` = '26961', `is_zoom` = 1, `orderby` = '-1', `enabled` = 1;
+
+-- Featured products
+INSERT INTO xlite_featured_products VALUES (4006,0,10);
+INSERT INTO xlite_featured_products VALUES (3002,0,20);
+INSERT INTO xlite_featured_products VALUES (4059,0,30);
+INSERT INTO xlite_featured_products VALUES (4043,0,40);
+INSERT INTO xlite_featured_products VALUES (4020,0,50);
+

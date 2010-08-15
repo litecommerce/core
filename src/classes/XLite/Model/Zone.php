@@ -39,21 +39,6 @@ namespace XLite\Model;
  */
 class Zone extends \XLite\Model\AEntity
 {
-    /*
-     * Zone element types
-     */
-    const ZONE_ELEMENT_COUNTRY = 'C';
-    const ZONE_ELEMENT_STATE   = 'S';
-    const ZONE_ELEMENT_TOWN    = 'T';
-    const ZONE_ELEMENT_ZIPCODE = 'Z';
-    const ZONE_ELEMENT_ADDRESS = 'A';
-
-    /*
-     * Zone types
-     */
-    const ZONE_SHIPPING = 'S';
-    const ZONE_TAX      = 'T';
-
     /**
      * Zone unique id 
      * 
@@ -65,7 +50,7 @@ class Zone extends \XLite\Model\AEntity
      * @GeneratedValue (strategy="AUTO")
      * @Column (type="integer", length="11", nullable=false)
      */
-    protected $zone_id;
+    protected $zone_id = 0;
 
     /**
      * Zone name
@@ -76,18 +61,7 @@ class Zone extends \XLite\Model\AEntity
      * @since  3.0.0
      * @Column (type="string", length="64", nullable=false)
      */
-    protected $zone_name;
-
-    /**
-     * Zone type (S - shipping zone, T - tax zone)
-     * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     * @Column (type="string", length="1", nullable=false)
-     */
-    protected $zone_type;
+    protected $zone_name = '';
 
     /**
      * Zone elements (relation)
@@ -102,30 +76,102 @@ class Zone extends \XLite\Model\AEntity
 
     /**
      * Get zone's countries list
-     * 
+     *
+     * @param bool $excluded Flag: true - get countries except zone countries
+     *
      * @return array
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getCountries()
+    public function getZoneCountries($excluded = false)
     {
-        return \XLite\Core\Database::getRepo('\XLite\Model\Zone')
-            ->getElements($this->getZoneId(), self::ZONE_ELEMENT_COUNTRY);
+        $zoneCountries = array();
+
+        $countryCodes = $this->getElementsByType(\XLite\Model\ZoneElement::ZONE_ELEMENT_COUNTRY);
+
+        if (!empty($countryCodes) || $excluded) {
+
+            $allCountries = \XLite\Core\Database::getRepo('XLite\Model\Country')->findAllCountries();
+
+            foreach ($allCountries as $key=>$country) {
+
+                $condition = in_array($country->getCode(), $countryCodes);
+
+                if ($condition && !$excluded || !$condition && $excluded) {
+                    $zoneCountries[] = $country;
+                }
+            }
+        }
+    
+        return $zoneCountries;
     }
 
     /**
      * Get zone's states list
      * 
+     * @param bool $excluded Flag: true - get states except zone states
+     *
      * @return array
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getStates()
+    public function getZoneStates($excluded = false)
     {
-        return \XLite\Core\Database::getRepo('\XLite\Model\Zone')
-            ->getElements($this->getZoneId(), self::ZONE_ELEMENT_STATE);
+        $zoneStates = array();
+
+        $stateCodes = $this->getElementsByType(\XLite\Model\ZoneElement::ZONE_ELEMENT_STATE);
+
+        if (!empty($stateCodes) || $excluded) {
+
+            $allStates = \XLite\Core\Database::getRepo('XLite\Model\State')->findAllStates();
+
+            usort($allStates, array('\XLite\Model\Zone', 'sortStates'));
+        
+            foreach ($allStates as $key=>$state) {
+
+                $condition = in_array($state->getCountryCode() . '_' . $state->getCode(), $stateCodes);
+
+                if ($condition && !$excluded || !$condition && $excluded) {
+                    $zoneStates[] = $state;
+                }
+            }
+        }
+    
+        return $zoneStates;
+    }
+
+    /**
+     * Comparison states function for usort()
+     * 
+     * @param \XLite\Model\State $a First state object
+     * @param \XLite\Model\State $b Second state object
+     *  
+     * @return int
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    static protected function sortStates($a, $b)
+    {
+        $aCountry = $a->getCountry()->getCountry();
+        $aState = $a->getState();
+
+        $bCountry = $b->getCountry()->getCountry();
+        $bState = $b->getState();
+
+        if ($aCountry == $bCountry && $aState == $bState) {
+            $result = 0;
+
+        } elseif ($aCountry == $bCountry) {
+            $result = ($aState > $bState) ? 1 : -1;
+
+        } else {
+            $result = ($aCountry > $bCountry) ? 1 : -1;
+        }
+
+        return $result;
     }
 
     /**
@@ -136,10 +182,9 @@ class Zone extends \XLite\Model\AEntity
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getCities()
+    public function getZoneCities()
     {
-        return \XLite\Core\Database::getRepo('\XLite\Model\Zone')
-            ->getElements($this->getZoneId(), self::ZONE_ELEMENT_TOWN);
+        return $this->getElementsByType(\XLite\Model\ZoneElement::ZONE_ELEMENT_TOWN);
     }
 
     /**
@@ -150,10 +195,9 @@ class Zone extends \XLite\Model\AEntity
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getZipCodes()
+    public function getZoneZipCodes()
     {
-        return \XLite\Core\Database::getRepo('\XLite\Model\Zone')
-            ->getElements($this->getZoneId(), self::ZONE_ELEMENT_ZIPCODE);
+        return $this->getElementsByType(\XLite\Model\ZoneElement::ZONE_ELEMENT_ZIPCODE);
     }
 
     /**
@@ -164,38 +208,220 @@ class Zone extends \XLite\Model\AEntity
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getAddresses()
+    public function getZoneAddresses()
     {
-        return \XLite\Core\Database::getRepo('\XLite\Model\Zone')
-            ->getElements($this->getZoneId(), self::ZONE_ELEMENT_ADDRESS);
+        return $this->getElementsByType(\XLite\Model\ZoneElement::ZONE_ELEMENT_ADDRESS);
     }
 
     /**
-     * getShippingZones 
+     * hasZoneElements 
      * 
+     * @return bool
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function hasZoneElements()
+    {
+        return $this->getZoneElements()->count() > 0;
+    }
+
+    /**
+     * Returns the list of zone elements by specified element type
+     * 
+     * @param string $elementType Element type
+     *  
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getElementsByType($elementType)
+    {
+        $result = array();
+
+        if ($this->hasZoneElements()) {
+
+            foreach ($this->getZoneElements() as $element) {
+                if ($elementType == $element->getElementType()) {
+                    $result[] = $element->getElementValue();
+                }
+            }
+        }
+    
+        return $result;
+    }
+
+    /**
+     * getZoneWeight 
+     * 
+     * @param mixed $address ____param_comment____
+     *  
      * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getShippingZones()
+    public function getZoneWeight($address)
     {
-        return \XLite\Core\Database::getRepo('\XLite\Model\Zone')
-            ->getZones(self::ZONE_SHIPPING);
+        $zoneWeight = 0;
+
+        $elementTypesData = \XLite\Model\ZoneElement::getElementTypesData();
+
+        if ($this->hasZoneElements()) {
+
+            foreach ($elementTypesData as $type => $data) {
+
+                $found = false;
+
+                $checkFuncName = 'checkZone' . $data['funcSuffix'];
+
+                // Get zone elements
+                $elements = $this->getElementsByType($type);
+
+                // Check if address field belongs to the elements
+                $found = $this->$checkFuncName($address, $elements);
+
+                if (!empty($elements) && $found) {
+                    // Increase the total zone weight
+                    $zoneWeight += $data['weight'];
+
+                } elseif ($data['required']) {
+                    // Break the comparing
+                    $zoneWeight = 0;
+                    break;
+                }
+            }
+        }
+
+        return $zoneWeight;
     }
 
     /**
-     * getTaxZones 
+     * checkZoneCountries 
      * 
+     * @param mixed $address  ____param_comment____
+     * @param mixed $elements ____param_comment____
+     *  
      * @return void
-     * @access public
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getTaxZones()
+    protected function checkZoneCountries($address, $elements)
     {
-        return \XLite\Core\Database::getRepo('\XLite\Model\Zone')
-            ->getZones(self::ZONE_TAX);
+        return isset($address['country'])
+            && !empty($elements)
+            && in_array($address['country'], $elements);
+    }
+
+    /**
+     * checkZoneStates 
+     * 
+     * @param mixed $address  ____param_comment____
+     * @param mixed $elements ____param_comment____
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function checkZoneStates($address, $elements)
+    {
+        return empty($elements)
+            || (
+                isset($address['country'])
+                && isset($address['state'])
+                && in_array($address['country'] . '_' . $address['state'], $elements)
+            );
+    }
+
+    /**
+     * checkZoneZipCodes 
+     * 
+     * @param mixed $address  ____param_comment____
+     * @param mixed $elements ____param_comment____
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function checkZoneZipCodes($address, $elements)
+    {
+        return empty($elements)
+            || (
+                isset($address['zipcode'])
+                && $this->checkMasks($address['zipcode'], $elements)
+            );
+    }
+
+    /**
+     * checkZoneCities 
+     * 
+     * @param mixed $address  ____param_comment____
+     * @param mixed $elements ____param_comment____
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function checkZoneCities($address, $elements)
+    {
+        return empty($elements)
+            || (
+                isset($address['city'])
+                && $this->checkMasks($address['city'], $elements)
+            );
+    }
+
+    /**
+     * checkZoneAddresses 
+     * 
+     * @param mixed $address  ____param_comment____
+     * @param mixed $elements ____param_comment____
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function checkZoneAddresses($address, $elements)
+    {
+        return empty($elements)
+            || (
+                isset($address['address'])
+                && $this->checkMasks($address['address'], $elements)
+            );
+    }
+
+    /**
+     * checkMasks 
+     * 
+     * @param mixed $value     ____param_comment____
+     * @param mixed $masksList ____param_comment____
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function checkMasks($value, $masksList)
+    {
+        $found = false;
+
+        foreach ($masksList as $mask) {
+
+            $mask = str_replace('%', '.*', preg_quote($mask));
+
+            if (preg_match('/' . $mask . '/', $value)) {
+                $found = true;
+                break;
+            }
+        }
+
+        return $found;
     }
 
 }

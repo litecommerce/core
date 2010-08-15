@@ -108,17 +108,6 @@ class Country extends \XLite\Model\AEntity
     protected $eu_member = false;
 
     /**
-     * Country shipping zone
-     * 
-     * @var    integer
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     * @Column (type="integer", length="11", nullable=false)
-     */
-    protected $shipping_zone = 0;
-
-    /**
      * States (relation)
      * 
      * @var    \Doctrine\Common\Collections\ArrayCollection

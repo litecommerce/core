@@ -50,7 +50,6 @@ class Zone extends \XLite\Model\Repo\ARepo
         $list = parent::defineCacheCells();
 
         $list['all'] = array(
-            self::ATTRS_CACHE_CELL    => array('zone_type'),
             self::RELATION_CACHE_CELL => array('\XLite\Model\Zone'),
         );
 
@@ -63,215 +62,106 @@ class Zone extends \XLite\Model\Repo\ARepo
     }
 
     /**
-     * getElements 
-     * 
-     * @param mixed $zoneId          ____param_comment____
-     * @param mixed $zoneElementType ____param_comment____
-     *  
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getElements($zoneId, $zoneElementType)
-    {
-        return $this->defineGetElements($zoneId, $zoneElementType)->getQuery()->getResult();
-    }
-
-    /**
-     * defineGetElements 
-     * 
-     * @param mixed $zoneId          ____param_comment____
-     * @param mixed $zoneElementType ____param_comment____
-     *  
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function defineGetElements($zoneId, $zoneElementType)
-    {
-        return $this->createQueryBuilder()
-            ->addSelect('ze')
-            ->andWhere('z.zone_id = :zoneId')
-            ->andWhere('ze.field_type = :fieldType')
-            ->leftJoin('z.zone_element', 'ze')
-            ->orderBy('ze.field')
-            ->setParameter('zoneId', $zoneId)
-            ->setParameter('fieldType', $zoneElementType);
-    }
-
-    /**
      * getZones 
      * 
-     * @param mixed $zoneId   ____param_comment____
-     * @param mixed $zoneType ____param_comment____
-     *  
      * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getZones($zoneType)
+    public function getZones()
     {
-        return $this->defineGetZones($zoneType)->getQuery()->getResult();
+        return $this->defineGetZones()->getQuery()->getResult();
     }
 
     /**
      * defineGetZones 
-     * 
-     * @param mixed $zoneType ____param_comment____
      *  
      * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function defineGetZones($zoneType)
+    protected function defineGetZones()
     {
         return $this->createQueryBuilder()
-            ->andWhere('z.zone_type = :zoneType')
-            ->orderBy('z.zone_name')
-            ->setParameter('zoneType', $zoneType);
+            ->orderBy('z.zone_name');
     }
 
-
-
-
-    public $isRead = true;
-
-    
-    function findAll($where = null, $orderby = null, $groupby = null, $limit = null)
+    /**
+     * getZone 
+     * 
+     * @param int $zoneId Zone Id
+     *  
+     * @return \XLite\Model\Zone
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getZone($zoneId)
     {
-        $states = $this->db->getTableByAlias('states');
-        $countries = $this->db->getTableByAlias('countries');
-        $array1 = $this->db->getAll("SELECT DISTINCT shipping_zone from $states order by shipping_zone");
-        $array2 = $this->db->getAll("SELECT DISTINCT shipping_zone from $countries order by shipping_zone");
-        $array = array_merge($array1, $array2); // state zones first
-        return $this->_zonesArray($array);
-    }
-
-    function findCountryZones()
-    {
-        $countries = $this->db->getTableByAlias('countries');
-        $array = $this->db->getAll("SELECT DISTINCT shipping_zone from $countries order by shipping_zone");
-        return $this->_zonesArray($array);
-    }
-
-    function findStateZones()
-    {
-        $states = $this->db->getTableByAlias('states');
-        $array = $this->db->getAll("SELECT DISTINCT shipping_zone from $states order by shipping_zone");
-        return $this->_zonesArray($array);
-    }
-
-    function _zonesArray($array)
-    {
-        $zones = array();
-        foreach ($array as $zone) {
-            $zone_object = new \XLite\Model\ShippingZone();
-            $zone_object->_updateProperties($zone);
-            $zones[$zone['shipping_zone']] = $zone_object;
-        }
-        if (!isset($zones[0])) {
-            $z = new \XLite\Model\ShippingZone();
-            $z->set('shipping_zone', 0);
-            $zones[0] = $z;
-        }
-        return $zones;
-    }
-
-    function find($where, $order = null)
-    {
-        $this->doDie("find() not applicable on ShippingZone");
-    }
-
-    function update($id, array $data)
-    {
-        $this->doDie("update() not applicable on ShippingZone");
-    }
-
-    function delete($id)
-    {
-        $this->doDie('Not implemented');
-    }
-
-    function create()
-    {
-        $states = $this->db->getTableByAlias('states');
-        $countries = $this->db->getTableByAlias('countries');
-        $max1 = $this->db->getOne("SELECT MAX(shipping_zone) from $states");
-        $max2 = $this->db->getOne("SELECT MAX(shipping_zone) from $countries");
-        $this->set('shipping_zone', max($max1, $max2)+1);
-    }
-
-    function hasCountries()
-    {
-        return 0 < count($this->getCountries());
-    }
-
-    function hasStates()
-    {
-        return 0 < count($this->getStates());
-    }
-
-    function setCountries($countries)
-    {
-        list($keys, $parameters) = \XLite\Core\Database::prepareArray($countries);
-        $list = \XLite\Core\Database::getQB()
-            ->select('c')
-            ->from('\XLite\Model\Country', 'c')
-            ->where('c.shipping_zone IN (' . implode(', ', $keys) . ')')
-            ->setParameters($parameters)
-            ->getQuery()
-            ->getResult();
-
-        foreach ($lists as $c)
-        {
-            $c->shipping_zone = $this->get('shipping_zone');
-            \XLite\Core\Database::getEM()->persist($c);
-        }
-        \XLite\Core\Database::getEM()->flush();
-
-        if (isset($this->countries)) {
-        	unset($this->countries);
-        }
-    }
-
-    function setStates($states)
-    {
-        $list = \XLite\Core\Database::getQB()
-            ->select('s')
-            ->from('\XLite\Model\State', 's')
-            ->where('s.state_id IN (:ids)')
-            ->setParameter('ids', $states)
-            ->getQuery()
-            ->getResult();
-                
-
-        foreach ($list as $s)
-        {
-            $s->shipping_zone = $this->get('shipping_zone');
-            \XLite\Core\Database::getEM()->persist('s');
+        try {
+            $zone = $this->defineGetZone($zoneId)->getQuery()->getSingleResult();
+        
+        } catch (\Doctrine\ORM\NoResultException $exception) {
+            $zone = null;
         }
 
-        \XLite\Core\Database::getEM()->flush();
-
-        if (isset($this->states)) {
-        	unset($this->states);
-        }
+        return $zone;
     }
 
-    function get($name)
+    /**
+     * defineGetZone
+     * 
+     * @param mixed $zoneId ____param_comment____
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineGetZone($zoneId)
     {
-        if ($name == "name") {
-            if ($this->get('shipping_zone') == 0) {
-                return "Default zone";
-            } else {
-                return "Zone ".$this->get('shipping_zone');
+        return $this->createQueryBuilder()
+            ->andWhere('z.zone_id = :zoneId')
+            ->setMaxResults(1)
+            ->setParameter('zoneId', $zoneId);
+    }
+
+    /**
+     * Get the zones list applicable to the specified address
+     * 
+     * @param array $address Address data
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getApplicableZones($address)
+    {
+        // Get all zones list
+        $allZones = $this->getZones();
+
+        $applicableZones = array();
+
+        // Get the list of zones that are applicable for address
+        foreach ($allZones as $zone) {
+
+            $zoneWeight = $zone->getZoneWeight($address);
+
+            if (0 < $zoneWeight) {
+                $applicableZones[$zoneWeight] = $zone;
             }
         }
-        return parent::get($name);
+
+        // Add default zone with zero weight
+        $applicableZones[0] = new \XLite\Model\Zone();
+
+        // Sort zones list by weight in reverse order
+        arsort($applicableZones, SORT_NUMERIC);
+
+        return $applicableZones;
     }
 
 }

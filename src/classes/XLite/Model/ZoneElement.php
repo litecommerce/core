@@ -34,42 +34,57 @@ namespace XLite\Model;
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
- * @Entity (repositoryClass="\XLite\Model\Repo\Zone")
- * @Table (name="zones")
+ * @Entity
+ * @Table (name="zone_elements")
  */
 class ZoneElement extends \XLite\Model\AEntity
 {
+    /*
+     * Zone element types
+     */
+    const ZONE_ELEMENT_COUNTRY = 'C';
+    const ZONE_ELEMENT_STATE   = 'S';
+    const ZONE_ELEMENT_TOWN    = 'T';
+    const ZONE_ELEMENT_ZIPCODE = 'Z';
+    const ZONE_ELEMENT_ADDRESS = 'A';
+
     /**
-     * Zone unique id 
+     * Unique zone element Id 
      * 
      * @var    integer
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      * @Id
+     * @GeneratedValue (strategy="AUTO")
+     * @Column (type="integer", length="11", nullable=false)
+     */
+    protected $element_id;
+
+    /**
+     * Zone Id 
+     * 
+     * @var    integer
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
      * @Column (type="integer", length="11", nullable=false)
      */
     protected $zone_id;
 
     /**
-     * Field (element value), e.g. 'US', 'US_NY', 'New Y%' etc
+     * Zone element value, e.g. 'US', 'US_NY', 'New Y%' etc
      * 
      * @var    string
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @Id
      * @Column (type="string", length="255", nullable=false)
      */
-    protected $field;
+    protected $element_value;
 
     /**
-     * Field type:
-     *   C - country code
-     *   S - state code (with country code as a prefix)
-     *   T - town/city mask
-     *   Z - zip code mask
-     *   A - address mask)
+     * Element type
      * 
      * @var    string
      * @access protected
@@ -77,7 +92,7 @@ class ZoneElement extends \XLite\Model\AEntity
      * @since  3.0.0
      * @Column (type="string", length="1", nullable=false)
      */
-    protected $field_type;
+    protected $element_type;
 
     /**
      * Zone (relation)
@@ -86,9 +101,53 @@ class ZoneElement extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @ManyToOne (targetEntity="XLite\Model\Zone", inversedBy="zones")
+     * @ManyToOne (targetEntity="XLite\Model\Zone", inversedBy="zone_elements")
      * @JoinColumn (name="zone_id", referencedColumnName="zone_id")
      */
     protected $zone;
+
+    /**
+     * getElementTypesData 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    static public function getElementTypesData()
+    {
+        return array(
+            self::ZONE_ELEMENT_COUNTRY => array(
+                'field'      => 'country',   // Address field name
+                'weight'     => 0x01,        // Element weight
+                'funcSuffix' => 'Countries', // Suffix for functions name: getZone<Suffix>, checkZone<Suffix>
+                'required'   => true,        // Required property: if true then entire zone declined if this element does bot match
+            ),
+            self::ZONE_ELEMENT_STATE   => array(
+                'field'      => 'state',
+                'weight'     => 0x02,
+                'funcSuffix' => 'States',
+                'required'   => true,
+            ),
+            self::ZONE_ELEMENT_ZIPCODE => array(
+                'field'      => 'zipcode',
+                'weight'     => 0x08,
+                'funcSuffix' => 'ZipCodes',
+                'required'   => false,
+            ),
+            self::ZONE_ELEMENT_TOWN    => array(
+                'field'      => 'city',
+                'weight'     => 0x10,
+                'funcSuffix' => 'Cities',
+                'required'   => false,
+            ),
+            self::ZONE_ELEMENT_ADDRESS => array(
+                'field'      => 'address',
+                'weight'     => 0x20,
+                'funcSuffix' =>'Addresses',
+                'required'   => false,
+            )
+        );
+    }
 
 }

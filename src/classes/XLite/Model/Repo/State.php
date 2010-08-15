@@ -63,11 +63,6 @@ class State extends \XLite\Model\Repo\ARepo
             self::RELATION_CACHE_CELL => array('\XLite\Model\Country'),
         );
 
-        $list['szone'] = array(
-            self::ATTRS_CACHE_CELL    => array('shipping_zone'),
-            self::RELATION_CACHE_CELL => array('\XLite\Model\Country'),
-        );
-
         return $list;
     }
 
@@ -228,45 +223,4 @@ class State extends \XLite\Model\Repo\ARepo
             ->leftJoin('s.country', 'c');
     }
 
-    /**
-     * Find states by shipping zone
-     *
-     * @param integer $shippingZone Shipping zone
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function findByShippingZone($shippingZone)
-    {
-        $data = $this->getFromCache('szone', array('shipping_zone' => $shippingZone));
-        if (!isset($data)) {
-            $data = $this->defineByShippingZoneQuery($shippingZone)->getQuery()->getResult();
-            $this->saveToCache($data, 'szone', array('shipping_zone' => $shippingZone));
-        }
-
-        return $data;
-    }
-
-    /**
-     * Define query builder for findByShippingZone()
-     *
-     * @param integer $shippingZone Shipping zone
-     *
-     * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function defineByShippingZoneQuery($shippingZone)
-    {
-        return \XLite\Core\Database::getQB()
-            ->addSelect('c')
-            ->leftJoin('s.country', 'c')
-            ->where('s.shipping_zone = :shipping_zone')
-            ->setParameter('shipping_zone', $shippingZone);
-    }
-
 }
-
