@@ -55,27 +55,21 @@ class ModulesManager extends AUtils
 
 
     /**
-     * Prepare ia clause for the SQL query
+     * Return name of the table where the module info is stored 
      * 
-     * @param string $separator fields separator
-     * @param array  $fields    list of fields
-     *  
      * @return string
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected static function prepareQueryFields($separator, array $fields = array())
+    protected static function getTableName()
     {
-        return empty($fields) ? '' : implode($separator, $fields);
+        return 'xlite_modules';
     }
 
     /**
      * Fetch list of active modules from DB
      * 
-     * @param string $fields     additional fields to fetch
-     * @param string $conditions additional conditions
-     *  
      * @return array
      * @access protected
      * @see    ____func_see____
@@ -84,9 +78,8 @@ class ModulesManager extends AUtils
     protected static function getModulesList(array $fields = array(), array $conditions = array())
     {
         return \Includes\Utils\Database::fetchAll(
-            'SELECT ' . static::prepareQueryFields(',', array_merge(array('name'), $fields)) . ' FROM xlite_modules'
-            . ' WHERE ' . static::prepareQueryFields(' AND ', array_merge(array('enabled = \'1\''), $conditions)),
-            \PDO::FETCH_ASSOC | \PDO::FETCH_GROUP | \PDO::FETCH_UNIQUE | \PDO::FETCH_COLUMN
+            'SELECT name, ' . static::getTableName() . '.* FROM ' . static::getTableName() . ' WHERE enabled = \'1\'',
+            \PDO::FETCH_ASSOC | \PDO::FETCH_GROUP | \PDO::FETCH_UNIQUE
         );
     }
 
@@ -100,15 +93,12 @@ class ModulesManager extends AUtils
      */
     protected static function getMutualModules()
     {
-        $modules = array_map(
-            function ($list) { return explode(',', $list); },
-            static::getModulesList(array('mutual_modules'), array('mutual_modules != \'\''))
-        );
-
         $result = array();
 
-        foreach ($modules as $list) {
-            $result = array_merge($result, $list);
+        foreach (static::$activeModules as $module) {
+            if (!empty($module['mutual_modules'])) {
+                $result = array_merge($result, explode(',', $module['mutual_modules']));
+            }
         }
 
         return array_unique($result);
@@ -125,9 +115,7 @@ class ModulesManager extends AUtils
      */
     protected static function disableMutualModules()
     {
-        $modules = static::getMutualModules();
-
-        if (!empty($modules)) {
+        if ($modules = static::getMutualModules()) {
             static::$activeModules = \Includes\Utils\ArrayManager::filterArrayByKeys(static::$activeModules, $modules);
 
             \Includes\Utils\Database::execute(
@@ -137,6 +125,20 @@ class ModulesManager extends AUtils
             );
         }
     }
+
+    /**
+     * Return list of <module_name> => <dependend_module_1>, <dependend_module_2>, ..., <dependend_module_N>
+     *
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getModuleDependencies()
+    {
+        // TODO: check the top-level methods
+    }
+
 
     /**
      * Retrieve module name from class name
@@ -165,7 +167,7 @@ class ModulesManager extends AUtils
     public static function getActiveModules($moduleName = null)
     {
         if (!isset(static::$activeModules)) {
-            static::$activeModules = static::getModulesList(array('\'1\''));
+            static::$activeModules = static::getModulesList();
             static::disableMutualModules();
         }
 
