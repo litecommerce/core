@@ -30,121 +30,163 @@ namespace XLite\Model;
 
 /**
  * Cart 
- * TODO[SINGLETON] - check how to resolve this issue
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
+ * @Entity
  */
 class Cart extends \XLite\Model\Order
 {
     /**
-     * Constructor
-     * 
-     * @param int $id order ID
-     *  
-     * @return void
+     * Array of instances for all derived classes
+     *
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0
+     */
+    protected static $instances = array();
+
+    /**
+     * Method to access a singleton
+     *
+     * @return \XLite\Model\Cart
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function __construct($id = null)
+    public static function getInstance()
     {
-        parent::__construct($id);
+        $className = get_called_class();
 
-        $this->fields['status'] = 'T';
+        // Create new instance of the object (if it is not already created)
+        if (!isset(static::$instances[$className])) {
+            $orderId = \XLite\Model\Session::getInstance()->get('order_id');
 
-        if ($orderId = \XLite\Model\Session::getInstance()->get('order_id')) {
-            $this->set('order_id', $orderId);
-            if (!$this->isExists()) {
-                $this->set('order_id', null);
+            if ($orderId) {
+                $cart = \XLite\Core\Database::getRepo('XLite\Model\Cart')->find($orderId);
+                if ($cart && self::TEMPORARY_STATUS != $cart->getStatus()) {
+                    \XLite\Model\Session::getInstance()->set('order_id', 0);
+                    $cart = null;
+                }
             }
-        }
 
-        if ('T' === $this->get('status')) {
+            if (!isset($cart)) {
+                $cart = new $className();
+                $cart->setStatus(self::TEMPORARY_STATUS);
+
+                \XLite\Core\Database::getEM()->persist($cart);  
+                \XLite\Core\Database::getEM()->flush();
+
+                \XLite\Model\Session::getInstance()->set('order_id', $cart->getOrderId());
+            }
+
+            static::$instances[$className] = $cart;
 
             $auth = \XLite\Model\Auth::getInstance();
 
             if ($auth->isLogged()) {
-                if ($auth->getProfile()->get('profile_id') != $this->get('profile_id')) {
-                    $this->setProfile($auth->getProfile());
-                    $this->calcTotals();
-                    if ($this->isPersistent) {
-                        $this->update();
-                    }    
+                if ($auth->getProfile()->get('profile_id') != $cart->getProfileId()) {
+                    $cart->setProfile($auth->getProfile());
+                    $cart->calculateTotals();
                 }
-                
 
-            } elseif ($this->get('profile_id')) {
 
-                $this->set('profile',  null);
-                $this->calcTotals();
+            } elseif ($cart->getProfileId()) {
+
+                $cart->setProfile(null);
+                $cart->calculateTotals();
             }
+
+            \XLite\Core\Database::getEM()->persist($cart);
+            \XLite\Core\Database::getEM()->flush();
+
         }
+
+        return static::$instances[$className];
+
     }
 
     /**
-     * Saves the shopping cart content to session 
+     * Prepare order before save data operation
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     * @PrePersist
+     * @PreUpdate
+     */
+    protected function prepareBeforeSave()
+    {
+        parent::prepareBeforeSave();
+
+        $this->setDate(time());
+
+    }
+
+    /**
+     * Clear cart
      * 
      * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function create()
+    public function clear()
     {
-        $this->set('date', time());
-        $this->set('status', "T");
-        parent::create();
-        $this->session->set('order_id', $this->get('order_id'));
-    }
+        foreach ($this->getItems() as $item) {
+            \XLite\Core\Database::getEM()->remvoe($item);
+        }
+        $this->getItems()->clear();
 
-    function update()
-    {
-        $this->set('date', time());
-        parent::update();
+        \XLite\Core\Database::getEM()->persist($this);
+        \XLite\Core\Database::getEM()->flush();
     }
 
     /**
-    * Clears the shopping cart.
-    *
-    * @access public
-    */
-    function clear()
+     * Prepare order before remove operation
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     * @PreRemove
+     */
+    protected function prepareBeforeRemove()
     {
-        $this->session->set('order_id', null);
-        $this->_items = array();
-    }
+        parent::prepareBeforeRemove();
 
-    function delete()
-    {
-        $this->set('profile', null);
-        parent::delete();
-        $this->session->set('order_id', null);
+        \XLite\Model\Session::getInstance()->set('order_id', null);
     }
 
     /**
-    * This method is called during checkout before payment processor
-    * is called. 
-    * The default implementation
-    * copies the current user profile into the order and sets checkout date. 
-    */
-    function checkout() 
+     * Order 'complete' event
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function processCheckOut()
     {
-        if ($this->get('status') == "T") {
-            $this->set('date', time());
+        if ('T' == $this->getStatus()) {
+            $this->setDate(time());
 
             $profile = \XLite\Model\Auth::getInstance()->getProfile();
-            if ($profile->get('order_id')) {
+            if ($profile->getOrderId()) {
                 // anonymous checkout:
                 // use the current profile as order profile
-                $this->set('profile_id', $this->getProfile()->get('profile_id'));
+                $this->setProfileId($this->getProfile()->get('profile_id'));
+
             } else {
                 $this->setProfileCopy($profile);
             }
-            $this->set('status', "I");
+            $this->setStatus(self::INPROGRESS_STATUS);
 
-            $this->update();
+            \XLite\Core\Database::getEM()->persist($this);
+            \XLite\Core\Database::getEM()->flush();
         }
     }
 
@@ -156,25 +198,26 @@ class Cart extends \XLite\Model\Order
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function calcShippingRates()
+    public function calculateShippingRates()
     {
         $rates = parent::calcShippingRates();
+        $id = $this->getShippingId();
 
         if (
-            ($this->get('shipping_id') && !isset($rates[$this->get('shipping_id')]))
-            || ($rates && !$this->get('shipping_id'))
+            ($id && !isset($rates[$id]))
+            || ($rates && !$id)
         ) {
             $shipping = null;
             if (0 < count($rates)) {
                 list($k, $rate) = each($rates);
                 reset($rates);
-                $shipping = $rate->get('shipping');
+                $shipping = $rate->getShipping();
             }
             $this->setShippingMethod($shipping);
-            if ($this->isPersistent) {
-                $this->calcTotals();
-                $this->update();
-            }
+            $this->calcTotals();
+
+            \XLite\Core\Database::getEM()->persist($this);
+            \XLite\Core\Database::getEM()->flush();
         }
 
         return $rates;

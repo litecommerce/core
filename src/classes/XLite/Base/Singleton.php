@@ -47,7 +47,6 @@ abstract class Singleton extends \XLite\Base\SuperClass
      */
     protected static $instances = array();
 
-
     /**
      * Method to access a singleton
      *
