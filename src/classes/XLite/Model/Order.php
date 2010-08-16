@@ -37,6 +37,9 @@ namespace XLite\Model;
  * @Entity (repositoryClass="\XLite\Model\Repo\Order")
  * @Table (name="orders")
  * @HasLifecycleCallbacks
+ * @InheritanceType("SINGLE_TABLE")
+ * @DiscriminatorColumn(name="status", type="string", length="1")
+ * @DiscriminatorMap({"T" = "XLite\Model\Cart"})
  */
 class Order extends \XLite\Model\AEntity
 {

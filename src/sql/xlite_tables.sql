@@ -175,23 +175,19 @@ CREATE TABLE xlite_order_items (
 
 DROP TABLE IF EXISTS xlite_orders;
 CREATE TABLE xlite_orders (
+  order_id int(11) NOT NULL auto_increment PRIMARY KEY,
   profile_id int(11) NOT NULL default '0',
   orig_profile_id int(11) NOT NULL default '0',
-  total decimal(12,2) NOT NULL default '0.00',
-  subtotal decimal(12,2) NOT NULL default '0.00',
-  shipping_cost decimal(12,2) NOT NULL default '0.00',
-  tax decimal(12,2) NOT NULL default '0.00',
+  total decimal(16,4) NOT NULL default '0.00',
+  subtotal decimal(16,4) NOT NULL default '0.00',
+  shipping_cost decimal(16,4) NOT NULL default '0.00',
+  tax decimal(16,4) NOT NULL default '0.00',
   tracking varchar(32) default NULL,
   date int(11) default NULL,
   status char(1) default 'I',
   payment_method varchar(64) default NULL,
-  details text,
   notes text,
-  order_id int(11) NOT NULL auto_increment,
   shipping_id int(11) default NULL,
-  detail_labels text,
-  taxes text,
-  PRIMARY KEY  (order_id),
   KEY xlite_order_date (date),
   KEY profile_id (profile_id),
   KEY orig_profile_id (orig_profile_id),
@@ -202,12 +198,27 @@ CREATE TABLE xlite_orders (
   KEY tracking (tracking),
   KEY status (status),
   KEY payment_method (payment_method),
-  FULLTEXT KEY details (details),
   FULLTEXT KEY notes (notes),
-  KEY shipping_id (shipping_id),
-  FULLTEXT KEY detail_labels (detail_labels),
-  FULLTEXT KEY taxes (taxes)
+  KEY shipping_id (shipping_id)
 ) TYPE=MyISAM;
+
+DROP TABLE IF EXISTS xlite_order_details;
+CREATE TABLE xlite_order_details (
+  detail_id int(11) NOT NULL auto_increment PRIMARY KEY,
+  order_id int(11) NOT NULL default '0',
+  name varchar(255) NOT NULL default '',
+  label varchar(255) NOT NULL default '',
+  value text NOT NULL,
+  KEY oname (order_id, name)
+) TYPE=MyISAM;
+
+DROP TABLE IF EXISTS xlite_order_taxes;
+CREATE TABLE xlite_order_taxes (
+  id int(11) NOT NULL auto_increment PRIMARY KEY,
+  order_id int(11) NOT NULL default '0',
+  KEY order_id (order_id)
+) TYPE=MyISAM;
+
 
 DROP TABLE IF EXISTS xlite_payment_methods;
 CREATE TABLE xlite_payment_methods (
