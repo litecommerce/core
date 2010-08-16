@@ -211,7 +211,11 @@ class Order extends \XLite\Model\Order implements \XLite\Base\IDecorator
                     $index++;
                 }
         
-                $items[$index]->updateAmount($amount);
+                $items[$index]->setAmount($amount);
+
+                // TODO[ITEM->UPDATE_AMOUNT]: Remove if it's not needed
+                // \XLite\Core\Database::getRepo('\XLite\Model\OrderItem')->update($items[$index]);
+
                 $items[$index]->set('outOfStock', true);
                 $this->set('exceeding', $items[$index]->get('product_id'));
             }

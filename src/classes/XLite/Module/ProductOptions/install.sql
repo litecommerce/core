@@ -65,9 +65,9 @@ DROP TABLE IF EXISTS xlite_order_item_options;
 CREATE TABLE xlite_order_item_options (
   id int(11) NOT NULL auto_increment PRIMARY KEY,
   item_id varchar(255) NOT NULL default '',
-  order_id int(11) default 0,
+  order_id int(11) NOT NULL default 0,
   group_id int(11) NOT NULL default 0,
-  option_id int(11) default 0,
+  option_id int(11) NOT NULL default 0,
   name varchar(255) NOT NULL default '',
   value text NOT NULL,
   KEY item (item_id, order_id)

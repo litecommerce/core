@@ -151,23 +151,6 @@ class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
     }
 
     /**
-     * Get item short description 
-     * 
-     * @param integer $limit Length limit
-     *  
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getShortDescription($limit = 30)
-    {
-        return is_null($this->getGC())
-            ? parent::getShortDescription($limit)
-            : substr('GC #' . $this->get('gcid'), 30);
-    }
-
-    /**
      * getter
      * 
      * @param string $name Property name
@@ -284,15 +267,17 @@ class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
     /**
      * Check - use standard template for item or not
      * 
+     * TODO: move this to the widgets. See also skins/../en/shopping_cart/items.tpl
+     * 
      * @return boolean
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function isUseStandardTemplate()
+    /*public function isUseStandardTemplate()
     {
         return !$this->get('gcid') && parent::isUseStandardTemplate();
-    }
+    }*/
 
     /**
      * Get item URL 

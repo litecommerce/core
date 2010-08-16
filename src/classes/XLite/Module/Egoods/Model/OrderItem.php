@@ -74,7 +74,7 @@ class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
         $this->update();
     }
 
-    function updateAmount($amount)
+    function setAmount($amount)
     {
         $amount = (int)$amount;
 
@@ -92,7 +92,7 @@ class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
             }
         }
 
-        parent::updateAmount($amount);
+        parent::setAmount($amount);
     }
 
     function isShipped()

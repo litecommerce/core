@@ -38,14 +38,66 @@ namespace XLite\Module\ProductOptions\Model;
 class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
 {
     /**
-     * Options (cache)
-     * 
-     * @var    array
+     * Item options
+     *
+     * @var    \Doctrine\ORM\PersistentCollection|array
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
+     * @OneToMany (targetEntity="XLite\Module\ProductOptions\Model\OrderItemOption", mappedBy="order_item", cascade={"persist","remove"})
      */
-    protected $options;
+    protected $options = array();
+
+
+    /**
+     * Return hash of the options names/values
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getSerializedOptions()
+    {
+        $result = '';
+
+        foreach ($this->options as $option) {
+            $result .= '|' . $option->getActualName() . ':' . $option->getActualValue();
+        }
+
+        return $result;
+    }
+
+
+    /**
+     * This key is used when checking if item is unique in the cart
+     *
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getKey()
+    {
+        return parent::getKey() . $this->getSerializedOptions();
+    }
+
+    /**
+     * Check - has item product options or not
+     *
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function hasOptions()
+    {
+        return $this->getProduct()->hasOptions();
+    }
+
+
+
 
     /**
      * Temporary item key 
@@ -70,21 +122,6 @@ class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
         'weight' => 'calculateWeight',
     );
 
-    /**
-     * Check - has item product options or not
-     * 
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function hasOptions()
-    {
-        $product = $this->getProduct();
-
-        return is_object($product) ? $product->hasOptions() : false;
-    }
-    
     /**
      * Set item product options 
      * 
@@ -212,30 +249,6 @@ class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
         }
 
         return $opt;
-    }
-
-    /**
-     * Get item unique key 
-     * 
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getKey()
-    {
-        $keys = array(parent::getKey());
-
-        // Add to key option group name and selected option name
-        foreach ($this->getProductOptions() as $option) {
-            $keys[] = sprintf(
-                '%s:%s',
-                $option->getName(),
-                $option->getValue()
-            );
-        }
-
-        return implode('|', $keys);
     }
 
     /**
