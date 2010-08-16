@@ -63,36 +63,51 @@ class XLite_Sniffs_PHP_Commenting_FunctionCommentSniff extends XLite_TagsSniff
     protected $currentFile = null;
 
 	protected $tags = array(
-                       'param'    => array(
-                                        'required'       => false,
-                                        'allow_multiple' => true,
-                                        'order_text'     => 'precedes @return',
-                                       ),
-                       'return' => array(
-                                        'required'       => true,
-                                        'allow_multiple' => false,
-                                        'order_text'     => 'follows @param',
-                                        ),
-                       'throws'        => array(
-                                        'required'       => false,
-                                        'allow_multiple' => true,
-                                        'order_text'     => 'follows @return',
-                                       ),
-                       'access' => array(
-                                        'required'       => false,
-                                        'allow_multiple' => false,
-                                        'order_text'     => 'follows @throws',
-                                        ),
-						'see'	=> array(
-                                        'required'       => false,
-                                        'allow_multiple' => false,
-                                        'order_text'     => 'follows @access',
-                                       ),
-                       'since'      => array(
-                                        'required'       => true,
-                                        'allow_multiple' => false,
-                                        'order_text'     => 'follows @see',
-                                       )
+    	'param'    => array(
+        	'required'       => false,
+            'allow_multiple' => true,
+            'order_text'     => 'precedes @return',
+        ),
+        'return' => array(
+        	'required'       => true,
+            'allow_multiple' => false,
+            'order_text'     => 'follows @param',
+        ),
+        'throws'        => array(
+            'required'       => false,
+            'allow_multiple' => true,
+            'order_text'     => 'follows @return',
+        ),
+        'access' => array(
+            'required'       => false,
+            'allow_multiple' => false,
+            'order_text'     => 'follows @throws',
+        ),
+		'see'	=> array(
+            'required'       => false,
+            'allow_multiple' => false,
+            'order_text'     => 'follows @access',
+        ),
+        'since'      => array(
+            'required'       => true,
+            'allow_multiple' => false,
+            'order_text'     => 'follows @see',
+        ),
+        'PreRemove'      => array(
+            'required'       => false,
+            'allow_multiple' => false,
+            'order_text'     => 'follows @see',
+        ),
+        'PreUpdate'      => array(
+            'required'       => false,
+            'allow_multiple' => false,
+            'order_text'     => 'follows @see',
+        ),
+        'PrePersist'      => array(
+            'required'       => false,
+            'allow_multiple' => false,
+            'order_text'     => 'follows @see',
+        ),
 
 	);
 
