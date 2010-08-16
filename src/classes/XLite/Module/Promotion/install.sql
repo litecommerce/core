@@ -71,8 +71,6 @@ ALTER TABLE xlite_orders ADD payedByPoints decimal(12,2) default 0;
 ALTER TABLE xlite_orders ADD discountCoupon varchar(12);
 ALTER TABLE xlite_orders ADD discount decimal(12,2) default 0;
 ALTER TABLE xlite_order_items ADD bonusItem int default 0 not null;
-ALTER TABLE xlite_order_items DROP primary key;
-ALTER TABLE xlite_order_items ADD primary key(order_id,item_id,bonusItem);
 
 INSERT INTO `xlite_config` VALUES (11,'allowDC','Promotion','checkbox',50,'Y');
 INSERT INTO `xlite_config` VALUES (20,'auto_expand_coupon_orders','Promotion','checkbox',80,'Y');
