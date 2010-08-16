@@ -28,197 +28,217 @@
 
 namespace XLite\Model;
 
-define('ORDER_EXPIRATION_TIME', 3600 * 24); // one day
-
 /**
  * Class represens an order
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
+ * @Entity (repositoryClass="\XLite\Model\Repo\Order")
+ * @Table (name="orders")
+ * @HasLifecycleCallbacks
  */
-class Order extends \XLite\Model\AModel
+class Order extends \XLite\Model\AEntity
 {
     /**
-     * Object properties (table filed => default value)
+     * Order statuses 
+     */
+    const TEMPORARY_STATUS  = 'T';
+    const INPROGRESS_STATUS = 'I';
+    const QUEUED_STATUS     = 'Q';
+    const PROCESSED_STATUS  = 'P';
+    const COMPLETED_STATUS  = 'C';
+    const FAILED_STATUS     = 'F';
+    const DECLINED_STATUS   = 'D';
+
+
+    /**
+     * Order unique id
      * 
-     * @var    array
+     * @var    mixed
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     * @Id
+     * @GeneratedValue (strategy="AUTO")
+     * @Column         (type="integer")
      */
-    protected $fields = array(
-        'order_id'        => '',  // primary key
-        'profile_id'      => '',  // profile data at the moment of the purchase
-        'orig_profile_id' => '',  // original profile id
-        'total'           => '',  // order costs: Total, Subtotal, Shipping
-        'subtotal'        => '',
-        'shipping_cost'   => '',
-        'tax'             => '',  // taxes applied to this order (serialized)
-        'shipping_id'     => 0,   // order shipping method primary key
-        'tracking'        => '',  // delivery tracking number
-        'date'            => '',  // date/time when the order purchased, timestamp
-        'status'          => 'I', // order status: Queued, Processed, Failed etc.
-        'payment_method'  => '',  // selected Payment method
-        'details'         => '',  // secure order data
-        'detail_labels'   => '',  // order data field names
-        'notes'           => '',  // notes entered by the customer
-        'taxes'           => '',  // serialized tax array
-    );
+    protected $order_id;
 
     /**
-     * Auto-increment file name
+     * Order profile unique id
+     * 
+     * @var    integer
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Column (type="integer")
+     */
+    protected $profile_id;
+
+    /**
+     * Original profile id
+     * 
+     * @var    integer
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Column (type="integer")
+     */
+    protected $orig_profile_id = 0;
+
+    /**
+     * Total 
+     * 
+     * @var    float
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Column (type="decimal", precision="4", scale="12")
+     */
+    protected $total = 0.0000;
+
+    /**
+     * Subtotal 
+     * 
+     * @var    float
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Column (type="decimal", precision="4", scale="12")
+     */
+    protected $subtotal = 0.0000;
+
+    /**
+     * Shipping cost 
+     * 
+     * @var    float
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Column (type="decimal", precision="4", scale="12")
+     */
+    protected $shipping_cost = 0.0000;
+
+    /**
+     * Tax cost
+     * 
+     * @var    float
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Column (type="decimal", precision="4", scale="12")
+     */
+    protected $tax = 0.0000;
+
+    /**
+     * Shipping method unique id 
+     * 
+     * @var    integer
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Column (type="integer")
+     */
+    protected $shipping_id = 0;
+
+    /**
+     * Shipping tracking code
      * 
      * @var    string
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     * @Column (type="string", length="32")
      */
-    protected $autoIncrement = 'order_id';
+    protected $tracking = '';
 
     /**
-     * Table alias 
+     * Order creation timestamp
+     * 
+     * @var    integer
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Column (type="integer")
+     */
+    protected $date;
+
+    /**
+     * Status code
      * 
      * @var    string
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     * @Column (type="string", length="1")
      */
-    protected $alias = 'orders';
-        
-    /**
-    * cache properties
-    */    
-    public $_origProfile = null;
-
-    public $_profile = null;
-
-    public $_paymentMethod = null;
-
-    public $_shippingMethod = null;
-
-    public $_details = null;
-
-    public $_detailLabels = null;
-
-    public $_taxes = null;
-
-    public $_statusChanged = false;
-
-    public $_oldStatus = 'I';
+    protected $status = self::INPROGRESS_STATUS;
 
     /**
-     * Default SQL filter (WHERE block) for findAll() method
+     * Payment method code
      * 
      * @var    string
-     * @access public
+     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     * @Column (type="string", length="64")
      */
-    public $_range = 'status != \'T\'';
+    protected $payment_method = '';
 
     /**
-     * Cart items cache 
+     * Customer notes 
      * 
-     * @var    array
+     * @var    string
      * @access protected
+     * @see    ____var_see____
      * @since  3.0.0
+     * @Column (type="string", length="65535")
      */
-    protected $_items = null;
+    protected $notes = '';
 
     /**
-     * _shippingRates 
-     * 
-     * @var    array
+     * Order details
+     *
+     * @var    \XLite\Model\OrderDetail
      * @access protected
+     * @see    ____var_see____
      * @since  3.0.0
+     *
+     * @OneToMany (targetEntity="XLite\Model\OrderDetail", mappedBy="order", cascade={"persist","remove"})
+     * @OrderBy ({"name" = "ASC"})
      */
-    protected $_shippingRates = null;
-
+    protected $details;
 
     /**
-     * Create new cart item 
-     * 
-     * @param \XLite\Model\OrderItem $item new item
-     *  
-     * @return void
+     * Order items
+     *
+     * @var    \XLite\Model\OrderItem
      * @access protected
+     * @see    ____var_see____
      * @since  3.0.0
+     *
+     * @OneToMany (targetEntity="XLite\Model\OrderItem", mappedBy="order", cascade={"persist","remove"})
      */
-    protected function _createItem(\XLite\Model\OrderItem $item)
-    {
-        if (!$this->isPersistent) {
-            $this->create();
-        }
+    protected $items;
 
-        $item->set('order_id', $this->get('order_id'));
-        $item->create();
+    ///////////////////////////// OBSOLETE PROPERTIES //////////////////////
 
-        // update cache
-        if (isset($this->_items)) {
-            $this->_items[] = $item;
-        }
-    }
+    protected $allTaxes = array();
+    protected $shippingTaxes = array();
+    protected $shippingTax = 0;
+    protected $subtotalShippedOnly = 0;
+    protected $statusChanged = false;
+    protected $oldStatus;
+    protected $shippingMethod;
+    protected $paymentMethodModel;
+    protected $profile;
+    protected $origProfile;
 
     /**
-     * Get shipping rates 
-     * FIXME - see the "calcShippingRates()" method
+     * Add item to order
      * 
-     * @param boolean $clearCache Clear cache flag
-     * 
-     * @return array of \XLite\Model\ShippingRate
-     * @access public
-     * @since  3.0.0
-     */
-    public function getShippingRates($clearCache = false)
-    {
-        return \XLite\Model\CachingFactory::getObjectFromCallback(
-            __METHOD__,
-            $this,
-            'calcShippingRates',
-            array(),
-            $clearCache
-        );
-    }
-
-    /**
-     * Return cart items cache 
-     * 
-     * @return array
-     * @access public
-     * @since  3.0.0
-     */
-    public function getItems()
-    {
-        if (!isset($this->_items)) {
-            if ($this->isPersistent) {
-                $item = new \XLite\Model\OrderItem();
-                $this->_items = $item->findAll('order_id = \'' . $this->get('order_id') . '\'', 'orderby');
-
-            } else {
-                $this->_items = array();
-            }
-        }
-
-        return $this->_items;
-    }
-
-    /**
-     * Return cart items number
-     * 
-     * @return int
-     * @access public
-     * @since  3.0.0
-     */
-    public function getItemsCount()
-    {
-        return count($this->getItems());
-    }
-
-    /**
-     * Add item ro order
-     * 
-     * @param \XLite\Model\OrderItem $newItem item to add
+     * @param \XLite\Model\OrderItem $newItem Item to add
      *  
      * @return boolean
      * @access public
@@ -230,25 +250,84 @@ class Order extends \XLite\Model\AModel
 
         if ($newItem->isValid()) {
 
-            $found = false;
-            $key   = $newItem->getKey();
+            $item = $this->getItemByItem($newItem);
 
-            foreach ($this->getItems() as $item) {
-                if ($item->getKey() == $key) {
-                    $item->updateAmount($item->get('amount') + $newItem->get('amount'));
-                    $found = true;
-                    break;
-                }
-            }
+            if ($item) {
+                $item->setAmount($item->getAmount() + $newItem->getAmount());
 
-            if (!$found) {
-                $this->_createItem($newItem);
+            } else {
+                $this->addNewItem($newItem);
             }
 
             $result = true;
         }
 
         return $result;
+    }
+
+    /**
+     * Get item from order by another item 
+     * 
+     * @param \XLite\Model\OrderItem $item Another item
+     *  
+     * @return \XLite\Model\OrderItem or null
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getItemByItem(\XLite\Model\OrderItem $item)
+    {
+        $key = $item->getKey();
+
+        $found = null;
+
+        foreach ($this->getItems() as $i) {
+            if ($i->getKey() == $key) {
+                $found = $item;
+                break;
+            }
+        }
+
+        return $found;
+    }
+
+    /**
+     * Create new cart item 
+     * 
+     * @param \XLite\Model\OrderItem $item new item
+     *  
+     * @return void
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function addNewItem(\XLite\Model\OrderItem $item)
+    {
+        $item->setOrder($this);
+        $this->addItems($item);
+    }
+
+    /**
+     * Get shipping rates 
+     * 
+     * @return array of \XLite\Model\ShippingRate
+     * @access public
+     * @since  3.0.0
+     */
+    public function getShippingRates()
+    {
+        return $this->calculateShippingRates();
+    }
+
+    /**
+     * Return items number
+     * 
+     * @return integer
+     * @access public
+     * @since  3.0.0
+     */
+    public function countItems()
+    {
+        return count($this->getItems());
     }
 
     /**
@@ -260,7 +339,7 @@ class Order extends \XLite\Model\AModel
      */
     public function isEmpty()
     {
-        return 0 >= $this->getItemsCount();
+        return 0 >= $this->countItems();
     }
 
     /**
@@ -272,7 +351,7 @@ class Order extends \XLite\Model\AModel
      */
     public function isMinOrderAmountError()
     {
-        return $this->get('subtotal') < doubleval($this->config->General->minimal_order_amount);
+        return $this->getSubtotal() < \XLite\MCore\Config::getInstance()->General->minimal_order_amount;
     }
 
     /**
@@ -284,7 +363,7 @@ class Order extends \XLite\Model\AModel
      */
     public function isMaxOrderAmountError()
     {
-        return $this->get('subtotal') > doubleval($this->config->General->maximal_order_amount);
+        return $this->getSubtotal() > \XLite\MCore\Config::getInstance()->General->maximal_order_amount;
     }
 
     /**
@@ -342,7 +421,7 @@ class Order extends \XLite\Model\AModel
     }
 
     /**
-     * isProcessed 
+     * Check - is order processed or not
      * 
      * @return bool
      * @access public
@@ -350,11 +429,11 @@ class Order extends \XLite\Model\AModel
      */
     public function isProcessed()
     {
-        return in_array($this->get('status'), array('P', 'C'));
+        return in_array($this->getStatus(), array(self::PROCESSED_STATUS, self::COMPLETED_STATUS));
     }
 
     /**
-     * isQueued 
+     * Check - os order queued or not
      * 
      * @return bool
      * @access public
@@ -362,81 +441,51 @@ class Order extends \XLite\Model\AModel
      */
     public function isQueued()
     {
-        return 'Q' == $this->get('status');
+        return self::QUEUED_STATUS == $this->getStatus();
     }
 
     /**
-     * Get default search donditions 
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function getDefaultSearchConditions()
-    {
-        return array(
-            'order_id'      => '',
-            'status'        => '',
-            'startDate'     => '',
-            'endDate'       => '',
-            'sortCriterion' => 'date',
-            'sortOrder'     => 'desc'
-        );
-    }
-
-    /**
-     * Get sort criterions 
+     * Calculate and return all order taxes
      * 
      * @return array
-     * @access public
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function getSortCriterions()
-    {
-        return array(
-            'order_id' => 'Order id',
-            'date'     => 'Date',
-            'status'   => 'Status',
-            'total'    => 'Total',
-        );
-    }
-
-    ////////////// Order calculation functions ////////////////
-
-    /**
-    * Calculates the Order taxes. 
-    */
-    function calcAllTaxes() 
+    protected function calculateAllTaxes() 
     {
         $taxRates = new \XLite\Model\TaxRates();
         $taxRates->set('order', $this);
         $result = array();
-        $items = $this->getItems();
-        foreach ($items as $item) {
-            $product = $item->get('product');
-            if ($this->config->Taxes->prices_include_tax && isset($product)) {
-                $item->set('price', $item->getComplex('product.price'));
+        foreach ($this->getItems() as $item) {
+            $product = $item->getProduct();
+            if (\XLite\Core\Config::getInstance()->Taxes->prices_include_tax && isset($product)) {
+                $item->setPrice($product->getPrice());
             }
+
             $taxRates->set('orderItem', $item);
             $taxRates->calculateTaxes();
-            $result = $this->_addTaxes($result, $taxRates->get('allTaxes'));
+
+            $result = $this->addTaxes($result, $taxRates->get('allTaxes'));
         }
 
         // tax on shipping
-        if (($this->get('shippingDefined') && !$this->config->Taxes->prices_include_tax) || ($this->get('shippingDefined') && $this->config->Taxes->prices_include_tax && $taxRates->get('shippingDefined'))) {
-            $taxRates->_conditionValues['product class'] = "shipping service";
-            $taxRates->_conditionValues['cost'] = $this->get('shippingCost');
+        $pricesIncludeTax = \XLite\Core\Config::getInstance()->Taxes->prices_include_tax;
+        if (
+            $this->isShippingDefined()
+            && (!$pricesIncludeTax || ($pricesIncludeTax && $taxRates->isShippingDefined()))
+        ) {
+            $taxRates->_conditionValues['product class'] = 'shipping service';
+            $taxRates->_conditionValues['cost'] = $this->getShippingCost();
             $taxRates->calculateTaxes();
-            $result = $this->_addTaxes($result, $taxRates->get('allTaxes'));
+            $result = $this->addTaxes($result, $taxRates->get('allTaxes'));
 
             $shippingTaxes = array();
-            $shippingTaxes = $this->_addTaxes($shippingTaxes, $taxRates->get('shippingTaxes'));
+            $shippingTaxes = $this->addTaxes($shippingTaxes, $taxRates->get('shippingTaxes'));
             foreach ($shippingTaxes as $name => $value) {
                 $shippingTaxes[$name] = $this->formatCurrency($shippingTaxes[$name]);
             }
-            $this->set('shippingTaxes', $shippingTaxes);
+            $this->shippingTaxes = $shippingTaxes;
         }
 
         // round all tax values
@@ -444,12 +493,23 @@ class Order extends \XLite\Model\AModel
             $result[$name] = $this->formatCurrency($result[$name]);
         }
 
-        $this->set('allTaxes', $result);
+        $this->allTaxes = $result;
 
         return $result;
     }
 
-    function _addTaxes($acc, $taxes) 
+    /**
+     * Add new taxes into existsing taxes list
+     * 
+     * @param array $acc   Existing taxes list
+     * @param array $taxes New taxes
+     *  
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function addTaxes(array $acc, array $taxes) 
     {
         foreach ($taxes as $tax => $value) {
             if (!isset($acc[$tax])) {
@@ -462,28 +522,35 @@ class Order extends \XLite\Model\AModel
     }
 
     /**
-    * Returns the total tax value (in currency) or null if no taxes applicable.
-    */
-    function calcTax() 
+     * Calculate and return tax cost 
+     * 
+     * @return float
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function calculateTaxCost() 
     {
-        $this->calcAllTaxes();
-        $taxes = $this->get('allTaxes');
+        // Base tax cost
+        $this->calculateAllTaxes();
+        $taxes = $this->allTaxes;
         $tax = isset($taxes['Tax']) ? $taxes['Tax'] : 0;    // total tax for all tax systems
-        $this->set('tax', $tax);
+        $this->setTax($tax);
 
+        // Shipping-based tax cost
         $shippingTax = 0;
 
-        if ($this->get('shippingDefined')) {
-            $shippingTaxes = $this->get('shippingTaxes');
+        if ($this->isShippingDefined()) {
+            $shippingTaxes = $this->shippingTaxes;
             if (is_array($shippingTaxes)) {
-                if ($this->config->Taxes->prices_include_tax && isset($shippingTaxes['Tax'])) {
+                if (\XLite\Core\Config::getInstance()->Taxes->prices_include_tax && isset($shippingTaxes['Tax'])) {
                     $shippingTax = $shippingTaxes['Tax'];
 
                 } else {
                     foreach ($shippingTaxes as $name => $value) {
                         if (
                             isset($taxes[$name])
-                            && ($this->config->Taxes->prices_include_tax || $taxes[$name] == $value)
+                            && (\XLite\Core\Config::getInstance()->Taxes->prices_include_tax || $taxes[$name] == $value)
                         ) {
                             $shippingTax += $value;
                         }
@@ -492,87 +559,87 @@ class Order extends \XLite\Model\AModel
             }
         }
 
-        $this->set('shippingTax', $shippingTax);
+        $this->shippingTax = $shippingTax;
 
         return $tax;
     }
 
     /**
-    * Returns the Order SubTotal (as the order items Total sum).
-    */
-    function calcSubtotal($shippedOnly=false) 
+     * Calculate order subtotal 
+     * 
+     * @param bolean $shippedOnly Calculate shipped items only
+     *  
+     * @return float
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function calculateSubtotal($shippedOnly = false) 
     {
         $subtotal = 0;
 
         foreach ($this->getItems() as $item) {
-            if ($shippedOnly && !$item->isShipped()) {
-                continue;
+            if (!$shippedOnly || $item->isShipped()) {
+                $subtotal += $item->getTotal();
             }
-
-            $subtotal += $item->getTotal();
         }
 
-        if (!$shippedOnly) {
-            $this->set('subtotal', $this->formatCurrency($subtotal));
+        if ($shippedOnly) {
+            $this->subtotalShippedOnly = $this->formatCurrency($subtotal);
 
         } else {
-            $this->set('subtotalShippedOnly', $this->formatCurrency($subtotal));
+            $this->setSubtotal($this->formatCurrency($subtotal));
         }
 
         return $subtotal;
     }
 
     /**
-    * Returns the Order total (as the order SubTotal + Taxes)
-    */
-    function calcTotal() 
+     * Calculate order total 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function calculateTotal() 
     {
-        if ($this->getItemsCount() <= 0) {
-            return;
+        if (0 < $this->countItems()) {
+
+            $this->calculateSubtotal();
+            $this->calculateShippingCost();
+            $this->calculateTaxCost();
+
+            $total = $this->getSubtotal();
+
+            if (!\XLite\Core\Config::getInstance()->Taxes->prices_include_tax) {
+                $total += $this->getTax();
+            }
+
+            $total += $this->getShippingCost();
+
+            if (\XLite\Core\Config::getInstance()->Taxes->prices_include_tax) {
+                $total += $this->shippingTax;
+            }
+
+            $this->setTotal($this->formatCurrency($total));
         }
-
-        $this->calcSubtotal();
-        $this->calcShippingCost();
-        $this->calcTax();
-
-        $total = $this->get('subtotal');
-
-        if (!$this->config->Taxes->prices_include_tax) {
-            $total += $this->get('tax');
-        }
-
-        $total += $this->get('shippingCost');
-
-        if ($this->config->Taxes->prices_include_tax) {
-            $total += $this->get('shippingTax');
-        }
-
-        $this->set('total', $this->formatCurrency($total));
     }
-
-    function getShippingCost() 
-    {
-        return $this->get('shipping_cost');
-    }
-
-    function setShippingCost($cost)  
-    {
-        $this->set('shipping_cost', $cost);
-    }
-
-    /** 
-    * Returns True if any of order items are shipped.
-    */
 
     /**
-    * Returns an array of order items to be shipped.
-    */
-    function getShippedItems() 
+     * Get shipped items 
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getShippedItems() 
     {
         $result = array();
 
-        foreach ($this->get('items') as $item) {
-            if ($item->get('shipped')) {
+        foreach ($this->getItems() as $item) {
+            if ($item->isShipped()) {
                 $result[] = $item;
             }
         }
@@ -581,64 +648,78 @@ class Order extends \XLite\Model\AModel
     }
 
     /**
-    * Returns the count of shipped order items.
-    */
-    function getShippedItemsCount() 
+     * Count shipped items quantity
+     * 
+     * @return integer
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function countShippedItems() 
     {
         $result = 0;
-        foreach ($this->get('shippedItems') as $item) {
-            $result += $item->get('amount');
+
+        foreach ($this->getShippedItems() as $item) {
+            $result += $item->getAmount();
         }
 
         return $result;
     }
 
     /**
-    * Returns the Total shipping weight, ounces.
-    */
-    function getWeight() 
+     * Get order weight 
+     * 
+     * @return float
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getWeight() 
     {
         $weight = 0;
-        foreach ($this->get('items') as $item) {
-            if ($item->get('shipped')) {
-                $weight += $item->get('weight');
-            }
+
+        foreach ($this->getShippedItems() as $item) {
+            $weight += $item->getWeight();
         }
 
         return $weight;
     }
 
     /**
-    * Calculates the Shiping cost for the selected shipping method.
-    * If no method selected, calculates it on the Shipping rates basis.
-    */
-    function calcShippingCost() 
+     * Calculate shipping cost 
+     * 
+     * @return float
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function calculateShippingCost() 
     {
         $cost = 0;
-        if (!$this->get('shipped')) {
-            $this->set('shipping_cost', $cost);
-            return $cost;
-        }
 
-        $shippingMethod = $this->getShippingMethod();
-        $cost = is_object($shippingMethod) ? $shippingMethod->calculate($this) : false;
+        if ($this->isShipped()) {
+        
+            $shippingMethod = $this->getShippingMethod();
+            $cost = is_object($shippingMethod) ? $shippingMethod->calculate($this) : false;
 
-        if (false === $cost) {
-            $rates = $this->calcShippingRates();
-            // find the first available shipping method
-            if (!is_null($rates) && count($rates) > 0) {
-                foreach ($rates as $key => $val) {
-                    $shippingID = $key;
-                    break;
+            if (false === $cost) {
+                $rates = $this->calculateShippingRates();
+
+                // find the first available shipping method
+                if (!is_null($rates) && count($rates) > 0) {
+                    foreach ($rates as $key => $val) {
+                        $shippingID = $key;
+                        break;
+                    }
+
+                    $shippingMethod = new \XLite\Model\Shipping($shippingID);
+                    $this->setShippingMethod($shippingMethod);
+                    $cost = $shippingMethod->calculate($this);
                 }
-
-                $shippingMethod = new \XLite\Model\Shipping($shippingID);
-                $this->setShippingMethod($shippingMethod);
-                $cost = $shippingMethod->calculate($this);
             }
         }
 
-        $this->set('shipping_cost', $this->formatCurrency($cost));
+        $this->setShippingCost($this->formatCurrency($cost));
 
         return $cost;
     }
@@ -646,28 +727,22 @@ class Order extends \XLite\Model\AModel
     /**
      * Calculate shipping rates 
      * 
-     * @return array of \XLite\Moel\ShippingRate
+     * @return array of \XLite\Model\ShippingRate
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function calcShippingRates() 
+    public function calculateShippingRates() 
     {
-        if (is_null($this->_shippingRates)) {
-
-            // For UPS Online Tools compatibility
-            $data = array();
+        $data = array();
             
-            foreach (\XLite\Model\Shipping::getModules() as $module) {
-                $data += $module->getRates($this);
-            }
-
-            uasort($data, array($this, 'getShippingRatesOrderCallback'));
-
-            $this->_shippingRates = $data;
+        foreach (\XLite\Model\Shipping::getModules() as $module) {
+            $data += $module->getRates($this);
         }
 
-        return $this->_shippingRates;
+        uasort($data, array($this, 'getShippingRatesOrderCallback'));
+
+        return $data;
     }
 
     /**
@@ -691,20 +766,33 @@ class Order extends \XLite\Model\AModel
             : 0;
     }
    
-    /////////////// Order validation functions /////////////////
-
-    function isTaxDefined() 
+    /**
+     * Check - is tax defined or not
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isTaxDefined() 
     {
         return true;
     }
     
-    function isShippingDefined() 
+    /**
+     * Check - is shipping methopd defined or not
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isShippingDefined() 
     {
-        return $this->get('shipping_id');
+        return (bool)$this->getShippingId();
     }
 
-    /////////////// Order data access functions ////////////////
-
+    /* TODO - rework
     function refresh($name) 
     {
         $name = "_" . $name;
@@ -720,43 +808,29 @@ class Order extends \XLite\Model\AModel
         }
 
     }
+    */
 
-    function set($name, $value) 
+    /**
+     * Set status 
+     * 
+     * @param string $value Status code
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setStatus($value)
     {
-        if ($name == 'details') {
-            $this->setDetails($value);
-
-        } else {
-            $oldStatus = $this->get('status');
-            parent::set($name, $value);
-
-            if ($name == "status" && !$this->_statusChanged && $value != $oldStatus) {
-                $this->_statusChanged = true; // call statusChanged later
-                $this->_oldStatus = $oldStatus;
-            }
-
-            // re-calculate shipping rates on next call to get('shippingRates')
-            $this->refresh('shippingRates');
-        }
-    }
-
-    function get($name) 
-    {
-        $result = null;
-        switch ($name) {
-            case "details":
-                $result = $this->getDetails();
-                break;
-
-            case "detail_labels":
-                $result = $this->getDetailLabels();
-                break;
-
-            default:
-                $result = parent::get($name);
+        if ($this->status != $value && !$this->statusChanged) {
+            $this->statusChanged = true;
+            $this->oldStatus = $this->status;
         }
 
-        return $result;
+        $this->status = $value;
+
+        // TODO - rework
+        //$this->refresh('shippingRates');
     }
 
     /**
@@ -769,11 +843,11 @@ class Order extends \XLite\Model\AModel
      */
     public function getShippingMethod() 
     {
-        if (is_null($this->_shippingMethod) && $this->get('shipping_id')) {
-            $this->_shippingMethod = new \XLite\Model\Shipping($this->get('shipping_id'));
+        if (!isset($this->shippingMethod) && $this->getShippingId()) {
+            $this->shippingMethod = new \XLite\Model\Shipping($this->getShippingId());
         }
 
-        return $this->_shippingMethod;
+        return $this->shippingMethod;
     }
 
     /**
@@ -789,12 +863,12 @@ class Order extends \XLite\Model\AModel
     public function setShippingMethod($shippingMethod) 
     {
         if (!is_null($shippingMethod) && $shippingMethod instanceof \XLite\Model\Shipping) {
-            $this->_shippingMethod = $shippingMethod;
-            $this->set('shipping_id', $shippingMethod->get('shipping_id'));
+            $this->shippingMethod = $shippingMethod;
+            $this->setShippingId($shippingMethod->get('shipping_id'));
 
         } else {
-            $this->_shippingMethod = false;
-            $this->set('shipping_id', 0);
+            $this->shippingMethod = false;
+            $this->setShippingId(0);
         }
     }
 
@@ -808,11 +882,11 @@ class Order extends \XLite\Model\AModel
      */
     public function getPaymentMethod()
     {
-        if (is_null($this->_paymentMethod) && $this->get('payment_method')) {
-            $this->_paymentMethod = \XLite\Model\PaymentMethod::factory($this->get('payment_method'));
+        if (!isset($this->paymentMethodModel) && $this->payment_method) {
+            $this->paymentMethodModel = \XLite\Model\PaymentMethod::factory($this->payment_method);
         }
 
-        return $this->_paymentMethod;
+        return $this->paymentMethodModel;
     }
     
     /**
@@ -827,54 +901,97 @@ class Order extends \XLite\Model\AModel
      */
     public function setPaymentMethod($paymentMethod)
     {
-        $this->_paymentMethod = $paymentMethod;
-        $this->set(
-            'payment_method',
-            is_null($paymentMethod)
-                ? 0
-                : $paymentMethod->get('payment_method')
-        );
+        $this->paymentMethodModel = $paymentMethod;
+        $this->payment_method = is_null($paymentMethod)
+            ? 0
+            : $paymentMethod->get('payment_method');
     }
 
-    function getProfile() 
+    /**
+     * Get order profile 
+     * 
+     * @return \XLite\Model\Profile
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getProfile() 
     {
-        if (!isset($this->_profile)) {
-            $pid = $this->get('profile_id');
+        if (!isset($this->profile)) {
+            $pid = $this->getProfileId();
             if ($pid) {
-                $this->_profile = new \XLite\Model\Profile($pid);
+                $this->profile = new \XLite\Model\Profile($pid);
             }
         }
 
-        return $this->_profile;
+        return $this->profile;
     }
 
-    function setProfile($profile) 
+    /**
+     * Set profile 
+     * 
+     * @param mixed $profile Profile
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setProfile($profile) 
     {
-        $this->_profile = $profile;
-        $this->set('profile_id', isset($profile) ? $profile->get('profile_id') : 0);
+        $this->profile = $profile;
+        $this->setProfileId(isset($profile) ? $profile->get('profile_id') : 0);
     }
     
-    function getOrigProfile() 
+    /**
+     * Get original profile 
+     * 
+     * @return \XLite\Model\Profile
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getOrigProfile() 
     {
-        if (!isset($this->_origProfile)) {
-            if ($pid = $this->get('orig_profile_id')) {
-                $this->_origProfile = new \XLite\Model\Profile($pid);
-
-            } else {
-                return $this->getProfile();
+        if (!isset($this->origProfile)) {
+            $pid = $this->getOrigProfileId();
+            if ($pid) {
+                $this->origProfile = new \XLite\Model\Profile($pid);
             }
         }
 
-        return $this->_origProfile;
+        return $this->_origProfile
+            ? $this->_origProfile
+            : $this->getProfile();
     }
 
-    function setOrigProfile($profile) 
+    /**
+     * Set original profile 
+     * 
+     * @param mixed $profile Profile
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setOrigProfile($profile) 
     {
-        $this->_origProfile = $profile;
-        $this->set('orig_profile_id', isset($profile) ? $profile->get('profile_id') : 0);
+        $this->origProfile = $profile;
+        $this->setOrigProfileId(isset($profile) ? $profile->get('profile_id') : 0);
     }
 
-    function setProfileCopy($prof) 
+    /**
+     * Set profile copy 
+     * 
+     * @param \XLite\Model\Profile $prof Profile
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setProfileCopy($prof) 
     {
         $this->setOrigProfile($prof);
 
@@ -886,34 +1003,33 @@ class Order extends \XLite\Model\AModel
     }
 
     /**
-    * Returns all tax values as an associative Array.
-    */
-    function getAllTaxes() 
-    {
-        if (is_null($this->_taxes)) {
-            $this->_taxes = $this->get('taxes') == '' ? array() : unserialize($this->get('taxes'));
-        }
-
-        return $this->_taxes;
-    }
-
-    function setAllTaxes($taxes) 
-    {
-        $this->_taxes = $taxes;
-        $this->set('taxes', serialize($taxes));
-    }
-
-    /**
-    * Returns the named tax label.
-    */
-    function getTaxLabel($name) 
+     * Get tax label 
+     * 
+     * @param string $name Tax name
+     *  
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getTaxLabel($name) 
     {
         $tax = new \XLite\Model\TaxRates();
 
         return $tax->getTaxLabel($name);
     }
 
-    function getRegistration($name) 
+    /**
+     * Get registration 
+     * 
+     * @param string $name Tax name
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getRegistration($name) 
     {
         $tax = new \XLite\Model\TaxRates();
 
@@ -931,7 +1047,8 @@ class Order extends \XLite\Model\AModel
     public function isTaxRegistered()
     {
         $result = false;
-        foreach ($this->get('allTaxes') as $name => $value) {
+
+        foreach ($this->allTaxes as $name => $value) {
             if ($this->getRegistration($name) != '') {
                 $result = true;
                 break;
@@ -942,32 +1059,38 @@ class Order extends \XLite\Model\AModel
     }
 
     /**
-    * Selects taxes to be shown in cart totals.
-    */
-    function getDisplayTaxes() 
+     * Get display taxes list
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getDisplayTaxes() 
     {
-        if (is_null($this->get('profile')) && !$this->config->General->def_calc_shippings_taxes) {
-            return null;
-        }
+        $taxes = null;
 
-        $taxRates = new \XLite\Model\TaxRates();
-        $values = $names = $orderby = array();
-        foreach ($this->get('allTaxes') as $name => $value) {
-            if ($taxRates->getTaxLabel($name)) {
-                $values[] = $value;
-                $names[] = $name;
-                $orderby[] = $taxRates->getTaxPosition($name);
+        if (!is_null($this->getProfile()) || \XLite\Core\Config::getInstance()->General->def_calc_shippings_taxes) {
+
+            $taxRates = new \XLite\Model\TaxRates();
+            $values = $names = $orderby = array();
+            foreach ($this->allTaxes as $name => $value) {
+                if ($taxRates->getTaxLabel($name)) {
+                    $values[] = $value;
+                    $names[] = $name;
+                    $orderby[] = $taxRates->getTaxPosition($name);
+                }
             }
-        }
 
-        // sort taxes according to $orderby
-        array_multisort($orderby, $values, $names);
+            // sort taxes according to $orderby
+            array_multisort($orderby, $values, $names);
 
-        // compile an associative array $name=>$value
-        $taxes = array();
-        $len = count($names);
-        for ($i = 0; $i < $len; $i++) {
-            $taxes[$names[$i]] = $values[$i];
+            // compile an associative array $name=>$value
+            $taxes = array();
+            $len = count($names);
+            for ($i = 0; $i < $len; $i++) {
+                $taxes[$names[$i]] = $values[$i];
+            }
         }
 
         return $taxes;
@@ -988,77 +1111,15 @@ class Order extends \XLite\Model\AModel
         if (!$this->isEmpty()) {
 
             $result = array();
-            foreach ($this->getItems() as $item_idx => $item) {
+            foreach ($this->getItems() as $i => $item) {
                 $result[] = array(
-                    $item_idx,
+                    $i,
                     $item->getKey(),
-                    $item->get('amount')
+                    $item->getAmount()
                 );
             }
 
             $result = serialize($result);
-        }
-
-        return $result;
-    }
-
-    /**
-     * Delete order item 
-     * 
-     * @param \XLite\Model\OrderItem $item Item
-     *  
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function deleteItem(\XLite\Model\OrderItem $item) 
-    {
-        $item->delete();
-        $this->refresh('items');
-    }
-
-    /**
-    * Updates the specified item.
-    *
-    * @param OrderItem $item The order item to update
-    * @access public
-    */
-    function updateItem($item) 
-    {
-        if (!is_null($this->_items)) {
-            $len = count($this->_items);
-            for ($i = 0; $i < $len; $i++) {
-                if ($this->_items[$i]->_uniqueKey == $item->_uniqueKey) {
-                    $this->_items[$i] = $item;
-                }
-            }
-        }
-    }
-
-    /**
-     * Check - item exist in order or not 
-     * 
-     * @param \XLite\Model\OrderItem $item Item
-     *  
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function isExistsItem(\XLite\Model\OrderItem $item)
-    {
-        $result = false;
-
-        if ($item->isValid()) {
-            $key = $item->getKey();
-
-            foreach ($this->getItems() as $i) {
-                if ($i->getKey() == $key) {
-                    $result = true;
-                    break;
-                }
-            }
         }
 
         return $result;
@@ -1073,9 +1134,9 @@ class Order extends \XLite\Model\AModel
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function calcTotals()
+    public function calculateTotals()
     {
-        $this->calcTotal();
+        $this->calculateTotal();
     }
 
     /**
@@ -1092,32 +1153,12 @@ class Order extends \XLite\Model\AModel
         $result = array();
 
         foreach ($this->getItems() as $item) {
-            $result[] = method_exists($item, 'getDescription')
-                ? $item->getDescription()
-                : $item->get('description');
+            if (method_exists($item, 'getDescription')) {
+                $result[] = $item->getDescription();
+            }
         }
 
-        $result[] = '';
-
-        return implode("\n", $result);
-    }
-
-    /**
-     * Get order details 
-     * 
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getDetails()
-    {
-        if (is_null($this->_details)) {
-            $d = parent::get('details');
-            $this->_details = '' == $d ? array() : unserialize($d);
-        }
-
-        return $this->_details;
+        return implode("\n", $result) . "\n";
     }
 
     /**
@@ -1134,32 +1175,16 @@ class Order extends \XLite\Model\AModel
     {
         $details = $this->getDetails();
 
-        return isset($details[$name]) ? $details[$name] : null;
-    }
+        $detail = null;
 
-    /**
-     * Set details 
-     * 
-     * @param mixed $value Value (string or array)
-     *  
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function setDetails($value)
-    {
-        if (!is_array($value)) {
-            $value = unserialize($value);
+        foreach ($details as $d) {
+            if ($d->getName() == $name) {
+                $detail = $d;
+                break;
+            }
         }
 
-        if (!is_array($value)) {
-            $value = array();
-        }
-
-        parent::set('details', serialize($value));
-
-        $this->_details = $value;
+        return $detail;
     }
 
     /**
@@ -1175,21 +1200,20 @@ class Order extends \XLite\Model\AModel
      */
     public function setDetail($name, $value)
     {
-        $details = $this->getDetails();
+        $detail = $this->getDetail($name);
 
-        $details[$name] = $value;
+        if ($detail) {
+            $deatil->setValue($value);
 
-        $this->setDetails($details);
-    }
+        } else {
+            $detail = new \XLite\Model\OrderDetail();
 
-    function getDetailLabels() 
-    {
-        if (is_null($this->_detailLabels)) {
-            $d = parent::get('detail_labels');
-            $this->_detailLabels = $d == '' ? array() : unserialize($d);
+            $detail->setOrder($this);
+            $this->addDetails($detail);
+
+            $detail->setName($name);
+            $deatil->setValue($value);
         }
-
-        return $this->_detailLabels;
     }
 
     /**
@@ -1204,26 +1228,9 @@ class Order extends \XLite\Model\AModel
      */
     public function getDetailLabel($name) 
     {
-        $d = $this->getDetailLabels();
+        $detail = $this->getDetail($name);
 
-        return isset($d[$name]) ? $d[$name] : null;
-    }
-
-    /**
-     * Set detail labels 
-     * 
-     * @param array $value Labels list
-     *  
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function setDetailLabels(array $value) 
-    {
-        parent::set('detail_labels', serialize($value));
-
-        $this->_detailLabels = $value;
+        return $detail ? $detail->getLabel() : null;
     }
 
     /**
@@ -1240,14 +1247,10 @@ class Order extends \XLite\Model\AModel
      */
     public function setDetailsCell($code, $name, $value)
     {
-        $details = $this->getDetails();
-        $labels = $this->getDetailLabels();
+        $this->setDetail($code, $value);
 
-        $details[$code] = $value;
-        $labels[$code] = $name;
-
-        $this->setDetails($details);
-        $this->setDetailLabels($labels);
+        $detail = $this->getDetail($code);
+        $detail->setLabel($name);
     }
 
     /**
@@ -1262,150 +1265,68 @@ class Order extends \XLite\Model\AModel
      */
     public function unsetDetailsCell($code)
     {
-        $details = $this->getDetails();
+        $detail = $this->getDetail();
 
-        if (isset($details[$code])) {
-            unset($details[$code]);
+        if ($detail) {
+            $this->getDetails()->removeElement($detail);
         }
-
-        $this->setDetails($details);
-    }
-
-    function _prepareSearchWhere($where)
-    {
-        return $where;
     }
 
     /**
-     * Orders search 
+     * statusChanged 
      * 
-     * @param \XLite\Model\Profile $profile       Profile
-     * @param integer             $id            Order id
-     * @param string              $status        Status code
-     * @param integer             $startDate     Date (start range)
-     * @param integer             $endDate       Date (end range)
-     * @param boolean             $orig_profile  User original profile
-     * @param string              $sortCriterion Sort criterion (field name)
-     * @param boolean             $sortOrderAsc  User ascending sort order
-     *  
-     * @return array of \XLite\Model\Order
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function search(
-        $profile = null,
-        $id = null,
-        $status = null,
-        $startDate = null,
-        $endDate = null,
-        $orig_profile = true,
-        $sortCriterion = 'date',
-        $sortOrderAsc = false
-    ) {
-        $where = array();
-
-        if (isset($profile)) {
-            $where[] = ($orig_profile ? 'orig_profile_id' : 'profile_id') . " = '" . $profile->get('profile_id') . "'";
-        }
-
-        if (!empty($id)) {
-            $where[] = 'order_id = ' . intval($id);
-        }
-
-        if (!empty($status)) {
-            $where[] = 'status = \'' . $status . '\'';
-        }
-
-        if ($startDate) {
-            $where[] = 'date >= ' . intval($startDate);
-        }
-
-        if ($endDate) {
-            $where[] = 'date <= ' . intval($endDate);
-        }
-
-        $where = $this->_prepareSearchWhere($where);
-
-        if (!$sortCriterion) {
-            $sortCriterion = 'date';
-        }
-
-        return $this->findAll(implode(' AND ', $where), $sortCriterion . ' ' . ($sortOrderAsc ? 'ASC' : 'DESC'));
-    }
-
-    /**
-     * Get orders count (by profile)
-     * 
-     * @param \XLite\Model\Profile $profile      Profile
-     * @param boolean             $orig_profile User original profile instead basic profile
+     * @param mixed $oldStatus ____param_comment____
+     * @param mixed $newStatus ____param_comment____
      *  
      * @return void
-     * @access public
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getCountByProfile(\XLite\Model\Profile $profile = null, $orig_profile = true)
+    protected function changeStatusPostprocess($oldStatus, $newStatus) 
     {
-        $where = array();
+        $list = array(self::PROCESSED_STATUS, self::COMPLETED_STATUS, self::QUEUED_STATUS);
 
-        if (isset($profile)) {
-            $where[] = ($orig_profile ? 'orig_profile_id' : 'profile_id') . ' = \'' . $profile->get('profile_id') . '\'';
-        }
-
-        return $this->count(implode(' AND ', $where));
-    }
-
-    ////////////////// Order status functions //////////////////
-
-    /**
-    * Calls one of the following function: declined, processed, failed, queued
-    * when order status is changed. See share/doc/developmentdocs/status.gif
-    */
-    function statusChanged($oldStatus, $newStatus) 
-    {
         if (
-            !in_array($oldStatus, array('P', 'C', 'Q'))
-            && in_array($newStatus, array('P', 'C', 'Q'))
+            !in_array($oldStatus, $list)
+            && in_array($newStatus, $list)
         ) {
-            $this->checkedOut();
+            $this->processCheckOut();
         }
 
-        if ($oldStatus == 'I' && $newStatus == 'Q') {
-            $this->queued();
+        if (self::INPROGRESS_STATUS == $oldStatus && self::QUEUED_STATUS == $newStatus) {
+            $this->processQueue();
         }
 
         if (
-            $oldStatus != 'P'
-            && $oldStatus != 'C'
-            && ($newStatus == 'P' || $newStatus == 'C')
+            self::PROCESSED_STATUS != $oldStatus
+            && self::COMPLETED_STATUS != $oldStatus
+            && (self::PROCESSED_STATUS == $newStatus || self::COMPLETED_STATUS == $newStatus)
         ) {
-            $this->processed();
+            $this->processProcess();
         }
 
         if (
-            ($oldStatus == 'P' || $oldStatus == 'C')
-            && $newStatus !='P'
-            && $newStatus != 'C'
+            (self::PROCESSED_STATUS == $oldStatus || self::COMPLETED_STATUS == $oldStatus)
+            && self::PROCESSED_STATUS != $newStatus
+            && self::COMPLETED_STATUS != $newStatus
         ) {
-            $this->declined();
+            $this->processDecline();
         }
 
         if (
-            ($oldStatus == 'P' || $oldStatus == 'C' || $oldStatus == 'Q')
-            && $newStatus !='P'
-            && $newStatus != 'C'
-            && $newStatus != 'Q'
+            in_array($oldStatus, $list)
+            && !in_array($newStatus, $list)
         ) {
-            $this->uncheckedOut();
+            $this->processUncheckOut();
         }
 
         if (
-            $oldStatus != 'F'
-            && $oldStatus != 'D'
-            && ($newStatus == 'F' || $newStatus == 'D')
+            self::FAILED_STATUS != $oldStatus
+            && self::DECLINED_STATUS != $oldStatus
+            && (self::FAILED_STATUS == $newStatus || self::DECLINED_STATUS == $newStatus)
         ) {
-            $this->failed();
+            $this->processFail();
         }
 
     }
@@ -1418,7 +1339,7 @@ class Order extends \XLite\Model\AModel
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function checkedOut()
+    protected function processCheckOut()
     {
     }
 
@@ -1430,7 +1351,7 @@ class Order extends \XLite\Model\AModel
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function uncheckedOut() 
+    protected function processUncheckOut() 
     {
     }
 
@@ -1442,7 +1363,7 @@ class Order extends \XLite\Model\AModel
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function queued() 
+    protected function processQueue() 
     {
     }
 
@@ -1454,29 +1375,30 @@ class Order extends \XLite\Model\AModel
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function succeed()
+    public function processSucceed()
     {
         // save order ID#
-        $this->session->set('last_order_id', $this->get('order_id'));
+        \XLite\Model\Session::getInstance()->set('last_order_id', $this->getOrderId());
 
         // send email notification about initially placed order
-        $status = $this->get('status');
-        if (
-            !in_array($status, array('P', "C", "I"))
-            && ($this->config->Email->enable_init_order_notif || $this->config->Email->enable_init_order_notif_customer)
-        ) {
+        $status = $this->getStatus();
+        $list = array(self::PROCESSED_STATUS, self::COMPLETED_STATUS, self::INPROGRESS_STATUS);
+        $send = \XLite\Core\Config::getInstance()->Email->enable_init_order_notif
+            || \XLite\Core\Config::getInstance()->Email->enable_init_order_notif_customer;
+
+        if (!in_array($status, $list) && $send) {
             $mail = new \XLite\Model\Mailer();
 
             // for compatibility with dialog.order syntax in mail templates
             $mail->order = $this;
 
             // notify customer
-            if ($this->config->Email->enable_init_order_notif_customer) {
+            if (\XLite\Core\Config::getInstance()->Email->enable_init_order_notif_customer) {
                 $mail->adminMail = false;
                 $mail->selectCustomerLayout();
                 $mail->set('charset', $this->getProfile()->getComplex('billingCountry.charset'));
                 $mail->compose(
-                    $this->config->Company->orders_department,
+                    \XLite\Core\Config::getInstance()->Company->orders_department,
                     $this->getProfile()->get('login'),
                     'order_created'
                 );
@@ -1484,14 +1406,14 @@ class Order extends \XLite\Model\AModel
             }
 
             // notify admin about initially placed order
-            if ($this->config->Email->enable_init_order_notif) {
+            if (\XLite\Core\Config::getInstance()->Email->enable_init_order_notif) {
 
                 // whether or not to show CC info in mail notification
                 $mail->adminMail = true;
                 $mail->set('charset', $this->xlite->config->Company->locationCountry->charset);
                 $mail->compose(
-                    $this->config->Company->site_administrator,
-                    $this->config->Company->orders_department,
+                    \XLite\Core\Config::getInstance()->Company->site_administrator,
+                    \XLite\Core\Config::getInstance()->Company->orders_department,
                     'order_created_admin'
                 );
                 $mail->send();
@@ -1507,15 +1429,15 @@ class Order extends \XLite\Model\AModel
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function processed()
+    protected function processProcess()
     {
         $mail = new \XLite\Model\Mailer();
         $mail->order = $this;
         $mail->adminMail = true;
         $mail->set('charset', $this->xlite->config->Company->locationCountry->charset);
         $mail->compose(
-            $this->config->Company->site_administrator,
-            $this->config->Company->orders_department,
+            \XLite\Core\Config::getInstance()->Company->site_administrator,
+            \XLite\Core\Config::getInstance()->Company->orders_department,
             'order_processed'
         );
         $mail->send();
@@ -1524,7 +1446,7 @@ class Order extends \XLite\Model\AModel
         $mail->selectCustomerLayout();
         $mail->set('charset', $this->getProfile()->getComplex('billingCountry.charset'));
         $mail->compose(
-            $this->config->Company->site_administrator,
+            \XLite\Core\Config::getInstance()->Company->site_administrator,
             $this->getProfile()->get('login'),
             'order_processed'
         );
@@ -1539,7 +1461,7 @@ class Order extends \XLite\Model\AModel
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function declined()
+    protected function processDecline()
     {
     }
 
@@ -1551,15 +1473,15 @@ class Order extends \XLite\Model\AModel
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function failed()
+    protected function processFail()
     {
         $mail = new \XLite\Model\Mailer();
         $mail->order = $this;
         $mail->adminMail = true;
         $mail->set('charset', $this->xlite->config->Company->locationCountry->charset);
         $mail->compose(
-            $this->config->Company->site_administrator,
-            $this->config->Company->orders_department,
+            \XLite\Core\Config::getInstance()->Company->site_administrator,
+            \XLite\Core\Config::getInstance()->Company->orders_department,
             'order_failed'
         );
         $mail->send();
@@ -1568,121 +1490,125 @@ class Order extends \XLite\Model\AModel
         $mail->selectCustomerLayout();
         $mail->set('charset', $this->getProfile()->getComplex('billingCountry.charset'));
         $mail->compose(
-            $this->config->Company->orders_department,
+            \XLite\Core\Config::getInstance()->Company->orders_department,
             $this->getProfile()->get('login'),
             'order_failed'
         );
         $mail->send();
     }
 
-    //////////////// Private data storage functions ////////////////
 
     /**
-    * Changes were made to the order
-    */
-    function _beforeSave() 
+     * Prepare order before save data operation
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     * @PrePersist
+     * @PreUpdate
+     */
+    protected function prepareBeforeSave() 
     {
-        if ($this->_statusChanged) {
-            $this->statusChanged($this->_oldStatus, $this->get('status'));
-            $this->_statusChanged = false;
+        if ($this->statusChanged) {
+            $this->changeStatusPostprocess($this->oldStatus, $this->getStatus());
+            $this->statusChanged = false;
         }
-
-        parent::_beforeSave();
-    }
-
-    function create() 
-    {
-        parent::create();
-
-        $orderStartID = intval($this->config->General->order_starting_number);
-
-        if ($this->get('order_id') < $orderStartID) {
-            $order_id = $this->get('order_id');
-            $this->set('order_id', $orderStartID);
-            $table = $this->db->getTableByAlias($this->get('alias'));
-            $this->db->query("UPDATE $table SET order_id = $orderStartID WHERE order_id = $order_id");
-        }
-    }
-
-    function remove()
-    {
-        $status = $this->get('status');
-        if ($status == "Q" || $status == "I") {
-            $this->set('status', "D"); // decline an order before deleting it
-            $this->statusChanged($status, "D");
-        }
-        $this->delete();
-    }
-
-    function delete()
-    {
-        foreach ($this->getItems() as $item) {
-            $this->deleteItem($item);
-        }
-
-        // don't remove profile if this is a cart object
-        if (!is_null($this->getProfile()) && $this->get('status') != 'T') {
-           $this->getProfile()->delete();
-        }
-
-        parent::delete();
     }
 
     /**
-    * Removes expired 'T' orders (carts)
-    */
-    function collectGarbage($limit = null) 
+     * Prepare order before remove operation
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     * @PreRemove
+     */
+    protected function prepareBeforeRemove()
     {
-        $order = new \XLite\Model\Order();
-        $order->_range = "status = 'T'";
-        $orders = $order->findAll("date < ".(time()-ORDER_EXPIRATION_TIME), 'date', null, $limit);
-        foreach ($orders as $o) {
-            $o->delete();
+        if (in_array($this->getStatus(), array(self::QUEUED_STATUS, self::INPROGRESS_STATUS))) {
+            $status = $this->getStatus();
+            $this->setStatus(self::DECLINED_STATUS);
+            $this->changeStatusPostprocess($status, self::DECLINED_STATUS);
         }
     }
 
-    function isShowCCInfo()
+    /**
+     * Check - CC info showing available or not
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isShowCCInfo()
     {
-        return $this->get('payment_method') == "CreditCard" && $this->config->Email->show_cc_info;
+        return 'CreditCard' == $this->getPaymentMethod()
+            && \XLite\Core\Config::getInstance()->Email->show_cc_info;
     }
 
-    function isShowECheckInfo()
+    /**
+     * Check - e-card info showing available or not
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isShowEcheckInfo()
     {
-        return $this->get('payment_method') == "Echeck" && $this->config->Email->show_cc_info;
+        return 'Echeck' == $this->getPaymentMethod()
+            && \XLite\Core\Config::getInstance()->Email->show_cc_info;
     }
 
-    function recalcItems()
+    /**
+     * Refresh order items 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function refreshItems()
     {
-        $items = $this->getItems();
-        if (is_array($items)) {
-            foreach ($items as $item_key => $item) {
-                $product = $item->get('product');
-                if ($this->config->Taxes->prices_include_tax && isset($product)) {
-                    $oldPrice = $item->get('price');
-                    $items[$item_key]->setProduct($item->get('product'));
-                    $items[$item_key]->updateAmount($item->get('amount'));
+        if (\XLite\Core\Config::getInstance()->Taxes->prices_include_tax) {
+            $changed = false;
 
-                    if ($items[$item_key]->get('price') != $oldPrice) {
-                        $this->_items = null;
+            foreach ($this->getItems() as $item) {
+                $product = $item->getProduct();
+                if ($product) {
+                    $oldPrice = $item->getPrice();
+                    $item->setProduct($item->getProduct());
+                    $item->updateAmount($item->getAmount());
+
+                    if ($item->getPrice() != $oldPrice) {
+                        $this->getItems()->removeElement($item);
+                        \XLite\Core\Database::getEM()->remove($item);
+                        $changed = true;
                     }
                 }
+            }
+
+            if ($changed) {
+                \XLite\Core\Database::getEM()->flush();
             }
         }
     }
 
-    function _dumpItems($items = null) {
-        if (!is_array($items)) {
-            $items = (array) $this->get('items');
-        }
-
-        if (empty($items)) {
-            var_dump($items);
-        }
-
-        foreach ($items as $key=>$item) {
-            echo "[$key] => ";
-            $item->dump();
-        }
+    /**
+     * Format currency value
+     * 
+     * @param float $price Currency
+     *  
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function formatCurrency($price)
+    {
+        return sprintf('%.02f', round(doubleval($price), 2));
     }
 
 }

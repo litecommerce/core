@@ -212,7 +212,7 @@ class Product extends \XLite\Model\Base\I18n
     /**
      * Product detailed images
      *
-     * @var    \XLite\Mode\Image\Product\Image
+     * @var    \XLite\Model\Image\Product\Image
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0

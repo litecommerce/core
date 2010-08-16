@@ -380,6 +380,9 @@ class Config extends \XLite\Model\Repo\Base\I18n
                 $config->General->defaultLanguage->detach();
             }
 
+            // Type cast
+            $config->General->minimal_order_amount = doubleval($config->General->minimal_order_amount);
+            $config->General->maximal_order_amount = doubleval($config->General->maximal_order_amount);
         }
 
         return $config;
