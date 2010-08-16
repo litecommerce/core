@@ -126,11 +126,12 @@ abstract class ACustomer extends \XLite\Controller\AController
     {
         $cart = $this->getCart();
 
-        if ($cart->isPersistent) {
-            $cart->recalcItems();
-            $cart->calcTotals();
-            $cart->update();
-        }
+        $cart->refreshItems();
+        $cart->calculateTotals();
+
+        \XLite\Core\Database::getEM()->persist($cart);
+        \XLite\Core\Database::getEM()->flush();
+
     }
 
     /**

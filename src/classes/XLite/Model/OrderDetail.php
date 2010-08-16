@@ -26,22 +26,34 @@
  * @since      3.0.0
  */
 
-namespace XLite\Model\Image\Product;
+namespace XLite\Model;
 
 /**
- * Product detaild image
+ * Order details
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
- *
- * @Entity 
- * @Table  (name="product_detailed_images")
+ * @Entity
+ * @Table (name="order_Details")
  */
-class Detailed extends \XLite\Model\Base\Image
+class OrderDetail extends \XLite\Model\AEntity
 {
     /**
-     * Alternative image text
+     * Order detail unique id
+     * 
+     * @var    mixed
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Id
+     * @GeneratedValue (strategy="AUTO")
+     * @Column         (type="integer")
+     */
+    protected $detail_id;
+
+    /**
+     * Record name (code)
      * 
      * @var    string
      * @access protected
@@ -49,51 +61,55 @@ class Detailed extends \XLite\Model\Base\Image
      * @since  3.0.0
      * @Column (type="string", length="255")
      */
-    protected $alt = '';
+    protected $name;
 
     /**
-     * Image position 
+     * Record label
      * 
-     * @var    integer
+     * @var    string
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @Column (type="integer")
+     * @Column (type="string", length="255")
      */
-    protected $orderby = 0;
+    protected $label = '';
 
     /**
-     * Zoom flag 
+     * Value
      * 
-     * @var    boolean
+     * @var    string
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @Column (type="boolean")
+     * @Column (type="string", length="65536")
      */
-    protected $is_zoom = false;
+    protected $value;
 
     /**
-     * Enabled 
-     * 
-     * @var    boolean
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     * @Column (type="boolean")
-     */
-    protected $enabled = false;
-
-    /**
-     * Relation to a product entity
+     * Relation to a order entity
      *
-     * @var    \Doctrine\Common\Collections\ArrayCollection
+     * @var    \XLite\Model\Order
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @ManyToOne  (targetEntity="XLite\Model\Product", inversedBy="details", fetch="LAZY")
-     * @JoinColumn (name="id", referencedColumnName="product_id")
+     * @ManyToOne  (targetEntity="XLite\Model\Order", inversedBy="thumbnail", fetch="LAZY")
+     * @JoinColumn (name="order_id", referencedColumnName="order_id")
      */
-    protected $product;
+    protected $order;
+
+    /**
+     * Get display record nName 
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getDisplayName()
+    {
+        return $this->getLabel() ?: $this->getName();
+    }
+
+
 }
