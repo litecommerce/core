@@ -158,17 +158,15 @@ CREATE TABLE xlite_modules (
 
 DROP TABLE IF EXISTS xlite_order_items;
 CREATE TABLE xlite_order_items (
-  item_id int(11) NOT NULL auto_increment,
+  item_id int(11) NOT NULL auto_increment PRIMARY KEY,
   order_id int(11) NOT NULL default '0',
-  orderby int(11) NOT NULL default '0',
-  product_id int(11) NOT NULL default '0',
-  product_name char(255) NOT NULL,
-  product_sku varchar(32) NOT NULL default '',
-  price double NOT NULL default '0',
+  object_id int(11) NOT NULL default '0',
+  object_type varchar(16) NOT NULL default 'product',
+  name varchar(255) NOT NULL,
+  sku varchar(255) NOT NULL default '',
+  price decimal(16,4) NOT NULL default '0.0000',
   amount int(11) NOT NULL default '1',
-  PRIMARY KEY  (order_id,item_id),
-  KEY orderby (orderby),
-  KEY product_id (product_id),
+  KEY ooo (order_id, object_id, object_type),
   KEY price (price),
   KEY amount (amount)
 ) TYPE=MyISAM;
@@ -188,6 +186,7 @@ CREATE TABLE xlite_orders (
   payment_method varchar(64) default NULL,
   notes text,
   shipping_id int(11) default NULL,
+  is_order int(1) NOT NULL default 1,
   KEY xlite_order_date (date),
   KEY profile_id (profile_id),
   KEY orig_profile_id (orig_profile_id),

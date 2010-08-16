@@ -395,10 +395,10 @@ class Database extends \XLite\Base\Singleton
         $classMetadata = $eventArgs->getClassMetadata();
 
         // Set table name prefix
-        $classMetadata->setTableName(
-            \XLite::getInstance()->getOptions(array('database_details', 'table_prefix'))
-            . $classMetadata->getTableName()
-        );
+        $prefix = \XLite::getInstance()->getOptions(array('database_details', 'table_prefix'));
+        if ($prefix && strpos($classMetadata->getTableName(), $prefix) !== 0) {
+            $classMetadata->setTableName($prefix . $classMetadata->getTableName());
+        }
 
         // Set repository
         if (!$classMetadata->customRepositoryClassName) {

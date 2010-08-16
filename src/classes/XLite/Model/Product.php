@@ -47,7 +47,7 @@ namespace XLite\Model;
  *         }
  * )
  */
-class Product extends \XLite\Model\Base\I18n
+class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrderItem
 {
     /**
      * Product unique ID 
@@ -243,6 +243,97 @@ class Product extends \XLite\Model\Base\I18n
      * @since  3.0.0
      */
     protected $activeDetailedImages;
+
+    /**
+     * Get object unique id 
+     * 
+     * @return integer
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getId()
+    {
+        return $this->getProductId();
+    }
+
+    /**
+     * Get weight 
+     * 
+     * @return float
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getWeight()
+    {
+        return $this->weight;
+    }
+
+    /**
+     * Get price
+     * 
+     * @return float
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getPrice()
+    {
+        return $this->price;
+    }
+
+    /**
+     * Get name 
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Get SKU 
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getSku()
+    {
+        return $this->sku;
+    }
+
+    /**
+     * Get thumbnail 
+     * 
+     * @return \XLite\Model\Image\Product\Thumbnail
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getThumbnail()
+    {
+        return $this->thumbnail;
+    }
+
+    /**
+     * Get free shipping flag
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getFreeShipping()
+    {
+        return $this->free_shipping;
+    }
 
     /**
      * Return certain Product <--> Category association

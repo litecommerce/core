@@ -171,7 +171,7 @@ abstract class ACustomer extends \XLite\Controller\AController
      */
     public function getCart()
     {
-        return \XLite\Model\CachingFactory::getObject(__METHOD__, '\XLite\Model\Cart');
+        return \XLite\Model\Cart::getInstance();
     }
 
     /**
