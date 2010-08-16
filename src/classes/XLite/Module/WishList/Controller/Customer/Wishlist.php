@@ -295,7 +295,11 @@ class Wishlist extends \XLite\Controller\Customer\ACustomer
             $this->cart->deleteItem($item);
 
         } else {
-            $item->updateAmount($item->get('amount') - $amount);
+            $item->setAmount($item->get('amount') - $amount);
+
+            // TODO[ITEM->UPDATE_AMOUNT]: Remove if it's not needed
+            // \XLite\Core\Database::getRepo('\XLite\Model\OrderItem')->update($item);
+
             $this->getCart()->updateItem($item);
         }
 

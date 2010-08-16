@@ -34,59 +34,64 @@ namespace XLite\Module\ProductOptions\Model;
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
- * @Entity (repositoryClass="\XLite\Module\ProductOptions\Model\Repo\OrderItemOption")
- * @Table (name="order_item_options")
+ *
+ * @Entity (repositoryClass="XLite\Module\ProductOptions\Model\Repo\OrderItemOption")
+ * @Table  (name="order_item_options")
  */
 class OrderItemOption extends \XLite\Model\AEntity
 {
     /**
-     * Saved option unique id 
+     * Primary key
      * 
-     * @var    integer
+     * @var    int
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Id
      * @GeneratedValue (strategy="AUTO")
-     * @Column (type="integer")
+     * @Column         (type="integer", length="11", nullable=false)
      */
     protected $id;
 
     /**
-     * Order item unique id 
+     * Order item id 
      * 
-     * @var    integer
+     * @var    int
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @Column (type="string", length="255")
+     *
+     * @Column (type="integer", length="11", nullable=false)
      */
     protected $item_id;
 
     /**
-     * Order unique id 
+     * Order id 
      * 
-     * @var    integer
+     * @var    int
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @Column (type="integer")
+     *
+     * @Column (type="integer", length="11", nullable=false)
      */
     protected $order_id;
 
     /**
-     * Option unique id 
+     * Option id 
      * 
-     * @var    integer
+     * @var    int
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @Column (type="integer")
+     *
+     * @Column (type="integer", length="11", nullable=false)
      */
     protected $option_id = 0;
 
     /**
-     * Group option unique id 
+     * Group option id 
      * 
      * @var    integer
      * @access protected
@@ -103,7 +108,8 @@ class OrderItemOption extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @Column (type="string", length="255")
+     *
+     * @Column (type="string", length="255", nullable=false)
      */
     protected $name;
 
@@ -114,9 +120,11 @@ class OrderItemOption extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     * 
      * @Column (type="string", length="65535", nullable="false")
      */
     protected $value = '';
+
 
     /**
      * @OneToOne(targetEntity="Shipping")
@@ -130,7 +138,8 @@ class OrderItemOption extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @OneToOne (targetEntity="XLite\Module\ProductOptions\Model\OptionGroup")
+     *
+     * @OneToOne   (targetEntity="XLite\Module\ProductOptions\Model\OptionGroup")
      * @JoinColumn (name="group_id", referencedColumnName="group_id")
      */
     protected $group;
@@ -142,10 +151,25 @@ class OrderItemOption extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @OneToOne (targetEntity="XLite\Module\ProductOptions\Model\Option")
+     *
+     * @OneToOne   (targetEntity="XLite\Module\ProductOptions\Model\Option")
      * @JoinColumn (name="option_id", referencedColumnName="option_id")
      */
     protected $option;
+
+    /**
+     * Order item (relation)
+     * 
+     * @var    \XLite\Model\OrderItem
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     *
+     * @ManyToOne  (targetEntity="XLite\Model\OrderItem", inversedBy="options")
+     * @JoinColumn (name="item_id", referencedColumnName="item_id")
+     */
+    protected $order_item;
+
 
     /**
      * Get actual selected option name 
@@ -157,9 +181,7 @@ class OrderItemOption extends \XLite\Model\AEntity
      */
     public function getActualName()
     {
-        return $this->getGroup()
-            ? $this->getGroup()->getName()
-            : $this->getName();
+        return $this->getGroup() ? $this->getGroup()->getName() : $this->getName();
     }
 
     /**
@@ -172,8 +194,6 @@ class OrderItemOption extends \XLite\Model\AEntity
      */
     public function getActualValue()
     {
-        return $this->getOption()
-            ? $this->getOption()->getName()
-            : $this->getValue();
+        return $this->getOption() ? $this->getOption()->getName() : $this->getValue();
     }
 }

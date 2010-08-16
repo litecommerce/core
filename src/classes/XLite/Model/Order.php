@@ -1613,6 +1613,4 @@ class Order extends \XLite\Model\AEntity
     {
         return sprintf('%.02f', round(doubleval($price), 2));
     }
-
 }
-

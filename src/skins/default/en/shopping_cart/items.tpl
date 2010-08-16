@@ -15,8 +15,10 @@
   <tbody>
     <tr class="selected-product" FOREACH="cart.getItems(),cart_id,item">
       <td>
-        <widget template="shopping_cart/item.tpl" IF="item.isUseStandardTemplate()" />
-        <widget module="GiftCertificates" template="modules/GiftCertificates/item.tpl" IF="item.gcid" />
+        <widget template="shopping_cart/item.tpl" />
+
+        {* TODO: add method to replace the the "shopping_cart/item.tpl" template *}
+        {* <widget module="GiftCertificates" template="modules/GiftCertificates/item.tpl" IF="item.gcid" />*}
       </td>
     </tr>
   </tbody>

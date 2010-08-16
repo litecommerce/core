@@ -91,4 +91,19 @@ class Converter extends AUtils
     {
         return rtrim($string, $chars);
     }
+
+    /**
+     * Get formatted price
+     * 
+     * @param float $price value to format
+     *  
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function formatPrice($price)
+    {
+        return sprintf('%.02f', round(doubleval($price), 2));
+    }
 }

@@ -308,7 +308,11 @@ class Cart extends \XLite\Model\Cart implements \XLite\Base\IDecorator
             			if ($item_idx != $item_idx_2 && $item_2->getKey() == $item_key && (!$item_2->isBonusApplies() && !$item_2->isPromotionItem())) {
             			    $amount = $item->get('amount');
             			    $this->deleteItem($item);
-            				$item_2->updateAmount($item_2->get('amount')+$amount);
+            				$item_2->setAmount($item_2->get('amount')+$amount);
+
+                            // TODO[ITEM->UPDATE_AMOUNT]: Remove if it's not needed
+                            // \XLite\Core\Database::getRepo('\XLite\Model\OrderItem')->update($item_2);
+
             				$countDowning = true;
             				break;
             			}

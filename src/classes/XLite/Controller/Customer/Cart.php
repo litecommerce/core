@@ -182,7 +182,11 @@ class Cart extends \XLite\Controller\Customer\ACustomer
                 isset($amount[$key])
                 && (is_null($cartId) || $cartId == $key)
             ) {
-                $items[$key]->updateAmount($amount[$key]);
+                $items[$key]->setAmount($amount[$key]);
+
+                // TODO[ITEM->UPDATE_AMOUNT]: Remove if it's not needed
+                // \XLite\Core\Database::getRepo('\XLite\Model\OrderItem')->update($items[$key]);
+
                 $this->getCart()->updateItem($items[$key]);
             }
         }

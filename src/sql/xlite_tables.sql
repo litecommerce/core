@@ -158,11 +158,11 @@ CREATE TABLE xlite_modules (
 
 DROP TABLE IF EXISTS xlite_order_items;
 CREATE TABLE xlite_order_items (
-  item_id varchar(255) NOT NULL default '',
+  item_id int(11) NOT NULL auto_increment,
   order_id int(11) NOT NULL default '0',
   orderby int(11) NOT NULL default '0',
   product_id int(11) NOT NULL default '0',
-  product_name varchar(255) NOT NULL default '',
+  product_name char(255) NOT NULL,
   product_sku varchar(32) NOT NULL default '',
   price double NOT NULL default '0',
   amount int(11) NOT NULL default '1',

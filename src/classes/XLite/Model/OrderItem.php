@@ -29,246 +29,223 @@
 namespace XLite\Model;
 
 /**
- * Something customer can put into its cart
+ * Something customer can put into his cart
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
+ *
+ * @Entity (repositoryClass="XLite\Model\Repo\OrderItem")
+ * @Table (name="order_items",
+ *         indexes={
+ *              @Index(name="orderby", columns={"orderby"}),
+ *              @Index(name="product_id", columns={"product_id"}),
+ *              @Index(name="price", columns={"price"}),
+ *              @Index(name="amount", columns={"amount"})
+ *         }
+ * )
  */
-class OrderItem extends \XLite\Model\AModel
+class OrderItem extends \XLite\Model\AEntity
 {
     /**
-     * Check for purchase limits 
+     * Primary key 
      * 
-     * @param int $value product amount
-     *  
-     * @return void
+     * @var    int
      * @access protected
+     * @see    ____var_see____
      * @since  3.0.0
+     * 
+     * @Id
+     * @GeneratedValue (strategy="AUTO")
+     * @Column         (type="integer", length="11", nullable=false)
      */
-    protected function correctAmount(&$value)
-    {
-        $origValue = $value;
+    protected $item_id;
 
-        if (!($product = $this->getProduct())) {
-            $product = new \XLite\Model\Product();
-        }
+    /**
+     * Id of order items is belong for 
+     * 
+     * @var    int
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     *
+     * @Column (type="integer", length="11", nullable=false) 
+     */
+    protected $order_id;
 
-        $min = $product->getMinPurchaseLimit();
-        $max = $product->getMaxPurchaseLimit();
+    /**
+     * Position
+     * 
+     * @var    int
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     *
+     * @Column (type="integer", length="11", nullable=false) 
+     */
+    protected $orderby;
 
-        $value = max($value, $min);
-        $value = min($value, $max);
+    /**
+     * ID of the product
+     * 
+     * @var    mixed
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     * 
+     * @Column (type="integer", length="11", nullable=false)
+     */
+    protected $product_id;
 
-        if ($origValue != $value) {
-            \XLite\Core\TopMessage::getInstance()->add(
-                'Amount of the "' . $product->get('name') . '" product '
-                . 'has been corrected: it must be between ' . $min . ' and ' . $max
-            );
-        }
-    }
+    /**
+     * Product name
+     *
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     *
+     * @Column (type="string", length="255", nullable=false)
+     */
+    protected $product_name;
+
+    /**
+     * Product SKU 
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     *
+     * @Column (type="string", length="32", nullable=false)
+     */
+    protected $product_sku;
+
+    /**
+     * Product price
+     *
+     * @var    decimal
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     *
+     * @Column (type="decimal", precision=14, scale=2)
+     */
+    protected $price;
+
+    /**
+     * Product amount 
+     * 
+     * @var    float
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     *
+     * @Column (type="integer", length="11", nullable=false)
+     */
+    protected $amount = 1;
 
 
     /**
-     * Sets the specified property value 
-     *                                   
-     * @param string $property field name
-     * @param mixed  $value    field value
-     *                                    
-     * @return void                       
-     * @access public                     
-     * @since  3.0                        
-     */                                   
-    public function set($property, $value)
-    {
-        if ('amount' == $property) {
-            $this->correctAmount($value);
-        }
-
-        return parent::set($property, $value);
-    }
+     * Item order 
+     * 
+     * @var    \XLite\Model\Order
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     * 
+     * @ManyToOne  (targetEntity="XLite\Model\Category", inversedBy="items")
+     * @JoinColumn (name="order_id", referencedColumnName="order_id")
+     */
+    protected $order;
 
     /**
-     * Return reference to the associated order object
+     * Item product 
+     * 
+     * @var    \XLite\Model\Product
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     * 
+     * OneToOne    (targetEntity="XLite\Model\Product")
+     * @JoinColumn (name="product_id", referencedColumnName="product_id")
+     */
+    protected $product;
+
+
+    /**
+     * FIXME - must be removed after the association "order" will become working
      * 
      * @return \XLite\Model\Order
      * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function getOrder()
     {
-        return \XLite\Model\CachingFactory::getObject(
-            __METHOD__ . $this->_uniqueKey,
-            '\XLite\Model\Order',
-            array($this->get('order_id'))
-        );
+        return new \XLite\Model\Order($this->getOrderId());
     }
 
     /**
-     * A reference to the product object 
-     * TODO - add caching
+     * Wrapper. If the product was deleted,
+     * item will use save product name and SKU
      * 
      * @return \XLite\Model\Product
      * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function getProduct()
     {
-        return \XLite\Core\Database::getRepo('\XLite\Model\Product')->find($this->get('product_id'));
-    }
-
-    /**
-     * Flag; is this item needs to be shipped
-     * 
-     * @return bool
-     * @access public
-     * @since  3.0.0
-     */
-    public function isShipped()
-    {
-        return is_null($this->getProduct()) || !((bool) $this->getProduct()->getFreeShipping());
-    }
-
-
-
-    public $fields = array(
-        'order_id'    => '',
-        'item_id'     => '',
-        'orderby'     => 0,
-        'product_id'  => '',
-        'product_name'  => '',
-        'product_sku'  => '',
-        'price'       => '0',
-        'amount'      => '1');
-
-    public $primaryKey = array('order_id', 'item_id');
-    public $alias = 'order_items';
-    public $defaultOrder = "orderby";
-
-    public function __construct()
-    {
-        $this->_uniqueKey = uniqid('order_item_');
-        parent::__construct();
-    }
-
-    public function setProduct($product)
-    {
-        $this->product = $product;
-
-        if (isset($product)) {
-        	if ($this->config->Taxes->prices_include_tax) {
-        		$this->set('price', $this->formatCurrency($product->getTaxedPrice()));
-        	} else {
-            	$this->set('price', $product->getPrice());
-        	}
-
-            $this->set('product_id', $product->getProductId());
-            $this->set('product_name', $product->getName());
-            $this->set('product_sku', $product->getSku());
+        if (!isset($this->product)) {
+            $this->product = new \XLite\Model\Product(
+                array('name' => $this->getProductName(), 'sku' => $this->getProductSku())
+            );
         }
+
+        return $this->product;
     }
 
     /**
-     * Create order item
+     * Save some fields from product
      * 
+     * @param \XLite\Model\Product $product product to set
+     *  
      * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function create()
+    public function setProduct(\XLite\Model\Product $product)
     {
-        $this->set('item_id', $this->getKey());
-        parent::create();
+        $price = \XLite\Core\Config::getInstance()->Taxes->prices_include_tax 
+            ? $product->getTaxedPrice() 
+            : $product->getPrice();
+
+        $this->setPrice(\Includes\Utils\Converter::formatPrice($price));
+        $this->setProductId($product->getProductId());
+        $this->setProductName($product->getName());
+        $this->setProductSku($product->getSku());
+
+        $this->product = $product;
     }
-    
+
     /**
-     * Get item unique key
-     *
-     * @return string
+     * Modified setter
+     * 
+     * @param int $amount value to set
+     *  
+     * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getKey()
+    public function setAmount($amount)
     {
-        return strval($this->get('product_id'));
-    }
+        $amount = max($amount, $this->getProduct()->getMinPurchaseLimit());
+        $amount = min($amount, $this->getProduct()->getMaxPurchaseLimit());
 
-    function updateAmount($amount)
-    {
-        $amount = (int)$amount;
-        if ($amount <= 0) {
-            $this->getOrder()->deleteItem($this);
-        } else {
-            $this->set('amount', $amount);
-            $this->update();
-        }
-    }
-
-    /**
-     * Update object
-     *
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function update()
-    {
-        $result = parent::update();
-
-        if ($result) {
-            $key = $this->getKey();
-            if ($key != $this->get('item_id')) {
-                $item = new \XLite\Model\OrderItem();
-                $sql = 'order_id = \'' . $this->get('order_id')
-                    . ' \' AND item_id = \'' . addslashes($key) . '\'';
-
-                if ($item->find($sql)) {
-
-                    // Unite items
-                    $item->updateAmount($this->get('amount') + $item->get('amount'));
-                    $this->getOrder()->deleteItem($this);
-
-                } else {
-
-                    // Update item id
-                    $sql = 'UPDATE ' . $this->getTable()
-                        . ' SET item_id = \'' . $key . '\''
-                        . ' WHERE order_id = \'' . $this->get('order_id')
-                        . ' \' AND item_id = \'' . addslashes($this->get('item_id')) . '\'';
-                    $this->db->query($sql);
-                    $this->set('item_id', $key);
-                    $this->getOrder()->updateItem($this);
-                }
-            }
-        }
-
-        return $result;
-    }
-
-    function getOrderby()
-    {
-        $sql = "SELECT MAX(orderby)+1 FROM %s WHERE order_id=%d";
-        $sql = sprintf($sql, $this->get('table'), $this->get('order_id'));
-
-        return $this->db->getOne($sql);
-    }
-
-    function getDiscountablePrice()
-    {
-        return $this->get('price');
-    }
-
-    function getTaxableTotal()
-    {
-        return $this->get('total');
-    }
-
-    function getPrice()
-    {
-        return $this->formatCurrency($this->get('price'));
+        $this->amount = $amount;
     }
 
     /**
@@ -281,7 +258,7 @@ class OrderItem extends \XLite\Model\AModel
      */
     public function getTotal()
     {
-        return $this->formatCurrency($this->get('price') * $this->get('amount'));
+        return Includes\Utils\Converter::formatPrice($this->getPrice() * $this->getAmount());
     }
 
     /**
@@ -294,55 +271,20 @@ class OrderItem extends \XLite\Model\AModel
      */
     public function getWeight()
     {
-        return $this->getComplex('product.weight') * $this->get('amount');
-    }
-
-    // FIXME - to remove
-    function getRealProduct()
-    {
-        return $this->getProduct() ?: false;
+        return $this->getProduct()->getWeight() * $this->getAmount();
     }
 
     /**
-     * Getter
+     * Check if item has a thumbnail
      * 
-     * @param string $name Property name
-     *  
-     * @return mixed
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function get($name)
-    {
-        $result = null;
-
-        if (in_array($name, array('name', 'brief_description', 'description', 'sku'))) {
-            if ($product = $this->getProduct()) {
-                $result = $this->getProduct()->{'get' . ucfirst($name)}();
-            } elseif ($name == 'name' || $name == 'sku') {
-                $result = $this->get("product_$name");
-            }
-        } else {
-            $result = parent::get($name);
-        }
-
-        return $result;
-    }
-    
-    /**
-     * Check - has item thumbnail or not
-     * 
-     * @return boolean
+     * @return bool
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
     public function hasThumbnail()
     {
-        return (!$this->isValid() && $this->getRealProduct())
-            ? $this->realProduct->hasThumbnail()
-            : $this->getProduct()->hasThumbnail();
+        return $this->getProduct()->hasThumbnail();
     }
 
     /**
@@ -355,24 +297,20 @@ class OrderItem extends \XLite\Model\AModel
      */
     public function getThumbnailURL()
     {
-        return (!$this->isValid() && $this->getRealProduct())
-            ? $this->realProduct->getThumbnailURL()
-            : $this->getProduct()->getThumbnailURL();
+        return $this->getProduct()->getThumbnailURL();
     }
 
     /**
      * Get item thumbnail
      *
-     * @return \XLite\Model\Image
+     * @return \XLite\Model\Image\Product\Thumbnail
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
     public function getThumbnail()
     {
-        return (!$this->isValid() && $this->getRealProduct())
-            ? null
-            : $this->getProduct()->getThumbnail();
+        return $this->getProduct()->getThumbnail();
     }
  
     /**
@@ -385,66 +323,88 @@ class OrderItem extends \XLite\Model\AModel
      */
     public function getDescription()
     {
-        return $this->get('name') . ' (' . $this->get('amount') . ')';
-    }
-
-    function getShortDescription($limit = 30)
-    {
-        if (strlen($this->get('sku'))) {
-            $desc = $this->get('sku');
-        } else {
-            $desc = substr($this->get('name'), 0, $limit);
-        }
-        if ($this->get('amount') == 1) {
-            return $desc;
-        } else {
-            return $desc . ' (' . $this->get('amount') . ')';
-        }
+        return $this->getProduct()->getName() . ' (' . $this->getAmount() . ')';
     }
 
     /**
-    * Validates the order item (e.g. the product_id supplied is an existing
-    * product id, the amount is greater than zero etc.).
-    * You cannot add an invalid item to a cart (prevented in Order::addItem()).
-    * This procedure disabled possible work-arounds of standard dialog 
-    * restrictions and is not intended to, say, restrict product options
-    * and other cases when the cart must show an error/explanation message
-    * to customer.
-    */
-    function isValid()
+     * Flag; is this item needs to be shipped
+     * 
+     * @return bool
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isShipped()
     {
-        return 0 < $this->get('amount');
+        return !((bool) $this->getProduct()->getFreeShipping());
     }
 
     /**
-    * Decide whether to use shopping_cart/item.tpl widget to display
-    * this item. Must be false if you want to use an alternative template.
-    */
-    function isUseStandardTemplate()
-    {
-        return true;
-    }
-
-    /**
-     * Get item URL 
+     * This key is used when checking if item is unique in the cart
      * 
      * @return string
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getURL()
+    public function getKey()
     {
-        $params = is_null($this->getProduct()) 
-            ? array() 
-            : array('product', '', array('product_id' => $this->getProduct()->getProductId()));
-
-        return call_user_func_array(array(\XLite\Core\Converter::getInstance(), 'buildURL'), $params);
+        return $this->getProductId();
     }
 
+    /**
+     * Check if item is valid
+     * 
+     * @return bool
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isValid()
+    {
+        return 0 < $this->getAmount();
+    }
+
+
+    // NOTE: these methods are needed for the modules
+    // TODO: check if there is a more convinient way to implement this
+
+    /**
+     * hasOptions 
+     * 
+     * @return bool
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     public function hasOptions()
     {
         return false;
     }
-}
 
+    /**
+     * getDiscountablePrice 
+     * 
+     * @return float
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getDiscountablePrice()
+    {
+        return $this->getPrice();
+    }   
+        
+    /**
+     * getTaxableTotal 
+     * 
+     * @return float
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getTaxableTotal()
+    {
+        return $this->getTotal();
+    }
+}
