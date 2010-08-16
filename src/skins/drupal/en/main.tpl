@@ -62,8 +62,8 @@
 <widget template="common/tab.tpl" label="Catalog" href="cart.php" img="sideicon_orders.gif" active="main">
 </TD>
 <TD>
-<widget if="cart.empty" template="common/tab.tpl" label="Your Cart" href="cart.php?target=cart" active="cart"/>
-<widget if="!cart.empty" template="common/tab.tpl" label="Your Cart" href="cart.php?target=cart" active="cart"/>
+<widget if="cart.isEmpty()" template="common/tab.tpl" label="Your Cart" href="cart.php?target=cart" active="cart"/>
+<widget if="!cart.isEmpty()" template="common/tab.tpl" label="Your Cart" href="cart.php?target=cart" active="cart"/>
 </TD>
 <TD>
 <widget module="WishList" IF="{auth.logged&wishlist.products}" template="common/tab.tpl" label="Wish list" href="cart.php?target=wishlist" img="modules/WishList/wish_list_icon.gif" active="wishlist">

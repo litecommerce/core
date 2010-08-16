@@ -14,11 +14,11 @@
 
   <table width="100%">
 
-    <tr IF="cart.empty">
-      <td><img src="images/cart_empty.gif" alt=""> Cart is empty</td>
+    <tr IF="cart.isEmpty()">
+      <td><img src="images/cart.isEmpty().gif" alt=""> Cart is empty</td>
     </tr>
 
-    <tr IF="!cart.empty">
+    <tr IF="!cart.isEmpty()">
       <td>
 
         <table width="100%">

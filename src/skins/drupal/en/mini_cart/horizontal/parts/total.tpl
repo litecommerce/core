@@ -11,7 +11,7 @@
  * @since     3.0.0
  * @ListChild (list="minicart.horizontal.childs", weight="20")
  *}
-<div class="cart-totals" IF="!cart.empty">
+<div class="cart-totals" IF="!cart.isEmpty()">
   <p><span class="delimiter">/</span><span class="cart-total">{price_format(cart,#total#):h}</span></p>
 </div>
 

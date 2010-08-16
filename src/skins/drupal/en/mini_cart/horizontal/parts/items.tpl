@@ -11,11 +11,11 @@
  * @since     3.0.0
  * @ListChild (list="minicart.horizontal.childs", weight="10")
  *}
-<div class="cart-items" IF="cart.empty">
-  <p class="cart-empty">Cart is empty</p>
+<div class="cart-items" IF="cart.isEmpty()">
+  <p class="cart.isEmpty()">Cart is empty</p>
 </div>
 
-<div class="cart-items" IF="!cart.empty">
+<div class="cart-items" IF="!cart.isEmpty()">
   <p class="toggle-button"><a href="{buildURL(#cart#)}" onclick="javascript: xlite_minicart_toggle('lc-minicart-{displayMode}'); return false;">{cart.getItemsCount()} item(s)</a> </p>
   <div class="items-list">
     <ul>

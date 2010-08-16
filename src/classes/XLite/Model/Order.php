@@ -38,8 +38,8 @@ namespace XLite\Model;
  * @Table (name="orders")
  * @HasLifecycleCallbacks
  * @InheritanceType("SINGLE_TABLE")
- * @DiscriminatorColumn(name="status", type="string", length="1")
- * @DiscriminatorMap({"T" = "XLite\Model\Cart"})
+ * @DiscriminatorColumn(name="is_order", type="integer", length="1")
+ * @DiscriminatorMap({"1" = "XLite\Model\Order", "0" = "XLite\Model\Cart"})
  */
 class Order extends \XLite\Model\AEntity
 {

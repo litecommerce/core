@@ -47,6 +47,8 @@ namespace XLite\Model;
  */
 class OrderItem extends \XLite\Model\AEntity
 {
+    const PRODUCT_TYPE = 'product';
+
     /**
      * Primary key 
      * 
@@ -57,94 +59,81 @@ class OrderItem extends \XLite\Model\AEntity
      * 
      * @Id
      * @GeneratedValue (strategy="AUTO")
-     * @Column         (type="integer", length="11", nullable=false)
+     * @Column         (type="integer")
      */
     protected $item_id;
 
     /**
-     * Id of order items is belong for 
+     * Object id
      * 
-     * @var    int
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     *
-     * @Column (type="integer", length="11", nullable=false) 
-     */
-    protected $order_id;
-
-    /**
-     * Position
-     * 
-     * @var    int
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     *
-     * @Column (type="integer", length="11", nullable=false) 
-     */
-    protected $orderby;
-
-    /**
-     * ID of the product
-     * 
-     * @var    mixed
+     * @var    integer
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      * 
-     * @Column (type="integer", length="11", nullable=false)
+     * @Column (type="integer")
      */
-    protected $product_id;
+    protected $object_id;
 
     /**
-     * Product name
+     * Object type
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     * 
+     * @Column (type="string", length="16")
+     */
+    protected $object_type = self::PRODUCT_TYPE;
+
+    /**
+     * Item name
      *
      * @var    string
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @Column (type="string", length="255", nullable=false)
+     * @Column (type="string", length="255")
      */
-    protected $product_name;
+    protected $name;
 
     /**
-     * Product SKU 
+     * Item SKU 
      * 
      * @var    string
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @Column (type="string", length="32", nullable=false)
+     * @Column (type="string", length="32")
      */
-    protected $product_sku;
+    protected $sku = '';
 
     /**
-     * Product price
+     * Item price
      *
      * @var    decimal
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @Column (type="decimal", precision=14, scale=2)
+     * @Column (type="decimal", precision="4", scale="12")
      */
     protected $price;
 
     /**
-     * Product amount 
+     * Item quantity 
      * 
-     * @var    float
+     * @var    integer
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @Column (type="integer", length="11", nullable=false)
+     * @Column (type="integer")
      */
     protected $amount = 1;
-
 
     /**
      * Item order 
@@ -154,7 +143,7 @@ class OrderItem extends \XLite\Model\AEntity
      * @see    ____var_see____
      * @since  3.0.0
      * 
-     * @ManyToOne  (targetEntity="XLite\Model\Category", inversedBy="items")
+     * @ManyToOne  (targetEntity="XLite\Model\Order", inversedBy="items")
      * @JoinColumn (name="order_id", referencedColumnName="order_id")
      */
     protected $order;
@@ -168,22 +157,36 @@ class OrderItem extends \XLite\Model\AEntity
      * @since  3.0.0
      * 
      * OneToOne    (targetEntity="XLite\Model\Product")
-     * @JoinColumn (name="product_id", referencedColumnName="product_id")
+     * @JoinColumn (name="object_id", referencedColumnName="product_id")
      */
     protected $product;
 
-
-    /**
-     * FIXME - must be removed after the association "order" will become working
-     * 
-     * @return \XLite\Model\Order
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getOrder()
+    public function getObject()
     {
-        return new \XLite\Model\Order($this->getOrderId());
+        $method = $this->getObjectGetterName();
+
+        return method_exists($this, $method)
+            ? $this->$method()
+            : null;
+    }
+
+    protected function getObjectGetterName()
+    {
+        return 'get' . ucfirst($this->getObjectType()) . 'Object';
+    }
+
+    protected function getProductObject()
+    {
+        if (!isset($this->product) || !$this->product->getProductId()) {
+            $this->product = new \XLite\Model\Product(
+                array(
+                    'name' => $this->getName(),
+                    'sku'  => $this->getSku(),
+                )
+            );
+        }
+
+        return $this->product;
     }
 
     /**
@@ -197,13 +200,9 @@ class OrderItem extends \XLite\Model\AEntity
      */
     public function getProduct()
     {
-        if (!isset($this->product)) {
-            $this->product = new \XLite\Model\Product(
-                array('name' => $this->getProductName(), 'sku' => $this->getProductSku())
-            );
-        }
-
-        return $this->product;
+        return self::PRODUCT_TYPE == $this->getObjectType()
+            ? $this->getProductObject()
+            : null;
     }
 
     /**
@@ -218,22 +217,27 @@ class OrderItem extends \XLite\Model\AEntity
      */
     public function setProduct(\XLite\Model\Product $product)
     {
-        $price = \XLite\Core\Config::getInstance()->Taxes->prices_include_tax 
-            ? $product->getTaxedPrice() 
-            : $product->getPrice();
+        $this->setObject($product);
+        $this->setObjectType(self::PRODUCT_TYPE);
+        $this->product = $product;
+    }
+
+    public function setObject(\XLite\Model\Base\IOrderItem $item)
+    {
+        $price = \XLite\Core\Config::getInstance()->Taxes->prices_include_tax
+            ? $item->getTaxedPrice()
+            : $item->getPrice();
 
         $this->setPrice(\Includes\Utils\Converter::formatPrice($price));
-        $this->setProductId($product->getProductId());
-        $this->setProductName($product->getName());
-        $this->setProductSku($product->getSku());
-
-        $this->product = $product;
+        $this->setObjectId($item->getId());
+        $this->setName($product->getName());
+        $this->setSku($product->getSku());
     }
 
     /**
      * Modified setter
      * 
-     * @param int $amount value to set
+     * @param int $amount Value to set
      *  
      * @return void
      * @access public
@@ -242,8 +246,8 @@ class OrderItem extends \XLite\Model\AEntity
      */
     public function setAmount($amount)
     {
-        $amount = max($amount, $this->getProduct()->getMinPurchaseLimit());
-        $amount = min($amount, $this->getProduct()->getMaxPurchaseLimit());
+        $amount = max($amount, $this->getObject()->getMinPurchaseLimit());
+        $amount = min($amount, $this->getObject()->getMaxPurchaseLimit());
 
         $this->amount = $amount;
     }
@@ -271,7 +275,7 @@ class OrderItem extends \XLite\Model\AEntity
      */
     public function getWeight()
     {
-        return $this->getProduct()->getWeight() * $this->getAmount();
+        return $this->getObject()->getWeight() * $this->getAmount();
     }
 
     /**
@@ -284,7 +288,7 @@ class OrderItem extends \XLite\Model\AEntity
      */
     public function hasThumbnail()
     {
-        return $this->getProduct()->hasThumbnail();
+        return (bool)$this->getThumbnail()->getImageId();
     }
 
     /**
@@ -297,20 +301,20 @@ class OrderItem extends \XLite\Model\AEntity
      */
     public function getThumbnailURL()
     {
-        return $this->getProduct()->getThumbnailURL();
+        return $this->getThumbnail()->getURL();
     }
 
     /**
      * Get item thumbnail
      *
-     * @return \XLite\Model\Image\Product\Thumbnail
+     * @return \XLite\Model\Base\Image
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
     public function getThumbnail()
     {
-        return $this->getProduct()->getThumbnail();
+        return $this->getObject()->getThumbnail();
     }
  
     /**
@@ -323,7 +327,7 @@ class OrderItem extends \XLite\Model\AEntity
      */
     public function getDescription()
     {
-        return $this->getProduct()->getName() . ' (' . $this->getAmount() . ')';
+        return $this->getObject()->getName() . ' (' . $this->getAmount() . ')';
     }
 
     /**
@@ -336,7 +340,7 @@ class OrderItem extends \XLite\Model\AEntity
      */
     public function isShipped()
     {
-        return !((bool) $this->getProduct()->getFreeShipping());
+        return !((bool) $this->getObject()->getFreeShipping());
     }
 
     /**
@@ -349,7 +353,7 @@ class OrderItem extends \XLite\Model\AEntity
      */
     public function getKey()
     {
-        return $this->getProductId();
+        return $this->getObjectType() . '.' . $this->getObjectId();
     }
 
     /**
@@ -365,25 +369,8 @@ class OrderItem extends \XLite\Model\AEntity
         return 0 < $this->getAmount();
     }
 
-
-    // NOTE: these methods are needed for the modules
-    // TODO: check if there is a more convinient way to implement this
-
     /**
-     * hasOptions 
-     * 
-     * @return bool
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function hasOptions()
-    {
-        return false;
-    }
-
-    /**
-     * getDiscountablePrice 
+     * Get discountable price 
      * 
      * @return float
      * @access public
@@ -396,7 +383,7 @@ class OrderItem extends \XLite\Model\AEntity
     }   
         
     /**
-     * getTaxableTotal 
+     * Get taxable total 
      * 
      * @return float
      * @access public

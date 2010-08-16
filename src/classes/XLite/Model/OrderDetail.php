@@ -35,7 +35,7 @@ namespace XLite\Model;
  * @see     ____class_see____
  * @since   3.0.0
  * @Entity
- * @Table (name="order_Details")
+ * @Table (name="order_details")
  */
 class OrderDetail extends \XLite\Model\AEntity
 {
@@ -93,7 +93,7 @@ class OrderDetail extends \XLite\Model\AEntity
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @ManyToOne  (targetEntity="XLite\Model\Order", inversedBy="thumbnail", fetch="LAZY")
+     * @ManyToOne  (targetEntity="XLite\Model\Order", inversedBy="details", fetch="LAZY")
      * @JoinColumn (name="order_id", referencedColumnName="order_id")
      */
     protected $order;
