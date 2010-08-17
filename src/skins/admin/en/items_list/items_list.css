@@ -29,3 +29,40 @@
 {
   display: inline;
 }
+
+.items-list .table
+{
+  padding: 5px;
+  width: 100%;
+}
+
+.items-list .table td
+{
+  padding: 3px;
+  white-space: nowrap;
+}
+
+.items-list .table a.name
+{
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.items-list .table a:hover
+{
+  text-decoration: none;
+}
+
+.items-list .table th
+{
+  padding: 5px;
+  font-size: 1.3em;
+  font-weight: normal;
+  background-color: #e5ebef;
+  white-space: nowrap;
+}
+
+.items-list .table a
+{
+  text-decoration: underline;
+}

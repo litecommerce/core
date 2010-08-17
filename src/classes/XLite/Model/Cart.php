@@ -66,7 +66,7 @@ class Cart extends \XLite\Model\Order
 
             if ($orderId) {
                 $cart = \XLite\Core\Database::getRepo('XLite\Model\Cart')->find($orderId);
-                if ($cart && self::TEMPORARY_STATUS != $cart->getStatus()) {
+                if ($cart && self::STATUS_TEMPORARY != $cart->getStatus()) {
                     \XLite\Model\Session::getInstance()->set('order_id', 0);
                     $cart = null;
                 }
@@ -74,7 +74,7 @@ class Cart extends \XLite\Model\Order
 
             if (!isset($cart)) {
                 $cart = new $className();
-                $cart->setStatus(self::TEMPORARY_STATUS);
+                $cart->setStatus(self::STATUS_TEMPORARY);
                 $cart->setProfileId(0);
             }
 
@@ -181,7 +181,7 @@ class Cart extends \XLite\Model\Order
             } else {
                 $this->setProfileCopy($profile);
             }
-            $this->setStatus(self::INPROGRESS_STATUS);
+            $this->setStatus(self::STATUS_INPROGRESS);
 
             \XLite\Core\Database::getEM()->persist($this);
             \XLite\Core\Database::getEM()->flush();

@@ -127,7 +127,9 @@ class Product extends \XLite\Model\Repo\Base\I18n
      */
     protected function prepareCndSKU(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
-        $queryBuilder->andWhere('p.sku LIKE :sku')->setParameter('sku', '%' . $value . '%');
+        $queryBuilder
+            ->andWhere('p.sku LIKE :sku')
+            ->setParameter('sku', '%' . $value . '%');
     }
 
     /**

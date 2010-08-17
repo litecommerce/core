@@ -21,52 +21,6 @@ function ProductsList(cell, URLParams, URLAJAXParams)
   this.constructor.prototype.constructor(cell, URLParams, URLAJAXParams);
 }
 
-// Change sort criterion
-ItemsList.prototype.changeSortByMode = function(handler)
-{
-  return this.process('sortBy', $(handler).attr('class'));
-}
-
-// Change sort order
-ItemsList.prototype.changeSortOrder = function()
-{
-  return this.process('sortOrder', ('asc' == this.URLParams.sortOrder) ? 'desc' : 'asc');
-}
-
-// Check all checkboxes in list
-ItemsList.prototype.checkAll = function(handler)
-{
-  return this.container.find('input:checkbox.checkbox').attr('checked', $(handler).attr('checked') ? 'checked' : '');
-}
-
-ItemsList.prototype.listeners.sortByModes = function(handler)
-{
-  $('.sort-order .part.sort-crit a', handler.container).click(
-    function() {
-      return !handler.changeSortByMode(this);
-    }
-  );
-}
-
-ItemsList.prototype.listeners.sortOrderModes = function(handler)
-{
-  $('.sort-order .part.order-by a', handler.container).click(
-    function() {
-      return !handler.changeSortOrder();
-    }
-  );
-
-}
-
-ItemsList.prototype.listeners.checboxes = function(handler)
-{
-  $('input:checkbox.check-all', handler.container).click(
-    function() {
-      return handler.checkAll(this);
-    }
-  );
-}
-
 
 ProductsList.prototype = new ItemsList();
 ProductsList.prototype.constructor = ItemsList;

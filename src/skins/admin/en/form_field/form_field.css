@@ -11,10 +11,6 @@
  * @since     3.0.0
  */
 
-#register-form input, select {
-  width: 150px;
-}
-
 .form_field_error {
   border: 1px solid #ff0000;
 }

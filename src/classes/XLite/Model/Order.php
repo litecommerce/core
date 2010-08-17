@@ -46,13 +46,13 @@ class Order extends \XLite\Model\AEntity
     /**
      * Order statuses 
      */
-    const TEMPORARY_STATUS  = 'T';
-    const INPROGRESS_STATUS = 'I';
-    const QUEUED_STATUS     = 'Q';
-    const PROCESSED_STATUS  = 'P';
-    const COMPLETED_STATUS  = 'C';
-    const FAILED_STATUS     = 'F';
-    const DECLINED_STATUS   = 'D';
+    const STATUS_TEMPORARY  = 'T';
+    const STATUS_INPROGRESS = 'I';
+    const STATUS_QUEUED     = 'Q';
+    const STATUS_PROCESSED  = 'P';
+    const STATUS_COMPLETED  = 'C';
+    const STATUS_FAILED     = 'F';
+    const STATUS_DECLINED   = 'D';
 
 
     /**
@@ -182,7 +182,7 @@ class Order extends \XLite\Model\AEntity
      * @since  3.0.0
      * @Column (type="string", length="1")
      */
-    protected $status = self::INPROGRESS_STATUS;
+    protected $status = self::STATUS_INPROGRESS;
 
     /**
      * Payment method code
@@ -240,6 +240,29 @@ class Order extends \XLite\Model\AEntity
      * @since  3.0.0
      */
     protected $addItemError;
+
+
+    /**
+     * Return list of all aloowed order statuses
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getAllowedStatuses()
+    {
+        return array(
+            self::STATUS_TEMPORARY  => 'Cart',
+            self::STATUS_INPROGRESS => 'Incompleted',
+            self::STATUS_QUEUED     => 'Queued',
+            self::STATUS_PROCESSED  => 'Processed',
+            self::STATUS_COMPLETED  => 'Completed',
+            self::STATUS_FAILED     => 'Failed',
+            self::STATUS_DECLINED   => 'Declined',
+        );
+    }
+
 
     ///////////////////////////// OBSOLETE PROPERTIES //////////////////////
 
@@ -489,7 +512,7 @@ class Order extends \XLite\Model\AEntity
      */
     public function isProcessed()
     {
-        return in_array($this->getStatus(), array(self::PROCESSED_STATUS, self::COMPLETED_STATUS));
+        return in_array($this->getStatus(), array(self::STATUS_PROCESSED, self::STATUS_COMPLETED));
     }
 
     /**
@@ -501,7 +524,7 @@ class Order extends \XLite\Model\AEntity
      */
     public function isQueued()
     {
-        return self::QUEUED_STATUS == $this->getStatus();
+        return self::STATUS_QUEUED == $this->getStatus();
     }
 
     /**
@@ -1341,7 +1364,7 @@ class Order extends \XLite\Model\AEntity
      */
     protected function changeStatusPostprocess($oldStatus, $newStatus) 
     {
-        $list = array(self::PROCESSED_STATUS, self::COMPLETED_STATUS, self::QUEUED_STATUS);
+        $list = array(self::STATUS_PROCESSED, self::STATUS_COMPLETED, self::STATUS_QUEUED);
 
         if (
             !in_array($oldStatus, $list)
@@ -1350,22 +1373,22 @@ class Order extends \XLite\Model\AEntity
             $this->processCheckOut();
         }
 
-        if (self::INPROGRESS_STATUS == $oldStatus && self::QUEUED_STATUS == $newStatus) {
+        if (self::STATUS_INPROGRESS == $oldStatus && self::STATUS_QUEUED == $newStatus) {
             $this->processQueue();
         }
 
         if (
-            self::PROCESSED_STATUS != $oldStatus
-            && self::COMPLETED_STATUS != $oldStatus
-            && (self::PROCESSED_STATUS == $newStatus || self::COMPLETED_STATUS == $newStatus)
+            self::STATUS_PROCESSED != $oldStatus
+            && self::STATUS_COMPLETED != $oldStatus
+            && (self::STATUS_PROCESSED == $newStatus || self::STATUS_COMPLETED == $newStatus)
         ) {
             $this->processProcess();
         }
 
         if (
-            (self::PROCESSED_STATUS == $oldStatus || self::COMPLETED_STATUS == $oldStatus)
-            && self::PROCESSED_STATUS != $newStatus
-            && self::COMPLETED_STATUS != $newStatus
+            (self::STATUS_PROCESSED == $oldStatus || self::STATUS_COMPLETED == $oldStatus)
+            && self::STATUS_PROCESSED != $newStatus
+            && self::STATUS_COMPLETED != $newStatus
         ) {
             $this->processDecline();
         }
@@ -1378,9 +1401,9 @@ class Order extends \XLite\Model\AEntity
         }
 
         if (
-            self::FAILED_STATUS != $oldStatus
-            && self::DECLINED_STATUS != $oldStatus
-            && (self::FAILED_STATUS == $newStatus || self::DECLINED_STATUS == $newStatus)
+            self::STATUS_FAILED != $oldStatus
+            && self::STATUS_DECLINED != $oldStatus
+            && (self::STATUS_FAILED == $newStatus || self::STATUS_DECLINED == $newStatus)
         ) {
             $this->processFail();
         }
@@ -1438,7 +1461,7 @@ class Order extends \XLite\Model\AEntity
 
         // send email notification about initially placed order
         $status = $this->getStatus();
-        $list = array(self::PROCESSED_STATUS, self::COMPLETED_STATUS, self::INPROGRESS_STATUS);
+        $list = array(self::STATUS_PROCESSED, self::STATUS_COMPLETED, self::STATUS_INPROGRESS);
         $send = \XLite\Core\Config::getInstance()->Email->enable_init_order_notif
             || \XLite\Core\Config::getInstance()->Email->enable_init_order_notif_customer;
 
@@ -1583,10 +1606,10 @@ class Order extends \XLite\Model\AEntity
      */
     protected function prepareBeforeRemove()
     {
-        if (in_array($this->getStatus(), array(self::QUEUED_STATUS, self::INPROGRESS_STATUS))) {
+        if (in_array($this->getStatus(), array(self::STATUS_QUEUED, self::STATUS_INPROGRESS))) {
             $status = $this->getStatus();
-            $this->setStatus(self::DECLINED_STATUS);
-            $this->changeStatusPostprocess($status, self::DECLINED_STATUS);
+            $this->setStatus(self::STATUS_DECLINED);
+            $this->changeStatusPostprocess($status, self::STATUS_DECLINED);
         }
     }
 
