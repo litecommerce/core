@@ -10,7 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<div IF="cart.shippingAvailable&cart.shipped&cart.getShippingRates()" class="delivery-box">
+<div IF="cart.isShippingAvailable()&cart.shipped&cart.getShippingRates()" class="delivery-box">
   <h4>{t(#Delivery#)}</h4>
 
   <widget module="UPSOnlineTools" template="modules/UPSOnlineTools/delivery.tpl">

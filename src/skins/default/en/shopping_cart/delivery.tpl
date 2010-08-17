@@ -10,7 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<p IF="cart.shippingAvailable&cart.shipped&cart.getShippingRates()" align="right">
+<p IF="cart.isShippingAvailable()&cart.shipped&cart.getShippingRates()" align="right">
 
   <widget module="UPSOnlineTools" template="modules/UPSOnlineTools/delivery.tpl">
 
