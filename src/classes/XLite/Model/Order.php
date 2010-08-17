@@ -434,7 +434,7 @@ class Order extends \XLite\Model\AEntity
      */
     public function isMinOrderAmountError()
     {
-        return $this->getSubtotal() < \XLite\MCore\Config::getInstance()->General->minimal_order_amount;
+        return $this->getSubtotal() < \XLite\Core\Config::getInstance()->General->minimal_order_amount;
     }
 
     /**
@@ -446,7 +446,7 @@ class Order extends \XLite\Model\AEntity
      */
     public function isMaxOrderAmountError()
     {
-        return $this->getSubtotal() > \XLite\MCore\Config::getInstance()->General->maximal_order_amount;
+        return $this->getSubtotal() > \XLite\Core\Config::getInstance()->General->maximal_order_amount;
     }
 
     /**
@@ -1324,7 +1324,7 @@ class Order extends \XLite\Model\AEntity
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function setDetailsCell($code, $name, $value)
+    public function setDetailCell($code, $name, $value)
     {
         $this->setDetail($code, $value);
 
@@ -1342,9 +1342,9 @@ class Order extends \XLite\Model\AEntity
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function unsetDetailsCell($code)
+    public function unsetDetailCell($code)
     {
-        $detail = $this->getDetail();
+        $detail = $this->getDetail($code);
 
         if ($detail) {
             $this->getDetails()->removeElement($detail);
@@ -1414,11 +1414,11 @@ class Order extends \XLite\Model\AEntity
      * Order 'complete' event
      * 
      * @return void
-     * @access protected
+     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function processCheckOut()
+    public function processCheckOut()
     {
     }
 

@@ -53,7 +53,7 @@ class Countries extends \XLite\Controller\Admin\AAdmin
         );
         $list = \XLite\Core\Database::getQB()
             ->select('c')
-            ->from('\XLite\Model\Country', 'c')
+            ->from('XLite\Model\Country', 'c')
             ->where('c.code IN (' . implode(', ', $keys) . ')')
             ->setParameters($parameters)
             ->getQuery()
@@ -82,7 +82,8 @@ class Countries extends \XLite\Controller\Admin\AAdmin
             return;
         }
 
-        $country = \XLite\Core\Database::getRepo('\XLite\Model\Country')->find(\XLite\Core\Request::getInstance()->code);
+        $country = \XLite\Core\Database::getRepo('XLite\Model\Country')
+            ->find(\XLite\Core\Request::getInstance()->code);
         if ($country) {
             $this->set('valid', false);
             $this->obligatorySetStatus('exists');
@@ -119,7 +120,7 @@ class Countries extends \XLite\Controller\Admin\AAdmin
 
         if ( is_array($countries) && count($countries) > 0 ) {
             foreach ($countries as $code) {
-                $country = \XLite\Core\Database::getEM()->find('\XLite\Model\Country', $code);
+                $country = \XLite\Core\Database::getRepo('XLite\Model\Country')->find($code);
                 if ($country) {
                     \XLite\Core\Database::getEM()->remove($country);
                 }
@@ -141,6 +142,6 @@ class Countries extends \XLite\Controller\Admin\AAdmin
      */
     public function getCountries()
     {
-        return \XLite\Core\Database::getRepo('\XLite\Model\Country')->findAllCountries();
+        return \XLite\Core\Database::getRepo('XLite\Model\Country')->findAllCountries();
     }
 }

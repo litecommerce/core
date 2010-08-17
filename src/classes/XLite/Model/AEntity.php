@@ -187,7 +187,7 @@ abstract class AEntity
      */
     public function getRepository()
     {
-        return DB::getEntityManager()->getRepository(get_called_class());
+        return DB::getRepo(get_called_class());
     }
 
     /**

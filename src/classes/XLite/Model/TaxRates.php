@@ -501,7 +501,8 @@ array("condition" => "state=District of Columbia", "action" => array(
 
         } else {
             if ($this->config->General->def_calc_shippings_taxes) {
-                $default_country = \XLite\Core\Database::getEM()->find('\XLite\Model\Country', $this->config->General->default_country);
+                $default_country = \XLite\Core\Database::getRepo('XLite\Model\Country')
+                    ->find($this->config->General->default_country);
                 $this->_conditionValues['country'] = $default_country->code;
                 /* TODO - rework
                 if ($default_country->eu_memeber) {
@@ -539,7 +540,7 @@ array("condition" => "state=District of Columbia", "action" => array(
         }
 
         /* TODO - rework
-        $c = \XLite\Core\Database::getEM()->find('\XLite\Model\Country', $this->_conditionValues['country']);
+        $c = \XLite\Core\Database::getRepo('XLite\Model\Country')->find($this->_conditionValues['country']);
         if ($c->eu_memeber) {
             $this->_conditionValues['country'] .= ",EU country";
         }

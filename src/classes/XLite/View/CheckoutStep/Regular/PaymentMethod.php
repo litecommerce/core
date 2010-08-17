@@ -73,7 +73,7 @@ class PaymentMethod extends \XLite\View\CheckoutStep\Regular\ARegular
      */
     protected function isPaymentSelected(\XLite\Model\PaymentMethod $paymentMethod)
     {
-        return $this->getCart()->get('paymentMethod')
-            && $this->getCart()->get('paymentMethod')->get('payment_method') == $paymentMethod->get('payment_method');
+        return $this->getCart()->getPaymentMethod()
+            && $this->getCart()->getPaymentMethod()->get('payment_method') == $paymentMethod->get('payment_method');
     }
 }

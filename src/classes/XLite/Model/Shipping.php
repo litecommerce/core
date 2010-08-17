@@ -126,6 +126,7 @@ class Shipping extends \XLite\Model\AModel
      */
     protected function getZone(\XLite\Model\Order $order)
     {
+        /* TODO - rework after shipping methods rework
         $profile = $order->getProfile();
 
         $zone = $profile
@@ -138,7 +139,8 @@ class Shipping extends \XLite\Model\AModel
         }
 
         if (!$zone) {
-            $defaultCountry = \XLite\Core\Database::getEM()->find('\XLite\Model\Country', $this->config->General->default_country);
+            $defaultCountry = \XLite\Core\Database::getRepo('XLite\Model\Country')
+                ->find($this->config->General->default_country);
             $zone = $defaultCountry->shipping_zone;
         }
 
@@ -147,6 +149,9 @@ class Shipping extends \XLite\Model\AModel
         }
 
         return $zone;
+        */
+
+        return 0;
     }
 
 
