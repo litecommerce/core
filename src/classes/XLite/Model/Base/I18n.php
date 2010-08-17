@@ -144,13 +144,13 @@ abstract class I18n extends \XLite\Model\AEntity
         $query = self::getLanguagesQuery();
         $queryFilled = false;
 
-        foreach ($this->translations as $t) {
-            if ($t->code == $code) {
+        foreach ($this->getTranslations() as $t) {
+            if ($t->getCode() == $code) {
                 $result = $t;
                 break;
 
-            } elseif (isset($query[$t->code])) {
-                $query[$t->code] = $t;
+            } elseif (isset($query[$t->getCode()])) {
+                $query[$t->getCode()] = $t;
                 $queryFilled = true;
             }
         }
@@ -164,8 +164,8 @@ abstract class I18n extends \XLite\Model\AEntity
                     }
                 }
 
-            } elseif (0 < count($this->translations)) {
-                foreach ($this->translations as $t) {
+            } elseif (0 < count($this->getTranslations())) {
+                foreach ($this->getTranslations() as $t) {
                     $result = $t;
                     break;
                 }
@@ -173,10 +173,12 @@ abstract class I18n extends \XLite\Model\AEntity
         }
 
         if (!$result) {
-            $className = get_called_class() . 'Translation';
+            $className = $this instanceof \Doctrine\ORM\Proxy\Proxy
+                ? $this->_entityClass . 'Translation'
+                : get_called_class() . 'Translation';
             $result = new $className();
-            $result->owner = $this;
-            $result->code = $code;
+            $result->setOwner($this);
+            $result->setCode($code);
             $this->translations[] = $result;
         }
 

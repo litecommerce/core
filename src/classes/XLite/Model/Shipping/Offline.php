@@ -143,12 +143,12 @@ class Offline extends \XLite\Model\Shipping
     protected function getRate(\XLite\Model\Order $order, \XLite\Model\Shipping $method)
     {
         $shipping_id = $method->get('shipping_id');
-        $weight = doubleval($order->get('weight'));
-        $total = doubleval($order->calcSubTotal(true)); // SubTotal for "shipped only" items
+        $weight = doubleval($order->getWeight());
+        $total = doubleval($order->calculateSubtotal(true)); // SubTotal for "shipped only" items
 
         $r = new \XLite\Model\ShippingRate();
         $zone = $this->getZone($order);
-        $items = $order->get('shippedItemsCount');
+        $items = $order->countShippedItems();
         $sql = "(shipping_id=-1 OR shipping_id='$shipping_id') AND (shipping_zone=-1 OR shipping_zone='$zone') AND min_weight<=$weight AND max_weight>=$weight AND min_total<=$total AND min_items<=$items AND max_items>=$items AND max_total>$total";
 
         if (!$r->find($this->_buildRateSql($sql, $order, $method), "shipping_id DESC, shipping_zone DESC")) {

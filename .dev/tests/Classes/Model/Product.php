@@ -16,7 +16,7 @@
  * @since      3.0.0
  */
 
-include_once './AProduct.php';
+include_once __DIR__ . '/AProduct.php';
 
 class XLite_Tests_Model_Product extends XLite_Tests_Model_AProduct
 {

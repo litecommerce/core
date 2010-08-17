@@ -293,7 +293,7 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      */
     public function getName()
     {
-        return $this->name;
+        return $this->getSoftTranslation()->getName();
     }
 
     /**
@@ -512,6 +512,23 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     public function getCategories()
     {
         return \XLite\Core\Database::getRepo('\XLite\Model\Category')->findAllByProductId($this->getProductId());
+    }
+
+    /**
+     * Get product Url 
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getURL()
+    {
+        return \XLite\Core\Converter::buildURL(
+            'product',
+            '',
+            array('product_id' => $this->getProductId())
+        );
     }
 
     /**

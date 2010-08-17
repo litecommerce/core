@@ -343,7 +343,7 @@ class OptionSurcharge extends \XLite\Model\AEntity
      */
     protected function postprocessSurchargeWeight($surcharge)
     {
-        return intval(round($surcharge, 0));
+        return round($surcharge, 2);
     }
 
 }

@@ -132,17 +132,15 @@ class Login extends \XLite\Controller\Customer\ACustomer
         $this->set('returnUrl', \XLite\Core\Request::getInstance()->returnUrl);
 
         if (!$this->get('returnUrl')) {
-            $cart = \XLite\Model\Cart::getInstance();
             $url = $this->getComplex('xlite.script');
-            if (!$cart->get('empty')) {
+            if (!$this->getCart()->isEmpty()) {
                 $url .= "?target=cart";
             }
 
             $this->set('returnUrl', $url);
         }
 
-        $cart = \XLite\Model\Cart::getInstance();
-        $cart->set('profile_id', $this->profile->get('profile_id'));
+        $this->getCart()->setProfileId($this->profile->get('profile_id'));
 
         $this->recalcCart();
     }
@@ -157,9 +155,12 @@ class Login extends \XLite\Controller\Customer\ACustomer
     {
         $this->auth->logoff();
         $this->returnUrl = $this->getComplex('xlite.script');
-        if (!$this->getCart()->get('empty')) {
+        if (!$this->getCart()->isEmpty()) {
         	if ($this->config->Security->logoff_clear_cart == 'Y') {
-            	$this->getCart()->delete();
+
+                \XLite\Core\Database::getEM()->remove($this->getCart());
+                \XLite\Core\Database::getEM()->flush();
+
         	} else {
                 $this->recalcCart();
         	}
