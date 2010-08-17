@@ -9,5 +9,6 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
+ * @ListChild (list="itemsList.order.admin.search.header", weight="40")
  *}
 <th valign="top">Risk Factor</th>

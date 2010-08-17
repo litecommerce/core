@@ -19,8 +19,5 @@
   {* List of products *}
   <widget class="\XLite\View\ItemsList\Product\Admin\Search" />
 
-  {* Operation buttons *}
-  {* <widget class="\XLite\View\Button\Submit" label="Update" />*}
-
 {* Close </form> tag *}
 <widget name="products_form" end />

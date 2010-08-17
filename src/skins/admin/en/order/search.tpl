@@ -14,15 +14,14 @@
 
 <widget template="common/dialog.tpl" head="Recent orders" body="order/recent_orders.tpl" recent_orders="{recentOrders}" IF="{recentOrders}" mode="" />
 
-<span IF="{getRequestParamValue(#mode#)=#search#}">
+{* Open <form ...> tag *}
+<widget class="\XLite\View\Form\Order\Modify\Batch" name="orders_form" />
 
-  <span class="Text" IF="{getNoSuchUser()}">No such user: {login:h}<br></span>
-  <span class="Text" IF="!count">No orders found</span>
-  <span class="Text" IF="count">{count} order<span IF="!count=#1#">s</span> found.</span>
+  {* List of orders *}
+  <widget class="\XLite\View\ItemsList\Order\Admin\Search" />
 
-  <widget template="common/dialog.tpl" head="Search results" body="order/list.tpl" IF="{count}">
-
-</span>
+{* Close </form> tag *}
+<widget name="orders_form" end />
 
 <widget module="AccountingPackage" template="common/dialog.tpl" head="Export found orders to MYOB Plus" body="modules/AccountingPackage/export_myob_select.tpl" mode="export_myob" />
 

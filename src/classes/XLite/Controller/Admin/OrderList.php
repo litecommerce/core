@@ -28,7 +28,6 @@
 
 namespace XLite\Controller\Admin;
 
-
 /**
  * Orders list controller
  * 
@@ -38,7 +37,34 @@ namespace XLite\Controller\Admin;
  */
 class OrderList extends \XLite\Controller\Admin\AAdmin
 {
-    public $params = array('target', 'mode', 'order_id', 'login', 'status');
+    /**
+     * doActionUpdate 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionUpdate()
+    {
+        \XLite\Core\Database::getRepo('\XLite\Model\Order')->updateInBatchById($this->getPostedData());
+    }
+
+    /**
+     * doActionDelete 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionDelete()
+    {
+        \XLite\Core\Database::getRepo('\XLite\Model\Order')->deleteInBatchById($this->getToDelete());
+    }
+    
+
+/*    public $params = array('target', 'mode', 'order_id', 'login', 'status');
 
     /**
      * noSuchUser 
@@ -48,7 +74,7 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
      * @see    ____var_see____
      * @since  3.0.0
      */
-    public $noSuchUser = false;
+/*    public $noSuchUser = false;
 
     /**
      * startDate 
@@ -58,7 +84,7 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
      * @see    ____var_see____
      * @since  3.0.0
      */
-    public $startDate = null;
+/*    public $startDate = null;
 
     /**
      * endDate 
@@ -68,7 +94,7 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
      * @see    ____var_see____
      * @since  3.0.0
      */
-    public $endDate = null;
+/*    public $endDate = null;
 
     /**
      * orders 
@@ -78,7 +104,7 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $orders = null;
+//*    protected $orders = null;
 
     /**
      * fillForm 
@@ -88,7 +114,7 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function init()
+/*    public function init()
     {
         parent::init();
 
@@ -116,7 +142,7 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getDateValue($fieldName)
+/*    public function getDateValue($fieldName)
     {
         $dateValue = \XLite\Core\Request::getInstance()->$fieldName;;
 
@@ -150,7 +176,7 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function isQuickSearch()
+/*    protected function isQuickSearch()
     {
     	return ('export_xls' != \XLite\Core\Request::getInstance()->action);
     }
@@ -163,7 +189,7 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getOrders()
+/*    protected function getOrders()
     {
         $origProfile = true;
         $enhacedSearch = false;
@@ -293,7 +319,7 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getNoSuchUser()
+/*    public function getNoSuchUser()
     {
         $this->getOrders();
         return $this->noSuchUser;
@@ -307,7 +333,7 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getCount()
+/*    public function getCount()
     {
         return count($this->getOrders());
     }
@@ -320,7 +346,7 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getRecentOrders()
+/*    public function getRecentOrders()
     {
         $result = array();
 
@@ -351,7 +377,7 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function doActionExportXls()
+/*    protected function doActionExportXls()
     {
         $w = new \XLite\View\ExportXLS();
         $w->component = $this;
@@ -381,7 +407,7 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function columnCount($order)
+/*    public function columnCount($order)
     {
         return 6;
     }
@@ -396,7 +422,7 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function rowCount($order)
+/*    public function rowCount($order)
     {
         return 38 + count($order->get('items'));
     }
@@ -409,7 +435,7 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function doActionDelete()
+/*    protected function doActionDelete()
     {
         if (isset(\XLite\Core\Request::getInstance()->order_ids)) {
             foreach (\XLite\Core\Request::getInstance()->order_ids as $oid => $value) {
@@ -427,7 +453,7 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getExportFormats()
+/*    protected function getExportFormats()
     {
         return array("export_xls" => "MS Excel XP/XML");
     }
@@ -440,9 +466,9 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getStartXML()
+/*    protected function getStartXML()
     {
         return '<?xml version="1.0"?>'."\n";;
-    }
+    }*/
 }
 

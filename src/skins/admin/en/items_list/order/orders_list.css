@@ -11,8 +11,18 @@
  * @since     3.0.0
  */
 
-.items-list .table th.name
+.items-list .table td.id
+{
+  text-align: center;
+}
+
+.items-list .table th.customer
 {
   width: 100%;
 }
 
+.items-list .table td.total
+{
+  text-align: right;
+  font-weight: bold;
+}
