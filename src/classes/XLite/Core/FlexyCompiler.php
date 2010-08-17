@@ -908,30 +908,37 @@ class FlexyCompiler extends \XLite\Base\Singleton
         $this->condition = '';
         $expr = $this->flexyExpression($str);
         switch ($str) {
-            case ":h":	// will display variable "as is"
+            case ':h':	// will display variable "as is"
                 break;
     
             case '':	// default display
                 $expr = 'func_htmlspecialchars(' . $expr . ')';
                 break;
 
-            case ":r":
+            case ':r':
                 $expr = "str_replace('\"', '&quot;',$expr)";
                 break;
 
-            case ":u":
+            case ':u':
                 $expr = "urlencode($expr)";
                 break;
 
-            case ":t":
+            case ':t':
                 $expr = "htmlentities($expr)";
                 break;
+
+            case ':p':
+                $expr = '\XLite\Core\Converter::formatPrice(' . $expr . ')';
+                break;
+
             default:
                 $this->error("Unknown modifier '$str'");
-            break;
         }
 
-        if ($this->condition) return self::PHP_OPEN . " if ($this->condition) echo $expr;" . self::PHP_CLOSE;
+        if ($this->condition) {
+            return self::PHP_OPEN . " if ($this->condition) echo $expr;" . self::PHP_CLOSE;
+        }
+
         return self::PHP_OPEN . " echo $expr;" . self::PHP_CLOSE;
     }
     function flexyExpression(&$str)

@@ -156,7 +156,7 @@ class OptionGroup extends \XLite\Model\Base\I18n
     protected $options;
 
     /**
-     * SetT type 
+     * Set type 
      * 
      * @param string $type Option group type
      *  

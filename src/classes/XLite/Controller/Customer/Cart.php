@@ -237,18 +237,25 @@ class Cart extends \XLite\Controller\Customer\ACustomer
     }
 
     /**
-     * 'clear' action
+     * Clear cart
      * 
      * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function action_clear()
+    protected function doActionClear()
     {
         if (!$this->getCart()->isEmpty()) {
-            $this->getCart()->delete();
+            foreach ($this->getCart()->getItems() as $item) {
+                \XLite\Core\Database::getEM()->remove($item);
+            }
+            $this->getCart()->getItems()->clear();
+
+            $this->updateCart();
         }
+
+        \XLite\Core\TopMessage::getInstance()->add('Item has been deleted from cart');
     }
 
     function isSecure()

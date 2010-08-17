@@ -102,6 +102,17 @@ class OrderItemOption extends \XLite\Model\AEntity
     protected $value = '';
 
     /**
+     * Group option sort position (from XLite\Module\ProductOptions\Model\OptionGroup)
+     * 
+     * @var    integer
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Column (type="integer")
+     */
+    protected $orderby;
+
+    /**
      * Option group (relation)
      * 
      * @var    \XLite\Module\ProductOptions\Model\OptionGroup

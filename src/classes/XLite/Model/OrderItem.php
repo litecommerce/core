@@ -161,6 +161,8 @@ class OrderItem extends \XLite\Model\AEntity
      */
     protected $product;
 
+    protected $objectExist = true;
+
     public function getObject()
     {
         $method = $this->getObjectGetterName();
@@ -177,7 +179,22 @@ class OrderItem extends \XLite\Model\AEntity
 
     protected function getProductObject()
     {
-        if (!isset($this->product) || !$this->product->getProductId()) {
+        // Product loaded in LAZY mode - check proxy
+        if (isset($this->product) && $this->product instanceof \Doctrine\ORM\Proxy\Proxy && !$this->product->getProductId()) {
+            $this->product = null;
+            $this->objectExist = false;
+        }
+
+        // Product not loaded - load product model and check
+        if (!isset($this->product) && $this->objectExist && $this->getObjectId()) {
+            $this->product = \XLite\Core\Database::getRepo('XLite\Model\Product')->find($this->getObjectId());
+            if (!$this->product) {
+                $this->objectExist = false;
+            }
+        }
+
+        // Product is not exists (may be removed) - display dump product
+        if (!isset($this->product)) {
             $this->product = new \XLite\Model\Product(
                 array(
                     'name' => $this->getName(),

@@ -504,4 +504,27 @@ class Converter extends \XLite\Base\Singleton
     {
         return str_replace('\\', '', get_class($obj));
     }
+
+    /**
+     * Format price value
+     * 
+     * @param mixed $price Price
+     *  
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function formatPrice($price)
+    {
+        if (isset($price)) {
+            $config = \XLite\Core\Config::getInstance();
+            $price = sprintf(
+                $config->General->price_format,
+                number_format(doubleval($price), 2, $config->General->decimal_delim, $config->General->thousand_delim)
+            );
+        }
+
+        return $price;
+    }
 }

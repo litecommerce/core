@@ -11,14 +11,14 @@
  * @since     3.0.0
  * @ListChild (list="cart.item.actions", weight="10")
  *}
-<widget class="\XLite\View\Form\Cart\Item\Update" name="item" item="{item}" cartId="{cart_id}" />
+<widget class="\XLite\View\Form\Cart\Item\Update" name="item" item="{item}" cartId="{item.getItemId()}" />
   <div class="item-sums">
-    <span class="item-price">{price_format(item,#price#):h}</span>
+    <span class="item-price">{item.getPrice():p}</span>
     <span class="sums-multiply">x</span>
-    <span class="item-quantity"><input type="text" name="amount" value="{item.amount}" class="wheel-ctrl field-integer field-positive field-non-zero" /></span>
+    <span class="item-quantity"><input type="text" name="amount" value="{item.getAmount()}" class="wheel-ctrl field-integer field-positive field-non-zero" /></span>
     <widget class="\XLite\View\Button\Image" style="update-icon update-icon-disabled" label="Update" disabled />
     <span class="sums-equals">=</span>
-    <span class="item-subtotal">{price_format(item,#total#):h}</span>
+    <span class="item-subtotal">{item.getTotal():p}</span>
   </div>
 <widget name="item" end />
 
