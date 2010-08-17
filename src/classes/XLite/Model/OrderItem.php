@@ -298,7 +298,7 @@ class OrderItem extends \XLite\Model\AEntity
      */
     public function hasThumbnail()
     {
-        return (bool)$this->getThumbnail()->getImageId();
+        return !is_null($this->getThumbnail()) && (bool)$this->getThumbnail()->getImageId();
     }
 
     /**

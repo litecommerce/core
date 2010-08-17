@@ -11,4 +11,4 @@
  * @since     3.0.0
  * @ListChild (list="cart.item.actions", weight="20")
  *}
-<p class="cart-error-message" IF="!item.valid">{t(#This product is out of stock or it has been disabled for sale#)}</p>
+<p class="cart-error-message" IF="!item.isValid()">{t(#This product is out of stock or it has been disabled for sale#)}</p>
