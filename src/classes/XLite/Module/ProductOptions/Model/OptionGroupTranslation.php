@@ -48,7 +48,7 @@ class OptionGroupTranslation extends \XLite\Model\Base\Translation
      * @since  3.0.0
      * @Column (type="string", length="255")
      */
-    protected $name;
+    protected $name = '';
 
     /**
      * Full group name

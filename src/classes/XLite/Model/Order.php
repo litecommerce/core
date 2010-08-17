@@ -56,6 +56,12 @@ class Order extends \XLite\Model\AEntity
 
 
     /**
+     * Add item error codes 
+     */
+    const NOT_VALID_ERROR = 'notValid';
+
+
+    /**
      * Order unique id
      * 
      * @var    mixed
@@ -225,6 +231,16 @@ class Order extends \XLite\Model\AEntity
      */
     protected $items;
 
+    /**
+     * 'Add item' error code
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $addItemError;
+
     ///////////////////////////// OBSOLETE PROPERTIES //////////////////////
 
     protected $allTaxes = array();
@@ -253,6 +269,8 @@ class Order extends \XLite\Model\AEntity
 
         if ($newItem->isValid()) {
 
+            $this->addItemError = null;
+
             $item = $this->getItemByItem($newItem);
 
             if ($item) {
@@ -263,9 +281,25 @@ class Order extends \XLite\Model\AEntity
             }
 
             $result = true;
+
+        } else {
+            $this->addItemError = self::NOT_VALID_ERROR;
         }
 
         return $result;
+    }
+
+    /**
+     * Get 'Add item' error code
+     * 
+     * @return string or null
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getAddItemError()
+    {
+        return $this->addItemError;
     }
 
     /**
@@ -286,6 +320,30 @@ class Order extends \XLite\Model\AEntity
 
         foreach ($this->getItems() as $i) {
             if ($i->getKey() == $key) {
+                $found = $item;
+                break;
+            }
+        }
+
+        return $found;
+    }
+
+    /**
+     * Get item from order by item  id
+     * 
+     * @param integer $itemId item id
+     *  
+     * @return \XLite\Model\OrderItem or null
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getItemByItemId($itemId)
+    {
+        $found = null;
+
+        foreach ($this->getItems() as $i) {
+            if ($i->getItemId() == $itemId) {
                 $found = $item;
                 break;
             }
@@ -573,11 +631,11 @@ class Order extends \XLite\Model\AEntity
      * @param bolean $shippedOnly Calculate shipped items only
      *  
      * @return float
-     * @access protected
+     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function calculateSubtotal($shippedOnly = false) 
+    public function calculateSubtotal($shippedOnly = false) 
     {
         $subtotal = 0;
 
@@ -1129,15 +1187,14 @@ class Order extends \XLite\Model\AEntity
     }
 
     /**
-     * Calculates order totals and store them in the order properties:
-     * total, subtotal, tax, shipping, etc
+     * Calculates order totals and store them in the order properties
      * 
      * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function calculateTotals()
+    public function calculate()
     {
         $this->calculateTotal();
     }

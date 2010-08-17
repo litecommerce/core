@@ -55,30 +55,6 @@ class OrderItemOption extends \XLite\Model\AEntity
     protected $id;
 
     /**
-     * Order item id 
-     * 
-     * @var    int
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     *
-     * @Column (type="integer", length="11", nullable=false)
-     */
-    protected $item_id;
-
-    /**
-     * Order id 
-     * 
-     * @var    int
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     *
-     * @Column (type="integer", length="11", nullable=false)
-     */
-    protected $order_id;
-
-    /**
      * Option id 
      * 
      * @var    int
@@ -125,12 +101,6 @@ class OrderItemOption extends \XLite\Model\AEntity
      */
     protected $value = '';
 
-
-    /**
-     * @OneToOne(targetEntity="Shipping")
-     * @JoinColumn(name="shipping_id", referencedColumnName="id")
-     */
-
     /**
      * Option group (relation)
      * 
@@ -169,7 +139,6 @@ class OrderItemOption extends \XLite\Model\AEntity
      * @JoinColumn (name="item_id", referencedColumnName="item_id")
      */
     protected $order_item;
-
 
     /**
      * Get actual selected option name 

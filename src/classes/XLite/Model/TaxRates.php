@@ -494,9 +494,11 @@ array("condition" => "state=District of Columbia", "action" => array(
     
     function setOrder($order)
     {
-        $profile = $order->get('profile');
+        $profile = $order->getProfile();
+
         if (!is_null($profile)) {
             $this->set('profile', $profile);
+
         } else {
             if ($this->config->General->def_calc_shippings_taxes) {
                 $default_country = \XLite\Core\Database::getEM()->find('\XLite\Model\Country', $this->config->General->default_country);
@@ -508,8 +510,10 @@ array("condition" => "state=District of Columbia", "action" => array(
                 */
             }
         }
-        if (!is_null($order->get('paymentMethod'))) {
-            $this->_conditionValues['payment method'] = $order->getComplex('paymentMethod.name');
+
+        $paymentMethod = $order->getPaymentMethod();
+        if (isset($paymentMethod)) {
+            $this->_conditionValues['payment method'] = $paymentMethod->get('name');
         }
     }
 
@@ -570,11 +574,11 @@ array("condition" => "state=District of Columbia", "action" => array(
         }
 
         if ($this->config->Taxes->prices_include_tax) {
-            $this->_conditionValues['cost'] = $item->get('price');
-            $this->_conditionValues['amount'] = $item->get('amount');
+            $this->_conditionValues['cost'] = $item->getPrice();
+            $this->_conditionValues['amount'] = $item->getAmount();
 
         } else {
-            $this->_conditionValues['cost'] = $item->get('taxableTotal');
+            $this->_conditionValues['cost'] = $item->getTaxableTotal();
         }
     }
 

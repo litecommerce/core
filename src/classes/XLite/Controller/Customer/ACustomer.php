@@ -109,10 +109,9 @@ abstract class ACustomer extends \XLite\Controller\AController
     {
         $cart = $this->getCart();
 
-        if ($cart->isPersistent) {
-            $cart->calcTotals();
-            $cart->update();
-        }
+        $cart->calculate();
+        \XLite\Core\Database::getEM()->persist($cart);
+        \XLite\Core\Database::getEM()->flush();
     }
 
     /**
@@ -124,14 +123,8 @@ abstract class ACustomer extends \XLite\Controller\AController
      */
     protected function recalcCart()
     {
-        $cart = $this->getCart();
-
-        $cart->refreshItems();
-        $cart->calculateTotals();
-
-        \XLite\Core\Database::getEM()->persist($cart);
-        \XLite\Core\Database::getEM()->flush();
-
+        $this->getCart()->refreshItems();
+        $this->updateCart();
     }
 
     /**
@@ -159,7 +152,7 @@ abstract class ACustomer extends \XLite\Controller\AController
     {
         $product = parent::getProduct();
 
-        return $product->get('enabled') ? $product : null;
+        return $product->getEnabled() ? $product : null;
     }
 
     /**
@@ -205,15 +198,11 @@ abstract class ACustomer extends \XLite\Controller\AController
     {
         parent::__construct($params);
 
-        // TODO - to remove; backward compatibility
-        $this->cart = $this->getCart();
-
         // TODO - check if it's really needed
         if ('checkout' == $this->getTarget() && $this->isCartProcessed()) {
             $this->getCart()->clear();
         }
     }
-
 
     public function isSecure()
     {

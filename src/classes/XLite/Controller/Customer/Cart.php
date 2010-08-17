@@ -80,7 +80,7 @@ class Cart extends \XLite\Controller\Customer\ACustomer
     }
 
     /**
-     * 'Add' action 
+     * Add product to cart
      * 
      * @return boolean
      * @access protected
@@ -94,8 +94,6 @@ class Cart extends \XLite\Controller\Customer\ACustomer
             ->find(\XLite\Core\Request::getInstance()->product_id);
 
         if (isset($product)) {
-            $this->collectCartGarbage();
-
             // add product to the cart
             if ($this->getCart()->addItem($this->getCurrentItem($product))) {
                 $this->updateCart();
@@ -103,10 +101,9 @@ class Cart extends \XLite\Controller\Customer\ACustomer
                 \XLite\Core\TopMessage::getInstance()->add('Product has been added to cart');
 
             } else {
-                \XLite\Core\TopMessage::getInstance()->add(
-                    'Product has not been added to cart',
-                    \XLite\Core\TopMessage::ERROR
-                );
+
+                $this->processAddItemError();
+
             }
 
             $productListUrl = null;
@@ -135,6 +132,24 @@ class Cart extends \XLite\Controller\Customer\ACustomer
     }
 
     /**
+     * Process 'Add item' error 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function processAddItemError()
+    {
+        if (\XLite\Model\Cart::NOT_VALID_ERROR == $this->getCart()->getAddItemError()) {
+            \XLite\Core\TopMessage::getInstance()->add(
+                'Product has not been added to cart',
+                \XLite\Core\TopMessage::ERROR
+            );
+        }
+    }
+
+    /**
      * 'delete' action
      * 
      * @return void
@@ -142,18 +157,22 @@ class Cart extends \XLite\Controller\Customer\ACustomer
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function action_delete()
+    protected function doActionDelete()
     {
-        // delete an item from the shopping cart
-        $items = $this->getCart()->get('items');
+        $item = $this->getCart()->getItemByItemId(\XLite\Core\Request::getInstance()->cart_id);
 
-        if (isset($items[\XLite\Core\Request::getInstance()->cart_id])) {
-            $this->getCart()->deleteItem($items[\XLite\Core\Request::getInstance()->cart_id]);
+        if ($item) {
+            $this->getCart()->getItems()->removeElement($item);
+            \XLite\Core\Database::getEM()->remove($item);
             $this->updateCart();
-        }
 
-        if ($this->getCart()->isEmpty()) {
-            $this->getCart()->delete();
+            \XLite\Core\TopMessage::getInstance()->add('Item has been deleted from cart');
+
+        } else {
+            \XLite\Core\TopMessage::getInstance()->add(
+                'Item has not been deleted from cart',
+                \XLite\Core\TopMessage::ERROR
+            );
         }
     }
 
@@ -168,38 +187,37 @@ class Cart extends \XLite\Controller\Customer\ACustomer
     protected function doActionUpdate()
     {
         // Update quantity
-        $items = $this->getCart()->get('items');
         $cartId = \XLite\Core\Request::getInstance()->cart_id;
         $amount = \XLite\Core\Request::getInstance()->amount;
         if (!is_array($amount)) {
             $amount = isset(\XLite\Core\Request::getInstance()->cart_id)
                 ? array($cartId => $amount)
                 : array();
+
+        } elseif (isset($cartId)) {
+            $amount = isset($amount[$cartId])
+                ? array($cartId => $amount[$cartId])
+                : array();
         }
 
-        foreach ($items as $key => $i) {
-            if (
-                isset($amount[$key])
-                && (is_null($cartId) || $cartId == $key)
-            ) {
-                $items[$key]->setAmount($amount[$key]);
+        $result = false;
 
-                // TODO[ITEM->UPDATE_AMOUNT]: Remove if it's not needed
-                // \XLite\Core\Database::getRepo('\XLite\Model\OrderItem')->update($items[$key]);
-
-                $this->getCart()->updateItem($items[$key]);
+        foreach ($amount as $id => $quantity) {
+            $item = $this->getCart()->getItemByItemId($id);
+            if ($item) {
+                $item->setAmount($quantity);
+                $result = true;
             }
         }
 
         // Update shipping method
         if (isset(\XLite\Core\Request::getInstance()->shipping)) {
-            $this->getCart()->set('shipping_id', \XLite\Core\Request::getInstance()->shipping);
+            $this->getCart()->setShippingId(\XLite\Core\Request::getInstance()->shipping);
+            $result = true;
         }
 
-        $this->updateCart();
-
-        if ($this->getCart()->isEmpty()) {
-            $this->getCart()->delete();
+        if ($result) {
+            $this->updateCart();
         }
     }
     
@@ -236,14 +254,6 @@ class Cart extends \XLite\Controller\Customer\ACustomer
     function isSecure()
     {
         return $this->is('HTTPS') ? true : parent::isSecure();
-    }
-
-    function collectCartGarbage()
-    {
-        // don't collect garbage, if the cart already has products
-        if ($this->getCart()->is('empty')) {
-            $this->getCart()->collectGarbage(5);
-        }
     }
 
     /**

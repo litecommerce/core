@@ -126,13 +126,24 @@ class Shipping extends \XLite\Model\AModel
      */
     protected function getZone(\XLite\Model\Order $order)
     {
-        if (!($zone = $order->getComplex('profile.shippingState.shipping_zone'))) {
-            if (!($zone = $order->getComplex('profile.shippingCountry.shipping_zone'))) {
-                $defaultCountry = \XLite\Core\Database::getEM()->find('\XLite\Model\Country', $this->config->General->default_country);
-                if (!($zone = $defaultCountry->shipping_zone)) {
-                    $zone = 0;
-                }
-            }
+        $profile = $order->getProfile();
+
+        $zone = $profile
+            ? $profile->getComplex('shippingState.shipping_zone')
+            : null;
+        if (!$zone) {
+            $zone = $profile
+                ? $profile->getComplex('shippingCountry.shipping_zone')
+                : null;
+        }
+
+        if (!$zone) {
+            $defaultCountry = \XLite\Core\Database::getEM()->find('\XLite\Model\Country', $this->config->General->default_country);
+            $zone = $defaultCountry->shipping_zone;
+        }
+
+        if (!$zone) {
+            $zone = 0;
         }
 
         return $zone;
@@ -263,11 +274,11 @@ class Shipping extends \XLite\Model\AModel
      */
     public function calculate(\XLite\Model\Order $order)
     {
-        $rates = $order->get('shippingRates');
+        $rates = $order->getShippingRates();
         $result = false;
 
         if (is_array($rates)) {
-            $shippingId = $order->get('shipping_id');
+            $shippingId = $order->getShippingId();
             if (isset($rates[$shippingId])) {
                 $result = $rates[$shippingId]->rate;
             }

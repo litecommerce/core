@@ -222,6 +222,16 @@ class OrderItem extends \XLite\Model\AEntity
         $this->product = $product;
     }
 
+    /**
+     * Set object 
+     * 
+     * @param \XLite\Model\Base\IOrderItem $item Order item related object
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     public function setObject(\XLite\Model\Base\IOrderItem $item)
     {
         $price = \XLite\Core\Config::getInstance()->Taxes->prices_include_tax
@@ -230,8 +240,8 @@ class OrderItem extends \XLite\Model\AEntity
 
         $this->setPrice(\Includes\Utils\Converter::formatPrice($price));
         $this->setObjectId($item->getId());
-        $this->setName($product->getName());
-        $this->setSku($product->getSku());
+        $this->setName($item->getName());
+        $this->setSku($item->getSku());
     }
 
     /**
@@ -262,7 +272,7 @@ class OrderItem extends \XLite\Model\AEntity
      */
     public function getTotal()
     {
-        return Includes\Utils\Converter::formatPrice($this->getPrice() * $this->getAmount());
+        return \Includes\Utils\Converter::formatPrice($this->getPrice() * $this->getAmount());
     }
 
     /**
@@ -328,6 +338,19 @@ class OrderItem extends \XLite\Model\AEntity
     public function getDescription()
     {
         return $this->getObject()->getName() . ' (' . $this->getAmount() . ')';
+    }
+
+    /**
+     * Get item URL 
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getURL()
+    {
+        return $this->getObject()->getURL();
     }
 
     /**

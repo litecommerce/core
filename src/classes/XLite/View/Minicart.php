@@ -104,9 +104,9 @@ class Minicart extends \XLite\View\SideBarBox
     protected function getItemsList()
     {
         return array_slice(
-            $this->getCart()->getItems(),
+            $this->getCart()->getItems()->toArray(),
             0,
-            min(self::ITEMS_TO_DISPLAY, $this->getCart()->getItemsCount())
+            min(self::ITEMS_TO_DISPLAY, $this->getCart()->countItems())
         );
     }
 
@@ -120,7 +120,7 @@ class Minicart extends \XLite\View\SideBarBox
      */
     protected function isTruncated()
     {
-        return self::ITEMS_TO_DISPLAY < $this->getCart()->getItemsCount();
+        return self::ITEMS_TO_DISPLAY < $this->getCart()->countItems();
     }
 
     /**
@@ -146,7 +146,7 @@ class Minicart extends \XLite\View\SideBarBox
      */
     protected function getTotals()
     {
-        return array('Total' => $this->getCart()->get('total'));
+        return array('Total' => $this->getCart()->getTotal());
     }
 
     /**

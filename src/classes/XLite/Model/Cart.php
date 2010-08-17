@@ -198,7 +198,7 @@ class Cart extends \XLite\Model\Order
      */
     public function calculateShippingRates()
     {
-        $rates = parent::calcShippingRates();
+        $rates = parent::calculateShippingRates();
         $id = $this->getShippingId();
 
         if (
@@ -212,7 +212,7 @@ class Cart extends \XLite\Model\Order
                 $shipping = $rate->getShipping();
             }
             $this->setShippingMethod($shipping);
-            $this->calcTotals();
+            $this->calculate();
 
             \XLite\Core\Database::getEM()->persist($this);
             \XLite\Core\Database::getEM()->flush();
@@ -220,5 +220,21 @@ class Cart extends \XLite\Model\Order
 
         return $rates;
     }
+
+    /**
+     * Calculates order totals and store them in the order properties
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     * @PostPersist
+     * @PostUpdate
+     */
+    public function calculate()
+    {
+        parent::calculate();
+    }
+
 }
 

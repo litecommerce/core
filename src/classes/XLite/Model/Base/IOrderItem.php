@@ -27,25 +27,122 @@
  */
 namespace XLite\Model\Base;
 
+/**
+ * Order item related object interface
+ * 
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
+ */
 interface IOrderItem
 {
+    /**
+     * getId 
+     * 
+     * @return integer
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
 	public function getId();
 
+    /**
+     * getPrice 
+     * 
+     * @return float
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
 	public function getPrice();
 
+    /**
+     * getTaxedPrice 
+     * 
+     * @return float
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
 	public function getTaxedPrice();
 
+    /**
+     * getWeight 
+     * 
+     * @return float
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
 	public function getWeight();
 
+    /**
+     * getMinPurchaseLimit 
+     * 
+     * @return integer
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
 	public function getMinPurchaseLimit();
 
+    /**
+     * getMaxPurchaseLimit 
+     * 
+     * @return integer
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
 	public function getMaxPurchaseLimit();
 
+    /**
+     * getName 
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
 	public function getName();
 
+    /**
+     * getSku 
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
 	public function getSku();
 
+    /**
+     * getThumbnail 
+     * 
+     * @return \XLite\Model\Base\Image or null
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
 	public function getThumbnail();
 
+    /**
+     * getFreeShipping 
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
 	public function getFreeShipping();
+
+    /**
+     * getURL 
+     *
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getURL();
 }
