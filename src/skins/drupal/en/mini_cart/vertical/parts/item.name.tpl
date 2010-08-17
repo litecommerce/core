@@ -11,4 +11,4 @@
  * @since     3.0.0
  * @ListChild (list="minicart.vertical.item", weight="10")
  *}
-<span class="item-name"><a href="{buildURL(#product#,##,_ARRAY_(#product_id#^item.product_id))}">{item.name}</a></span>
+<span class="item-name"><a href="{buildURL(#product#,##,_ARRAY_(#product_id#^item.product_id))}">{item.getName()}</a></span>

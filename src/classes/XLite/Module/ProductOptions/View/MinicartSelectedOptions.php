@@ -204,7 +204,7 @@ class MinicartSelectedOptions extends \XLite\View\AView
     protected function assembleList()
     {
         $this->limitEnabled = false;
-        $this->allOptions = $this->getItem()->getProductOptions();
+        $this->allOptions = $this->getItem()->getOptions()->toArray();
         $this->options = $this->allOptions;
     
         if ($this->lengthLimit < count($this->options)) {

@@ -11,4 +11,4 @@
  * @since     3.0.0
  * @ListChild (list="minicart.horizontal.item", weight="10")
  *}
-<span class="item-name"><a href="{item.getUrl()}">{item.name}</a></span>
+<span class="item-name"><a href="{item.getUrl()}">{item.getName()}</a></span>

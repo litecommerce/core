@@ -46,6 +46,7 @@ class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
      * @since  3.0.0
      *
      * @OneToMany (targetEntity="XLite\Module\ProductOptions\Model\OrderItemOption", mappedBy="order_item", cascade={"persist","remove"})
+     * @OrderBy ({"orderby" = "ASC"})
      */
     protected $options;
 
@@ -127,6 +128,7 @@ class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
                     $o = new \XLite\Module\ProductOptions\Model\OrderItemOption();
                     $o->setOrderItem($this);
                     $o->setGroup($group);
+                    $o->setOrderby($group->getOrderby());
                     $o->setName($group->getName());
                     if (isset($data['option'])) {
                         $o->setOption($data['option']);

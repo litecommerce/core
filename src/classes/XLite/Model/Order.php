@@ -246,7 +246,6 @@ class Order extends \XLite\Model\AEntity
     protected $allTaxes = array();
     protected $shippingTaxes = array();
     protected $shippingTax = 0;
-    protected $subtotalShippedOnly = 0;
     protected $statusChanged = false;
     protected $oldStatus;
     protected $shippingMethod;
@@ -344,7 +343,7 @@ class Order extends \XLite\Model\AEntity
 
         foreach ($this->getItems() as $i) {
             if ($i->getItemId() == $itemId) {
-                $found = $item;
+                $found = $i;
                 break;
             }
         }
@@ -645,10 +644,7 @@ class Order extends \XLite\Model\AEntity
             }
         }
 
-        if ($shippedOnly) {
-            $this->subtotalShippedOnly = $this->formatCurrency($subtotal);
-
-        } else {
+        if (!$shippedOnly) {
             $this->setSubtotal($this->formatCurrency($subtotal));
         }
 

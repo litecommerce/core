@@ -11,4 +11,4 @@
  * @since     3.0.0
  * @ListChild (list="minicart.horizontal.item", weight="20")
  *}
-<span class="item-price">{price_format(item,#price#):h}</span><span class="delimiter">x</span><span class="item-qty">{item.amount}</span>
+<span class="item-price">{price_format(item,#price#):h}</span><span class="delimiter">x</span><span class="item-qty">{item.getAmount()}</span>
