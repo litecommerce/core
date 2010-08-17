@@ -10,7 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<div IF="cart.isShippingAvailable()&cart.shipped&cart.getShippingRates()" class="delivery-box">
+<div IF="cart.isShippingAvailable()&cart.isShipped()&cart.getShippingRates()" class="delivery-box">
   <h4>{t(#Delivery#)}</h4>
 
   <widget module="UPSOnlineTools" template="modules/UPSOnlineTools/delivery.tpl">
@@ -18,7 +18,7 @@
   <ul IF="!xlite.UPSOnlineToolsEnabled" class="deliveries">
     {foreach:cart.getShippingRates(),rate}
     <li {if:cart.shipping_id=rate.shipping.shipping_id} class="selected"{end:}>
-      <input type="radio" id="shipping_{rate.shipping.shipping_id}" name="shipping" value="{rate.shipping.shipping_id}" checked="{cart.isSelected(#shipping_id#,rate.shipping.shipping_id)}" />
+      <input type="radio" id="shipping_{rate.shipping.shipping_id}" name="shipping" value="{rate.shipping.shipping_id}" checked="{isSelected(#shipping_id#,rate.shipping.shipping_id)}" />
       <label for="shipping_{rate.shipping.shipping_id}">{rate.shipping.name:h}</label>
       <span>{price_format(rate,#rate#):h}</span>
     </li>

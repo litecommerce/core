@@ -353,26 +353,26 @@ class Config extends \XLite\Model\Repo\Base\I18n
 
         // Add human readable store country and state names for Company options
         if (isset($config->Company)) {
-            $config->Company->locationCountry = \XLite\Core\Database::getRepo('\XLite\Model\Country')
+            $config->Company->locationCountry = \XLite\Core\Database::getRepo('XLite\Model\Country')
                 ->findDetached($config->Company->location_country);
 
-            $config->Company->locationState = \XLite\Core\Database::getRepo('\XLite\Model\State')
+            $config->Company->locationState = \XLite\Core\Database::getRepo('XLite\Model\State')
                 ->findById($config->Company->location_state, $config->Company->location_custom_state);
         }
 
         // Add human readable default country name for General options
         if (isset($config->General)) {
-            $config->General->defaultCountry = \XLite\Core\Database::getRepo('\XLite\Model\Country')
+            $config->General->defaultCountry = \XLite\Core\Database::getRepo('XLite\Model\Country')
                 ->findDetached($config->General->default_country);
 
             // Get default language object
             if (isset($config->General->default_language)) {
-                $config->General->defaultLanguage = \XLite\Core\Database::getRepo('\XLite\Model\Language')
+                $config->General->defaultLanguage = \XLite\Core\Database::getRepo('XLite\Model\Language')
                     ->findOneByCode($config->General->default_language);
             }
 
             if (!isset($config->General->defaultLanguage)) {
-                $config->General->defaultLanguage = \XLite\Core\Database::getRepo('\XLite\Model\Language')
+                $config->General->defaultLanguage = \XLite\Core\Database::getRepo('XLite\Model\Language')
                     ->getDefaultLanguage();
             }
 

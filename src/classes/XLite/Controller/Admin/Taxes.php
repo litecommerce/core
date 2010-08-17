@@ -657,7 +657,7 @@ class Taxes extends \XLite\Controller\Admin\AAdmin
             ),
         );
 
-        $list = \XLite\Core\Database::getRepo('\XLite\Model\Country')->findAll();
+        $list = \XLite\Core\Database::getRepo('XLite\Model\Country')->findAll();
         foreach ($list as $country) {
             $countries['values'][$country->code] = $country->country;
         }
@@ -1036,7 +1036,7 @@ class Taxes extends \XLite\Controller\Admin\AAdmin
      */
     protected function convertCountryIds(array $ids)
     {
-        $qb = \XLite\Core\Database::getRepo('\XLite\Model\Country')->createQueryBuilder();
+        $qb = \XLite\Core\Database::getRepo('XLite\Model\Country')->createQueryBuilder();
         $keys = \XLite\Core\Database::buildInCondition($qb, $ids, 'id');
         $list = $qb->andWhere('c.code IN (' . implode(', ', $keys). ')')
             ->getQuery()
@@ -1168,14 +1168,14 @@ class Taxes extends \XLite\Controller\Admin\AAdmin
                 $tax->_conditionValues[$name1] = $this->$name;
             }
             if (isset($this->country)) {
-                $country = \XLite\Core\Database::getEM()->find('\XLite\Model\Country', $this->country);
+                $country = \XLite\Core\Database::getRepo('XLite\Model\Country')->find($this->country);
                 $tax->_conditionValues['country'] = $country->country;
                 if ($country->eu_member) {
                     $tax->_conditionValues['country'] .= ",EU country";
                   }
             }
             if (isset($this->state)) {
-                $state = \XLite\Core\Database::getEM()->find('\XLite\Model\State', $this->state);
+                $state = \XLite\Core\Database::getRepo('XLite\Model\State')->find($this->state);
                 $tax->_conditionValues['state'] = $state->state;
                 unset($state);
             }

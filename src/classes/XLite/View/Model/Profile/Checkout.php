@@ -196,8 +196,10 @@ class Checkout extends \XLite\View\Model\Profile\Main
      */
     protected function renewShippingMethod()
     {
+        /* TODO - rework
         \XLite\Model\Cart::getInstance()->refresh('shippingRates');
         \XLite\Model\Cart::getInstance()->refresh('profile');
+        */
         \XLite\Model\Cart::getInstance()->getShippingRates();
     }
 
@@ -230,7 +232,7 @@ class Checkout extends \XLite\View\Model\Profile\Main
 
         // Anonymous user has no primary account, only the one associated with current order
         if ($this->isAnonymousUser()) {
-            $this->getModelObject()->set('order_id', \XLite\Model\Cart::getInstance()->get('order_id'));
+            $this->getModelObject()->set('order_id', \XLite\Model\Cart::getInstance()->getOrderId());
         }
 
         $result = parent::performActionModify();
@@ -263,7 +265,7 @@ class Checkout extends \XLite\View\Model\Profile\Main
      */
     public function getProfileId($checkMode = true)
     {
-        return \XLite\Model\Cart::getInstance()->get('profile_id');
+        return \XLite\Model\Cart::getInstance()->getProfileId();
     }
 
 

@@ -278,11 +278,11 @@ class Profile extends \XLite\Model\AModel
 
     function getBillingCountry() 
     {
-        return \XLite\Core\Database::getEM()->find('\XLite\Model\Country', $this->get('billing_country'));
+        return \XLite\Core\Database::getRepo('XLite\Model\Country')->find($this->get('billing_country'));
     }
     function getShippingCountry() 
     {
-        return \XLite\Core\Database::getEM()->find('\XLite\Model\Country', $this->get('shipping_country'));
+        return \XLite\Core\Database::getRepo('XLite\Model\Country')->find($this->get('shipping_country'));
     }
 
     function enable() 
@@ -415,9 +415,9 @@ class Profile extends \XLite\Model\AModel
 
     function _convertCountry($value)
     {
-        $country = \XLite\Core\Database::getRepo('\XLite\Model\Country')->find($value);
+        $country = \XLite\Core\Database::getRepo('XLite\Model\Country')->find($value);
         if (!$country) {
-            $country = \XLite\Core\Database::getRepo('\XLite\Model\Country')->findOneByCountry($value);
+            $country = \XLite\Core\Database::getRepo('XLite\Model\Country')->findOneByCountry($value);
         }
 
         return $country ? $country->code : '';

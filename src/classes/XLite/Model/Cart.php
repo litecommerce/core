@@ -85,14 +85,14 @@ class Cart extends \XLite\Model\Order
             if ($auth->isLogged()) {
                 if ($auth->getProfile()->get('profile_id') != $cart->getProfileId()) {
                     $cart->setProfile($auth->getProfile());
-                    $cart->calculateTotals();
+                    $cart->calculate();
                 }
 
 
             } elseif ($cart->getProfileId()) {
 
                 $cart->setProfile(null);
-                $cart->calculateTotals();
+                $cart->calculate();
             }
 
             \XLite\Core\Database::getEM()->persist($cart);
@@ -163,11 +163,11 @@ class Cart extends \XLite\Model\Order
      * Order 'complete' event
      * 
      * @return void
-     * @access protected
+     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function processCheckOut()
+    public function processCheckOut()
     {
         if ('T' == $this->getStatus()) {
             $this->setDate(time());

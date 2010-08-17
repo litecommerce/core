@@ -117,7 +117,7 @@ class ShippingZone extends \XLite\Model\AModel
     function getCountries()
     {
         if (!isset($this->countries)) {
-            $this->countries = \XLite\Core\Database::getRepo('\XLite\Model\Country')
+            $this->countries = \XLite\Core\Database::getRepo('XLite\Model\Country')
                 ->findByShippingZone($this->get('shipping_zone'));
         }
 
@@ -149,7 +149,7 @@ class ShippingZone extends \XLite\Model\AModel
         list($keys, $parameters) = \XLite\Core\Database::prepareArray($countries);
         $list = \XLite\Core\Database::getQB()
             ->select('c')
-            ->from('\XLite\Model\Country', 'c')
+            ->from('XLite\Model\Country', 'c')
             ->where('c.shipping_zone IN (' . implode(', ', $keys) . ')')
             ->setParameters($parameters)
             ->getQuery()

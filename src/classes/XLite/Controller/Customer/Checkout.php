@@ -144,7 +144,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
      */
     protected function isZeroOrderTotal()
     {
-        return 0 == $this->getCart()->get('total') && $this->config->Payments->default_offline_payment;
+        return 0 == $this->getCart()->getTotal() && $this->config->Payments->default_offline_payment;
     }
 
     /**
@@ -416,7 +416,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
     
         } else {
 
-            $this->getCart()->set('paymentMethod', $pm);
+            $this->getCart()->setPaymentMethod($pm);
             $this->updateCart();
 
             if ($this->isPaymentNeeded()) {
@@ -442,7 +442,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
         $this->checkHtaccess();
 
         if (isset(\XLite\Core\Request::getInstance()->shipping)) {
-            $this->getCart()->set('shipping_id', \XLite\Core\Request::getInstance()->shipping);
+            $this->getCart()->setShippingId(\XLite\Core\Request::getInstance()->shipping);
             $this->updateCart();
         }
     }
@@ -509,7 +509,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
                 case self::CHECKOUT_MODE_ZERO_TOTAL:
                     \XLite\Core\Request::getInstance()->payment_id = $this->config->Payments->default_offline_payment;
                     $this->doActionPayment();
-                    $this->getCart()->checkout();
+                    $this->getCart()->processCheckOut();
                     $this->doActionCheckout();
 
                     break;
@@ -573,14 +573,14 @@ class Checkout extends \XLite\Controller\Customer\Cart
             return;
         }
 
-        $pm = $this->getCart()->get('paymentMethod');
+        $pm = $this->getCart()->getPaymentMethod();
         if (!is_null($pm)) {
             $notes = isset(\XLite\Core\Request::getInstance()->notes)
                 ? \XLite\Core\Request::getInstance()->notes
                 : '';
-            $this->getCart()->set('notes', $notes);
+            $this->getCart()->setNotes($notes);
 
-            $this->getCart()->checkout();
+            $this->getCart()->processCheckOut();
 
             switch ($pm->handleRequest($this->getCart())) {
 
@@ -595,7 +595,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
                         $this->buildURL(
                             'checkoutSuccess',
                             '',
-                            array('order_id' => $this->getCart()->get('order_id'))
+                            array('order_id' => $this->getCart()->getOrderId())
                         )
                     );
                     break;
@@ -605,7 +605,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
                         $this->buildURL(
                             'checkout',
                             '',
-                            array('mode' => 'error', 'order_id' => $this->getCart()->get('order_id'))
+                            array('mode' => 'error', 'order_id' => $this->getCart()->getOrderId())
                         )
                     );
                     break;
@@ -666,8 +666,11 @@ class Checkout extends \XLite\Controller\Customer\Cart
 
     function _initCHInfo()
     {
-        if (isset($_REQUEST['ch_info']))
-            $this->getCart()->set('details', $_REQUEST['ch_info']);
+        if (isset($_REQUEST['ch_info'])) {
+            foreach ($_REQUEST['ch_info'] as $k => $v) {
+                $this->getCart()->setDetail($k, $v);
+            }
+        }
     }
 
     /**
@@ -701,9 +704,9 @@ class Checkout extends \XLite\Controller\Customer\Cart
      */
     protected function success()
     {
-        $this->getCart()->succeed();
-        $this->session->set('last_order_id', $this->getCart()->get('order_id'));
-        $this->getCart()->clear();
+        $this->getCart()->processSucceed();
+
+        \XLite\Model\Session::getInstance()->set('order_id', null);
 
         // anonymous checkout: logoff
         if ($this->auth->getProfile() && $this->auth->getProfile()->get('order_id')) {
