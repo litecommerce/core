@@ -837,7 +837,13 @@ abstract class AView extends \XLite\Core\Handler
             $format = $this->config->General->date_format;
         }
 
-        return strftime($format, is_scalar($base) ? $base : $base->get($field));
+        if (is_object($base)) {
+            $base = $base instanceof \XLite\Model\AEntity
+                ? $base->$field
+                : $base->get($field);
+        }
+
+        return strftime($format, $base);
     }
 
     /**

@@ -11,5 +11,5 @@
  * @since     3.0.0
  * @ListChild (list="invoice.totals", weight="20")
  *}
-<td>Shipping cost:</td>
-<td class="total">{price_format(order,#shipping_cost#):h}</td>
+<td>{t(#Shipping cost#)}:</td>
+<td class="total">{order.getShippingCost():p}</td>

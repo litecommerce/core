@@ -23,10 +23,10 @@
 
   <tr FOREACH="order.getItems(),item">
     <td class="name">{displayViewListContent(#invoice.item.name#,_ARRAY_(#item#^item))}</td>
-    <td class="sku">{item.sku}</td>
-    <td class="price">{price_format(item,#price#):h}</td>
-    <td class="qty">{item.amount}</td>
-    <td class="total">{price_format(item,#total#):h}</td>
+    <td class="sku">{item.getSku()}</td>
+    <td class="price">{item.getPrice():p}</td>
+    <td class="qty">{item.getAmount()}</td>
+    <td class="total">{item.getTotal():p}</td>
   </tr>
 
   <tr FOREACH="getViewList(#invoice.items#),w">

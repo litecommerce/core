@@ -18,8 +18,8 @@
   </tr>
 
   <tr class="grand-total">
-    <td>Grand total:</td>
-    <td class="total">{price_format(order,#total#):h}</td>
+    <td>{t(#Grand total#)}:</td>
+    <td class="total">{order.getTotal():p}</td>
   </tr>
 
 </table>

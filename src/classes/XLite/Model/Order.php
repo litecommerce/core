@@ -1086,7 +1086,7 @@ class Order extends \XLite\Model\AEntity
         $this->setOrigProfile($prof);
 
         $p = $prof->cloneObject();
-        $p->set('order_id', $this->get('order_id'));
+        $p->set('order_id', $this->getOrderId());
         $p->update();
 
         $this->setProfile($p);
@@ -1199,15 +1199,15 @@ class Order extends \XLite\Model\AEntity
         if (!$this->isEmpty()) {
 
             $result = array();
-            foreach ($this->getItems() as $i => $item) {
+            foreach ($this->getItems() as $item) {
                 $result[] = array(
-                    $i,
+                    $item->getItemId(),
                     $item->getKey(),
                     $item->getAmount()
                 );
             }
 
-            $result = serialize($result);
+            $result = md5(serialize($result));
         }
 
         return $result;
@@ -1464,9 +1464,6 @@ class Order extends \XLite\Model\AEntity
      */
     public function processSucceed()
     {
-        // save order ID#
-        \XLite\Model\Session::getInstance()->set('last_order_id', $this->getOrderId());
-
         // send email notification about initially placed order
         $status = $this->getStatus();
         $list = array(self::STATUS_PROCESSED, self::STATUS_COMPLETED, self::STATUS_INPROGRESS);
@@ -1505,7 +1502,21 @@ class Order extends \XLite\Model\AEntity
                 );
                 $mail->send();
             }
+
+            $this->markAsOrder();
         }
+    }
+
+    /**
+     * Mark cart as order 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function markAsOrder()
+    {
     }
     
     /**

@@ -11,5 +11,5 @@
  * @since     3.0.0
  * @ListChild (list="invoice.totals", weight="10")
  *}
-<td>Subtotal:</td>
-<td class="total">{price_format(order,#subtotal#):h}</td>
+<td>{t(#Subtotal#)}:</td>
+<td class="total">{order.getSubtotal():p}</td>

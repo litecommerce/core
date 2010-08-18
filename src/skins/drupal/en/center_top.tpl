@@ -56,7 +56,7 @@
 <!-- [order] {{{ -->
 <widget class="\XLite\View\OrderSearch" />
 <widget class="\XLite\View\Order" />
-<widget class="\XLite\View\Invoice" />
+<widget class="\XLite\View\InvoicePage" />
 <!-- [/order] }}} -->
 
 <!-- [modules] {{{ -->

@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage Controller
+ * @subpackage View
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -26,27 +26,17 @@
  * @since      3.0.0
  */
 
-namespace XLite\Controller\Customer;
+namespace XLite\View;
 
 /**
- * Checkout success page
+ * Invoice widget
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class CheckoutSuccess extends \XLite\Controller\Customer\ACustomer
+class InvoicePage extends \XLite\View\Dialog
 {
-    /**
-     * Controller parameters
-     * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected $params = array('target', 'order_id');
-
     /**
      * Order (cache)
      * 
@@ -55,49 +45,46 @@ class CheckoutSuccess extends \XLite\Controller\Customer\ACustomer
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $order = null;
+    protected $order;
 
     /**
-     * Common method to determine current location 
+     * Return title
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getHead()
+    {
+        return 'Order #' . $this->getOrder()->getOrderId();
+    }
+
+    /**
+     * Return templates directory name
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDir()
+    {
+        return 'order/invoice';
+    }
+
+    /**
+     * Return file name for the center part template 
      * 
      * @return string
      * @access protected
      * @since  3.0.0
-     */     
-    protected function getLocation()
-    {
-        return 'Checkout';
-    }
-
-    /**
-     * Get page title
-     *
-     * @return string
-     * @access public
-     * @since  3.0.0
      */
-    public function getTitle()
+    protected function getBody()
     {
-        return 'Thank you for your order';
-    }
-
-    function handleRequest()
-    {
-        // security check on return page
-        $order_id = $this->get('order_id');
-        if (
-            $order_id != $this->session->get('last_order_id') &&
-            $order_id != $this->getCart()->get('order_id')
-        ) {
-            $this->redirect($this->buildUrl('cart'));
-
-        } else {
-            parent::handleRequest();
-        }
+        return 'order/invoice/page.tpl';
     }
 
     /**
-     * Get order 
+     * Get order
      * 
      * @return \XLite\Model\Order
      * @access public
@@ -114,20 +101,34 @@ class CheckoutSuccess extends \XLite\Controller\Customer\ACustomer
         return $this->order;
     }
 
-    function getCharset()
+    /**
+     * Check widget visibility
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isVisible()
     {
-        $order = $this->getOrder();
-        if ($order && $order->getProfile()) {
-            $charset = $order->getProfile()->getComplex('billingCountry.charset');
-        }
-
-        return (isset($charset) && $charset)
-            ? $charset
-            : parent::getCharset();
+        return parent::isVisible()
+            && $this->getOrder();
     }
 
-    function getSecure()
+    /**
+     * Return list of targets allowed for this widget
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getAllowedTargets()
     {
-        return $this->config->Security->customer_security;
+        $result = parent::getAllowedTargets();
+
+        $result[] = 'invoice';
+    
+        return $result;
     }
 }

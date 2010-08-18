@@ -45,7 +45,7 @@ class Echeck extends \XLite\Model\PaymentMethod
      * @see    ____var_see____
      * @since  3.0.0
      */
-    public $formTemplate = "checkout/echeck.tpl";
+    public $formTemplate = 'checkout/echeck.tpl';
 
     /**
      * Use secure site part
@@ -80,11 +80,11 @@ class Echeck extends \XLite\Model\PaymentMethod
      * @param \XLite\Model\Cart $cart Cart
      *  
      * @return void
-     * @access public
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function process(\XLite\Model\Cart $cart)
+    protected function process(\XLite\Model\Cart $cart)
     {
         $cart->setDetailLabels($this->formFields);
 
@@ -95,8 +95,7 @@ class Echeck extends \XLite\Model\PaymentMethod
             }
         }
 
-        $cart->set('status', 'Q');
-        $cart->update();
+        $cart->setStatus($cart::STATUS_QUEUED);
     }
 
     /**
@@ -115,11 +114,10 @@ class Echeck extends \XLite\Model\PaymentMethod
             $this->process($cart);
 
         } else {
-            $cart->set('status', 'F');
-            $cart->update();
+            $cart->setStatus($cart::STATUS_FAILED);
         }
 
-        return in_array($cart->get('status'), array('Q', 'P'))
+        return in_array($cart->getStatus(), array($cart::STATUS_QUEUED, $cart::STATUS_PROCESSED))
             ? self::PAYMENT_SUCCESS
             : self::PAYMENT_FAILURE;
     }
@@ -140,7 +138,10 @@ class Echeck extends \XLite\Model\PaymentMethod
 
         if (!is_array($data)) {
 
-            \XLite\Core\TopMessage::getInstance()->add('Check data is required', \XLite\Core\TopMessage::ERROR);
+            \XLite\Core\TopMessage::getInstance()->add(
+                'Check data is required',
+                \XLite\Core\TopMessage::ERROR
+            );
             $result = false;
 
         } else {
@@ -150,7 +151,10 @@ class Echeck extends \XLite\Model\PaymentMethod
 
             foreach ($fields as $key => $name) {
                 if (!isset($data[$key]) || empty($data[$key])) {
-                    \XLite\Core\TopMessage::getInstance()->add($name . ' is required', \XLite\Core\TopMessage::ERROR);
+                    \XLite\Core\TopMessage::getInstance()->add(
+                        $name . ' is required',
+                        \XLite\Core\TopMessage::ERROR
+                    );
                     $result = false;
                 }
             }

@@ -35,40 +35,42 @@ namespace XLite\View;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Invoice extends \XLite\View\Dialog
+class Invoice extends \XLite\View\AView
 {
     /**
-     * Order (cache)
-     * 
-     * @var    \XLite\Model\Order
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * Widget parameter names
      */
-    protected $order = null;
+
+    const PARAM_ORDER = 'order';
 
     /**
-     * Return title
+     * Define widget parameters
      *
-     * @return string
+     * @return void
      * @access protected
-     * @since  3.0.0
+     * @since  1.0.0
      */
-    protected function getHead()
+    protected function defineWidgetParams()
     {
-        return 'Order #' . $this->getOrder()->get('order_id');
+        parent::defineWidgetParams();
+
+        $this->widgetParams += array(
+            self::PARAM_ORDER => new \XLite\Model\WidgetParam\Object(
+                'Order', null, false, '\XLite\Model\Order'
+            ),
+        );
     }
 
     /**
-     * Return templates directory name
-     *
+     * Return default template
+     * 
      * @return string
      * @access protected
      * @since  3.0.0
      */
-    protected function getDir()
+    protected function getDefaultTemplate()
     {
-        return 'order/invoice';
+        return 'order/invoice/body.tpl';
     }
 
     /**
@@ -81,11 +83,7 @@ class Invoice extends \XLite\View\Dialog
      */
     public function getOrder()
     {
-        if (is_null($this->order)) {
-            $this->order = new \XLite\Model\Order(intval(\XLite\Core\Request::getInstance()->order_id));
-        }
-
-        return $this->order;
+        return $this->getParam(self::PARAM_ORDER);
     }
 
     /**
@@ -98,7 +96,8 @@ class Invoice extends \XLite\View\Dialog
      */
     protected function isVisible()
     {
-        return parent::isVisible() && $this->getOrder()->isExists();
+        return parent::isVisible()
+            && $this->getOrder();
     }
 
     /**
@@ -116,21 +115,5 @@ class Invoice extends \XLite\View\Dialog
         $list[] = 'order/invoice/style.css';
 
         return $list;
-    }
-
-    /**
-     * Return list of targets allowed for this widget
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function getAllowedTargets()
-    {
-        $result = parent::getAllowedTargets();
-        $result[] = 'invoice';
-    
-        return $result;
     }
 }
