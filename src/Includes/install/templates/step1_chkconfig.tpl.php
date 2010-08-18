@@ -286,7 +286,7 @@ Please contact the support services of your hosting provider to adjust this para
 <div id="lc_php_memory_limit" style="display : none">
 <font class="ErrorTitle">Dependency failed: memory_limit</font>
     <br><br>
-    For LiteCommerce application to work correctly, the value of memory_limit variable in php.ini file must be &gt;= 16M.
+    For LiteCommerce application to work correctly, the value of memory_limit variable in php.ini file must be &gt;= <?php echo constant('LC_PHP_MEMORY_LIMIT_MIN'); ?>.
 
     <p>To adjust this parameter:
 
@@ -302,7 +302,7 @@ Please contact the support services of your hosting provider to adjust this para
     <br><br>
     change to:
     <br><br>
-    <font style="background-color: #E3EAEF;">memory_limit = 16M</font>
+    <font style="background-color: #E3EAEF;">memory_limit = <?php echo constant('LC_PHP_MEMORY_LIMIT_MIN'); ?></font>
     <br><br>
     Save the file, then restart your web server application for the changes to take effect.
 
