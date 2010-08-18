@@ -12,5 +12,5 @@
  * @ListChild (list="cart.totals", weight="100")
  *}
 <li class="grand-total"><em>{t(#Grand total#)}:</em>
-  {price_format(cart,#total#):h}
+  {cart.getTotal():p}
 </li>

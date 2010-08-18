@@ -35,6 +35,7 @@ namespace XLite\Model;
  * @see     ____class_see____
  * @since   3.0.0
  * @Entity
+ * @HasLifecycleCallbacks
  */
 class Cart extends \XLite\Model\Order
 {
@@ -228,8 +229,8 @@ class Cart extends \XLite\Model\Order
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
-     * @PostPersist
-     * @PostUpdate
+     * @PrePersist
+     * @PreUpdate
      */
     public function calculate()
     {

@@ -110,6 +110,7 @@ abstract class ACustomer extends \XLite\Controller\AController
         $cart = $this->getCart();
 
         $cart->calculate();
+
         \XLite\Core\Database::getEM()->persist($cart);
         \XLite\Core\Database::getEM()->flush();
     }

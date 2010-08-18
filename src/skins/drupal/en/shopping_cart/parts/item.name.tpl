@@ -11,4 +11,4 @@
  * @since     3.0.0
  * @ListChild (list="cart.item.info", weight="10")
  *}
-<p class="item-title"><a href="{item.url}">{item.name}</a></p>
+<p class="item-title"><a href="{item.getURL()}">{item.getName()}</a></p>

@@ -185,6 +185,7 @@ CREATE TABLE xlite_orders (
   status char(1) default 'I',
   payment_method varchar(64) default NULL,
   notes text,
+  taxes text,
   shipping_id int(11) default NULL,
   is_order int(1) NOT NULL default 1,
   KEY xlite_order_date (date),
@@ -210,14 +211,6 @@ CREATE TABLE xlite_order_details (
   value text NOT NULL,
   KEY oname (order_id, name)
 ) TYPE=MyISAM;
-
-DROP TABLE IF EXISTS xlite_order_taxes;
-CREATE TABLE xlite_order_taxes (
-  id int(11) NOT NULL auto_increment PRIMARY KEY,
-  order_id int(11) NOT NULL default '0',
-  KEY order_id (order_id)
-) TYPE=MyISAM;
-
 
 DROP TABLE IF EXISTS xlite_payment_methods;
 CREATE TABLE xlite_payment_methods (

@@ -14,7 +14,7 @@
  *}
 <table class="selected-products">
   <tbody>
-    <tr class="selected-product" FOREACH="cart.getItems(),cart_id,item">
+    <tr class="selected-product" FOREACH="cart.getItems(),item">
       <widget template="shopping_cart/item.tpl" />
 
       {* TODO: add method to replace the the "shopping_cart/item.tpl" template *}

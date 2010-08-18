@@ -41,7 +41,6 @@ abstract class AItem extends \XLite\View\Form\AForm
      * Widget paramater names
      */
     const PARAM_ITEM    = 'item';
-    const PARAM_CART_ID = 'cartId';
 
 
     /**
@@ -53,7 +52,7 @@ abstract class AItem extends \XLite\View\Form\AForm
      */
     protected function getFormName()
     {
-        return 'cart_item_' . $this->getParam(self::PARAM_CART_ID);
+        return 'cart_item_' . $this->getParam(self::PARAM_ITEM)->getItemId();
     }
 
     /**
@@ -83,9 +82,6 @@ abstract class AItem extends \XLite\View\Form\AForm
         $this->widgetParams[self::PARAM_ITEM] = new \XLite\Model\WidgetParam\Object(
             'Cart item', null, false, '\XLite\Model\OrderItem'
         );
-        $this->widgetParams[self::PARAM_CART_ID] = new \XLite\Model\WidgetParam\Int(
-            'Cart item id', null, false
-        );
     }
 
     /**
@@ -101,7 +97,7 @@ abstract class AItem extends \XLite\View\Form\AForm
 
         $this->widgetParams[self::PARAM_FORM_PARAMS]->appendValue(
             array(
-                'cart_id' => $this->getParam(self::PARAM_CART_ID)
+                'cart_id' => $this->getParam(self::PARAM_ITEM)->getItemId()
             )
         );
     }

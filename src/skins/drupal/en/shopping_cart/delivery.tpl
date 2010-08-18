@@ -17,10 +17,10 @@
 
   <ul IF="!xlite.UPSOnlineToolsEnabled" class="deliveries">
     {foreach:cart.getShippingRates(),rate}
-    <li {if:cart.shipping_id=rate.shipping.shipping_id} class="selected"{end:}>
-      <input type="radio" id="shipping_{rate.shipping.shipping_id}" name="shipping" value="{rate.shipping.shipping_id}" checked="{isSelected(#shipping_id#,rate.shipping.shipping_id)}" />
+    <li {if:cart.getShippingId()=rate.shipping.shipping_id} class="selected"{end:}>
+      <input type="radio" id="shipping_{rate.shipping.shipping_id}" name="shipping" value="{rate.shipping.shipping_id}" checked="{isSelected(cart.getShippingId(),rate.shipping.shipping_id)}" />
       <label for="shipping_{rate.shipping.shipping_id}">{rate.shipping.name:h}</label>
-      <span>{price_format(rate,#rate#):h}</span>
+      <span>{rate.rate:p}</span>
     </li>
     {end:}
   </ul>

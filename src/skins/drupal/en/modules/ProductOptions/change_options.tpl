@@ -12,7 +12,7 @@
  *}
 <widget class="\XLite\Module\ProductOptions\View\Form\Item\ChangeOptions" name="change_options" className="change-options" />
 
-  <h1>Edit options</h1>
+  <h1>{t(#Edit options#)}</h1>
 
   <widget class="\XLite\Module\ProductOptions\View\ProductOptions" product="{getProduct()}" selectedOptions="{getSelectedOptions()}" />
 

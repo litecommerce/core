@@ -174,6 +174,8 @@ class OrderItemOption extends \XLite\Model\AEntity
      */
     public function getActualValue()
     {
-        return $this->getOption() ? $this->getOption()->getName() : $this->getValue();
+        return ($this->getOption() && $this->getOption()->getOptionId())
+            ? $this->getOption()->getName()
+            : $this->getValue();
     }
 }

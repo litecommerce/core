@@ -116,8 +116,8 @@ class ChangeOptions extends \XLite\View\AView
     {
         $options = array();
 
-        foreach ($this->getParam(self::PARAM_ITEM)->getProductOptions() as $option) {
-            $options[$option->getGroupId()] = $option->getOption()
+        foreach ($this->getParam(self::PARAM_ITEM)->getOptions() as $option) {
+            $options[$option->getGroupId()] = ($option->getOption() && $option->getOption()->getOptionId())
                 ? $option->getOption()->getOptionId()
                 : $option->getValue();
         }

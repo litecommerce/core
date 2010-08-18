@@ -124,8 +124,6 @@ class ChangeOptions extends \XLite\Controller\Customer\ACustomer
 
             if (is_array($options) && $this->getItem()->getProduct()->checkOptionsException($options)) {
                 $this->getItem()->setProductOptions($options);
-                $this->getCart()->updateItem($this->getItem());
-                $this->getItem()->update();
                 $this->updateCart();
 
                 \XLite\Core\TopMessage::getInstance()->add('Options has been successfully changed');
@@ -172,15 +170,14 @@ class ChangeOptions extends \XLite\Controller\Customer\ACustomer
                 \XLite\Core\Request::getInstance()->source == 'cart'
                 && is_numeric(\XLite\Core\Request::getInstance()->item_id)
             ) {
-                $items = $this->getCart()->getItems();
+                $item = $this->getCart()->getItemByItemId(\XLite\Core\Request::getInstance()->item_id);
 
-                $itemId = \XLite\Core\Request::getInstance()->item_id;
                 if (
-                    isset($items[$itemId])
-                    && $items[$itemId]->getProduct()
-                    && $items[$itemId]->hasOptions()
+                    $item
+                    && $item->getProduct()
+                    && $item->hasOptions()
                 ) {
-                    $this->item = $items[\XLite\Core\Request::getInstance()->item_id];
+                    $this->item = $item;
                 }
             }
         }

@@ -13,5 +13,5 @@
  *}
 <li>
   <em>{t(#Subtotal#)}:</em>
-  {price_format(cart,#subtotal#):h}
+  {cart.getSubtotal():p}
 </li>

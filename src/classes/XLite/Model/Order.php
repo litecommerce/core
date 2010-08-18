@@ -207,6 +207,17 @@ class Order extends \XLite\Model\AEntity
     protected $notes = '';
 
     /**
+     * Taxes (serialized)
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Column (type="array")
+     */
+    protected $taxes = array();
+
+    /**
      * Order details
      *
      * @var    \XLite\Model\OrderDetail
@@ -266,7 +277,6 @@ class Order extends \XLite\Model\AEntity
 
     ///////////////////////////// OBSOLETE PROPERTIES //////////////////////
 
-    protected $allTaxes = array();
     protected $shippingTaxes = array();
     protected $shippingTax = 0;
     protected $statusChanged = false;
@@ -576,7 +586,7 @@ class Order extends \XLite\Model\AEntity
             $result[$name] = $this->formatCurrency($result[$name]);
         }
 
-        $this->allTaxes = $result;
+        $this->setTaxes($result);
 
         return $result;
     }
@@ -616,7 +626,7 @@ class Order extends \XLite\Model\AEntity
     {
         // Base tax cost
         $this->calculateAllTaxes();
-        $taxes = $this->allTaxes;
+        $taxes = $this->getTaxes();
         $tax = isset($taxes['Tax']) ? $taxes['Tax'] : 0;    // total tax for all tax systems
         $this->setTax($tax);
 
@@ -1128,7 +1138,7 @@ class Order extends \XLite\Model\AEntity
     {
         $result = false;
 
-        foreach ($this->allTaxes as $name => $value) {
+        foreach ($this->getTaxes() as $name => $value) {
             if ($this->getRegistration($name) != '') {
                 $result = true;
                 break;
@@ -1150,11 +1160,14 @@ class Order extends \XLite\Model\AEntity
     {
         $taxes = null;
 
-        if (!is_null($this->getProfile()) || \XLite\Core\Config::getInstance()->General->def_calc_shippings_taxes) {
+        if (
+            !is_null($this->getProfile())
+            || \XLite\Core\Config::getInstance()->General->def_calc_shippings_taxes
+        ) {
 
             $taxRates = new \XLite\Model\TaxRates();
             $values = $names = $orderby = array();
-            foreach ($this->allTaxes as $name => $value) {
+            foreach ($this->getTaxes() as $name => $value) {
                 if ($taxRates->getTaxLabel($name)) {
                     $values[] = $value;
                     $names[] = $name;
@@ -1165,12 +1178,7 @@ class Order extends \XLite\Model\AEntity
             // sort taxes according to $orderby
             array_multisort($orderby, $values, $names);
 
-            // compile an associative array $name=>$value
-            $taxes = array();
-            $len = count($names);
-            for ($i = 0; $i < $len; $i++) {
-                $taxes[$names[$i]] = $values[$i];
-            }
+            $taxes = array_combine($names, $values);
         }
 
         return $taxes;
