@@ -46,7 +46,10 @@ class Order extends \XLite\Model\Repo\ARepo
      * Allowable search params 
      */
 
+    const P_ORDER_ID = 'orderId';
+    const P_EMAIL    = 'email';
     const P_STATUS   = 'status';
+    const P_DATE     = 'date';
     const P_ORDER_BY = 'orderBy';
     const P_LIMIT    = 'limit';
 
@@ -73,7 +76,10 @@ class Order extends \XLite\Model\Repo\ARepo
     protected function getHandlingSearchParams()
     {
         return array(
+            self::P_ORDER_ID,
+            self::P_EMAIL,
             self::P_STATUS,
+            self::P_DATE,
         );
     }
 
@@ -96,7 +102,49 @@ class Order extends \XLite\Model\Repo\ARepo
      * Prepare certain search condition
      *
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder query builder to prepare
-     * @param mixed                      $value        condition data
+     * @param int                        $value        condition data
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function prepareCndOrderId(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
+    {
+        if (!empty($value)) {
+            $queryBuilder
+                ->andWhere('o.order_id = :order_id')
+                ->setParameter('order_id', $value);
+        }
+    }
+
+    /**
+     * Prepare certain search condition
+     *
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder query builder to prepare
+     * @param string                     $value        condition data
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function prepareCndEmail(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
+    {
+        if (!empty($value)) {
+            // TODO - uncomment after the "Profile" model will support ORM
+            // $queryBuilder
+            //    ->innerJoin('o.profile', 'p')
+            //    ->andWhere('p.login = :email')
+            //    ->setParameter('email', $value);
+        }
+    }
+
+    /**
+     * Prepare certain search condition
+     *
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder query builder to prepare
+     * @param string                     $value        condition data
      *
      * @return void
      * @access protected
@@ -105,12 +153,36 @@ class Order extends \XLite\Model\Repo\ARepo
      */
     protected function prepareCndStatus(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
-        if (in_array($value, \XLite\Model\Order::getAllowedStatuses())) {
+        if (!is_null(\XLite\Model\Order::getAllowedStatuses($value))) {
             $queryBuilder
                 ->andWhere('o.status = :status')
                 ->setParameter('status', $value);
         } else {
             // May be we need to add some processing here? Or not?
+        }
+    }
+
+    /**
+     * Prepare certain search condition
+     *
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder query builder to prepare
+     * @param srray                      $value        condition data
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function prepareCndDate(\Doctrine\ORM\QueryBuilder $queryBuilder, array $value)
+    {
+        if (!empty($value)) {
+            list($start, $end) = $value;
+
+            $queryBuilder
+                ->andWhere('o.date >= :start')
+                ->andWhere('o.date <= :end')
+                ->setParameter('start', $start)
+                ->setParameter('end', $end);
         }
     }
 
