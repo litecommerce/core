@@ -44,7 +44,6 @@ class SelectedOptions extends \XLite\View\AView
     const PARAM_ITEM       = 'item';
     const PARAM_SOURCE     = 'source';
     const PARAM_STORAGE_ID = 'storage_id';
-    const PARAM_ITEM_ID    = 'item_id';
 
 
     /**
@@ -74,7 +73,6 @@ class SelectedOptions extends \XLite\View\AView
             self::PARAM_ITEM       => new \XLite\Model\WidgetParam\Object('Item', null, false, '\XLite\Model\OrderItem'),
             self::PARAM_SOURCE     => new \XLite\Model\WidgetParam\String('Source', ''),
             self::PARAM_STORAGE_ID => new \XLite\Model\WidgetParam\Int('Storage id', null),
-            self::PARAM_ITEM_ID    => new \XLite\Model\WidgetParam\Int('Item id', null),
         );
     }
 
@@ -155,7 +153,7 @@ class SelectedOptions extends \XLite\View\AView
             array(
                 'source'     => $this->getParam('source'),
                 'storage_id' => $this->getParam('storage_id'),
-                'item_id'    => $this->getParam('item_id'),
+                'item_id'    => $this->getItem()->getItemId(),
                 'isPopup'    => 1,
             )
         );

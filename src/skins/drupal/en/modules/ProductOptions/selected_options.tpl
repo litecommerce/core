@@ -10,10 +10,10 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<span class="item-option" FOREACH="item.getProductOptions(),option">
+<span class="item-option" FOREACH="item.getOptions(),option">
   {option.getActualName():h}: {option.getActualValue():h}<span IF="optionArrayPointer<optionArraySize">, </span>
 </span>
 
 <span IF="getParam(#source#)" class="item-change-options">
-  <a href="{getChangeOptionsLink()}" onclick="javascript: return changeOption.call(this);">Change options</a>
+  <a href="{getChangeOptionsLink()}" onclick="javascript: return changeOption.call(this);">{t(#Change options#)}</a>
 </span>

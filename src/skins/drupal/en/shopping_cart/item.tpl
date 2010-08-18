@@ -12,20 +12,20 @@
  *}
 
 <td class="delete-from-list">
-  <widget class="\XLite\View\Form\Cart\Item\Delete" name="itemRemove" item="{item}" cartId="{cart_id}" />
+  <widget class="\XLite\View\Form\Cart\Item\Delete" name="itemRemove" item="{item}" />
     <widget class="\XLite\View\Button\Image" label="Delete item" />
   <widget name="itemRemove" end />
 </td>
 
 <td class="item-thumbnail" IF="item.hasThumbnail()">
-  <a href="{item.url}">
-    <widget class="\XLite\View\Image" image="{item.getThumbnail()}" alt="{item.name}" maxWidth="75" maxHeight="75" IF="item.getThumbnail()" />
-    <img src="{item.thumbnailURL}" alt="{item.name}" IF="!item.getThumbnail()" />
+  <a href="{item.getURL()}">
+    <widget class="\XLite\View\Image" image="{item.getThumbnail()}" alt="{item.getName()}" maxWidth="75" maxHeight="75" IF="item.getThumbnail()" />
+    <img src="{item.getThumbnailURL()}" alt="{item.getName()}" IF="!item.getThumbnail()" />
   </a>
 </td>
 
 <td class="item-info">
-  {displayViewListContent(#cart.item.info#,_ARRAY_(#item#^item,#cart_id#^cart_id))}
+  {displayViewListContent(#cart.item.info#,_ARRAY_(#item#^item))}
 </td>
 
 <td class="item-actions">

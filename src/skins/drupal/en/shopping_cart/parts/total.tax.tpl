@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Shipping cart tax totals
+ * Shopping cart tax totals
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -15,5 +15,5 @@
   {t(#n/a#)}
 </li>
 <li FOREACH="cart.getDisplayTaxes(),tax_name,tax"><em>{cart.getTaxLabel(tax_name)}:</em>
-  {price_format(tax):h}
+  {tax:p}
 </li>

@@ -11,7 +11,7 @@
  * @since     3.0.0
  * @ListChild (list="cart.item.actions", weight="10")
  *}
-<widget class="\XLite\View\Form\Cart\Item\Update" name="item" item="{item}" cartId="{item.getItemId()}" />
+<widget class="\XLite\View\Form\Cart\Item\Update" name="item" item="{item}" />
   <div class="item-sums">
     <span class="item-price">{item.getPrice():p}</span>
     <span class="sums-multiply">x</span>
