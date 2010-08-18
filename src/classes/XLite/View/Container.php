@@ -44,6 +44,7 @@ abstract class Container extends \XLite\View\RequestHandler\ARequestHandler
      * 
      * @return string
      * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     abstract protected function getHead();
@@ -53,6 +54,7 @@ abstract class Container extends \XLite\View\RequestHandler\ARequestHandler
      * 
      * @return string
      * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     abstract protected function getDir();

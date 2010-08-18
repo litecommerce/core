@@ -194,28 +194,21 @@ abstract class AModel extends \XLite\View\Dialog
 
 
     /**
-     * Model class associated with the form
+     * This object will be used if another one is not pased
      *
-     * @return string
+     * @return \XLite\Model\AModel
      * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    abstract protected function getDefaultModelObjectClass();
-
-    /**
-     * List of model primary keys
-     *
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    abstract protected function getDefaultModelObjectKeys();
+    abstract protected function getDefaultModelObject();
 
     /**
      * Return name of web form widget class
      *
      * @return string
      * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     abstract protected function getFormClass();
@@ -258,18 +251,6 @@ abstract class AModel extends \XLite\View\Dialog
         return 'Access denied';
     }
  
-    /**
-     * This object will be used if another one is not pased
-     *
-     * @return \XLite\Model\AModel
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getDefaultModelObject()
-    {
-        return \XLite\Model\Factory::create($this->getDefaultModelObjectClass(), $this->getDefaultModelObjectKeys());
-    }
-
     /**
      * Return templates directory name
      *
@@ -378,7 +359,7 @@ abstract class AModel extends \XLite\View\Dialog
 
         $this->widgetParams += array(
             self::PARAM_MODEL_OBJECT => new \XLite\Model\WidgetParam\Object(
-                'Object', $this->getDefaultModelObject(), false, $this->getDefaultModelObjectClass()
+                'Object', $this->getDefaultModelObject(), false, get_class($this->getDefaultModelObject())
             ),
         );
     }
@@ -647,6 +628,11 @@ abstract class AModel extends \XLite\View\Dialog
     {
         $class = $data[self::SCHEMA_CLASS];
 
+        $method = 'prepareFieldParams' . \XLite\Core\Converter::convertToCamelCase($name);
+        if (method_exists($this, $method)) {
+            $this->$method($data);
+        }
+
         return new $class($this->getFieldSchemaArgs($name, $data));
     }
 
@@ -856,7 +842,7 @@ abstract class AModel extends \XLite\View\Dialog
         $fields = $this->getFormFields();
 
         foreach ($fields[$section][self::SECTION_PARAM_FIELDS] as $index => $field) {
-            $result[$field->getName()] = $field->getValue();
+            $result[$field->getName()] = $this->prepareFieldValue(null, $field->getValue(), $section);
         }
 
         return $fields;
@@ -1062,7 +1048,7 @@ abstract class AModel extends \XLite\View\Dialog
             $value = $this->getRequestData($name);
 
             if (!isset($value)) {
-                $value = $this->getModelObject()->get($name);
+                $value = $this->getModelObject()->$name;
             }
         }
 

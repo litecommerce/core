@@ -54,6 +54,7 @@ abstract class AFormField extends \XLite\View\AView
      * Available field types
      */
 
+    const FIELD_TYPE_LABEL     = 'label';
     const FIELD_TYPE_TEXT      = 'text';
     const FIELD_TYPE_PASSWORD  = 'password';
     const FIELD_TYPE_SELECT    = 'select';
@@ -97,6 +98,7 @@ abstract class AFormField extends \XLite\View\AView
      * 
      * @return string
      * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     abstract protected function getFieldTemplate();
@@ -413,6 +415,7 @@ abstract class AFormField extends \XLite\View\AView
      *
      * @return string
      * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     abstract public function getFieldType();

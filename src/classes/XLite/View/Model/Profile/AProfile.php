@@ -180,27 +180,16 @@ abstract class AProfile extends \XLite\View\Model\AModel
     }
 
     /**
-     * List of model primary keys
+     * This object will be used if another one is not pased
      *
-     * @return string
+     * @return \XLite\Model\AModel
      * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getDefaultModelObjectKeys()
+    protected function getDefaultModelObject()
     {
-        return array($this->getProfileId());
-    }
-
-    /**
-     * Model class associated with the form
-     *
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getDefaultModelObjectClass()
-    {
-        return '\XLite\Model\Profile';
+        return new \XLite\Model\Profile($this->getProfileId());
     }
 
     /**
@@ -239,6 +228,7 @@ abstract class AProfile extends \XLite\View\Model\AModel
      * 
      * @return void
      * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function defineFormFields()

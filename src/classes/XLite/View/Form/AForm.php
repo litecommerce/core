@@ -188,10 +188,11 @@ abstract class AForm extends \XLite\View\AView
     }
 
     /**
-     * getDefaultTarget 
+     * Return default value for the "target" parameter
      * 
      * @return string
      * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getDefaultTarget()
@@ -200,10 +201,11 @@ abstract class AForm extends \XLite\View\AView
     }
 
     /**
-     * getDefaultAction 
+     * Return default value for the "action" parameter
      * 
      * @return string
      * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getDefaultAction()
@@ -212,10 +214,11 @@ abstract class AForm extends \XLite\View\AView
     }
 
     /**
-     * getDefaultParams 
+     * Return list of the form default parameters
      * 
      * @return array
      * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getDefaultParams()

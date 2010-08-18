@@ -34,8 +34,9 @@ namespace XLite\Model;
  * @package    XLite
  * @see        ____class_see____
  * @since      3.0.0
+ * 
  * @Entity (repositoryClass="\XLite\Model\Repo\Product")
- * @Table (name="products",
+ * @Table  (name="products",
  *         indexes={
  *              @Index(name="price", columns={"price"}),
  *              @Index(name="sku", columns={"sku"}),

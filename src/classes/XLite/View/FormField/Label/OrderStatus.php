@@ -26,58 +26,27 @@
  * @since      3.0.0
  */
 
-namespace XLite\View\Form\Profile;
+namespace XLite\View\FormField\Label;
 
 /**
- * Profile abstract form
+ * OrderStatus
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @package    XLite
+ * @see        ____class_see____
+ * @since      3.0.0
  */
-abstract class AProfile extends \XLite\View\Form\AForm
+class OrderStatus extends \XLite\View\FormField\Label
 {
     /**
-     * Current form name
-     *
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getFormName()
-    {
-        return 'profile_form';
-    }   
-
-    /**
-     * getDefaultParams 
+     * getValue 
      * 
-     * @return array
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getDefaultParams()
-    {
-        $result = parent::getDefaultParams();
-
-        if ($profileId = static::getCurrentForm()->getRequestProfileId()) {
-            $result['profile_id'] = $profileId;
-        }
-
-        return $result;
-    }
-
-    /**
-     * getDefaultClassName
-     *
      * @return string
-     * @access protected
+     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getDefaultClassName()
+    public function getValue()
     {
-        return 'profile-form';
+        return \XLite\Model\Order::getAllowedStatuses(parent::getValue());
     }
 }
-

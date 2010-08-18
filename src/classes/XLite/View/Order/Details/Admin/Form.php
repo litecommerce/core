@@ -26,58 +26,27 @@
  * @since      3.0.0
  */
 
-namespace XLite\View\Form\Profile;
+namespace XLite\View\Order\Details\Admin;
 
 /**
- * Profile abstract form
+ * Form 
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @package    XLite
+ * @see        ____class_see____
+ * @since      3.0.0
  */
-abstract class AProfile extends \XLite\View\Form\AForm
+class Form extends \XLite\View\Order\Details\Base\AForm
 {
     /**
-     * Current form name
-     *
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getFormName()
-    {
-        return 'profile_form';
-    }   
-
-    /**
-     * getDefaultParams 
+     * Return default value for the "action" parameter
      * 
-     * @return array
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getDefaultParams()
-    {
-        $result = parent::getDefaultParams();
-
-        if ($profileId = static::getCurrentForm()->getRequestProfileId()) {
-            $result['profile_id'] = $profileId;
-        }
-
-        return $result;
-    }
-
-    /**
-     * getDefaultClassName
-     *
      * @return string
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getDefaultClassName()
+    protected function getDefaultAction()
     {
-        return 'profile-form';
+        return 'update';
     }
 }
-

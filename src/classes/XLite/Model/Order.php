@@ -256,14 +256,16 @@ class Order extends \XLite\Model\AEntity
     /**
      * Return list of all aloowed order statuses
      * 
-     * @return array
+     * @param string $status status to get
+     *  
+     * @return array|string
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function getAllowedStatuses()
+    public static function getAllowedStatuses($status = null)
     {
-        return array(
+        $list = array(
             self::STATUS_TEMPORARY  => 'Cart',
             self::STATUS_INPROGRESS => 'Incompleted',
             self::STATUS_QUEUED     => 'Queued',
@@ -272,6 +274,8 @@ class Order extends \XLite\Model\AEntity
             self::STATUS_FAILED     => 'Failed',
             self::STATUS_DECLINED   => 'Declined',
         );
+
+        return isset($status) ? (isset($list[$status]) ? $list[$status] : null) : $list;
     }
 
 
@@ -1174,7 +1178,7 @@ class Order extends \XLite\Model\AEntity
     {
         $result = false;
 
-        foreach ($this->getTaxes() as $name => $value) {
+        foreach ((array)$this->getTaxes() as $name => $value) {
             if ($this->getRegistration($name) != '') {
                 $result = true;
                 break;
@@ -1203,7 +1207,7 @@ class Order extends \XLite\Model\AEntity
 
             $taxRates = new \XLite\Model\TaxRates();
             $values = $names = $orderby = array();
-            foreach ($this->getTaxes() as $name => $value) {
+            foreach ((array)$this->getTaxes() as $name => $value) {
                 if ($taxRates->getTaxLabel($name)) {
                     $values[] = $value;
                     $names[] = $name;
@@ -1214,7 +1218,9 @@ class Order extends \XLite\Model\AEntity
             // sort taxes according to $orderby
             array_multisort($orderby, $values, $names);
 
-            $taxes = array_combine($names, $values);
+            if (!empty($names)) {
+                $taxes = array_combine($names, $values);
+            }
         }
 
         return $taxes;
