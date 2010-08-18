@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Name item cell
+ * Invoice items table head part : SKU column
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -9,6 +9,6 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- * @ListChild (list="invoice.item", weight="10")
+ * @ListChild (list="invoice.items.head", weight="20")
  *}
-<td class="name">{displayViewListContent(#invoice.item.name#,_ARRAY_(#item#^item))}</td>
+<th class="sku">{t(#SKU#)}</th>
