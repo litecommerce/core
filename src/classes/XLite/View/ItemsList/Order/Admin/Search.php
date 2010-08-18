@@ -41,7 +41,10 @@ class Search extends \XLite\View\ItemsList\Order\Admin\AAdmin
      * Widget param names 
      */
 
-    const PARAM_STATUS = 'status';
+    const PARAM_ORDER_ID = 'orderId';
+    const PARAM_LOGIN    = 'login';
+    const PARAM_STATUS   = 'status';
+    const PARAM_DATE     = 'date';
 
 
     /**
@@ -156,7 +159,10 @@ class Search extends \XLite\View\ItemsList\Order\Admin\AAdmin
     protected function getSearchParams()
     {
         return array(
-            \XLite\Model\Repo\Order::P_STATUS => self::PARAM_STATUS,
+            \XLite\Model\Repo\Order::P_ORDER_ID => self::PARAM_ORDER_ID,
+            \XLite\Model\Repo\Order::P_EMAIL    => self::PARAM_LOGIN,
+            \XLite\Model\Repo\Order::P_STATUS   => self::PARAM_STATUS,
+            \XLite\Model\Repo\Order::P_DATE     => self::PARAM_DATE,
         );
     }
 
@@ -172,8 +178,17 @@ class Search extends \XLite\View\ItemsList\Order\Admin\AAdmin
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
+            self::PARAM_ORDER_ID => new \XLite\Model\WidgetParam\Int(
+                'Order ID', null
+            ),
+            self::PARAM_LOGIN => new \XLite\Model\WidgetParam\String(
+                'Email', ''
+            ),
             self::PARAM_STATUS => new \XLite\Model\WidgetParam\Set(
                 'Status', null, array_keys(\XLite\Model\Order::getAllowedStatuses())
+            ),
+            self::PARAM_DATE => new \XLite\Model\WidgetParam\Collection(
+                'Date', array()
             ),
         );
     }
@@ -207,6 +222,11 @@ class Search extends \XLite\View\ItemsList\Order\Admin\AAdmin
 
         foreach ($this->getSearchParams() as $modelParam => $requestParam) {
             $result->$modelParam = $this->getParam($requestParam);
+        }
+
+        // FIXME
+        if ($this->startDate < $this->endDate) {
+            $result->{\XLite\Model\Repo\Order::P_DATE} = array($this->startDate, $this->endDate);
         }
 
         return $result;

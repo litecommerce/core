@@ -64,57 +64,16 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
     }
     
 
-/*    public $params = array('target', 'mode', 'order_id', 'login', 'status');
-
-    /**
-     * noSuchUser 
-     * 
-     * @var    mixed
-     * @access public
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-/*    public $noSuchUser = false;
-
-    /**
-     * startDate 
-     * 
-     * @var    mixed
-     * @access public
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-/*    public $startDate = null;
-
-    /**
-     * endDate 
-     * 
-     * @var    mixed
-     * @access public
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-/*    public $endDate = null;
-
-    /**
-     * orders 
-     * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-//*    protected $orders = null;
-
     /**
      * fillForm 
+     * FIXME - to remove
      * 
      * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-/*    public function init()
+    public function init()
     {
         parent::init();
 
@@ -134,6 +93,7 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
 
     /**
      * getDateValue 
+     * FIXME - to remove
      * 
      * @param string $fieldName field name (prefix)
      *  
@@ -142,7 +102,7 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
      * @see    ____func_see____
      * @since  3.0.0
      */
-/*    public function getDateValue($fieldName)
+    public function getDateValue($fieldName)
     {
         $dateValue = \XLite\Core\Request::getInstance()->$fieldName;;
 
@@ -166,207 +126,6 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
 
         return $dateValue;
 
-    }
-
-    /**
-     * isQuickSearch 
-     * 
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-/*    protected function isQuickSearch()
-    {
-    	return ('export_xls' != \XLite\Core\Request::getInstance()->action);
-    }
-
-    /**
-     * getOrders 
-     * 
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-/*    protected function getOrders()
-    {
-        $origProfile = true;
-        $enhacedSearch = false;
-        $onlyNormalProfile = false;
-
-        if (is_null($this->orders)) {
-
-            $order = new \XLite\Model\Order();
-            $order->collectGarbage();
-            $order->fetchKeysOnly = false;
-            $order->fetchObjIdxOnly = $this->isQuickSearch();
-
-            $login = \XLite\Core\Request::getInstance()->login;
-
-            if (!empty($login)) {
-
-                $profile = new \XLite\Model\Profile();
-                $profile->_range = null;
-
-                if (!$profile->find("login='" . addslashes($login) . "' AND order_id != '0'")) {
-                    $this->noSuchUser = true;
-
-                	if ($profile->find("login='" . addslashes($login) . "' AND order_id = '0'")) {
-                    	$this->noSuchUser = false;
-                        $origProfile = false;
-
-                	} else {
-                        $where = "login LIKE '%" . addslashes($login) . "%'";
-                        $users = $profile->findAll($where);
-
-                        if (is_array($users) && count($users) > 0) {
-                            $this->noSuchUser = false;
-                        	$enhacedSearch = true;
-                        }
-                	}
-                }
-
-            } else {
-                $profile = null;
-            }
-
-            if (!$enhacedSearch) {
-
-            	if ((!empty($login) && $profile->get('profile_id')) || empty($login)) {
-                    $this->orders = $order->search(
-                            $profile,
-                            \XLite\Core\Request::getInstance()->order_id,
-                            \XLite\Core\Request::getInstance()->status,
-                            $this->getDateValue('startDate'),
-                            $this->getDateValue('endDate') + 24 * 3600,
-                            $origProfile
-                        );
-                }
-
-            	if (0 == count($this->orders) && is_object($profile)) {
-                    $where = "login='" . addslashes($login) . "'";
-                    $users = $profile->findAll($where);
-                    $onlyNormalProfile = true;
-            	}
-            }
-
-            if ($enhacedSearch || (!$enhacedSearch && 0 == count($this->orders))) {
-            	$orders = $order->search(
-                        null,
-                        \XLite\Core\Request::getInstance()->order_id,
-                        \XLite\Core\Request::getInstance()->status,
-                        $this->getDateValue('startDate'),
-                        $this->getDateValue('endDate') + 24 * 3600
-                    );
-
-                $this->orders = array();
-
-                if (is_array($orders) && count($orders) > 0) {
-
-                    for ($i = 0; $i < count($orders); $i++) {
-
-                		if ($order->isObjectDescriptor($orders[$i])) {
-                			$orders[$i] = $order->descriptorToObject($orders[$i]);
-                        }
-
-                        $profileId = $orders[$i]->get('profile_id');
-                        $origProfileId = $orders[$i]->get('orig_profile_id');
-
-                        for ($j = 0; $j < count($users); $j++) {
-
-                            $uid = $users[$j]->get('profile_id');
-
-                            if (!$onlyNormalProfile) {
-
-    							if ($uid == $profileId || $uid == $origProfileId) {
-    								$this->orders[] = $orders[$i];
-    								break;
-                                }
-
-                            } elseif ($uid == $profileId) {
-    								$this->orders[] = $orders[$i];
-    								break;
-    						}
-                        }
-                    }
-                }
-            }
-
-            if ($this->action == "export_xls") {
-
-                foreach ($this->orders as $ord_idx => $order) {
-
-                    $taxes = 0;
-
-            		foreach ($order->getDisplayTaxes() as $tax_name => $tax) {
-            			$taxes += $tax;
-                    }
-
-            		$this->orders[$ord_idx]->set('tax', $taxes);
-            	}
-            }
-        }
-
-        return $this->orders;
-    }
-
-    /**
-     * getNoSuchUser 
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-/*    public function getNoSuchUser()
-    {
-        $this->getOrders();
-        return $this->noSuchUser;
-    }
-
-    /**
-     * getCount: how many orders were found
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-/*    public function getCount()
-    {
-        return count($this->getOrders());
-    }
-
-    /**
-     * getRecentOrders 
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-/*    public function getRecentOrders()
-    {
-        $result = array();
-
-        if ($this->config->General->recent_orders) {
-            $order = new \XLite\Model\Order();
-            $order->collectGarbage();
-            $where = "status in ('Q','P')";
-            $count = $order->count($where);
-            $from = $count - $this->config->General->recent_orders;
-
-            if ($from < 0) {
-                $from = 0;
-            }
-
-            $order->_range = null;
-            $result = array_reverse($order->findAll($where, "date", null, "$from, $count"));
-
-        }
-
-        return $result;
     }
 
     /**
@@ -395,54 +154,6 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
 
         // do not output anything
         $this->set('silent', true);
-    }
-
-    /**
-     * columnCount 
-     * 
-     * @param mixed $order Order
-     *  
-     * @return integer
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-/*    public function columnCount($order)
-    {
-        return 6;
-    }
-
-    /**
-     * rowCount 
-     * 
-     * @param mixed $order ____param_comment____
-     *  
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-/*    public function rowCount($order)
-    {
-        return 38 + count($order->get('items'));
-    }
-
-    /**
-     * doActionDelete 
-     * 
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-/*    protected function doActionDelete()
-    {
-        if (isset(\XLite\Core\Request::getInstance()->order_ids)) {
-            foreach (\XLite\Core\Request::getInstance()->order_ids as $oid => $value) {
-                $order = new \XLite\Model\Order($oid);
-                $order->remove();
-            }
-        }
     }
 
     /**

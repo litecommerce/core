@@ -24,7 +24,7 @@
       <tr>
         <td class=FormButton noWrap height=10>Order id</td>
         <td height=10>
-          <input size=6 name=order_id value="{order_id}" />
+          <input size=6 name=orderId value="{orderId}" />
         </td>
       </tr>
 
@@ -36,7 +36,7 @@
       <tr>
         <td class=FormButton noWrap height=10>Order status:</td>
         <td height=10>
-          <widget class="\XLite\View\StatusSelect" field="status" allOption />
+          <widget class="\XLite\View\StatusSelect" field="status" allOption value="{status}" />
         </td>
       </tr>
 
@@ -62,13 +62,14 @@
         <td class=FormButton width=78>&nbsp;</td>
         <td height=30>
           <input type="button" value=" Search " class="DialogMainButton" onClick="document.order_search_form.mode.value='search'; document.order_search_form.action.value=''; document.order_search_form.submit()" />
-          &nbsp;&nbsp;&nbsp;
+          {* TODO - restore and uncomment *}
+          {*&nbsp;&nbsp;&nbsp;
           <input type="button" value=" Export to.. " onclick="document.order_search_form.action.value=document.order_search_form.export_format.value;document.order_search_form.submit()" />
           &nbsp;
           <select name="export_format">
             <option value="default" selected>- select export format -</option>
             <option FOREACH="exportFormats,format,description" value="{format}">{description}</option>
-          </select>
+          </select>*}
         </td>
       </tr>
 
