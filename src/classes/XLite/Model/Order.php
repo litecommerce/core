@@ -1326,7 +1326,7 @@ class Order extends \XLite\Model\AEntity
         $detail = $this->getDetail($name);
 
         if ($detail) {
-            $deatil->setValue($value);
+            $detail->setValue($value);
 
         } else {
             $detail = new \XLite\Model\OrderDetail();
@@ -1335,7 +1335,7 @@ class Order extends \XLite\Model\AEntity
             $this->addDetails($detail);
 
             $detail->setName($name);
-            $deatil->setValue($value);
+            $detail->setValue($value);
         }
     }
 

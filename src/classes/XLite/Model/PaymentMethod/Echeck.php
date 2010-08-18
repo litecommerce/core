@@ -86,13 +86,13 @@ class Echeck extends \XLite\Model\PaymentMethod
      */
     protected function process(\XLite\Model\Cart $cart)
     {
-        $cart->setDetailLabels($this->formFields);
-
         $data = \XLite\Core\Request::getInstance()->ch_info;
         foreach ($this->formFields as $key => $name) {
-            if (isset($data[$key])) {
-                $cart->setDetail($key, $data[$key]);
-            }
+            $cart->setDetailCell(
+                $key,
+                $name,
+                isset($data[$key]) ? $data[$key] : null
+            );
         }
 
         $cart->setStatus($cart::STATUS_QUEUED);
