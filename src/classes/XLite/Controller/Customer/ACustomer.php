@@ -108,7 +108,10 @@ abstract class ACustomer extends \XLite\Controller\AController
     protected function updateCart()
     {
         $cart = $this->getCart();
+        \XLite\Core\Database::getEM()->persist($cart);
+        \XLite\Core\Database::getEM()->flush();
 
+        $cart->normalizeItems();
         $cart->calculate();
 
         \XLite\Core\Database::getEM()->persist($cart);

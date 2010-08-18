@@ -352,7 +352,7 @@ class Order extends \XLite\Model\AEntity
 
         foreach ($this->getItems() as $i) {
             if ($i->getKey() == $key) {
-                $found = $item;
+                $found = $i;
                 break;
             }
         }
@@ -397,6 +397,42 @@ class Order extends \XLite\Model\AEntity
     {
         $item->setOrder($this);
         $this->addItems($item);
+    }
+
+    /**
+     * Normalize items 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function normalizeItems()
+    {
+        // Normalize by key
+        $keys = array();
+
+        foreach ($this->getItems() as $item) {
+            $key = $item->getKey();
+            if (isset($keys[$key])) {
+                $keys[$key]->setAmount($keys[$key]->getAmount() + $item->getAmount());
+                $this->getItems()->removeElement($item);
+                \XLite\Core\Database::getEM()->remove($item);
+
+            } else {
+                $keys[$key] = $item;
+            }
+        }
+
+        unset($keys);
+
+        // Remove invalid items
+        foreach ($this->getItems() as $item) {
+            if (!$item->isValid()) {
+                $this->getItems()->removeElement($item);
+                \XLite\Core\Database::getEM()->remove($item);
+            }
+        }
     }
 
     /**
