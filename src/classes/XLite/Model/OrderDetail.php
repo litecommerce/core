@@ -34,6 +34,7 @@ namespace XLite\Model;
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
+ *  
  * @Entity
  * @Table (name="order_details")
  */
@@ -46,6 +47,7 @@ class OrderDetail extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Id
      * @GeneratedValue (strategy="AUTO")
      * @Column         (type="integer")
@@ -59,6 +61,7 @@ class OrderDetail extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="string", length="255")
      */
     protected $name;
@@ -70,6 +73,7 @@ class OrderDetail extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="string", length="255")
      */
     protected $label = '';
@@ -81,6 +85,7 @@ class OrderDetail extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="string", length="65536")
      */
     protected $value;
@@ -98,6 +103,7 @@ class OrderDetail extends \XLite\Model\AEntity
      */
     protected $order;
 
+
     /**
      * Get display record nName 
      * 
@@ -110,6 +116,4 @@ class OrderDetail extends \XLite\Model\AEntity
     {
         return $this->getLabel() ?: $this->getName();
     }
-
-
 }

@@ -22,7 +22,11 @@
 
 	<tr>
 		<td nowrap><b>Order Status</b></td>
-		<td><widget template="common/order_status.tpl"></td>
+		<td>
+      <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr><widget class="\XLite\View\FormField\Label\OrderStatus" value="{order.getStatus()}" /></tr>
+      </table>
+    </td>
 	</tr>
 	<tr>
 		<td nowrap><b>E-mail</b></td>
@@ -162,7 +166,8 @@
 		<td bgcolor="#DDDDDD">{order.paymentMethod.name:h}</td>
 	<tr>
 
-    <tbody IF="order.showCCInfo&adminMail">
+    {* TODO: check if it's needed *}
+    {* <tbody IF="order.showCCInfo&adminMail">
     <tr>
         <td nowrap><b>Credit card information:</b></td>
         <td>&nbsp;</td>
@@ -224,7 +229,7 @@
     <tr>
         <td colspan="2">&nbsp;</td>
     </tr>
-    </tbody>
+    </tbody>*}
 
 	<tr>
 		<td nowrap>Delivery</td>

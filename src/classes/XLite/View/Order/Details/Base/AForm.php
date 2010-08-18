@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage Controller
+ * @subpackage View
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -26,64 +26,57 @@
  * @since      3.0.0
  */
 
-namespace XLite\Controller\Admin;
+namespace XLite\View\Order\Details\Base;
 
 /**
- * ____description____
+ * AForm 
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @package    XLite
+ * @see        ____class_see____
+ * @since      3.0.0
  */
-class Order extends \XLite\Controller\Admin\AAdmin
+abstract class AForm extends \XLite\View\Form\AForm
 {
     /**
-     * getRequestData 
-     * TODO: to remove
-     * 
-     * @return void
+     * Each form must define its own name
+     *
+     * @return string
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getRequestData()
+    protected function getFormName()
     {
-        return \Includes\Utils\ArrayManager::filterArrayByKeys(
-            \XLite\Core\Request::getInstance()->getData(),
-            array('status', 'notes')
-        );
+        return 'order_details';
     }
 
     /**
-     * doActionUpdate 
+     * Return default value for the "target" parameter
      * 
-     * @return void
+     * @return string
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function doActionUpdate()
+    protected function getDefaultTarget()
     {
-        $request = \XLite\Core\Request::getInstance();
-
-        return \XLite\Core\Database::getRepo('\XLite\Model\Order')->updateById(
-            \XLite\Core\Request::getInstance()->order_id,
-            $this->getRequestData()
-        );
-    } 
+        return 'order';
+    }
 
     /**
-     * getViewerTemplate
+     * Return list of the form default parameters
      * 
-     * @return void
+     * @return array
+     * @access protected
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getViewerTemplate()
+    protected function getDefaultParams()
     {
-        return ('invoice' == \XLite\Core\Request::getInstance()->mode)
-            ? 'common/print_invoice.tpl'
-            : parent::getViewerTemplate();
+        $result = parent::getDefaultParams();
+        $result['order_id'] = static::getCurrentForm()->getOrderId();
+
+        return $result;
     }
 }

@@ -17,11 +17,12 @@
 <widget module="UPSOnlineTools" template="modules/UPSOnlineTools/show_container_details.tpl">
 
 <P>
-<table border=0>
 <form action="admin.php" method="POST">
 <input type="hidden" name="target" value="order">
 <input type="hidden" name="action" value="update">
 <input type="hidden" name="order_id" value="{order.order_id}">
+<input type="hidden" name="returnUrl" value="{buildURL(#order#,##,_ARRAY_(#order_id#^order.order_id))}">
+<table border=0>
 <tr>
 	<td>Status:</td>
 	<td IF="order.status=config.General.clear_cc_info"><widget class="\XLite\View\StatusSelect" field="status" value="{order.status}"></td>
@@ -46,5 +47,5 @@
 	<td></td>
 	<td><input type="submit" value=" Submit"></td>
 </tr>
-</form>
 </table>
+</form>

@@ -26,58 +26,27 @@
  * @since      3.0.0
  */
 
-namespace XLite\View\Form\Profile;
+namespace XLite\View\FormField\Label;
 
 /**
- * Profile abstract form
+ * ALabel 
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @package    XLite
+ * @see        ____class_see____
+ * @since      3.0.0
  */
-abstract class AProfile extends \XLite\View\Form\AForm
+abstract class ALabel extends \XLite\View\FormField\AFormField
 {
     /**
-     * Current form name
+     * Return field type
      *
      * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getFormName()
-    {
-        return 'profile_form';
-    }   
-
-    /**
-     * getDefaultParams 
-     * 
-     * @return array
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getDefaultParams()
-    {
-        $result = parent::getDefaultParams();
-
-        if ($profileId = static::getCurrentForm()->getRequestProfileId()) {
-            $result['profile_id'] = $profileId;
-        }
-
-        return $result;
-    }
-
-    /**
-     * getDefaultClassName
-     *
-     * @return string
-     * @access protected
+     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getDefaultClassName()
+    public function getFieldType()
     {
-        return 'profile-form';
+        return self::FIELD_TYPE_LABEL;
     }
 }
-

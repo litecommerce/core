@@ -102,12 +102,15 @@
 
 <widget class="\XLite\View\LanguagesModify\Dialog" />
 
-<span IF="!xlite.AOMEnabled">
+{* Order details page *}
+<widget class="\XLite\View\Order\Details\Admin\Model" template="order/order.tpl" />
+
+{*<span IF="!xlite.AOMEnabled">
 {if:!xlite.GoogleCheckoutEnabled}
 <widget target="order" template="common/dialog.tpl" body="order/order.tpl" head="Order # {order.order_id}">
 {else:}
 <widget module="AOM" template="modules/AOM/main.tpl">
-{end:}
+{end:}*}
 </span>
 <span IF="xlite.AOMEnabled">
 <widget module="AOM" template="modules/AOM/main.tpl">
