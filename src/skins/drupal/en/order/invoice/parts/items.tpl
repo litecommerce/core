@@ -14,19 +14,11 @@
 <table cellspacing="0" class="invoice-items">
 
   <tr>
-    <th class="name">Product</th>
-    <th class="sku">SKU</th>
-    <th class="price">Price</th>
-    <th class="qty">Qty</th>
-    <th class="total">Total</th>
+    {displayViewListContent(#invoice.items.head#)}
   </tr>
 
   <tr FOREACH="order.getItems(),item">
-    <td class="name">{displayViewListContent(#invoice.item.name#,_ARRAY_(#item#^item))}</td>
-    <td class="sku">{item.getSku()}</td>
-    <td class="price">{item.getPrice():p}</td>
-    <td class="qty">{item.getAmount()}</td>
-    <td class="total">{item.getTotal():p}</td>
+    {displayViewListContent(#invoice.item#,_ARRAY_(#item#^item))}
   </tr>
 
   <tr FOREACH="getViewList(#invoice.items#),w">
