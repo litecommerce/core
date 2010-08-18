@@ -20,5 +20,4 @@
 <br />
 <hr class="tiny" />
 
-<widget template="common/invoice.tpl" />
-
+<widget class="\XLite\View\Invoice" order="{getOrder()}" />

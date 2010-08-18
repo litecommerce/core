@@ -26,56 +26,53 @@
  * @since      3.0.0
  */
 
-namespace XLite\Model\PaymentMethod;
+namespace XLite\Model\Repo;
 
 /**
- * ____description____
+ * Cart repository
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Offline extends \XLite\Model\PaymentMethod
+class Cart extends \XLite\Model\Repo\ARepo
 {
     /**
-     * Payment form template 
+     * Mark cart model as order 
      * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected $formTemplate = 'checkout/offline.tpl';
-
-    /**
-     * Process payment
-     * 
-     * @param \XLite\Model\Cart $cart Cart
+     * @param integer $orderId Order id
      *  
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function process(\XLite\Model\Cart $cart)
-    {
-        $cart->setStatus($cart::STATUS_QUEUED);
-    }
-
-    /**
-     * Handle request 
-     * 
-     * @param \XLite\Model\Cart $cart Cart
-     *  
-     * @return integer Operation status
+     * @return boolean
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function handleRequest(\XLite\Model\Cart $cart)
+    public function markAsOrder($orderId)
     {
-        $this->process($cart);
+        return 0 < $this->defineMarkAsOrderQuery($orderId)->execute();
+    }
 
-        return self::PAYMENT_SUCCESS;
+    /**
+     * Define query for markAsOrder() method
+     * 
+     * @param integer $orderId Order id
+     *  
+     * @return \Doctrine\ORM\NativeQuery
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineMarkAsOrderQuery($orderId)
+    {
+        $query = new \Doctrine\ORM\NativeQuery($this->_em);
+        $query->setSql(
+            'UPDATE ' . $this->_class->getTableName() . ' '
+            . 'SET is_order = :flag '
+            . 'WHERE order_id = :id'
+        );
+        $query->setParameter('flag', 1);
+        $query->setParameter('id', $orderId);
+
+        return $query;
     }
 }

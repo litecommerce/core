@@ -34,7 +34,7 @@ namespace XLite\Model;
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
- * @Entity
+ * @Entity (repositoryClass="\XLite\Model\Repo\Cart")
  * @HasLifecycleCallbacks
  */
 class Cart extends \XLite\Model\Order
@@ -170,11 +170,11 @@ class Cart extends \XLite\Model\Order
      */
     public function processCheckOut()
     {
-        if ('T' == $this->getStatus()) {
+        if (self::STATUS_TEMPORARY == $this->getStatus()) {
             $this->setDate(time());
 
             $profile = \XLite\Model\Auth::getInstance()->getProfile();
-            if ($profile->getOrderId()) {
+            if ($profile->get('order_id')) {
                 // anonymous checkout:
                 // use the current profile as order profile
                 $this->setProfileId($this->getProfile()->get('profile_id'));
@@ -182,11 +182,22 @@ class Cart extends \XLite\Model\Order
             } else {
                 $this->setProfileCopy($profile);
             }
-            $this->setStatus(self::STATUS_INPROGRESS);
 
-            \XLite\Core\Database::getEM()->persist($this);
-            \XLite\Core\Database::getEM()->flush();
+            $this->setStatus(self::STATUS_INPROGRESS);
         }
+    }
+
+    /**
+     * Mark cart as order 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function markAsOrder()
+    {
+        $this->getRepository()->markAsOrder($this->getOrderId());
     }
 
     /**

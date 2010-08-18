@@ -12,12 +12,12 @@
  * @ListChild (list="invoice.bottom", weight="20")
  *}
 <td class="payment">
-  <strong>Payment method:</strong>
+  <strong>{t(#Payment method#)}:</strong>
   {order.paymentMethod.name:h}
 </td>
 
 <td class="shipping">
-  <strong>Shipping method:</strong>
-  {if:order.shippingMethod}{order.shippingMethod.name:h}{else:}n/a{end:}
+  <strong>{t(#Shipping method#)}:</strong>
+  {if:order.getShippingMethod()}{order.shippingMethod.name:h}{else:}n/a{end:}
 </td>
 

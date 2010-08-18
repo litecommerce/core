@@ -668,5 +668,6 @@ INSERT INTO xlite_language_labels (label_id, name) VALUES (92, 'The X module has
 INSERT INTO xlite_language_labels (label_id, name) VALUES (93, 'The X module has been uninstalled in an abnormal way');
 INSERT INTO xlite_language_labels (label_id, name) VALUES (94, 'The modules have been updated');
 INSERT INTO xlite_language_labels (label_id, name) VALUES (95, 'The X module has been disabled in an abnormal way');
+INSERT INTO xlite_language_labels (label_id, name) VALUES (96, 'Congratulations! Your order has been successfully placed');
 
 

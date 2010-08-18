@@ -232,6 +232,7 @@ class Cart extends \XLite\Controller\Customer\ACustomer
     protected function doActionCheckout()
     {
         $this->doActionUpdate();
+
         // switch to checkout dialog 
         $this->set('returnUrl', $this->buildURL('checkout'));
     }

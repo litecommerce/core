@@ -568,21 +568,31 @@ class Checkout extends \XLite\Controller\Customer\Cart
             || $this->getCart()->isEmpty()
             || $itemsAfterUpdate != $itemsBeforeUpdate
         ) {
+
+            // Cart is changed
             $this->set('absence_of_product', true);
             $this->redirect($this->buildURL('cart'));
-            return;
-        }
 
-        $pm = $this->getCart()->getPaymentMethod();
-        if (!is_null($pm)) {
-            $notes = isset(\XLite\Core\Request::getInstance()->notes)
-                ? \XLite\Core\Request::getInstance()->notes
-                : '';
-            $this->getCart()->setNotes($notes);
+        } elseif (is_null($this->getCart()->getPaymentMethod())) {
+
+            // Payment method is not selected
+            $this->redirect(
+                $this->buildURL(
+                    'cart',
+                    '',
+                    array('mode' => 'paymentMethod')
+                )
+            );
+
+        } else {
+
+            if (isset(\XLite\Core\Request::getInstance()->notes)) {
+                $this->getCart()->setNotes(\XLite\Core\Request::getInstance()->notes);
+            }
 
             $this->getCart()->processCheckOut();
 
-            switch ($pm->handleRequest($this->getCart())) {
+            switch ($this->getCart()->getPaymentMethod()->handleRequest($this->getCart())) {
 
                 case \XLite\Model\PaymentMethod::PAYMENT_SILENT:
                     // don't call output()
@@ -590,7 +600,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
                     break;
 
                 case \XLite\Model\PaymentMethod::PAYMENT_SUCCESS:
-                    $this->success();
+                    $this->processSucceed();
                     $this->setReturnUrl(
                         $this->buildURL(
                             'checkoutSuccess',
@@ -622,7 +632,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
         $orderId = isset($request->order_id_name) ? $request->order_id_name : $request->order_id;
 
         if ($this->isCartProcessed()) {
-            $this->success();
+            $this->processSucceed();
             $this->returnUrl = $this->buildURL('checkoutSuccess', '', array('order_id' => $orderId));
 
         } else {
@@ -682,7 +692,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
     }
 
     /**
-     * External call success() method
+     * External call processSucceed() method
      * 
      * @return mixed
      * @access public
@@ -691,7 +701,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
      */
     public function callSuccess()
     {
-        return $this->success();
+        return $this->processSucceed();
     }
  
     /**
@@ -702,11 +712,15 @@ class Checkout extends \XLite\Controller\Customer\Cart
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function success()
+    protected function processSucceed()
     {
         $this->getCart()->processSucceed();
 
+        \XLite\Model\Session::getInstance()->set('last_order_id', $this->getCart()->getOrderId());
         \XLite\Model\Session::getInstance()->set('order_id', null);
+
+        \XLite\Core\Database::getEM()->persist($this->getCart());
+        \XLite\Core\Database::getEM()->flush();
 
         // anonymous checkout: logoff
         if ($this->auth->getProfile() && $this->auth->getProfile()->get('order_id')) {

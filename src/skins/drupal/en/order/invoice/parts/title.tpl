@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Order success note
+ * Invoice title
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -9,5 +9,10 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
+ * @ListChild (list="invoice.base", weight="20")
  *}
-{t(#Congratulations! Your order has been successfully placed#)}
+<h2 class="invoice">Invoice #{order.getOrderId()}</h2>
+<div class="invoice-title">
+{time_format(order.getDate())}
+<span>{t(#Grand total#)}: {order.getTotal():p}</span>
+</div>
