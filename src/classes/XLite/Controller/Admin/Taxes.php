@@ -118,6 +118,13 @@ class Taxes extends \XLite\Controller\Admin\AAdmin
     {
         $poses = array();
         $taxes = $this->config->Taxes->taxes;
+        if (!is_array($taxes)) {
+            $taxes = unserialize($taxes);
+        }
+        if (!is_array($taxes)) {
+            $taxes = array();
+        }
+
         $postData = \XLite\Core\Request::getInstance()->new;
 
         if ($postData['name']) {
