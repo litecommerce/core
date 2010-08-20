@@ -96,6 +96,21 @@ class XLite_Sniffs_PHP_Commenting_ClassCommentSniff extends XLite_Sniffs_PHP_Com
             'allow_multiple' => false,
             'order_text'     => 'follows @Table',
         ),
+        'InheritanceType' => array(
+            'required'       => false,
+            'allow_multiple' => false,
+            'order_text'     => 'follows @Table',
+        ),
+        'DiscriminatorColumn' => array(
+            'required'       => false,
+            'allow_multiple' => false,
+            'order_text'     => 'follows @Table',
+        ),
+        'DiscriminatorMap' => array(
+            'required'       => false,
+            'allow_multiple' => false,
+            'order_text'     => 'follows @Table',
+        ),
         'ListChild' => array(
             'required'       => false,
             'allow_multiple' => true,
