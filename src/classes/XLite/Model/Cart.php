@@ -232,21 +232,4 @@ class Cart extends \XLite\Model\Order
 
         return $rates;
     }
-
-    /**
-     * Calculates order totals and store them in the order properties
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     * @PrePersist
-     * @PreUpdate
-     */
-    public function calculate()
-    {
-        parent::calculate();
-    }
-
 }
-

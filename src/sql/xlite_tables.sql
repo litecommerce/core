@@ -166,6 +166,8 @@ CREATE TABLE xlite_order_items (
   sku varchar(255) NOT NULL default '',
   price decimal(16,4) NOT NULL default '0.0000',
   amount int(11) NOT NULL default '1',
+  subtotal decimal(16,4) NOT NULL default '0.0000',
+  total decimal(16,4) NOT NULL default '0.0000',
   KEY ooo (order_id, object_id, object_type),
   KEY price (price),
   KEY amount (amount)
@@ -178,8 +180,6 @@ CREATE TABLE xlite_orders (
   orig_profile_id int(11) NOT NULL default '0',
   total decimal(16,4) NOT NULL default '0.00',
   subtotal decimal(16,4) NOT NULL default '0.00',
-  shipping_cost decimal(16,4) NOT NULL default '0.00',
-  tax decimal(16,4) NOT NULL default '0.00',
   tracking varchar(32) default NULL,
   date int(11) default NULL,
   status char(1) default 'I',
@@ -193,8 +193,6 @@ CREATE TABLE xlite_orders (
   KEY orig_profile_id (orig_profile_id),
   KEY total (total),
   KEY subtotal (subtotal),
-  KEY shipping_cost (shipping_cost),
-  KEY tax (tax),
   KEY tracking (tracking),
   KEY status (status),
   KEY payment_method (payment_method),
@@ -210,6 +208,32 @@ CREATE TABLE xlite_order_details (
   label varchar(255) NOT NULL default '',
   value text NOT NULL,
   KEY oname (order_id, name)
+) TYPE=MyISAM;
+
+DROP TABLE IF EXISTS xlite_order_modifiers;
+CREATE TABLE xlite_order_modifiers (
+  id int(11) NOT NULL auto_increment PRIMARY KEY,
+  order_id int(11) NOT NULL default '0',
+  code varchar(32) NOT NULL default '',
+  name varchar(255) NOT NULL default '',
+  is_visible tinyint(1) NOT NULL default 0,
+  is_summable tinyint(1) NOT NULL default 1,
+  subcode varchar(32) NOT NULL default '',
+  surcharge decimal(16,4) NOT NULL default '0.0000',
+  KEY ocs (order_id, code, subcode)
+) TYPE=MyISAM;
+
+DROP TABLE IF EXISTS xlite_order_item_modifiers;
+CREATE TABLE xlite_order_item_modifiers (
+  id int(11) NOT NULL auto_increment PRIMARY KEY,
+  item_id int(11) NOT NULL default '0',
+  code varchar(32) NOT NULL default '',
+  name varchar(255) NOT NULL default '',
+  is_visible tinyint(1) NOT NULL default 0,
+  is_summable tinyint(1) NOT NULL default 1,
+  subcode varchar(32) NOT NULL default '',
+  surcharge decimal(16,4) NOT NULL default '0.0000',
+  KEY ics (item_id, code, subcode)
 ) TYPE=MyISAM;
 
 DROP TABLE IF EXISTS xlite_payment_methods;

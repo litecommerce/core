@@ -12,5 +12,21 @@
  * @ListChild (list="cart.bottom.right", weight="10")
  *}
 <ul class="cart-sums">
-  {displayViewListContent(#cart.totals#)}
+
+  <li>
+    <em>{t(#Subtotal#)}:</em>
+    {cart.getSubtotal():p}
+  </li>
+
+  <li FOREACH="cart.getVisibleSavedModifiers(),modifier" class="{modifier.getCode()} {modifier.getSubcode()}">
+    <em>{t(modifier.getName())}:</em>
+    {if:modifier.isAvailable()}{modifier.getSurcharge():p}{else:}{t(#n/a#)}{end:}
+  </li>
+
+  <li class="grand-total">
+    <em>{t(#Grand total#)}:</em>
+    {cart.getTotal():p}
+  </li>
+
+  {*displayViewListContent(#cart.totals#)*}
 </ul>
