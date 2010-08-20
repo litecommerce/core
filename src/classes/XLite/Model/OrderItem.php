@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage ____sub_package____
+ * @subpackage Model
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -38,14 +38,14 @@ namespace XLite\Model;
  * @Entity (repositoryClass="XLite\Model\Repo\OrderItem")
  * @Table (name="order_items",
  *         indexes={
- *              @Index(name="orderby", columns={"orderby"}),
- *              @Index(name="product_id", columns={"product_id"}),
- *              @Index(name="price", columns={"price"}),
- *              @Index(name="amount", columns={"amount"})
+ *              @Index (name="orderby", columns={"orderby"}),
+ *              @Index (name="product_id", columns={"product_id"}),
+ *              @Index (name="price", columns={"price"}),
+ *              @Index (name="amount", columns={"amount"})
  *         }
  * )
  */
-class OrderItem extends \XLite\Model\AEntity
+class OrderItem extends \XLite\Model\Base\ModifierOwner
 {
     const PRODUCT_TYPE = 'product';
 
@@ -161,32 +161,83 @@ class OrderItem extends \XLite\Model\AEntity
      */
     protected $product;
 
+    /**
+     * Order item saved modifiers
+     *
+     * @var    \XLite\Model\OrderItemModifier
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     *
+     * @OneToMany (targetEntity="XLite\Model\OrderItemModifier", mappedBy="owner", cascade={"persist","remove"})
+     */
+    protected $saved_modifiers;
+
+    /**
+     * Object exist flag
+     * 
+     * @var    boolean
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
     protected $objectExist = true;
 
+    /**
+     * Get object 
+     * 
+     * @return \XLite\Model\Base\IOrderItem or null
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     public function getObject()
     {
         $method = $this->getObjectGetterName();
 
-        return method_exists($this, $method)
-            ? $this->$method()
-            : null;
+        // $method calculated in getObjectGetterName()
+        return method_exists($this, $method) ? $this->$method() : null;
     }
 
+    /**
+     * Get object method-getter name 
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     protected function getObjectGetterName()
     {
         return 'get' . ucfirst($this->getObjectType()) . 'Object';
     }
 
+    /**
+     * Get product object 
+     * 
+     * @return \XLite\Model\Product
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     protected function getProductObject()
     {
         // Product loaded in LAZY mode - check proxy
-        if (isset($this->product) && $this->product instanceof \Doctrine\ORM\Proxy\Proxy && !$this->product->getProductId()) {
+        if (
+            isset($this->product)
+            && $this->product instanceof \Doctrine\ORM\Proxy\Proxy
+            && !$this->product->getProductId()
+        ) {
             $this->product = null;
             $this->objectExist = false;
         }
 
         // Product not loaded - load product model and check
-        if (!isset($this->product) && $this->objectExist && $this->getObjectId()) {
+        if (
+            !isset($this->product)
+            && $this->objectExist
+            && $this->getObjectId()
+        ) {
             $this->product = \XLite\Core\Database::getRepo('XLite\Model\Product')->find($this->getObjectId());
             if (!$this->product) {
                 $this->objectExist = false;
@@ -209,6 +260,7 @@ class OrderItem extends \XLite\Model\AEntity
     /**
      * Wrapper. If the product was deleted,
      * item will use save product name and SKU
+     * TODO - switch to getObject() and remove 
      * 
      * @return \XLite\Model\Product
      * @access public
@@ -277,19 +329,6 @@ class OrderItem extends \XLite\Model\AEntity
         $amount = min($amount, $this->getObject()->getMaxPurchaseLimit());
 
         $this->amount = $amount;
-    }
-
-    /**
-     * Get item cost
-     * 
-     * @return float
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getTotal()
-    {
-        return \Includes\Utils\Converter::formatPrice($this->getPrice() * $this->getAmount());
     }
 
     /**
@@ -411,6 +450,7 @@ class OrderItem extends \XLite\Model\AEntity
 
     /**
      * Get discountable price 
+     * TODO - rework - move to separate order item discount modifier
      * 
      * @return float
      * @access public
@@ -424,6 +464,7 @@ class OrderItem extends \XLite\Model\AEntity
         
     /**
      * Get taxable total 
+     * TODO - rework - move to separate order item tax modifier
      * 
      * @return float
      * @access public
@@ -433,5 +474,19 @@ class OrderItem extends \XLite\Model\AEntity
     public function getTaxableTotal()
     {
         return $this->getTotal();
+    }
+
+    /**
+     * Calculate and save order item subtotal 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function calculateSubtotal()
+    {
+        $subtotal = $this->getPrice() * $this->getAmount();
+        $this->setSubtotal($subtotal);
     }
 }

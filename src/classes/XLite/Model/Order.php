@@ -37,11 +37,11 @@ namespace XLite\Model;
  * @Entity (repositoryClass="\XLite\Model\Repo\Order")
  * @Table (name="orders")
  * @HasLifecycleCallbacks
- * @InheritanceType("SINGLE_TABLE")
- * @DiscriminatorColumn(name="is_order", type="integer", length="1")
- * @DiscriminatorMap({"1" = "XLite\Model\Order", "0" = "XLite\Model\Cart"})
+ * @InheritanceType ("SINGLE_TABLE")
+ * @DiscriminatorColumn (name="is_order", type="integer", length="1")
+ * @DiscriminatorMap ({"1" = "XLite\Model\Order", "0" = "XLite\Model\Cart"})
  */
-class Order extends \XLite\Model\AEntity
+class Order extends \XLite\Model\Base\ModifierOwner
 {
     /**
      * Order statuses 
@@ -95,50 +95,6 @@ class Order extends \XLite\Model\AEntity
      * @Column (type="integer")
      */
     protected $orig_profile_id = 0;
-
-    /**
-     * Total 
-     * 
-     * @var    float
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     * @Column (type="decimal", precision="4", scale="12")
-     */
-    protected $total = 0.0000;
-
-    /**
-     * Subtotal 
-     * 
-     * @var    float
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     * @Column (type="decimal", precision="4", scale="12")
-     */
-    protected $subtotal = 0.0000;
-
-    /**
-     * Shipping cost 
-     * 
-     * @var    float
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     * @Column (type="decimal", precision="4", scale="12")
-     */
-    protected $shipping_cost = 0.0000;
-
-    /**
-     * Tax cost
-     * 
-     * @var    float
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     * @Column (type="decimal", precision="4", scale="12")
-     */
-    protected $tax = 0.0000;
 
     /**
      * Shipping method unique id 
@@ -243,6 +199,18 @@ class Order extends \XLite\Model\AEntity
     protected $items;
 
     /**
+     * Order saved modifiers
+     *
+     * @var    \XLite\Model\OrderModifier
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     *
+     * @OneToMany (targetEntity="XLite\Model\OrderModifier", mappedBy="owner", cascade={"persist","remove"})
+     */
+    protected $saved_modifiers;
+
+    /**
      * 'Add item' error code
      * 
      * @var    string
@@ -252,6 +220,13 @@ class Order extends \XLite\Model\AEntity
      */
     protected $addItemError;
 
+    ///////////////////////////// OBSOLETE PROPERTIES //////////////////////
+
+    protected $statusChanged = false;
+    protected $oldStatus;
+    protected $paymentMethodModel;
+    protected $profile;
+    protected $origProfile;
 
     /**
      * Return list of all aloowed order statuses
@@ -277,18 +252,6 @@ class Order extends \XLite\Model\AEntity
 
         return isset($status) ? (isset($list[$status]) ? $list[$status] : null) : $list;
     }
-
-
-    ///////////////////////////// OBSOLETE PROPERTIES //////////////////////
-
-    protected $shippingTaxes = array();
-    protected $shippingTax = 0;
-    protected $statusChanged = false;
-    protected $oldStatus;
-    protected $shippingMethod;
-    protected $paymentMethodModel;
-    protected $profile;
-    protected $origProfile;
 
     /**
      * Add item to order
@@ -440,18 +403,6 @@ class Order extends \XLite\Model\AEntity
     }
 
     /**
-     * Get shipping rates 
-     * 
-     * @return array of \XLite\Model\ShippingRate
-     * @access public
-     * @since  3.0.0
-     */
-    public function getShippingRates()
-    {
-        return $this->calculateShippingRates();
-    }
-
-    /**
      * Return items number
      * 
      * @return integer
@@ -500,60 +451,6 @@ class Order extends \XLite\Model\AEntity
     }
 
     /**
-     * Check - shipping is available for this order or not
-     * 
-     * @return boolean
-     * @access public
-     * @since  3.0.0
-     */
-    public function isShippingAvailable()
-    {
-        return 0 < count($this->getShippingRates());
-    }
-
-    /**
-     * Assign first shipping rate 
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function assignFirstShippingRate()
-    {
-        $rates = $this->getShippingRates();
-
-        $shipping = null;
-        if (0 < count($rates)) {
-            $rate = array_shift($rates);
-            $shipping = $rate->get('shipping');
-        }
-
-        $this->setShippingMethod($shipping);
-    }
-
-    /**
-     * Returns true if any of order items are shipped 
-     * 
-     * @return bool
-     * @access public
-     * @since  3.0.0
-     */
-    public function isShipped()
-    {
-        $result = false;
-
-        foreach ($this->getItems() as $item) {
-            if ($item->isShipped()) {
-                $result = true;
-                break;
-            }
-        }
-
-        return $result;
-    }
-
-    /**
      * Check - is order processed or not
      * 
      * @return bool
@@ -578,222 +475,42 @@ class Order extends \XLite\Model\AEntity
     }
 
     /**
-     * Calculate and return all order taxes
+     * Calculate and save order subtotal 
      * 
-     * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function calculateAllTaxes() 
-    {
-        $taxRates = new \XLite\Model\TaxRates();
-        $taxRates->set('order', $this);
-        $result = array();
-        foreach ($this->getItems() as $item) {
-            $product = $item->getProduct();
-            if (\XLite\Core\Config::getInstance()->Taxes->prices_include_tax && isset($product)) {
-                $item->setPrice($product->getPrice());
-            }
-
-            $taxRates->set('orderItem', $item);
-            $taxRates->calculateTaxes();
-
-            $result = $this->addTaxes($result, $taxRates->get('allTaxes'));
-        }
-
-        // tax on shipping
-        $pricesIncludeTax = \XLite\Core\Config::getInstance()->Taxes->prices_include_tax;
-        if (
-            $this->isShippingDefined()
-            && (!$pricesIncludeTax || ($pricesIncludeTax && $taxRates->isShippingDefined()))
-        ) {
-            $taxRates->_conditionValues['product class'] = 'shipping service';
-            $taxRates->_conditionValues['cost'] = $this->getShippingCost();
-            $taxRates->calculateTaxes();
-            $result = $this->addTaxes($result, $taxRates->get('allTaxes'));
-
-            $shippingTaxes = array();
-            $shippingTaxes = $this->addTaxes($shippingTaxes, $taxRates->get('shippingTaxes'));
-            foreach ($shippingTaxes as $name => $value) {
-                $shippingTaxes[$name] = $this->formatCurrency($shippingTaxes[$name]);
-            }
-            $this->shippingTaxes = $shippingTaxes;
-        }
-
-        // round all tax values
-        foreach ($result as $name => $value) {
-            $result[$name] = $this->formatCurrency($result[$name]);
-        }
-
-        $this->setTaxes($result);
-
-        return $result;
-    }
-
-    /**
-     * Add new taxes into existsing taxes list
-     * 
-     * @param array $acc   Existing taxes list
-     * @param array $taxes New taxes
-     *  
-     * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function addTaxes(array $acc, array $taxes) 
-    {
-        foreach ($taxes as $tax => $value) {
-            if (!isset($acc[$tax])) {
-                $acc[$tax] = 0;
-            }
-            $acc[$tax] += $value;
-        }
-
-        return $acc;
-    }
-
-    /**
-     * Calculate and return tax cost 
-     * 
-     * @return float
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function calculateTaxCost() 
-    {
-        // Base tax cost
-        $this->calculateAllTaxes();
-        $taxes = $this->getTaxes();
-        $tax = isset($taxes['Tax']) ? $taxes['Tax'] : 0;    // total tax for all tax systems
-        $this->setTax($tax);
-
-        // Shipping-based tax cost
-        $shippingTax = 0;
-
-        if ($this->isShippingDefined()) {
-            $shippingTaxes = $this->shippingTaxes;
-            if (is_array($shippingTaxes)) {
-                if (\XLite\Core\Config::getInstance()->Taxes->prices_include_tax && isset($shippingTaxes['Tax'])) {
-                    $shippingTax = $shippingTaxes['Tax'];
-
-                } else {
-                    foreach ($shippingTaxes as $name => $value) {
-                        if (
-                            isset($taxes[$name])
-                            && (\XLite\Core\Config::getInstance()->Taxes->prices_include_tax || $taxes[$name] == $value)
-                        ) {
-                            $shippingTax += $value;
-                        }
-                    }
-                }
-            }
-        }
-
-        $this->shippingTax = $shippingTax;
-
-        return $tax;
-    }
-
-    /**
-     * Calculate order subtotal 
-     * 
-     * @param bolean $shippedOnly Calculate shipped items only
-     *  
-     * @return float
+     * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function calculateSubtotal($shippedOnly = false) 
+    public function calculateSubtotal() 
     {
         $subtotal = 0;
 
         foreach ($this->getItems() as $item) {
-            if (!$shippedOnly || $item->isShipped()) {
-                $subtotal += $item->getTotal();
-            }
+            $item->calculate();
+            $subtotal += $item->getTotal();
         }
 
-        if (!$shippedOnly) {
-            $this->setSubtotal($this->formatCurrency($subtotal));
-        }
-
-        return $subtotal;
+        $this->setSubtotal($subtotal);
     }
 
     /**
      * Calculate order total 
      * 
      * @return void
-     * @access protected
+     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function calculateTotal() 
+    public function calculate() 
     {
         if (0 < $this->countItems()) {
+            parent::calculate();
 
-            $this->calculateSubtotal();
-            $this->calculateShippingCost();
-            $this->calculateTaxCost();
-
-            $total = $this->getSubtotal();
-
-            if (!\XLite\Core\Config::getInstance()->Taxes->prices_include_tax) {
-                $total += $this->getTax();
-            }
-
-            $total += $this->getShippingCost();
-
-            if (\XLite\Core\Config::getInstance()->Taxes->prices_include_tax) {
-                $total += $this->shippingTax;
-            }
-
-            $this->setTotal($this->formatCurrency($total));
+        } else {
+            $this->setSubtotal(0);
+            $this->setTotal(0);
         }
-    }
-
-    /**
-     * Get shipped items 
-     * 
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getShippedItems() 
-    {
-        $result = array();
-
-        foreach ($this->getItems() as $item) {
-            if ($item->isShipped()) {
-                $result[] = $item;
-            }
-        }
-
-        return $result;
-    }
-
-    /**
-     * Count shipped items quantity
-     * 
-     * @return integer
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function countShippedItems() 
-    {
-        $result = 0;
-
-        foreach ($this->getShippedItems() as $item) {
-            $result += $item->getAmount();
-        }
-
-        return $result;
     }
 
     /**
@@ -813,113 +530,6 @@ class Order extends \XLite\Model\AEntity
         }
 
         return $weight;
-    }
-
-    /**
-     * Calculate shipping cost 
-     * 
-     * @return float
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function calculateShippingCost() 
-    {
-        $cost = 0;
-
-        if ($this->isShipped()) {
-        
-            $shippingMethod = $this->getShippingMethod();
-            $cost = is_object($shippingMethod) ? $shippingMethod->calculate($this) : false;
-
-            if (false === $cost) {
-                $rates = $this->calculateShippingRates();
-
-                // find the first available shipping method
-                if (!is_null($rates) && count($rates) > 0) {
-                    foreach ($rates as $key => $val) {
-                        $shippingID = $key;
-                        break;
-                    }
-
-                    $shippingMethod = new \XLite\Model\Shipping($shippingID);
-                    $this->setShippingMethod($shippingMethod);
-                    $cost = $shippingMethod->calculate($this);
-                }
-            }
-        }
-
-        $this->setShippingCost($this->formatCurrency($cost));
-
-        return $cost;
-    }
-
-    /**
-     * Calculate shipping rates 
-     * 
-     * @return array of \XLite\Model\ShippingRate
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function calculateShippingRates() 
-    {
-        $data = array();
-            
-        foreach (\XLite\Model\Shipping::getModules() as $module) {
-            $data += $module->getRates($this);
-        }
-
-        uasort($data, array($this, 'getShippingRatesOrderCallback'));
-
-        return $data;
-    }
-
-    /**
-     * Shipping rates sorting callback 
-     * 
-     * @param \XLite\Model\ShippingRate $a First shipping rate
-     * @param \XLite\Model\ShippingRate $b Second shipping rate
-     *  
-     * @return integer
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getShippingRatesOrderCallback(\XLite\Model\ShippingRate $a, \XLite\Model\ShippingRate $b)
-    {
-        $sa = $a->getShipping();
-        $sb = $b->getShipping();
-
-        return ($sa && $sb)
-            ? strcmp($sa->get('order_by'), $sb->get('order_by'))
-            : 0;
-    }
-   
-    /**
-     * Check - is tax defined or not
-     * 
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function isTaxDefined() 
-    {
-        return true;
-    }
-    
-    /**
-     * Check - is shipping methopd defined or not
-     * 
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function isShippingDefined() 
-    {
-        return (bool)$this->getShippingId();
     }
 
     /* TODO - rework
@@ -961,45 +571,6 @@ class Order extends \XLite\Model\AEntity
 
         // TODO - rework
         //$this->refresh('shippingRates');
-    }
-
-    /**
-     * Get shipping method 
-     * 
-     * @return \XLite\Model\Shipping
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getShippingMethod() 
-    {
-        if (!isset($this->shippingMethod) && $this->getShippingId()) {
-            $this->shippingMethod = new \XLite\Model\Shipping($this->getShippingId());
-        }
-
-        return $this->shippingMethod;
-    }
-
-    /**
-     * Set shipping method 
-     * 
-     * @param \XLite\Model\Shipping $shippingMethod Shipping method
-     *  
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function setShippingMethod($shippingMethod) 
-    {
-        if (!is_null($shippingMethod) && $shippingMethod instanceof \XLite\Model\Shipping) {
-            $this->shippingMethod = $shippingMethod;
-            $this->setShippingId($shippingMethod->get('shipping_id'));
-
-        } else {
-            $this->shippingMethod = false;
-            $this->setShippingId(0);
-        }
     }
 
     /**
@@ -1133,100 +704,6 @@ class Order extends \XLite\Model\AEntity
     }
 
     /**
-     * Get tax label 
-     * 
-     * @param string $name Tax name
-     *  
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getTaxLabel($name) 
-    {
-        $tax = new \XLite\Model\TaxRates();
-
-        return $tax->getTaxLabel($name);
-    }
-
-    /**
-     * Get registration 
-     * 
-     * @param string $name Tax name
-     *  
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getRegistration($name) 
-    {
-        $tax = new \XLite\Model\TaxRates();
-
-        return $tax->getRegistration($name);
-    }
-
-    /**
-     * Check - any tax is registered  or not
-     * 
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function isTaxRegistered()
-    {
-        $result = false;
-
-        foreach ((array)$this->getTaxes() as $name => $value) {
-            if ($this->getRegistration($name) != '') {
-                $result = true;
-                break;
-            }
-        }
-
-        return $result;
-    }
-
-    /**
-     * Get display taxes list
-     * 
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getDisplayTaxes() 
-    {
-        $taxes = null;
-
-        if (
-            !is_null($this->getProfile())
-            || \XLite\Core\Config::getInstance()->General->def_calc_shippings_taxes
-        ) {
-
-            $taxRates = new \XLite\Model\TaxRates();
-            $values = $names = $orderby = array();
-            foreach ((array)$this->getTaxes() as $name => $value) {
-                if ($taxRates->getTaxLabel($name)) {
-                    $values[] = $value;
-                    $names[] = $name;
-                    $orderby[] = $taxRates->getTaxPosition($name);
-                }
-            }
-
-            // sort taxes according to $orderby
-            array_multisort($orderby, $values, $names);
-
-            if (!empty($names)) {
-                $taxes = array_combine($names, $values);
-            }
-        }
-
-        return $taxes;
-    }
-
-    /**
      * Get items list fingerprint 
      * 
      * @return string
@@ -1253,19 +730,6 @@ class Order extends \XLite\Model\AEntity
         }
 
         return $result;
-    }
-
-    /**
-     * Calculates order totals and store them in the order properties
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function calculate()
-    {
-        $this->calculateTotal();
     }
 
     /**

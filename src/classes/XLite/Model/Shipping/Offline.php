@@ -144,7 +144,7 @@ class Offline extends \XLite\Model\Shipping
     {
         $shipping_id = $method->get('shipping_id');
         $weight = doubleval($order->getWeight());
-        $total = doubleval($order->calculateSubtotal(true)); // SubTotal for "shipped only" items
+        $total = doubleval($order->getShippedSubtotal()); // SubTotal for "shipped only" items
 
         $r = new \XLite\Model\ShippingRate();
         $zone = $this->getZone($order);

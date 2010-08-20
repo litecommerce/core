@@ -13,8 +13,14 @@
  *}
 <table cellspacing="0" class="invoice-totals">
 
-  <tr FOREACH="getViewList(#invoice.totals#),w">
-    {w.display()}
+  <tr>
+    <td>{t(#Subtotal#)}:</td>
+    <td class="total">{order.getSubtotal():p}</td>
+  </tr>
+
+  <tr FOREACH="cart.getVisibleSavedModifiers(),modifier" class="{modifier.getCode()} {modifier.getSubcode()}">
+    <td>{t(modifier.getName())}:</td>
+    <td class="total">{order.getSurcharge():p}</td>
   </tr>
 
   <tr class="grand-total">
