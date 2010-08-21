@@ -35,6 +35,125 @@ namespace XLite\Model;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class ListNode extends \Includes\DataStructure\Node\ListNode
+class ListNode extends \XLite\Base\SuperClass
 {
+    /**
+     * Link to previous list element or null
+     *
+     * @var    XLite_Model_ListNode or null
+     * @access protected
+     * @since  3.0.0
+     */
+    protected $prev = null;
+
+    /**
+     * Link to next list element or null
+     *
+     * @var    XLite_Model_ListNode|null
+     * @access protected
+     * @since  3.0.0
+     */
+    protected $next = null;
+
+    /**
+     * Node identifier
+     *
+     * @var    string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected $key = null;
+
+
+    /**
+     * Set node identifier
+     *
+     * @param string $key node key
+     *
+     * @return void
+     * @access public
+     * @since  3.0.0
+     */
+    public function __construct($key)
+    {
+        $this->key = $key;
+    }
+
+    /**
+     * Return link to previous list element
+     *
+     * @return XLite_Model_ListNode|null
+     * @access public
+     * @since  3.0.0
+     */
+    public function getPrev()
+    {
+        return $this->prev;
+    }
+
+    /**
+     * Return link to next list element
+     *
+     * @return XLite_Model_ListNode|null
+     * @access public
+     * @since  3.0.0
+     */
+    public function getNext()
+    {
+        return $this->next;
+    }
+
+    /**
+     * Set link to previous list element
+     *
+     * @param \Xlite\Model\ListNode $node node link to set
+     *
+     * @return void
+     * @access public
+     * @since  3.0.0
+     */
+    public function setPrev(\Xlite\Model\ListNode $node = null)
+    {
+        $this->prev = $node;
+    }
+
+    /**
+     * Set link to next list element
+     *
+     * @param \Xlite\Model\ListNode $node node link to set
+     *
+     * @return void
+     * @access public
+     * @since  3.0.0
+     */
+    public function setNext(\Xlite\Model\ListNode $node = null)
+    {
+        $this->next = $node;
+    }
+
+    /**
+     * Return node identifier
+     *
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getKey()
+    {
+        return $this->key;
+    }
+
+    /**
+     * Callback to search node by its identifier
+     *
+     * @param string $key node key
+     *
+     * @return bool
+     * @access public
+     * @since  3.0.0
+     */
+    public function checkKey($key)
+    {
+        return $key != $this->getKey();
+    }
 }
