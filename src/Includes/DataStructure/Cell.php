@@ -35,7 +35,7 @@ namespace Includes\DataStructure;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Cell implements \Iterator
+class Cell
 {
     /**
      * Array of properties 
@@ -122,72 +122,6 @@ class Cell implements \Iterator
     public function __unset($name)
     {
         unset($this->properties[$name]);
-    }
-
-
-    /**
-     * Return the current element
-     * 
-     * @return mixed
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function current()
-    {
-        return current($this->properties);
-    }
-
-    /**
-     * Return the key of the current element 
-     * 
-     * @return scalar
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function key()
-    {
-        return key($this->properties);
-    }
-
-    /**
-     * Move forward to next element 
-     * 
-     * @return mixed (ignored)
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function next()
-    {
-        return next($this->properties);
-    }
-
-    /**
-     * Rewind the Iterator to the first element
-     * 
-     * @return mixed (ignored)
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function rewind()
-    {
-        return reset($this->properties);
-    }
-
-    /**
-     * Checks if current position is valid
-     * 
-     * @return bool
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function valid()
-    {
-        return false !== $this->current();
     }
 
 
