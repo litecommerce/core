@@ -1048,7 +1048,7 @@ abstract class AModel extends \XLite\View\Dialog
             $value = $this->getRequestData($name);
 
             if (!isset($value)) {
-                $value = $this->getModelObject()->$name;
+                $value = $this->getModelObject()->get($name);
             }
         }
 
