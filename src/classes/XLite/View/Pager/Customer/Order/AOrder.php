@@ -26,38 +26,27 @@
  * @since      3.0.0
  */
 
-namespace XLite\View\Sort;
+namespace XLite\View\Pager\Customer\Order;
 
 /**
- * Order sort widget 
+ * Abstract pager class for the OrdersList widget
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
- * @ListChild (list="orders.panel", weight="20")
+ * @package    XLite
+ * @see        ____class_see____
+ * @since      3.0.0
  */
-class Order extends \XLite\View\Sort\ASort
+abstract class AOrder extends \XLite\View\Pager\Customer\ACustomer
 {
     /**
-     * Define widget parameters
+     * Return number of items per page
      *
-     * @return void
+     * @return int
      * @access protected
-     * @since  1.0.0
+     * @see    ____func_see____
+     * @since  3.0.0
      */
-    protected function defineWidgetParams()
+    protected function getItemsPerPageDefault()
     {
-        parent::defineWidgetParams();
-
-        $this->widgetParams[self::PARAM_PARAMS]->setValue(array('target' => 'order_list', 'mode' => 'search'));
-        $this->widgetParams[self::PARAM_SORT_CRITERIONS]->setValue(
-            array(
-                'order_id' => 'Order id',
-                'date'     => 'Date',
-                'status'   => 'Status',
-                'total'    => 'Total',
-            )
-        );
-        $this->widgetParams[self::PARAM_CELL]->setValue($this->session->get('orders_search'));
+        return intval(\XLite\Core\Config::getInstance()->General->orders_per_page);
     }
 }

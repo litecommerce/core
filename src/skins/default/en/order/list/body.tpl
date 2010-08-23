@@ -41,7 +41,7 @@ $(document).ready(
   function() {
     $('.orders-list.{getClassIdentifier()}').each(
       function() {
-        new OrdersListController(this, {getAJAXRequestParamsAsJSObject()});
+        new OrdersListController(this, {getAJAXRequestParamsAsJSObject():r});
       }
     );
   }

@@ -26,38 +26,15 @@
  * @since      3.0.0
  */
 
-namespace XLite\View\Sort;
+namespace XLite\View\Pager\Customer\Order;
 
 /**
- * Order sort widget 
+ * Pager for the orders search page
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
- * @ListChild (list="orders.panel", weight="20")
+ * @package    XLite
+ * @see        ____class_see____
+ * @since      3.0.0
  */
-class Order extends \XLite\View\Sort\ASort
+class Search extends \XLite\View\Pager\Customer\Order\AOrder
 {
-    /**
-     * Define widget parameters
-     *
-     * @return void
-     * @access protected
-     * @since  1.0.0
-     */
-    protected function defineWidgetParams()
-    {
-        parent::defineWidgetParams();
-
-        $this->widgetParams[self::PARAM_PARAMS]->setValue(array('target' => 'order_list', 'mode' => 'search'));
-        $this->widgetParams[self::PARAM_SORT_CRITERIONS]->setValue(
-            array(
-                'order_id' => 'Order id',
-                'date'     => 'Date',
-                'status'   => 'Status',
-                'total'    => 'Total',
-            )
-        );
-        $this->widgetParams[self::PARAM_CELL]->setValue($this->session->get('orders_search'));
-    }
 }

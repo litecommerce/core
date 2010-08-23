@@ -66,21 +66,11 @@ class Search extends \XLite\View\OrderList\AOrderList
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getOrders()
+    public function getOrders(\XLite\Core\CommonCell $cnd = null)
     {
-        if (is_null($this->orders)) {
-            $conditions = $this->getConditions();
-
-            $order = new \XLite\Model\Order();
-            $this->orders = $order->search(
-                $this->getProfile(),
-                $conditions['order_id'],
-                $conditions['status'],
-                $conditions['startDate'],
-                $conditions['endDate'],
-                true,
-                $conditions['sortCriterion'],
-                $conditions['sortOrder'] == 'asc'
+        if (!isset($this->orders)) {
+            $this->orders = \XLite\Core\Database::getRepo('\XLite\Model\Order')->search(
+                $this->getConditions($cnd)
             );
         }
 
@@ -99,16 +89,13 @@ class Search extends \XLite\View\OrderList\AOrderList
     {
         if (!isset($this->namedWidgets['pager'])) {
             $this->getWidget(
-                array(
-                    'data'   => $this->getOrders(),
-                    'pageId' => $this->getPageId(),
-                ),
-                '\XLite\View\PagerOrig\OrdersList',
+                array('pageId' => $this->getPageId()),
+                '\XLite\View\Pager\Customer\Order\Search',
                 'pager'
             );
         }
 
-        return $this->namedWidgets['pager']->getData();
+        return $this->getOrders($this->namedWidgets['pager']->getLimitCondition());
     }
 
     /**
@@ -147,17 +134,33 @@ class Search extends \XLite\View\OrderList\AOrderList
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getConditions()
+    protected function getConditions(\XLite\Core\CommonCell $cnd = null)
     {
-        if (is_null($this->conditions)) {
+        if (!isset($this->conditions)) {
             $this->conditions = $this->session->get('orders_search');
             if (!is_array($this->conditions)) {
-                $this->conditions = \XLite\Model\Order::getDefaultSearchConditions();
+                $this->conditions = array();
                 $this->session->set('orders_search', $this->conditions);
+            }
+            foreach ($this->conditions as $key => $value) {
             }
         }
 
-        return $this->conditions;
+        $cnd = $cnd ?: new \XLite\Core\CommonCell();
+
+        if (!$this->getProfile()->isAdmin()) {
+            $cnd->profileId = $this->getProfile()->get('profile_id');
+        }
+
+        $cnd->orderBy = array('o.' . $this->conditions['sortCriterion'], $this->conditions['sortOrder']);
+        $cnd->orderId = $this->conditions['order_id'];
+        $cnd->status = $this->conditions['status'];
+
+        if ($this->conditions['startDate'] < $this->conditions['endDate']) {
+            $cnd->date = array($this->conditions['startDate'], $this->conditions['endDate']);
+        }
+
+        return $cnd;
     }
 
     /**
@@ -170,9 +173,7 @@ class Search extends \XLite\View\OrderList\AOrderList
      */
     public function getPageId()
     {
-        $conditions = $this->getConditions();
-
-        return isset($conditions['pageId']) ? $conditions['pageId'] : 0;
+        return abs(intval($this->getConditions()->pageId));
     }
 }
 

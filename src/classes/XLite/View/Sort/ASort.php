@@ -121,7 +121,7 @@ abstract class ASort extends \XLite\View\AView
     {
         $cell = $this->getParam(self::PARAM_CELL);
 
-        return $key == $cell['sortCriterion'];
+        return isset($cell['sortCriterion']) && $key == $cell['sortCriterion'];
     }
 
     /**
@@ -136,7 +136,7 @@ abstract class ASort extends \XLite\View\AView
     {
         $cell = $this->getParam(self::PARAM_CELL);
 
-        return 'asc' == $cell['sortOrder'];
+        return empty($cell['sortOrder']) || 'asc' == $cell['sortOrder'];
     }
 
     /**

@@ -10,9 +10,9 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-{if:order.isSelected(#status#,#Q#)}Queued{end:}
-{if:order.isSelected(#status#,#P#)}Processed{end:}
-{if:order.isSelected(#status#,#I#)}Incomplete{end:}
-{if:order.isSelected(#status#,#F#)}Failed{end:}
-{if:order.isSelected(#status#,#D#)}Declined{end:}
-{if:order.isSelected(#status#,#C#)}Complete{end:}
+{if:isSelected(order,#status#,#Q#)}Queued{end:}
+{if:isSelected(order,#status#,#P#)}Processed{end:}
+{if:isSelected(order,#status#,#I#)}Incomplete{end:}
+{if:isSelected(order,#status#,#F#)}Failed{end:}
+{if:isSelected(order,#status#,#D#)}Declined{end:}
+{if:isSelected(order,#status#,#C#)}Complete{end:}

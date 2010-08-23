@@ -191,7 +191,7 @@ class Tax extends \XLite\Model\Order implements \XLite\Base\IDecorator
 
             $taxRates = new \XLite\Model\TaxRates();
             $values = $names = $orderby = array();
-            foreach ($this->getTaxes() as $name => $value) {
+            foreach ((array)$this->getTaxes() as $name => $value) {
                 if ($taxRates->getTaxLabel($name)) {
                     $values[] = $value;
                     $names[] = $name;

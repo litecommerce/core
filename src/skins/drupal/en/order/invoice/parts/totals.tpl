@@ -11,21 +11,21 @@
  * @since     3.0.0
  * @ListChild (list="invoice.base", weight="40")
  *}
-<table cellspacing="0" class="invoice-totals">
+<ul class="invoice-totals">
 
-  <tr>
-    <td>{t(#Subtotal#)}:</td>
-    <td class="total">{order.getSubtotal():p}</td>
-  </tr>
+  <li>
+    <em>{t(#Subtotal#)}:</em>
+    {cart.getSubtotal():p}
+  </li>
 
-  <tr FOREACH="cart.getVisibleSavedModifiers(),modifier" class="{modifier.getCode()} {modifier.getSubcode()}">
-    <td>{t(modifier.getName())}:</td>
-    <td class="total">{order.getSurcharge():p}</td>
-  </tr>
+  <li FOREACH="cart.getVisibleSavedModifiers(),modifier" class="{modifier.getCode()} {modifier.getSubcode()}">
+    <em>{t(modifier.getName())}:</em>
+    {if:modifier.isAvailable(modifier.getSubcode())}{modifier.getSurcharge():p}{else:}{t(#n/a#)}{end:}
+  </li>
 
-  <tr class="grand-total">
-    <td>{t(#Grand total#)}:</td>
-    <td class="total">{order.getTotal():p}</td>
-  </tr>
+  <li class="grand-total">
+    <em>{t(#Grand total#)}:</em>
+    {cart.getTotal():p}
+  </li>
 
-</table>
+</ul>
