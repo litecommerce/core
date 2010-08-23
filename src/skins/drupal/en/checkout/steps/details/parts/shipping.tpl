@@ -12,6 +12,6 @@
  * @ListChild (list="chekout.details", weight="20")
  *}
 <div IF="cart.shippingMethod" class="shipping-method">
-  <span class="title">Shipping method:</span>&nbsp;&nbsp;<span class="text">{cart.shippingMethod.name} ({price_format(cart,#shipping_cost#):h})</span>
+  <span class="title">Shipping method:</span>&nbsp;&nbsp;<span class="text">{cart.shippingMethod.name} ({price_format(cart.getTotalByModifier(%XLite\Model\OrderModifier\Shipping::MODIFIER_SHIPPING%)):h})</span>
   <widget class="\XLite\View\Button\Link" label="Change shipping method" style="change" location="{buildURL(#checkout#,##,_ARRAY_(#mode#^#paymentMethod#))}" />
 </div>

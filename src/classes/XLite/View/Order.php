@@ -83,7 +83,9 @@ class Order extends \XLite\View\Dialog
     public function getOrder()
     {
         if (is_null($this->order)) {
-            $this->order = new \XLite\Model\Order(intval(\XLite\Core\Request::getInstance()->order_id));
+            $this->order = \XLite\Core\Database::getRepo('\XLite\Model\Order')->find(
+                intval(\XLite\Core\Request::getInstance()->order_id)
+            );
         }
 
         return $this->order;
@@ -99,8 +101,7 @@ class Order extends \XLite\View\Dialog
      */
     protected function isVisible()
     {
-        return parent::isVisible()
-            && $this->getOrder()->isExists();
+        return parent::isVisible() && !is_null($this->getOrder());
     }
 
     /**
@@ -114,7 +115,6 @@ class Order extends \XLite\View\Dialog
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
-
         $list[] = 'order/style.css';
 
         return $list;

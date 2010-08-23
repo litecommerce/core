@@ -101,15 +101,29 @@ class OrderSearch extends \XLite\View\Dialog
      */
     protected function getConditions()
     {
-        if (is_null($this->conditions)) {
+        if (!isset($this->conditions)) {
             $this->conditions = $this->session->get('orders_search');
             if (!is_array($this->conditions)) {
-                $this->conditions = \XLite\Model\Order::getDefaultSearchConditions();
+                $this->conditions = array();
                 $this->session->set('orders_search', $this->conditions);
             }
         }
 
-        return $this->conditions;
+        $cnd = new \XLite\Core\CommonCell();
+
+        if (!$this->getProfile()->isAdmin()) {
+            $cnd->profileId = $this->getProfile()->get('profile_id');
+        }
+
+        $cnd->orderBy = array('o.' . $this->conditions['sortCriterion'], $this->conditions['sortOrder']);
+        $cnd->orderId = $this->conditions['order_id'];
+        $cnd->status = $this->conditions['status'];
+
+        if ($this->conditions['startDate'] < $this->conditions['endDate']) {
+            $cnd->date = array($this->conditions['startDate'], $this->conditions['endDate']);
+        }
+
+        return $cnd;
     }
 
     /**
@@ -124,9 +138,7 @@ class OrderSearch extends \XLite\View\Dialog
      */
     public function getCondition($name)
     {
-        $conditions = $this->getConditions();
-
-        return isset($conditions[$name]) ? $conditions[$name] : null;
+        return $this->getConditions()->$name;
     }
 
     /**
@@ -139,43 +151,22 @@ class OrderSearch extends \XLite\View\Dialog
      */
     public function isDefaultConditions()
     {
-        $default = \XLite\Model\Order::getDefaultSearchConditions();
-
-        unset($default['sortCriterion'], $default['sortOrder']);
-
-        $intersect = count(
-            array_intersect_assoc(
-                $this->getConditions(),
-                $default
-            )
-        );
-
-        return count($default) == $intersect;
+        return false;
     }
 
     /**
-     * Get orders list
+     * Get orders 
      * 
-     * @return array
+     * @return array of \XLite\Model\Order
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
     public function getOrders()
     {
-        if (is_null($this->orders)) {
-            $conditions = $this->getConditions();
-
-            $order = new \XLite\Model\Order();
-            $this->orders = $order->search(
-                $this->getProfile(),
-                $conditions['order_id'],
-                $conditions['status'],
-                $conditions['startDate'],
-                $conditions['endDate'],
-                true,
-                $conditions['sortCriterion'],
-                $conditions['sortOrder'] == 'asc'
+        if (!isset($this->orders)) {
+            $this->orders = \XLite\Core\Database::getRepo('\XLite\Model\Order')->search(
+                $this->getConditions()
             );
         }
 
@@ -236,8 +227,7 @@ class OrderSearch extends \XLite\View\Dialog
     public function getTotalCount()
     {
         if (is_null($this->totalCount)) {
-            $order = new \XLite\Model\Order();
-            $this->totalCount = $order->getCountByProfile($this->getProfile());
+            $this->totalCount = count($this->getOrders());
         }
 
         return $this->totalCount;

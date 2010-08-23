@@ -167,7 +167,7 @@ class OrderItemsShort extends \XLite\View\AView
     {
         return $this->getRequestParamValue(self::PARAM_FULL)
             ? $this->getOrder()->getItems()
-            : array_slice($this->getOrder()->getItems(), 0, $this->orderItemsMax);
+            : array_slice($this->getOrder()->getItems()->toArray(), 0, $this->orderItemsMax);
     }
 
     /**
@@ -180,7 +180,7 @@ class OrderItemsShort extends \XLite\View\AView
      */
     public function isMoreLinkVisible()
     {
-        return $this->orderItemsMax < $this->getOrder()->getItemsCount();
+        return $this->orderItemsMax < count($this->getItems());
     }
 
     /**
