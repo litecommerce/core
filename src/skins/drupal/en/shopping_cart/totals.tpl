@@ -20,7 +20,7 @@
 
   <li FOREACH="cart.getVisibleSavedModifiers(),modifier" class="{modifier.getCode()} {modifier.getSubcode()}">
     <em>{t(modifier.getName())}:</em>
-    {if:modifier.isAvailable()}{modifier.getSurcharge():p}{else:}{t(#n/a#)}{end:}
+    {if:modifier.isAvailable(modifier.getSubcode())}{modifier.getSurcharge():p}{else:}{t(#n/a#)}{end:}
   </li>
 
   <li class="grand-total">

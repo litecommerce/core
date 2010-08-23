@@ -243,7 +243,7 @@
     <widget module="Promotion" template="modules/Promotion/invoice_discount.tpl">
 	<tr>
 		<td nowrap>Shipping cost</td>
-		<td>{price_format(order,#shipping_cost#):h}</td>
+		<td>{price_format(order.getTotalByModifier(%XLite\Model\OrderModifier\Shipping::MODIFIER_SHIPPING%)):h}</td>
 	</tr>
 	<tr FOREACH="order.getDisplayTaxes(),tax_name,tax">
    		<td nowrap>{order.getTaxLabel(tax_name)}</td>

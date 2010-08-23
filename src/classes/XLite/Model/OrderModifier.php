@@ -161,7 +161,7 @@ class OrderModifier extends \XLite\Model\AEntity
     }
 
     /**
-     * Check - modifier is available or not
+     * Check if modifier is available or not
      * 
      * @param string $subcode Subcode
      *  
