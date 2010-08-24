@@ -108,7 +108,7 @@ class AdvBlock extends \XLite\View\AView
     {
         $list = parent::getJSFiles();
 
-        $list[] = 'popup/jquery.blockUI.js';
+        $list[] = 'js/jquery.blockUI.js';
         $list[] = 'popup/popup.js';
         $list[] = 'advertise/helpdesk.js';
 
