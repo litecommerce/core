@@ -24,6 +24,42 @@ $(document).ready(
     {
       return params[name];
     }
+
+    // Extend ALoadable prototype
+    if ('undefined' != typeof(window.ALoadable)) {
+      var oldGetParams = ALoadable.prototype.getParams;
+
+      // Add delta id
+      ALoadable.prototype.getParams = function(params)
+      {
+        params = oldGetParams.apply(this, arguments);
+        var delta = null;
+        this.base.parents('.block').map(
+          function() {
+            if (!delta && this.id) {
+              var m = this.id.match(/^block-lc_connector-(.+)$/i);
+              if (m) {
+                delta = m[1];
+              }
+            }
+          }
+        );
+
+        if (delta) {
+          params.widgetConfId = delta;
+        }
+
+        return params;
+
+      }
+
+      // Get second block< after H2
+      ALoadable.prototype.extractRequestData = function(div)
+      {
+        return div.children().eq(1);
+      }
+    }
+
   }
 );
 

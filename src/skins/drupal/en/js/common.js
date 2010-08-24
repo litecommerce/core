@@ -10,39 +10,6 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  */
-
-/**
- * OOP core
- */
-
-// OOP extends emulation
-function extend(child, parent) {
-  var F = function() { };
-  F.prototype = parent.prototype;
-  child.prototype = new F();
-  child.prototype.constructor = child;
-  child.superclass = parent.prototype;
-}
-
-// Base class
-function Base()
-{
-}
-
-// Get superclass without class name
-Base.prototype.getSuperclass = function()
-{
-    var m = this.constructor.toString().match(/function ([^\(]+)/);
-
-    return eval(m[1] + '.superclass');
-}
-
-// Call parent method by name nad arguments list
-Base.prototype.callSupermethod = function(name, args)
-{
-    return this.getSuperclass()[name].apply(this, args);
-}
-
 function getSkinRoot()
 {
   var re = new RegExp('js\/common\.js');
