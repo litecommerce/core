@@ -38,6 +38,34 @@ namespace Includes;
 class Decorator extends Decorator\ADecorator
 {
     /**
+     * Walk through the PHP files tree and collect classes info
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function createClassTree()
+    {
+        // Iterate over all PHP files in the "classes" directory
+        foreach (\Includes\Utils\FileFilter::filterByExtension(LC_CLASSES_DIR, 'php') as $fileInfo) {
+
+            // Check if file contains class definition
+            if ($data = \Includes\Decorator\Utils\ClassData\Parser::parse($fileInfo)) {
+
+                // Create node in the classes tree
+                \Includes\Decorator\DataStructure\ClassData\Tree::addNode($data);
+            }
+        }
+    }
+
+
+
+
+
+    /////////////////////////////// TO REWORK ///////////////////////////////
+
+    /**
      * Pattern to parse PHP files
      */
     const CLASS_PATTERN = '/\s*((?:abstract|final)\s+)?(class|interface)\s+([\w\\\]+)(\s+extends\s+([\w\\\]+))?(\s+implements\s+([\w\\\]+(?:\s*,\s*[\w\\\]+)*))?\s*(\/\*.*\*\/)?\s*{/USsi';
@@ -518,35 +546,6 @@ class Decorator extends Decorator\ADecorator
     }
 
     /**
-     * Check if class implements some interface
-     * 
-     * @param string $interfaceName interface to check
-     * @param string $implements    string from class declaration (the "implements ..." part)
-     *  
-     * @return bool
-     * @access protected
-     * @since  3.0
-     */
-    protected function isImplements($interfaceName, $implements)
-    {
-        return in_array($interfaceName, explode(',', str_replace(' ', '', trim($implements))));
-    }
-
-    /**
-     * Check if current class implements the "IDecorator" interface
-     * 
-     * @param array $implements list of implemented inerfaces
-     *  
-     * @return bool
-     * @access protected
-     * @since  3.0
-     */
-    protected function isDecorator($implements)
-    {
-        return $this->isImplements('\XLite\Base\IDecorator', $implements);
-    }
-
-    /**
      * Check if current class implements the "\XLite\Base\IViewChild" interface
      * 
      * @param string $comment Class comment
@@ -561,20 +560,6 @@ class Decorator extends Decorator\ADecorator
     }
 
     /**
-     * Check if current class implements the "\XLite\Base\IPatcher" interface
-     * 
-     * @param array $implements list of implemented inerfaces
-     *  
-     * @return bool
-     * @access protected
-     * @since  3.0
-     */
-    protected function isPatcher($implements)
-    {
-        return $this->isImplements('\XLite\Base\IPatcher', $implements);
-    }
-
-    /**
      * Check if current class is multilanguage owner
      * 
      * @param string $extends Extends directive
@@ -586,42 +571,6 @@ class Decorator extends Decorator\ADecorator
     protected function isMultilang($extends)
     {
         return '\XLite\Model\Base\I18n' == $extends;
-    }
-
-    /**
-     * Parse class file and return class info 
-     * 
-     * @param string $filePath file name and path
-     *  
-     * @return array
-     * @access protected
-     * @since  3.0
-     */
-    protected function getClassInfo($filePath)
-    {
-        $result = array('', '', '', false, '', '');
-
-        $data = file_get_contents($filePath);
-
-        if (preg_match(self::CLASS_PATTERN, $data, $matches)) {
-
-            // Class name, extends class name and the "implements A, B, C ..." part
-            foreach (array(3, 5, 7) as $index => $key) {
-                $result[$index] = isset($matches[$key]) ? $matches[$key] : '';
-            }
-            $result[4] = $this->getClassComment($data);
-            $result[3] = (bool)preg_match(self::CLASS_ENTITY_PATTERN, $result[4]);
-
-            // Namespace
-            if (!empty($result[0]) && preg_match('/^namespace (\S+);/Sm', $data, $m)) {
-                $namespace = substr($m[1], 0, 1) == '\\' ? substr($m[1], 1) : $m[1];
-                if (!empty($namespace)) {
-                    $result[0] = '\\' . $namespace . '\\' . $result[0];
-                }
-            }
-        }
-
-        return $result;
     }
 
     /**
@@ -761,49 +710,56 @@ class Decorator extends Decorator\ADecorator
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function createClassTree()
+    protected function createClassTreeFull()
     {
-        foreach (\Includes\Utils\FileFilter::filterByExtension(LC_CLASSES_DIR, 'php') as $fileInfo) {
+        $this->createClassTree();
 
-            $filePath = $fileInfo->getPathname();
+        foreach (\Includes\Decorator\DataStructure\ClassData\Tree::getIndex() as $node) {
+
+            $filePath = $node->getFilePath(); //$fileInfo->getPathname();
+
+            if (empty($filePath)) {
+                continue;
+            }
 
             // Parse file and get class info
-            list($class, $extends, $implements, $isEntity, $classComment) = $this->getClassInfo($filePath);
+            // list($class, $extends, $implements, $isEntity, $classComment) = $this->getClassInfo($filePath);
 
             // Check classes for active modules only
             // Do not include class into cache if parent defined in currently disabled module
-            if (\Includes\Decorator\Utils\ModulesManager::checkClass($class, $extends)) {
+            if (\Includes\Decorator\Utils\ModulesManager::checkClass($node->getClass(), $node->getParentClass())) {
 
                 // Get path related to the "LC_CLASSES_DIR" directory
                 $relativePath = preg_replace('/^' . preg_quote(LC_CLASSES_DIR, '/') . '(.*)\.php$/i', '$1.php', $filePath);
+                $classComment = $this->getClassComment(file_get_contents($filePath));
 
                 // Class defined in current PHP file has a wrong name (not corresponded to file name)
-                if (isset($this->classesInfo[$class])) {
+                /*if (isset($this->classesInfo[$class])) {
                     echo (sprintf(self::CLASS_ALREADY_DEFINED_MSG, $class, $relativePath));
                     die (4);
-                }
+                }*/
 
                 // Save data
-                $this->classesInfo[$class] = array(
+                $this->classesInfo[$node->getClass()] = array(
                     self::INFO_FILE          => $relativePath,
-                    self::INFO_CLASS_ORIG    => $class,
-                    self::INFO_EXTENDS       => $extends,
-                    self::INFO_EXTENDS_ORIG  => $extends,
-                    self::INFO_IS_DECORATOR  => $this->isDecorator($implements),
-                    self::INFO_ENTITY        => $isEntity,
+                    self::INFO_CLASS_ORIG    => $node->getClass(),
+                    self::INFO_EXTENDS       => $node->getParentClass(),
+                    self::INFO_EXTENDS_ORIG  => $node->getParentClass(),
+                    self::INFO_IS_DECORATOR  => $node->isImplements('\XLite\Base\IDecorator'),
+                    self::INFO_ENTITY        => (bool)preg_match(self::CLASS_ENTITY_PATTERN, $classComment),
                     self::INFO_CLASS_COMMENT => $classComment,
                 );
 
                 if ($this->isViewChild($classComment)) {
-                    $this->viewListChilds[$relativePath] = $class;
+                    $this->viewListChilds[$relativePath] = $node->getClass();
                 }
 
-                if ($this->isPatcher($implements)) {
-                    $this->templatePatches[] = $class;
+                if ($node->isImplements('\XLite\Base\IPatcher')) {
+                    $this->templatePatches[] = $node->getClass();
                 }
 
-                if ($this->isMultilang($extends)) {
-                    $this->multilangs[] = $class;
+                if ($this->isMultilang($node->getParentClass())) {
+                    $this->multilangs[] = $node->getClass();
                 }
     
                 if ($classComment || !preg_match(self::INTERFACE_COMMENT_PATTERN, file_get_contents($filePath))) {
@@ -970,7 +926,7 @@ class Decorator extends Decorator\ADecorator
     public function buildCache()
     {
         // Prepare classes list
-        $this->createClassTree();
+        $this->createClassTreeFull();
 
 
         $this->normalizeModuleControllerNames();
