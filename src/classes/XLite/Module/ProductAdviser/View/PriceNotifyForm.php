@@ -99,7 +99,7 @@ class PriceNotifyForm extends \XLite\View\AView
         $list = parent::getJSFiles();
 
         $list[] = 'modules/ProductAdviser/PriceNotification/notify_form.js';
-        $list[] = 'popup/jquery.blockUI.js';
+        $list[] = 'js/jquery.blockUI.js';
         $list[] = 'popup/popup.js';
 
         return $list;

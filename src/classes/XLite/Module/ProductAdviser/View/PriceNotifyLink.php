@@ -113,7 +113,7 @@ class PriceNotifyLink extends \XLite\View\AView
 
         $list[] = 'modules/ProductAdviser/PriceNotification/product_button.js';
         $list[] = 'modules/ProductAdviser/notify_me.js';
-        $list[] = 'popup/jquery.blockUI.js';
+        $list[] = 'js/jquery.blockUI.js';
         $list[] = 'popup/popup.js';
 
         return $list;

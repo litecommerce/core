@@ -103,7 +103,7 @@ class CartRow extends \XLite\View\AView
     {
         $list = parent::getJSFiles();
         $list[] = 'modules/GiftCertificates/cart.js';
-        $list[] = 'popup/jquery.blockUI.js';
+        $list[] = 'js/jquery.blockUI.js';
         $list[] = 'popup/popup.js';
 
         return $list;

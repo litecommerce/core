@@ -82,7 +82,7 @@ class NotifyLink extends \XLite\View\AView
 
         $list[] = 'modules/ProductAdviser/OutOfStock/product_quantity.js';
         $list[] = 'modules/ProductAdviser/notify_me.js';
-        $list[] = 'popup/jquery.blockUI.js';
+        $list[] = 'js/jquery.blockUI.js';
         $list[] = 'popup/popup.js';
 
         return $list;
