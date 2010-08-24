@@ -192,6 +192,10 @@ class Minicart extends \XLite\View\SideBarBox
     public function getJSFiles()
     {
         $list = parent::getJSFiles();
+
+        $list[] = 'js/core.controller.js';
+        $list[] = 'js/core.loadable.js';
+        $list[] = 'js/jquery.blockUI.js';
         $list[] = 'mini_cart/minicart.js';
 
         return $list;

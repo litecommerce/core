@@ -10,6 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  */
+
 function getSkinRoot()
 {
   var re = new RegExp('js\/common\.js');
@@ -24,33 +25,40 @@ function getSkinRoot()
   return path;
 }
 
-function parseUri (str) {
-	var	o   = parseUri.options,
-		m   = o.parser[o.strictMode ? "strict" : "loose"].exec(str),
-		uri = {},
-		i   = 14;
+function parseUri(str) {
+  var o   = parseUri.options,
+  m   = o.parser[o.strictMode ? "strict" : "loose"].exec(str),
+  uri = {},
+  i   = 14;
 
-	while (i--) uri[o.key[i]] = m[i] || "";
+  while (i--) {
+    uri[o.key[i]] = m[i] || "";
+  }
 
-	uri[o.q.name] = {};
-	uri[o.key[12]].replace(o.q.parser, function ($0, $1, $2) {
-		if ($1) uri[o.q.name][$1] = $2;
-	});
+  uri[o.q.name] = {};
+  uri[o.key[12]].replace(
+    o.q.parser,
+    function ($0, $1, $2) {
+      if ($1) {
+        uri[o.q.name][$1] = $2;
+      }
+    }
+  );
 
-	return uri;
+  return uri;
 };
 
 parseUri.options = {
-	strictMode: false,
-	key: ["source","protocol","authority","userInfo","user","password","host","port","relative","path","directory","file","query","anchor"],
-	q:   {
-		name:   "queryKey",
-		parser: /(?:^|&)([^&=]*)=?([^&]*)/g
-	},
-	parser: {
-		strict: /^(?:([^:\/?#]+):)?(?:\/\/((?:(([^:@]*)(?::([^:@]*))?)?@)?([^:\/?#]*)(?::(\d*))?))?((((?:[^?#\/]*\/)*)([^?#]*))(?:\?([^#]*))?(?:#(.*))?)/,
-		loose:  /^(?:(?![^:@]+:[^:@\/]*@)([^:\/?#.]+):)?(?:\/\/)?((?:(([^:@]*)(?::([^:@]*))?)?@)?([^:\/?#]*)(?::(\d*))?)(((\/(?:[^?#](?![^?#\/]*\.[^?#\/.]+(?:[?#]|$)))*\/?)?([^?#\/]*))(?:\?([^#]*))?(?:#(.*))?)/
-	}
+  strictMode: false,
+  key: ["source","protocol","authority","userInfo","user","password","host","port","relative","path","directory","file","query","anchor"],
+  q: {
+    name:   "queryKey",
+    parser: /(?:^|&)([^&=]*)=?([^&]*)/g
+  },
+  parser: {
+    strict: /^(?:([^:\/?#]+):)?(?:\/\/((?:(([^:@]*)(?::([^:@]*))?)?@)?([^:\/?#]*)(?::(\d*))?))?((((?:[^?#\/]*\/)*)([^?#]*))(?:\?([^#]*))?(?:#(.*))?)/,
+    loose:  /^(?:(?![^:@]+:[^:@\/]*@)([^:\/?#.]+):)?(?:\/\/)?((?:(([^:@]*)(?::([^:@]*))?)?@)?([^:\/?#]*)(?::(\d*))?)(((\/(?:[^?#](?![^?#\/]*\.[^?#\/.]+(?:[?#]|$)))*\/?)?([^?#\/]*))(?:\?([^#]*))?(?:#(.*))?)/
+  }
 };
 
 // Get product id from object class name
@@ -75,47 +83,34 @@ function getProductIdFromClassName(obj)
 
 function formModify(obj, url)
 {
-	var form = obj.form;
-	if (form) {
-		var parsed = parseUri(url);
+  var form = obj.form;
+  if (form) {
+    var parsed = parseUri(url);
 
-		for (var key in parsed.queryKey) {
-			if (form[key]) {
-				form[key].value = parsed.queryKey[key];
+    for (var key in parsed.queryKey) {
+      if (form[key]) {
+        form[key].value = parsed.queryKey[key];
 
-			} else {
-				var input = document.createElement('INPUT');
-				input.type = 'hidden';
-				input.name = key;
-				input.value = parsed.queryKey[key];
+      } else {
+        var input = document.createElement('INPUT');
+        input.type = 'hidden';
+        input.name = key;
+        input.value = parsed.queryKey[key];
 
-				form.appendChild(input);
-			}
-		}
+        form.appendChild(input);
+      }
+    }
 
-		if (
-			form.getAttribute('method')
-			&& form.getAttribute('method').toUpperCase() == 'POST'
-			&& (parsed.query || parsed.path || parsed.host)
-		) {
-			form.setAttribute('action', url);
-		}
-	}
+    if (
+      form.getAttribute('method')
+      && form.getAttribute('method').toUpperCase() == 'POST'
+      && (parsed.query || parsed.path || parsed.host)
+    ) {
+      form.setAttribute('action', url);
+    }
+  }
 
-	return true;
-}
-
-function eventBind(obj, e, func)
-{
-	if ($) {
-		$(obj).bind(e, func);
-
-	} else if (window.addEventListener) {
-		obj.addEventListener(e, func, false);
-
-	} else if (window.attachEvent) {
-		window.attachEvent('on' + e, func);
-	}
+  return true;
 }
 
 // URL builder singleton
@@ -130,7 +125,7 @@ var URLHandler = {
   // Return query param
   getParamValue: function(name, params)
   {
-    return name + this.nameValueSeparator + params[name];
+    return name + this.nameValueSeparator + ('undefined' == typeof(params[name]) ? '' : params[name]);
   },
 
   // Get param value for the target and action params

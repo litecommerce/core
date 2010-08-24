@@ -22,7 +22,7 @@ $(document).ready(
 
     URLHandler.getMainParamValue = function(name, params)
     {
-      return params[name];
+      return 'undefined' == typeof(params[name]) ? '' : params[name];
     }
 
     // Extend ALoadable prototype

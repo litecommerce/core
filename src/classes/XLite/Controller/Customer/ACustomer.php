@@ -40,12 +40,21 @@ abstract class ACustomer extends \XLite\Controller\AController
     /**
      * cart 
      * 
-     * @var    mixed
+     * @var    \XLite\Model\Cart
      * @access protected
      * @since  3.0.0
      */
-    protected $cart = null;
+    protected $cart;
 
+    /**
+     * Initial cart fingerprint 
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $initialCartFingerprint;
 
     /**
      * Stub for the CMS connectors
@@ -116,6 +125,57 @@ abstract class ACustomer extends \XLite\Controller\AController
 
         \XLite\Core\Database::getEM()->persist($cart);
         \XLite\Core\Database::getEM()->flush();
+
+        $this->assemblyEvent();
+
+        $this->initialCartFingerprint = $this->getCart()->getEventFingerprint();
+    }
+
+    /**
+     * Assembly updateCart event 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function assemblyEvent()
+    {
+        $old = $this->initialCartFingerprint;
+        $new = $this->getCart()->getEventFingerprint();
+        $items = array();
+
+        // Assembly changed
+        foreach ($new['items'] as $n => $cell) {
+            $found = false;
+            foreach ($old['items'] as $i => $oldCell) {
+                if ($cell['key'] == $oldCell['key']) {
+                    if ($cell['quantity'] != $oldCell['quantity']) {
+                        $cell['quantity_change'] = $cell['quantity'] - $oldCell['quantity'];
+                        $items[] = $cell;
+                    }
+
+                    unset($old['items'][$i]);
+                    $found = true;
+                    break;
+                }
+            }
+
+            if (!$found) {
+                $cell['quantity_change'] = $cell['quantity'];
+                $items[] = $cell;
+            }
+        }
+
+        // Assemble removed
+        foreach ($old['items'] as $cell) {
+            $cell['quantity_change'] = $cell['quantity'] * -1;
+            $items[] = $cell;
+        }
+
+        if ($items) {
+            \XLite\Core\Event::updateCart(array('items' => $items));
+        }
     }
 
     /**
@@ -266,6 +326,9 @@ abstract class ACustomer extends \XLite\Controller\AController
         if (!$this->checkStorefrontAccessability()) {
             $this->closeStorefront();
         }
+
+        // Save initial cart fingerprint
+        $this->initialCartFingerprint = $this->getCart()->getEventFingerprint();
 
         return parent::handleRequest();
     }

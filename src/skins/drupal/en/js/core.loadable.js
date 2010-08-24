@@ -34,17 +34,25 @@ ALoadable.prototype.base = null;
 // Shade flag
 ALoadable.prototype.isShowModalScreen = false;
 
+// Widget loading flag
+ALoadable.prototype.isLoading = false;
+
+// Widget has deferred load operation
+ALoadable.prototype.deferredLoad = false;
+
+// Options
+
 // Use shade
 ALoadable.prototype.shadeWidget = true;
 
 // Use widget blocking
 ALoadable.prototype.blockWidget = true;
 
-// Widget loading flag
-ALoadable.prototype.isLoading = false;
+// Widget target
+ALoadable.prototype.widgetTarget = null;
 
-// Widget has deferred load operation
-ALoadable.prototype.deferredLoad = false;
+// Widget class name
+ALoadable.prototype.widgetClass = null;
 
 // Check base
 ALoadable.prototype.checkBase = function(base)
@@ -79,9 +87,15 @@ ALoadable.prototype.load = function(params)
   this.isLoading = true;
   this.deferredLoad = false;
 
+  var url = this.buildWidgetRequestURL(params);
+
+  this.base.trigger('preload', [this, url]);
+
+  this.saveState();
+
   this.shade();
 
-  return core.get(this.buildWidgetRequestURL(params), this.loadHandlerCallback);
+  return core.get(url, this.loadHandlerCallback);
 }
 
 // Build request widget URL (AJAX)
@@ -93,7 +107,21 @@ ALoadable.prototype.buildWidgetRequestURL = function(params)
 // [ABSTRACT] Get additional parameters
 ALoadable.prototype.getParams = function(params)
 {
-  return params ? params : {};
+  params = params ? params : {};
+
+  if ('undefined' == typeof(params.target) && this.widgetTarget) {
+    params.target = this.widgetTarget;
+  }
+
+  if ('undefined' == typeof(params.action)) {
+    params.action = '';
+  }
+
+  if ('undefined' == typeof(params.widget) && this.widgetClass) {
+    params.widget = this.widgetClass;
+  }
+
+  return params;
 }
 
 // onload handler
@@ -165,6 +193,11 @@ ALoadable.prototype.postprocess = function(isSuccess)
       }
     );
   }
+}
+
+// [ABSTRACT] Widget save state (before widget load / reload)
+ALoadable.prototype.saveState = function()
+{
 }
 
 // Show modal screen

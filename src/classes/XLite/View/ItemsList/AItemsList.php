@@ -619,7 +619,7 @@ abstract class AItemsList extends \XLite\View\Container
     public function getJSFiles()
     {
         $list = parent::getJSFiles();
-        $list[] = 'popup/jquery.blockUI.js';
+        $list[] = 'js/jquery.blockUI.js';
         // Static call of the non-static function
         $list[] = self::getDir() . '/items_list.js';
 

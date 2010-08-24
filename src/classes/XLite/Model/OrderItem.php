@@ -489,4 +489,22 @@ class OrderItem extends \XLite\Model\Base\ModifierOwner
         $subtotal = $this->getPrice() * $this->getAmount();
         $this->setSubtotal($subtotal);
     }
+
+    /**
+     * Get event cell base information
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getEventCell()
+    {
+        return array(
+            'item_id'     => $this->getItemId(),
+            'key'         => $this->getKey(),
+            'object_type' => $this->getObjectType(),
+            'object_id'   => $this->getObjectId(),
+        );
+    }
 }

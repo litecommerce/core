@@ -11,29 +11,107 @@
  * @since     3.0.0
  */
 
-function xlite_minicart_toggle(id) {
-	var el = document.getElementById(id);
-  if (el && el.className) {
-    if (!el._initialized) {
-      $(el).click(
-        function (event) {
-          event.stopPropagation();
-        }
-      );
-      $(document).click(
-        function() {
-          if (el.className.search(/expanded/) != -1) {
-            xlite_minicart_toggle(el.id);
-          }
-        }
-      );
-      el._initialized = true;
-    }
+/**
+ * Controller
+ */
 
-  	var c = el.className.replace('collapsed', 'expanded');
-	  if (c == el.className) {
-		  c = el.className.replace('expanded', 'collapsed');
+function MinicartController(base)
+{
+  this.callSupermethod('constructor', arguments);
+
+  this.block = new MinicartView(this.base);
+
+  var o = this;
+
+  core.bind(
+    'updateCart',
+    function(event, data) {
+      o.block.load();
     }
-	  el.className = c;
+  );
+}
+
+extend(MinicartController, AController);
+
+// Controller name
+MinicartController.prototype.name = 'MinicartController';
+
+// Find pattern
+MinicartController.prototype.findPattern = '.lc-minicart-horizontal';
+
+// Controller associated widget
+MinicartController.prototype.block = null;
+
+// Initialize controller
+AController.prototype.initialize = function()
+{
+  var o = this;
+
+  this.base.bind(
+    'reload',
+    function(event, box) {
+      o.bind(box);
+    }
+  );
+}
+
+/**
+ * Widget
+ */
+
+function MinicartView(base)
+{
+  this.callSupermethod('constructor', arguments);
+}
+
+extend(MinicartView, ALoadable);
+
+// No shade widget
+MinicartView.prototype.shadeWidget = false;
+
+// Widget target
+MinicartView.prototype.widgetTarget = 'cart';
+
+// Widget class name
+MinicartView.prototype.widgetClass = '\\XLite\\View\\Minicart';
+
+// Expanded mode flag
+MinicartView.prototype.isExpanded = false;
+
+// Postprocess widget
+MinicartView.prototype.postprocess = function(isSuccess)
+{
+  this.callSupermethod('postprocess', arguments);
+
+  if (isSuccess) {
+    var o = this;
+    $('.toggle-button a', this.base).click(
+      function(event) {
+        event.stopPropagation();
+
+        o.toggleViewMode(event);
+
+        return false;
+      }
+    );
+
+    if (this.isExpanded) {
+      this.base.addClass('expanded').removeClass('collapsed');
+    }
   }
 }
+
+// Toggle view mode
+MinicartView.prototype.toggleViewMode = function()
+{
+  if (this.base.hasClass('expanded')) {
+    this.base.removeClass('expanded').addClass('collapsed');
+    this.isExpanded = false;
+
+  } else {
+    this.base.addClass('expanded').removeClass('collapsed');
+    this.isExpanded = true;
+  }
+}
+
+core.autoload(MinicartController);
