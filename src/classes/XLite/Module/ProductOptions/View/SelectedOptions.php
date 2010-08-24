@@ -114,7 +114,7 @@ class SelectedOptions extends \XLite\View\AView
         $list = parent::getJSFiles();
 
         $list[] = 'modules/ProductOptions/change_options.js';
-        $list[] = 'popup/jquery.blockUI.js';
+        $list[] = 'js/jquery.blockUI.js';
         $list[] = 'popup/popup.js';
 
         return $list;

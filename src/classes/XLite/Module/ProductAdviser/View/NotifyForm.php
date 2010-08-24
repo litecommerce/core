@@ -101,7 +101,7 @@ class NotifyForm extends \XLite\View\AView
         $list = parent::getJSFiles();
 
         $list[] = 'modules/ProductAdviser/OutOfStock/notify_form.js';
-        $list[] = 'popup/jquery.blockUI.js';
+        $list[] = 'js/jquery.blockUI.js';
         $list[] = 'popup/popup.js';
 
         return $list;

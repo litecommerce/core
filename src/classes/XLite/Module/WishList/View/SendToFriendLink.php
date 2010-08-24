@@ -85,7 +85,7 @@ class SendToFriendLink extends \XLite\View\AView
         $list = parent::getJSFiles();
 
         $list[] = 'modules/WishList/send_to_friend_link.js';
-        $list[] = 'popup/jquery.blockUI.js';
+        $list[] = 'js/jquery.blockUI.js';
         $list[] = 'popup/popup.js';
 
         return $list;
