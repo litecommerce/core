@@ -187,7 +187,7 @@ abstract class AOrderList extends \XLite\View\Dialog
     {
         $list = parent::getJSFiles();
 
-        $list[] = 'popup/jquery.blockUI.js';
+        $list[] = 'js/jquery.blockUI.js';
         $list[] = 'order/list/list.js';
 
         return $list;

@@ -209,4 +209,29 @@ class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
 
         return $weight;
     }
+
+    /**
+     * Get event cell base information
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getEventCell()
+    {
+        $cell = parent::getEventCell();
+
+        $cell['options'] = array();
+
+        foreach ($this->getOptions() as $option) {
+            $cell['options'][] = array(
+                'group_id'  => $option->getGroupId(),
+                'option_id' => $option->getOptionId(),
+                'value'     => $option->getValue(),
+            );
+        }
+
+        return $cell;
+    }
 }

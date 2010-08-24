@@ -59,16 +59,20 @@ window.core = {
   {
     var result = true;
 
+    name = name.toLowerCase();
+
     if (this.isReady) {
-      result = this.messages.trigger(name, [params]);
+    
       if ('undefined' != typeof(window.console)) {
         if (params) {
-          console.log('Fire \'' + name + '\' event with arguments: ' + $.param(params));
+          console.log('Fire \'' + name + '\' event with arguments: ' + var_export(params, true));
 
         } else {
           console.log('Fire \'' + name + '\' event');
         }
       }
+
+      result = this.messages.trigger(name, [params]);
 
     } else {
       this.savedEvents.push(
@@ -85,7 +89,7 @@ window.core = {
   // Bind on common messages
   bind: function(name, callback)
   {
-    this.messages.bind(name, callback);
+    this.messages.bind(name.toLowerCase(), callback);
   },
 
   // Get HTML data from server
@@ -119,7 +123,9 @@ window.core = {
         complete: function(XMLHttpRequest, textStatus)
           {
             data = core.processResponse(XMLHttpRequest);
-            return callback ? callback(XMLHttpRequest, textStatus, data) : true;
+            var notValid = !!XMLHttpRequest.getResponseHeader('not-valid');
+
+            return callback ? callback(XMLHttpRequest, textStatus, data, !notValid) : true;
           },
         contentType: 'application/x-www-form-urlencoded',
         global: false,
@@ -146,6 +152,20 @@ window.core = {
     }
 
     return 4 == xhr.readyState && 200 == xhr.status ? xhr.responseText : false;
+  },
+
+  autoload: function(className)
+  {
+    if ('function' == typeof(className)) {
+      var m = className.toString().match(/function ([^\(]+)/);
+      className = m[1];
+    }
+
+    $(document).ready(
+      function() {
+        eval('new ' + className + '();');
+      }
+    );
   }
   
 };
@@ -169,7 +189,3 @@ $(document).ready(
     core.savedEvents = [];
   }
 );
-
-
-
-

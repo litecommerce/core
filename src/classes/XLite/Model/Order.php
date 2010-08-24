@@ -755,6 +755,30 @@ class Order extends \XLite\Model\Base\ModifierOwner
     }
 
     /**
+     * Get order fingerprint for event subsystem
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getEventFingerprint()
+    {
+        $hash = array(
+            'items' => array(),
+        );
+
+        foreach ($this->getItems() as $item) {
+            $event = $item->getEventCell();
+            $event['quantity'] = $item->getAmount();
+
+            $hash['items'][] = $event;
+        }
+
+        return $hash;
+    }
+
+    /**
      * Get detail 
      * 
      * @param string $name Details cell name

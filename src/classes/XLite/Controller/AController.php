@@ -143,6 +143,9 @@ abstract class AController extends \XLite\Core\Handler
             $location = $this->filterXliteFormID($location);
         }
 
+        \XLite\Core\Event::getInstance()->display();
+        \XLite\Core\Event::getInstance()->clear();
+
         \XLite\Core\Operator::redirect($location, false, $this->getParam(self::PARAM_REDIRECT_CODE));
     }
 
@@ -723,16 +726,16 @@ abstract class AController extends \XLite\Core\Handler
         return \XLite\Core\Request::getInstance()->isHTTPS();
     }
 
-    function startDownload($filename, $contentType = "application/force-download")
+    function startDownload($filename, $contentType = 'application/force-download')
     {
         @set_time_limit(0);
-        header("Content-type: $contentType");
-        header("Content-disposition: attachment; filename=$filename");
+        header('Content-type: ' . $contentType);
+        header('Content-disposition: attachment; filename=' . $filename);
     }
 
     function startImage()
     {
-        header("Content-type: image/gif");
+        header('Content-type: image/gif');
         $this->set('silent', true);
     }
 

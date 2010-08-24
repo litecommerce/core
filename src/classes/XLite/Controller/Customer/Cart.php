@@ -147,6 +147,8 @@ class Cart extends \XLite\Controller\Customer\ACustomer
                 \XLite\Core\TopMessage::ERROR
             );
         }
+
+        $this->valid = false;
     }
 
     /**
