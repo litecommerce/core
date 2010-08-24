@@ -573,6 +573,7 @@ abstract class AView extends \XLite\Core\Handler
     {
         $list = array(
             'js/common.js',
+            'js/core.js',
             'js/jquery.mousewheel.js',
         );
 

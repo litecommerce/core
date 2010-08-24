@@ -104,7 +104,7 @@ abstract class AController extends \XLite\Core\Handler
      */
     protected function getDefaultRedirectCode()
     {
-        return \XLite\Core\Request::getInstance()->isAJAX() ? 278 : 302;
+        return \XLite\Core\Request::getInstance()->isAJAX() ? 200 : 302;
     }
 
     /**
@@ -428,7 +428,8 @@ abstract class AController extends \XLite\Core\Handler
         if ($this->isRedirectNeeded()) {
             if (\XLite\Core\Request::getInstance()->isAJAX() && !$this->isValid()) {
                 // Internal redirect
-                $this->getWidgetParams(self::PARAM_REDIRECT_CODE)->setValue(279);
+                $this->getWidgetParams(self::PARAM_REDIRECT_CODE)->setValue(200);
+                header('not-valid: 1');
             }
 
             $this->redirect();
@@ -450,7 +451,33 @@ abstract class AController extends \XLite\Core\Handler
             $params[$name] = $this->get($name);
         }
 
-        return new \XLite\View\Controller($params, $this->getViewerTemplate());
+        if (
+            \XLite\Core\Request::getInstance()->isAJAX()
+            && \XLite\Core\Request::getInstance()->widget
+        ) {
+
+            $viewer = $this->getAJAXViewer();
+
+        } else {        
+            $viewer = new \XLite\View\Controller($params, $this->getViewerTemplate());
+        }
+
+        return $viewer;
+    }
+
+    /**
+     * Get AJAX-called viewer 
+     * 
+     * @return \XLite\View\AView
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getAJAXViewer()
+    {
+        $class = \XLite\Core\Request::getInstance()->widget;
+
+        return new $class($params, $this->getViewerTemplate());
     }
 
     /**

@@ -407,37 +407,6 @@ EOT;
     }
 
     /**
-     * Return Viewer object
-     * 
-     * @return \XLite\View\Controller
-     * @access public
-     * @since  3.0.0
-     */
-    public function getViewer()
-    {
-        if (
-            \XLite\Core\Request::getInstance()->isAJAX()
-            && \XLite\Core\Request::getInstance()->widget
-        ) {
-
-            $params = array();
-
-            foreach (array(self::PARAM_SILENT, self::PARAM_DUMP_STARTED) as $name) {
-                $params[$name] = $this->get($name);
-            }
-
-            $class = \XLite\Core\Request::getInstance()->widget;
-            $viewer = new $class($params, $this->getViewerTemplate());
-
-        } else {
-            $viewer = parent::getViewer();
-        }
-
-        return $viewer;
-    }
-
-
-    /**
      * getRequestDataByPrefix 
      * 
      * @param string $prefix index in the request array
