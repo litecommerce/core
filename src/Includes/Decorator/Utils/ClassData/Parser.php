@@ -38,6 +38,16 @@ namespace Includes\Decorator\Utils\ClassData;
 abstract class Parser extends \Includes\Decorator\Utils\ClassData\AClassData
 {
     /**
+     * Pattern to parse clas definition
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected static $pattern;
+
+    /**
      * List of registered parsers 
      * 
      * @var    array
@@ -58,9 +68,9 @@ abstract class Parser extends \Includes\Decorator\Utils\ClassData\AClassData
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected static function getTokenName($name)
+    protected static function __N($name)
     {
-        return constant('\Includes\Decorator\DataStructure\ClassData\Node::' . $name);
+        return constant('\Includes\Decorator\DataStructure\ClassData\Node::N_' . $name);
     }
 
     /**
@@ -73,20 +83,30 @@ abstract class Parser extends \Includes\Decorator\Utils\ClassData\AClassData
      */
     protected static function getPatternParserMain()
     {
-        // Namespace (1)
-        $pattern  = '(?:(?:namespace\s+)([\w\\\]+)\s*;.*)?';
-        // Class accessability modifier (2)
-        $pattern .= '((?:abstract|final)\s+)?';
-        // Class or interface name (3,4)
-        $pattern .= '(class|interface)\s+([\w\\\]+)';
-        // Parent class name (5,6)
-        $pattern .= '(\s+extends\s+([\w\\\]+))?';
-        // Implemented interfaces (7,8)
-        $pattern .= '(\s+implements\s+([\w\\\]+(?:\s*,\s*[\w\\\]+)*))?';
-        // Whitespaces (10). TODO: must be improved
-        $pattern .= '\s*(\/\*.*\*\/)?\s*{';
+        if (!isset(static::$pattern)) {
 
-        return '/' . $pattern . '/USsi';
+            // Doctrine "@Entity" tag
+            static::$pattern  = '.*(@Entity)?.*';
+            // phpDocumenter comment
+            static::$pattern  = '.*(?:\s*(\/\*+' . static::$pattern . '\*+\/))?\s*';
+            // Namespace
+            static::$pattern  = '(?:(?:namespace\s+)([\w\\\]+)\s*;' . static::$pattern . ')?';
+            // Class accessability modifier
+            static::$pattern .= '((?:abstract|final)\s+)?';
+            // Class or interface name
+            static::$pattern .= '(class|interface)\s+([\w\\\]+)';
+            // Parent class name
+            static::$pattern .= '(\s+extends\s+([\w\\\]+))?';
+            // Implemented interfaces
+            static::$pattern .= '(\s+implements\s+([\w\\\]+(?:\s*,\s*[\w\\\]+)*))?';
+            // Whitespaces
+            static::$pattern .= '\s*(\/\*.*\*\/)?\s*{';
+
+            // Modifiers
+            static::$pattern = '/' . static::$pattern . '/USsi';
+        }
+
+        return static::$pattern;
     }
 
     /**
@@ -99,7 +119,14 @@ abstract class Parser extends \Includes\Decorator\Utils\ClassData\AClassData
      */
     protected static function getSchemaParserMain()
     {
-        return array('NAME_SPACE' => 1, 'NAME' => 4, 'PARENT' => 6, 'INTERFACES' => 8);
+        return array(
+            'NAME_SPACE'    => 1,
+            'CLASS_COMMENT' => 2,
+            'ENTITY'        => 3,
+            'CLASS'         => 6,
+            'PARENT_CLASS'  => 8,
+            'INTERFACES'    => 10,
+        );
     }
 
     /**
@@ -114,18 +141,16 @@ abstract class Parser extends \Includes\Decorator\Utils\ClassData\AClassData
      */
     protected static function postprocessParserMain(array $data)
     {
-        $name = static::getTokenName('NAME');
-        $namespace = static::getTokenName('NAME_SPACE');
-        $interfaces = static::getTokenName('INTERFACES');
-
         // Add namespace
-        if (isset($data[$namespace]) && '\\' !== substr($data[$name], 0, 1)) {
-            $data[$name] = '\\' . $data[$namespace] . '\\' . $data[$name];
+        if (isset($data[static::__N('NAME_SPACE')]) && '\\' !== substr($data[static::__N('CLASS')], 0, 1)) {
+            $data[static::__N('CLASS')] = '\\' . $data[static::__N('NAME_SPACE')] . '\\' . $data[static::__N('CLASS')];
         }
 
         // Get implemented interfaces
-        if (isset($data[$interfaces])) {
-            $data[$interfaces] = explode(',', str_replace(' ', '', trim($data[$interfaces])));
+        if (isset($data[static::__N('INTERFACES')])) {
+            $data[static::__N('INTERFACES')] = explode(',', str_replace(' ', '', trim($data[static::__N('INTERFACES')])));
+        } else {
+            $data[static::__N('INTERFACES')] = array();
         }
 
         return $data;
@@ -164,7 +189,7 @@ abstract class Parser extends \Includes\Decorator\Utils\ClassData\AClassData
 
         foreach ($schema as $key => $index) {
             if (isset($tokens[$index])) {
-                $data[static::getTokenName($key)] = $tokens[$index];
+                $data[static::__N($key)] = $tokens[$index];
             }
         }
 
@@ -208,7 +233,7 @@ abstract class Parser extends \Includes\Decorator\Utils\ClassData\AClassData
         }
 
         if (!empty($data)) {
-            $data += array(\Includes\Decorator\DataStructure\ClassData\Node::FILE_PATH => $path);
+            $data += array(static::__N('FILE_PATH') => $path);
         }
 
         return $data;

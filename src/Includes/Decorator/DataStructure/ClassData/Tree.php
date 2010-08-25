@@ -176,7 +176,7 @@ abstract class Tree extends \Includes\DataStructure\Hierarchical\Tree
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function removeNode(\Includes\Decorator\DataStructure\ClassData\Node $node)
+    public static function removeNode(\Includes\Decorator\DataStructure\ClassData\Node $node)
     {
         $node->remove();
         unset(static::$index[$node->getClass()]);
