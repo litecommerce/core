@@ -59,7 +59,7 @@ class Category extends \XLite\View\AView
      */
     protected function isVisible()
     {
-        return parent::isVisible() && $this->getCategory()->description;
+        return parent::isVisible() && $this->getCategory()->getDescription();
     }
 
 
