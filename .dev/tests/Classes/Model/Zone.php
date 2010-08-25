@@ -78,7 +78,7 @@ class XLite_Tests_Model_Zone extends XLite_Tests_TestCase
         );
 
         $data[] = array(
-            'zoneid' => 5,
+            'zoneid' => 4,
             'address'  => array(
                 'country' => 'FR',
                 'state'   => 'NY',
@@ -90,7 +90,7 @@ class XLite_Tests_Model_Zone extends XLite_Tests_TestCase
         );
 
         $data[] = array(
-            'zoneid' => 4,
+            'zoneid' => 5,
             'address'  => array(
                 'country' => 'FR',
                 'state'   => 'NY',
