@@ -95,6 +95,8 @@ INSERT INTO xlite_language_label_translations (id, code, label) VALUES (93, 'en'
 INSERT INTO xlite_language_label_translations (id, code, label) VALUES (94, 'en', 'The modules have been updated');
 INSERT INTO xlite_language_label_translations (id, code, label) VALUES (95, 'en', 'The {{module}} module has been disabled in an abnormal way');
 INSERT INTO xlite_language_label_translations (id, code, label) VALUES (96, 'en', 'Congratulations! Your order has been successfully placed.<br />Thank you for using our store. An order notification has been sent to your e-mail address.<br />Your order will be processed according to the delivery details.');
+INSERT INTO xlite_language_label_translations (id, code, label) VALUES (97, 'en', '{{count}} items in bag');
+INSERT INTO xlite_language_label_translations (id, code, label) VALUES (98, 'en', 'Other items');
 
 -- Language names
 INSERT INTO xlite_language_translations (code, id, name) VALUES ('en',1,'Afar');

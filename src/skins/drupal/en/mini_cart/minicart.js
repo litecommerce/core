@@ -37,13 +37,13 @@ extend(MinicartController, AController);
 MinicartController.prototype.name = 'MinicartController';
 
 // Find pattern
-MinicartController.prototype.findPattern = '.lc-minicart-horizontal';
+MinicartController.prototype.findPattern = '.lc-minicart';
 
 // Controller associated widget
 MinicartController.prototype.block = null;
 
 // Initialize controller
-AController.prototype.initialize = function()
+MinicartController.prototype.initialize = function()
 {
   var o = this;
 
@@ -85,12 +85,19 @@ MinicartView.prototype.postprocess = function(isSuccess)
 
   if (isSuccess) {
     var o = this;
-    $('.toggle-button a', this.base).click(
+    this.base.click(
       function(event) {
         event.stopPropagation();
 
         o.toggleViewMode(event);
 
+        return false;
+      }
+    );
+
+    $('.items-list', this.base).click(
+      function(event) {
+        event.stopPropagation();
         return false;
       }
     );

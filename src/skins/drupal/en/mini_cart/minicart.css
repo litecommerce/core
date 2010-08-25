@@ -1,7 +1,7 @@
 /* vim: set ts=2 sw=2 sts=2 et: */
 
 /**
- * ____file_title____
+ * Minicart styles
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -11,7 +11,7 @@
  * @since     3.0.0
  */
 
-.lc-minicart .collapsed .items-list {
+.lc-minicart.collapsed .items-list {
     display: none;
 }
 
@@ -21,68 +21,12 @@
   z-index: 9999;
 }
 
-.lc-minicart .items-list ul
-{
-  list-style: none;
-}
-
 .lc-minicart .items-list .item-name
 {
   display: block;
 }
 
-.lc-minicart .delimiter
+.lc-minicart .items-list
 {
-  margin-left: 0.5em;
-  margin-right: 0.5em;
-}
-
-.lc-minicart-horizontal .cart-link,
-.lc-minicart-horizontal .cart-items,
-.lc-minicart-horizontal .cart-totals,
-.lc-minicart-horizontal .lc-minilist,
-.lc-minicart-horizontal .cart-checkout
-{
-  float: left;
-}
-
-.lc-minicart-horizontal .cart-items
-{
-  margin-left: 0.5em;
-}
-
-.lc-minicart-horizontal .cart-checkout,
-.lc-minicart-horizontal .lc-minilist
-{
-  margin-left: 1em;
-}
-
-.lc-minicart-horizontal .items-list
-{
-  background: white;
-  padding: 1em;
-  width: 20em;
   position: absolute;
-  right: 0;
-  top: 1.5em;
-  border-style: solid;
-}
-
-.lc-minicart-horizontal .cart-link img
-{
-  background: url(img/minicart.gif);
-}
-
-.lc-minicart-vertical h3,
-.lc-minilist-vertical h3
-{
-  margin: 0;
-  padding-left: 22px;
-  background: transparent url(img/minicart.gif) no-repeat 0px 6px;
-}
-
-.lc-minilist-vertical h3
-{
-  background-image: url(img/minilist.gif);
-  background-position: 0px 5px;
 }

@@ -10,7 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<div id="lc-minicart-{displayMode}" class="lc-minicart-{displayMode} {collapsed}">
+<div id="lc-minicart-{displayMode}" class="lc-minicart lc-minicart-{displayMode} {getCollapsed()}">
 
   {displayViewListContent(#minicart.horizontal.childs#)}
 
