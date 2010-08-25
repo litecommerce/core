@@ -57,6 +57,9 @@ class Decorator extends Decorator\ADecorator
                 \Includes\Decorator\DataStructure\ClassData\Tree::addNode($data);
             }
         }
+
+        // Remove the stub nodes
+        \Includes\Decorator\DataStructure\ClassData\Tree::collectGarbage();
     }
 
 
@@ -716,14 +719,7 @@ class Decorator extends Decorator\ADecorator
 
         foreach (\Includes\Decorator\DataStructure\ClassData\Tree::getIndex() as $node) {
 
-            $filePath = $node->getFilePath(); //$fileInfo->getPathname();
-
-            if (empty($filePath)) {
-                continue;
-            }
-
-            // Parse file and get class info
-            // list($class, $extends, $implements, $isEntity, $classComment) = $this->getClassInfo($filePath);
+            $filePath = $node->getFilePath();
 
             // Check classes for active modules only
             // Do not include class into cache if parent defined in currently disabled module
@@ -732,12 +728,6 @@ class Decorator extends Decorator\ADecorator
                 // Get path related to the "LC_CLASSES_DIR" directory
                 $relativePath = preg_replace('/^' . preg_quote(LC_CLASSES_DIR, '/') . '(.*)\.php$/i', '$1.php', $filePath);
                 $classComment = $this->getClassComment(file_get_contents($filePath));
-
-                // Class defined in current PHP file has a wrong name (not corresponded to file name)
-                /*if (isset($this->classesInfo[$class])) {
-                    echo (sprintf(self::CLASS_ALREADY_DEFINED_MSG, $class, $relativePath));
-                    die (4);
-                }*/
 
                 // Save data
                 $this->classesInfo[$node->getClass()] = array(
