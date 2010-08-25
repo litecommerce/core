@@ -34,7 +34,7 @@ namespace XLite\Model;
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
- * @Entity (repositoryClass="\XLite\Model\Repo\Zone")
+ * @Entity (repositoryClass="XLite\Model\Repo\Zone")
  * @Table (name="zones")
  */
 class Zone extends \XLite\Model\AEntity
@@ -73,6 +73,18 @@ class Zone extends \XLite\Model\AEntity
      * @OneToMany (targetEntity="XLite\Model\ZoneElement", mappedBy="zone", cascade={"persist","remove"})
      */
     protected $zone_elements;
+
+    /**
+     * Shipping rates (relation)
+     * 
+     * @var    \Doctrine\Common\Collections\ArrayCollection
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     *
+     * @OneToMany (targetEntity="XLite\Model\Shipping\Markup", mappedBy="zone", cascade={"persist","remove"})
+     */
+    protected $shipping_markups;
 
     /**
      * Get zone's countries list
@@ -279,17 +291,20 @@ class Zone extends \XLite\Model\AEntity
                 // Get zone elements
                 $elements = $this->getElementsByType($type);
 
-                // Check if address field belongs to the elements
-                $found = $this->$checkFuncName($address, $elements);
+                if (!empty($elements)) {
 
-                if (!empty($elements) && $found) {
-                    // Increase the total zone weight
-                    $zoneWeight += $data['weight'];
+                    // Check if address field belongs to the elements
+                    $found = $this->$checkFuncName($address, $elements);
 
-                } elseif ($data['required']) {
-                    // Break the comparing
-                    $zoneWeight = 0;
-                    break;
+                    if ($found) {
+                        // Increase the total zone weight
+                        $zoneWeight += $data['weight'];
+
+                    } elseif ($data['required']) {
+                        // Break the comparing
+                        $zoneWeight = 0;
+                        break;
+                    }
                 }
             }
         }
