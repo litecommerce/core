@@ -84,16 +84,6 @@ class Decorator extends Decorator\ADecorator
     const INTERFACE_COMMENT_PATTERN = '/(\s+\*\/\s+)interface /USsi';
 
     /**
-     * Pattern to detect entity-based class
-     */
-    const CLASS_ENTITY_PATTERN = '/@entity/USsi';
-
-    /**
-     * Pattern to parse DOC block
-     */
-    const DOCBLOCK_PATTERN = '/^\s+\*\s+@(\w+)(.*)$/Smi';
-
-    /**
      * Suffix for the so called "root" decorator class names
      */
     const ROOT_CLASS_SUFFIX = 'Abstract';
@@ -727,7 +717,7 @@ class Decorator extends Decorator\ADecorator
 
                 // Get path related to the "LC_CLASSES_DIR" directory
                 $relativePath = preg_replace('/^' . preg_quote(LC_CLASSES_DIR, '/') . '(.*)\.php$/i', '$1.php', $filePath);
-                $classComment = $this->getClassComment(file_get_contents($filePath));
+                $classComment = $node->getClassComment();
 
                 // Save data
                 $this->classesInfo[$node->getClass()] = array(
@@ -735,8 +725,8 @@ class Decorator extends Decorator\ADecorator
                     self::INFO_CLASS_ORIG    => $node->getClass(),
                     self::INFO_EXTENDS       => $node->getParentClass(),
                     self::INFO_EXTENDS_ORIG  => $node->getParentClass(),
-                    self::INFO_IS_DECORATOR  => $node->isImplements('\XLite\Base\IDecorator'),
-                    self::INFO_ENTITY        => (bool)preg_match(self::CLASS_ENTITY_PATTERN, $classComment),
+                    self::INFO_IS_DECORATOR  => in_array('\XLite\Base\IDecorator', $node->getInterfaces()),
+                    self::INFO_ENTITY        => $node->isEntity(),
                     self::INFO_CLASS_COMMENT => $classComment,
                 );
 
@@ -744,7 +734,7 @@ class Decorator extends Decorator\ADecorator
                     $this->viewListChilds[$relativePath] = $node->getClass();
                 }
 
-                if ($node->isImplements('\XLite\Base\IPatcher')) {
+                if (in_array('\XLite\Base\IPatcher', $node->getInterfaces())) {
                     $this->templatePatches[] = $node->getClass();
                 }
 

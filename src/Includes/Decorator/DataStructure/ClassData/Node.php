@@ -41,16 +41,52 @@ class Node extends \Includes\DataStructure\Node\Tree
      * Field names
      */
 
-    const NAME_SPACE = 'namespace';
-    const NAME       = 'name';
-    const PARENT     = 'parent';
-    const INTERFACES = 'interfaces';
-    const IS_STUB    = 'isStub';
-    const FILE_PATH  = 'filePath';
+    const N_NAME_SPACE    = 'nameSpace';
+    const N_CLASS_COMMENT = 'classComment';
+    const N_CLASS         = 'name';
+    const N_PARENT_CLASS  = 'parent';
+    const N_INTERFACES    = 'interfaces';
+    const N_STUB          = 'stub';
+    const N_ENTITY        = 'entity';
+    const N_FILE_PATH     = 'filePath';
 
 
     /**
-     * Set the reference to parent node
+     * Method to access node properties
+     * 
+     * @param string $method called method
+     * @param array  $args   method arguments
+     *  
+     * @return mixed
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function __call($method, array $args = array())
+    {
+        // Parse getter name
+        if (!preg_match('/(get|is)(\w+)/Ss', $method, $matches)) {
+            throw new \Exception('Undefined class method or wrong getter/setter - "' . $method . '"');
+        }
+
+        // Get the class constant by the method name
+        if (!defined($property = 'self::N' . strtoupper(preg_replace('/([A-Z])/', '_$1', $matches[2])))) {
+            throw new \Exception('Undefined class constant - "' . $property . '"');
+        }
+
+        $result = $this->__get(constant($property));
+
+        // Cast to the "bool" type
+        if ('is' === $matches[1]) {
+            $result = (bool) $result;
+        }
+
+        return $result;
+    }
+
+
+    /**
+     * (Un)Set reference to parent node
      *
      * @param self $parent parent node ref
      *
@@ -59,88 +95,9 @@ class Node extends \Includes\DataStructure\Node\Tree
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function setParent(self $parent)
+    public function setParent(self $parent = null)
     {
         $this->parent = $parent;
-    }
-
-    /**
-     * Unset the parent node
-     *
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function unsetParent()
-    {
-        $this->parent = null;
-    }
-
-    /**
-     * Alias
-     *
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getClass()
-    {
-        return $this->__get(self::NAME);
-    }
-
-    /**
-     * Alias
-     *
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getParentClass()
-    {
-        return $this->__get(self::PARENT);
-    }
-
-    /**
-     * Check if class implements some interface
-     *
-     * @param string $name interface to check
-     *
-     * @return bool
-     * @access protected
-     * @since  3.0
-     */
-    public function isImplements($name)
-    {
-        return in_array($name, (array) $this->__get(self::INTERFACES));
-    }
-
-    /**
-     * Alias
-     *
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getFilePath()
-    {
-        return $this->__get(self::FILE_PATH);
-    }
-
-    /**
-     * Check if it's the so called "stub" node
-     *
-     * @return bool
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function isStub()
-    {
-        return (bool) $this->__get(self::IS_STUB);
     }
 
     /**
@@ -177,7 +134,7 @@ class Node extends \Includes\DataStructure\Node\Tree
     public function removeChild(self $node)
     {
         unset($this->children[$node->getClass()]);
-        $node->unsetParent();
+        $node->setParent();
     }
 
     /**
@@ -193,7 +150,7 @@ class Node extends \Includes\DataStructure\Node\Tree
      */
     public function replant(self $parent, self $node)
     {
-        $this->setData(array(self::IS_STUB => false) + $node->getData());
+        $this->setData(array(self::N_STUB => false) + $node->getData());
         $parent->addChild($this);
     }
 
@@ -214,6 +171,7 @@ class Node extends \Includes\DataStructure\Node\Tree
         $this->parent->removeChild($this);
     }
 
+
     /**
      * Add stub node to the tree
      *
@@ -226,6 +184,6 @@ class Node extends \Includes\DataStructure\Node\Tree
      */
     public static function createStubNode($class)
     {
-        return new static(array(self::NAME => $class, self::IS_STUB => true));
+        return new static(array(self::N_CLASS => $class, self::N_STUB => true));
     }
 }
