@@ -10,13 +10,8 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<ul class="item-options">
+<a class="item-options underline-emulation" href="{buildUrl(#cart#)}" rel="ul.item-options.item-{item.getItemId()}"><span>{t(#options#)}</span></a>
+<br />
+<ul class="popup item-options item-{item.getItemId()}" style="display: none;">
   <li FOREACH="getOptions(),option">{option.getActualName():h}: {option.getActualValue():h}</li>
 </ul>
-{if:isLimitEnabled()}
-  <a class="item-all-options" href="{buildUrl(#cart#)}" rel="ul.item-all-options.item-{getParam(#cartId#)}">all options</a>
-  <br />
-  <ul class="item-all-options item-{getParam(#cartId#)}" style="display: none;">
-    <li FOREACH="getAllOptions(),option">{option.getActualName():h}: {option.getActualValue():h}</li>
-  </ul>
-{end:}

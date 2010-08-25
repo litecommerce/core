@@ -10,22 +10,31 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  */
-$(document).ready(
-  function() {
-    $('.lc-minicart a.item-all-options').cluetip(
+var oldPostprocess = MinicartView.prototype.postprocess;
+MinicartView.prototype.postprocess = function(isSuccess)
+{
+  oldPostprocess.apply(this, arguments);
+
+  if (isSuccess) {
+    $('a.item-options', this.base).map(
+      function()
       {
-        local: true,
-        dropShadow: false,
-        showTitle: false,
-        cluezIndex: 11000,
-        width: 100,
-        positionBy: 'bottomTop',
-        topOffset: 15,
-        mouseOutClose: false,
-        onShow: function(ct, c) {
-          ct.width('auto');
-        }
+        $(this).cluetip(
+          {
+            local: true,
+            dropShadow: false,
+            showTitle: false,
+            cluezIndex: 11000,
+            width: 100,
+            positionBy: 'bottomTop',
+            topOffset: 15,
+            mouseOutClose: false,
+            onShow: function(ct, c) {
+              ct.width('auto');
+            }
+          }
+        );
       }
     );
   }
-);
+}

@@ -11,6 +11,5 @@
  * @since     3.0.0
  * @ListChild (list="minicart.horizontal.childs", weight="5")
  *}
-<div class="cart-link">
-  <a href="{buildURL(#cart#)}"><img src="images/spacer.gif" width="16" height="16" alt="" /></a>
-</div>
+<div class="minicart-items-number">{cart.countQuantity()}</div>
+<div class="minicart-items-text">{t(#items#)}</div>

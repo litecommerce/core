@@ -10,34 +10,23 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  */
-.lc-minicart ul.item-options li,
-.lc-minicart ul.item-all-options li,
-.lc-minicart a.item-all-options
-{
-  font-size: 0.95em;
-}
-
-.lc-minicart ul.item-options {
-  border: 0px none;
-}
-
-.lc-minicart a.item-all-options {
-  text-decoration: none;
-  border-bottom: 1px dotted #3165AD;
+.lc-minicart a.item-options {
   cursor: help;
+  padding-top: 2px;
 }
 
-#cluetip-inner ul.item-all-options {
-  border-style: solid;
-  background: #fff none;
-  padding: 5px;
+#cluetip-inner ul.item-options {
+  border: 0px none;
+  padding: 10px;
   margin: 0px;
   list-style: none;
 }
 
-#cluetip-inner ul.item-all-options li {
+#cluetip-inner ul.item-options li {
+  font-size: 12px;
   padding: 0px;
   margin: 0px;
   list-style: none;
   white-space: nowrap;
+  background: transparent none;
 }

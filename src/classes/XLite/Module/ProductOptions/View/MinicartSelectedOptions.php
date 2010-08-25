@@ -44,48 +44,6 @@ class MinicartSelectedOptions extends \XLite\View\AView
      */
 
     const PARAM_ITEM    = 'item';
-    const PARAM_CART_ID = 'cartId';
-
-
-    /**
-     * Item short options list (cache)
-     * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected $options = null;
-
-    /**
-     * Item full options list (cache)
-     * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected $allOptions = null;
-
-    /**
-     * Limit enabled flag
-     * 
-     * @var    boolean
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected $limitEnabled = null;
-
-    /**
-     * Options lisst limit
-     * 
-     * @var    integer
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected $lengthLimit = 2;
 
 
     /**
@@ -113,12 +71,11 @@ class MinicartSelectedOptions extends \XLite\View\AView
 
         $this->widgetParams += array(
             self::PARAM_ITEM    => new \XLite\Model\WidgetParam\Object('Item', null, false, '\XLite\Model\OrderItem'),
-            self::PARAM_CART_ID => new \XLite\Model\WidgetParam\Int('Cart id', 0, false),
         );
     }
 
     /**
-     * getItem 
+     * Get order item 
      * 
      * @return \XLite\Model\OrderItem
      * @access protected
@@ -128,7 +85,6 @@ class MinicartSelectedOptions extends \XLite\View\AView
     {
         return $this->getParam(self::PARAM_ITEM);
     }
-
 
     /**
      * Check widget visibility 
@@ -143,74 +99,16 @@ class MinicartSelectedOptions extends \XLite\View\AView
     }
 
     /**
-     * Get short options list
+     * Get options list
      * 
-     * @return array
+     * @return \Doctrine\Common\Collection\ArrayCollection
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
     public function getOptions()
     {
-        if (is_null($this->options)) {
-            $this->assembleList();
-        }
-
-        return $this->options;
-    }
-
-    /**
-     * Get full options list
-     * 
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getAllOptions()
-    {
-        if (is_null($this->allOptions)) {
-            $this->assembleList();
-        }
-
-        return $this->allOptions;
-    }
-
-    /**
-     * Check - options lisst limit enabled or not
-     * 
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function isLimitEnabled()
-    {
-        if (is_null($this->limitEnabled)) {
-            $this->assembleList();
-        }
-
-        return $this->limitEnabled;
-    }
-
-    /**
-     * Assemble options lists
-     * 
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function assembleList()
-    {
-        $this->limitEnabled = false;
-        $this->allOptions = $this->getItem()->getOptions()->toArray();
-        $this->options = $this->allOptions;
-    
-        if ($this->lengthLimit < count($this->options)) {
-            $this->options = array_slice($this->options, 0, $this->lengthLimit);
-            $this->limitEnabled = true;
-        }
+        return $this->getItem()->getOptions();
     }
 
     /**
@@ -225,10 +123,8 @@ class MinicartSelectedOptions extends \XLite\View\AView
     {
         $list = parent::getJSFiles();
 
-        if ($this->isLimitEnabled()) {
-            $list[] = 'modules/ProductOptions/minicart.js';
-            $list[] = 'js/jquery.cluetip.js';
-        }
+        $list[] = 'modules/ProductOptions/minicart.js';
+        $list[] = 'js/jquery.cluetip.js';
 
         return $list;
     }

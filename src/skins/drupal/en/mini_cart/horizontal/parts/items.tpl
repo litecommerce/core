@@ -11,20 +11,22 @@
  * @since     3.0.0
  * @ListChild (list="minicart.horizontal.childs", weight="10")
  *}
-<div class="cart-items" IF="cart.isEmpty()">
-  <p class="cart.isEmpty()">Cart is empty</p>
+<div IF="!cart.isEmpty()" class="popup items-list">
+
+  <p class="title">
+    <a href="{buildURL(#cart#)}">{t(#X items in bag#,_ARRAY_(#count#^cart.countQuantity()))}</a>
+  </p>
+
+  <ul>
+    <li FOREACH="getItemsList(),item">
+      {displayViewListContent(#minicart.horizontal.item#,_ARRAY_(#item#^item))}
+    </li>
+  </ul>
+
+  <p IF="isTruncated()" class="other-items"><a href="{buildURL(#cart#)}">{t(#Other items#)}</a></p>
+
+  <hr />
+
+  {displayViewListContent(#minicart.horizontal.buttons#)}
+
 </div>
-
-<div class="cart-items" IF="!cart.isEmpty()">
-  <p class="toggle-button"><a href="{buildURL(#cart#)}">{cart.countItems()} item(s)</a> </p>
-  <div class="items-list">
-    <ul>
-      <li FOREACH="getItemsList(),item">
-        {displayViewListContent(#minicart.horizontal.item#,_ARRAY_(#item#^item))}
-      </li>
-    </ul>
-    <p class="other-items"><a href="{buildURL(#cart#)}">View cart</a></p>
-  </div>
-</div>
-
-

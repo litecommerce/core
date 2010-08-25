@@ -415,6 +415,24 @@ class Order extends \XLite\Model\Base\ModifierOwner
     }
 
     /**
+     * Return order items total quantity
+     * 
+     * @return integer
+     * @access public
+     * @since  3.0.0
+     */
+    public function countQuantity()
+    {
+        $quantity = 0;
+
+        foreach ($this->getitems() as $item) {
+            $quantity += $item->getAmount();
+        }
+
+        return $quantity;
+    }
+
+    /**
      * Checks whether the shopping cart/order is empty
      * 
      * @return bool
