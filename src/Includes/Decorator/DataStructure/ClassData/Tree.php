@@ -75,21 +75,6 @@ abstract class Tree extends \Includes\DataStructure\Hierarchical\Tree
     }
 
     /**
-     * Index a node
-     *
-     * @param \Includes\Decorator\DataStructure\ClassData\Node $node  node object
-     *
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected static function addIndex(\Includes\Decorator\DataStructure\ClassData\Node $node)
-    {
-        static::$index[$node->getClass()] = $node;
-    }
-
-    /**
      * Add new node and index it
      *
      * @param \Includes\Decorator\DataStructure\ClassData\Node $parent parent node
@@ -103,7 +88,7 @@ abstract class Tree extends \Includes\DataStructure\Hierarchical\Tree
     protected static function addChildNode(\Includes\Decorator\DataStructure\ClassData\Node $parent, \Includes\Decorator\DataStructure\ClassData\Node $node)
     {
         $parent->addChild($node);
-        static::addIndex($node);
+        static::$index[$node->getClass()] = $node;
     }
 
     /**
@@ -179,6 +164,40 @@ abstract class Tree extends \Includes\DataStructure\Hierarchical\Tree
 
         // Add or replace node
         static::replantNode($parent, $node) ?: static::addChildNode($parent, $node);
+    }
+
+    /**
+     * Remove node
+     * 
+     * @param \Includes\Decorator\DataStructure\ClassData\Node $node node to remove
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function removeNode(\Includes\Decorator\DataStructure\ClassData\Node $node)
+    {
+        $node->remove();
+        unset(static::$index[$node->getClass()]);
+
+        $node = null;
+        unset($node);
+    }
+
+    /**
+     * Remove the stub nodes
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function collectGarbage()
+    {
+        foreach (static::$index as $node) {
+            !$node->isStub() ?: static::removeNode($node);
+        }
     }
 
     /**

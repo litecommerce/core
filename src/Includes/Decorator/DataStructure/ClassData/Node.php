@@ -65,6 +65,19 @@ class Node extends \Includes\DataStructure\Node\Tree
     }
 
     /**
+     * Unset the parent node
+     *
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function unsetParent()
+    {
+        $this->parent = null;
+    }
+
+    /**
      * Alias
      *
      * @return string
@@ -152,6 +165,22 @@ class Node extends \Includes\DataStructure\Node\Tree
     }
 
     /**
+     * Remove child node
+     *
+     * @param self $node node to remove
+     *
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function removeChild(self $node)
+    {
+        unset($this->children[$node->getClass()]);
+        $node->unsetParent();
+    }
+
+    /**
      * "Re-plant" node: move the sub-tree from root to the already created sub-tree
      *
      * @param self $parent new parent (root to re-plant to)
@@ -166,6 +195,23 @@ class Node extends \Includes\DataStructure\Node\Tree
     {
         $this->setData(array(self::IS_STUB => false) + $node->getData());
         $parent->addChild($this);
+    }
+
+    /**
+     * Remove node
+     *
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function remove()
+    {
+        foreach ($this->children as $child) {
+            $child->setParent($this->parent);
+        }
+
+        $this->parent->removeChild($this);
     }
 
     /**
