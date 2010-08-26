@@ -47,6 +47,11 @@ set_include_path(
     . PATH_SEPARATOR . PATH_SRC . '/var/run/classes'
 );
 
+// Include local code
+if (file_exists(__DIR__ . '/local.php')) {
+    require_once __DIR__ . '/local.php';
+}
+
 require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
@@ -59,11 +64,6 @@ require_once PATH_TESTS . '/PHPUnit/SeleniumTestCase.php';
 
 require_once PATH_SRC . '/top.inc.php';
 
-// Include local code
-if (file_exists(__DIR__ . '/local.php')) {
-    require_once __DIR__ . '/local.php';
-}
-
 if (!defined('SELENIUM_SOURCE_URL')) {
     $arr = explode('/', realpath(__DIR__ . '/../..'));
     array_shift($arr);
@@ -74,6 +74,10 @@ if (!defined('SELENIUM_SOURCE_URL')) {
     define('SELENIUM_SOURCE_URL', 'http://xcart2-530.crtdev.local/~' . posix_getlogin() . '/' . implode('/', $arr));
 
     unset($arr);
+}
+
+if (!defined('SELENIUM_SERVER')) {
+    define('SELENIUM_SERVER', 'cormorant.crtdev.local');
 }
 
 if (isset($_SERVER['argv']) && preg_match('/--log-xml\s+(\S+)\s/s', implode(' ', $_SERVER['argv']), $match)) {

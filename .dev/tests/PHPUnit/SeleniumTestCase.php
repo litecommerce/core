@@ -89,7 +89,7 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
         array(
             'name'    => 'FireFox 3.5 (Windows)',
             'browser' => '*firefox C:\Program Files\Mozilla Firefox 3.5\firefox.exe',
-            'host'    => 'cormorant.crtdev.local',
+            'host'    => SELENIUM_SERVER,
             'port'    => 4444,
             'timeout' => 10000
         ),
