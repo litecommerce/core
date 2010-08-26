@@ -59,6 +59,11 @@ require_once PATH_TESTS . '/PHPUnit/SeleniumTestCase.php';
 
 require_once PATH_SRC . '/top.inc.php';
 
+// Include local code
+if (file_exists(__DIR__ . '/local.php')) {
+    require_once __DIR__ . '/local.php';
+}
+
 if (!defined('SELENIUM_SOURCE_URL')) {
     $arr = explode('/', realpath(__DIR__ . '/../..'));
     array_shift($arr);
