@@ -84,7 +84,7 @@ class Zone extends \XLite\Model\AEntity
      *
      * @OneToMany (targetEntity="XLite\Model\Shipping\Markup", mappedBy="zone", cascade={"persist","remove"})
      */
-    protected $shipping_markups;
+    // protected $shipping_markups;
 
     /**
      * Get zone's countries list
