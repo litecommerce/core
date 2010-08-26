@@ -23,7 +23,7 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
     /**
      * Prefix for all classes with test cases
      */
-    const CLASS_PREFIX = 'XLite_WebTests_';
+    const CLASS_PREFIX = 'XLite_Web_';
 
     static public $cssProcessedFiles = array();
 
@@ -111,6 +111,28 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
 */
     );
 
+    protected $unknownCSSProperty = array(
+        'zoom',
+        'border-radius',
+        'border-top-left-raius',
+        'border-top-right-raius',
+        'border-bottom-left-raius',
+        'border-bottom-right-raius',
+        'box-shadow',
+        '-moz-border-radius',
+        '-webkit-border-radius',
+        '-moz-border-radius-topleft',
+        '-moz-border-radius-topright',
+        '-moz-border-radius-bottomright',
+        '-moz-border-radius-bottomleft',
+        '-webkit-border-top-left-radius',
+        '-webkit-border-top-right-radius',
+        '-webkit-border-bottom-right-radius',
+        '-webkit-border-bottom-left-radius',
+        '-webkit-box-shadow',
+        '-moz-box-shadow',
+    );
+
     /**
      * Constructor
      * 
@@ -121,7 +143,9 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
     public function __construct($name = NULL, array $data = array(), array $browser = array())
     {
         $this->browserName = $browser['name'];
-        $this->coverageScriptUrl = SELENIUM_SOURCE_URL . '/phpunit_coverage.php';
+        $this->coverageScriptUrl = defined('SELENIUM_COVERAGE_URL')
+            ? SELENIUM_COVERAGE_URL . '/phpunit_coverage.php'
+            : SELENIUM_SOURCE_URL . '/phpunit_coverage.php';
         parent::__construct($name, $data, $browser);
     }
 
@@ -268,12 +292,16 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
 
         foreach ($xpath->query("//link[@rel='stylesheet']") as $node) {
             $url = $node->getAttribute('href');
-            if (!preg_match('/^https?:\/\//Ss', $url)) {
+            if (preg_match('/^\//Ss', $url)) {
+                $parsed = parse_url($this->baseURL);
+                $url = $parsed['scheme'] . '://' . $parsed['host'] . $url;
+
+            } elseif (!preg_match('/^https?:\/\//Ss', $url)) {
                 $url = $this->baseURL . $url;
             }
 
             if (!in_array($url, XLite_Tests_SeleniumTestCase::$cssProcessedFiles)) {
-                $this->validateCSS(trim(file_get_contents($url)));
+                $this->validateCSS(trim(file_get_contents($url)), $url);
                 XLite_Tests_SeleniumTestCase::$cssProcessedFiles[] = $url;
             }
         }
@@ -365,12 +393,12 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
         }
     }
 
-    private function validateCSS($data)
+    private function validateCSS($data, $url)
     {
         $post = array(
             'text' => $data,
             'lang' => 'en',
-            'profile' => 'css21',
+            'profile' => 'css3',
             'usermedium' => 'all',
             'type' => 'none',
             'warning' => '1'
@@ -386,9 +414,6 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
 
-        curl_setopt($ch, CURLOPT_PROXYTYPE, CURLPROXY_HTTP);
-        curl_setopt($ch, CURLOPT_PROXY, 'max:ukzCA78n01z0Nlf@192.168.10.1:3128');
-
         curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_0);
 
         $body = curl_exec($ch);
@@ -402,6 +427,8 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
         $dom->loadHTML(trim($body));
         $xpath = new DOMXPath($dom);
 
+        $errors = array();
+
         foreach ($xpath->query('//tr[@class=\'error\']') as $node) {
             $line = $xpath->query('td[position()=1]', $node)->item(0)->nodeValue;
             $context = trim($xpath->query('td[position()=2]', $node)->item(0)->nodeValue);
@@ -411,8 +438,20 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
                 $descr = preg_replace('/[ ]{2,}/Ss', ' ', $descr);
                 $descr = str_replace("\n ", "\n", $descr);
                 $descr = str_replace("\n\n", "\n", $descr);
-                $this->fail('W3C CSS validation fail: Selector:' . $context.'; Line: ' . $line . "; Message: " . $descr);
+                if (
+                    !preg_match('/Property (\S+) doesn\'t exist/Ssi', $descr, $m)
+                    || !in_array($m[1], $this->unknownCSSProperty)
+                ) {
+                    $errors[] = '[' . str_repeat('0', 5 - strlen($line)) . $line . '] ' . $context . ' : ' . $descr;
+                }
             }
+        }
+
+        if ($errors) {
+            $this->fail(
+                'W3C CSS validation fail (' . $url. '):' . PHP_EOL
+                . "\t" . implode(PHP_EOL . "\t", $errors) . PHP_EOL
+            );
         }
     }
 
