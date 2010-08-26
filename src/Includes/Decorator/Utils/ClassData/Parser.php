@@ -74,6 +74,22 @@ abstract class Parser extends \Includes\Decorator\Utils\ClassData\AClassData
     }
 
     /**
+     * Safely get field from array
+     * 
+     * @param array  &$data data array
+     * @param string $field field name
+     *  
+     * @return mixed
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function getField(array &$data, $field)
+    {
+        return isset($data[static::__N($field)]) ? $data[static::__N($field)] : null;
+    }
+
+    /**
      * Get pattern for the certain parser
      *
      * @return string
@@ -86,7 +102,7 @@ abstract class Parser extends \Includes\Decorator\Utils\ClassData\AClassData
         if (!isset(static::$pattern)) {
 
             // Doctrine "@Entity" tag
-            static::$pattern  = '.*(@Entity)?.*';
+            static::$pattern  = '.*(?:(@Entity).*)?';
             // phpDocumenter comment
             static::$pattern  = '.*(?:\s*(\/\*+' . static::$pattern . '\*+\/))?\s*';
             // Namespace
@@ -141,17 +157,17 @@ abstract class Parser extends \Includes\Decorator\Utils\ClassData\AClassData
      */
     protected static function postprocessParserMain(array $data)
     {
+        $namespace  = static::getField($data, 'NAME_SPACE');
+        $class      = static::getField($data, 'CLASS');
+        $interfaces = static::getField($data, 'INTERFACES');
+
         // Add namespace
-        if (isset($data[static::__N('NAME_SPACE')]) && '\\' !== substr($data[static::__N('CLASS')], 0, 1)) {
-            $data[static::__N('CLASS')] = '\\' . $data[static::__N('NAME_SPACE')] . '\\' . $data[static::__N('CLASS')];
+        if ($namespace && '\\' !== substr($class, 0, 1)) {
+            $data[static::__N('CLASS')] = '\\' . $namespace . '\\' . $class;
         }
 
         // Get implemented interfaces
-        if (isset($data[static::__N('INTERFACES')])) {
-            $data[static::__N('INTERFACES')] = explode(',', str_replace(' ', '', trim($data[static::__N('INTERFACES')])));
-        } else {
-            $data[static::__N('INTERFACES')] = array();
-        }
+        $data[static::__N('INTERFACES')] = $interfaces ? explode(',', str_replace(' ', '', trim($interfaces))) : array();
 
         return $data;
     }
@@ -196,6 +212,24 @@ abstract class Parser extends \Includes\Decorator\Utils\ClassData\AClassData
         return $data;
     }
 
+    /**
+     * Check if the corresponded module is active
+     * 
+     * @param array $data data returned by parser
+     *  
+     * @return bool
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function isModuleEnabled(array &$data)
+    {
+        return \Includes\Decorator\Utils\ModulesManager::checkClass(
+            static::getField($data, 'CLASS'),
+            static::getField($data, 'PARENT_CLASS')
+        );
+    }
+
 
     /**
      * Get file content and execute the parsers stack
@@ -232,10 +266,9 @@ abstract class Parser extends \Includes\Decorator\Utils\ClassData\AClassData
             $data = array_replace_recursive($data, static::$postprocess($result));
         }
 
-        if (!empty($data)) {
-            $data += array(static::__N('FILE_PATH') => $path);
-        }
+        // Skip classes from disabled modules
+        static::isModuleEnabled($data) ?: ($data = array());
 
-        return $data;
+        return empty($data) ? array() : ($data + array(static::__N('FILE_PATH') => $path));
     }
 }

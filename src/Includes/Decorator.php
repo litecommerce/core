@@ -711,40 +711,35 @@ class Decorator extends Decorator\ADecorator
 
             $filePath = $node->getFilePath();
 
-            // Check classes for active modules only
-            // Do not include class into cache if parent defined in currently disabled module
-            if (\Includes\Decorator\Utils\ModulesManager::checkClass($node->getClass(), $node->getParentClass())) {
+            // Get path related to the "LC_CLASSES_DIR" directory
+            $relativePath = preg_replace('/^' . preg_quote(LC_CLASSES_DIR, '/') . '(.*)\.php$/i', '$1.php', $filePath);
+            $classComment = $node->getClassComment();
 
-                // Get path related to the "LC_CLASSES_DIR" directory
-                $relativePath = preg_replace('/^' . preg_quote(LC_CLASSES_DIR, '/') . '(.*)\.php$/i', '$1.php', $filePath);
-                $classComment = $node->getClassComment();
+            // Save data
+            $this->classesInfo[$node->getClass()] = array(
+                self::INFO_FILE          => $relativePath,
+                self::INFO_CLASS_ORIG    => $node->getClass(),
+                self::INFO_EXTENDS       => $node->getParentClass(),
+                self::INFO_EXTENDS_ORIG  => $node->getParentClass(),
+                self::INFO_IS_DECORATOR  => in_array('\XLite\Base\IDecorator', $node->getInterfaces()),
+                self::INFO_ENTITY        => $node->isEntity(),
+                self::INFO_CLASS_COMMENT => $classComment,
+            );
 
-                // Save data
-                $this->classesInfo[$node->getClass()] = array(
-                    self::INFO_FILE          => $relativePath,
-                    self::INFO_CLASS_ORIG    => $node->getClass(),
-                    self::INFO_EXTENDS       => $node->getParentClass(),
-                    self::INFO_EXTENDS_ORIG  => $node->getParentClass(),
-                    self::INFO_IS_DECORATOR  => in_array('\XLite\Base\IDecorator', $node->getInterfaces()),
-                    self::INFO_ENTITY        => $node->isEntity(),
-                    self::INFO_CLASS_COMMENT => $classComment,
-                );
+            if ($this->isViewChild($classComment)) {
+                $this->viewListChilds[$relativePath] = $node->getClass();
+            }
 
-                if ($this->isViewChild($classComment)) {
-                    $this->viewListChilds[$relativePath] = $node->getClass();
-                }
+            if (in_array('\XLite\Base\IPatcher', $node->getInterfaces())) {
+                $this->templatePatches[] = $node->getClass();
+            }
 
-                if (in_array('\XLite\Base\IPatcher', $node->getInterfaces())) {
-                    $this->templatePatches[] = $node->getClass();
-                }
-
-                if ($this->isMultilang($node->getParentClass())) {
-                    $this->multilangs[] = $node->getClass();
-                }
+            if ($this->isMultilang($node->getParentClass())) {
+                $this->multilangs[] = $node->getClass();
+            }
     
-                if ($classComment || !preg_match(self::INTERFACE_COMMENT_PATTERN, file_get_contents($filePath))) {
-                    $this->checkClassCommentAttributes($classComment, $filePath);
-                }
+            if ($classComment || !preg_match(self::INTERFACE_COMMENT_PATTERN, file_get_contents($filePath))) {
+                $this->checkClassCommentAttributes($classComment, $filePath);
             }
         }
     }
