@@ -233,7 +233,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * 
      * @param string $status status to get
      *  
-     * @return array|string
+     * @return array | string
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -250,7 +250,9 @@ class Order extends \XLite\Model\Base\ModifierOwner
             self::STATUS_DECLINED   => 'Declined',
         );
 
-        return isset($status) ? (isset($list[$status]) ? $list[$status] : null) : $list;
+        return isset($status)
+            ? (isset($list[$status]) ? $list[$status] : null)
+            : $list;
     }
 
     /**
@@ -1042,7 +1044,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
 
                 // whether or not to show CC info in mail notification
                 $mail->adminMail = true;
-                $mail->set('charset', $this->xlite->config->Company->locationCountry->charset);
+                $mail->set('charset', \XLite\Core\Config::getInstance()->Company->locationCountry->charset);
                 $mail->compose(
                     \XLite\Core\Config::getInstance()->Company->site_administrator,
                     \XLite\Core\Config::getInstance()->Company->orders_department,
@@ -1080,7 +1082,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
         $mail = new \XLite\Model\Mailer();
         $mail->order = $this;
         $mail->adminMail = true;
-        $mail->set('charset', $this->xlite->config->Company->locationCountry->charset);
+        $mail->set('charset', \XLite\Core\Config::getInstance()->Company->locationCountry->charset);
         $mail->compose(
             \XLite\Core\Config::getInstance()->Company->site_administrator,
             \XLite\Core\Config::getInstance()->Company->orders_department,
@@ -1124,7 +1126,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
         $mail = new \XLite\Model\Mailer();
         $mail->order = $this;
         $mail->adminMail = true;
-        $mail->set('charset', $this->xlite->config->Company->locationCountry->charset);
+        $mail->set('charset', \XLite\Core\Config::getInstance()->Company->locationCountry->charset);
         $mail->compose(
             \XLite\Core\Config::getInstance()->Company->site_administrator,
             \XLite\Core\Config::getInstance()->Company->orders_department,
@@ -1148,14 +1150,18 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * Prepare order before save data operation
      * 
      * @return void
-     * @access protected
+     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      * @PrePersist
      * @PreUpdate
      */
-    protected function prepareBeforeSave() 
+    public function prepareBeforeSave() 
     {
+        if (!is_numeric($this->date)) {
+            $this->setDate(time());
+        }
+
         if ($this->statusChanged) {
             $this->changeStatusPostprocess($this->oldStatus, $this->getStatus());
             $this->statusChanged = false;
