@@ -181,11 +181,116 @@ class XLite_Tests_Model_Order extends XLite_Tests_TestCase
 
     }
 
+	public function testAddItem()
+	{
+        $order = new \XLite\Model\Order();
+
+        $profile = new \XLite\Model\Profile();
+        $list = $profile->findAll();
+        $profile = array_shift($list);
+        unset($list);
+
+        $order->map($this->testOrder);
+        $order->setPaymentMethod(\XLite\Model\PaymentMethod::factory('PurchaseOrder'));
+        $order->setProfileId(0);
+
+        $item = new \XLite\Model\OrderItem();
+
+        $item->setProduct($this->getProduct());
+        $item->setAmount(1);
+        $item->setPrice($this->getProduct()->getPrice());
+
+        $this->assertTrue($order->addItem($item), 'check add item');
+		$this->assertEquals(1, $order->getItems()->count(), 'check items length');
+        $this->assertEquals(1, $order->getItems()->get(0)->getAmount(), 'check item amount');
+
+        $item = new \XLite\Model\OrderItem();
+
+        $item->setProduct($this->getProduct());
+        $item->setAmount(1);
+        $item->setPrice($this->getProduct()->getPrice());
+
+        $this->assertTrue($order->addItem($item), 'check add item #2');
+        $this->assertEquals(1, $order->getItems()->count(), 'check items length #2');
+        $this->assertEquals(2, $order->getItems()->get(0)->getAmount(), 'check item amount #2');
+
+        \XLite\Core\Database::getEM()->persist($order);
+        \XLite\Core\Database::getEM()->flush();
+	}
+
     public function testGetAddItemError()
     {
         $order = $this->getTestOrder();
         $this->assertNull($order->getAddItemError(), 'empty add item error');
     }
+
+	public function testGetItemByItem()
+	{
+		$order = $this->getTestOrder();
+
+        $item = new \XLite\Model\OrderItem();
+
+        $item->setProduct($this->getProduct());
+        $item->setAmount(1);
+        $item->setPrice($this->getProduct()->getPrice());
+
+		$this->assertEquals($item->getKey(), $order->getItemByItem($item)->getKey(), 'check equals items');
+
+		$list = \XLite\Core\Database::getRepo('XLite\Model\Product')->findByEnabled(true);
+		$p = $list[1];
+		unset($list[1]);
+		foreach ($list as $i) {
+			\XLite\Core\Database::getEM()->detach($i);
+		}
+		unset($list);
+
+        $item = new \XLite\Model\OrderItem();
+
+        $item->setProduct($p);
+        $item->setAmount(1);
+        $item->setPrice($p->getPrice());
+
+        $this->assertNull($order->getItemByItem($item), 'check not equals items');
+
+		$order->addItem($item);
+
+        $this->assertEquals($item->getKey(), $order->getItemByItem($item)->getKey(), 'check equals items #2');
+	}
+
+	public function testGetItemByItemId()
+	{
+		$order = $this->getTestOrder();
+
+		$list = \XLite\Core\Database::getRepo('XLite\Model\Product')->findByEnabled(true);
+		$p = $list[1];
+		unset($list[1]);
+		foreach ($list as  $i) {
+			\XLite\Core\Database::getEM()->detach($i);
+		}
+		unset($lisst);
+
+        $item = new \XLite\Model\OrderItem();
+
+        $item->setProduct($p);
+        $item->setAmount(1);
+        $item->setPrice($p->getPrice());
+
+		$order->addItem($item);
+
+        $this->assertEquals(
+			$item->getKey(),
+			$order->getItemByItemId($item->getItemId())->getKey(),
+			'check equals items'
+		);
+
+        $this->assertNull($order->getItemByItemId(0), 'check not exists item');
+
+		$o2 = $this->gettestOrder();
+
+		$id = $o2->getItems()->get(0)->getItemId();
+
+		$this->assertNull($order->getItemByItemId($id), 'check foreign item');
+	}
 
     protected function getProduct()
     {
