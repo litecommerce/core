@@ -34,8 +34,9 @@ namespace XLite\Model\Image\Category;
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
+ *
  * @Entity
- * @Table (name="category_images")
+ * @Table  (name="category_images")
  */
 class Image extends \XLite\Model\Base\Image
 {

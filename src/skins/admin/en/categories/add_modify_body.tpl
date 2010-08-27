@@ -52,6 +52,12 @@
     </tr>
 
     <tr>
+      <td class="FormButton" valign="top">HTML code block (to use instead of the name and description)</td>
+      <td>&nbsp;</td>
+      <td><textarea name="html_block" cols="50" rows="10">{category.getHtmlBlock():h}</textarea></td>
+    </tr>
+
+    <tr>
       <td>{if:category.hasImage()}<img src="{category.image.getURL()}" border="0" />{else:}<img src="images/no_image.png" border="0" />{end:}</td>
       <td>&nbsp;</td>
       <td valign="bottom" rowspan=2>

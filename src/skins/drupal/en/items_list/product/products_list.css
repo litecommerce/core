@@ -11,8 +11,18 @@
  * @since     3.0.0
  */
 
+/* Header */
+.list-header {
+  height: 2em;
+  padding: 0.3em 0.3em;
+}
+
 .list-header .display-modes {
   float: left;
+}
+
+.list-header .display-modes li a {
+  padding: 0.1em 0.8em;
 }
 
 .list-header ul {
@@ -25,6 +35,21 @@
   display: inline;
   margin: 0;
   padding: 0 0 0 6px;
+  background: none;
+}
+
+/* Sort box */
+.sort-box
+{
+  float: right;
+}
+
+.sort-box a
+{
+  font-size: 1.4em;
+  text-decoration: none;
+  padding-bottom: 4px;
+  line-height: normal;
 }
 
 /* List body and common styles */

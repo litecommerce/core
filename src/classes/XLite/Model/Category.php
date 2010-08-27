@@ -165,6 +165,18 @@ class Category extends \XLite\Model\Base\I18n
     protected $clean_url = '';
 
     /**
+     * HTML code to use instead category name and description
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     *
+     * @Column (type="text", nullable=false)
+     */
+    protected $html_block = '';
+
+    /**
      * Many-to-one relation with memberships table
      * 
      * @var    \Doctrine\Common\Collections\ArrayCollection

@@ -61,4 +61,17 @@ class Category extends \XLite\Controller\Customer\Catalog
     {
         is_null($this->getCategory()) ? $this->setReturnUrl($this->buildURL('main')) : parent::handleRequest();
     }
+
+    /**
+     * Return header for the ceter part of current page
+     *
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getContentHeader()
+    {
+        return $this->getCategory()->getHtmlBlock() ?: parent::getContentHeader();
+    }
 }

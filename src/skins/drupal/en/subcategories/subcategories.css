@@ -58,3 +58,7 @@
   text-align: center;
   position: relative;       /* Hack for FF2: in FF2 static "inner-blocks" are non-clickable */
 }
+
+.subcategories-separator {
+  height: 3em;
+}
