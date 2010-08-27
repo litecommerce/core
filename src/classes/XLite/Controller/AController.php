@@ -500,6 +500,7 @@ abstract class AController extends \XLite\Core\Handler
      * 
      * @return string
      * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function getTitle()

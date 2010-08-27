@@ -1,8 +1,8 @@
 
 -- Categories [2]
 
-INSERT INTO xlite_categories VALUES (14015,1,2,1,0,0,0,1,1,'fruit');
-INSERT INTO xlite_categories VALUES (14009,3,4,1,0,0,0,1,1,'vegetables');
+INSERT INTO xlite_categories VALUES (14015,1,2,1,0,0,0,1,1,'fruit','');
+INSERT INTO xlite_categories VALUES (14009,3,4,1,0,0,0,1,1,'vegetables','');
 
 INSERT INTO xlite_category_images VALUES (1,14015,'demo_c14015.jpeg','image/jpeg',160,92,9201,1278408407,'');
 INSERT INTO xlite_category_images VALUES (2,14009,'demo_c14009.jpeg','image/jpeg',160,127,10863,1278408407,'');

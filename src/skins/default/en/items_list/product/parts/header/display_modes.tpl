@@ -13,7 +13,6 @@
  *}
 
 <div class="display-modes" IF="isDisplayModeSelectorVisible()">
-  View as:
   <ul>
     <li FOREACH="displayModes,key,name" class="{getDisplayModeLinkClassName(key)}">
       <a href="{getActionUrl(_ARRAY_(#displayMode#^key))}" class="{key}">{name}</a>
