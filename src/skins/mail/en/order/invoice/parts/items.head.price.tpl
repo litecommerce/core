@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * ____file_title____
+ * Invoice items table head part : Price column
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -9,16 +9,6 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
+ * @ListChild (list="invoice.items.head", weight="30")
  *}
-<html>
-<body>
-Dear {order.profile.billing_firstname:h} {order.profile.billing_lastname:h}!
-<p>
-Thank you for your order made with our shopping system.<br>
-Please come back soon!
-<p>
-<widget class="\XLite\View\Invoice" order="{order}" />
-<p>
-{signature:h}
-</body>
-</html>
+<th class="price">{t(#Price#)}</th>

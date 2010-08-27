@@ -173,16 +173,18 @@ class FlexyCompiler extends \XLite\Base\Singleton
      */
     protected function preprocess()
     {
-        $tpl = substr($this->file, strlen(LC_SKINS_DIR));
-        list($zone, $lang, $tpl) = explode(LC_DS, $tpl, 3);
+        if (0 === strpos($this->file, LC_SKINS_DIR)) {
+            $tpl = substr($this->file, strlen(LC_SKINS_DIR));
+            list($zone, $lang, $tpl) = explode(LC_DS, $tpl, 3);
 
-        foreach ($this->getPatches($this->getZone($zone), $lang, $tpl) as $patch) {
-            $method = 'process' . ucfirst($patch->patch_type) . 'Patch';
-            if (method_exists($this, $method)) {
-                $this->$method($patch);
+            foreach ($this->getPatches($this->getZone($zone), $lang, $tpl) as $patch) {
+                $method = 'process' . ucfirst($patch->patch_type) . 'Patch';
+                if (method_exists($this, $method)) {
+                    $this->$method($patch);
 
-            } else {
-                // TODO - add throw exception
+                } else {
+                    // TODO - add throw exception
+                }
             }
         }
     }

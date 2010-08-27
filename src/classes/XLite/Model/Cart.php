@@ -111,13 +111,13 @@ class Cart extends \XLite\Model\Order
      * Prepare order before save data operation
      * 
      * @return void
-     * @access protected
+     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      * @PrePersist
      * @PreUpdate
      */
-    protected function prepareBeforeSave()
+    public function prepareBeforeSave()
     {
         parent::prepareBeforeSave();
 

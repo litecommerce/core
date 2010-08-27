@@ -136,7 +136,6 @@ class Decorator extends Decorator\ADecorator
     protected $doctrineClassAttributes = array(
         'Entity',
         'Table',
-        'HasLifecycleCallbacks',
         'InheritanceType',
         'DiscriminatorColumn',
         'DiscriminatorMap',
@@ -413,6 +412,7 @@ class Decorator extends Decorator\ADecorator
                 $comment = $this->getClassComment($content);
                 if ($comment) {
                     $newComment = $this->modifyParentEntityClassComment($comment);
+
                     $content = str_replace($comment, $newComment, $content);
 
                 } elseif (preg_match(self::CLASS_PATTERN, $content, $matches)) {
@@ -494,7 +494,7 @@ class Decorator extends Decorator\ADecorator
     protected function modifyParentEntityClassComment($comment)
     {
         $comment = preg_replace(
-            '/^ \* @(?:' . implode('|', $this->doctrineClassAttributes) . ')(?:\s+\(?:.+\))?\s*$/UiSm',
+            '/^ \* @(?:' . implode('|', $this->doctrineClassAttributes) . ')(?:\s+\(.+\))?\s*$/UiSm',
             '',
             $comment
         );

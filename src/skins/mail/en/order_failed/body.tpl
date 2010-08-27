@@ -16,7 +16,7 @@ Dear {order.profile.billing_firstname:h} {order.profile.billing_lastname:h}!
 <p>
 Your order # {order.order_id:r} has failed or been declined by the shop administration.<br>
 <p>
-<widget template="common/invoice.tpl">
+<widget class="\XLite\View\Invoice" order="{order}" />
 <p>
 {signature:h}
 </body>
