@@ -181,7 +181,7 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @OneToMany (targetEntity="XLite\Model\CategoryProducts", mappedBy="product", cascade={"persist","remove"})
+     * @OneToMany (targetEntity="XLite\Model\CategoryProducts", mappedBy="product", cascade={"all"})
      * @OrderBy   ({"orderby" = "ASC"})
      */
     protected $category_products;
@@ -194,7 +194,7 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @OneToOne (targetEntity="XLite\Model\Image\Product\Thumbnail", mappedBy="product", cascade={"persist","remove"})
+     * @OneToOne (targetEntity="XLite\Model\Image\Product\Thumbnail", mappedBy="product", cascade={"all"})
      */
     protected $thumbnail;
 
@@ -206,7 +206,7 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @OneToOne (targetEntity="XLite\Model\Image\Product\Image", mappedBy="product", cascade={"persist","remove"})
+     * @OneToOne (targetEntity="XLite\Model\Image\Product\Image", mappedBy="product", cascade={"all"})
      */
     protected $image;
 
@@ -218,7 +218,7 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @OneToMany (targetEntity="XLite\Model\Image\Product\Detailed", mappedBy="product", cascade={"persist","remove"})
+     * @OneToMany (targetEntity="XLite\Model\Image\Product\Detailed", mappedBy="product", cascade={"all"})
      * @OrderBy ({"orderby" = "ASC"})
      */
     protected $detailedImages;

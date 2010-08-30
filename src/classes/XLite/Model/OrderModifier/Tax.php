@@ -307,13 +307,13 @@ class Tax extends \XLite\Model\Order implements \XLite\Base\IDecorator
 
             // Prepared shipping taxes values
             foreach ($this->shippingTaxes as $name => $value) {
-                $this->shippingTaxes[$name] = $this->formatCurrency($value);
+                $this->shippingTaxes[$name] = \XLite\Core\Converter::formatCurrency($value);
             }
         }
 
         // Prepared all tax values
         foreach ($result as $name => $value) {
-            $result[$name] = $this->formatCurrency($result[$name]);
+            $result[$name] = \XLite\Core\Converter::formatCurrency($result[$name]);
         }
 
         $this->setTaxes($result);

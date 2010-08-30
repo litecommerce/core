@@ -88,10 +88,10 @@ class Echeck extends \XLite\Model\PaymentMethod
     {
         $data = \XLite\Core\Request::getInstance()->ch_info;
         foreach ($this->formFields as $key => $name) {
-            $cart->setDetailCell(
+            $cart->setDetail(
                 $key,
-                $name,
-                isset($data[$key]) ? $data[$key] : null
+                isset($data[$key]) ? $data[$key] : null,
+                $name
             );
         }
 

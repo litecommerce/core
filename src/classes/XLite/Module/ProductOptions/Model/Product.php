@@ -44,7 +44,7 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @OneToMany (targetEntity="XLite\Module\ProductOptions\Model\OptionGroup", mappedBy="product", cascade={"persist","remove"})
+     * @OneToMany (targetEntity="XLite\Module\ProductOptions\Model\OptionGroup", mappedBy="product", cascade={"all"})
      */
     protected $optionGroups;
 

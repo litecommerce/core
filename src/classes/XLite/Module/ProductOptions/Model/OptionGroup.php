@@ -151,7 +151,7 @@ class OptionGroup extends \XLite\Model\Base\I18n
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @OneToMany (targetEntity="XLite\Module\ProductOptions\Model\Option", mappedBy="group", cascade={"persist","remove"})
+     * @OneToMany (targetEntity="XLite\Module\ProductOptions\Model\Option", mappedBy="group", cascade={"all"})
      */
     protected $options;
 

@@ -1152,6 +1152,11 @@ PHP;
                 }
             }
 
+            if (isset($attributes['haslifecyclecallbacks'])) {
+                $hasDoctrineAttribute = true;
+                unset($attributes['haslifecyclecallbacks']);
+            }
+
             if ($hasDoctrineAttribute && !$hasEntity) {
                 $errors[] = 'Class has not @Entity attribute, but has some Doctrine class attributes';
             }
