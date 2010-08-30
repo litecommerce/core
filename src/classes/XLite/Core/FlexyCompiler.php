@@ -682,7 +682,7 @@ class FlexyCompiler extends \XLite\Base\Singleton
                 while (($pos = strpos($str, "{", $pos)) !== false) {
                     $pos1 = strpos($str, "}", $pos);
                     if ($pos1 !== false) {
-                        $echo = $this->flexyEcho(substr($str, $pos, $pos1-$pos));
+                        $echo = $this->flexyEcho(substr($str, $pos, $pos1-$pos+1));
                         $this->subst($token['start']+$pos, $token['start']+$pos1+1, $echo);
                     } else {
                         break;

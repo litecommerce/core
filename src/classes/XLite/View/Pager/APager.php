@@ -329,6 +329,21 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
     }
 
     /**
+     * getFrameHalfLength 
+     * 
+     * @param bool $shortPart which part of frame to return
+     *  
+     * @return int
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getFrameHalfLength($shortPart = true)
+    {
+        return call_user_func($shortPart ? 'floor' : 'ceil', $this->getPagesPerFrame() / 2);
+    }
+
+    /**
      * getFrameStartPage
      *
      * @return int
@@ -337,9 +352,40 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
      */
     protected function getFrameStartPage()
     {
-        $pageId = $this->getPageId() - ceil($this->getPagesPerFrame() / 2);
+        $pageId = min(
+            $this->getPageId() - $this->getFrameHalfLength(),
+            $this->getPagesCount() - $this->getPagesPerFrame()
+        );
 
-        return (0 > $pageId) ? 0 : $pageId;
+        return max(0, $pageId);
+    }
+
+    /**
+     * isFurthermostPage 
+     * 
+     * @param string $type link type (first / previous / next / last)
+     *  
+     * @return bool
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function isFurthermostPage($type)
+    {
+        switch ($type) {
+        
+            case self::PAGE_FIRST:
+                $result = $this->getPageId() > $this->getFrameHalfLength();
+                break;
+                
+            case self::PAGE_LAST:
+                $result = $this->getPageId() < $this->getPagesCount() - $this->getFrameHalfLength(false);
+                break;
+                
+            default:
+                $result = false;
+        }       
+        
+        return $result;
     }
 
     /**
@@ -356,23 +402,6 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
         }
 
         $this->pageURLs = array_slice($this->pageURLs, $this->getFrameStartPage(), $this->getPagesPerFrame(), true);
-    }
-
-    /**
-     * isFurthermostPage 
-     * 
-     * @param string $type link type (first / previous / next / last)
-     *  
-     * @return bool
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function isFurthermostPage($type)
-    {
-        $pageId = $this->getPageId();
-
-        return (0 >= $pageId && in_array($type, array(self::PAGE_FIRST, self::PAGE_PREVIOUS)))
-            || ($this->getPagesCount() - 1 <= $pageId && in_array($type, array(self::PAGE_LAST, self::PAGE_NEXT)));
     }
 
     /**
@@ -404,48 +433,6 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
     protected function isCurrentPage($pageId)
     {
         return $this->getPageId() == $pageId;
-    }
-
-    /**
-     * getLinkClassName 
-     * 
-     * @param mixed $index page notation
-     *  
-     * @return int
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getLinkClassName($index)
-    {
-        return $this->getPageIdByNotation($index);
-    }
-
-    /**
-     * Get border link class name
-     *
-     * @param string $type link type (first / previous / next / last)
-     *
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getBorderLinkClassName($type)
-    {
-        return $type . ' ' . ($this->isFurthermostPage($type) ? $type . '-disabled disabled' : '');
-    }
-
-    /**
-     * getPageClassName 
-     * 
-     * @param int $pageId current page ID
-     *  
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getPageClassName($pageId)
-    {
-        return 'page-item page-' . $pageId . ' ' . ($this->isCurrentPage($pageId) ? 'selected' : '');
     }
 
      /**

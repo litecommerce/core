@@ -41,107 +41,43 @@ ul.pager li a {
   display: inline-block;
   border: 1px solid #fff;
   font-size: 1.1em;
-  height: 1.7em;
-  width: 2.1em;
   padding-top: 0.3em;
   text-align: center;
+  width: 2.1em;
+  height: 1.7em;
 }
 
 ul.pager li a:hover,
 ul.pager li a:visited:hover {
   border-width: 1px;
-  border-color: black;
-  background: #f3f3f3 none;
+  border-color: #b1c9e0;
 }
 
-ul.pager li span {
-  padding: 2px 8px;
-  display: inline-block;
-  font-weight: normal;
-  color: #fff;
-}
-
-ul.pager li.pager-current,
-ul.pager li.selected
-{
-  font-weight: bold;
-}
-
-ul.pager li.pager-current span,
-ul.pager li.pager-current a,
-ul.pager li.pager-current a:hover,
-ul.pager li.selected span,
-ul.pager li.selected a,
-ul.pager li.selected a:hover
-{
+ul.pager li.selected a {
   background: #869cb1 none;
   color: #fff;
   cursor: text;
   border-color: #869cb1;
 }
 
-ul.pager .first img,
-ul.pager .previous img,
-ul.pager .next img, 
-ul.pager .last img
-{
-  height: 7px;
-  width: 9px;
-  background: transparent url(../images/pager_arrows.gif) no-repeat left top;
+ul.pager li.previous {
+  background: transparent url(images/arrow_pager_left.png) no-repeat center center;
 }
 
-ul.pager .previous img,
-ul.pager .next img {
-  width: 5px;
-}
-
-ul.pager .previous img { 
-  background-position: -9px top;
-} 
-
-ul.pager .next img { 
-  background-position: -14px top;
-} 
-
-ul.pager .last img { 
-  background-position: -19px top;
+ul.pager li.next {
+  background: transparent url(images/arrow_pager_right.png) no-repeat center;
 }
 
 ul.pager li.disabled a {
   cursor: text;
 }
 
-ul.pager li.disabled a:hover,
-ul.pager li.disabled a:visited:hover
-{
-  background: transparent none;
-  border-color: #fff;
-}
-
-ul.pager .first-disabled img {
-  background-position: left -7px;
-}
-
-ul.pager .previous-disabled img {
-  background-position: -9px -7px;
-}
-
-ul.pager .next-disabled img {
-  background-position: -14px -7px;
-}
-
-ul.pager .last-disabled img { 
-  background-position: -19px -7px;
-}
-
-div.pager-items-total
-{
+div.pager-items-total {
   float: right;
   padding-top: 0.6em;
 }
 
-div.pager-items-total input.page-length
-{
+div.pager-items-total input.page-length {
   width: 2em;
   text-align: right;
 }
