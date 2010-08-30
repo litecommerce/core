@@ -148,12 +148,12 @@ class Cart extends \XLite\Model\Order
      * Prepare order before remove operation
      * 
      * @return void
-     * @access protected
+     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      * @PreRemove
      */
-    protected function prepareBeforeRemove()
+    public function prepareBeforeRemove()
     {
         parent::prepareBeforeRemove();
 

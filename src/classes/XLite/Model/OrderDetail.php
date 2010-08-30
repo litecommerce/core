@@ -76,7 +76,7 @@ class OrderDetail extends \XLite\Model\AEntity
      *
      * @Column (type="string", length="255")
      */
-    protected $label = '';
+    protected $label;
 
     /**
      * Value

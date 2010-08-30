@@ -210,7 +210,7 @@ class Category extends \XLite\Model\Base\I18n
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @OneToMany (targetEntity="XLite\Model\CategoryProducts", mappedBy="category", cascade={"persist","remove"})
+     * @OneToMany (targetEntity="XLite\Model\CategoryProducts", mappedBy="category", cascade={"all"})
      * @OrderBy   ({"orderby" = "ASC"})
      */
     protected $category_products;

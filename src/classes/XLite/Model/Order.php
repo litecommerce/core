@@ -181,7 +181,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @OneToMany (targetEntity="XLite\Model\OrderDetail", mappedBy="order", cascade={"persist","remove"})
+     * @OneToMany (targetEntity="XLite\Model\OrderDetail", mappedBy="order", cascade={"all"})
      * @OrderBy ({"name" = "ASC"})
      */
     protected $details;
@@ -194,7 +194,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @OneToMany (targetEntity="XLite\Model\OrderItem", mappedBy="order", cascade={"persist","remove"})
+     * @OneToMany (targetEntity="XLite\Model\OrderItem", mappedBy="order", cascade={"all"})
      */
     protected $items;
 
@@ -206,7 +206,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @OneToMany (targetEntity="XLite\Model\OrderModifier", mappedBy="owner", cascade={"persist","remove"})
+     * @OneToMany (targetEntity="XLite\Model\OrderModifier", mappedBy="owner", cascade={"all"})
      */
     protected $saved_modifiers;
 
@@ -386,7 +386,10 @@ class Order extends \XLite\Model\Base\ModifierOwner
             if (isset($keys[$key])) {
                 $keys[$key]->setAmount($keys[$key]->getAmount() + $item->getAmount());
                 $this->getItems()->removeElement($item);
-                \XLite\Core\Database::getEM()->remove($item);
+
+                if (\XLite\Core\Database::getEM()->contains($item)) {
+                    \XLite\Core\Database::getEM()->remove($item);
+                }
 
             } else {
                 $keys[$key] = $item;
@@ -399,7 +402,9 @@ class Order extends \XLite\Model\Base\ModifierOwner
         foreach ($this->getItems() as $item) {
             if (!$item->isValid()) {
                 $this->getItems()->removeElement($item);
-                \XLite\Core\Database::getEM()->remove($item);
+                if (\XLite\Core\Database::getEM()->contains($item)) {
+                    \XLite\Core\Database::getEM()->remove($item);
+                }
             }
         }
     }
@@ -498,11 +503,11 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * Calculate and save order subtotal 
      * 
      * @return void
-     * @access public
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function calculateSubtotal() 
+    protected function calculateSubtotal() 
     {
         $subtotal = 0;
 
@@ -681,8 +686,8 @@ class Order extends \XLite\Model\Base\ModifierOwner
             }
         }
 
-        return $this->_origProfile
-            ? $this->_origProfile
+        return $this->origProfile
+            ? $this->origProfile
             : $this->getProfile();
     }
 
@@ -712,7 +717,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function setProfileCopy($prof) 
+    public function setProfileCopy(\XLite\Model\Profile $prof) 
     {
         $this->setOrigProfile($prof);
 
@@ -766,12 +771,10 @@ class Order extends \XLite\Model\Base\ModifierOwner
         $result = array();
 
         foreach ($this->getItems() as $item) {
-            if (method_exists($item, 'getDescription')) {
-                $result[] = $item->getDescription();
-            }
+            $result[] = $item->getDescription();
         }
 
-        return implode("\n", $result) . "\n";
+        return implode("\n", $result);
     }
 
     /**
@@ -829,84 +832,49 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * 
      * @param string $name  Cell code
      * @param mixed  $value Cell value
+     * @param string $label Cell label
      *  
      * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function setDetail($name, $value)
+    public function setDetail($name, $value, $label = null)
     {
         $detail = $this->getDetail($name);
 
-        if ($detail) {
-            $detail->setValue($value);
-
-        } else {
+        if (!$detail) {
             $detail = new \XLite\Model\OrderDetail();
 
             $detail->setOrder($this);
             $this->addDetails($detail);
 
             $detail->setName($name);
-            $detail->setValue($value);
         }
+
+        $detail->setValue($value);
+        $detail->setLabel($label);
     }
 
     /**
-     * Get detail cell label 
+     * Get meaning order details 
      * 
-     * @param string $name Cell name
-     *  
-     * @return string
+     * @return array
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getDetailLabel($name) 
+    public function getMeaningDetails()
     {
-        $detail = $this->getDetail($name);
+        $result = array();
 
-        return $detail ? $detail->getLabel() : null;
-    }
-
-    /**
-     * Set details cell
-     * 
-     * @param string $code  Cell code
-     * @param string $name  Cell name
-     * @param mixed  $value Cell value
-     *  
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function setDetailCell($code, $name, $value)
-    {
-        $this->setDetail($code, $value);
-
-        $detail = $this->getDetail($code);
-        $detail->setLabel($name);
-    }
-
-    /**
-     * Unset details cell 
-     * 
-     * @param string $code Cell code
-     *  
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function unsetDetailCell($code)
-    {
-        $detail = $this->getDetail($code);
-
-        if ($detail) {
-            $this->getDetails()->removeElement($detail);
+        foreach ($this->getDetails() as $detail) {
+            if ($detail->getLabel()) {
+                $result[] = $detail;
+            }
         }
+
+        return $result;
     }
 
     /**
@@ -965,7 +933,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
         ) {
             $this->processFail();
         }
-
     }
 
     /**
@@ -1145,7 +1112,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
         $mail->send();
     }
 
-
     /**
      * Prepare order before save data operation
      * 
@@ -1172,12 +1138,12 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * Prepare order before remove operation
      * 
      * @return void
-     * @access protected
+     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      * @PreRemove
      */
-    protected function prepareBeforeRemove()
+    public function prepareBeforeRemove()
     {
         if (in_array($this->getStatus(), array(self::STATUS_QUEUED, self::STATUS_INPROGRESS))) {
             $status = $this->getStatus();
@@ -1196,7 +1162,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
      */
     public function isShowCCInfo()
     {
-        return 'CreditCard' == $this->getPaymentMethod()
+        return 'CreditCard' == $this->getPaymentMethod()->get('payment_method')
             && \XLite\Core\Config::getInstance()->Email->show_cc_info;
     }
 
@@ -1216,6 +1182,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
 
     /**
      * Refresh order items 
+     * TODO - rework after tax subsystem rework
      * 
      * @return void
      * @access public
@@ -1246,20 +1213,5 @@ class Order extends \XLite\Model\Base\ModifierOwner
                 \XLite\Core\Database::getEM()->flush();
             }
         }
-    }
-
-    /**
-     * Format currency value
-     * 
-     * @param float $price Currency
-     *  
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function formatCurrency($price)
-    {
-        return sprintf('%.02f', round(doubleval($price), 2));
     }
 }

@@ -93,7 +93,7 @@ class Option extends \XLite\Model\Base\I18n
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @OneToMany (targetEntity="XLite\Module\ProductOptions\Model\OptionException", mappedBy="option", cascade={"persist","remove"})
+     * @OneToMany (targetEntity="XLite\Module\ProductOptions\Model\OptionException", mappedBy="option", cascade={"all"})
      */
     protected $exceptions;
 
@@ -104,7 +104,7 @@ class Option extends \XLite\Model\Base\I18n
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @OneToMany (targetEntity="XLite\Module\ProductOptions\Model\OptionSurcharge", mappedBy="option", cascade={"persist","remove"})
+     * @OneToMany (targetEntity="XLite\Module\ProductOptions\Model\OptionSurcharge", mappedBy="option", cascade={"all"})
      */
     protected $surcharges;
 

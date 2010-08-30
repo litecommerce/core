@@ -15,8 +15,8 @@
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
  * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
+ * @package    Tests
+ * @subpackage Classes
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -26,57 +26,27 @@
  * @since      3.0.0
  */
 
-namespace XLite\Core;
+namespace XLite\Model;
 
-/**
- * DB-based configuration registry
- * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
- */
-class Config extends \XLite\Base\Singleton
+class FakeOrderItem extends \XLite\Model\OrderItem
 {
+	protected $fakeInvalid = false;
+
+	public function setInvalidFake()
+	{
+		$this->fakeInvalid = true;
+	}
+
     /**
-     * Read config options
-     * 
-     * @param mixed $force ____param_comment____
-     *  
-     * @return void
+     * Check if item is valid
+     *
+     * @return bool
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function readConfig($force = false)
+    public function isValid()
     {
-        return \XLite\Core\Database::getRepo('XLite\Model\Config')->getAllOptions($force);
-    }
-
-    /**
-     * Update and re-read options 
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function update()
-    {
-        parent::update();
-
-        $this->readConfig(true);
-    }
-
-    /**
-     * Method to access a singleton 
-     * 
-     * @return \XLite\Core\CommonCell
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function getInstance()
-    {
-        return parent::getInstance()->readConfig();
+        return $this->fakeInvalid ? false : 0 < $this->getAmount();
     }
 }

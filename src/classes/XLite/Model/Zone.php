@@ -70,7 +70,7 @@ class Zone extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @OneToMany (targetEntity="XLite\Model\ZoneElement", mappedBy="zone", cascade={"persist","remove"})
+     * @OneToMany (targetEntity="XLite\Model\ZoneElement", mappedBy="zone", cascade={"all"})
      */
     protected $zone_elements;
 
@@ -82,7 +82,7 @@ class Zone extends \XLite\Model\AEntity
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @OneToMany (targetEntity="XLite\Model\Shipping\Markup", mappedBy="zone", cascade={"persist","remove"})
+     * @OneToMany (targetEntity="XLite\Model\Shipping\Markup", mappedBy="zone", cascade={"all"})
      */
     // protected $shipping_markups;
 

@@ -197,9 +197,14 @@ class Logger extends \XLite\Base\Singleton
             'Server API: ' . PHP_SAPI,
         );
 
-        if (isset($_SERVER) && isset($_SERVER['REQUEST_METHOD'])) {
-            $parts[] = 'Request method: ' . $_SERVER['REQUEST_METHOD'];
-            $parts[] = 'URI: ' . $_SERVER['REQUEST_URI'];
+        if (isset($_SERVER)) {
+            if (isset($_SERVER['REQUEST_METHOD'])) {
+                $parts[] = 'Request method: ' . $_SERVER['REQUEST_METHOD'];
+            }
+
+            if (isset($_SERVER['REQUEST_URI'])) {
+                $parts[] = 'URI: ' . $_SERVER['REQUEST_URI'];
+            }
         }
 
         $message .= "\n" . implode('; ', $parts) . ';';

@@ -31,8 +31,8 @@ if (false === defined('PHPUnit_MAIN_METHOD')) {
 }
 
 // PHPUnit classes
-define('PATH_TESTS', realpath(dirname(__FILE__)));
-define('PATH_ROOT', realpath(dirname(__FILE__) . '/../..'));
+define('PATH_TESTS', realpath(__DIR__));
+define('PATH_ROOT', realpath(__DIR__ . '/../..'));
 
 if (file_exists(PATH_ROOT . '/src')) {
     define('PATH_SRC', realpath(PATH_ROOT . '/src'));

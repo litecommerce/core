@@ -206,7 +206,7 @@ CREATE TABLE xlite_order_details (
   detail_id int(11) NOT NULL auto_increment PRIMARY KEY,
   order_id int(11) NOT NULL default '0',
   name varchar(255) NOT NULL default '',
-  label varchar(255) NOT NULL default '',
+  label varchar(255) default NULL,
   value text NOT NULL,
   KEY oname (order_id, name)
 ) TYPE=MyISAM;

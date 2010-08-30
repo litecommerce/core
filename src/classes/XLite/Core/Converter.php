@@ -506,6 +506,31 @@ class Converter extends \XLite\Base\Singleton
     }
 
     /**
+     * Format currency value
+     * 
+     * @param mixed $price Currency unformatted value
+     *  
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function formatCurrency($price)
+    {
+        if (isset($price)) {
+            $config = \XLite\Core\Config::getInstance();
+            $price = number_format(
+                doubleval($price),
+                2,
+                $config->General->decimal_delim,
+                $config->General->thousand_delim
+            );
+        }
+
+        return $price;
+    }
+
+    /**
      * Format price value
      * 
      * @param mixed $price Price

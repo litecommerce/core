@@ -45,7 +45,7 @@ class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @OneToMany (targetEntity="XLite\Module\ProductOptions\Model\OrderItemOption", mappedBy="order_item", cascade={"persist","remove"})
+     * @OneToMany (targetEntity="XLite\Module\ProductOptions\Model\OrderItemOption", mappedBy="order_item", cascade={"all"})
      * @OrderBy ({"orderby" = "ASC"})
      */
     protected $options;
@@ -196,7 +196,7 @@ class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
      */
     public function getWeight()
     {
-        $weight = parent::getPrice();
+        $weight = parent::getWeight();
 
         foreach ($this->getOptions() as $option) {
             if (

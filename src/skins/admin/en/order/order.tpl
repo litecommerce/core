@@ -28,14 +28,12 @@
 	<td IF="order.status=config.General.clear_cc_info"><widget class="\XLite\View\StatusSelect" field="status" value="{order.status}"></td>
 	<td IF="!order.status=config.General.clear_cc_info"><widget class="\XLite\View\StatusSelect" field="status" value="{order.status}" pm="{order.paymentMethod.payment_method}"></td>
 </tr>
-{foreach:order.details,name,val}
-<tr valign="top" IF="order.getDetailLabel(name)">
-	<td >{order.getDetailLabel(name)}:</td>
-	<td>
- 	  <input type="text" name="details[{name}]" size="40" value="{val:r}">
-    </td>
+
+<tr FOREACH="order.getMeaningDetails(),d" valign="top">
+	<td>{d.getLabel()}:</td>
+	<td><input type="text" name="details[{d.getDetailId()}]" size="40" value="{d.getValue():r}" /></td>
 </tr>
-{end:}
+
 <tr valign="top">
 	<td>Notes:</td>
 	<td><textarea name="notes" cols="60" rows="7">{order.notes:h}</textarea></td> 

@@ -169,7 +169,7 @@ class OrderItem extends \XLite\Model\Base\ModifierOwner
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @OneToMany (targetEntity="XLite\Model\OrderItemModifier", mappedBy="owner", cascade={"persist","remove"})
+     * @OneToMany (targetEntity="XLite\Model\OrderItemModifier", mappedBy="owner", cascade={"all"})
      */
     protected $saved_modifiers;
 
