@@ -709,25 +709,19 @@ class Decorator extends Decorator\ADecorator
 
         foreach (\Includes\Decorator\DataStructure\ClassData\Tree::getIndex() as $node) {
 
-            $filePath = $node->getFilePath();
-
-            // Get path related to the "LC_CLASSES_DIR" directory
-            $relativePath = preg_replace('/^' . preg_quote(LC_CLASSES_DIR, '/') . '(.*)\.php$/i', '$1.php', $filePath);
-            $classComment = $node->getClassComment();
-
             // Save data
             $this->classesInfo[$node->getClass()] = array(
-                self::INFO_FILE          => $relativePath,
+                self::INFO_FILE          => $node->getFilePath(),
                 self::INFO_CLASS_ORIG    => $node->getClass(),
                 self::INFO_EXTENDS       => $node->getParentClass(),
                 self::INFO_EXTENDS_ORIG  => $node->getParentClass(),
                 self::INFO_IS_DECORATOR  => in_array('\XLite\Base\IDecorator', $node->getInterfaces()),
-                self::INFO_ENTITY        => $node->isEntity(),
-                self::INFO_CLASS_COMMENT => $classComment,
+                self::INFO_ENTITY        => $node->hasTag('Entity'),
+                self::INFO_CLASS_COMMENT => ($classComment = $node->getClassComment()),
             );
 
             if ($this->isViewChild($classComment)) {
-                $this->viewListChilds[$relativePath] = $node->getClass();
+                $this->viewListChilds[$node->getFilePath()] = $node->getClass();
             }
 
             if (in_array('\XLite\Base\IPatcher', $node->getInterfaces())) {
@@ -738,8 +732,8 @@ class Decorator extends Decorator\ADecorator
                 $this->multilangs[] = $node->getClass();
             }
     
-            if ($classComment || !preg_match(self::INTERFACE_COMMENT_PATTERN, file_get_contents($filePath))) {
-                $this->checkClassCommentAttributes($classComment, $filePath);
+            if ($classComment || !preg_match(self::INTERFACE_COMMENT_PATTERN, file_get_contents(LC_CLASSES_DIR . '/' . $node->getFilePath()))) {
+                $this->checkClassCommentAttributes($classComment, $node->getFilePath());
             }
         }
     }

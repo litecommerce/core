@@ -43,13 +43,28 @@ class Node extends \Includes\DataStructure\Node\Tree
 
     const N_NAME_SPACE    = 'nameSpace';
     const N_CLASS_COMMENT = 'classComment';
+    const N_TAGS          = 'tags';
     const N_CLASS         = 'name';
     const N_PARENT_CLASS  = 'parent';
     const N_INTERFACES    = 'interfaces';
     const N_STUB          = 'stub';
-    const N_ENTITY        = 'entity';
     const N_FILE_PATH     = 'filePath';
 
+
+    /**
+     * Return constant by short name
+     * 
+     * @param string $name short name
+     *  
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getProperty($name)
+    {
+        return constant('self::N' . strtoupper(preg_replace('/([A-Z])/Ss', '_$1', $name)));
+    }
 
     /**
      * Method to access node properties
@@ -65,23 +80,45 @@ class Node extends \Includes\DataStructure\Node\Tree
     public function __call($method, array $args = array())
     {
         // Parse getter name
-        if (!preg_match('/(get|is)(\w+)/Ss', $method, $matches)) {
+        if (!preg_match('/(get|is|hasTag)(\w+)?/Ss', $method, $matches)) {
             throw new \Exception('Undefined class method or wrong getter/setter - "' . $method . '"');
         }
 
-        // Get the class constant by the method name
-        if (!defined($property = 'self::N' . strtoupper(preg_replace('/([A-Z])/', '_$1', $matches[2])))) {
-            throw new \Exception('Undefined class constant - "' . $property . '"');
-        }
+        $result = $this->__get(static::getProperty($matches[2]));
 
-        $result = $this->__get(constant($property));
-
-        // Cast to the "bool" type
         if ('is' === $matches[1]) {
             $result = (bool) $result;
         }
 
         return $result;
+    }
+
+    /**
+     * Get tag valus from class comment
+     * 
+     * @param string $name tag name
+     *  
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function hasTag($name)
+    {
+        return in_array($name, $this->__get(self::N_TAGS));
+    }
+
+    /**
+     * Return relative path to the class file
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getFilePathRelative()
+    {
+        return preg_replace('/^' . preg_quote(LC_CLASSES_DIR, '/') . '(.*)\.php$/i', '$1.php', $this->__get(self::N_FILE_PATH));
     }
 
 
