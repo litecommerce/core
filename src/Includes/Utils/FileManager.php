@@ -210,4 +210,25 @@ class FileManager extends AUtils
 
         return $path;
     }
+
+    /**
+     * Return relative path by an absolute one
+     * 
+     * @param string $path      path to convert
+     * @param string $compareTo base part of the path
+     * @param string $extension file extension
+     *  
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getRelativePath($path, $compareTo, $extension = 'php')
+    {
+        return preg_replace(
+            '/^' . preg_quote($compareTo, '/') . '(.*)\.' . $extension . '$/i',
+            '$1.' . $extension,
+            $path
+        );
+    }
 }

@@ -152,7 +152,7 @@ abstract class Tree extends \Includes\DataStructure\Hierarchical\Tree
      * 
      * @param array $data class node info
      *  
-     * @return void
+     * @return \Includes\Decorator\DataStructure\ClassData\Node
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -164,6 +164,8 @@ abstract class Tree extends \Includes\DataStructure\Hierarchical\Tree
 
         // Add or replace node
         static::replantNode($parent, $node) ?: static::addChildNode($parent, $node);
+
+        return $node;
     }
 
     /**

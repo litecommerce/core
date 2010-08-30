@@ -54,7 +54,10 @@ class Decorator extends Decorator\ADecorator
             if ($data = \Includes\Decorator\Utils\ClassData\Parser::parse($fileInfo)) {
 
                 // Create node in the classes tree
-                \Includes\Decorator\DataStructure\ClassData\Tree::addNode($data);
+                $node = \Includes\Decorator\DataStructure\ClassData\Tree::addNode($data);
+
+                // Check constrains
+                \Includes\Decorator\Utils\ClassData\Verifier::checkNode($node);
             }
         }
 
