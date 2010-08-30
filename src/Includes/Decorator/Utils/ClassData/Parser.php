@@ -189,6 +189,7 @@ abstract class Parser extends \Includes\Decorator\Utils\ClassData\AClassData
         $namespace  = static::getField($data, 'NAME_SPACE');
         $class      = static::getField($data, 'CLASS');
         $interfaces = static::getField($data, 'INTERFACES');
+        $filePath   = static::getField($data, 'FILE_PATH');
 
         // Add namespace
         if ($namespace && '\\' !== substr($class, 0, 1)) {
@@ -202,11 +203,7 @@ abstract class Parser extends \Includes\Decorator\Utils\ClassData\AClassData
         $data[static::__N('TAGS')] = static::getTags(static::getField($data, 'CLASS_COMMENT'));
 
         // Save relative path
-        $data[static::__N('FILE_PATH')] = preg_replace(
-            '/^' . preg_quote(LC_CLASSES_DIR, '/') . '(.*)\.php$/i',
-            '$1.php',
-            static::getField($data, 'FILE_PATH')
-        );
+        $data[static::__N('FILE_PATH')] = \Includes\Utils\FileManager::getRelativePath($filePath, LC_CLASSES_DIR);
 
         return $data;
     }
