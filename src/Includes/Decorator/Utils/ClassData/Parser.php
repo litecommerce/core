@@ -101,10 +101,8 @@ abstract class Parser extends \Includes\Decorator\Utils\ClassData\AClassData
     {
         if (!isset(static::$pattern)) {
 
-            // Doctrine "@Entity" tag
-            static::$pattern  = '.*(?:(@Entity).*)?';
             // phpDocumenter comment
-            static::$pattern  = '.*(?:\s*(\/\*+' . static::$pattern . '\*+\/))?\s*';
+            static::$pattern  = '.*(?:\s*(\/\*+.*\*+\/))?\s*';
             // Namespace
             static::$pattern  = '(?:(?:namespace\s+)([\w\\\]+)\s*;' . static::$pattern . ')?';
             // Class accessability modifier
@@ -138,11 +136,42 @@ abstract class Parser extends \Includes\Decorator\Utils\ClassData\AClassData
         return array(
             'NAME_SPACE'    => 1,
             'CLASS_COMMENT' => 2,
-            'ENTITY'        => 3,
-            'CLASS'         => 6,
-            'PARENT_CLASS'  => 8,
-            'INTERFACES'    => 10,
+            'CLASS'         => 5,
+            'PARENT_CLASS'  => 7,
+            'INTERFACES'    => 9,
         );
+    }
+
+    /**
+     * Prepare data for the "getTags()" method
+     * 
+     * @param array $matches data to prepare
+     *  
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function prepareTags(array $matches)
+    {
+        return array_combine($matches[1], $matches[2]);
+    }
+
+    /**
+     * Return the "@\w+" tokens (tags)
+     * 
+     * @param string $comment class comment
+     *  
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function getTags($comment)
+    {
+        return preg_match_all('/@(\w+)\s*(?:\()?(.*?)\s*(?:\))?(?=$|@\w+)/Smi', $comment, $matches) 
+            ? static::prepareTags($matches) 
+            : array();
     }
 
     /**
@@ -168,6 +197,16 @@ abstract class Parser extends \Includes\Decorator\Utils\ClassData\AClassData
 
         // Get implemented interfaces
         $data[static::__N('INTERFACES')] = $interfaces ? explode(',', str_replace(' ', '', trim($interfaces))) : array();
+
+        // Get phpDocumenter tags
+        $data[static::__N('TAGS')] = static::getTags(static::getField($data, 'CLASS_COMMENT'));
+
+        // Save relative path
+        $data[static::__N('FILE_PATH')] = preg_replace(
+            '/^' . preg_quote(LC_CLASSES_DIR, '/') . '(.*)\.php$/i',
+            '$1.php',
+            static::getField($data, 'FILE_PATH')
+        );
 
         return $data;
     }
@@ -254,7 +293,7 @@ abstract class Parser extends \Includes\Decorator\Utils\ClassData\AClassData
             $schema      = 'getSchema' . $method;
             $postprocess = 'postprocess' . $method;
 
-            // Stop stack execution if parser returned "false"
+            // Stop stack execution if current parser returned "false"
             if (false === ($result = static::applyPattern(static::$pattern(), $content))) {
                 break;
             }
@@ -263,12 +302,9 @@ abstract class Parser extends \Includes\Decorator\Utils\ClassData\AClassData
             $result = static::applySchema($result, static::$schema());
 
             // Prepare and save data
-            $data = array_replace_recursive($data, static::$postprocess($result));
+            $data = array_replace_recursive($data, static::$postprocess($result + array(static::__N('FILE_PATH') => $path)));
         }
 
-        // Skip classes from disabled modules
-        static::isModuleEnabled($data) ?: ($data = array());
-
-        return empty($data) ? array() : ($data + array(static::__N('FILE_PATH') => $path));
+        return (empty($data) || !static::isModuleEnabled($data)) ? null : $data;
     }
 }
