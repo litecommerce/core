@@ -103,7 +103,6 @@ class OrderDetail extends \XLite\Model\AEntity
      */
     protected $order;
 
-
     /**
      * Get display record nName 
      * 
