@@ -1,4 +1,5 @@
 DELETE FROM xlite_categories;
+DELETE FROM xlite_category_images;
 DELETE FROM xlite_category_translations;
 DELETE FROM xlite_category_products;
 DELETE FROM xlite_products;
@@ -6,8 +7,8 @@ DELETE FROM xlite_product_translations;
 DELETE FROM xlite_product_images;
 DELETE FROM xlite_product_thumbnails;
 
-INSERT INTO xlite_categories VALUES (14015,1,2,1,0,0,0,1,1,'fruit');
-INSERT INTO xlite_categories VALUES (14009,3,4,1,0,0,0,1,1,'vegetables');
+INSERT INTO xlite_categories VALUES (14015,1,2,1,0,0,0,1,1,'fruit','');
+INSERT INTO xlite_categories VALUES (14009,3,4,1,0,0,0,1,1,'vegetables','');
 
 INSERT INTO xlite_category_translations VALUES (1,'en',14015,'Fruit','<p>In botany, a fruit is the ripened ovary, together with its seeds, of a flowering plant. In cuisine, when discussing fruit as food, the term usually refers to just those plant fruits that are sweet and fleshy, examples of which would be plum, apple, and orange. However, a great many common vegetables, as well as nuts and grains, are the fruit of the plants they come from. Fruits that might not be considered such in a culinary context include gourds (e.g. squash and pumpkin), maize, tomatoes, and green peppers. These are fruits to a botanist, but are generally treated as vegetables in cooking. Some spices, such as allspice and nutmeg, are fruits. Rarely, culinary \"fruits\" are not fruits in the botanical sense, such as rhubarb in which only the sweet leaf petiole is edible.</p>\n<p>The term false fruit is sometimes applied to a fruit, like the fig (a multiple-accessory fruit) or to a plant structure that resembles a fruit but is not derived from a flower or flowers. Some gymnosperms, such as yew, have fleshy arils that resemble fruits and some junipers have berry-like, fleshy cones.</p>\n<div style=\"padding: 24px 24px 24px 21px; display: block; background-color: #ececec;\">From <a style=\"color: #1e7ec8; text-decoration: underline;\" title=\"\" href=\"http://www.knowledgerush.com\">www.knowledgerush.com</a></div>','','','');
 INSERT INTO xlite_category_translations VALUES (2,'en',14009,'Vegetables','<p>Vegetable is a nutritional and culinary term denoting any part of a plant that is commonly consumed by humans as food, but is not regarded as a culinary fruit, nut, herb, spice, or grain. In common usage, vegetables include the leaves (e.g. lettuce), stems (asparagus), and roots (carrot) of various plants. But the term can also encompass non-sweet fruits such as seed-pods (beans), cucumbers, squashes, pumpkins, tomatoes, avocadoes, green peppers, etc.; even some seeds (peas and beans) that are easily softened by soaking.</p>\n<div style=\"padding: 24px 24px 24px 21px; display: block; background-color: #ececec;\">From <a style=\"color: #1e7ec8; text-decoration: underline;\" title=\"\" href=\"http://www.knowledgerush.com\">www.knowledgerush.com</a></div>','','','');

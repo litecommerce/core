@@ -998,13 +998,16 @@ class Order extends \XLite\Model\Base\ModifierOwner
             if (\XLite\Core\Config::getInstance()->Email->enable_init_order_notif_customer) {
                 $mail->adminMail = false;
                 $mail->selectCustomerLayout();
-                $mail->set('charset', $this->getProfile()->getComplex('billingCountry.charset'));
-                $mail->compose(
-                    \XLite\Core\Config::getInstance()->Company->orders_department,
-                    $this->getProfile()->get('login'),
-                    'order_created'
-                );
-                $mail->send();
+                $profile = $this->getProfile();
+                if ($profile) {
+                    $mail->set('charset', $profile->getComplex('billingCountry.charset'));
+                    $mail->compose(
+                        \XLite\Core\Config::getInstance()->Company->orders_department,
+                        $profile->get('login'),
+                        'order_created'
+                    );
+                    $mail->send();
+                }
             }
 
             // notify admin about initially placed order
@@ -1060,13 +1063,16 @@ class Order extends \XLite\Model\Base\ModifierOwner
 
         $mail->adminMail = false;
         $mail->selectCustomerLayout();
-        $mail->set('charset', $this->getProfile()->getComplex('billingCountry.charset'));
-        $mail->compose(
-            \XLite\Core\Config::getInstance()->Company->site_administrator,
-            $this->getProfile()->get('login'),
-            'order_processed'
-        );
-        $mail->send();
+        $profile = $this->getProfile();
+        if ($profile) {
+            $mail->set('charset', $profile->getComplex('billingCountry.charset'));
+            $mail->compose(
+                \XLite\Core\Config::getInstance()->Company->site_administrator,
+                $profile->get('login'),
+                'order_processed'
+            );
+            $mail->send();
+        }
     }
 
     /**
@@ -1104,13 +1110,16 @@ class Order extends \XLite\Model\Base\ModifierOwner
 
         $mail->adminMail = false;
         $mail->selectCustomerLayout();
-        $mail->set('charset', $this->getProfile()->getComplex('billingCountry.charset'));
-        $mail->compose(
-            \XLite\Core\Config::getInstance()->Company->orders_department,
-            $this->getProfile()->get('login'),
-            'order_failed'
-        );
-        $mail->send();
+        $profile = $this->getProfile();
+        if ($profile) {
+            $mail->set('charset', $profile->getComplex('billingCountry.charset'));
+            $mail->compose(
+                \XLite\Core\Config::getInstance()->Company->orders_department,
+                $profile->get('login'),
+                'order_failed'
+            );
+            $mail->send();
+        }
     }
 
     /**

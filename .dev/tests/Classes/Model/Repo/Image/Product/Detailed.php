@@ -66,12 +66,7 @@ class XLite_Tests_Model_Repo_Image_Product_Detailed extends XLite_Tests_TestCase
     protected function getProduct()
     {
         if (!isset($this->product)) {
-            $list = \XLite\Core\Database::getRepo('XLite\Model\Product')->findFrame(1, 1);
-
-            $this->product = array_shift($list);
-            foreach ($list as $p) {
-                $p->detach();
-            }
+            $this->product = \XLite\Core\Database::getRepo('XLite\Model\Product')->findOneByEnabled(true);
 
             // Remove old detailed images
             foreach ($this->product->getDetailedImages() as $i) {
@@ -79,14 +74,11 @@ class XLite_Tests_Model_Repo_Image_Product_Detailed extends XLite_Tests_TestCase
             }
             $this->product->getDetailedImages()->clear();
 
-            \XLite\Core\Database::getEM()->persist($this->product);
-            \XLite\Core\Database::getEM()->flush();
-
             foreach ($this->images as $path) {
                 $i = new \XLite\Model\Image\Product\Detailed();
 
                 $i->setProduct($this->product);
-                $this->product->getDetailedImages()->add($i);
+                $this->product->addDetailedImages($i);
 
                 $i->loadFromLocalFile(LC_ROOT_DIR . 'images' . LC_DS . 'product_detailed_images' . LC_DS . $path);
                 $i->setEnabled(true);

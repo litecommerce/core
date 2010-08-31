@@ -221,7 +221,7 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      * @OneToMany (targetEntity="XLite\Model\Image\Product\Detailed", mappedBy="product", cascade={"all"})
      * @OrderBy ({"orderby" = "ASC"})
      */
-    protected $detailedImages;
+    protected $detailed_images;
 
     /**
      * Product extra fields 

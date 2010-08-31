@@ -188,7 +188,7 @@ class XLite_Tests_Model_Product extends XLite_Tests_Model_AProduct
      */
 	public function testGetProductId()
     {
-        $result = \XLite\Core\Database::getRepo('\XLite\Model\Product')->find(15090);
+        $result = \XLite\Core\Database::getRepo('XLite\Model\Product')->find(15090);
 
         // Check entity
         $this->assertNotNull($result, 'Product not found');
