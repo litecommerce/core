@@ -36,6 +36,7 @@ namespace XLite\Model;
  * @since   3.0.0
  *
  * @Entity
+ * @HasLifecycleCallbacks
  * @Table (name="order_modifiers",
  *         indexes={
  *              @Index (name="ocs", columns={"order_id", "code", "subcode"})
@@ -147,13 +148,13 @@ class OrderModifier extends \XLite\Model\AEntity
      * Prepare subcode
      * 
      * @return void
-     * @access protected
+     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      * @PrePersist
      * @PreUpdate
      */
-    protected function prepareSubcode()
+    public function prepareSubcode()
     {
         if (!$this->getSubcode()) {
             $this->setSubcode($this->getCode());
@@ -170,7 +171,7 @@ class OrderModifier extends \XLite\Model\AEntity
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function isAvailable($subcode)
+    public function isAvailable($subcode = null)
     {
         $owner = $this->getOwner();
         $list = $owner->getModifiers();
@@ -179,6 +180,7 @@ class OrderModifier extends \XLite\Model\AEntity
 
         if (isset($list[$this->getCode()])) {
             $cell = $list[$this->getCode()];
+            $subcode = isset($subcode) ? $subcode : $this->getSubcode();
             $result = isset($cell[$owner::MODIFIER_ATTR_AVAILABILITY]) 
                 ? $owner->{$cell[$owner::MODIFIER_ATTR_AVAILABILITY]}($subcode)
                 : true;

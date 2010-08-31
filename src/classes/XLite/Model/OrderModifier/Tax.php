@@ -53,7 +53,7 @@ class Tax extends \XLite\Model\Order implements \XLite\Base\IDecorator
     {
         $list = parent::defineModifiers();
 
-        $list[] = self::MODIFIER_TAX;
+        $list[20] = self::MODIFIER_TAX;
 
         return $list;
     }
