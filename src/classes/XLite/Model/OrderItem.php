@@ -85,7 +85,7 @@ class OrderItem extends \XLite\Model\Base\ModifierOwner
      * 
      * @Column (type="string", length="16")
      */
-    protected $object_type = self::PRODUCT_TYPE;
+    protected $object_type;
 
     /**
      * Item name
@@ -196,7 +196,7 @@ class OrderItem extends \XLite\Model\Base\ModifierOwner
         $method = $this->getObjectGetterName();
 
         // $method calculated in getObjectGetterName()
-        return method_exists($this, $method) ? $this->$method() : null;
+        return ($method && method_exists($this, $method)) ? $this->$method() : null;
     }
 
     /**
@@ -209,7 +209,9 @@ class OrderItem extends \XLite\Model\Base\ModifierOwner
      */
     protected function getObjectGetterName()
     {
-        return 'get' . ucfirst($this->getObjectType()) . 'Object';
+        return $this->getObjectType()
+            ? 'get' . ucfirst($this->getObjectType()) . 'Object'
+            : false;
     }
 
     /**
@@ -311,6 +313,8 @@ class OrderItem extends \XLite\Model\Base\ModifierOwner
         $this->setObjectId($item->getId());
         $this->setName($item->getName());
         $this->setSku($item->getSku());
+
+        $this->product = null;
     }
 
     /**
@@ -341,7 +345,11 @@ class OrderItem extends \XLite\Model\Base\ModifierOwner
      */
     public function getWeight()
     {
-        return $this->getObject()->getWeight() * $this->getAmount();
+        $object = $this->getObject();
+
+        return $object
+            ? $object->getWeight() * $this->getAmount()
+            : 0;
     }
 
     /**
