@@ -65,7 +65,6 @@ class Order extends \XLite\Model\Repo\ARepo
      */
     protected $currentSearchCnd = null;
 
-
     /**
      * Return list of handling search params 
      * 
@@ -181,8 +180,9 @@ class Order extends \XLite\Model\Repo\ARepo
             $queryBuilder
                 ->andWhere('o.status = :status')
                 ->setParameter('status', $value);
+
         } else {
-            // May be we need to add some processing here? Or not?
+            // TODO - add throw exception
         }
     }
 
@@ -199,7 +199,7 @@ class Order extends \XLite\Model\Repo\ARepo
      */
     protected function prepareCndDate(\Doctrine\ORM\QueryBuilder $queryBuilder, array $value)
     {
-        if (!empty($value)) {
+        if (2 == count($value)) {
             list($start, $end) = $value;
 
             $queryBuilder
@@ -224,7 +224,7 @@ class Order extends \XLite\Model\Repo\ARepo
     }
 
     /**     
-     * Define query for findAllExpiredTemporaryOrders() method
+     * Define query for findAllExipredTemporaryOrders() method
      * 
      * @return \Doctrine\ORM\QueryBuilder
      * @access protected
@@ -243,17 +243,16 @@ class Order extends \XLite\Model\Repo\ARepo
      * Find all expired temporary orders 
      * 
      * @return \Doctrine\Common\Collection\ArrayCollection
-     * @access protected
+     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function findAllExipredTemporaryOrders()
+    public function findAllExipredTemporaryOrders()
     {
-        return $this->defineAllTemporaryOrdersQuery()
+        return $this->defineAllExpiredTemporaryOrdersQuery()
             ->getQuery()
             ->getResult();
     }
-
 
     /**
      * Create a new QueryBuilder instance that is prepopulated for this entity name
@@ -288,7 +287,7 @@ class Order extends \XLite\Model\Repo\ARepo
      */
     public function collectGarbage()
     {
-        $this->deleteInBatch($this->findAllExpiredTemporaryOrders());
+        $this->deleteInBatch($this->findAllExipredTemporaryOrders());
     }
 
     /**
@@ -323,7 +322,8 @@ class Order extends \XLite\Model\Repo\ARepo
      */
     protected function prepareCndLimit(\Doctrine\ORM\QueryBuilder $queryBuilder, array $value)
     {
-        call_user_func_array(array($this, 'assignFrame'), array_merge(array($queryBuilder), $value));
+        array_unshift($value, $queryBuilder);
+        call_user_func_array(array($this, 'assignFrame'), $value);
     }
 
     /**
@@ -341,7 +341,9 @@ class Order extends \XLite\Model\Repo\ARepo
     protected function callSearchConditionHandler($value, $key, \Doctrine\ORM\QueryBuilder $queryBuilder)
     {
         if ($this->isSearchParamHasHandler($key)) {
-            $this->{'prepareCnd' . ucfirst($key)}($queryBuilder, $value);
+            $methodName = 'prepareCnd' . ucfirst($key);
+            $this->$methodName($queryBuilder, $value);
+
         } else {
             // TODO - add logging here
         }
@@ -365,13 +367,25 @@ class Order extends \XLite\Model\Repo\ARepo
         $this->currentSearchCnd = $cnd;
 
         foreach ($this->currentSearchCnd as $key => $value) {
-            $this->callSearchConditionHandler($value, $key, $queryBuilder);
+            if (self::P_LIMIT != $key || !$countOnly) {
+                $this->callSearchConditionHandler($value, $key, $queryBuilder);
+            }
         }
 
         if ($countOnly) {
             $queryBuilder->select('COUNT(o.order_id)');
+
+            try {
+                $result = intval($queryBuilder->getQuery()->getSingleScalarResult());
+
+            } catch (\Doctrine\ORM\NoResultException $exception) {
+                $result = 0;
+            }
+
+        } else {
+            $result = $queryBuilder->getQuery()->getResult();
         }
 
-        return $queryBuilder->getQuery()->{'get' . ($countOnly ? 'SingleScalar' : '') . 'Result'}();
+        return $result;
     }
 }
