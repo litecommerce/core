@@ -1008,9 +1008,15 @@ class Decorator extends Decorator\ADecorator
      */
     protected function postGenerateModels()
     {
+        $repos = array();
+
         foreach (\Includes\Decorator\Utils\Doctrine\EntityManager::getAllMetadata() as $metadata) {
             $path = LC_CLASSES_CACHE_DIR . DIRECTORY_SEPARATOR . str_replace('\\', DIRECTORY_SEPARATOR, $metadata->name) . '.php';
             $data = file_get_contents($path);
+
+            if (preg_match('/\ * @Entity/Ssi', $data)) {
+                $repos[] = $metadata->name;   
+            }
 
             $additionalMethods = array();
 
@@ -1085,6 +1091,11 @@ PHP;
             }
 
             file_put_contents($path, $data);
+        }
+
+        // Renew meta data ceche
+        foreach ($repos as $name) {
+            \XLite\Core\Database::getRepo($name);
         }
     }
 

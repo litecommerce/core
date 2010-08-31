@@ -92,7 +92,7 @@ class Detailed extends \XLite\Model\Base\Image
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @ManyToOne  (targetEntity="XLite\Model\Product", inversedBy="detailedImages", fetch="LAZY")
+     * @ManyToOne  (targetEntity="XLite\Model\Product", inversedBy="detailed_images")
      * @JoinColumn (name="id", referencedColumnName="product_id")
      */
     protected $product;

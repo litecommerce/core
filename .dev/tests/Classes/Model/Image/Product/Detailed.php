@@ -117,12 +117,7 @@ class XLite_Tests_Model_Image_Product_Detailed extends XLite_Tests_TestCase
     protected function getProduct()
     {
         if (!isset($this->product)) {
-            $list = \XLite\Core\Database::getRepo('XLite\Model\Product')->findFrame(1, 1);
-
-            $this->product = array_shift($list);
-            foreach ($list as $p) {
-                $p->detach();
-            }
+            $this->product = \XLite\Core\Database::getRepo('XLite\Model\Product')->findOneByEnabled(true);
 
             // Remove old detailed images
             foreach ($this->product->getDetailedImages() as $i) {
