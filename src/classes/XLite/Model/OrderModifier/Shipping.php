@@ -53,7 +53,7 @@ class Shipping extends \XLite\Model\Order implements \XLite\Base\IDecorator
     {
         $list = parent::defineModifiers();
 
-        $list[] = self::MODIFIER_SHIPPING;
+        $list[10] = self::MODIFIER_SHIPPING;
 
         return $list;
     }

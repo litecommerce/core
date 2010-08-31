@@ -207,6 +207,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * @since  3.0.0
      *
      * @OneToMany (targetEntity="XLite\Model\OrderModifier", mappedBy="owner", cascade={"all"})
+     * @OrderBy ({"id" = "ASC"})
      */
     protected $saved_modifiers;
 
