@@ -31,9 +31,9 @@ namespace XLite\Base;
 /**
  * Singleton 
  * 
- * @package    XLite
- * @see        ____class_see____
- * @since      3.0.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
 abstract class Singleton extends \XLite\Base\SuperClass
 {

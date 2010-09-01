@@ -94,8 +94,9 @@ class TopMessage extends \XLite\Base\Singleton
     /**
      * Add message
      * 
-     * @param string $text Message text
-     * @param string $type Message type
+     * @param string  $text    Message text
+     * @param string  $type    Message type
+     * @param boolean $rawText Preprocessing text flag
      *  
      * @return boolean
      * @access public
@@ -186,8 +187,8 @@ class TopMessage extends \XLite\Base\Singleton
     /**
      * Add messages
      * 
-     * @param array $text Message text
-     * @param string $type Message type
+     * @param array  $messages Message texts
+     * @param string $type     Message type
      *  
      * @return boolean
      * @access public

@@ -261,52 +261,55 @@ class Gettext extends \XLite\Core\TranslationDriver\ATranslationDriver
     {
         $list = \XLite\Core\Database::getRepo('\XLite\Model\LanguageLabel')->findLabelsByCode($code);
 
+        $result = false;
+
         // .mo-file format source: http://www.gnu.org/software/gettext/manual/gettext.html#MO-Files
         $fp = @fopen($path, 'wb');
-        if (!$fp) {
-            return false;
-        }
+        if ($fp) {
  
-        $n = count($list);
-        $o = 28;
-        $t = $o + $n * 8;
-        $s = 0;
-        $h = $t + $n * 8;
+            $n = count($list);
+            $o = 28;
+            $t = $o + $n * 8;
+            $s = 0;
+            $h = $t + $n * 8;
  
-        // Writing the header and offsets
-        fwrite($fp, pack('LLLLLLL', hexdec('950412de'), 0, $n, $o, $t, $s, $h));
+            // Writing the header and offsets
+            fwrite($fp, pack('LLLLLLL', hexdec('950412de'), 0, $n, $o, $t, $s, $h));
  
-        $spointer = $h + $s * 4;
+            $spointer = $h + $s * 4;
  
-        // Writing the table containing the lengths and offsets of language label names
-        foreach ($list as $n => $v) {
-            $l = strlen($n);
-            fwrite($fp, pack('LL', $l, $spointer));
-            $spointer += $l+1;
-        }
+            // Writing the table containing the lengths and offsets of language label names
+            foreach ($list as $n => $v) {
+                $l = strlen($n);
+                fwrite($fp, pack('LL', $l, $spointer));
+                $spointer += $l+1;
+            }
  
-        // Writing the table containing the lengths and offsets of language label values
-        foreach ($list as $v) {
-            $l = strlen($v);
-            fwrite($fp, pack('LL', $l, $spointer));
-            $spointer += $l + 1;
-        }   
+            // Writing the table containing the lengths and offsets of language label values
+            foreach ($list as $v) {
+                $l = strlen($v);
+                fwrite($fp, pack('LL', $l, $spointer));
+                $spointer += $l + 1;
+            }   
+
+            $nul = chr(0);
  
-        $nul = chr(0);
- 
-        // Writing NUL terminated language label names
-        foreach ($list as $n => $v) {
-            fwrite($fp, $n . $nul);
-        }
+            // Writing NUL terminated language label names
+            foreach ($list as $n => $v) {
+                fwrite($fp, $n . $nul);
+            }
     
-        // Writing NUL terminated language label values
-        foreach ($list as $v) {
-            fwrite($fp, $v . $nul);
+            // Writing NUL terminated language label values
+            foreach ($list as $v) {
+                fwrite($fp, $v . $nul);
+            }
+ 
+            fclose($fp);
+
+            $result = true;
         }
  
-        fclose($fp);
- 
-        return true;
+        return $result;
     }
 
     /**
