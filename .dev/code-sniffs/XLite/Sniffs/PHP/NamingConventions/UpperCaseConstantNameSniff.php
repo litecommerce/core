@@ -110,6 +110,7 @@ class XLite_Sniffs_PHP_NamingConventions_UpperCaseConstantNameSniff extends XLit
 			if (
 				$tokens[$stackPtr - 1]['code'] == T_NS_SEPARATOR
 				|| $tokens[$stackPtr + 1]['code'] == T_NS_SEPARATOR
+				|| $tokens[$stackPtr - 2]['code'] == T_NAMESPACE
 			) {
 				// This is a namespace prefix
 				return;

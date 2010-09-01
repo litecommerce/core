@@ -167,6 +167,14 @@ class Profiler extends \XLite\Base\Singleton implements \Doctrine\DBAL\Logging\S
         'image',
     );
 
+    /**
+     * Use xdebug stack trace 
+     * 
+     * @var    boolean
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
     protected static $useXdebugStackTrace = false;
 
     /**
@@ -283,7 +291,10 @@ class Profiler extends \XLite\Base\Singleton implements \Doctrine\DBAL\Logging\S
             );
 
             if (self::$useXdebugStackTrace) {
-                xdebug_start_trace(LC_VAR_DIR . 'log' . LC_DS . $timePoint . '.' . microtime(true), XDEBUG_TRACE_COMPUTERIZED);
+                xdebug_start_trace(
+                    LC_VAR_DIR . 'log' . LC_DS . $timePoint . '.' . microtime(true),
+                    XDEBUG_TRACE_COMPUTERIZED
+                );
             }
 
         } elseif ($this->points[$timePoint]['open']) {
@@ -306,7 +317,10 @@ class Profiler extends \XLite\Base\Singleton implements \Doctrine\DBAL\Logging\S
             $this->points[$timePoint]['open'] = true;
 
             if (self::$useXdebugStackTrace) {
-                xdebug_start_trace(LC_VAR_DIR . 'log' . LC_DS . $timePoint . '.' . microtime(true), XDEBUG_TRACE_COMPUTERIZED);
+                xdebug_start_trace(
+                    LC_VAR_DIR . 'log' . LC_DS . $timePoint . '.' . microtime(true),
+                    XDEBUG_TRACE_COMPUTERIZED
+                );
             }
 
         }
@@ -488,10 +502,12 @@ HTML;
             $lastMem = 0;
             foreach (self::$memoryPoints as $d) {
                 $diff = $d['memory'] - $lastMem;
+                $m = number_format(round($d['memory'] / 1024 / 1024, 3), 3, self::DEC_POINT, self::THOUSANDS_SEP);
+                $md = number_format(round($diff / 1024 / 1024, 3), 3, self::DEC_POINT, self::THOUSANDS_SEP);
                 echo (
                     '<tr>'
-                    . '<td>' . number_format(round($d['memory'] / 1024 / 1024, 3), 3, self::DEC_POINT, self::THOUSANDS_SEP) . '</td>'
-                    . '<td>' . number_format(round($diff / 1024 / 1024, 3), 3, self::DEC_POINT, self::THOUSANDS_SEP) . '</td>'
+                    . '<td>' . $m . '</td>'
+                    . '<td>' . $md . '</td>'
                     . '<td>' . implode(' << ', $d['trace']) . '</td>'
                     . '</tr>'
                 );
