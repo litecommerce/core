@@ -105,7 +105,7 @@ class Node extends \Includes\DataStructure\Node\Tree
      */
     public function hasTag($name)
     {
-        return in_array($name, $this->__get(self::N_TAGS));
+        return ($tags = $this->__get(self::N_TAGS)) && isset($tags[$name]);
     }
 
     /**
