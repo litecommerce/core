@@ -399,7 +399,8 @@ abstract class Image extends \XLite\Model\AEntity
     /**
      * Load from request 
      * 
-     * @param string $key Key in $_FILES service array
+     * @param string $key    Key in $_FILES service array
+     * @param string $subkey Optional subkey
      *  
      * @return boolean
      * @access public
@@ -413,7 +414,7 @@ abstract class Image extends \XLite\Model\AEntity
         $cell = isset($_FILES[$key]) ? $_FILES[$key] : null;
         if ($cell && (!$subkey || isset($cell['name'][$subkey]))) {
             $error = $subkey ? $cell['error'][$subkey] : $cell['error'];
-            if ($error == UPLOAD_ERR_OK) {
+            if (UPLOAD_ERR_OK == $error) {
                 $tmp = $subkey ? $cell['tmp_name'][$subkey] : $cell['tmp_name'];
                 $basename = $subkey ? $cell['name'][$subkey] : $cell['name'];
 
@@ -437,7 +438,8 @@ abstract class Image extends \XLite\Model\AEntity
     /**
      * Load image from local file 
      * 
-     * @param string $path Absolute path
+     * @param string $path     Absolute path
+     * @param string $basename File name
      *  
      * @return boolean
      * @access public

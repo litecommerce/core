@@ -327,26 +327,29 @@ class Gettext extends \XLite\Core\TranslationDriver\ATranslationDriver
     {
         $list = \XLite\Core\Database::getRepo('\XLite\Model\LanguageLabel')->findLabelsByCode($code);
 
+        $result = false;
+
         $poPath = LC_TMP_DIR . 'translate.' . $code . '.po';
         $fp = @fopen($poPath, 'wb');
-        if (!$fp) {
-            return false;
+        if ($fp) {
+
+            foreach ($list as $k => $v) {
+                fwrite($fp, 'msgid "' . addslashes($k) . '"' . "\n" . 'msgstr "' . addslashes($v) . '"' . "\n\n");
+            }
+
+            fclose($fp);
+
+            $exec = $this->getMsgFmtExecutable();
+            if ($exec) {
+                $exec .= ' ' . $poPath . ' -o ' . $path;
+                exec($exec);
+                unlink($poPath);
+            }
+
+            $result = file_exists($path);
         }
 
-        foreach ($list as $k => $v) {
-            fwrite($fp, 'msgid "' . addslashes($k) . '"' . "\n" . 'msgstr "' . addslashes($v) . '"' . "\n\n");
-        }
-
-        fclose($fp);
-
-        $exec = $this->getMsgFmtExecutable();
-        if ($exec) {
-            $exec .= ' ' . $poPath . ' -o ' . $path;
-            exec($exec);
-            unlink($poPath);
-        }
-
-        return file_exists($path);
+        return $result;
     }
 
     /**

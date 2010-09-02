@@ -31,10 +31,10 @@ namespace XLite\Model\Repo;
 /**
  * The "order_item" model repository
  * 
- * @package    XLite
- * @see        ____class_see____
- * @since      3.0.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
-class OrderItem extends \XLite\Model\Repo\Base\I18n
+class OrderItem extends \XLite\Model\Repo\ARepo
 {
 }

@@ -299,7 +299,12 @@ class Module extends \XLite\Model\Repo\ARepo
     protected function defineAllByDependQuery($depend)
     {
         return $this->createQueryBuilder()
-            ->andWhere('(m.dependencies LIKE :dbegin OR m.dependencies LIKE :dmiddle OR m.dependencies LIKE :dend OR m.dependencies = :depend)')
+            ->andWhere(
+                '(m.dependencies LIKE :dbegin OR'
+                . ' m.dependencies LIKE :dmiddle OR'
+                . ' m.dependencies LIKE :dend OR'
+                . ' m.dependencies = :depend)'
+            )
             ->setParameter('depend', $depend)
             ->setParameter('dbegin', $depend . ',')
             ->setParameter('dmiddle', ',' . $depend . ',')

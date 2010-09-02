@@ -1443,6 +1443,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @see    ____func_see____
      * @since  3.0.0
      */
+    /*
     protected function parseCategoryField($data, $allowMultyCategories) 
     {
         $i = 0;
@@ -1522,6 +1523,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
 
         return $result;
     }
+    */
 
     /**
      * createCategoryField
@@ -1537,6 +1539,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @see    ____func_see____
      * @since  3.0.0
      */
+    /*
     public function createCategoryField($categorySet) 
     {
         if (is_array($categorySet)) {
@@ -1562,6 +1565,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
 
         return $result;
     }
+    */
     
     /**
      * createRecursive 
@@ -1573,6 +1577,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @see    ____func_see____
      * @since  3.0.0
      */
+    /*
     public function createRecursive($name) 
     {
         if (!is_array($name)) {
@@ -1602,6 +1607,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
 
         return new \XLite\Model\Category($categoryId);
     }
+    */
 
     /**
      * findCategory 
@@ -1613,6 +1619,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @see    ____func_see____
      * @since  3.0.0
      */
+    /*
     public function findCategory($path) 
     {
         if (!is_array($path)) {
@@ -1639,6 +1646,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
 
         return $notFound ? null : new \XLite\Model\Category($categoryId);
     }
+    */
 
     /**
      * filterRule 
@@ -1648,6 +1656,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @see    ____func_see____
      * @since  3.0.0
      */
+    /*
     public function filterRule()
     {
         $result = true;
@@ -1670,6 +1679,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
 
         return $result;
     }
+    */
 
     /**
      * filter 
@@ -1679,6 +1689,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @see    ____func_see____
      * @since  3.0.0
      */
+    /*
     public function filter() 
     {
         $result = parent::filter(); // default
@@ -1729,6 +1740,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
 
         return $result;
     }
+    */
     
     /**
      * _compareMembership 
@@ -1741,6 +1753,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @see    ____func_see____
      * @since  3.0.0
      */
+    /*
     public function _compareMembership($categoryMembership, $userMembership) 
     {
         return 'all' == $categoryMembership 
@@ -1749,6 +1762,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
             && $userMembership 
             || $categoryMembership == $userMembership;
     }
+    */
 
     /**
      * toXML 
@@ -1758,6 +1772,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @see    ____func_see____
      * @since  3.0.0
      */
+    /*
     public function toXML() 
     {
         $id = 'category_' . $this->get('category_id');
@@ -1765,6 +1780,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
 
         return "<category id=\"$id\">\n$xml\n</category>\n";
     }
+    */
     
     /**
      * fieldsToXML 
@@ -1774,6 +1790,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @see    ____func_see____
      * @since  3.0.0
      */
+    /*
     public function fieldsToXML() 
     {
         $xml = '';
@@ -1791,4 +1808,5 @@ class Category extends \XLite\Model\Repo\Base\I18n
 
         return parent::fieldsToXML() . $xml;
     }
+    */
 }
