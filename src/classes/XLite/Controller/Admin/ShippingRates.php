@@ -37,117 +37,271 @@ namespace XLite\Controller\Admin;
  */
 class ShippingRates extends \XLite\Controller\Admin\AAdmin
 {
-    public $params = array('target', 'shipping_zone_range', 'shipping_id_range');
-    
-    public $shipping_id_range = "";
-    public $shipping_zone_range = "";
-
-    function getPageTemplate()
-    {
-        return "shipping/charges.tpl";
-    }
-
     /**
-     * getShippingZones 
+     * handleRequest 
      * 
-     * @return array
+     * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getShippingZones()
+    public function handleRequest()
     {
-        if (!isset($this->zones)) {
-    
-            $this->zones = \XLite\Core\Database::getRepo('XLite\Model\Zone')->getZones();
+        parent::handleRequest();
 
-            $defaultZone = new \XLite\Model\Zone();
-            $defaultZone->setZoneName('Default zone');
-
-            array_unshift($this->zones, $defaultZone);
+        if ('Y' != $this->config->Shipping->shipping_enabled) {
+            $this->redirect('admin.php?target=shipping_settings');
         }
-
-        return $this->zones;
     }
 
-    function getShippingRates()
+    /**
+     * Validates and prepares posted data for markup objects
+     * 
+     * @param array $data  Array of posted data
+     * @param bool  $isNew If true then prepares data for creating a new markup 
+     *  
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function prepareData($data, $isNew = false)
     {
-        // read select condition from the request
-        $condition = array();
-        if (isset(\XLite\Core\Request::getInstance()->shipping_zone_range) && strlen(\XLite\Core\Request::getInstance()->shipping_zone_range) > 0) {
-            $this->shipping_zone_range = \XLite\Core\Request::getInstance()->shipping_zone_range;
-            $condition[] = "shipping_zone='$this->shipping_zone_range'";
-        }
-        if (!empty(\XLite\Core\Request::getInstance()->shipping_id_range)) {
-            $this->shipping_id_range = \XLite\Core\Request::getInstance()->shipping_id_range;
-            $condition[] = "shipping_id='$this->shipping_id_range'";
-        }
-        $condition = implode(' AND ', $condition);
-        $sr = new \XLite\Model\ShippingRate();
-        $shipping_rates = $sr->findAll($condition);
-        $shipping = new \XLite\Model\Shipping();
-    	$modules = $shipping->getModules();
-    	$modules = (is_array($modules)) ? array_keys($modules) : array();
-        $shippings = $shipping->findAll();
-        $validShippings = array("-1");
-        foreach ($shippings as $shipping) {
-            if (in_array($shipping->get('class'), $modules) && $shipping->get('enabled')) {
-                $validShippings[] = $shipping->get('shipping_id');
+        // Allowed markup fields
+        $fields = ($isNew ? array('method_id', 'zone_id') : array());
+
+        $fields = array_merge(
+            $fields,
+            array(
+                'min_weight',
+                'max_weight',
+                'min_total',
+                'max_total',
+                'min_items',
+                'max_items',
+                'markup_flat',
+                'markup_percent',
+                'markup_per_item',
+                'markup_per_weight'
+            )
+        );
+
+        $errorMsg = null;
+
+        foreach ($data as $key => $value) {
+
+            // Reject key if it is out of the allowed fields
+            if (!in_array($key, $fields)) {
+                unset($data[$key]);
+                continue;
             }
-        }
 
-        // assign numbers
-        $i = 1;
-        $excluded_shipping_rates = array();
-        foreach ($shipping_rates as $key => $val) {
-            $shipping_rates[$key]->pos = $i++;
-            if (!in_array($val->get('shipping_id'), $validShippings)) {
-            	$excluded_shipping_rates[$key] = true;
-            }
-        }
-        foreach ($excluded_shipping_rates as $key => $val) {
-        	unset($shipping_rates[$key]);
-        }
+            // If it is for creating of markup - validate method_id and zone_id
+            if ($isNew) {
 
-        return $shipping_rates;
-    }
+                if ('method_id' == $key) {
+                    $method = \XLite\Core\Database::getRepo('XLite\Model\Shipping\Method')
+                        ->getMethodById(intval($value));
 
-    function action_add()
-    {
-        $this->params[] = "message";
-        $rate = new \XLite\Model\ShippingRate();
-        $rate->set('properties', \XLite\Core\Request::getInstance()->getData());
-        if (!$rate->isExists()) {
-        	$this->set('message', "added");
-        	$rate->create();
-        } else {
-        	$this->set('message', "add_failed");
-        }
-    }
+                    if (isset($method)) {
+                        // Add shipping method object to the data
+                        $data['shipping_method'] = $method;
 
-    function action_update()
-    {
-        $shippingRates = $this->get('shippingRates');
-        foreach (\XLite\Core\Request::getInstance()->rate as $key => $rate_data) {
-            if (array_key_exists($key, $shippingRates)) {
-                $rate = new \XLite\Model\ShippingRate();
-                $rate->set('properties', $rate_data);
-                if ($rate->isExists()) {
-                    $rate->update();
-                } else {
-                    $rate = $shippingRates[$key];
-    	            $rate->delete();
-        	        $rate->set('properties', $rate_data);
-            	    $rate->create();
+                    } else {
+                        $errorMsg = $this->t('Wrong method_id specifed');
+                        break;
+                    }
+                }
+
+                if ('zone_id' == $key) {
+                    $zone = \XLite\Core\Database::getRepo('XLite\Model\Zone')->getZone(intval($value));
+
+                    if (isset($zone)) {
+                        // Add zone object to the data
+                        $data['zone'] = $zone;
+
+                    } else {
+                        $errorMsg = $this->t('Wrong zone_id specifed');
+                        break;
+                    }
                 }
             }
+
+            // Sanitize value
+            $data[$key] = in_array($key, array('method_id', 'zone_id')) ? intval($value) : doubleval($value);
+        }
+
+        // If error occured then returns false, else returns data
+        if (isset($errorMsg)) {
+            $result = false;
+
+            \XLite\Core\TopMessage::getInstance()->add(
+                $errorMsg,
+                \XLite\Core\TopMessage::ERROR
+            );
+
+        } else {
+            $result = $data;
+        }
+
+        return $result;
+    }
+
+    /**
+     * Do action 'Add'
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function doActionAdd()
+    {
+        $postedData = \XLite\Core\Request::getInstance()->getData();
+
+        $data = $this->prepareData($postedData['new'], true);
+
+        if (is_array($data)) {
+
+            $newMarkup = new \XLite\Model\Shipping\Markup();
+
+            $newMarkup->map($data);
+
+            \XLite\Core\Database::getEM()->persist($newMarkup);
+            \XLite\Core\Database::getEM()->flush();
+
+            \XLite\Core\TopMessage::getInstance()->add(
+                $this->t('Shipping markup is successfully created'),
+                \XLite\Core\TopMessage::INFO
+            );
         }
     }
 
-    function action_delete()
+    /**
+     * doActionUpdate 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function doActionUpdate()
     {
-        $shippingRates = $this->get('shippingRates');
-        $rate = $shippingRates[\XLite\Core\Request::getInstance()->deleted_rate];
-        $rate->delete();
+        $postedData = \XLite\Core\Request::getInstance()->getData();
+
+        if (isset($postedData['posted_data']) && is_array($postedData['posted_data'])) {
+
+            foreach ($postedData['posted_data'] as $markupId => $values) {
+
+                $values = $this->prepareData($values);
+
+                if (is_array($values)) {
+                    $data[$markupId] = $values;
+                }
+            }
+
+            $markupIds = array_keys($data);
+
+            $markups = \XLite\Core\Database::getRepo('XLite\Model\Shipping\Markup')->getMarkupsByIds($markupIds);
+
+            if (!empty($markups)) {
+
+                foreach ($markups as $markup) {
+                    $markup->map($data[$markup->getMarkupId()]);
+                    \XLite\Core\Database::getEM()->persist($markup);
+                }
+
+                \XLite\Core\Database::getEM()->flush();
+
+                \XLite\Core\TopMessage::getInstance()->add(
+                    $this->t('Shipping markups have been updated'),
+                    \XLite\Core\TopMessage::INFO
+                );
+            }
+        }
+
+        $this->redirect($this->getRedirectUrl());
     }
+
+    /**
+     * doActionDelete 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function doActionDelete()
+    {
+        $postedData = \XLite\Core\Request::getInstance()->getData();
+
+        if (isset($postedData['to_delete']) && is_array($postedData['to_delete'])) {
+
+            $markupIds = array_keys($postedData['to_delete']);
+
+            $markups = \XLite\Core\Database::getRepo('XLite\Model\Shipping\Markup')->getMarkupsByIds($markupIds);
+
+            if (!empty($markups)) {
+
+                foreach ($markups as $markup) {
+                    \XLite\Core\Database::getEM()->remove($markup);
+                }
+
+                \XLite\Core\Database::getEM()->flush();
+                \XLite\Core\Database::getEM()->clear();
+
+                \XLite\Core\TopMessage::getInstance()->add(
+                    $this->t('The selected shipping markups have been deleted successfully'),
+                    \XLite\Core\TopMessage::INFO
+                );
+            }
+        }
+
+        $this->redirect($this->getRedirectUrl());
+    }
+
+    /**
+     * Do action 'change'
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function doActionChange()
+    {
+        $this->redirect($this->getRedirectUrl());
+    }
+
+    /**
+     * Generates redirect Url 
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getRedirectUrl()
+    {
+        $params = array();
+
+        $postedData = \XLite\Core\Request::getInstance()->getData();
+
+        if (isset($postedData['methodid']) && 0 < intval($postedData['methodid'])) {
+            $params[] = sprintf('methodid=%d', intval($postedData['methodid']));
+        }
+
+        if (isset($postedData['zoneid']) && 0 < intval($postedData['zoneid'])) {
+            $params[] = sprintf('zoneid=%d', intval($postedData['zoneid']));
+        }
+
+        $redirect = 'admin.php?target=shipping_rates';
+
+        if (!empty($params)) {
+            $redirect .= '&' . implode('&', $params);
+        }
+
+        return $redirect;
+    }
+
 }

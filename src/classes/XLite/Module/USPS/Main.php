@@ -114,6 +114,7 @@ class Main extends \XLite\Module\AModule
     {
         parent::init();
 
-        $this->registerShippingModule('usps');
+        // Register USPS shipping processor
+        \XLite\Model\Shipping::getInstance()->registerProcessor('\XLite\Module\USPS\Model\Shipping\Processor\USPS');
     }
 }

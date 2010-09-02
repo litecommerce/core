@@ -108,9 +108,9 @@ class Main extends \XLite\Module\AModule
     {
         parent::init();
 
-        $this->registerShippingModule('aupost');
+        // Register AustraliaPost shipping processor
+        \XLite\Model\Shipping::getInstance()->registerProcessor('\XLite\Module\AustraliaPost\Model\Shipping\Processor\AustraliaPost');
 
         \XLite::getInstance()->set('AustraliaPostEnabled', true);
-
     }
 }

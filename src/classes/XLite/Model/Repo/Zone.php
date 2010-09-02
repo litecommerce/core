@@ -71,7 +71,14 @@ class Zone extends \XLite\Model\Repo\ARepo
      */
     public function getZones()
     {
-        return $this->defineGetZones()->getQuery()->getResult();
+        $data = $this->getFromCache('all');
+
+        if (!isset($data)) {
+            $data = $this->defineGetZones()->getQuery()->getResult();
+            $this->saveToCache($data, 'all');
+        }
+
+        return $data;
     }
 
     /**
@@ -85,7 +92,8 @@ class Zone extends \XLite\Model\Repo\ARepo
     protected function defineGetZones()
     {
         return $this->createQueryBuilder()
-            ->orderBy('z.zone_name');
+            ->addOrderBy('z.is_default', 'DESC')
+            ->addOrderBy('z.zone_name');
     }
 
     /**
@@ -100,14 +108,21 @@ class Zone extends \XLite\Model\Repo\ARepo
      */
     public function getZone($zoneId)
     {
-        try {
-            $zone = $this->defineGetZone($zoneId)->getQuery()->getSingleResult();
+        $data = $this->getFromCache('zone', array('zone_id' => $zoneId));
+
+        if (!isset($data)) {
+
+            try {
+                $data = $this->defineGetZone($zoneId)->getQuery()->getSingleResult();
+                $this->saveToCache($data, 'zone', array('zone_id' => $zoneId));
         
-        } catch (\Doctrine\ORM\NoResultException $exception) {
-            $zone = null;
+            } catch (\Doctrine\ORM\NoResultException $exception) {
+                $data = null;
+            }
+
         }
 
-        return $zone;
+        return $data;
     }
 
     /**
@@ -140,6 +155,10 @@ class Zone extends \XLite\Model\Repo\ARepo
      */
     public function getApplicableZones($address)
     {
+        if (is_numeric($address['state'])) {
+            $address['state'] = \XLite\Core\Database::getRepo('XLite\Model\State')->getCodeById($address['state']);
+        }
+
         // Get all zones list
         $allZones = $this->getZones();
 
@@ -156,10 +175,10 @@ class Zone extends \XLite\Model\Repo\ARepo
         }
 
         // Add default zone with zero weight
-        $applicableZones[0] = new \XLite\Model\Zone();
+        $applicableZones[0] = $this->findOneBy(array('is_default' => 1));
 
         // Sort zones list by weight in reverse order
-        arsort($applicableZones, SORT_NUMERIC);
+        krsort($applicableZones);
 
         return $applicableZones;
     }

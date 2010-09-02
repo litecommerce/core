@@ -32,13 +32,9 @@ function ShowNotes()
 
 Use this section to define shipping zones.
 
-<span id="notes_url" style="display:"><a href="javascript:ShowNotes();" class="NavigationPath" onClick="this.blur()"><b>How to define shipping zones &gt;&gt;&gt;</b></a></span>
-
-<span id="notes_body" style="display: none"><br /><br />
-Select a country or a state from a list, specify the zone where the country or state should be listed and click on the 'Apply' button. To select more than one country/state, hold down the CTRL key while making a selection. A zone can contain either countries or states. You cannot include both states and countries into the same zone.  
-</span>
-
 <hr />
+
+<br />
 
 {if:isZonesDefined()}
 
@@ -70,13 +66,13 @@ function deleteZones()
   <input type="hidden" name="target" value="shipping_zones" />
   <input type="hidden" name="action" value="delete" />
 
-  <table cellpadding="3" cellspacing="1">
+  <table cellpadding="3" cellspacing="1" width="500">
 
-  <tbody FOREACH="getShippingZones(),k,zn">
+  <tbody FOREACH="getShippingZones(),k,zn" class="{getRowClass(k,#DialogBox#,#TableRow#)}">
 
     <tr>
-      <td><input type="checkbox" name="to_delete[{zn.getZoneId()}]"{if:k=0} disabled="disabled"{end:}} /></td>
-      <td>{if:k=0}{zn.getZoneName()} (all addresses){else:}<a href="admin.php?target=shipping_zones&zoneid={zn.getZoneId()}">{zn.getZoneName()}</a><span IF="!zn.hasZoneElements()"> (empty zone)</span>{end:}</td>
+      <td><input type="checkbox" name="to_delete[{zn.getZoneId()}]"{if:zn.getZoneId()=1} disabled="disabled"{end:}} /></td>
+      <td width="100%"><a href="admin.php?target=shipping_zones&zoneid={zn.getZoneId()}"><b>{zn.getZoneName()}</b></a></td>
     </tr>
 
   </tbody>

@@ -10,22 +10,29 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
+
 <p IF="message=#added#"><font class="SuccessMessage">&gt;&gt;&nbsp;Shipping rate has been added successfully&nbsp;&lt;&lt;</font></p>
+
 <p IF="message=#add_failed#"><font class="ErrorMessage">&gt;&gt;&nbsp;Shipping rate cannot be added&nbsp;&lt;&lt;</font><br>Please make sure that <b>"min weight", "min total", "min items", "shipping zone", "shipping method"</b> fields do not overlap with other shipping rates.</p>
 
-<script language="Javascript">
+<script type="text/javascript" language="JavaScript 1.2">
+<!--
+
 function visibleBox(id, status)
 {
-        var Element = document.getElementById(id);
-        if (Element) {
-            Element.style.display = ((status) ? "" : "none");
-        }
+  var Element = document.getElementById(id);
+  if (Element) {
+    Element.style.display = ((status) ? '' : 'none');
+  }
 }
+
 function ShowNotes()
 {
-        visibleBox("notes_url", false);
-        visibleBox("notes_body", true);
+  visibleBox('notes_url', false);
+  visibleBox('notes_body', true);
 }
+
+-->
 </script>
 
 Use this section to define rules for calculating shipping rates.
@@ -41,10 +48,10 @@ SHIPPING = flat + ITEMS*per_item + WEIGHT*per_{config.General.weight_unit} + SUB
 </p>
 <p align="justify">
 For real-time shipping methods (USPS, UPS, Intershipper):
-</p>	
+</p>  
 <p align="justify">
 SHIPPING = raw on-line_rate + flat + ITEMS*per_item + WEIGHT*per_{config.General.weight_unit} + SUBTOTAL*(% of subtotal)/100;
-</p>										  
+</p>                      
 <p align="justify">
 Based on these patterns, different shipping rate formulas can be defined for 
 different order weight and price ranges and quantities of items. Ranges 
@@ -77,29 +84,38 @@ and cannot be edited.
 </p>
 </span>
 
-<hr>
+<hr \>
 
-<form name="charges_methods" method="GET" action="admin.php">
-<input type="hidden" name="target" value="shipping_rates">
-<table border="0">
-	<tr>
-		<td colspan="2">Edit charges for:</td>
-	</tr>
-	<tr>
-		<td>
-			<select name="shipping_id_range" onChange="document.charges_methods.submit();">
-			<option value="">All shipping methods</option>
-			<option FOREACH="shippings,shipping" value="{shipping.shipping_id}" selected="{isSelected(shipping,#shipping_id#,shipping_id_range)}">{shipping.name:h}</option>
-			</select>
-		</td>
-		<td>
-			<select name="shipping_zone_range" onChange="document.charges_methods.submit();">
-			<option value="">All shipping zones</option>
-			<option FOREACH="getShippingZones(),zone" value="{zone.getZoneId()}" selected="{isSelected(zone,#shipping_zone#,shipping_zone_range)}">{zone.getZoneName()}</option>
-			</select>
-		</td>
-	</tr>
-</table>
+<form name="charges_methods" method="post" action="admin.php">
+
+  <input type="hidden" name="target" value="shipping_rates" />
+  <input type="hidden" name="action" value="change" />
+
+  <table border="0">
+
+    <tr>
+      <td colspan="2">Edit charges for:</td>
+    </tr>
+
+    <tr>
+      <td>
+        <select name="methodid" onChange="document.charges_methods.submit();">
+          <option value="">All shipping methods</option>
+          <option FOREACH="getShippingMethods(),m" value="{m.getMethodId()}" selected="{isSelected(m,#method_id#,methodid)}">{m.getName():h}</option>
+        </select>
+      </td>
+
+      <td>
+        <select name="zoneid" onChange="document.charges_methods.submit();">
+          <option value="">All shipping zones</option>
+          <option FOREACH="getShippingZones(),k,zn" value="{zn.getZoneId()}" selected="{isSelected(zn,#zone_id#,zoneid)}">{zn.getZoneName()}</option>
+        </select>
+      </td>
+    </tr>
+
+  </table>
+
 </form>
 
-<widget template="shipping/charges_form.tpl">
+<widget template="shipping/charges_form.tpl" />
+

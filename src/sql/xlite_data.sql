@@ -7,8 +7,8 @@ INSERT INTO `xlite_config` VALUES (9,'admin_security','Security','checkbox',10,'
 INSERT INTO `xlite_config` VALUES (10,'admin_zone_sbbe_enabled','General','checkbox',490,'Y');
 INSERT INTO `xlite_config` VALUES (12,'allow_admin_ip','SecurityIP','',40,'');
 INSERT INTO `xlite_config` VALUES (27,'buynow_button_enabled','General','checkbox',240,'Y');
-INSERT INTO `xlite_config` VALUES (29,'callback_code','Shipping','text',0,'');
-INSERT INTO `xlite_config` VALUES (30,'callback_status','Shipping','text',0,'');
+--INSERT INTO `xlite_config` VALUES (29,'callback_code','Shipping','text',0,'');
+--INSERT INTO `xlite_config` VALUES (30,'callback_status','Shipping','text',0,'');
 INSERT INTO `xlite_config` VALUES (31,'captcha_length','Captcha','text',20,'5');
 INSERT INTO `xlite_config` VALUES (32,'captcha_protection','Captcha','separator',0,'');
 INSERT INTO `xlite_config` VALUES (33,'captcha_protection_system','Security','checkbox',110,'N');
@@ -32,7 +32,6 @@ INSERT INTO `xlite_config` VALUES (72,'default_offline_payment','Payments','text
 INSERT INTO `xlite_config` VALUES (74,'default_purchase_limit','General','text',293,'9999');
 INSERT INTO `xlite_config` VALUES (75,'default_select_payment','Payments','text',0,'');
 INSERT INTO `xlite_config` VALUES (76,'default_zipcode','General','text',320,'10000');
-INSERT INTO `xlite_config` VALUES (77,'def_calc_shippings_taxes','General','checkbox',260,'N');
 INSERT INTO `xlite_config` VALUES (80,'developer_mode','General','checkbox',105,'');
 INSERT INTO `xlite_config` VALUES (89,'direct_product_url','General','checkbox',255,'N');
 INSERT INTO `xlite_config` VALUES (90,'discounts_after_taxes','Taxes','checkbox',210,'N');
@@ -79,7 +78,7 @@ INSERT INTO `xlite_config` VALUES (214,'proxy','Security','text',25,'');
 INSERT INTO `xlite_config` VALUES (216,'recent_orders','General','text',440,'10');
 INSERT INTO `xlite_config` VALUES (217,'redirect_to_cart','General','checkbox',300,'Y');
 INSERT INTO `xlite_config` VALUES (228,'safe_mode','General','checkbox',130,'N');
-INSERT INTO `xlite_config` VALUES (233,'shipping_code','Shipping','text',0,'1702936249');
+--INSERT INTO `xlite_config` VALUES (233,'shipping_code','Shipping','text',0,'1702936249');
 INSERT INTO `xlite_config` VALUES (234,'shop_closed','General','checkbox',110,'N');
 INSERT INTO `xlite_config` VALUES (236,'show_cc_info','Email','checkbox',40,'N');
 INSERT INTO `xlite_config` VALUES (237,'show_thumbnails','General','checkbox',230,'Y');
@@ -112,6 +111,15 @@ INSERT INTO `xlite_config` VALUES (276,'weight_unit','General','select',610,'lbs
 INSERT INTO `xlite_config` VALUES (299,'you_save','General','select',296,'Y');
 INSERT INTO `xlite_config` VALUES (300,'default_language','General','',330,'en');
 
+INSERT INTO `xlite_config` VALUES (310,'anonymous','Shipping','separator',30,'');
+INSERT INTO `xlite_config` VALUES (311,'anonymous_address','Shipping','text',40,'');
+INSERT INTO `xlite_config` VALUES (312,'anonymous_city','Shipping','text',50,'');
+INSERT INTO `xlite_config` VALUES (313,'anonymous_country','Shipping','country',90,'US');
+INSERT INTO `xlite_config` VALUES (314,'anonymous_custom_state','Shipping','text',70,'');
+INSERT INTO `xlite_config` VALUES (315,'anonymous_state','Shipping','state',60,'34');
+INSERT INTO `xlite_config` VALUES (316,'anonymous_zipcode','Shipping','text',80,'10001');
+INSERT INTO `xlite_config` VALUES (317,'shipping_enabled','Shipping','',10,'Y');
+INSERT INTO `xlite_config` VALUES (77,'def_calc_shippings_taxes','Shipping','checkbox',20,'Y');
 
 
 
@@ -376,12 +384,6 @@ INSERT INTO xlite_payment_methods VALUES ('FaxOrdering','Fax Ordering','Fax: (55
 INSERT INTO xlite_payment_methods VALUES ('MoneyOrdering','Money Order','US Banks Only','Offline','',45,1);
 INSERT INTO xlite_payment_methods VALUES ('Echeck','Check','Check payment','Echeck','',50,1);
 INSERT INTO xlite_payment_methods VALUES ('COD','COD','Cash On Delivery','Offline','',60,1);
-
-INSERT INTO xlite_shipping VALUES (2,'Offline','L','National shipping',1,10);
-INSERT INTO xlite_shipping VALUES (3,'Offline','I','International shipping',1,20);
-
-INSERT INTO `xlite_shipping_rates` VALUES (2,'0.00','999999.00','0.00','999999.00',0,'2.00','0.00','0.00','0.00',0,999999);
-INSERT INTO `xlite_shipping_rates` VALUES (3,'0.00','999999.00','0.00','999999.00',0,'5.00','0.00','0.00','0.00',0,999999);
 
 -- Languages
 INSERT INTO xlite_languages (lng_id, code, code3) VALUES (1,'aa','aar');
@@ -671,5 +673,12 @@ INSERT INTO xlite_language_labels (label_id, name) VALUES (95, 'The X module has
 INSERT INTO xlite_language_labels (label_id, name) VALUES (96, 'Congratulations! Your order has been successfully placed');
 INSERT INTO xlite_language_labels (label_id, name) VALUES (97, 'X items in bag');
 INSERT INTO xlite_language_labels (label_id, name) VALUES (98, 'Other items');
+INSERT INTO xlite_language_labels (label_id, name) VALUES (99, 'The selected shipping method has been deleted successfully');
+INSERT INTO xlite_language_labels (label_id, name) VALUES (100, 'Shipping methods have been updated');
+INSERT INTO xlite_language_labels (label_id, name) VALUES (101, 'Shipping method has been added');
+INSERT INTO xlite_language_labels (label_id, name) VALUES (102, 'The selected zones have been deleted successfully');
+INSERT INTO xlite_language_labels (label_id, name) VALUES (103, 'Zone details have been updated successfully');
+INSERT INTO xlite_language_labels (label_id, name) VALUES (104, 'New zone has been created successfully');
 
+INSERT INTO xlite_zones VALUES (1,'Default zone (all addresses)',1);
 

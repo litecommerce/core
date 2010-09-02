@@ -116,3 +116,13 @@ INSERT INTO xlite_order_item_options SET item_id = 18, group_id = 1, option_id =
 INSERT INTO xlite_order_item_options SET item_id = 18, group_id = 2, option_id = 4, name = 'Size', value = 'Small';
 INSERT INTO xlite_order_items SET `order_id` = '7', `object_type` = 'product', `object_id` = '15091', `price` = '8.99', `name` = 'Peach', `sku` = '00002', `amount` = '2', `item_id` = 19;
 INSERT INTO xlite_order_item_options SET item_id = 19, group_id = 6, option_id = 13 name = 'Size', value = 'Small';
+
+
+-- Shipping methods [2]
+
+INSERT INTO xlite_shipping_methods (method_id, processor, carrier, code, enabled, position) VALUES (100, 'offline', '', '', 1, 10);
+INSERT INTO xlite_shipping_method_translations (code, id, name) VALUES ('en', 100, 'Courier');
+
+INSERT INTO xlite_shipping_methods (method_id, processor, carrier, code, enabled, position) VALUES (101, 'offline', '', '', 1, 20);
+INSERT INTO xlite_shipping_method_translations (code, id, name) VALUES ('en', 101, 'Local shipping');
+

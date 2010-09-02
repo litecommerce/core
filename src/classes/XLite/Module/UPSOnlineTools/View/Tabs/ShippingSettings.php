@@ -26,7 +26,7 @@
  * @since      3.0.0
  */
 
-namespace XLite\Module\USPS\Controller\Admin;
+namespace XLite\Module\UPSOnlineTools\View\Tabs;
 
 /**
  * ____description____
@@ -35,18 +35,6 @@ namespace XLite\Module\USPS\Controller\Admin;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class ShippingSettings extends \XLite\Controller\Admin\ShippingSettings implements \XLite\Base\IDecorator
+class ShippingSettings extends \XLite\View\Tabs\ShippingSettings implements \XLite\Base\IDecorator
 {
-    public function __construct(array $params)
-    {
-        parent::__construct($params);
-        $this->pages['usps'] = "USPS settings"; // add a page
-        $this->pageTemplates['usps'] = "modules/USPS/config.tpl";
-    }
-
-    function action_clear_cache()
-    {
-        $usps = new \XLite\Module\USPS\Model\Shipping\Usps();
-        $usps->cleanCache();
-    }
 }

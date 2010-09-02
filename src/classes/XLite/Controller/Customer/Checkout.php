@@ -198,8 +198,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
     {
         $cart = $this->getCart();
 
-        return $cart->isShippingAvailable()
-            && (!$cart->getShippingMethod() || !$cart->getShippingMethod()->isExists());
+        return !$cart->isShippingAvailable();
     }
 
     /**

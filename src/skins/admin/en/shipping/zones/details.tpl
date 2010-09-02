@@ -28,8 +28,34 @@ function onZoneSubmit()
   }
 }
 
+function visibleBox(id, status)
+{
+  var Element = document.getElementById(id);
+	if (Element) {
+	  Element.style.display = ((status) ? "" : "none");
+  }
+}
+
+function ShowNotes()
+{
+  visibleBox("notes_url", false);
+	visibleBox("notes_body", true);
+}
+
 -->
 </script>
+
+Use this section to define shipping zones.
+
+<span id="notes_url" style="display:"><a href="javascript:ShowNotes();" class="NavigationPath" onClick="this.blur()"><b>How to define shipping zones &gt;&gt;&gt;</b></a></span>
+
+<span id="notes_body" style="display: none"><br /><br />
+Select a country or a state from a list, specify the zone where the country or state should be listed and click on the 'Apply' button. To select more than one country/state, hold down the CTRL key while making a selection. A zone can contain either countries or states. You cannot include both states and countries into the same zone.  
+</span>
+
+<hr />
+
+<br /><br />
 
 <form action="admin.php" method="post" name="zoneform">
 
@@ -50,6 +76,8 @@ function onZoneSubmit()
         <br /><br />
       </td>
     </tr>
+
+    <tbody IF="zone.getIsDefault()=0">
 
     {* Countries *}
 
@@ -210,6 +238,16 @@ function onZoneSubmit()
         <input type="button" onClick="javascript: onZoneSubmot();" value="Save zone details" />
       </td>
     </tr>
+
+    </tbody>
+
+    <tbody IF="zone.getIsDefault()=1">
+
+      <tr>
+        <td colspan="3"><br />This is a default zone which covers all addresses. It's impossible to edit this zone's countries, states etc</td>
+      </tr>
+
+    </tbody>
 
   </table>
 

@@ -97,6 +97,12 @@ INSERT INTO xlite_language_label_translations (id, code, label) VALUES (95, 'en'
 INSERT INTO xlite_language_label_translations (id, code, label) VALUES (96, 'en', 'Congratulations! Your order has been successfully placed.<br />Thank you for using our store. An order notification has been sent to your e-mail address.<br />Your order will be processed according to the delivery details.');
 INSERT INTO xlite_language_label_translations (id, code, label) VALUES (97, 'en', '{{count}} items in bag');
 INSERT INTO xlite_language_label_translations (id, code, label) VALUES (98, 'en', 'Other items');
+INSERT INTO xlite_language_label_translations (id, code, label) VALUES (99, 'en', 'The selected shipping method has been deleted successfully');
+INSERT INTO xlite_language_label_translations (id, code, label) VALUES (100, 'en', 'Shipping methods have been updated');
+INSERT INTO xlite_language_label_translations (id, code, label) VALUES (101, 'en', 'Shipping methods has been added');
+INSERT INTO xlite_language_label_translations (id, code, label) VALUES (102, 'en', 'The selected zones have been deleted successfully');
+INSERT INTO xlite_language_label_translations (id, code, label) VALUES (103, 'en', 'Zone details have been updated successfully');
+INSERT INTO xlite_language_label_translations (id, code, label) VALUES (104, 'en', 'New zone has been created successfully');
 
 -- Language names
 INSERT INTO xlite_language_translations (code, id, name) VALUES ('en',1,'Afar');
@@ -382,6 +388,15 @@ INSERT INTO `xlite_config_translations` VALUES (203,'en',271,'Valid domain names
 INSERT INTO `xlite_config_translations` VALUES (204,'en',275,'Weight symbol','');
 INSERT INTO `xlite_config_translations` VALUES (205,'en',276,'Weight unit','');
 INSERT INTO `xlite_config_translations` VALUES (224,'en',299,'Enable \"save\" label (for Market Price)','');
+
+INSERT INTO `xlite_config_translations` VALUES (225,'en',310,'Default customer shipping address','');
+INSERT INTO `xlite_config_translations` VALUES (226,'en',311,'Address line','');
+INSERT INTO `xlite_config_translations` VALUES (227,'en',312,'City','');
+INSERT INTO `xlite_config_translations` VALUES (228,'en',313,'Country','');
+INSERT INTO `xlite_config_translations` VALUES (229,'en',314,'Other state (specify)','');
+INSERT INTO `xlite_config_translations` VALUES (230,'en',315,'State','');
+INSERT INTO `xlite_config_translations` VALUES (231,'en',316,'Zip/postal code','');
+
 
 -- Memberships
 INSERT INTO xlite_membership_translations (id, code, name) VALUES (1, 'en', 'Gold');

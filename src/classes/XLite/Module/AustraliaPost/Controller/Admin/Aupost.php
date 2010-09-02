@@ -35,8 +35,9 @@ namespace XLite\Module\AustraliaPost\Controller\Admin;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Aupost extends \XLite\Controller\Admin\ShippingSettings
+class Aupost extends \XLite\Controller\Admin\AAdmin
 {
+/*
     public $params = array('target', "updated");
     public $page		="aupost";
     public $updated 	= false;
@@ -51,21 +52,68 @@ class Aupost extends \XLite\Controller\Admin\ShippingSettings
         $aupost = new \XLite\Module\AustraliaPost\Model\Shipping\Aupost();
         $this->settings = $aupost->get('options');
     }
-    
-    function action_update()  
-    {
-        $aupost = new \XLite\Module\AustraliaPost\Model\Shipping\Aupost();
-        $currency_rate = $_POST['currency_rate'];
-        if (((double) $currency_rate) <= 0) {
-            $_POST['currency_rate'] = 1;
-        }
-        $aupost->set('options', (object)$_POST);
-        $this->set('updated', true);
 
+ */
+
+    protected function doActionUpdate()
+    {
+        $postedData = \XLite\Core\Request::getInstance()->getData();
+
+        $allowedFields = array(
+            'length',
+            'width',
+            'height',
+            'currency_rate'
+        );
+
+        $data = array();
+        $errorMsg = null;
+
+        foreach ($allowedFields as $field) {
+
+            if (isset($postedData[$field])) {
+                $data[$field] = $postedData[$field];
+
+            } else {
+                $errorMsg = $this->t('Wrong data submited');
+                break;
+            }
+        }
+
+        if (isset($errorMsg)) {
+            \XLite\Core\TopMessage::getInstance()->add(
+                $errorMsg,
+                \XLite\Core\TopMessage::ERROR
+            );
+
+        } else {
+            foreach ($data as $key => $value) {
+                \XLite\Core\Database::getRepo('\XLite\Model\Config')->createOption(
+                    array(
+                        'category' => 'AustraliaPost',
+                        'name'     => $key,
+                        'value'    => $value
+                    )
+                );
+            }
+
+//            \XLite\Core\Config::getInstance()->update();
+            $this->config->update();
+
+            \XLite\Core\TopMessage::getInstance()->add(
+                $this->t('Shipping settings has been successfully updated'),
+                \XLite\Core\TopMessage::INFO
+            );
+        }
     }
     
-    function action_test()  
+    protected function doActionTest()
     {
+        $postedData = \XLite\Core\Request::getInstance()->getData();
+
+        var_dump($postedData);
+        die();
+
         if (empty($this->weight)) 
             $this->weight = 1;
         if (empty($this->sourceZipcode)) 

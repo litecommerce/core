@@ -136,7 +136,7 @@ class Cart extends \XLite\Model\Order
     public function clear()
     {
         foreach ($this->getItems() as $item) {
-            \XLite\Core\Database::getEM()->remvoe($item);
+            \XLite\Core\Database::getEM()->remove($item);
         }
         $this->getItems()->clear();
 
@@ -211,25 +211,32 @@ class Cart extends \XLite\Model\Order
     protected function calculateShippingRates()
     {
         $rates = parent::calculateShippingRates();
-        $id = $this->getShippingId();
+        $methodId = $this->getShippingId();
 
-        if (
-            ($id && !isset($rates[$id]))
-            || ($rates && !$id)
-        ) {
-            $shipping = null;
-            if (0 < count($rates)) {
-                list($k, $rate) = each($rates);
-                reset($rates);
-                $shipping = $rate->getShipping();
+        $shippingRate = null;
+
+        if (!empty($rates)) {
+
+            if (0 < intval($methodId)) {
+                foreach ($rates as $rate) {
+                    if ($methodId == $rate->getMethodId()) {
+                        $shippingRate = $rate;
+                        break;
+                    }
+                }
+            
+            } else {
+                $shippingRate = array_shift($rates);
+                $methodId = $shippingRate->getMethodId();
             }
-            $this->setShippingMethod($shipping);
-            $this->calculate();
-
-            \XLite\Core\Database::getEM()->persist($this);
-            \XLite\Core\Database::getEM()->flush();
         }
+
+        $this->setShippingRate($shippingRate);
+
+        \XLite\Core\Database::getEM()->persist($this);
+        \XLite\Core\Database::getEM()->flush();
 
         return $rates;
     }
+
 }

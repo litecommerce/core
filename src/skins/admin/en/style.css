@@ -641,3 +641,75 @@ A.AomMenu:active  {
   background: transparent url(images/adv_icon_hosting.png) no-repeat left 20px;
   padding-left: 55px;
 }
+
+/*
+	Subheader styles
+*/
+TABLE.SubHeaderGrey {
+	WIDTH: 100%;
+	MARGIN-BOTTOM: 10px;
+}
+.SubHeaderGrey {
+	COLOR: #666666;
+	FONT-SIZE: 11px;
+	FONT-WEIGHT: bold;
+	PADDING: 0px;
+}
+.SubHeaderGreyLine {
+	HEIGHT: 1px;
+	BACKGROUND-COLOR: #CCCCCC;
+	PADDING: 0px;
+}
+TABLE.SubHeaderBlack {
+	WIDTH: 100%;
+	MARGIN-BOTTOM: 10px;
+}
+.SubHeaderBlack {
+	COLOR: #010101;
+	FONT-SIZE: 12px;
+	FONT-WEIGHT: bold;
+	PADDING: 0px;
+}
+.SubHeaderBlackLine {
+	HEIGHT: 1px;
+	BACKGROUND-COLOR: #000000;
+	PADDING: 0px;
+}
+TABLE.SubHeaderRed {
+	WIDTH: 100%;
+	MARGIN-BOTTOM: 10px;
+}
+.SubHeaderRed {
+	FONT-WEIGHT: bold;
+	PADDING: 0px;
+}
+.SubHeaderRedLine {
+	HEIGHT: 1px;
+	BACKGROUND-COLOR: #acb7c7;
+	PADDING: 0px;
+}
+TABLE.SubHeader {
+	WIDTH: 100%;
+	MARGIN-BOTTOM: 10px;
+}
+.SubHeader {
+	COLOR: #b51a00;
+	FONT-WEIGHT: bold;
+	FONT-SIZE: 11px;
+	PADDING: 0px;
+}
+.SubHeaderLine {
+	HEIGHT: 1px;
+	BACKGROUND-COLOR: #9d1500;
+	PADDING: 0px;
+}
+
+.TableSubHead {
+	BACKGROUND-COLOR: #EEEEEE;
+	FONT-WEIGHT: normal;
+}
+
+.Spc {
+	WIDTH: 1px;
+	HEIGHT: 1px;
+}

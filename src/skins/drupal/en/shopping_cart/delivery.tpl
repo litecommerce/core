@@ -13,14 +13,14 @@
 <div IF="cart.isDeliveryAvailable()&cart.isShipped()&cart.getShippingRates()" class="delivery-box">
   <h4>{t(#Delivery#)}</h4>
 
-  <widget module="UPSOnlineTools" template="modules/UPSOnlineTools/delivery.tpl">
+  <widget module="UPSOnlineTools" template="modules/UPSOnlineTools/delivery.tpl" />
 
   <ul IF="!xlite.UPSOnlineToolsEnabled" class="deliveries">
     {foreach:cart.getShippingRates(),rate}
-    <li {if:cart.getShippingId()=rate.shipping.shipping_id} class="selected"{end:}>
-      <input type="radio" id="shipping_{rate.shipping.shipping_id}" name="shipping" value="{rate.shipping.shipping_id}" checked="{isSelected(cart.getShippingId(),rate.shipping.shipping_id)}" />
-      <label for="shipping_{rate.shipping.shipping_id}">{rate.shipping.name:h}</label>
-      <span>{rate.rate:p}</span>
+    <li {if:cart.getShippingId()=rate.getMethodId()} class="selected"{end:}>
+      <input type="radio" id="shipping_{rate.getMethodId()}" name="shipping" value="{rate.getMethodId()}" checked="{isSelected(cart.getShippingId(),rate.getMethodId())}" />
+      <label for="shipping_{rate.getMethodId()}">{rate.getMethodName():h}</label>
+      <span>{rate.getTotalRate():p}</span>
     </li>
     {end:}
   </ul>
