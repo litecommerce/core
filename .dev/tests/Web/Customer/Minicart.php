@@ -96,10 +96,10 @@ class XLite_Web_Customer_Minicart extends XLite_Web_Customer_ACustomer
         $product = $this->getActiveProduct();
 
         $this->open('store/product//product_id-' . $product->getProductId());
-        $this->click("//button[@type='submit']/span[text()='Add to Cart']");
+        $this->clickAndWait("//button[@type='submit']/span[text()='Add to Cart']");
  
-        $this->open('/~max/xlite_cms/src/store/product//product_id-' . $product->getProductId());
-        $this->click("//button[@type='submit']/span[text()='Add to Cart']");
+        $this->open('store/product//product_id-' . $product->getProductId());
+        $this->clickAndWait("//button[@type='submit']/span[text()='Add to Cart']");
  
         $this->assertElementPresent(
             "//div[@id='lc-minicart-horizontal']"
@@ -151,11 +151,6 @@ class XLite_Web_Customer_Minicart extends XLite_Web_Customer_ACustomer
         $this->open('store/product//product_id-' . $product->getProductId());
         $this->clickAndWait("//button[@type='submit']/span[text()='Add to Cart']");
 
-        $this->open('store/product//product_id-' . $product->getProductId());
-
-        $this->assertElementPresent("//button[@type='submit']/span[text()='Add to Cart']");
-        $this->clickAndWait("//button[@type='submit']/span[text()='Add to Cart']");
-
         $this->assertElementPresent(
             "//div[@id='lc-minicart-horizontal']"
             . "/div[@class='minicart-items-number' and text()='3']"
@@ -185,4 +180,44 @@ class XLite_Web_Customer_Minicart extends XLite_Web_Customer_ACustomer
             . "/div[@class='item-price' and text()='$ " . $product->getPrice() . " x 1']"
         );
     }
+
+    public function testOpenClose()
+    {
+        $product = $this->getActiveProduct();
+
+        $this->open('store/product//product_id-' . $product->getProductId());
+        $this->clickAndWait("//button[@type='submit']/span[text()='Add to Cart']");
+
+        $this->assertEquals(
+            '0',
+            $this->getEval("selenium.browserbot.getCurrentWindow().$('#lc-minicart-horizontal .items-list:visible').length"),
+            'check closed popup'
+        );
+
+        $this->click("//div[@id='lc-minicart-horizontal']");
+
+        $this->assertEquals(
+            '1',
+            $this->getEval("selenium.browserbot.getCurrentWindow().$('#lc-minicart-horizontal .items-list:visible').length"),
+            'check open popup'
+        );
+
+        $this->click("//div[@id='lc-minicart-horizontal']");
+
+        $this->assertEquals(
+            '0',
+            $this->getEval("selenium.browserbot.getCurrentWindow().$('#lc-minicart-horizontal .items-list:visible').length"),
+            'check closed popup #2'
+        );
+
+        $this->click("//div[@id='lc-minicart-horizontal']");
+        $this->click("//div[@id='container']");
+
+        $this->assertEquals(
+            '0',
+            $this->getEval("selenium.browserbot.getCurrentWindow().$('#lc-minicart-horizontal .items-list:visible').length"),
+            'check closed popup #3'
+        );
+    }
+
 }
