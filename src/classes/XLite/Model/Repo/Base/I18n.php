@@ -37,75 +37,75 @@ namespace XLite\Model\Repo\Base;
  */
 abstract class I18n extends \XLite\Model\Repo\ARepo
 {
-	/**
-	 * Add language subquery with language code relation
-	 * 
-	 * @param \Doctrine\ORM\QueryBuilder $qb    Query builder
-	 * @param string                    $alias Main model alias
-	 * @param string                    $code  Language code
-	 *  
-	 * @return \Doctrine\ORM\QueryBuilder
-	 * @access protected
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	protected function addLanguageQuery(\Doctrine\ORM\QueryBuilder $qb, $alias = null, $code = null)
-	{
+    /**
+     * Add language subquery with language code relation
+     * 
+     * @param \Doctrine\ORM\QueryBuilder $qb    Query builder
+     * @param string                     $alias Main model alias
+     * @param string                     $code  Language code
+     *  
+     * @return \Doctrine\ORM\QueryBuilder
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function addLanguageQuery(\Doctrine\ORM\QueryBuilder $qb, $alias = null, $code = null)
+    {
         if (!isset($alias)) {
             $alias = $this->getMainAlias($qb);
         }
 
-		if (is_null($code)) {
-			$code = \XLite\Model\Session::getInstance()->getLanguage()->code;
-		}
+        if (is_null($code)) {
+            $code = \XLite\Model\Session::getInstance()->getLanguage()->code;
+        }
 
-		$qb->add('select', 'translations', true);
-		$qb->add(
-			'join',
-			new \Doctrine\ORM\Query\Expr\Join(
-				\Doctrine\ORM\Query\Expr\Join::INNER_JOIN,
-				$alias . '.translations',
-				'translations',
-				\Doctrine\ORM\Query\Expr\Join::WITH,
-				'translations.code = :lng'
-			),
-			true
-		);
-		$qb->setParameter('lng', $code);
+        $qb->add('select', 'translations', true);
+        $qb->add(
+            'join',
+            new \Doctrine\ORM\Query\Expr\Join(
+                \Doctrine\ORM\Query\Expr\Join::INNER_JOIN,
+                $alias . '.translations',
+                'translations',
+                \Doctrine\ORM\Query\Expr\Join::WITH,
+                'translations.code = :lng'
+            ),
+            true
+        );
+        $qb->setParameter('lng', $code);
 
-		return $qb;
-	}
+        return $qb;
+    }
 
-	/**
-	 * Add translations subquery 
-	 * 
-	 * @param \Doctrine\ORM\QueryBuilder $qb    Query builder
-	 * @param string                    $alias Main model alias
-	 *  
-	 * @return \Doctrine\ORM\QueryBuilder
-	 * @access protected
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	protected function addTranslationsSubquery(\Doctrine\ORM\QueryBuilder $qb, $alias = null)
-	{
+    /**
+     * Add translations subquery 
+     * 
+     * @param \Doctrine\ORM\QueryBuilder $qb    Query builder
+     * @param string                     $alias Main model alias
+     *  
+     * @return \Doctrine\ORM\QueryBuilder
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function addTranslationsSubquery(\Doctrine\ORM\QueryBuilder $qb, $alias = null)
+    {
         if (!isset($alias)) {
             $alias = $this->getMainAlias($qb);
         }
 
-		$qb->add('select', 'translations', true);
-		$qb->add(
-			'join',
-			new \Doctrine\ORM\Query\Expr\Join(
-				\Doctrine\ORM\Query\Expr\Join::LEFT_JOIN,
-				$alias . '.translations',
-				'translations'
-			),
-			true
-		);
+        $qb->add('select', 'translations', true);
+        $qb->add(
+            'join',
+            new \Doctrine\ORM\Query\Expr\Join(
+                \Doctrine\ORM\Query\Expr\Join::LEFT_JOIN,
+                $alias . '.translations',
+                'translations'
+            ),
+            true
+        );
 
-		return $qb;
-	}
+        return $qb;
+    }
 
     /**
      * Create a new QueryBuilder instance that is prepopulated for this entity name

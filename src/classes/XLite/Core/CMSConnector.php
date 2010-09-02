@@ -189,9 +189,14 @@ abstract class CMSConnector extends \XLite\Base\Singleton
     {
         $product = \XLite\Core\Database::getRepo('\XLite\Model\Product')->find($productId);
 
-        return (isset($product) && $product->getCleanUrl())
-            ? ($product->getCleanUrl() . (preg_match('/(\.html|\/htm)$/Ss', $url) ? '.html' : ''))
-            : null;
+        $result = null;
+
+        if (isset($product) && $product->getCleanUrl()) {
+            $result = $product->getCleanUrl()
+                . (preg_match('/(\.html|\/htm)$/Ss', $url) ? '.html' : '');
+        }
+
+        return $result;
     }
 
 
@@ -530,7 +535,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
 
         // By category
         if (!$cleanUrl) {
-            $parts = preg_split('\'/\'', $path, 2,  PREG_SPLIT_NO_EMPTY);
+            $parts = preg_split('\'/\'', $path, 2, PREG_SPLIT_NO_EMPTY);
             $category = \XLite\Core\Database::getRepo('\XLite\Model\Category')->getCategoryByCleanUrl($parts[0]);
 
             if ($category) {

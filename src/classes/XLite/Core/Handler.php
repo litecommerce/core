@@ -214,10 +214,23 @@ abstract class Handler extends \XLite\Base
     {
         return array_filter(
             $this->getWidgetParams(),
-            function (\XLite\Model\WidgetParam\AWidgetParam $param) {
-                return $param->isSetting;
-            }
+            array($this, 'getWidgetSettingsFilter')
         );
+    }
+
+    /**
+     * Filter for getWidgetSettings() method
+     * 
+     * @param \XLite\Model\WidgetParam\AWidgetParam $param Widget parameter
+     *  
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getWidgetSettingsFilter(\XLite\Model\WidgetParam\AWidgetParam $param)
+    {
+        return $param->isSetting;
     }
 
     /**

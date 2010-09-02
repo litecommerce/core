@@ -34,9 +34,9 @@ namespace XLite\Model\Repo;
 /**
  * The "product" model repository
  * 
- * @package    XLite
- * @see        ____class_see____
- * @since      3.0.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
 class Product extends \XLite\Model\Repo\Base\I18n
 {
@@ -127,8 +127,7 @@ class Product extends \XLite\Model\Repo\Base\I18n
      */
     protected function prepareCndSKU(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
-        $queryBuilder
-            ->andWhere('p.sku LIKE :sku')
+        $queryBuilder->andWhere('p.sku LIKE :sku')
             ->setParameter('sku', '%' . $value . '%');
     }
 
@@ -145,17 +144,14 @@ class Product extends \XLite\Model\Repo\Base\I18n
      */
     protected function prepareCndCategoryId(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
-        $queryBuilder
-            ->leftJoin('p.category_products', 'cp')
+        $queryBuilder->leftJoin('p.category_products', 'cp')
             ->addOrderBy('cp.orderby');
 
         if (empty($this->currentSearchCnd->{self::P_SEARCH_IN_SUBCATS})) {
-            $queryBuilder
-                ->andWhere('cp.category_id = :categoryId')
+            $queryBuilder->andWhere('cp.category_id = :categoryId')
                 ->setParameter('categoryId', $value);
         } else {
-            $queryBuilder
-                ->leftJoin('cp.category', 'c');
+            $queryBuilder->leftJoin('cp.category', 'c');
 
             \XLite\Core\Database::getRepo('\XLite\Model\Category')->addSubTreeCondition($queryBuilder, $value);
         }
@@ -189,7 +185,7 @@ class Product extends \XLite\Model\Repo\Base\I18n
      * Prepare certain search condition
      *
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder query builder to prepare
-     * @param  array                     $value        condition data
+     * @param array                      $value        condition data
      *
      * @return void
      * @access protected
@@ -248,7 +244,7 @@ class Product extends \XLite\Model\Repo\Base\I18n
      * @param bool                   $countOnly return items list or only its size
      *  
      * @return \Doctrine\ORM\PersistentCollection|int
-     * @access protected
+     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */

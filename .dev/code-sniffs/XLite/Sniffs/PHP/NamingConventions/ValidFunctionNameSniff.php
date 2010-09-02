@@ -147,6 +147,10 @@ class XLite_Sniffs_PHP_NamingConventions_ValidFunctionNameSniff extends XLite_Ab
             $testMethodName = substr($methodName, 1);
         }
 
+		if ($this->isReserverMethodName($methodName)) {
+			return;
+		}
+
 		$words = $this->getWordsByCapitalLetter($methodName);
 		$fBit = array_shift($words);
 		if (!$this->checkLowWord($fBit)) {
@@ -154,7 +158,8 @@ class XLite_Sniffs_PHP_NamingConventions_ValidFunctionNameSniff extends XLite_Ab
 			$phpcsFile->addError($this->getReqPrefix('REQ.PHP.1.4.1') . $error, $stackPtr);
 
 		}
-		if (!$this->checkVerb($fBit) && !$this->isReserverMethodName($methodName)) {
+
+		if (!$this->checkVerb($fBit)) {
 
 			$error = ucfirst($scope)." method name \"$className::$methodName\" is not in verb form";
 			$phpcsFile->addError($this->getReqPrefix('REQ.PHP.1.4.2') . $error, $stackPtr);

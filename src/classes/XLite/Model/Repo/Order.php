@@ -115,8 +115,7 @@ class Order extends \XLite\Model\Repo\ARepo
     protected function prepareCndOrderId(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
         if (!empty($value)) {
-            $queryBuilder
-                ->andWhere('o.order_id = :order_id')
+            $queryBuilder->andWhere('o.order_id = :order_id')
                 ->setParameter('order_id', $value);
         }
     }
@@ -135,8 +134,7 @@ class Order extends \XLite\Model\Repo\ARepo
     protected function prepareCndProfileId(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
         if (!empty($value)) {
-            $queryBuilder
-                ->andWhere('o.orig_profile_id = :profile_id')
+            $queryBuilder->andWhere('o.orig_profile_id = :profile_id')
                 ->setParameter('profile_id', $value);
         }
     }
@@ -177,8 +175,7 @@ class Order extends \XLite\Model\Repo\ARepo
     protected function prepareCndStatus(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
         if (!is_null(\XLite\Model\Order::getAllowedStatuses($value))) {
-            $queryBuilder
-                ->andWhere('o.status = :status')
+            $queryBuilder->andWhere('o.status = :status')
                 ->setParameter('status', $value);
 
         } else {
@@ -202,8 +199,7 @@ class Order extends \XLite\Model\Repo\ARepo
         if (2 == count($value)) {
             list($start, $end) = $value;
 
-            $queryBuilder
-                ->andWhere('o.date >= :start')
+            $queryBuilder->andWhere('o.date >= :start')
                 ->andWhere('o.date <= :end')
                 ->setParameter('start', $start)
                 ->setParameter('end', $end);
@@ -257,7 +253,8 @@ class Order extends \XLite\Model\Repo\ARepo
     /**
      * Create a new QueryBuilder instance that is prepopulated for this entity name
      *
-     * @param string $alias Table alias
+     * @param string  $alias      Table alias
+     * @param boolean $placedOnly Use only orders or orders + carts
      *
      * @return \Doctrine\ORM\QueryBuilder
      * @access public
@@ -269,8 +266,7 @@ class Order extends \XLite\Model\Repo\ARepo
         $result = parent::createQueryBuilder($alias);
 
         if ($placedOnly) {
-            $result
-                ->andWhere('o.status != :tempStatus')
+            $result->andWhere('o.status != :tempStatus')
                 ->setParameter('tempStatus', \XLite\Model\Order::STATUS_TEMPORARY);
         }
 
@@ -294,7 +290,7 @@ class Order extends \XLite\Model\Repo\ARepo
      * Prepare certain search condition
      *
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder query builder to prepare
-     * @param  array                     $value        condition data
+     * @param array                      $value        condition data
      *
      * @return void
      * @access protected
@@ -342,6 +338,7 @@ class Order extends \XLite\Model\Repo\ARepo
     {
         if ($this->isSearchParamHasHandler($key)) {
             $methodName = 'prepareCnd' . ucfirst($key);
+            // $methodName is assembled from 'prepareCnd' + key
             $this->$methodName($queryBuilder, $value);
 
         } else {
@@ -356,8 +353,8 @@ class Order extends \XLite\Model\Repo\ARepo
      * @param \XLite\Core\CommonCell $cnd       search condition
      * @param bool                   $countOnly return items list or only its size
      *  
-     * @return \Doctrine\ORM\PersistentCollection|int
-     * @access protected
+     * @return \Doctrine\ORM\PersistentCollection or int
+     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */

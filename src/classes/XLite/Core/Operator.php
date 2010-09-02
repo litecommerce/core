@@ -110,7 +110,8 @@ class Operator extends \XLite\Base\Singleton
      */
     public static function isClassExists($name)
     {
-        return class_exists($name, false) || file_exists(LC_CLASSES_CACHE_DIR . str_replace('\\', LC_DS, $name) . '.php');
+        return class_exists($name, false)
+            || file_exists(LC_CLASSES_CACHE_DIR . str_replace('\\', LC_DS, $name) . '.php');
     }
 
     /**

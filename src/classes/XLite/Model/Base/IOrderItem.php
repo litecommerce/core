@@ -44,7 +44,7 @@ interface IOrderItem
      * @see    ____func_see____
      * @since  3.0.0
      */
-	public function getId();
+    public function getId();
 
     /**
      * getPrice 
@@ -54,7 +54,7 @@ interface IOrderItem
      * @see    ____func_see____
      * @since  3.0.0
      */
-	public function getPrice();
+    public function getPrice();
 
     /**
      * getTaxedPrice 
@@ -64,7 +64,7 @@ interface IOrderItem
      * @see    ____func_see____
      * @since  3.0.0
      */
-	public function getTaxedPrice();
+    public function getTaxedPrice();
 
     /**
      * getWeight 
@@ -74,7 +74,7 @@ interface IOrderItem
      * @see    ____func_see____
      * @since  3.0.0
      */
-	public function getWeight();
+    public function getWeight();
 
     /**
      * getMinPurchaseLimit 
@@ -84,7 +84,7 @@ interface IOrderItem
      * @see    ____func_see____
      * @since  3.0.0
      */
-	public function getMinPurchaseLimit();
+    public function getMinPurchaseLimit();
 
     /**
      * getMaxPurchaseLimit 
@@ -94,7 +94,7 @@ interface IOrderItem
      * @see    ____func_see____
      * @since  3.0.0
      */
-	public function getMaxPurchaseLimit();
+    public function getMaxPurchaseLimit();
 
     /**
      * getName 
@@ -104,7 +104,7 @@ interface IOrderItem
      * @see    ____func_see____
      * @since  3.0.0
      */
-	public function getName();
+    public function getName();
 
     /**
      * getSku 
@@ -114,7 +114,7 @@ interface IOrderItem
      * @see    ____func_see____
      * @since  3.0.0
      */
-	public function getSku();
+    public function getSku();
 
     /**
      * getThumbnail 
@@ -124,7 +124,7 @@ interface IOrderItem
      * @see    ____func_see____
      * @since  3.0.0
      */
-	public function getThumbnail();
+    public function getThumbnail();
 
     /**
      * getFreeShipping 
@@ -134,7 +134,7 @@ interface IOrderItem
      * @see    ____func_see____
      * @since  3.0.0
      */
-	public function getFreeShipping();
+    public function getFreeShipping();
 
     /**
      * getURL 

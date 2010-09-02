@@ -99,6 +99,16 @@ class Converter extends \XLite\Base\Singleton
         return str_replace(self::$to, self::$from, lcfirst(strval($string)));
     }
 
+    /**
+     * Prepare method name 
+     * 
+     * @param string $string Underline-style string
+     *  
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     public static function prepareMethodName($string)
     {
         return str_replace(self::$from, self::$to, strval($string));
@@ -130,7 +140,7 @@ class Converter extends \XLite\Base\Singleton
     /**
      * Parse string into array
      *
-     * @param array  $params    params list
+     * @param string $query     Query
      * @param string $glue      char to agglutinate "name" and "value"
      * @param string $separator char to agglutinate <"name", "value"> pairs
      * @param string $quotes    char to quote the "value" param
@@ -274,8 +284,8 @@ class Converter extends \XLite\Base\Singleton
      * Resize image by width / height limits
      * 
      * @param \XLite\Model\Base\Image $image  Image
-     * @param integer                $width  Width limit
-     * @param integer                $height Height limit
+     * @param integer                 $width  Width limit
+     * @param integer                 $height Height limit
      *  
      * @return array (new width + new height + image body)
      * @access public
@@ -311,8 +321,8 @@ class Converter extends \XLite\Base\Singleton
      * Resize image 
      * 
      * @param \XLite\Model\Base\Image $image  Image
-     * @param integer                $width  New width
-     * @param integer                $height New height
+     * @param integer                 $width  New width
+     * @param integer                 $height New height
      *  
      * @return string or false
      * @access public
@@ -334,73 +344,68 @@ class Converter extends \XLite\Base\Singleton
 
         $type = $image->mime;
 
-        if (!isset($types[$type])) {
-            return false;
+        $result = false;
+
+        if (isset($types[$type]) && $image->body) {
+
+            $type = $types[$type];
+
+            $func = 'imagecreatefrom' . $type;
+            if (function_exists($func)) {
+
+                $data = $image->body;
+
+                $fn = tempnam(LC_TMP_DIR, 'image');
+
+                file_put_contents($fn, $data);
+                unset($data);
+
+                // $func is assembled from 'imagecreatefrom' + image type
+                $imageResource = $func($fn);
+                unlink($fn);
+
+                if ($imageResource) {
+
+                    $newImage = imagecreatetruecolor($width, $height);
+                    imagealphablending($newImage, false);
+                    imagesavealpha($newImage, true);
+
+                    $res = imagecopyresampled(
+                        $newImage,
+                        $imageResource,
+                        0,
+                        0,  
+                        0,
+                        0,
+                        $width,
+                        $height,
+                        $image->width,
+                        $image->height
+                    );
+                    imagedestroy($imageResource);
+
+                    require_once LC_LIB_DIR . 'phpunsharpmask.php';
+
+                    $unsharpImage = UnsharpMask($newImage);
+                    if ($unsharpImage) {
+                        $newImage = $unsharpImage;
+                    }
+
+                    $func = 'image' . $type;
+
+                    ob_start();
+                    // $func is assembled from 'image' + image type
+                    $result = $func($newImage);
+                    $image = ob_get_contents();
+                    ob_end_clean();
+                    imagedestroy($newImage);
+
+                    $result = $result ? $image : false;
+                }
+            }
         }
 
-        $type = $types[$type];
-
-        $func = 'imagecreatefrom' . $type;
-        if (!function_exists($func)) {
-            return false;
-        }
-
-        $data = $image->body;
-
-        if (!$data) {
-            return false;
-        }
-
-        $fn = tempnam(LC_TMP_DIR, 'image');
-
-        file_put_contents($fn, $data);
-        unset($data);
-
-        $imageResource = $func($fn);
-        unlink($fn);
-
-        if (!$imageResource) {
-            return false;
-        }
-
-        $newImage = imagecreatetruecolor($width, $height);
-        imagealphablending($newImage, false);
-        imagesavealpha($newImage, true);
-
-        $res = imagecopyresampled(
-            $newImage,
-            $imageResource,
-            0,
-            0,  
-            0,
-            0,
-            $width,
-            $height,
-            $image->width,
-            $image->height
-        );
-        imagedestroy($imageResource);
-
-        require_once LC_LIB_DIR . 'phpunsharpmask.php';
-
-        $unsharpImage = UnsharpMask($newImage);
-        if ($unsharpImage) {
-            $newImage = $unsharpImage;
-        }
-
-        $func = 'image' . $type;
-
-        ob_start();
-        $result = $func($newImage);
-        $image = ob_get_contents();
-        ob_end_clean();
-        imagedestroy($newImage);
-
-        if (!$result) {
-            return false;
-        }
-
-        return $image;
+        return $result;
     }
 
     /**
