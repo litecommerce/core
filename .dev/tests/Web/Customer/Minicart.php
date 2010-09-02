@@ -32,16 +32,13 @@ class XLite_Web_Customer_Minicart extends XLite_Web_Customer_ACustomer
 {
     public function testEmptyCart()
     {
-        $this->logOut();
+        $product = $this->getActiveProduct();
 
-        $this->open('store/cart/clear');
-        $this->open('store/cart');
+        $this->open('store/product//product_id-' . $product->getProductId());
 
         // Empty
         $this->assertElementPresent("//div[@id='lc-minicart-horizontal']/div[@class='minicart-items-number' and text()='0']");
         $this->assertElementPresent("//div[@id='lc-minicart-horizontal']/div[@class='minicart-items-text' and text()='items']");
-
-        $this->validate();
     }
 
     public function testAddToCart()

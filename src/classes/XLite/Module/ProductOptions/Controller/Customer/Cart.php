@@ -120,7 +120,7 @@ class Cart extends \XLite\Controller\Customer\Cart implements \XLite\Base\IDecor
             $key = $this->getCurrentItem()->getKey();
             foreach ($this->getCart()->getItems() as $i) {
                 if ($i->getKey() == $key) {
-                    $this->cart->deleteItem($i);
+                    $this->getCart()->getItems()->removeElement($i);
                     break;
                 }
             }
