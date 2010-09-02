@@ -138,11 +138,11 @@ class Shipping extends \XLite\Model\Order implements \XLite\Base\IDecorator
      * Calculate shipping rates 
      * 
      * @return array of \XLite\Model\ShippingRate
-     * @access public
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function calculateShippingRates() 
+    protected function calculateShippingRates() 
     {
         $data = array();
             

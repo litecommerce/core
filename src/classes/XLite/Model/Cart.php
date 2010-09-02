@@ -204,11 +204,11 @@ class Cart extends \XLite\Model\Order
      * Calculate shipping rates 
      * 
      * @return array of \XLite\Moel\ShippingRate
-     * @access public
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function calculateShippingRates()
+    protected function calculateShippingRates()
     {
         $rates = parent::calculateShippingRates();
         $id = $this->getShippingId();
