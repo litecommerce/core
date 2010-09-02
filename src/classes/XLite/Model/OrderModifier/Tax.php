@@ -182,7 +182,7 @@ class Tax extends \XLite\Model\Order implements \XLite\Base\IDecorator
      */
     public function getDisplayTaxes() 
     {
-        $taxes = null;
+        $taxes = array();
 
         if (
             !is_null($this->getProfile())
