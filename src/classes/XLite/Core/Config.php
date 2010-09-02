@@ -38,6 +38,16 @@ namespace XLite\Core;
 class Config extends \XLite\Base\Singleton
 {
     /**
+     * Config (cache)
+     * 
+     * @var    \XLite\Core\CommonCell
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $config;
+
+    /**
      * Read config options
      * 
      * @param mixed $force ____param_comment____
@@ -49,7 +59,11 @@ class Config extends \XLite\Base\Singleton
      */
     public function readConfig($force = false)
     {
-        return \XLite\Core\Database::getRepo('XLite\Model\Config')->getAllOptions($force);
+        if (!isset($this->config) || $force) {
+            $this->config = \XLite\Core\Database::getRepo('XLite\Model\Config')->getAllOptions($force);
+        }
+
+        return $this->config;
     }
 
     /**
