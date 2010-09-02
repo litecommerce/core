@@ -188,34 +188,30 @@ class XLite_Web_Customer_Minicart extends XLite_Web_Customer_ACustomer
         $this->open('store/product//product_id-' . $product->getProductId());
         $this->clickAndWait("//button[@type='submit']/span[text()='Add to Cart']");
 
-        $this->assertEquals(
-            '0',
-            $this->getEval("selenium.browserbot.getCurrentWindow().$('#lc-minicart-horizontal .items-list:visible').length"),
+        $this->assertJqueryNotPresent(
+            '#lc-minicart-horizontal .items-list:visible',
             'check closed popup'
         );
 
         $this->click("//div[@id='lc-minicart-horizontal']");
 
-        $this->assertEquals(
-            '1',
-            $this->getEval("selenium.browserbot.getCurrentWindow().$('#lc-minicart-horizontal .items-list:visible').length"),
+        $this->assertJqueryPresent(
+            '#lc-minicart-horizontal .items-list:visible',
             'check open popup'
         );
 
         $this->click("//div[@id='lc-minicart-horizontal']");
 
-        $this->assertEquals(
-            '0',
-            $this->getEval("selenium.browserbot.getCurrentWindow().$('#lc-minicart-horizontal .items-list:visible').length"),
+        $this->assertJqueryNotPresent(
+            '#lc-minicart-horizontal .items-list:visible',
             'check closed popup #2'
         );
 
         $this->click("//div[@id='lc-minicart-horizontal']");
         $this->click("//div[@id='container']");
 
-        $this->assertEquals(
-            '0',
-            $this->getEval("selenium.browserbot.getCurrentWindow().$('#lc-minicart-horizontal .items-list:visible').length"),
+        $this->assertJqueryNotPresent(
+            '#lc-minicart-horizontal .items-list:visible',
             'check closed popup #3'
         );
     }

@@ -243,6 +243,28 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
         echo "\n" . sprintf('%\'.-86s', trim($message));
     }
 
+    public function getJSExpression($expression)
+    {
+        return $this->getEval('selenium.browserbot.getCurrentWindow().' . $expression);
+    }
+
+    public function assertJqueryPresent($pattern, $message = null)
+    {
+        $this->assertTrue(
+            0 < intval($this->getJSExpression("$('" . $pattern . "').length")),
+            $message
+        );
+    }
+
+    public function assertJqueryNotPresent($pattern, $message = null)
+    {
+        $this->assertEquals(
+            0,
+            intval($this->getJSExpression("$('" . $pattern . "').length")),
+            $message
+        );
+    }
+
     public function __call($command, $arguments)
     {
         try {
