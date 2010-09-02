@@ -15,17 +15,17 @@
 
   <li>
     <em>{t(#Subtotal#)}:</em>
-    {cart.getSubtotal():p}
+    {order.getSubtotal():p}
   </li>
 
-  <li FOREACH="cart.getVisibleSavedModifiers(),modifier" class="{modifier.getCode()} {modifier.getSubcode()}">
+  <li FOREACH="order.getVisibleSavedModifiers(),modifier" class="{modifier.getCode()} {modifier.getSubcode()}">
     <em>{t(modifier.getName())}:</em>
     {if:modifier.isAvailable(modifier.getSubcode())}{modifier.getSurcharge():p}{else:}{t(#n/a#)}{end:}
   </li>
 
   <li class="grand-total">
     <em>{t(#Grand total#)}:</em>
-    {cart.getTotal():p}
+    {order.getTotal():p}
   </li>
 
 </ul>
