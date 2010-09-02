@@ -33,6 +33,7 @@ class XLite_Tests_Model_OrderModifier_Shipping extends XLite_Tests_TestCase
         'notes'          => 'Test note',
     );
 
+    /*
     protected function setUp()
     {
         parent::setUp();
@@ -215,4 +216,6 @@ class XLite_Tests_Model_OrderModifier_Shipping extends XLite_Tests_TestCase
 
         return $order;
     }
+
+     */
 }

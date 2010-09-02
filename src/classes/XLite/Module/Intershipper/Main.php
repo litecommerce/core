@@ -107,6 +107,8 @@ class Main extends \XLite\Module\AModule
     {
         parent::init();
 
-        $this->registerShippingModule('intershipper');
+        // Register AustraliaPost shipping processor
+        \XLite\Model\Shipping::getInstance()->registerProcessor('\XLite\Module\Intershipper\Model\Shipping\Processor\Intershipper');
+
     }
 }

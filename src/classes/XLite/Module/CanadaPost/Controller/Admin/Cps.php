@@ -35,7 +35,7 @@ namespace XLite\Module\CanadaPost\Controller\Admin;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Cps extends \XLite\Controller\Admin\ShippingSettings
+class Cps extends \XLite\Controller\Admin\AAdmin
 {
     public $params = array('target', "updated");
     public $page		="cps";

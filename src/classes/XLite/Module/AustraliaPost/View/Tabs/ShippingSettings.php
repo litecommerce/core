@@ -26,7 +26,7 @@
  * @since      3.0.0
  */
 
-namespace XLite\Module\Intershipper\Controller\Admin;
+namespace XLite\Module\AustraliaPost\View\Tabs;
 
 /**
  * ____description____
@@ -35,13 +35,17 @@ namespace XLite\Module\Intershipper\Controller\Admin;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class ShippingSettings extends \XLite\Controller\Admin\ShippingSettings implements \XLite\Base\IDecorator
+class ShippingSettings extends \XLite\View\Tabs\ShippingSettings implements \XLite\Base\IDecorator
 {
-    public function __construct(array $params)
+    public function init() 
     {
-        parent::__construct($params);
-        $this->pages['intershipper'] = "Intershipper settings";
-        $this->pageTemplates['intershipper'] = "modules/Intershipper/config.tpl";
-    }
+        parent::init();
 
+        if ('Y' == $this->config->Shipping->shipping_enabled) {
+            $this->tabs['aupost'] = array(
+                'title'    => 'Australia Post settings',
+                'template' => 'modules/AustraliaPost/main.tpl'
+            );
+        }
+    }
 }

@@ -64,6 +64,17 @@ class Zone extends \XLite\Model\AEntity
     protected $zone_name = '';
 
     /**
+     * Zone default flag
+     * 
+     * @var    integer
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Column (type="integer", length="1", nullable=false)
+     */
+    protected $is_default = 0;
+
+    /**
      * Zone elements (relation)
      * 
      * @var    \Doctrine\Common\Collections\ArrayCollection
@@ -84,7 +95,7 @@ class Zone extends \XLite\Model\AEntity
      *
      * @OneToMany (targetEntity="XLite\Model\Shipping\Markup", mappedBy="zone", cascade={"all"})
      */
-    // protected $shipping_markups;
+    protected $shipping_markups;
 
     /**
      * Get zone's countries list

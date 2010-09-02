@@ -30,7 +30,7 @@ class XLite_Tests_Model_Zone extends XLite_Tests_TestCase
 	{
         $data = array();
         $data[] = array(
-            'zoneid' => 2,
+            'zoneid' => 20,
             'address'  => array(
                 'country' => 'US',
                 'state'   => 'NY',
@@ -42,7 +42,7 @@ class XLite_Tests_Model_Zone extends XLite_Tests_TestCase
         );
 
         $data[] = array(
-            'zoneid' => 2,
+            'zoneid' => 20,
             'address'  => array(
                 'country' => 'US',
                 'state'   => 'NY',
@@ -54,7 +54,7 @@ class XLite_Tests_Model_Zone extends XLite_Tests_TestCase
         );
 
         $data[] = array(
-            'zoneid' => 2,
+            'zoneid' => 20,
             'address'  => array(
                 'country' => 'US',
                 'state'   => 'CA',
@@ -66,7 +66,7 @@ class XLite_Tests_Model_Zone extends XLite_Tests_TestCase
         );
 
         $data[] = array(
-            'zoneid' => 2,
+            'zoneid' => 20,
             'address'  => array(
                 'country' => 'FR',
                 'state'   => 'NY',
@@ -78,7 +78,7 @@ class XLite_Tests_Model_Zone extends XLite_Tests_TestCase
         );
 
         $data[] = array(
-            'zoneid' => 4,
+            'zoneid' => 40,
             'address'  => array(
                 'country' => 'FR',
                 'state'   => 'NY',
@@ -90,7 +90,7 @@ class XLite_Tests_Model_Zone extends XLite_Tests_TestCase
         );
 
         $data[] = array(
-            'zoneid' => 5,
+            'zoneid' => 50,
             'address'  => array(
                 'country' => 'FR',
                 'state'   => 'NY',

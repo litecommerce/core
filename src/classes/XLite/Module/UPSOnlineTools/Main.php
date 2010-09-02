@@ -117,7 +117,8 @@ class Main extends \XLite\Module\AModule
     {
         parent::init();
 
-        $this->registerShippingModule('ups');
+        // Register UPS shipping processor
+        \XLite\Model\Shipping::getInstance()->registerProcessor('\XLite\Module\UPSOnlineTools\Model\Shipping\Processor\UPS');
 
         \XLite::getInstance()->set('UPSOnlineToolsEnabled', true);
 

@@ -35,7 +35,7 @@ namespace XLite\Module\Intershipper\Controller\Admin;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Intershipper extends \XLite\Controller\Admin\ShippingSettings
+class Intershipper extends \XLite\Controller\Admin\AAdmin
 {
     public $params = array('target', "updated");
     public $settings;

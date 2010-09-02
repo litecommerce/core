@@ -472,44 +472,56 @@ CREATE TABLE xlite_sessions (
   KEY expiry (expiry)
 ) TYPE=MyISAM;
 
-DROP TABLE IF EXISTS xlite_shipping;
-CREATE TABLE xlite_shipping (
-  shipping_id int(11) NOT NULL auto_increment,
-  class varchar(32) NOT NULL default '',
-  destination char(1) NOT NULL default 'N',
-  name varchar(128) NOT NULL default '',
-  enabled int(11) NOT NULL default '1',
-  order_by int(11) NOT NULL default '0',
-  PRIMARY KEY  (shipping_id),
-  KEY class (class),
-  KEY destination (destination),
-  KEY name (name),
+DROP TABLE IF EXISTS xlite_shipping_methods;
+CREATE TABLE xlite_shipping_methods (
+  method_id int(11) NOT NULL auto_increment,
+  processor varchar(255) NOT NULL default '',
+  carrier varchar(255) NOT NULL default '',
+  code varchar(32) NOT NULL default '',
+  enabled int(1) NOT NULL default '1',
+  position int(11) NOT NULL default '0',
+  PRIMARY KEY  (method_id),
+  KEY processor (processor),
+  KEY carrier (carrier),
   KEY enabled (enabled),
-  KEY order_by (order_by)
+  KEY position (position)
 ) TYPE=MyISAM;
 
-DROP TABLE IF EXISTS xlite_shipping_rates;
-CREATE TABLE xlite_shipping_rates (
-  shipping_id int(11) NOT NULL default '0',
+DROP TABLE IF EXISTS xlite_shipping_method_translations;
+CREATE TABLE xlite_shipping_method_translations (
+  label_id int(11) NOT NULL AUTO_INCREMENT,
+  code char(2) NOT NULL,
+  id int(11) NOT NULL DEFAULT '0',
+  name char(255) NOT NULL,
+  PRIMARY KEY (label_id),
+  KEY ci (code,id),
+  KEY i (id)
+) TYPE=MyISAM;
+
+DROP TABLE IF EXISTS xlite_shipping_markups;
+CREATE TABLE xlite_shipping_markups (
+  markup_id int(11) NOT NULL auto_increment,
+  method_id int(11) NOT NULL default '0',
+  zone_id int(11) NOT NULL default '0',
   min_weight decimal(12,2) NOT NULL default '0.00',
   max_weight decimal(12,2) NOT NULL default '999999.00',
   min_total decimal(12,2) NOT NULL default '0.00',
   max_total decimal(12,2) NOT NULL default '999999.00',
-  shipping_zone int(11) NOT NULL default '0',
-  flat decimal(12,2) NOT NULL default '0.00',
-  per_item decimal(12,2) NOT NULL default '0.00',
-  percent decimal(12,2) NOT NULL default '0.00',
-  per_lbs decimal(12,2) NOT NULL default '0.00',
   min_items int(11) NOT NULL default '0',
   max_items int(11) NOT NULL default '999999',
-  PRIMARY KEY  (shipping_id,shipping_zone,min_weight,min_total,min_items),
+  markup_flat decimal(12,2) NOT NULL default '0.00',
+  markup_percent decimal(12,2) NOT NULL default '0.00',
+  markup_per_item decimal(12,2) NOT NULL default '0.00',
+  markup_per_weight decimal(12,2) NOT NULL default '0.00',
+  PRIMARY KEY  (markup_id),
+  KEY rate (method_id,zone_id,min_weight,min_total,min_items),
   KEY max_weight (max_weight),
   KEY max_total (max_total),
-  KEY flat (flat),
-  KEY per_item (per_item),
-  KEY percent (percent),
-  KEY per_lbs (per_lbs),
-  KEY max_items (max_items)
+  KEY max_items (max_items),
+  KEY markup_flat (markup_flat),
+  KEY markup_per_item (markup_per_item),
+  KEY markup_percent (markup_percent),
+  KEY markup_per_weight (markup_per_weight)
 ) TYPE=MyISAM;
 
 DROP TABLE IF EXISTS xlite_states;
@@ -643,8 +655,10 @@ DROP TABLE IF EXISTS xlite_zones;
 CREATE TABLE xlite_zones (
   zone_id int(11) NOT NULL auto_increment,
   zone_name varchar(64) NOT NULL default '',
+  is_default int(1) NOT NULL default '0',
   PRIMARY KEY  (zone_id),
-  KEY zone_name (zone_name)
+  KEY zone_name (zone_name),
+  KEY zone_default (is_default)
 ) TYPE=MyISAM;
 
 DROP TABLE IF EXISTS xlite_zone_elements;

@@ -35,7 +35,7 @@ namespace XLite\Module\USPS\Controller\Admin;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Usps extends \XLite\Controller\Admin\ShippingSettings
+class Usps extends \XLite\Controller\Admin\AAdmin
 {
     /**
      * Controller parameters
@@ -223,6 +223,20 @@ class Usps extends \XLite\Controller\Admin\ShippingSettings
 
         $this->testResult = true;
         $this->valid = false;
+    }
+
+    /**
+     * Clear USPS cache 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionClearCache()
+    {
+        $usps = new \XLite\Module\USPS\Model\Shipping\Usps();
+        $usps->cleanCache();
     }
 
 }

@@ -483,5 +483,25 @@ class Profile extends \XLite\Model\AModel
 
         return $result;
     }
+
+    /**
+     * Returns shipping address fields 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getShippingAddress()
+    {
+        $result = array();
+
+        foreach ($this->addressFields as $name) {
+            $result[$name] = $this->get('shipping_' . $name);
+        }
+
+        return $result;
+    }
+
 }
 

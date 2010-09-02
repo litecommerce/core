@@ -26,7 +26,7 @@
  * @since      3.0.0
  */
 
-namespace XLite\Module\AustraliaPost\Controller\Admin;
+namespace XLite\Module\CanadaPost\View\Tabs;
 
 /**
  * ____description____
@@ -35,12 +35,17 @@ namespace XLite\Module\AustraliaPost\Controller\Admin;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class ShippingSettings extends \XLite\Controller\Admin\ShippingSettings implements \XLite\Base\IDecorator
+class ShippingSettings extends \XLite\View\Tabs\ShippingSettings implements \XLite\Base\IDecorator
 {
-    public function __construct(array $params) 
+    public function init() 
     {
-        parent::__construct($params);
-        $this->pages['aupost']	= "Australia Post settings";
-        $this->pageTemplates['aupost'] = "modules/AustraliaPost/config.tpl";
+        parent::init();
+
+        if ('Y' == $this->config->Shipping->shipping_enabled) {
+            $this->tabs['cps'] = array(
+                'title'    => 'Canada Post settings',
+                'template' => 'modules/CanadaPost/config.tpl'
+            );
+        }
     }
 }

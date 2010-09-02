@@ -37,9 +37,20 @@ namespace XLite\Model\OrderModifier;
  */
 class Shipping extends \XLite\Model\Order implements \XLite\Base\IDecorator
 {
+    /**
+     * Modifier name definition
+     */
     const MODIFIER_SHIPPING = 'shipping';
 
-    protected $shippingMethod;
+    /**
+     * shippingRate 
+     * 
+     * @var    \XLite\Model\Shipping\Rate
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $shippingRate;
 
     /**
      * Define order modifiers 
@@ -71,28 +82,55 @@ class Shipping extends \XLite\Model\Order implements \XLite\Base\IDecorator
         $cost = 0;
 
         if ($this->isShipped()) {
-        
-            $shippingMethod = $this->getShippingMethod();
-            $cost = is_object($shippingMethod) ? $shippingMethod->calculate($this) : false;
 
-            if (false === $cost) {
-                $rates = $this->calculateShippingRates();
+            $rate = $this->getSelectedRate();
 
-                // find the first available shipping method
-                if (!is_null($rates) && count($rates) > 0) {
-                    foreach ($rates as $key => $val) {
-                        $shippingID = $key;
-                        break;
-                    }
-
-                    $shippingMethod = new \XLite\Model\Shipping($shippingID);
-                    $this->setShippingMethod($shippingMethod);
-                    $cost = $shippingMethod->calculate($this);
-                }
+            if (is_object($rate)) {
+                $cost = $rate->getTotalRate();
             }
         }
 
         $this->saveModifier(self::MODIFIER_SHIPPING, $cost);
+    }
+
+    /**
+     * getSelectedRate 
+     * 
+     * @return \XLite\Model\Shipping\Rate
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getSelectedRate()
+    {
+        if (!is_object($this->shippingRate) || $this->shippingRate->getMethodId() != $this->getShippingId()) {
+
+            // Get shipping rates
+            $rates = $this->calculateShippingRates();
+
+            if (!empty($rates)) {
+
+                if (0 < intval($this->getShippingId())) {
+
+                    foreach ($rates as $rate) {
+
+                        if ($this->getShippingId() == $rate->getMethodId()) {
+                            $this->shippingRate = $rate;
+                            break;
+                        }
+                    }
+            
+                } else {
+                    $this->shippingRate = array_shift($rates);
+                    $this->setShippingId($this->shippingRate->getMethodId());
+
+                    \XLite\Core\Database::getEM()->persist($this);
+                    \XLite\Core\Database::getEM()->flush();
+                }
+            }
+        }
+
+        return $this->shippingRate;
     }
 
     /**
@@ -131,7 +169,7 @@ class Shipping extends \XLite\Model\Order implements \XLite\Base\IDecorator
      */
     public function isShippingAvailable()
     {
-        return (bool)$this->getShippingMethod();
+        return is_object($this->getSelectedRate());
     }
 
     /**
@@ -145,12 +183,13 @@ class Shipping extends \XLite\Model\Order implements \XLite\Base\IDecorator
     protected function calculateShippingRates() 
     {
         $data = array();
-            
-        foreach (\XLite\Model\Shipping::getModules() as $module) {
-            $data += $module->getRates($this);
-        }
 
-        uasort($data, array($this, 'getShippingRatesOrderCallback'));
+        if ($this->isShipped()) {
+
+            $data = \XLite\Model\Shipping::getInstance()->getRates($this);
+            
+            uasort($data, array($this, 'getShippingRatesOrderCallback'));
+        }
 
         return $data;
     }
@@ -166,14 +205,24 @@ class Shipping extends \XLite\Model\Order implements \XLite\Base\IDecorator
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getShippingRatesOrderCallback(\XLite\Model\ShippingRate $a, \XLite\Model\ShippingRate $b)
+    public function getShippingRatesOrderCallback(\XLite\Model\Shipping\Rate $a, \XLite\Model\Shipping\Rate $b)
     {
-        $sa = $a->getShipping();
-        $sb = $b->getShipping();
+        $result = 0;
 
-        return ($sa && $sb)
-            ? strcmp($sa->get('order_by'), $sb->get('order_by'))
-            : 0;
+        $sa = $a->getMethod();
+        $sb = $b->getMethod();
+
+        if (isset($sa) && isset($sb)) {
+
+            if ($sa->getPosition() > $sb->getPosition()) {
+                $result = 1;
+
+            } elseif ($sa->getPosition() < $sb->getPosition()) {
+                $result = -1;
+            }
+        }
+
+        return $result;
     }
 
     /**
@@ -226,7 +275,7 @@ class Shipping extends \XLite\Model\Order implements \XLite\Base\IDecorator
      */
     public function isShippingDefined()
     {
-        return (bool)$this->getShippingId();
+        return is_object($this->getSelectedRate());
     }
 
     /**
@@ -239,31 +288,35 @@ class Shipping extends \XLite\Model\Order implements \XLite\Base\IDecorator
      */
     public function getShippingMethod()
     {
-        if (!isset($this->shippingMethod) && $this->getShippingId()) {
-            $this->shippingMethod = new \XLite\Model\Shipping($this->getShippingId());
+        $result = null;
+
+        $rate = $this->getSelectedRate();
+
+        if (isset($rate)) {
+            $result = $rate->getMethod();
         }
 
-        return $this->shippingMethod;
+        return $result;
     }
 
     /**
-     * Set shipping method 
+     * Set shipping rate and shipping method id 
      * 
-     * @param \XLite\Model\Shipping $shippingMethod Shipping method
+     * @param \XLite\Model\Shipping\Rate $shippingRate Shipping rate object
      *  
      * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function setShippingMethod($shippingMethod) 
+    public function setShippingRate($shippingRate) 
     {
-        if (!is_null($shippingMethod) && $shippingMethod instanceof \XLite\Model\Shipping) {
-            $this->shippingMethod = $shippingMethod;
-            $this->setShippingId($shippingMethod->get('shipping_id'));
+        if (!is_null($shippingRate) && $shippingRate instanceof \XLite\Model\Shipping\Rate) {
+            $this->shippingRate = $shippingRate;
+            $this->setShippingId($shippingRate->getMethodId());
 
         } else {
-            $this->shippingMethod = false;
+            $this->shippingRate = false;
             $this->setShippingId(0);
         }
     }
@@ -271,7 +324,7 @@ class Shipping extends \XLite\Model\Order implements \XLite\Base\IDecorator
     /**
      * Get shipping rates 
      * 
-     * @return array of \XLite\Model\ShippingRate
+     * @return array of \XLite\Model\Shipping\Rate
      * @access public
      * @since  3.0.0
      */
@@ -304,13 +357,13 @@ class Shipping extends \XLite\Model\Order implements \XLite\Base\IDecorator
     {
         $rates = $this->getShippingRates();
 
-        $shipping = null;
+        $rate = null;
+
         if (0 < count($rates)) {
             $rate = array_shift($rates);
-            $shipping = $rate->get('shipping');
         }
 
-        $this->setShippingMethod($shipping);
+        $this->setShippingRate($rate);
     }
 
     /**

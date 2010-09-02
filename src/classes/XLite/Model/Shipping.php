@@ -35,346 +35,180 @@ namespace XLite\Model;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Shipping extends \XLite\Model\AModel
+class Shipping extends \XLite\Base\Singleton
 {
     /**
-     * Db table fields
-     *
+     * List of registered shipping processors
+     * 
      * @var    array
      * @access protected
      * @since  3.0
      */
-    protected $fields = array(
-        'shipping_id' => '',
-        'class'       => '',
-        'destination' => 'L',
-        'name'        => '',
-        'order_by'    => 0,
-        'enabled'     => 1,
-    );
+    protected static $registeredProcessors = array();
 
     /**
-     * Db table name
-     *
-     * @var    string
-     * @access protected
-     * @since  3.0
-     */
-    protected $alias = 'shipping';
-
-    /**
-     * Db table primary key
-     *
-     * @var    string
-     * @access protected
-     * @since  3.0
-     */
-    protected $autoIncrement = 'shipping_id';
-
-    /**
-     * Filed to use in ORDERBY clause
-     *
-     * @var    string
+     * __constructor 
+     * 
+     * @return void
      * @access public
-     * @since  3.0
-     */
-    public $defaultOrder = "order_by, name";
-
-    /**
-     * List of registered shipping modules
-     * 
-     * @var    array
-     * @access protected
-     * @since  3.0
-     */
-    protected static $registeredShippingModules = array(
-        'Offline' => 'Model\Shipping\Offline',
-    );
-
-    /**
-     * Default shipping methods is registered (or not)
-     * 
-     * @var    boolean
-     * @access protected
-     * @see    ____var_see____
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    protected static $defaultShippingMethodsIsRegistered = false;
-
-    /**
-     * Normalize service name 
-     * 
-     * @param string $name string to normalize_
-     *  
-     * @return string
-     * @access protected
-     * @since  3.0
-     */
-    protected function _normalizeName($name)
+    public function __construct()
     {
-        return trim(preg_replace('/\s+/', ' ', $name));
+        self::registerProcessor('\XLite\Model\Shipping\Processor\Offline');
     }
 
     /**
-     * Return shipping zone 
+     * Register new shipping processor. All processors classes must be
+     * derived from \XLite\Model\Shipping\Processor\AProcessor class
+     *
+     * @param string $processorClass Processor class
+     *
+     * @return void
+     * @access public
+     * @since  3.0
+     */
+    public static function registerProcessor($processorClass)
+    {
+        if (!in_array($processorClass, array_keys(self::$registeredProcessors))) {
+
+            if (\XLite\Core\Operator::isClassExists($processorClass)) {
+                self::$registeredProcessors[$processorClass] = new $processorClass();
+                uasort(self::$registeredProcessors, array(\XLite\Model\Shipping::getInstance(), 'sortProcessors'));
+
+            }
+        }
+    }
+
+    /**
+     * Sort function for sorting processors by class 
      * 
-     * @param \XLite\Model\Order $order order object
+     * @param \XLite\Model\Shipping\Processor\AProcessor $a First processor
+     * @param \XLite\Model\Shipping\Processor\AProcessor $b Second processor
      *  
      * @return int
      * @access protected
-     * @since  3.0
+     * @see    ____func_see____
+     * @since  3.0.0
      */
-    protected function getZone(\XLite\Model\Order $order)
+    protected function sortProcessors($a, $b)
     {
-        /* TODO - rework after shipping methods rework
-        $profile = $order->getProfile();
+        $result = 0;
 
-        $zone = $profile
-            ? $profile->getComplex('shippingState.shipping_zone')
-            : null;
-        if (!$zone) {
-            $zone = $profile
-                ? $profile->getComplex('shippingCountry.shipping_zone')
-                : null;
-        }
+        $bottomProcessorId = 'offline';
 
-        if (!$zone) {
-            $defaultCountry = \XLite\Core\Database::getRepo('XLite\Model\Country')
-                ->find($this->config->General->default_country);
-            $zone = $defaultCountry->shipping_zone;
-        }
+        $a1 = $a->getProcessorId();
+        $b1 = $b->getProcessorId();
 
-        if (!$zone) {
-            $zone = 0;
-        }
+        if ($a1 == $bottomProcessorId) {
+            $result = 1;
 
-        return $zone;
-        */
-
-        return 0;
-    }
-
-
-    /**
-     * Return only enabled services from the $methods list 
-     * 
-     * @param array $methods methods list
-     *  
-     * @return array
-     * @access public
-     * @since  3.0
-     */
-    public function filterEnabled(array $methods)
-    {
-        $filtered = array();
-
-        foreach ($methods as $id => $rate) {
-            if ($rate->shipping->is('enabled')) {
-                $filtered[$id] = $rate;
-            }
-        }
-
-        return $filtered;
-    }
-
-    /**
-     * Check module class 
-     * 
-     * @param string $id module identifier
-     *  
-     * @return void
-     * @access public
-     * @since  3.0
-     */
-    public function __construct($id = null)
-    {
-        if (!self::$defaultShippingMethodsIsRegistered) {
-            self::registerDefaultModules();
-        }
-
-        parent::__construct($id);
-
-        // unset the class, if it is not registerred within active shipping modules
-        if ($id && ($class = $this->get('class')) && !isset(self::$registeredShippingModules[$class])) {
-            $this->set('class', null);
-        }
-    }
-
-    /**
-     * Return module name (stub)
-     * 
-     * @return void
-     * @access public
-     * @since  3.0
-     */
-    public function getModuleName()
-    {
-        $this->doDie('getModuleName is not implemented for abstract class Shipping');
-    }
-
-    /**
-     * Register new shipping module.
-     *
-     * @param string $name  module name
-     * @param string $class module class
-     *
-     * @return void
-     * @access public
-     * @since  3.0
-     */
-    public static function registerShippingModule($name, $class, $rawRegister = false)
-    {
-        if (!$rawRegister && !self::$defaultShippingMethodsIsRegistered) {
-            self::registerDefaultModules();
-        }
-
-        if (
-            !isset(self::$registeredShippingModules[$name])
-            || !(self::$registeredShippingModules[$name] instanceof self)
-        ) {
-            $class = '\XLite\\' . $class;
-            if (\XLite\Core\Operator::isClassExists($class)) {
-                self::$registeredShippingModules[$name] = new $class();
-                self::$registeredShippingModules[$name]->set('class', $name);
-
-            } else {
-                // TODO - add exception throwing
-            }
-        }
-    }
-
-    /**
-     * Retrieves all shipping methods relevant to $this shipping module 
-     * 
-     * @return \XLite\Model\Shipping
-     * @access public
-     * @since  3.0
-     */
-    public function getShippingMethods()
-    {
-        return $this->findAll('class = \'' . $this->get('class') . '\'');
-    }
-    
-    /**
-     * Return shipping rates (stub)
-     * 
-     * @param \XLite\Model\Order $order order object
-     *  
-     * @return void
-     * @since  3.0
-     */
-    public function getRates(\XLite\Model\Order $order)
-    {
-        $this->doDie("getRates(): Not implemented in abstract class Shipping");
-    }
-    
-    /**
-     * calculate 
-     * 
-     * @param \XLite\Model\Order $order order object
-     *  
-     * @return mixed
-     * @access public
-     * @since  3.0
-     */
-    public function calculate(\XLite\Model\Order $order)
-    {
-        $rates = $order->getShippingRates();
-        $result = false;
-
-        if (is_array($rates)) {
-            $shippingId = $order->getShippingId();
-            if (isset($rates[$shippingId])) {
-                $result = $rates[$shippingId]->rate;
-            }
+        } elseif ($b1 == $bottomProcessorId) {
+            $result = -1;
+        
+        } else {
+            $result = strcasecmp($a1, $b1);
         }
 
         return $result;
     }
 
     /**
-     * Used by real-time shipping methods to collect shipping services in
-     * the shipping tables. It will create a shipping $name of class
-     * $class and destination $destination (L/I) if there is no such
-     * method and return an existing or a newly created one 
-     * 
-     * @param string $class       module class
-     * @param string $name        module name
-     * @param string $destination shipping destination
-     *  
-     * @return \XLite\Model\Shipping
-     * @access public
-     * @since  3.0
-     */
-    public function getService($class, $name, $destination) 
-    {
-        $name = $this->_normalizeName($name);
-
-        $shipping = self::getInstanceByName($class);
-
-        // search for the shipping method specified by ($class, $name)
-        if (!$shipping->find('class = \'' . $class . '\' AND name = \'' . addslashes($name) . '\' AND destination = \'' . $destination . '\'')) {
-            // create a new service, disabled
-            $shipping->set('class', $class);
-            $shipping->set('name', $name);
-            $shipping->set('destination', $destination);
-            $shipping->set('enabled', 0);
-            $shipping->create();
-        }
-
-        return $shipping;
-    }
-
-    /**
-     * Return list of all available shipping modules
+     * Unregister shipping processor.
+     *
+     * @param string $processorClass Processor class
      *
      * @return void
      * @access public
      * @since  3.0
      */
-    public static function getModules()
+    public static function unregisterProcessor($processorClass)
     {
-        static::registerDefaultModules();
-
-        return self::$registeredShippingModules;
-    }
-
-    /**
-     * Register predefined modules 
-     * 
-     * @return void
-     * @access public
-     * @since  3.0
-     */
-    public static function registerDefaultModules()
-    {
-        if (!self::$defaultShippingMethodsIsRegistered) {
-            foreach (self::$registeredShippingModules as $name => $class) {
-                unset(self::$registeredShippingModules[$name]);
-                self::registerShippingModule($name, $class, true);
-            }
-
-            self::$defaultShippingMethodsIsRegistered = true;
+        if (in_array($processorClass, self::$registeredProcessors)) {
+            unset(self::$registeredProcessors[$processorClass]);
         }
     }
 
     /**
-     * Get instance by name 
+     * Returns the list of registered shipping processors 
      * 
-     * @param string  $name       Shipping module name
-     * @param integer $shippingId Shipping method id
-     *  
-     * @return \XLite\Model\Shipping
+     * @return array
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function getInstanceByName($name, $shippingId = null)
+    public static function getProcessors()
     {
-        $className = isset(self::$registeredShippingModules[$name])
-            ? get_class(self::$registeredShippingModules[$name])
-            : '\XLite\Model\Shipping';
-
-        return $shippingId ? new $className($shippingId) : new $className();
+        return self::$registeredProcessors;
     }
+
+    /**
+     * Retrieves shipping methods: all or by specified processor
+     * 
+     * @return array
+     * @access public
+     * @since  3.0
+     */
+    public function getShippingMethods($processorClass = null)
+    {
+        $methods = array();
+
+        if (isset($processorClass) && isset(self::$registeredProcessors[$processorClass])) {
+            $methods[] = self::$registeredProcessors[$processorClass]->getShippingMethods();
+
+        } else {
+
+            foreach (self::$registeredProcessors as $processor) {
+                $methods = array_merge($processor->getShippingMethods());
+            }
+        }
+
+        return $methods;
+    }
+    
+    /**
+     * Return shipping rates
+     * 
+     * @param \XLite\Model\Order $order order object
+     *  
+     * @return void
+     * @access public
+     * @since  3.0
+     */
+    public function getRates(\XLite\Model\Order $order)
+    {
+        $rates = array();
+
+        foreach (self::$registeredProcessors as $processor) {
+            // Get rates from processors
+            $rates = array_merge($rates, $processor->getRates($order));
+        }
+
+        if (!empty($rates)) {
+
+            // Calculate markups
+            foreach ($rates as $id => $rate) {
+
+                // If markup has already been calculated for rate then continue iteration
+                if (null !== $rate->getMarkup()) {
+                    continue;
+                }
+
+                // Get markup
+                $markup = \XLite\Core\Database::getRepo('XLite\Model\Shipping\Markup')
+                    ->getMarkup($rate->getMethod()->getMethodId(), $order);
+
+                // Set markup to the rate
+                if (isset($markup)) {
+                    $rate->setMarkup($markup);
+                    $rate->setMarkupRate($markup->getMarkupValue());
+                    $rates[$id] = $rate;
+                }
+            }
+        }
+
+        return $rates;
+    }
+
 }

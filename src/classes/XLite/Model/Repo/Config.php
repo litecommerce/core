@@ -123,7 +123,7 @@ class Config extends \XLite\Model\Repo\Base\I18n
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getOptionsAbaliabilityCondition()
+    protected function getOptionsAvailabilityCondition()
     {
         $conditions = array();
         $params = array();
@@ -153,9 +153,9 @@ class Config extends \XLite\Model\Repo\Base\I18n
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function prepareOptionsAbaliabilityCondition(\Doctrine\ORM\QueryBuilder $qb)
+    protected function prepareOptionsAvailabilityCondition(\Doctrine\ORM\QueryBuilder $qb)
     {
-        list($condition, $params) = $this->getOptionsAbaliabilityCondition();
+        list($condition, $params) = $this->getOptionsAvailabilityCondition();
 
         return isset($condition) 
             ? $qb->andWhere($condition)->setParameters($qb->getParameters() + $params) 
@@ -175,7 +175,7 @@ class Config extends \XLite\Model\Repo\Base\I18n
      */
     public function createQueryBuilder($alias = null)
     {
-        return $this->prepareOptionsAbaliabilityCondition(parent::createQueryBuilder($alias));
+        return $this->prepareOptionsAvailabilityCondition(parent::createQueryBuilder($alias));
     }
 
     /**

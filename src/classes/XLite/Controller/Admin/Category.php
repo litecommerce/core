@@ -124,7 +124,7 @@ class Category extends \XLite\Controller\Admin\Catalog
      */
     public function getParentCategoryId($categoryId)
     {
-        return \XLite\Core\Database::getRepo('\XLite\Model\Category')->getParentCategoryId($categoryId ? $categoryId : $this->getCategoryId());
+        return \XLite\Core\Database::getRepo('XLite\Model\Category')->getParentCategoryId($categoryId ? $categoryId : $this->getCategoryId());
     }
     
     /**
@@ -139,7 +139,7 @@ class Category extends \XLite\Controller\Admin\Catalog
     {
         if (is_null($this->category) && !in_array($this->mode, $this->addModes)) {
 
-            $this->category = \XLite\Core\Database::getRepo('\XLite\Model\Category')->getCategory($this->getCategoryId());
+            $this->category = \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategory($this->getCategoryId());
         }
 
         if (is_null($this->category)) {
@@ -161,7 +161,7 @@ class Category extends \XLite\Controller\Admin\Catalog
     {
         $result = array();
 
-        $categoryPath = \XLite\Core\Database::getRepo('\XLite\Model\Category')->getCategoryPath($this->getCategoryId());
+        $categoryPath = \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategoryPath($this->getCategoryId());
 
         if (is_array($categoryPath)) {
             
@@ -260,7 +260,7 @@ class Category extends \XLite\Controller\Admin\Catalog
      */
     protected function isCleanURLUnique($cleanURL, $categoryId = null)
     {
-        $result = \XLite\Core\Database::getRepo('\XLite\Model\Category')->getCategoryByCleanUrl($cleanURL);
+        $result = \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategoryByCleanUrl($cleanURL);
 
         return !isset($result) || (!is_null($categoryId) && intval($categoryId ) == intval($result->getCategoryId()));
     }
@@ -280,7 +280,7 @@ class Category extends \XLite\Controller\Admin\Catalog
             $code = $this->getCurrentLanguage();
 
             // update category
-            $category = \XLite\Core\Database::getEM()->find('\XLite\Model\Category', $properties['category_id']);
+            $category = \XLite\Core\Database::getEM()->find('XLite\Model\Category', $properties['category_id']);
 
             $category->map($properties);
             $category->getTranslation($code)->name = $properties['name'];
@@ -292,7 +292,7 @@ class Category extends \XLite\Controller\Admin\Catalog
             \XLite\Core\Database::getEM()->persist($category);
             \XLite\Core\Database::getEM()->flush();
 
-            \XLite\Core\Database::getRepo('\XLite\Model\Category')->cleanCache();
+            \XLite\Core\Database::getRepo('XLite\Model\Category')->cleanCache();
 
             // update category image
 //            $image = $category->get('image');
@@ -357,10 +357,10 @@ class Category extends \XLite\Controller\Admin\Catalog
 
                 // create category
                 if ('child' == $operation) {
-                    $category = \XLite\Core\Database::getRepo('\XLite\Model\Category')->addChild($this->getCategoryId());
+                    $category = \XLite\Core\Database::getRepo('XLite\Model\Category')->addChild($this->getCategoryId());
 
                 } else {
-                    $category = \XLite\Core\Database::getRepo('\XLite\Model\Category')->addSibling($this->getCategoryId(), ('before' == $operation));
+                    $category = \XLite\Core\Database::getRepo('XLite\Model\Category')->addSibling($this->getCategoryId(), ('before' == $operation));
                 }
 
                 // Add category properties
@@ -377,7 +377,7 @@ class Category extends \XLite\Controller\Admin\Catalog
                 \XLite\Core\Database::getEM()->persist($category);
                 \XLite\Core\Database::getEM()->flush();
 
-                \XLite\Core\Database::getRepo('\XLite\Model\Category')->cleanCache();
+                \XLite\Core\Database::getRepo('XLite\Model\Category')->cleanCache();
             }
 
             $this->redirect('admin.php?target=categories&category_id=' . $category->category_id);

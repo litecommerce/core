@@ -39,30 +39,6 @@ ALTER TABLE xlite_products ADD COLUMN ups_packaging int(11) NOT NULL default 0;
 
 ALTER TABLE xlite_orders ADD COLUMN ups_containers text NOT NULL default '';
 
-INSERT INTO xlite_shipping(shipping_id,class,destination,name,enabled,order_by) VALUES (134,'ups','L','UPS Standard',1,20);
-INSERT INTO xlite_shipping(shipping_id,class,destination,name,enabled,order_by) VALUES (24,'ups','L','UPS 3 Day Select',1,70);
-INSERT INTO xlite_shipping(shipping_id,class,destination,name,enabled,order_by) VALUES (23,'ups','L','UPS Ground',1,80);
-INSERT INTO xlite_shipping(shipping_id,class,destination,name,enabled,order_by) VALUES (133,'ups','I','UPS Worldwide Express Plus',1,30);
-INSERT INTO xlite_shipping(shipping_id,class,destination,name,enabled,order_by) VALUES (132,'ups','I','UPS Worldwide Expedited',1,120);
-INSERT INTO xlite_shipping(shipping_id,class,destination,name,enabled,order_by) VALUES (131,'ups','I','UPS Worldwide Express',1,110);
-INSERT INTO xlite_shipping(shipping_id,class,destination,name,enabled,order_by) VALUES (25,'ups','L','UPS 2nd Day Air A.M.',1,60);
-INSERT INTO xlite_shipping(shipping_id,class,destination,name,enabled,order_by) VALUES (26,'ups','L','UPS 2nd Day Air',1,50);
-INSERT INTO xlite_shipping(shipping_id,class,destination,name,enabled,order_by) VALUES (27,'ups','L','UPS Next Day Air Saver',1,100);
-INSERT INTO xlite_shipping(shipping_id,class,destination,name,enabled,order_by) VALUES (28,'ups','L','UPS Next Day Air Early A.M.',1,10);
-INSERT INTO xlite_shipping(shipping_id,class,destination,name,enabled,order_by) VALUES (29,'ups','L','UPS Next Day Air',1,90);
-INSERT INTO xlite_shipping(shipping_id,class,destination,name,enabled,order_by) VALUES (140,'ups','I','UPS Standard to Canada',1,40);
-
-INSERT INTO xlite_shipping(shipping_id,class,destination,name,enabled,order_by) VALUES (141,'ups','I','UPS Express',1,130);
-INSERT INTO xlite_shipping(shipping_id,class,destination,name,enabled,order_by) VALUES (142,'ups','I','UPS Expedited',1,140);
-INSERT INTO xlite_shipping(shipping_id,class,destination,name,enabled,order_by) VALUES (30,'ups','I','UPS Saver',1,150);
-INSERT INTO xlite_shipping(shipping_id,class,destination,name,enabled,order_by) VALUES (143,'ups','I','UPS Express Early A.M.',1,160);
-INSERT INTO xlite_shipping(shipping_id,class,destination,name,enabled,order_by) VALUES (144,'ups','I','UPS Express Plus',1,170);
-INSERT INTO xlite_shipping(shipping_id,class,destination,name,enabled,order_by) VALUES (31,'ups','L','UPS Today Standard',1,180);
-INSERT INTO xlite_shipping(shipping_id,class,destination,name,enabled,order_by) VALUES (32,'ups','L','UPS Today Dedicated Courrier',1,190);
-INSERT INTO xlite_shipping(shipping_id,class,destination,name,enabled,order_by) VALUES (33,'ups','L','UPS Today Intercity',1,200);
-INSERT INTO xlite_shipping(shipping_id,class,destination,name,enabled,order_by) VALUES (34,'ups','L','UPS Today Express',1,210);
-INSERT INTO xlite_shipping(shipping_id,class,destination,name,enabled,order_by) VALUES (35,'ups','L','UPS Today Express Saver',1,220);
-
 INSERT INTO `xlite_config` VALUES (1,'account_type','UPSOnlineTools',NULL,0,'01');
 INSERT INTO `xlite_config` VALUES (21,'av_quality','UPSOnlineTools',NULL,0,'exact');
 INSERT INTO `xlite_config` VALUES (22,'av_status','UPSOnlineTools',NULL,0,'Y');
@@ -103,3 +79,52 @@ UPDATE xlite_countries SET eu_member='Y' WHERE code='PL';
 UPDATE xlite_countries SET eu_member='Y' WHERE code='RO';
 UPDATE xlite_countries SET eu_member='Y' WHERE code='SK';
 UPDATE xlite_countries SET eu_member='Y' WHERE code='SI';
+
+
+INSERT INTO `xlite_shipping_methods` (`method_id`, `processor`, `carrier`, `code`, `enabled`, `position`) VALUES (4001,'ups','ups','',1,0);
+INSERT INTO `xlite_shipping_methods` (`method_id`, `processor`, `carrier`, `code`, `enabled`, `position`) VALUES (4002,'ups','ups','',1,0);
+INSERT INTO `xlite_shipping_methods` (`method_id`, `processor`, `carrier`, `code`, `enabled`, `position`) VALUES (4003,'ups','ups','',1,0);
+INSERT INTO `xlite_shipping_methods` (`method_id`, `processor`, `carrier`, `code`, `enabled`, `position`) VALUES (4004,'ups','ups','',1,0);
+INSERT INTO `xlite_shipping_methods` (`method_id`, `processor`, `carrier`, `code`, `enabled`, `position`) VALUES (4005,'ups','ups','',1,0);
+INSERT INTO `xlite_shipping_methods` (`method_id`, `processor`, `carrier`, `code`, `enabled`, `position`) VALUES (4006,'ups','ups','',1,0);
+INSERT INTO `xlite_shipping_methods` (`method_id`, `processor`, `carrier`, `code`, `enabled`, `position`) VALUES (4007,'ups','ups','',1,0);
+INSERT INTO `xlite_shipping_methods` (`method_id`, `processor`, `carrier`, `code`, `enabled`, `position`) VALUES (4008,'ups','ups','',1,0);
+INSERT INTO `xlite_shipping_methods` (`method_id`, `processor`, `carrier`, `code`, `enabled`, `position`) VALUES (4009,'ups','ups','',1,0);
+INSERT INTO `xlite_shipping_methods` (`method_id`, `processor`, `carrier`, `code`, `enabled`, `position`) VALUES (4010,'ups','ups','',1,0);
+INSERT INTO `xlite_shipping_methods` (`method_id`, `processor`, `carrier`, `code`, `enabled`, `position`) VALUES (4011,'ups','ups','',1,0);
+INSERT INTO `xlite_shipping_methods` (`method_id`, `processor`, `carrier`, `code`, `enabled`, `position`) VALUES (4012,'ups','ups','',1,0);
+INSERT INTO `xlite_shipping_methods` (`method_id`, `processor`, `carrier`, `code`, `enabled`, `position`) VALUES (4013,'ups','ups','',1,0);
+INSERT INTO `xlite_shipping_methods` (`method_id`, `processor`, `carrier`, `code`, `enabled`, `position`) VALUES (4014,'ups','ups','',1,0);
+INSERT INTO `xlite_shipping_methods` (`method_id`, `processor`, `carrier`, `code`, `enabled`, `position`) VALUES (4015,'ups','ups','',1,0);
+INSERT INTO `xlite_shipping_methods` (`method_id`, `processor`, `carrier`, `code`, `enabled`, `position`) VALUES (4016,'ups','ups','',1,0);
+INSERT INTO `xlite_shipping_methods` (`method_id`, `processor`, `carrier`, `code`, `enabled`, `position`) VALUES (4017,'ups','ups','',1,0);
+INSERT INTO `xlite_shipping_methods` (`method_id`, `processor`, `carrier`, `code`, `enabled`, `position`) VALUES (4018,'ups','ups','',1,0);
+INSERT INTO `xlite_shipping_methods` (`method_id`, `processor`, `carrier`, `code`, `enabled`, `position`) VALUES (4019,'ups','ups','',1,0);
+INSERT INTO `xlite_shipping_methods` (`method_id`, `processor`, `carrier`, `code`, `enabled`, `position`) VALUES (4020,'ups','ups','',1,0);
+INSERT INTO `xlite_shipping_methods` (`method_id`, `processor`, `carrier`, `code`, `enabled`, `position`) VALUES (4021,'ups','ups','',1,0);
+INSERT INTO `xlite_shipping_methods` (`method_id`, `processor`, `carrier`, `code`, `enabled`, `position`) VALUES (4022,'ups','ups','',1,0);
+
+
+INSERT INTO `xlite_shipping_method_translations` (`code`, `id`, `name`) VALUES ('en',4001,'UPS 2nd Day Air');
+INSERT INTO `xlite_shipping_method_translations` (`code`, `id`, `name`) VALUES ('en',4002,'UPS 2nd Day Air A.M.');
+INSERT INTO `xlite_shipping_method_translations` (`code`, `id`, `name`) VALUES ('en',4003,'UPS 3 Day Select');
+INSERT INTO `xlite_shipping_method_translations` (`code`, `id`, `name`) VALUES ('en',4004,'UPS Expedited');
+INSERT INTO `xlite_shipping_method_translations` (`code`, `id`, `name`) VALUES ('en',4005,'UPS Express');
+INSERT INTO `xlite_shipping_method_translations` (`code`, `id`, `name`) VALUES ('en',4006,'UPS Express Early A.M.');
+INSERT INTO `xlite_shipping_method_translations` (`code`, `id`, `name`) VALUES ('en',4007,'UPS Express Plus');
+INSERT INTO `xlite_shipping_method_translations` (`code`, `id`, `name`) VALUES ('en',4008,'UPS Ground');
+INSERT INTO `xlite_shipping_method_translations` (`code`, `id`, `name`) VALUES ('en',4009,'UPS Next Day Air');
+INSERT INTO `xlite_shipping_method_translations` (`code`, `id`, `name`) VALUES ('en',4010,'UPS Next Day Air Early A.M.');
+INSERT INTO `xlite_shipping_method_translations` (`code`, `id`, `name`) VALUES ('en',4011,'UPS Next Day Air Saver');
+INSERT INTO `xlite_shipping_method_translations` (`code`, `id`, `name`) VALUES ('en',4012,'UPS Saver');
+INSERT INTO `xlite_shipping_method_translations` (`code`, `id`, `name`) VALUES ('en',4013,'UPS Standard');
+INSERT INTO `xlite_shipping_method_translations` (`code`, `id`, `name`) VALUES ('en',4014,'UPS Standard to Canada');
+INSERT INTO `xlite_shipping_method_translations` (`code`, `id`, `name`) VALUES ('en',4015,'UPS Today Dedicated Courrier');
+INSERT INTO `xlite_shipping_method_translations` (`code`, `id`, `name`) VALUES ('en',4016,'UPS Today Express');
+INSERT INTO `xlite_shipping_method_translations` (`code`, `id`, `name`) VALUES ('en',4017,'UPS Today Express Saver');
+INSERT INTO `xlite_shipping_method_translations` (`code`, `id`, `name`) VALUES ('en',4018,'UPS Today Intercity');
+INSERT INTO `xlite_shipping_method_translations` (`code`, `id`, `name`) VALUES ('en',4019,'UPS Today Standard');
+INSERT INTO `xlite_shipping_method_translations` (`code`, `id`, `name`) VALUES ('en',4020,'UPS Worldwide Expedited');
+INSERT INTO `xlite_shipping_method_translations` (`code`, `id`, `name`) VALUES ('en',4021,'UPS Worldwide Express');
+INSERT INTO `xlite_shipping_method_translations` (`code`, `id`, `name`) VALUES ('en',4022,'UPS Worldwide Express Plus');
+

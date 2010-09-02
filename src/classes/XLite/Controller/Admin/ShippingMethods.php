@@ -29,7 +29,7 @@
 namespace XLite\Controller\Admin;
 
 /**
- * ____description____
+ * Shipping methods management page controller
  * 
  * @package XLite
  * @see     ____class_see____
@@ -37,35 +37,119 @@ namespace XLite\Controller\Admin;
  */
 class ShippingMethods extends \XLite\Controller\Admin\AAdmin
 {
-    function action_add()
+    /**
+     * handleRequest 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function handleRequest()
     {
-        $shipping = new \XLite\Model\Shipping();
-        $shipping->set('properties', \XLite\Core\Request::getInstance()->getData());
-        $shipping->create();
-        $this->xlite->set('action_add_valid', true);
-    }
+        parent::handleRequest();
 
-    function action_update()
-    {
-        foreach (\XLite\Core\Request::getInstance()->order_by as $shipping_id=>$order_by) {
-            $shipping = new \XLite\Model\Shipping($shipping_id);
-            $shipping->set('order_by', $order_by);
-            $enabled = 0;
-
-            if (isset(\XLite\Core\Request::getInstance()->enabled)) {
-                $_tmp = \XLite\Core\Request::getInstance()->enabled;
-                if (isset($_tmp[$shipping_id])) {
-                    $enabled = 1;
-                }
-            }
-            $shipping->set('enabled', $enabled);
-            $shipping->update();
+        if ('Y' != $this->config->Shipping->shipping_enabled) {
+            $this->redirect('admin.php?target=shipping_settings');
         }
     }
 
-    function action_delete()
+    /**
+     * Do action 'Add'
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function doActionAdd()
     {
-        $shipping = new \XLite\Model\Shipping(\XLite\Core\Request::getInstance()->shipping_id);
-        $shipping->delete();
+        $postedData = \XLite\Core\Request::getInstance()->getData();
+
+        $newMethod = new \XLite\Model\Shipping\Method();
+
+        $newMethod->setPosition($postedData['position']);
+        $newMethod->setProcessor('offline');
+
+        $code = $this->getCurrentLanguage();
+        $newMethod->getTranslation($code)->name = $postedData['name'];
+
+        \XLite\Core\Database::getEM()->persist($newMethod);
+        \XLite\Core\Database::getEM()->flush();
+
+        \XLite\Core\TopMessage::getInstance()->add(
+            $this->t('Shipping method has been added'),
+            \XLite\Core\TopMessage::INFO
+        );
+    }
+
+    /**
+     * Do action 'Update'
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function doActionUpdate()
+    {
+        $postedData = \XLite\Core\Request::getInstance()->getData();
+
+        $methodIds = array_keys($postedData['methods']);
+
+        $methods = \XLite\Core\Database::getRepo('XLite\Model\Shipping\Method')->getMethodsByIds($methodIds);
+
+        $code = $this->getCurrentLanguage();
+
+        foreach ($methods as $method) {
+
+            if (isset($postedData['methods'][$method->getMethodId()])) {
+                $data = $postedData['methods'][$method->getMethodId()];
+
+                $method->setPosition(intval($data['position']));
+                $method->setEnabled(isset($data['enabled']) ? 1 : 0);
+                $method->getTranslation($code)->name = $data['name'];
+
+                \XLite\Core\Database::getEM()->persist($method);
+            }
+        }
+
+        if (isset($data)) {
+
+            \XLite\Core\Database::getEM()->flush();
+
+            \XLite\Core\TopMessage::getInstance()->add(
+                $this->t('Shipping methods have been updated'),
+                \XLite\Core\TopMessage::INFO
+            );
+        }
+    }
+
+    /**
+     * Do action 'Delete'
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function doActionDelete()
+    {
+        $postedData = \XLite\Core\Request::getInstance()->getData();
+
+        $method = \XLite\Core\Database::getRepo('XLite\Model\Shipping\Method')
+            ->getMethodById(intval($postedData['method_id']));
+
+        if (isset($method)) {
+
+            \XLite\Core\Database::getEM()->remove($method);
+            \XLite\Core\Database::getEM()->flush();
+            \XLite\Core\Database::getEM()->clear();
+
+            \XLite\Core\TopMessage::getInstance()->add(
+                $this->t('The selected shipping method has been deleted successfully'),
+                \XLite\Core\TopMessage::INFO
+            );
+        }
     }
 }

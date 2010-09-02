@@ -165,7 +165,6 @@
 <widget module="USPS" target="usps"  template="common/dialog.tpl" body="modules/USPS/test.tpl" head="USPS Live Test">
 <widget module="Intershipper" target="intershipper" class="\XLite\View\Tabber" body="{pageTemplate}" switch="target">
 <widget module="Intershipper" target="intershipper"  template="common/dialog.tpl" body="modules/Intershipper/test.tpl" head="Intershipper Live Test">
-<widget module="AustraliaPost" template="modules/AustraliaPost/main.tpl">
 <widget module="CanadaPost" target="cps" class="\XLite\View\Tabber" body="{pageTemplate}" switch="target">
 <widget module="CanadaPost" target="cps" template="common/dialog.tpl" body="modules/CanadaPost/test.tpl" head="Canada Post Live Test">
 <widget module="XCartImport" target="xcart_import" template="common/dialog.tpl" body="modules/XCartImport/dialog.tpl" head="Import X-Cart data">

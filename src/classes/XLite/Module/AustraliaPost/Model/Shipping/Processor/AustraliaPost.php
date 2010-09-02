@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage Controller
+ * @subpackage Model
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -26,47 +26,56 @@
  * @since      3.0.0
  */
 
-namespace XLite\Module\UPSOnlineTools\Controller\Admin;
+namespace XLite\Module\AustraliaPost\Model\Shipping\Processor;
 
 /**
- * Shipping settings controller
+ * Shipping processor model
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @package    XLite
+ * @subpackage Model
+ * @see        ____class_see____
+ * @since      3.0.0
  */
-class ShippingSettings extends \XLite\Controller\Admin\ShippingSettings
-implements \XLite\Base\IDecorator
+class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor implements \XLite\Base\IDecorator
 {
     /**
-     * Get shippings list
+     * Unique processor Id
      * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $processorId = 'aupost';
+
+    /**
+     * getProcessorName 
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getProcessorName()
+    {
+        return 'Australia Post';
+    }
+
+    /**
+     * Returns offline shipping rates 
+     * 
+     * @param \XLite\Model\Order $order Order object
+     *  
      * @return array
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getShippings()
+    public function getRates($order)
     {
-        if (is_null($this->_shippings)) {
+        $rates = array();
 
-            parent::getShippings();
-
-            $method = new \XLite\Module\UPSOnlineTools\Model\Shipping\Ups();
-
-            foreach ($this->_shippings as $shippingKey => $shipping) {
-                if ($shipping->get('class') == 'ups') {
-                    $name = $method->getNameUPS($shipping->get('name'));
-
-                    $name = str_replace('<sup>nd', '-nd', $name);
-                    $name = str_replace('<sup>', ' ', $name);
-                    $name = str_replace('</sup>', '', $name);
-
-                    $this->_shippings[$shippingKey]->set('name', $name);
-                }
-            }
-        }
-
-        return $this->_shippings;
+        // Return shipping rates list
+        return $rates;
     }
 }

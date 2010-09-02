@@ -20,25 +20,19 @@ INSERT INTO `xlite_config` VALUES (146,'length','AustraliaPost','',0,'100');
 INSERT INTO `xlite_config` VALUES (281,'width','AustraliaPost','',0,'100');
 
 
---INSERT INTO xlite_shipping VALUES (300,'aupost','L','Australia Post Air Mail',1,0);
---INSERT INTO xlite_shipping VALUES (301,'aupost','L','Australia Post Economy Air',1,0);
-INSERT INTO xlite_shipping VALUES (302,'aupost','L','Australia Post Express Parcels',1,0);
-INSERT INTO xlite_shipping VALUES (303,'aupost','L','Australia Post Regular Parcels',1,0);
---INSERT INTO xlite_shipping VALUES (304,'aupost','L','Australia Post Sea Mail',1,0);
-INSERT INTO xlite_shipping VALUES (310,'aupost','I','Australia Post Air Mail',1,0);
---INSERT INTO xlite_shipping VALUES (311,'aupost','I','Australia Post Economy Air',1,0);
---INSERT INTO xlite_shipping VALUES (312,'aupost','I','Australia Post Express Parcels',1,0);
---INSERT INTO xlite_shipping VALUES (313,'aupost','I','Australia Post Regular Parcels',1,0);
-INSERT INTO xlite_shipping VALUES (314,'aupost','I','Australia Post Sea Mail',1,0);
-INSERT INTO xlite_shipping VALUES (305,'aupost','I','Australia Post Express Courier International Document',1,0);
-INSERT INTO xlite_shipping VALUES (306,'aupost','I','Australia Post Express Courier International Merchandise',1,0);
-INSERT INTO xlite_shipping VALUES (307,'aupost','I','Australia Post Express Post International',1,0);
--- not supported by Australia Post, see https://bt.crtdev.local/view.php?id=51462
-DELETE FROM xlite_shipping WHERE shipping_id = 300;
-DELETE FROM xlite_shipping WHERE shipping_id = 301;
-DELETE FROM xlite_shipping WHERE shipping_id = 304;
-DELETE FROM xlite_shipping WHERE shipping_id = 311;
-DELETE FROM xlite_shipping WHERE shipping_id = 312;
-DELETE FROM xlite_shipping WHERE shipping_id = 313;
+INSERT INTO `xlite_shipping_methods` (`method_id`, `processor`, `carrier`, `code`, `enabled`, `position`) VALUES (1001,'aupost','aupost','',1,0);
+INSERT INTO `xlite_shipping_methods` (`method_id`, `processor`, `carrier`, `code`, `enabled`, `position`) VALUES (1002,'aupost','aupost','',1,0);
+INSERT INTO `xlite_shipping_methods` (`method_id`, `processor`, `carrier`, `code`, `enabled`, `position`) VALUES (1003,'aupost','aupost','',1,0);
+INSERT INTO `xlite_shipping_methods` (`method_id`, `processor`, `carrier`, `code`, `enabled`, `position`) VALUES (1004,'aupost','aupost','',1,0);
+INSERT INTO `xlite_shipping_methods` (`method_id`, `processor`, `carrier`, `code`, `enabled`, `position`) VALUES (1005,'aupost','aupost','',1,0);
+INSERT INTO `xlite_shipping_methods` (`method_id`, `processor`, `carrier`, `code`, `enabled`, `position`) VALUES (1006,'aupost','aupost','',1,0);
+INSERT INTO `xlite_shipping_methods` (`method_id`, `processor`, `carrier`, `code`, `enabled`, `position`) VALUES (1007,'aupost','aupost','',1,0);
 
+INSERT INTO `xlite_shipping_method_translations` (`code`, `id`, `name`) VALUES ('en',1001,'Australia Post Air Mail');
+INSERT INTO `xlite_shipping_method_translations` (`code`, `id`, `name`) VALUES ('en',1002,'Australia Post Express Courier International Document');
+INSERT INTO `xlite_shipping_method_translations` (`code`, `id`, `name`) VALUES ('en',1003,'Australia Post Express Courier International Merchandise');
+INSERT INTO `xlite_shipping_method_translations` (`code`, `id`, `name`) VALUES ('en',1004,'Australia Post Express Parcels');
+INSERT INTO `xlite_shipping_method_translations` (`code`, `id`, `name`) VALUES ('en',1005,'Australia Post Express Post International');
+INSERT INTO `xlite_shipping_method_translations` (`code`, `id`, `name`) VALUES ('en',1006,'Australia Post Regular Parcels');
+INSERT INTO `xlite_shipping_method_translations` (`code`, `id`, `name`) VALUES ('en',1007,'Australia Post Sea Mail');
 

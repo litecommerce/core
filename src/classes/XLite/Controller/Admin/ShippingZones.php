@@ -38,49 +38,20 @@ namespace XLite\Controller\Admin;
 class ShippingZones extends \XLite\Controller\Admin\AAdmin
 {
     /**
-     * zones 
+     * handleRequest 
      * 
-     * @var    mixed
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected $zones = null;
-
-    /**
-     * getShippingZones 
-     * 
-     * @return array
+     * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getShippingZones()
+    public function handleRequest()
     {
-        if (!isset($this->zones)) {
-    
-            $this->zones = \XLite\Core\Database::getRepo('XLite\Model\Zone')->getZones();
+        parent::handleRequest();
 
-            $defaultZone = new \XLite\Model\Zone();
-            $defaultZone->setZoneName('Default zone');
-
-            array_unshift($this->zones, $defaultZone);
+        if ('Y' != $this->config->Shipping->shipping_enabled) {
+            $this->redirect('admin.php?target=shipping_settings');
         }
-
-        return $this->zones;
-    }
-
-    /**
-     * isZonesDefined 
-     * 
-     * @return bool
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function isZonesDefined()
-    {
-        return (count($this->getShippingZones()) > 1);
     }
 
     /**
@@ -108,6 +79,11 @@ class ShippingZones extends \XLite\Controller\Admin\AAdmin
 
             // Remove zones by ids
             \XLite\Core\Database::getRepo('XLite\Model\Zone')->deleteInBatchById($zoneIds);
+
+            \XLite\Core\TopMessage::getInstance()->add(
+                $this->t('The selected zones have been deleted successfully'),
+                \XLite\Core\TopMessage::INFO
+            );
         }
     }
 
@@ -133,7 +109,7 @@ class ShippingZones extends \XLite\Controller\Admin\AAdmin
 
             $data = $this->getElementsData($postedData);
 
-            if (!empty($data[\XLite\Model\ZoneElement::ZONE_ELEMENT_COUNTRY])) {
+            if (1 == $zoneId || !empty($data[\XLite\Model\ZoneElement::ZONE_ELEMENT_COUNTRY])) {
             
                 // Remove all zone elements if exists
                 if ($zone->hasZoneElements()) {
@@ -162,6 +138,11 @@ class ShippingZones extends \XLite\Controller\Admin\AAdmin
                 \XLite\Core\Database::getEM()->persist($zone);
                 \XLite\Core\Database::getEM()->flush();
                 \XLite\Core\Database::getEM()->clear();
+
+                \XLite\Core\TopMessage::getInstance()->add(
+                    $this->t('Zone details have been updated successfully'),
+                    \XLite\Core\TopMessage::INFO
+                );
 
             } else {
                 \XLite\Core\TopMessage::getInstance()->add(
@@ -215,6 +196,11 @@ class ShippingZones extends \XLite\Controller\Admin\AAdmin
 
                     \XLite\Core\Database::getEM()->persist($zone);
                     \XLite\Core\Database::getEM()->flush();
+
+                    \XLite\Core\TopMessage::getInstance()->add(
+                        $this->t('New zone has been created successfully'),
+                        \XLite\Core\TopMessage::INFO
+                    );
 
                     $this->redirect('admin.php?target=shipping_zones&zoneid=' . $zoneId);
 

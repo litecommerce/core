@@ -66,13 +66,14 @@ class Order extends \XLite\Model\Order implements \XLite\Base\IDecorator
      * @see    ____func_see____
      * @since  3.0.0
      */
+    /*
     public function __construct($id = null)
     {
         parent::__construct($id);
 
         $this->fields['ups_containers'] = base64_encode(serialize(array()));
     }
-
+     */
     /**
      * Assign first shipping rate 
      * 
@@ -85,14 +86,14 @@ class Order extends \XLite\Model\Order implements \XLite\Base\IDecorator
     {
         $rates = $this->getCarrierRates();
 
-        $shipping = null;
+        $rates = null;
+
         if (0 < count($rates)) {
             reset($rates);
             $rate = array_shift($rates);
-            $shipping = $rate->get('shipping');
         }
 
-        $this->setShippingMethod($shipping);
+        $this->setShippingRate($rate);
     }
 
     /**

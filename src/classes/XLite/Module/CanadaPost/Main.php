@@ -108,7 +108,8 @@ class Main extends \XLite\Module\AModule
     {
         parent::init();
 
-        $this->registerShippingModule('cps');
+        // Register CanadaPost shipping processor
+        \XLite\Model\Shipping::getInstance()->registerProcessor('\XLite\Module\CanadaPost\Model\Shipping\Processor\CanadaPost');
 
         \XLite::getInstance()->set('CanadaPostEnabled',true);
     }
