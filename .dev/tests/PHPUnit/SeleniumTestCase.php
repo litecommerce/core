@@ -20,6 +20,8 @@ require_once 'PHPUnit/Extensions/SeleniumTestCase.php';
 
 abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumTestCase
 {
+    const SELENIUM_TTL = 60000;
+
     /**
      * Prefix for all classes with test cases
      */
@@ -91,7 +93,7 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
             'browser' => '*firefox C:\Program Files\Mozilla Firefox 3.5\firefox.exe',
             'host'    => SELENIUM_SERVER,
             'port'    => 4444,
-            'timeout' => 10000
+            'timeout' => self::SELENIUM_TTL,
         ),
 /*
         array(
