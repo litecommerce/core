@@ -78,6 +78,9 @@ MinicartView.prototype.widgetClass = '\\XLite\\View\\Minicart';
 // Expanded mode flag
 MinicartView.prototype.isExpanded = false;
 
+// Body handler is binded or not
+MinicartView.prototype.bodyHandlerBinded = false;
+
 // Postprocess widget
 MinicartView.prototype.postprocess = function(isSuccess)
 {
@@ -89,11 +92,21 @@ MinicartView.prototype.postprocess = function(isSuccess)
       function(event) {
         event.stopPropagation();
 
-        o.toggleViewMode(event);
+        o.toggleViewMode();
 
         return false;
       }
     );
+
+    if (!this.bodyHandlerBinded) {
+      $('body').click(
+        function (event) {
+          o.toggleViewMode(false);
+        }
+      );
+
+      this.bodyHandlerBinded = true;
+    }
 
     $('.items-list', this.base).click(
       function(event) {
@@ -109,15 +122,18 @@ MinicartView.prototype.postprocess = function(isSuccess)
 }
 
 // Toggle view mode
-MinicartView.prototype.toggleViewMode = function()
+MinicartView.prototype.toggleViewMode = function(expand)
 {
-  if (this.base.hasClass('expanded')) {
-    this.base.removeClass('expanded').addClass('collapsed');
-    this.isExpanded = false;
+  if (expand !== true && expand !== false) {
+      expand = !this.base.hasClass('expanded');
+  }
+  this.isExpanded = expand;
+
+  if (expand) {
+    this.base.addClass('expanded').removeClass('collapsed');
 
   } else {
-    this.base.addClass('expanded').removeClass('collapsed');
-    this.isExpanded = true;
+    this.base.removeClass('expanded').addClass('collapsed');
   }
 }
 
