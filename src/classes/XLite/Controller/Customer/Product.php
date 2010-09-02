@@ -46,7 +46,9 @@ class Product extends \XLite\Controller\Customer\Catalog
      */
     protected function getCategoryId()
     {
-        return ($categoryId = parent::getCategoryId()) ?: $this->getProduct()->getCategoryId();
+        $categoryId = parent::getCategoryId();
+
+        return $categoryId ?: $this->getProduct()->getCategoryId();
     }
 
     /**

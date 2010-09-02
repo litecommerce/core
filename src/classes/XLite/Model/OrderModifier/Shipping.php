@@ -103,7 +103,10 @@ class Shipping extends \XLite\Model\Order implements \XLite\Base\IDecorator
      */
     protected function getSelectedRate()
     {
-        if (!is_object($this->shippingRate) || $this->shippingRate->getMethodId() != $this->getShippingId()) {
+        if (
+            !is_object($this->shippingRate)
+            || $this->shippingRate->getMethodId() != $this->getShippingId()
+        ) {
 
             // Get shipping rates
             $rates = $this->calculateShippingRates();

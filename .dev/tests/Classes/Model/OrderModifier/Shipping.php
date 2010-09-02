@@ -33,7 +33,6 @@ class XLite_Tests_Model_OrderModifier_Shipping extends XLite_Tests_TestCase
         'notes'          => 'Test note',
     );
 
-    /*
     protected function setUp()
     {
         parent::setUp();
@@ -47,11 +46,13 @@ class XLite_Tests_Model_OrderModifier_Shipping extends XLite_Tests_TestCase
 
         $this->assertTrue($order->isShippingAvailable(), 'check shipping avalable');
 
-        $order->setShippingMethod(null);
+        $order->setShippingRate(null);
+        $order->getItems()->get(0)->getObject()->setFreeShipping(true);
 
         $this->assertFalse($order->isShippingAvailable(), 'check shipping not avalable');
     }
 
+    /*
     public function testGetShippingRates()
     {
         $order = $this->getTestOrder();
@@ -178,6 +179,7 @@ class XLite_Tests_Model_OrderModifier_Shipping extends XLite_Tests_TestCase
 
         $this->assertEquals(0, $order->getShippedSubtotal(), 'check shipped subtotal (empty)');
     }
+    */
 
     protected function getProduct()
     {
@@ -216,6 +218,4 @@ class XLite_Tests_Model_OrderModifier_Shipping extends XLite_Tests_TestCase
 
         return $order;
     }
-
-     */
 }
