@@ -84,10 +84,10 @@ class CheckoutSuccess extends \XLite\Controller\Customer\ACustomer
     function handleRequest()
     {
         // security check on return page
-        $order_id = $this->get('order_id');
+        $order_id = \XLite\Core\Request::getInstance()->order_id;
         if (
             $order_id != $this->session->get('last_order_id') &&
-            $order_id != $this->getCart()->get('order_id')
+            $order_id != $this->getCart()->getOrderId()
         ) {
             $this->redirect($this->buildUrl('cart'));
 
