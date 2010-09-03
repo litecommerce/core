@@ -19,13 +19,15 @@
 
 namespace Doctrine\ORM;
 
+use Exception;
+
 /**
  * Base exception class for all ORM exceptions.
  *
  * @author Roman Borschel <roman@code-factory.org>
  * @since 2.0
  */
-class ORMException extends \Exception
+class ORMException extends Exception
 {
     public static function missingMappingDriverImpl()
     {
@@ -41,23 +43,6 @@ class ORMException extends \Exception
     public static function unrecognizedField($field)
     {
         return new self("Unrecognized field: $field");
-    }
-
-    public static function removedEntityInCollectionDetected($entity, $assoc)
-    {
-        return new self("Removed entity of type " . get_class($entity)
-                . " detected in collection '" . $assoc->sourceFieldName . "' during flush."
-                . " Remove deleted entities from collections.");
-    }
-
-    public static function invalidEntityState($state)
-    {
-        return new self("Invalid entity state: $state.");
-    }
-
-    public static function detachedEntityCannotBeRemoved()
-    {
-        return new self("A detached entity can not be removed.");
     }
 
     public static function invalidFlushMode($mode)

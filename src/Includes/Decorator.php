@@ -1022,31 +1022,13 @@ class Decorator extends Decorator\ADecorator
 
             $relations = array();
 
-            // Add set<RelationName>
             foreach ($metadata->associationMappings as $an => $av) {
 
                 if (
-                    $av instanceof \Doctrine\ORM\Mapping\OneToManyMapping
-                    || $av instanceof \Doctrine\ORM\Mapping\ManyToManyMapping
+                    $av['type'] == $metadata::ONE_TO_MANY
+                    || $av['type'] == $metadata::MANY_TO_MANY
                 ) {
                     $relations[] = $an;
-
-                    $varName = str_replace(self::$from, self::$to, $an);
-                    $methodName = ucfirst($varName);
-                    $additionalMethods[] = <<<PHP
-    /**
-     * Set $an
-     *
-     * @param \\Doctrine\\Common\\Collections\\Collection \$$varName
-     *
-     * @return void
-     * @access public
-     */
-    public function set$methodName(\\Doctrine\\Common\\Collections\\Collection \$$varName)
-    {
-        \$this->$an = \$$varName;
-    }
-PHP;
                 }
             }
 

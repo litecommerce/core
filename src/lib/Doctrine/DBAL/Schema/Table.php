@@ -37,21 +37,6 @@ use Doctrine\DBAL\DBALException;
 class Table extends AbstractAsset
 {
     /**
-     * @var int
-     */
-    const ID_NONE = 0;
-
-    /**
-     * @var int
-     */
-    const ID_SEQUENCE = 1;
-
-    /**
-     * @var int
-     */
-    const ID_IDENTITY = 2;
-
-    /**
      * @var string
      */
     protected $_name = null;
@@ -82,11 +67,6 @@ class Table extends AbstractAsset
     protected $_options = array();
 
     /**
-     * @var bool
-     */
-    protected $_idGeneratorType = self::ID_NONE;
-
-    /**
      * @var SchemaConfig
      */
     protected $_schemaConfig = null;
@@ -100,7 +80,7 @@ class Table extends AbstractAsset
      * @param int $idGeneratorType
      * @param array $options
      */
-    public function __construct($tableName, array $columns=array(), array $indexes=array(), array $fkConstraints=array(), $idGeneratorType=self::ID_NONE, array $options=array())
+    public function __construct($tableName, array $columns=array(), array $indexes=array(), array $fkConstraints=array(), $idGeneratorType = 0, array $options=array())
     {
         if (strlen($tableName) == 0) {
             throw DBALException::invalidTableName($tableName);
@@ -161,16 +141,6 @@ class Table extends AbstractAsset
         }
 
         return $primaryKey;
-    }
-
-    /**
-     * @param string $type
-     * @return Table
-     */
-    public function setIdGeneratorType($type)
-    {
-        $this->_idGeneratorType = $type;
-        return $this;
     }
 
     /**
@@ -250,7 +220,7 @@ class Table extends AbstractAsset
             }
 
             if ( ! $this->hasColumn($columnName)) {
-                throw SchemaException::columnDoesNotExist($columnName);
+                throw SchemaException::columnDoesNotExist($columnName, $this->_name);
             }
         }
         $this->_addIndex(new Index($indexName, $columnNames, $isUnique, $isPrimary));
@@ -366,7 +336,7 @@ class Table extends AbstractAsset
 
             foreach ($foreignColumnNames AS $columnName) {
                 if ( ! $foreignTable->hasColumn($columnName)) {
-                    throw SchemaException::columnDoesNotExist($columnName);
+                    throw SchemaException::columnDoesNotExist($columnName, $foreignTable->getName());
                 }
             }
         } else {
@@ -375,7 +345,7 @@ class Table extends AbstractAsset
 
         foreach ($localColumnNames AS $columnName) {
             if ( ! $this->hasColumn($columnName)) {
-                throw SchemaException::columnDoesNotExist($columnName);
+                throw SchemaException::columnDoesNotExist($columnName, $this->_name);
             }
         }
         
@@ -433,7 +403,7 @@ class Table extends AbstractAsset
         $indexName = strtolower($indexName);
 
         if (isset($this->_indexes[$indexName]) || ($this->_primaryKeyName != false && $index->isPrimary())) {
-            throw SchemaException::indexAlreadyExists($indexName);
+            throw SchemaException::indexAlreadyExists($indexName, $this->_name);
         }
 
         if ($index->isPrimary()) {
@@ -483,26 +453,10 @@ class Table extends AbstractAsset
     {
         $constraintName = strtolower($constraintName);
         if(!$this->hasForeignKey($constraintName)) {
-            throw SchemaException::foreignKeyDoesNotExist($constraintName);
+            throw SchemaException::foreignKeyDoesNotExist($constraintName, $this->_name);
         }
 
         return $this->_fkConstraints[$constraintName];
-    }
-
-    /**
-     * @return bool
-     */
-    public function isIdGeneratorIdentity()
-    {
-        return ($this->_idGeneratorType==self::ID_IDENTITY);
-    }
-
-    /**
-     * @return array
-     */
-    public function isIdGeneratorSequence()
-    {
-        return ($this->_idGeneratorType==self::ID_SEQUENCE);
     }
 
     /**
@@ -510,7 +464,24 @@ class Table extends AbstractAsset
      */
     public function getColumns()
     {
-        return $this->_columns;
+        $columns = $this->_columns;
+
+        $pkCols = array();
+        $fkCols = array();
+
+        if ($this->hasIndex($this->_primaryKeyName)) {
+            $pkCols = $this->getPrimaryKey()->getColumns();
+        }
+        foreach ($this->getForeignKeys() AS $fk) {
+            /* @var $fk ForeignKeyConstraint */
+            $fkCols = array_merge($fkCols, $fk->getColumns());
+        }
+        $colNames = array_unique(array_merge($pkCols, $fkCols, array_keys($columns)));
+
+        uksort($columns, function($a, $b) use($colNames) {
+            return (array_search($a, $colNames) >= array_search($b, $colNames));
+        });
+        return $columns;
     }
 
 
@@ -536,7 +507,7 @@ class Table extends AbstractAsset
     {
         $columnName = strtolower($columnName);
         if (!$this->hasColumn($columnName)) {
-            throw SchemaException::columnDoesNotExist($columnName);
+            throw SchemaException::columnDoesNotExist($columnName, $this->_name);
         }
 
         return $this->_columns[$columnName];
@@ -568,7 +539,7 @@ class Table extends AbstractAsset
     {
         $indexName = strtolower($indexName);
         if (!$this->hasIndex($indexName)) {
-            throw SchemaException::indexDoesNotExist($indexName);
+            throw SchemaException::indexDoesNotExist($indexName, $this->_name);
         }
         return $this->_indexes[$indexName];
     }

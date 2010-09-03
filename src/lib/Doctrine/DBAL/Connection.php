@@ -19,7 +19,7 @@
 
 namespace Doctrine\DBAL;
 
-use PDO, Closure,
+use PDO, Closure, Exception,
     Doctrine\DBAL\Types\Type,
     Doctrine\DBAL\Driver\Connection as DriverConnection,
     Doctrine\Common\EventManager,
@@ -39,6 +39,7 @@ use PDO, Closure,
  * @author  Roman Borschel <roman@code-factory.org>
  * @author  Konsta Vesterinen <kvesteri@cc.hut.fi>
  * @author  Lukas Smith <smith@pooteeweet.org> (MDB2 library)
+ * @author  Benjamin Eberlei <kontakt@beberlei.de>
  */
 class Connection implements DriverConnection
 {
@@ -310,9 +311,8 @@ class Connection implements DriverConnection
      * @param string $statement The SQL query.
      * @param array $params The query parameters.
      * @return array
-     * @todo Rename: fetchAssoc
      */
-    public function fetchRow($statement, array $params = array())
+    public function fetchAssoc($statement, array $params = array())
     {
         return $this->executeQuery($statement, $params)->fetch(PDO::FETCH_ASSOC);
     }
@@ -553,8 +553,9 @@ class Connection implements DriverConnection
     {
         $this->connect();
 
-        if ($this->_config->getSQLLogger() !== null) {
-            $this->_config->getSQLLogger()->logSQL($query, $params);
+        $hasLogger = $this->_config->getSQLLogger() !== null;
+        if ($hasLogger) {
+            $this->_config->getSQLLogger()->startQuery($query, $params, $types);
         }
 
         if ($params) {
@@ -567,6 +568,10 @@ class Connection implements DriverConnection
             }
         } else {
             $stmt = $this->_conn->query($query);
+        }
+
+        if ($hasLogger) {
+            $this->_config->getSQLLogger()->stopQuery();
         }
 
         return $stmt;
@@ -583,10 +588,10 @@ class Connection implements DriverConnection
      *                        represents a row of the result set.
      * @return mixed The projected result of the query.
      */
-    public function project($query, array $params = array(), Closure $function)
+    public function project($query, array $params, Closure $function)
     {
         $result = array();
-        $stmt = $this->executeQuery($query, $params);
+        $stmt = $this->executeQuery($query, $params ?: array());
 
         while ($row = $stmt->fetch()) {
             $result[] = $function($row);
@@ -606,6 +611,8 @@ class Connection implements DriverConnection
      */
     public function query()
     {
+        $this->connect();
+
         return call_user_func_array(array($this->_conn, 'query'), func_get_args());
     }
 
@@ -625,8 +632,9 @@ class Connection implements DriverConnection
     {
         $this->connect();
 
-        if ($this->_config->getSQLLogger() !== null) {
-            $this->_config->getSQLLogger()->logSQL($query, $params);
+        $hasLogger = $this->_config->getSQLLogger() !== null;
+        if ($hasLogger) {
+            $this->_config->getSQLLogger()->startQuery($query, $params, $types);
         }
 
         if ($params) {
@@ -640,6 +648,10 @@ class Connection implements DriverConnection
             $result = $stmt->rowCount();
         } else {
             $result = $this->_conn->exec($query);
+        }
+
+        if ($hasLogger) {
+            $this->_config->getSQLLogger()->stopQuery();
         }
 
         return $result;
@@ -707,6 +719,28 @@ class Connection implements DriverConnection
     }
 
     /**
+     * Executes a function in a transaction.
+     *
+     * The function gets passed this Connection instance as an (optional) parameter.
+     *
+     * If an exception occurs during execution of the function or transaction commit,
+     * the transaction is rolled back and the exception re-thrown.
+     *
+     * @param Closure $func The function to execute transactionally.
+     */
+    public function transactional(Closure $func)
+    {
+        $this->beginTransaction();
+        try {
+            $func($this);
+            $this->commit();
+        } catch (Exception $e) {
+            $this->rollback();
+            throw $e;
+        }
+    }
+
+    /**
      * Starts a transaction by suspending auto-commit mode.
      *
      * @return void
@@ -732,7 +766,7 @@ class Connection implements DriverConnection
     public function commit()
     {
         if ($this->_transactionNestingLevel == 0) {
-            throw ConnectionException::commitFailedNoActiveTransaction();
+            throw ConnectionException::noActiveTransaction();
         }
         if ($this->_isRollbackOnly) {
             throw ConnectionException::commitFailedRollbackOnly();
@@ -758,7 +792,7 @@ class Connection implements DriverConnection
     public function rollback()
     {
         if ($this->_transactionNestingLevel == 0) {
-            throw ConnectionException::rollbackFailedNoActiveTransaction();
+            throw ConnectionException::noActiveTransaction();
         }
 
         $this->connect();
@@ -820,7 +854,7 @@ class Connection implements DriverConnection
      * @return boolean
      * @throws ConnectionException If no transaction is active.
      */
-    public function getRollbackOnly()
+    public function isRollbackOnly()
     {
         if ($this->_transactionNestingLevel == 0) {
             throw ConnectionException::noActiveTransaction();

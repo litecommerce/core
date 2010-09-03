@@ -1,7 +1,5 @@
 <?php
 /*
- *  $Id$
- *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -43,7 +41,10 @@ final class DriverManager
             'pdo_pgsql'  => 'Doctrine\DBAL\Driver\PDOPgSql\Driver',
             'pdo_oci' => 'Doctrine\DBAL\Driver\PDOOracle\Driver',
             'pdo_mssql'  => 'Doctrine\DBAL\Driver\PDOMsSql\Driver',
-            'oci8' => 'Doctrine\DBAL\Driver\OCI8\Driver'
+            'oci8' => 'Doctrine\DBAL\Driver\OCI8\Driver',
+            'ibm_db2' => 'Doctrine\DBAL\Driver\IBMDB2\DB2Driver',
+            'pdo_ibm' => 'Doctrine\DBAL\Driver\PDOIbm\Driver',
+            'pdo_sqlsrv' => 'Doctrine\DBAL\Driver\PDOSqlsrv\Driver',
             );
 
     /** Private constructor. This class cannot be instantiated. */
@@ -108,6 +109,7 @@ final class DriverManager
         if (isset($params['pdo']) && ! $params['pdo'] instanceof \PDO) {
             throw DBALException::invalidPdoInstance();
         } else if (isset($params['pdo'])) {
+            $params['pdo']->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
             $params['driver'] = 'pdo_' . $params['pdo']->getAttribute(\PDO::ATTR_DRIVER_NAME);
         } else {
             self::_checkParams($params);

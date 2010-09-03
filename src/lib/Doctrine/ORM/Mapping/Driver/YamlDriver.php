@@ -1,7 +1,5 @@
 <?php
 /*
- *  $Id$
- *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -27,14 +25,11 @@ use Doctrine\ORM\Mapping\ClassMetadataInfo,
 /**
  * The YamlDriver reads the mapping metadata from yaml schema files.
  *
- * @license 	http://www.opensource.org/licenses/lgpl-license.php LGPL
- * @link    	www.doctrine-project.org
- * @since   	2.0
- * @version     $Revision$
- * @author		Benjamin Eberlei <kontakt@beberlei.de>
- * @author		Guilherme Blanco <guilhermeblanco@hotmail.com>
- * @author      Jonathan H. Wage <jonwage@gmail.com>
- * @author      Roman Borschel <roman@code-factory.org>
+ * @since 2.0
+ * @author Benjamin Eberlei <kontakt@beberlei.de>
+ * @author Guilherme Blanco <guilhermeblanco@hotmail.com>
+ * @author Jonathan H. Wage <jonwage@gmail.com>
+ * @author Roman Borschel <roman@code-factory.org>
  */
 class YamlDriver extends AbstractFileDriver
 {
@@ -61,32 +56,38 @@ class YamlDriver extends AbstractFileDriver
         }
 
         // Evaluate root level properties
+        $table = array();
         if (isset($element['table'])) {
-            $metadata->table['name'] = $element['table'];
+            $table['name'] = $element['table'];
         }
+        $metadata->setPrimaryTable($table);
 
+        /* not implemented specially anyway. use table = schema.table
         if (isset($element['schema'])) {
             $metadata->table['schema'] = $element['schema'];
-        }
+        }*/
 
         if (isset($element['inheritanceType'])) {
             $metadata->setInheritanceType(constant('Doctrine\ORM\Mapping\ClassMetadata::INHERITANCE_TYPE_' . strtoupper($element['inheritanceType'])));
+
+            if ($metadata->inheritanceType != \Doctrine\ORM\Mapping\ClassMetadata::INHERITANCE_TYPE_NONE) {
+                // Evaluate discriminatorColumn
+                if (isset($element['discriminatorColumn'])) {
+                    $discrColumn = $element['discriminatorColumn'];
+                    $metadata->setDiscriminatorColumn(array(
+                        'name' => $discrColumn['name'],
+                        'type' => $discrColumn['type'],
+                        'length' => $discrColumn['length']
+                    ));
+                }
+
+                // Evaluate discriminatorMap
+                if (isset($element['discriminatorMap'])) {
+                    $metadata->setDiscriminatorMap($element['discriminatorMap']);
+                }
+            }
         }
 
-        // Evaluate discriminatorColumn
-        if (isset($element['discriminatorColumn'])) {
-            $discrColumn = $element['discriminatorColumn'];
-            $metadata->setDiscriminatorColumn(array(
-                'name' => $discrColumn['name'],
-                'type' => $discrColumn['type'],
-                'length' => $discrColumn['length']
-            ));
-        }
-
-        // Evaluate discriminatorMap
-        if (isset($element['discriminatorMap'])) {
-            $metadata->setDiscriminatorMap($element['discriminatorMap']);
-        }
 
         // Evaluate changeTrackingPolicy
         if (isset($element['changeTrackingPolicy'])) {
@@ -135,6 +136,10 @@ class YamlDriver extends AbstractFileDriver
         if (isset($element['id'])) {
             // Evaluate identifier settings
             foreach ($element['id'] as $name => $idElement) {
+                if (!isset($idElement['type'])) {
+                    throw MappingException::propertyTypeIsRequired($className, $name);
+                }
+
                 $mapping = array(
                     'id' => true,
                     'fieldName' => $name,
@@ -145,11 +150,21 @@ class YamlDriver extends AbstractFileDriver
                     $mapping['columnName'] = $idElement['column'];
                 }
 
+                if (isset($idElement['length'])) {
+                    $mapping['length'] = $idElement['length'];
+                }
+
                 $metadata->mapField($mapping);
 
                 if (isset($idElement['generator'])) {
                     $metadata->setIdGeneratorType(constant('Doctrine\ORM\Mapping\ClassMetadata::GENERATOR_TYPE_'
                             . strtoupper($idElement['generator']['strategy'])));
+                }
+                // Check for SequenceGenerator/TableGenerator definition
+                if (isset($idElement['sequenceGenerator'])) {
+                    $metadata->setSequenceGeneratorDefinition($idElement['sequenceGenerator']);
+                } else if (isset($idElement['tableGenerator'])) {
+                    throw MappingException::tableIdGeneratorNotImplemented($className);
                 }
             }
         }
@@ -176,12 +191,6 @@ class YamlDriver extends AbstractFileDriver
                         $metadata->setIdGeneratorType(constant('Doctrine\ORM\Mapping\ClassMetadata::GENERATOR_TYPE_'
                                 . strtoupper($fieldMapping['generator']['strategy'])));
                     }
-                }
-                // Check for SequenceGenerator/TableGenerator definition
-                if (isset($fieldMapping['sequenceGenerator'])) {
-                    $metadata->setSequenceGeneratorDefinition($fieldMapping['sequenceGenerator']);
-                } else if (isset($fieldMapping['tableGenerator'])) {
-                    throw MappingException::tableIdGeneratorNotImplemented($className);
                 }
                 if (isset($fieldMapping['column'])) {
                     $mapping['columnName'] = $fieldMapping['column'];
@@ -224,7 +233,7 @@ class YamlDriver extends AbstractFileDriver
                 );
 
                 if (isset($oneToOneElement['fetch'])) {
-                    $mapping['fetch'] = constant('Doctrine\ORM\Mapping\AssociationMapping::FETCH_' . $oneToOneElement['fetch']);
+                    $mapping['fetch'] = constant('Doctrine\ORM\Mapping\ClassMetadata::FETCH_' . $oneToOneElement['fetch']);
                 }
 
                 if (isset($oneToOneElement['mappedBy'])) {
@@ -269,7 +278,7 @@ class YamlDriver extends AbstractFileDriver
                 );
 
                 if (isset($oneToManyElement['fetch'])) {
-                    $mapping['fetch'] = constant('Doctrine\ORM\Mapping\AssociationMapping::FETCH_' . $oneToManyElement['fetch']);
+                    $mapping['fetch'] = constant('Doctrine\ORM\Mapping\ClassMetadata::FETCH_' . $oneToManyElement['fetch']);
                 }
 
                 if (isset($oneToManyElement['cascade'])) {
@@ -293,7 +302,7 @@ class YamlDriver extends AbstractFileDriver
                 );
 
                 if (isset($manyToOneElement['fetch'])) {
-                    $mapping['fetch'] = constant('Doctrine\ORM\Mapping\AssociationMapping::FETCH_' . $manyToOneElement['fetch']);
+                    $mapping['fetch'] = constant('Doctrine\ORM\Mapping\ClassMetadata::FETCH_' . $manyToOneElement['fetch']);
                 }
 
                 if (isset($manyToOneElement['inversedBy'])) {
@@ -333,7 +342,7 @@ class YamlDriver extends AbstractFileDriver
                 );
 
                 if (isset($manyToManyElement['fetch'])) {
-                    $mapping['fetch'] = constant('Doctrine\ORM\Mapping\AssociationMapping::FETCH_' . $manyToManyElement['fetch']);
+                    $mapping['fetch'] = constant('Doctrine\ORM\Mapping\ClassMetadata::FETCH_' . $manyToManyElement['fetch']);
                 }
 
                 if (isset($manyToManyElement['mappedBy'])) {
@@ -439,6 +448,6 @@ class YamlDriver extends AbstractFileDriver
      */
     protected function _loadMappingFile($file)
     {
-        return \Symfony\Components\Yaml\Yaml::load($file);
+        return \Symfony\Component\Yaml\Yaml::load($file);
     }
 }

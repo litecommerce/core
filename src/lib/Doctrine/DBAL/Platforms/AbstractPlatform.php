@@ -1,7 +1,5 @@
 <?php
 /*
- *  $Id$
- *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -42,6 +40,7 @@ use Doctrine\DBAL\DBALException,
  * @author  Jonathan Wage <jonwage@gmail.com>
  * @author  Roman Borschel <roman@code-factory.org>
  * @author  Lukas Smith <smith@pooteeweet.org> (PEAR MDB2 library)
+ * @author  Benjamin Eberlei <kontakt@beberlei.de>
  * @todo Remove any unnecessary methods.
  */
 abstract class AbstractPlatform
@@ -77,9 +76,77 @@ abstract class AbstractPlatform
     const TRIM_BOTH = 3;
 
     /**
+     * @var array
+     */
+    protected $doctrineTypeMapping = null;
+
+    /**
      * Constructor.
      */
     public function __construct() {}
+
+    /**
+     * Register a doctrine type to be used in conjunction with a column type of this platform.
+     *
+     * @param string $dbType
+     * @param string $doctrineType
+     */
+    public function registerDoctrineTypeMapping($dbType, $doctrineType)
+    {
+        if ($this->doctrineTypeMapping === null) {
+            $this->initializeDoctrineTypeMappings();
+        }
+
+        if (!Types\Type::hasType($doctrineType)) {
+            throw DBALException::typeNotFound($doctrineType);
+        }
+
+        $dbType = strtolower($dbType);
+        $this->doctrineTypeMapping[$dbType] = $doctrineType;
+    }
+
+    /**
+     * Get the Doctrine type that is mapped for the given database column type.
+     * 
+     * @param  string $dbType
+     * @return string
+     */
+    public function getDoctrineTypeMapping($dbType)
+    {
+        if ($this->doctrineTypeMapping === null) {
+            $this->initializeDoctrineTypeMappings();
+        }
+        
+        $dbType = strtolower($dbType);
+        if (isset($this->doctrineTypeMapping[$dbType])) {
+            return $this->doctrineTypeMapping[$dbType];
+        } else {
+            throw new \Doctrine\DBAL\DBALException("Unknown database type ".$dbType." requested, " . get_class($this) . " may not support it.");
+        }
+    }
+
+    /**
+     * Check if a database type is currently supported by this platform.
+     *
+     * @param string $dbType
+     * @return bool
+     */
+    public function hasDoctrineTypeMappingFor($dbType)
+    {
+        if ($this->doctrineTypeMapping === null) {
+            $this->initializeDoctrineTypeMappings();
+        }
+
+        $dbType = strtolower($dbType);
+        return isset($this->doctrineTypeMapping[$dbType]);
+    }
+
+    /**
+     * Lazy load Doctrine Type Mappings
+     *
+     * @return void
+     */
+    abstract protected function initializeDoctrineTypeMappings();
 
     /**
      * Gets the character used for identifier quoting.
@@ -488,9 +555,46 @@ abstract class AbstractPlatform
         return 'COS(' . $value . ')';
     }
 
-    public function getForUpdateSql()
+    public function getForUpdateSQL()
     {
         return 'FOR UPDATE';
+    }
+
+    /**
+     * Honors that some SQL vendors such as MsSql use table hints for locking instead of the ANSI SQL FOR UPDATE specification.
+     *
+     * @param  string $fromClause
+     * @param  int $lockMode
+     * @return string
+     */
+    public function appendLockHint($fromClause, $lockMode)
+    {
+        return $fromClause;
+    }
+
+    /**
+     * Get the sql snippet to append to any SELECT statement which locks rows in shared read lock.
+     *
+     * This defaults to the ASNI SQL "FOR UPDATE", which is an exclusive lock (Write). Some database
+     * vendors allow to lighten this constraint up to be a real read lock.
+     *
+     * @return string
+     */
+    public function getReadLockSQL()
+    {
+        return $this->getForUpdateSQL();
+    }
+
+    /**
+     * Get the SQL snippet to append to any SELECT statement which obtains an exclusive lock on the rows.
+     *
+     * The semantics of this lock mode should equal the SELECT .. FOR UPDATE of the ASNI SQL standard.
+     *
+     * @return string
+     */
+    public function getWriteLockSQL()
+    {
+        return $this->getForUpdateSQL();
     }
 
     public function getDropDatabaseSQL($database)
@@ -612,7 +716,7 @@ abstract class AbstractPlatform
             $columnData['type'] = $column->getType();
             $columnData['length'] = $column->getLength();
             $columnData['notnull'] = $column->getNotNull();
-            $columnData['unique'] = ($column->hasPlatformOption("unique"))?$column->getPlatformOption('unique'):false;
+            $columnData['unique'] = false; // TODO: what do we do about this?
             $columnData['version'] = ($column->hasPlatformOption("version"))?$column->getPlatformOption('version'):false;
             if(strtolower($columnData['type']) == "string" && $columnData['length'] === null) {
                 $columnData['length'] = 255;
@@ -621,13 +725,10 @@ abstract class AbstractPlatform
             $columnData['scale'] = $column->getScale();
             $columnData['default'] = $column->getDefault();
             $columnData['columnDefinition'] = $column->getColumnDefinition();
+            $columnData['autoincrement'] = $column->getAutoincrement();
 
             if(in_array($column->getName(), $options['primary'])) {
                 $columnData['primary'] = true;
-
-                if($table->isIdGeneratorIdentity()) {
-                    $columnData['autoincrement'] = true;
-                }
             }
 
             $columns[$columnData['name']] = $columnData;
@@ -1095,7 +1196,7 @@ abstract class AbstractPlatform
             throw \InvalidArgumentException("Incomplete definition. 'columns' required.");
         }
         
-        return 'CONSTRAINT' . $name . ' UNIQUE ('
+        return 'CONSTRAINT ' . $name . ' UNIQUE ('
              . $this->getIndexFieldDeclarationListSQL($index->getColumns()) 
              . ')';
     }
@@ -1175,6 +1276,17 @@ abstract class AbstractPlatform
     public function getTemporaryTableSQL()
     {
         return 'TEMPORARY';
+    }
+
+    /**
+     * Some vendors require temporary table names to be qualified specially.
+     *
+     * @param  string $tableName
+     * @return string
+     */
+    public function getTemporaryTableName($tableName)
+    {
+        return $tableName;
     }
 
     /**
@@ -1555,6 +1667,17 @@ abstract class AbstractPlatform
     {
         throw DBALException::notSupported(__METHOD__);
     }
+
+    /**
+     * Obtain DBMS specific SQL to be used to create datetime with timezone offset fields.
+     * 
+     * @param array $fieldDeclaration
+     */
+    public function getDateTimeTzTypeDeclarationSQL(array $fieldDeclaration)
+    {
+        return $this->getDateTimeTypeDeclarationSQL($fieldDeclaration);
+    }
+    
     
     /**
      * Obtain DBMS specific SQL to be used to create date fields in statements
@@ -1691,6 +1814,16 @@ abstract class AbstractPlatform
     }
 
     /**
+     * Some databases don't allow to create and drop databases at all or only with certain tools.
+     *
+     * @return bool
+     */
+    public function supportsCreateDropDatabase()
+    {
+        return true;
+    }
+
+    /**
      * @return bool
      */
     public function createsExplicitIndexForForeignKeys()
@@ -1719,11 +1852,19 @@ abstract class AbstractPlatform
      * the format of a stored datetime value of this platform.
      * 
      * @return string The format string.
-     * 
-     * @todo We need to get the specific format for each dbms and override this
-     * function for each platform
      */
     public function getDateTimeFormatString()
+    {
+        return 'Y-m-d H:i:s';
+    }
+
+    /**
+     * Gets the format string, as accepted by the date() function, that describes
+     * the format of a stored datetime with timezone value of this platform.
+     *
+     * @return string The format string.
+     */
+    public function getDateTimeTzFormatString()
     {
         return 'Y-m-d H:i:s';
     }
@@ -1842,5 +1983,15 @@ abstract class AbstractPlatform
     public function getTruncateTableSQL($tableName, $cascade = false)
     {
         return 'TRUNCATE '.$tableName;
+    }
+
+    /**
+     * This is for test reasons, many vendors have special requirements for dummy statements.
+     * 
+     * @return string
+     */
+    public function getDummySelectSQL()
+    {
+        return 'SELECT 1';
     }
 }

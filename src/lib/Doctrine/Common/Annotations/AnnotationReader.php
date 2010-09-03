@@ -19,9 +19,10 @@
 
 namespace Doctrine\Common\Annotations;
 
-use \ReflectionClass, 
-    \ReflectionMethod, 
-    \ReflectionProperty,
+use Closure,
+    ReflectionClass,
+    ReflectionMethod, 
+    ReflectionProperty,
     Doctrine\Common\Cache\Cache;
 
 /**
@@ -48,24 +49,35 @@ class AnnotationReader
      *
      * @var Doctrine\Common\Annotations\Parser
      */
-    private $_parser;
+    private $parser;
     
     /**
      * Cache mechanism to store processed Annotations
      *
      * @var Doctrine\Common\Cache\Cache
      */
-    private $_cache;
+    private $cache;
     
     /**
      * Constructor. Initializes a new AnnotationReader that uses the given Cache provider.
      * 
      * @param Cache $cache The cache provider to use. If none is provided, ArrayCache is used.
+     * @param Parser $parser The parser to use. If none is provided, the default parser is used.
      */
-    public function __construct(Cache $cache = null)
+    public function __construct(Cache $cache = null, Parser $parser = null)
     {
-        $this->_parser = new Parser;
-        $this->_cache = $cache ?: new \Doctrine\Common\Cache\ArrayCache;
+        $this->parser = $parser ?: new Parser;
+        $this->cache = $cache ?: new \Doctrine\Common\Cache\ArrayCache;
+    }
+
+    /**
+     * Set whether or not to try and autoload annotation classes.
+     *
+     * @param boolean $bool
+     */
+    public function setAutoloadAnnotationClasses($bool)
+    {
+        $this->parser->setAutoloadAnnotationClasses($bool);
     }
 
     /**
@@ -76,7 +88,24 @@ class AnnotationReader
      */
     public function setDefaultAnnotationNamespace($defaultNamespace)
     {
-        $this->_parser->setDefaultAnnotationNamespace($defaultNamespace);
+        $this->parser->setDefaultAnnotationNamespace($defaultNamespace);
+    }
+
+    /**
+     * Sets the custom function to use for creating new annotations on the
+     * underlying parser.
+     *
+     * The function is supplied two arguments. The first argument is the name
+     * of the annotation and the second argument an array of values for this
+     * annotation. The function is assumed to return an object or NULL.
+     * Whenever the function returns NULL for an annotation, the implementation falls
+     * back to the default annotation creation process of the underlying parser.
+     *
+     * @param Closure $func
+     */
+    public function setAnnotationCreationFunction(Closure $func)
+    {
+        $this->parser->setAnnotationCreationFunction($func);
     }
 
     /**
@@ -87,7 +116,32 @@ class AnnotationReader
      */
     public function setAnnotationNamespaceAlias($namespace, $alias)
     {
-        $this->_parser->setAnnotationNamespaceAlias($namespace, $alias);
+        $this->parser->setAnnotationNamespaceAlias($namespace, $alias);
+    }
+
+    /**
+     * Sets a flag whether to try to autoload annotation classes, as well as to distinguish
+     * between what is an annotation and what not by triggering autoloading.
+     *
+     * NOTE: Autoloading of annotation classes is inefficient and requires silently failing
+     *       autoloaders. In particular, setting this option to TRUE renders this AnnotationReader
+     *       incompatible with a {@link ClassLoader}.
+     * @param boolean $bool Boolean flag.
+     */
+    public function setAutoloadAnnotations($bool)
+    {
+        $this->parser->setAutoloadAnnotations($bool);
+    }
+
+    /**
+     * Gets a flag whether to try to autoload annotation classes.
+     *
+     * @see setAutoloadAnnotations
+     * @return boolean
+     */
+    public function getAutoloadAnnotations()
+    {
+        return $this->parser->getAutoloadAnnotations();
     }
 
     /**
@@ -102,16 +156,16 @@ class AnnotationReader
         $cacheKey = $class->getName() . self::$CACHE_SALT;
 
         // Attempt to grab data from cache
-        if (($data = $this->_cache->fetch($cacheKey)) !== false) {
+        if (($data = $this->cache->fetch($cacheKey)) !== false) {
             return $data;
         }
         
-        $annotations = $this->_parser->parse($class->getDocComment(), 'class ' . $class->getName());
-        $this->_cache->save($cacheKey, $annotations, null);
+        $annotations = $this->parser->parse($class->getDocComment(), 'class ' . $class->getName());
+        $this->cache->save($cacheKey, $annotations, null);
         
         return $annotations;
     }
-    
+
     /**
      * Gets a class annotation.
      * 
@@ -139,13 +193,13 @@ class AnnotationReader
         $cacheKey = $property->getDeclaringClass()->getName() . '$' . $property->getName() . self::$CACHE_SALT;
 
         // Attempt to grab data from cache
-        if (($data = $this->_cache->fetch($cacheKey)) !== false) {
+        if (($data = $this->cache->fetch($cacheKey)) !== false) {
             return $data;
         }
         
         $context = 'property ' . $property->getDeclaringClass()->getName() . "::\$" . $property->getName();
-        $annotations = $this->_parser->parse($property->getDocComment(), $context);
-        $this->_cache->save($cacheKey, $annotations, null);
+        $annotations = $this->parser->parse($property->getDocComment(), $context);
+        $this->cache->save($cacheKey, $annotations, null);
         
         return $annotations;
     }
@@ -177,13 +231,13 @@ class AnnotationReader
         $cacheKey = $method->getDeclaringClass()->getName() . '#' . $method->getName() . self::$CACHE_SALT;
 
         // Attempt to grab data from cache
-        if (($data = $this->_cache->fetch($cacheKey)) !== false) {
+        if (($data = $this->cache->fetch($cacheKey)) !== false) {
             return $data;
-        }
+        } 
 
         $context = 'method ' . $method->getDeclaringClass()->getName() . '::' . $method->getName() . '()';
-        $annotations = $this->_parser->parse($method->getDocComment(), $context);
-        $this->_cache->save($cacheKey, $annotations, null);
+        $annotations = $this->parser->parse($method->getDocComment(), $context);
+        $this->cache->save($cacheKey, $annotations, null);
         
         return $annotations;
     }

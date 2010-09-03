@@ -61,8 +61,8 @@ class SingleTablePersister extends AbstractEntityInheritancePersister
             }
             // Foreign key columns
             foreach ($subClass->associationMappings as $assoc) {
-                if ($assoc->isOwningSide && $assoc->isOneToOne() && ! $assoc->inherited) {
-                    foreach ($assoc->targetToSourceKeyColumns as $srcColumn) {
+                if ($assoc['isOwningSide'] && $assoc['type'] & ClassMetadata::TO_ONE && ! isset($assoc['inherited'])) {
+                    foreach ($assoc['targetToSourceKeyColumns'] as $srcColumn) {
                         $columnAlias = $srcColumn . $this->_sqlAliasCounter++;
                         $columnList .= ', ' . $tableAlias . ".$srcColumn AS $columnAlias";
                         $resultColumnName = $this->_platform->getSQLResultCasing($columnAlias);
@@ -100,7 +100,11 @@ class SingleTablePersister extends AbstractEntityInheritancePersister
 
         // Append discriminator condition
         if ($conditionSql) $conditionSql .= ' AND ';
-        $values = array($this->_conn->quote($this->_class->discriminatorValue));
+        $values = array();
+        if ($this->_class->discriminatorValue !== null) { // discriminators can be 0
+            $values[] = $this->_conn->quote($this->_class->discriminatorValue);
+        }
+
         $discrValues = array_flip($this->_class->discriminatorMap);
         foreach ($this->_class->subClasses as $subclassName) {
             $values[] = $this->_conn->quote($discrValues[$subclassName]);

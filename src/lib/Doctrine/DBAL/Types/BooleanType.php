@@ -30,7 +30,7 @@ use Doctrine\DBAL\Platforms\AbstractPlatform;
  */
 class BooleanType extends Type
 {
-    public function getSqlDeclaration(array $fieldDeclaration, AbstractPlatform $platform)
+    public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform)
     {
         return $platform->getBooleanTypeDeclarationSQL($fieldDeclaration);
     }
@@ -42,7 +42,7 @@ class BooleanType extends Type
     
     public function convertToPHPValue($value, AbstractPlatform $platform)
     {
-        return (bool) $value;
+        return (null === $value) ? null : (bool) $value;
     }
 
     public function getName()

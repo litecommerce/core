@@ -178,6 +178,16 @@ class Profiler extends \XLite\Base\Singleton implements \Doctrine\DBAL\Logging\S
     protected static $useXdebugStackTrace = false;
 
     /**
+     * Current query 
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $currentQuery;
+
+    /**
      * Check - templates profiling mode is enabled or not
      * 
      * @return boolean
@@ -668,5 +678,36 @@ HTML;
         }
 
         return array_slice($trace, self::TRACE_BEGIN, self::TRACE_LENGTH);
+    }
+
+    /**
+     * Logs a SQL statement somewhere
+     * 
+     * @param string $sql    The SQL to be executed
+     * @param array  $params The SQL parameter
+     * @param array  $types  The SQL parameter types
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function startQuery($sql, array $params = null, array $types = null)
+    {
+        $this->addQuery($sql);
+        $this->currentQuery = $sql;
+    }
+
+    /**
+     * Mark the last started query as stopped. This can be used for timing of queries 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function stopQuery()
+    {
+        $this->setQueryTime($this->currentQuery);
     }
 }

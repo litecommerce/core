@@ -175,7 +175,8 @@ class OCI8Statement implements \Doctrine\DBAL\Driver\Statement
         }
         
         $result = array();
-        oci_fetch_all($this->_sth, $result, 0, -1, self::$fetchStyleMap[$fetchStyle] | OCI_RETURN_NULLS | OCI_FETCHSTATEMENT_BY_ROW);
+        oci_fetch_all($this->_sth, $result, 0, -1,
+            self::$fetchStyleMap[$fetchStyle] | OCI_RETURN_NULLS | OCI_FETCHSTATEMENT_BY_ROW | OCI_RETURN_LOBS);
         
         return $result;
     }
@@ -185,7 +186,7 @@ class OCI8Statement implements \Doctrine\DBAL\Driver\Statement
      */
     public function fetchColumn($columnIndex = 0)
     {
-        $row = oci_fetch_row($this->_sth);
+        $row = oci_fetch_array($this->_sth, OCI_NUM | OCI_RETURN_NULLS | OCI_RETURN_LOBS);
         return $row[$columnIndex];
     }
 

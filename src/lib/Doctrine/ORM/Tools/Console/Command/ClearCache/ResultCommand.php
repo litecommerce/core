@@ -21,9 +21,9 @@
 
 namespace Doctrine\ORM\Tools\Console\Command\ClearCache;
 
-use Symfony\Components\Console\Input\InputArgument,
-    Symfony\Components\Console\Input\InputOption,
-    Symfony\Components\Console;
+use Symfony\Component\Console\Input\InputArgument,
+    Symfony\Component\Console\Input\InputOption,
+    Symfony\Component\Console;
 
 /**
  * Command to clear the result cache of the various cache drivers.
@@ -82,6 +82,10 @@ EOT
 
         if ( ! $cacheDriver) {
             throw new \InvalidArgumentException('No Result cache driver is configured on given EntityManager.');
+        }
+
+        if ($cacheDriver instanceof \Doctrine\Common\Cache\ApcCache) {
+            throw new \LogicException("Cannot clear APC Cache from Console, its shared in the Webserver memory and not accessible from the CLI.");
         }
 
         $outputed = false;

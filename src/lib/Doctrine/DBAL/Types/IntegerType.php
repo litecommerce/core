@@ -25,7 +25,7 @@ use Doctrine\DBAL\Platforms\AbstractPlatform;
 
 /**
  * Type that maps an SQL INT to a PHP integer.
- * 
+ *
  * @author Roman Borschel <roman@code-factory.org>
  * @since 2.0
  */
@@ -36,16 +36,16 @@ class IntegerType extends Type
         return Type::INTEGER;
     }
 
-    public function getSqlDeclaration(array $fieldDeclaration, AbstractPlatform $platform)
+    public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform)
     {
         return $platform->getIntegerTypeDeclarationSQL($fieldDeclaration);
     }
 
     public function convertToPHPValue($value, AbstractPlatform $platform)
     {
-        return (int) $value;
+        return (null === $value) ? null : (int) $value;
     }
-    
+
     public function getBindingType()
     {
         return \PDO::PARAM_INT;
