@@ -11,7 +11,7 @@
  * @since     3.0.0
  * @ListChild (list="minicart.horizontal.childs", weight="10")
  *}
-<div IF="!cart.isEmpty()" class="popup items-list">
+<div IF="!cart.isEmpty()" class="internal-popup items-list">
 
   <p class="title">
     <a href="{buildURL(#cart#)}">{t(#X items in bag#,_ARRAY_(#count#^cart.countQuantity()))}</a>

@@ -12,6 +12,6 @@
  *}
 <a class="item-options underline-emulation" href="{buildUrl(#cart#)}" rel="ul.item-options.item-{item.getItemId()}"><span>{t(#options#)}</span></a>
 <br />
-<ul class="popup item-options item-{item.getItemId()}" style="display: none;">
+<ul class="internal-popup item-options item-{item.getItemId()}" style="display: none;">
   <li FOREACH="getOptions(),option">{option.getActualName():h}: {option.getActualValue():h}</li>
 </ul>
