@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Products list (list variant)
+ * Overlapping box
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -9,13 +9,8 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
+ *
+ * @ListChild (list="itemsList.product.list.customer.quick_look.info", weight="20")
  *}
-<table class="list-body list-body-list">
 
-  <tr FOREACH="getPageData(),product" class="info">
-    <td class="hproduct">{displayListPart(#body#,_ARRAY_(#product#^product))}</td>
-  </tr>
-
-  {displayListPart(#items#)}
-
-</table>
+<div class="drag-n-drop">Drag me to the cart</div>

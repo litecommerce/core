@@ -11,4 +11,4 @@
  * @since     3.0.0
  * @ListChild (list="itemsList.product.list.customer.info", weight="20")
  *}
-<div IF="isShowDescription()" class="description product-description">{truncate(product,#brief_description#,#300#):h}</div>
+<div IF="isShowDescription()" class="description product-description">{truncate(product.getCommonDescription(),#300#):h}</div>

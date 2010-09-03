@@ -12,6 +12,7 @@
  * @ListChild (list="itemsList.product.list.customer.body", weight="40")
  *}
 
-<div class="body">
+<td class="body">
+  <div class="quick-look-cell">{displayListPart(#quick_look.info#)}</div>
   {displayListPart(#info#,_ARRAY_(#product#^product))}
-</div>
+</td>

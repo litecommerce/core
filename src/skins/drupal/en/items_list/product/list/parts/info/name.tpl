@@ -11,5 +11,5 @@
  * @since     3.0.0
  * @ListChild (list="itemsList.product.list.customer.info", weight="10")
  *}
-<a href="{buildURL(#product#,##,_ARRAY_(#product_id#^product.product_id,#category_id#^category_id))}" class="fn product-name">{product.name:h}</a>
+<a href="{buildURL(#product#,##,_ARRAY_(#product_id#^product.product_id,#category_id#^category_id))}" class="product-name">{product.name:h}</a>
 <br />
