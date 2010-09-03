@@ -111,7 +111,6 @@ MinicartView.prototype.postprocess = function(isSuccess)
     $('.items-list', this.base).click(
       function(event) {
         event.stopPropagation();
-        return false;
       }
     );
 
