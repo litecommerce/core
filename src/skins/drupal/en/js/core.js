@@ -92,6 +92,12 @@ window.core = {
     this.messages.bind(name.toLowerCase(), callback);
   },
 
+  // Unbind on common messages
+  unbind: function(name, callback)
+  {
+    this.messages.unbind(name.toLowerCase(), callback);
+  },
+
   // Get HTML data from server
   get: function(url, callback)
   {
