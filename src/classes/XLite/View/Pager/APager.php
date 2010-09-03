@@ -329,6 +329,19 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
     }
 
     /**
+     * getFrameLength 
+     * 
+     * @return int
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getFrameLength()
+    {
+        return min($this->getPagesPerFrame(), $this->getPagesCount());
+    }
+
+    /**
      * getFrameHalfLength 
      * 
      * @param bool $shortPart which part of frame to return
@@ -340,7 +353,7 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
      */
     protected function getFrameHalfLength($shortPart = true)
     {
-        return call_user_func($shortPart ? 'floor' : 'ceil', $this->getPagesPerFrame() / 2);
+        return call_user_func($shortPart ? 'floor' : 'ceil', $this->getFrameLength() / 2);
     }
 
     /**
@@ -354,7 +367,7 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
     {
         $pageId = min(
             $this->getPageId() - $this->getFrameHalfLength(),
-            $this->getPagesCount() - $this->getPagesPerFrame()
+            $this->getPagesCount() - $this->getFrameLength()
         );
 
         return max(0, $pageId);
@@ -372,19 +385,19 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
     protected function isFurthermostPage($type)
     {
         switch ($type) {
-        
+
             case self::PAGE_FIRST:
-                $result = $this->getPageId() > $this->getFrameHalfLength();
+                $result = (0 < $this->getFrameStartPage());
                 break;
-                
+
             case self::PAGE_LAST:
-                $result = $this->getPageId() < $this->getPagesCount() - $this->getFrameHalfLength(false);
+                $result = ($this->getFrameStartPage() + $this->getFrameLength()) < $this->getPagesCount();
                 break;
-                
+
             default:
                 $result = false;
-        }       
-        
+        }
+
         return $result;
     }
 
@@ -401,7 +414,7 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
             $this->pageURLs[$i] = $this->buildUrlByPageId($i);
         }
 
-        $this->pageURLs = array_slice($this->pageURLs, $this->getFrameStartPage(), $this->getPagesPerFrame(), true);
+        $this->pageURLs = array_slice($this->pageURLs, $this->getFrameStartPage(), $this->getFrameLength(), true);
     }
 
     /**

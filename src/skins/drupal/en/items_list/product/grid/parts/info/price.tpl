@@ -9,6 +9,6 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- * @ListChild (list="itemsList.product.grid.customer.info", weight="10")
+ * @ListChild (list="itemsList.product.grid.customer.info", weight="50")
  *}
-<widget class="\XLite\View\Price" product="{product}" displayOnlyPrice="true" IF="isShowPrice()" />
+<br /><widget class="\XLite\View\Price" product="{product}" displayOnlyPrice="true" IF="isShowPrice()" />

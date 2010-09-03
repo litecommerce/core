@@ -14,7 +14,7 @@
 <ul class="pager" IF="isPagesListVisible()">
 
   <li class="previous {if:isCurrentPage(getPageIdByNotation(#first#))}disabled{else:}active{end:}">
-    <a href="{buildUrlByPageId(getPageIdByNotation(#previous#))}" class="{getPageIdByNotation(#previous#)}">&nbsp;</a>
+    <a href="{buildUrlByPageId(getPageIdByNotation(#previous#))}" class="{getPageIdByNotation(#previous#)}" title="Previous page">&nbsp;</a>
   </li>
 
   <li class="first" IF="isFurthermostPage(#first#)">
@@ -34,7 +34,7 @@
   </li>
 
   <li class="next {if:isCurrentPage(getPageIdByNotation(#last#))}disabled{else:}active{end:}">
-    <a href="{buildUrlByPageId(getPageIdByNotation(#next#))}" class="{getPageIdByNotation(#next#)}">&nbsp;</a>
+    <a href="{buildUrlByPageId(getPageIdByNotation(#next#))}" class="{getPageIdByNotation(#next#)}" title="Next page">&nbsp;</a>
   </li>
 
 </ul>

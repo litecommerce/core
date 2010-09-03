@@ -11,18 +11,22 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
+<p />
 <table class="list-body list-body-grid list-body-grid-{getParam(#gridColumns#)}-columns" IF="!isCSSLayout()">
 
   <tbody FOREACH="getProductRows(),row">
-
-    <tr class="info">
-      <td FOREACH="row,product" class="hproduct"><div IF="product">{displayListPart(#title#,_ARRAY_(#product#^product))}</div></td>
-    </tr>
-
-    <tr class="buttons">
-      <td FOREACH="row,product" class="product"><div IF="product">{displayListPart(#info#,_ARRAY_(#product#^product))}</div></td>
-    </tr>
-
+  <tr class="info">
+    {foreach:row,idx,product}
+    <td IF="product&!idx=#0#" class="separator"></td>
+    <td IF="product" class="hproduct">
+      <div class="quick-look-cell">{displayListPart(#quick_look#)}</div>
+      {displayListPart(#info#,_ARRAY_(#product#^product))}
+    </td>
+    {end:}
+  </tr>
+  <tr>
+    <td colspan="100" class="separator"></td>
+  </tr>
   </tbody>
 
   {displayListPart(#items#)}

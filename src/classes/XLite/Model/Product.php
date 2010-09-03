@@ -641,4 +641,17 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
 
         return $result;
     }
+
+    /**
+     * Try to fetch product description
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCommonDescription()
+    {
+        return $this->getBriefDescription() ?: $this->getDescription();
+    }
 }

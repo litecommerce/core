@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Item Buy now button
+ * Overlapping box
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -9,7 +9,6 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- * @ListChild (list="itemsList.product.list.customer.info", weight="40")
+ * @ListChild (list="itemsList.product.grid.customer.quick_look", weight="20")
  *}
-
-<widget class="\XLite\View\BuyNow" product="{product}" IF="isShowAdd2Cart(product)" style="aux-button add-to-cart" />
+<div class="drag-n-drop">Drag me to the cart</div>
