@@ -9,6 +9,8 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- * @ListChild (list="itemsList.product.grid.customer.quick_look", weight="20")
+ * 
+ * @ListChild (list="itemsList.product.grid.customer.quick_look.thumbnail", weight="20")
  *}
-<div class="drag-n-drop">Drag me to the cart</div>
+
+<div class="button"><widget class="\XLite\View\Button\Regular" label="Quick look" /></div>

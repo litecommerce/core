@@ -60,6 +60,9 @@ ul.pager li.selected a {
   border-color: #869cb1;
 }
 
+ul.pager li.spacer {
+}
+
 ul.pager li.previous {
   background: transparent url(images/arrow_pager_left.png) no-repeat center center;
 }
