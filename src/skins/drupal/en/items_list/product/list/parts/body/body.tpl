@@ -13,6 +13,8 @@
  *}
 
 <td class="body">
-  <div class="quick-look-cell">{displayListPart(#quick_look.info#)}</div>
+  <div class="quick-look-cell">
+    {displayListPart(#quick_look.info#)}
+  </div>
   {displayListPart(#info#,_ARRAY_(#product#^product))}
 </td>

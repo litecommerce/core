@@ -13,7 +13,7 @@
 <table class="list-body list-body-list">
 
   <tr FOREACH="getPageData(),product" class="info">
-    <td class="hproduct">{displayListPart(#body#,_ARRAY_(#product#^product))}</td>
+    {displayListPart(#body#,_ARRAY_(#product#^product))}
   </tr>
 
   {displayListPart(#items#)}

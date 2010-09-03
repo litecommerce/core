@@ -17,6 +17,8 @@
     <a href="{buildUrlByPageId(getPageIdByNotation(#previous#))}" class="{getPageIdByNotation(#previous#)}" title="Previous page">&nbsp;</a>
   </li>
 
+  <li class="spacer">&nbsp;</li>
+
   <li class="first" IF="isFurthermostPage(#first#)">
     <a href="{buildUrlByPageId(getPageIdByNotation(#first#))}" class="{getPageIdByNotation(#first#)}">{inc(getPageIdByNotation(#first#))}</a>
   </li>
@@ -32,6 +34,8 @@
   <li class="last" IF="isFurthermostPage(#last#)">
     <a href="{buildUrlByPageId(getPageIdByNotation(#last#))}" class="{getPageIdByNotation(#last#)}">{inc(getPageIdByNotation(#last#))}</a>
   </li>
+
+  <li class="spacer">&nbsp;</li>
 
   <li class="next {if:isCurrentPage(getPageIdByNotation(#last#))}disabled{else:}active{end:}">
     <a href="{buildUrlByPageId(getPageIdByNotation(#next#))}" class="{getPageIdByNotation(#next#)}" title="Next page">&nbsp;</a>
