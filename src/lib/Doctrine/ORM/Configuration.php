@@ -240,29 +240,6 @@ class Configuration extends \Doctrine\DBAL\Configuration
     }
 
     /**
-     * Gets a boolean flag that indicates whether Doctrine should make use of the
-     * C extension.
-     *
-     * @return boolean TRUE if Doctrine is configured to use the C extension, FALSE otherwise.
-     */
-    public function getUseCExtension()
-    {
-        return isset($this->_attributes['useCExtension']) ?
-                $this->_attributes['useCExtension'] : false;
-    }
-
-    /**
-     * Sets a boolean flag that indicates whether Doctrine should make use of the
-     * C extension.
-     *
-     * @param boolean $boolean Whether to make use of the C extension or not.
-     */
-    public function setUseCExtension($boolean)
-    {
-        $this->_attributes['useCExtension'] = $boolean;
-    }
-
-    /**
      * Adds a named DQL query to the configuration.
      *
      * @param string $name The name of the query.
@@ -323,13 +300,13 @@ class Configuration extends \Doctrine\DBAL\Configuration
      */
     public function ensureProductionSettings()
     {
-        if ( ! $this->_attributes['queryCacheImpl']) {
+        if ( !$this->getQueryCacheImpl()) {
             throw ORMException::queryCacheNotConfigured();
         }
-        if ( ! $this->_attributes['metadataCacheImpl']) {
+        if ( !$this->getMetadataCacheImpl()) {
             throw ORMException::metadataCacheNotConfigured();
         }
-        if ($this->_attributes['autoGenerateProxyClasses']) {
+        if ($this->getAutoGenerateProxyClasses()) {
             throw ORMException::proxyClassesAlwaysRegenerating();
         }
     }
@@ -461,5 +438,28 @@ class Configuration extends \Doctrine\DBAL\Configuration
     public function setCustomDatetimeFunctions(array $functions)
     {
         $this->_attributes['customDatetimeFunctions'] = array_change_key_case($functions);
+    }
+
+    /**
+     * Get the hydrator class for the given hydration mode name.
+     *
+     * @param string $modeName The hydration mode name.
+     * @return string $hydrator The hydrator class name.
+     */
+    public function getCustomHydrationMode($modeName)
+    {
+        return isset($this->_attributes['customHydrationModes'][$modeName]) ?
+            $this->_attributes['customHydrationModes'][$modeName] : null;
+    }
+
+    /**
+     * Add a custom hydration mode.
+     *
+     * @param string $modeName The hydration mode name.
+     * @param string $hydrator The hydrator class name.
+     */
+    public function addCustomHydrationMode($modeName, $hydrator)
+    {
+        $this->_attributes['customHydrationModes'][$modeName] = $hydrator;
     }
 }

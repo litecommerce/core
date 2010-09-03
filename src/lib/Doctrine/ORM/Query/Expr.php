@@ -1,7 +1,5 @@
 <?php
 /*
- *  $Id$
- *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -27,17 +25,17 @@ namespace Doctrine\ORM\Query;
  * @license http://www.opensource.org/licenses/lgpl-license.php LGPL
  * @link    www.doctrine-project.org
  * @since   2.0
- * @version $Revision$
  * @author  Guilherme Blanco <guilhermeblanco@hotmail.com>
  * @author  Jonathan Wage <jonwage@gmail.com>
  * @author  Roman Borschel <roman@code-factory.org>
+ * @author  Benjamin Eberlei <kontakt@beberlei.de>
  * @todo Rename: ExpressionBuilder
  */
 class Expr
 {
     /**
      * Creates a conjunction of the given boolean expressions.
-     * 
+     *
      * Example:
      *
      *     [php]
@@ -55,7 +53,7 @@ class Expr
 
     /**
      * Creates a disjunction of the given boolean expressions.
-     * 
+     *
      * Example:
      *
      *     [php]
@@ -70,10 +68,10 @@ class Expr
     {
         return new Expr\Orx(func_get_args());
     }
-    
+
     /**
      * Creates an ASCending order expression.
-     * 
+     *
      * @param $sort
      * @return OrderBy
      */
@@ -81,10 +79,10 @@ class Expr
     {
         return new Expr\OrderBy($expr, 'ASC');
     }
-    
+
     /**
      * Creates a DESCending order expression.
-     * 
+     *
      * @param $sort
      * @return OrderBy
      */
@@ -95,7 +93,7 @@ class Expr
 
     /**
      * Creates an equality comparison expression with the given arguments.
-     * 
+     *
      * First argument is considered the left expression and the second is the right expression.
      * When converted to string, it will generated a <left expr> = <right expr>. Example:
      *
@@ -325,7 +323,7 @@ class Expr
 
     /**
      * Creates a product mathematical expression with the given arguments.
-     * 
+     *
      * First argument is considered the left expression and the second is the right expression.
      * When converted to string, it will generated a <left expr> * <right expr>. Example:
      *
@@ -435,6 +433,13 @@ class Expr
      */
     public function notIn($x, $y)
     {
+        if (is_array($y)) {
+            foreach ($y as &$literal) {
+                if ( ! ($literal instanceof Expr\Literal)) {
+                    $literal = $this->_quoteLiteral($literal);
+                }
+            }
+        }
         return new Expr\Func($x . ' NOT IN', (array) $y);
     }
 
@@ -470,9 +475,13 @@ class Expr
      * @param integer $len Length of crop. May accept negative values.
      * @return Expr\Func
      */
-    public function substring($x, $from, $len)
+    public function substring($x, $from, $len = null)
     {
-        return new Expr\Func('SUBSTRING', array($x, $from, $len));
+        $args = array($x, $from);
+        if (null !== $len) {
+            $args[] = $len;
+        }
+        return new Expr\Func('SUBSTRING', $args);
     }
 
     /**
@@ -518,16 +527,16 @@ class Expr
     {
         return new Expr\Literal($this->_quoteLiteral($literal));
     }
-    
+
     /**
      * Quotes a literal value, if necessary, according to the DQL syntax.
-     * 
+     *
      * @param mixed $literal The literal value.
      * @return string
      */
     private function _quoteLiteral($literal)
     {
-        if (is_numeric($literal)) {
+        if (is_numeric($literal) && !is_string($literal)) {
             return (string) $literal;
         } else {
             return "'" . str_replace("'", "''", $literal) . "'";

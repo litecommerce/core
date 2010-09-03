@@ -38,6 +38,7 @@ abstract class Type
     const BIGINT = 'bigint';
     const BOOLEAN = 'boolean';
     const DATETIME = 'datetime';
+    const DATETIMETZ = 'datetimetz';
     const DATE = 'date';
     const TIME = 'time';
     const DECIMAL = 'decimal';
@@ -61,6 +62,7 @@ abstract class Type
         self::STRING => 'Doctrine\DBAL\Types\StringType',
         self::TEXT => 'Doctrine\DBAL\Types\TextType',
         self::DATETIME => 'Doctrine\DBAL\Types\DateTimeType',
+        self::DATETIMETZ => 'Doctrine\DBAL\Types\DateTimeTzType',
         self::DATE => 'Doctrine\DBAL\Types\DateType',
         self::TIME => 'Doctrine\DBAL\Types\TimeType',
         self::DECIMAL => 'Doctrine\DBAL\Types\DecimalType'
@@ -111,7 +113,7 @@ abstract class Type
      * @param array $fieldDeclaration The field declaration.
      * @param AbstractPlatform $platform The currently used database platform.
      */
-    abstract public function getSqlDeclaration(array $fieldDeclaration, AbstractPlatform $platform);
+    abstract public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform);
 
     /**
      * Gets the name of this type.

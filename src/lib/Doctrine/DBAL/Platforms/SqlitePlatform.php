@@ -1,7 +1,5 @@
 <?php
 /*
- *  $Id$
- *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -378,6 +376,11 @@ class SqlitePlatform extends AbstractPlatform
         return false;
     }
 
+    public function supportsIdentityColumns()
+    {
+        return true;
+    }
+
     /**
      * Get the platform name for this instance
      *
@@ -427,5 +430,45 @@ class SqlitePlatform extends AbstractPlatform
             return $pos+1;
         }
         return 0;
+    }
+
+    public function getForUpdateSql()
+    {
+        return '';
+    }
+
+    protected function initializeDoctrineTypeMappings()
+    {
+        $this->doctrineTypeMapping = array(
+            'boolean'       => 'boolean',
+            'tinyint'       => 'boolean',
+            'smallint'      => 'smallint',
+            'mediumint'     => 'integer',
+            'int'           => 'integer',
+            'integer'       => 'integer',
+            'serial'        => 'integer',
+            'bigint'        => 'bigint',
+            'bigserial'     => 'bigint',
+            'clob'          => 'text',
+            'tinytext'      => 'text',
+            'mediumtext'    => 'text',
+            'longtext'      => 'text',
+            'text'          => 'text',
+            'varchar'       => 'string',
+            'varchar2'      => 'string',
+            'nvarchar'      => 'string',
+            'image'         => 'string',
+            'ntext'         => 'string',
+            'char'          => 'string',
+            'date'          => 'date',
+            'datetime'      => 'datetime',
+            'timestamp'     => 'datetime',
+            'time'          => 'time',
+            'float'         => 'decimal',
+            'double'        => 'decimal',
+            'real'          => 'decimal',
+            'decimal'       => 'decimal',
+            'numeric'       => 'decimal',
+        );
     }
 }

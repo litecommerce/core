@@ -35,13 +35,13 @@ class DecimalType extends Type
         return Type::DECIMAL;
     }
 
-    public function getSqlDeclaration(array $fieldDeclaration, AbstractPlatform $platform)
+    public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform)
     {
         return $platform->getDecimalTypeDeclarationSQL($fieldDeclaration);
     }
 
     public function convertToPHPValue($value, AbstractPlatform $platform)
     {
-        return (double) $value;
+        return (null === $value) ? null : (double) $value;
     }
 }

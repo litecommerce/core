@@ -1,7 +1,5 @@
 <?php
 /*
- *  $Id$
- *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -35,7 +33,7 @@ class DateType extends Type
         return Type::DATE;
     }
 
-    public function getSqlDeclaration(array $fieldDeclaration, AbstractPlatform $platform)
+    public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform)
     {
         return $platform->getDateTypeDeclarationSQL($fieldDeclaration);
     }
@@ -48,7 +46,14 @@ class DateType extends Type
     
     public function convertToPHPValue($value, AbstractPlatform $platform)
     {
-        return ($value !== null) 
-            ? \DateTime::createFromFormat('!'.$platform->getDateFormatString(), $value) : null;
+        if ($value === null) {
+            return null;
+        }
+
+        $val = \DateTime::createFromFormat('!'.$platform->getDateFormatString(), $value);
+        if (!$val) {
+            throw ConversionException::conversionFailed($value, $this->getName());
+        }
+        return $val;
     }
 }

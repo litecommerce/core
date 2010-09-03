@@ -105,6 +105,11 @@ class ProxyFactory
         $proxyDir = $toDir ?: $this->_proxyDir;
         $proxyDir = rtrim($proxyDir, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
         foreach ($classes as $class) {
+            /* @var $class ClassMetadata */
+            if ($class->isMappedSuperclass) {
+                continue;
+            }
+
             $proxyClassName = str_replace('\\', '', $class->name) . 'Proxy';
             $proxyFileName = $proxyDir . $proxyClassName . '.php';
             $this->_generateProxyClass($class, $proxyClassName, $proxyFileName, self::$_proxyClassTemplate);
@@ -144,7 +149,7 @@ class ProxyFactory
 
         $file = str_replace($placeholders, $replacements, $file);
 
-        file_put_contents($fileName, $file);
+        file_put_contents($fileName, $file, LOCK_EX);
     }
 
     /**
@@ -164,7 +169,11 @@ class ProxyFactory
             }
 
             if ($method->isPublic() && ! $method->isFinal() && ! $method->isStatic()) {
-                $methods .= PHP_EOL . '    public function ' . $method->getName() . '(';
+                $methods .= PHP_EOL . '    public function ';
+                if ($method->returnsReference()) {
+                    $methods .= '&';
+                }
+                $methods .= $method->getName() . '(';
                 $firstParam = true;
                 $parameterString = $argumentString = '';
 
@@ -217,9 +226,9 @@ class ProxyFactory
         $sleepImpl = '';
 
         if ($class->reflClass->hasMethod('__sleep')) {
-            $sleepImpl .= 'return parent::__sleep();';
+            $sleepImpl .= "return array_merge(array('__isInitialized__'), parent::__sleep());";
         } else {
-            $sleepImpl .= 'return array(';
+            $sleepImpl .= "return array('__isInitialized__', ";
             $first = true;
 
             foreach ($class->getReflectionProperties() as $name => $prop) {
@@ -264,8 +273,7 @@ class <proxyClassName> extends \<className> implements \Doctrine\ORM\Proxy\Proxy
             if ($this->_entityPersister->load($this->_identifier, $this) === null) {
                 throw new \Doctrine\ORM\EntityNotFoundException();
             }
-            unset($this->_entityPersister);
-            unset($this->_identifier);
+            unset($this->_entityPersister, $this->_identifier);
         }
     }
 
@@ -273,9 +281,6 @@ class <proxyClassName> extends \<className> implements \Doctrine\ORM\Proxy\Proxy
 
     public function __sleep()
     {
-        if (!$this->__isInitialized__) {
-            throw new \RuntimeException("Not fully loaded proxy can not be serialized.");
-        }
         <sleepImpl>
     }
 }';

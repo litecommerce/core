@@ -1,7 +1,5 @@
 <?php
 /*
- *  $Id$
- *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -34,19 +32,6 @@ namespace Doctrine\DBAL\Schema;
  */
 class Comparator
 {
-    /**
-     * @var array
-     */
-    private $_checkColumnPlatformOptions = array();
-
-    /**
-     * @param string $optionName
-     */
-    public function addColumnPlatformOptionCheck($optionName)
-    {
-        $this->_checkColumnPlatformOptions[] = $optionName;
-    }
-
     /**
      * @param Schema $fromSchema
      * @param Schema $toSchema
@@ -193,16 +178,7 @@ class Comparator
             }
         }
 
-        // Try to find columns that only changed their name, rename operations maybe cheaper than add/drop
-        foreach ($tableDifferences->addedColumns AS $addedColumnName => $addedColumn) {
-            foreach ($tableDifferences->removedColumns AS $removedColumnName => $removedColumn) {
-                if (count($this->diffColumn($addedColumn, $removedColumn)) == 0) {
-                    $tableDifferences->renamedColumns[$removedColumn->getName()] = $addedColumn;
-                    unset($tableDifferences->addedColumns[$addedColumnName]);
-                    unset($tableDifferences->removedColumns[$removedColumnName]);
-                }
-            }
-        }
+        $this->detectColumnRenamings($tableDifferences);
 
         $table1Indexes = $table1->getIndexes();
         $table2Indexes = $table2->getIndexes();
@@ -263,6 +239,34 @@ class Comparator
         }
 
         return $changes ? $tableDifferences : false;
+    }
+
+    /**
+     * Try to find columns that only changed their name, rename operations maybe cheaper than add/drop
+     * however ambiguouties between different possibilites should not lead to renaming at all.
+     * 
+     * @param TableDiff $tableDifferences
+     */
+    private function detectColumnRenamings(TableDiff $tableDifferences)
+    {
+        $renameCandidates = array();
+        foreach ($tableDifferences->addedColumns AS $addedColumnName => $addedColumn) {
+            foreach ($tableDifferences->removedColumns AS $removedColumnName => $removedColumn) {
+                if (count($this->diffColumn($addedColumn, $removedColumn)) == 0) {
+                    $renameCandidates[$addedColumn->getName()][] = array($removedColumn, $addedColumn);
+                }
+            }
+        }
+
+        foreach ($renameCandidates AS $candidate => $candidateColumns) {
+            if (count($candidateColumns) == 1) {
+                list($removedColumn, $addedColumn) = $candidateColumns[0];
+
+                $tableDifferences->renamedColumns[$removedColumn->getName()] = $addedColumn;
+                unset($tableDifferences->addedColumns[$addedColumnName]);
+                unset($tableDifferences->removedColumns[$removedColumnName]);
+            }
+        }
     }
 
     /**
@@ -340,14 +344,8 @@ class Comparator
             }
         }
 
-        foreach ($this->_checkColumnPlatformOptions AS $optionName) {
-            if($column1->hasPlatformOption($optionName) && $column2->hasPlatformOption($optionName)) {
-                if ($column1->getPlatformOption($optionName) != $column2->getPlatformOption($optionName)) {
-                    $changedProperties[] = $optionName;
-                }
-            } else if ($column1->hasPlatformOption($optionName) != $column2->hasPlatformOption($optionName)) {
-                $changedProperties[] = $optionName;
-            }
+        if ($column1->getAutoincrement() != $column2->getAutoincrement()) {
+            $changedProperties[] = 'autoincrement';
         }
 
         return $changedProperties;

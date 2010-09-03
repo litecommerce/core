@@ -1,5 +1,7 @@
 <?php
 /*
+ *  $Id$
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -15,32 +17,24 @@
  * This software consists of voluntary contributions made by many individuals
  * and is licensed under the LGPL. For more information, see
  * <http://www.doctrine-project.org>.
+*/
+
+namespace Doctrine\ORM;
+
+/**
+ * Is thrown when a transaction is required for the current operation, but there is none open.
+ *
+ * @license     http://www.opensource.org/licenses/lgpl-license.php LGPL
+ * @link        www.doctrine-project.com
+ * @since       1.0
+ * @version     $Revision$
+ * @author      Benjamin Eberlei <kontakt@beberlei.de>
+ * @author      Roman Borschel <roman@code-factory.org>
  */
-
-namespace Doctrine\ORM\Id;
-
-use Doctrine\ORM\EntityManager;
-
-class SequenceIdentityGenerator extends IdentityGenerator
+class TransactionRequiredException extends ORMException
 {
-    private $_sequenceName;
-    
-    public function __construct($sequenceName)
+    static public function transactionRequired()
     {
-        $this->_sequenceName = $sequenceName;
-    }
-
-    public function generate(EntityManager $em, $entity)
-    {
-        return $em->getConnection()->lastInsertId($this->_sequenceName);
-    }
-    
-    /**
-     * @return boolean
-     * @override
-     */
-    public function isPostInsertGenerator()
-    {
-        return true;
+        return new self('An open transaction is required for this operation.');
     }
 }

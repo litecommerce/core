@@ -19,25 +19,31 @@
 
 namespace Doctrine\Common\Annotations;
 
+use Closure, Doctrine\Common\ClassLoader;
+
 /**
  * A simple parser for docblock annotations.
  *
- * @since   2.0
- * @author  Benjamin Eberlei <kontakt@beberlei.de>
- * @author  Guilherme Blanco <guilhermeblanco@hotmail.com>
- * @author  Jonathan Wage <jonwage@gmail.com>
- * @author  Roman Borschel <roman@code-factory.org>
+ * This Parser can be subclassed to customize certain aspects of the annotation
+ * parsing and/or creation process. Note though that currently no special care
+ * is taken to maintain full backwards compatibility for subclasses. Implementation
+ * details of the default Parser can change without explicit notice.
+ *
+ * @since 2.0
+ * @author Benjamin Eberlei <kontakt@beberlei.de>
+ * @author Guilherme Blanco <guilhermeblanco@hotmail.com>
+ * @author Jonathan Wage <jonwage@gmail.com>
+ * @author Roman Borschel <roman@code-factory.org>
  */
 class Parser
 {
     /**
-     * Tags that are stripped prior to parsing in order to reduce parsing overhead.
+     * Some common tags that are stripped prior to parsing in order to reduce parsing overhead.
      *
      * @var array
      */
-    private static $_strippedInlineTags = array(
-        "{@example", "{@id", "{@internal", "{@inheritdoc",
-        "{@link", "{@source", "{@toc", "{@tutorial", "*/"
+    private static $strippedTags = array(
+        "{@internal", "{@inheritdoc", "{@link"
     );
 
     /**
@@ -45,87 +51,160 @@ class Parser
      *
      * @var Doctrine\Common\Annotations\Lexer
      */
-    private $_lexer;
+    private $lexer;
 
     /**
-     * Flag to control if the current Annotation is nested or not.
+     * Flag to control if the current annotation is nested or not.
      *
      * @var boolean
      */
-    private $_isNestedAnnotation = false;
+    protected $isNestedAnnotation = false;
 
     /**
-     * Default namespace for Annotations.
+     * Default namespace for annotations.
      *
      * @var string
      */
-    private $_defaultAnnotationNamespace = '';
+    private $defaultAnnotationNamespace = '';
 
     /**
      * Hashmap to store namespace aliases.
      *
      * @var array
      */
-    private $_namespaceAliases = array();
+    private $namespaceAliases = array();
 
     /**
      * @var string
      */
-    private $_context = '';
+    private $context = '';
+
+    /**
+     * @var boolean Whether to try to autoload annotations that are not yet defined.
+     */
+    private $autoloadAnnotations = false;
+
+    /**
+     * @var Closure The custom function used to create new annotations, if any.
+     */
+    private $annotationCreationFunction;
 
     /**
      * Constructs a new AnnotationParser.
-     *
      */
-    public function __construct()
+    public function __construct(Lexer $lexer = null)
     {
-        $this->_lexer = new Lexer;
+        $this->lexer = $lexer ?: new Lexer;
+    }
+
+    /**
+     * Gets the lexer used by this parser.
+     * 
+     * @return Lexer The lexer.
+     */
+    public function getLexer()
+    {
+        return $this->lexer;
+    }
+
+    /**
+     * Sets a flag whether to try to autoload annotation classes, as well as to distinguish
+     * between what is an annotation and what not by triggering autoloading.
+     *
+     * NOTE: Autoloading of annotation classes is inefficient and requires silently failing
+     *       autoloaders. In particular, setting this option to TRUE renders the Parser
+     *       incompatible with a {@link ClassLoader}.
+     * @param boolean $bool Boolean flag.
+     */
+    public function setAutoloadAnnotations($bool)
+    {
+        $this->autoloadAnnotations = $bool;
+    }
+
+    /**
+     * Sets the custom function to use for creating new annotations.
+     *
+     * The function is supplied two arguments. The first argument is the name
+     * of the annotation and the second argument an array of values for this
+     * annotation. The function is assumed to return an object or NULL.
+     * Whenever the function returns NULL for an annotation, the parser falls
+     * back to the default annotation creation process.
+     *
+     * Whenever the function returns NULL for an annotation, the implementation falls
+     * back to the default annotation creation process.
+     *
+     * @param Closure $func
+     */
+    public function setAnnotationCreationFunction(Closure $func)
+    {
+        $this->annotationCreationFunction = $func;
+    }
+
+    /**
+     * Gets a flag whether to try to autoload annotation classes.
+     *
+     * @see setAutoloadAnnotations
+     * @return boolean
+     */
+    public function getAutoloadAnnotations()
+    {
+        return $this->autoloadAnnotations;
     }
 
     /**
      * Sets the default namespace that is assumed for an annotation that does not
      * define a namespace prefix.
      *
-     * @param $defaultNamespace
+     * @param string $defaultNamespace
      */
     public function setDefaultAnnotationNamespace($defaultNamespace)
     {
-        $this->_defaultAnnotationNamespace = $defaultNamespace;
+        $this->defaultAnnotationNamespace = $defaultNamespace;
     }
 
     /**
      * Sets an alias for an annotation namespace.
      *
-     * @param $namespace
-     * @param $alias
+     * @param string $namespace
+     * @param string $alias
      */
     public function setAnnotationNamespaceAlias($namespace, $alias)
     {
-        $this->_namespaceAliases[$alias] = $namespace;
+        $this->namespaceAliases[$alias] = $namespace;
+    }
+
+    /**
+     * Gets the namespace alias mappings used by this parser.
+     *
+     * @return array The namespace alias mappings.
+     */
+    public function getNamespaceAliases()
+    {
+        return $this->namespaceAliases;
     }
 
     /**
      * Parses the given docblock string for annotations.
      *
-     * @param string $docBlockString
-     * @param string $context
-     * @return array Array of Annotations. If no annotations are found, an empty array is returned.
+     * @param string $docBlockString The docblock string to parse.
+     * @param string $context The parsing context.
+     * @return array Array of annotations. If no annotations are found, an empty array is returned.
      */
     public function parse($docBlockString, $context='')
     {
-        $this->_context = $context;
+        $this->context = $context;
 
         // Strip out some known inline tags.
-        $input = str_replace(self::$_strippedInlineTags, '', $docBlockString);
+        $input = str_replace(self::$strippedTags, '', $docBlockString);
 
         // Cut of the beginning of the input until the first '@'.
         $input = substr($input, strpos($input, '@'));
 
-        $this->_lexer->reset();
-        $this->_lexer->setInput(trim($input, '* /'));
-        $this->_lexer->moveNext();
+        $this->lexer->reset();
+        $this->lexer->setInput(trim($input, '* /'));
+        $this->lexer->moveNext();
 
-        if ($this->_lexer->isNextToken(Lexer::T_AT)) {
+        if ($this->lexer->isNextToken(Lexer::T_AT)) {
             return $this->Annotations();
         }
 
@@ -136,15 +215,15 @@ class Parser
      * Attempts to match the given token with the current lookahead token.
      * If they match, updates the lookahead token; otherwise raises a syntax error.
      *
-     * @param int|string token type or value
+     * @param int Token type.
      * @return bool True if tokens match; false otherwise.
      */
     public function match($token)
     {
-        if ( ! ($this->_lexer->lookahead['type'] === $token)) {
-            $this->syntaxError($this->_lexer->getLiteral($token));
+        if ( ! ($this->lexer->lookahead['type'] === $token)) {
+            $this->syntaxError($this->lexer->getLiteral($token));
         }
-        $this->_lexer->moveNext();
+        $this->lexer->moveNext();
     }
 
     /**
@@ -157,19 +236,19 @@ class Parser
     private function syntaxError($expected, $token = null)
     {
         if ($token === null) {
-            $token = $this->_lexer->lookahead;
+            $token = $this->lexer->lookahead;
         }
 
         $message =  "Expected {$expected}, got ";
 
-        if ($this->_lexer->lookahead === null) {
+        if ($this->lexer->lookahead === null) {
             $message .= 'end of string';
         } else {
             $message .= "'{$token['value']}' at position {$token['position']}";
         }
 
-        if (strlen($this->_context)) {
-            $message .= ' in ' . $this->_context;
+        if (strlen($this->context)) {
+            $message .= ' in ' . $this->context;
         }
 
         $message .= '.';
@@ -184,22 +263,23 @@ class Parser
      */
     public function Annotations()
     {
-        $this->_isNestedAnnotation = false;
+        $this->isNestedAnnotation = false;
 
         $annotations = array();
         $annot = $this->Annotation();
 
         if ($annot !== false) {
             $annotations[get_class($annot)] = $annot;
+            $this->lexer->skipUntil(Lexer::T_AT);
         }
 
-        while ($this->_lexer->lookahead !== null && $this->_lexer->isNextToken(Lexer::T_AT)) {
-            $this->_isNestedAnnotation = false;
-
+        while ($this->lexer->lookahead !== null && $this->lexer->isNextToken(Lexer::T_AT)) {
+            $this->isNestedAnnotation = false;
             $annot = $this->Annotation();
 
             if ($annot !== false) {
                 $annotations[get_class($annot)] = $annot;
+                $this->lexer->skipUntil(Lexer::T_AT);
             }
         }
 
@@ -215,7 +295,7 @@ class Parser
      * SimpleName     ::= identifier
      * Alias          ::= identifier
      *
-     * @return mixed False if it is not a valid Annotation; instance of Annotation subclass otherwise.
+     * @return mixed False if it is not a valid annotation.
      */
     public function Annotation()
     {
@@ -224,52 +304,56 @@ class Parser
 
         $this->match(Lexer::T_AT);
         $this->match(Lexer::T_IDENTIFIER);
-        $nameParts[] = $this->_lexer->token['value'];
+        $nameParts[] = $this->lexer->token['value'];
 
-        while ($this->_lexer->isNextToken(Lexer::T_NAMESPACE_SEPARATOR)) {
+        while ($this->lexer->isNextToken(Lexer::T_NAMESPACE_SEPARATOR)) {
             $this->match(Lexer::T_NAMESPACE_SEPARATOR);
             $this->match(Lexer::T_IDENTIFIER);
-            $nameParts[] = $this->_lexer->token['value'];
+            $nameParts[] = $this->lexer->token['value'];
         }
 
         // Effectively pick the name of the class (append default NS if none, grab from NS alias, etc)
-        if (count($nameParts) == 1) {
-            if (strpos($nameParts[0], ':')) {
-                list ($alias, $simpleName) = explode(':', $nameParts[0]);
-                $name = $this->_namespaceAliases[$alias] . $simpleName;
-            } else {
-                $name = $this->_defaultAnnotationNamespace . $nameParts[0];
+        if (strpos($nameParts[0], ':')) {
+            list ($alias, $nameParts[0]) = explode(':', $nameParts[0]);
+
+            // If the namespace alias doesnt exist, throw exception
+            if ( ! isset($this->namespaceAliases[$alias])) {
+                $this->lexer->skipUntil(Lexer::T_AT);
+                return false;
             }
+
+            $name = $this->namespaceAliases[$alias] . implode('\\', $nameParts);
+        } else if (count($nameParts) == 1) {
+            $name = $this->defaultAnnotationNamespace . $nameParts[0];
         } else {
             $name = implode('\\', $nameParts);
         }
 
-        // Is it really an annotation class?
-        if (
-            ( ! $this->_isNestedAnnotation && $this->_lexer->lookahead != null &&
-            ! $this->_lexer->isNextToken(Lexer::T_OPEN_PARENTHESIS) &&
-            ! $this->_lexer->isNextToken(Lexer::T_AT)) ||
-            ! class_exists($name, false)
-        ) {
-            $this->_lexer->skipUntil(Lexer::T_AT);
-
+        // Does the annotation class exist?
+        if ( ! class_exists($name, $this->autoloadAnnotations)) {
+            $this->lexer->skipUntil(Lexer::T_AT);
             return false;
         }
 
         // Next will be nested
-        $this->_isNestedAnnotation = true;
+        $this->isNestedAnnotation = true;
 
-        if ($this->_lexer->isNextToken(Lexer::T_OPEN_PARENTHESIS)) {
+        if ($this->lexer->isNextToken(Lexer::T_OPEN_PARENTHESIS)) {
             $this->match(Lexer::T_OPEN_PARENTHESIS);
 
-            if ( ! $this->_lexer->isNextToken(Lexer::T_CLOSE_PARENTHESIS)) {
+            if ( ! $this->lexer->isNextToken(Lexer::T_CLOSE_PARENTHESIS)) {
                 $values = $this->Values();
             }
 
             $this->match(Lexer::T_CLOSE_PARENTHESIS);
         }
 
-        return new $name($values);
+        if ($this->annotationCreationFunction !== null) {
+            $func = $this->annotationCreationFunction;
+            $annot = $func($name, $values);
+        }
+
+        return isset($annot) ? $annot : $this->newAnnotation($name, $values);
     }
 
     /**
@@ -282,14 +366,14 @@ class Parser
         $values = array();
 
         // Handle the case of a single array as value, i.e. @Foo({....})
-        if ($this->_lexer->isNextToken(Lexer::T_OPEN_CURLY_BRACES)) {
+        if ($this->lexer->isNextToken(Lexer::T_OPEN_CURLY_BRACES)) {
             $values['value'] = $this->Value();
             return $values;
         }
 
         $values[] = $this->Value();
 
-        while ($this->_lexer->isNextToken(Lexer::T_COMMA)) {
+        while ($this->lexer->isNextToken(Lexer::T_COMMA)) {
             $this->match(Lexer::T_COMMA);
             $value = $this->Value();
 
@@ -321,7 +405,7 @@ class Parser
      */
     public function Value()
     {
-        $peek = $this->_lexer->glimpse();
+        $peek = $this->lexer->glimpse();
 
         if ($peek['value'] === '=') {
             return $this->FieldAssignment();
@@ -337,26 +421,26 @@ class Parser
      */
     public function PlainValue()
     {
-        if ($this->_lexer->isNextToken(Lexer::T_OPEN_CURLY_BRACES)) {
+        if ($this->lexer->isNextToken(Lexer::T_OPEN_CURLY_BRACES)) {
             return $this->Arrayx();
         }
 
-        if ($this->_lexer->isNextToken(Lexer::T_AT)) {
+        if ($this->lexer->isNextToken(Lexer::T_AT)) {
             return $this->Annotation();
         }
 
-        switch ($this->_lexer->lookahead['type']) {
+        switch ($this->lexer->lookahead['type']) {
             case Lexer::T_STRING:
                 $this->match(Lexer::T_STRING);
-                return $this->_lexer->token['value'];
+                return $this->lexer->token['value'];
 
             case Lexer::T_INTEGER:
                 $this->match(Lexer::T_INTEGER);
-                return $this->_lexer->token['value'];
+                return $this->lexer->token['value'];
 
             case Lexer::T_FLOAT:
                 $this->match(Lexer::T_FLOAT);
-                return $this->_lexer->token['value'];
+                return $this->lexer->token['value'];
 
             case Lexer::T_TRUE:
                 $this->match(Lexer::T_TRUE);
@@ -380,7 +464,7 @@ class Parser
     public function FieldAssignment()
     {
         $this->match(Lexer::T_IDENTIFIER);
-        $fieldName = $this->_lexer->token['value'];
+        $fieldName = $this->lexer->token['value'];
         $this->match(Lexer::T_EQUALS);
 
         return array($fieldName => $this->PlainValue());
@@ -398,7 +482,7 @@ class Parser
         $this->match(Lexer::T_OPEN_CURLY_BRACES);
         $values[] = $this->ArrayEntry();
 
-        while ($this->_lexer->isNextToken(Lexer::T_COMMA)) {
+        while ($this->lexer->isNextToken(Lexer::T_COMMA)) {
             $this->match(Lexer::T_COMMA);
             $values[] = $this->ArrayEntry();
         }
@@ -427,19 +511,35 @@ class Parser
      */
     public function ArrayEntry()
     {
-        $peek = $this->_lexer->glimpse();
+        $peek = $this->lexer->glimpse();
 
         if ($peek['value'] == '=') {
             $this->match(
-                $this->_lexer->isNextToken(Lexer::T_INTEGER) ? Lexer::T_INTEGER : Lexer::T_STRING
+                $this->lexer->isNextToken(Lexer::T_INTEGER) ? Lexer::T_INTEGER : Lexer::T_STRING
             );
 
-            $key = $this->_lexer->token['value'];
+            $key = $this->lexer->token['value'];
             $this->match(Lexer::T_EQUALS);
 
             return array($key, $this->PlainValue());
         }
 
         return array(null, $this->Value());
+    }
+
+    /**
+     * Constructs a new annotation with a given map of values.
+     *
+     * The default construction procedure is to instantiate a new object of a class
+     * with the same name as the annotation. Subclasses can override this method to
+     * change the construction process of new annotations.
+     *
+     * @param string The name of the annotation.
+     * @param array The map of annotation values.
+     * @return mixed The new annotation with the given values.
+     */
+    protected function newAnnotation($name, array $values)
+    {
+        return new $name($values);
     }
 }
