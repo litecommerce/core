@@ -320,7 +320,7 @@ INSERT INTO `xlite_config_translations` VALUES (58,'en',72,'Payment method to be
 INSERT INTO `xlite_config_translations` VALUES (60,'en',74,'Default purchase limit','');
 INSERT INTO `xlite_config_translations` VALUES (61,'en',75,'Default payment method','');
 INSERT INTO `xlite_config_translations` VALUES (62,'en',76,'Default zip/postal code in the registration form','');
-INSERT INTO `xlite_config_translations` VALUES (63,'en',77,'Show shipping rates & taxes to unregistered customers<br>(presuming that a customer comes from the default country)','');
+INSERT INTO `xlite_config_translations` VALUES (63,'en',77,'Display shipping rates to unregistered customers<br>(presuming that a customer comes from the default country)','');
 INSERT INTO `xlite_config_translations` VALUES (64,'en',80,'Developer\'s mode (force to re-generate cache)','');
 INSERT INTO `xlite_config_translations` VALUES (67,'en',89,'Allow direct URL access to products from disabled categories','');
 INSERT INTO `xlite_config_translations` VALUES (68,'en',90,'Discounts charged after taxes application','');
