@@ -57,14 +57,14 @@ class XLite_Web_Customer_Minicart extends XLite_Web_Customer_ACustomer
 
         $this->assertElementPresent(
             "//div[@id='lc-minicart-horizontal']"
-            . "/div[@class='popup items-list']"
+            . "/div[@class='internal-popup items-list']"
             . "/p[@class='title']"
             . "/a[text()='1 items in bag']"
         );
 
         $this->assertElementPresent(
             "//div[@id='lc-minicart-horizontal']"
-            . "/div[@class='popup items-list']"
+            . "/div[@class='internal-popup items-list']"
             . "/ul"
             . "/li"
             . "/span"
@@ -73,7 +73,7 @@ class XLite_Web_Customer_Minicart extends XLite_Web_Customer_ACustomer
 
         $this->assertElementPresent(
             "//div[@id='lc-minicart-horizontal']"
-            . "/div[@class='popup items-list']"
+            . "/div[@class='internal-popup items-list']"
             . "/ul"
             . "/li"
             . "/div[@class='item-price' and text()='$ " . $product->getPrice() . " x 1']"
@@ -81,7 +81,7 @@ class XLite_Web_Customer_Minicart extends XLite_Web_Customer_ACustomer
 
         $this->assertElementPresent(
             "//div[@id='lc-minicart-horizontal']"
-            . "/div[@class='popup items-list']"
+            . "/div[@class='internal-popup items-list']"
             . "/div[@class='cart-checkout']"
             . "/button"
             . "/span[text()='Checkout']"
@@ -105,14 +105,14 @@ class XLite_Web_Customer_Minicart extends XLite_Web_Customer_ACustomer
 
         $this->assertElementPresent(
             "//div[@id='lc-minicart-horizontal']"
-            . "/div[@class='popup items-list']"
+            . "/div[@class='internal-popup items-list']"
             . "/p[@class='title']"
             . "/a[text()='2 items in bag']"
         );
 
         $this->assertElementPresent(
             "//div[@id='lc-minicart-horizontal']"
-            . "/div[@class='popup items-list']"
+            . "/div[@class='internal-popup items-list']"
             . "/ul"
             . "/li"
             . "/span"
@@ -121,7 +121,7 @@ class XLite_Web_Customer_Minicart extends XLite_Web_Customer_ACustomer
 
         $this->assertElementPresent(
             "//div[@id='lc-minicart-horizontal']"
-            . "/div[@class='popup items-list']"
+            . "/div[@class='internal-popup items-list']"
             . "/ul"
             . "/li"
             . "/div[@class='item-price' and text()='$ " . $product->getPrice() . " x 2']"
@@ -155,14 +155,14 @@ class XLite_Web_Customer_Minicart extends XLite_Web_Customer_ACustomer
 
         $this->assertElementPresent(
             "//div[@id='lc-minicart-horizontal']"
-            . "/div[@class='popup items-list']"
+            . "/div[@class='internal-popup items-list']"
             . "/p[@class='title']"
             . "/a[text()='3 items in bag']"
         );
 
         $this->assertElementPresent(
             "//div[@id='lc-minicart-horizontal']"
-            . "/div[@class='popup items-list']"
+            . "/div[@class='internal-popup items-list']"
             . "/ul"
             . "/li"
             . "/span"
@@ -171,7 +171,7 @@ class XLite_Web_Customer_Minicart extends XLite_Web_Customer_ACustomer
 
         $this->assertElementPresent(
             "//div[@id='lc-minicart-horizontal']"
-            . "/div[@class='popup items-list']"
+            . "/div[@class='internal-popup items-list']"
             . "/ul"
             . "/li"
             . "/div[@class='item-price' and text()='$ " . $product->getPrice() . " x 1']"

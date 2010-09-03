@@ -101,9 +101,9 @@ class XLite_Tests_Model_Zone extends XLite_Tests_TestCase
             'weight' => 0,
         );
 
-        foreach ($data as $dt) {
+        foreach ($data as $i => $dt) {
             $zone = \XLite\Core\Database::getRepo('XLite\Model\Zone')->getZone($dt['zoneid']);
-            $this->assertEquals($dt['weight'], $zone->getZoneWeight($dt['address']));
+            $this->assertEquals($dt['weight'], $zone->getZoneWeight($dt['address']), 'check ' . $i . ' iteration');
         }
     }
 
