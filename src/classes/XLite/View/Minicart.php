@@ -133,7 +133,7 @@ class Minicart extends \XLite\View\SideBarBox
      */
     protected function getCollapsed()
     {
-        return ($this->getCart()->isEmpty()) ? 'empty' : 'collapsed';
+        return $this->getCart()->isEmpty() ? 'empty' : 'collapsed';
     }
 
     /**
