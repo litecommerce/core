@@ -187,8 +187,8 @@ class Search extends \XLite\View\ItemsList\Order\Admin\AAdmin
             self::PARAM_STATUS => new \XLite\Model\WidgetParam\Set(
                 'Status', null, array_keys(\XLite\Model\Order::getAllowedStatuses())
             ),
-            self::PARAM_DATE => new \XLite\Model\WidgetParam\Collection(
-                'Date', array()
+            self::PARAM_DATE => new \XLite\Model\WidgetParam\Int(
+                'Date', null
             ),
         );
     }
