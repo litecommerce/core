@@ -468,7 +468,7 @@ abstract class Image extends \XLite\Model\AEntity
 
         if ($result) {
             $this->path = basename($path);
-            $this->renewImageParameters();
+            $result = $this->renewImageParameters();
         }
 
         return $result;

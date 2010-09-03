@@ -80,7 +80,11 @@ class XLite_Tests_Model_Repo_Image_Product_Detailed extends XLite_Tests_TestCase
                 $i->setProduct($this->product);
                 $this->product->addDetailedImages($i);
 
-                $i->loadFromLocalFile(LC_ROOT_DIR . 'images' . LC_DS . 'product_detailed_images' . LC_DS . $path);
+                $p = LC_ROOT_DIR . 'images' . LC_DS . 'product_detailed_images' . LC_DS . $path;
+                $this->assertTrue(
+                    $i->loadFromLocalFile($p),
+                    'load image from ' . $p
+                );
                 $i->setEnabled(true);
                 $i->setAlt($path);
                 $i->setOrderby(1);
