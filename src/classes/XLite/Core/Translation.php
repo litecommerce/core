@@ -67,7 +67,7 @@ class Translation extends \XLite\Base\Singleton
      */
     protected $driversQuery = array(
         '\XLite\Core\TranslationDriver\Gettext',
-        '\XLite\Core\TranslationDriver\Db'
+        '\XLite\Core\TranslationDriver\Db',
     );
 
     /**
