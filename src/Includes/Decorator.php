@@ -38,31 +38,31 @@ namespace Includes;
 class Decorator extends Decorator\ADecorator
 {
     /**
-     * Walk through the PHP files tree and collect classes info
+     * Classes tree
+     * 
+     * @var    \Includes\Decorator\DataStructure\ClassData\Tree
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $classesTree;
+
+
+    /**
+     * Return (and initialize, if needed) classes tree
      *
-     * @return void
+     * @return \Includes\Decorator\DataStructure\ClassData\Tree
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function createClassTree()
+    protected function getClassesTree()
     {
-        // Iterate over all PHP files in the "classes" directory
-        foreach (\Includes\Utils\FileFilter::filterByExtension(LC_CLASSES_DIR, 'php') as $fileInfo) {
-
-            // Check if file contains class definition
-            if ($data = \Includes\Decorator\Utils\ClassData\Parser::parse($fileInfo)) {
-
-                // Create node in the classes tree
-                $node = \Includes\Decorator\DataStructure\ClassData\Tree::addNode($data);
-
-                // Check constrains
-                \Includes\Decorator\Utils\ClassData\Verifier::checkNode($node);
-            }
+        if (!isset($this->classesTree)) {
+            $this->classesTree = new \Includes\Decorator\DataStructure\ClassData\Tree();
         }
 
-        // Remove the stub nodes
-        \Includes\Decorator\DataStructure\ClassData\Tree::collectGarbage();
+        return $this->classesTree;
     }
 
 
@@ -166,15 +166,6 @@ class Decorator extends Decorator\ADecorator
         self::INFO_CLASS_ORIG   => 'class  ',
         self::INFO_EXTENDS_ORIG => 'extends',
     );
-
-    /**
-     * PDO connection handler 
-     * 
-     * @var    PDO
-     * @access protected
-     * @since  3.0
-     */
-    protected $dbHandler = null;
 
     /**
      * Classes info
@@ -708,35 +699,33 @@ class Decorator extends Decorator\ADecorator
      */
     protected function createClassTreeFull()
     {
-        $this->createClassTree();
-
-        foreach (\Includes\Decorator\DataStructure\ClassData\Tree::getIndex() as $node) {
+        foreach ($this->getClassesTree()->getIndex() as $node) {
 
             // Save data
-            $this->classesInfo[$node->getClass()] = array(
-                self::INFO_FILE          => $node->getFilePath(),
-                self::INFO_CLASS_ORIG    => $node->getClass(),
-                self::INFO_EXTENDS       => $node->getParentClass(),
-                self::INFO_EXTENDS_ORIG  => $node->getParentClass(),
-                self::INFO_IS_DECORATOR  => in_array('\XLite\Base\IDecorator', $node->getInterfaces()),
+            $this->classesInfo[$node->__get(self::N_CLASS)] = array(
+                self::INFO_FILE          => $node->__get(self::N_FILE_PATH),
+                self::INFO_CLASS_ORIG    => $node->__get(self::N_CLASS),
+                self::INFO_EXTENDS       => $node->__get(self::N_PARENT_CLASS),
+                self::INFO_EXTENDS_ORIG  => $node->__get(self::N_PARENT_CLASS),
+                self::INFO_IS_DECORATOR  => in_array('\XLite\Base\IDecorator', $node->__get(self::N_INTERFACES)),
                 self::INFO_ENTITY        => $node->hasTag('Entity'),
-                self::INFO_CLASS_COMMENT => ($classComment = $node->getClassComment()),
+                self::INFO_CLASS_COMMENT => ($classComment = $node->__get(self::N_CLASS_COMMENT)),
             );
 
             if ($this->isViewChild($classComment)) {
-                $this->viewListChilds[$node->getFilePath()] = $node->getClass();
+                $this->viewListChilds[$node->__get(self::N_FILE_PATH)] = $node->__get(self::N_CLASS);
             }
 
-            if (in_array('\XLite\Base\IPatcher', $node->getInterfaces())) {
-                $this->templatePatches[] = $node->getClass();
+            if (in_array('\XLite\Base\IPatcher', $node->__get(self::N_INTERFACES))) {
+                $this->templatePatches[] = $node->__get(self::N_CLASS);
             }
 
-            if ($this->isMultilang($node->getParentClass())) {
-                $this->multilangs[] = $node->getClass();
+            if ($this->isMultilang($node->__get(self::N_PARENT_CLASS))) {
+                $this->multilangs[] = $node->__get(self::N_CLASS);
             }
     
-            if ($classComment || !preg_match(self::INTERFACE_COMMENT_PATTERN, file_get_contents(LC_CLASSES_DIR . '/' . $node->getFilePath()))) {
-                $this->checkClassCommentAttributes($classComment, $node->getFilePath());
+            if ($classComment || !preg_match(self::INTERFACE_COMMENT_PATTERN, file_get_contents(LC_CLASSES_DIR . '/' . $node->__get(self::N_FILE_PATH)))) {
+                $this->checkClassCommentAttributes($classComment, $node->__get(self::N_FILE_PATH));
             }
         }
     }
@@ -849,6 +838,7 @@ class Decorator extends Decorator\ADecorator
 
             // Wrong class name
             if (!isset($this->classesInfo[$class][self::INFO_FILE])) {
+                var_dump($this->classesInfo[$class]);die;
                 echo (sprintf(self::UNDEFINED_CLASS_MSG, $class));
                 die (2);
             }
@@ -1898,33 +1888,5 @@ DATA;
 
             \XLite\Core\Database::getEM()->flush();
         }
-    }
-
-    /**
-     * Destructor
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function __destruct()
-    {
-        // This db connection is not needed for other classes
-        $this->dbHandler = null;
-    }
-
-
-    /**
-     * Return self instance
-     * 
-     * @return Decorator
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function getInstance()
-    {
-        return new static;
     }
 }

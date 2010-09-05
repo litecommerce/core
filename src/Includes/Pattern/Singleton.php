@@ -26,70 +26,55 @@
  * @since      3.0.0
  */
 
-namespace Includes\DataStructure\Node;
+namespace Includes\Pattern;
 
 /**
- * ANode 
+ * Singleton 
  * 
  * @package    XLite
  * @see        ____class_see____
  * @since      3.0.0
  */
-abstract class ANode extends \Includes\DataStructure\Cell
+abstract class Singleton extends \Includes\Pattern\APattern
 {
     /**
-     * Link to the parent element
-     *
-     * @var    self
+     * Class instances 
+     * 
+     * @var    array
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $parent;
+    protected static $instances = array();
 
 
     /**
-     * (Un)Set reference to parent node
-     *
-     * @param self $parent parent node ref
-     *
+     * Protected constructur 
+     * 
      * @return void
-     * @access public
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function setParent(self $parent = null)
+    protected function __construct()
     {
-        $this->parent = $parent;
     }
 
-    /**
-     * Add child node
-     *
-     * @param self $node node to add
-     *
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function addChild(self $node)
-    {
-        $node->setParent($this);
-    }
 
     /**
-     * Remove child node
-     *
-     * @param self $node node to remove
-     *
-     * @return void
+     * Return object instance
+     * 
+     * @return static
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function removeChild(self $node)
+    public static function getInstance()
     {
-        $node->setParent();
+        if (!isset(static::$instances[$class = get_called_class()])) {
+            static::$instances[$class] = new static();
+        }
+
+        return static::$instances[$class];
     }
 }

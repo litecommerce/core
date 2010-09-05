@@ -35,61 +35,18 @@ namespace Includes\Decorator\DataStructure\ClassData;
  * @see        ____class_see____
  * @since      3.0.0
  */
-abstract class Tree extends \Includes\DataStructure\Hierarchical\Tree
+class Tree extends \Includes\DataStructure\Hierarchical\Tree
 {
     /**
-     * Tree root
+     * Name of the node class
      *
-     * @var    \Includes\Decorator\DataStructure\ClassData\Node
+     * @var    string
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected static $root;
+    protected $nodeClass = '\Includes\Decorator\DataStructure\ClassData\Node';
 
-    /**
-     * Tree index
-     *
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected static $index = array();
-
-
-    /**
-     * Find node by key
-     *
-     * @param string $class node class (key to search)
-     *
-     * @return \Includes\Decorator\DataStructure\ClassData\Node
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    // FIXME
-    public static function find($class)
-    {
-        return isset(static::$index[$class]) ? static::$index[$class] : null;
-    }
-
-    /**
-     * Add new node and index it
-     *
-     * @param \Includes\Decorator\DataStructure\ClassData\Node $parent parent node
-     * @param \Includes\Decorator\DataStructure\ClassData\Node $node   child node to add
-     *
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected static function addChildNode(\Includes\Decorator\DataStructure\ClassData\Node $parent, \Includes\Decorator\DataStructure\ClassData\Node $node)
-    {
-        $parent->addChild($node);
-        static::$index[$node->getClass()] = $node;
-    }
 
     /**
      * Search class parent by the class name
@@ -101,17 +58,20 @@ abstract class Tree extends \Includes\DataStructure\Hierarchical\Tree
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected static function getNodeParent(\Includes\Decorator\DataStructure\ClassData\Node $node)
+    protected function getNodeParent(\Includes\Decorator\DataStructure\ClassData\Node $node)
     {
-        $parent = static::$root;
+        $parent = $this->root;
+        $parentClass = $node->__get(\Includes\Decorator\ADecorator::N_PARENT_CLASS);
 
         // Check if parent class is already add to the tree
-        if ($node->getParentClass() && !($parent = static::find($node->getParentClass()))) {
+        if ($parentClass && !($parent = $this->find($parentClass))) {
 
             // If not, create the stub for the parent node
-            static::addChildNode(
-                static::$root,
-                $parent = \Includes\Decorator\DataStructure\ClassData\Node::createStubNode($node->getParentClass())
+            $this->addChildNode(
+                $this->root,
+                $parent = \Includes\Decorator\DataStructure\ClassData\Node::createStubNode(
+                    array(\Includes\Decorator\ADecorator::N_CLASS => $parentClass)
+                )
             );
         }
 
@@ -121,114 +81,103 @@ abstract class Tree extends \Includes\DataStructure\Hierarchical\Tree
     /**
      * Change node data and parent
      *
-     * @param \Includes\Decorator\DataStructure\ClassData\Node $parent node new parent
-     * @param \Includes\Decorator\DataStructure\ClassData\Node $node   node to get data
+     * @param \Includes\DataStructure\Node\Tree $parent node new parent
+     * @param \Includes\DataStructure\Node\Tree $node   node to get data
      *
      * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected static function replantNode(\Includes\Decorator\DataStructure\ClassData\Node $parent, \Includes\Decorator\DataStructure\ClassData\Node $node)
+    protected function replantNode(\Includes\DataStructure\Node\Tree $parent, \Includes\DataStructure\Node\Tree $node)
     {
-        // Replace existsting node (only for "stub" nodes)
-        if ($child = static::find($node->getClass())) {
-
-            // Duplacate definition
-            if (!$child->isStub()) {
-                throw new \Exception('Duplicate class definition - "' . $child->getClass() . '"');
-            }
-
-            // So called "re-plant" operation: change node parent
-            $child->replant($parent, $node);
+        // Duplacate definition
+        if (($child = $this->find($node->getKey())) && !$child->isStub()) {
+            throw new \Exception('Duplicate class definition - "' . $child->getKey() . '"');
         }
 
-        return (bool) $child;
+        return parent::replantNode($parent, $node);
     }
-
 
     /**
      * Add class descriptor to the tree
-     * 
+     *
      * @param array $data class node info
-     *  
+     *
      * @return \Includes\Decorator\DataStructure\ClassData\Node
-     * @access public
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function addNode(array $data)
+    protected function addNode(array $data)
     {
         $node   = new \Includes\Decorator\DataStructure\ClassData\Node($data);
-        $parent = static::getNodeParent($node);
+        $parent = $this->getNodeParent($node);
 
         // Add or replace node
-        static::replantNode($parent, $node) ?: static::addChildNode($parent, $node);
+        $this->replantNode($parent, $node) ?: $this->addChildNode($parent, $node);
 
         return $node;
     }
 
     /**
-     * Remove node
-     * 
-     * @param \Includes\Decorator\DataStructure\ClassData\Node $node node to remove
-     *  
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function removeNode(\Includes\Decorator\DataStructure\ClassData\Node $node)
-    {
-        $node->remove();
-        unset(static::$index[$node->getClass()]);
-
-        $node = null;
-        unset($node);
-    }
-
-    /**
      * Remove the stub nodes
-     * 
+     *
      * @return void
-     * @access public
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function collectGarbage()
+    protected function collectGarbage()
     {
-        foreach (static::$index as $node) {
-            !$node->isStub() ?: static::removeNode($node);
+        foreach ($this->index as $node) {
+            !$node->isStub() ?: $this->removeNode($node);
         }
     }
 
+
     /**
-     * Static constructor
+     * Walk through the PHP files tree and collect classes info
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function create()
+    {
+        // Iterate over all PHP files in the "classes" directory
+        foreach (\Includes\Utils\FileFilter::filterByExtension(LC_CLASSES_DIR, 'php') as $fileInfo) {
+
+            // Check if file contains class definition
+            if ($data = \Includes\Decorator\Utils\ClassData\Parser::parse($fileInfo)) {
+
+                // Create node in the classes tree
+                $node = $this->addNode($data);
+
+                // Check constrains
+                \Includes\Decorator\Utils\ClassData\Verifier::checkNode($node);
+            }
+        }
+
+        // Remove the stub nodes
+        $this->collectGarbage();
+    }
+
+
+    /**
+     * Constructor
      *
      * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function __constructStatic()
+    public function __construct()
     {
-        static::$root = new \Includes\Decorator\DataStructure\ClassData\Node();
-    }
+        parent::__construct();
 
-    /**
-     * Return tree index
-     * FIXME: DEVCODE, to remove
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function getIndex()
-    {
-        return static::$index;
+        // Walk through the PHP files tree and collect classes info
+        $this->create();
     }
 }
-
-// Call static constructor
-\Includes\Decorator\DataStructure\ClassData\Tree::__constructStatic();

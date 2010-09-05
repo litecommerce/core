@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage Includes_Decorator
+ * @subpackage Includes
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -26,44 +26,15 @@
  * @since      3.0.0
  */
 
-namespace Includes\Decorator;
+namespace Includes\Pattern;
 
 /**
- * ADecorator 
+ * APattern 
  * 
  * @package    XLite
  * @see        ____class_see____
  * @since      3.0.0
  */
-abstract class ADecorator extends \Includes\Pattern\Singleton
+abstract class APattern
 {
-    /**
-     * Indexes in "classesInfo" array
-     *
-     * FIXME - to remove
-     */
-
-    const INFO_FILE          = 'file';
-    const INFO_CLASS         = 'class';
-    const INFO_CLASS_ORIG    = 'class_orig';
-    const INFO_EXTENDS       = 'extends';
-    const INFO_EXTENDS_ORIG  = 'extends_orig';
-    const INFO_IS_DECORATOR  = 'is_decorator';
-    const INFO_IS_ROOT_CLASS = 'is_top_class';
-    const INFO_CLASS_TYPE    = 'class_type';
-    const INFO_ENTITY        = 'entity';
-    const INFO_CLASS_COMMENT = 'class_comment';
-
-
-    /**
-     * Class node field names
-     */
-
-    const N_NAME_SPACE    = 'nameSpace';
-    const N_CLASS_COMMENT = 'classComment';
-    const N_TAGS          = 'tags';
-    const N_CLASS         = 'class';
-    const N_PARENT_CLASS  = 'parentClass';
-    const N_INTERFACES    = 'interfaces';
-    const N_FILE_PATH     = 'filePath';
 }

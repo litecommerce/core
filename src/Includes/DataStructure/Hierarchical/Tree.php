@@ -35,6 +35,158 @@ namespace Includes\DataStructure\Hierarchical;
  * @see        ____class_see____
  * @since      3.0.0
  */
-abstract class Tree extends \Includes\DataStructure\Hierarchical\AHierarchical
+class Tree extends \Includes\DataStructure\Hierarchical\AHierarchical
 {
+    /**
+     * Tree root
+     *
+     * @var    \Includes\DataStructure\Node\Tree
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $root;
+
+    /**
+     * Tree index
+     *
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $index = array();
+
+    /**
+     * Name of the node class
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $nodeClass = '\Includes\DataStructure\Node\Tree';
+
+
+    /**
+     * Find node by key
+     *
+     * FIXME - must be protected 
+     *
+     * @param string|int $key key to search
+     *
+     * @return \Includes\DataStructure\Node\Tree
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function find($key)
+    {
+        return isset($this->index[$key]) ? $this->index[$key] : null;
+    }
+
+    /**
+     * Add child node and index it
+     *
+     * @param \Includes\DataStructure\Node\Tree $parent parent node
+     * @param \Includes\DataStructure\Node\Tree $node   child node to add
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function addChildNode(\Includes\DataStructure\Node\Tree $parent, \Includes\DataStructure\Node\Tree $node)
+    {
+        $parent->addChild($node);
+        $this->index[$node->getKey()] = $node;
+    }
+
+    /**
+     * Remove node and clear index
+     *
+     * @param \Includes\DataStructure\Node\Tree $parent parent node
+     * @param \Includes\DataStructure\Node\Tree $node   child node to add
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function removeChildNode(\Includes\DataStructure\Node\Tree $parent, \Includes\DataStructure\Node\Tree $node)
+    {
+        $parent->removeChild($node);
+        unset($this->index[$node->getKey()]);
+    }
+
+    /**
+     * Change node data and parent
+     *
+     * @param \Includes\DataStructure\Node\Tree $parent node new parent
+     * @param \Includes\DataStructure\Node\Tree $node   node to get data
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function replantNode(\Includes\DataStructure\Node\Tree $parent, \Includes\DataStructure\Node\Tree $node)
+    {
+        // Replace existsting node
+        if ($child = $this->find($node->getKey())) {
+
+            // So called "re-plant" operation: change node parent
+            $child->replant($parent, $node);
+        }
+
+        return $child;
+    }
+
+
+    /**
+     * Remove node
+     *
+     * @param \Includes\DataStructure\Node\Tree $node node to remove
+     *
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function removeNode(\Includes\DataStructure\Node\Tree $node)
+    {
+        $node->remove();
+        unset($this->index[$node->getKey()]);
+
+        $node = null;
+        unset($node);
+    }
+
+    /**
+     * Constructor
+     *
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function __construct()
+    {
+        $this->root = new $this->nodeClass;
+    }
+
+    /**
+     * Return tree index
+     *
+     * FIXME: DEVCODE, to remove
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getIndex()
+    {
+        return $this->index;
+    }
 }

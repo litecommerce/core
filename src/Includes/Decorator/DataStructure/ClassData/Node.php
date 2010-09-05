@@ -38,59 +38,35 @@ namespace Includes\Decorator\DataStructure\ClassData;
 class Node extends \Includes\DataStructure\Node\Tree
 {
     /**
-     * Field names
+     * Flag for so called "stub" nodes
      */
-
-    const N_NAME_SPACE    = 'nameSpace';
-    const N_CLASS_COMMENT = 'classComment';
-    const N_TAGS          = 'tags';
-    const N_CLASS         = 'name';
-    const N_PARENT_CLASS  = 'parent';
-    const N_INTERFACES    = 'interfaces';
-    const N_STUB          = 'stub';
-    const N_FILE_PATH     = 'filePath';
+    const IS_STUB = 'isStub';
 
 
     /**
-     * Return constant by short name
+     * Return node key (class name)
      * 
-     * @param string $name short name
-     *  
      * @return string
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function getProperty($name)
+    public function getKey()
     {
-        return constant('self::N' . strtoupper(preg_replace('/([A-Z])/Ss', '_$1', $name)));
+        return $this->__get(\Includes\Decorator\ADecorator::N_CLASS);
     }
 
     /**
-     * Method to access node properties
+     * Check if this node is the "stub" node
      * 
-     * @param string $method called method
-     * @param array  $args   method arguments
-     *  
-     * @return mixed
+     * @return bool
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function __call($method, array $args = array())
+    public function isStub()
     {
-        // Parse getter name
-        if (!preg_match('/(get|is|hasTag)(\w+)?/Ss', $method, $matches)) {
-            throw new \Exception('Undefined class method or wrong getter/setter - "' . $method . '"');
-        }
-
-        $result = $this->__get(static::getProperty($matches[2]));
-
-        if ('is' === $matches[1]) {
-            $result = (bool) $result;
-        }
-
-        return $result;
+        return $this->__isset(self::IS_STUB);
     }
 
     /**
@@ -105,36 +81,7 @@ class Node extends \Includes\DataStructure\Node\Tree
      */
     public function hasTag($name)
     {
-        return ($tags = $this->__get(self::N_TAGS)) && isset($tags[$name]);
-    }
-
-    /**
-     * Return relative path to the class file
-     * 
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getFilePathRelative()
-    {
-        return preg_replace('/^' . preg_quote(LC_CLASSES_DIR, '/') . '(.*)\.php$/i', '$1.php', $this->__get(self::N_FILE_PATH));
-    }
-
-
-    /**
-     * (Un)Set reference to parent node
-     *
-     * @param self $parent parent node ref
-     *
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function setParent(self $parent = null)
-    {
-        $this->parent = $parent;
+        return ($tags = $this->__get(\Includes\Decorator\ADecorator::N_TAGS)) && isset($tags[$name]);
     }
 
     /**
@@ -149,29 +96,12 @@ class Node extends \Includes\DataStructure\Node\Tree
      */
     public function addChild(self $node)
     {
-        // An unexpected logical error (replace in non-root node)
-        if (isset($this->children[$node->getClass()], $this->parent)) {
-            throw new \Exception('Duplicate child class - "' . $node->getClass() . '"');
+        // An unexpected logical error (replacement in non-root node)
+        if (isset($this->children[$node->getKey()], $this->parent)) {
+            throw new \Exception('Duplicate child class - "' . $node->getKey() . '"');
         }
 
-        $node->setParent($this);
-        $this->children[$node->getClass()] = $node;
-    }
-
-    /**
-     * Remove child node
-     *
-     * @param self $node node to remove
-     *
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function removeChild(self $node)
-    {
-        unset($this->children[$node->getClass()]);
-        $node->setParent();
+        parent::addChild($node);
     }
 
     /**
@@ -187,40 +117,24 @@ class Node extends \Includes\DataStructure\Node\Tree
      */
     public function replant(self $parent, self $node)
     {
-        $this->setData(array(self::N_STUB => false) + $node->getData());
-        $parent->addChild($this);
-    }
+        $this->__unset(self::IS_STUB);
 
-    /**
-     * Remove node
-     *
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function remove()
-    {
-        foreach ($this->children as $child) {
-            $child->setParent($this->parent);
-        }
-
-        $this->parent->removeChild($this);
+        parent::replant($parent, $node);
     }
 
 
     /**
      * Add stub node to the tree
      *
-     * @param string $class class name
+     * @param array $data data to set
      *
      * @return self
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function createStubNode($class)
+    public static function createStubNode(array $data = array())
     {
-        return new static(array(self::N_CLASS => $class, self::N_STUB => true));
+        return new static($data + array(self::IS_STUB => true));
     }
 }
