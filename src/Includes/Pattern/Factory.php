@@ -29,52 +29,59 @@
 namespace Includes\Pattern;
 
 /**
- * Singleton 
+ * Factory
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class Singleton extends \Includes\Pattern\APattern
+abstract class Factory extends \Includes\Pattern\APattern
 {
     /**
-     * Class instances 
+     * Class handlers cache
      * 
      * @var    array
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected static $instances = array();
+    protected static $classHandlers = array();
 
 
     /**
-     * Protected constructur 
+     * Return the Reflection handler for class
      * 
-     * @return void
+     * @param string $class class name
+     *  
+     * @return \ReflectionClass
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function __construct()
+    protected function getClassHandler($class)
     {
+        if (!isset(static::$classHandlers[$class])) {
+            static::$classHandlers[$class] = new \ReflectionClass($class);
+        }
+
+        return static::$classHandlers[$class];
     }
 
 
     /**
-     * Return object instance
-     * 
-     * @return static
+     * Create object instance and pass arguments to it contructor (if needed)
+     *
+     * @param string $class class name
+     * @param array  $args  constructor arguments
+     *
+     * @return object
      * @access public
-     * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function getInstance()
+    public static function create($class, array $args = array())
     {
-        if (!isset(static::$instances[$class = get_called_class()])) {
-            static::$instances[$class] = new static();
-        }
+        $handler = $this->getClassHandler($class);
 
-        return static::$instances[$class];
+        return $handler->hasMethod('__construct') ? $handler->newInstanceArgs($args) : $handler->newInstance();
     }
 }

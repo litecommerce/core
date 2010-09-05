@@ -909,6 +909,9 @@ class Decorator extends Decorator\ADecorator
         // Generate models
         $this->generateModels();
 
+        // Run registered plugins
+        \Includes\Decorator\Utils\PluginManager::runAll();
+
         // Regenerate view lists
         $this->regenerateViewLists();
 
