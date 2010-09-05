@@ -59,21 +59,6 @@ abstract class Parser extends \Includes\Decorator\Utils\ClassData\AClassData
 
 
     /**
-     * Compose the constant name and return its value
-     * 
-     * @param string $name short name
-     *  
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected static function __N($name)
-    {
-        return constant('\Includes\Decorator\DataStructure\ClassData\Node::N_' . $name);
-    }
-
-    /**
      * Safely get field from array
      * 
      * @param array  &$data data array
@@ -86,7 +71,7 @@ abstract class Parser extends \Includes\Decorator\Utils\ClassData\AClassData
      */
     protected static function getField(array &$data, $field)
     {
-        return isset($data[static::__N($field)]) ? $data[static::__N($field)] : null;
+        return isset($data[$field]) ? $data[$field] : null;
     }
 
     /**
@@ -134,11 +119,11 @@ abstract class Parser extends \Includes\Decorator\Utils\ClassData\AClassData
     protected static function getSchemaParserMain()
     {
         return array(
-            'NAME_SPACE'    => 1,
-            'CLASS_COMMENT' => 2,
-            'CLASS'         => 5,
-            'PARENT_CLASS'  => 7,
-            'INTERFACES'    => 9,
+            self::N_NAME_SPACE    => 1,
+            self::N_CLASS_COMMENT => 2,
+            self::N_CLASS         => 5,
+            self::N_PARENT_CLASS  => 7,
+            self::N_INTERFACES    => 9,
         );
     }
 
@@ -186,24 +171,24 @@ abstract class Parser extends \Includes\Decorator\Utils\ClassData\AClassData
      */
     protected static function postprocessParserMain(array $data)
     {
-        $namespace  = static::getField($data, 'NAME_SPACE');
-        $class      = static::getField($data, 'CLASS');
-        $interfaces = static::getField($data, 'INTERFACES');
-        $filePath   = static::getField($data, 'FILE_PATH');
+        $namespace  = static::getField($data, self::N_NAME_SPACE);
+        $class      = static::getField($data, self::N_CLASS);
+        $interfaces = static::getField($data, self::N_INTERFACES);
+        $filePath   = static::getField($data, self::N_FILE_PATH);
 
         // Add namespace
         if ($namespace && '\\' !== substr($class, 0, 1)) {
-            $data[static::__N('CLASS')] = '\\' . $namespace . '\\' . $class;
+            $data[self::N_CLASS] = '\\' . $namespace . '\\' . $class;
         }
 
         // Get implemented interfaces
-        $data[static::__N('INTERFACES')] = $interfaces ? explode(',', str_replace(' ', '', trim($interfaces))) : array();
+        $data[self::N_INTERFACES] = $interfaces ? explode(',', str_replace(' ', '', trim($interfaces))) : array();
 
         // Get phpDocumenter tags
-        $data[static::__N('TAGS')] = static::getTags(static::getField($data, 'CLASS_COMMENT'));
+        $data[self::N_TAGS] = static::getTags(static::getField($data, self::N_CLASS_COMMENT));
 
         // Save relative path
-        $data[static::__N('FILE_PATH')] = \Includes\Utils\FileManager::getRelativePath($filePath, LC_CLASSES_DIR);
+        $data[self::N_FILE_PATH] = \Includes\Utils\FileManager::getRelativePath($filePath, LC_CLASSES_DIR);
 
         return $data;
     }
@@ -241,7 +226,7 @@ abstract class Parser extends \Includes\Decorator\Utils\ClassData\AClassData
 
         foreach ($schema as $key => $index) {
             if (isset($tokens[$index])) {
-                $data[static::__N($key)] = $tokens[$index];
+                $data[$key] = $tokens[$index];
             }
         }
 
@@ -261,8 +246,8 @@ abstract class Parser extends \Includes\Decorator\Utils\ClassData\AClassData
     protected static function isModuleEnabled(array &$data)
     {
         return \Includes\Decorator\Utils\ModulesManager::checkClass(
-            static::getField($data, 'CLASS'),
-            static::getField($data, 'PARENT_CLASS')
+            static::getField($data, self::N_CLASS),
+            static::getField($data, self::N_PARENT_CLASS)
         );
     }
 
@@ -299,7 +284,7 @@ abstract class Parser extends \Includes\Decorator\Utils\ClassData\AClassData
             $result = static::applySchema($result, static::$schema());
 
             // Prepare and save data
-            $data = array_replace_recursive($data, static::$postprocess($result + array(static::__N('FILE_PATH') => $path)));
+            $data = array_replace_recursive($data, static::$postprocess($result + array(self::N_FILE_PATH => $path)));
         }
 
         return (empty($data) || !static::isModuleEnabled($data)) ? null : $data;
