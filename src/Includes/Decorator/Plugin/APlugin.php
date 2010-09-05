@@ -26,55 +26,24 @@
  * @since      3.0.0
  */
 
-namespace Includes\Pattern;
+namespace Includes\Decorator\Plugin;
 
 /**
- * Singleton 
+ * Abstract base class for all plugins
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class Singleton extends \Includes\Pattern\APattern
+abstract class APlugin extends \Includes\Decorator\ADecorator
 {
     /**
-     * Class instances 
-     * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected static $instances = array();
-
-
-    /**
-     * Protected constructur 
+     * Main plugin function 
      * 
      * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function __construct()
-    {
-    }
-
-
-    /**
-     * Return object instance
-     * 
-     * @return static
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function getInstance()
-    {
-        if (!isset(static::$instances[$class = get_called_class()])) {
-            static::$instances[$class] = new static();
-        }
-
-        return static::$instances[$class];
-    }
+    abstract public function run();
 }

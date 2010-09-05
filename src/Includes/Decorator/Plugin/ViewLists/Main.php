@@ -26,55 +26,26 @@
  * @since      3.0.0
  */
 
-namespace Includes\Pattern;
+namespace Includes\Decorator\Plugin\ViewLists;
 
 /**
- * Singleton 
+ * Decorator plugin to generate widget lists
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class Singleton extends \Includes\Pattern\APattern
+class Main extends \Includes\Decorator\Plugin\APlugin
 {
     /**
-     * Class instances 
-     * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected static $instances = array();
-
-
-    /**
-     * Protected constructur 
+     * Generate widget lists
      * 
      * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function __construct()
-    {
-    }
-
-
-    /**
-     * Return object instance
-     * 
-     * @return static
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function getInstance()
+    public function run()
     {
-        if (!isset(static::$instances[$class = get_called_class()])) {
-            static::$instances[$class] = new static();
-        }
-
-        return static::$instances[$class];
     }
 }
