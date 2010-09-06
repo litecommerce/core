@@ -73,6 +73,7 @@
 table.list-body {
   height: 100%;
   border-style: none;
+  cursor: move;
 }
 
 table.list-body td {
@@ -101,11 +102,8 @@ table.list-body-grid-6-columns td {
   width: 16.75%;
 }
 
-table.list-body a {
-  display: block;
-}
-
 table.list-body td.hproduct a.product-thumbnail {
+  display: block;
   text-align: center;
 }
 
@@ -128,7 +126,6 @@ table.list-body div.quick-look-cell div.drag-n-drop {
   color: #8fa8c0;
   background: transparent url(images/icon_drag.png) no-repeat left center;
   padding-left: 2em;
-  cursor: move;
   visibility: hidden;
 }
 
