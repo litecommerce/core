@@ -163,23 +163,29 @@ class XLite_Tests_AllTests
         }	
 
         // Web tests
-        $classesDir  = dirname( __FILE__ ) . DIRECTORY_SEPARATOR . 'Web' . DIRECTORY_SEPARATOR;
-        $pattern     = '/^' . str_replace('/', '\/', preg_quote($classesDir)) . '(.*)\.php$/';
+        if (!defined('SELENIUM_DISABLED')) {
+            $classesDir  = dirname( __FILE__ ) . DIRECTORY_SEPARATOR . 'Web' . DIRECTORY_SEPARATOR;
+            $pattern     = '/^' . str_replace('/', '\/', preg_quote($classesDir)) . '(.*)\.php$/';
 
-        $dirIterator = new RecursiveDirectoryIterator($classesDir);
-        $iterator    = new RecursiveIteratorIterator($dirIterator, RecursiveIteratorIterator::CHILD_FIRST);
+            $dirIterator = new RecursiveDirectoryIterator($classesDir);
+            $iterator    = new RecursiveIteratorIterator($dirIterator, RecursiveIteratorIterator::CHILD_FIRST);
 
-        foreach ($iterator as $filePath => $fileObject) {
-            if (
-                preg_match($pattern, $filePath, $matches)
-                && !empty($matches[1])
-                && !preg_match('/\/Abstract.php/Ss', $filePath)
-                && (!$includes || in_array($matches[1], $includes))
-            ) {
-                require_once $filePath;
-                $suite->addTestSuite(XLite_Tests_SeleniumTestCase::CLASS_PREFIX . str_replace(DIRECTORY_SEPARATOR, '_', $matches[1]));
-            }
-        } 
+            foreach ($iterator as $filePath => $fileObject) {
+                if (
+                    preg_match($pattern, $filePath, $matches)
+                    && !empty($matches[1])
+                    && !preg_match('/\/Abstract.php/Ss', $filePath)
+                    && !preg_match('/\/A[A-Z]/Ss', $filePath)
+                    && (!$includes || in_array($matches[1], $includes))
+                ) {
+                    require_once $filePath;
+                    $suite->addTestSuite(
+                        XLite_Tests_SeleniumTestCase::CLASS_PREFIX
+                        . str_replace(DIRECTORY_SEPARATOR, '_', $matches[1])
+                    );
+                }
+            } 
+        }
 
         error_reporting(E_ALL);
 
