@@ -73,7 +73,7 @@ class WishListProduct extends \XLite\Model\AModel
         );
 
         // Search in current wishlist by item ID
-        $result = $this->find(\XLite\Core\Converter::buildQuery(array_map('addslashes', $properties), '=', ' AND ', '\''));
+        $result = $this->find(\Includes\Utils\Converter::buildQuery(array_map('addslashes', $properties), '=', ' AND ', '\''));
 
         if (!$result) {
             // Assign object properties manually, since they were not assigned in "find()"

@@ -139,7 +139,7 @@ abstract class Parser extends \Includes\Decorator\Utils\ClassData\AClassData
      */
     protected static function prepareTags(array $matches)
     {
-        return array_combine($matches[1], $matches[2]);
+        return array_combine(array_map('strtolower', $matches[1]), $matches[2]);
     }
 
     /**
@@ -251,6 +251,21 @@ abstract class Parser extends \Includes\Decorator\Utils\ClassData\AClassData
         );
     }
 
+
+    /**
+     * Parse value of a phpDocumenter tag
+     * 
+     * @param string $value value to parse
+     *  
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function parseTagValue($value)
+    {
+        return \Includes\Utils\Converter::parseQuery($value, '=', ',', '"\'');
+    }
 
     /**
      * Get file content and execute the parsers stack

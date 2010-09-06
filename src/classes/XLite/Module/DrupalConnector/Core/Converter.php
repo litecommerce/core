@@ -74,7 +74,7 @@ class Converter extends \XLite\Core\Converter implements \XLite\Base\IDecorator
             $result = \XLite\Module\DrupalConnector\Handler::getInstance()->getPortalPrefix($target, $action, $params);
 
             if ($params) {
-                $result .= '/' . \XLite\Core\Converter::buildQuery($params, '-', '/');
+                $result .= '/' . \Includes\Utils\Converter::buildQuery($params, '-', '/');
             }
 
             $result = self::normalizeDrupalURL($result);
@@ -113,7 +113,7 @@ class Converter extends \XLite\Core\Converter implements \XLite\Base\IDecorator
         $url = implode('/', $parts);
 
         if ($params) {
-            $url .= '/' . \XLite\Core\Converter::buildQuery($params, '-', '/');
+            $url .= '/' . \Includes\Utils\Converter::buildQuery($params, '-', '/');
         }
 
         return $url;

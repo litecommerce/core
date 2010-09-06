@@ -62,18 +62,30 @@ class Converter extends AUtils
     }
 
     /**
-     * Generate SQL query string
+     * Parse string into array
      *
-     * @param array  $data      data to use
+     * @param string $query     Query
+     * @param string $glue      char to agglutinate "name" and "value"
+     * @param string $separator char to agglutinate <"name", "value"> pairs
+     * @param string $quotes    char to quote the "value" param
      *
      * @return string
      * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
+     * @since  3.0
      */
-    public static function buildSQLQuery(array $data)
+    public static function parseQuery($query, $glue = '=', $separator = '&', $quotes = '')
     {
-        return static::buildQuery($data, '=', ',', '\'');
+        $result = array();
+
+        if (1 < count($parts = explode($separator, $query))) {
+            foreach ($parts as $part) {
+                if (1 < count($tokens = explode($glue, trim($part)))) {
+                    $result[$tokens[0]] = trim($tokens[1], $quotes);
+                }
+            }
+        }
+
+        return $result;
     }
 
     /**

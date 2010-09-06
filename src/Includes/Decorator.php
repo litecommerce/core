@@ -52,11 +52,11 @@ class Decorator extends Decorator\ADecorator
      * Return (and initialize, if needed) classes tree
      *
      * @return \Includes\Decorator\DataStructure\ClassData\Tree
-     * @access protected
+     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getClassesTree()
+    public function getClassesTree()
     {
         if (!isset($this->classesTree)) {
             $this->classesTree = new \Includes\Decorator\DataStructure\ClassData\Tree();
@@ -708,7 +708,7 @@ class Decorator extends Decorator\ADecorator
                 self::INFO_EXTENDS       => $node->__get(self::N_PARENT_CLASS),
                 self::INFO_EXTENDS_ORIG  => $node->__get(self::N_PARENT_CLASS),
                 self::INFO_IS_DECORATOR  => in_array('\XLite\Base\IDecorator', $node->__get(self::N_INTERFACES)),
-                self::INFO_ENTITY        => $node->hasTag('Entity'),
+                self::INFO_ENTITY        => !is_null($node->getTag('Entity')),
                 self::INFO_CLASS_COMMENT => ($classComment = $node->__get(self::N_CLASS_COMMENT)),
             );
 
@@ -838,7 +838,6 @@ class Decorator extends Decorator\ADecorator
 
             // Wrong class name
             if (!isset($this->classesInfo[$class][self::INFO_FILE])) {
-                var_dump($this->classesInfo[$class]);die;
                 echo (sprintf(self::UNDEFINED_CLASS_MSG, $class));
                 die (2);
             }
@@ -910,7 +909,7 @@ class Decorator extends Decorator\ADecorator
         $this->generateModels();
 
         // Run registered plugins
-        \Includes\Decorator\Utils\PluginManager::runAll();
+        \Includes\Decorator\Utils\PluginManager::invokeHook('run');
 
         // Regenerate view lists
         $this->regenerateViewLists();
@@ -1456,12 +1455,6 @@ DATA;
      */
     protected function regenerateViewLists()
     {
-        // Truncate old
-        foreach (\XLite\Core\Database::getRepo('\XLite\Model\ViewList')->findAll() as $l) {
-            \XLite\Core\Database::getEM()->remove($l);
-        }
-        \XLite\Core\Database::getEM()->flush();
-
         $this->viewListPreprocessors = array();
 
         // Create new

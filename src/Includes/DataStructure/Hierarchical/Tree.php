@@ -69,23 +69,6 @@ class Tree extends \Includes\DataStructure\Hierarchical\AHierarchical
 
 
     /**
-     * Find node by key
-     *
-     * FIXME - must be protected 
-     *
-     * @param string|int $key key to search
-     *
-     * @return \Includes\DataStructure\Node\Tree
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function find($key)
-    {
-        return isset($this->index[$key]) ? $this->index[$key] : null;
-    }
-
-    /**
      * Add child node and index it
      *
      * @param \Includes\DataStructure\Node\Tree $parent parent node
@@ -163,6 +146,34 @@ class Tree extends \Includes\DataStructure\Hierarchical\AHierarchical
     }
 
     /**
+     * Find node by key
+     *
+     * @param string|int $key key to search
+     *
+     * @return \Includes\DataStructure\Node\Tree
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function find($key)
+    {
+        return isset($this->index[$key]) ? $this->index[$key] : null;
+    }
+
+    /**
+     * Return tree index
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getIndex()
+    {
+        return $this->index;
+    }
+
+    /**
      * Constructor
      *
      * @return void
@@ -173,20 +184,5 @@ class Tree extends \Includes\DataStructure\Hierarchical\AHierarchical
     public function __construct()
     {
         $this->root = new $this->nodeClass;
-    }
-
-    /**
-     * Return tree index
-     *
-     * FIXME: DEVCODE, to remove
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getIndex()
-    {
-        return $this->index;
     }
 }

@@ -111,7 +111,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
      */
     protected function getProfileWhereCondition($cmsUserId)
     {
-        return \XLite\Core\Converter::getInstance()->buildQuery(
+        return \Includes\Utils\Converter::buildQuery(
             $this->getProfileDBFields($cmsUserId), '=', ' AND ', '\''
         ) . ' AND order_id = \'0\'';
     }
@@ -169,7 +169,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
 
         if (isset($category) && $category->getCleanUrl()) {
             $url =  \Includes\Utils\URLManager::trimTrailingSlashes($category->getCleanUrl());
-            $url .= '/' . \XLite\Core\Converter::buildQuery($params, '-', '/');
+            $url .= '/' . \Includes\Utils\Converter::buildQuery($params, '-', '/');
         }
 
         return $url;
@@ -541,7 +541,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
             if ($category) {
                 $params  = array('category_id' => $category->getCategoryId());
                 if (!empty($parts[1])) {
-                    $params += \XLite\Core\Converter::parseQuery($parts[1], '-', '/');
+                    $params += \Includes\Utils\Converter::parseQuery($parts[1], '-', '/');
                 }
 
                 $cleanUrl = \XLite\Core\Converter::buildURL('category', '', $params);

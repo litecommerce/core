@@ -29,7 +29,17 @@
 namespace Includes\Decorator\Utils;
 
 /**
- * PluginManager 
+ * Plugins manager 
+ *
+ *
+ * Available hooks:
+ *
+ * - required:
+ * --- void run()
+ *
+ * - optional:
+ * --- array prepareTags(array &$result, array $matches)
+ *
  * 
  * @package XLite
  * @see     ____class_see____
@@ -71,7 +81,17 @@ abstract class PluginManager extends \Includes\Decorator\Utils\AUtils
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected static $plugins = array();
+    protected static $plugins;
+
+    /**
+     * Cache of the plugin instances
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected static $instancesCache = array();
 
 
     /**
@@ -100,21 +120,6 @@ abstract class PluginManager extends \Includes\Decorator\Utils\AUtils
     protected static function getPluginClass($plugin)
     {
         return '\Includes\Decorator\Plugin\\' . $plugin . '\Main';
-    }
-
-    /**
-     * Check if plugin is available
-     *
-     * @param string $status value from the config file
-     *
-     * @return bool
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected static function checkStatus($status)
-    {
-        return self::STATUS_OFF !== $status;
     }
 
     /**
@@ -157,15 +162,22 @@ abstract class PluginManager extends \Includes\Decorator\Utils\AUtils
      */
     protected static function getPlugins()
     {
-        // Check config file
-        if (\Includes\Utils\FileManager::isFileReadable(static::getConfigFile())) {
+        if (!isset(static::$plugins)) {
 
-            // Read and check retrieved data
-            $data = static::parseConfigFile();
-            static::checkConfigData($data);
+            // Check config file
+            if (\Includes\Utils\FileManager::isFileReadable(static::getConfigFile())) {
 
-            // Save plugins list
-            static::$plugins = array_replace_recursive(static::$plugins, $data[self::SECTION_PLUGINS]);
+                // Read and check retrieved data
+                $data = static::parseConfigFile();
+                static::checkConfigData($data);
+
+                // Save plugins list
+                static::$plugins = array_keys($data[self::SECTION_PLUGINS], self::STATUS_ON);
+
+            } else {
+
+                throw new \Exception('Unable to read config file for the Decorator plugins');
+            }
         }
 
         return static::$plugins;
@@ -181,28 +193,84 @@ abstract class PluginManager extends \Includes\Decorator\Utils\AUtils
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected static function getPlugin($plugin)
+    protected static function getPluginInstance($plugin)
     {
-        if (!is_subclass_of(static::getPluginClass($plugin), self::CLASS_BASE)) {
-            throw new \Exception('Plugin "' . $plugin . '" does not extend the "' . self::CLASS_BASE . '" class');
+        if (!isset(static::$instancesCache[$plugin])) {
+
+            if (!is_subclass_of(static::getPluginClass($plugin), self::CLASS_BASE)) {
+                throw new \Exception('Plugin "' . $plugin . '" does not extend the "' . self::CLASS_BASE . '" class');
+            }
+
+            static::$instancesCache[$plugin] = call_user_func(array(static::getPluginClass($plugin), 'getInstance'));
         }
 
-        return call_user_func(array('\Includes\Decorator\Plugin\\' . $plugin . '\Main', 'getInstance'));
+        return static::$instancesCache[$plugin];
+    }
+
+    /**
+     * Compose hook handler method name
+     * 
+     * @param string $hook hook name
+     *  
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function getHookHandlerName($hook)
+    {
+        return 'executeHookHandler' . ucfirst($hook);
+    }
+
+    /**
+     * Check if plugin has a certain hook handler
+     * 
+     * @param string $plugin plugin name
+     * @param string $hook   hook name
+     *  
+     * @return bool
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function checkPluginHook($plugin, $hook)
+    {
+        return method_exists($this->getPluginInstance($plugin), $this->getHookHandlerName($hook));
+    }
+
+    /**
+     * Run the corresponded hook handler
+     *
+     * @param string $plugin plugin name
+     * @param string $hook   hook name
+     * @param array  $args   handler call arguments  
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function executeHookHandler($plugin, $hook, array $args = array())
+    {
+        return call_user_func_array(array($this->getPluginInstance($plugin), $this->getHookHandlerName($hook)), $args);
     }
 
 
     /**
-     * Run all plugins
+     * Check and execute hook handlers
      * 
+     * @param string $hook hook name
+     * @param array  $args arguments of the hook handler call
+     *  
      * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function runAll()
+    public static function invokeHook($hook, array $args = array())
     {
-        foreach (static::getPlugins() as $plugin => $status) {
-            !static::checkStatus($status) ?: static::getPlugin($plugin)->run();
+        foreach (static::getPlugins() as $plugin) {
+            !static::checkPluginHook($plugin, $hook) ?: static::executeHookHandler($plugin, $hook, $args);
         }
     }
 }
