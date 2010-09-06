@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Products list display mode selector
+ * Shopping cart box
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -10,13 +10,9 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *
- * @ListChild (list="itemsList.header", weight="20")
+ * @ListChild (list="itemsList.product.cart")
  *}
 
-<div class="display-modes" IF="isDisplayModeSelectorVisible()">
-  <ul>
-    <li FOREACH="displayModes,key,name" class="{getDisplayModeLinkClassName(key)}">
-      <a href="{getActionUrl(_ARRAY_(#displayMode#^key))}" class="{key}">{name}</a>
-    </li>
-  </ul>
+<div class="cart-tray-box">
+  <div class="text">Drop items here to shop</div>
 </div>

@@ -39,6 +39,7 @@ ItemsList.prototype.changeSortOrder = function()
   return this.process('sortOrder', ('asc' == this.URLParams.sortOrder) ? 'desc' : 'asc');
 }
 
+
 ItemsList.prototype.listeners.displayModes = function(handler)
 {
   $('.display-modes a', handler.container).click(
@@ -64,7 +65,21 @@ ItemsList.prototype.listeners.sortOrderModes = function(handler)
       return !handler.changeSortOrder();
     }
   );
+}
 
+ItemsList.prototype.listeners.dragCells = function(handler)
+{
+  $('table.list-body td.hproduct, table.list-body-list td.body', handler.container).mousedown(
+    function() {
+      return $('div.cart-tray-box').show();
+    }
+  );
+
+  $('*').mouseup(
+    function() {
+      return $('div.cart-tray-box').hide();
+    } 
+  );
 }
 
 

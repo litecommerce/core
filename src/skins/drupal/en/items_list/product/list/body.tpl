@@ -10,6 +10,9 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
+
+{displayViewListContent(#itemsList.product.cart#)}
+
 <table class="list-body list-body-list">
 
   <tr FOREACH="getPageData(),product" class="info">

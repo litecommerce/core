@@ -11,7 +11,11 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
+
+{displayViewListContent(#itemsList.product.cart#)}
+
 <p />
+
 <table class="list-body list-body-grid list-body-grid-{getParam(#gridColumns#)}-columns" IF="!isCSSLayout()">
 
   <tbody FOREACH="getProductRows(),row">
