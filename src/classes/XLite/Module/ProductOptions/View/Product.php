@@ -75,4 +75,22 @@ class Product extends \XLite\View\Product implements \XLite\Base\IDecorator
             ? $saved[$this->getProduct()->getProductId()]
             : array();
     }
+
+    /**
+     * Register CSS files
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCSSFiles()
+    {
+        $list = parent::getCSSFiles();
+
+        $list[] = 'modules/ProductOptions/product_details.css';
+
+        return $list;
+    }
+
 }

@@ -11,7 +11,7 @@
  * @since     3.0.0
  * @ListChild (list="productDetails.base", weight="20")
  *}
-<div IF="product.hasImage()" class="product-thumbnail">
+<div IF="product.hasImage()" class="image">
 
   {displayViewListContent(#productDetails.image#)}
 

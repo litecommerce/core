@@ -11,5 +11,9 @@
  * @since     3.0.0
  * @ListChild (list="productDetails.base", weight="40")
  *}
-<h3>{t(#Description#)}</h3>
+<div class="tabs">
+  <ul class="tabs primary">
+    <li class="active"><a href="#description">{t(#Description#)}</a></li>
+  </ul>
+</div>
 {displayViewListContent(#productDetails.info#)}

@@ -26,23 +26,22 @@
  * @since      3.0.0
  */
 
-namespace XLite\View;
+namespace XLite\View\Button;
 
 /**
- * Product image
- * 
+ * Facebook Like button
+ *
  * @package XLite
  * @see     ____class_see____
- * @since   3.0.0
- * @ListChild (list="productDetails.image", weight="10")
+ * @since   3.0
  */
-class ProductImage extends \XLite\View\AView
+class FacebookLike extends \XLite\View\AView
 {
     /**
-     * Widget parameter names
+     * Widget parameters
      */
-
-    const PARAM_PRODUCT = 'product';
+    const PARAM_WIDTH  = 'width';
+    const PARAM_HEIGHT = 'height';
 
 
     /**
@@ -54,21 +53,7 @@ class ProductImage extends \XLite\View\AView
      */
     protected function getDefaultTemplate()
     {
-        return 'product_details/parts/image.box.tpl';
-    }
-
-    /**
-     * Return current template
-     *
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getTemplate()
-    {
-        return $this->getParam(self::PARAM_PRODUCT)->hasZoomImage()
-            ? 'product_details/parts/image.zoom.tpl'
-            : $this->getDefaultTemplate();
+        return 'button/facebook_like.tpl';
     }
 
     /**
@@ -83,60 +68,55 @@ class ProductImage extends \XLite\View\AView
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_PRODUCT => new \XLite\Model\WidgetParam\Object(
-                'Product',
-                $this->getProduct(),
-                false,
-                '\XLite\Model\Product'
+            self::PARAM_WIDTH => new \XLite\Model\WidgetParam\Int(
+                'Width',
+                450
+            ),
+            self::PARAM_HEIGHT => new \XLite\Model\WidgetParam\Int(
+                'Height',
+                80
             ),
         );
+
     }
 
     /**
-     * Get zoom image 
+     * Get current URL 
      * 
      * @return string
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getZoomImageURL()
+    public function getCurrentURL()
     {
-        return $this->getParam(self::PARAM_PRODUCT)->getZoomImage()->getURL();
+        return (\XLite\Core\Request::getInstance()->isHTTPS() ? 'https' : 'http')
+            . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
     }
 
     /**
-     * Register JS files
-     *
-     * @return array
+     * Get width 
+     * 
+     * @return integer
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getJSFiles()
+    public function getWidth()
     {
-        $list = parent::getJSFiles();
-
-        $list[] = 'js/cloud-zoom.min.js';
-
-        return $list;
+        return $this->getParam(self::PARAM_WIDTH);
     }
 
     /**
-     * Register CSS files
-     *
-     * @return array
+     * Get height 
+     * 
+     * @return integer
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getCSSFiles()
+    public function getHeight()
     {
-        $list = parent::getCSSFiles();
-
-        $list[] = 'css/cloud-zoom.css';
-
-        return $list;
+        return $this->getParam(self::PARAM_HEIGHT);
     }
 }
-

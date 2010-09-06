@@ -12,7 +12,7 @@
  */
 $(document).ready(
   function() {
-    $('.di-gallery a').lightBox(
+    $('.gallery a').lightBox(
       {
         fixedNavigation: true,
         imageLoading:    lightBoxImagesDir + '/lightbox-ico-loading.gif',
