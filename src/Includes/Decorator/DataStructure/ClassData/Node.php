@@ -70,7 +70,7 @@ class Node extends \Includes\DataStructure\Node\Tree
     }
 
     /**
-     * Get tag valus from class comment
+     * Get tag value from class comment
      * 
      * @param string $name tag name
      *  
@@ -79,9 +79,11 @@ class Node extends \Includes\DataStructure\Node\Tree
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function hasTag($name)
+    public function getTag($name)
     {
-        return ($tags = $this->__get(\Includes\Decorator\ADecorator::N_TAGS)) && isset($tags[$name]);
+        $tags = $this->__get(\Includes\Decorator\ADecorator::N_TAGS);
+
+        return isset($tags[$name = strtolower($name)]) ? $tags[$name] : null;
     }
 
     /**

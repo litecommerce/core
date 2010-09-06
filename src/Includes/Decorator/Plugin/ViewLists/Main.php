@@ -38,6 +38,66 @@ namespace Includes\Decorator\Plugin\ViewLists;
 class Main extends \Includes\Decorator\Plugin\APlugin
 {
     /**
+     * getMappedPHPClasses 
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getMappedPHPClasses()
+    {
+        return array_filter(
+            \Includes\Decorator::getInstance()->getClassesTree()->getIndex(),
+            function (\Includes\Decorator\DataStructure\ClassData\Node $node) {
+                return !is_null($node->getTag('ListChild'));
+            }
+        );
+    }
+
+    /**
+     * getRepo 
+     * 
+     * @return \XLite\Model\Repo\ViewList
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getRepo()
+    {
+        return \XLite\Core\Database::getRepo('\XLite\Model\ViewList');
+    }
+
+    /**
+     * clearAll 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function clearAll()
+    {
+        $this->getRepo()->deleteInBatch($this->getRepo()->findAll());
+    }
+
+    /**
+     * handlePHPClasses 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function handlePHPClasses()
+    {
+        /* foreach ($this->getMappedPHPClasses() as $node) {
+
+        } */ 
+    }
+
+
+    /**
      * Generate widget lists
      * 
      * @return void
@@ -45,7 +105,12 @@ class Main extends \Includes\Decorator\Plugin\APlugin
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function run()
+    public function executeHookHandlerRun()
     {
+        // Truncate old
+        $this->clearAll();
+
+        // Create new
+        $this->handlePHPClasses();
     }
 }
