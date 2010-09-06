@@ -174,7 +174,7 @@ abstract class I18n extends \XLite\Model\AEntity
 
         if (!$result) {
             $className = $this instanceof \Doctrine\ORM\Proxy\Proxy
-                ? $this->_entityClass . 'Translation'
+                ? get_parent_class($this) . 'Translation'
                 : get_called_class() . 'Translation';
             $result = new $className();
             $result->setOwner($this);
