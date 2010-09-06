@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Products list (table variant)
+ * Item SKU
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -9,18 +9,8 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
+ *
+ * @ListChild (list="itemsList.product.table.customer.title", weight="40")
  *}
 
-<table class="list-body list-body-table">
-
-  <tr>
-    {displayListPart(#title#)}
-  </td>
-
-  <tr FOREACH="getPageData(),product" class="info">
-    {displayListPart(#info#,_ARRAY_(#product#^product))}
-  </tr>
-
-  {displayListPart(#items#)}
-
-</table>
+<th class="price">Price</th>

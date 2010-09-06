@@ -39,13 +39,11 @@
 }
 
 /* Sort box */
-.sort-box
-{
+.sort-box {
   float: right;
 }
 
-.sort-box a
-{
+.sort-box a {
   font-size: 1.4em;
   text-decoration: none;
   padding-bottom: 4px;
@@ -74,6 +72,7 @@
 
 table.list-body {
   height: 100%;
+  border-style: none;
 }
 
 table.list-body td {
@@ -82,62 +81,41 @@ table.list-body td {
   height: 100%;
 }
 
-table.list-body-grid-1-columns td
-{
+table.list-body-grid-1-columns td {
   width: 100%;
 }
-table.list-body-grid-2-columns td
-{
+
+table.list-body-grid-2-columns td {
   width: 50%;
 }
-table.list-body-grid-3-columns td
-{
+
+table.list-body-grid-3-columns td {
   width: 32%;
 }
-table.list-body-grid-5-columns td
-{
+
+table.list-body-grid-5-columns td {
   width: 25%;
 }
-table.list-body-grid-6-columns td
-{
+
+table.list-body-grid-6-columns td {
   width: 16.75%;
 }
 
-table.list-body a
-{
+table.list-body a {
   display: block;
 }
 
-table.list-body td.hproduct a.product-thumbnail
-{
+table.list-body td.hproduct a.product-thumbnail {
   text-align: center;
-}
-
-table.list-body a.product-name
-{
-  font-size: 1.5em;
-  text-decoration: none;
 }
 
 table.list-body-list td.hproduct {
   min-width: 8em;
 }
 
-table.list-body-grid a span
-{
-  display: block;
-}
-
-table.list-body-grid .buttons td
-{
-  text-align: center;
-  padding: 0.5em 0 1.5em;
-}
-
-table.list-body-grid .buttons form
-{
-  display: inline;
-  margin-left: 1em;
+table.list-body-grid td.separator {
+  width: 2%;
+  height: 1.5em;
 }
 
 table.list-body div.quick-look-cell {
@@ -172,12 +150,60 @@ table.list-body div.quick-look-cell.thumbnail div.button button {
   margin-top: 20%;
 }
 
+table.list-body input.product-add2cart {
+  background: transparent url(images/bag/small.png) no-repeat;
+  width: 29px;
+  height: 26px;
+}
+
 table.list-body-list td.body {
   width: 100%;
 }
 
 table.list-body-list div.quick-look-cell div.drag-n-drop {
   float: right;
+}
+
+table.list-body-table th {
+  border: 0;
+  border-top: 1px #e4e4e4 solid;
+  background: #f8f8f8;
+  color: #949494;
+  text-align: left;
+  vertical-align: bottom;
+  padding: 0.8em;
+}
+
+table.list-body-table th.price {
+  text-align: right;
+}
+
+table.list-body-table td {
+  vertical-align: middle;
+  padding: 0.5em;
+  white-space: nowrap;
+  border-top: 1px #e4e4e4 solid;
+}
+
+table.list-body-table td.sku {
+  color: #4e4e4e;
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+table.list-body-table td.name {
+  white-space: normal;
+  width: 100%;
+}
+
+table.list-body-table td.price {
+  padding-left: 1.5em;
+  text-align: right;
+}
+
+table.list-body-table td.qty input.product-qty {
+  width: 3em;
+  text-align: right;
 }
 
 table.list-body-grid td.hproduct:hover div.quick-look-cell div.drag-n-drop,
