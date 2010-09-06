@@ -11,4 +11,4 @@
  * @since     3.0.0
  * @ListChild (list="itemsList.product.list.customer.info", weight="30")
  *}
-<br /><widget class="\XLite\View\Price" product="{product}" displayOnlyPrice="true" IF="isShowPrice()" />
+<widget class="\XLite\View\Price" product="{product}" displayOnlyPrice="true" IF="isShowPrice()" />
