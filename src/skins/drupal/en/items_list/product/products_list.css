@@ -73,7 +73,6 @@
 table.list-body {
   height: 100%;
   border-style: none;
-  cursor: move;
 }
 
 table.list-body td {
@@ -203,10 +202,42 @@ table.list-body-table td.qty input.product-qty {
   text-align: right;
 }
 
+table.list-body td.hproduct,
+table.list-body td.body {
+  cursor: move;
+}
+
 table.list-body-grid td.hproduct:hover div.quick-look-cell div.drag-n-drop,
 table.list-body-grid td.hproduct:hover div.quick-look-cell div.button,
 table.list-body-list tr:hover div.quick-look-cell div.drag-n-drop,
 table.list-body-list tr:hover div.quick-look-cell div.button {
   visibility: visible;
+}
+
+div.cart-tray-box {
+  position: fixed;
+  top: 5em;
+  right: 5em;
+  z-index: 1000;
+  border: 1px #bbc7d2 solid;
+  width: 158px;
+  height: 221px;
+  display: none;
+  background: #fff url(images/bag/tray.png) no-repeat center center;
+  -moz-border-radius: 0.25em;
+  -webkit-border-radius: 0.25em;
+  border-radius: 0.25em;
+  box-shadow: 0.25em 0.25em 0.25em #bbc7d2;
+  -moz-box-shadow: 0.25em 0.25em 0.25em #bbc7d2;
+  -webkit-box-shadow: 0.25em 0.25em 0.25em #bbc7d2;
+}
+
+div.cart-tray-box div.text {
+  width: 8em;
+  font-weight: bold;
+  text-align: center;
+  color: #7594b0;
+  margin: 0 auto;
+  margin-top: 100%;
 }
 

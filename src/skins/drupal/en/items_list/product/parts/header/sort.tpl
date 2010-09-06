@@ -9,8 +9,10 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
+ *
  * @ListChild (list="itemsList.header")
  *}
+
 <div IF="isSortBySelectorVisible()" class="sort-box">
 
   <span>Sort by</span>
