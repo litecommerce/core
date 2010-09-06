@@ -10,7 +10,9 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<div class="product-thumbnail-box">
-  <widget class="\XLite\View\Image" image="{product.getImage()}" className="photo product-thumbnail" id="product_image_{product.product_id}" maxWidth="100" centerImage />
+<div class="image-box">
+  <a IF="product.getActiveDetailedImages()" class="arrow left-arrow" href="javascript:void(0);"><img src="src/spacer.gif" alt="" /></a>
+  <widget class="\XLite\View\Image" image="{product.getImage()}" className="photo product-thumbnail" id="product_image_{product.product_id}" maxWidth="460" centerImage />
   <widget class="\XLite\View\SaveMark" product="{product}" />
+  <a IF="product.getActiveDetailedImages()" class="arrow right-arrow" href="javascript:void(0);"><img src="src/spacer.gif" alt="" /></a>
 </div>

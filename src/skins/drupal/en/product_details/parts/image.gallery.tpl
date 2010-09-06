@@ -10,12 +10,12 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<ul class="di-gallery">
-  <li FOREACH="product.getActiveDetailedImages(),image">
-    <div><a href="{image.getFrontURL()}"><widget class="\XLite\View\Img" image="{image}" alt="{image.getAlt()}" maxWidth="50" maxHeight="40" /></a></div>
+<a href="javascript:void(0);" class="loupe" onclick="javascript: $('.product-details .gallery li.selected a').eq(0).trigger('click');"><img src="images/spacer.gif" alt="" /></a>
+<ul class="gallery">
+  <li FOREACH="product.getActiveDetailedImages(),i,image" class="{getListItemClass(i)}">
+    <a href="{image.getFrontURL()}"><widget class="\XLite\View\Img" image="{image}" alt="{image.getAlt()}" maxWidth="60" maxHeight="60" /></a>
   </li>
 </ul>
-<a href="javascript:void(0);" onclick="javascript: $('.di-gallery a').eq(0).trigger('click');">See all images ({product.countActiveDetailedImages()})</a>
 <script type="text/javascript">
 var lightBoxImagesDir = '{getLightBoxImagesDir()}';
 </script>

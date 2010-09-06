@@ -11,7 +11,7 @@
  * @since     3.0.0
  * @ListChild (list="productDetails.base", weight="30")
  *}
-<div class="product-body">
+<div class="body">
 
   {displayViewListContent(#productDetails.main#)}
 

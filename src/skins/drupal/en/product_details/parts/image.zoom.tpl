@@ -10,22 +10,11 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<a href="{getZoomImageURL()}" class="product-thumbnail">
-  <widget class="\XLite\View\Image" image="{product.getImage()}" className="photo product-thumbnail" id="product_image_{product.getProductId()}" maxWidth="100" centerImage />
-  <widget class="\XLite\View\SaveMark" product="{product}" />
-</a>
-<script type="text/javascript">
-$(document).ready(
-  function() {
-    $('#product_image_{product.product_id}').parents('a').eq(0).jqzoom(
-      {
-        title: false,
-        showPreload: false,
-        zoomWidth: 200,
-        zoomHeight: 240,
-        zoomType: 'reverse'
-      }
-    );
-  }
-);
-</script>
+<div class="image-box">
+  <a IF="product.getActiveDetailedImages()" class="arrow left-arrow" href="javascript:void(0);"><img src="src/spacer.gif" alt="" /></a>
+  <a href="{getZoomImageURL()}" class="cloud-zoom" id="pimage_{product.product_id}">
+    <widget class="\XLite\View\Img" image="{product.getImage()}" className="photo product-thumbnail" id="product_image_{product.product_id}" maxWidth="460" centerImage />
+    <widget class="\XLite\View\SaveMark" product="{product}" />
+  </a>
+  <a IF="product.getActiveDetailedImages()" class="arrow right-arrow" href="javascript:void(0);"><img src="src/spacer.gif" alt="" /></a>
+</div>

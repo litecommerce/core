@@ -11,4 +11,4 @@
  * @since     3.0.0
  * @ListChild (list="productDetails.buttons", weight="10")
  *}
-<widget class="\XLite\View\Button\Submit" label="Add to Cart" style="bright-button big-button add2cart-button" />
+<widget class="\XLite\View\Button\Submit" label="Add to Bag" style="bright add2cart" />

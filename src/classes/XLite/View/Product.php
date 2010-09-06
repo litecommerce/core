@@ -148,7 +148,6 @@ class Product extends \XLite\View\Dialog
         return true;
     }
 
-
     /**
      * Return list of targets allowed for this widget
      *

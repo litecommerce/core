@@ -108,6 +108,40 @@ class ProductDetailedGallery extends \XLite\View\AView
     }
 
     /**
+     * Get list item class name
+     * 
+     * @param integer $i Detailed image index
+     *  
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getListItemClass($i)
+    {
+        return 0 == $i ? 'selected' : '';
+    }
+
+    /**
+     * Get image URL (middle-size)
+     * 
+     * @param \XLite\Model\Base\Image $image  Image
+     * @param integer                 $width  Width limit
+     * @param integer                 $height Height limit
+     *  
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getMiddleImageURL(\XLite\Model\Base\Image $image, $width, $height)
+    {
+        $result = $image->getResizedURL($width, $height);
+
+        return $result[2];
+    }
+
+    /**
      * Register JS files
      *
      * @return array
