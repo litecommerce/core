@@ -92,6 +92,8 @@ class Zone extends \XLite\Model\Repo\ARepo
     protected function defineGetZones()
     {
         return $this->createQueryBuilder()
+            ->addSelect('ze')
+            ->leftJoin('z.zone_elements', 'ze')
             ->addOrderBy('z.is_default', 'DESC')
             ->addOrderBy('z.zone_name');
     }
@@ -115,11 +117,10 @@ class Zone extends \XLite\Model\Repo\ARepo
             try {
                 $data = $this->defineGetZone($zoneId)->getQuery()->getSingleResult();
                 $this->saveToCache($data, 'zone', array('zone_id' => $zoneId));
-        
+
             } catch (\Doctrine\ORM\NoResultException $exception) {
                 $data = null;
             }
-
         }
 
         return $data;
@@ -138,8 +139,9 @@ class Zone extends \XLite\Model\Repo\ARepo
     protected function defineGetZone($zoneId)
     {
         return $this->createQueryBuilder()
+            ->addSelect('ze')
+            ->leftJoin('z.zone_elements', 'ze')
             ->andWhere('z.zone_id = :zoneId')
-            ->setMaxResults(1)
             ->setParameter('zoneId', $zoneId);
     }
 
