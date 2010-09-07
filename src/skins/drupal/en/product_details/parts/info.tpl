@@ -13,7 +13,10 @@
  *}
 <div class="tabs">
   <ul class="tabs primary">
-    <li class="active"><a href="#description">{t(#Description#)}</a></li>
+    <li class="active"><a href="#description" class="active">{t(#Description#)}</a></li>
+    <li><a href="#taf">{t(#Tell a friend#)}</a></li>
+    <li><a href="#cr">{t(#Customer reviews#)}</a></li>
+    <li><a href="#rp">{t(#Related products#)}</a></li>
   </ul>
 </div>
 {displayViewListContent(#productDetails.info#)}
