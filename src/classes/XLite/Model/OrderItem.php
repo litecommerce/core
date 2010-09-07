@@ -156,7 +156,7 @@ class OrderItem extends \XLite\Model\Base\ModifierOwner
      * @see    ____var_see____
      * @since  3.0.0
      * 
-     * OneToOne    (targetEntity="XLite\Model\Product")
+     * @OneToOne    (targetEntity="XLite\Model\Product")
      * @JoinColumn (name="object_id", referencedColumnName="product_id")
      */
     protected $product;
