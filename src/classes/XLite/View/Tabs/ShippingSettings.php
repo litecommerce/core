@@ -162,7 +162,7 @@ class ShippingSettings extends \XLite\View\Tabs\ATabs
     {
         if (isset(\XLite\Core\Request::getInstance()->zoneid)) {
             $zone = \XLite\Core\Database::getRepo('XLite\Model\Zone')
-                ->getZone(\XLite\Core\Request::getInstance()->zoneid);
+                ->findZone(\XLite\Core\Request::getInstance()->zoneid);
 
             if (!isset($zone)) {
                 \XLite\Core\TopMessage::getInstance()->add(
@@ -189,7 +189,7 @@ class ShippingSettings extends \XLite\View\Tabs\ATabs
     public function getShippingZones()
     {
         if (!isset($this->zones)) {
-            $this->zones = \XLite\Core\Database::getRepo('XLite\Model\Zone')->getZones();
+            $this->zones = \XLite\Core\Database::getRepo('XLite\Model\Zone')->findAllZones();
         }
 
         return $this->zones;

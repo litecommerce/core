@@ -48,9 +48,9 @@ class XLite_Tests_Model_Zone extends XLite_Tests_TestCase
                 'state'   => 'NY',
                 'city'    => 'New Worker',
                 'zipcode' => '10134',
-                'address' => 'Some address',
+                'address' => '92nd Street Y 1395 Lexington Avenue',
             ),
-            'weight' => 0x01 + 0x02 + 0x08,
+            'weight' => 0x01 + 0x02 + 0x08 + 0x20,
         );
 
         $data[] = array(
@@ -102,7 +102,21 @@ class XLite_Tests_Model_Zone extends XLite_Tests_TestCase
         );
 
         foreach ($data as $i => $dt) {
-            $zone = \XLite\Core\Database::getRepo('XLite\Model\Zone')->getZone($dt['zoneid']);
+
+            $zone = \XLite\Core\Database::getRepo('XLite\Model\Zone')->findZone($dt['zoneid']);
+            
+            if (20 == $zone->getZoneId()) {
+                $zoneElement = new \XLite\Model\ZoneElement();
+                $zoneElement->setZoneId(20);
+                $zoneElement->setElementValue('%Lexington%');
+                $zoneElement->setElementType('A');
+                $zoneElement->setZone($zone);
+
+                $zone->addZoneElements($zoneElement);
+
+                $flag = true;
+            }
+
             $this->assertEquals($dt['weight'], $zone->getZoneWeight($dt['address']), 'check ' . $i . ' iteration');
         }
     }
@@ -117,7 +131,7 @@ class XLite_Tests_Model_Zone extends XLite_Tests_TestCase
      */
     public function testGetZoneCountries()
     {
-        $zone = \XLite\Core\Database::getRepo('XLite\Model\Zone')->getZone(20);
+        $zone = \XLite\Core\Database::getRepo('XLite\Model\Zone')->findZone(20);
 
         $includedCountries = $zone->getZoneCountries();
         $this->assertTrue(is_array($includedCountries), 'getZoneCountries() must return an array');
@@ -160,7 +174,7 @@ class XLite_Tests_Model_Zone extends XLite_Tests_TestCase
      */
     public function testGetZoneStates()
     {
-        $zone = \XLite\Core\Database::getRepo('XLite\Model\Zone')->getZone(20);
+        $zone = \XLite\Core\Database::getRepo('XLite\Model\Zone')->findZone(20);
 
         $includedStates = $zone->getZoneStates();
         $this->assertTrue(is_array($includedStates), 'getZoneStates() must return an array');
@@ -203,7 +217,7 @@ class XLite_Tests_Model_Zone extends XLite_Tests_TestCase
      */
     public function testGetZoneCities()
     {
-         $zone = \XLite\Core\Database::getRepo('XLite\Model\Zone')->getZone(20);
+         $zone = \XLite\Core\Database::getRepo('XLite\Model\Zone')->findZone(20);
         
          $cities = $zone->getZoneCities();
 
@@ -220,7 +234,7 @@ class XLite_Tests_Model_Zone extends XLite_Tests_TestCase
      */
     public function testGetZoneZipCodes()
     {
-         $zone = \XLite\Core\Database::getRepo('XLite\Model\Zone')->getZone(20);
+         $zone = \XLite\Core\Database::getRepo('XLite\Model\Zone')->findZone(20);
         
          $zipcodes = $zone->getZoneZipCodes();
 
@@ -237,7 +251,7 @@ class XLite_Tests_Model_Zone extends XLite_Tests_TestCase
      */
     public function testGetZoneAddresses()
     {
-         $zone = \XLite\Core\Database::getRepo('XLite\Model\Zone')->getZone(20);
+         $zone = \XLite\Core\Database::getRepo('XLite\Model\Zone')->findZone(20);
 
          $zoneElement = new \XLite\Model\ZoneElement();
          $zoneElement->setZoneId(20);
@@ -262,13 +276,13 @@ class XLite_Tests_Model_Zone extends XLite_Tests_TestCase
      */
     public function testHasZoneElements()
     {
-        $zone = \XLite\Core\Database::getRepo('XLite\Model\Zone')->getZone(20);
+        $zone = \XLite\Core\Database::getRepo('XLite\Model\Zone')->findZone(20);
         $this->assertTrue($zone->hasZoneElements(), 'zone #20 (New York zone) is empty');
 
-        $zone = \XLite\Core\Database::getRepo('XLite\Model\Zone')->getZone(50);
+        $zone = \XLite\Core\Database::getRepo('XLite\Model\Zone')->findZone(50);
         $this->assertFalse($zone->hasZoneElements(), 'zone #50 (Atlantida) is not empty');
 
-        $zone = \XLite\Core\Database::getRepo('XLite\Model\Zone')->getZone(1);
+        $zone = \XLite\Core\Database::getRepo('XLite\Model\Zone')->findZone(1);
         $this->assertFalse($zone->hasZoneElements(), 'zone #1 (Default zone) is not empty');
 
     }
@@ -283,7 +297,7 @@ class XLite_Tests_Model_Zone extends XLite_Tests_TestCase
      */
     public function testGetElementsByType()
     {
-        $zone = \XLite\Core\Database::getRepo('XLite\Model\Zone')->getZone(20);
+        $zone = \XLite\Core\Database::getRepo('XLite\Model\Zone')->findZone(20);
 
         $elements = $zone->getElementsByType('S');
 
@@ -303,7 +317,7 @@ class XLite_Tests_Model_Zone extends XLite_Tests_TestCase
      */
     public function testGetZoneId()
     {
-        $zone = \XLite\Core\Database::getRepo('XLite\Model\Zone')->getZone(20);
+        $zone = \XLite\Core\Database::getRepo('XLite\Model\Zone')->findZone(20);
 
         $this->assertNotNull($zone, 'Zone not found');
         $this->assertEquals(20, $zone->getZoneId(), 'Zone Id does not match');
@@ -322,7 +336,7 @@ class XLite_Tests_Model_Zone extends XLite_Tests_TestCase
      */
     public function testGetZoneName()
     {
-        $zone = \XLite\Core\Database::getRepo('XLite\Model\Zone')->getZone(20);
+        $zone = \XLite\Core\Database::getRepo('XLite\Model\Zone')->findZone(20);
 
         $this->assertNotNull($zone, 'Zone not found');
         $this->assertEquals('New York area', $zone->getZoneName(), 'Zone name does not match');
@@ -342,11 +356,30 @@ class XLite_Tests_Model_Zone extends XLite_Tests_TestCase
      */
     public function testGetIsDefault()
     {
-        $zone = \XLite\Core\Database::getRepo('XLite\Model\Zone')->getZone(20);
+        $zone = \XLite\Core\Database::getRepo('XLite\Model\Zone')->findZone(20);
         $this->assertEquals(0, $zone->getIsDefault(), 'Zone #20 must not to be a default');
 
-        $zone = \XLite\Core\Database::getRepo('XLite\Model\Zone')->getZone(1);
+        $zone = \XLite\Core\Database::getRepo('XLite\Model\Zone')->findZone(1);
         $this->assertEquals(1, $zone->GetIsDefault(), 'Zone #1 must be a default');
+    }
+
+    /**
+     * testSetIsDefault 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function testSetIsDefault()
+    {
+        $zone = \XLite\Core\Database::getRepo('XLite\Model\Zone')->findZone(20);
+        $zone->setIsDefault(1);
+        $this->assertEquals(1, $zone->getIsDefault(), 'Zone #20 setIsDefault(1) does not work');
+
+        $zone = \XLite\Core\Database::getRepo('XLite\Model\Zone')->findZone(1);
+        $zone->setIsDefault(0);
+        $this->assertEquals(0, $zone->GetIsDefault(), 'Zone #1 setIsDefault(0) does not work');
     }
 
 }

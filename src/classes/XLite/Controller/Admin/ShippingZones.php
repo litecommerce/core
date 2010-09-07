@@ -80,6 +80,8 @@ class ShippingZones extends \XLite\Controller\Admin\AAdmin
             // Remove zones by ids
             \XLite\Core\Database::getRepo('XLite\Model\Zone')->deleteInBatchById($zoneIds);
 
+            \XLite\Core\Database::getRepo('XLite\Model\Zone')->cleanCache();
+
             \XLite\Core\TopMessage::getInstance()->add(
                 $this->t('The selected zones have been deleted successfully'),
                 \XLite\Core\TopMessage::INFO
@@ -102,7 +104,7 @@ class ShippingZones extends \XLite\Controller\Admin\AAdmin
         $zoneId = intval($postedData['zoneid']);
 
         if (isset($postedData['zoneid']) && 0 < $zoneId) {
-            $zone = \XLite\Core\Database::getRepo('XLite\Model\Zone')->getZone($zoneId);
+            $zone = \XLite\Core\Database::getRepo('XLite\Model\Zone')->find($zoneId);
         }
 
         if (isset($zone)) {
@@ -110,7 +112,7 @@ class ShippingZones extends \XLite\Controller\Admin\AAdmin
             $data = $this->getElementsData($postedData);
 
             if (1 == $zoneId || !empty($data[\XLite\Model\ZoneElement::ZONE_ELEMENT_COUNTRY])) {
-            
+
                 // Remove all zone elements if exists
                 if ($zone->hasZoneElements()) {
 
@@ -138,6 +140,8 @@ class ShippingZones extends \XLite\Controller\Admin\AAdmin
                 \XLite\Core\Database::getEM()->persist($zone);
                 \XLite\Core\Database::getEM()->flush();
                 \XLite\Core\Database::getEM()->clear();
+
+                \XLite\Core\Database::getRepo('XLite\Model\Zone')->cleanCache($zoneId);
 
                 \XLite\Core\TopMessage::getInstance()->add(
                     $this->t('Zone details have been updated successfully'),
@@ -197,6 +201,8 @@ class ShippingZones extends \XLite\Controller\Admin\AAdmin
                     \XLite\Core\Database::getEM()->persist($zone);
                     \XLite\Core\Database::getEM()->flush();
 
+                    \XLite\Core\Database::getRepo('XLite\Model\Zone')->cleanCache($zoneId);
+
                     \XLite\Core\TopMessage::getInstance()->add(
                         $this->t('New zone has been created successfully'),
                         \XLite\Core\TopMessage::INFO
@@ -250,9 +256,11 @@ class ShippingZones extends \XLite\Controller\Admin\AAdmin
             foreach ($elements as $elementValue) {
 
                 $newElement = new \XLite\Model\ZoneElement();
-                $newElement->setZone($zone);
+
+                $newElement->setZoneId($zone->getZoneId());
                 $newElement->setElementValue($elementValue);
                 $newElement->setElementType($elementType);
+                $newElement->setZone($zone);
 
                 $zone->addZoneElements($newElement);
             }

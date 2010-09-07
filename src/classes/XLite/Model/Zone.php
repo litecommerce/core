@@ -50,7 +50,7 @@ class Zone extends \XLite\Model\AEntity
      * @GeneratedValue (strategy="AUTO")
      * @Column (type="integer", length="11", nullable=false)
      */
-    protected $zone_id = 0;
+    protected $zone_id;
 
     /**
      * Zone name
@@ -336,8 +336,8 @@ class Zone extends \XLite\Model\AEntity
      */
     protected function checkZoneCountries($address, $elements)
     {
-        return isset($address['country'])
-            && !empty($elements)
+        return !empty($elements)
+            && isset($address['country'])
             && in_array($address['country'], $elements);
     }
 

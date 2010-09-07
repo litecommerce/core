@@ -75,7 +75,7 @@ class Markup extends \XLite\Model\Repo\ARepo
         if (isset($address)) {
             // Get customer zone sorted out by weight
             $customerZones = \XLite\Core\Database::getRepo('\XLite\Model\Zone')
-                ->getApplicableZones($address);
+                ->findApplicableZones($address);
         }
 
         // Iterate through zones and generate markups list

@@ -62,19 +62,41 @@ class Zone extends \XLite\Model\Repo\ARepo
     }
 
     /**
-     * getZones 
+     * cleanCache 
      * 
+     * @param int $zoneId Zone Id
+     *  
      * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getZones()
+    public function cleanCache($zoneId = null)
+    {
+        $this->deleteCache('all');
+        
+        if (isset($zoneId)) {
+            $this->deleteCache('zone.' . sprintf('%d', $zoneId));
+
+        } else {
+            $this->deleteCache('zone');
+        }
+    }
+
+    /**
+     * findAllZones 
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function findAllZones()
     {
         $data = $this->getFromCache('all');
 
         if (!isset($data)) {
-            $data = $this->defineGetZones()->getQuery()->getResult();
+            $data = $this->defineFindAllZones()->getQuery()->getResult();
             $this->saveToCache($data, 'all');
         }
 
@@ -89,7 +111,7 @@ class Zone extends \XLite\Model\Repo\ARepo
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function defineGetZones()
+    protected function defineFindAllZones()
     {
         return $this->createQueryBuilder()
             ->addSelect('ze')
@@ -108,14 +130,14 @@ class Zone extends \XLite\Model\Repo\ARepo
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getZone($zoneId)
+    public function findZone($zoneId)
     {
         $data = $this->getFromCache('zone', array('zone_id' => $zoneId));
 
         if (!isset($data)) {
 
             try {
-                $data = $this->defineGetZone($zoneId)->getQuery()->getSingleResult();
+                $data = $this->defineFindZone($zoneId)->getQuery()->getSingleResult();
                 $this->saveToCache($data, 'zone', array('zone_id' => $zoneId));
 
             } catch (\Doctrine\ORM\NoResultException $exception) {
@@ -136,7 +158,7 @@ class Zone extends \XLite\Model\Repo\ARepo
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function defineGetZone($zoneId)
+    protected function defineFindZone($zoneId)
     {
         return $this->createQueryBuilder()
             ->addSelect('ze')
@@ -155,14 +177,14 @@ class Zone extends \XLite\Model\Repo\ARepo
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getApplicableZones($address)
+    public function findApplicableZones($address)
     {
         if (is_numeric($address['state'])) {
             $address['state'] = \XLite\Core\Database::getRepo('XLite\Model\State')->getCodeById($address['state']);
         }
 
         // Get all zones list
-        $allZones = $this->getZones();
+        $allZones = $this->findAllZones();
 
         $applicableZones = array();
 

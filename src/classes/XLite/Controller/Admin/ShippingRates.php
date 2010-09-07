@@ -114,7 +114,7 @@ class ShippingRates extends \XLite\Controller\Admin\AAdmin
                 }
 
                 if ('zone_id' == $key) {
-                    $zone = \XLite\Core\Database::getRepo('XLite\Model\Zone')->getZone(intval($value));
+                    $zone = \XLite\Core\Database::getRepo('XLite\Model\Zone')->findZone(intval($value));
 
                     if (isset($zone)) {
                         // Add zone object to the data
