@@ -39,80 +39,78 @@ namespace XLite\Model\Repo\Shipping;
 class Method extends \XLite\Model\Repo\ARepo
 {
     /**
-     * Returns all shipping processors 
+     * Adds additional condition to the query for checking if method is enabled
      * 
-     * @return array
-     * @access public
+     * @param \Doctrine\ORM\QueryBuilder $qb    Query builder object
+     * @param string                     $alias Entity alias
+     *  
+     * @return \Doctrine\ORM\QueryBuilder
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getShippingProcessors()
+    protected function addEnabledCondition(\Doctrine\ORM\QueryBuilder $qb, $alias = 'm')
     {
-        $data = $this->defineGetShippingProcessorsQuery()
-            ->getQuery()
-            ->getResult();
-
-        $processors = array();
-
-        foreach ($data as $value) {
-            if (\XLite\Core\Operator::isClassExists($value['processor'])) {
-                $processors[] = new $value['processor'];
-            }
+        if (!\XLite::getInstance()->isAdminZone()) {
+            $qb->andWhere($alias . '.enabled = 1');
         }
 
-        return $processors;
+        return $qb;
     }
 
     /**
-     * Define query builder object for getShippingProcessorsQuery()
+     * Define query builder object for findMethodsByProcessor()
      * 
+     * @param string $processorId Processor Id
+     *  
      * @return \Doctrine\ORM\QueryBuilder
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function defineGetShippingProcessorsQuery()
+    protected function defineFindMethodsByProcessor($processorId)
     {
-        return \XLite\Core\Database::getQB()
-            ->addSelect('m.processor')
-            ->from($this->_entityName, 'm')
-            ->groupBy('m.processor');
+        $qb = $this->createQueryBuilder('m')
+            ->andWhere('m.processor =:processorId')
+            ->setParameter('processorId', $processorId);
+
+        return $this->addEnabledCondition($qb);
     }
 
     /**
-     * Returns shipping methods by specified processor's class name 
+     * Define query builder object for findMethodsByIds()
      * 
-     * @param string $processor Processor class name
+     * @param array $ids Array of method_id values
+     *  
+     * @return \Doctrine\ORM\QueryBuilder
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineFindMethodsByIds($ids)
+    {
+        $qb = $this->createQueryBuilder('m');
+
+        return $qb->andWhere($qb->expr()->in('m.method_id', $ids));
+    }
+
+    /**
+     * Returns shipping methods by specified processor Id 
+     * 
+     * @param string $processorId Processor Id
      *  
      * @return array
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getMethodsByProcessor($processor)
+    public function findMethodsByProcessor($processorId)
     {
-        $data = $this->defineGetMethodsByProcessor($processor)
-            ->getQuery()
-            ->getResult();
+        $data = $this->defineFindMethodsByProcessor($processorId)
+           ->getQuery()
+           ->getResult();
 
         return $data;
-    }
-
-    /**
-     * Define query builder object for getMethodsByProcessor()
-     * 
-     * @param string $processor Processor class name
-     *  
-     * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function defineGetMethodsByProcessor($processor)
-    {
-        return $this->createQueryBuilder('m')
-            ->andWhere('m.processor =:processor')
-            ->setParameter('processor', $processor);
     }
 
     /**
@@ -125,45 +123,11 @@ class Method extends \XLite\Model\Repo\ARepo
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getMethodsByIds($ids)
+    public function findMethodsByIds($ids)
     {
-        $data = $this->defineGetMethodsByIds($ids)
+        $data = $this->defineFindMethodsByIds($ids)
             ->getQuery()
             ->getResult();
-
-        return $data;
-    }
-
-    /**
-     * Define query builder object for getMethodsByIds()
-     * 
-     * @param array $ids Array of method_id values
-     *  
-     * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function defineGetMethodsByIds($ids)
-    {
-        $qb = $this->createQueryBuilder('m');
-
-        return $qb->andWhere($qb->expr()->in('m.method_id', $ids));
-    }
-
-    /**
-     * Returns shipping method by method_id 
-     * 
-     * @param int $id Method Id
-     *  
-     * @return \XLite\Model\Shipping\Method
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getMethodById($id)
-    {
-        $data = $this->find($id);
 
         return $data;
     }

@@ -109,17 +109,4 @@ class Method extends \XLite\Model\Base\I18n
      */
     protected $shipping_markups;
 
-    /**
-     * Checks if shipping method has markups
-     * 
-     * @return bool
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function hasMarkups()
-    {
-        return count($this->getMarkups()) > 0;
-    }
-
 }

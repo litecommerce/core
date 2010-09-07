@@ -101,7 +101,7 @@ class ShippingRates extends \XLite\Controller\Admin\AAdmin
 
                 if ('method_id' == $key) {
                     $method = \XLite\Core\Database::getRepo('XLite\Model\Shipping\Method')
-                        ->getMethodById(intval($value));
+                        ->find(intval($value));
 
                     if (isset($method)) {
                         // Add shipping method object to the data

@@ -93,7 +93,7 @@ abstract class AProcessor extends \XLite\Base\SuperClass
     public function getShippingMethods()
     {
         return \XLite\Core\Database::getRepo('XLite\Model\Shipping\Method')
-            ->getMethodsByProcessor($this->getProcessorId());
+            ->findMethodsByProcessor($this->getProcessorId());
     }
 
     /**

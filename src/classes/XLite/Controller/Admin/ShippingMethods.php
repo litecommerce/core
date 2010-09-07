@@ -97,7 +97,7 @@ class ShippingMethods extends \XLite\Controller\Admin\AAdmin
 
         $methodIds = array_keys($postedData['methods']);
 
-        $methods = \XLite\Core\Database::getRepo('XLite\Model\Shipping\Method')->getMethodsByIds($methodIds);
+        $methods = \XLite\Core\Database::getRepo('XLite\Model\Shipping\Method')->findMethodsByIds($methodIds);
 
         $code = $this->getCurrentLanguage();
 
@@ -138,7 +138,7 @@ class ShippingMethods extends \XLite\Controller\Admin\AAdmin
         $postedData = \XLite\Core\Request::getInstance()->getData();
 
         $method = \XLite\Core\Database::getRepo('XLite\Model\Shipping\Method')
-            ->getMethodById(intval($postedData['method_id']));
+            ->find(intval($postedData['method_id']));
 
         if (isset($method)) {
 
