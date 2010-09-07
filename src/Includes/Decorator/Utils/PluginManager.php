@@ -172,7 +172,7 @@ abstract class PluginManager extends \Includes\Decorator\Utils\AUtils
                 static::checkConfigData($data);
 
                 // Save plugins list
-                static::$plugins = array_keys($data[self::SECTION_PLUGINS], self::STATUS_ON);
+                static::$plugins = array_keys(array_filter($data[self::SECTION_PLUGINS]));
 
             } else {
 
@@ -235,7 +235,7 @@ abstract class PluginManager extends \Includes\Decorator\Utils\AUtils
      */
     protected static function checkPluginHook($plugin, $hook)
     {
-        return method_exists($this->getPluginInstance($plugin), $this->getHookHandlerName($hook));
+        return method_exists(static::getPluginInstance($plugin), static::getHookHandlerName($hook));
     }
 
     /**
@@ -252,7 +252,7 @@ abstract class PluginManager extends \Includes\Decorator\Utils\AUtils
      */
     protected static function executeHookHandler($plugin, $hook, array $args = array())
     {
-        return call_user_func_array(array($this->getPluginInstance($plugin), $this->getHookHandlerName($hook)), $args);
+        return call_user_func_array(array(static::getPluginInstance($plugin), static::getHookHandlerName($hook)), $args);
     }
 
 
