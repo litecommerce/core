@@ -46,6 +46,12 @@ class ProductImage extends \XLite\View\AView
 
 
     /**
+     * Cloud zoom layer maximum width
+     */
+    const ZOOM_MAX_WIDTH = 460;
+
+
+    /**
      * Return widget default template
      *
      * @return string
@@ -103,6 +109,19 @@ class ProductImage extends \XLite\View\AView
     public function getZoomImageURL()
     {
         return $this->getParam(self::PARAM_PRODUCT)->getZoomImage()->getURL();
+    }
+
+    /**
+     * Get zoom layer width
+     *
+     * @return integer
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getZoomWidth()
+    {
+        return min($this->getParam(self::PARAM_PRODUCT)->getImage()->getWidth(), self::ZOOM_MAX_WIDTH);
     }
 
     /**

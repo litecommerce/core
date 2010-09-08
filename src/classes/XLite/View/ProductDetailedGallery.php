@@ -153,7 +153,7 @@ class ProductDetailedGallery extends \XLite\View\AView
     {
         $list = parent::getJSFiles();
 
-        $list[] = 'js/jquery.lightbox-0.5.min.js';
+        $list[] = 'js/jquery.colorbox-min.js';
 
         return $list;
     }
@@ -170,7 +170,7 @@ class ProductDetailedGallery extends \XLite\View\AView
     {
         $list = parent::getCSSFiles();
 
-        $list[] = 'css/jquery.lightbox-0.5.css';
+        $list[] = 'css/colorbox.css';
 
         return $list;
     }
