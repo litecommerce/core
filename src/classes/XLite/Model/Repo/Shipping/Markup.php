@@ -39,6 +39,128 @@ namespace XLite\Model\Repo\Shipping;
 class Markup extends \XLite\Model\Repo\ARepo
 {
     /**
+     * Adds markup condition to the query builder object
+     * 
+     * @param \Doctrine\ORM\QueryBuilder $qb     Query builder object
+     * @param \XLite\Model\Order         $order  Order object
+     * @param int                        $zoneId Zone Id
+     *  
+     * @return \Doctrine\ORM\QueryBuilder
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function addMarkupCondition($qb, $order, $zoneId)
+    {
+        $prepareSum = array(
+            'm.markup_flat',
+            '(m.markup_percent * :value / 100)',
+            '(m.markup_per_item * :items)',
+            '(m.markup_per_weight * :weight)'
+        );
+
+        return $qb->addSelect(implode(' + ', $prepareSum) . ' as markup_value')
+            ->andWhere('m.min_weight <= :weight')
+            ->andWhere('m.zone_id = :zoneId')
+            ->andWhere('m.max_weight >= :weight')
+            ->andWhere('m.min_total <= :total')
+            ->andWhere('m.max_total >= :total')
+            ->andWhere('m.min_items <= :items')
+            ->andWhere('m.max_items >= :items')
+            ->setParameters(
+                array_merge(
+                    $qb->getParameters(),
+                    array(
+                        'zoneId' => $zoneId,
+                        'weight' => $order->getWeight(),
+                        'total'  => $order->getSubtotal(),
+                        'items'  => $order->countShippedItems(),
+                        'value'  => $order->getSubtotal()
+                    )
+                )
+            );
+    }
+
+    /**
+     * Define query builder object for findMarkupsByProcessor()
+     * 
+     * @param string             $processor Processor class name
+     * @param \XLite\Model\Order $order     Order or cart object
+     * @param int                $zoneId    Zone Id
+     *  
+     * @return \Doctrine\ORM\QueryBuilder
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineFindMarkupsByProcessorQuery($processor, $order, $zoneId)
+    {
+        $qb = $this->createQueryBuilder('m')
+            ->addSelect('sm')
+            ->innerJoin('m.shipping_method', 'sm')
+            ->andWhere('sm.processor = :processor')
+            ->andWhere('sm.enabled = 1')
+            ->setParameters(
+                array(
+                    'processor' => $processor
+                )
+            );
+
+        $qb = $this->addMarkupCondition($qb, $order, $zoneId);
+
+        return $qb;
+    }
+
+    /**
+     * defineFindMarkupsByZoneAndMethodQuery 
+     * 
+     * @param int $zoneId   Zone Id
+     * @param int $methodId Method Id
+     *  
+     * @return \Doctrine\ORM\QueryBuilder
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineFindMarkupsByZoneAndMethodQuery($zoneId, $methodId)
+    {
+        $qb = $this->createQueryBuilder('m');
+
+        $qb = $qb->addSelect('sm')
+            ->innerJoin('m.shipping_method', 'sm')
+            ->andWhere('sm.enabled = 1');
+
+        if (isset($zoneId)) {
+            $qb = $qb->andWhere('m.zone_id = :zoneId')
+                ->setParameter('zoneId', $zoneId);
+        }
+
+        if (isset($methodId)) {
+            $qb = $qb->andWhere('m.method_id = :methodId')
+                ->setParameter('methodId', $methodId);
+        }
+
+        return $qb;
+    }
+
+    /**
+     * defineFindMarkupsByIdsQuery 
+     * 
+     * @param array $ids Array of markup id
+     *  
+     * @return \Doctrine\ORM\QueryBuilder
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineFindMarkupsByIdsQuery($ids)
+    {
+        $qb = $this->createQueryBuilder('m');
+
+        return $qb->andWhere($qb->expr()->in('m.markup_id', $ids));
+    }
+
+    /**
      * Returns shipping markups for order by specified processor
      * 
      * @param string             $processor Processor class name
@@ -49,7 +171,7 @@ class Markup extends \XLite\Model\Repo\ARepo
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getMarkupsByProcessor($processor, $order)
+    public function findMarkupsByProcessor($processor, $order)
     {
         $result = array();
 
@@ -81,7 +203,7 @@ class Markup extends \XLite\Model\Repo\ARepo
         // Iterate through zones and generate markups list
         foreach ($customerZones as $zone) {
 
-            $markups = $this->defineGetMarkupsByProcessorQuery($processor, $order, $zone->getZoneId())
+            $markups = $this->defineFindMarkupsByProcessorQuery($processor, $order, $zone->getZoneId())
                 ->getQuery()
                 ->getResult();
 
@@ -102,73 +224,7 @@ class Markup extends \XLite\Model\Repo\ARepo
     }
 
     /**
-     * Define query builder object for getMarkupsByProcessorQuery()
-     * 
-     * @param string             $processor Processor class name
-     * @param \XLite\Model\Order $order     Order or cart object
-     * @param int                $zoneId    Zone Id
-     *  
-     * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function defineGetMarkupsByProcessorQuery($processor, $order, $zoneId)
-    {
-        $qb = $this->createQueryBuilder('m')
-            ->addSelect('sm')
-            ->innerJoin('m.shipping_method', 'sm')
-            ->andWhere('sm.processor = :processor')
-            ->andWhere('sm.enabled = 1')
-            ->setParameters(
-                array(
-                    'processor' => $processor
-                )
-            );
-
-        $qb = $this->addMarkupCondition($qb, $order, $zoneId);
-
-        return $qb;
-    }
-
-    /**
-     * Adds markup condition to the query builder object
-     * 
-     * @param \Doctrine\ORM\QueryBuilder $qb     Query builder object
-     * @param \XLite\Model\Order         $order  Order object
-     * @param int                        $zoneId Zone Id
-     *  
-     * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function addMarkupCondition($qb, $order, $zoneId)
-    {
-        return $qb->addSelect('(m.markup_flat + (m.markup_percent * :value / 100) + (m.markup_per_item * :items) + (m.markup_per_weight * :weight)) as markup_value')
-            ->andWhere('m.min_weight <= :weight')
-            ->andWhere('m.zone_id = :zoneId')
-            ->andWhere('m.max_weight >= :weight')
-            ->andWhere('m.min_total <= :total')
-            ->andWhere('m.max_total >= :total')
-            ->andWhere('m.min_items <= :items')
-            ->andWhere('m.max_items >= :items')
-            ->setParameters(
-                array_merge(
-                    $qb->getParameters(),
-                    array(
-                        'zoneId' => $zoneId,
-                        'weight' => $order->getWeight(),
-                        'total'  => $order->getSubtotal(),
-                        'items'  => $order->countShippedItems(),
-                        'value'  => $order->getSubtotal()
-                    )
-                )
-            );
-    }
-
-    /**
-     * getMarkupsByZoneAndMethod 
+     * findMarkupsByZoneAndMethod 
      * 
      * @param int $zoneId   Zone Id
      * @param int $methodId Method Id
@@ -178,45 +234,13 @@ class Markup extends \XLite\Model\Repo\ARepo
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getMarkupsByZoneAndMethod($zoneId = null, $methodId = null)
+    public function findMarkupsByZoneAndMethod($zoneId = null, $methodId = null)
     {
-        $data = $this->defineGetMarkupsByZoneAndMethod($zoneId, $methodId)
+        $data = $this->defineFindMarkupsByZoneAndMethodQuery($zoneId, $methodId)
             ->getQuery()
             ->getResult();
 
         return $data;
-    }
-
-    /**
-     * defineGetMarkupsByZoneAndMethod 
-     * 
-     * @param int $zoneId   Zone Id
-     * @param int $methodId Method Id
-     *  
-     * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function defineGetMarkupsByZoneAndMethod($zoneId, $methodId)
-    {
-        $qb = $this->createQueryBuilder('m');
-
-        $qb = $qb->addSelect('sm')
-            ->innerJoin('m.shipping_method', 'sm')
-            ->andWhere('sm.enabled = 1');
-
-        if (isset($zoneId)) {
-            $qb = $qb->andWhere('m.zone_id = :zoneId')
-                ->setParameter('zoneId', $zoneId);
-        }
-
-        if (isset($methodId)) {
-            $qb = $qb->andWhere('m.method_id = :methodId')
-                ->setParameter('methodId', $methodId);
-        }
-
-        return $qb;
     }
 
     /**
@@ -229,30 +253,13 @@ class Markup extends \XLite\Model\Repo\ARepo
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getMarkupsByIds($ids)
+    public function findMarkupsByIds($ids)
     {
-        $data = $this->defineGetMarkupsByIds($ids)
+        $data = $this->defineFindMarkupsByIdsQuery($ids)
             ->getQuery()
             ->getResult();
 
         return $data;
-    }
-
-    /**
-     * defineGetMarkupsByIds 
-     * 
-     * @param array $ids Array of markup id
-     *  
-     * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function defineGetMarkupsByIds($ids)
-    {
-        $qb = $this->createQueryBuilder('m');
-
-        return $qb->andWhere($qb->expr()->in('m.markup_id', $ids));
     }
 
 }

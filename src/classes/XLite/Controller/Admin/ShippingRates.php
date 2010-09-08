@@ -114,7 +114,7 @@ class ShippingRates extends \XLite\Controller\Admin\AAdmin
                 }
 
                 if ('zone_id' == $key) {
-                    $zone = \XLite\Core\Database::getRepo('XLite\Model\Zone')->findZone(intval($value));
+                    $zone = \XLite\Core\Database::getRepo('XLite\Model\Zone')->find(intval($value));
 
                     if (isset($zone)) {
                         // Add zone object to the data
@@ -202,7 +202,7 @@ class ShippingRates extends \XLite\Controller\Admin\AAdmin
 
             $markupIds = array_keys($data);
 
-            $markups = \XLite\Core\Database::getRepo('XLite\Model\Shipping\Markup')->getMarkupsByIds($markupIds);
+            $markups = \XLite\Core\Database::getRepo('XLite\Model\Shipping\Markup')->findMarkupsByIds($markupIds);
 
             if (!empty($markups)) {
 
@@ -239,7 +239,7 @@ class ShippingRates extends \XLite\Controller\Admin\AAdmin
 
             $markupIds = array_keys($postedData['to_delete']);
 
-            $markups = \XLite\Core\Database::getRepo('XLite\Model\Shipping\Markup')->getMarkupsByIds($markupIds);
+            $markups = \XLite\Core\Database::getRepo('XLite\Model\Shipping\Markup')->findMarkupsByIds($markupIds);
 
             if (!empty($markups)) {
 
