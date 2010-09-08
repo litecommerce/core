@@ -82,7 +82,7 @@ class Offline extends AProcessor
 
         // Find markups for all enabled offline shipping methods
         $markups = \XLite\Core\Database::getRepo('XLite\Model\Shipping\Markup')
-            ->getMarkupsByProcessor($this->getProcessorId(), $order);
+            ->findMarkupsByProcessor($this->getProcessorId(), $order);
 
         if (!empty($markups)) {
 

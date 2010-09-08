@@ -254,7 +254,7 @@ class ShippingSettings extends \XLite\View\Tabs\ATabs
 
             // Get markups
             $markups = \XLite\Core\Database::getRepo('XLite\Model\Shipping\Markup')
-                ->getMarkupsByZoneAndMethod($zoneId, $methodId);
+                ->findMarkupsByZoneAndMethod($zoneId, $methodId);
 
             $this->markups[$key] = $markups;
         }
