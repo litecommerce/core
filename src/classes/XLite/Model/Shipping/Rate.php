@@ -88,6 +88,18 @@ class Rate extends \XLite\Base\SuperClass
      */
     protected $extraData = null;
 
+    /**
+     * Public class constructor
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
     /**
      * getMethod 
@@ -204,7 +216,7 @@ class Rate extends \XLite\Base\SuperClass
     /**
      * getExtraData
      * 
-     * @return array
+     * @return \XLite\Core\CommonCell
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
