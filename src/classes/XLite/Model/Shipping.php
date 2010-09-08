@@ -71,11 +71,11 @@ class Shipping extends \XLite\Base\Singleton
      */
     public static function registerProcessor($processorClass)
     {
-        if (!in_array($processorClass, array_keys(self::$registeredProcessors))) {
+        if (!isset(self::$registeredProcessors[$processorClass])) {
 
             if (\XLite\Core\Operator::isClassExists($processorClass)) {
                 self::$registeredProcessors[$processorClass] = new $processorClass();
-                uasort(self::$registeredProcessors, array(\XLite\Model\Shipping::getInstance(), 'sortProcessors'));
+                uasort(self::$registeredProcessors, array(\XLite\Model\Shipping::getInstance(), 'compareProcessors'));
 
             }
         }
@@ -92,7 +92,7 @@ class Shipping extends \XLite\Base\Singleton
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function sortProcessors($a, $b)
+    protected function compareProcessors($a, $b)
     {
         $result = 0;
 
@@ -125,7 +125,7 @@ class Shipping extends \XLite\Base\Singleton
      */
     public static function unregisterProcessor($processorClass)
     {
-        if (in_array($processorClass, self::$registeredProcessors)) {
+        if (isset(self::$registeredProcessors[$processorClass])) {
             unset(self::$registeredProcessors[$processorClass]);
         }
     }
@@ -155,7 +155,7 @@ class Shipping extends \XLite\Base\Singleton
         $methods = array();
 
         if (isset($processorClass) && isset(self::$registeredProcessors[$processorClass])) {
-            $methods[] = self::$registeredProcessors[$processorClass]->getShippingMethods();
+            $methods = self::$registeredProcessors[$processorClass]->getShippingMethods();
 
         } else {
 
