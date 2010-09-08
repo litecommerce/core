@@ -111,6 +111,9 @@ ProductDetailsView.prototype.widgetClass = '\\XLite\\View\\Product';
 // Imgaes gallery
 ProductDetailsView.prototype.gallery = null;
 
+// Zoom layer max. width
+ProductDetailsView.prototype.zoomMaxWidth = 460;
+
 // Postprocess widget
 ProductDetailsView.prototype.postprocess = function(isSuccess, initial)
 {
@@ -160,18 +163,62 @@ ProductDetailsView.prototype.postprocess = function(isSuccess, initial)
 
     // Gallery
     if (typeof(window.lightBoxImagesDir) != 'undefined') {
-      $('.gallery a', this.base).lightBox(
-        {
-          fixedNavigation: true,
-          imageLoading:    lightBoxImagesDir + '/lightbox-ico-loading.gif',
-          imageBtnPrev:    lightBoxImagesDir + '/lightbox-btn-prev.gif',
-          imageBtnNext:    lightBoxImagesDir + '/lightbox-btn-next.gif',
-          imageBtnClose:   lightBoxImagesDir + '/lightbox-btn-close.gif',
-          imageBlank:      lightBoxImagesDir + '/lightbox-blank.gif'
+      $('.loupe', this.base).click(
+        function(event) {
+          o.showLightbox();
+          setTimeout(
+            function() {
+              $('.gallery li.selected a').eq(0).trigger('click');
+            },
+            500
+          );
+
+          return false;
         }
       );
     }
+
+    this.hideLightbox();
   }
+}
+
+ProductDetailsView.prototype.showLightbox = function()
+{
+  var o = this;
+
+  $('.gallery a', this.base)
+    .unbind('click')
+    .colorbox(
+      {
+        onComplete: function() {
+          $('#cboxCurrent').css('display', 'none');
+        },
+        onClosed: function() {
+          o.hideLightbox();
+        }
+      }
+    );
+}
+
+ProductDetailsView.prototype.hideLightbox = function()
+{
+  var o = this;
+
+  $('.gallery a', this.base)
+    .unbind('click')
+    .bind(
+      'click',
+      function(event) {
+        event.stopPropagation();
+
+        if (!$(this).parents('li').eq(0).hasClass('selected')) {
+          var i = $.inArray(this, $(this).parents('ul').eq(0).find('a').get());
+          o.selectImage(i);
+        }
+
+        return false;
+      }
+    );
 }
 
 // Get base element for shade / unshade operation
@@ -209,10 +256,16 @@ ProductDetailsView.prototype.switchImage = function(diff)
     next = next % this.gallery.length;
   }
 
+  return this.selectImage(next);
+}
+
+// Select image from gallery
+ProductDetailsView.prototype.selectImage = function(pos)
+{
   this.gallery.removeClass('selected');
 
   // Refresh main image and another options + cloud zoom plugin restart
-  next = this.gallery.eq(next);
+  next = this.gallery.eq(pos);
   next.addClass('selected');
 
   var cloud = $('.cloud-zoom', this.base);
@@ -236,7 +289,7 @@ ProductDetailsView.prototype.switchImage = function(diff)
   $('.image .image-center', this.base)
     .css('width', middle.attr('width') + 'px');
 
-  eval('var tmp = {' + $('a', next).attr('rel') + '}');
+  eval('var tmp = {' + $('a', next).attr('rev') + '}');
 
   if (tmp.width > middle.attr('width') || tmp.height > middle.attr('height')) {
     cloud.CloudZoom();

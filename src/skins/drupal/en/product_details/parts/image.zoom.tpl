@@ -13,7 +13,7 @@
 <div class="image-box">
   <a IF="product.getActiveDetailedImages()" class="arrow left-arrow" href="javascript:void(0);"><img src="images/spacer.gif" alt="" /></a>
   <div class="image-center">
-    <a href="{getZoomImageURL()}" class="cloud-zoom" id="pimage_{product.product_id}" rel="adjustX: 110, showTitle: false">
+    <a href="{getZoomImageURL()}" class="cloud-zoom" id="pimage_{product.product_id}" rel="adjustX: 97, showTitle: false, tintOpacity: 0.5, tint: '#fff', lensOpacity: 0">
       <widget class="\XLite\View\Img" image="{product.getImage()}" className="photo product-thumbnail" id="product_image_{product.product_id}" maxWidth="350" />
       <widget class="\XLite\View\SaveMark" product="{product}" />
     </a>
