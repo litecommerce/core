@@ -11,11 +11,16 @@
  * @since     3.0.0
  *}
 <a href="javascript:void(0);" class="loupe" onclick="javascript: $('.product-details .gallery li.selected a').eq(0).trigger('click');"><img src="images/spacer.gif" alt="" /></a>
-<ul class="gallery">
-  <li FOREACH="product.getActiveDetailedImages(),i,image" class="{getListItemClass(i)}">
-    <a href="{image.getFrontURL()}"><widget class="\XLite\View\Img" image="{image}" alt="{image.getAlt()}" maxWidth="60" maxHeight="60" /></a>
-  </li>
-</ul>
+
+<div class="gallery-container">
+  <ul class="gallery">
+    <li FOREACH="product.getActiveDetailedImages(),i,image" class="{getListItemClass(i)}">
+      <a href="{image.getFrontURL()}" rel="width: {image.getWidth()}, height: {image.getHeight()}"><widget class="\XLite\View\Img" image="{image}" alt="{image.getAlt()}" maxWidth="60" maxHeight="60" /></a>
+      <widget class="\XLite\View\Img" className="middle" style="display: none;" image="{image}" maxWidth="350" />
+    </li>
+  </ul>
+</div>
+
 <script type="text/javascript">
 var lightBoxImagesDir = '{getLightBoxImagesDir()}';
 </script>

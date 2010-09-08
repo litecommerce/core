@@ -163,4 +163,24 @@ class Product extends \XLite\View\Dialog
     
         return $result;
     }
+
+    /**
+     * Get a list of JavaScript files required to display the widget properly
+     *
+     * @return void
+     * @access public
+     * @since  3.0.0
+     */
+    public function getJSFiles()
+    {
+        $list = parent::getJSFiles();
+
+        $list[] = 'js/core.controller.js';
+        $list[] = 'js/core.loadable.js';
+        $list[] = 'js/jquery.blockUI.js';
+        $list[] = 'product_details/controller.js';
+
+        return $list;
+    }
+
 }

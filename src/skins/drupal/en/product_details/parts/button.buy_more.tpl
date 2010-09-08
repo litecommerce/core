@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Quantity input box
+ * Product details Buy more button
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -9,7 +9,6 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- * @ListChild (list="productDetails.buttons", weight="5")
- * @ListChild (list="productDetails.buttons.added", weight="5")
+ * @ListChild (list="productDetails.buttons.added", weight="10")
  *}
-{t(#Qty#)}: <input type="text" value="{product.getMinPurchaseLimit()}" class="quantity field-requred field-integer field-positive field-non-zero" />
+<widget class="\XLite\View\Button\Submit" label="Buy more" style="action buy-more" />

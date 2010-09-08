@@ -22,7 +22,7 @@ function ALoadable(base) {
       return o.loadHandler(xhr, s, data);
     }
 
-    this.postprocess(true);
+    this.postprocess(true, true);
   }
 }
 
@@ -182,7 +182,7 @@ ALoadable.prototype.placeRequestData = function(box)
 }
 
 // [ABSTRACT] Widget post processing (after new widge data placing)
-ALoadable.prototype.postprocess = function(isSuccess)
+ALoadable.prototype.postprocess = function(isSuccess, initial)
 {
   if (isSuccess) {
     var o = this;
@@ -212,16 +212,18 @@ ALoadable.prototype.shade = function()
   }
 
   if (this.shadeWidget)  {
-    this.base.block(
+    this.getShadeBase().block(
       {
         message: '<div></div>',
         css: {
           width: '30%',
           top: '35%',
-          left: '35%'
+          left: '35%',
+          zIndex: 16000
         },
         overlayCSS: {
-          opacity: 0.1
+          opacity: 0.1,
+          zIndex: 15000
         }
       }
     );
@@ -253,7 +255,7 @@ ALoadable.prototype.unshade = function()
   }
 
   if (this.shadeWidget)  {
-    this.base.unblock();
+    this.getShadeBase().unblock();
 
   } else if (this.blockWidget) {
     this.base.unbind('click', this.blocker).unbind('focus', this.blocker);
@@ -262,6 +264,11 @@ ALoadable.prototype.unshade = function()
   this.isShowModalScreen = false;
 
   return true;
+}
+
+// Get base element for shade / unshade operation
+ALoadable.prototype.getShadeBase = function() {
+  return this.base;
 }
 
 // Event blocker
