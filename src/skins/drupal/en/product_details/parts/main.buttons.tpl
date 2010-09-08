@@ -9,8 +9,7 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- * @ListChild (list="productDetails.main", weight="100")
  *}
-<div IF="availableForSale" class="buttons-row">
+<div class="buttons-row">
   {displayViewListContent(#productDetails.buttons#)}
 </div>

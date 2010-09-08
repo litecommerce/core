@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Quantity input box
+ * Product details buttons block
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -9,7 +9,11 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- * @ListChild (list="productDetails.buttons", weight="5")
- * @ListChild (list="productDetails.buttons.added", weight="5")
  *}
-{t(#Qty#)}: <input type="text" value="{product.getMinPurchaseLimit()}" class="quantity field-requred field-integer field-positive field-non-zero" />
+<p class="added-note">{t(#This product has been added to your bag#,_ARRAY_(#href#^buildUrl(#cart#))):h}</p>
+<div class="buttons-row added">
+  {displayViewListContent(#productDetails.buttons.added#)}
+</div>
+<div class="added-block">
+  {displayViewListContent(#productDetails.buttons.continue#)}
+</div>

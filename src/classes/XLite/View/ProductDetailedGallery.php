@@ -134,7 +134,7 @@ class ProductDetailedGallery extends \XLite\View\AView
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getMiddleImageURL(\XLite\Model\Base\Image $image, $width, $height)
+    public function getMiddleImageURL(\XLite\Model\Base\Image $image, $width = null, $height = null)
     {
         $result = $image->getResizedURL($width, $height);
 
@@ -154,7 +154,6 @@ class ProductDetailedGallery extends \XLite\View\AView
         $list = parent::getJSFiles();
 
         $list[] = 'js/jquery.lightbox-0.5.min.js';
-        $list[] = 'product_details/parts/image.gallery.js';
 
         return $list;
     }

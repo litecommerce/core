@@ -679,6 +679,7 @@ INSERT INTO xlite_language_labels (label_id, name) VALUES (101, 'Shipping method
 INSERT INTO xlite_language_labels (label_id, name) VALUES (102, 'The selected zones have been deleted successfully');
 INSERT INTO xlite_language_labels (label_id, name) VALUES (103, 'Zone details have been updated successfully');
 INSERT INTO xlite_language_labels (label_id, name) VALUES (104, 'New zone has been created successfully');
+INSERT INTO xlite_language_labels (label_id, name) VALUES (105, 'This product has been added to your bag');
 
 INSERT INTO xlite_zones VALUES (1,'Default zone (all addresses)',1);
 
