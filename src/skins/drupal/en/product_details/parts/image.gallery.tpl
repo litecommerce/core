@@ -10,7 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<a href="javascript:void(0);" class="loupe" onclick="javascript: $('.product-details .gallery li.selected a').eq(0).trigger('click');"><img src="images/spacer.gif" alt="" /></a>
+<a href="javascript:void(0);" class="loupe"><img src="images/spacer.gif" alt="" /></a>
 
 <div class="gallery-container">
   <ul class="gallery">

@@ -84,11 +84,14 @@ function ProductDetailsView(base, productId)
 
   this.productId = productId;
 
+  var o = this;
+
   this.linkClickHandler = function(event)
   {
     event.stopPropagation();
 
-    $('.product-details .gallery li.selected a').eq(0).trigger('click');
+    o.showLightbox();
+    $('.gallery li.selected a', o.base).eq(0).trigger('click');
 
     return false;
   }
