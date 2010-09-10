@@ -48,6 +48,22 @@ class Cart extends \XLite\Controller\Customer\ACustomer
 
 
     /**
+     * Recalculate cart on each start of the cart page
+     * TODO: check and if it will decrease performance - rework
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function handleRequest()
+    {
+        parent::handleRequest();
+
+        $this->updateCart();
+    }
+
+    /**
      * Common method to determine current location 
      * 
      * @return string

@@ -74,7 +74,7 @@ class Tax extends \XLite\Model\Order implements \XLite\Base\IDecorator
         // Shipping-based tax cost
         $shippingTax = 0;
 
-        if ($this->isShippingDefined()) {
+        if ($this->isShippingSelected()) {
             $shippingTaxes = $this->shippingTaxes;
             if (is_array($shippingTaxes)) {
                 if (\XLite\Core\Config::getInstance()->Taxes->prices_include_tax && isset($shippingTaxes['Tax'])) {
@@ -294,7 +294,7 @@ class Tax extends \XLite\Model\Order implements \XLite\Base\IDecorator
         // tax on shipping
         $pricesIncludeTax = \XLite\Core\Config::getInstance()->Taxes->prices_include_tax;
         if (
-            $this->isShippingDefined()
+            $this->isShippingSelected()
             && (!$pricesIncludeTax || ($pricesIncludeTax && $taxRates->isShippingDefined()))
         ) {
             $taxRates->_conditionValues['product class'] = 'shipping service';

@@ -110,6 +110,7 @@ class Order extends \XLite\Model\Order implements \XLite\Base\IDecorator
         }
     }
 
+    // TODO: isShippingAvailable() is no more exists - rework it
     function isShippingAvailable()
     {
         $items = $this->getItems();

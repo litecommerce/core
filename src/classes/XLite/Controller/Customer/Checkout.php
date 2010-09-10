@@ -157,7 +157,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
      */
     protected function isNoShipping()
     {
-        return !$this->getCart()->isShippingAvailable() && $this->getCart()->isShipped();
+        return $this->getCart()->isShipped() && !$this->getCart()->isShippingSelected();
     }
 
     /**
@@ -198,7 +198,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
     {
         $cart = $this->getCart();
 
-        return !$cart->isShippingAvailable();
+        return !$cart->isShippingSelected();
     }
 
     /**

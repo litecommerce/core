@@ -73,9 +73,9 @@ class Markup extends \XLite\Model\Repo\ARepo
                     array(
                         'zoneId' => $zoneId,
                         'weight' => $order->getWeight(),
-                        'total'  => $order->getSubtotal(),
+                        'total'  => $order->getShippedSubtotal(),
                         'items'  => $order->countShippedItems(),
-                        'value'  => $order->getSubtotal()
+                        'value'  => $order->getShippedSubtotal()
                     )
                 )
             );
