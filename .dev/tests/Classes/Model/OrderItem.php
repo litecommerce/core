@@ -107,7 +107,7 @@ class XLite_Tests_Model_OrderItem extends XLite_Tests_TestCase
         $list = \XLite\Core\Database::getRepo('XLite\Model\Product')->findByEnabled(true);
         $p = $list[1];
 
-        $item->setObject($p);
+        $item->setProduct($p);
 
         \XLite\Core\Database::getEM()->persist($item);
         \XLite\Core\Database::getEM()->flush();
