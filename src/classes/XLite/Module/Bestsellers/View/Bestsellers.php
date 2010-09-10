@@ -36,7 +36,7 @@ namespace XLite\Module\Bestsellers\View;
  * @see        ____class_see____
  * @since   3.0.0
  */
-class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
+class Bestsellers extends \XLite\View\Dialog
 {
     /**
      * Widget parameter names
@@ -62,16 +62,17 @@ class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
 
     /**
      * Return class name for the list pager
-     *
+     * TODO REMOVE this method since the widget must use PAGER 
      * @return string
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getPagerClass()
+    protected function getDir()
     {
-        // TODO - rework
-        return null;
+        return 'modules/Bestsellers';
+
+//        return 'XLite\Module\Bestsellers\View\Pager\Bestsellers';
     }
 
     /**
@@ -98,6 +99,9 @@ class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
             ),
         );
 
+/*
+        TODO rework to use it with PAGER
+
         $this->widgetParams[self::PARAM_WIDGET_TYPE]->setValue(
             $this->config->Bestsellers->bestsellers_menu
             ? self::WIDGET_TYPE_SIDEBAR
@@ -117,6 +121,8 @@ class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
         $this->widgetParams[self::PARAM_SHOW_SORT_BY_SELECTOR]->setValue(false);
         $this->widgetParams[self::PARAM_SORT_BY]->setValue('Name');
         $this->widgetParams[self::PARAM_SORT_ORDER]->setValue('asc');
+*/
+
     }
 
     /**
@@ -136,7 +142,6 @@ class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
 
     /**
      * Return products list
-     * TODO - rework
      * 
      * @return void
      * @access protected
@@ -145,14 +150,13 @@ class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
      */
     protected function getData(\XLite\Core\CommonCell $cnd, $countOnly = false)
     {
-        $args = array($this->getNumberOfBestsellers(), $this->getRootId());
+        $data = \XLite\Core\Database::getRepo('XLite\Model\OrderItem')
+            ->getBestsellers(
+                $this->getNumberOfBestsellers(),
+                $this->getRootId()
+            );
 
-        return \XLite\Model\CachingFactory::getObjectFromCallback(
-            'getBestsellers' . implode('', $args),
-            '\XLite\Module\Bestsellers\Model\Bestsellers',
-            'getBestsellers',
-            $args
-        );
+        return $data;
     }
 
     /**
@@ -180,9 +184,13 @@ class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
      */
     protected function getNumberOfBestsellers()
     {
+        return $this->config->Bestsellers->number_of_bestsellers;
+/*
+    TODO REWORK!!!
         return (int)(self::WIDGET_TYPE_SIDEBAR == $this->getParam(self::PARAM_WIDGET_TYPE)
             ? $this->getParam(self::PARAM_SIDEBAR_MAX_ITEMS)
             : $this->config->Bestsellers->number_of_bestsellers);
+*/
     }
 
 
