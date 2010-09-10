@@ -47,8 +47,8 @@ class XLite_Web_Customer_Minicart extends XLite_Web_Customer_ACustomer
 
         $this->open('store/product//product_id-' . $product->getProductId());
 
-        $this->assertElementPresent("//button[@type='submit']/span[text()='Add to Cart']");
-        $this->clickAndWait("//button[@type='submit']/span[text()='Add to Cart']");
+        $this->assertElementPresent("//button[@type='submit']/span[text()='Add to Bag']");
+        $this->clickAndWait("//button[@type='submit']/span[text()='Add to Bag']");
 
         $this->assertElementPresent(
             "//div[@id='lc-minicart-horizontal']"
@@ -93,10 +93,10 @@ class XLite_Web_Customer_Minicart extends XLite_Web_Customer_ACustomer
         $product = $this->getActiveProduct();
 
         $this->open('store/product//product_id-' . $product->getProductId());
-        $this->clickAndWait("//button[@type='submit']/span[text()='Add to Cart']");
+        $this->clickAndWait("//button[@type='submit']/span[text()='Add to Bag']");
  
         $this->open('store/product//product_id-' . $product->getProductId());
-        $this->clickAndWait("//button[@type='submit']/span[text()='Add to Cart']");
+        $this->clickAndWait("//button[@type='submit']/span[text()='Add to Bag']");
  
         $this->assertElementPresent(
             "//div[@id='lc-minicart-horizontal']"
@@ -133,10 +133,10 @@ class XLite_Web_Customer_Minicart extends XLite_Web_Customer_ACustomer
         $product = $this->getActiveProduct();
 
         $this->open('store/product//product_id-' . $product->getProductId());
-        $this->clickAndWait("//button[@type='submit']/span[text()='Add to Cart']");
+        $this->clickAndWait("//button[@type='submit']/span[text()='Add to Bag']");
 
         $this->open('store/product//product_id-' . $product->getProductId());
-        $this->clickAndWait("//button[@type='submit']/span[text()='Add to Cart']");
+        $this->clickAndWait("//button[@type='submit']/span[text()='Add to Bag']");
 
         foreach ($this->getActiveProducts() as $p) {
             if ($p->getProductId() != $product->getProductId()) {
@@ -146,7 +146,7 @@ class XLite_Web_Customer_Minicart extends XLite_Web_Customer_ACustomer
         }
 
         $this->open('store/product//product_id-' . $product->getProductId());
-        $this->clickAndWait("//button[@type='submit']/span[text()='Add to Cart']");
+        $this->clickAndWait("//button[@type='submit']/span[text()='Add to Bag']");
 
         $this->assertElementPresent(
             "//div[@id='lc-minicart-horizontal']"
@@ -183,7 +183,7 @@ class XLite_Web_Customer_Minicart extends XLite_Web_Customer_ACustomer
         $product = $this->getActiveProduct();
 
         $this->open('store/product//product_id-' . $product->getProductId());
-        $this->clickAndWait("//button[@type='submit']/span[text()='Add to Cart']");
+        $this->clickAndWait("//button[@type='submit']/span[text()='Add to Bag']");
 
         $this->assertJqueryNotPresent(
             '#lc-minicart-horizontal .items-list:visible',
