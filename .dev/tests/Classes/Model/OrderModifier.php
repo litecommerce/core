@@ -51,7 +51,7 @@ class XLite_Tests_Model_OrderModifier extends XLite_Tests_TestCase
         $m = $order->getSavedModifiers()->get(0);
 
         $this->assertEquals('shipping', $m->getCode(), 'check code');
-        $this->assertEquals(2.8, round($m->getSurcharge(), 2), 'check surcharge');
+        $this->assertEquals(5.68, round($m->getSurcharge(), 2), 'check surcharge');
         $this->assertEquals('Shipping cost', $m->getName(), 'check name');
         $this->assertTrue($m->getIsVisible(), 'check visibility');
         $this->assertTrue($m->getIsSummable(), 'check summable status');
@@ -143,11 +143,27 @@ class XLite_Tests_Model_OrderModifier extends XLite_Tests_TestCase
         */
     }
 
-    protected function getProduct()
+    /**
+     * getProducts 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getProduct($productId)
     {
-        return \XLite\Core\Database::getRepo('XLite\Model\Product')->findOneByEnabled(true);
+        return \XLite\Core\Database::getRepo('XLite\Model\Product')->find($productId);
     }
 
+    /**
+     * getTestOrder 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     protected function getTestOrder()
     {
         $order = new \XLite\Model\Order();
@@ -157,25 +173,33 @@ class XLite_Tests_Model_OrderModifier extends XLite_Tests_TestCase
         $profile = array_shift($list);
         unset($list);
 
-        $order->map($this->testOrder);
         $order->setPaymentMethod(\XLite\Model\PaymentMethod::factory('PurchaseOrder'));
-        $order->setProfileId(0);
+        $order->setProfileId($profile->get('profile_id'));
 
-        $order->setDetail('t1', '123');
-        $order->setDetail('t2', '456', 'test');
+        $productIds = array(3002, 4004, 4005, 4006, 4007, 4008);
 
-        $item = new \XLite\Model\OrderItem();
+        foreach ($productIds as $index => $productId) {
 
-        $item->setProduct($this->getProduct());
-        $item->setAmount(1);
-        $item->setPrice($this->getProduct()->getPrice());
+            $product = $this->getProduct($productId);
 
-        $order->addItem($item);
+            if ($index % 2) {
+                $product->setFreeShipping(true);
+            }
+
+            $item = new \XLite\Model\OrderItem();
+
+            $item->setProduct($product);
+            $item->setAmount(4);
+            $item->setPrice($product->getPrice());
+
+            $order->addItem($item);
+        }
 
         \XLite\Core\Database::getEM()->persist($order);
         \XLite\Core\Database::getEM()->flush();
 
         $order->setProfileCopy($profile);
+
         $order->calculate();
 
         \XLite\Core\Database::getEM()->persist($order);

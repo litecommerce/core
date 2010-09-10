@@ -285,6 +285,23 @@ abstract class ModifierOwner extends \XLite\Model\AEntity
     }
 
     /**
+     * Unset modifier 
+     * 
+     * @param string $code Modifier code
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function unsetModifier($code)
+    {
+        if (isset($this->modifiers[$code])) {
+            unset($this->modifiers[$code]);
+        }
+    }
+
+    /**
      * Calculation
      * 
      * @return float

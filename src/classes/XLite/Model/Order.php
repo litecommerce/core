@@ -539,25 +539,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
         }
     }
 
-    /**
-     * Get order weight 
-     * 
-     * @return float
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getWeight() 
-    {
-        $weight = 0;
-
-        foreach ($this->getShippedItems() as $item) {
-            $weight += $item->getWeight();
-        }
-
-        return $weight;
-    }
-
     /* TODO - rework
     function refresh($name) 
     {

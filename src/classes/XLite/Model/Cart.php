@@ -200,43 +200,4 @@ class Cart extends \XLite\Model\Order
         $this->getRepository()->markAsOrder($this->getOrderId());
     }
 
-    /**
-     * Calculate shipping rates 
-     * 
-     * @return array of \XLite\Moel\ShippingRate
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function calculateShippingRates()
-    {
-        $rates = parent::calculateShippingRates();
-        $methodId = $this->getShippingId();
-
-        $shippingRate = null;
-
-        if (!empty($rates)) {
-
-            if (0 < intval($methodId)) {
-                foreach ($rates as $rate) {
-                    if ($methodId == $rate->getMethodId()) {
-                        $shippingRate = $rate;
-                        break;
-                    }
-                }
-            
-            } else {
-                $shippingRate = array_shift($rates);
-                $methodId = $shippingRate->getMethodId();
-            }
-        }
-
-        $this->setShippingRate($shippingRate);
-
-        \XLite\Core\Database::getEM()->persist($this);
-        \XLite\Core\Database::getEM()->flush();
-
-        return $rates;
-    }
-
 }

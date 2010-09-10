@@ -76,6 +76,7 @@ class Order extends \XLite\Model\Order implements \XLite\Base\IDecorator
      */
     /**
      * Assign first shipping rate 
+     * TODO: check if this method is really needed
      * 
      * @return void
      * @access public
@@ -93,7 +94,7 @@ class Order extends \XLite\Model\Order implements \XLite\Base\IDecorator
             $rate = array_shift($rates);
         }
 
-        $this->setShippingRate($rate);
+        $this->setSelectedRate($rate);
     }
 
     /**
@@ -207,7 +208,7 @@ class Order extends \XLite\Model\Order implements \XLite\Base\IDecorator
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getShippingRatesOrderCallback(\XLite\Model\ShippingRate $a, \XLite\Model\ShippingRate $b)
+    public function compareShippingRates(\XLite\Model\ShippingRate $a, \XLite\Model\ShippingRate $b)
     {
         $class_a = $a->getComplex('shipping.class');
         $class_b = $b->getComplex('shipping.class');
@@ -219,7 +220,7 @@ class Order extends \XLite\Model\Order implements \XLite\Base\IDecorator
             $result = 1;
 
         } else {
-            $result = parent::getShippingRatesOrderCallback($a, $b);
+            $result = parent::compareShippingRates($a, $b);
         }
 
         return $result;

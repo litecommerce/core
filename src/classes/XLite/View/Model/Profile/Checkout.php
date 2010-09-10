@@ -196,11 +196,11 @@ class Checkout extends \XLite\View\Model\Profile\Main
      */
     protected function renewShippingMethod()
     {
-        /* TODO - rework
+        /* TODO - rework: do a renew entire cart, not only shipping
         \XLite\Model\Cart::getInstance()->refresh('shippingRates');
         \XLite\Model\Cart::getInstance()->refresh('profile');
         */
-        \XLite\Model\Cart::getInstance()->getShippingRates();
+        \XLite\Model\Cart::getInstance()->calculate();
     }
 
     /**

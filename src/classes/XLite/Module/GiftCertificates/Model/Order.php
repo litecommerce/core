@@ -474,7 +474,8 @@ class Order extends \XLite\Model\Order implements \XLite\Base\IDecorator
 
     /**
      * Check - shipping is available or not
-     * 
+     * TODO: isShippingAvailable is no more exists - rework it
+     *
      * @return boolean
      * @access public
      * @see    ____func_see____
@@ -489,6 +490,7 @@ class Order extends \XLite\Model\Order implements \XLite\Base\IDecorator
 
     /**
      * Check - shipping is defined or not
+     * TODO: isShippingDefined is no more exists - rework it
      * 
      * @return boolean
      * @access public

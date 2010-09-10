@@ -130,6 +130,7 @@ class Order extends \XLite\Model\Order implements \XLite\Base\IDecorator
         return parent::isShipped();
     }
 
+    // TODO: remove or replace on isShippingSelected() ?
     function isShippingAvailable() 
     {
         return count($this->get('shippingRates')) > 0;
