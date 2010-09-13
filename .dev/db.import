@@ -33,11 +33,22 @@ echo "\n";
 list($c['server'], $c['unix_socket']) = explode(':', $c['hostspec'], 2);
 
 echo "Drop&create database ...";
-$cmd = 'mysql -h' . $c['server'] . ' -S' . $c['unix_socket'] . ' -u' . $c['username'] . ' -p' . $c['password'] . ' -e\'DROP DATABASE IF EXISTS `' . $c['database'] . '`;CREATE DATABASE `' . $c['database'] . '` DEFAULT CHARACTER SET utf8;\'';
+
+$cmd = 'mysql -h' . $c['server'] . ' -u' . $c['username'] . ' -p' . $c['password'];
+
+if (!is_null($c['unix_socket'])) {
+    $cmd .= ' -S' . $c['unix_socket'];
+}   
+
+$cmd .= ' -e\'DROP DATABASE IF EXISTS `' . $c['database'] . '`;CREATE DATABASE `' . $c['database'] . '` DEFAULT CHARACTER SET utf8;\'';
+
 $out = array();
 $r = 0;
+
 exec($cmd, $out, $r);
+
 echo implode("\n", $out) . "\n";
+
 if ($r > 0)
 	exit($r);
 
@@ -49,7 +60,7 @@ if (!EXT) {
 	db_import('xlite_demo.sql', $c);
 
 	echo 'Create default user [bit-bucket@rrf.ru : master]...';
-    $cmd = 'mysql -c -h' . $c['server'] . ' -S' . $c['unix_socket'] . ' -u' . $c['username'] . ' -p' . $c['password'] . ' -e "REPLACE INTO xlite_profiles (profile_id, login, password, access_level, billing_title, billing_firstname, billing_lastname, billing_phone, billing_address, billing_city, billing_state, billing_country, billing_zipcode, shipping_title, shipping_firstname, shipping_lastname, shipping_phone, shipping_address, shipping_city, shipping_state, shipping_country, shipping_zipcode, first_login, last_login, status) VALUES (1,\'bit-bucket@rrf.ru\',\'eb0a191797624dd3a48fa681d3061212\',100,\'Mr.\',\'Bit\',\'Bucket\',\'0123456789\',\'Billing street, 1\',\'Edmond\',38,\'US\',\'73003\',\'Mr.\',\'Bit\',\'Bucket\',\'9876543210\',\'Shipping street, 1\',\'Edmond\',38,\'US\',\'73003\',1053689339,1058449247,\'E\')" ' . $c['database'];
+    $cmd = 'mysql -c -h' . $c['server'] . (!is_null($c['unix_socket']) ? ' -S' . $c['unix_socket'] : '') . ' -u' . $c['username'] . ' -p' . $c['password'] . ' -e "REPLACE INTO xlite_profiles (profile_id, login, password, access_level, billing_title, billing_firstname, billing_lastname, billing_phone, billing_address, billing_city, billing_state, billing_country, billing_zipcode, shipping_title, shipping_firstname, shipping_lastname, shipping_phone, shipping_address, shipping_city, shipping_state, shipping_country, shipping_zipcode, first_login, last_login, status) VALUES (1,\'bit-bucket@rrf.ru\',\'eb0a191797624dd3a48fa681d3061212\',100,\'Mr.\',\'Bit\',\'Bucket\',\'0123456789\',\'Billing street, 1\',\'Edmond\',38,\'US\',\'73003\',\'Mr.\',\'Bit\',\'Bucket\',\'9876543210\',\'Shipping street, 1\',\'Edmond\',38,\'US\',\'73003\',1053689339,1058449247,\'E\')" ' . $c['database'];
     $out = array();
     $r = 0;
     exec($cmd, $out, $r);
@@ -79,12 +90,18 @@ function db_import($filename, $c) {
 	$path = realpath(dirname(realpath(__FILE__)) . '/../src/sql/' . $filename);
 
 	if (file_exists($path)) {
+
 		echo 'Import ' . $filename . ' ...';
-		$cmd = 'mysql -c -h' . $c['server'] . ' -S' . $c['unix_socket'] . ' -u' . $c['username'] . ' -p' . $c['password'] . ' ' . $c['database'] . ' < ' . $path;
+
+		$cmd = 'mysql -c -h' . $c['server'] . (!is_null($c['unix_socket']) ? ' -S' . $c['unix_socket'] : '') . ' -u' . $c['username'] . ' -p' . $c['password'] . ' ' . $c['database'] . ' < ' . $path;
+
 		$out = array();
 		$r = 0;
+
 		exec($cmd, $out, $r);
+
 		echo implode("\n", $out) . "\n";
+
 		if ($r > 0) {
     		exit($r);
 		}
