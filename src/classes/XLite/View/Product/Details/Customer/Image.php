@@ -26,25 +26,19 @@
  * @since      3.0.0
  */
 
-namespace XLite\View;
+namespace XLite\View\Product\Details\Customer;
 
 /**
- * Product image
+ * Image
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
+ *
  * @ListChild (list="productDetails.image", weight="10")
  */
-class ProductImage extends \XLite\View\AView
+class Image extends \XLite\View\Product\Details\Customer\ACustomer
 {
-    /**
-     * Widget parameter names
-     */
-
-    const PARAM_PRODUCT = 'product';
-
-
     /**
      * Cloud zoom layer maximum width
      */
@@ -60,7 +54,7 @@ class ProductImage extends \XLite\View\AView
      */
     protected function getDefaultTemplate()
     {
-        return 'product_details/parts/image.box.tpl';
+        return $this->getDir() . '/parts/image.box.tpl';
     }
 
     /**
@@ -72,57 +66,37 @@ class ProductImage extends \XLite\View\AView
      */
     protected function getTemplate()
     {
-        return $this->getParam(self::PARAM_PRODUCT)->hasZoomImage()
-            ? 'product_details/parts/image.zoom.tpl'
+        return $this->getProduct()->hasZoomImage()
+            ? $this->getDir() . '/parts/image.zoom.tpl'
             : $this->getDefaultTemplate();
-    }
-
-    /**
-     * Define widget parameters
-     *
-     * @return void
-     * @access protected
-     * @since  1.0.0
-     */
-    protected function defineWidgetParams()
-    {
-        parent::defineWidgetParams();
-
-        $this->widgetParams += array(
-            self::PARAM_PRODUCT => new \XLite\Model\WidgetParam\Object(
-                'Product',
-                $this->getProduct(),
-                false,
-                '\XLite\Model\Product'
-            ),
-        );
     }
 
     /**
      * Get zoom image 
      * 
      * @return string
-     * @access public
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getZoomImageURL()
+    protected function getZoomImageURL()
     {
-        return $this->getParam(self::PARAM_PRODUCT)->getZoomImage()->getURL();
+        return $this->getProduct()->getZoomImage()->getURL();
     }
 
     /**
      * Get zoom layer width
      *
      * @return integer
-     * @access public
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getZoomWidth()
+    protected function getZoomWidth()
     {
-        return min($this->getParam(self::PARAM_PRODUCT)->getImage()->getWidth(), self::ZOOM_MAX_WIDTH);
+        return min($this->getProduct()->getImage()->getWidth(), self::ZOOM_MAX_WIDTH);
     }
+
 
     /**
      * Register JS files
@@ -135,7 +109,6 @@ class ProductImage extends \XLite\View\AView
     public function getJSFiles()
     {
         $list = parent::getJSFiles();
-
         $list[] = 'js/cloud-zoom.min.js';
 
         return $list;
@@ -152,10 +125,8 @@ class ProductImage extends \XLite\View\AView
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
-
         $list[] = 'css/cloud-zoom.css';
 
         return $list;
     }
 }
-

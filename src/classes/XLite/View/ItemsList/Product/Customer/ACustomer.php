@@ -595,4 +595,36 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
             $this->widgetParams[self::PARAM_TEMPLATE]->setValue($this->getDefaultTemplate());
         }
     }
+
+    /**
+     * Get a list of CSS files required to display the widget properly
+     *
+     * @return array
+     * @access public
+     * @since  3.0.0
+     */
+    public function getCSSFiles()
+    {
+        $list = parent::getCSSFiles();
+        $list[] = 'popup/popup.css';
+        $list[] = $this->getDir() . '/quick_look.css';
+
+        return $list;
+    }
+
+
+    /**
+     * Get a list of JavaScript files required to display the widget properly
+     *
+     * @return array
+     * @access public
+     * @since  3.0.0
+     */
+    public function getJSFiles()
+    {
+        $list = parent::getJSFiles();
+        $list[] = 'popup/popup.js';
+
+        return $list;
+    }
 }

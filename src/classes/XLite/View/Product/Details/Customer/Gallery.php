@@ -26,25 +26,19 @@
  * @since      3.0.0
  */
 
-namespace XLite\View;
+namespace XLite\View\Product\Details\Customer;
 
 /**
- * Product images gallery widget
- *
+ * Gallery
+ * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0
+ * @since   3.0.0
+ *
  * @ListChild (list="productDetails.image", weight="20")
  */
-class ProductDetailedGallery extends \XLite\View\AView
+class Gallery extends \XLite\View\Product\Details\Customer\ACustomer
 {
-    /**
-     * Widget parameter names
-     */
-
-    const PARAM_PRODUCT = 'product';
-
-
     /**
      * Return widget default template
      *
@@ -54,39 +48,18 @@ class ProductDetailedGallery extends \XLite\View\AView
      */
     protected function getDefaultTemplate()
     {
-        return 'product_details/parts/image.gallery.tpl';
-    }
-
-    /**
-     * Define widget parameters
-     *
-     * @return void
-     * @access protected
-     * @since  1.0.0
-     */
-    protected function defineWidgetParams()
-    {
-        parent::defineWidgetParams();
-
-        $this->widgetParams += array(
-            self::PARAM_PRODUCT => new \XLite\Model\WidgetParam\Object(
-                'Product',
-                $this->getProduct(),
-                false,
-                '\XLite\Model\Product'
-            ),
-        );
+        return $this->getDir() . '/parts/image.gallery.tpl';
     }
 
     /**
      * Get LightBox library images directory 
      * 
      * @return string
-     * @access public
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getLightBoxImagesDir()
+    protected function getLightBoxImagesDir()
     {
         return \XLite::getInstance()->getShopUrl(
             \XLite\Model\Layout::getInstance()->getPath() . 'images/lightbox'
@@ -103,8 +76,7 @@ class ProductDetailedGallery extends \XLite\View\AView
      */
     protected function isVisible()
     {
-        return parent::isVisible()
-            && $this->getParam(self::PARAM_PRODUCT)->getActiveDetailedImages();
+        return parent::isVisible() && $this->getProduct()->getActiveDetailedImages();
     }
 
     /**
@@ -113,13 +85,13 @@ class ProductDetailedGallery extends \XLite\View\AView
      * @param integer $i Detailed image index
      *  
      * @return string
-     * @access public
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getListItemClass($i)
+    protected function getListItemClass($i)
     {
-        return 0 == $i ? 'selected' : '';
+        return (0 == $i) ? 'selected' : '';
     }
 
     /**
@@ -130,16 +102,17 @@ class ProductDetailedGallery extends \XLite\View\AView
      * @param integer                 $height Height limit
      *  
      * @return string
-     * @access public
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getMiddleImageURL(\XLite\Model\Base\Image $image, $width = null, $height = null)
+    protected function getMiddleImageURL(\XLite\Model\Base\Image $image, $width = null, $height = null)
     {
         $result = $image->getResizedURL($width, $height);
 
         return $result[2];
     }
+
 
     /**
      * Register JS files
@@ -152,7 +125,6 @@ class ProductDetailedGallery extends \XLite\View\AView
     public function getJSFiles()
     {
         $list = parent::getJSFiles();
-
         $list[] = 'js/jquery.colorbox-min.js';
 
         return $list;
@@ -169,7 +141,6 @@ class ProductDetailedGallery extends \XLite\View\AView
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
-
         $list[] = 'css/colorbox.css';
 
         return $list;

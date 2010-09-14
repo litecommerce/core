@@ -62,6 +62,7 @@ abstract class AButton extends \XLite\View\AView
      *
      * @return string
      * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getDefaultLabel()

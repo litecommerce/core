@@ -121,14 +121,17 @@ abstract class AView extends \XLite\Core\Handler
      */
     protected $viewLists = array();
 
+
     /**
      * Return widget default template
      *
      * @return string
      * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     abstract protected function getDefaultTemplate();
+
 
     /**
      * Return full URL by the skindir-related one

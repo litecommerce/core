@@ -30,6 +30,7 @@
 <!-- [catalog] {{{ -->
 <widget class="\XLite\View\Subcategories" />
 <widget class="\XLite\View\ItemsList\Product\Customer\Category" />
+<widget class="\XLite\View\Product\QuickLook" />
 <widget class="\XLite\View\CategoryEmpty" />
 <!-- [/catalog] }}} -->
 

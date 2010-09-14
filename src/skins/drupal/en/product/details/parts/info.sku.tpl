@@ -11,7 +11,7 @@
  * @since     3.0.0
  * @ListChild (list="productDetails.attributes", weight="10")
  *}
-<li IF="{product.getSKU()}" class="identifier product-sku">
+<li IF="product.getSKU()&isSectionVisible(#sku#)" class="identifier product-sku">
   <strong class="type">{t(#SKU#)}:</strong>
   <span class="value">{product.sku}</span>
 </li>
