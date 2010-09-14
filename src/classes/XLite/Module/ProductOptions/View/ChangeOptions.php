@@ -34,6 +34,7 @@ namespace XLite\Module\ProductOptions\View;
  * @package XLite
  * @see     ____class_see____
  * @since   3.0
+ *
  * @ListChild (list="center")
  */
 class ChangeOptions extends \XLite\View\AView
@@ -43,17 +44,6 @@ class ChangeOptions extends \XLite\View\AView
      */
 
     const PARAM_ITEM = 'item';
-
-
-    /**
-     * Product (cache)
-     * 
-     * @var    \XLite\Model\Product
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected $product = null;
 
 
     /**
@@ -135,11 +125,10 @@ class ChangeOptions extends \XLite\View\AView
      */
     public static function getAllowedTargets()
     {
-        $result = parent::getAllowedTargets();
-
-        $result[] = 'change_options';
+        $list = parent::getAllowedTargets();
+        $list[] = 'change_options';
     
-        return $result;
+        return $list;
     }
 }
 

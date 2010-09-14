@@ -26,70 +26,63 @@
  * @since      3.0.0
  */
 
-namespace XLite\Module\ProductOptions\View;
+namespace XLite\View\Product\Details\Customer\Page;
 
 /**
- * Product widget
+ * APage 
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class Product extends \XLite\View\Product\Details\Customer\ACustomer implements \XLite\Base\IDecorator
+abstract class APage extends \XLite\View\Product\Details\Customer\ACustomer
 {
     /**
-     * Check - available product for sale or not
-     *
-     * @return bool
-     * @access public
-     * @since  3.0.0
-     */
-    public function isAvailableForSale()
-    {
-        /* TODO - rework
-        if ($this->xlite->get('InventoryTrackingEnabled')) {
-            $product = $this->getProduct();
-            if ($product->getComplex('inventory.found') && !$product->get('tracking')) {
-                $result = 0 < $product->getComplex('inventory.amount');
-            }
-        }
-
-        return isset($result) ? $result : 
-        */    
-        return parent::isAvailableForSale();
-    }
-
-    /**
-     * Get selected options 
+     * List of sections to hide
      * 
      * @return array
-     * @access public
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getSelectedOptions()
+    protected function getInvisibleSections()
     {
-        $saved = $this->session->get('saved_invalid_options');
-
-        return is_array($saved) && isset($saved[$this->getProduct()->getProductId()])
-            ? $saved[$this->getProduct()->getProductId()]
-            : array();
+        return array();
     }
 
     /**
-     * Register CSS files
+     * Check if section is visible
+     * 
+     * @param string $name section name
+     *  
+     * @return bool
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isSectionVisible($name)
+    {
+        return !in_array($name, $this->getInvisibleSections());
+    }
+
+
+    /**
+     * Get a list of JavaScript files required to display the widget properly
      *
      * @return array
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getCSSFiles()
+    public function getJSFiles()
     {
-        $list = parent::getCSSFiles();
-        $list[] = 'modules/ProductOptions/product_details.css';
+        $list = parent::getJSFiles();
+
+        $list[] = 'js/core.controller.js';
+        $list[] = 'js/core.loadable.js';
+        $list[] = 'js/jquery.blockUI.js';
+        $list[] = $this->getDir() . '/controller.js';
 
         return $list;
     }
-
 }

@@ -9,9 +9,11 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
+ *
  * @ListChild (list="productDetails.base", weight="40")
  *}
-<div class="tabs">
+
+<div class="tabs" IF="isSectionVisible(#tabs#)">
   <ul class="tabs primary">
     <li class="active"><a href="#description" class="active">{t(#Description#)}</a></li>
     <li><a href="#taf">{t(#Tell a friend#)}</a></li>
@@ -19,4 +21,5 @@
     <li><a href="#rp">{t(#Related products#)}</a></li>
   </ul>
 </div>
+
 {displayViewListContent(#productDetails.info#)}

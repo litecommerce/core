@@ -34,8 +34,9 @@ namespace XLite\Model;
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
+ *
  * @Entity (repositoryClass="\XLite\Model\Repo\Config")
- * @Table (name="config",
+ * @Table  (name="config",
  *         indexes={
  *              @Index (name="orderby", columns={"orderby"}),
  *              @Index (name="type", columns={"type"})
@@ -51,6 +52,7 @@ class Config extends \XLite\Model\Base\I18n
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Id
      * @GeneratedValue (strategy="AUTO")
      * @Column (type="integer", unique=true)
@@ -64,6 +66,7 @@ class Config extends \XLite\Model\Base\I18n
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="string", length="32", nullable=false)
      */
     protected $name;
@@ -75,6 +78,7 @@ class Config extends \XLite\Model\Base\I18n
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="string", length="32", nullable=false)
      */
     protected $category;
@@ -87,6 +91,7 @@ class Config extends \XLite\Model\Base\I18n
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="string", length="32", nullable=false)
      */
     protected $type = '';
@@ -98,6 +103,7 @@ class Config extends \XLite\Model\Base\I18n
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="integer", length="11", nullable=false)
      */
     protected $orderby = 0;
@@ -109,6 +115,7 @@ class Config extends \XLite\Model\Base\I18n
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="text", nullable=false)
      */
     protected $value;

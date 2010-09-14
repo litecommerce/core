@@ -26,72 +26,52 @@
  * @since      3.0.0
  */
 
-namespace XLite\View;
+namespace XLite\View\Product\Details\Customer\Page;
 
 /**
- * Product details buttons block
- *
+ * QuickLook 
+ * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0
- * @ListChild (list="productDetails.main", weight="100")
+ * @since   3.0.0
+ *
+ * @ListChild (list="center")
  */
-class ProductDetailsButtons extends \XLite\View\AView
+class QuickLook extends \XLite\View\Product\Details\Customer\Page\APage
 {
     /**
-     * Widget parameter names
-     */
-
-    const PARAM_PRODUCT = 'product';
-
-
-    /**
-     * Return widget default template
-     *
-     * @return string
+     * List of sections to hide
+     * 
+     * @return array
      * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getDefaultTemplate()
+    protected function getInvisibleSections()
     {
-        return \XLite\Core\Request::getInstance()->added
-            ? 'product_details/parts/main.buttons_added.tpl' 
-            : 'product_details/parts/main.buttons.tpl';
+        $list = parent::getInvisibleSections();
+
+        $list[] = 'tabs';
+        $list[] = 'attrs';
+        $list[] = 'sku';
+
+        return $list;
     }
 
-    /**
-     * Define widget parameters
-     *
-     * @return void
-     * @access protected
-     * @since  1.0.0
-     */
-    protected function defineWidgetParams()
-    {
-        parent::defineWidgetParams();
-
-        $this->widgetParams += array(
-            self::PARAM_PRODUCT => new \XLite\Model\WidgetParam\Object(
-                'Product',
-                $this->getProduct(),
-                false,
-                '\XLite\Model\Product'
-            ),
-        );
-    }
 
     /**
-     * Check visibility
+     * Return list of allowed targets
      * 
-     * @return bolean
+     * @return array
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function isVisible()
+    public static function getAllowedTargets()
     {
-        return parent::isVisible()
-            && $this->getParam(self::PARAM_PRODUCT);
+        $list = parent::getAllowedTargets();
+        $list[] = 'quick_look';
+
+        return $list;
     }
 }
-

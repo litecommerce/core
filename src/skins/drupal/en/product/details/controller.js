@@ -109,7 +109,7 @@ ProductDetailsView.prototype.shadeWidget = true;
 ProductDetailsView.prototype.widgetTarget = 'product';
 
 // Widget class name
-ProductDetailsView.prototype.widgetClass = '\\XLite\\View\\Product';
+ProductDetailsView.prototype.widgetClass = '\\XLite\\View\\Product\\Details\\Customer\\Page\\Main';
 
 // Imgaes gallery
 ProductDetailsView.prototype.gallery = null;

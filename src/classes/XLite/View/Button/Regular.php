@@ -77,7 +77,8 @@ class Regular extends \XLite\View\Button\AButton
      *
      * @return void
      * @access protected
-     * @since  1.0.0
+     * @see    ____func_see____
+     * @since  3.0.0
      */
     protected function defineWidgetParams()
     {
@@ -115,6 +116,7 @@ class Regular extends \XLite\View\Button\AButton
      *
      * @return string
      * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getDefaultJSCode()
