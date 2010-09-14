@@ -478,6 +478,12 @@ abstract class AController extends \XLite\Core\Handler
      */
     protected function getAJAXViewer()
     {
+        $params = array();
+
+        foreach (array(self::PARAM_SILENT, self::PARAM_DUMP_STARTED) as $name) {
+            $params[$name] = $this->get($name);
+        }
+
         $class = \XLite\Core\Request::getInstance()->widget;
 
         return new $class($params, $this->getViewerTemplate());
