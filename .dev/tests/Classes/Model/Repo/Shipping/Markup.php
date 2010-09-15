@@ -125,7 +125,7 @@ class XLite_Tests_Model_Repo_Shipping_Markup extends XLite_Tests_TestCase
             $profileId = 0;
         }
 
-        $order->setPaymentMethod(\XLite\Model\PaymentMethod::factory('PurchaseOrder'));
+        $order->setCurrency(\XLite\Core\Database::getRepo('XLite\Model\Currency')->find(840));
         $order->setProfileId($profileId);
         $order->setSubTotal(17.99);
 

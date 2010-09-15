@@ -61,8 +61,8 @@ class XLite_Tests_Model_Order extends XLite_Tests_TestCase
 
         $this->assertEquals(
             'Purchase Order',
-            $order->getPaymentMethod()->get('name'),
-            'check product id'
+            $order->getPaymentMethod()->getName(),
+            'check payment method'
         );
 
         $this->assertEquals(
@@ -209,7 +209,7 @@ class XLite_Tests_Model_Order extends XLite_Tests_TestCase
         unset($list);
 
         $order->map($this->testOrder);
-        $order->setPaymentMethod(\XLite\Model\PaymentMethod::factory('PurchaseOrder'));
+        $order->setCurrency(\XLite\Core\Database::getRepo('XLite\Model\Currency')->find(840));
         $order->setProfileId(0);
 
         $item = new \XLite\Model\OrderItem();
@@ -605,7 +605,7 @@ class XLite_Tests_Model_Order extends XLite_Tests_TestCase
 
         $this->assertEquals(
             'Purchase Order',
-            $order->getPaymentMethod()->get('name'),
+            $order->getPaymentMethod()->getName(),
             'check payment method'
         );
 
@@ -617,25 +617,26 @@ class XLite_Tests_Model_Order extends XLite_Tests_TestCase
 
         $this->assertEquals(
             'Purchase Order',
-            $order->getPaymentMethod()->get('name'),
+            $order->getPaymentMethod()->getName(),
             'check payment method #2'
         );
+
     }
 
     public function testSetPaymentMethod()
     {
         $order = $this->getTestOrder();
 
-        $order->setPaymentMethod(\XLite\Model\PaymentMethod::factory('PurchaseOrder'));
+        $order->setPaymentMethod(\XLite\Core\Database::getRepo('XLite\Model\Payment\Method')->find(2));
         $this->assertEquals(
             'Purchase Order',
-            $order->getPaymentMethod()->get('name'),
+            $order->getPaymentMethod()->getName(),
             'check payment method'
         );
 
         $order->setPaymentMethod(null);
-        $this->assertNull(
-            $order->getPaymentMethod(),
+        $this->assertTrue(
+            is_null($order->getPaymentMethod()),
             'check payment method #2'
         );
     }
@@ -927,7 +928,7 @@ class XLite_Tests_Model_Order extends XLite_Tests_TestCase
 
         $this->assertFalse($order->isShowCCInfo(), 'not show cc info');
 
-        $order->setPaymentMethod(\XLite\Model\PaymentMethod::factory('CreditCard'));
+        $order->setPaymentMethod(\XLite\Core\Database::getRepo('XLite\Model\Payment\Method')->find(1));
 
         $this->assertFalse($order->isShowCCInfo(), 'not show cc info');
     }
@@ -942,7 +943,7 @@ class XLite_Tests_Model_Order extends XLite_Tests_TestCase
 
         $this->assertFalse($order->isShowEcheckInfo(), 'not show echeck info');
 
-        $order->setPaymentMethod(\XLite\Model\PaymentMethod::factory('Echeck'));
+        $order->setPaymentMethod(\XLite\Core\Database::getRepo('XLite\Model\Payment\Method')->find(6));
 
         $this->assertFalse($order->isShowEcheckInfo(), 'not show echeck info');
 
@@ -972,8 +973,13 @@ class XLite_Tests_Model_Order extends XLite_Tests_TestCase
         unset($list);
 
         $order->map($this->testOrder);
-        $order->setPaymentMethod(\XLite\Model\PaymentMethod::factory('PurchaseOrder'));
+        $order->setCurrency(\XLite\Core\Database::getRepo('XLite\Model\Currency')->find(840));
         $order->setProfileId(0);
+
+        \XLite\Core\Database::getEM()->persist($order);
+        \XLite\Core\Database::getEM()->flush();
+
+        $order->setPaymentMethod(\XLite\Core\Database::getRepo('XLite\Model\Payment\Method')->find(2));
 
         $item = new \XLite\Model\OrderItem();
 

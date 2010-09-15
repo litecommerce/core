@@ -165,7 +165,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
     /**
      * Order details
      *
-     * @var    \XLite\Model\OrderDetail
+     * @var    \Doctrine\Common\Collections\Collection
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
@@ -178,7 +178,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
     /**
      * Order items
      *
-     * @var    \XLite\Model\OrderItem
+     * @var    \Doctrine\Common\Collections\Collection
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
@@ -190,7 +190,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
     /**
      * Order saved modifiers
      *
-     * @var    \XLite\Model\OrderModifier
+     * @var    \Doctrine\Common\Collections\Collection
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
@@ -203,7 +203,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
     /**
      * Payment transactions
      *
-     * @var    \XLite\Model\Payment\Transaction
+     * @var    \Doctrine\Common\Collections\Collection
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
@@ -622,9 +622,14 @@ class Order extends \XLite\Model\Base\ModifierOwner
      */
     public function setPaymentMethod($paymentMethod, $value = null)
     {
+        if (isset($paymentMethod) && !($paymentMethod instanceof \XLite\Model\Payment\Method)) {
+            $paymentMethod = null;
+        }
+
         if (!isset($paymentMethod) || $this->getFirstOpenPaymentTransaction()) {
             $t = $this->getFirstOpenPaymentTransaction();
             if ($t) {
+                $this->getPaymentTransactions()->removeElement($t);
                 $t->getPaymentMethod()->getTransactions()->removeElement($t);
                 \XLite\Core\Database::getEM()->remove($t);
             }
@@ -660,6 +665,8 @@ class Order extends \XLite\Model\Base\ModifierOwner
 
         $transaction->setPaymentMethod($method);
         $method->getTransactions()->add($transaction);
+
+        \XLite\Core\Database::getEM()->persist($method);
 
         $this->getPaymentTransactions()->add($transaction);
         $transaction->setOrder($this);

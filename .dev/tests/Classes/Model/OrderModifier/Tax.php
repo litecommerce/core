@@ -123,7 +123,7 @@ class XLite_Tests_Model_OrderModifier_Tax extends XLite_Tests_TestCase
         unset($list);
 
         $order->map($this->testOrder);
-        $order->setPaymentMethod(\XLite\Model\PaymentMethod::factory('PurchaseOrder'));
+        $order->setCurrency(\XLite\Core\Database::getRepo('XLite\Model\Currency')->find(840));
         $order->setProfileId(0);
 
         $item = new \XLite\Model\OrderItem();

@@ -37,7 +37,6 @@ namespace XLite\Module\Bestsellers\Model\Repo;
  */
 class OrderItem extends \XLite\Model\Repo\OrderItem implements \XLite\Base\IDecorator
 {
-
     /**
      * Defines bestsellers products collection 
      * 
@@ -51,52 +50,44 @@ class OrderItem extends \XLite\Model\Repo\OrderItem implements \XLite\Base\IDeco
      */
     public function getBestsellers($count = 0, $cat = 0)
     {
-        $qb = $this->prepareBestsellers();
-
-        if (0 < $count) {
-
-            $qb->setMaxResults($count);
-
-        }   
-
-        if (0 < $cat) {
-
-            \XLite\Core\Database::getRepo('\XLite\Model\Category')->addSubTreeCondition($qb, $cat);
-
-        }   
-
-        return $this->getObjectOnlyResult($qb);
+        return $this->getObjectOnlyResult($this->prepareBestsellers($count, $cat));
     }
 
     /**
      * Prepares query builder object to get bestsell products
+     * 
+     * @param integer $count number of products to get
+     * @param integer $cat   category identificator
      * 
      * @return \Doctrine\ORM\QueryBuilder Query builder object
      * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function prepareBestsellers()
+    protected function prepareBestsellers($count, $cat)
     {
-        $qb = $this->createQueryBuilder();
-
-        $qb->addSelect('prod')
+        $qb = $this->createQueryBuilder()
+            ->addSelect('prod')
             ->addSelect('sum(o.amount) as product_amount')
             ->leftJoin('o.product', 'prod')
-            ->leftJoin('o.order', 'ord')
+            ->innerJoin('o.order', 'ord')
             ->leftJoin('prod.category_products', 'cp')
             ->leftJoin('cp.category', 'c')
             ->andWhere('prod.enabled = :enabled')
             ->andWhere('ord.status IN (:complete_status, :processed_status)')
             ->groupBy('o.product')
             ->orderBy('product_amount', 'DESC')
-            ->setParameters(
-                array(
-                    'enabled'          => true,
-                    'complete_status'  => \XLite\Model\Order::STATUS_COMPLETED,
-                    'processed_status' => \XLite\Model\Order::STATUS_PROCESSED,
-                )   
-            );  
+            ->setParameter('enabled', true)
+            ->setParameter('complete_status', \XLite\Model\Order::STATUS_COMPLETED)
+            ->setParameter('processed_status', \XLite\Model\Order::STATUS_PROCESSED);
+
+        if (0 < $count) {
+            $qb->setMaxResults($count);
+        }
+
+        if (0 < $cat) {
+            \XLite\Core\Database::getRepo('XLite\Model\Category')->addSubTreeCondition($qb, $cat);
+        }
 
         return $qb;
     }
