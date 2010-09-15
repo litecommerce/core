@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage ____sub_package____
+ * @subpackage Model
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -26,54 +26,40 @@
  * @since      3.0.0
  */
 
-namespace XLite\View\CheckoutStep\Regular;
+namespace XLite\Model\Payment;
 
 /**
- * \XLite\View\CheckoutStep\Regular\PaymentMethod 
+ * Payment method multilingual data
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
+ * @Entity
+ * @Table (name="payment_method_translations")
  */
-class PaymentMethod extends \XLite\View\CheckoutStep\Regular\ARegular
+class MethodTranslation extends \XLite\Model\Base\Translation
 {
     /**
-     * Return step templates directory name
+     * Name
      *
-     * @return string
+     * @var    string
      * @access protected
+     * @see    ____var_see____
      * @since  3.0.0
+     *
+     * @Column (type="string", length="255")
      */
-    protected function getStepDir()
-    {
-        return 'paymentMethod';
-    }
+    protected $name;
 
     /**
-     * Return title
+     * Description
      *
-     * @return string
+     * @var    string
      * @access protected
+     * @see    ____var_see____
      * @since  3.0.0
-     */
-    protected function getHead()
-    {
-        return 'Select payment method';
-    }
-
-    /**
-     * Check - specified payment method is selected or not
      *
-     * @param \XLite\Model\PaymentMethod $paymentMethod Payment method
-     *
-     * @return boolean
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
+     * @Column (type="text")
      */
-    protected function isPaymentSelected(\XLite\Model\Payment\Method $method)
-    {
-        return $this->getCart()->getPaymentMethod()
-            && $this->getCart()->getPaymentMethod()->getMethodId() == $method->getMethodId();
-    }
+    protected $description;
 }

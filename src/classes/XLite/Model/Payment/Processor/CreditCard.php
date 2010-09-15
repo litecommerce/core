@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage ____sub_package____
+ * @subpackage Model
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -26,54 +26,66 @@
  * @since      3.0.0
  */
 
-namespace XLite\View\CheckoutStep\Regular;
+namespace XLite\Model\Payment\Processor;
 
 /**
- * \XLite\View\CheckoutStep\Regular\PaymentMethod 
+ * Credit card
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class PaymentMethod extends \XLite\View\CheckoutStep\Regular\ARegular
+class CreditCard extends \XLite\Model\Payment\Processor\Offline
 {
     /**
-     * Return step templates directory name
+     * Get input template
      *
-     * @return string
-     * @access protected
+     * @return string or null
+     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getStepDir()
+    public function getInputTemplate()
     {
-        return 'paymentMethod';
+        return 'checkout/credit_card.tpl';
     }
 
     /**
-     * Return title
+     * Get input data labels list
      *
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getHead()
-    {
-        return 'Select payment method';
-    }
-
-    /**
-     * Check - specified payment method is selected or not
-     *
-     * @param \XLite\Model\PaymentMethod $paymentMethod Payment method
-     *
-     * @return boolean
+     * @return array
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function isPaymentSelected(\XLite\Model\Payment\Method $method)
+    protected function getInputDataLabels()
     {
-        return $this->getCart()->getPaymentMethod()
-            && $this->getCart()->getPaymentMethod()->getMethodId() == $method->getMethodId();
+        return array(
+            'name'       => 'Cardholder\'s name',
+            'number'     => 'Credit card Number',
+            'date'       => 'Expiration date',
+            'start_date' => 'Start date',
+            'issue'      => 'Issue number',
+        );
     }
+
+    /**
+     * Get input data access levels list
+     *
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getInputDataAccessLevels()
+    {
+        return array(
+            'name'       => \XLite\Model\Payment\TransactionData::ACCESS_ADMIN,
+            'number'     => \XLite\Model\Payment\TransactionData::ACCESS_ADMIN,
+            'date'       => \XLite\Model\Payment\TransactionData::ACCESS_ADMIN,
+            'start_date' => \XLite\Model\Payment\TransactionData::ACCESS_ADMIN,
+            'issue'      => \XLite\Model\Payment\TransactionData::ACCESS_ADMIN,
+        );
+    }
+
 }

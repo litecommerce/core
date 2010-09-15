@@ -18,9 +18,9 @@ CREATE TABLE xlite_xpc_configurations (
     PRIMARY KEY (confid)
 ) TYPE=MyISAM;
 
-ALTER TABLE xlite_orders ADD xpc_txnid varchar(32) NOT NULL default '';
-ALTER TABLE xlite_payment_methods ADD xpc_confid int(6) NOT NULL default 0;
-ALTER TABLE xlite_payment_methods ADD KEY xpc_confid(xpc_confid);
+--ALTER TABLE xlite_orders ADD xpc_txnid varchar(32) NOT NULL default '';
+--ALTER TABLE xlite_payment_methods ADD xpc_confid int(6) NOT NULL default 0;
+--ALTER TABLE xlite_payment_methods ADD KEY xpc_confid(xpc_confid);
 
 INSERT INTO `xlite_config` VALUES (285,'xpc_allowed_ip_addresses','XPaymentsConnector','text',70,'');
 INSERT INTO `xlite_config` VALUES (286,'xpc_private_key','XPaymentsConnector','textarea',50,'');

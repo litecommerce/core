@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage ____sub_package____
+ * @subpackage Model
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -26,54 +26,54 @@
  * @since      3.0.0
  */
 
-namespace XLite\View\CheckoutStep\Regular;
+namespace XLite\Model\Repo\Payment;
 
 /**
- * \XLite\View\CheckoutStep\Regular\PaymentMethod 
+ * Payment method repository
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class PaymentMethod extends \XLite\View\CheckoutStep\Regular\ARegular
+class Method extends \XLite\Model\Repo\ARepo
 {
     /**
-     * Return step templates directory name
+     * Default 'order by' field name
      *
-     * @return string
+     * @var    string
      * @access protected
+     * @see    ____var_see____
      * @since  3.0.0
      */
-    protected function getStepDir()
+    protected $defaultOrderBy = 'orderby';
+
+    /**
+     * Find all activemethods
+     * 
+     * @return \Doctrine\Common\Collection\Colelction
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function findAllActive()
     {
-        return 'paymentMethod';
+        return $this->defineAllActiveQuery()
+            ->getQuery()
+            ->getResult();
     }
 
     /**
-     * Return title
-     *
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getHead()
-    {
-        return 'Select payment method';
-    }
-
-    /**
-     * Check - specified payment method is selected or not
-     *
-     * @param \XLite\Model\PaymentMethod $paymentMethod Payment method
-     *
-     * @return boolean
+     * Define query for findAllActive() method
+     * 
+     * @return \Doctrine\ORM\QueryBuilder
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function isPaymentSelected(\XLite\Model\Payment\Method $method)
+    protected function defineAllActiveQuery()
     {
-        return $this->getCart()->getPaymentMethod()
-            && $this->getCart()->getPaymentMethod()->getMethodId() == $method->getMethodId();
+        return $this->createQueryBuilder()
+            ->andWhere('m.enabled = :true')
+            ->setParameter('true', true);
     }
 }

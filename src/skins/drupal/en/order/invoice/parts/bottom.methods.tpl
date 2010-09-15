@@ -13,7 +13,9 @@
  *}
 <td class="payment">
   <strong>{t(#Payment method#)}:</strong>
-  {order.paymentMethod.name:h}
+  {foreach:order.getPaymentTransactions(),t}
+    {t.paymentMethod.getName():h}<br />
+  {end:}
 </td>
 
 <td class="shipping">

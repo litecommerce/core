@@ -77,6 +77,9 @@ class Cart extends \XLite\Model\Order
                 $cart = new $className();
                 $cart->setStatus(self::STATUS_TEMPORARY);
                 $cart->setProfileId(0);
+
+                // TODO - rework
+                $cart->setCurrency(\XLite::getController()->getCurrentCurrency());
             }
 
             static::$instances[$className] = $cart;
@@ -170,6 +173,8 @@ class Cart extends \XLite\Model\Order
      */
     public function processCheckOut()
     {
+        parent::processCheckOut();
+
         if (self::STATUS_TEMPORARY == $this->getStatus()) {
             $this->setDate(time());
 
@@ -182,8 +187,6 @@ class Cart extends \XLite\Model\Order
             } else {
                 $this->setProfileCopy($profile);
             }
-
-            $this->setStatus(self::STATUS_INPROGRESS);
         }
     }
 

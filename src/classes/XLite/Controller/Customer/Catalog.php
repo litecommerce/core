@@ -95,7 +95,8 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
     {
         parent::addBaseLocation();
 
-        $categoryPath = \XLite\Core\Database::getRepo('\XLite\Model\Category')->getCategoryPath(\XLite\Core\Request::getInstance()->category_id);
+        $categoryPath = \XLite\Core\Database::getRepo('\XLite\Model\Category')
+            ->getCategoryPath(\XLite\Core\Request::getInstance()->category_id);
 
         foreach ($categoryPath as $category) {
             if (0 < $category->category_id) {
@@ -126,7 +127,6 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
      */
     abstract protected function getModelObject();
 
-
     /**
      * Return current (or default) category object
      *
@@ -136,7 +136,8 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
      */
     public function getCategory()
     {
-        return \XLite\Core\Database::getRepo('\XLite\Model\Category')->getCategory($this->getCategoryId());
+        return \XLite\Core\Database::getRepo('XLite\Model\Category')
+            ->getCategory($this->getCategoryId());
     }
 
     /**
@@ -148,7 +149,11 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
      */
     public function getTitle()
     {
-        return ($metaTitle = $this->getModelObject()->getMetaTitle()) ?: $this->getModelObject()->getName();
+        $object = $this->getModelObject();
+
+        return $object
+            ? ($object->getMetaTitle() ?: $object->getName())
+            : null;
     }
 
     /**
@@ -160,7 +165,9 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
      */
     public function getDescription()
     {
-        return $this->getModelObject()->getDescription();
+        return $this->getModelObject()
+            ? $this->getModelObject()->getDescription()
+            : null;
     }
 
     /**
@@ -172,7 +179,11 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
      */
     public function getMetaDescription()
     {
-        return ($metaDesc = $this->getModelObject()->getMetaDesc()) ?: $this->getDescription();
+        $object = $this->getModelObject();
+
+        return $object
+            ? ($object->getMetaDesc() ?: $this->getDescription())
+            : null;
     }
 
     /**
@@ -184,6 +195,8 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
      */
     public function getKeywords()
     {
-        return $this->getModelObject()->getMetaTags();
+        return $this->getModelObject()
+            ? $this->getModelObject()->getMetaTags()
+            : null;
     }
 }

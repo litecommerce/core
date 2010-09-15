@@ -514,7 +514,7 @@ array("condition" => "state=District of Columbia", "action" => array(
 
         $paymentMethod = $order->getPaymentMethod();
         if (isset($paymentMethod)) {
-            $this->_conditionValues['payment method'] = $paymentMethod->get('name');
+            $this->_conditionValues['payment method'] = $paymentMethod->getServiceName();
         }
     }
 

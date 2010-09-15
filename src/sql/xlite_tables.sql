@@ -89,6 +89,27 @@ CREATE TABLE xlite_config_translations (
   KEY i (id)
 ) TYPE=MyISAM;
 
+DROP TABLE IF EXISTS xlite_currencies;
+CREATE TABLE xlite_currencies (
+  code char(3) NOT NULL,
+  currency_id int(3) NOT NULL PRIMARY KEY,
+  symbol varchar(16) NOT NULL,
+  e tinyint(1) NOT NULL,
+  UNIQUE KEY code(code)
+) TYPE=MyISAM;
+
+DROP TABLE IF EXISTS xlite_currency_translations;
+CREATE TABLE xlite_currency_translations (
+  label_id int(11) NOT NULL AUTO_INCREMENT,
+  code char(2) NOT NULL,
+  id int(11) NOT NULL DEFAULT '0',
+  name char(255) NOT NULL,
+  PRIMARY KEY (label_id),
+  KEY ci (code,id),
+  KEY i (id)
+) TYPE=MyISAM;
+
+
 DROP TABLE IF EXISTS xlite_waitingips;
 CREATE TABLE xlite_waitingips (
   id int NOT NULL auto_increment,
@@ -184,11 +205,11 @@ CREATE TABLE xlite_orders (
   tracking varchar(32) default NULL,
   date int(11) default NULL,
   status char(1) default 'I',
-  payment_method varchar(64) default NULL,
   notes text,
   taxes text,
   shipping_id int(11) default NULL,
   is_order int(1) NOT NULL default 1,
+  currency_id int(3) NOT NULL default 840,
   KEY xlite_order_date (date),
   KEY profile_id (profile_id),
   KEY orig_profile_id (orig_profile_id),
@@ -196,7 +217,6 @@ CREATE TABLE xlite_orders (
   KEY subtotal (subtotal),
   KEY tracking (tracking),
   KEY status (status),
-  KEY payment_method (payment_method),
   FULLTEXT KEY notes (notes),
   KEY shipping_id (shipping_id)
 ) TYPE=MyISAM;
@@ -239,20 +259,62 @@ CREATE TABLE xlite_order_item_modifiers (
 
 DROP TABLE IF EXISTS xlite_payment_methods;
 CREATE TABLE xlite_payment_methods (
-  payment_method varchar(64) NOT NULL default '',
-  name varchar(128) NOT NULL default '',
-  details varchar(255) NOT NULL default '',
+  method_id int(11) NOT NULL auto_increment PRIMARY KEY,
+  service_name varchar(128) NOT NULL default '',
   class varchar(64) NOT NULL default '',
-  params text NOT NULL,
   orderby int(11) NOT NULL default '0',
-  enabled int(1) NOT NULL default '1',
-  PRIMARY KEY  (payment_method),
+  enabled tinyint(1) NOT NULL default '1',
   KEY orderby (orderby),
-  KEY name (name),
-  KEY details (details),
-  KEY class (class),
-  FULLTEXT KEY params (params),
+  KEY class (class, enabled),
   KEY enabled (enabled)
+) TYPE=MyISAM;
+
+DROP TABLE IF EXISTS xlite_payment_method_translations;
+CREATE TABLE xlite_payment_method_translations (
+  label_id int(11) NOT NULL AUTO_INCREMENT,
+  code char(2) NOT NULL,
+  id int(11) NOT NULL DEFAULT '0',
+  name char(255) NOT NULL,
+  description text NOT NULL,
+  PRIMARY KEY (label_id),
+  KEY ci (code,id),
+  KEY i (id)
+) TYPE=MyISAM;
+
+DROP TABLE IF EXISTS xlite_payment_method_settings;
+CREATE TABLE xlite_payment_method_settings (
+  setting_id int(11) NOT NULL auto_increment PRIMARY KEY,
+  method_id int(11) NOT NULL default 0,
+  name varchar(128) NOT NULL,
+  value text NOT NULL,
+  KEY mn (method_id, name)
+) TYPE=MyISAM;
+
+DROP TABLE IF EXISTS xlite_payment_transactions;
+CREATE TABLE xlite_payment_transactions (
+  `transaction_id` int(11) NOT NULL auto_increment PRIMARY KEY,
+  `order_id` int(11) NOT NULL default 0,
+  `method_id` int(11) NOT NULL default 0,
+  `method_name` varchar(128) NOT NULL,
+  `method_local_name` varchar(255) NOT NULL,
+  `status` char(1) NOT NULL default 'I',
+  `value` decimal(16,4) NOT NULL default '0.0000',
+  `type` char(8) NOT NULL default 'sale',
+  `note` varchar(255) NOT NULL default '',
+  KEY o (order_id, status),
+  KEY pm (method_id, status),
+  KEY status (status)
+) TYPE=MyISAM;
+
+DROP TABLE IF EXISTS xlite_payment_transaction_data;
+CREATE TABLE xlite_payment_transaction_data (
+  data_id int(11) NOT NULL auto_increment PRIMARY KEY,
+  transaction_id int(11) NOT NULL default 0,
+  name varchar(128) NOT NULL,
+  label varchar(255) NOT NULL default '',
+  access_level char(1) NOT NULL default 'A',
+  value text NOT NULL,
+  KEY tn (transaction_id, name)
 ) TYPE=MyISAM;
 
 DROP TABLE IF EXISTS xlite_products;

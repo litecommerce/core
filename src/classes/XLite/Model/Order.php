@@ -141,17 +141,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
     protected $status = self::STATUS_INPROGRESS;
 
     /**
-     * Payment method code
-     * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     * @Column (type="string", length="64")
-     */
-    protected $payment_method = '';
-
-    /**
      * Customer notes 
      * 
      * @var    string
@@ -210,6 +199,31 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * @OrderBy ({"id" = "ASC"})
      */
     protected $saved_modifiers;
+
+    /**
+     * Payment transactions
+     *
+     * @var    \XLite\Model\Payment\Transaction
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     *
+     * @OneToMany (targetEntity="XLite\Model\Payment\Transaction", mappedBy="order", cascade={"all"})
+     */
+    protected $payment_transactions;
+
+    /**
+     * Currency 
+     * 
+     * @var    \XLite\Model\Currency
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     *
+     * @ManyToOne (targetEntity="XLite\Model\Currency")
+     * @JoinColumn (name="currency_id", referencedColumnName="currency_id")
+     */
+    protected $currency;
 
     /**
      * 'Add item' error code
@@ -583,36 +597,159 @@ class Order extends \XLite\Model\Base\ModifierOwner
     /**
      * Get payment method 
      * 
-     * @return \XLite\Model\PaymentMethod
+     * @return \XLite\Model\Payment\Method or null
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
     public function getPaymentMethod()
     {
-        if (!isset($this->paymentMethodModel) && $this->payment_method) {
-            $this->paymentMethodModel = \XLite\Model\PaymentMethod::factory($this->payment_method);
-        }
+        $t = $this->getFirstOpenPaymentTransaction();
 
-        return $this->paymentMethodModel;
+        return $t ? $t->getPaymentMethod() : null;
     }
     
     /**
      * Set payment method 
      * 
-     * @param \XLite\Model\PaymentMethod $paymentMethod Payment method
+     * @param \XLite\Model\Payment\Method $paymentMethod Payment method
+     * @param float                       $value         Payment transaction value
      *  
      * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function setPaymentMethod($paymentMethod)
+    public function setPaymentMethod($paymentMethod, $value = null)
     {
-        $this->paymentMethodModel = $paymentMethod;
-        $this->payment_method = is_null($paymentMethod)
-            ? 0
-            : $paymentMethod->get('payment_method');
+        if (!isset($paymentMethod) || $this->getFirstOpenPaymentTransaction()) {
+            $t = $this->getFirstOpenPaymentTransaction();
+            if ($t) {
+                $t->getPaymentMethod()->getTransactions()->removeElement($t);
+                \XLite\Core\Database::getEM()->remove($t);
+            }
+        }
+
+        if (isset($paymentMethod)) {
+            $this->addPaymentTransaction($paymentMethod, $value);
+        }
+    }
+
+    /**
+     * Add payment transaction 
+     * 
+     * @param \XLite\Model\Payment\Method $method   Payment method
+     * @param float                       $value    Value
+     * @param string                      $currency Currency code
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function addPaymentTransaction(\XLite\Model\Payment\Method $method, $value = null, $currency = null)
+    {
+        if (!isset($value) || 0 >= $value) {
+            $value = $this->getOpenTotal();
+
+        } else {
+            $value = min($value, $this->getOpenTotal());
+        }
+
+        $transaction = new \XLite\Model\Payment\Transaction();
+
+        $transaction->setPaymentMethod($method);
+        $method->getTransactions()->add($transaction);
+
+        $this->getPaymentTransactions()->add($transaction);
+        $transaction->setOrder($this);
+
+        $transaction->setMethodName($method->getServiceName());
+        $transaction->setMethodLocalName($method->getName());
+        $transaction->setStatus($transaction::STATUS_INITIALIZED);
+        $transaction->setValue($value);
+
+        \XLite\Core\Database::getEM()->persist($transaction);
+    }
+
+    /**
+     * Get first open (not payed) payment transaction 
+     * 
+     * @return \XLite\Model\Payment\Transaction or null
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getFirstOpenPaymentTransaction()
+    {
+        $result = null;
+
+        foreach ($this->getPaymentTransactions() as $t) {
+            if ($t::STATUS_INITIALIZED == $t->getStatus()) {
+                $result = $t;
+                break;
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Get open (not-payed) total 
+     * 
+     * @return float
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getOpenTotal()
+    {
+        $total = $this->getTotal();
+
+        foreach ($this->getPaymentTransactions() as $t) {
+            $total -= $t->getChargeValueModifier();
+        }
+
+        return $total;
+    }
+
+    /**
+     * Check - order is open (has initialized transactions or has open total) or not
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isOpen()
+    {
+        return $this->getFirstOpenPaymentTransaction()
+            || 0 < $this->getOpenTotal();
+    }
+
+    /**
+     * Check - order is payed or not
+     * Payed - order has not open total and all payment transactions are failed or completed
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isPayed()
+    {
+        $result = !$this->isOpen();
+
+        if ($result) {
+            foreach ($this->getPaymentTransactions() as $t) {
+                if (!$t->isFailed() || !$t->isCompleted()) {
+                    $result = false;
+                    break;
+                }
+            }
+        }
+
+        return $result;
     }
 
     /**
@@ -1004,9 +1141,9 @@ class Order extends \XLite\Model\Base\ModifierOwner
                 );
                 $mail->send();
             }
-
-            $this->markAsOrder();
         }
+
+        $this->markAsOrder();
     }
 
     /**
