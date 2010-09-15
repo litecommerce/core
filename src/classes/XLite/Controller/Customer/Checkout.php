@@ -331,16 +331,13 @@ class Checkout extends \XLite\Controller\Customer\Cart
      * Return list of available payment methods
      * 
      * @return array
-     * @access protected
+     * @access public
      * @since  3.0.0
      */
-    protected function getPaymentMethods()
+    public function getPaymentMethods()
     {
-        return \XLite\Model\CachingFactory::getObjectFromCallback(
-            __METHOD__,
-            '\XLite\Model\PaymentMethod',
-            'getActiveMethods'
-        );
+        return \XLite\Core\Database::getRepo('XLite\Model\Payment\Method')
+            ->findAllActive();
     }
 
     /**
@@ -406,8 +403,8 @@ class Checkout extends \XLite\Controller\Customer\Cart
         // FIXME - is it really needed?
         $this->checkHtaccess();
 
-        $pm = new \XLite\Model\PaymentMethod(\XLite\Core\Request::getInstance()->payment_id);
-        if (!$pm->isExists()) {
+        $pm = \XLite\Core\Database::getRepo('XLite\Model\Payment\Method')->find(\XLite\Core\Request::getInstance()->payment_id);
+        if (!$pm) {
             \XLite\Core\TopMessage::getInstance()->add(
                 'No payment method selected',
                 \XLite\Core\TopMessage::ERROR
@@ -420,7 +417,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
 
             if ($this->isPaymentNeeded()) {
                 \XLite\Core\TopMessage::getInstance()->add(
-                    'The selected payment method is obsolete or invalid. Select another payment method.',
+                    'The selected payment method is obsolete or invalid. Select another payment method',
                     \XLite\Core\TopMessage::ERROR
                 );
             }
@@ -591,34 +588,66 @@ class Checkout extends \XLite\Controller\Customer\Cart
 
             $this->getCart()->processCheckOut();
 
-            switch ($this->getCart()->getPaymentMethod()->handleRequest($this->getCart())) {
+            // Get first (and only) payment transaction
+        
+            $transaction = $this->getCart()->getFirstOpenPaymentTransaction();
 
-                case \XLite\Model\PaymentMethod::PAYMENT_SILENT:
-                    // don't call output()
-                    $this->set('silent', true);
-                    break;
+            $result = null;
 
-                case \XLite\Model\PaymentMethod::PAYMENT_SUCCESS:
-                    $this->processSucceed();
-                    $this->setReturnUrl(
-                        $this->buildURL(
-                            'checkoutSuccess',
-                            '',
-                            array('order_id' => $this->getCart()->getOrderId())
-                        )
-                    );
-                    break;
+            if ($transaction) {
+                $result = $transaction->handleCheckoutAction();
 
-                case \XLite\Model\PaymentMethod::PAYMENT_FAILURE:
-                    $this->setReturnUrl(
-                        $this->buildURL(
-                            'checkout',
-                            '',
-                            array('mode' => 'error', 'order_id' => $this->getCart()->getOrderId())
-                        )
-                    );
-                    break;
+            } elseif (!$this->getCart()->isOpen()) {
+
+                $result = \XLite\Model\Payment\Transaction::COMPLETED;
+
+                $status = \XLite\Model\Order::STATUS_PROCESSED;
+
+                foreach ($this->getCart()->getTransactions() as $t) {
+                    if ($t::STATUS_SUCCESS != $t->getStatus()) {
+                        $status = \XLite\Model\Order::STATUS_QUEUED;
+                        break;
+                    }
+                }
+
+                $this->getCart()->setStatus($status);
             }
+
+            if (\XLite\Model\Payment\Transaction::PROLONGATION == $result) {
+                $this->set('silent', true);
+
+            } elseif ($this->getCart()->isOpen()) {
+
+                // Order is open - go to Select payment method step
+
+                if ($transaction && $transaction->getNote()) {
+                    \XLite\Core\TopMessage::getInstance()->add(
+                        $transaction->getNote(),
+                        $transaction->isFailed() ? \XLite\Core\TopMessage::ERROR : \XLite\Core\TopMessage::INFO,
+                        true
+                    );
+                }
+
+                $this->setReturnUrl($this->buildURL('checkout'));
+
+            } else {
+
+                $this->getCart()->setStatus(
+                    $this->getCart()->isPayed() ? \XLite\Model\Order::STATUS_PROCESSED : \XLite\Model\Order::STATUS_QUEUED
+                );
+
+                $this->processSucceed();
+                $this->setReturnUrl(
+                    $this->buildURL(
+                        'checkoutSuccess',
+                        '',
+                        array('order_id' => $this->getCart()->getOrderId())
+                    )
+                );
+
+            }
+
+            $this->updateCart();
         }
     }
 
@@ -738,11 +767,6 @@ class Checkout extends \XLite\Controller\Customer\Cart
     public function isSecure()
     {
         return $this->config->Security->customer_security;
-    }
-
-    function isDisplayNumber()
-    {
-        return $this->config->General->display_check_number;
     }
 }
 

@@ -1,10 +1,7 @@
-INSERT INTO `xlite_orders` VALUES (1,1,1,'20.7599','17.9900','',1283939344,'P','MoneyOrdering','','a:1:{s:3:\"Tax\";s:4:\"0.00\";}',100,0,0,'0.00',NULL,'0.00','0.00','','','0.00','','','','',NULL,NULL,0,NULL,'','',NULL,0);
-INSERT INTO `xlite_orders` VALUES (2,1,3,'121.1137','116.9100','',1283867845,'C','MoneyOrdering','','a:1:{s:3:\"Tax\";s:4:\"0.00\";}',100,0,0,'0.00',NULL,'0.00','0.00','','','0.00','','','','',NULL,NULL,0,NULL,'','',NULL,0);
-INSERT INTO `xlite_orders` VALUES (3,1,0,'0.0000','0.0000','',1283861783,'T','','','a:0:{}',0,0,0,'0.00',NULL,'0.00','0.00','','','0.00','','','','',NULL,NULL,0,NULL,'','',NULL,0);
-INSERT INTO `xlite_orders` VALUES (4,1,0,'0.0000','0.0000','',1283925379,'T','','','a:0:{}',0,0,0,'0.00',NULL,'0.00','0.00','','','0.00','','','','',NULL,NULL,0,NULL,'','',NULL,0);
-INSERT INTO `xlite_orders` VALUES (5,1,0,'0.0000','0.0000','',1283938337,'T','','','a:0:{}',0,0,0,'0.00',NULL,'0.00','0.00','','','0.00','','','','',NULL,NULL,0,NULL,'','',NULL,0);
-INSERT INTO `xlite_orders` VALUES (6,1,0,'0.0000','0.0000','',1284008419,'T','','','a:0:{}',0,0,0,'0.00',NULL,'0.00','0.00','','','0.00','','','','',NULL,NULL,0,NULL,'','',NULL,0);
-
+INSERT INTO `xlite_orders` SET order_id = 1, profile_id = 1, orig_profile_id = 1, total = '20.7599', subtotal = '17.9900', is_order = 1, date = 1283939344, status = 'P', taxes = 'a:1:{s:3:\"Tax\";s:4:\"0.00\";}';
+INSERT INTO xlite_payment_transactions VALUES (1,1,5,'MoneyOrdering','Money Ordering','S',20.7599,'sale','');
+INSERT INTO `xlite_orders` SET order_id = 2, profile_id = 1, orig_profile_id = 3, total = '121.1137', subtotal= '116.9100',is_order = 1, date = 1283867845, status = 'C', taxes = 'a:1:{s:3:\"Tax\";s:4:\"0.00\";}';
+INSERT INTO xlite_payment_transactions VALUES (2,2,5,'MoneyOrdering','Money Ordering','S',121.1137,'sale','');
 
 INSERT INTO `xlite_order_items` VALUES (1,1,3002,'product','Binary Mom','00000','17.9900','-1.00',1,'17.9900','17.9900','0.00',0,NULL,'','','');
 INSERT INTO `xlite_order_items` VALUES (2,2,4059,'product','Paint Shop Pro Web Graphics [PDF]','00057','39.9500','-1.00',1,'39.9500','39.9500','0.00',0,NULL,'','','');

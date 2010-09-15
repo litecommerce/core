@@ -10,6 +10,8 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<widget template="{cart.paymentMethod.formTemplate}" IF="cart.paymentMethod.formTemplate" />
+{if:cart.paymentMethod.processor.getInputTemplate()}
+  <div class="details"><widget template="{cart.paymentMethod.processor.getInputTemplate()}" processor="cart.paymentMethod.getProcessor()"/></div>
+{end:}
 
-<widget module="GoogleCheckout" template="modules/GoogleCheckout/google_checkout.tpl" IF="{cart.paymentMethod.payment_method=#google_checkout#}">
+<!--widget module="GoogleCheckout" template="modules/GoogleCheckout/google_checkout.tpl" IF="{cart.paymentMethod.payment_method=#google_checkout#}"-->

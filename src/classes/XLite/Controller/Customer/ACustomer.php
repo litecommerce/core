@@ -249,25 +249,6 @@ abstract class ACustomer extends \XLite\Controller\AController
         return parent::getShopUrl($url, $currentSecurity ? $currentSecurity : $secure);
     }
 
-    /**
-     * Cleanup processed cart for non-checkout pages 
-     * 
-     * @param array $params controller params
-     *  
-     * @return void
-     * @access public
-     * @since  3.0.0
-     */
-    public function __construct(array $params = array())
-    {
-        parent::__construct($params);
-
-        // TODO - check if it's really needed
-        if ('checkout' == $this->getTarget() && $this->isCartProcessed()) {
-            $this->getCart()->clear();
-        }
-    }
-
     public function isSecure()
     {
         $result = parent::isSecure();
@@ -344,6 +325,21 @@ abstract class ACustomer extends \XLite\Controller\AController
     public function getContentHeader()
     {
         return $this->getTitle();
+    }
+
+    /**
+     * Get current currency 
+     * TODO - rework
+     * 
+     * @return \XLite\Model\Currency
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCurrentCurrency()
+    {
+        return \XLite\Core\Database::getRepo('XLite\Model\Currency')
+            ->find(840);
     }
 }
 

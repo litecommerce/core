@@ -29,61 +29,54 @@ $(document).ready(
 $('.checkout-details').submit(CheckoutSubmit);
 </script>
 
-<div class="details">
+<table cellspacing="0" class="form-table">
 
-  <table cellspacing="0" class="form-table">
+  <tr>
+    <td><label for="cc_name">{t(#Cardholder's name#)}:</label></td>
+    <td class="marker">*</td>
+    <td>
+      <input type="text" name="payment[name]" id="cc_name" value="{cart.profile.billing_firstname} {cart.profile.billing_lastname}" />
+    </td>
+  </tr>
 
-    <tr>
-      <td><label for="cc_name">Cardholder's name:</label></td>
-      <td class="marker">*</td>
-      <td>
-        <input type="text" name="cc_info[cc_name]" id="cc_name" value="{cart.profile.billing_firstname} {cart.profile.billing_lastname}" />
-      </td>
-    </tr>
+  <tr>
+    <td><label for="cc_number">{t(#Credit card number#)}:</label></td>
+    <td class="marker">*</td>
+    <td>
+      <input type="text" name="payment[number]" id='cc_number' value="" class="field-required" />
+    </td>
+  </tr>
 
-    <tr>
-      <td><label for="cc_number">Credit card number:</label></td>
-      <td class="marker">*</td>
-      <td>
-        <input type="text" name="cc_info[cc_number]" id='cc_number' value="{cart.details.cc_number:r}" />
-      </td>
-    </tr>
+  <tr id='start_date'>
+    <td><label for="cc_start_date">{t(#Start date#)}:</label></td>
+    <td class="marker"><span id="start_date_star">*</span></td>
+    <td>
+      <input type="text" name="payment[start_date]" value="" size="4" maxlength="4" id="cc_start_date" />
+    </td>
+  </tr>
 
-    <tr id='start_date'>
-      <td>Start date:</td>
-      <td class="marker"><span id="start_date_star">*</span></td>
-      <td>
-        <widget class="\XLite\View\Date" field="cc_info_cc_start_date_" hide_days="1" higherYear="{getCurrentYear()}" showMonthsNumbers="1" /><br />
-        <input type="checkbox" name="no_start_date" id="start_date_box" onclick="javascript: showStar('start_date');" />&nbsp;<label for="start_date_box">My card has no "Start date" information</label>
-        <input type="hidden" name="cc_info[cc_start_date]" value="MMYY" />
-      </td>
-    </tr>
+  <tr>
+    <td><label for="cc_date">{t(#Expiration date#)}:</label></td>
+    <td class="marker">*</td>
+    <td>
+      <input type="text" name="payment[date]" value="" size="4" maxlength="4" class="field-required" id="cc_date" />
+    </td>
+  </tr>
 
-    <tr>
-      <td>Expiration date:</td>
-      <td class="marker">*</td>
-      <td>
-        <widget class="\XLite\View\Date" field="cc_info_cc_date_" hide_days="1" lowerYear="{getCurrentYear()}" yearsRange="5" showMonthsNumbers="1" />
-        <input type="hidden" name="cc_info[cc_date]" value="MMYY" />
-      </td>
-    </tr>
+  <tr id='issue_number'>
+    <td><label for="cc_issue">{t(#Issue no#)}:</label></td>
+    <td class="marker"><span id="issue_number_star">*</span></td>
+    <td>
+      <input type="text" id="cc_issue" name="payment[issue]" value="" size="4" maxlength="4" /><br />
+    </td>
+  </tr>
 
-    <tr id='issue_number'>
-      <td><label for="cc_issue">Issue no.:</label></td>
-      <td class="marker"><span id="issue_number_star">*</span></td>
-      <td>
-        <input type="text" id="cc_issue" name="cc_info[cc_issue]" value="{cart.details.cc_issue:r}" size="4" maxlength="4" /><br />
-        <input type="checkbox" name="no_issue_number" id="issue_number_box" onclick="javascript: showStar('issue_number');" />&nbsp;<label for="issue_number_box">My card has no "Issue no." information</label>
-      </td>
-    </tr>
+  <tr>
+    <td><label for="cc_cvv2">{t(#CVV2#)}:</label></td>
+    <td class="marker"><span id="cvv2_label">*</span></td>
+    <td>
+      <input type="text" id='cc_cvv2' name="payment[cvv2]" value="" />
+    </td>
+  </tr>
 
-    <tr>
-      <td><label for="cc_cvv2">CVV2 / CVC2 / CID:</label></td>
-      <td class="marker"><span id="cvv2_label">*</span></td>
-      <td>
-        <input type="text" id='cc_cvv2' name="cc_info[cc_cvv2]" value="{cart.details.cc_cvv2:r}" />
-      </td>
-    </tr>
-
-  </table>
-</div>
+</table>

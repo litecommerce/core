@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage ____sub_package____
+ * @subpackage Model
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -26,54 +26,68 @@
  * @since      3.0.0
  */
 
-namespace XLite\View\CheckoutStep\Regular;
+namespace XLite\Model\Payment;
 
 /**
- * \XLite\View\CheckoutStep\Regular\PaymentMethod 
+ * Something customer can put into his cart
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
+ *
+ * @Entity
+ * @Table (name="payment_method_settings")
  */
-class PaymentMethod extends \XLite\View\CheckoutStep\Regular\ARegular
+class MethodSetting extends \XLite\Model\AEntity
 {
     /**
-     * Return step templates directory name
-     *
-     * @return string
+     * Primary key 
+     * 
+     * @var    integer
      * @access protected
+     * @see    ____var_see____
      * @since  3.0.0
+     * 
+     * @Id
+     * @GeneratedValue (strategy="AUTO")
+     * @Column         (type="integer")
      */
-    protected function getStepDir()
-    {
-        return 'paymentMethod';
-    }
+    protected $setting_id;
 
     /**
-     * Return title
-     *
-     * @return string
+     * Setting name
+     * 
+     * @var    string
      * @access protected
+     * @see    ____var_see____
      * @since  3.0.0
+     * 
+     * @Column (type="string", length="128")
      */
-    protected function getHead()
-    {
-        return 'Select payment method';
-    }
+    protected $name;
 
     /**
-     * Check - specified payment method is selected or not
+     * Value
      *
-     * @param \XLite\Model\PaymentMethod $paymentMethod Payment method
-     *
-     * @return boolean
+     * @var    string
      * @access protected
-     * @see    ____func_see____
+     * @see    ____var_see____
      * @since  3.0.0
+     *
+     * @Column (type="text")
      */
-    protected function isPaymentSelected(\XLite\Model\Payment\Method $method)
-    {
-        return $this->getCart()->getPaymentMethod()
-            && $this->getCart()->getPaymentMethod()->getMethodId() == $method->getMethodId();
-    }
+    protected $value;
+
+    /**
+     * Payment method 
+     * 
+     * @var    \XLite\Model\Payment\Method
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     * 
+     * @ManyToOne  (targetEntity="XLite\Model\Payment\Method", inversedBy="settings")
+     * @JoinColumn (name="method_id", referencedColumnName="method_id")
+     */
+    protected $payment_method;
 }

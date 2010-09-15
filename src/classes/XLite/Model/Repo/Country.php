@@ -47,7 +47,6 @@ class Country extends \XLite\Model\Repo\ARepo
      */
     protected $defaultOrderBy = 'country';
 
-
     /**
      * Define cache cells 
      * 

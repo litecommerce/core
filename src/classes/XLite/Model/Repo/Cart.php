@@ -49,7 +49,9 @@ class Cart extends \XLite\Model\Repo\ARepo
      */
     public function markAsOrder($orderId)
     {
-        return 0 < $this->defineMarkAsOrderQuery($orderId)->execute();
+        $stmt = $this->defineMarkAsOrderQuery($orderId);
+
+        return $stmt && $stmt->execute() && 0 < $stmt->rowCount();
     }
 
     /**
@@ -57,22 +59,27 @@ class Cart extends \XLite\Model\Repo\ARepo
      * 
      * @param integer $orderId Order id
      *  
-     * @return \Doctrine\ORM\NativeQuery
+     * @return \Doctrine\DBAL\Statement or null
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
     protected function defineMarkAsOrderQuery($orderId)
     {
-        $query = new \Doctrine\ORM\NativeQuery($this->_em);
-        $query->setSql(
+        $stmt = $this->_em->getConnection()->prepare(
             'UPDATE ' . $this->_class->getTableName() . ' '
             . 'SET is_order = :flag '
             . 'WHERE order_id = :id'
         );
-        $query->setParameter('flag', 1);
-        $query->setParameter('id', $orderId);
 
-        return $query;
+        if ($stmt) {
+            $stmt->bindValue(':flag', 1);
+            $stmt->bindValue(':id', $orderId);
+
+        } else {
+            $stmt = null;
+        }
+
+        return $stmt;
     }
 }

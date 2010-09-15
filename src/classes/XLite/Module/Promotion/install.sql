@@ -90,5 +90,5 @@ INSERT INTO `xlite_config_translations` VALUES (133,'en',177,'Offer application 
 INSERT INTO `xlite_config_translations` VALUES (134,'en',178,'The discounted price cannot be less than zero','');
 INSERT INTO `xlite_config_translations` VALUES (176,'en',235,'Show applicable special offers during checkout','');
 
-INSERT INTO xlite_payment_methods (payment_method,name,details,orderby,class,enabled,params) values ('bonus_points','Pay by bonus points','','70','bonus_points',1,'');
+--INSERT INTO xlite_payment_methods (payment_method,name,details,orderby,class,enabled,params) values ('bonus_points','Pay by bonus points','','70','bonus_points',1,'');
 
