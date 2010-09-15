@@ -175,22 +175,7 @@ class Markup extends \XLite\Model\Repo\ARepo
     {
         $result = array();
 
-        if (is_object($order->getProfile())) {
-            $address = $order->getProfile()->getShippingAddress();
-
-        } else {
-            $config = \XLite\Base::getInstance()->config->Shipping;
-
-            if ($config->def_calc_shippings_taxes) {
-                $address = array(
-                    'address' => $config->anonymous_address,
-                    'city'    => $config->anonymous_city,
-                    'state'   => $config->anonymous_state,
-                    'zipcode' => $config->anonymous_zipcode,
-                    'country' => $config->anonymous_country
-                );
-            }
-        }
+        $address = \XLite\Model\Shipping::getInstance()->getDestinationAddress($order);
 
         $customerZones = array();
 

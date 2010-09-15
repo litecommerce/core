@@ -11,6 +11,13 @@
  * @since     3.0.0
  *}
 
+<b>Australia Post</b> module allows to use online shipping rates calculation via <a href="http://drc.edeliver.com.au/">Post eDeliver Delivery Rate Calculator service</a>.
+<br />
+Please note that rates are calculated for shipping from Australian locations only. 
+
+<br /><br />
+
 <widget template="modules/AustraliaPost/config.tpl" />
 
 <widget template="modules/AustraliaPost/test.tpl" />
+

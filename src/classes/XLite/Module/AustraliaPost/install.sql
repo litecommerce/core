@@ -20,13 +20,13 @@ INSERT INTO `xlite_config` VALUES (146,'length','AustraliaPost','',0,'100');
 INSERT INTO `xlite_config` VALUES (281,'width','AustraliaPost','',0,'100');
 
 
-INSERT INTO `xlite_shipping_methods` (`method_id`, `processor`, `carrier`, `code`, `enabled`, `position`) VALUES (1001,'aupost','aupost','',1,0);
-INSERT INTO `xlite_shipping_methods` (`method_id`, `processor`, `carrier`, `code`, `enabled`, `position`) VALUES (1002,'aupost','aupost','',1,0);
-INSERT INTO `xlite_shipping_methods` (`method_id`, `processor`, `carrier`, `code`, `enabled`, `position`) VALUES (1003,'aupost','aupost','',1,0);
-INSERT INTO `xlite_shipping_methods` (`method_id`, `processor`, `carrier`, `code`, `enabled`, `position`) VALUES (1004,'aupost','aupost','',1,0);
-INSERT INTO `xlite_shipping_methods` (`method_id`, `processor`, `carrier`, `code`, `enabled`, `position`) VALUES (1005,'aupost','aupost','',1,0);
-INSERT INTO `xlite_shipping_methods` (`method_id`, `processor`, `carrier`, `code`, `enabled`, `position`) VALUES (1006,'aupost','aupost','',1,0);
-INSERT INTO `xlite_shipping_methods` (`method_id`, `processor`, `carrier`, `code`, `enabled`, `position`) VALUES (1007,'aupost','aupost','',1,0);
+INSERT INTO `xlite_shipping_methods` (`method_id`, `processor`, `carrier`, `code`, `enabled`, `position`) VALUES (1001,'aupost','aupost','AIR',1,0);
+INSERT INTO `xlite_shipping_methods` (`method_id`, `processor`, `carrier`, `code`, `enabled`, `position`) VALUES (1002,'aupost','aupost','ECI_D',1,0);
+INSERT INTO `xlite_shipping_methods` (`method_id`, `processor`, `carrier`, `code`, `enabled`, `position`) VALUES (1003,'aupost','aupost','ECI_M',1,0);
+INSERT INTO `xlite_shipping_methods` (`method_id`, `processor`, `carrier`, `code`, `enabled`, `position`) VALUES (1004,'aupost','aupost','EXPRESS',1,0);
+INSERT INTO `xlite_shipping_methods` (`method_id`, `processor`, `carrier`, `code`, `enabled`, `position`) VALUES (1005,'aupost','aupost','EPI',1,0);
+INSERT INTO `xlite_shipping_methods` (`method_id`, `processor`, `carrier`, `code`, `enabled`, `position`) VALUES (1006,'aupost','aupost','STANDARD',1,0);
+INSERT INTO `xlite_shipping_methods` (`method_id`, `processor`, `carrier`, `code`, `enabled`, `position`) VALUES (1007,'aupost','aupost','SEA',1,0);
 
 INSERT INTO `xlite_shipping_method_translations` (`code`, `id`, `name`) VALUES ('en',1001,'Australia Post Air Mail');
 INSERT INTO `xlite_shipping_method_translations` (`code`, `id`, `name`) VALUES ('en',1002,'Australia Post Express Courier International Document');

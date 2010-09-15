@@ -49,6 +49,26 @@ abstract class AProcessor extends \XLite\Base\SuperClass
     protected $processorId = null;
 
     /**
+     * Url of shipping server for rates calculation
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $apiUrl = null;
+
+    /**
+     * Log of request/response pairs during communitation with a shipping server 
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $apiCommunicationLog = null;
+
+    /**
      * Define public constructor
      * 
      * @return void
@@ -73,14 +93,15 @@ abstract class AProcessor extends \XLite\Base\SuperClass
     /**
      * Returns processor's shipping methods rates
      * 
-     * @param \XLite\Model\Order $order Order object
+     * @param mixed $order       Order object or an array with input data
+     * @param bool  $ignoreCache Flag: if true then do not get rates from cache
      *  
      * @return array
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    abstract public function getRates($order);
+    abstract public function getRates($order, $ignoreCache= false);
 
     /**
      * Returns processor's shipping methods 
@@ -121,4 +142,74 @@ abstract class AProcessor extends \XLite\Base\SuperClass
     {
         return false;
     }
+
+    /**
+     * Returns an API URL 
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getApiUrl()
+    {
+        return $this->apiUrl;
+    }
+
+    /**
+     * Returns an API communication log 
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getApiCommunicationLog()
+    {
+        return $this->apiCommunicationLog;
+    }
+
+    /**
+     * getDataFromCache 
+     * 
+     * @param string $key Key of a cache cell
+     *  
+     * @return mixed
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getDataFromCache($key)
+    {
+        $data = null;
+        
+        $cacheDriver = \XLite\Core\Database::getCacheDriver();
+
+        $key = md5($key);
+
+        if ($cacheDriver->contains($key)) {
+            $data = $cacheDriver->fetch($key);
+        }
+
+        return $data;
+    }
+
+    /**
+     * saveDataInCache 
+     * 
+     * @param string $key  Key of a cache cell
+     * @param mixed  $data Data object for saving in the cache
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function saveDataInCache($key, $data)
+    {
+        $cacheDriver = \XLite\Core\Database::getCacheDriver();
+
+        $cacheDriver->save(md5($key), $data);
+    }
+
 }

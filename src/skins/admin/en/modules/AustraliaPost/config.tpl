@@ -11,6 +11,10 @@
  * @since     3.0.0
  *}
 
+<div class="AdminTitle">Australia Post settings</div>
+
+<br />
+
 <form action="admin.php" method="post">
 
   <input type="hidden" name="target" value="aupost" />
@@ -20,27 +24,31 @@
 
     <tr>
       <td><b>Package length (mm):</b></td>
-      <td rowspan=4>&nbsp;</td>
-      <td><input type="text" name="length" value="{settings.length:r}" size="15"></td>
+      <td rowspan="4">&nbsp;</td>
+      <td><input type="text" name="length" value="{config.AustraliaPost.length:r}" size="15" /></td>
     </tr>
 
     <tr>
       <td><b>Package width (mm):</b></td>
-      <td><input type="text" name="width" value="{settings.width:r}" size="15"></td>
+      <td><input type="text" name="width" value="{config.AustraliaPost.width:r}" size="15" /></td>
     </tr>
 
     <tr>
       <td><b>Package height (mm):</b></td>
-      <td><input type="text" name="height" value="{settings.height:r}" size="15"></td>
+      <td><input type="text" name="height" value="{config.AustraliaPost.height:r}" size="15" /></td>
     </tr>
 
     <tr>
       <td><b>Currency rate:</b></td>
-      <td><input type="text" name="currency_rate" value="{settings.currency_rate:r}" size="8"> (shop's currency/AUD)</td>
+      <td><input type="text" name="currency_rate" value="{config.AustraliaPost.currency_rate:r}" size="8" /></td>
     </tr>
 
     <tr>
-      <td colspan=3 align=center><INPUT type=submit value="Apply"></TD>
+      <td colspan="2">(specify rate X, where 1 AUD = X in shop currency)</td>
+    </tr>
+
+    <tr>
+      <td colspan="2"><br /><input type="submit" value="Save" /></TD>
     </tr>
 
   </table>
