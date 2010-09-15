@@ -76,6 +76,17 @@ class Method extends \XLite\Model\Base\I18n
     protected $carrier = '';
 
     /**
+     * Unique code of shipping method (within processor space)
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Column (type="string", length="255", nullable=false)
+     */
+    protected $code = '';
+
+    /**
      * Whether the method is enabled or disabled
      * 
      * @var    string

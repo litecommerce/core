@@ -35,108 +35,134 @@ namespace XLite\Module\AustraliaPost\Controller\Admin;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Aupost extends \XLite\Controller\Admin\AAdmin
+class Aupost extends \XLite\Controller\Admin\ShippingSettings
 {
-/*
-    public $params = array('target', "updated");
-    public $page		="aupost";
-    public $updated 	= false;
-    public $testResult = false;
-    public $settings;
-    public $rates 		= array();
-
-    public function __construct(array $params)  
+    /**
+     * getOptionsCategory 
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getOptionsCategory()
     {
-        parent::__construct($params);
-
-        $aupost = new \XLite\Module\AustraliaPost\Model\Shipping\Aupost();
-        $this->settings = $aupost->get('options');
+        return 'AustraliaPost';
     }
 
- */
-
-    protected function doActionUpdate()
-    {
-        $postedData = \XLite\Core\Request::getInstance()->getData();
-
-        $allowedFields = array(
-            'length',
-            'width',
-            'height',
-            'currency_rate'
-        );
-
-        $data = array();
-        $errorMsg = null;
-
-        foreach ($allowedFields as $field) {
-
-            if (isset($postedData[$field])) {
-                $data[$field] = $postedData[$field];
-
-            } else {
-                $errorMsg = $this->t('Wrong data submited');
-                break;
-            }
-        }
-
-        if (isset($errorMsg)) {
-            \XLite\Core\TopMessage::getInstance()->add(
-                $errorMsg,
-                \XLite\Core\TopMessage::ERROR
-            );
-
-        } else {
-            foreach ($data as $key => $value) {
-                \XLite\Core\Database::getRepo('\XLite\Model\Config')->createOption(
-                    array(
-                        'category' => 'AustraliaPost',
-                        'name'     => $key,
-                        'value'    => $value
-                    )
-                );
-            }
-
-//            \XLite\Core\Config::getInstance()->update();
-            $this->config->update();
-
-            \XLite\Core\TopMessage::getInstance()->add(
-                $this->t('Shipping settings has been successfully updated'),
-                \XLite\Core\TopMessage::INFO
-            );
-        }
-    }
-    
+    /**
+     * doActionTest 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     protected function doActionTest()
     {
         $postedData = \XLite\Core\Request::getInstance()->getData();
 
-        var_dump($postedData);
+        // Generate input data array for rates calculator
+
+        $data = array();
+        $errorFields = array();
+
+        if (isset($postedData['weight']) && 0 < doubleval($postedData['weight'])) {
+            $data['weight'] = doubleval($postedData['weight']);
+
+        } else {
+            $data['weight'] = 1;
+        }
+
+        if (isset($postedData['sourceZipcode']) && !empty($postedData['sourceZipcode'])) {
+            $data['srcAddress']['zipcode'] = $postedData['sourceZipcode'];
+
+        } else {
+            $data['srcAddress']['zipcode'] = $this->config->Company->location_zipcode;
+        }
+
+        if (isset($postedData['destinationZipcode']) && !empty($postedData['destinationZipcode'])) {
+            $data['dstAddress']['zipcode'] = $postedData['destinationZipcode'];
+
+        } else {
+            $errorFields[] = 'destinationZipcode';
+        }
+
+        if (isset($postedData['destinationCountry']) && !empty($postedData['destinationCountry'])) {
+            $data['dstAddress']['country'] = $postedData['destinationCountry'];
+
+        } else {
+            $errorFields[] = 'destinationCountry';
+        }
+
+        echo "<h2>Input data</h2>";
+
+        ob_start();
+        print_r($data);
+        $dataStr = '<pre>' . ob_get_contents() . '</pre>';
+        ob_clean();
+
+        echo $dataStr;
+
+        if (empty($errorFields)) {
+
+            // Get rates
+
+            $aupost = new \XLite\Module\AustraliaPost\Model\Shipping\Processor\AustraliaPost();
+
+            $startTime = microtime(true);
+
+            $rates = $aupost->getRates($data, true);
+
+            $proceedTime = microtime(true) - $startTime;
+
+            if (!empty($rates)) {
+
+                // Rates have been successfully calculated, display them
+                echo "<h2>Rates:</h2>";
+                
+                foreach ($rates as $rate) {
+                    echo sprintf("%s (%0.2f)<br>", $rate->getMethodName(), $rate->getBaseRate());
+                }
+
+                echo sprintf("<br /><i>Time elapsed: %0.3f seconds</i>", $proceedTime);
+
+            } else {
+                $errorMsg = $this->t('There are no rates available for specified source/destination and/or package measurements/weight.');
+            }
+        
+        } else {
+            $errorMsg = $this->t('The following expected input data have wrong format or empty: ' . implode(', ', $errorFields));
+        }
+
+        if (!empty($errorMsg)) {
+            echo "<h3>$errorMsg</h3>";
+        }
+
+        if (isset($aupost)) {
+            $cmLog = $aupost->getApiCommunicationLog();
+        }
+
+        if (isset($cmLog)) {
+
+            echo "<h2>Communication log</h2>";
+
+            ob_start();
+
+            echo "API URL: " . $aupost->getApiUrl() . "\n\n";
+
+            foreach ($cmLog as $log) {
+                print_r($log);
+                echo "\n<hr />\n";
+            }
+
+            $msg = '<pre>' . ob_get_contents() . '</pre>';
+            ob_clean();
+
+            echo $msg;
+        }
+
         die();
-
-        if (empty($this->weight)) 
-            $this->weight = 1;
-        if (empty($this->sourceZipcode)) 
-            $this->sourceZipcode = $this->config->Company->location_zipcode;
-        if (empty($this->destinationZipcode)) 
-            $this->destinationZipcode = $this->config->Company->location_zipcode;
-        if (empty($this->destinationCountry)) 
-            $this->destinationCountry = $this->config->General->default_country;
- 
-        $this->aupost = new \XLite\Module\AustraliaPost\Model\Shipping\Aupost();
-        $options = $this->aupost->get('options');
-
-        $this->rates = $this->aupost->queryRates
-        (
-            $options, 
-            $this->sourceZipcode,
-            $this->destinationZipcode,
-            $this->destinationCountry,
-            $this->weight,
-            $this->weight_unit
-        );
-        $this->testResult = true;
-        $this->valid	  = false;
     }
 
 }

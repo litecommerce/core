@@ -37,6 +37,11 @@ namespace XLite\Controller\Admin;
  */
 class ShippingSettings extends \XLite\Controller\Admin\AAdmin
 {
+    protected function getOptionsCategory()
+    {
+        return 'Shipping';
+    }
+
     /**
      * Returns shipping options 
      * 
@@ -48,7 +53,7 @@ class ShippingSettings extends \XLite\Controller\Admin\AAdmin
     public function getOptions()
     {
         return \XLite\Core\Database::getRepo('\XLite\Model\Config')
-            ->findByCategoryAndVisible('Shipping');
+            ->findByCategoryAndVisible($this->getOptionsCategory());
     }
 
     /**
@@ -64,7 +69,7 @@ class ShippingSettings extends \XLite\Controller\Admin\AAdmin
         $postedData = \XLite\Core\Request::getInstance()->getData();
 
         $options = \XLite\Core\Database::getRepo('\XLite\Model\Config')
-            ->findBy(array('category' => 'Shipping'));
+            ->findBy(array('category' => $this->getOptionsCategory()));
 
         $isUpdated = false;
 

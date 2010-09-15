@@ -37,6 +37,14 @@ namespace XLite\Module\AustraliaPost\View\Tabs;
  */
 class ShippingSettings extends \XLite\View\Tabs\ShippingSettings implements \XLite\Base\IDecorator
 {
+    /**
+     * Widget initialization 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     public function init() 
     {
         parent::init();

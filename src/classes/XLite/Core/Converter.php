@@ -510,4 +510,31 @@ class Converter extends \XLite\Base\Singleton
 
         return $price;
     }
+
+    /**
+     * Convert value from one to other weight units 
+     * 
+     * @param float  $value   Weight value
+     * @param string $srcUnit Source weight unit
+     * @param string $dstUnit Destination weight unit
+     *  
+     * @return float
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function convertWeightUnits($value, $srcUnit, $dstUnit)
+    {
+        $unitsInGrams = array(
+            'lbs' => 453.59,
+            'oz'  => 28.35,
+            'kg'  => 1000,
+            'g'   => 1,
+        );
+
+        $multiplier = $unitsInGrams[$srcUnit] / $unitsInGrams[$dstUnit];
+
+        return $value * $multiplier;
+    }
+
 }

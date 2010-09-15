@@ -187,6 +187,8 @@ class Shipping extends \XLite\Base\Singleton
 
         if (!empty($rates)) {
 
+            $markups = array();
+
             // Calculate markups
             foreach ($rates as $id => $rate) {
 
@@ -195,20 +197,63 @@ class Shipping extends \XLite\Base\Singleton
                     continue;
                 }
 
-                // Get markup
-                $markup = \XLite\Core\Database::getRepo('XLite\Model\Shipping\Markup')
-                    ->getMarkup($rate->getMethod()->getMethodId(), $order);
+                $processor = $rate->getMethod()->getProcessor();
+
+                if (!isset($markups[$processor])) {
+                    $markups[$processor] = \XLite\Core\Database::getRepo('XLite\Model\Shipping\Markup')
+                        ->findMarkupsByProcessor($processor, $order);
+                }
 
                 // Set markup to the rate
-                if (isset($markup)) {
-                    $rate->setMarkup($markup);
-                    $rate->setMarkupRate($markup->getMarkupValue());
-                    $rates[$id] = $rate;
+                if (isset($markups[$processor])) {
+
+                    foreach ($markups[$processor] as $method) {
+
+                        if ($method->getMethodId() == $rate->getMethodId()) {
+                            $rate->setMarkup($markup);
+                            $rate->setMarkupRate($markup->getMarkupValue());
+                            $rates[$id] = $rate;
+                        }
+                    }
                 }
             }
         }
 
         return $rates;
+    }
+
+    /**
+     * Get destination address from the order
+     * 
+     * @param \XLite\Model\Order $order Order instance
+     *  
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getDestinationAddress(\XLite\Model\Order $order)
+    {
+        $address = null;
+        
+        if (is_object($order->getProfile())) {
+            $address = $order->getProfile()->getShippingAddress();
+
+        } else {
+            $config = \XLite\Base::getInstance()->config->Shipping;
+
+            if ($config->def_calc_shippings_taxes) {
+                $address = array(
+                    'address' => $config->anonymous_address,
+                    'city'    => $config->anonymous_city,
+                    'state'   => $config->anonymous_state,
+                    'zipcode' => $config->anonymous_zipcode,
+                    'country' => $config->anonymous_country
+                );
+            }
+        }
+
+        return $address;
     }
 
 }
