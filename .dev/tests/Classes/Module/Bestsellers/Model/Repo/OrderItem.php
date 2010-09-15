@@ -36,15 +36,15 @@ class XLite_Tests_Module_Bestsellers_Model_Repo_OrderItem extends XLite_Tests_Te
     );
 
     protected $bestsUrls1 = array(
-        0 => 'admin.php?target=product&product_id=4012',
-        1 => 'admin.php?target=product&product_id=4003',
-        2 => 'admin.php?target=product&product_id=4030',
+        0 => 4012,
+        1 => 4003,
+        2 => 4030,
     );
 
     protected $bestsUrls2 = array(
-        0 => 'admin.php?target=product&product_id=4012',
-        1 => 'admin.php?target=product&product_id=4009',
-        2 => 'admin.php?target=product&product_id=4003',
+        0 => 4012,
+        1 => 4009,
+        2 => 4003,
     );  
 
     protected function setUp()
@@ -62,31 +62,42 @@ class XLite_Tests_Module_Bestsellers_Model_Repo_OrderItem extends XLite_Tests_Te
 
         $one = $best[0];
 
-        $this->assertEquals('admin.php?target=product&product_id=4003', $one->getUrl(), 'Wrong root category bestsellers list');
-
+        $this->assertEquals(3002, $one->getProduct()->getProductId(), 'Wrong root category bestsellers list');
     }
 
     public function testCollection()
     {
-        $order = $this->getTestOrder(\XLite\Model\Order::STATUS_PROCESSED);
+        $order = $this->getTestOrder(
+            \XLite\Model\Order::STATUS_PROCESSED,
+            array(
+                4012 => 50,
+                4003 => 40,
+                4030 => 30,
+            )
+        );
 
         $best = \XLite\Core\Database::getRepo('XLite\Model\OrderItem')->getBestsellers(3);
 
-        foreach ($this->bestsUrls1 as $index => $url) {
+        foreach ($this->bestsUrls1 as $index => $id) {
 
-            $this->assertEquals($best[$index]->getUrl(), $url, 'Wrong #' . $index . ' product in bestsellers (1)');
+            $this->assertEquals($best[$index]->getObjectId(), $id, 'Wrong #' . $index . ' product in bestsellers (1)');
 
         }
 
-        $order = $this->getTestOrder(\XLite\Model\Order::STATUS_COMPLETED, array('2' => 20, '10' => 10));
+        $order = $this->getTestOrder(
+            \XLite\Model\Order::STATUS_COMPLETED,
+            array(
+                4009 => 45,
+            )
+        );
 
         $best = \XLite\Core\Database::getRepo('XLite\Model\OrderItem')->getBestsellers(3);
 
         $this->assertNotEquals(count($best), 1, 'Wrong number of bestsellers was returned. (1).0');
 
-        foreach ($this->bestsUrls2 as $index => $url) {
+        foreach ($this->bestsUrls2 as $index => $id) {
 
-            $this->assertEquals($best[$index]->getUrl(), $url, 'Wrong #' . $index . ' product in bestsellers (2)');
+            $this->assertEquals($best[$index]->getObjectId(), $id, 'Wrong #' . $index . ' product in bestsellers (2)');
 
         }
 
@@ -100,21 +111,11 @@ class XLite_Tests_Module_Bestsellers_Model_Repo_OrderItem extends XLite_Tests_Te
 
         $one = $best[0];
 
-        $this->assertEquals('admin.php?target=product&product_id=4009', $one->getUrl(), 'Wrong root category bestsellers list');
+        $this->assertEquals(4009, $one->getObjectId(), 'Wrong root category bestsellers list');
 
     }   
 
-
-    protected function getProduct($index = null)
-    {
-        $products = \XLite\Core\Database::getRepo('XLite\Model\Product')->findByEnabled(true);
-
-        return (is_null($index) || $index > count($products))
-            ? $products[0]
-            : $products[$index];
-    }
-
-    protected function getTestOrder($status = null, $items = null)
+    protected function getTestOrder($status, array $items)
     {
         $order = new \XLite\Model\Order();
 
@@ -124,26 +125,28 @@ class XLite_Tests_Module_Bestsellers_Model_Repo_OrderItem extends XLite_Tests_Te
         unset($list);
 
         $order->map($this->testOrder);
-        $order->setPaymentMethod(\XLite\Model\PaymentMethod::factory('PurchaseOrder'));
+        $order->setCurrency(\XLite\Core\Database::getRepo('XLite\Model\Currency')->find(840));
         $order->setProfileId(0);
 
-        $items = is_null($items) 
-            ? array(
-                '3'  => 1,
-                '10' => 3,
-            )
-            : $items;
+        \XLite\Core\Database::getEM()->persist($order);
+        \XLite\Core\Database::getEM()->flush();
+
+        $order->setPaymentMethod(\XLite\Core\Database::getRepo('XLite\Model\Payment\Method')->find(3));
 
         foreach ($items as $index => $amount) {
 
             $item = new \XLite\Model\OrderItem();
 
-            $item->setProduct($this->getProduct($index));
+            $p = \XLite\Core\Database::getRepo('XLite\Model\Product')->find($index);
+
+            if (!isset($p)) {
+                $this->markTestSkipped('Product #' . $index . ' not found in DB!');
+            }
+            $item->setProduct($p);
             $item->setAmount($amount);
-            $item->setPrice($this->getProduct()->getPrice());
+            $item->setPrice($p->getPrice());
 
             $order->addItem($item);
-
         }
 
         if (!is_null($status)) {

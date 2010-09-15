@@ -173,7 +173,7 @@ class XLite_Tests_Model_OrderModifier extends XLite_Tests_TestCase
         $profile = array_shift($list);
         unset($list);
 
-        $order->setPaymentMethod(\XLite\Model\PaymentMethod::factory('PurchaseOrder'));
+        $order->setCurrency(\XLite\Core\Database::getRepo('XLite\Model\Currency')->find(840));
         $order->setProfileId($profile->get('profile_id'));
 
         $productIds = array(3002, 4004, 4005, 4006, 4007, 4008);

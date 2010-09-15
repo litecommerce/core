@@ -283,7 +283,25 @@ class Order extends \XLite\Model\Repo\ARepo
      */
     public function collectGarbage()
     {
-        $this->deleteInBatch($this->findAllExipredTemporaryOrders());
+        $this->defineCollectGarbageQUery()->getQuery()->execute();
+    }
+
+    /**
+     * Define query for collectGarbage() method
+     * 
+     * @return \Doctrine\ORM\QueryBuilder
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineCollectGarbageQUery()
+    {
+        return $this->_em
+            ->createQueryBuilder()
+            ->delete($this->_entityName, 'o')
+            ->andWhere('o.status = :tempStatus AND o.date < :time')
+            ->setParameter('tempStatus', \XLite\Model\Order::STATUS_TEMPORARY)
+            ->setParameter('time', time() - $this->getOrderTTL());
     }
 
     /**

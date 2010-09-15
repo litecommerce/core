@@ -93,7 +93,7 @@ class Transaction extends \XLite\Model\AEntity
      * 
      * @Column (type="string", length="255")
      */
-    protected $method_local_name;
+    protected $method_local_name = '';
 
     /**
      * Status
@@ -140,7 +140,7 @@ class Transaction extends \XLite\Model\AEntity
      *
      * @Column (type="string", length="8")
      */
-    protected $type = \XLite\Model\Payment\Base\Online::TRANSACTION_SALE;
+    protected $type = 'sale';
 
     /**
      * Order

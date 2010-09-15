@@ -99,7 +99,7 @@
 		</copy>
 		<mkdir dir="${buildDir}/src/sql/local" />
 		<copy todir="${buildDir}/src/sql/local">
-			<fileset file="${sourceDir}/src//sql/local/xlite_all_modules.sql" />
+			<fileset file="${sourceDir}/src/sql/local/xlite_all_modules.sql" />
 		</copy>
         <copy todir="${buildDir}/src/images/product_detailed_images">
             <fileset dir="${srcDir}/images/product_detailed_images">
