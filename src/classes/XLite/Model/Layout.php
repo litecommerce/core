@@ -113,6 +113,19 @@ class Layout extends \XLite\Base
     {
         return isset($this->list[$widgetName]);
     }
+
+    /**
+     * getShortPath 
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getShortPath()
+    {
+        return $this->skin . '/' . $this->locale . '/';
+    }
     
     /**
      * Returns the layout path
@@ -123,12 +136,9 @@ class Layout extends \XLite\Base
      */
     public function getPath()
     {
-        if (!isset($this->path)) {
-            $this->path = sprintf('skins/%s/%s/', $this->skin, $this->locale);
-        }
-
-        return $this->path;
+        return 'skins/' . $this->getShortPath();
     }
+
 
     public function getPathCustomer()
     {

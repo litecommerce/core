@@ -9,6 +9,6 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- * @ListChild (list="productDetails.main", weight="12")
  *}
+
 <div class="tmp-01"></div>
