@@ -77,7 +77,6 @@ abstract class AEntity
 
     /**
      * Map data to entity columns
-     * FIXME
      * 
      * @param array $data Data
      *  
@@ -88,16 +87,11 @@ abstract class AEntity
      */
     public function map(array $data)
     {
-        $result = true;
-
         foreach ($data as $key => $value) {
-            $method = 'set' . $this->getMethodName($key);
-            if (method_exists($this, $method) && false === $this->$method($value)) {
-                $result = false;
+            if (method_exists($this, $method = 'set' . $this->getMethodName($key))) {
+                $this->$method($value);
             }
         }
-
-        return $result;
     }
 
     /**

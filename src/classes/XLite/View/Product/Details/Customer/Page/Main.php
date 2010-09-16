@@ -38,6 +38,29 @@ namespace XLite\View\Product\Details\Customer\Page;
 class Main extends \XLite\View\Product\Details\Customer\Page\APage
 {
     /**
+     * getViewListChildren
+     * 
+     * @param string $list List name
+     *  
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getViewListChildren($list)
+    {
+        $result = parent::getViewListChildren($list);
+
+        if ('productDetails.main' === $list) {
+            $this->addViewListChild($result, array('tpl' => $this->getDir() . '/parts/main.tmp01.tpl'), 12);
+            $this->addViewListChild($result, array('tpl' => $this->getDir() . '/parts/main.tmp02.tpl'), 42);
+        }
+
+        return $result;
+    }
+
+
+    /**
      * Return list of allowed targets
      * 
      * @return array

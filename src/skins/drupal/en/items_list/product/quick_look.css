@@ -13,6 +13,8 @@
 
 div.blockMsg.blockPage {
   top: 5%;
+  position: absolute !important;
+  padding: 0;
 }
 
 body.store-category div.blockMsg.blockPage h1#page-title {
@@ -23,6 +25,7 @@ body.store-category div.blockMsg.blockPage h2 {
   display: none;
 }
 
-div.block-subcontainer {
+div.blockMsg div.block-subcontainer {
   overflow: hidden;
+  padding: 2em;
 }

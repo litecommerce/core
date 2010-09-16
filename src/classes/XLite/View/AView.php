@@ -1068,6 +1068,51 @@ abstract class AView extends \XLite\Core\Handler
     }
 
     /**
+     * getViewListChildren
+     * 
+     * @param string $list List name
+     *  
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getViewListChildren($list)
+    {
+        return \XLite\Core\Database::getRepo('\XLite\Model\ViewList')->findClassList(
+            $this->getViewListClass(),
+            $list,
+            \XLite::isAdminZone() ? \XLite\Model\ViewList::ADMIN_INTERFACE : \XLite\Model\ViewList::CUSTOMER_INTERFACE
+        );
+    }
+
+    /**
+     * addViewListChild 
+     * 
+     * @param array $list       list to modify
+     * @param array $properties node properties
+     * @param int   $weight     node position
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function addViewListChild(array &$list, array $properties, $weight = 0) 
+    {
+        // Search node to insert after
+        while ((list($key, $node) = each($list)) && ($node->getWeight() <= $weight));
+
+        // Prepare properties
+        $properties['tpl']    = \XLite\Model\Layout::getInstance()->getShortPath() . $properties['tpl'];
+        $properties['weight'] = $weight;
+        $properties['list']   = $node->getList();
+
+        // Add element to the array
+        array_splice($list, $key, 0, array(new \XLite\Model\ViewList($properties)));
+    }
+
+    /**
      * Define view list 
      * 
      * @param string $list List name
@@ -1079,23 +1124,11 @@ abstract class AView extends \XLite\Core\Handler
      */
     protected function defineViewList($list)
     {
-        $class = $this->getViewListClass();
-        $zone = \XLite::isAdminZone()
-            ? \XLite\Model\ViewList::ADMIN_INTERFACE
-            : \XLite\Model\ViewList::CUSTOMER_INTERFACE;
+        $widgets    = array();
+        $pathLength = strlen(\XLite\Model\Layout::getInstance()->getShortPath());
+        $hash       = array();
 
-        $childs = \XLite\Core\Database::getRepo('\XLite\Model\ViewList')
-            ->findClassList($class, $list, $zone);
-
-        $widgets = array();
-
-        $path = \XLite\Model\Layout::getInstance()->skin . LC_DS
-            . \XLite\Model\Layout::getInstance()->locale . LC_DS;
-        $pathLength = strlen($path);
-
-        $hash = array();
-
-        foreach ($childs as $widget) {
+        foreach ($this->getViewListChildren($list) as $widget) {
 
             if ($widget->tpl && isset($hash[$widget->tpl])) {
                 continue;
@@ -1108,18 +1141,18 @@ abstract class AView extends \XLite\Core\Handler
                 // List child is widget
                 $w = $this->getWidget(
                     array(
-                        'viewListClass' => $class,
+                        'viewListClass' => $this->getViewListClass(),
                         'viewListName'  => $list,
                     ),
                     $widget->child
                 );
 
-            } elseif ($widget->tpl && 0 === strncmp($path, $widget->tpl, $pathLength)) {
+            } elseif ($widget->tpl && 0 === strncmp(\XLite\Model\Layout::getInstance()->getShortPath(), $widget->tpl, $pathLength)) {
 
                 // List child is template
                 $w = $this->getWidget(
                     array(
-                        'viewListClass' => $class,
+                        'viewListClass' => $this->getViewListClass(),
                         'viewListName'  => $list,
                         'template'      => substr($widget->tpl, $pathLength),
                     )
