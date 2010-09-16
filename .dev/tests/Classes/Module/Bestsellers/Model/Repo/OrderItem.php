@@ -30,72 +30,153 @@ require_once PATH_TESTS . '/FakeClass/Model/OrderItem.php';
 
 class XLite_Tests_Module_Bestsellers_Model_Repo_OrderItem extends XLite_Tests_TestCase
 {
+
+    /**
+     *  Product id constants
+     */
+    const PR1 = 15090;
+    const PR2 = 16281;
+    const PR3 = 16280;
+    const PR4 = 16282;
+
+    /**
+     *  Category id for the PR1 product
+     */
+    const CATEGORY = 14015;
+
+
+    /**
+     * Some information for the test order
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  1.0.0
+     */
     protected $testOrder = array(
         'tracking'       => 'test t',
         'notes'          => 'Test note',
     );
 
-    protected $bestsUrls1 = array(
-        0 => 4012,
-        1 => 4003,
-        2 => 4030,
+    /**
+     * First test sequence of the bestsellers
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  1.0.0
+     */
+    protected $test1 = array(
+        0 => self::PR1,
+        1 => self::PR2,
+        2 => self::PR4,
     );
 
-    protected $bestsUrls2 = array(
-        0 => 4012,
-        1 => 4009,
-        2 => 4003,
-    );  
+    /**
+     * Second test sequence of the bestsellers
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  1.0.0
+     */
+    protected $test2 = array(
+        0 => self::PR1,
+        1 => self::PR3,
+        2 => self::PR2,
+    );
 
+    /** 
+     * setUp
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     protected function setUp()
-    {
+    {   
         parent::setUp();
 
         \XLite\Core\Database::getEM()->clear();
-    }
 
-    public function testGetBestsellers()
-    {
-        $best = \XLite\Core\Database::getRepo('XLite\Model\OrderItem')->getBestsellers(1);
+        $this->query(file_get_contents(__DIR__ . '/sql/product/setup.sql'));
 
-        $this->assertEquals(1, count($best), 'Wrong number of bestsellers was returned (1)');
+        \XLite\Core\Database::getEM()->flush();
 
-        $one = $best[0];
+    }   
 
-        $this->assertEquals(3002, $one->getProduct()->getProductId(), 'Wrong root category bestsellers list');
-    }
+    /** 
+     * tearDown
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function tearDown()
+    {   
+        parent::tearDown();
 
+        $this->query(file_get_contents(__DIR__ . '/sql/product/restore.sql'));
+
+        \XLite\Core\Database::getEM()->flush();
+
+    }   
+
+
+    /**
+     *  Test of bestseller for the root category
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
     public function testCollection()
     {
+
+        /**
+         * First order goes with processed status 
+         */
         $order = $this->getTestOrder(
             \XLite\Model\Order::STATUS_PROCESSED,
             array(
-                4012 => 50,
-                4003 => 40,
-                4030 => 30,
+                self::PR1 => 50,
+                self::PR2 => 40,
+                self::PR4 => 30,
             )
         );
 
-        $best = \XLite\Core\Database::getRepo('XLite\Model\OrderItem')->getBestsellers(3);
+        $best = $this->findBestsellers(3);
 
-        foreach ($this->bestsUrls1 as $index => $id) {
+        /**
+         * First sequence 
+         */
+        foreach ($this->test1 as $index => $id) {
 
             $this->assertEquals($best[$index]->getObjectId(), $id, 'Wrong #' . $index . ' product in bestsellers (1)');
 
         }
 
+        /**
+         * Second order goes with completed status 
+         */
         $order = $this->getTestOrder(
             \XLite\Model\Order::STATUS_COMPLETED,
             array(
-                4009 => 45,
+                self::PR3 => 45,
             )
         );
 
-        $best = \XLite\Core\Database::getRepo('XLite\Model\OrderItem')->getBestsellers(3);
+        $best = $this->findBestsellers(3);
 
         $this->assertNotEquals(count($best), 1, 'Wrong number of bestsellers was returned. (1).0');
 
-        foreach ($this->bestsUrls2 as $index => $id) {
+        /**
+         * Second sequence  
+         */
+        foreach ($this->test2 as $index => $id) {
 
             $this->assertEquals($best[$index]->getObjectId(), $id, 'Wrong #' . $index . ' product in bestsellers (2)');
 
@@ -103,25 +184,63 @@ class XLite_Tests_Module_Bestsellers_Model_Repo_OrderItem extends XLite_Tests_Te
 
     }
 
+    /**
+     * Test of bestseller in some non-root category
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
     public function testGetBestsellersCategory()
-    {   
-        $best = \XLite\Core\Database::getRepo('XLite\Model\OrderItem')->getBestsellers(1, 1002);
+    {
+        $order = $this->getTestOrder(
+            \XLite\Model\Order::STATUS_COMPLETED,
+            array(
+                self::PR1 => 50,
+                self::PR2 => 40,
+                self::PR4 => 30,
+            )   
+        );  
+
+        $best = $this->findBestsellers(1, self::CATEGORY);
 
         $this->assertEquals(1, count($best), 'Wrong number of bestsellers was returned (1)');
 
         $one = $best[0];
 
-        $this->assertEquals(4009, $one->getObjectId(), 'Wrong root category bestsellers list');
-
+        /**
+         *  
+         */
+        $this->assertEquals(self::PR1, $one->getObjectId(), 'Wrong root category bestsellers list');
     }   
 
+
+/**
+ *  FOR INNER USE ONLY
+ */
+
+    /**
+     * Prepare order
+     * 
+     * @param mixed $status ____param_comment____
+     * @param array $items  ____param_comment____
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
     protected function getTestOrder($status, array $items)
     {
         $order = new \XLite\Model\Order();
 
         $profile = new \XLite\Model\Profile();
+
         $list = $profile->findAll();
+
         $profile = array_shift($list);
+
         unset($list);
 
         $order->map($this->testOrder);
@@ -165,9 +284,24 @@ class XLite_Tests_Module_Bestsellers_Model_Repo_OrderItem extends XLite_Tests_Te
         \XLite\Core\Database::getEM()->flush();
 
         return $order;
+    }
+
+
+    /**
+     *  Wrapper for the REPO findBestsellers method
+     * 
+     * @param int $count ____param_comment____
+     * @param int $cat   ____param_comment____
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function findBestsellers($count = 0, $cat = 0)
+    {   
+        return \XLite\Core\Database::getRepo('XLite\Model\OrderItem')->findBestsellers($count, $cat);
     }   
-
-
 
 
 }

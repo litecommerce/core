@@ -151,7 +151,7 @@ class Bestsellers extends \XLite\View\Dialog
     protected function getData(\XLite\Core\CommonCell $cnd, $countOnly = false)
     {
         $data = \XLite\Core\Database::getRepo('XLite\Model\OrderItem')
-            ->getBestsellers(
+            ->findBestsellers(
                 $this->getNumberOfBestsellers(),
                 $this->getRootId()
             );
