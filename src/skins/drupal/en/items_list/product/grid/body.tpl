@@ -21,13 +21,14 @@
   <tbody FOREACH="getProductRows(),row">
   <tr class="info">
     {foreach:row,idx,product}
-    <td IF="product&!idx=#0#" class="separator"></td>
+    <td IF="!idx=#0#" class="separator"></td>
     <td IF="product" class="hproduct">
       <div class="quick-look-cell">
         {displayListPart(#quick_look.info#)}
       </div>
       {displayListPart(#info#,_ARRAY_(#product#^product))}
     </td>
+    <td IF="!product">&nbsp;</td>
     {end:}
   </tr>
   <tr>
