@@ -10,20 +10,29 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<ul class="lc-subcategory-icons" IF="category.getSubcategories()">
-  <li FOREACH="category.getSubcategories(),subcategory">
-    {* FF2 requires an extra div in order to display "inner-blocks" properly *}
-    <a href="{buildURL(#category#,##,_ARRAY_(#category_id#^subcategory.category_id))}" class="lc-subcategory-icon">
-      <span class="lc-subcategory-icon">
+
+<table class="subcategory-icons">
+
+  <tr class="info" FOREACH="getCategoryRows(),row">
+    <td FOREACH="row,idx,subcategory" class="hcategory">
+      {if:subcategory}
+      <a href="{buildURL(#category#,##,_ARRAY_(#category_id#^subcategory.category_id))}" class="hcategory">
+      <span class="subcategory-icon">
         <widget class="\XLite\View\Image" image="{subcategory.image}" maxWidth="{getIconWidth()}" maxHeight="{getIconHeight()}" alt="{subcategory.name}" centerImage=1 />
       </span>
-      <span class="lc-subcategory-name">{subcategory.name}</span>
-    </a>
-  </li>
-  <li FOREACH="getViewList(#subcategories.childs#),w">
-    {w.display()}
-  </li>
-</ul>
+      <br />
+      <span class="subcategory-name">{subcategory.name}</span>
+      </a>
+      {else:}
+      &nbsp;
+      {end:}
+    </td>
+  </tr>
+
+  {displayListPart(#items#)}
+
+</table>
+
 {displayViewListContent(#subcategories.base#)}
 
 <div class="subcategories-separator"></div>

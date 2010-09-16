@@ -160,11 +160,11 @@ class Subcategories extends \XLite\View\Dialog
      * Return the maximal icon width
      * 
      * @return integer
-     * @access public
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getIconWidth()
+    protected function getIconWidth()
     {
         return $this->getParam(self::PARAM_ICON_MAX_WIDTH);
     }
@@ -173,13 +173,43 @@ class Subcategories extends \XLite\View\Dialog
      * Return the maximal icon height
      * 
      * @return integer
-     * @access public
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getIconHeight()
+    protected function getIconHeight()
     {
         return $this->getParam(self::PARAM_ICON_MAX_HEIGHT);
+    }
+
+    /**
+     * getColumnsCount 
+     * 
+     * @return int
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getColumnsCount()
+    {
+        return 3;
+    }
+
+    /**
+     * getCategoryRows 
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getCategoryRows()
+    {
+        $rows = array_chunk($this->getCategory()->getSubcategories(), $this->getColumnsCount());
+        $last = count($rows) - 1;
+        $rows[$last] = array_pad($rows[$last], $this->getColumnsCount(), false);
+
+        return $rows;
     }
 
 
