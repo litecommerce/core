@@ -131,6 +131,7 @@ $lcSettings = array(
     'enable_modules' => array(
         'DrupalConnector', // Allows to use Drupal CMS as a storefront
         'AdvancedSearch',
+        'AustraliaPost',
         'Bestsellers',
         'DetailedImages',
         'FeaturedProducts',
