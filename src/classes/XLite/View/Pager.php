@@ -38,30 +38,6 @@ namespace XLite\View;
 class Pager extends \XLite\View\Pager\APager
 {
     /**
-     * Widget parameter names
-     */
-
-    const PARAM_DATA = 'data';
-
-
-    /**
-     * Define widget parameters
-     *
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function defineWidgetParams()
-    {
-        parent::defineWidgetParams();
-
-        $this->widgetParams += array(
-            self::PARAM_DATA => new \XLite\Model\WidgetParam\Collection('Data', array()),
-        );
-    }
-
-    /**
      * Return number of items per page
      * 
      * @return int
@@ -85,21 +61,5 @@ class Pager extends \XLite\View\Pager\APager
     protected function getPagesPerFrame()
     {
         return 5;
-    }
-
-    /**
-     * Return list of items to display on the current page
-     *
-     * @param int $start index of the first item on the page
-     * @param int $count number of items per page
-     *
-     * @return array|\Doctrine\ORM\PersistentCollection
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getDataFrame($start, $count)
-    {
-        return $this->getParam(self::PARAM_DATA);
     }
 }
