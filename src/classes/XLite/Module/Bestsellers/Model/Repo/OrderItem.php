@@ -48,9 +48,9 @@ class OrderItem extends \XLite\Model\Repo\OrderItem implements \XLite\Base\IDeco
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getBestsellers($count = 0, $cat = 0)
+    public function findBestsellers($count = 0, $cat = 0)
     {
-        return $this->getObjectOnlyResult($this->prepareBestsellers($count, $cat));
+        return $this->getObjectOnlyResult($this->defineBestsellersQuery($count, $cat));
     }
 
     /**
@@ -64,7 +64,7 @@ class OrderItem extends \XLite\Model\Repo\OrderItem implements \XLite\Base\IDeco
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function prepareBestsellers($count, $cat)
+    protected function defineBestsellersQuery($count, $cat)
     {
         $qb = $this->createQueryBuilder()
             ->addSelect('prod')
