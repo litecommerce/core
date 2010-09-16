@@ -34,7 +34,7 @@ class XLite_NameSniff extends XLite_ReqCodesSniff
 		'perform', 'notify', 'cancel', 'sort', 'sanitize', 'use', 'accept', 'regenerate', 'inner', 'make', 'count', 'build',
 		'refresh', 'postprocess', 'preprocess', 'include', 'truncate', 'inc', 'map', 'strip', 'calc', 'compile', 'request', 'modify',
 		'normalize', 'filter', 'sanitize', 'fill', 'import', 'export', 'stop', 'start', 'perform', 'correct', 'rebuild', 'merge',
-        'apply', 'translate', 'enable', 'disable', 'detach', 'attach', 'read', 'resize', 'search', 'uninstall', 'flush', 'compare'
+        'apply', 'translate', 'enable', 'disable', 'detach', 'attach', 'read', 'resize', 'search', 'uninstall', 'flush', 'compare',
 
 		// FIXME - rename later
 		'processed', 'checked', 'declined', 'queued', 'unchecked', 'checkout',
