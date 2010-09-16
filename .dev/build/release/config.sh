@@ -27,6 +27,7 @@ DRUPAL_DIRNAME="drupal"
 # LiteCommerce modules for including to the distributives
 XLITE_MODULES="
 AdvancedSearch
+AustraliaPost
 AuthorizeNet
 Bestsellers
 DetailedImages
