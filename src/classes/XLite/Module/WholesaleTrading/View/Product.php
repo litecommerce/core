@@ -35,7 +35,7 @@ namespace XLite\Module\WholesaleTrading\View;
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class Product extends XLite\View\Product\Details\Customer\Page\APage implements \XLite\Base\IDecorator
+abstract class Product extends \XLite\View\Product\Details\Customer\Page\APage implements \XLite\Base\IDecorator
 {
     /**
      * Check - available product for sale or not
