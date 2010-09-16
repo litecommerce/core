@@ -197,6 +197,17 @@ class XLite_Tests_Module_AustraliaPost_Model_Shipping_Processor_AustraliaPost ex
         $this->assertTrue(is_array($rates), 'getRates() must return an array');
 
         $this->assertEquals(0, count($rates), 'Count of rates is not match with an expected value ');
+
+        // Disable aupost methods for further testing
+
+        $methods = \XLite\Core\Database::getRepo('XLite\Model\Shipping\Method')->findByProcessor('aupost');
+
+        foreach ($methods as $method) {
+            $method->setEnabled(0);
+            \XLite\Core\Database::getEM()->persist($method);
+        }
+
+        \XLite\Core\Database::getEM()->flush();
     }
 
     /**
