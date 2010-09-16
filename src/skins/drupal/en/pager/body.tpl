@@ -23,13 +23,13 @@
     <a href="{buildUrlByPageId(getPageIdByNotation(#first#))}" class="{getPageIdByNotation(#first#)}">{inc(getPageIdByNotation(#first#))}</a>
   </li>
 
-  <li class="furthermost" IF="isFurthermostPage(#first#)">...</li>
+  <li class="furthermost" IF="isFurthermostPage(#first#)"><a>...</a></li>
 
   <li FOREACH="getPageUrls(),num,pageUrl" class="item {num} {if:isCurrentPage(num)}selected{else:}active{end:}">
     <a href="{pageUrl}" class="{num}">{inc(num)}</a>
   </li>
 
-  <li class="furthermost" IF="isFurthermostPage(#last#)">...</li>
+  <li class="furthermost" IF="isFurthermostPage(#last#)"><a>...</a></li>
 
   <li class="last" IF="isFurthermostPage(#last#)">
     <a href="{buildUrlByPageId(getPageIdByNotation(#last#))}" class="{getPageIdByNotation(#last#)}">{inc(getPageIdByNotation(#last#))}</a>
