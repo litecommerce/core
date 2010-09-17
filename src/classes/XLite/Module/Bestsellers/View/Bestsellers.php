@@ -36,7 +36,7 @@ namespace XLite\Module\Bestsellers\View;
  * @see        ____class_see____
  * @since   3.0.0
  */
-class Bestsellers extends \XLite\View\Dialog
+class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
 {
     /**
      * Widget parameter names
@@ -62,17 +62,15 @@ class Bestsellers extends \XLite\View\Dialog
 
     /**
      * Return class name for the list pager
-     * TODO REMOVE this method since the widget must use PAGER 
+     *
      * @return string
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getDir()
+    protected function getPagerClass()
     {
-        return 'modules/Bestsellers';
-
-//        return 'XLite\Module\Bestsellers\View\Pager\Bestsellers';
+        return '\XLite\View\Pager';
     }
 
     /**
@@ -99,9 +97,6 @@ class Bestsellers extends \XLite\View\Dialog
             ),
         );
 
-/*
-        TODO rework to use it with PAGER
-
         $this->widgetParams[self::PARAM_WIDGET_TYPE]->setValue(
             $this->config->Bestsellers->bestsellers_menu
             ? self::WIDGET_TYPE_SIDEBAR
@@ -121,8 +116,6 @@ class Bestsellers extends \XLite\View\Dialog
         $this->widgetParams[self::PARAM_SHOW_SORT_BY_SELECTOR]->setValue(false);
         $this->widgetParams[self::PARAM_SORT_BY]->setValue('Name');
         $this->widgetParams[self::PARAM_SORT_ORDER]->setValue('asc');
-*/
-
     }
 
     /**
@@ -150,13 +143,11 @@ class Bestsellers extends \XLite\View\Dialog
      */
     protected function getData(\XLite\Core\CommonCell $cnd, $countOnly = false)
     {
-        $data = \XLite\Core\Database::getRepo('XLite\Model\OrderItem')
+        return \XLite\Core\Database::getRepo('XLite\Model\OrderItem')
             ->findBestsellers(
-                $this->getNumberOfBestsellers(),
+                $this->getItemsCount(), 
                 $this->getRootId()
-            );
-
-        return $data;
+            ); 
     }
 
     /**
@@ -174,25 +165,33 @@ class Bestsellers extends \XLite\View\Dialog
             : $this->getParam(self::PARAM_ROOT_ID);
     }
 
-    /**
+    /** 
      * Get the number of bestsellers to display
      * 
-     * @return int
+     * @return integer
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getNumberOfBestsellers()
-    {
-        return $this->config->Bestsellers->number_of_bestsellers;
-/*
-    TODO REWORK!!!
+    protected function getItemsCount()
+    {   
         return (int)(self::WIDGET_TYPE_SIDEBAR == $this->getParam(self::PARAM_WIDGET_TYPE)
             ? $this->getParam(self::PARAM_SIDEBAR_MAX_ITEMS)
             : $this->config->Bestsellers->number_of_bestsellers);
-*/
-    }
+    }   
 
+    /** 
+     * Get the number of bestsellers to display per page
+     * 
+     * @return integer
+     * @access protected
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getItemsPerPage()
+    {   
+        return $this->getItemsCount();
+    }   
 
     /**
      * Return list of targets allowed for this widget

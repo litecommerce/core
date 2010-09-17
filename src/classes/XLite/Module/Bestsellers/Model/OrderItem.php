@@ -37,4 +37,31 @@ namespace XLite\Module\Bestsellers\Model;
  */
 class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
 {
+
+    /**
+     * Return product id
+     * 
+     * @return integer
+     * @access public
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getProductId()
+    {
+        return $this->getProduct()->getProductId();
+    }
+
+    /**
+     * Return list price of product
+     * 
+     * @return float
+     * @access public
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public function getListPrice()
+    {
+        return $this->getProduct()->getListPrice();
+    }
+
 }
