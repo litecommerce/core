@@ -26,17 +26,16 @@
  * @since      3.0.0
  */
 
-namespace XLite\Module\AuthorizeNet\Model\PaymentMethod;
+namespace XLite\Module\AuthorizeNet\Model\Payment\Processor;
 
 /**
- * Authorize.NET
+ * Authorize.Net SIM processor
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class AuthorizenetCc
-extends \XLite\Model\PaymentMethod\CreditCardWebBased
+class AuthorizeNetSIM extends \XLite\Model\Payment\Base\WebBased
 {
     /**
      * AVS messages
@@ -203,118 +202,119 @@ extends \XLite\Model\PaymentMethod\CreditCardWebBased
         '141' => 'This transaction has been declined. The system-generated void for the original FraudScreen-rejected transaction failed.',
         '145' => 'This transaction has been declined. The system-generated void for the original card code-rejected and AVS-rejected transaction failed.',
         '152' => 'The transaction was authorized, but the client could not be notified; the transaction will not be settled. The system-generated void for the original transaction failed. The response for the original transaction could not be communicated to the client.',
-        '165' => 'This transaction has been declined. The system-generated void for the original card code-rejected transaction failed.'
+        '165' => 'This transaction has been declined. The system-generated void for the original card code-rejected transaction failed.',
     );
 
     /**
-     * Processor (cache)
+     * Get operation types 
      * 
-     * @var    \XLite\Module\AuthorizeNet\Processor
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected $processor = null;
- 
-    /**
-     * Configuration template 
-     * 
-     * @var    string
-     * @access public
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    public $configurationTemplate = 'modules/AuthorizeNet/config.tpl';
-
-    /**
-     * Processor name 
-     * 
-     * @var    string
-     * @access public
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    public $processorName = 'Authorize.Net';
-
-    /**
-     * Get form URL
-     *
-     * @return string
+     * @return array
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getFormURL()
+    public function getOperationTypes()
     {
-        $params = $this->get('params');
+        return array(
+            self::OPERATION_SALE,
+            self::OPERATION_AUTH,
+        );
+    }
 
-        return 'TRUE' == $params['test']
+    /**
+     * Get settings widget or template 
+     * 
+     * @return string Widget class name or template path
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getSettingsWidget()
+    {
+        return 'modules/AuthorizeNet/config.tpl';
+    }
+
+    /**
+     * Get redirect form URL 
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getFormURL()
+    {
+        return $this->getSetting('test')
             ? 'https://test.authorize.net/gateway/transact.dll'
             : 'https://secure.authorize.net/gateway/transact.dll';
     }
 
     /**
-     * Get form fields
-     *
-     * @param \XLite\Model\Cart $cart $cart
-     *
+     * Get redirect form fields list
+     * 
      * @return array
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getFields(\XLite\Model\Cart $cart)
+    protected function getFormFields()
     {
-        $params = $this->get('params');
-
         mt_srand();
         $sequence = mt_rand(1, 1000);
 
-        $tstamp = isset($params['offset']) ? intval($params['offset']) : 0;
-        $tstamp = time() - $tstamp;
+        $tstamp = gmdate('U');
 
         $hash = $this->getHMAC(
-            $params['key'],
-            $params['login'] . '^' . $sequence . '^' . $tstamp . '^' . $cart->get('total') . '^' . $params['currency']
+            $this->getSetting('key'),
+            $this->getSetting('login') . '^' . $sequence . '^' . $tstamp . '^' . round($this->transaction->getValue(), 2) . '^'
         );
 
-        $bState = $cart->getProfile()->getComplex('billingState.code')
-            ? $cart->getProfile()->getComplex('billingState.code')
+        $bState = $this->getOrder()->getProfile()->getComplex('billingState.code')
+            ? $this->getOrder()->getProfile()->getComplex('billingState.code')
             : 'n/a';
 
-        $sState = $cart->getProfile()->getComplex('shippingState.code')
-            ? $cart->getProfile()->getComplex('shippingState.code')
+        $sState = $this->getOrder()->getProfile()->getComplex('shippingState.code')
+            ? $this->getOrder()->getProfile()->getComplex('shippingState.code')
             : 'n/a';
+
+        switch ($this->transaction->getType()) {
+            case self::TRANSACTION_AUTH:
+                $type = 'AUTH_ONLY';
+                break;
+
+            default:
+                $type = 'AUTH_CAPTURE';
+        }
 
         return array(
-            'x_test_request'  => $params['test'],
-            'x_login'         => $params['login'],
-            'x_type'          => $params['type'],
+            'x_test_request'  => $this->getSetting('test') ? 'TRUE' : 'FALSE',
+            'x_login'         => $this->getSetting('login'),
+            'x_type'          => $type,
             'x_fp_sequence'   => $sequence,
             'x_fp_timestamp'  => $tstamp,
             'x_fp_hash'       => $hash,
             'x_show_form'     => 'PAYMENT_FORM',
-            'x_amount'        => $cart->get('total'),
-            'x_currency_code' => $params['currency'],
+            'x_amount'        => round($this->transaction->getValue(), 2),
+            'x_currency_code' => $this->getSetting('currency'),
             'x_method'        => 'CC',
-            'x_first_name'    => $cart->getProfile()->get('billing_firstname'),
-            'x_last_name'     => $cart->getProfile()->get('billing_lastname'),
-            'x_phone'         => $cart->getProfile()->get('billing_phone'),
-            'x_email'         => $cart->getProfile()->get('login'),
-            'x_cust_id'       => $cart->getProfile()->get('login'),
-            'x_address'       => $cart->getProfile()->get('billing_address'),
-            'x_city'          => $cart->getProfile()->get('billing_city'),
+            'x_first_name'    => $this->getOrder()->getProfile()->get('billing_firstname'),
+            'x_last_name'     => $this->getOrder()->getProfile()->get('billing_lastname'),
+            'x_phone'         => $this->getOrder()->getProfile()->get('billing_phone'),
+            'x_email'         => $this->getOrder()->getProfile()->get('login'),
+            'x_cust_id'       => $this->getOrder()->getProfile()->get('login'),
+            'x_address'       => $this->getOrder()->getProfile()->get('billing_address'),
+            'x_city'          => $this->getOrder()->getProfile()->get('billing_city'),
             'x_state'         => $bState,
-            'x_zip'           => $cart->getProfile()->get('billing_zipcode'),
-            'x_country'       => $cart->getProfile()->getComplex('billingCountry.country'),
-            'x_ship_to_first_name' => $cart->getProfile()->get('shipping_firstname'),
-            'x_ship_to_last_name'  => $cart->getProfile()->get('shipping_lastname'),
-            'x_ship_to_address'    => $cart->getProfile()->get('shipping_address'),
-            'x_ship_to_city'       => $cart->getProfile()->get('shipping_city'),
+            'x_zip'           => $this->getOrder()->getProfile()->get('billing_zipcode'),
+            'x_country'       => $this->getOrder()->getProfile()->getComplex('billingCountry.country'),
+            'x_ship_to_first_name' => $this->getOrder()->getProfile()->get('shipping_firstname'),
+            'x_ship_to_last_name'  => $this->getOrder()->getProfile()->get('shipping_lastname'),
+            'x_ship_to_address'    => $this->getOrder()->getProfile()->get('shipping_address'),
+            'x_ship_to_city'       => $this->getOrder()->getProfile()->get('shipping_city'),
             'x_ship_to_state'      => $sState,
-            'x_ship_to_zip'        => $cart->getProfile()->get('shipping_zipcode'),
-            'x_ship_to_country'    => $cart->getProfile()->getComplex('shippingCountry.country'),
-            'x_invoice_num'        => $cart->get('order_id'),
+            'x_ship_to_zip'        => $this->getOrder()->getProfile()->get('shipping_zipcode'),
+            'x_ship_to_country'    => $this->getOrder()->getProfile()->getComplex('shippingCountry.country'),
+            'x_invoice_num'        => $this->transaction->getTransactionId(),
             'x_relay_response'     => 'TRUE',
             'x_relay_url'          => $this->getReturnURL('x_invoice_num'),
             'x_customer_ip'        => $this->getClientIP(),
@@ -322,61 +322,87 @@ extends \XLite\Model\PaymentMethod\CreditCardWebBased
     }
 
     /**
-     * Handle request
-     *
-     * @param \XLite\Model\Cart $cart Cart
-     * @param string           $type Call type
-     *
-     * @return integer Operation status
+     * Process return
+     * 
+     * @param \XLite\Model\Payment\Transaction $transaction Return-owner transaction
+     *  
+     * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function handleRequest(\XLite\Model\Cart $cart, $type = self::CALL_CHECKOUT)
+    public function processReturn(\XLite\Model\Payment\Transaction $transaction)
     {
-        parent::handleRequest($cart, $type);
+        parent::processReturn($transaction);
 
-        if (self::CALL_BACK == $type) {
-            $request = \XLite\Core\Request::getInstance();
+        $request = \XLite\Core\Request::getInstance();
 
-            $status = 1 == $request->x_response_code ? 'P' : 'F';
+        $status = 1 == $request->x_response_code ? $transaction::STATUS_SUCCESS : $transaction::STATUS_FAILED;
 
-            if (isset($request->x_response_reason_text)) {
-                $cart->setDetailsCell('response', 'Response', $request->x_response_reason_text);
+        if (isset($request->x_response_reason_text)) {
+            $this->getOrder()->setDetail('response', $request->x_response_reason_text, 'Response');
+            $this->transaction->setNote($request->x_response_reason_text);
 
-            } elseif (isset($this->err[$request->x_response_reason_code])) {
-                $cart->setDetailsCell('response', 'Response', $this->err[$request->x_response_reason_code]);
-            }
-
-            if ($request->x_auth_code) {
-                $cart->setDetailsCell('authCode', 'Auth code', $request->x_auth_code);
-            }
-
-            if ($request->x_trans_id) {
-                $cart->setDetailsCell('transId', 'Transaction ID', $request->x_trans_id);
-            }
-
-            if ($request->x_response_subcode) {
-                $cart->setDetailsCell('responseSubcode', 'Response subcode', $request->x_response_subcode);
-            }
-
-            if (isset($request->x_avs_code) && isset($this->avserr[$request->x_avs_code])) {
-                $cart->setDetailsCell('avs', 'AVS', $this->avserr[$request->x_avs_code]);
-            }
-
-            if (isset($request->x_CVV2_Resp_Code) && isset($this->cvverr[$request->x_CVV2_Resp_Code])) {
-                $cart->setDetailsCell('cvv', 'CVV', $this->cvverr[$request->x_CVV2_Resp_Code]);
-            }
-
-            if (!$this->checkTotal($cart, $request->x_amount)) {
-                $status = 'F';
-            }
-
-            $cart->set('status', $status);
-            $cart->update();
-
-            $this->displayReturnPage($cart);
+        } elseif (isset($this->err[$request->x_response_reason_code])) {
+            $this->getOrder()->setDetail('response', $this->err[$request->x_response_reason_code], 'Response');
+            $this->transaction->setNote($this->err[$request->x_response_reason_code]);
         }
+
+        if ($request->x_auth_code) {
+            $this->getOrder()->setDetail('authCode', $request->x_auth_code, 'Auth code');
+        }
+
+        if ($request->x_trans_id) {
+            $this->getOrder()->setDetail('transId', $request->x_trans_id, 'Transaction ID');
+        }
+
+        if ($request->x_response_subcode) {
+            $this->getOrder()->setDetail('responseSubcode', $request->x_response_subcode, 'Response subcode');
+        }
+
+        if (isset($request->x_avs_code) && isset($this->avserr[$request->x_avs_code])) {
+            $this->getOrder()->setDetail('avs', $this->avserr[$request->x_avs_code], 'AVS status');
+        }
+
+        if (isset($request->x_CVV2_Resp_Code) && isset($this->cvverr[$request->x_CVV2_Resp_Code])) {
+            $this->getOrder()->setDetail('cvv', $this->cvverr[$request->x_CVV2_Resp_Code], 'CVV status');
+        }
+
+        if (!$this->checkTotal($request->x_amount)) {
+            $status = $transaction::STATUS_FAILED;
+        }
+
+        $this->transaction->setStatus($status);
+    }
+
+    /**
+     * Check - payment method is configured or not
+     * 
+     * @param \XLite\Model\Payment\Method $method Payment method
+     *  
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isConfigured(\XLite\Model\Payment\Method $method)
+    {
+        return parent::isConfigured()
+            && $method->getSetting('login')
+            && $method->getSetting('type');
+    }
+
+    /**
+     * Get return type 
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getReturnType()
+    {
+        return self::RETURN_TYPE_HTML_REDIRECT;
     }
 
     /**
@@ -418,22 +444,4 @@ extends \XLite\Model\PaymentMethod\CreditCardWebBased
 
         return $result;
     }
-
-    /**
-     * Check - payment method is configured or not
-     * 
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function isConfigured()
-    {
-        $params = $this->get('params');
-
-        return parent::isConfigured()
-            && $params['login']
-            && $params['type'];
-    }
-
 }

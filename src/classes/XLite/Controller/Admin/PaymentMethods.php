@@ -37,71 +37,51 @@ namespace XLite\Controller\Admin;
  */
 class PaymentMethods extends \XLite\Controller\Admin\AAdmin
 {
-    protected $configurableMethods = null;
+    /**
+     * Controller parameters
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $params = array('target', 'language');
 
-    function hasConfigurableMethods()
+    /**
+     * Update payment methods
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionUpdate()
     {
-        if (is_null($this->configurableMethods)) {
+        $data = \XLite\Core\Request::getInstance()->data;
 
-            $this->configurableMethods = false;
-            $pm = new \XLite\Model\PaymentMethod();
-            
-            foreach ($pm->readAll() as $pm) {
-                if (!is_null($pm->configurationTemplate)) {
-                    $this->configurableMethods = true;
-                    break;
+       if (!is_array($data)) {
+
+            // TODO - add top message
+
+        } else {
+            $code = $this->getCurrentLanguage();
+            foreach ($data as $id => $row) {
+                $m = \XLite\Core\Database::getRepo('\XLite\Model\Payment\Method')->find($id);
+
+                if (!$m) {
+                    // TODO - add top message
+                    continue;
                 }
+
+                $m->getTranslation($code)->setName($row['name']);
+                $m->getTranslation($code)->setDescription($row['description']);
+                $m->setOrderby(intval($row['orderby']));
+                $m->setEnabled(isset($row['enabled']) && '1' == $row['enabled']);
+
+                \XLite\Core\Database::getEM()->persist($m);
             }
+
+            \XLite\Core\Database::getEM()->flush();
         }
-
-        return $this->configurableMethods;
-    }
-
-    function action_update()
-    {
-    	$default_offline_payment = $this->config->Payments->default_offline_payment;
-
-        foreach ($this->data as $id => $data) {
-            if (array_key_exists('enabled', $data)) {
-                $data['enabled'] = 1;
-            } else {
-                $data['enabled'] = 0;
-            }
-
-            if ($data['payment_method'] == $default_offline_payment && !$data['enabled']) {
-
-                \XLite\Core\Database::getRepo('\XLite\Model\Config')->createOption(
-                    array(
-                        'category' =>'Payments',
-                        'name'     => 'default_offline_payment',
-                        'value'    =>''
-                    )
-                );
-            }
-
-            $payment_method = new \XLite\Model\PaymentMethod();
-            $payment_method->setProperties($data);
-            $payment_method->read();
-            $payment_method->update();
-        }
-    }
-
-    function action_default_payment()
-    {
-        \XLite\Core\Database::getRepo('\XLite\Model\Config')->createOption(
-            array(
-                'category' => 'Payments',
-                'name'     => 'default_offline_payment',
-                'value'    => $this->default_payment
-            )
-        );
-
-        \XLite\Core\Database::getRepo('\XLite\Model\Config')->createOption(
-            array(
-                'category' => 'Payments',
-                'name'     => 'default_select_payment',
-                'value'    => $this->default_select_payment
-            )
-        );
     }
 }

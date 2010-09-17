@@ -1,1 +1,8 @@
---INSERT INTO xlite_payment_methods (payment_method,name,details,class,params,orderby,enabled) VALUES ('authorizenet_cc','AuthorizeNet','Visa, Mastercard, American Express','authorizenet_cc','O:8:"stdClass":9:{s:3:"url";s:49:"https://secure.authorize.net/gateway/transact.dll";s:5:"login";s:0:"";s:3:"key";s:0:"";s:4:"test";s:4:"TRUE";s:4:"cvv2";s:1:"1";s:12:"md5HashValue";s:0:"";s:6:"prefix";s:7:"X-Lite-";s:8:"currency";s:3:"USD";s:4:"type";s:12:"AUTH_CAPTURE";}',10,0);
+INSERT INTO xlite_payment_methods (method_id, service_name, class) VALUES (10, 'AuthorizeNet SIM','Module\\AuthorizeNet\\Model\\Payment\\Processor\\AuthorizeNetSIM');
+
+INSERT INTO xlite_payment_method_translations (id, code, name) VALUES (10, 'en', 'Authorize.Net SIM');
+
+INSERT INTO xlite_payment_method_settings (method_id, name, value) VALUES (10, 'login', '');
+INSERT INTO xlite_payment_method_settings (method_id, name, value) VALUES (10, 'key', '');
+INSERT INTO xlite_payment_method_settings (method_id, name, value) VALUES (10, 'test', '1');
+INSERT INTO xlite_payment_method_settings (method_id, name, value) VALUES (10, 'prefix', 'xlite');

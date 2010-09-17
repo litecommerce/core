@@ -84,4 +84,39 @@ class Currency extends \XLite\Model\Base\I18n
      * @Column (type="integer")
      */
     protected $e = 0;
+
+    /**
+     * Round value 
+     * 
+     * @param float $value Value
+     *  
+     * @return float
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function roundValue($value)
+    {
+        return round($value, $this->getE());
+    }
+
+    /**
+     * Format value 
+     * 
+     * @param float $value Value
+     *  
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function formatValue($value)
+    {
+        return number_format(
+            $this->roundValue($value),
+            $this->getE(),
+            \XLite\Core\Config::getInstance()->General->decimal_delim,
+            \XLite\Core\Config::getInstance()->General->thousand_delim
+        );
+    }
 }

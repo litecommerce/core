@@ -2,7 +2,7 @@ UPDATE xlite_modules SET enabled = 0;
 UPDATE xlite_modules SET enabled = 1 WHERE name IN (
 --'AdvancedSearch',
 'AustraliaPost',
---'AuthorizeNet',
+'AuthorizeNet',
 'Bestsellers',
 'DrupalConnector',
 --'FeaturedProducts',

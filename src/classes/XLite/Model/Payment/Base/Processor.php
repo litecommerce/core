@@ -101,6 +101,62 @@ abstract class Processor extends \XLite\Base
     }
 
     /**
+     * Get settings widget or template 
+     * 
+     * @return string Widget class name or template path
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getSettingsWidget()
+    {
+        return null;
+    }
+
+    /**
+     * Get current trnsaction order 
+     * 
+     * @return \XLite\Model\Order
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getOrder()
+    {
+        return $this->transaction->getOrder();
+    }
+
+    /**
+     * Get setting value by name
+     * 
+     * @param string $name Name
+     *  
+     * @return mixed
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getSetting($name)
+    {
+        return $this->transaction->getPaymentMethod()->getSetting($name);
+    }
+
+    /**
+     * Check - payment method is configured or not
+     * 
+     * @param \XLite\Model\Payment\Method $method Payment method
+     *  
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isConfigured(\XLite\Model\Payment\Method $method)
+    {
+        return true;
+    }
+
+    /**
      * Do initial payment 
      * 
      * @return string Status code

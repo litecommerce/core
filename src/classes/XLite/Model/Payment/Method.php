@@ -147,4 +147,54 @@ class Method extends \XLite\Model\Base\I18n
     {
         $this->class = preg_replace('/^\\?(?:XLite\\)/Sis', '', $class);
     }
+
+    /**
+     * Get setting value by name
+     * 
+     * @param string $name Name
+     *  
+     * @return mixed
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getSetting($name)
+    {
+        $result = null;
+
+        foreach ($this->getSettings() as $setting) {
+            if ($setting->getName() == $name) {
+                $result = $setting->getValue();
+                break;
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Set setting value by name
+     * 
+     * @param string $name  Name
+     * @param string $value Value
+     *  
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setSetting($name, $value)
+    {
+        $result = false;
+
+        foreach ($this->getSettings() as $setting) {
+            if ($setting->getName() == $name) {
+                $setting->setValue($value);
+                $result = true;
+                break;
+            }
+        }
+
+        return $result;
+    }
 }

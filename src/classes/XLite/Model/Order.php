@@ -595,6 +595,36 @@ class Order extends \XLite\Model\Base\ModifierOwner
     }
 
     /**
+     * Set subtotal 
+     * 
+     * @param float $value Subtotal
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setSubtotal($value)
+    {
+        $this->subtotal = $this->getCurrency()->roundValue($value);
+    }
+
+    /**
+     * Set total 
+     * 
+     * @param float $value Total
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setTotal($value)
+    {
+        $this->total = $this->getCurrency()->roundValue($value);
+    }
+
+    /**
      * Get payment method 
      * 
      * @return \XLite\Model\Payment\Method or null
@@ -608,7 +638,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
 
         return $t ? $t->getPaymentMethod() : null;
     }
-    
+   
     /**
      * Set payment method 
      * 

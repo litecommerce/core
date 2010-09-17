@@ -29,7 +29,7 @@
 namespace XLite\Controller\Admin;
 
 /**
- * Payment method configure
+ * Payment method
  * 
  * @package XLite
  * @see     ____class_see____
@@ -38,45 +38,14 @@ namespace XLite\Controller\Admin;
 class PaymentMethod extends \XLite\Controller\Admin\AAdmin
 {
     /**
-     * Controller parameters 
+     * Controller parameters
      * 
-     * @var    array
-     * @access public
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    public $params = array('target', 'payment_method', 'updated', 'error');
-
-    /**
-     * Payment methods (cache) 
-     * 
-     * @var    \XLite\Model\PaymentMethod
+     * @var    string
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $pm = null;
-
-    public $error = '';
-
-    public $updated = false;
-
-    /**
-     * Get payment method 
-     * 
-     * @return \XLite\Model\PaymentMethod
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getPM()
-    {
-        if (is_null($this->pm)) {
-            $this->pm = \XLite\Model\PaymentMethod::factory(\XLite\Core\Request::getInstance()->payment_method);
-        }
-
-        return $this->pm;
-    }
+    protected $params = array('target', 'method_id');
 
     /**
      * Update payment method
@@ -88,11 +57,30 @@ class PaymentMethod extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionUpdate()
     {
-        $this->set('error', $this->getPM()->handleConfigRequest());
-        $this->set('updated', 1);
-        $this->set(
-            'returnUrl',
-            $this->buildUrl('payment_methods')
-        );
+        $settings = \XLite\Core\Request::getInstance()->settings;
+
+        $m = \XLite\Core\Database::getRepo('\XLite\Model\Payment\Method')->find(\XLite\Core\Request::getInstance()->method_id);
+
+       if (!is_array($settings)) {
+
+            // TODO - add top message
+
+        } elseif (!$m) {
+
+            // TODO - add top message
+
+        } else {
+
+            foreach ($settings as $name => $value) {
+                $m->setSetting($name, $value);
+            }
+
+            \XLite\Core\Database::getEM()->persist($m);
+            \XLite\Core\Database::getEM()->flush();
+
+            $this->setReturnUrl(
+                $this->buildUrl('payment_methods')
+            );
+        }
     }
 }

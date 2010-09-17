@@ -10,29 +10,10 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<script type="text/javascript">
-var checkEnabled = parseInt('{config.General.enable_credit_card_validation}');
-if (isNaN(checkEnabled)) {
-  checkEnabled = 0;   
-}
-
-var card_codes = {};
-{foreach:cart.paymentMethod.cardTypes,key,card}
-	card_codes.{card.code} = {card.cvv2};	
-{end:}
-
-$(document).ready(
-  function() {
-    showSoloOrSwitch();
-  }
-);
-$('.checkout-details').submit(CheckoutSubmit);
-</script>
-
 <table cellspacing="0" class="form-table">
 
   <tr>
-    <td><label for="cc_name">{t(#Cardholder's name#)}:</label></td>
+    <td><label for="cc_name">{t(#Cardholder name#)}:</label></td>
     <td class="marker">*</td>
     <td>
       <input type="text" name="payment[name]" id="cc_name" value="{cart.profile.billing_firstname} {cart.profile.billing_lastname}" />

@@ -515,4 +515,35 @@ class OrderItem extends \XLite\Model\Base\ModifierOwner
             'object_id'   => $this->getObjectId(),
         );
     }
+
+    /**
+     * Set subtotal 
+     * 
+     * @param float $value Subtotal
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setSubtotal($value)
+    {
+        $this->subtotal = $this->getOrder()->getCurrency()->roundValue($value);
+    }
+
+    /**
+     * Set total 
+     * 
+     * @param float $value Total
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setTotal($value)
+    {
+        $this->total = $this->getOrder()->getCurrency()->roundValue($value);
+    }
+
 }

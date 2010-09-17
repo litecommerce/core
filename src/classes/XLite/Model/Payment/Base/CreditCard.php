@@ -64,6 +64,19 @@ abstract class CreditCard extends \XLite\Model\Payment\Base\Online
 
 
     /**
+     * 'Initial trancation type' setting cell name
+     */
+    const SETTING_INITIAL_TXN_TYPE = 'initialTxnType';
+
+
+    /**
+     * Initial trancation type codes
+     */
+    const TXN_TYPE_CHARGE = 'sale';
+    const TXN_TYPE_AUTH   = 'auth';
+
+
+    /**
      * Get input template
      *
      * @return string or null
