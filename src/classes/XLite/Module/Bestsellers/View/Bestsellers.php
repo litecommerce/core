@@ -143,11 +143,33 @@ class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
      */
     protected function getData(\XLite\Core\CommonCell $cnd, $countOnly = false)
     {
-        return \XLite\Core\Database::getRepo('XLite\Model\OrderItem')
-            ->findBestsellers(
-                $this->getItemsCount(), 
-                $this->getRootId()
-            ); 
+        $limit = $this->getItemsCount();
+
+        foreach ($cnd as $key => $value) {
+
+            if (\XLite\Model\Repo\Product::P_LIMIT === $key) {
+
+                list(, $limit) = $value;
+
+            }
+
+        }
+
+        if (true === $countOnly) {
+
+            $result = $limit;
+
+        } else {
+
+            $result = \XLite\Core\Database::getRepo('XLite\Model\OrderItem')
+                ->findBestsellers(
+                    $limit, 
+                    $this->getRootId()
+                ); 
+
+        }
+
+        return $result;
     }
 
     /**
