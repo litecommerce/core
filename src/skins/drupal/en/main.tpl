@@ -132,9 +132,7 @@
 <!-- [/search] -->
 
 <widget class="\XLite\View\TopCategories" />
-{*
 <widget module="Bestsellers" class="\XLite\Module\Bestsellers\View\Bestsellers" widgetType="sidebar" />
-*}
 <widget module="GiftCertificates" template="common/sidebar_box.tpl" head="Gift certificates" dir="modules/GiftCertificates/menu">
 <widget module="Affiliate" template="common/sidebar_box.tpl" head="Affiliate" dir="modules/Affiliate/menu">
 <widget template="common/sidebar_box.tpl" head="Help" dir="help">
