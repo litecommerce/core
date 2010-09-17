@@ -305,6 +305,11 @@ ul.form li.required label {
   background: transparent url(images/red_star.png) no-repeat right 5px;
 }
 
+ul.form li .note {
+  display: block;
+  font-size: 10px;
+}
+
 div.buttons {
   margin-top: 10px;
 }

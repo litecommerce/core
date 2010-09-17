@@ -183,7 +183,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
      */
     protected function isPaymentNeeded()
     {
-        return !$this->getCart()->getPaymentMethod();
+        return !$this->getCart()->getPaymentMethod() && $this->getCart()->getOpenTotal();
     }
 
     /**
@@ -569,16 +569,10 @@ class Checkout extends \XLite\Controller\Customer\Cart
             $this->set('absence_of_product', true);
             $this->redirect($this->buildURL('cart'));
 
-        } elseif (is_null($this->getCart()->getPaymentMethod())) {
+        } elseif ($this->isPaymentNeeded()) {
 
             // Payment method is not selected
-            $this->redirect(
-                $this->buildURL(
-                    'cart',
-                    '',
-                    array('mode' => 'paymentMethod')
-                )
-            );
+            $this->redirect($this->buildURL('checkout'));
 
         } else {
 
@@ -603,7 +597,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
 
                 $status = \XLite\Model\Order::STATUS_PROCESSED;
 
-                foreach ($this->getCart()->getTransactions() as $t) {
+                foreach ($this->getCart()->getPaymentTransactions() as $t) {
                     if ($t::STATUS_SUCCESS != $t->getStatus()) {
                         $status = \XLite\Model\Order::STATUS_QUEUED;
                         break;
@@ -615,6 +609,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
 
             if (\XLite\Model\Payment\Transaction::PROLONGATION == $result) {
                 $this->set('silent', true);
+                exit(0);
 
             } elseif ($this->getCart()->isOpen()) {
 
@@ -651,20 +646,42 @@ class Checkout extends \XLite\Controller\Customer\Cart
         }
     }
 
-    public function action_return()
+    /**
+     * Return from payment gateway
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function doActionReturn()
     {
         // some of gateways can't accept return url on run-time and
         // use the one set in merchant account, so we can't pass
         // 'order_id' in run-time, instead pass the order id parameter name
-        $request = \XLite\Core\Request::getInstance();
-        $orderId = isset($request->order_id_name) ? $request->order_id_name : $request->order_id;
+        $orderId = \XLite\Core\Request::getInstance()->order_id;
+        $cart = \XLite\Core\Database::getRepo('XLite\Model\Cart')->find($orderId);
 
-        if ($this->isCartProcessed()) {
-            $this->processSucceed();
-            $this->returnUrl = $this->buildURL('checkoutSuccess', '', array('order_id' => $orderId));
+        if (!$cart) {
+            \XLite\Model\Session::getInstance()->set('order_id', null);
+            // TODO - add top message
+            $this->setReturnUrl($this->buildURL('cart'));
+
+        } elseif ($cart->isOpen()) {
+            \XLite\Model\Session::getInstance()->set('order_id', $orderId);
+            // TODO - add top message
+            $this->setReturnUrl($this->buildURL('checkout'));
 
         } else {
-            $this->returnUrl = $this->buildURL('checkout', '', array('mode' => 'error', 'order_id' => $orderId));
+            \XLite\Model\Session::getInstance()->set('order_id', $orderId);
+
+            $cart->setStatus(
+                $this->getCart()->isPayed() ? \XLite\Model\Order::STATUS_PROCESSED : \XLite\Model\Order::STATUS_QUEUED
+            );
+
+            $this->processSucceed();
+
+            $this->setReturnUrl($this->buildURL('checkoutSuccess', '', array('order_id' => $orderId)));
         }
     }
 

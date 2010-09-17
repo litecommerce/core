@@ -76,7 +76,8 @@
 <widget template="users/search.tpl" target="users">
 <widget target="recent_login" template="common/dialog.tpl" body="recent_login.tpl" head="Login history">
 
-<widget target="payment_methods" template="common/dialog.tpl" body="payment_methods/body.tpl" head="Payment methods">
+<widget class="\XLite\View\Payment\Methods" />
+<widget class="\XLite\View\Payment\Method" />
 
 <widget target="product_list" template="product/product_list_form.tpl">
 <widget target="product" class="\XLite\View\Tabber" body="{pageTemplate}" switch="page">
@@ -123,8 +124,6 @@
 
 <widget template="stats.tpl">
 <widget module="EcommerceReports" template="modules/EcommerceReports/reports.tpl">
-
-<widget target="payment_method" body="{pm.configurationTemplate}" template="common/dialog.tpl" head="{pm.processorName} settings">
 
 <widget target="css_edit" template="common/dialog.tpl" body="css_editor/css_edit.tpl" head="CSS Editor">
 <widget target="image_edit" template="common/dialog.tpl" body="image_editor/edit.tpl" head="Image Editor">

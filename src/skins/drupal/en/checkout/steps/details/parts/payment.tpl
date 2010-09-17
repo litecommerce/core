@@ -11,7 +11,7 @@
  * @since     3.0.0
  * @ListChild (list="chekout.details", weight="60")
  *}
-<div class="payment-method">
+<div IF="cart.getPaymentMethod()" class="payment-method">
   <widget class="\XLite\View\Button\Link" label="Change payment method" style="change" location="{buildURL(#checkout#,##,_ARRAY_(#mode#^#paymentMethod#))}" />
   <h2>{cart.paymentMethod.name}</h2>
   <widget template="{getDir()}/paymentForm.tpl" />

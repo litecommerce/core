@@ -29,7 +29,7 @@
 namespace XLite\Module\AuthorizeNet;
 
 /**
- * Authorize.NET module
+ * Authorize.Net SIM module
  * 
  * @package XLite
  * @see     ____class_see____
@@ -70,51 +70,6 @@ class Main extends \XLite\Module\AModule
      */
     public function getDescription()
     {
-        return 'Authorize.Net credit card payment processor';
-    }
-
-    /**
-     * Determines if we need to show settings form link
-     *
-     * @return bool
-     * @access public
-     * @since  3.0.0
-     */
-    public function showSettingsForm()
-    {
-        return true;
-    }
-
-    /**
-     * Return link to settings form
-     *
-     * @return string
-     * @access public
-     * @since  3.0.0
-     */
-    public function getSettingsForm()
-    {
-        return \XLite\Core\Converter::buildUrl(
-            'payment_method',
-            '',
-            array('payment_method' => 'authorizenet_cc'),
-            \XLite::ADMIN_SELF
-        );
-    }
-
-    /**
-     * Perform some actions at startup
-     *
-     * @return void
-     * @access public
-     * @since  3.0.0
-     */
-    public function init()
-    {
-        parent::init();
-        
-        $this->registerPaymentMethod('authorizenet_cc');
-
-        \XLite::getInstance()->set('AuthorizeNetEnabled', true);
+        return 'Authorize.Net SIM (Server Integration Method) credit card payment processor';
     }
 }

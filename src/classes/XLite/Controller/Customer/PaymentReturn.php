@@ -29,13 +29,13 @@
 namespace XLite\Controller\Customer;
 
 /**
- * Payment method callback
+ * Web-based payment method return
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Callback extends \XLite\Controller\Customer\ACustomer
+class PaymentReturn extends \XLite\Controller\Customer\ACustomer
 {
     /**
      * This controller is always accessible
@@ -59,21 +59,24 @@ class Callback extends \XLite\Controller\Customer\ACustomer
      */
     public function handleRequest()
     {
-        \XLite\Core\Request::getInstance()->action = 'callback';
+        \XLite\Core\Request::getInstance()->action = 'return';
 
         parent::handleRequest();
     }
 
     /**
-     * Process callback
+     * Process return
      * 
      * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function doActionCallback()
+    protected function doActionReturn()
     {
+        $txn = null;
+        $txnIdName = 'txnId';
+
         if (isset(\XLite\Core\Request::getInstance()->txn_id_name)) {
             /**
              * some of gateways can't accept return url on run-time and
@@ -81,22 +84,18 @@ class Callback extends \XLite\Controller\Customer\ACustomer
              * 'order_id' in run-time, instead pass the order id parameter name
              */
             $txnIdName = \XLite\Core\Request::getInstance()->txn_id_name;
-
-        } else {
-            $txnIdName = 'txn_id';
         }
 
-        if (!isset(\XLite\Core\Request::getInstance()->$txnIdName)) {
-            $this->doDie('The transaction ID variable \'' . $txnIdName . '\' is not found in request');
+        if (isset(\XLite\Core\Request::getInstance()->$txnIdName)) {
+            $txn = \XLite\Core\Database::getRepo('XLite\Model\Payment\Transaction')->find(\XLite\Core\Request::getInstance()->$txnIdName);
         }
 
-        $txn = \XLite\Core\Database::getRepo('XLite\Model\Payment\Transaction')->find(\XLite\Core\Request::getInstance()->$txnIdName);
         if (!$txn) {
 
             $methods = \XLite\Core\Database::getRepo('XLite\Model\Payment\Method')->findAllActive();
             foreach ($methods as $method) {
                 if (method_exists($method->getProcessor(), 'getCallbackOwnerTransaction')) {
-                    $txn = $method->getProcessor()->getCallbackOwnerTransaction();
+                    $txn = $method->getProcessor()->getReturnOwnerTransaction();
                     if ($txn) {
                         break;
                     }
@@ -106,12 +105,63 @@ class Callback extends \XLite\Controller\Customer\ACustomer
         }
 
         if ($txn) {
-            $txn->getPaymentMethod()->getProcessor()->processCallback($txn);
+            $txn->getPaymentMethod()->getProcessor()->processReturn($txn);
+
+            \XLite\Core\Database::getEM()->persist($txn);
+            \XLite\Core\Database::getEM()->flush();
+
+            $url = \XLite::getShopUrl(
+                $this->buildUrl('checkout', 'return', array('order_id' => $txn->getorder()->getOrderId())),
+                $this->config->Security->customer_security
+            );
+
+            switch ($txn->getPaymentMethod()->getProcessor()->getReturnType()) {
+                case \XLite\Model\Payment\Base\WebBase:RETURN_TYPE_HTML_REDIRECT:
+                    $this->doHTMLRedirect($url);
+                    break;
+
+                case \XLite\Model\Payment\Base\WebBase:RETURN_TYPE_CUSTOM:
+                    $txn->getPaymentMethod()->getProcessor()->doCustomReturnRedirect();
+
+                default:
+                    $this->setReturnUrl($url);
+            }
 
         } else {
             // TODO - add error logging
+
+            $this->setReturnUrl(
+                $this->buildUrl('checkout')
+            );
         }
 
-        $this->set('silent', true);
+    }
+
+    /**
+     * Do HTML-based redirect 
+     * 
+     * @param string $url  URL
+     * @param int    $time Redirect delay
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doHTMLRedirect($url, $time = 1)
+    {
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Refresh" content="<?php echo $time; ?>;URL=<?php echo $url; ?>" />
+</head>
+<body>
+If the page is not updated in <?php echo $time; ?> seconds, please follow this link: <a href="<?php echo $url; ?>">continue &gt;&gt;</a>
+</body>
+</html>
+<?php
+
+        exit(0);
     }
 }

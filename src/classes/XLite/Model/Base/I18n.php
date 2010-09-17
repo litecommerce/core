@@ -106,19 +106,21 @@ abstract class I18n extends \XLite\Model\AEntity
 
         $result = null;
 
-        foreach ($this->translations as $t) {
-            if ($t->code == $code) {
+        foreach ($this->getTranslations() as $t) {
+            if ($t->getCode() == $code) {
                 $result = $t;
                 break;
             }
         }
 
         if (!$result) {
-            $className = get_called_class() . 'Translation';
+            $className = $this instanceof \Doctrine\ORM\Proxy\Proxy
+                ? get_parent_class($this) . 'Translation'
+                : get_called_class() . 'Translation';
             $result = new $className();
-            $result->owner = $this;
-            $result->code = $code;
-            $this->translations[] = $result;
+            $result->setOwner($this);
+            $result->setCode($code);
+            $this->getTranslations()->add($result);
         }
 
         return $result;
@@ -179,7 +181,7 @@ abstract class I18n extends \XLite\Model\AEntity
             $result = new $className();
             $result->setOwner($this);
             $result->setCode($code);
-            $this->translations[] = $result;
+            $this->getTranslations()->add($result);
         }
 
         return $result;

@@ -35,7 +35,7 @@ namespace XLite\Model\Repo\Payment;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Method extends \XLite\Model\Repo\ARepo
+class Method extends \XLite\Model\Repo\Base\I18n
 {
     /**
      * Default 'order by' field name
@@ -48,7 +48,35 @@ class Method extends \XLite\Model\Repo\ARepo
     protected $defaultOrderBy = 'orderby';
 
     /**
-     * Find all activemethods
+     * Find all methods
+     * 
+     * @return \Doctrine\Common\Collection\Colelction
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function findAllMethods()
+    {
+        return $this->defineAllMethodsQuery()
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * Define query for findAllMethods() method
+     * 
+     * @return \Doctrine\ORM\QueryBuilder
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineAllMethodsQuery()
+    {
+        return $this->createQueryBuilder();
+    }
+
+    /**
+     * Find all active methods
      * 
      * @return \Doctrine\Common\Collection\Colelction
      * @access public
