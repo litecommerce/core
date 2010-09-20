@@ -64,17 +64,9 @@ abstract class WebBased extends \XLite\Model\Payment\Base\CreditCard
     {
         $method = $this->getFormMethod();
         $url = $this->getFormURL();
-        $body = '';
+        $body = $this->assembleFormBody();
 
-        $inputs = array();
-        foreach ($this->getFormFields() as $name => $value) {
-            $inputs[] = '<input type="hidden" name="' . htmlspecialchars($name)
-                . '" value="' . htmlspecialchars($value) . '" />';
-        }
-
-        if ($inputs) {
-            $body = '      ' . implode("\n" . '      ', $inputs);
-        }
+        $this->logRedirect($this->getFormFields());
 
         $page = <<<HTML
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -172,6 +164,8 @@ HTML;
     public function processReturn(\XLite\Model\Payment\Transaction $transaction)
     {
         $this->transaction = $transaction;
+
+        $this->logReturn(\XLite\Core\Request::getInstance()->getData());
     }
 
     /**
@@ -276,5 +270,68 @@ HTML;
      */
     public function doCustomReturnRedirect()
     {
+    }
+
+    /**
+     * Assemble form body (field set)
+     * 
+     * @return string HTML
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function assembleFormBody()
+    {
+        $inputs = array();
+        foreach ($this->getFormFields() as $name => $value) {
+            $inputs[] = '<input type="hidden" name="' . htmlspecialchars($name)
+                . '" value="' . htmlspecialchars($value) . '" />';
+        }
+
+        if ($inputs) {
+            $body = '      ' . implode("\n" . '      ', $inputs);
+        }
+
+        return $body;
+    }
+
+    /**
+     * Log redirect form
+     *
+     * @param array $list Form fields list
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function logRedirect(array $list)
+    {
+        \XLite\Logger::getInstance()->log(
+            $this->transaction->getPaymentMethod()->getServiceName() . ' payment gateway : redirect' . PHP_EOL
+            . 'Method: ' . $this->getFormMethod() . PHP_EOL
+            . 'URL: ' . $this->getFormURL() . PHP_EOL
+            . 'Data: ' . var_export($list, true),
+            LOG_DEBUG
+        );
+    }
+
+    /**
+     * Log return request
+     *
+     * @param array @list Request data
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function logReturn(array $list)
+    {
+        \XLite\Logger::getInstance()->log(
+            $this->transaction->getPaymentMethod()->getServiceName() . ' payment gateway : return' . PHP_EOL
+            . 'Data: ' . var_export($list, true),
+            LOG_DEBUG
+        );
     }
 }

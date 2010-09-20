@@ -93,10 +93,8 @@ web_dir = ""
 ;
 [log_details]
 type = file
-;type = client
-;type = "null"
 name = "var/log/xlite.log.php"
-level = PEAR_LOG_DEBUG
+level = PEAR_LOG_WARNING
 ident = "XLite"
 suppress_errors = On
 suppress_log_errors = Off

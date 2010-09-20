@@ -101,6 +101,36 @@ class Currency extends \XLite\Model\Base\I18n
     }
 
     /**
+     * Round value as integer
+     * 
+     * @param float $value Value
+     *  
+     * @return integer
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function roundValueAsInteger($value)
+    {
+        return intval(round($value, $this->getE()) * pow(10, $this->getE()));
+    }
+
+    /**
+     * Convert integer to float 
+     * 
+     * @param integer $value Value
+     *  
+     * @return float
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function convertIntegerToFloat($value)
+    {
+        return $value / pow(10, $this->getE());
+    }
+
+    /**
      * Format value 
      * 
      * @param float $value Value

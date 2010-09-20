@@ -46,7 +46,9 @@ class Method extends \XLite\View\Dialog
      */
     protected function getHead()
     {
-        return 'Payment method settings';
+        return $this->getPaymentMethod()
+            ? $this->getPaymentMethod()->getServiceName() . ' settings'
+            : 'Payment method settings';
     }
 
     /**
@@ -103,7 +105,8 @@ class Method extends \XLite\View\Dialog
      */
     public function getPaymentMethod()
     {
-        return \XLite\Core\Database::getRepo('XLite\Model\Payment\Method')->find(\XLite\Core\Request::getInstance()->method_id);
+        return \XLite\Core\Database::getRepo('XLite\Model\Payment\Method')
+            ->find(\XLite\Core\Request::getInstance()->method_id);
     }
 
     /**

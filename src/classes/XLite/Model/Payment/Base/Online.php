@@ -49,6 +49,9 @@ abstract class Online extends \XLite\Model\Payment\Base\Processor
      */
     public function processCallback(\XLite\Model\Payment\Transaction $transaction)
     {
+        $this->transaction = $transaction;
+
+        $this->logCallback(\XLite\Core\Request::getInstance()->getData());
     }
 
     /**
@@ -68,11 +71,11 @@ abstract class Online extends \XLite\Model\Payment\Base\Processor
      * Get client IP 
      * 
      * @return string
-     * @access public
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getClientIP()
+    protected function getClientIP()
     {
         $result = null;
 
@@ -84,5 +87,88 @@ abstract class Online extends \XLite\Model\Payment\Base\Processor
         }
 
         return $result;
+    }
+
+    /**
+     * Get invoice description 
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getInvoiceDescription()
+    {
+        return 'Order #' . $this->getSetting('prefix') . $this->getOrder()->getOrderId()
+            . '; transaction: ' . $this->transaction->getTransactionId();
+    }
+ 
+    /**
+     * Define saved into transaction data schema
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineSavedData()
+    {
+        return array();
+    }
+
+    /**
+     * Save request data into transaction
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function saveDataFromRequest()
+    {
+        foreach ($this->defineSavedData() as $key => $name) {
+            if (isset(\XLite\Core\Request::getInstance()->$key)) {
+                $this->setDetail($key, \XLite\Core\Request::getInstance()->$key, $name);
+            }
+        }
+    }
+
+    /**
+     * Array cell mask
+     * 
+     * @param array  $list Array
+     * @param string $name CEll key
+     *  
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function maskCell(array $list, $name)
+    {
+        if (isset($list[$name])) {
+            $list[$name] = str_repeat('*', strlen($list[$name]));
+        }
+
+        return $list;
+    }
+
+    /**
+     * Log callback
+     *
+     * @param array $list Callback data
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function logCallback(array $list)
+    {
+        \XLite\Logger::getInstance()->log(
+            $this->transaction->getPaymentMethod()->getServiceName() . ' payment gateway : callback' . PHP_EOL
+            . 'Data: ' . var_export($list, true),
+            LOG_DEBUG
+        );
     }
 }
