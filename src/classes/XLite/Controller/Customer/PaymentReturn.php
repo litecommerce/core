@@ -87,7 +87,8 @@ class PaymentReturn extends \XLite\Controller\Customer\ACustomer
         }
 
         if (isset(\XLite\Core\Request::getInstance()->$txnIdName)) {
-            $txn = \XLite\Core\Database::getRepo('XLite\Model\Payment\Transaction')->find(\XLite\Core\Request::getInstance()->$txnIdName);
+            $txn = \XLite\Core\Database::getRepo('XLite\Model\Payment\Transaction')
+                ->find(\XLite\Core\Request::getInstance()->$txnIdName);
         }
 
         if (!$txn) {
@@ -111,16 +112,16 @@ class PaymentReturn extends \XLite\Controller\Customer\ACustomer
             \XLite\Core\Database::getEM()->flush();
 
             $url = \XLite::getShopUrl(
-                $this->buildUrl('checkout', 'return', array('order_id' => $txn->getorder()->getOrderId())),
+                $this->buildUrl('checkout', 'return', array('order_id' => $txn->getOrder()->getOrderId())),
                 $this->config->Security->customer_security
             );
 
             switch ($txn->getPaymentMethod()->getProcessor()->getReturnType()) {
-                case \XLite\Model\Payment\Base\WebBase:RETURN_TYPE_HTML_REDIRECT:
+                case \XLite\Model\Payment\Base\WebBased::RETURN_TYPE_HTML_REDIRECT:
                     $this->doHTMLRedirect($url);
                     break;
 
-                case \XLite\Model\Payment\Base\WebBase:RETURN_TYPE_CUSTOM:
+                case \XLite\Model\Payment\Base\WebBased::RETURN_TYPE_CUSTOM:
                     $txn->getPaymentMethod()->getProcessor()->doCustomReturnRedirect();
 
                 default:

@@ -765,6 +765,27 @@ class Order extends \XLite\Model\Base\ModifierOwner
     }
 
     /**
+     * Get totally payed total 
+     * 
+     * @return float
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getPayedTotal()
+    {
+        $total = $this->getTotal();
+
+        foreach ($this->getPaymentTransactions() as $t) {
+            if ($t->isCompleted()) {
+                $total -= $t->getChargeValueModifier();
+            }
+        }
+
+        return $total;
+    }
+
+    /**
      * Check - order is payed or not
      * Payed - order has not open total and all payment transactions are failed or completed
      * 
@@ -775,18 +796,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
      */
     public function isPayed()
     {
-        $result = !$this->isOpen();
-
-        if ($result) {
-            foreach ($this->getPaymentTransactions() as $t) {
-                if (!$t->isFailed() || !$t->isCompleted()) {
-                    $result = false;
-                    break;
-                }
-            }
-        }
-
-        return $result;
+        return 0 >= $this->getPayedTotal();
     }
 
     /**

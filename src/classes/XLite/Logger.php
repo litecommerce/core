@@ -38,15 +38,6 @@ namespace XLite;
 class Logger extends \XLite\Base\Singleton
 {
     /**
-     * Logger defaults 
-     */
-    const LOGGER_DEFAULT_TYPE = null;
-    const LOGGER_DEFAULT_NAME = '/dev/null';
-    const LOGGER_DEFAULT_LEVEL = LOG_DEBUG;
-    const LOGGER_DEFAULT_IDENT = 'X-Lite';
-
-
-    /**
      * Security file header 
      * 
      * @var    string
@@ -108,12 +99,20 @@ class Logger extends \XLite\Base\Singleton
      * @since  3.0.0
      */
     protected $options = array(
-        'type'  => self::LOGGER_DEFAULT_TYPE,
-        'name'  => self::LOGGER_DEFAULT_NAME,
-        'level' => self::LOGGER_DEFAULT_LEVEL,
-        'ident' => self::LOGGER_DEFAULT_IDENT
+        'type'  => null,
+        'name'  => '/dev/null',
+        'level' => LOG_WARNING,
+        'ident' => 'X-Lite',
     );
 
+    /**
+     * Mark tempaltes flag
+     * 
+     * @var    boolean
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
     protected static $markTempaltes = false;
 
     /**
@@ -157,6 +156,26 @@ class Logger extends \XLite\Base\Singleton
         }
 
         self::$markTempaltes = (bool)\XLite::getInstance()->getOptions(array('debug', 'mark_templates'));
+
+        $logger = \Log::singleton(
+            $this->getType(),
+            $this->getName(),
+            $this->getIdent()
+        );
+
+        if (isset($this->options['level'])) {
+            $level = $this->options['level'];
+            if (defined($level)) {
+                $level = constant($level);
+            }
+            $level = min(7, intval($level));
+            $mask = 0;
+            for ($i = 0; $i <= $level; $i++) {
+                $mask += 1 << $i;
+            }
+
+            $logger->setMask($mask);
+        }
     }
     
     /**
@@ -170,7 +189,7 @@ class Logger extends \XLite\Base\Singleton
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function log($message, $level = null)
+    public function log($message, $level = LOG_DEBUG)
     {
         $dir = getcwd();
         chdir(LC_DIR);
@@ -180,17 +199,6 @@ class Logger extends \XLite\Base\Singleton
             $this->getName(),
             $this->getIdent()
         );
-
-        if (!isset($level)) {
-            $defaultLevel = $this->options['level'];
-            if (defined($defaultLevel)) {
-                $level = constant($defaultLevel);
-            }
-        }
-
-        if (!isset($level)) {
-            $level = PEAR_LOG_DEBUG;
-        }
 
         // Add additional info
         $parts = array(
@@ -207,14 +215,14 @@ class Logger extends \XLite\Base\Singleton
             }
         }
 
-        $message .= "\n" . implode('; ', $parts) . ';';
+        $message .= PHP_EOL . implode(';' . PHP_EOL, $parts) . ';';
 
         // Add debug backtrace
         if (PEAR_LOG_ERR >= $level) {
-            $message .= "\n" . 'Backtrace:' . "\n\t" . implode("\n\t", $this->getBackTrace());
+            $message .= PHP_EOL . 'Backtrace:' . PHP_EOL . "\t" . implode(PHP_EOL . "\t", $this->getBackTrace());
         }
 
-        $logger->log(trim($message) . "\n", $level);
+        $logger->log(trim($message) . PHP_EOL, $level);
 
         chdir($dir);
     }
@@ -563,6 +571,14 @@ class Logger extends \XLite\Base\Singleton
         }
     }
 
+    /**
+     * Check - display debug templates info or not
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     public static function isMarkTemplates()
     {
         return self::$markTempaltes;

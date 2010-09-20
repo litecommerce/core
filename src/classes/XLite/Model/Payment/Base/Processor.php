@@ -114,7 +114,7 @@ abstract class Processor extends \XLite\Base
     }
 
     /**
-     * Get current trnsaction order 
+     * Get current transaction order 
      * 
      * @return \XLite\Model\Order
      * @access protected
@@ -124,6 +124,19 @@ abstract class Processor extends \XLite\Base
     protected function getOrder()
     {
         return $this->transaction->getOrder();
+    }
+
+    /**
+     * Get current transaction order profile
+     * 
+     * @return \XLite\Model\Profile
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getProfile()
+    {
+        return $this->transaction->getOrder()->getProfile();
     }
 
     /**
@@ -181,22 +194,43 @@ abstract class Processor extends \XLite\Base
 
         foreach ($this->request as $name => $value)  {
             if (isset($accessLevels[$name])) {
-                $record = new \XLite\Model\Payment\TransactionData;
-
-                $record->setName($name);
-                $record->setValue($value);
-                if (isset($labels[$name])) {
-                    $record->setLabel($labels[$name]);
-                }
-
-                $record->setAccessLevel($accessLevels[$name]);
-
-                $this->transaction->getData()->add($record);
-                $record->setTransaction($this->transaction);
-
-                \XLite\Core\Database::getEM()->persist($record);
+                $this->setDetail(
+                    $name,
+                    $value,
+                    isset($labels[$name]) ? $labels[$name] : null
+                );
             }
         }
+    }
+
+    /**
+     * Set transaction detail record
+     * 
+     * @param string $name  Code
+     * @param string $value Value
+     * @param string $label Label
+     *  
+     * @return \XLite\Model\Payment\TransactionData
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function setDetail($name, $value, $label = null)
+    {
+        $record = new \XLite\Model\Payment\TransactionData;
+
+        $record->setName($name);
+        $record->setValue($value);
+        if (isset($label)) {
+            $record->setLabel($label);
+        }
+
+        $this->transaction->getData()->add($record);
+        $record->setTransaction($this->transaction);
+
+        \XLite\Core\Database::getEM()->persist($record);
+    
+        return $record;
     }
 
     /**

@@ -662,21 +662,23 @@ class Checkout extends \XLite\Controller\Customer\Cart
         $orderId = \XLite\Core\Request::getInstance()->order_id;
         $cart = \XLite\Core\Database::getRepo('XLite\Model\Cart')->find($orderId);
 
+        if ($cart) {
+            \XLite\Model\Cart::setObject($cart);
+        }
+
         if (!$cart) {
             \XLite\Model\Session::getInstance()->set('order_id', null);
             // TODO - add top message
             $this->setReturnUrl($this->buildURL('cart'));
 
         } elseif ($cart->isOpen()) {
-            \XLite\Model\Session::getInstance()->set('order_id', $orderId);
             // TODO - add top message
             $this->setReturnUrl($this->buildURL('checkout'));
 
         } else {
-            \XLite\Model\Session::getInstance()->set('order_id', $orderId);
 
             $cart->setStatus(
-                $this->getCart()->isPayed() ? \XLite\Model\Order::STATUS_PROCESSED : \XLite\Model\Order::STATUS_QUEUED
+                $cart->isPayed() ? \XLite\Model\Order::STATUS_PROCESSED : \XLite\Model\Order::STATUS_QUEUED
             );
 
             $this->processSucceed();
