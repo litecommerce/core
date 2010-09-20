@@ -34,7 +34,7 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
     {
         $product = $this->getActiveProduct();
 
-        $this->open('store/product//product_id-' . $product->getProductId());
+        $this->openAndWait('store/product//product_id-' . $product->getProductId());
 
         $this->assertElementPresent(
             "//h1[@id='page-title' and text()='" . $product->getName() . "']",
@@ -196,12 +196,6 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
 
         $this->assertJqueryPresent('#cloud-zoom-big:visible', 'check zoomer layout');
         $this->assertJqueryPresent('.cloud-zoom-lens:visible', 'check zoomer lens');
-
-        $this->assertEquals(
-            $this->getJSExpression("$('.product-details .body').offset().left") + 2,
-            $this->getJSExpression("$('.cloud-zoom-big').offset().left"),
-            'check zoomer layout offset'
-        );
 
         $this->mouseOut("//div[@class='mousetrap']");
 

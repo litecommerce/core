@@ -97,7 +97,7 @@ class XLite_Tests_Model_Order extends XLite_Tests_TestCase
             'check order subtotal'
         );
         $this->assertEquals(
-            $shippingCost + $this->getProduct()->getPrice(),
+            round($shippingCost + $this->getProduct()->getPrice(), 2),
             $order->getTotal(),
             'check total'
         );
@@ -137,7 +137,11 @@ class XLite_Tests_Model_Order extends XLite_Tests_TestCase
         $this->assertEquals($this->getProduct()->getPrice(), $order->getItems()->get(0)->getPrice(), 'check price');
         $this->assertEquals(2 * $this->getProduct()->getPrice(), $order->getItems()->get(0)->getSubtotal(), 'check item subtotal');
         $this->assertEquals(2 * $this->getProduct()->getPrice(), $order->getSubtotal(), 'check order subtotal');
-        $this->assertEquals($shippingCost + 2 * $this->getProduct()->getPrice(), $order->getTotal(), 'check total');
+        $this->assertEquals(
+            round($shippingCost + 2 * $this->getProduct()->getPrice(), 2),
+            $order->getTotal(),
+            'check total'
+        );
 
         $order->setStatus($order::STATUS_INPROGRESS);
         \XLite\Core\Database::getEM()->persist($order);
@@ -533,7 +537,7 @@ class XLite_Tests_Model_Order extends XLite_Tests_TestCase
         $shippingCost = $order->getTotalByModifier('shipping');
 
         $this->assertEquals(
-            $shippingCost + $this->getProduct()->getPrice(),
+            round($shippingCost + $this->getProduct()->getPrice(), 2),
             $order->getTotal(),
             'check total'
         );
@@ -544,7 +548,7 @@ class XLite_Tests_Model_Order extends XLite_Tests_TestCase
         $shippingCost = $order->getTotalByModifier('shipping');
 
         $this->assertEquals(
-            $shippingCost + 2 * $this->getProduct()->getPrice(),
+            round($shippingCost + 2 * $this->getProduct()->getPrice(), 2),
             $order->getTotal(),
             'check total #2'
         );
