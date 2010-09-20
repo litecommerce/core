@@ -11,6 +11,10 @@
  * @since     3.0.0
  *}
 
+<div class="right-panel">
+  <widget class="\XLite\View\EditorLanguageSelector" />
+</div>
+
 <p>
 
 <span IF="getRequestParamValue(#mode#)!=#modify#">Mandatory fields are marked with an asterisk (<font class="Star">*</font>).<br /><br /></span>
