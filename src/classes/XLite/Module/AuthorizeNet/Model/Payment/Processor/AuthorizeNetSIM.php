@@ -264,9 +264,13 @@ class AuthorizeNetSIM extends \XLite\Model\Payment\Base\WebBased
 
         $tstamp = gmdate('U');
 
+        $strin = $this->getSetting('login') . '^'
+            . $sequence . '^'
+            . $tstamp . '^'
+            . round($this->transaction->getValue(), 2) . '^';
         $hash = $this->getHMAC(
             $this->getSetting('key'),
-            $this->getSetting('login') . '^' . $sequence . '^' . $tstamp . '^' . round($this->transaction->getValue(), 2) . '^'
+            $string
         );
 
         $bState = $this->getOrder()->getProfile()->getComplex('billingState.code')

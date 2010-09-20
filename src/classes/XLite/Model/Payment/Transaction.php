@@ -89,7 +89,7 @@ class Transaction extends \XLite\Model\AEntity
      * @var    string
      * @access protected
      * @see    ____var_see____
-      @since  3.0.0
+     *  @since  3.0.0
      * 
      * @Column (type="string", length="255")
      */

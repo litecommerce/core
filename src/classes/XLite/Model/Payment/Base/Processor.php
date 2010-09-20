@@ -192,7 +192,7 @@ abstract class Processor extends \XLite\Base
         $labels = $this->getInputDataLabels();
         $accessLevels = $this->getInputDataAccessLevels();
 
-        foreach ($this->request as $name => $value)  {
+        foreach ($this->request as $name => $value) {
             if (isset($accessLevels[$name])) {
                 $this->setDetail(
                     $name,
