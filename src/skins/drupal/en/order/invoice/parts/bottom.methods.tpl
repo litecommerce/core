@@ -13,7 +13,7 @@
  *}
 <td class="payment">
   <strong>{t(#Payment method#)}:</strong>
-  {foreach:order.getPaymentTransactions(),t}
+  {foreach:order.getActivePaymentTransactions(),t}
     {t.paymentMethod.getName():h}<br />
   {end:}
 </td>

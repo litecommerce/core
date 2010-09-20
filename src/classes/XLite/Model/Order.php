@@ -671,6 +671,27 @@ class Order extends \XLite\Model\Base\ModifierOwner
     }
 
     /**
+     * Get active payment transactions 
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getActivePaymentTransactions()
+    {
+        $result = array();
+
+        foreach ($this->getPaymentTransactions() as $t) {
+            if (!$t->isFailed()) {
+                $result[] = $t;
+            }
+        }
+
+        return $result;
+    }
+
+    /**
      * Add payment transaction 
      * 
      * @param \XLite\Model\Payment\Method $method   Payment method

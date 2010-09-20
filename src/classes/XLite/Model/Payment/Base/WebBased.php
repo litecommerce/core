@@ -231,7 +231,8 @@ HTML;
         $result = true;
 
         if ($currency && $this->transaction->getOrder()->getCurrency()->getCode() != $currency) {
-            $msg = 'Currency code doesn\'t match. Order currency: ' . $this->transaction->getOrder()->getCurrency()->getCode()
+            $msg = 'Currency code doesn\'t match. Order currency: '
+                . $this->transaction->getOrder()->getCurrency()->getCode()
                 . '; payment gateway currency: ' . $currency;
             $this->transaction->getOrder()->setDetail('error', 'Hacking attempt!', 'Error');
             $this->transaction->getOrder()->setDetail(
@@ -319,7 +320,7 @@ HTML;
     /**
      * Log return request
      *
-     * @param array @list Request data
+     * @param array $list Request data
      * 
      * @return void
      * @access protected
