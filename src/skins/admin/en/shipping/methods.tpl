@@ -11,6 +11,10 @@
  * @since     3.0.0
  *}
 
+<div class="right-panel">
+  <widget class="\XLite\View\EditorLanguageSelector" />
+</div>
+
 <script type="text/javascript" language="JavaScript 1.2">
 <!-- 
 
