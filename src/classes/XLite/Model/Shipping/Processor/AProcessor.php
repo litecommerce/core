@@ -140,7 +140,7 @@ abstract class AProcessor extends \XLite\Base\SuperClass
      */
     public function isMethodNamesAdjustable()
     {
-        return false;
+        return true;
     }
 
     /**
