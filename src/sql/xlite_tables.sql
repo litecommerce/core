@@ -275,7 +275,7 @@ CREATE TABLE xlite_payment_method_translations (
   code char(2) NOT NULL,
   id int(11) NOT NULL DEFAULT '0',
   name char(255) NOT NULL,
-  description text NOT NULL,
+  description text NOT NULL default '',
   PRIMARY KEY (label_id),
   KEY ci (code,id),
   KEY i (id)

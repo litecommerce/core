@@ -120,7 +120,7 @@ abstract class I18n extends \XLite\Model\AEntity
             $result = new $className();
             $result->setOwner($this);
             $result->setCode($code);
-            $this->getTranslations()->add($result);
+            $this->addTranslations($result);
         }
 
         return $result;
@@ -181,7 +181,7 @@ abstract class I18n extends \XLite\Model\AEntity
             $result = new $className();
             $result->setOwner($this);
             $result->setCode($code);
-            $this->getTranslations()->add($result);
+            $this->addTranslations($result);
         }
 
         return $result;

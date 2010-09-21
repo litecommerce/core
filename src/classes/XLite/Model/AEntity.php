@@ -88,7 +88,9 @@ abstract class AEntity
     public function map(array $data)
     {
         foreach ($data as $key => $value) {
-            if (method_exists($this, $method = 'set' . $this->getMethodName($key))) {
+            $method = 'set' . $this->getMethodName($key);
+            if (method_exists($this, $method)) {
+                // $method is assembled from 'set' + getMethodName()
                 $this->$method($value);
             }
         }
