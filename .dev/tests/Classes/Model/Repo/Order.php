@@ -116,11 +116,11 @@ class XLite_Tests_Model_Repo_Order extends XLite_Tests_TestCase
 
     public function testSearch()
     {
-        $repo = \XLite\Core\Database::getRepo('XLite\Model\Order');
-        foreach ($repo->findAll() as $o) {
-            \XLite\Core\Database::getEM()->remove($o);
-        }
-        \XLite\Core\Database::getEM()->flush();
+        \XLite\Core\Database::getEM()
+            ->createQueryBuilder()
+            ->delete('XLite\Model\Order', 'o')
+            ->getQuery()
+            ->execute();
 
         $o1 = $this->getTestOrder();
         $o2 = $this->getTestOrder();
