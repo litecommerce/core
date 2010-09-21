@@ -118,6 +118,8 @@ class XLite_Tests_Module_Bestsellers_Model_Repo_OrderItem extends XLite_Tests_Te
     {   
         parent::tearDown();
 
+        \XLite\Core\Database::getEM()->clear();
+
         $this->query(file_get_contents(__DIR__ . '/sql/product/restore.sql'));
 
         \XLite\Core\Database::getEM()->flush();
