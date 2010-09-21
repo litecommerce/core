@@ -209,9 +209,19 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
         // Instantiate singltons
         if ($this->needAppInit($request)) {
             $this->app = \XLite::getInstance()->run($request['controller']);
-//            \XLite\Core\Database::getInstance();
-//            \XLite\Core\Session::getInstance();
-//            \XLite\Core\Converter::getInstance();
+        }
+
+        // Clear and restart (if need) entity manager
+        \XLite\Core\Database::getEM()->clear();
+        try {
+            \XLite\Core\Database::getEM()->flush();
+        } catch (\Doctrine\ORM\ORMException $e) {
+            if ('The EntityManager is closed.' == $e->getMessage()) {
+                \XLite\Core\Database::getInstance()->startEntityManager();
+
+            } else {
+                throw $e;
+            }
         }
 
         // Memory usage

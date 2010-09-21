@@ -35,13 +35,6 @@ class XLite_Tests_Model_Repo_Order extends XLite_Tests_TestCase
         'notes'          => 'Test note',
     );
 
-    protected function setUp()
-    {
-        parent::setUp();
-
-        \XLite\Core\Database::getEM()->clear();
-    }
-
     public function testFindAllExipredTemporaryOrders()
     {
         $order = $this->getTestOrder();
@@ -142,6 +135,7 @@ class XLite_Tests_Model_Repo_Order extends XLite_Tests_TestCase
         $repo = \XLite\Core\Database::getRepo('XLite\Model\Order');
 
         // By order id
+        \XLite\Core\Database::getEM()->clear();
         $cnd = new \XLite\Core\CommonCell();
         $cnd->{$repo::P_ORDER_ID} = $o1->getOrderId();
 
@@ -158,6 +152,7 @@ class XLite_Tests_Model_Repo_Order extends XLite_Tests_TestCase
         $this->assertEquals(3, count($list), 'check length (empty)');
 
         // By profile id
+        \XLite\Core\Database::getEM()->clear();
         $cnd = new \XLite\Core\CommonCell();
         $cnd->{$repo::P_PROFILE_ID} = $o1->getOrigProfileId();
 
@@ -166,6 +161,7 @@ class XLite_Tests_Model_Repo_Order extends XLite_Tests_TestCase
         $this->assertEquals(3, count($list), 'check length #2');
 
         // By email
+        \XLite\Core\Database::getEM()->clear();
         $cnd = new \XLite\Core\CommonCell();
         $cnd->{$repo::P_EMAIL} = $o1->getOrigProfile()->get('email');
 
@@ -174,6 +170,7 @@ class XLite_Tests_Model_Repo_Order extends XLite_Tests_TestCase
         $this->assertEquals(3, count($list), 'check length #3');
 
         // By status
+        \XLite\Core\Database::getEM()->clear();
         $cnd = new \XLite\Core\CommonCell();
         $cnd->{$repo::P_STATUS} = $o1::STATUS_QUEUED;
 
@@ -189,6 +186,7 @@ class XLite_Tests_Model_Repo_Order extends XLite_Tests_TestCase
         $this->assertEquals($o2->getOrderId(), $list[0]->getOrderId(), 'check order id #3');
 
         // By date
+        \XLite\Core\Database::getEM()->clear();
         $cnd = new \XLite\Core\CommonCell();
         $cnd->{$repo::P_DATE} = array($o1->getDate() - 100, $o3->getDate() + 100);
 
@@ -197,6 +195,7 @@ class XLite_Tests_Model_Repo_Order extends XLite_Tests_TestCase
         $this->assertEquals(3, count($list), 'check length #6');
 
         // Search with order by
+        \XLite\Core\Database::getEM()->clear();
         $cnd->{$repo::P_ORDER_BY} = array('o.order_id', 'asc');
 
         $list = $repo->search($cnd);
@@ -212,6 +211,7 @@ class XLite_Tests_Model_Repo_Order extends XLite_Tests_TestCase
         $this->assertEquals($o1->getOrderId(), $list[2]->getOrderId(), 'check order id #7');
 
         // With limit
+        \XLite\Core\Database::getEM()->clear();
         $cnd->{$repo::P_LIMIT} = array(0, 2);
 
         $list = $repo->search($cnd);
