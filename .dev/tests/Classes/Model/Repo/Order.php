@@ -123,14 +123,19 @@ class XLite_Tests_Model_Repo_Order extends XLite_Tests_TestCase
             ->execute();
 
         $o1 = $this->getTestOrder();
-        $o2 = $this->getTestOrder();
-        $o3 = $this->getTestOrder();
-
         $o1->setStatus($o1::STATUS_QUEUED);
-        $o2->setStatus($o1::STATUS_PROCESSED);
         \XLite\Core\Database::getEM()->persist($o1);
+        \XLite\Core\Database::getEM()->flush();
+        \XLite\Core\Database::getEM()->detach($o1);
+
+        $o2 = $this->getTestOrder();
+        $o2->setStatus($o1::STATUS_PROCESSED);
         \XLite\Core\Database::getEM()->persist($o2);
         \XLite\Core\Database::getEM()->flush();
+        \XLite\Core\Database::getEM()->detach($o2);
+
+        $o3 = $this->getTestOrder();
+
 
         $repo = \XLite\Core\Database::getRepo('XLite\Model\Order');
 
