@@ -283,7 +283,7 @@ class Order extends \XLite\Model\Repo\ARepo
      */
     public function collectGarbage()
     {
-        $this->defineCollectGarbageQUery()->getQuery()->execute();
+        $this->defineCollectGarbageQuery()->getQuery()->execute();
     }
 
     /**

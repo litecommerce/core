@@ -125,6 +125,20 @@ class Database extends \XLite\Base\Singleton
         $this->config->setAutoGenerateProxyClasses(false);
 
         // Initialize DB connection and entity manager
+        $this->startEntityManager();
+    }
+
+    /**
+     * Start Doctrine entity manager 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function startEntityManager()
+    {
+        // Initialize DB connection and entity manager
         self::$em = \Doctrine\ORM\EntityManager::create($this->getDSN(), $this->config);
 
         if (\XLite\Core\Profiler::getInstance()->enabled) {
