@@ -715,11 +715,11 @@ class Order extends \XLite\Model\Base\ModifierOwner
         $transaction = new \XLite\Model\Payment\Transaction();
 
         $transaction->setPaymentMethod($method);
-        $method->getTransactions()->add($transaction);
+        $method->addTransactions($transaction);
 
         \XLite\Core\Database::getEM()->persist($method);
 
-        $this->getPaymentTransactions()->add($transaction);
+        $this->addPaymentTransactions($transaction);
         $transaction->setOrder($this);
 
         $transaction->setMethodName($method->getServiceName());

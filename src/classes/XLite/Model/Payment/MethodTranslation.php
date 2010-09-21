@@ -61,5 +61,5 @@ class MethodTranslation extends \XLite\Model\Base\Translation
      *
      * @Column (type="text")
      */
-    protected $description;
+    protected $description = '';
 }

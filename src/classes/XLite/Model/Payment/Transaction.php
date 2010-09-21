@@ -192,10 +192,11 @@ class Transaction extends \XLite\Model\AEntity
     {
         $this->setStatus(self::STATUS_INPROGRESS);
 
-        $result = $this->getPaymentMethod()->getProcessor()->pay(
-            $this,
-            \XLite\Core\Request::getInstance()->payment
-        );
+        $data = is_array(\XLite\Core\Request::getInstance()->payment)
+            ? \XLite\Core\Request::getInstance()->payment
+            : array();
+
+        $result = $this->getPaymentMethod()->getProcessor()->pay($this, $data);
 
         $return = self::COMPLETED;
 

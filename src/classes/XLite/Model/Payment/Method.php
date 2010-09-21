@@ -145,7 +145,7 @@ class Method extends \XLite\Model\Base\I18n
      */
     public function setClass($class)
     {
-        $this->class = preg_replace('/^\\?(?:XLite\\)/Sis', '', $class);
+        $this->class = preg_replace('/^\\\?(?:XLite\\\)?\\\?/Sis', '', $class);
     }
 
     /**
@@ -189,7 +189,7 @@ class Method extends \XLite\Model\Base\I18n
 
         foreach ($this->getSettings() as $setting) {
             if ($setting->getName() == $name) {
-                $setting->setValue($value);
+                $setting->setValue(strval($value));
                 $result = true;
                 break;
             }
