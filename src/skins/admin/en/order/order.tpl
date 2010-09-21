@@ -10,7 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<widget template="common/invoice.tpl">
+<widget template="order/invoice/page.tpl" />
 
 <p>
 <b><a href="admin.php?target=order&mode=invoice&order_id={order.order_id}" target="_blank"><input type="image" src="images/go.gif" width="13" height="13" border="0" align="absmiddle"> Print invoice</a></b>
@@ -25,8 +25,7 @@
 <table border=0>
 <tr>
 	<td>Status:</td>
-	<td IF="order.status=config.General.clear_cc_info"><widget class="\XLite\View\StatusSelect" field="status" value="{order.status}"></td>
-	<td IF="!order.status=config.General.clear_cc_info"><widget class="\XLite\View\StatusSelect" field="status" value="{order.status}" pm="{order.paymentMethod.payment_method}"></td>
+	<td><widget class="\XLite\View\StatusSelect" field="status" value="{order.status}" /></td>
 </tr>
 
 <tr FOREACH="order.getMeaningDetails(),d" valign="top">
