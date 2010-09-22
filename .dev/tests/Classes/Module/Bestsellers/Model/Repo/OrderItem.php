@@ -103,7 +103,6 @@ class XLite_Tests_Module_Bestsellers_Model_Repo_OrderItem extends XLite_Tests_Te
         $this->query(file_get_contents(__DIR__ . '/sql/product/setup.sql'));
 
         \XLite\Core\Database::getEM()->flush();
-
     }   
 
     /** 
@@ -115,7 +114,7 @@ class XLite_Tests_Module_Bestsellers_Model_Repo_OrderItem extends XLite_Tests_Te
      * @since  3.0.0
      */
     protected function tearDown()
-    {   
+    {
         parent::tearDown();
 
         \XLite\Core\Database::getEM()->clear();
@@ -123,8 +122,7 @@ class XLite_Tests_Module_Bestsellers_Model_Repo_OrderItem extends XLite_Tests_Te
         $this->query(file_get_contents(__DIR__ . '/sql/product/restore.sql'));
 
         \XLite\Core\Database::getEM()->flush();
-
-    }   
+    }
 
     /**
      *  Test of bestseller for the root category
@@ -134,9 +132,8 @@ class XLite_Tests_Module_Bestsellers_Model_Repo_OrderItem extends XLite_Tests_Te
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function testCollection()
+    public function testFindBestsellersRoot()
     {
-
         /**
          * First order goes with processed status 
          */
@@ -157,8 +154,11 @@ class XLite_Tests_Module_Bestsellers_Model_Repo_OrderItem extends XLite_Tests_Te
          * First sequence 
          */
         foreach ($this->test1 as $index => $id) {
+
             $this->assertTrue(isset($best[$index]), 'Not set #' . $index . ' product in bestsellers (1)');
+
             $this->assertEquals($best[$index]->getObjectId(), $id, 'Wrong #' . $index . ' product in bestsellers (1)');
+
         }
 
         /**
@@ -179,8 +179,11 @@ class XLite_Tests_Module_Bestsellers_Model_Repo_OrderItem extends XLite_Tests_Te
          * Second sequence  
          */
         foreach ($this->test2 as $index => $id) {
+
             $this->assertTrue(isset($best[$index]), 'Not set #' . $index . ' product in bestsellers (2)');
+
             $this->assertEquals($best[$index]->getObjectId(), $id, 'Wrong #' . $index . ' product in bestsellers (2)');
+
         }
 
     }
@@ -193,7 +196,7 @@ class XLite_Tests_Module_Bestsellers_Model_Repo_OrderItem extends XLite_Tests_Te
      * @see    ____func_see____
      * @since  1.0.0
      */
-    public function testGetBestsellersCategory()
+    public function testFindBestsellersCategory()
     {
         $order = $this->getTestOrder(
             \XLite\Model\Order::STATUS_COMPLETED,
@@ -210,11 +213,8 @@ class XLite_Tests_Module_Bestsellers_Model_Repo_OrderItem extends XLite_Tests_Te
 
         $one = $best[0];
 
-        /**
-         *  
-         */
         $this->assertEquals(self::PR1, $one->getObjectId(), 'Wrong root category bestsellers list');
-    }   
+    }
 
 
 /**
@@ -248,6 +248,12 @@ class XLite_Tests_Module_Bestsellers_Model_Repo_OrderItem extends XLite_Tests_Te
         $order->setCurrency(\XLite\Core\Database::getRepo('XLite\Model\Currency')->find(840));
         $order->setProfileId(0);
 
+        if (!is_null($status)) {
+
+            $order->setStatus($status);
+
+        }   
+
         \XLite\Core\Database::getEM()->persist($order);
         \XLite\Core\Database::getEM()->flush();
 
@@ -269,12 +275,6 @@ class XLite_Tests_Module_Bestsellers_Model_Repo_OrderItem extends XLite_Tests_Te
             $order->addItem($item);
         }
 
-        if (!is_null($status)) {
-
-            $order->setStatus($status);
-
-        }
-
         \XLite\Core\Database::getEM()->persist($order);
         \XLite\Core\Database::getEM()->flush();
 
@@ -283,6 +283,8 @@ class XLite_Tests_Module_Bestsellers_Model_Repo_OrderItem extends XLite_Tests_Te
 
         \XLite\Core\Database::getEM()->persist($order);
         \XLite\Core\Database::getEM()->flush();
+
+        \XLite\Core\Database::getEM()->clear();
 
         return $order;
     }
