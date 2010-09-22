@@ -126,7 +126,6 @@ class XLite_Tests_Module_Bestsellers_Model_Repo_OrderItem extends XLite_Tests_Te
 
     }   
 
-
     /**
      *  Test of bestseller for the root category
      * 
@@ -152,13 +151,14 @@ class XLite_Tests_Module_Bestsellers_Model_Repo_OrderItem extends XLite_Tests_Te
 
         $best = $this->findBestsellers(3);
 
+        $this->assertEquals(count($this->test1), count($best), 'Wrong number of bestsellers was returned. (1)');
+
         /**
          * First sequence 
          */
         foreach ($this->test1 as $index => $id) {
-
+            $this->assertTrue(isset($best[$index]), 'Not set #' . $index . ' product in bestsellers (1)');
             $this->assertEquals($best[$index]->getObjectId(), $id, 'Wrong #' . $index . ' product in bestsellers (1)');
-
         }
 
         /**
@@ -173,15 +173,14 @@ class XLite_Tests_Module_Bestsellers_Model_Repo_OrderItem extends XLite_Tests_Te
 
         $best = $this->findBestsellers(3);
 
-        $this->assertNotEquals(count($best), 1, 'Wrong number of bestsellers was returned. (1).0');
+        $this->assertEquals(count($this->test2), count($best), 'Wrong number of bestsellers was returned. (2)');
 
         /**
          * Second sequence  
          */
         foreach ($this->test2 as $index => $id) {
-
+            $this->assertTrue(isset($best[$index]), 'Not set #' . $index . ' product in bestsellers (2)');
             $this->assertEquals($best[$index]->getObjectId(), $id, 'Wrong #' . $index . ' product in bestsellers (2)');
-
         }
 
     }
@@ -287,7 +286,6 @@ class XLite_Tests_Module_Bestsellers_Model_Repo_OrderItem extends XLite_Tests_Te
 
         return $order;
     }
-
 
     /**
      *  Wrapper for the REPO findBestsellers method

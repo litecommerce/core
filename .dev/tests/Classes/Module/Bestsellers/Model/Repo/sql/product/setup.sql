@@ -6,6 +6,9 @@ DELETE FROM xlite_products;
 DELETE FROM xlite_product_translations;
 DELETE FROM xlite_product_images;
 DELETE FROM xlite_product_thumbnails;
+DELETE FROM xlite_option_groups;
+DELETE FROM xlite_options;
+DELETE FROM xlite_option_surcharges;
 
 INSERT INTO xlite_categories VALUES (14015,1,2,1,0,0,0,1,1,'fruit','');
 INSERT INTO xlite_categories VALUES (14009,3,4,1,0,0,0,1,1,'vegetables','');

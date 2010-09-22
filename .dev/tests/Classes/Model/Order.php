@@ -115,6 +115,8 @@ class XLite_Tests_Model_Order extends XLite_Tests_TestCase
         \XLite\Core\Database::getEM()->persist($order);
         \XLite\Core\Database::getEM()->flush();
 
+        \XLite\Core\Database::getEM()->clear();
+
         $order = \XLite\Core\Database::getRepo('XLite\Model\Order')->find($order->getOrderId());
 
         $this->assertEquals($order::STATUS_PROCESSED, $order->getStatus(), 'check new status');
