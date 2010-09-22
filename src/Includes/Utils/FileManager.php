@@ -140,7 +140,7 @@ class FileManager extends AUtils
     public static function mkdirRecursive($dir, $mode = 0755)
     {
         if (!file_exists($dir)) {
-            mkdir($dir, $mode, true);   
+            @mkdir($dir, $mode, true);   
         }
     }
 
