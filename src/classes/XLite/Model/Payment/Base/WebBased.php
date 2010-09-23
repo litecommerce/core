@@ -182,7 +182,7 @@ HTML;
     {
         return \XLite::getInstance()->getShopUrl(
             \XLite\Core\Converter::buildUrl('payment_return', '', array('txn_id_name' => $fieldName)),
-            \XLite\Core\Request::getInstance()->isHTTPS()
+            true
         );
     }
 
