@@ -75,7 +75,7 @@ class XLite_Tests_Module_AustraliaPost_Model_Shipping_Processor_AustraliaPost ex
     {
         $processor = new \XLite\Module\AustraliaPost\Model\Shipping\Processor\AustraliaPost();
 
-        $this->assertFalse($processor->isMethodNamesAdjustable());
+        $this->assertTrue($processor->isMethodNamesAdjustable());
     }
 
     /**
