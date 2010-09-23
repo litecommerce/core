@@ -72,5 +72,17 @@ class Place extends \XLite\View\Form\AForm
     {
         return 'checkout';
     }
+
+    /**
+     * Return value for the <form action="..." ...> attribute
+     * 
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getFormAction()
+    {
+        return \XLite::getInstance()->getShopUrl(parent::getFormAction(), true);
+    }
 }
 

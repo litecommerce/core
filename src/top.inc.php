@@ -56,6 +56,18 @@ define('LC_NAMESPACE',      'XLite');
 define('LC_MODEL_NS',       LC_NAMESPACE . '\\' . 'Model');
 define('LC_MODEL_PROXY_NS', LC_MODEL_NS . '\\' . 'Proxy');
 
+// DEVCODE - disabled xdebug for Selenium-based tests
+if (
+    isset($_COOKIE)
+    && isset($_COOKIE['no_xdebug_coverage'])
+    && $_COOKIE['no_xdebug_coverage']
+    && function_exists('xdebug_stop_code_coverage')
+) {
+    @xdebug_stop_code_coverage();
+}
+
+// /DEVCODE
+
 // Autoloading routines
 require_once (LC_INCLUDES_DIR . 'Autoloader.php');
 \Includes\Autoloader::registerAll();
