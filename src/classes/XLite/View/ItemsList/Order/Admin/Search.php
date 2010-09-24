@@ -95,14 +95,14 @@ class Search extends \XLite\View\ItemsList\Order\Admin\AAdmin
     }
 
     /**
-     * isFooterVisisble
+     * isFooterVisible
      *
      * @return bool
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function isFooterVisisble()
+    protected function isFooterVisible()
     {
         return true;
     }
