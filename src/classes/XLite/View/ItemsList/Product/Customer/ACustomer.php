@@ -294,14 +294,14 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
     }
 
     /**
-     * isHeaderVisisble
+     * isHeaderVisible
      *
      * @return bool
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function isHeaderVisisble()
+    protected function isHeaderVisible()
     {
         return !$this->isSideBarBox()
             && ($this->isDisplayModeSelectorVisible() || $this->isSortBySelectorVisible());

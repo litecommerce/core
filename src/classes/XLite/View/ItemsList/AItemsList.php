@@ -534,27 +534,27 @@ abstract class AItemsList extends \XLite\View\Container
     }
 
     /**
-     * isHeaderVisisble 
+     * isHeaderVisible 
      * 
      * @return bool
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function isHeaderVisisble()
+    protected function isHeaderVisible()
     {
         return false;
     }
 
     /**
-     * isFooterVisisble 
+     * isFooterVisible 
      * 
      * @return bool
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function isFooterVisisble()
+    protected function isFooterVisible()
     {
         return false;
     }
