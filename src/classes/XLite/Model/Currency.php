@@ -47,7 +47,7 @@ class Currency extends \XLite\Model\Base\I18n
      * @see    ____var_see____
      * @since  3.0.0
      * @Id
-     * @GeneratedValue (strategy="NONE")
+     * @GeneratedValue (strategy="AUTO")
      * @Column         (type="integer")
      */
     protected $currency_id;
@@ -112,7 +112,7 @@ class Currency extends \XLite\Model\Base\I18n
      */
     public function roundValueAsInteger($value)
     {
-        return intval(round($value, $this->getE()) * pow(10, $this->getE()));
+        return intval(round($this->roundValue($value) * pow(10, $this->getE())));
     }
 
     /**
