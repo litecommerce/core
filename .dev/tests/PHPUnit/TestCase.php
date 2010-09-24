@@ -231,7 +231,7 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
         // Print new line between classes
         $currentClass = get_called_class();
         if (empty(XLite_Tests_TestSuite::$currentClass) || $currentClass !== XLite_Tests_TestSuite::$currentClass) {
-            echo "\n";
+            echo PHP_EOL;
             XLite_Tests_TestSuite::$currentClass = $currentClass;
         }
 
@@ -263,7 +263,7 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
         // Memory usage
         $this->end['memory'] += memory_get_usage();
 
-        echo "\n" . $this->getExecTime();
+        echo PHP_EOL . $this->getExecTime();
         echo $this->getMemoryUsage();
 
         $this->writeMetricLog();

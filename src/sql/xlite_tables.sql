@@ -92,7 +92,7 @@ CREATE TABLE xlite_config_translations (
 DROP TABLE IF EXISTS xlite_currencies;
 CREATE TABLE xlite_currencies (
   code char(3) NOT NULL,
-  currency_id int(3) NOT NULL PRIMARY KEY,
+  currency_id int(3) NOT NULL auto_increment PRIMARY KEY,
   symbol varchar(16) NOT NULL,
   e tinyint(1) NOT NULL,
   UNIQUE KEY code(code)
