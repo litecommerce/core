@@ -200,16 +200,15 @@ HTML;
     {
         $result = true;
 
-        if ($total && round($this->transaction->getValue(), 2) != $total) {
+        if ($total && $this->transaction->getValue() != $total) {
             $msg = 'Total amount doesn\'t match. Transaction total: ' . $this->transaction->getValue()
                 . '; payment gateway amount: ' . $total;
-            $this->transaction->getOrder()->setDetail('error', 'Hacking attempt!', 'Error');
-            $this->transaction->getOrder()->setDetail(
-                'errorDescription',
+            $this->setDetail(
+                'total_checking_error',
                 $msg,
-                'Hacking attempt details'
+                'Hacking attempt'
             );
-            $this->transaction->setNote($msg);
+
             $result = false;
         }
 
@@ -234,13 +233,11 @@ HTML;
             $msg = 'Currency code doesn\'t match. Order currency: '
                 . $this->transaction->getOrder()->getCurrency()->getCode()
                 . '; payment gateway currency: ' . $currency;
-            $this->transaction->getOrder()->setDetail('error', 'Hacking attempt!', 'Error');
-            $this->transaction->getOrder()->setDetail(
-                'errorDescription',
+            $this->setDetail(
+                'currency_checking_error',
                 $msg,
                 'Hacking attempt details'
             );
-            $this->transaction->setNote($msg);
 
             $result = false;
         }
