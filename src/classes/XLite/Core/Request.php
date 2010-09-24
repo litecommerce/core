@@ -194,6 +194,20 @@ class Request extends \XLite\Base\Singleton
     }
 
     /**
+     * Set request method
+     *
+      * @param string $method New request method
+     *
+     * @return void
+     * @access public
+     * @since  3.0.0
+     */
+    public function setRequestMethod($method)
+    {
+        $this->requestMethod = $method;
+    }
+
+    /**
      * Check if current request method is "GET" 
      * 
      * @return bool

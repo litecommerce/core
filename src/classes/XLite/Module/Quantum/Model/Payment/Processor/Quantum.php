@@ -170,7 +170,7 @@ class Quantum extends \XLite\Model\Payment\Base\WebBased
      */
     public function isConfigured(\XLite\Model\Payment\Method $method)
     {
-        return parent::isConfigured()
+        return parent::isConfigured($method)
             && $method->getSetting('login');
     }
 

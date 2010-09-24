@@ -76,7 +76,7 @@ class MethodSetting extends \XLite\Model\AEntity
      *
      * @Column (type="text")
      */
-    protected $value;
+    protected $value = '';
 
     /**
      * Payment method 
