@@ -288,51 +288,28 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
     /**
      * Check exception code 
      * 
-     * @param function $func      Function
-     * @param string   $errorCode Error code
+     * @param function $func    Function
+     * @param string   $class   Exception class name
+     * @param string   $message Exception message
      *  
      * @return void
      * @access protected
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function checkException($func, $errorCode)
+    protected function checkException($func, $message, $class = '\Exception')
     {
-        if ($this->isFunction($func)) {
-            $func = array($func);
+        try {
 
-        } elseif (is_array($func)) {
-            foreach ($func as $k => $v) {
-                if (!$this->isFunction($v)) {
-                    unset($func[$k]);
-                }
-            }
-        }
+            $func();
+            $this->fail('Exception "' . $message . '" was not thrown');
 
-        if (!is_array($func) || count($func) == 0) {
-            $this->fail($this->getMessage('Argument $func is not valid'));
-        }
+        } catch (\Exception $exception) {
 
-        foreach ($func as $i => $f) {
+            $this->assertEquals($message, $exception->getMessage(), 'Check exception : "' . $message . '" message not found');
+            $this->assertTrue($exception instanceof $class, 'Check exception : "' . $class . '" exception class not equal');
 
-            try {
-
-                $f();
-
-            } catch (\XLite\Core\Exception $exception) {
-
-                $message = $this->getMessage('Check for the ' . $errorCode . ' exception:');
-                $this->assertEquals($errorCode, $exception->getName(), $message);
-                continue;
-            } 
-
-            $this->fail(
-                $this->getMessage(
-                    'The ' . $errorCode . ' exception was not thrown'
-                    . (count($func) > 1 ? (' (function #' . ($i + 1) .')') : '')
-                )
-            );
-        }
+        } 
     }
 
     protected function checkWarning($func, $errorCode)
