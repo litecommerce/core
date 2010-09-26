@@ -13,4 +13,4 @@
  * @ListChild (list="itemsList.product.list.customer.quick_look.thumbnail", weight="20")
  *}
 
-<div class="button"><widget class="\XLite\View\Button\Regular" label="Quick look" /></div>
+<div class="button"><widget class="\XLite\View\Button\Regular" label="Quick look" style="action" /></div>

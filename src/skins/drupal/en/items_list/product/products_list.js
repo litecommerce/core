@@ -67,19 +67,43 @@ ItemsList.prototype.listeners.sortOrderModes = function(handler)
   );
 }
 
-ItemsList.prototype.listeners.dragCells = function(handler)
+ItemsList.prototype.listeners.dragNDrop = function(handler)
 {
-  $('table.list-body td.hproduct, table.list-body-list td.body', handler.container).mousedown(
-    function() {
-      return $('div.cart-tray-box').show();
-    }
-  );
+  $('table.list-body-grid td.hproduct, table.list-body-list tr.info', handler.container).draggable({
+    helper: function() {
+      clone = $(this).clone();
 
-  $('*').mouseup(
-    function() {
-      return $('div.cart-tray-box').hide();
-    } 
-  );
+      // TODO - check if there is more convinient way
+      clone.css('width', $(this).css('width'));
+      clone.css('height', $(this).css('height'));
+
+      clone.css('opacity', 0.5);
+      clone.css('z-index', 500);
+
+      return clone;
+    },
+    start: function(event, ui) {
+      $('div.cart-tray-box').show();
+    },
+    stop: function(event, ui) {
+      $('div.cart-tray-box').hide();
+    },
+  });
+
+  $('div.cart-tray-box').droppable({
+    hoverClass: 'droppable',
+    tolerance: 'pointer',
+    // FIXME
+    drop: function(event, ui) {
+      handler.URLAJAXParams = [];
+
+      handler.URLAJAXParams['target'] = 'cart';
+      handler.URLAJAXParams['action'] = 'add';
+      handler.URLAJAXParams['product_id'] = $(ui.draggable).attr('id');
+
+      $.ajax({type: 'get', url: handler.buildURL(true), timeout: 15000});
+    },
+  });
 }
 
 
