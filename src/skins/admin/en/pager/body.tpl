@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * FIXME - simplify
+ * Pager
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -13,22 +13,32 @@
 
 <ul class="pager" IF="isPagesListVisible()">
 
-  <li class="{getBorderLinkClassName(#first#)}">
-    <a href="{buildUrlByPageId(getPageIdByNotation(#first#))}" class="{getLinkClassName(#first#)}"><img src="images/spacer.gif" alt="First" /></a>
-  </li>
-  <li class="{getBorderLinkClassName(#previous#)}">
-    <a href="{buildUrlByPageId(getPageIdByNotation(#previous#))}" class="{getLinkClassName(#previous#)}"><img src="images/spacer.gif" alt="Previous" /></a>
+  <li class="previous {if:isCurrentPage(getPageIdByNotation(#first#))}disabled{else:}active{end:}">
+    <a href="{buildUrlByPageId(getPageIdByNotation(#previous#))}" class="{getPageIdByNotation(#previous#)}" title="Previous page">&nbsp;</a>
   </li>
 
-  <li FOREACH="getPageUrls(),num,pageUrl" class="{getPageClassName(num)}">
-    <a href="{pageUrl}" class="{getLinkClassName(num)}">{inc(num)}</a>
+  <li class="spacer">&nbsp;</li>
+
+  <li class="first" IF="isFurthermostPage(#first#)">
+    <a href="{buildUrlByPageId(getPageIdByNotation(#first#))}" class="{getPageIdByNotation(#first#)}">{inc(getPageIdByNotation(#first#))}</a>
   </li>
 
-  <li class="{getBorderLinkClassName(#next#)}">
-    <a href="{buildUrlByPageId(getPageIdByNotation(#next#))}" class="{getLinkClassName(#next#)}"><img src="images/spacer.gif" alt="Next" /></a>
+  <li class="furthermost" IF="isFurthermostPage(#first#)"><a>...</a></li>
+
+  <li FOREACH="getPageUrls(),num,pageUrl" class="item {num} {if:isCurrentPage(num)}selected{else:}active{end:}">
+    <a href="{pageUrl}" class="{num}">{inc(num)}</a>
   </li>
-  <li class="{getBorderLinkClassName(#last#)}">
-    <a href="{buildUrlByPageId(getPageIdByNotation(#last#))}" class="{getLinkClassName(#last#)}"><img src="images/spacer.gif" alt="Last" /></a>
+
+  <li class="furthermost" IF="isFurthermostPage(#last#)"><a>...</a></li>
+
+  <li class="last" IF="isFurthermostPage(#last#)">
+    <a href="{buildUrlByPageId(getPageIdByNotation(#last#))}" class="{getPageIdByNotation(#last#)}">{inc(getPageIdByNotation(#last#))}</a>
+  </li>
+
+  <li class="spacer">&nbsp;</li>
+
+  <li class="next {if:isCurrentPage(getPageIdByNotation(#last#))}disabled{else:}active{end:}">
+    <a href="{buildUrlByPageId(getPageIdByNotation(#next#))}" class="{getPageIdByNotation(#next#)}" title="Next page">&nbsp;</a>
   </li>
 
 </ul>

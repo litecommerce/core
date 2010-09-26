@@ -11,121 +11,85 @@
  * @since     3.0.0
  */
 
+.list-pager,
+.list-pager-low
+{
+  height: 1.8em;
+  padding-bottom: 1em;
+}
+
 ul.pager {
   padding: 0;
   margin: 0;
-  display: inline;
   list-style: none;
+  display: inline;
 }
 
 ul.pager li {
-  margin: 0;
   padding: 0;
   border: none;
-  display: inline;
+  display: inline-table;
   list-style: none;
+  background: none;
+  height: 2.1em;
+  width: 2.1em;
+  text-align: center;
+  vertical-align: middle;
+  border: 1px solid #fff;
 }
 
 ul.pager li a {
   border: 0;
+  display: table-cell;
   text-decoration: none;
-  margin: 0;  
-  padding: 2px 7px;
   font-weight: normal;
-  display: inline-block;
-  border: 1px solid #fff;
+  text-align: center;
+  vertical-align: middle;
+  width: 100%;
+  height: 100%;
+  font-size: 1.1em;
 }
 
-ul.pager li a:hover,
-ul.pager li a:visited:hover {
+ul.pager li:hover {
   border-width: 1px;
-  border-color: black;
-  background: #f3f3f3 none;
+  border-color: #b1c9e0;
 }
 
-ul.pager li.pager-current,
-ul.pager li.selected
-{
-  font-weight: bold;
-}
-
-ul.pager li.pager-current a,
-ul.pager li.pager-current a:hover,
-ul.pager li.selected a,
-ul.pager li.selected a:hover
-{
+ul.pager li.selected a {
   background: #869cb1 none;
   color: #fff;
   cursor: text;
-  border-color: #fff;
+  border-color: #869cb1;
 }
 
-ul.pager .first img,
-ul.pager .previous img,
-ul.pager .next img, 
-ul.pager .last img
-{
-  height: 7px;
-  width: 9px;
-  background: transparent url(../images/pager_arrows.gif) no-repeat left top;
+ul.pager li.spacer,
+ul.pager li.furthermost {
+  border: none;
+  width: 0.3em;
 }
 
-ul.pager .previous img,
-ul.pager .next img {
-  width: 5px;
+ul.pager li.furthermost {
+  vertical-align: bottom;
 }
 
-ul.pager .previous img { 
-  background-position: -9px top;
-} 
+ul.pager li.previous {
+  background: transparent url(images/arrow_pager_left.png) no-repeat center center;
+}
 
-ul.pager .next img { 
-  background-position: -14px top;
-} 
-
-ul.pager .last img { 
-  background-position: -19px top;
+ul.pager li.next {
+  background: transparent url(images/arrow_pager_right.png) no-repeat center center;
 }
 
 ul.pager li.disabled a {
   cursor: text;
 }
 
-ul.pager li.disabled a:hover,
-ul.pager li.disabled a:visited:hover
-{
-  background: transparent none;
-  border-color: #fff;
-}
-
-ul.pager .first-disabled img {
-  background-position: left -7px;
-}
-
-ul.pager .previous-disabled img {
-  background-position: -9px -7px;
-}
-
-ul.pager .next-disabled img {
-  background-position: -14px -7px;
-}
-
-ul.pager .last-disabled img { 
-  background-position: -19px -7px;
-}
-
-div.pager-items-total
-{
+div.pager-items-total {
   float: right;
+  padding-top: 0.6em;
 }
 
-div.pager-items-total input.page-length
-{
+div.pager-items-total input.page-length {
   width: 2em;
   text-align: right;
-}
-
-div.pager-items-total span.records-count
-{
-  font-weight: bold;
 }
