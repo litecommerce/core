@@ -15,7 +15,7 @@
 
 <table class="list-body list-body-list">
 
-  <tr FOREACH="getPageData(),product" class="info">
+  <tr FOREACH="getPageData(),product" class="info" id="{product.getProductId()}">
     {displayListPart(#body#,_ARRAY_(#product#^product))}
   </tr>
 

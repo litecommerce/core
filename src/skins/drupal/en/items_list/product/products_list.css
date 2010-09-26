@@ -34,7 +34,7 @@
 .list-header ul li {
   display: inline;
   margin: 0;
-  padding: 0 0 0 6px;
+  padding: 0;
   background: none;
 }
 
@@ -44,10 +44,8 @@
 }
 
 .sort-box a {
-  font-size: 1.4em;
   text-decoration: none;
   padding-bottom: 4px;
-  line-height: normal;
 }
 
 /* List body and common styles */
@@ -67,47 +65,29 @@
 }
 
 /*
- * GRID layout based on tables
+ * Layouts based on tables
  */
 
 table.list-body {
-  height: 100%;
   border-style: none;
 }
 
 table.list-body td {
-  padding: 0.5em;
+  padding: 1em;
   border-style: none;
-  height: 100%;
-}
-
-table.list-body-grid-1-columns td {
-  width: 100%;
-}
-
-table.list-body-grid-2-columns td {
-  width: 50%;
-}
-
-table.list-body-grid-3-columns td {
-  width: 32%;
-}
-
-table.list-body-grid-5-columns td {
-  width: 25%;
-}
-
-table.list-body-grid-6-columns td {
-  width: 16.75%;
 }
 
 table.list-body td.hproduct a.product-thumbnail {
-  display: block;
+  display: table-cell;
   text-align: center;
+  vertical-align: middle;
+  height: 200px;
+  min-height: 200px;
+  min-width: 185px;
 }
 
-table.list-body-list td.hproduct {
-  min-width: 8em;
+table.list-body-grid td {
+  padding-top: 0;
 }
 
 table.list-body-grid td.separator {
@@ -117,15 +97,24 @@ table.list-body-grid td.separator {
 
 table.list-body div.quick-look-cell {
   position: relative;
-  width: 100%;
 }
 
 table.list-body div.quick-look-cell div.drag-n-drop {
-  font-size: 1.0em;
+  font-size: 0.9em;
   color: #8fa8c0;
   background: transparent url(images/icon_drag.png) no-repeat left center;
   padding-left: 2em;
   visibility: hidden;
+  cursor: move;
+}
+
+table.list-body-grid div.quick-look-cell div.drag-n-drop {
+  margin-left: -0.5em;
+}
+
+table.list-body-list div.quick-look-cell div.drag-n-drop {
+  margin-right: -0.5em;
+  margin-top: -0.5em;
 }
 
 table.list-body div.quick-look-cell div.button {
@@ -138,12 +127,12 @@ table.list-body div.quick-look-cell div.button {
   width: 100%;
 }
 
-table.list-body div.quick-look-cell.thumbnail div.button {
-  height: 100%;
+table.list-body-grid div.quick-look-cell-thumbnail div.button {
+  margin-top: 40%;
 }
 
-table.list-body div.quick-look-cell.thumbnail div.button button {
-  margin-top: 20%;
+table.list-body-list div.quick-look-cell-thumbnail div.button {
+  margin-top: 50%;
 }
 
 table.list-body input.product-add2cart {
@@ -202,11 +191,6 @@ table.list-body-table td.qty input.product-qty {
   text-align: right;
 }
 
-table.list-body td.hproduct,
-table.list-body td.body {
-  cursor: move;
-}
-
 table.list-body-grid td.hproduct:hover div.quick-look-cell div.drag-n-drop,
 table.list-body-grid td.hproduct:hover div.quick-look-cell div.button,
 table.list-body-list tr:hover div.quick-look-cell div.drag-n-drop,
@@ -218,12 +202,12 @@ div.cart-tray-box {
   position: fixed;
   top: 5em;
   right: 5em;
-  z-index: 1000;
+  z-index: 200;
   border: 1px #bbc7d2 solid;
   width: 158px;
   height: 221px;
   display: none;
-  background: #fff url(images/bag/tray.png) no-repeat center center;
+  background: #fff url(images/bag/tray/regular.png) no-repeat center center;
   -moz-border-radius: 0.25em;
   -webkit-border-radius: 0.25em;
   border-radius: 0.25em;
@@ -232,8 +216,12 @@ div.cart-tray-box {
   -webkit-box-shadow: 0.25em 0.25em 0.25em #bbc7d2;
 }
 
+div.cart-tray-box.droppable {
+  background: #fff url(images/bag/tray/droppable.png) no-repeat center center;
+}
+
 div.cart-tray-box div.text {
-  width: 8em;
+  width: 110px;
   font-weight: bold;
   text-align: center;
   color: #7594b0;

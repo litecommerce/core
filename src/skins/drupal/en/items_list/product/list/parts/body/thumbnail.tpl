@@ -14,8 +14,10 @@
  *}
 
 <td class="hproduct">
-  <div class="quick-look-cell thumbnail">
+  <div class="quick-look-cell">
+  <div class="quick-look-cell-thumbnail">
     {displayListPart(#quick_look.thumbnail#)}
-    <a IF="isShowThumbnails()" class="product-thumbnail" href="{buildURL(#product#,##,_ARRAY_(#product_id#^product.product_id,#category_id#^category_id))}"><widget class="\XLite\View\Image" image="{product.getThumbnail()}" centerImage=0 maxWidth="{getIconWidth()}" maxHeight="{getIconHeight()}" alt="{product.name}" className="photo" /></a>
+    <a IF="isShowThumbnails()" class="product-thumbnail" href="{buildURL(#product#,##,_ARRAY_(#product_id#^product.product_id,#category_id#^category_id))}"><widget class="\XLite\View\Image" image="{product.getThumbnail()}" maxWidth="{getIconWidth()}" maxHeight="{getIconHeight()}" alt="{product.name}" className="photo" /></a>
+  </div>
   </div>
 </td>

@@ -114,7 +114,7 @@ class Cart extends \XLite\Controller\Customer\ACustomer
             if ($this->getCart()->addItem($this->getCurrentItem($product))) {
                 $this->updateCart();
 
-                \XLite\Core\TopMessage::getInstance()->add('Product has been added to cart');
+                \XLite\Core\TopMessage::getInstance()->add('Product has been added to the cart');
 
             } else {
 

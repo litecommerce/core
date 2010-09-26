@@ -22,11 +22,11 @@
   <tr class="info">
     {foreach:row,idx,product}
     <td IF="!idx=#0#" class="separator"></td>
-    <td IF="product" class="hproduct">
+    <td IF="product" class="hproduct" id="{product.getProductId()}">
       <div class="quick-look-cell">
         {displayListPart(#quick_look.info#)}
+        {displayListPart(#info#,_ARRAY_(#product#^product))}
       </div>
-      {displayListPart(#info#,_ARRAY_(#product#^product))}
     </td>
     <td IF="!product">&nbsp;</td>
     {end:}
@@ -39,21 +39,6 @@
   {displayListPart(#items#)}
 
 </table>
-
-{* Use a CSS layout *}
-{* FIXME - must be revised *}
-<ul IF="isCSSLayout()" class="list-body list-body-grid">
-  <li FOREACH="getPageData(),product" class="item">
-    {* FF2 requires an extra div in order to display "inner-blocks" properly *}
-    <div>
-      {displayViewListContent(#productsList.gridItem.title#,_ARRAY_(#product#^product))}
-      {displayViewListContent(#productsList.gridItem.info#,_ARRAY_(#product#^product))}
-    </div>
-  </li>
-  <li FOREACH="getViewList(#productsList.gridItems#),w">
-    {w.display()}
-  </li>
-</ul>
 
 <div IF="isShowMoreLink()">
   <a class="link" href="{getMoreLinkURL()}">{getMoreLinkText()}</a>

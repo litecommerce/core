@@ -13,4 +13,4 @@
  * @ListChild (list="itemsList.product.list.customer.quick_look.info", weight="20")
  *}
 
-<div class="drag-n-drop">Drag me to the cart</div>
+<div class="drag-n-drop">Drag and drop me to the bag</div>
