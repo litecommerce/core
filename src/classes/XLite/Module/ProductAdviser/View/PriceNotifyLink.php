@@ -34,7 +34,9 @@ namespace XLite\Module\ProductAdviser\View;
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
+ *
  * @ListChild (list="productDetails.main", weight="60")
+ * @ListChild (list="quickLook.main", weight="60")
  */
 class PriceNotifyLink extends \XLite\View\AView
 {

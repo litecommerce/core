@@ -40,22 +40,16 @@ namespace XLite\View\Product\Details\Customer\Page;
 class QuickLook extends \XLite\View\Product\Details\Customer\Page\APage
 {
     /**
-     * List of sections to hide
+     * getDir 
      * 
-     * @return array
+     * @return string
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getInvisibleSections()
+    protected function getDir()
     {
-        $list = parent::getInvisibleSections();
-
-        $list[] = 'tabs';
-        $list[] = 'attrs';
-        $list[] = 'sku';
-
-        return $list;
+        return parent::getDir() . '/quick_look';
     }
 
 
