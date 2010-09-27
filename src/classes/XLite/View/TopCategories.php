@@ -148,6 +148,19 @@ class TopCategories extends \XLite\View\SideBarBox
     }
 
     /**
+     * Checks whether it is a subtree
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isSubtree()
+    {
+        return ($this->getParam(self::PARAM_IS_SUBTREE) !== false);
+    }
+
+    /**
      * Check - category included into active trail or not
      * 
      * @param \XLite\Model\Category $category Category
