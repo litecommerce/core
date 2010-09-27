@@ -38,35 +38,6 @@ namespace XLite\View\Product\Details\Customer\Page;
 abstract class APage extends \XLite\View\Product\Details\Customer\ACustomer
 {
     /**
-     * List of sections to hide
-     * 
-     * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getInvisibleSections()
-    {
-        return array();
-    }
-
-    /**
-     * Check if section is visible
-     * 
-     * @param string $name section name
-     *  
-     * @return bool
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function isSectionVisible($name)
-    {
-        return !in_array($name, $this->getInvisibleSections());
-    }
-
-
-    /**
      * Get a list of JavaScript files required to display the widget properly
      *
      * @return array
@@ -81,7 +52,7 @@ abstract class APage extends \XLite\View\Product\Details\Customer\ACustomer
         $list[] = 'js/core.controller.js';
         $list[] = 'js/core.loadable.js';
         $list[] = 'js/jquery.blockUI.js';
-        $list[] = $this->getDir() . '/controller.js';
+        $list[] = self::getDir() . '/controller.js';
 
         return $list;
     }

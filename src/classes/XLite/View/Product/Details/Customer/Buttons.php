@@ -36,6 +36,7 @@ namespace XLite\View\Product\Details\Customer;
  * @since   3.0.0
  *
  * @ListChild (list="productDetails.main", weight="100")
+ * @ListChild (list="quickLook.main", weight="100")
  */
 class Buttons extends \XLite\View\Product\Details\Customer\ACustomer
 {

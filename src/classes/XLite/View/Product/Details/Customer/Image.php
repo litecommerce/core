@@ -36,6 +36,7 @@ namespace XLite\View\Product\Details\Customer;
  * @since   3.0.0
  *
  * @ListChild (list="productDetails.image", weight="10")
+ * @ListChild (list="quickLook.image", weight="10")
  */
 class Image extends \XLite\View\Product\Details\Customer\ACustomer
 {

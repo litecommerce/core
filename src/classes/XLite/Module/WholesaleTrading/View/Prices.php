@@ -34,7 +34,9 @@ namespace XLite\Module\WholesaleTrading\View;
  * @package XLite
  * @see     ____class_see____
  * @since   3.0
+ *
  * @ListChild (list="productDetails.main", weight="50")
+ * @ListChild (list="quickLook.main", weight="50")
  */
 class Prices extends \XLite\View\AView
 {

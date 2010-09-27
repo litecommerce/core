@@ -13,12 +13,11 @@
 
 div.blockMsg.blockPage {
   top: 5%;
-  position: absolute !important;
   padding: 0;
 }
 
 body.store-category div.blockMsg.blockPage h1#page-title {
-  padding-left: 50%;
+  padding-left: 58%;
 }
 
 body.store-category div.blockMsg.blockPage h2 {
@@ -28,4 +27,17 @@ body.store-category div.blockMsg.blockPage h2 {
 div.blockMsg div.block-subcontainer {
   overflow: hidden;
   padding: 2em;
+}
+
+body.store-category .product-details div.image {
+  width: 1%;
+}
+
+body.store-category .product-details .image-box {
+  margin: 0;
+  width: 50%;
+}
+
+body.store-category .product-details .body {
+  width: auto;
 }

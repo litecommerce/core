@@ -93,15 +93,15 @@ ItemsList.prototype.listeners.dragNDrop = function(handler)
   $('div.cart-tray-box').droppable({
     hoverClass: 'droppable',
     tolerance: 'pointer',
-    // FIXME
     drop: function(event, ui) {
-      handler.URLAJAXParams = [];
-
-      handler.URLAJAXParams['target'] = 'cart';
-      handler.URLAJAXParams['action'] = 'add';
-      handler.URLAJAXParams['product_id'] = $(ui.draggable).attr('id');
-
-      $.ajax({type: 'get', url: handler.buildURL(true), timeout: 15000});
+      /*this.shade();*/
+      core.post(
+        URLHandler.buildURL({}),
+        {target: 'cart', action: 'add', product_id: $(ui.draggable).attr('id')},
+        function(XMLHttpRequest, textStatus, data, isValid) {
+          /*isValid ? this.load() : this.unshade();*/
+        }
+      );
     },
   });
 }

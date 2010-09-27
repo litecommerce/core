@@ -11,7 +11,7 @@
  * @since     3.0.0
  * @ListChild (list="productDetails.info", weight="10")
  *}
-<tbody IF="isSectionVisible(#attrs#)">
+<tbody>
 
   <ul IF="product.getExtraFields(true)|product.weight|isViewListVisible(#productDetails.attributes#)" class="extra-fields">
 

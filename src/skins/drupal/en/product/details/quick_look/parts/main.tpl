@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Product price
+ * Product details main block
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -9,6 +9,12 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- * @ListChild (list="productDetails.main", weight="40")
+ *
+ * @ListChild (list="quickLook.base", weight="30")
  *}
-<widget class="\XLite\View\Price" product="{product}" />
+<div class="body">
+
+  {displayViewListContent(#quickLook.main#)}
+
+</div>
+
