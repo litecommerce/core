@@ -177,25 +177,31 @@ abstract class AView extends \XLite\Core\Handler
     /**
      * Return full template file name
      *
+     * @param string $template template file name (optional)
+     *  
      * @return string
      * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getTemplateFile()
+    protected function getTemplateFile($template = null)
     {
-        return \XLite\Model\Layout::getInstance()->getLayout($this->getTemplate());
+        return \XLite\Model\Layout::getInstance()->getLayout($template ?: $this->getTemplate());
     }
 
     /**
      * Return compiled template file name
      *
+     * @param string $template template file name (optional)
+     *  
      * @return string
      * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getDisplayFile()
+    protected function getDisplayFile($template = null)
     {
-        return LC_COMPILE_DIR . $this->getTemplateFile() . '.php';
+        return LC_COMPILE_DIR . $this->getTemplateFile($template) . '.php';
     }
 
     /**
@@ -374,11 +380,11 @@ abstract class AView extends \XLite\Core\Handler
      * @access protected
      * @since  3.0.0
      */
-    protected function includeCompiledFile()
+    protected function includeCompiledFile($original = null)
     {
         // Template files: source and compiled
-        $original = LC_ROOT_DIR . $this->getTemplateFile();
-        $compiled = $this->getDisplayFile();
+        $original = LC_ROOT_DIR . $this->getTemplateFile($original);
+        $compiled = $this->getDisplayFile($original);
 
         // Only compile if some criteria is match
         if (!$this->checkTemplateStatus($original, $compiled)) {
