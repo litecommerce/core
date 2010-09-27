@@ -383,8 +383,9 @@ abstract class AView extends \XLite\Core\Handler
     protected function includeCompiledFile($original = null)
     {
         // Template files: source and compiled
-        $original = LC_ROOT_DIR . $this->getTemplateFile($original);
+        // NOTE: do not change call order
         $compiled = $this->getDisplayFile($original);
+        $original = LC_ROOT_DIR . $this->getTemplateFile($original);
 
         // Only compile if some criteria is match
         if (!$this->checkTemplateStatus($original, $compiled)) {
