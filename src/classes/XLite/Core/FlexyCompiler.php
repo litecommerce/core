@@ -763,8 +763,6 @@ class FlexyCompiler extends \XLite\Base\Singleton
             if (!empty($attrs['mode'])) {
                 $modes = str_replace(',', '\',\'', preg_replace('/[^\w,]+/', '', $attrs['mode']));
                 $conditions[] = '$this->isDisplayRequiredForMode(array(\'' . $modes . '\'))';
-                // TODO - uncomment
-                // unset($attrs['mode']);
             }
 
             if (isset($attrs['IF'])) {
@@ -775,11 +773,15 @@ class FlexyCompiler extends \XLite\Base\Singleton
             	$conditions[] = $attrs['IF'];
             }
 
-            $this->unsetAttributes($attrs, array('IF', 'FOREACH', 'class'));
+            $this->unsetAttributes($attrs, array('IF', 'FOREACH', 'class', 'mode'));
 
-            $result .= '$this->getWidget(' 
-                       . (empty($attrs) ? (empty($arguments) ? '' : 'array()') : $this->getAttributesList($attrs)) 
-                       . (empty($arguments) ? '' : ', ' . $arguments) . ')->display();';
+            if (empty($arguments) && (1 == count($attrs)) && isset($attrs['template'])) {
+                $result .= '$this->includeCompiledFile(' . $this->flexyAttribute($attrs['template'])  . ');';
+            } else {
+                $result .= '$this->getWidget(' 
+                    . (empty($attrs) ? (empty($arguments) ? '' : 'array()') : $this->getAttributesList($attrs)) 
+                    . (empty($arguments) ? '' : ', ' . $arguments) . ')->display();';
+            }
 
             
             if (!empty($conditions)) {
