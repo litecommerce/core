@@ -9,7 +9,6 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- * @ListChild (list="cart.bottom.left", weight="20")
  *}
 <div class="shipping-estimator">
   <widget class="\XLite\View\Form\Cart\Main" name="shopping_form" />

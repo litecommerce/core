@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Shopping cart item options block
+ * Shopping cart Go to checkout button
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -9,8 +9,6 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- * @ListChild (list="cart.item.info", weight="25")
+ * @ListChild (list="cart.panel.totals", weight="40")
  *}
-<div class="item-options">
-  <widget class="\XLite\Module\ProductOptions\View\SelectedOptions" item="{item}" source="cart" />
-</div>
+<li class="button"><widget class="\XLite\View\Button\Link" label="Go to checkout" location="{buildURL(#checkout#)}" style="bright" /></li>

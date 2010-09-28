@@ -10,8 +10,11 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<div id="shopping-cart">
-
-  {displayViewListContent(#cart.childs#)}
-
+<div id="cart">
+  <div id="cart-right">
+    {displayViewListContent(#cart.panel#)}
+  </div>
+  <div id="shopping-cart">
+    {displayViewListContent(#cart.childs#)}
+  </div>
 </div>

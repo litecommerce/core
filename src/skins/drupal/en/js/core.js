@@ -146,18 +146,20 @@ window.core = {
   // Process response from server
   processResponse: function(xhr)
   {
-    var list = xhr.getAllResponseHeaders().split(/\n/);
+    if (4 == xhr.readyState && 200 == xhr.status) {
+      var list = xhr.getAllResponseHeaders().split(/\n/);
 
-    for (var i = 0; i < list.length; i++) {
-      if (-1 !== list[i].search(/^event-([^:]+):(.+)$/i)) {
-
-        // Server-side event
-        var m = list[i].match(/event-([^:]+):(.+)$/i);
-        core.trigger(m[1].toLowerCase(), eval('(' + m[2] + ')'));
+      for (var i = 0; i < list.length; i++) {
+        if (-1 !== list[i].search(/^event-([^:]+):(.+)/i)) {
+  
+          // Server-side event
+          var m = list[i].match(/event-([^:]+):(.+)/i);
+          core.trigger(m[1].toLowerCase(), eval('(' + m[2] + ')'));
+        }
       }
     }
 
-    return 4 == xhr.readyState && 200 == xhr.status ? xhr.responseText : false;
+    return (4 == xhr.readyState && 200 == xhr.status) ? xhr.responseText : false;
   },
 
   autoload: function(className)

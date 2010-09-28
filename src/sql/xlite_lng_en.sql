@@ -104,6 +104,7 @@ INSERT INTO xlite_language_label_translations (id, code, label) VALUES (102, 'en
 INSERT INTO xlite_language_label_translations (id, code, label) VALUES (103, 'en', 'Zone details have been updated successfully');
 INSERT INTO xlite_language_label_translations (id, code, label) VALUES (104, 'en', 'New zone has been created successfully');
 INSERT INTO xlite_language_label_translations (id, code, label) VALUES (105, 'en', 'This product has been added to <a href="{{href}}">your bag</a>');
+INSERT INTO xlite_language_label_translations (id, code, label) VALUES (106, 'en', 'Your shopping bag &mdash; {{count}} items');
 
 -- Language names
 INSERT INTO xlite_language_translations (code, id, name) VALUES ('en',1,'Afar');

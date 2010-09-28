@@ -26,41 +26,51 @@
  * @since      3.0.0
  */
 
-namespace XLite\View\Button;
-
+namespace XLite\View\Form\Cart;
 
 /**
- * Image-based button
+ * Shipping estimator form
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Image extends \XLite\View\Button\Regular
+class ShippingEstimator extends \XLite\View\Form\AForm
 {
     /**
-     * Return widget default template
-     *
+     * Current form name 
+     * 
      * @return string
      * @access protected
      * @since  3.0.0
      */
-    protected function getDefaultTemplate()
+    protected function getFormName()
     {
-        return 'button/image.tpl';
+        return 'shipping_estimator_form';
     }
 
     /**
-     * JavaScript: default JS code to execute
-     *
+     * Get default form target 
+     * 
      * @return string
      * @access protected
-     * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getDefaultJSCode()
+    protected function getDefaultTarget()
     {
-        return parent::getDefaultJSCode() . ' return false;';
+        return 'cart';
+    }
+
+    /**
+     * Get default form action 
+     * 
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultAction()
+    {
+        return 'shipping_estimate';
     }
 }
 

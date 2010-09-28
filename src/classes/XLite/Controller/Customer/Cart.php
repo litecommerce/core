@@ -72,7 +72,9 @@ class Cart extends \XLite\Controller\Customer\ACustomer
      */
     protected function getLocation()
     {
-        return 'Shopping cart';
+        return $this->getCart()->isEmpty()
+            ? $this->t('Your shopping bag is empty')
+            : $this->t('Your shopping bag - X items', array('count' => $this->getCart()->countItems()));
     }
 
     /**
@@ -187,6 +189,7 @@ class Cart extends \XLite\Controller\Customer\ACustomer
             \XLite\Core\TopMessage::getInstance()->add('Item has been deleted from cart');
 
         } else {
+            $this->valid = false;
             \XLite\Core\TopMessage::getInstance()->add(
                 'Item has not been deleted from cart',
                 \XLite\Core\TopMessage::ERROR
@@ -292,7 +295,9 @@ class Cart extends \XLite\Controller\Customer\ACustomer
      */
     public function getTitle()
     {
-        return 'Your shopping cart';
+        return $this->getCart()->isEmpty()
+            ? $this->t('Your shopping bag is empty')
+            : $this->t('Your shopping bag - X items', array('count' => $this->getCart()->countItems()));
     }
 }
 

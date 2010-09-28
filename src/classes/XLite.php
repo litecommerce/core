@@ -68,7 +68,6 @@ class XLite extends \XLite\Base
      */
     protected static $controller = null;
 
-
     /**
      * Flag; determines if we need to cleanup (and, as a result, to rebuild) classes and templates cache
      *
@@ -86,6 +85,16 @@ class XLite extends \XLite\Base
      * @since  3.0.0
      */
     protected $_xlite_form_id = null;
+
+    /**
+     * Current currency 
+     * 
+     * @var    \XLite\Model\Currency
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $currentCurrency;
 
     /**
      * It's not possible to instantiate this class using the "new" operator 
@@ -377,5 +386,23 @@ class XLite extends \XLite\Base
         }
 
         return $this;
+    }
+
+    /**
+     * Get curent currency 
+     * TODO - rework this to config ... or not?
+     * 
+     * @return \XLite\Model\Currency
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCurrency()
+    {
+        if (!isset($this->currentCurrency)) {
+            $this->currentCurrency = \XLite\Core\Database::getRepo('XLite\Model\Currency')->findDetached(840);
+        }
+
+        return $this->currentCurrency;
     }
 }

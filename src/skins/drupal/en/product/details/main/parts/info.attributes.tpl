@@ -11,19 +11,15 @@
  * @since     3.0.0
  * @ListChild (list="productDetails.info", weight="10")
  *}
-<tbody>
+<ul IF="product.getExtraFields(true)|product.weight|isViewListVisible(#productDetails.attributes#)" class="extra-fields">
 
-  <ul IF="product.getExtraFields(true)|product.weight|isViewListVisible(#productDetails.attributes#)" class="extra-fields">
+  <li IF="!product.weight=0">
+    <strong>{t(#Weight#)}:</strong>
+    <span>{product.weight} {config.General.weight_symbol}</span>
+  </li>
 
-    <li IF="!product.weight=0">
-      <strong>{t(#Weight#)}:</strong>
-      <span>{product.weight} {config.General.weight_symbol}</span>
-    </li>
+  <widget class="\XLite\View\ExtraFields" product="{product}" />
 
-    <widget class="\XLite\View\ExtraFields" product="{product}" />
+  {displayViewListContent(#productDetails.attributes#)}
 
-    <tbody FOREACH="getViewList(#productDetails.attributes#),w">{w.display()}</tbody>
-
-  </ul>
-
-</tbody>
+</ul>

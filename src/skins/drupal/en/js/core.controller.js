@@ -92,7 +92,7 @@ AController.prototype.isBaseCatched = function(base)
       }
     );
 
-  } else if (typeof(base.controller) != 'undefined'){
+  } else if (typeof(base.controller) != 'undefined') {
     result = true;
   }
 

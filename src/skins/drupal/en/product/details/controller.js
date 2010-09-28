@@ -19,9 +19,8 @@ function ProductDetailsController(base)
 {
   this.callSupermethod('constructor', arguments);
 
-  if (this.base.get(0).name && this.base.get(0).name.search(/add_to_cart_([0-9]+)/) != -1) {
-    var m = this.base.get(0).name.match(/add_to_cart_([0-9]+)/);
-    this.productId = m[1];
+  if (this.base.get(0).elements.namedItem('product_id')) {
+    this.productId = this.base.get(0).elements.namedItem('product_id').value;
 
     this.block = new ProductDetailsView(this.base, this.productId);
 
@@ -151,7 +150,7 @@ ProductDetailsView.prototype.postprocess = function(isSuccess, initial)
       'submit',
       function(event)
       {
-        return o.submitForm(event, this);
+        return o.addProductToCart(event, this);
       }
     )
 
@@ -314,24 +313,17 @@ ProductDetailsView.prototype.getParams = function(params)
 }
 
 // Form submit handler
-ProductDetailsView.prototype.submitForm = function(event, form)
+ProductDetailsView.prototype.addProductToCart = function(event, form)
 {
-  if ('undefined' == typeof(form.validate) || form.validate()) {
+  var o = this;
+
+  var callback = function (XMLHttpRequest, textStatus, data, isValid) {
+    return o.postprocessAdd2Cart(XMLHttpRequest, textStatus, data, isValid);
+  }
+
+  if (this.submitForm(form, callback)) {
     this.shade();
     this.base.get(0).controller.selfAdded = true;
-
-    form = $(form);
-
-    var o = this;
-
-    core.post(
-      form.attr('action'),
-      form.serialize(),
-      function (XMLHttpRequest, textStatus, data, isValid)
-      {
-        return o.postprocessAdd2Cart(XMLHttpRequest, textStatus, data, isValid);
-      }
-    );
   }
 
   return false;

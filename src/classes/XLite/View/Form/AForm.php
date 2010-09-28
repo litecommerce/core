@@ -302,6 +302,18 @@ abstract class AForm extends \XLite\View\AView
         return false;
     }
 
+    /**
+     * Get class name 
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getClassName()
+    {
+        return $this->getParam(self::PARAM_CLASS_NAME);
+    }
 
     /**
      * Return current form reference
