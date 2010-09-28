@@ -26,8 +26,6 @@
  * @since      3.0.0
  */
 
-require_once PATH_TESTS . '/FakeClass/Model/OrderItem.php';
-
 class XLite_Tests_Module_Bestsellers_Model_Repo_OrderItem extends XLite_Tests_TestCase
 {
 
@@ -157,7 +155,7 @@ class XLite_Tests_Module_Bestsellers_Model_Repo_OrderItem extends XLite_Tests_Te
 
             $this->assertTrue(isset($best[$index]), 'Not set #' . $index . ' product in bestsellers (1)');
 
-            $this->assertEquals($best[$index]->getObjectId(), $id, 'Wrong #' . $index . ' product in bestsellers (1)');
+            $this->assertEquals($best[$index]->getProductId(), $id, 'Wrong #' . $index . ' product in bestsellers (1)');
 
         }
 
@@ -182,7 +180,7 @@ class XLite_Tests_Module_Bestsellers_Model_Repo_OrderItem extends XLite_Tests_Te
 
             $this->assertTrue(isset($best[$index]), 'Not set #' . $index . ' product in bestsellers (2)');
 
-            $this->assertEquals($best[$index]->getObjectId(), $id, 'Wrong #' . $index . ' product in bestsellers (2)');
+            $this->assertEquals($best[$index]->getProductId(), $id, 'Wrong #' . $index . ' product in bestsellers (2)');
 
         }
 
@@ -213,7 +211,7 @@ class XLite_Tests_Module_Bestsellers_Model_Repo_OrderItem extends XLite_Tests_Te
 
         $one = $best[0];
 
-        $this->assertEquals(self::PR1, $one->getObjectId(), 'Wrong root category bestsellers list');
+        $this->assertEquals(self::PR1, $one->getProductId(), 'Wrong root category bestsellers list');
     }
 
 
@@ -302,7 +300,7 @@ class XLite_Tests_Module_Bestsellers_Model_Repo_OrderItem extends XLite_Tests_Te
      */
     protected function findBestsellers($count = 0, $cat = 0)
     {   
-        return \XLite\Core\Database::getRepo('XLite\Model\OrderItem')->findBestsellers($count, $cat);
+        return \XLite\Core\Database::getRepo('XLite\Model\Product')->findBestsellers($count, $cat);
     }   
 
 
