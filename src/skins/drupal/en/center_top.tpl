@@ -34,10 +34,6 @@
 <widget target="help" mode="contactusMessage" template="common/dialog.tpl" body="contactus_message.tpl" head="Message is sent">
 <!-- [/help] }}} -->
 
-<!-- [shopping_cart] {{{ -->
-<widget class="\XLite\View\Cart" />
-<!-- [/shopping_cart] }}} -->
-
 <!-- [profile] {{{ -->
 <widget class="\XLite\View\AddressBook" />
 {*<widget target="profile" mode="login" template="common/dialog.tpl" head="Authentication" body="authentication.tpl">
@@ -50,17 +46,9 @@
 <!-- [/profile] }}} -->
 
 <!-- [checkout] {{{ -->
-<widget class="\XLite\View\Checkout" />
-
 <widget target="checkoutSuccess" template="checkout/success.tpl" />
 <widget module="GoogleCheckout" template="common/dialog.tpl" body="modules/GoogleCheckout/google_checkout_dialog.tpl" head="Google Checkout payment module" IF="{target=#googlecheckout#&!valid}" />
 <!-- [/checkout] }}} -->
-
-<!-- [order] {{{ -->
-<widget class="\XLite\View\OrderSearch" />
-<widget class="\XLite\View\Order" />
-<widget class="\XLite\View\InvoicePage" />
-<!-- [/order] }}} -->
 
 <!-- [modules] {{{ -->
 <widget module="GiftCertificates" class="\XLite\Module\GiftCertificates\View\AddGiftCertificate" />

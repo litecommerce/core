@@ -34,6 +34,8 @@ namespace XLite\View;
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
+ *
+ * @ListChild (list="center")
  */
 class Cart extends \XLite\View\Dialog
 {
@@ -46,7 +48,9 @@ class Cart extends \XLite\View\Dialog
      */
     protected function getHead()
     {
-        return 'Shopping cart';
+        return $this->getCart()->isEmpty()
+            ? $this->t('Your shopping bag is empty')
+            : $this->t('Your shopping bag - X items', array('count' => $this->getCart()->countItems()));
     }
 
     /**
@@ -70,7 +74,9 @@ class Cart extends \XLite\View\Dialog
      */
     protected function getBodyTemplate()
     {
-        return $this->getCart()->isEmpty() ? 'empty.tpl' : parent::getBodyTemplate();
+        return $this->getCart()->isEmpty()
+            ? 'empty.tpl'
+            : parent::getBodyTemplate();
     }
 
     /**
@@ -113,15 +119,15 @@ class Cart extends \XLite\View\Dialog
      */
     public function getJSFiles()
     {
-        return array_merge(
-            parent::getJSFiles(),
-            array(
-                $this->getDir() . '/cart.js',
-                $this->getDir() . '/delivery.js',
-            )
-        );
-    }
+        $list = parent::getJSFiles();
 
+        $list[] = 'js/core.controller.js';
+        $list[] = 'js/core.loadable.js';
+        $list[] = 'js/jquery.blockUI.js';
+        $list[] = $this->getDir() . '/controller.js';
+
+        return $list;
+    }
 
     /**
      * Return list of targets allowed for this widget
@@ -134,6 +140,7 @@ class Cart extends \XLite\View\Dialog
     public static function getAllowedTargets()
     {
         $result = parent::getAllowedTargets();
+
         $result[] = 'cart';
     
         return $result;

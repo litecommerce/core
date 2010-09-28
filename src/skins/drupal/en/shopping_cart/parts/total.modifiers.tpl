@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Shopping cart item invalid notes
+ * Shopping cart modifiers
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -9,6 +9,9 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- * @ListChild (list="cart.item.actions", weight="20")
+ * @ListChild (list="cart.panel.totals", weight="20")
  *}
-<p class="cart-error-message" IF="!item.isValid()">{t(#This product is out of stock or it has been disabled for sale#)}</p>
+<li FOREACH="cart.getVisibleSavedModifiers(),m" class="{m.getCode()}-modifier">
+  <strong>{m.getName()}:</strong>
+  {formatPrice(m.getSurcharge(),cart.getCurrency())}
+</li>

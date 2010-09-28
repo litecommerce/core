@@ -5,7 +5,6 @@ UPDATE xlite_modules SET enabled = 1 WHERE name IN (
 'AuthorizeNet',
 'Bestsellers',
 'DrupalConnector',
-'eWAYWeb',
 'Quantum',
 --'FeaturedProducts',
 --'GiftCertificates',

@@ -12,16 +12,18 @@
  * @ListChild (list="cart.childs", weight="10")
  * @ListChild (list="checkout.cart", weight="10")
  *}
-<table class="selected-products">
-  <tbody>
-    <tr class="selected-product" FOREACH="cart.getItems(),item">
-      <widget template="shopping_cart/item.tpl" />
+<table class="selected-products" cellspacing="0">
 
-      {* TODO: add method to replace the the "shopping_cart/item.tpl" template *}
-      {* <widget module="GiftCertificates" template="modules/GiftCertificates/item.tpl" IF="item.gcid" />*}
-    </tr>
-    <tr class="selected-product additional-item" FOREACH="getViewList(#cart.items#),w">
-      {w.display()}
-    </tr>
-  </tbody>
+  <tr>
+    {displayViewListContent(#cart.items.header#)}
+  </tr>
+
+  <tr class="selected-product" FOREACH="cart.getItems(),item">
+    {displayViewListContent(#cart.item#,_ARRAY_(#item#^item))}
+  </tr>
+
+  <tr class="selected-product additional-item" FOREACH="getViewList(#cart.items#),w">
+    {w.display()}
+  </tr>
+
 </table>

@@ -203,7 +203,7 @@ ALoadable.prototype.saveState = function()
 // Show modal screen
 ALoadable.prototype.shade = function()
 {
-  if (!this.base) {
+  if (!this.base || !this.base.length) {
     return false;
   }
 
@@ -276,3 +276,24 @@ ALoadable.prototype.blocker = function(event) {
   event.stopPropagation();
   return false;
 }
+
+// Submit specified POST form
+ALoadable.prototype.submitForm = function(form, callback)
+{
+  var result = false;
+
+  if ('undefined' == typeof(form.validate) || form.validate()) {
+    form = $(form);
+
+    core.post(
+      form.attr('action'),
+      form.serialize(),
+      callback
+    );
+
+    result = true;
+  }
+
+  return result;
+}
+

@@ -922,6 +922,28 @@ abstract class AView extends \XLite\Core\Handler
     }
 
     /**
+     * Format price 
+     * 
+     * @param float                 $value    Price
+     * @param \XLite\Model\Currency $currency Currency
+     *  
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function formatPrice($value, \XLite\Model\Currency $currency = null)
+    {
+        if (!isset($currency)) {
+            $currency = \XLite::getInstance()->getCurrency();
+        }
+
+        $symbol = $currency->getSymbol() ?: (strtoupper($currency->getCode()) . ' ');
+
+        return $symbol . $currency->formatValue($value);
+    }
+
+    /**
      * Add slashes 
      * 
      * @param mixed  $base  string or object instance to get field value from

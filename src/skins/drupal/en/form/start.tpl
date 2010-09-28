@@ -11,6 +11,7 @@
  * @since     3.0.0
  *}
 
-<form action="{getFormAction()}" method="{getParam(#formMethod#)}" name="{getFormName()}" onsubmit="javascript: {getJSOnSubmitCode()}"{if:getParam(#className#)} class="{getParam(#className#)}"{end:}{if:isMultipart()} enctype="multipart/form-data"{end:}>
-<input FOREACH="getFormParams(),paramName,paramValue" type="hidden" name="{paramName}" value="{paramValue}" />
-
+<form action="{getFormAction()}" method="{getParam(#formMethod#)}" onsubmit="javascript: {getJSOnSubmitCode()}"{if:getClassName()} class="{getClassName()}"{end:}{if:isMultipart()} enctype="multipart/form-data"{end:}>
+<div class="form-params" style="display: none;">
+  <input FOREACH="getFormParams(),paramName,paramValue" type="hidden" name="{paramName}" value="{paramValue}" />
+</div>
