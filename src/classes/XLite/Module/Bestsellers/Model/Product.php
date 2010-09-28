@@ -35,33 +35,19 @@ namespace XLite\Module\Bestsellers\Model;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
+class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
 {
-
     /**
-     * Return product id
+     * Item product 
      * 
-     * @return integer
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    public function getProductId()
-    {
-        return $this->getProduct()->getProductId();
-    }
-
-    /**
-     * Return list price of product
+     * @var    \XLite\Model\OrderItem
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
      * 
-     * @return float
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
+     * @OneToOne    (targetEntity="XLite\Model\OrderItem")
+     * @JoinColumn (name="product_id", referencedColumnName="object_id")
      */
-    public function getListPrice()
-    {
-        return $this->getProduct()->getListPrice();
-    }
+    protected $order_item;
 
 }

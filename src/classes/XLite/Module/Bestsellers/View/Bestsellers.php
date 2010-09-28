@@ -151,7 +151,7 @@ class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
 
         } else {
 
-            $result = \XLite\Core\Database::getRepo('XLite\Model\OrderItem')
+            $result = \XLite\Core\Database::getRepo('XLite\Model\Product')
                 ->findBestsellers(
                     $limit, 
                     $this->getRootId()

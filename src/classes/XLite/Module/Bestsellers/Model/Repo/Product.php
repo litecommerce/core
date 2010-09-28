@@ -35,7 +35,7 @@ namespace XLite\Module\Bestsellers\Model\Repo;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class OrderItem extends \XLite\Model\Repo\OrderItem implements \XLite\Base\IDecorator
+class Product extends \XLite\Model\Repo\Product implements \XLite\Base\IDecorator
 {
     /**
      * Defines bestsellers products collection 
@@ -67,13 +67,12 @@ class OrderItem extends \XLite\Model\Repo\OrderItem implements \XLite\Base\IDeco
     protected function defineBestsellersQuery($count, $cat)
     {
         $qb = $this->createQueryBuilder()
-            ->addSelect('prod')
-            ->addSelect('sum(o.amount) as product_amount')
-            ->leftJoin('o.product', 'prod')
+            ->leftJoin('p.order_item', 'o')
             ->innerJoin('o.order', 'ord')
-            ->leftJoin('prod.category_products', 'cp')
+            ->leftJoin('p.category_products', 'cp')
             ->leftJoin('cp.category', 'c')
-            ->andWhere('prod.enabled = :enabled')
+            ->addSelect('sum(o.amount) as product_amount')
+            ->andWhere('p.enabled = :enabled')
             ->andWhere('ord.status IN (:complete_status, :processed_status)')
             ->groupBy('o.product')
             ->orderBy('product_amount', 'DESC')
