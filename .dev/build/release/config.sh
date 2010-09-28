@@ -39,6 +39,7 @@ InventoryTracking
 PayPalPro
 ProductAdviser
 ProductOptions
+Quantum
 UPSOnlineTools
 USPS
 WishList
