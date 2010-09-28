@@ -24,6 +24,35 @@ function extend(child, parent) {
   child.superclass = parent.prototype;
 }
 
+// Decorate / add method
+function decorate(class, methodName, method)
+{
+  class = getClassByName(class);
+
+  var result = false;
+
+  if (class) {
+    method.previousMethod = 'undefined' == typeof(class.prototype[methodName]) ? null : class.prototype[methodName];
+    class.prototype[methodName] = method;
+    result = true;
+  }
+
+  return result;
+}
+
+// Get class object by name (or object)
+function getClassByName(class)
+{
+  if (class && class.constructor == String) {
+    class = eval('(("undefined" != typeof(window.' + class + ') && ' + class + '.constructor == Function) ? ' + class + ' : null)');
+
+  } else if (!class || class.constructor != Function) {
+    class = null;
+  }
+
+  return class;
+}
+
 // Base class
 function Base()
 {
@@ -99,7 +128,7 @@ window.core = {
   },
 
   // Get HTML data from server
-  get: function(url, callback)
+  get: function(url, callback, data)
   {
     return $.ajax(
       {
@@ -111,10 +140,11 @@ window.core = {
             return callback ? callback(XMLHttpRequest, textStatus, data) : true;
           },
         contentType: 'text/html',
-        global: false,
-        timeout: 15000,
-        type: 'GET',
-        url: url
+        global:      false,
+        timeout:     15000,
+        type:        'GET',
+        url:         url,
+        data:        data
       }
     );
   },

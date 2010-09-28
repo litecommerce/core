@@ -133,6 +133,7 @@ class SelectedOptions extends \XLite\View\AView
         $list = parent::getCSSFiles();
 
         $list[] = 'popup/popup.css';
+        $list[] = 'modules/ProductOptions/change_options.css';
 
         return $list;
     }

@@ -11,11 +11,8 @@
  * @since     3.0.0
  *}
 <widget class="\XLite\Module\ProductOptions\View\Form\Item\ChangeOptions" name="change_options" className="change-options" />
-
-  <h1>{t(#Edit options#)}</h1>
-
   <widget class="\XLite\Module\ProductOptions\View\ProductOptions" product="{getProduct()}" selectedOptions="{getSelectedOptions()}" />
 
-  <widget class="\XLite\View\Button\Submit" label="Update" />
+  <widget class="\XLite\View\Button\Submit" label="Change" style="action" />
 
 <widget name="change_options" end />

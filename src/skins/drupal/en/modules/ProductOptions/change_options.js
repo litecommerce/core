@@ -1,7 +1,7 @@
 /* vim: set ts=2 sw=2 sts=2 et: */
 
 /**
- * ____file_title____
+ * Change options additional controller
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -11,7 +11,35 @@
  * @since     3.0.0
  */
 
-function changeOption()
-{
-  return !openBlockUIPopupURL(this.href);
-}
+core.bind(
+  'load',
+  function() {
+    decorate(
+      'CartView',
+      'postprocess',
+      function(isSuccess, initial)
+      {
+        arguments.callee.previousMethod.apply(this, arguments);
+
+        if (isSuccess) {
+
+          var o = this;
+
+          $('.item-change-options a', this.base).click(
+            function(event) {
+              return o.changeOptions(event, this);
+            }
+          );
+        }
+      }
+    );
+    decorate(
+      'CartView',
+      'changeOptions',
+      function(event, link)
+      {
+        return !popup.load(link.href);
+      }
+    );
+  }
+);

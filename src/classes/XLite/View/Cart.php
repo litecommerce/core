@@ -123,6 +123,7 @@ class Cart extends \XLite\View\Dialog
 
         $list[] = 'js/core.controller.js';
         $list[] = 'js/core.loadable.js';
+        $list[] = 'js/core.popup.js';
         $list[] = 'js/jquery.blockUI.js';
         $list[] = $this->getDir() . '/controller.js';
 

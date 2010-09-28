@@ -72,9 +72,7 @@ class Cart extends \XLite\Controller\Customer\ACustomer
      */
     protected function getLocation()
     {
-        return $this->getCart()->isEmpty()
-            ? $this->t('Your shopping bag is empty')
-            : $this->t('Your shopping bag - X items', array('count' => $this->getCart()->countItems()));
+        return $this->getTitle();
     }
 
     /**
@@ -297,7 +295,7 @@ class Cart extends \XLite\Controller\Customer\ACustomer
     {
         return $this->getCart()->isEmpty()
             ? $this->t('Your shopping bag is empty')
-            : $this->t('Your shopping bag - X items', array('count' => $this->getCart()->countItems()));
+            : $this->t('Your shopping bag - X items', array('count' => $this->getCart()->countQuantity()));
     }
 }
 

@@ -56,7 +56,20 @@ class ChangeOptions extends \XLite\Controller\Customer\ACustomer
      */      
     protected function getLocation()
     {
-        return 'Change options';
+        return $this->getTitle();
+    }
+
+    /**
+     * Get page title
+     *
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getTitle()
+    {
+        return $this->t('Change options');
     }
 
     /**
