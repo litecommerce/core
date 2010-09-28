@@ -130,5 +130,23 @@ class ChangeOptions extends \XLite\View\AView
     
         return $list;
     }
+
+    /**
+     * Register CSS files
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCSSFiles()
+    {
+        $list = parent::getCSSFiles();
+
+        $list[] = 'modules/ProductOptions/change_options.css';
+
+        return $list;
+    }
+
 }
 

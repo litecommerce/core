@@ -17,5 +17,5 @@
 </ul>
 
 <div IF="getParam(#source#)" class="item-change-options">
-  <a href="{getChangeOptionsLink()}" onclick="javascript: return changeOption.call(this);">{t(#Change options#)}</a>
+  <a href="{getChangeOptionsLink()}">{t(#Change options#)}</a>
 </div>

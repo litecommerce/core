@@ -53,11 +53,7 @@ $(document).ready(
 
       }
 
-      // Get second block< after H2
-      ALoadable.prototype.extractRequestData = function(div)
-      {
-        return div.children().eq(1);
-      }
+      ALoadable.prototype.titleRequestPattern = 'h2:eq(0)';
     }
 
   }

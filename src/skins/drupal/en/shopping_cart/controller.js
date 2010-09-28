@@ -85,6 +85,9 @@ extend(CartView, ALoadable);
 // Shade widget
 CartView.prototype.shadeWidget = true;
 
+// Update page title
+CartView.prototype.updatePageTitle = true;
+
 // Widget target
 CartView.prototype.widgetTarget = 'cart';
 
@@ -93,6 +96,9 @@ CartView.prototype.widgetClass = '\\XLite\\View\\Cart';
 
 // Update item quantity action TTL
 CartView.prototype.updateActionTTL = 2000;
+
+// Update quantity timeout resource
+CartView.prototype.submitTO = null;
 
 // Postprocess widget
 CartView.prototype.postprocess = function(isSuccess, initial)
@@ -114,7 +120,7 @@ CartView.prototype.postprocess = function(isSuccess, initial)
     $('.selected-product input.quantity', this.base)
       .each(
         function() {
-          this.initialValue = this.value;
+          $(this).parents('form').get(0).initialValue = this.value;
         }
       )
       .blur(
@@ -124,13 +130,13 @@ CartView.prototype.postprocess = function(isSuccess, initial)
       )
       .keypress(
         function(event) {
-          if (this.submitTO) {
-            clearTimeout(this.submitTO);
-            this.submitTO = null;
+          if (o.submitTO) {
+            clearTimeout(o.submitTO);
+            o.submitTO = null;
           }
 
           var i = this;
-          this.submitTO = setTimeout(
+          o.submitTO = setTimeout(
             function() {
               $(i).blur();
             },
@@ -158,8 +164,12 @@ CartView.prototype.postprocess = function(isSuccess, initial)
 CartView.prototype.removeItem = function(event, form)
 {
   if (!this.base.get(0).controller.selfUpdated && this.submitForm(form, this.postprocessActionCallback)) {
-    this.shade();
+    if (this.submitTO) {
+      clearTimeout(this.submitTO);
+      this.submitTO = null;
+    }
     this.base.get(0).controller.selfUpdated = true;
+    this.shade();
   }
 
   return false;
@@ -168,9 +178,14 @@ CartView.prototype.removeItem = function(event, form)
 // Update quantity
 CartView.prototype.updateQuantity = function(event, form)
 {
-  if (!this.base.get(0).controller.selfUpdated && this.submitForm(form, this.postprocessActionCallback)) {
-    this.shade();
+  var value = $('input.quantity', form).get(0).value;
+  if (!this.base.get(0).controller.selfUpdated && form.initialValue != value && this.submitForm(form, this.postprocessActionCallback)) {
+    if (this.submitTO) {
+      clearTimeout(this.submitTO);
+      this.submitTO = null;
+    }
     this.base.get(0).controller.selfUpdated = true;
+    this.shade();
   }
 
   return false;
@@ -180,6 +195,10 @@ CartView.prototype.updateQuantity = function(event, form)
 CartView.prototype.clearCart = function(event, form)
 {
   if (!this.base.get(0).controller.selfUpdated && this.submitForm(form, this.postprocessActionCallback)) {
+    if (this.submitTO) {
+      clearTimeout(this.submitTO);
+      this.submitTO = null;
+    }
     this.shade();
     this.base.get(0).controller.selfUpdated = true;
   }

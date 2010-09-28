@@ -48,11 +48,21 @@ ALoadable.prototype.shadeWidget = true;
 // Use widget blocking
 ALoadable.prototype.blockWidget = true;
 
+// Update page title from loaded request or not
+ALoadable.prototype.updatePageTitle = false;
+
 // Widget target
 ALoadable.prototype.widgetTarget = null;
 
 // Widget class name
 ALoadable.prototype.widgetClass = null;
+
+// Page title element pattern
+ALoadable.prototype.titlePattern = 'h1:eq(0)';
+
+// Page title element pattern in request's response data
+ALoadable.prototype.titleRequestPattern = 'h1:eq(0)';
+
 
 // Check base
 ALoadable.prototype.checkBase = function(base)
@@ -165,12 +175,21 @@ ALoadable.prototype.getTemporaryContainer = function()
 // Extract widget data
 ALoadable.prototype.extractRequestData = function(div)
 {
-  return div.children().eq(0);
+  return div;
 }
 
 // Place request data
 ALoadable.prototype.placeRequestData = function(box)
 {
+  // Update page title
+  var title = $(this.titleRequestPattern, box).eq(0);
+  if (this.updatePageTitle && 1 == title.length) {
+    $(this.titlePattern).eq(0).html(title.html());
+  }
+
+  // Update widget body
+  box = box.children().eq(1);
+
   var id = 'temporary-ajax-id-' + (new Date()).getTime();
   box.addClass(id);
   this.base.trigger('reload', [box]);
@@ -181,7 +200,7 @@ ALoadable.prototype.placeRequestData = function(box)
   return true;
 }
 
-// [ABSTRACT] Widget post processing (after new widge data placing)
+// [ABSTRACT] Widget post processing (after new widget data placing)
 ALoadable.prototype.postprocess = function(isSuccess, initial)
 {
   if (isSuccess) {
