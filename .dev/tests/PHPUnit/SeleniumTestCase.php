@@ -310,6 +310,8 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
 
         $this->validateHTML($html);
 
+        return;
+
         $dom = new DOMDocument();
         $dom->loadHTML($html);
         $xpath = new DOMXPath($dom);
@@ -347,7 +349,8 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
 
         $ch = curl_init();
 
-        curl_setopt($ch, CURLOPT_URL, 'http://w3c.crtdev.local/check');
+//        curl_setopt($ch, CURLOPT_URL, 'http://w3c.crtdev.local/check');
+        curl_setopt($ch, CURLOPT_URL, 'http://validator.w3.org/check');
         curl_setopt($ch, CURLOPT_HEADER, false);
         curl_setopt($ch, CURLOPT_TIMEOUT, 30);
         curl_setopt($ch, CURLOPT_POST, true);
