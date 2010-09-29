@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage View
+ * @subpackage Controller
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -26,63 +26,40 @@
  * @since      3.0.0
  */
 
-namespace XLite\Module\ProductAdviser\View;
-
-// FIXME - must be derived from he same class as the \XLite\Module\ProductAdviser\View\NotifyForm one
+namespace XLite\Controller\Customer;
 
 /**
- * Notify link widget
- *
+ * Shipping estimator
+ * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0
+ * @since   3.0.0
  */
-class NotifyLink extends \XLite\View\AView
+class ShippingEstimate extends \XLite\Controller\Customer\ACustomer
 {
     /**
-     * Return widget default template
-     *
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getDefaultTemplate()
-    {
-        return 'modules/ProductAdviser/OutOfStock/product_quantity.tpl';
-    }
-
-
-    /**
-     * Check visibility 
+     * Common method to determine current location 
      * 
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
+     * @return string
+     * @access protected 
      * @since  3.0.0
      */
-    protected function isVisible()
+    protected function getLocation()
     {
-        return parent::isVisible()
-            && $this->xlite->get('PA_InventorySupport')
-            && ($this->config->ProductAdviser->customer_notifications_mode & 2) != 0
-            && $this->getRejectedItem();
+        return $this->getTitle();
     }
 
     /**
-     * Register JS files
-     *
-     * @return array
+     * Get page title
+     * 
+     * @return string
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getJSFiles()
+    public function getTitle()
     {
-        $list = parent::getJSFiles();
-
-        $list[] = 'modules/ProductAdviser/OutOfStock/product_quantity.js';
-        $list[] = 'modules/ProductAdviser/notify_me.js';
-
-        return $list;
+        return $this->t('Estimate shipping cost');
     }
 }
+

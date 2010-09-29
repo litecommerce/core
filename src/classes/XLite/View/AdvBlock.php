@@ -109,25 +109,7 @@ class AdvBlock extends \XLite\View\AView
         $list = parent::getJSFiles();
 
         $list[] = 'js/jquery.blockUI.js';
-        $list[] = 'popup/popup.js';
         $list[] = 'advertise/helpdesk.js';
-
-        return $list;
-    }
-
-    /**
-     * Register CSS files
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getCSSFiles()
-    {
-        $list = parent::getCSSFiles();
-
-        $list[] = 'popup/popup.css';
 
         return $list;
     }

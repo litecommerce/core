@@ -15,7 +15,7 @@ $(document).ready(
   function() {
     $('a.send-to-friend').click(
       function() {
-        return !openBlockUIPopupURL(this.href);
+        return !popup.load(this);
       }
     );
   }

@@ -562,7 +562,10 @@ abstract class AView extends \XLite\Core\Handler
      */
     public function getCSSFiles()
     {
-        $list = array('ajax.css');
+        $list = array(
+            'ajax.css',
+            'css/popup.css',
+        );
 
         if (\XLite\Logger::isMarkTemplates()) {
             $list[] = 'template_debuger.css';
@@ -584,6 +587,9 @@ abstract class AView extends \XLite\Core\Handler
         $list = array(
             'js/common.js',
             'js/core.js',
+            'js/core.controller.js',
+            'js/core.loadable.js',
+            'js/core.popup.js',
             'js/php.js',
             'js/jquery.mousewheel.js',
         );

@@ -26,67 +26,27 @@
  * @since      3.0.0
  */
 
-namespace XLite\Module\WishList\View;
+namespace XLite\View\Form\Cart\ShippingEstimator;
 
 /**
- * Send-to-friend popup link
- *
+ * Shipping estimator destination form
+ * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0
+ * @since   3.0.0
  */
-class SendToFriendLink extends \XLite\View\AView
+class Destination extends \XLite\View\Form\Cart\ShippingEstimator\AShippingEstimator
 {
     /**
-     * Widget parameter names
-     */
-
-    const PARAM_PRODUCT = 'product';
-
-
-    /**
-     * Return widget default template
-     *
+     * Get default form action 
+     * 
      * @return string
      * @access protected
      * @since  3.0.0
      */
-    protected function getDefaultTemplate()
+    protected function getDefaultAction()
     {
-        return 'modules/WishList/send_to_friend_link.tpl';
-    }
-
-    /**
-     * Define widget parameters
-     *
-     * @return void
-     * @access protected
-     * @since  1.0.0
-     */
-    protected function defineWidgetParams()
-    {
-        parent::defineWidgetParams();
-
-        $this->widgetParams += array(
-            self::PARAM_PRODUCT => new \XLite\Model\WidgetParam\Object('Product', null, false, '\XLite\Model\Product'),
-        );
-    }
-
-    /**
-     * Register JS files
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getJSFiles()
-    {
-        $list = parent::getJSFiles();
-
-        $list[] = 'modules/WishList/send_to_friend_link.js';
-
-        return $list;
+        return 'set_destination';
     }
 }
 

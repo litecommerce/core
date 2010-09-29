@@ -42,7 +42,7 @@ function displayHelpdeskForm(subject, message)
 
   div.append(form);
 
-  blockUIPopup(div.html());
+  popup.open(div);
 
   return true;
 }

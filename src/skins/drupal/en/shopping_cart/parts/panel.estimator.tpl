@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Shopping cart Shipping estimator panel
+ * Shipping estimator panel
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -12,15 +12,24 @@
  * @ListChild (list="cart.panel", weight="20")
  *}
 <div class="estimator">
-  {if:cart.getShippingMethod()&cart.profile}
+
+  {if:cart.getShippingMethod()&cart.getProfile()}
+
     <ul>
       <li><span>{t(#Shipping#)}:</span> {cart.shippingMethod.getName():h}</li>
       <li><span>{t(#Estimated for#)}:</span> {cart.profile.shippingCountry.getCountry()} {cart.profile.shippingState.getState()}, {cart.profile.shipping_zipcode}</li>
     </ul>
-    <a href="{buildUrl(#estimate_shipping#)}">{t(#Change method#)}</a>
+
+    <a href="{buildUrl(#shipping_estimate#)}" class="estimate">{t(#Change method#)}</a>
+
   {else:}
-    <div class="buttons">
-      <widget class="\XLite\View\Button\Link" label="Estimate shipping cost" location="{buildUrl(#estimate_shipping#)}" style="action estimate" />
-    </div>
+
+    <widget class="\XLite\View\Form\Cart\ShippingEstimator\Open" name="shippingEstimator" />
+      <div class="buttons">
+        <widget class="\XLite\View\Button\Submit" label="Estimate shipping cost" style="action estimate" />
+      </div>
+    <widget name="shippingEstimator" end />
+
   {end:}
+
 </div>

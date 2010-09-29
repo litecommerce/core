@@ -115,25 +115,6 @@ class PriceNotifyLink extends \XLite\View\AView
 
         $list[] = 'modules/ProductAdviser/PriceNotification/product_button.js';
         $list[] = 'modules/ProductAdviser/notify_me.js';
-        $list[] = 'js/jquery.blockUI.js';
-        $list[] = 'popup/popup.js';
-
-        return $list;
-    }
-
-    /**
-     * Register CSS files
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getCSSFiles()
-    {
-        $list = parent::getCSSFiles();
-
-        $list[] = 'popup/popup.css';
 
         return $list;
     }

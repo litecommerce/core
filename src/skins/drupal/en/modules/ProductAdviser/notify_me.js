@@ -17,5 +17,5 @@ function notifyMe(link, box)
         return false;
     }
 
-    return !openBlockUIPopupURL(link.href);
+    return !popup.load(link);
 }
