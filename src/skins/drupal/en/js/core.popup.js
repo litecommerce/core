@@ -38,6 +38,10 @@ popup.load = function(url)
 
     } else if (url.constructor == HTMLFormElement) {
       method = 'loadByForm';
+
+    } else if (url.constructor == HTMLAnchorElement) {
+      method = 'loadByLink';
+
     }
 
     if (method) {
@@ -71,6 +75,14 @@ popup.loadByForm = function(form)
   }
 
   return result;
+}
+
+// Load by link element 
+popup.loadByLink = function(link)
+{
+  link = $(link).eq(0);
+
+  return (1 == link.length && link.attr('href')) ? core.get(link.attr('href'), this.postprocessRequestCallback) : false;
 }
 
 // Postprocess request
@@ -130,7 +142,6 @@ popup.place = function(data)
   if (false !== data) {
     data = this.extractRequestData(data);
     this.open(data);
-    this.postprocess();
   }
 }
 
@@ -226,12 +237,20 @@ popup.open = function(box)
   // Modify overlay
   $('.blockOverlay')
     .attr('title', 'Click to unblock')
-    .css('z-index', '1100000')
+    .css(
+      {
+        'z-index':          '1100000',
+        'background-color': 'inherit',
+        'opacity':          'inherit'
+      }
+    )
     .click(
       function(event) {
         return o.close();
       }
     );
+
+  this.postprocess();
 }
 
 // Close popup
@@ -239,3 +258,19 @@ popup.close = function()
 {
   $.unblockUI();
 }
+
+$(document).ready(
+  function() {
+    if ($.blockUI) {
+      $.blockUI.defaults.css =             {};
+      $.blockUI.defaults.centerX =         true;
+      $.blockUI.defaults.centerY =         true;
+      $.blockUI.defaults.bindEvents =      true;
+      $.blockUI.defaults.constrainTabKey = true;
+      $.blockUI.defaults.showOverlay =     true;
+      $.blockUI.defaults.focusInput =      true;
+      $.blockUI.defaults.fadeIn =          0;
+      $.blockUI.defaults.fadeOut =         0;
+    }
+  }
+);

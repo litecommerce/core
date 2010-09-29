@@ -114,8 +114,6 @@ class SelectedOptions extends \XLite\View\AView
         $list = parent::getJSFiles();
 
         $list[] = 'modules/ProductOptions/change_options.js';
-        $list[] = 'js/jquery.blockUI.js';
-        $list[] = 'popup/popup.js';
 
         return $list;
     }
@@ -132,7 +130,6 @@ class SelectedOptions extends \XLite\View\AView
     {
         $list = parent::getCSSFiles();
 
-        $list[] = 'popup/popup.css';
         $list[] = 'modules/ProductOptions/change_options.css';
 
         return $list;
@@ -155,7 +152,6 @@ class SelectedOptions extends \XLite\View\AView
                 'source'     => $this->getParam('source'),
                 'storage_id' => $this->getParam('storage_id'),
                 'item_id'    => $this->getItem()->getItemId(),
-                'isPopup'    => 1,
             )
         );
     }

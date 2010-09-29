@@ -606,7 +606,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
-        $list[] = 'popup/popup.css';
+
         $list[] = $this->getDir() . '/quick_look.css';
 
         return $list;
@@ -623,7 +623,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
     public function getJSFiles()
     {
         $list = parent::getJSFiles();
-        $list[] = 'popup/popup.js';
+
         $list[] = 'js/jquery-ui.1.7.2.js';
 
         return $list;

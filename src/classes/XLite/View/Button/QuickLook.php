@@ -92,7 +92,7 @@ class QuickLook extends \XLite\View\Button\Regular
      */
     protected function getDefaultJSCode()
     {
-        return 'return !openBlockUIPopupURL(\'' . $this->getLink() . '\')';
+        return 'return !popup.load(\'' . $this->getLink() . '\')';
     }
 
     /**

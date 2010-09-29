@@ -60,42 +60,40 @@ $(document).ready(
 );
 
 /**
- * List of all "get"-forms 
- */
-var xliteForms = [];
-
-/**
- * Semaphore 
- */
-var submitStarted = false;
-
-
-/**
  * Prepare submit params for the forms having "GET" method
  * 
  * @param HTMLFormElement $form curretn form
  *  
  * @return void
- * @since  3.0.0 EE
+ * @since  3.0.0
  */
 function drupalOnSubmitGetForm(form)
 {
-	if (!submitStarted) {
+  if (
+    form
+    && form.constructor == HTMLFormElement
+    && form.getAttribute('method')
+    && form.getAttribute('method').toUpperCase() == 'GET'
+  ) {
 
-		submitStarted = true;
+  	var result = {};
 
-		params = xliteForms[form.getAttribute('name')];
-		params.splice(params.indexOf('q'), 1);
+	  for (var i = 0; i < form.elements.length; i++) {
+		  var element = form.elements[i];
+      if (element.name && element.name != 'q') {
+    		result[element.name] = element.value;
+      }
+  	}
 
-		result = [];
+    var q = form.elements.namedItem('q');
+    if (!q) {
+      q = document.createElement('INPUT')
+      q.type = 'hidden';
+      q.name = 'q';
+      form.appendChild(q);
+    }
 
-		for (i = 0; i < params.length; i++) {
-			element = form.elements[params[i]];
-			result[params[i]] = element.value;
-			element.parentNode.removeChild(element);
-		}
-
-		form.q.value = URLHandler.buildURL(result);
-	}
+	  q.value = 'store/' + URLHandler.buildMainPart(result) + URLHandler.buildQueryPart(result);
+  }
 }
 

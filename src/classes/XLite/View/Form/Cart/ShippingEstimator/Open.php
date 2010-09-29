@@ -26,41 +26,17 @@
  * @since      3.0.0
  */
 
-namespace XLite\View\Form\Cart;
+namespace XLite\View\Form\Cart\ShippingEstimator;
 
 /**
- * Shipping estimator form
+ * Open shipping estimator form
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class ShippingEstimator extends \XLite\View\Form\AForm
+class Open extends \XLite\View\Form\Cart\ShippingEstimator\AShippingEstimator
 {
-    /**
-     * Current form name 
-     * 
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getFormName()
-    {
-        return 'shipping_estimator_form';
-    }
-
-    /**
-     * Get default form target 
-     * 
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getDefaultTarget()
-    {
-        return 'cart';
-    }
-
     /**
      * Get default form action 
      * 
@@ -70,7 +46,21 @@ class ShippingEstimator extends \XLite\View\Form\AForm
      */
     protected function getDefaultAction()
     {
-        return 'shipping_estimate';
+        return '';
     }
+
+    /**
+     * Get default form method 
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getDefaultFormMethod()
+    {
+        return 'get';
+    }
+
 }
 

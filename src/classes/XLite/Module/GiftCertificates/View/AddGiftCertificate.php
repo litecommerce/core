@@ -166,28 +166,9 @@ class AddGiftCertificate extends \XLite\View\Dialog
     {
         $list = parent::getJSFiles();
         $list[] = $this->getDir() . '/add_gift_certificate.js';
-        $list[] = 'js/jquery.blockUI.js';
-        $list[] = 'popup/popup.js';
 
         return $list;
     }
-
-    /**
-     * Register CSS files
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getCSSFiles()
-    {
-        $list = parent::getCSSFiles();
-        $list[] = 'popup/popup.css';
-
-        return $list;
-    }
-
 
     /**
      * Return list of targets allowed for this widget

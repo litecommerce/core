@@ -1,4 +1,3 @@
-/* vim: set ts=2 sw=2 sts=2 et: */
 
 /**
  * Cart controller
@@ -48,9 +47,6 @@ CartController.prototype.block = null;
 
 // Self-updated status
 CartController.prototype.selfUpdated = false;
-
-// Any action postprocessing callback
-CartController.prototype.postprocessActionCallback = null;
 
 // Initialize controller
 CartController.prototype.initialize = function()
@@ -157,6 +153,19 @@ CartView.prototype.postprocess = function(isSuccess, initial)
         return o.clearCart(event, this);
       }
     );
+
+    // Shipping estimator
+    $('.estimator button.estimate', this.base).parents('form').eq(0).submit(
+      function(event) {
+        return o.openShippingEstimator(event, this);
+      }
+    );
+    $('.estimator a.estimate', this.base).click(
+      function(event) {
+        return o.openShippingEstimator(event, this);
+      }
+    );
+
   }
 }
 
@@ -201,6 +210,16 @@ CartView.prototype.clearCart = function(event, form)
     }
     this.shade();
     this.base.get(0).controller.selfUpdated = true;
+  }
+
+  return false;
+}
+
+// Open Shipping estimator popup
+CartView.prototype.openShippingEstimator = function(event, elm)
+{
+  if (!this.base.get(0).controller.selfUpdated && !this.submitTO) {
+    popup.load(elm);
   }
 
   return false;

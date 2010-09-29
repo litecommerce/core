@@ -14,7 +14,7 @@ $(document).ready(
   function() {
     $('#shopping-cart form.verify-gc').submit(
       function() {
-        return !blockUIPopupFormTarget(this);
+        return !popup.load(this);
       }
     );
   }

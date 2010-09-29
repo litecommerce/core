@@ -26,63 +26,39 @@
  * @since      3.0.0
  */
 
-namespace XLite\Module\ProductAdviser\View;
-
-// FIXME - must be derived from he same class as the \XLite\Module\ProductAdviser\View\NotifyForm one
+namespace XLite\View\Form\Cart\ShippingEstimator;
 
 /**
- * Notify link widget
- *
+ * Abstract shipping estimator form
+ * 
  * @package XLite
  * @see     ____class_see____
- * @since   3.0
+ * @since   3.0.0
  */
-class NotifyLink extends \XLite\View\AView
+abstract class AShippingEstimator extends \XLite\View\Form\AForm
 {
     /**
-     * Return widget default template
-     *
+     * Current form name 
+     * 
      * @return string
      * @access protected
      * @since  3.0.0
      */
-    protected function getDefaultTemplate()
+    protected function getFormName()
     {
-        return 'modules/ProductAdviser/OutOfStock/product_quantity.tpl';
+        return 'shipping_estimator_form';
     }
 
-
     /**
-     * Check visibility 
+     * Get default form target 
      * 
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
+     * @return string
+     * @access protected
      * @since  3.0.0
      */
-    protected function isVisible()
+    protected function getDefaultTarget()
     {
-        return parent::isVisible()
-            && $this->xlite->get('PA_InventorySupport')
-            && ($this->config->ProductAdviser->customer_notifications_mode & 2) != 0
-            && $this->getRejectedItem();
-    }
-
-    /**
-     * Register JS files
-     *
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getJSFiles()
-    {
-        $list = parent::getJSFiles();
-
-        $list[] = 'modules/ProductAdviser/OutOfStock/product_quantity.js';
-        $list[] = 'modules/ProductAdviser/notify_me.js';
-
-        return $list;
+        return 'shipping_estimate';
     }
 }
+

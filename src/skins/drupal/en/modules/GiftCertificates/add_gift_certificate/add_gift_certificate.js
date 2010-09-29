@@ -16,7 +16,7 @@ $(document).ready(
     // Add gift certificate verify popup controller
     $('.gc-verify').click(
       function() {
-        return !openBlockUIPopupURL(this.href);  
+        return !popup.load(this);  
       }
     );
 
