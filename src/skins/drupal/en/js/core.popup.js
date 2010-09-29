@@ -111,9 +111,9 @@ popup.postprocessRequest = function(XMLHttpRequest, textStatus, data, isValid)
       self.location.reload(true);
     }
 
-  } else if (200 == XMLHttpRequest.status && this.isPostRequest) {
+  } else if (277 == XMLHttpRequest.status) {
 
-    // POST request is success - close popup in silence
+    // Close popup in silence
     this.close();
 
   } else if (200 == XMLHttpRequest.status) {

@@ -176,7 +176,7 @@ window.core = {
   // Process response from server
   processResponse: function(xhr)
   {
-    if (4 == xhr.readyState && 200 == xhr.status) {
+    if (4 == xhr.readyState && (200 == xhr.status || (270 <= xhr.status && 300 > xhr.status))) {
       var list = xhr.getAllResponseHeaders().split(/\n/);
 
       for (var i = 0; i < list.length; i++) {

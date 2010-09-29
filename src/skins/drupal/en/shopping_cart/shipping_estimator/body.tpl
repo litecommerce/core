@@ -28,17 +28,17 @@
 
   </ul>
 
-  <div IF="!getShippingRates()" class="buttons main">
-    <widget IF="getShippingRates()" class="\XLite\View\Button\Submit" label="Apply destination" style="action"/>
+  <div IF="isEstimate()" class="buttons">
+    <widget class="\XLite\View\Button\Submit" label="Apply destination" />
   </div>
 
-  <div IF="getShippingRates()" class="buttons">
-    <widget IF="getShippingRates()" class="\XLite\View\Button\Submit" label="Apply destination" />
+  <div IF="!isEstimate()" class="buttons main">
+    <widget class="\XLite\View\Button\Submit" label="Apply destination" style="action"/>
   </div>
 
 <widget name="destination" end />
 
-<div IF="getShippingRates()" class="estimate-methods">
+<div IF="isEstimate()" class="estimate-methods">
   <h3>{t(#Choose shipping method#)}</h3>
 
   <widget class="\XLite\View\Form\Cart\ShippingEstimator\Change" name="change" />
