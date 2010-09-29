@@ -68,6 +68,12 @@ class XLite_Tests_Module_Quantum_Model_Payment_Processor_Quantum extends XLite_T
         $sid = \Xlite\Model\Session::getInstance()->getID();
         $amount = $t->getValue();
 
+        $urla = \XLite::getInstance()->getShopUrl('admin.php?target=payment_return&amp;txn_id_name=ID', true);
+        $urla = str_replace('ID&xid', 'ID&amp;xid', $urla);
+
+        $urld = \XLite::getInstance()->getShopUrl('admin.php?target=payment_return&amp;txn_id_name=ID', true);
+        $urld = str_replace('ID&xid', 'ID&amp;xid', $urld);
+
         $etalon = <<<HTML
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
@@ -78,8 +84,8 @@ class XLite_Tests_Module_Quantum_Model_Payment_Processor_Quantum extends XLite_T
   <form method="post" id="form" name="payment_form" action="https://secure.quantumgateway.com/cgi/qgwdbe.php">
     <fieldset style="display: none;">
       <input type="hidden" name="gwlogin" value="test" />
-      <input type="hidden" name="post_return_url_approved" value="https://xcart2-530.crtdev.local/~max/xlite/src/admin.php?target=payment_return&amp;txn_id_name=ID&amp;xid=$sid" />
-      <input type="hidden" name="post_return_url_declined" value="https://xcart2-530.crtdev.local/~max/xlite/src/admin.php?target=payment_return&amp;txn_id_name=ID&amp;xid=$sid" />
+      <input type="hidden" name="post_return_url_approved" value="$urla" />
+      <input type="hidden" name="post_return_url_declined" value="$urld" />
       <input type="hidden" name="ID" value="$tid" />
       <input type="hidden" name="amount" value="$amount" />
       <input type="hidden" name="BADDR1" value="Billing street, 1" />
