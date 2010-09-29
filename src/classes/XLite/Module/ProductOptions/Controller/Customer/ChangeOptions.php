@@ -141,6 +141,8 @@ class ChangeOptions extends \XLite\Controller\Customer\ACustomer
 
                 \XLite\Core\TopMessage::getInstance()->add('Options has been successfully changed');
 
+                $this->setSilenceClose();
+
             } else {
 
                 \XLite\Core\TopMessage::getInstance()->add(
@@ -148,7 +150,8 @@ class ChangeOptions extends \XLite\Controller\Customer\ACustomer
                     . ' Please select other product options',
                     \XLite\Core\TopMessage::ERROR
                 );
-                $this->getWidgetParams(self::PARAM_REDIRECT_CODE)->setValue(279);
+
+                $this->setInternalRedirect();
 
                 $this->set(
                     'returnUrl',

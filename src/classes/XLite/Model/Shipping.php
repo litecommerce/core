@@ -237,9 +237,25 @@ class Shipping extends \XLite\Base\Singleton
         $address = null;
         
         if (is_object($order->getProfile())) {
+
+            // Order profail exist
+
             $address = $order->getProfile()->getShippingAddress();
 
+        } elseif ($order->getDetail('shipping_estimate_country') && $order->getDetail('shipping_estimate_zipcode')) {
+
+            // Estimated shipping
+            $address = array(
+                'address' => '',
+                'city'    => '',
+                'state'   => '',
+                'zipcode' => $order->getDetail('shipping_estimate_zipcode')->getValue(),
+                'country' => $order->getDetail('shipping_estimate_country')->getValue()
+            );
+
         } else {
+
+            // Anonymous address
             $config = \XLite\Base::getInstance()->config->Shipping;
 
             if ($config->def_calc_shippings_taxes) {

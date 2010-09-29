@@ -82,46 +82,131 @@ class ShippingEstimate extends \XLite\View\AView
             ->findByEnabled(true);
     }
 
+    /**
+     * Check - specified country selected or not
+     * 
+     * @param \XLite\Model\Country $country Country
+     *  
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     public function isCountrySelected(\XLite\Model\Country $country)
     {
         $profile = $this->getCart()->getProfile();
+        $detail = $this->getCart()->getDetail('shipping_estimate_country');
 
-        return $profile
-            && $profile->get('shipping_country')->getCode() == $country->getCode();
+        return ($profile && $profile->get('shipping_country')->getCode() == $country->getCode())
+            || ($detail && $detail->getValue() == $country->getCode());
     }
 
+    /**
+     * Get ZIP code 
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     public function getZipcode()
     {
         $profile = $this->getCart()->getProfile();
+        $detail = $this->getCart()->getDetail('shipping_estimate_zipcode');
 
-        return $profile ? $profile->get('shipping_zipcode') : '';
+        return $profile
+            ? $profile->get('shipping_zipcode')
+            : ($detail ? $detail->getValue() : '');
     }
 
+    /**
+     * Get shipping rates 
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     public function getShippingRates()
     {
         return $this->getCart()->getShippingRates();
     }
 
+    /**
+     * Check - specified rate is selected or not
+     * 
+     * @param \XLite\Model\Shipping\Rate $rate Shipping rate
+     *  
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     public function isRateSelected(\XLite\Model\Shipping\Rate $rate)
     {
         return $this->getCart()->getSelectedRate() == $rate;
     }
 
+    /**
+     * Get rate method id 
+     * 
+     * @param \XLite\Model\Shipping\Rate $rate Shipping rate
+     *  
+     * @return integer
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     public function getMethodId(\XLite\Model\Shipping\Rate $rate)
     {
         return $rate->getMethod()->getMethodId();
     }
 
+    /**
+     * Get rate method name 
+     * 
+     * @param \XLite\Model\Shipping\Rate $rate Shipping rate
+     *  
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     public function getMethodName(\XLite\Model\Shipping\Rate $rate)
     {
         return $rate->getMethod()->getName();
     }
 
+    /**
+     * Get rate markup 
+     * 
+     * @param \XLite\Model\Shipping\Rate $rate Shipping rate
+     *  
+     * @return float
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     public function getMarkup(\XLite\Model\Shipping\Rate $rate)
     {
         return $rate->getMarkup()->getMarkupValue();
     }
 
+    /**
+     * Check - shipping is estimate or not
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isEstimate()
+    {
+        $cart = $this->getCart();
+
+        return $cart->getProfile()
+            || ($cart->getDetail('shipping_estimate_country') && $cart->getDetail('shipping_estimate_zipcode'));
+    }
 
 }
 

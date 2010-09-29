@@ -61,5 +61,72 @@ class ShippingEstimate extends \XLite\Controller\Customer\ACustomer
     {
         return $this->t('Estimate shipping cost');
     }
+
+    /**
+     * Set estimate destination 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionSetDestination()
+    {
+        $profile = $this->getCart()->getProfile();
+
+        $country = \XLite\Core\Database::getRepo('XLite\Model\Country')->find(\XLite\Core\Request::getInstance()->country);
+
+        if ($country && \XLite\Core\Request::getInstance()->zipcode) {
+            if (!$profile) {
+                $this->getCart()->setDetail('shipping_estimate_country', $country->getCode());
+                $this->getCart()->setDetail('shipping_estimate_zipcode', \XLite\Core\Request::getInstance()->zipcode);
+
+            } else {
+                $profile->set('shipping_country', $country->getCode());
+                $profile->set('shipping_zipcode', \XLite\Core\Request::getInstance()->zipcode);
+                $profile->update();
+            }
+
+            $this->updateCart();
+
+            $this->valid = true;
+
+            $this->setInternalRedirect();
+
+        } else {
+
+            $this->valid = false;
+
+        }
+    }
+
+    /**
+     * Change shipping method 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionChangeMethod()
+    {
+        if (
+            \XLite\Core\Request::getInstance()->methodId
+            && $this->getCart()->getShippingId() != \XLite\Core\Request::getInstance()->methodId
+        ) {
+            $this->getCart()->setShippingId(\XLite\Core\Request::getInstance()->methodId);
+            $this->updateCart();
+
+            \XLite\Core\Event::updateCart(
+                array(
+                    'items' => array(),
+                    'shipping' => $this->getCart()->getShippingId(),
+                )
+            );
+        }
+
+        $this->valid = true;
+        $this->setSilenceClose();
+    }
 }
 

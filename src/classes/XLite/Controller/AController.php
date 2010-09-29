@@ -429,13 +429,60 @@ abstract class AController extends \XLite\Core\Handler
         }
 
         if ($this->isRedirectNeeded()) {
-            if (\XLite\Core\Request::getInstance()->isAJAX() && !$this->isValid()) {
-                // Internal redirect
-                $this->getWidgetParams(self::PARAM_REDIRECT_CODE)->setValue(200);
-                header('not-valid: 1');
+            if (\XLite\Core\Request::getInstance()->isAJAX()) {
+                if (!$this->isValid()) {
+
+                    // AXAX-based - cancel redirect
+                    $this->getWidgetParams(self::PARAM_REDIRECT_CODE)->setValue(200);
+                    header('not-valid: 1');
+
+                } elseif ($this->internalRedirect) {
+
+                    // Popup internal redirect
+                    $this->getWidgetParams(self::PARAM_REDIRECT_CODE)->setValue(279);
+
+                } elseif ($this->silenceClose) {
+
+                    // Popup silence close
+                    $this->getWidgetParams(self::PARAM_REDIRECT_CODE)->setValue(277);
+                }
             }
 
             $this->redirect();
+        }
+    }
+
+    /**
+     * Set internal popup redirect 
+     * 
+     * @param boolean $flag Internal redirect status
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function setInternalRedirect($flag = true)
+    {
+        if (\XLite\Core\Request::getInstance()->isAJAX()) {
+            $this->internalRedirect = (bool)$flag;
+        }
+    }
+
+    /**
+     * Set silence close popup
+     * 
+     * @param boolean $flag Silence close status
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function setSilenceClose($flag = true)
+    {
+        if (\XLite\Core\Request::getInstance()->isAJAX()) {
+            $this->silenceClose = (bool)$flag;
         }
     }
 
