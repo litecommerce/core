@@ -212,7 +212,7 @@ $(document).ready(
 
                 // Search end comment tag
                 var end = null;
-                var endPattern = new RegExp(' \}\}\}' + begin.data.replace(/\).+$/, ')').replace(/(\(|\)|\/)/g, '.'));
+                var endPattern = new RegExp(' \}\}\}' + begin.data.replace(/\).+$/, ')').replace(/(\(|\)|\/|\\)/g, '.'));
                 var ns = p;
                 while (ns.nextSibling && !end) {
                   ns = ns.nextSibling;
