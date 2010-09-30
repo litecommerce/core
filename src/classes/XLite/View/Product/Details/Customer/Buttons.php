@@ -35,13 +35,13 @@ namespace XLite\View\Product\Details\Customer;
  * @see     ____class_see____
  * @since   3.0.0
  *
- * @ListChild (list="productDetails.main", weight="100")
- * @ListChild (list="quickLook.main", weight="100")
+ * @ListChild (list="product.details.page.info", weight="100")
+ * @ListChild (list="product.details.quicklook.info", weight="100")
  */
 class Buttons extends \XLite\View\Product\Details\Customer\ACustomer
 {
     /**
-     * Return widget default template
+     * Return the default widget template
      *
      * @return string
      * @access protected
@@ -49,7 +49,37 @@ class Buttons extends \XLite\View\Product\Details\Customer\ACustomer
      */
     protected function getDefaultTemplate()
     {
-        return $this->getDir() . '/parts/main.buttons' 
-            . (\XLite\Core\Request::getInstance()->added ? '_added' : '') . '.tpl';
+        return $this->getDir() . "/parts/:list.buttons.tpl";
+    }
+
+
+    /**
+     * Return the widget template
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getTemplate()
+    {
+        $tpl = parent::getTemplate();
+
+        // We had to do the replacement there because viewListName is NULL when in getDefaultTemplate()
+        $list = str_replace('product.details.', '', $this->viewListName);
+        return str_replace(':list', $list, $tpl);
+    }
+
+    /**
+     * Checks whether a product was added to the cart
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isProductAdded()
+    {
+        return \XLite\Core\Request::getInstance()->added;
     }
 }

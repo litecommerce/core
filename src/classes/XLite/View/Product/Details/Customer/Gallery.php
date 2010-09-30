@@ -35,8 +35,8 @@ namespace XLite\View\Product\Details\Customer;
  * @see     ____class_see____
  * @since   3.0.0
  *
- * @ListChild (list="productDetails.image", weight="20")
- * @ListChild (list="quickLook.image", weight="20")
+ * @ListChild (list="product.details.page.image", weight="20")
+ * @ListChild (list="product.details.quicklook.image", weight="20")
  */
 class Gallery extends \XLite\View\Product\Details\Customer\ACustomer
 {
@@ -49,7 +49,7 @@ class Gallery extends \XLite\View\Product\Details\Customer\ACustomer
      */
     protected function getDefaultTemplate()
     {
-        return $this->getDir() . '/parts/image.gallery.tpl';
+        return $this->getDir() . '/parts/gallery.tpl';
     }
 
     /**

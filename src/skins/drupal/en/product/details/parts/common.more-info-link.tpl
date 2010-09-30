@@ -1,8 +1,8 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Product details 'Tell a friend' box
- *
+ * Product details title main block
+ *  
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -10,9 +10,6 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *
- * @ListChild (list="product.details.page.image")
+ * @ListChild (list="product.details.quicklook.info", weight="12")
  *}
-<hr class="line" />
-
-{* <widget module="WishList" class="\XLite\Module\WishList\View\SendToFriendLink" product="{product}" /> *}
-[addthis-button]
+<a href="{buildURL(#product#,##,_ARRAY_(#product_id#^product.product_id,#category_id#^category_id))}" class="product-name">More info</a>

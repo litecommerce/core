@@ -35,8 +35,8 @@ namespace XLite\View\Product\Details\Customer;
  * @see     ____class_see____
  * @since   3.0.0
  *
- * @ListChild (list="productDetails.image", weight="10")
- * @ListChild (list="quickLook.image", weight="10")
+ * @ListChild (list="product.details.page.image.photo", weight="10")
+ * @ListChild (list="product.details.quicklook.image", weight="10")
  */
 class Image extends \XLite\View\Product\Details\Customer\ACustomer
 {
@@ -55,7 +55,7 @@ class Image extends \XLite\View\Product\Details\Customer\ACustomer
      */
     protected function getDefaultTemplate()
     {
-        return $this->getDir() . '/parts/image.box.tpl';
+        return $this->getDir() . '/parts/image-regular.tpl';
     }
 
     /**
@@ -68,7 +68,7 @@ class Image extends \XLite\View\Product\Details\Customer\ACustomer
     protected function getTemplate()
     {
         return $this->getProduct()->hasZoomImage()
-            ? $this->getDir() . '/parts/image.zoom.tpl'
+            ? $this->getDir() . '/parts/image-zoom.tpl'
             : $this->getDefaultTemplate();
     }
 

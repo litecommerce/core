@@ -47,7 +47,7 @@ class Main extends \XLite\View\Product\Details\Customer\Page\APage
      */
     protected function getDir()
     {
-        return parent::getDir() . '/main';
+        return parent::getDir() . '/page';
     }
 
 

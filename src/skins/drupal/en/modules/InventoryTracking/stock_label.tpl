@@ -9,7 +9,8 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- * @ListChild (list="productDetails.main", weight="30")
+ *
+ * @ListChild (list="product.details.page.info", weight="30")
  *}
 {if:product.inventory.found}
   <div IF="{product.isInStock()}" class="product-stock-label product-in-stock">In stock</div>

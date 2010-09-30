@@ -9,6 +9,9 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- * @ListChild (list="productDetails.buttons", weight="20")
+ *
+ * @ListChild (list="product.details.page.info.buttons.cart-buttons", weight="30")
+ * @ListChild (list="product.details.page.info.buttons-added.cart-buttons", weight="30")
+ * @ListChild (list="product.details.quicklook.info.buttons", weight="40")
  *}
 <widget class="\XLite\View\Button\Regular" label="Add to Wish list" target="wishlist" action="add" style="bright add2wl" />
