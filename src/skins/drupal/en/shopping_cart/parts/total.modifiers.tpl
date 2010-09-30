@@ -13,5 +13,9 @@
  *}
 <li FOREACH="cart.getVisibleSavedModifiers(),m" class="{m.getCode()}-modifier">
   <strong>{m.getName()}:</strong>
-  {formatPrice(m.getSurcharge(),cart.getCurrency())}
+  {if:m.isAvailable()}
+    {formatPrice(m.getSurcharge(),cart.getCurrency())}
+  {else:}
+    {t(#n/a#)}
+  {end:}
 </li>

@@ -89,7 +89,17 @@ class Cart extends \XLite\View\Dialog
      */
     public function getContinueURL()
     {
-        return $this->session->get('continueURL');
+        $url = $this->session->get('continueURL');
+
+        if (!$url && isset($_SERVER['HTTP_REFERER'])) {
+            $url = $_SERVER['HTTP_REFERER'];
+        }
+
+        if (!$url) {
+            $url = $this->buildURL('main');
+        }
+
+        return $url;
     }
 
     /**
@@ -145,6 +155,45 @@ class Cart extends \XLite\View\Dialog
         $result[] = 'cart';
     
         return $result;
+    }
+
+    /**
+     * Check - shipping estimate or not
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isShippingEstimate()
+    {
+        return (bool)\XLite\Model\Shipping::getInstance()->getDestinationAddress($this->getCart());
+    }
+
+    /**
+     * Get shipping estimate address
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getEstimateAddress()
+    {
+        $address = \XLite\Model\Shipping::getInstance()->getDestinationAddress($this->getCart());
+
+        $country = \XLite\Core\Database::getRepo('XLite\Model\Country')->find($address['country']);
+        $state = \XLite\Core\Database::getRepo('XLite\Model\State')->find($address['state']);
+
+        $string = $country->getCountry();
+
+        if ($state) {
+            $string .= ' ' . $state->getState();
+        }
+
+        $string .= ', ' . $address['zipcode'];
+
+        return $string;
     }
 }
 
