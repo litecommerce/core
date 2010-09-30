@@ -70,16 +70,16 @@ class QuickLook extends \XLite\View\Button\Regular
     }
 
     /**
-     * getLink 
-     * 
+     * getId
+     *
      * @return string
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getLink()
+    protected function getId()
     {
-        return $this->buildURL('quick_look', '', array('product_id' => $this->getProduct()->getProductId()));
+        return $this->getProduct()->getProductId();
     }
 
     /**
@@ -92,7 +92,7 @@ class QuickLook extends \XLite\View\Button\Regular
      */
     protected function getDefaultJSCode()
     {
-        return 'return !popup.load(\'' . $this->getLink() . '\')';
+        return 'return void(0);';
     }
 
     /**

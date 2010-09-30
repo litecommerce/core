@@ -39,6 +39,15 @@ ItemsList.prototype.changeSortOrder = function()
   return this.process('sortOrder', ('asc' == this.URLParams.sortOrder) ? 'desc' : 'asc');
 }
 
+// Open the QuickLook popup
+ItemsList.prototype.openQuickLookPopup = function(button)
+{
+  this.URLAJAXParams['target'] = 'quick_look';
+  this.URLAJAXParams['product_id'] = $(button).attr('id');
+
+  return !popup.load(URLHandler.buildURL(this.URLAJAXParams));
+}
+
 
 ItemsList.prototype.listeners.displayModes = function(handler)
 {
@@ -125,6 +134,15 @@ ItemsList.prototype.listeners.dragNDrop = function(handler)
       }
     },
   });
+}
+
+ItemsList.prototype.listeners.quickLookButtons = function(handler)
+{
+  $('.quick-look-cell button.action', handler.container).click(
+    function() {
+      return !handler.openQuickLookPopup(this);
+    }
+  );
 }
 
 
