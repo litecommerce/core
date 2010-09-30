@@ -609,6 +609,14 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
 
         $list[] = $this->getDir() . '/quick_look.css';
 
+        // FIXME
+        foreach (array('Page\QuickLook', 'Image', 'Gallery') as $class) {
+            $list = array_merge($list, 
+                $list,
+                $this->getWidget(array(), '\XLite\View\Product\Details\Customer\\' . $class)->getCSSFiles()
+            );
+        }
+
         return $list;
     }
 
@@ -625,6 +633,14 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
         $list = parent::getJSFiles();
 
         $list[] = 'js/jquery-ui.1.7.2.js';
+
+        // FIXME
+        foreach (array('Page\QuickLook', 'Image', 'Gallery') as $class) {
+            $list = array_merge(
+                $list,
+                $this->getWidget(array(), '\XLite\View\Product\Details\Customer\\' . $class)->getJSFiles()
+            );
+        }
 
         return $list;
     }

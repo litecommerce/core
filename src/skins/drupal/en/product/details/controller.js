@@ -19,7 +19,7 @@ function ProductDetailsController(base)
 {
   this.callSupermethod('constructor', arguments);
 
-  if (this.base.get(0).elements.namedItem('product_id')) {
+  if (this.base.get(0) && this.base.get(0).elements.namedItem('product_id')) {
     this.productId = this.base.get(0).elements.namedItem('product_id').value;
 
     this.block = new ProductDetailsView(this.base, this.productId);
