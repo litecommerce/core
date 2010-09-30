@@ -94,11 +94,9 @@ class ShippingEstimate extends \XLite\View\AView
      */
     public function isCountrySelected(\XLite\Model\Country $country)
     {
-        $profile = $this->getCart()->getProfile();
-        $detail = $this->getCart()->getDetail('shipping_estimate_country');
+        $address = \XLite\Model\Shipping::getInstance()->getDestinationAddress($this->getCart());
 
-        return ($profile && $profile->get('shipping_country')->getCode() == $country->getCode())
-            || ($detail && $detail->getValue() == $country->getCode());
+        return $address && isset($address['country']) && $address['country'] == $country->getCode();
     }
 
     /**
@@ -111,12 +109,11 @@ class ShippingEstimate extends \XLite\View\AView
      */
     public function getZipcode()
     {
-        $profile = $this->getCart()->getProfile();
-        $detail = $this->getCart()->getDetail('shipping_estimate_zipcode');
+        $address = \XLite\Model\Shipping::getInstance()->getDestinationAddress($this->getCart());
 
-        return $profile
-            ? $profile->get('shipping_zipcode')
-            : ($detail ? $detail->getValue() : '');
+        return ($address && isset($address['zipcode']))
+            ? $address['zipcode']
+            : '';
     }
 
     /**
@@ -202,10 +199,7 @@ class ShippingEstimate extends \XLite\View\AView
      */
     public function isEstimate()
     {
-        $cart = $this->getCart();
-
-        return $cart->getProfile()
-            || ($cart->getDetail('shipping_estimate_country') && $cart->getDetail('shipping_estimate_zipcode'));
+        return (bool)\XLite\Model\Shipping::getInstance()->getDestinationAddress($this->getCart());
     }
 
 }

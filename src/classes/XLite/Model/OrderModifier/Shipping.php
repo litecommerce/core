@@ -294,16 +294,7 @@ class Shipping extends \XLite\Model\Order implements \XLite\Base\IDecorator
      */
     public function isShippingEnabled()
     {
-        $result = false;
-
-        if ('Y' == \XLite\Base::getInstance()->config->Shipping->shipping_enabled) {
-            $profile = $this->getProfile();
-
-            $result = isset($profile)
-                || (!isset($profile) && 'Y' == \XLite\Base::getInstance()->config->Shipping->def_calc_shippings_taxes);
-        }
-
-        return $result;
+        return 'Y' == \XLite\Base::getInstance()->config->Shipping->shipping_enabled;
     }
 
     /**

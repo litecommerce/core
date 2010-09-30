@@ -11,4 +11,4 @@
  * @since     3.0.0
  * @ListChild (list="cart.buttons", weight="10")
  *}
-<widget class="\XLite\View\Button\Link" label="Continue shopping" location="{getContinueURL()}" style="action" IF="getContinueURL()" />
+<widget class="\XLite\View\Button\Link" label="Continue shopping" location="{getContinueURL()}" style="action" />

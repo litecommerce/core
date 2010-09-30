@@ -119,7 +119,7 @@ INSERT INTO `xlite_config` VALUES (314,'anonymous_custom_state','Shipping','text
 INSERT INTO `xlite_config` VALUES (315,'anonymous_state','Shipping','state',60,'34');
 INSERT INTO `xlite_config` VALUES (316,'anonymous_zipcode','Shipping','text',80,'10001');
 INSERT INTO `xlite_config` VALUES (317,'shipping_enabled','Shipping','',10,'Y');
-INSERT INTO `xlite_config` VALUES (77,'def_calc_shippings_taxes','Shipping','checkbox',20,'Y');
+INSERT INTO `xlite_config` VALUES (77,'def_calc_shippings_taxes','Shipping','checkbox',20,'N');
 
 
 
