@@ -12,7 +12,7 @@
  * @ListChild (list="cart.item", weight="10")
  *}
 <td class="item-remove delete-from-list">
-  <widget class="\XLite\View\Form\Cart\Item\Delete" name="itemRemove" item="{item}" />
+  <widget class="\XLite\View\Form\Cart\Item\Delete" name="itemRemove{item.getItemId()}" item="{item}" />
     <div><widget class="\XLite\View\Button\Image" label="Delete item" style="remove" /></div>
-  <widget name="itemRemove" end />
+  <widget name="itemRemove{item.getItemId()}" end />
 </td>

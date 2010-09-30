@@ -15,7 +15,7 @@
   {if:isShippingEstimate()}
 
     <ul>
-      <li><span>{t(#Shipping#)}:</span> {cart.shippingMethod.getName():h}</li>
+      <li><span>{t(#Shipping#)}:</span> {cart.shippingMethod.getName():h} ({formatPrice(getShippingCost(),cart.getCurrency())})</li>
       <li><span>{t(#Estimated for#)}:</span> {getEstimateAddress()}</li>
     </ul>
 

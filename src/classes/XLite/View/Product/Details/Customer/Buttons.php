@@ -80,6 +80,16 @@ class Buttons extends \XLite\View\Product\Details\Customer\ACustomer
      */
     public function isProductAdded()
     {
-        return \XLite\Core\Request::getInstance()->added;
+        $result = false;
+
+        foreach ($this->getCart()->getItems() as $item) {
+            $product = $item->getProduct();
+            if ($product && $product->getProductId() == $this->getProduct()->getProductId()) {
+                $result = true;
+                break;
+            }
+        }
+
+        return $result;
     }
 }
