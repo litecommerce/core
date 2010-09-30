@@ -10,6 +10,6 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *
- * @ListChild (list="product.details.page.image.photo", weight="15")
+ * @ListChild (list="product.details.page.image", weight="15")
  *}
 <a IF="product.getActiveDetailedImages()" href="javascript:void(0);" class="loupe"><img src="images/spacer.gif" alt="Zoom image" /></a>

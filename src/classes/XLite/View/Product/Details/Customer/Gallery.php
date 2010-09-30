@@ -143,6 +143,7 @@ class Gallery extends \XLite\View\Product\Details\Customer\ACustomer
     {
         $list = parent::getCSSFiles();
         $list[] = 'css/colorbox.css';
+        $list[] = $this->getDir() . '/parts/gallery.css';
 
         return $list;
     }

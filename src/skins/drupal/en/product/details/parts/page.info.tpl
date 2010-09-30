@@ -11,7 +11,7 @@
  * @since     3.0.0
  * @ListChild (list="product.details.page", weight="30")
  *}
-<div class="body">
+<div class="product-details-info">
   {displayViewListContent(#product.details.page.info#)}
 </div>
 

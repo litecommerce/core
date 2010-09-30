@@ -90,7 +90,7 @@ function ProductDetailsView(base, productId)
     event.stopPropagation();
 
     o.showLightbox();
-    $('.gallery li.selected a', o.base).eq(0).trigger('click');
+    $('.product-image-gallery li.selected a', o.base).eq(0).trigger('click');
 
     return false;
   }
@@ -124,11 +124,11 @@ ProductDetailsView.prototype.postprocess = function(isSuccess, initial)
   if (isSuccess) {
 
     // Fix box width
-    $('.image .image-center', this.base)
-      .css('width', $('.image .image-center img', this.base).attr('width') + 'px');
+    $('.image .product-photo', this.base)
+      .css('width', $('.image .product-photo img', this.base).attr('width') + 'px');
 
     // Save gallery list items
-    this.gallery = $('.image .gallery li', this.base);
+    this.gallery = $('.image .product-image-gallery li', this.base);
 
     var o = this;
 
@@ -170,7 +170,7 @@ ProductDetailsView.prototype.postprocess = function(isSuccess, initial)
           o.showLightbox();
           setTimeout(
             function() {
-              $('.gallery li.selected a').eq(0).trigger('click');
+              $('.product-image-gallery li.selected a').eq(0).trigger('click');
             },
             500
           );
@@ -188,7 +188,7 @@ ProductDetailsView.prototype.showLightbox = function()
 {
   var o = this;
 
-  $('.gallery a', this.base)
+  $('.product-image-gallery a', this.base)
     .unbind('click')
     .colorbox(
       {
@@ -206,7 +206,7 @@ ProductDetailsView.prototype.hideLightbox = function()
 {
   var o = this;
 
-  $('.gallery a', this.base)
+  $('.product-image-gallery a', this.base)
     .unbind('click')
     .bind(
       'click',
@@ -288,7 +288,7 @@ ProductDetailsView.prototype.selectImage = function(pos)
     .attr('width', middle.attr('width'))
     .attr('height', middle.attr('height'));
 
-  $('.image .image-center', this.base)
+  $('.image .product-photo', this.base)
     .css('width', middle.attr('width') + 'px');
 
   eval('var tmp = {' + $('a', next).attr('rev') + '}');

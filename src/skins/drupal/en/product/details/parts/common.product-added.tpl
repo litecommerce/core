@@ -13,4 +13,4 @@
  * @ListChild (list="product.details.page.info.buttons-added", weight="5")
  * @ListChild (list="product.details.quicklook.info.buttons-added", weight="5")
  *}
-<p class="product-added-note">{t(#This product has been added to your bag#,_ARRAY_(#href#^buildUrl(#cart#))):h}</p>
+<p class="product-added-note">This product has been added to <a href="{buildURL(#cart#,##,_ARRAY_())}">your bag</a></p>

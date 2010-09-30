@@ -1,0 +1,12 @@
+table.product-photo-box,
+table.product-photo-box tr,
+table.product-photo-box td
+{
+  border-style: none;
+}
+
+table.product-photo-box td
+{
+  vertical-align: middle;
+  padding: 0;
+}

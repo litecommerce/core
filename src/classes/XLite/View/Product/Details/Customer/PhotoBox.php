@@ -26,33 +26,44 @@
  * @since      3.0.0
  */
 
-namespace XLite\View\Product\Details\Customer\Page;
+namespace XLite\View\Product\Details\Customer;
 
 /**
- * APage 
+ * PhotoBox
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
+ *
+ * @ListChild (list="product.details.page.image", weight="0")
  */
-abstract class APage extends \XLite\View\Product\Details\Customer\ACustomer
+class PhotoBox extends \XLite\View\Product\Details\Customer\ACustomer
 {
     /**
-     * Get a list of JavaScript files required to display the widget properly
+     * Return the default widget template
      *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultTemplate()
+    {
+        return $this->getDir() . "/parts/page.image.photo.tpl";
+    }
+
+    /**
+     * Return a list of CSS files required to display the widget
+     * 
      * @return array
-     * @access public
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getJSFiles()
+    public function getCSSFiles()
     {
-        $list = parent::getJSFiles();
+        $list = parent::getCSSFiles();
 
-        $list[] = 'js/core.controller.js';
-        $list[] = 'js/core.loadable.js';
-        $list[] = 'js/jquery.blockUI.js';
-        $list[] = self::getDir() . '/controller.js';
+        $list[] = $this->getDir() . "/parts/page.image.photo.css";
 
         return $list;
     }
