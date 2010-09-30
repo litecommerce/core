@@ -9,6 +9,8 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- * @ListChild (list="productDetails.main", weight="70")
+ *
+ * @ListChild (list="product.details.page.info", weight="70")
+ * @ListChild (list="product.details.quicklook.info", weight="70")
  *}
 <widget class="\XLite\Module\ProductOptions\View\ProductOptions" product="{getProduct()}" selectedOptions="{getSelectedOptions()}" />

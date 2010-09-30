@@ -35,8 +35,8 @@ namespace XLite\Module\WholesaleTrading\View;
  * @see     ____class_see____
  * @since   3.0
  *
- * @ListChild (list="productDetails.info", weight="30")
- * @ListChild (list="quickLook.info", weight="30")
+ * @ListChild (list="product.details.page.tabs", weight="30")
+ * @ListChild (list="product.details.quicklook.tabs", weight="30")
  */
 class ExtendedOptions extends \XLite\View\AView
 {
