@@ -13,3 +13,4 @@
  * @ListChild (list="product.details.page.image.photo", weight="5")
  *}
 <a IF="product.getActiveDetailedImages()" class="arrow left-arrow" href="javascript:void(0);"><img src="images/spacer.gif" alt="Previous image" /></a>
+<span IF="!product.getActiveDetailedImages()" class="arrow left-arrow"></span>

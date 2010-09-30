@@ -10,9 +10,9 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<div class="image-center">
+<div class="product-photo">
   <a href="{getZoomImageURL()}" class="cloud-zoom" id="pimage_{product.product_id}" rel="adjustX: 97, showTitle: false, tintOpacity: 0.5, tint: '#fff', lensOpacity: 0">
-    <widget class="\XLite\View\Img" image="{product.getImage()}" className="photo product-thumbnail" id="product_image_{product.product_id}" maxWidth="300" />
+    <widget class="\XLite\View\Img" image="{product.getImage()}" className="photo product-thumbnail" id="product_image_{product.product_id}" maxWidth="350" />
     <widget class="\XLite\View\SaveMark" product="{product}" />
   </a>
 </div>

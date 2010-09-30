@@ -10,8 +10,8 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<div class="gallery-container">
-  <ul class="gallery">
+<div class="product-image-gallery">
+  <ul>
     <li FOREACH="product.getActiveDetailedImages(),i,image" class="{getListItemClass(i)}">
       <a href="{image.getFrontURL()}" rel="gallery" rev="width: {image.getWidth()}, height: {image.getHeight()}" title="{image.getAlt()}"><widget class="\XLite\View\Img" image="{image}" alt="{image.getAlt()}" maxWidth="60" maxHeight="60" /></a>
       <widget class="\XLite\View\Img" className="middle" style="display: none;" image="{image}" maxWidth="350" />

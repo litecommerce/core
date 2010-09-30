@@ -10,8 +10,9 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *
- * @ListChild (list="product.details.page.image", weight="0")
  *}
-<div class="image-box">
-  {displayViewListContent(#product.details.page.image.photo#)}
-</div>
+<table class="product-photo-box" IF="isViewListVisible(#product.details.page.image.photo#)">
+  <tr>
+    <td FOREACH="getViewList(#product.details.page.image.photo#),item">{item.display()}</td>
+  </tr>
+</table>

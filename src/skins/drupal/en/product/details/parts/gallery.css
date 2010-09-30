@@ -1,0 +1,28 @@
+.product-image-gallery 
+{
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.product-image-gallery ul
+{
+  margin-left: auto;
+  margin-right: auto;
+  list-style: none;
+  width: auto;
+  display: inline-block;
+}
+
+.product-image-gallery li
+{
+  list-style: none;
+  float: left;
+  vertical-align: middle;
+  text-align: center;
+}
+
+.product-image-gallery a
+{
+  vertical-align: middle;
+  text-align: center;
+}
