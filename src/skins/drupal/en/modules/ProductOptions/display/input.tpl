@@ -10,4 +10,4 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<input type="text" name="product_options[{option.getGroupId()}]" value="{getOptionText(option)}"{if:option.getCols()} size="{option.getCols()}"{end:} />
+<input type="text" name="product_options[{option.getGroupId()}]" value="{getOptionText(option)}"{if:option.getCols()} size="{option.getCols()}"{end:} class="text" />

@@ -10,20 +10,22 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  */
-.product-details .body ul.product-options {
+ul.product-options {
   list-style: none;
   margin: 11px 0px;
   padding: 0px;
   width: 342px;
 }
 
-.product-details .body ul.product-options strong {
+ul.product-options strong {
   color: #2c5b7a;
   font-size: 18px;
   font-weight: normal;
+  vertical-align: middle;
+  padding-right: 10px;
 }
 
-.product-details .body ul.product-options li.product-option {
+ul.product-options li.product-option {
   list-style: none;
   background-color: #f4f4f4;
   padding: 13px 20px;
@@ -31,8 +33,8 @@
   background-image: none;
 }
 
-.product-details .body ul.product-options ul,
-  .product-details .body ul.product-options ul li
+ul.product-options ul,
+  ul.product-options ul li
 {
   list-style: none;
   padding: 0px;
@@ -40,16 +42,32 @@
   background-image: none;
 }
 
-.product-details .body ul.product-options ul {
+ul.product-options ul {
   padding: 4px 0px;
 }
 
-.product-details .body ul.product-options ul li {
+ul.product-options ul li {
   padding: 3px 2px;
 }
 
-.product-details .body ul.product-options ul li label {
+ul.product-options ul li label {
   font-size: 16px;
 }
 
+ul.product-options select {
+  margin-bottom: 2px;
+  vertical-align: middle;
+}
+
+ul.product-options textarea,
+  ul.product-options input.text
+{
+  width: 100%;
+}
+
+/* Popup-based styles */
+.blockUI .change-options .buttons {
+  margin-top: 10px;
+  text-align: center;
+}
 

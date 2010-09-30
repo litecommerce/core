@@ -29,53 +29,14 @@
 namespace XLite\Module\ProductOptions\View;
 
 /**
- * Product widget
+ * Cart widget
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class Product extends \XLite\View\Product\Details\Customer\ACustomer implements \XLite\Base\IDecorator
+class Cart extends \XLite\View\Cart implements \XLite\Base\IDecorator
 {
-    /**
-     * Check - available product for sale or not
-     *
-     * @return bool
-     * @access public
-     * @since  3.0.0
-     */
-    public function isAvailableForSale()
-    {
-        /* TODO - rework
-        if ($this->xlite->get('InventoryTrackingEnabled')) {
-            $product = $this->getProduct();
-            if ($product->getComplex('inventory.found') && !$product->get('tracking')) {
-                $result = 0 < $product->getComplex('inventory.amount');
-            }
-        }
-
-        return isset($result) ? $result : 
-        */    
-        return parent::isAvailableForSale();
-    }
-
-    /**
-     * Get selected options 
-     * 
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getSelectedOptions()
-    {
-        $saved = $this->session->get('saved_invalid_options');
-
-        return is_array($saved) && isset($saved[$this->getProduct()->getProductId()])
-            ? $saved[$this->getProduct()->getProductId()]
-            : array();
-    }
-
     /**
      * Register CSS files
      *

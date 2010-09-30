@@ -126,6 +126,7 @@ class ChangeOptions extends \XLite\View\AView
     public static function getAllowedTargets()
     {
         $list = parent::getAllowedTargets();
+
         $list[] = 'change_options';
     
         return $list;
@@ -143,10 +144,9 @@ class ChangeOptions extends \XLite\View\AView
     {
         $list = parent::getCSSFiles();
 
-        $list[] = 'modules/ProductOptions/change_options.css';
+        $list[] = 'modules/ProductOptions/product_details.css';
 
         return $list;
     }
-
 }
 
