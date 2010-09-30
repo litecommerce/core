@@ -13,5 +13,5 @@
  * @ListChild (list="product.details.page.info", weight="110")
  *}
 <div class="facebook">
-  <widget class="\XLite\View\Button\FacebookLike" width="450" height="65" />
+  <widget class="\XLite\View\Button\FacebookLike" width="450" height="24" />
 </div>
