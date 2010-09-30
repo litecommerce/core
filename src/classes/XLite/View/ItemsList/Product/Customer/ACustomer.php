@@ -70,9 +70,10 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      * Allowed display modes
      */
 
-    const DISPLAY_MODE_LIST  = 'list';
-    const DISPLAY_MODE_GRID  = 'grid';
-    const DISPLAY_MODE_TABLE = 'table';
+    const DISPLAY_MODE_LIST    = 'list';
+    const DISPLAY_MODE_GRID    = 'grid';
+    const DISPLAY_MODE_TABLE   = 'table';
+    const DISPLAY_MODE_ROTATOR = 'rotator';
 
     /**
      * A special option meaning that a CSS layout is to be used
