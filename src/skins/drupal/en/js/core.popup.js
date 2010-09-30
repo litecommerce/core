@@ -220,10 +220,9 @@ popup.open = function(box)
     }
   );
 
-  // Reposition
-  $('.blockMsg')
-    .css('left', Math.round(($(window).width() - $('.blockMsg').width()) / 2) + 'px')
-    .css('z-index', '1200000');
+  $('.blockMsg').css('z-index', '1200000');
+
+  this.reposition();
 
   // Add close handler
   var o = this;
@@ -253,6 +252,20 @@ popup.open = function(box)
   this.postprocess();
 }
 
+// Reposition (center) popup
+popup.reposition = function()
+{
+  var l = Math.max(0, Math.round(($(window).width() - $('.blockMsg').width()) / 2));
+  var t = Math.max(0, Math.round(($(window).height() - $('.blockMsg').height()) / 2));
+
+  $('.blockMsg').css(
+    {
+      'left': l + 'px',
+      'top':  t + 'px'
+    }
+  );
+}
+
 // Close popup
 popup.close = function()
 {
@@ -272,5 +285,11 @@ $(document).ready(
       $.blockUI.defaults.fadeIn =          0;
       $.blockUI.defaults.fadeOut =         0;
     }
+  }
+);
+
+$(window).resize(
+  function(event) {
+    popup.reposition();
   }
 );
