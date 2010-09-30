@@ -88,6 +88,13 @@ class ShippingEstimate extends \XLite\Controller\Customer\ACustomer
                 $profile->update();
             }
 
+            \XLite\Core\Event::updateCart(
+                array(
+                    'items' => array(),
+                    'shipping' => $this->getCart()->getShippingId(),
+                )
+            );
+
             $this->updateCart();
 
             $this->valid = true;
