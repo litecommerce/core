@@ -67,8 +67,11 @@ ItemsList.prototype.listeners.sortOrderModes = function(handler)
   );
 }
 
+// TODO - to improve
 ItemsList.prototype.listeners.dragNDrop = function(handler)
 {
+  var isDropped = false;
+
   $('table.list-body-grid td.hproduct, table.list-body-list tr.info', handler.container).draggable({
     helper: function() {
       clone = $(this).clone();
@@ -83,25 +86,43 @@ ItemsList.prototype.listeners.dragNDrop = function(handler)
       return clone;
     },
     start: function(event, ui) {
+      isDropped = false;
+      $('div.cart-tray-box div.text div').html('<span>Drop items here</span><br /><span>to shop</span>');
       $('div.cart-tray-box').show();
     },
     stop: function(event, ui) {
-      $('div.cart-tray-box').hide();
+      if (!isDropped) {
+        $('div.cart-tray-box').hide();
+      }
     },
   });
 
   $('div.cart-tray-box').droppable({
     hoverClass: 'droppable',
-    tolerance: 'pointer',
+    tolerance: 'touch',
+    over: function(event, ui) {
+      $('', 'div.cart-tray-box div.text').addClass('droppable');
+    },
+    out: function(event, ui) {
+      $('span', 'div.cart-tray-box div.text').removeClass('droppable');
+    },
     drop: function(event, ui) {
-      /*this.shade();*/
-      core.post(
-        URLHandler.buildURL({}),
-        {target: 'cart', action: 'add', product_id: $(ui.draggable).attr('id')},
-        function(XMLHttpRequest, textStatus, data, isValid) {
-          /*isValid ? this.load() : this.unshade();*/
-        }
-      );
+      if (!isDropped) {
+        isDropped = true;
+
+        $('div', 'div.cart-tray-box div.text').html('');
+        $('div.cart-tray-box div.text').addClass('wait-block');
+
+        core.post(
+          URLHandler.buildURL({}),
+          {target: 'cart', action: 'add', product_id: $(ui.draggable).attr('id')},
+          function(XMLHttpRequest, textStatus, data, isValid) {
+            $('div.cart-tray-box div.text').removeClass('wait-block');
+            $('div', 'div.cart-tray-box div.text').html('<span>Product added</span><br /><span>to the bag</span>');
+            setTimeout(function() {$('div.cart-tray-box').hide();}, 1500);
+          }
+        );
+      }
     },
   });
 }

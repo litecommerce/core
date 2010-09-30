@@ -14,5 +14,5 @@
  *}
 
 <div class="cart-tray-box">
-  <div class="text">Drop items here to shop</div>
+  <div class="text"><div></div></div>
 </div>

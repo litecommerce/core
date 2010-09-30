@@ -221,11 +221,24 @@ div.cart-tray-box.droppable {
 }
 
 div.cart-tray-box div.text {
-  width: 110px;
-  font-weight: bold;
   text-align: center;
-  color: #7594b0;
-  margin: 0 auto;
   margin-top: 100%;
 }
 
+div.cart-tray-box div.text.wait-block {
+  width: 60%;
+  border: 1px #bbc7d2 solid;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #fff;
+  padding: 0.8em;
+}
+
+div.cart-tray-box div.text span {
+  font-weight: bold;
+  color: #7594b0;
+}
+
+div.cart-tray-box div.text span.droppable {
+  background-color: #d7e5fa;
+}
