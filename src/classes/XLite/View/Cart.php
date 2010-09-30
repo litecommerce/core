@@ -195,5 +195,36 @@ class Cart extends \XLite\View\Dialog
 
         return $string;
     }
+
+    /**
+     * Get shipping cost 
+     * 
+     * @return float
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getShippingCost()
+    {
+        $result = 0;
+
+        $cart = $this->getCart();
+
+        $modifiers = $this->getCart()->getModifiers();
+
+        if (isset($modifiers['shipping'])) {
+            foreach ($cart->getVisibleSavedModifiers() as $m) {
+                if ($cart::MODIFIER_SHIPPING == $m->getCode()) {
+                    if ($m->isAvailable()) {
+                        $result = $m->getSurcharge();
+                    }
+                    break;
+                }
+            }
+        }
+
+        return $result;
+    }
+
 }
 

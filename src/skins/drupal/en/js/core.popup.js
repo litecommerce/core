@@ -204,7 +204,7 @@ popup.unfreezePopup = function()
 // Open as wait box
 popup.openAsWait = function()
 {
-  this.open('<div class="block-wait">Please wait ...</div>');
+  this.open('<div class="block-wait"></div>');
 }
 
 // Open-n-display popup
