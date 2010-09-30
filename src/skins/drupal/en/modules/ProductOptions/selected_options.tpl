@@ -11,9 +11,12 @@
  * @since     3.0.0
  *}
 <ul class="selected-options">
-  <li FOREACH="item.getOptions(),option">
-    <span>{option.getActualName():h}:</span> {option.getActualValue():h}{if:!optionArrayPointer=optionArraySize}, {end:}
-  </li>
+  {foreach:item.getOptions(),option}
+    <li IF="!isOptionEmpty(option)">
+      <span>{option.getActualName():h}:</span>
+      {option.getActualValue():h}{if:!optionArrayPointer=optionArraySize}, {end:}
+    </li>
+  {end:}
 </ul>
 
 <div IF="getParam(#source#)" class="item-change-options">
