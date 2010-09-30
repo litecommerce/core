@@ -130,7 +130,7 @@ class ChangeOptions extends \XLite\Controller\Customer\ACustomer
      */
     protected function doActionChange()
     {
-        if (\XLite\Core\Request::getInstance()->source == 'cart') {
+        if ('cart' == \XLite\Core\Request::getInstance()->source) {
             $options = $this->getItem()
                 ->getProduct()
                 ->prepareOptions(\XLite\Core\Request::getInstance()->product_options);
