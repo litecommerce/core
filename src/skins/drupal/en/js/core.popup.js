@@ -88,7 +88,12 @@ popup.loadByLink = function(link)
 // Postprocess request
 popup.postprocessRequest = function(XMLHttpRequest, textStatus, data, isValid)
 {
-  if (278 == XMLHttpRequest.status) {
+  if (4 != XMLHttpRequest.readyState) {
+
+    // Connection failed
+    this.close();
+
+  } else if (278 == XMLHttpRequest.status) {
 
     // Redirect
     this.close();

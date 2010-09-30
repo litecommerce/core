@@ -159,14 +159,14 @@ class SelectedOptions extends \XLite\View\AView
     /**
      * Check - item option is empty or not
      * 
-     * @param \XLite\Module\ProductOptions\OrderItemOption $option Item option
+     * @param \XLite\Module\ProductOptions\Model\OrderItemOption $option Item option
      *  
      * @return boolean
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function isOptionEmpty(\XLite\Module\ProductOptions\OrderItemOption $option)
+    public function isOptionEmpty(\XLite\Module\ProductOptions\Model\OrderItemOption $option)
     {
         return 0 == strlen($option->getActualValue());
     }

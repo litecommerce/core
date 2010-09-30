@@ -265,6 +265,12 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
         );
     }
 
+    protected function skipCoverage()
+    {
+        $this->openAndWait('');
+        $this->createCookie('no_xdebug_coverage=1');
+    }
+
     public function __call($command, $arguments)
     {
         try {
