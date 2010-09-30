@@ -113,6 +113,21 @@ CartView.prototype.postprocess = function(isSuccess, initial)
     );
 
     // Update item
+    var delayedUpdate = function(event) {
+      if (o.submitTO) {
+        clearTimeout(o.submitTO);
+        o.submitTO = null;
+      }
+
+      var i = this;
+      o.submitTO = setTimeout(
+        function() {
+          $(i).blur();
+        },
+        o.updateActionTTL
+      );
+    }
+
     $('.selected-product input.quantity', this.base)
       .each(
         function() {
@@ -124,22 +139,9 @@ CartView.prototype.postprocess = function(isSuccess, initial)
           return $(this.form).submit();
         }
       )
-      .keypress(
-        function(event) {
-          if (o.submitTO) {
-            clearTimeout(o.submitTO);
-            o.submitTO = null;
-          }
-
-          var i = this;
-          o.submitTO = setTimeout(
-            function() {
-              $(i).blur();
-            },
-            o.updateActionTTL
-          );
-        }
-      )
+      .keypress(delayedUpdate)
+      .data('min', 1)
+      .mousewheel(delayedUpdate)
       .parents('form').eq(0)
       .submit(
         function(event) {

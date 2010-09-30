@@ -37,4 +37,17 @@ namespace XLite\View\Product\Details\Customer;
  */
 abstract class ACustomer extends \XLite\View\Product\Details\ADetails
 {
+    /**
+     * Check if widget is visible
+     *
+     * @return bool
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isVisible()
+    {
+        return parent::isVisible()
+            && $this->getProduct();
+    }
 }
