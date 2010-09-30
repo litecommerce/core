@@ -96,7 +96,16 @@ class ShippingEstimate extends \XLite\View\AView
     {
         $address = \XLite\Model\Shipping::getInstance()->getDestinationAddress($this->getCart());
 
-        return $address && isset($address['country']) && $address['country'] == $country->getCode();
+        $c = 'US';
+
+        if ($address && isset($address['country'])) {
+            $c = $address['country'];
+
+        } elseif (\XLite\Core\Config::getInstance()->General->default_country) {
+            $c = \XLite\Core\Config::getInstance()->General->default_country;
+        }
+
+        return $country->getCode() == $c;
     }
 
     /**

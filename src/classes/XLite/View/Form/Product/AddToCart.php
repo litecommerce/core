@@ -96,10 +96,18 @@ class AddToCart extends \XLite\View\Form\Product\AProduct
      */
     protected function getFormDefaultParams()
     {
-        return array(
-            'product_id'  => $this->getProduct()->getProductId(),
-            'category_id' => $this->getProduct()->getCategoryId(),
-        );
+        $result = array();
+
+        $product = $this->getProduct();
+
+        if ($product) {
+            $result = array(
+                'product_id'  => $product->getProductId(),
+                'category_id' => $product->getCategoryId(),
+            );
+        }
+
+        return $result;
     }
 }
 
