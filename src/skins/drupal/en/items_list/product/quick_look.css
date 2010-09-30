@@ -29,15 +29,3 @@ div.blockMsg div.block-subcontainer {
   padding: 2em;
 }
 
-body.store-category .product-details div.image {
-  width: 1%;
-}
-
-body.store-category .product-details .image-box {
-  margin: 0;
-  width: 50%;
-}
-
-body.store-category .product-details .body {
-  width: auto;
-}
