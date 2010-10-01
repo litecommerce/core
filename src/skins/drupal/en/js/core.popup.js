@@ -225,7 +225,12 @@ popup.open = function(box)
     }
   );
 
-  $('.blockMsg').css('z-index', '1200000');
+  $('.blockMsg').css(
+    {
+      'z-index':  '1200000',
+      'position': 'absolute'
+    }
+  );
 
   this.reposition();
 
@@ -260,28 +265,12 @@ popup.open = function(box)
 // Reposition (center) popup
 popup.reposition = function()
 {
-  var ww = $(window).width();
-  var wh = $(window).height();
+  var w = $(window);
+  var d = $(document);
+  var b = $('.blockMsg');
 
-  var maxw = ww - 40;
-  var maxh = wh - 40;
-
-  /* TODO - refactoring
-  if (maxw < $('.blockMsg').width()) {
-    var w = maxw - ($('.blockMsg').width() - $('.blockMsg .block-subcontainer').innerWidth());
-    w = Math.max(200, w);
-    $('.blockMsg .block-subcontainer').css('width', w + 'px');
-  }
-
-  if (maxh < $('.blockMsg').height()) {
-    var h = maxh - ($('.blockMsg').outerHeight() - $('.blockMsg .block-subcontainer').innerHeight());
-    h = Math.max(200, h);
-    $('.blockMsg .block-subcontainer').css('height', h + 'px');
-  }
-  */
-
-  var l = Math.max(0, Math.round((ww - $('.blockMsg').width()) / 2));
-  var t = Math.max(0, Math.round((wh - $('.blockMsg').height()) / 2));
+  var l = Math.max(0, Math.round((w.width() - b.width()) / 2)) + d.scrollLeft();
+  var t = Math.max(0, Math.round((w.height() - b.height()) / 2)) + d.scrollTop();
 
   $('.blockMsg').css(
     {
