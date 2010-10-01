@@ -139,6 +139,8 @@ class XLite_Tests_Model_Shipping extends XLite_Tests_TestCase
 
         $order = $this->getTestOrder(false);
 
+        \XLite\Base::getInstance()->config->Shipping->def_calc_shippings_taxes = true;
+
         $address = \XLite\Model\Shipping::getInstance()->getDestinationAddress($order);
 
         $this->assertTrue(is_array($address), 'getDestinationAddress() must return an array');
