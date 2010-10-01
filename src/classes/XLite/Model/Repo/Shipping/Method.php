@@ -107,8 +107,8 @@ class Method extends \XLite\Model\Repo\ARepo
     public function findMethodsByProcessor($processorId)
     {
         $data = $this->defineFindMethodsByProcessor($processorId)
-           ->getQuery()
-           ->getResult();
+            ->getQuery()
+            ->getResult();
 
         return $data;
     }

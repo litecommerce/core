@@ -31,9 +31,9 @@ namespace XLite\View\Form\Product\Modify;
 /**
  * AModify 
  * 
- * @package    XLite
- * @see        ____class_see____
- * @since      3.0.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
 abstract class AModify extends \XLite\View\Form\Product\AProduct
 {

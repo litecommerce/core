@@ -232,7 +232,7 @@ class Profile extends \XLite\Controller\Customer\ACustomer
         $this->set('mode', $this->registerForm->get('mode'));
         if ($this->registerForm->is('valid')) {
             $this->auth->loginProfile($this->registerForm->get('profile'));
-            $this->recalcCart();
+            $this->updateCart();
         }
     }
 
@@ -247,7 +247,7 @@ class Profile extends \XLite\Controller\Customer\ACustomer
                 $cart->set('profile_id', $this->profileForm->profile->get('profile_id'));
                 $cart->setProfile($this->profileForm->profile);
                 $cart->update();
-        		$this->recalcCart();
+        		$this->updateCart();
             }
         }
     }
@@ -263,7 +263,7 @@ class Profile extends \XLite\Controller\Customer\ACustomer
             }
 
             $this->auth->unregister($this->profile);
-        	$this->recalcCart();
+        	$this->updateCart();
             $this->set('mode', "delete");
             $this->set('submode', "confirmed");
         }

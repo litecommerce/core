@@ -88,19 +88,18 @@ class ConfirmDeletion extends \XLite\View\AView
             ->find($this->getParam(self::PARAM_LNG_ID));
     }
 
-	/**
-	 * Check widget visibility 
-	 * 
-	 * @return void
-	 * @access public
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	protected function isVisible()
-	{
-		return parent::isVisible()
-			&& $this->getConfirmLanguage();
-	}
-
+    /**
+     * Check widget visibility 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isVisible()
+    {
+        return parent::isVisible()
+            && $this->getConfirmLanguage();
+    }
 
 }

@@ -74,7 +74,8 @@ class ShippingEstimate extends \XLite\Controller\Customer\ACustomer
     {
         $profile = $this->getCart()->getProfile();
 
-        $country = \XLite\Core\Database::getRepo('XLite\Model\Country')->find(\XLite\Core\Request::getInstance()->country);
+        $country = \XLite\Core\Database::getRepo('XLite\Model\Country')
+            ->find(\XLite\Core\Request::getInstance()->country);
 
         if ($country && $country->getEnabled() && \XLite\Core\Request::getInstance()->zipcode) {
 

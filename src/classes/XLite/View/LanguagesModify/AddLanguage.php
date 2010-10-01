@@ -63,19 +63,18 @@ class AddLanguage extends \XLite\View\AView
             ->findInactiveLanguages();
     }
 
-	/**
-	 * Check widget visibility 
-	 * 
-	 * @return void
-	 * @access public
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	protected function isVisible()
-	{
-		return parent::isVisible()
-			&& $this->getInactiveLanguages();
-	}
-
+    /**
+     * Check widget visibility 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isVisible()
+    {
+        return parent::isVisible()
+            && $this->getInactiveLanguages();
+    }
 
 }

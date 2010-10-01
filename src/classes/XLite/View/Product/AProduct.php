@@ -29,11 +29,11 @@
 namespace XLite\View\Product;
 
 /**
- * AProduct 
+ * Abstract product-based widget
  * 
- * @package    XLite
- * @see        ____class_see____
- * @since      3.0.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
 abstract class AProduct extends \XLite\View\AView
 {

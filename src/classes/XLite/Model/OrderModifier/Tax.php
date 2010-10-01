@@ -39,6 +39,14 @@ class Tax extends \XLite\Model\Order implements \XLite\Base\IDecorator
 {
     const MODIFIER_TAX = 'tax';
 
+    /**
+     * Shipping taxes (cache)
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
     protected $shippingTaxes = array();
 
     /**

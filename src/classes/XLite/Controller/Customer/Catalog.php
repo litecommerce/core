@@ -40,8 +40,8 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
     /**
      * Determines if we need to return categoty link or not 
      * 
-     * @param \XLite\Model\Category $category category model object to use
-     * @param bool                 $includeCurrent flag
+     * @param \XLite\Model\Category $category       category model object to use
+     * @param bool                  $includeCurrent flag
      *  
      * @return string
      * @access protected
@@ -55,8 +55,8 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
     /**
      * Return link to category page 
      * 
-     * @param \XLite\Model\Category $category category model object to use
-     * @param bool                 $includeCurrent flag
+     * @param \XLite\Model\Category $category       category model object to use
+     * @param bool                  $includeCurrent flag
      *  
      * @return string
      * @access protected
@@ -73,7 +73,7 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
      * Return category name and link 
      * 
      * @param \XLite\Model\Category $category       category model object to use_
-     * @param bool                 $includeCurrent flag
+     * @param bool                  $includeCurrent flag
      *  
      * @return \XLite\Model\Location
      * @access protected

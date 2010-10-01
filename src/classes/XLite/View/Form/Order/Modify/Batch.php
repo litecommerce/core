@@ -31,9 +31,9 @@ namespace XLite\View\Form\Order\Modify;
 /**
  * List 
  * 
- * @package    XLite
- * @see        ____class_see____
- * @since      3.0.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
 class Batch extends \XLite\View\Form\Order\Modify\AModify
 {

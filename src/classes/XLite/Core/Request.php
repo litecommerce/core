@@ -196,7 +196,7 @@ class Request extends \XLite\Base\Singleton
     /**
      * Set request method
      *
-      * @param string $method New request method
+     * @param string $method New request method
      *
      * @return void
      * @access public

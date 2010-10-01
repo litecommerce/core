@@ -37,15 +37,15 @@ namespace XLite\View\LanguagesModify;
  */
 class SelectLanguage extends \XLite\View\AView
 {
-	/**
-	 * Translate language (cache)
-	 * 
-	 * @var    \XLite\Model\Language
-	 * @access protected
-	 * @see    ____var_see____
-	 * @since  3.0.0
-	 */
-	protected $translateLanguage = null;
+    /**
+     * Translate language (cache)
+     * 
+     * @var    \XLite\Model\Language
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $translateLanguage = null;
 
     /**
      * Return widget default template
@@ -160,15 +160,15 @@ class SelectLanguage extends \XLite\View\AView
      */
     protected function getTranslatedLanguage()
     {
-		if (!isset($this->translateLanguage)) {
-	        if (\XLite\Core\Request::getInstance()->language) {
-    	        $this->translateLanguage = \XLite\Core\Database::getRepo('\XLite\Model\Language')->findOneByCode(
-        	        \XLite\Core\Request::getInstance()->language
-            	);
-	            if (!$this->translateLanguage || !$this->translateLanguage->added) {
-					$this->translateLanguage = false;
-				}
-			}
+        if (!isset($this->translateLanguage)) {
+            if (\XLite\Core\Request::getInstance()->language) {
+                $this->translateLanguage = \XLite\Core\Database::getRepo('\XLite\Model\Language')->findOneByCode(
+                    \XLite\Core\Request::getInstance()->language
+                );
+                if (!$this->translateLanguage || !$this->translateLanguage->added) {
+                    $this->translateLanguage = false;
+                }
+            }
         }
 
         return $this->translateLanguage;
@@ -188,19 +188,18 @@ class SelectLanguage extends \XLite\View\AView
             ->findInactiveLanguages();
     }
 
-	/**
-	 * Check widget visibility 
-	 * 
-	 * @return void
-	 * @access public
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	protected function isVisible()
-	{
-		return parent::isVisible()
-			&& $this->getInactiveLanguages();
-	}
-
+    /**
+     * Check widget visibility 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isVisible()
+    {
+        return parent::isVisible()
+            && $this->getInactiveLanguages();
+    }
 
 }

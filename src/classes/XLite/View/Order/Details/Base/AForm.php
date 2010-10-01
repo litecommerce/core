@@ -31,9 +31,9 @@ namespace XLite\View\Order\Details\Base;
 /**
  * AForm 
  * 
- * @package    XLite
- * @see        ____class_see____
- * @since      3.0.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
 abstract class AForm extends \XLite\View\Form\AForm
 {
@@ -67,7 +67,6 @@ abstract class AForm extends \XLite\View\Form\AForm
      * Return list of the form default parameters
      * 
      * @return array
-     * @access protected
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0

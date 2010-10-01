@@ -26,7 +26,7 @@
  * @since      3.0.0
  */
 
-namespace XLite\View\LanguageModify;
+namespace XLite\View\LanguagesModify;
 
 /**
  * Language options dialog
@@ -95,7 +95,8 @@ class Options extends \XLite\View\AView
     {
         if (!isset($this->label)) {
             if ($this->getParam(self::PARAM_LNG_ID)) {
-                $this->editLanguage = \XLite\Core\Database::getRepo('\XLite\Model\Language')->find($this->getParam(self::PARAM_LNG_ID));
+                $this->editLanguage = \XLite\Core\Database::getRepo('\XLite\Model\Language')
+                    ->find($this->getParam(self::PARAM_LNG_ID));
 
             } else {
                 $this->editLanguage = false;
@@ -109,7 +110,7 @@ class Options extends \XLite\View\AView
      * Check if widget is visible
      *
      * @return bool
-     * @access public
+     * @access protected
      * @since  3.0.0
      */
     protected function isVisible()

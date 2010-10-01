@@ -31,9 +31,9 @@ namespace XLite\View\Order\Details\Admin;
 /**
  * Model 
  * 
- * @package    XLite
- * @see        ____class_see____
- * @since      3.0.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
 class Model extends \XLite\View\Order\Details\Base\AModel
 {
@@ -77,7 +77,7 @@ class Model extends \XLite\View\Order\Details\Base\AModel
     /**
      * Format order date
      * 
-     * @param array $data widget params
+     * @param array &$data widget params
      *  
      * @return void
      * @access protected

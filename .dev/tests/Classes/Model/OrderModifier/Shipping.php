@@ -233,7 +233,7 @@ class XLite_Tests_Model_OrderModifier_Shipping extends XLite_Tests_TestCase
         \XLite\Base::getInstance()->config->Shipping->shipping_enabled = 'Y';
         \XLite\Base::getInstance()->config->Shipping->def_calc_shippings_taxes = 'N';
 
-        $this->assertFalse($order->isShippingEnabled(), 'isShippingEnabled() must return false (8)');
+        $this->assertTrue($order->isShippingEnabled(), 'isShippingEnabled() must return true (8)');
 
         \XLite\Base::getInstance()->config->Shipping->shipping_enabled = 'Y';
         \XLite\Base::getInstance()->config->Shipping->def_calc_shippings_taxes = 'Y';

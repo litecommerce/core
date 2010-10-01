@@ -294,7 +294,7 @@ class Order extends \XLite\Model\Repo\ARepo
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function defineCollectGarbageQUery()
+    protected function defineCollectGarbageQuery()
     {
         return $this->_em
             ->createQueryBuilder()
