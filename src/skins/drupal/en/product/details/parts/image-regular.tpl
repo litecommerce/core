@@ -11,6 +11,6 @@
  * @since     3.0.0
  *}
 <div class="product-photo">
-  <widget class="\XLite\View\Image" image="{product.getImage()}" className="photo product-thumbnail" id="product_image_{product.product_id}" maxWidth="350" centerImage />
+  <widget class="\XLite\View\Image" image="{product.getImage()}" className="photo product-thumbnail" id="product_image_{product.product_id}" maxWidth="330" centerImage />
   <widget class="\XLite\View\SaveMark" product="{product}" />
 </div>
