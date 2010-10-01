@@ -128,7 +128,7 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
             "//form[@class='product-details hproduct']"
             . "/div[@class='body']"
             . "/div[@class='facebook']"
-            . "/iframe[@src='http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Fxcart2-530.crtdev.local%2F%7Emax%2Fxlite_cms%2Fsrc%2Fstore%2Fproduct%2F%2Fproduct_id-" . $product->getProductId() . "&layout=standard&show_faces=true&width=450&action=like&colorscheme=light&height=80']",
+            . "/iframe[contains(@src,'http://www.facebook.com/plugins/like.php')]",
             'check Facebook Like button'
         );
 
