@@ -19,8 +19,8 @@ function ProductDetailsController(base)
 {
   this.callSupermethod('constructor', arguments);
 
-  if (this.base.get(0) && this.base.get(0).elements.namedItem('product_id')) {
-    this.productId = this.base.get(0).elements.namedItem('product_id').value;
+  if (this.base.get(0) && $('form.product-details', this.base).get(0).elements.namedItem('product_id')) {
+    this.productId = $('form.product-details', this.base).get(0).elements.namedItem('product_id').value;
 
     this.block = new ProductDetailsView(this.base, this.productId);
 
@@ -50,7 +50,7 @@ ProductDetailsController.prototype.productId = null;
 ProductDetailsController.prototype.name = 'ProductDetailsController';
 
 // Find pattern
-ProductDetailsController.prototype.findPattern = 'form.product-details';
+ProductDetailsController.prototype.findPattern = 'div.product-details';
 
 // Controller associated main widget
 ProductDetailsController.prototype.block = null;
@@ -146,7 +146,7 @@ ProductDetailsView.prototype.postprocess = function(isSuccess, initial)
     );
 
     // Form AJAX-based submit
-    this.base.eq(0).bind(
+    $('form.product-details', this.base).eq(0).bind(
       'submit',
       function(event)
       {
