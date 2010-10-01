@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage ____sub_package____
+ * @subpackage View
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -49,9 +49,9 @@ class Checkout extends \XLite\View\Button\Link
     {
         parent::defineWidgetParams();
 
-		$this->widgetParams[self::PARAM_LOCATION]->setValue($this->buildUrl('checkout'));
-		$this->widgetParams[self::PARAM_LABEL]->setValue('Checkout');
-		$this->widgetParams[self::PARAM_STYLE]->setValue('bright-button big-button checkout-button');
-	}
+        $this->widgetParams[self::PARAM_LOCATION]->setValue($this->buildUrl('checkout'));
+        $this->widgetParams[self::PARAM_LABEL]->setValue('Checkout');
+        $this->widgetParams[self::PARAM_STYLE]->setValue('bright-button big-button checkout-button');
+    }
 
 }

@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage ____sub_package____
+ * @subpackage View
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -64,7 +64,7 @@ class PaymentMethod extends \XLite\View\CheckoutStep\Regular\ARegular
     /**
      * Check - specified payment method is selected or not
      *
-     * @param \XLite\Model\PaymentMethod $paymentMethod Payment method
+     * @param \XLite\Model\Payment\Method $method Payment method
      *
      * @return boolean
      * @access protected

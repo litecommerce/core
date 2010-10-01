@@ -464,12 +464,14 @@ class XLite_Web_Customer_Cart extends XLite_Web_Customer_ACustomer
             "//h3[text()='Choose shipping method']"
         );
 
+        $name = $this->getJSExpression('$(".estimate-methods form ul li:eq(1) label ").html()');
+
         $this->check(
             "//div[@class='estimate-methods']"
             . "/form[@method='post']"
             . "/ul"
-            . "/li"
-            . "/input[@type='radio' and @value='101']",
+            . "/li[position()=2]"
+            . "/input[@type='radio']",
             'check 2nd shipping method'
         );
 
@@ -482,7 +484,7 @@ class XLite_Web_Customer_Cart extends XLite_Web_Customer_ACustomer
         );
 
         $this->waitForCondition(
-            'selenium.browserbot.getCurrentWindow().$(".box .estimator ul li").html().search(/Local shipping/) != -1',
+            'selenium.browserbot.getCurrentWindow().$(".box .estimator ul li").html().search(/' . $name . '/) != -1',
             60000,
             'check close estimator'
         );

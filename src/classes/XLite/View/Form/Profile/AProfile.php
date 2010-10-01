@@ -60,7 +60,9 @@ abstract class AProfile extends \XLite\View\Form\AForm
     {
         $result = parent::getDefaultParams();
 
-        if ($profileId = static::getCurrentForm()->getRequestProfileId()) {
+        $profileId = static::getCurrentForm()->getRequestProfileId();
+
+        if ($profileId) {
             $result['profile_id'] = $profileId;
         }
 

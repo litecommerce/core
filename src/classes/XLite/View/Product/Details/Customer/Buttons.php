@@ -49,7 +49,7 @@ class Buttons extends \XLite\View\Product\Details\Customer\ACustomer
      */
     protected function getDefaultTemplate()
     {
-        return $this->getDir() . "/parts/:list.buttons.tpl";
+        return $this->getDir() . '/parts/:list.buttons.tpl';
     }
 
 
@@ -67,6 +67,7 @@ class Buttons extends \XLite\View\Product\Details\Customer\ACustomer
 
         // We had to do the replacement there because viewListName is NULL when in getDefaultTemplate()
         $list = str_replace('product.details.', '', $this->viewListName);
+
         return str_replace(':list', $list, $tpl);
     }
 

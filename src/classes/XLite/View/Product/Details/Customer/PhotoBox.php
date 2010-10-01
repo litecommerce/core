@@ -48,14 +48,14 @@ class PhotoBox extends \XLite\View\Product\Details\Customer\ACustomer
      */
     protected function getDefaultTemplate()
     {
-        return $this->getDir() . "/parts/page.image.photo.tpl";
+        return $this->getDir() . '/parts/page.image.photo.tpl';
     }
 
     /**
      * Return a list of CSS files required to display the widget
      * 
      * @return array
-     * @access protected
+     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -63,7 +63,7 @@ class PhotoBox extends \XLite\View\Product\Details\Customer\ACustomer
     {
         $list = parent::getCSSFiles();
 
-        $list[] = $this->getDir() . "/parts/page.image.photo.css";
+        $list[] = $this->getDir() . '/parts/page.image.photo.css';
 
         return $list;
     }

@@ -31,9 +31,9 @@ namespace XLite\View\Form\Product\Modify;
 /**
  * Details 
  * 
- * @package    XLite
- * @see        ____class_see____
- * @since      3.0.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
 class Single extends \XLite\View\Form\Product\Modify\AModify
 {

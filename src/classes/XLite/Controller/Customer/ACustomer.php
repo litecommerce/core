@@ -126,20 +126,20 @@ abstract class ACustomer extends \XLite\Controller\AController
         \XLite\Core\Database::getEM()->persist($cart);
         \XLite\Core\Database::getEM()->flush();
 
-        $this->assemblyEvent();
+        $this->assembleEvent();
 
         $this->initialCartFingerprint = $this->getCart()->getEventFingerprint();
     }
 
     /**
-     * Assembly updateCart event 
+     * Assemble updateCart event 
      * 
      * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function assemblyEvent()
+    protected function assembleEvent()
     {
         $old = $this->initialCartFingerprint;
         $new = $this->getCart()->getEventFingerprint();
@@ -179,19 +179,6 @@ abstract class ACustomer extends \XLite\Controller\AController
     }
 
     /**
-     * recalcCart 
-     * 
-     * @return void
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function recalcCart()
-    {
-        $this->getCart()->refreshItems();
-        $this->updateCart();
-    }
-
-    /**
      * isCartProcessed 
      * 
      * @return bool
@@ -202,8 +189,6 @@ abstract class ACustomer extends \XLite\Controller\AController
     {
         return $this->getCart()->isProcessed() || $this->getCart()->isQueued();
     }
-
-
 
     /**
      * Return current (or default) product object
@@ -249,6 +234,14 @@ abstract class ACustomer extends \XLite\Controller\AController
         return parent::getShopUrl($url, $currentSecurity ? $currentSecurity : $secure);
     }
 
+    /**
+     * Check - use secure (HTTPS) connection or not
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     public function isSecure()
     {
         $result = parent::isSecure();

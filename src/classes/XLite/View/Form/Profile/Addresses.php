@@ -31,10 +31,9 @@ namespace XLite\View\Form\Profile;
 /**
  * \XLite\View\Form\Profile\Addresses 
  * 
- * @package    XLite
- * @subpackage ____sub_package____
- * @see        ____class_see____
- * @since      3.0.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
 class Addresses extends \XLite\View\Form\Profile\AProfile
 {

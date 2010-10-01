@@ -71,13 +71,14 @@ class Gallery extends \XLite\View\Product\Details\Customer\ACustomer
      * Check visibility
      * 
      * @return bolean
-     * @access public
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
     protected function isVisible()
     {
-        return parent::isVisible() && $this->getProduct()->getActiveDetailedImages();
+        return parent::isVisible()
+            && $this->getProduct()->getActiveDetailedImages();
     }
 
     /**
@@ -92,7 +93,7 @@ class Gallery extends \XLite\View\Product\Details\Customer\ACustomer
      */
     protected function getListItemClass($i)
     {
-        return (0 == $i) ? 'selected' : '';
+        return 0 == $i ? 'selected' : '';
     }
 
     /**

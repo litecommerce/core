@@ -96,7 +96,8 @@ class EditLabel extends \XLite\View\AView
     {
         if (!isset($this->label)) {
             if ($this->getParam(self::PARAM_LABEL_ID)) {
-                $this->label = \XLite\Core\Database::getRepo('\XLite\Model\LanguageLabel')->find($this->getParam(self::PARAM_LABEL_ID));
+                $this->label = \XLite\Core\Database::getRepo('\XLite\Model\LanguageLabel')
+                    ->find($this->getParam(self::PARAM_LABEL_ID));
 
             } else {
                 $this->label = false;
@@ -138,7 +139,7 @@ class EditLabel extends \XLite\View\AView
      * Check if widget is visible
      *
      * @return bool
-     * @access public
+     * @access protected
      * @since  3.0.0
      */
     protected function isVisible()

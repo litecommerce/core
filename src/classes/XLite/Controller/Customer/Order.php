@@ -41,11 +41,11 @@ class Order extends \XLite\Controller\Customer\ACustomer
      * Controller parameters
      * 
      * @var    array
-     * @access public
+     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      */
-    public $params = array('target', 'order_id');
+    protected $params = array('target', 'order_id');
 
     /**
      * Order (cache)

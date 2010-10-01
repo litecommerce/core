@@ -32,6 +32,8 @@ class XLite_Web_Customer_Minicart extends XLite_Web_Customer_ACustomer
 {
     public function testEmptyCart()
     {
+        $this->skipCoverage();
+
         $product = $this->getActiveProduct();
 
         $this->open('store/product//product_id-' . $product->getProductId());
@@ -43,6 +45,8 @@ class XLite_Web_Customer_Minicart extends XLite_Web_Customer_ACustomer
 
     public function testAddToCart()
     {
+        $this->skipCoverage();
+
         $product = $this->getActiveProduct();
 
         $this->open('store/product//product_id-' . $product->getProductId());
@@ -90,6 +94,8 @@ class XLite_Web_Customer_Minicart extends XLite_Web_Customer_ACustomer
 
     public function testAddToCartOnceMore()
     {
+        $this->skipCoverage();
+
         $product = $this->getActiveProduct();
 
         $this->open('store/product//product_id-' . $product->getProductId());
@@ -130,6 +136,8 @@ class XLite_Web_Customer_Minicart extends XLite_Web_Customer_ACustomer
 
     public function testAddToCartOnceMore2()
     {
+        $this->skipCoverage();
+
         $product = $this->getActiveProduct();
 
         $this->open('store/product//product_id-' . $product->getProductId());
@@ -180,6 +188,8 @@ class XLite_Web_Customer_Minicart extends XLite_Web_Customer_ACustomer
 
     public function testOpenClose()
     {
+        $this->skipCoverage();
+
         $product = $this->getActiveProduct();
 
         $this->open('store/product//product_id-' . $product->getProductId());

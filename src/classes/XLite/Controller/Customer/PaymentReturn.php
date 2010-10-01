@@ -123,6 +123,7 @@ class PaymentReturn extends \XLite\Controller\Customer\ACustomer
 
                 case \XLite\Model\Payment\Base\WebBased::RETURN_TYPE_CUSTOM:
                     $txn->getPaymentMethod()->getProcessor()->doCustomReturnRedirect();
+                    break;
 
                 default:
                     $this->setReturnUrl($url);
@@ -151,18 +152,19 @@ class PaymentReturn extends \XLite\Controller\Customer\ACustomer
      */
     protected function doHTMLRedirect($url, $time = 1)
     {
-?>
+        $html = <<<HTML
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <meta http-equiv="Refresh" content="<?php echo $time; ?>;URL=<?php echo $url; ?>" />
+  <meta http-equiv="Refresh" content="$time;URL=$url" />
 </head>
 <body>
-If the page is not updated in <?php echo $time; ?> seconds, please follow this link: <a href="<?php echo $url; ?>">continue &gt;&gt;</a>
+If the page is not updated in $time; seconds, please follow this link: <a href="$url">continue &gt;&gt;</a>
 </body>
 </html>
-<?php
+HTML;
 
-        exit(0);
+        print ($html);
+        exit (0);
     }
 }

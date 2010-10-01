@@ -31,9 +31,9 @@ namespace XLite\View\Order\Details\Admin;
 /**
  * Form 
  * 
- * @package    XLite
- * @see        ____class_see____
- * @since      3.0.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
 class Form extends \XLite\View\Order\Details\Base\AForm
 {

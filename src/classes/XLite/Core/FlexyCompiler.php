@@ -1148,32 +1148,39 @@ class FlexyCompiler extends \XLite\Base\Singleton
         }
     }
 
-    function _addFormIdToActions($text, $text_start)
+    protected function _addFormIdToActions($text, $text_start)
     {
         $blocks = array();
-        $search_text = "action=";
+        $search_text = 'action=';
         $prev_pos = 0;
         while ($pos = strpos($text, $search_text, $prev_pos)) {
             $blocks[] = array(
-                "start" => $prev_pos, 
-                "end" => $pos + strlen($search_text),
-                "body" => substr($text, $prev_pos, $pos + strlen($search_text)-$prev_pos)
+                'start' => $prev_pos, 
+                'end'   => $pos + strlen($search_text),
+                'body'  => substr($text, $prev_pos, $pos + strlen($search_text) - $prev_pos),
             );
             $prev_pos = $pos + strlen($search_text);
         }
 
         foreach ($blocks as $block) {
             // exclude links to customer zone
-            if (preg_match("/cart\.php/", $block['body'])) continue;
+            if (
+                preg_match('/cart\.php/', $block['body'])
+                || !preg_match('/(\?|&)action=/', $block['body'], $matches)
+            ) {
+                continue;
+            }
 
-            if (!preg_match("/(\?|&)action=/", $block['body'], $matches)) continue;
             $action_text = $matches[0];
             $link_symbol = $matches[1];
             $pos = strpos($block['body'], $action_text);
             if ($pos !== false) {
                 $gen_form_id = $this->getXliteFormIDText();
-                $echo = $link_symbol."xlite_form_id=$gen_form_id&action=";
-                $this->subst($text_start+$block['start']+$pos, $text_start+$block['start']+$pos+strlen($action_text), $echo);
+                $echo = $link_symbol . 'xlite_form_id=' . $gen_form_id . '&action=';
+                $this->subst(
+                    $text_start + $block['start'] + $pos, $text_start + $block['start'] + $pos + strlen($action_text),
+                    $echo
+                );
             }
         }
     }

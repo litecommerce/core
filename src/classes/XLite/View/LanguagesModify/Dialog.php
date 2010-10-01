@@ -47,35 +47,35 @@ class Dialog extends \XLite\View\Dialog
      */
     protected $limit = 20;
 
-	/**
-	 * Founded labels with pagination (cache)
-	 * 
-	 * @var    array
-	 * @access protected
-	 * @see    ____var_see____
-	 * @since  3.0.0
-	 */
-	protected $labels = null;
+    /**
+     * Founded labels with pagination (cache)
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $labels = null;
 
-	/**
-	 * Labels count
-	 * 
-	 * @var    integer
-	 * @access protected
-	 * @see    ____var_see____
-	 * @since  3.0.0
-	 */
-	protected $labelsCount = null;
+    /**
+     * Labels count
+     * 
+     * @var    integer
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $labelsCount = null;
 
-	/**
-	 * Pages count 
-	 * 
-	 * @var    integer
-	 * @access protected
-	 * @see    ____var_see____
-	 * @since  3.0.0
-	 */
-	protected $pagesCount = null;
+    /**
+     * Pages count 
+     * 
+     * @var    integer
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $pagesCount = null;
 
     /**
      * Translate language 
@@ -148,12 +148,12 @@ class Dialog extends \XLite\View\Dialog
      * @see    ____func_see____
      * @since  3.0.0
      */
-	protected function getLabels()
-	{
-		$this->defineLabels();
+    protected function getLabels()
+    {
+        $this->defineLabels();
 
-		return $this->labels;
-	}
+        return $this->labels;
+    }
 
     /**
      * Count labels 
@@ -163,12 +163,12 @@ class Dialog extends \XLite\View\Dialog
      * @see    ____func_see____
      * @since  3.0.0
      */
-	public function countLabels()
-	{
+    public function countLabels()
+    {
         $this->defineLabels();
 
         return $this->labelsCount;
-	}
+    }
 
     /**
      * Get pages count
@@ -178,12 +178,12 @@ class Dialog extends \XLite\View\Dialog
      * @see    ____func_see____
      * @since  3.0.0
      */
-	public function getPages()
-	{
-		$this->defineLabels();
+    public function getPages()
+    {
+        $this->defineLabels();
 
-		return $this->pagesCount;
-	}
+        return $this->pagesCount;
+    }
 
     /**
      * Get page index
@@ -229,12 +229,12 @@ class Dialog extends \XLite\View\Dialog
      * @see    ____func_see____
      * @since  3.0.0
      */
-	public function getSearchSubstring()
-	{
-		$data = \XLite\Model\Session::getInstance()->get('labelsSearch');
+    public function getSearchSubstring()
+    {
+        $data = \XLite\Model\Session::getInstance()->get('labelsSearch');
 
-		return is_array($data) && isset($data['name']) ? $data['name'] : '';
-	}
+        return is_array($data) && isset($data['name']) ? $data['name'] : '';
+    }
 
     /**
      * Check - widget search all labels or not
@@ -245,11 +245,11 @@ class Dialog extends \XLite\View\Dialog
      * @since  3.0.0
      */
     public function isSearchAll()
-	{
+    {
         $data = \XLite\Model\Session::getInstance()->get('labelsSearch');
 
         return is_array($data) && !isset($data['name']);
-	}
+    }
 
     /**
      * Check - search is enabled or not
@@ -392,53 +392,53 @@ class Dialog extends \XLite\View\Dialog
      * @see    ____func_see____
      * @since  3.0.0
      */
-	protected function defineLabels()
-	{
-		if (!isset($this->labels)) {
+    protected function defineLabels()
+    {
+        if (!isset($this->labels)) {
             $this->labelsCount = 0;
             $this->labels = array();
 
             $data = \XLite\Model\Session::getInstance()->get('labelsSearch');
 
-			if (is_array($data)) {
+            if (is_array($data)) {
 
-				// Get total count
-				if (isset($data['name'])) {
-					$this->labelsCount = \XLite\Core\Database::getRepo('\XLite\Model\LanguageLabel')
-						->countByName($data['name']);
+                // Get total count
+                if (isset($data['name'])) {
+                    $this->labelsCount = \XLite\Core\Database::getRepo('\XLite\Model\LanguageLabel')
+                        ->countByName($data['name']);
 
-				} else {
-					$this->labelsCount = \XLite\Core\Database::getRepo('\XLite\Model\LanguageLabel')->count();
-				}
+                } else {
+                    $this->labelsCount = \XLite\Core\Database::getRepo('\XLite\Model\LanguageLabel')->count();
+                }
 
                 $page = \XLite\Core\Request::getInstance()->page
                     ? \XLite\Core\Request::getInstance()->page
                     : $data['page'];
 
-				list($this->pagesCount, $data['page']) = \XLite\Core\Operator::calculatePagination(
+                list($this->pagesCount, $data['page']) = \XLite\Core\Operator::calculatePagination(
                     $this->labelsCount,
                     $page,
                     $this->limit
                 );
-				$start = ($data['page'] - 1) * $this->limit;
+                $start = ($data['page'] - 1) * $this->limit;
 
-				// Get frame
-				if (!$this->labelsCount) {
-					$this->labels = array();
+                // Get frame
+                if (!$this->labelsCount) {
+                    $this->labels = array();
 
-				} elseif (isset($data['name'])) {
-					$this->labels = \XLite\Core\Database::getRepo('\XLite\Model\LanguageLabel')
-						->findLikeName($data['name'], $start, $this->limit);
+                } elseif (isset($data['name'])) {
+                    $this->labels = \XLite\Core\Database::getRepo('\XLite\Model\LanguageLabel')
+                        ->findLikeName($data['name'], $start, $this->limit);
 
-				} else {
-					$this->labels = \XLite\Core\Database::getRepo('\XLite\Model\LanguageLabel')
+                } else {
+                    $this->labels = \XLite\Core\Database::getRepo('\XLite\Model\LanguageLabel')
                         ->findFrame($start, $this->limit);
-				}
+                }
 
-				\XLite\Model\Session::getInstance()->set('labelsSearch', $data);
-			}
-		}
-	}
+                \XLite\Model\Session::getInstance()->set('labelsSearch', $data);
+            }
+        }
+    }
 
     /**
      * Register CSS files

@@ -65,7 +65,7 @@ class Transaction extends \XLite\Model\Repo\ARepo
     /**
      * Define query for findOneByParams() method
      * 
-     * @param array   $params   Parameters
+     * @param array   $params  Parameters
      * @param integer $orderId Order id
      *  
      * @return \Doctrine\ORM\QueryBuilder

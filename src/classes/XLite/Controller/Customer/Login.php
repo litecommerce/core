@@ -142,7 +142,7 @@ class Login extends \XLite\Controller\Customer\ACustomer
 
         $this->getCart()->setProfileId($this->profile->get('profile_id'));
 
-        $this->recalcCart();
+        $this->updateCart();
     }
 
     function getShopUrl($url, $secure = false, $pure_url = false)
@@ -162,7 +162,7 @@ class Login extends \XLite\Controller\Customer\ACustomer
                 \XLite\Core\Database::getEM()->flush();
 
         	} else {
-                $this->recalcCart();
+                $this->updateCart();
         	}
         }
     }
