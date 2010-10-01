@@ -34,6 +34,8 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
     {
         $product = $this->getActiveProduct();
 
+        $productId = $product->getProductId();
+
         $this->openAndWait('store/product//product_id-' . $product->getProductId());
 
         $this->assertElementPresent(
@@ -43,30 +45,32 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
 
         // Image block
         if ($product->hasZoomImage()) {
+
+            $listSelector = "css=div.product-details form.product-details.hproduct .image .product-photo-box"; 
+
             $this->assertElementPresent(
-                "//form[@class='product-details hproduct']"
-                . "/div[@class='image']"
-                . "/div[@class='image-box']"
-                . "/div[@class='image-center']"
-                . "/div[@id='wrap']"
-                . '/a[@id="pimage_' . $product->getProductId() . '" and @class="cloud-zoom" and @rel="adjustX: 97, showTitle: false, tintOpacity: 0.5, tint: \'#fff\', lensOpacity: 0"]'
-                . "/img[@class='photo product-thumbnail']",
+                $listSelector,
+                'check product-photo-box'
+            );
+
+            $this->assertElementPresent(
+                "$listSelector .product-photo div#wrap a.cloud-zoom#pimage_".$productId." img.photo.product-thumbnail",
                 'check image'
             );
+
+            $imageRel = $this->getJSExpression("$('a.cloud-zoom#pimage_$productId').attr('rel')");
+            $this->assertEquals(
+                $imageRel,
+                "adjustX: 97, showTitle: false, tintOpacity: 0.5, tint: '#fff', lensOpacity: 0",
+                "check image rel attribute"
+            );
+
             $this->assertElementPresent(
-                "//form[@class='product-details hproduct']"
-                . "/div[@class='image']"
-                . "/div[@class='image-box']"
-                . "/a[@class='arrow left-arrow']"
-                . "/img",
+                "$listSelector a.arrow.left-arrow img",
                 'check left arrow'
             );
             $this->assertElementPresent(
-                "//form[@class='product-details hproduct']"
-                . "/div[@class='image']"
-                . "/div[@class='image-box']"
-                . "/a[@class='arrow right-arrow']"
-                . "/img",
+                "$listSelector a.arrow.right-arrow img",
                 'check right arrow'
             );
         }
@@ -83,8 +87,8 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
             $this->assertElementPresent(
                 "//form[@class='product-details hproduct']"
                 . "/div[@class='image']"
-                . "/div[@class='gallery-container']"
-                . "/ul[@class='gallery']"
+                . "/div[@class='product-image-gallery']"
+                . "/ul"
                 . "/li"
                 . "/a[@rel='gallery']"
                 . "/img",
@@ -92,12 +96,12 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
             );
             $this->assertEquals(
                 count($product->getActiveDetailedImages()),
-                $this->getJSExpression("$('.product-details .image .gallery li a').length"),
+                $this->getJSExpression("$('div.product-details .image .product-image-gallery li a').length"),
                 'check gallery length'
             );
             $this->assertEquals(
                 'true',
-                $this->getJSExpression("$('.product-details .image .gallery li').eq(0).hasClass('selected')"),
+                $this->getJSExpression("$('div.product-details .image .product-image-gallery li').eq(0).hasClass('selected')"),
                 'check default selected item'
             );
         }
@@ -105,32 +109,40 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
         // Main block
         $this->assertElementPresent(
             "//form[@class='product-details hproduct']"
-            . "/div[@class='body']"
+            . "/div[@class='product-details-info']"
             . "/div[@class='price product-price' and text()='$ " . $product->getPrice() . "']",
             'check price'
         );
         $this->assertElementPresent(
-            "//form[@class='product-details hproduct']"
-            . "/div[@class='body']"
-            . "/div[@class='buttons-row']"
-            . "/input[@type='text' and @class='quantity field-requred field-integer field-positive field-non-zero' and @value='1']",
+            "css=form.product-details.hproduct .product-details-info .product-buttons input.quantity.field-requred.field-integer.field-positive.field-non-zero[type=text][value=1]",
             'check quantity input box'
         );
+
         $this->assertElementPresent(
             "//form[@class='product-details hproduct']"
-            . "/div[@class='body']"
+            . "/div[@class='product-details-info']"
+            . "/div[@class='product-buttons']"
             . "/div[@class='buttons-row']"
             . "/button[@type='submit' and @class='bright add2cart']"
             . "/span[text()='Add to Bag']",
             'check Add to bag button'
         );
+
+        $facebookSelector = "css=form.product-details.hproduct .product-details-info .facebook iframe";
         $this->assertElementPresent(
-            "//form[@class='product-details hproduct']"
-            . "/div[@class='body']"
-            . "/div[@class='facebook']"
-            . "/iframe[contains(@src,'http://www.facebook.com/plugins/like.php')]",
-            'check Facebook Like button'
+            $facebookSelector,
+            "check Facebook widget"
         );
+
+        $url = urlencode($this->getLocation());
+        $facebookLink = "http://www.facebook.com/plugins/like.php?href=$url&layout=standard&show_faces=true&width=450&action=like&colorscheme=light&height=24";
+        $iframeLink = $this->getJSExpression("$('.facebook iframe').attr('src')");
+        $this->assertEquals(
+            $iframeLink,
+            $facebookLink,
+            'check Facebook Like link'
+        );
+
 
         // Tabs
         $this->assertElementPresent(
@@ -229,16 +241,16 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
             $this->assertElementPresent(
                 "//form[@class='product-details hproduct']"
                 . "/div[@class='image']"
-                . "/div[@class='image-box']"
-                . "/div[@class='image-center' and @style='width: " . $w . "px;']",
+                . "/div[@class='product-photo-box']"
+                . "/div[@class='product-photo' and @style='width: " . $w . "px;']",
                 'check new image center block [' . $idx. ' image]'
             );
 
             $this->assertElementPresent(
                 "//form[@class='product-details hproduct']"
                 . "/div[@class='image']"
-                . "/div[@class='image-box']"
-                . "/div[@class='image-center']"
+                . "/div[@class='product-photo-box']"
+                . "/div[@class='product-photo']"
                 . "/div[@id='wrap']"
                 . "/a[@class='cloud-zoom']"
                 . "/img[@src='" . $src . "' and @width='" . $w . "' and @height='" . $h . "']",
@@ -274,7 +286,7 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
 
         $this->getJSExpression('$("a.loupe").trigger("click")');
 
-        $src = $this->getJSExpression("$('ul.gallery li:eq(0) a').attr('href')");
+        $src = $this->getJSExpression("$('.product-image-gallery ul li:eq(0) a').attr('href')");
 
         $this->waitForCondition(
             'selenium.browserbot.getCurrentWindow().$("#cboxPhoto").attr("src") == "' . $src . '"',
@@ -329,7 +341,7 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
         );
 
         // Check 'next' navigation
-        $length = intval($this->getJSExpression("$('ul.gallery li a').length"));
+        $length = intval($this->getJSExpression("$('.product-image-gallery ul li a').length"));
 
         for ($i = 1; $i < $length; $i++) {
 
@@ -342,7 +354,7 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
                 . "/div[@id='cboxNext' and text()='next']"
             );
 
-            $src = $this->getJSExpression("$('ul.gallery li:eq($i) a').attr('href')");
+            $src = $this->getJSExpression("$('.product-image-gallery ul li:eq($i) a').attr('href')");
 
             $this->assertElementPresent(
                 "//body"
@@ -382,39 +394,38 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
 
         $qty = 0;
 
-        $this->click(
-            "//form[@class='product-details hproduct']"
-            . "/div[@class='body']"
-            . "/div[@class='buttons-row']"
-            . "/button[@class='bright add2cart']"
+        $formSelector = "css=form.product-details.hproduct";
+        $cartButtonSelector = "$formSelector .product-details-info .product-buttons button.bright.add2cart";
+        $buyButtonSelector = "$formSelector .product-details-info .product-buttons-added button.action.buy-more";
+        $continueButtonSelector = "$formSelector .product-details-info .product-buttons-added button.bright.continue";
+    
+        $this->assertElementPresent(
+            $cartButtonSelector,
+            "check add2cart button"
         );
-
+        $this->click($cartButtonSelector);
+        
         $qty++;
 
         $this->waitForCondition(
-            'selenium.browserbot.getCurrentWindow().$(".product-details .added .buy-more").length > 0',
+            'selenium.browserbot.getCurrentWindow().$(".product-details .product-buttons-added .buy-more").length > 0',
             10000,
             'check content reloading'
         );
-
-        $this->assertElementPresent(
-            "//form[@class='product-details hproduct']"
-            . "/div[@class='body']"
-            . "/div[@class='added-block']"
-            . "/button[@class='bright continue']",
+       $this->assertElementPresent(
+            $continueButtonSelector,
             'check Continue shopping button'
         );
 
+        // This assertion requires the minicart widget to be visible on the page
         $q = intval($this->getJSExpression("$('.minicart-items-number').html()"));
-
         $this->assertEquals($qty, $q, 'check quantity');
 
-        $this->click(
-            "//form[@class='product-details hproduct']"
-            . "/div[@class='body']"
-            . "/div[@class='buttons-row added']"
-            . "/button[@class='action buy-more']"
+        $this->assertElementPresent(
+            $buyButtonSelector,
+            'check Buy now button'
         );
+        $this->click($buyButtonSelector);
 
         $qty++;
 
@@ -423,7 +434,7 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
             10000,
             'check content reloading #2'
         );
-
+ 
         /* TODO - rework after Inventory tracking module is changed
 
         $this->getJSExpression("$('.product-details input.quantity').attr('value', 3)");
