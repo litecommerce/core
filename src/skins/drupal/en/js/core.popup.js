@@ -23,13 +23,21 @@ popup.isLoading = false;
 // Request type status - POST or GET
 popup.isPostRequest = false;
 
+// Identifier of the element displayed in the popup
+popup.elementId = false;
+
 /**
  * Methods 
  */
 
 // Load data to popup
-popup.load = function(url)
+popup.load = function(url, id)
 {
+
+  if (id) {
+    this.elementId = id;
+  }
+
   var result = false;
   if (core.isRequesterEnabled) {
     var method = null;
@@ -231,6 +239,11 @@ popup.open = function(box)
       'position': 'absolute'
     }
   );
+
+  if (this.elementId) {
+    var className = 'BlockMsg-' + this.elementId;
+    $('.blockMsg').addClass(className);  
+  }
 
   this.reposition();
 

@@ -45,7 +45,7 @@ ItemsList.prototype.openQuickLookPopup = function(button)
   this.URLAJAXParams['target'] = 'quick_look';
   this.URLAJAXParams['product_id'] = $(button).attr('id');
 
-  return !popup.load(URLHandler.buildURL(this.URLAJAXParams));
+  return !popup.load(URLHandler.buildURL(this.URLAJAXParams), 'product-quicklook');
 }
 
 

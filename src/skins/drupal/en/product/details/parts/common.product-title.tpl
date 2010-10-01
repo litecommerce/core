@@ -13,4 +13,4 @@
  * @ListChild (list="product.details.page.info", weight="10")
  * @ListChild (list="product.details.quicklook.info", weight="10")
  *}
-<h2 class="fn">{product.name:h}</h2>
+<h1 class="fn title">{product.name:h}</h1>
