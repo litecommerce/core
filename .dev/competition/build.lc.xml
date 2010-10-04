@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="xcart" default="deploy" basedir=".">
+
+    <target name="clear">
+        <delete dir="lc" quiet="true" failonerror="false" />
+    </target>
+
+    <target name="deploy">
+		<mkdir dir="lc" />
+        <exec executable="svn" dir="lc" >
+            <arg line="checkout svn://svn.crtdev.local/repo/xlite/main xlite" />
+        </exec>
+        <exec executable="svn" dir="lc" >
+            <arg line="checkout svn://svn.crtdev.local/repo/xlite_cms/main xlite_cms" />
+        </exec>
+
+		<mkdir dir="lc/xlite_cms/src/sites/default" />
+        <copy file="deploy/lc/settings.php" todir="lc/xlite_cms/src/sites/default" />
+
+        <filter token="webDir" value="${webDir}/lc/xlite_cms/src" />
+        <copy file="deploy/lc/.htaccess" todir="lc/xlite_cms/src" filtering="true" />
+
+		<filter token="webDir" value="${webDir}/lc/xlite/src" />
+		<copy file="deploy/lc/config.local.php" todir="lc/xlite/src/etc" filtering="true" />
+
+        <chmod file="lc/xlite_cms/.dev/db.import" perm="755" />
+        <exec executable=".dev/db.import" dir="lc/xlite_cms" failonerror="true" />
+
+        <chmod file="lc/xlite/.dev/db.import" perm="755" />
+		<exec executable=".dev/db.import" dir="lc/xlite" failonerror="true" />
+
+    </target>
+
+</project>
