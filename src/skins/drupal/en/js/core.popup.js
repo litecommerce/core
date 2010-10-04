@@ -23,6 +23,9 @@ popup.isLoading = false;
 // Request type status - POST or GET
 popup.isPostRequest = false;
 
+// Current unblock event handler
+popup.currentUnblockCallback = null;
+
 // Identifier of the element displayed in the popup
 popup.elementId = false;
 
@@ -31,12 +34,8 @@ popup.elementId = false;
  */
 
 // Load data to popup
-popup.load = function(url, id)
+popup.load = function(url, id, unblockCallback)
 {
-
-  if (id) {
-    this.elementId = id;
-  }
 
   var result = false;
   if (core.isRequesterEnabled) {
@@ -54,7 +53,12 @@ popup.load = function(url, id)
 
     if (method) {
       this.isLoading = true;
+      this.currentUnblockCallback = unblockCallback;
       this.openAsWait();
+
+      if (id) {
+        this.elementId = id;
+      }
       this.isPostRequest = false;
       result = this[method](url);
     }
@@ -118,7 +122,7 @@ popup.postprocessRequest = function(XMLHttpRequest, textStatus, data, isValid)
     // Internal redirect
     var url = XMLHttpRequest.getResponseHeader('Location');
     if (url) {
-      this.load(url);
+      this.load(url, this.elementId, this.currentUnblockCallback);
 
     } else {
       self.location.reload(true);
@@ -167,14 +171,14 @@ popup.extractRequestData = function(data)
 // Popup post processing 
 popup.postprocess = function()
 {
-  $('.blockMsg h1.title').remove();
+  $('.blockMsg h1#page-title.title').remove();
 
   var o = this;
   $('.blockMsg form').submit(
     function(event) {
       event.stopPropagation();
       o.freezePopup();
-      o.load(this);
+      o.load(this, o.elementId, o.currentUnblockCallback);
       return false;
     }
   );
@@ -241,8 +245,7 @@ popup.open = function(box)
   );
 
   if (this.elementId) {
-    var className = 'BlockMsg-' + this.elementId;
-    $('.blockMsg').addClass(className);  
+    $('.blockMsg').addClass('BlockMsg-' + this.elementId);
   }
 
   this.reposition();
@@ -297,6 +300,13 @@ popup.reposition = function()
 popup.close = function()
 {
   $.unblockUI();
+
+  if (this.currentUnblockCallback && this.currentUnblockCallback.constructor == Function) {
+    this.currentUnblockCallback();
+  }
+
+  this.elementId = null;
+  this.currentUnblockCallback = null;
 }
 
 $(document).ready(
