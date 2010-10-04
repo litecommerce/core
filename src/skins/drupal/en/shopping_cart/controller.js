@@ -1,3 +1,4 @@
+/* vim: set ts=2 sw=2 sts=2 et: */
 
 /**
  * Cart controller
@@ -26,7 +27,10 @@ function CartController(base)
     core.bind(
       'updateCart',
       function(event, data) {
-        if (!o.selfUpdated) {
+        if (o.selfUpdated) {
+          o.block.cartUpdated = true;
+
+        } else {
           o.block.load();
         }
       }
@@ -95,6 +99,9 @@ CartView.prototype.updateActionTTL = 2000;
 
 // Update quantity timeout resource
 CartView.prototype.submitTO = null;
+
+// Cart silence updated status
+CartView.prototype.cartUpdated = false;
 
 // Postprocess widget
 CartView.prototype.postprocess = function(isSuccess, initial)
@@ -221,16 +228,36 @@ CartView.prototype.clearCart = function(event, form)
 CartView.prototype.openShippingEstimator = function(event, elm)
 {
   if (!this.base.get(0).controller.selfUpdated && !this.submitTO) {
-    popup.load(elm);
+    var o = this;
+    this.base.get(0).controller.selfUpdated = true;
+    popup.load(
+      elm,
+      null,
+      function(event) {
+        o.closeShippingEstimatorHandler();
+      }
+    );
   }
 
   return false;
+}
+
+// Clse Shipping estimator popup handler
+CartView.prototype.closeShippingEstimatorHandler = function()
+{
+  if (this.cartUpdated) {
+    this.load();
+  }
+
+  this.base.get(0).controller.selfUpdated = false;
+  this.cartUpdated = false;
 }
 
 // Form POST processor
 CartView.prototype.postprocessAction = function(XMLHttpRequest, textStatus, data, isValid)
 {
   this.base.get(0).controller.selfUpdated = false;
+  this.cartUpdated = false;
 
   if (isValid) {
     this.load();

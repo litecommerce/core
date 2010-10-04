@@ -79,17 +79,34 @@ class ShippingEstimate extends \XLite\Controller\Customer\ACustomer
 
         if ($country && $country->getEnabled() && \XLite\Core\Request::getInstance()->zipcode) {
 
-            if (!$profile) {
-                $this->getCart()->setDetail('shipping_estimate_country', $country->getCode());
-                $this->getCart()->setDetail('shipping_estimate_zipcode', \XLite\Core\Request::getInstance()->zipcode);
+            $address = \XLite\Model\Shipping::getInstance()->getDestinationAddress($this->getCart());
 
-            } else {
-                $profile->set('shipping_country', $country->getCode());
-                $profile->set('shipping_zipcode', \XLite\Core\Request::getInstance()->zipcode);
-                $profile->update();
+            if (
+                !$address
+                || $address['country'] != $country->getCode()
+                || $address['zipcode'] != \XLite\Core\Request::getInstance()->zipcode
+            ) {
+
+                if (!$profile) {
+                    $this->getCart()->setDetail('shipping_estimate_country', $country->getCode());
+                    $this->getCart()->setDetail('shipping_estimate_zipcode', \XLite\Core\Request::getInstance()->zipcode);
+
+                } else {
+                    $profile->set('shipping_country', $country->getCode());
+                    $profile->set('shipping_zipcode', \XLite\Core\Request::getInstance()->zipcode);
+                    $profile->update();
+                }
+
+                $this->updateCart();
+
+                \XLite\Core\Event::updateCart(
+                    array(
+                        'items'            => array(),
+                        'shipping_address' => \XLite\Model\Shipping::getInstance()->getDestinationAddress($this->getCart()),
+                    )
+                );
+
             }
-
-            $this->updateCart();
 
             $this->valid = true;
 
@@ -121,7 +138,7 @@ class ShippingEstimate extends \XLite\Controller\Customer\ACustomer
 
             \XLite\Core\Event::updateCart(
                 array(
-                    'items' => array(),
+                    'items'    => array(),
                     'shipping' => $this->getCart()->getShippingId(),
                 )
             );
