@@ -130,4 +130,31 @@ class Image extends \XLite\View\Product\Details\Customer\ACustomer
 
         return $list;
     }
+
+    /**
+     * Return the max image width depending on whether it is a quicklook popup, or not
+     * 
+     * @return int
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getWidgetMaxWidth()
+    {
+        return strpos($this->viewListName, 'quicklook') ? 300 : 330;
+    }
+
+    /**
+     * Return a relative horizontal position of the zoom box depending on whether it is a quicklook popup, or not
+     * 
+     * @return int
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getZoomAdjustX()
+    {
+        return strpos($this->viewListName, 'quicklook') ? 32 : 97;
+    } 
+
 }
