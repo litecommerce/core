@@ -24,8 +24,6 @@ function ProductsList(cell, URLParams, URLAJAXParams)
   this.callSupermethod('constructor', arguments);
 }
 
-//extend(ProductsList, ItemsList);
-
 // Set new display mode
 ProductsList.prototype.changeDisplayMode = function(handler)
 {
