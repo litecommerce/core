@@ -46,6 +46,25 @@ class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
     const PARAM_USE_NODE    = 'useNode';
     const PARAM_CATEGORY_ID = 'category_id';
 
+    /**
+     * Category id
+     * 
+     * @var    mixed
+     * @access protected
+     * @see    ____var_see____
+     * @since  1.0.0
+     */
+    protected $rootCategoryId = null;
+
+    /**
+     * Bestsellers products
+     * 
+     * @var    mixed
+     * @access protected
+     * @see    ____var_see____
+     * @since  1.0.0
+     */
+    protected $bestsellProducts = null;
 
     /**
      * Get title
@@ -87,7 +106,7 @@ class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
 
         $this->widgetParams += array(
             self::PARAM_USE_NODE => new \XLite\Model\WidgetParam\Checkbox(
-                'Use current category id', false, true
+                'Use current category id', true, true
             ),
             self::PARAM_ROOT_ID => new \XLite\Model\WidgetParam\ObjectId\Category(
                 'Root category Id', 0, true, true
@@ -136,28 +155,29 @@ class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
     /**
      * Return products list
      * 
-     * @return void
+     * @return mixed
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getData(\XLite\Core\CommonCell $cnd, $countOnly = false)
     {
-        $limit = $this->getItemsCount();
+        if (is_null($this->bestsellProducts)) {
 
-        if (true === $countOnly) {
+            $limit = (int)(self::WIDGET_TYPE_SIDEBAR == $this->getParam(self::PARAM_WIDGET_TYPE)
+                ? $this->getParam(self::PARAM_SIDEBAR_MAX_ITEMS)
+                : $this->config->Bestsellers->number_of_bestsellers);
 
-            $result = $limit;
-
-        } else {
-
-            $result = \XLite\Core\Database::getRepo('XLite\Model\Product')
+            $this->bestsellProducts = \XLite\Core\Database::getRepo('XLite\Model\Product')
                 ->findBestsellers(
-                    $limit, 
+                    $limit,
                     $this->getRootId()
-                ); 
-
+                );
         }
+
+        $result = true === $countOnly
+            ? count($this->bestsellProducts)
+            : $this->bestsellProducts;
 
         return $result;
     }
@@ -172,24 +192,15 @@ class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
      */
     protected function getRootId()
     {
-        return $this->getParam(self::PARAM_USE_NODE) 
-            ? intval(\XLite\Core\Request::getInstance()->category_id) 
-            : $this->getParam(self::PARAM_ROOT_ID);
-    }
+        if (is_null($this->rootCategoryId)) {
 
-    /** 
-     * Get the number of bestsellers to display
-     * 
-     * @return integer
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getItemsCount()
-    {   
-        return (int)(self::WIDGET_TYPE_SIDEBAR == $this->getParam(self::PARAM_WIDGET_TYPE)
-            ? $this->getParam(self::PARAM_SIDEBAR_MAX_ITEMS)
-            : $this->config->Bestsellers->number_of_bestsellers);
+            $this->rootCategoryId = $this->getParam(self::PARAM_USE_NODE) 
+                ? intval(\XLite\Core\Request::getInstance()->category_id) 
+                : $this->getParam(self::PARAM_ROOT_ID);
+
+        }
+
+        return $this->rootCategoryId;
     }
 
     /**
