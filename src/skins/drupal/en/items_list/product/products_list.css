@@ -77,13 +77,12 @@ table.list-body td {
   border-style: none;
 }
 
-table.list-body td.hproduct a.product-thumbnail {
-  display: table-cell;
+table.list-body td.hproduct a.product-thumbnail
+{
+  display: block;
+  margin: 0 auto;
   text-align: center;
-  vertical-align: middle;
-  height: 200px;
-  min-height: 200px;
-  min-width: 185px;
+  padding: 12px 0;
 }
 
 table.list-body-grid td {
