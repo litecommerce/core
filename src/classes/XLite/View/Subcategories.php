@@ -148,10 +148,10 @@ class Subcategories extends \XLite\View\Dialog
                 'Display mode', self::DISPLAY_MODE_ICONS, true, $this->displayModes
             ),
             self::PARAM_ICON_MAX_WIDTH => new \XLite\Model\WidgetParam\Int(
-                'Maximal icon width', 90, true
+                'Maximal icon width', 160, true
             ),
             self::PARAM_ICON_MAX_HEIGHT => new \XLite\Model\WidgetParam\Int(
-                'Maximal icon height', 90, true
+                'Maximal icon height', 160, true
             ),
         );
     }

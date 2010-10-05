@@ -15,7 +15,7 @@
 
 <div class="quick-look-cell-thumbnail">
   {displayListPart(#quick_look.thumbnail#,_ARRAY_(#product#^product))}
-  <a IF="isShowThumbnails()&product.hasThumbnail()" href="{buildURL(#product#,##,_ARRAY_(#product_id#^product.product_id,#category_id#^category_id))}" class="product-thumbnail url">
-  <widget class="\XLite\View\Image" image="{product.getThumbnail()}" maxWidth="{getIconWidth()}" maxHeight="{getIconHeight()}" alt="{product.name}" className="photo" />
+  <a IF="isShowThumbnails()&product.hasImage()" href="{buildURL(#product#,##,_ARRAY_(#product_id#^product.product_id,#category_id#^category_id))}" class="product-thumbnail url">
+    <widget class="\XLite\View\Image" image="{product.getImage()}" maxWidth="{getIconWidth()}" maxHeight="{getIconHeight()}" alt="{product.name}" className="photo product-thumbnail" />
   </a>
 </div>
