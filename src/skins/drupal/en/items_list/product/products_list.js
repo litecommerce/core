@@ -12,35 +12,40 @@
  */
 
 // Products list class
+
+extend(ProductsList, ItemsList);
+
 function ProductsList(cell, URLParams, URLAJAXParams)
 {
   if (!cell) {
     return;
   }
 
-  this.constructor.prototype.constructor(cell, URLParams, URLAJAXParams);
+  this.callSupermethod('constructor', arguments);
 }
 
+//extend(ProductsList, ItemsList);
+
 // Set new display mode
-ItemsList.prototype.changeDisplayMode = function(handler)
+ProductsList.prototype.changeDisplayMode = function(handler)
 {
-  return this.constructor.prototype.process('displayMode', $(handler).attr('class'));
+  return this.process('displayMode', $(handler).attr('class'));
 }
 
 // Change sort criterion
-ItemsList.prototype.changeSortByMode = function(handler)
+ProductsList.prototype.changeSortByMode = function(handler)
 {
   return this.process('sortBy', handler.options[handler.selectedIndex].value);
 }
 
 // Change sort order
-ItemsList.prototype.changeSortOrder = function()
+ProductsList.prototype.changeSortOrder = function()
 {
   return this.process('sortOrder', ('asc' == this.URLParams.sortOrder) ? 'desc' : 'asc');
 }
 
 // Open the QuickLook popup
-ItemsList.prototype.openQuickLookPopup = function(button)
+ProductsList.prototype.openQuickLookPopup = function(button)
 {
   this.URLAJAXParams['target'] = 'quick_look';
   this.URLAJAXParams['product_id'] = $(button).attr('id');
@@ -48,8 +53,7 @@ ItemsList.prototype.openQuickLookPopup = function(button)
   return !popup.load(URLHandler.buildURL(this.URLAJAXParams), 'product-quicklook');
 }
 
-
-ItemsList.prototype.listeners.displayModes = function(handler)
+ProductsList.prototype.listeners.displayModes = function(handler)
 {
   $('.display-modes a', handler.container).click(
     function() {
@@ -58,7 +62,7 @@ ItemsList.prototype.listeners.displayModes = function(handler)
   );
 }
 
-ItemsList.prototype.listeners.sortByModes = function(handler)
+ProductsList.prototype.listeners.sortByModes = function(handler)
 {
   $('select.sort-crit', handler.container).change(
     function() {
@@ -67,7 +71,7 @@ ItemsList.prototype.listeners.sortByModes = function(handler)
   );
 }
 
-ItemsList.prototype.listeners.sortOrderModes = function(handler)
+ProductsList.prototype.listeners.sortOrderModes = function(handler)
 {
   $('a.sort-order', handler.container).click(
     function() {
@@ -77,7 +81,7 @@ ItemsList.prototype.listeners.sortOrderModes = function(handler)
 }
 
 // TODO - to improve
-ItemsList.prototype.listeners.dragNDrop = function(handler)
+ProductsList.prototype.listeners.dragNDrop = function(handler)
 {
   var isDropped = false;
 
@@ -136,7 +140,7 @@ ItemsList.prototype.listeners.dragNDrop = function(handler)
   });
 }
 
-ItemsList.prototype.listeners.quickLookButtons = function(handler)
+ProductsList.prototype.listeners.quickLookButtons = function(handler)
 {
   $('.quick-look-cell button.action', handler.container).click(
     function() {
@@ -144,8 +148,4 @@ ItemsList.prototype.listeners.quickLookButtons = function(handler)
     }
   );
 }
-
-
-ProductsList.prototype = new ItemsList();
-ProductsList.prototype.constructor = ItemsList;
 
