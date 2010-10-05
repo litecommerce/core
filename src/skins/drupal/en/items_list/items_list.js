@@ -27,6 +27,8 @@ function ItemsList(cell, URLParams, URLAJAXParams)
   this.addListeners();
 }
 
+extend(ItemsList, AController);
+
 ItemsList.prototype.container = null;
 
 ItemsList.prototype.cell = null;
@@ -153,6 +155,7 @@ ItemsList.prototype.showModalScreen = function()
   $('.blockElement')
     .css({padding: null, border: null, margin: null, textAlign: null, color: null, backgroundColor: null, cursor: null})
     .addClass('wait-block');
+
   $('.blockOverlay')
     .css({padding: null, border: null, margin: null, textAlign: null, color: null, backgroundColor: null, cursor: null})
     .addClass('wait-block-overlay');
