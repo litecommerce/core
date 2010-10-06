@@ -126,7 +126,7 @@ class Subcategories extends \XLite\View\Dialog
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
-        $list[] = 'subcategories/subcategories.css';
+        $list[] = 'common/grid-list.css';
 
         return $list;
     }
@@ -148,10 +148,10 @@ class Subcategories extends \XLite\View\Dialog
                 'Display mode', self::DISPLAY_MODE_ICONS, true, $this->displayModes
             ),
             self::PARAM_ICON_MAX_WIDTH => new \XLite\Model\WidgetParam\Int(
-                'Maximal icon width', 160, true
+                'Maximal icon width', 170, true
             ),
             self::PARAM_ICON_MAX_HEIGHT => new \XLite\Model\WidgetParam\Int(
-                'Maximal icon height', 160, true
+                'Maximal icon height', 170, true
             ),
         );
     }
@@ -196,7 +196,7 @@ class Subcategories extends \XLite\View\Dialog
     }
 
     /**
-     * getCategoryRows 
+     * Return subcategories split into rows
      * 
      * @return array
      * @access protected
@@ -205,11 +205,24 @@ class Subcategories extends \XLite\View\Dialog
      */
     protected function getCategoryRows()
     {
-        $rows = array_chunk($this->getCategory()->getSubcategories(), $this->getColumnsCount());
+        $rows = array_chunk($this->getSubcategories(), $this->getColumnsCount());
         $last = count($rows) - 1;
         $rows[$last] = array_pad($rows[$last], $this->getColumnsCount(), false);
 
         return $rows;
+    }
+
+    /**
+     * Return subcategories
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getSubcategories()
+    {
+        return $this->getCategory()->getSubcategories();
     }
 
 

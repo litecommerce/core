@@ -1431,10 +1431,26 @@ abstract class AView extends \XLite\Core\Handler
     }
 
     /**
-     * displayListPart 
+     * Combines the nested list name from the parent list name and a suffix
      * 
-     * @param string $part   list part name
-     * @param array  $params widget params
+     * @param string $part Suffix to be added to the parent list name
+     *  
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getNestedListName($part)
+    {
+        return $this->getListName() . '.' . $part;
+    }
+
+
+    /**
+     * Display a nested view list
+     * 
+     * @param string $part   Suffix that should be appended to the name of a parent list (will be delimited with a dot)
+     * @param array  $params Widget params
      *  
      * @return void
      * @access protected
@@ -1443,7 +1459,23 @@ abstract class AView extends \XLite\Core\Handler
      */
     protected function displayListPart($part, array $params = array())
     {
-        $this->displayViewListContent($this->getListName() . '.' . $part, $params);
+        $this->displayViewListContent($this->getNestedListName($part), $params);
+    }
+
+    /**
+     * Get a nested view list 
+     * 
+     * @param string $list      Suffix of the nested list name
+     * @param array  $arguments List common arguments
+     *  
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getNestedViewList($part, array $arguments = array())
+    {
+        $this->getViewList($this->getNestedListName($part), $arguments);
     }
 
     /**
