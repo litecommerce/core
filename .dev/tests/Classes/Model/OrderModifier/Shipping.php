@@ -318,7 +318,7 @@ class XLite_Tests_Model_OrderModifier_Shipping extends XLite_Tests_TestCase
     {
         $order = $this->getTestOrder();
 
-        $this->assertEquals(3.84, $order->getWeight(), 'check weight of shipped items');
+        $this->assertEquals(2.56, $order->getWeight(), 'check weight of shipped items');
     }
 
     /**
@@ -390,7 +390,7 @@ class XLite_Tests_Model_OrderModifier_Shipping extends XLite_Tests_TestCase
         $value = $order->getShippedSubtotal();
 
         $this->assertTrue(is_numeric($value), 'getShippedSubtotal() must return a numeric value');
-        $this->assertEquals(211.88, $value, 'getShippedSubtotal() returned wrong value');
+        $this->assertEquals(299.72, round($value, 2), 'getShippedSubtotal() returned wrong value');
     }
 
     /**
@@ -426,7 +426,7 @@ class XLite_Tests_Model_OrderModifier_Shipping extends XLite_Tests_TestCase
         $order->setCurrency(\XLite\Core\Database::getRepo('XLite\Model\Currency')->find(840));
         $order->setProfileId($profile->get('profile_id'));
 
-        $productIds = array(3002, 4004, 4005, 4006, 4007, 4008);
+        $productIds = array(4059, 4004, 4005, 4006, 4007, 4008);
 
         foreach ($productIds as $index => $productId) {
 
