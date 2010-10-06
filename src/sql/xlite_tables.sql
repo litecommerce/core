@@ -17,7 +17,7 @@ CREATE TABLE xlite_categories (
   KEY threshold_bestsellers (threshold_bestsellers),
   KEY enabled (enabled),
   KEY clean_url (clean_url)
-) TYPE=MyISAM;
+) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 DROP TABLE IF EXISTS xlite_category_images;
 CREATE TABLE xlite_category_images (
@@ -32,7 +32,7 @@ CREATE TABLE xlite_category_images (
   hash varchar(32) NOT NULL DEFAULT '',
   PRIMARY KEY (image_id),
   KEY id (id)
-) TYPE=MyISAM;
+) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 DROP TABLE IF EXISTS xlite_category_products;
 CREATE TABLE xlite_category_products (
@@ -45,7 +45,7 @@ CREATE TABLE xlite_category_products (
   KEY xlite_product_links_product (product_id),
   KEY orderby (orderby),
   KEY xlite_product_links_category (category_id)
-) TYPE=MyISAM;
+) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 DROP TABLE IF EXISTS xlite_category_translations;
 CREATE TABLE xlite_category_translations (
@@ -60,7 +60,7 @@ CREATE TABLE xlite_category_translations (
   PRIMARY KEY (label_id),
   KEY ci (code,id),
   KEY i (id)
-) TYPE=MyISAM;
+) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 DROP TABLE IF EXISTS xlite_config;
 CREATE TABLE xlite_config (
@@ -74,8 +74,8 @@ CREATE TABLE xlite_config (
   UNIQUE KEY nc (category, name),
   KEY orderby (orderby),
   KEY type (type),
-  FULLTEXT KEY value (value)
-) TYPE=MyISAM;
+  KEY value (value (65536))
+) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 DROP TABLE IF EXISTS xlite_config_translations;
 CREATE TABLE xlite_config_translations (
@@ -87,7 +87,7 @@ CREATE TABLE xlite_config_translations (
   PRIMARY KEY (label_id),
   KEY ci (code, id),
   KEY i (id)
-) TYPE=MyISAM;
+) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 DROP TABLE IF EXISTS xlite_currencies;
 CREATE TABLE xlite_currencies (
@@ -96,7 +96,7 @@ CREATE TABLE xlite_currencies (
   symbol varchar(16) NOT NULL,
   e tinyint(1) NOT NULL,
   UNIQUE KEY code(code)
-) TYPE=MyISAM;
+) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 DROP TABLE IF EXISTS xlite_currency_translations;
 CREATE TABLE xlite_currency_translations (
@@ -107,7 +107,7 @@ CREATE TABLE xlite_currency_translations (
   PRIMARY KEY (label_id),
   KEY ci (code,id),
   KEY i (id)
-) TYPE=MyISAM;
+) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 
 DROP TABLE IF EXISTS xlite_waitingips;
@@ -120,7 +120,7 @@ CREATE TABLE xlite_waitingips (
   count int NOT NULL DEFAULT '0',
   PRIMARY KEY  (id),
   UNIQUE (ip)
-) TYPE=MyISAM;
+) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 DROP TABLE IF EXISTS xlite_htaccess;
 CREATE TABLE xlite_htaccess (
@@ -131,7 +131,7 @@ CREATE TABLE xlite_htaccess (
   PRIMARY KEY  (id),
   KEY hash (hash),
   UNIQUE (filename)
-) TYPE=MyISAM;
+) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 DROP TABLE IF EXISTS xlite_countries;
 CREATE TABLE xlite_countries (
@@ -147,7 +147,7 @@ CREATE TABLE xlite_countries (
   KEY charset (charset),
   KEY enabled (enabled),
   KEY eu_member (eu_member)
-) TYPE=MyISAM;
+) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 DROP TABLE IF EXISTS xlite_log;
 CREATE TABLE xlite_log (
@@ -158,7 +158,7 @@ CREATE TABLE xlite_log (
   KEY unixtime (unixtime,ident),
   KEY priority (priority),
   KEY message (message)
-) TYPE=MyISAM;
+) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 DROP TABLE IF EXISTS xlite_modules;
 CREATE TABLE xlite_modules (
@@ -176,7 +176,7 @@ CREATE TABLE xlite_modules (
   KEY dependencies (dependencies),
   KEY mutual_modules (mutual_modules),
   KEY type (type)
-) TYPE=MyISAM;
+) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 DROP TABLE IF EXISTS xlite_order_items;
 CREATE TABLE xlite_order_items (
@@ -193,7 +193,7 @@ CREATE TABLE xlite_order_items (
   KEY ooo (order_id, object_id, object_type),
   KEY price (price),
   KEY amount (amount)
-) TYPE=MyISAM;
+) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 DROP TABLE IF EXISTS xlite_orders;
 CREATE TABLE xlite_orders (
@@ -217,9 +217,9 @@ CREATE TABLE xlite_orders (
   KEY subtotal (subtotal),
   KEY tracking (tracking),
   KEY status (status),
-  FULLTEXT KEY notes (notes),
+  KEY notes (notes (65536)),
   KEY shipping_id (shipping_id)
-) TYPE=MyISAM;
+) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 DROP TABLE IF EXISTS xlite_order_details;
 CREATE TABLE xlite_order_details (
@@ -229,7 +229,7 @@ CREATE TABLE xlite_order_details (
   label varchar(255) default NULL,
   value text NOT NULL,
   KEY oname (order_id, name)
-) TYPE=MyISAM;
+) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 DROP TABLE IF EXISTS xlite_order_modifiers;
 CREATE TABLE xlite_order_modifiers (
@@ -242,7 +242,7 @@ CREATE TABLE xlite_order_modifiers (
   subcode varchar(32) NOT NULL default '',
   surcharge decimal(16,4) NOT NULL default '0.0000',
   KEY ocs (order_id, code, subcode)
-) TYPE=MyISAM;
+) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 DROP TABLE IF EXISTS xlite_order_item_modifiers;
 CREATE TABLE xlite_order_item_modifiers (
@@ -255,7 +255,7 @@ CREATE TABLE xlite_order_item_modifiers (
   subcode varchar(32) NOT NULL default '',
   surcharge decimal(16,4) NOT NULL default '0.0000',
   KEY ics (item_id, code, subcode)
-) TYPE=MyISAM;
+) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 DROP TABLE IF EXISTS xlite_payment_methods;
 CREATE TABLE xlite_payment_methods (
@@ -267,7 +267,7 @@ CREATE TABLE xlite_payment_methods (
   KEY orderby (orderby),
   KEY class (class, enabled),
   KEY enabled (enabled)
-) TYPE=MyISAM;
+) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 DROP TABLE IF EXISTS xlite_payment_method_translations;
 CREATE TABLE xlite_payment_method_translations (
@@ -279,7 +279,7 @@ CREATE TABLE xlite_payment_method_translations (
   PRIMARY KEY (label_id),
   KEY ci (code,id),
   KEY i (id)
-) TYPE=MyISAM;
+) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 DROP TABLE IF EXISTS xlite_payment_method_settings;
 CREATE TABLE xlite_payment_method_settings (
@@ -288,7 +288,7 @@ CREATE TABLE xlite_payment_method_settings (
   name varchar(128) NOT NULL,
   value text NOT NULL,
   KEY mn (method_id, name)
-) TYPE=MyISAM;
+) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 DROP TABLE IF EXISTS xlite_payment_transactions;
 CREATE TABLE xlite_payment_transactions (
@@ -304,7 +304,7 @@ CREATE TABLE xlite_payment_transactions (
   KEY o (order_id, status),
   KEY pm (method_id, status),
   KEY status (status)
-) TYPE=MyISAM;
+) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 DROP TABLE IF EXISTS xlite_payment_transaction_data;
 CREATE TABLE xlite_payment_transaction_data (
@@ -315,7 +315,7 @@ CREATE TABLE xlite_payment_transaction_data (
   access_level char(1) NOT NULL default 'A',
   value text NOT NULL,
   KEY tn (transaction_id, name)
-) TYPE=MyISAM;
+) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 DROP TABLE IF EXISTS xlite_products;
 CREATE TABLE xlite_products (
@@ -339,7 +339,7 @@ CREATE TABLE xlite_products (
   KEY tax_class (tax_class),
   KEY free_shipping (free_shipping),
   KEY clean_url (clean_url)
-) TYPE=MyISAM;
+) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 DROP TABLE IF EXISTS xlite_product_images;
 CREATE TABLE xlite_product_images (
@@ -354,7 +354,7 @@ CREATE TABLE xlite_product_images (
   hash varchar(32) NOT NULL DEFAULT '',
   PRIMARY KEY (image_id),
   KEY id (id)
-) TYPE=MyISAM;
+) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 DROP TABLE IF EXISTS xlite_product_thumbnails;
 CREATE TABLE xlite_product_thumbnails (
@@ -369,7 +369,7 @@ CREATE TABLE xlite_product_thumbnails (
   hash varchar(32) NOT NULL DEFAULT '',
   PRIMARY KEY (image_id),
   KEY id (id)
-) TYPE=MyISAM;
+) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 DROP TABLE IF EXISTS xlite_product_detailed_images;
 CREATE TABLE xlite_product_detailed_images (
@@ -388,7 +388,7 @@ CREATE TABLE xlite_product_detailed_images (
   `enabled` tinyint(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (image_id),
   KEY id (id)
-) TYPE=MyISAM;
+) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 DROP TABLE IF EXISTS xlite_product_translations;
 CREATE TABLE xlite_product_translations (
@@ -404,7 +404,7 @@ CREATE TABLE xlite_product_translations (
   PRIMARY KEY (label_id),
   KEY ci (code,id),
   KEY i (id)
-) TYPE=MyISAM;
+) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 DROP TABLE IF EXISTS xlite_extra_fields;
 CREATE TABLE xlite_extra_fields (
@@ -415,7 +415,7 @@ CREATE TABLE xlite_extra_fields (
   enabled int(1) NOT NULL default '1',
   order_by int(11) NOT NULL default '0',
   parent_field_id int(11) NOT NULL default '0',
-  categories TEXT NOT NULL,
+  categories text NOT NULL,
   PRIMARY KEY  (field_id),
   KEY product_id (product_id),
   KEY order_by (order_by),
@@ -423,17 +423,17 @@ CREATE TABLE xlite_extra_fields (
   KEY default_value (default_value),
   KEY enabled (enabled),
   KEY parent_field_id (parent_field_id),
-  FULLTEXT KEY categories (categories)
-) TYPE=MyISAM;
+  KEY categories (categories (65536))
+) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 DROP TABLE IF EXISTS xlite_extra_field_values;
 CREATE TABLE xlite_extra_field_values (
   product_id int(11) NOT NULL default '0',
   field_id int(11) NOT NULL default '0',
-  value text NOT NULL default '',
+  value text(65536) NOT NULL default '',
   KEY field_key (product_id, field_id),
-  FULLTEXT KEY value (value)
-) TYPE=MyISAM;
+  KEY value (value (65536))
+) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 DROP TABLE IF EXISTS xlite_profiles;
 CREATE TABLE xlite_profiles (
@@ -513,7 +513,7 @@ CREATE TABLE xlite_profiles (
   KEY status (status),
   KEY membership (membership),
   KEY pending_membership (pending_membership)
-) TYPE=MyISAM;
+) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 DROP TABLE IF EXISTS xlite_search_stat;
 CREATE TABLE xlite_search_stat (
@@ -523,7 +523,7 @@ CREATE TABLE xlite_search_stat (
   PRIMARY KEY  (query),
   KEY product_count (product_count),
   KEY count (count)
-) TYPE=MyISAM;
+) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 DROP TABLE IF EXISTS xlite_sessions;
 CREATE TABLE xlite_sessions (
@@ -532,7 +532,7 @@ CREATE TABLE xlite_sessions (
   data text NOT NULL,
   PRIMARY KEY  (id),
   KEY expiry (expiry)
-) TYPE=MyISAM;
+) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 DROP TABLE IF EXISTS xlite_shipping_methods;
 CREATE TABLE xlite_shipping_methods (
@@ -547,7 +547,7 @@ CREATE TABLE xlite_shipping_methods (
   KEY carrier (carrier),
   KEY enabled (enabled),
   KEY position (position)
-) TYPE=MyISAM;
+) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 DROP TABLE IF EXISTS xlite_shipping_method_translations;
 CREATE TABLE xlite_shipping_method_translations (
@@ -558,7 +558,7 @@ CREATE TABLE xlite_shipping_method_translations (
   PRIMARY KEY (label_id),
   KEY ci (code,id),
   KEY i (id)
-) TYPE=MyISAM;
+) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 DROP TABLE IF EXISTS xlite_shipping_markups;
 CREATE TABLE xlite_shipping_markups (
@@ -584,7 +584,7 @@ CREATE TABLE xlite_shipping_markups (
   KEY markup_per_item (markup_per_item),
   KEY markup_percent (markup_percent),
   KEY markup_per_weight (markup_per_weight)
-) TYPE=MyISAM;
+) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 DROP TABLE IF EXISTS xlite_states;
 CREATE TABLE xlite_states (
@@ -595,7 +595,7 @@ CREATE TABLE xlite_states (
   PRIMARY KEY  (state_id),
   KEY code (code,country_code),
   KEY state (state)
-) TYPE=MyISAM;
+) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 DROP TABLE IF EXISTS xlite_upgrades;
 CREATE TABLE xlite_upgrades (
@@ -604,7 +604,7 @@ CREATE TABLE xlite_upgrades (
   date int(11) NOT NULL default '0',
   PRIMARY KEY  (from_ver,to_ver),
   KEY date (date)
-) TYPE=MyISAM;
+) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 DROP TABLE IF EXISTS xlite_forms;
 CREATE TABLE xlite_forms (
@@ -613,7 +613,7 @@ CREATE TABLE xlite_forms (
   date int(11) NOT NULL default '0',
   PRIMARY KEY  (form_id,session_id),
   KEY date (date)
-) TYPE=MyISAM;
+) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 DROP TABLE IF EXISTS xlite_view_lists;
 CREATE TABLE xlite_view_lists (
@@ -624,7 +624,7 @@ CREATE TABLE xlite_view_lists (
   weight int(11) NOT NULL default 0,
   callback varchar(64) NOT NULL default '',
   KEY cl (class, list, weight)
-) TYPE=MyISAM;
+) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 DROP TABLE IF EXISTS xlite_view_lists;
 CREATE TABLE xlite_view_lists (
@@ -636,7 +636,7 @@ CREATE TABLE xlite_view_lists (
   weight mediumint unsigned NOT NULL default 0,
   tpl varchar(255) NOT NULL default '',
   KEY clzw (class, list, zone, weight)
-) TYPE=MyISAM;
+) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 DROP TABLE IF EXISTS xlite_template_patches;
 CREATE TABLE xlite_template_patches (
@@ -652,7 +652,7 @@ CREATE TABLE xlite_template_patches (
   regexp_replace text NOT NULL,
   custom_callback varchar(128) NOT NUll default '',
   KEY zlt (zone, lang, tpl)
-) TYPE=MyISAM;
+) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 
 -- ALTER TABLE xlite_modules CHANGE version version varchar(12) NOT NULL DEFAULT '0';
@@ -667,7 +667,7 @@ CREATE TABLE xlite_languages (
   UNIQUE KEY code3 (code3),
   UNIQUE KEY code2 (code),
   KEY status(status)
-) TYPE=MyISAM;
+) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 DROP TABLE IF EXISTS xlite_language_translations;
 CREATE TABLE xlite_language_translations (
@@ -677,14 +677,14 @@ CREATE TABLE xlite_language_translations (
   name char(64) NOT NULL,
   KEY ci (code, id),
   KEY i (id)
-) TYPE=MyISAM;
+) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 DROP TABLE IF EXISTS xlite_language_labels;
 CREATE TABLE xlite_language_labels (
   label_id int(11) NOT NULL auto_increment PRIMARY KEY,
   name varchar(255) NOT NULL default '',
   KEY name (name)
-) TYPE=MyISAM;
+) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 DROP TABLE IF EXISTS xlite_language_label_translations;
 CREATE TABLE xlite_language_label_translations (
@@ -694,14 +694,14 @@ CREATE TABLE xlite_language_label_translations (
   label text NOT NULL,
   KEY ci (code, id),
   KEY i (id)
-) TYPE=MyISAM;
+) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 DROP TABLE IF EXISTS xlite_memberships;
 CREATE TABLE xlite_memberships (
   membership_id int(11) NOT NULL auto_increment PRIMARY KEY,
   orderby int(11) NOT NULL default 0,
   active int(1) NOT NULL default 1
-) TYPE=MyISAM;
+) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 DROP TABLE IF EXISTS xlite_membership_translations;
 CREATE TABLE xlite_membership_translations (
@@ -711,7 +711,7 @@ CREATE TABLE xlite_membership_translations (
   name char(128) NOT NULL,
   KEY ci (code, id),
   KEY i (id)
-) TYPE=MyISAM;
+) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 DROP TABLE IF EXISTS xlite_zones;
 CREATE TABLE xlite_zones (
@@ -721,7 +721,7 @@ CREATE TABLE xlite_zones (
   PRIMARY KEY  (zone_id),
   KEY zone_name (zone_name),
   KEY zone_default (is_default)
-) TYPE=MyISAM;
+) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 DROP TABLE IF EXISTS xlite_zone_elements;
 CREATE TABLE xlite_zone_elements (
@@ -732,6 +732,6 @@ CREATE TABLE xlite_zone_elements (
   PRIMARY KEY  (element_id),
   KEY type_value (element_type,element_value),
   KEY id_type (zone_id,element_type)
-) TYPE=MyISAM;
+) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 

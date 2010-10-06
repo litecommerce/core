@@ -9,7 +9,7 @@ CREATE TABLE xlite_option_groups (
   `rows` tinyint unsigned NOT NULL default 0,
   `enabled` tinyint(1) unsigned NOT NULL default 0,
   KEY product_id (product_id, orderby)
-) TYPE=MyISAM;
+) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 DROP TABLE IF EXISTS xlite_option_group_translations;
 CREATE TABLE xlite_option_group_translations (
@@ -21,7 +21,7 @@ CREATE TABLE xlite_option_group_translations (
   PRIMARY KEY (label_id),
   KEY ci (code,id),
   KEY i (id)
-) TYPE=MyISAM;
+) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 DROP TABLE IF EXISTS xlite_options;
 CREATE TABLE xlite_options (
@@ -30,7 +30,7 @@ CREATE TABLE xlite_options (
   orderby int(11) NOT NULL default 0,
   enabled tinyint(1) unsigned NOT NULL default 0,
   KEY grp (group_id, enabled, orderby)
-) TYPE=MyISAM;
+) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 DROP TABLE IF EXISTS xlite_option_surcharges;
 CREATE TABLE xlite_option_surcharges (
@@ -40,7 +40,7 @@ CREATE TABLE xlite_option_surcharges (
   `modifier` decimal(16,4) NOT NULL default '0.0000',
   `modifier_type` char(1) NOT NULL default '%',
   UNIQUE KEY ot (`option_id`, `type`)
-) TYPE=MyISAM;
+) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 DROP TABLE IF EXISTS xlite_option_translations;
 CREATE TABLE xlite_option_translations (
@@ -51,7 +51,7 @@ CREATE TABLE xlite_option_translations (
   PRIMARY KEY (label_id),
   KEY ci (code,id),
   KEY i (id)
-) TYPE=MyISAM;
+) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 DROP TABLE IF EXISTS xlite_option_exceptions;
 CREATE TABLE xlite_option_exceptions (
@@ -59,7 +59,7 @@ CREATE TABLE xlite_option_exceptions (
   option_id int(11) NOT NULL default 0,
   exception_id int(11) NOT NULL default 0,
   UNIQUE KEY (option_id, exception_id)
-) TYPE=MyISAM;
+) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 DROP TABLE IF EXISTS xlite_order_item_options;
 CREATE TABLE xlite_order_item_options (
@@ -71,7 +71,7 @@ CREATE TABLE xlite_order_item_options (
   `value` text NOT NULL,
   `orderby` int(11) NOT NULL default 0,
   KEY item (item_id, orderby)
-) TYPE=MyISAM;
+) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 
 ---ALTER TABLE xlite_products ADD expansion_limit int NOT NULL default 0;
