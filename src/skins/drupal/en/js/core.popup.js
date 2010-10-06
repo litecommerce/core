@@ -34,7 +34,7 @@ popup.elementId = false;
  */
 
 // Load data to popup
-popup.load = function(url, id, unblockCallback)
+popup.load = function(url, id, unblockCallback, timeout)
 {
 
   var result = false;
@@ -60,7 +60,7 @@ popup.load = function(url, id, unblockCallback)
         this.elementId = id;
       }
       this.isPostRequest = false;
-      result = this[method](url);
+      result = this[method](url, timeout);
     }
   }
 
@@ -68,9 +68,9 @@ popup.load = function(url, id, unblockCallback)
 }
 
 // Load by URL
-popup.loadByURL = function(url)
+popup.loadByURL = function(url, timeout)
 {
-  return core.get(url, this.postprocessRequestCallback);
+  return core.get(url, this.postprocessRequestCallback, null, timeout);
 }
 
 // Load by form element
