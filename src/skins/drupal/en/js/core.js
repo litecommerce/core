@@ -128,7 +128,7 @@ window.core = {
   },
 
   // Get HTML data from server
-  get: function(url, callback, data)
+  get: function(url, callback, data, timeout)
   {
     return $.ajax(
       {
@@ -141,7 +141,7 @@ window.core = {
           },
         contentType: 'text/html',
         global:      false,
-        timeout:     15000,
+        timeout:     (timeout==null) ? 15000 : timeout,
         type:        'GET',
         url:         url,
         data:        data
