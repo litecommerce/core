@@ -10,29 +10,15 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-
-<table class="subcategory-icons">
-
-  <tr class="info" FOREACH="getCategoryRows(),row">
-    <td FOREACH="row,idx,subcategory" class="hcategory">
-      {if:subcategory}
-      <a href="{buildURL(#category#,##,_ARRAY_(#category_id#^subcategory.category_id))}" class="hcategory">
+<ul class="subcategory-icons grid-list" IF="getSubcategories()">
+  <li FOREACH="getSubcategories(),subcategory">
+    <a href="{buildURL(#category#,##,_ARRAY_(#category_id#^subcategory.category_id))}">
       <span class="subcategory-icon">
         <widget class="\XLite\View\Image" image="{subcategory.image}" maxWidth="{getIconWidth()}" maxHeight="{getIconHeight()}" alt="{subcategory.name}" centerImage=1 />
       </span>
-      <br />
       <span class="subcategory-name">{subcategory.name}</span>
-      </a>
-      {else:}
-      &nbsp;
-      {end:}
-    </td>
-  </tr>
-
-  {displayListPart(#items#)}
-
-</table>
-
+    </a>
+  </li>
+  <li FOREACH="getNestedViewList(#children#),item">{item.display()}</li>
+</ul>
 {displayViewListContent(#subcategories.base#)}
-
-<div class="subcategories-separator"></div>

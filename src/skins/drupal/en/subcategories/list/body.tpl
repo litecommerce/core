@@ -19,5 +19,3 @@
   </li>
 </ul>
 {displayViewListContent(#subcategories.base#)}
-
-<div class="subcategories-separator"></div>

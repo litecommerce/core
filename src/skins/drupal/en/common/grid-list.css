@@ -1,0 +1,64 @@
+/* vim: set ts=2 sw=2 sts=2 et: */
+
+/**
+ * ____file_title____
+ *  
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   SVN: $Id$
+ * @link      http://www.litecommerce.com/
+ * @since     3.0.0
+ */
+
+/*
+ * Information on hacks used below is available at:
+ * - http://blog.mozilla.com/webdev/2009/02/20/cross-browser-inline-block/
+ * - http://foohack.com/2007/11/cross-browser-support-for-inline-block-styling/
+ */
+
+ul.grid-list,
+ul.grid-list li
+{
+  margin: 0;
+  padding: 0;
+}
+
+ul.grid-list li
+{
+  list-style: none;
+  background-image: none;
+  vertical-align: top;
+  display: -moz-inline-stack;   /* FF2 supports this instead of "inline-block" */
+  display: inline-block;
+  border-style: solid;          /* Weird but FF requires this in order to display "inline-blocks" properly */
+  border-color: transparent;    /* Hide the border in all browsers but IE6 */
+  border-width: 0px;
+}
+
+/* IE6 requires this in order to correctly display li as "inline-blocks */
+* html ul.grid-list li
+{
+  display: inline;
+  border-style: none;           /* Hide the border in IE6 */
+}
+
+/* IE7 requires this in order to correctly display li as "inline-blocks */
+*:first-child+html ul.grid-list li
+{
+  display: inline;
+}
+
+ul.grid-list a
+{
+  display: block;
+  text-align: center;
+}
+
+ul.grid-list a span
+{
+  display: block;
+  text-align: center;
+  position: relative;       /* Hack for FF2: in FF2 static "inner-blocks" are non-clickable */
+}
+
