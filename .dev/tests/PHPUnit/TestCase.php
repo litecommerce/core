@@ -213,6 +213,9 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
 
         // Clear and restart (if need) entity manager
         \XLite\Core\Database::getEM()->clear();
+
+        \XLite\Core\Database::getEM()->getConnection()->executeQuery('SET autocommit = 1');
+
         try {
             \XLite\Core\Database::getEM()->flush();
         } catch (\Doctrine\ORM\ORMException $e) {

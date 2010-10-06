@@ -176,11 +176,15 @@ class XLite_Tests_Model_OrderModifier extends XLite_Tests_TestCase
         $order->setCurrency(\XLite\Core\Database::getRepo('XLite\Model\Currency')->find(840));
         $order->setProfileId($profile->get('profile_id'));
 
-        $productIds = array(3002, 4004, 4005, 4006, 4007, 4008);
+        $productIds = array(4059, 4004, 4005, 4006, 4007, 4008);
 
         foreach ($productIds as $index => $productId) {
 
             $product = $this->getProduct($productId);
+
+            if (!$product) {
+                $this->fail('Product #' . $productId . ' can not found!');
+            }
 
             if ($index % 2) {
                 $product->setFreeShipping(true);
