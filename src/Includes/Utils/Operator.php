@@ -94,13 +94,16 @@ class Operator extends AUtils
      */
     public static function redirect($location, $code = 302)
     {
-        if (headers_sent()) {
-            static::flush(static::getJSRedirectCode($location));
-        } else {
-            header('Location: ' . $location, true, $code);
-        }
+        if ('cli' != PHP_SAPI) {
+            if (headers_sent()) {
+                static::flush(static::getJSRedirectCode($location));
 
-        exit (0);
+            } else {
+                header('Location: ' . $location, true, $code);
+            }
+
+            exit (0);
+        }
     }
 
     /**
