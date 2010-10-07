@@ -1180,4 +1180,55 @@ function showQueryStatus($myerr, $ignoreErrors)
     }
 }
 
+/**
+ * Alternative debug backtrace assembler 
+ * 
+ * @return array
+ * @see    ____func_see____
+ * @since  3.0.0
+ */
+function func_debug_backtrace()
+{
+    $trace = array();
+
+    foreach (debug_backtrace(false) as $l) {
+        $parts = array();
+
+        if (isset($l['file'])) {
+
+            $parts[] = 'file ' . $l['file'];
+
+        } elseif (isset($l['class']) && isset($l['function'])) {
+
+            $parts[] = 'method ' . $l['class'] . '::' . $l['function'];
+
+        } elseif (isset($l['function'])) {
+
+            $parts[] = 'function ' . $l['function'];
+
+        }
+
+        if (isset($l['line'])) {
+            $parts[] = $l['line'];
+        }
+
+        if ($parts) {
+            $trace[] = implode(' : ', $parts);
+        }
+    }
+
+    return array_slice($trace, 1);
+}
+
+/**
+ * Alternative debug backtrace printer
+ * 
+ * @return void
+ * @see    ____func_see____
+ * @since  3.0.0
+ */
+function func_debug_print_backtrace()
+{
+    print (implode(PHP_EOL, func_debug_backtrace()));
+}
 
