@@ -64,6 +64,81 @@
   background: transparent url(../images/added2cart.gif) no-repeat left top;
 }
 
+
+
+.products .product
+{
+  position: relative;
+}
+
+.products .product .drag-n-drop-handle
+{
+  background: transparent url(images/icon_drag.png) no-repeat left center;
+  padding-left: 20px;
+  visibility: hidden;
+  cursor: move;
+}
+
+table.products-grid
+{
+  border-style: none;
+}
+
+.products .product-cell .drag-n-drop-handle,
+.products .product-cell .quicklook,
+.products .product-cell:hover .ui-draggable-dragging .quicklook
+{
+  visibility: hidden;
+}
+
+.products .product-cell:hover .drag-n-drop-handle,
+.products .product-cell:hover .quicklook
+{
+  visibility: visible;
+}
+
+.products .product .quicklook
+{
+  width: 100%;
+  position: absolute;
+  top: 40%;
+  left: 0;
+  text-align: center;
+  z-index: 100;
+}
+
+.products-grid .product-name,
+.products-grid .product-thumbnail,
+.products-grid .product-price
+{
+  display: block;
+}
+
+.products-grid a.product-thumbnail
+{
+  text-align: center;
+}
+
+
+
+
+
+
+
+table.list-body div.quick-look-cell div.drag-n-drop {
+  font-size: 0.9em;
+  color: #8fa8c0;
+}
+
+table.list-body-grid div.quick-look-cell div.drag-n-drop {
+  margin-left: -0.5em;
+}
+
+table.list-body-list div.quick-look-cell div.drag-n-drop {
+  margin-right: -0.5em;
+  margin-top: -0.5em;
+}
+
 /*
  * Layouts based on tables
  */
@@ -89,22 +164,9 @@ table.list-body-grid td {
   padding-top: 0;
 }
 
-table.list-body-grid td.separator {
-  width: 2%;
-  height: 1.5em;
-}
-
-table.list-body div.quick-look-cell {
-  position: relative;
-}
-
 table.list-body div.quick-look-cell div.drag-n-drop {
   font-size: 0.9em;
   color: #8fa8c0;
-  background: transparent url(images/icon_drag.png) no-repeat left center;
-  padding-left: 2em;
-  visibility: hidden;
-  cursor: move;
 }
 
 table.list-body-grid div.quick-look-cell div.drag-n-drop {
@@ -117,13 +179,9 @@ table.list-body-list div.quick-look-cell div.drag-n-drop {
 }
 
 table.list-body div.quick-look-cell div.button {
-  position: absolute;
   text-align: center;
   background: rgb(255, 255, 255);
   background: rgba(255, 255, 255, 0.7);
-  z-index: 100;
-  visibility: hidden;
-  width: 100%;
 }
 
 table.list-body-grid div.quick-look-cell-thumbnail div.button {
@@ -133,6 +191,8 @@ table.list-body-grid div.quick-look-cell-thumbnail div.button {
 table.list-body-list div.quick-look-cell-thumbnail div.button {
   margin-top: 50%;
 }
+
+
 
 table.list-body input.product-add2cart {
   background: transparent url(images/bag/small.png) no-repeat;

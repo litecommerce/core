@@ -83,7 +83,7 @@ ProductsList.prototype.listeners.dragNDrop = function(handler)
 {
   var isDropped = false;
 
-  $('table.list-body-grid td.hproduct, table.list-body-list tr.info', handler.container).draggable({
+  $('.products-grid .product, .products-list .product', handler.container).draggable({
     helper: function() {
       clone = $(this).clone();
 
@@ -140,7 +140,7 @@ ProductsList.prototype.listeners.dragNDrop = function(handler)
 
 ProductsList.prototype.listeners.quickLookButtons = function(handler)
 {
-  $('.quick-look-cell button.action', handler.container).click(
+  $('.products-grid .product .quicklook button.action', handler.container).click(
     function() {
       return !handler.openQuickLookPopup(this);
     }

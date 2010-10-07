@@ -411,6 +411,18 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
     }
 
     /**
+     * getPageBodyFile
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getPageBodyFile()
+    {
+        return $this->isCSSLayout() ? 'body-css-layout.tpl' : 'body-table-layout.tpl';
+    }
+
+    /**
      * getSidebarMaxItems
      *
      * @return int

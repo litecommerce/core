@@ -193,4 +193,18 @@ abstract class AProduct extends \XLite\View\ItemsList\AItemsList
 
         parent::__construct($params);
     }
+
+    /**
+     * Returns CSS classes for the container element
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getContainerClass()
+    {
+        return 'products';
+    }
+
 }
