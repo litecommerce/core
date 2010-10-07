@@ -3,9 +3,9 @@
 
 	<taskdef name="jmeter" classname="org.programmerplanet.ant.taskdefs.jmeter.JMeterTask" />
 
-	<target name="build" depends="set-properties,clean,update,prepare,php-documentor,analysis,tests,create-build" />
+	<target name="build" depends="set-properties,clean,update,prepare,php-documentor,analysis,create-build,tests" />
 
-	<target name="cc" depends="set-properties-cc,clean,update,prepare,php-documentor,analysis,tests-cc,create-build" />
+	<target name="cc" depends="set-properties-cc,clean,update,prepare,php-documentor,analysis,comparison,create-build,tests-cc" />
 
 	<target name="pure-build" depends="set-properties,clean,update,prepare,php-documentor,create-build" />
 
@@ -192,6 +192,13 @@
         <delete>
             <fileset file="${buildDir}/reports/xlite-svn.log" />
         </delete>
+	</target>
+
+	<target name="comparison">
+        <exec executable="svn" dir="${buildDir}" >
+            <arg line="checkout svn://svn.crtdev.local/repo/comparison/main comparison" />
+        </exec>
+        <ant antfile="${buildDir}/comparison/build.xml" target="cc" />
 	</target>
 
 	<target name="create-build">
