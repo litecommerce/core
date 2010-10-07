@@ -228,7 +228,7 @@ class OrderItem extends \XLite\Model\Base\ModifierOwner
         if (
             isset($this->product)
             && $this->product instanceof \Doctrine\ORM\Proxy\Proxy
-            && !$this->product->getProductId()
+            && !$this->product->getId()
         ) {
             $this->product = null;
             $this->objectExist = false;
