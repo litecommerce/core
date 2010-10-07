@@ -226,7 +226,19 @@ abstract class AItemsList extends \XLite\View\Container
      */
     protected function getPageBodyTemplate()
     {
-        return $this->getDir() . '/' . $this->getPageBodyDir() . '/body.tpl';
+        return $this->getDir() . '/' . $this->getPageBodyDir() . '/' . $this->getPageBodyFile();
+    }
+
+    /**
+     * getPageBodyFile 
+     * 
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getPageBodyFile()
+    {
+        return 'body.tpl';
     }
 
     /**

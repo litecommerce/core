@@ -10,7 +10,6 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  * 
- * @ListChild (list="itemsList.product.grid.customer.quick_look.thumbnail", weight="20")
+ * @ListChild (list="itemsList.product.grid.customer.info", weight="999")
  *}
-
-<div class="button"><widget class="\XLite\View\Button\QuickLook" product="{product}" style="action" /></div>
+<div class="quicklook"><widget class="\XLite\View\Button\QuickLook" product="{product}" style="action" /></div>

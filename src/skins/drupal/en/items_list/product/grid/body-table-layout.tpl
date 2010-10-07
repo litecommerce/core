@@ -14,32 +14,32 @@
 
 {displayViewListContent(#itemsList.product.cart#)}
 
-<p />
-
+<!--
 <table class="list-body list-body-grid list-body-grid-{getParam(#gridColumns#)}-columns" IF="!isCSSLayout()">
+-->
+<div class="{getContainerClass()}">
 
-  <tbody FOREACH="getProductRows(),row">
-  <tr class="info">
-    {foreach:row,idx,product}
-    <td IF="!idx=#0#" class="separator"></td>
-    <td IF="product" class="hproduct" id="{product.getProductId()}">
-      <div class="quick-look-cell">
-        {displayListPart(#quick_look.info#)}
-        {displayListPart(#info#,_ARRAY_(#product#^product))}
-      </div>
-    </td>
-    <td IF="!product">&nbsp;</td>
-    {end:}
-  </tr>
-  <tr>
-    <td colspan="100" class="separator"></td>
-  </tr>
-  </tbody>
+  <table class="products-grid grid-{getParam(#gridColumns#)}-columns">
+    {foreach:getProductRows(),row}
+      <tr>
+        {foreach:row,idx,product}
+        <td IF="product" class="product-cell">
+          <div class="product productid-{product.getProductId()}">
+            {displayListPart(#info#,_ARRAY_(#product#^product))}
+          </div>
+        </td>
+        <td IF="!product">&nbsp;</td>
+        {end:}
+      </tr>
+      {end:}
 
-  {displayListPart(#items#)}
+      {displayListPart(#items#)}
 
-</table>
+    </tbody>
+  </table>
 
-<div IF="isShowMoreLink()">
-  <a class="link" href="{getMoreLinkURL()}">{getMoreLinkText()}</a>
+  <div IF="isShowMoreLink()">
+    <a class="link" href="{getMoreLinkURL()}">{getMoreLinkText()}</a>
+  </div>
+
 </div>
