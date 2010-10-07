@@ -91,7 +91,6 @@ ProductsList.prototype.listeners.dragNDrop = function(handler)
       clone.css('width', $(this).css('width'));
       clone.css('height', $(this).css('height'));
 
-      clone.css('opacity', 0.5);
       clone.css('z-index', 500);
 
       return clone;
