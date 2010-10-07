@@ -91,8 +91,9 @@ table.products-grid
   visibility: hidden;
 }
 
-.products .product-cell:hover .drag-n-drop-handle,
-.products .product-cell:hover .quicklook
+.products .product:hover .drag-n-drop-handle,
+.products .ui-draggable-dragging .drag-n-drop-handle,
+.products .product:hover .quicklook
 {
   visibility: visible;
 }
