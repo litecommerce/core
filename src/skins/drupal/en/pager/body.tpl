@@ -11,34 +11,34 @@
  * @since     3.0.0
  *}
 
-<ul class="pager" IF="isPagesListVisible()">
+<ul class="pager grid-list" IF="isPagesListVisible()">
 
-  <li class="previous {if:isCurrentPage(getPageIdByNotation(#first#))}disabled{else:}active{end:}">
-    <a href="{buildUrlByPageId(getPageIdByNotation(#previous#))}" class="{getPageIdByNotation(#previous#)}" title="Previous page">&nbsp;</a>
+  <li class="item previous-page {if:isDisabledNotation(#first#)}disabled{else:}active{end:}">
+
+    <a IF="!isDisabledNotation(#first#)" href="{buildUrlByPageId(getPageIdByNotation(#previous#))}" class="{getPageIdByNotation(#previous#)}" title="Previous page">&nbsp;</a>
+    <span IF="isDisabledNotation(#first#)" class="{getPageIdByNotation(#previous#)}">&nbsp;</span>
   </li>
 
-  <li class="spacer">&nbsp;</li>
-
-  <li class="first" IF="isFurthermostPage(#first#)">
+  <li class="item first-page" IF="isFurthermostPage(#first#)">
     <a href="{buildUrlByPageId(getPageIdByNotation(#first#))}" class="{getPageIdByNotation(#first#)}">{inc(getPageIdByNotation(#first#))}</a>
   </li>
 
-  <li class="furthermost" IF="isFurthermostPage(#first#)"><a>...</a></li>
+  <li class="more-pages" IF="isFurthermostPage(#first#)"><span>...</span></li>
 
   <li FOREACH="getPageUrls(),num,pageUrl" class="item {num} {if:isCurrentPage(num)}selected{else:}active{end:}">
-    <a href="{pageUrl}" class="{num}">{inc(num)}</a>
+    <a href="{pageUrl}" class="{num}" IF="!isCurrentPage(num)">{inc(num)}</a>
+    <span class="{num}" IF="isCurrentPage(num)">{inc(num)}</span>
   </li>
 
-  <li class="furthermost" IF="isFurthermostPage(#last#)"><a>...</a></li>
+  <li class="more-pages" IF="isFurthermostPage(#last#)"><span>...</span></li>
 
-  <li class="last" IF="isFurthermostPage(#last#)">
+  <li class="item last-page" IF="isFurthermostPage(#last#)">
     <a href="{buildUrlByPageId(getPageIdByNotation(#last#))}" class="{getPageIdByNotation(#last#)}">{inc(getPageIdByNotation(#last#))}</a>
   </li>
 
-  <li class="spacer">&nbsp;</li>
-
-  <li class="next {if:isCurrentPage(getPageIdByNotation(#last#))}disabled{else:}active{end:}">
-    <a href="{buildUrlByPageId(getPageIdByNotation(#next#))}" class="{getPageIdByNotation(#next#)}" title="Next page">&nbsp;</a>
+  <li class="item next-page {if:isDisabledNotation(#last#)}disabled{else:}active{end:}">
+    <a IF="!isDisabledNotation(#last#)" href="{buildUrlByPageId(getPageIdByNotation(#next#))}" class="{getPageIdByNotation(#next#)}" title="Next page">&nbsp;</a>
+    <span IF="isDisabledNotation(#last#)" class="{getPageIdByNotation(#next#)}">&nbsp;</span>
   </li>
 
 </ul>

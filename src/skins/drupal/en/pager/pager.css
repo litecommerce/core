@@ -11,85 +11,42 @@
  * @since     3.0.0
  */
 
-.list-pager,
-.list-pager-low
+ul.pager,
+ul.pager li
 {
-  height: 1.8em;
-  padding-bottom: 1em;
-}
-
-ul.pager {
-  padding: 0;
   margin: 0;
-  list-style: none;
-  display: inline;
-}
-
-ul.pager li {
   padding: 0;
-  border: none;
-  display: inline-table;
+}
+
+ul.pager li
+{
   list-style: none;
-  background: none;
-  height: 2.1em;
-  width: 2.1em;
-  text-align: center;
-  vertical-align: middle;
-  border: 1px solid #fff;
+  background-image: none;
+  background-repeat: no-repeat;
+  background-position: center center;
 }
 
-ul.pager li a {
-  border: 0;
-  display: table-cell;
+ul.pager li.previous-page
+{
+  background-image: url(images/arrow_pager_left.png);
+}
+
+ul.pager li.next-page
+{
+  background-image: url(images/arrow_pager_right.png);
+}
+
+
+ul.pager a,
+ul.pager span
+{
+  width: 1em;
+}
+
+ul.pager li a,
+ul.pager li span
+{
+  display: block;
+  text-align: center;
   text-decoration: none;
-  font-weight: normal;
-  text-align: center;
-  vertical-align: middle;
-  width: 100%;
-  height: 100%;
-  font-size: 1.1em;
-}
-
-ul.pager li:hover {
-  border-width: 1px;
-  border-color: #b1c9e0;
-}
-
-ul.pager li.selected a {
-  background: #869cb1 none;
-  color: #fff;
-  cursor: text;
-  border-color: #869cb1;
-}
-
-ul.pager li.spacer,
-ul.pager li.furthermost {
-  border: none;
-  width: 0.3em;
-}
-
-ul.pager li.furthermost {
-  vertical-align: bottom;
-}
-
-ul.pager li.previous {
-  background: transparent url(images/arrow_pager_left.png) no-repeat center center;
-}
-
-ul.pager li.next {
-  background: transparent url(images/arrow_pager_right.png) no-repeat center center;
-}
-
-ul.pager li.disabled a {
-  cursor: text;
-}
-
-div.pager-items-total {
-  float: right;
-  padding-top: 0.6em;
-}
-
-div.pager-items-total input.page-length {
-  width: 2em;
-  text-align: right;
 }
