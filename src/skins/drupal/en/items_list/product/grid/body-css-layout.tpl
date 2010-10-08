@@ -14,9 +14,6 @@
 
 {displayViewListContent(#itemsList.product.cart#)}
 
-<!--
-<table class="list-body list-body-grid list-body-grid-{getParam(#gridColumns#)}-columns" IF="!isCSSLayout()">
--->
 <div class="{getContainerClass()}">
 
   <ul class="products-grid grid-list" IF="getPageData()">

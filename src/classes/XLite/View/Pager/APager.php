@@ -294,9 +294,9 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
     }
 
     /**
-     * getPageIndexNotations 
+     * Returns a page Id by its notation
      * 
-     * @param mixed $index page notation
+     * @param string $index Page notation (first, last, next, previous)
      *  
      * @return int
      * @access protected
@@ -313,6 +313,24 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
 
         return isset($result[$index]) ? $result[$index] : $index;
     }
+
+    /**
+     * Checks whether a page is disabled by its notation
+     * 
+     * @param string $notation Page notation (first, last, next, previous)
+     *  
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isDisabledNotation($notation)
+    {
+        return $this->isCurrentPage($this->getPageIdByNotation($notation));
+    }
+
+
+
 
     /**
      * Build page URL by page ID

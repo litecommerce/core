@@ -12,10 +12,17 @@
  */
 
 /* Header */
-.list-header {
+
+
+
+/*
+
+.list-header
+ {
   height: 2em;
   padding: 0.3em 0.3em;
 }
+
 
 .list-header .display-modes {
   float: left;
@@ -38,7 +45,6 @@
   background: none;
 }
 
-/* Sort box */
 .sort-box {
   float: right;
 }
@@ -48,7 +54,6 @@
   padding-bottom: 4px;
 }
 
-/* List body and common styles */
 .list-body {
   padding: 0px;
 }
@@ -64,7 +69,7 @@
   background: transparent url(../images/added2cart.gif) no-repeat left top;
 }
 
-
+*/
 
 .products .product
 {
