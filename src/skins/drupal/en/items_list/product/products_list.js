@@ -97,39 +97,42 @@ ProductsList.prototype.listeners.dragNDrop = function(handler)
     },
     start: function(event, ui) {
       isDropped = false;
-      $('div.cart-tray-box div.text div').html('<span>Drop items here</span><br /><span>to shop</span>');
-      $('div.cart-tray-box').show();
+      $('.cart-tray').addClass('cart-tray-active');
+      $('.cart-tray').addClass('cart-tray-moving');
     },
     stop: function(event, ui) {
       if (!isDropped) {
-        $('div.cart-tray-box').hide();
+        $('.cart-tray').removeClass('cart-tray-active');
+        $('.cart-tray').removeClass('cart-tray-moving');
       }
     },
   });
 
-  $('div.cart-tray-box').droppable({
-    hoverClass: 'droppable',
+  $('.cart-tray').droppable({
     tolerance: 'touch',
     over: function(event, ui) {
-      $('', 'div.cart-tray-box div.text').addClass('droppable');
-    },
+      $('.cart-tray .tray-area').addClass('droppable');
+   },
     out: function(event, ui) {
-      $('span', 'div.cart-tray-box div.text').removeClass('droppable');
+      $('.cart-tray .tray-area').removeClass('droppable');
     },
     drop: function(event, ui) {
       if (!isDropped) {
         isDropped = true;
-
-        $('div', 'div.cart-tray-box div.text').html('');
-        $('div.cart-tray-box div.text').addClass('wait-block');
-
+        $('.cart-tray').removeClass('cart-tray-moving');
+        $('.cart-tray').addClass('cart-tray-adding');
+        $('.cart-tray .tray-area').removeClass('droppable');
         core.post(
           URLHandler.buildURL({}),
           {target: 'cart', action: 'add', product_id: $(ui.draggable).attr('id')},
           function(XMLHttpRequest, textStatus, data, isValid) {
-            $('div.cart-tray-box div.text').removeClass('wait-block');
-            $('div', 'div.cart-tray-box div.text').html('<span>Product added</span><br /><span>to the bag</span>');
-            setTimeout(function() {$('div.cart-tray-box').hide();}, 1500);
+            $('.cart-tray').removeClass('cart-tray-adding');
+            $('.cart-tray').addClass('cart-tray-added');
+            setTimeout(function() {
+                $('.cart-tray').removeClass('cart-tray-active');
+                $('.cart-tray').removeClass('cart-tray-added');
+              }, 3000
+            );
           }
         );
       }
@@ -139,7 +142,7 @@ ProductsList.prototype.listeners.dragNDrop = function(handler)
 
 ProductsList.prototype.listeners.quickLookButtons = function(handler)
 {
-  $('.products-grid .product .quicklook button.action', handler.container).click(
+  $('.products .product .quicklook button.action', handler.container).click(
     function() {
       return !handler.openQuickLookPopup(this);
     }

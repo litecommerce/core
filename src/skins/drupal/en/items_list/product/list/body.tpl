@@ -13,12 +13,26 @@
 
 {displayViewListContent(#itemsList.product.cart#)}
 
-<table class="list-body list-body-list">
+<div class="{getContainerClass()}">
 
-  <tr FOREACH="getPageData(),product" class="info" id="{product.getProductId()}">
-    {displayListPart(#body#,_ARRAY_(#product#^product))}
-  </tr>
+  <ul class="products-list" IF="getPageData()">
+    <li FOREACH="getPageData(),product" class="product-cell">
+      {*
+       * Unfortunately, here we can use neither regular ul/li (because we don't know the image width),
+       * nor table-cell (becase it is not supported by IE6/IE7),
+       * nor a single table with border-spacing and negative margins (because we need borders around two cells)
+       *}
+      <table class="product productid-{product.getProductId()}">
+        <tr>
+          {*
+           * Since there is no way to make a TD having a relative position, we need a container
+           * in order to position Absolute and Relative elements in nested lists 
+           *}
+          <td class="product-photo"><div class="container">{displayListPart(#photo#,_ARRAY_(#product#^product))}</div></td>
+          <td class="product-info"><div class="container">{displayListPart(#info#,_ARRAY_(#product#^product))}</div></td>
+        </tr>
+      </table>
+    </li>
+  </ul>
 
-  {displayListPart(#items#)}
-
-</table>
+</div>
