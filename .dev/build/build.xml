@@ -198,7 +198,7 @@
         <exec executable="svn" dir="${buildDir}" >
             <arg line="checkout svn://svn.crtdev.local/repo/comparison/main comparison" />
         </exec>
-        <ant antfile="${buildDir}/comparison/build.xml" target="cc" dir="comparison" />
+        <ant antfile="${buildDir}/comparison/build.xml" target="cc" dir="${buildDir}/comparison" />
 	</target>
 
 	<target name="create-build">
