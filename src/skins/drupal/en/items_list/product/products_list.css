@@ -157,14 +157,14 @@ ul.products-list li
   height: 221px;
   border-style: solid;
   background-color: white;
-  background-image: url(images/bag/tray/regular.png);
-  background-repeat: no-repeat;
-  background-position: center center;
 }
 
 .cart-tray .tray-area
 {
   height: 100%;
+  background-image: url(images/bag/tray.png);
+  background-repeat: no-repeat;
+  background-position: center center;
 }
 
 .cart-tray,
@@ -184,13 +184,6 @@ ul.products-list li
 .cart-tray-added .product-added
 {
   display: block;
-}
-
-.cart-tray .droppable
-{
-  background-image: url(images/bag/tray/droppable.png);
-  background-repeat: no-repeat;
-  background-position: center center;
 }
 
 .cart-tray .tray-status,
