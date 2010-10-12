@@ -2,7 +2,6 @@
 
 {**
  * Products list (grid variant)
- * NOTE: Unfortunately TABLE layout is the only cross-browser way to line up buttons
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -24,9 +23,5 @@
     </li>
     <li FOREACH="getNestedViewList(#items#),item" class="product-cell">{item.display()}</li>
   </ul>
-
-  <div IF="isShowMoreLink()">
-    <a class="link" href="{getMoreLinkURL()}">{getMoreLinkText()}</a>
-  </div>
 
 </div>

@@ -2,7 +2,6 @@
 
 {**
  * Products list (grid variant)
- * NOTE: Unfortunately TABLE layout is the only cross-browser way to line up buttons
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -29,8 +28,6 @@
         {end:}
       </tr>
       {end:}
-
-      {displayListPart(#items#)}
 
     </tbody>
   </table>

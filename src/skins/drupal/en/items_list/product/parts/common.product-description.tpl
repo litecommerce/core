@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Overlapping box
+ * Item description
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -9,8 +9,6 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- *
- * @ListChild (list="itemsList.product.list.customer.quick_look.thumbnail", weight="20")
+ * @ListChild (list="itemsList.product.list.customer.info", weight="30")
  *}
-
-<div class="button"><widget class="\XLite\View\Button\Regular" label="Quick look" style="action" /></div>
+<div class="description product-description">{truncate(product.getCommonDescription(),#300#):h}</div>

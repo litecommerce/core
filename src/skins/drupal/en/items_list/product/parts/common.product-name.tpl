@@ -10,5 +10,6 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  * @ListChild (list="itemsList.product.grid.customer.info", weight="20")
+ * @ListChild (list="itemsList.product.list.customer.info", weight="20")
  *}
-<a href="{buildURL(#product#,##,_ARRAY_(#product_id#^product.product_id,#category_id#^category_id))}" class="product-name">{product.name:h}</a>
+<h2 class="product-name"><a href="{buildURL(#product#,##,_ARRAY_(#product_id#^product.product_id,#category_id#^category_id))}">{product.name:h}</a></h2>
