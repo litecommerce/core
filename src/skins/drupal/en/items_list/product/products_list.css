@@ -141,6 +141,13 @@ ul.products-list li
   text-align: center;
 }
 
+.products input.product-add2cart
+{
+  background: transparent url(images/bag/small.png) no-repeat;
+  width: 19px;
+  height: 24px;
+}
+
 
 .cart-tray
 {
@@ -299,7 +306,8 @@ table.list-body-list div.quick-look-cell-thumbnail div.button {
 
 
 
-table.list-body input.product-add2cart {
+table.list-body input.product-add2cart
+{
   background: transparent url(images/bag/small.png) no-repeat;
   width: 29px;
   height: 26px;

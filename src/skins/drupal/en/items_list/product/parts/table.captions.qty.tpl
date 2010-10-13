@@ -10,7 +10,6 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *
- * @ListChild (list="itemsList.product.table.customer.title", weight="40")
+ * @ListChild (list="itemsList.product.table.customer.captions", weight="30")
  *}
-
-<th class="price">Price</th>
+<th class="caption-product-qty">Qty.</th>

@@ -10,7 +10,6 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *
- * @ListChild (list="itemsList.product.table.customer.info", weight="10")
+ * @ListChild (list="itemsList.product.table.customer.captions", weight="40")
  *}
-
-<td class="sku">{if:product.sku}{product.sku}{else:}&nbsp;{end:}</td>
+<th class="caption-product-price">Price</th>

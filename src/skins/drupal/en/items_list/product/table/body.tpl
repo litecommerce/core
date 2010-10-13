@@ -10,17 +10,17 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
+<div class="{getContainerClass()}">
 
-<table class="list-body list-body-table">
+  <table class="products-table" IF="getPageData()">
+    <tr>
+      {displayListPart(#captions#)}
+    </tr>
+    <tr FOREACH="getPageData(),product" class="product-cell product productid-{product.getProductId()}">
+      <td FOREACH="getNestedViewList(#columns#,_ARRAY_(#product#^product)),column">{column.display()}</td>
+    </tr>
+  </table>
 
-  <tr>
-    {displayListPart(#title#)}
-  </td>
+  {displayListPart(#buttons#)}
 
-  <tr FOREACH="getPageData(),product" class="info">
-    {displayListPart(#info#,_ARRAY_(#product#^product))}
-  </tr>
-
-  {displayListPart(#items#)}
-
-</table>
+</div>

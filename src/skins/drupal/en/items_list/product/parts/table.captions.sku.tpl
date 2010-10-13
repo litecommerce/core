@@ -10,7 +10,6 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *
- * @ListChild (list="itemsList.product.table.customer.title", weight="20")
+ * @ListChild (list="itemsList.product.table.customer.captions", weight="10")
  *}
-
-<th class="name">Product name</th>
+<th class="caption-product-sku">SKU</th>

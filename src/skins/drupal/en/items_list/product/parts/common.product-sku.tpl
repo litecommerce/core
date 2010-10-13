@@ -1,16 +1,15 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Item price
- *
- * @author    Creative Development LLC <info@cdev.ru>
+ * Item SKU
+ *  
+ * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *
- * @ListChild (list="itemsList.product.table.customer.info", weight="40")
+ * @ListChild (list="itemsList.product.table.customer.columns", weight="10")
  *}
-
-<td IF="isShowPrice()" class="price"><widget class="\XLite\View\Price" product="{product}" displayOnlyPrice="true" /></td>
+{if:product.sku}{product.sku}{else:}&nbsp;{end:}
