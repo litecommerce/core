@@ -250,7 +250,10 @@ class Product extends \XLite\Model\Repo\Base\I18n
      */
     public function search(\XLite\Core\CommonCell $cnd, $countOnly = false)
     {
-        $queryBuilder = $this->createQueryBuilder();
+        $queryBuilder = $countOnly
+            ? $this->createPureQueryBuilder()
+            : $this->createQueryBuilder();
+
         $this->currentSearchCnd = $cnd;
 
         foreach ($this->currentSearchCnd as $key => $value) {
@@ -261,7 +264,9 @@ class Product extends \XLite\Model\Repo\Base\I18n
             $queryBuilder->select('COUNT(p.product_id)');
         }
 
-        return $queryBuilder->getQuery()->{'get' . ($countOnly ? 'SingleScalar' : '') . 'Result'}();
+        return $countOnly
+            ? $queryBuilder->getQuery()->getSingleScalarResult()
+            : $queryBuilder->getQuery()->getResult();
     }
 
 
@@ -287,6 +292,27 @@ class Product extends \XLite\Model\Repo\Base\I18n
     }
 
     /**
+     * Create a new QueryBuilder instance that is prepopulated for this entity name
+     *
+     * @param string $alias Table alias
+     *
+     * @return \Doctrine\ORM\QueryBuilder
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function createPureQueryBuilder($alias = null)
+    {
+        $result = parent::createPureQueryBuilder($alias);
+
+        if (!\XLite::isAdminZone()) {
+            $result->andWhere('p.enabled = :enabled')->setParameter('enabled', true);
+        }
+
+        return $result;
+    }
+
+    /**
      * Find product by clean URL
      * TODO - to revise
      * 
@@ -302,6 +328,7 @@ class Product extends \XLite\Model\Repo\Base\I18n
         try {
             $result = $this->createQueryBuilder()
                 ->andWhere('p.clean_url = :url')
+                ->setMaxResults(1)
                 ->setParameter('url', $url)
                 ->getQuery()
                 ->getSingleResult();
