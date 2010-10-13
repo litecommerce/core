@@ -215,7 +215,6 @@ class Category extends \XLite\Model\Base\I18n
      */
     protected $category_products;
 
-
     /**
      * The number of products assigned to the category
      * (Real-time calculated)
@@ -226,7 +225,6 @@ class Category extends \XLite\Model\Base\I18n
      * @since  3.0.0
      */
     protected $products_count = 0;
-
 
     /**
      * Check if category has image 
@@ -251,7 +249,8 @@ class Category extends \XLite\Model\Base\I18n
      */
     public function getSubcategories()
     {
-        return \XLite\Core\Database::getRepo('\XLite\Model\Category')->getCategoriesPlainList($this->getCategoryId());
+        return \XLite\Core\Database::getRepo('XLite\Model\Category')
+            ->getCategoriesPlainList($this->getCategoryId());
     }
 
     /**
@@ -277,9 +276,10 @@ class Category extends \XLite\Model\Base\I18n
      */
     public function hasSubcategories()
     {
-        $data = \XLite\Core\Database::getRepo('\XLite\Model\Category')->getCategoryFromHash($this->getCategoryId());
+        $data = \XLite\Core\Database::getRepo('XLite\Model\Category')
+            ->getCategoryFromHash($this->getCategoryId());
 
-        return (isset($data) ? $data->getSubCategoriesCount() > 0 : false);
+        return isset($data) && 0 < $data->getSubCategoriesCount();
     }
 
     /**
@@ -394,6 +394,6 @@ class Category extends \XLite\Model\Base\I18n
         }
         $cnd->{\XLite\Model\Repo\Product::P_CATEGORY_ID} = $this->getCategoryId();
 
-        return \XLite\Core\Database::getRepo('\XLite\Model\Product')->search($cnd, $countOnly);
+        return \XLite\Core\Database::getRepo('XLite\Model\Product')->search($cnd, $countOnly);
     }
 }
