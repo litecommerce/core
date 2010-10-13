@@ -661,4 +661,21 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
 
         return $list;
     }
+
+    /**
+     * Checks whether a product was added to the cart
+     * 
+     * @param int $product The product to look for
+     *
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isProductAdded($product)
+    {
+        return $this->getCart()->isProductAdded($product->getProductId());
+    }
+
+
 }

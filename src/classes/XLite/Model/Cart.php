@@ -163,6 +163,33 @@ class Cart extends \XLite\Model\Order
         \XLite\Core\Database::getEM()->flush();
     }
 
+
+    /**
+     * Checks whether a product is in the cart
+     * 
+     * @param int $productId ID of the product to look for
+     *
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isProductAdded($productId)
+    {
+        $result = false;
+
+        foreach ($this->getItems() as $item) {
+            $product = $item->getProduct();
+            if ($product && $product->getProductId() == $productId) {
+                $result = true;
+                break;
+            }
+        }
+
+        return $result;
+    }
+
+
     /**
      * Prepare order before remove operation
      * 

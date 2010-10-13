@@ -9,5 +9,8 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
+ *
+ * @ListChild (list="itemsList.product.grid.customer.info", weight="998")
+ * @ListChild (list="itemsList.product.list.customer.photo", weight="998")
  *}
-<img src="images/spacer.gif" alt="Added to cart" class="added-to-cart" />
+<div alt="Added to cart" class="added-to-cart" IF="isProductAdded(product)"></div>
