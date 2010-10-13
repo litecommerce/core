@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * "Add to cart" column title
+ * Item SKU
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -10,7 +10,6 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *
- * @ListChild (list="itemsList.product.table.customer.title", weight="50")
+ * @ListChild (list="itemsList.product.table.customer.captions", weight="20")
  *}
-
-<th class="add2cart">&nbsp;</th>
+<th class="caption-product-name">Product name</th>
