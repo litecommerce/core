@@ -50,4 +50,18 @@ abstract class ACustomer extends \XLite\View\Product\Details\ADetails
         return parent::isVisible()
             && $this->getProduct();
     }
+
+    /**
+     * Checks whether a product was added to the cart
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isProductAdded()
+    {
+        return $this->getCart()->isProductAdded($this->getProduct()->getProductId());
+    }
+
 }

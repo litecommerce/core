@@ -11,22 +11,17 @@
  * @since     3.0.0
  */
 
-/* Header */
-
-
-/*
-.list-body .added-to-cart {
+.products .added-to-cart
+{
   display: block;
   position: absolute;
-  left: 5px;
-  top: 0px;
+  right: 8px;
+  top: 8px;
   z-index: 20;
   width: 19px;
-  height: 14px;
-  background: transparent url(../images/added2cart.gif) no-repeat left top;
+  height: 24px;
+  background: transparent url(images/bag/small.png) no-repeat left top;
 }
-*/
-
 
 table.products-grid,
 table.products-grid td,

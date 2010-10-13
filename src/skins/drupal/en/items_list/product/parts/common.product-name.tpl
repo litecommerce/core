@@ -12,4 +12,4 @@
  * @ListChild (list="itemsList.product.grid.customer.info", weight="20")
  * @ListChild (list="itemsList.product.list.customer.info", weight="20")
  *}
-<h2 class="product-name"><a href="{buildURL(#product#,##,_ARRAY_(#product_id#^product.product_id,#category_id#^category_id))}">{product.name:h}</a></h2>
+<h3 class="product-name"><a href="{buildURL(#product#,##,_ARRAY_(#product_id#^product.product_id,#category_id#^category_id))}">{product.name:h}</a></h3>

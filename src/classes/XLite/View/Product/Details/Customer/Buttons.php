@@ -71,26 +71,4 @@ class Buttons extends \XLite\View\Product\Details\Customer\ACustomer
         return str_replace(':list', $list, $tpl);
     }
 
-    /**
-     * Checks whether a product was added to the cart
-     * 
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function isProductAdded()
-    {
-        $result = false;
-
-        foreach ($this->getCart()->getItems() as $item) {
-            $product = $item->getProduct();
-            if ($product && $product->getProductId() == $this->getProduct()->getProductId()) {
-                $result = true;
-                break;
-            }
-        }
-
-        return $result;
-    }
 }
