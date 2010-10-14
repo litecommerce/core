@@ -91,7 +91,7 @@ ProductsList.prototype.listeners.dragNDrop = function(handler)
 
   $(draggablePattern, handler.container).draggable(
     {
-      revert: true,
+      revert: 'invalid',
       revertDuration: 300,
       zIndex: 500,
 
@@ -114,7 +114,7 @@ ProductsList.prototype.listeners.dragNDrop = function(handler)
       start: function(event, ui)
       {
         isProductDrag = true;
-        $('.cart-tray').not('.cart-tray-adding')
+        $('.cart-tray').not('.cart-tray-adding').not('.cart-tray-added')
           .addClass('cart-tray-active')
           .addClass('cart-tray-moving')
           .attr('style', '');
@@ -123,13 +123,19 @@ ProductsList.prototype.listeners.dragNDrop = function(handler)
       stop: function(event, ui)
       {
         isProductDrag = false;
-        $('.cart-tray').not('.cart-tray-adding')
+        $('.cart-tray').not('.cart-tray-adding').not('.cart-tray-added')
           .fadeOut(
             cartTrayFadeOutDuration,
             function() {
-              $(this)
-                .removeClass('cart-tray-active')
-                .removeClass('cart-tray-moving');
+              if (isProductDrag) {
+                $(this).show();
+
+              } else {
+                $(this)
+                  .removeClass('cart-tray-active')
+                  .removeClass('cart-tray-moving')
+                  .removeClass('cart-tray-added');
+              }
             }
           );
 
@@ -157,6 +163,7 @@ ProductsList.prototype.listeners.dragNDrop = function(handler)
         if (isProductDrag) {
           $('.cart-tray')
             .removeClass('cart-tray-moving')
+            .removeClass('cart-tray-added')
             .addClass('cart-tray-adding')
             .find('.tray-area')
             .removeClass('droppable');
@@ -183,15 +190,30 @@ ProductsList.prototype.listeners.dragNDrop = function(handler)
                     .addClass('cart-tray-added');
                   setTimeout(
                     function() {
-                      $('.cart-tray').not('.cart-tray-adding')
-                        .fadeOut(
-                          cartTrayFadeOutDuration,
-                          function() {
-                            $(this)
-                            .removeClass('cart-tray-active')
-                            .removeClass('cart-tray-added');
-                          }
-                        );
+                      if (isProductDrag) {
+                        $('.cart-tray')
+                          .removeClass('cart-tray-added')
+                          .addClass('cart-tray-moving');
+
+                      } else {
+                        $('.cart-tray').not('.cart-tray-adding')
+                          .fadeOut(
+                            cartTrayFadeOutDuration,
+                            function() {
+                              if (isProductDrag) {
+                                $(this)
+                                  .removeClass('cart-tray-added')
+                                  .addClass('cart-tray-moving')
+                                  .show();
+
+                              } else {
+                                $(this)
+                                .removeClass('cart-tray-active')
+                                .removeClass('cart-tray-added');
+                              }
+                            }
+                          );
+                      }
                     },
                     3000
                   );
