@@ -271,6 +271,18 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
         $this->createCookie('no_xdebug_coverage=1');
     }
 
+    protected function dragAndDropDelay($locatorFrom, $locatorMiddle, $locatorTo, $delay = 1)
+    {
+        $this->mouseDownAt($locatorFrom, '0,+10');
+        $this->mouseMoveAt($locatorMiddle, '0,+10');
+        $this->mouseOver($locatorMiddle);
+        sleep($delay);
+
+        $this->mouseMoveAt($locatorTo, '0,+10');
+        $this->mouseOver($locatorTo);
+        $this->mouseUpAt($locatorTo, '0,+10');
+    }
+
     public function __call($command, $arguments)
     {
         try {
