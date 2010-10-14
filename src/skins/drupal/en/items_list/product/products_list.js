@@ -81,63 +81,128 @@ ProductsList.prototype.listeners.sortOrderModes = function(handler)
 // TODO - to improve
 ProductsList.prototype.listeners.dragNDrop = function(handler)
 {
-  var isDropped = false;
+  var cartTrayFadeOutDuration = 400;
 
-  $('.products-grid .product, .products-list .product', handler.container).draggable({
-    helper: function() {
-      clone = $(this).clone();
+  var draggablePattern = '.products-grid .product, .products-list .product';
+  var draggableMarkPattern = '.products-grid .product .drag-n-drop-handle, .products-list .product .drag-n-drop-handle';
 
-      // TODO - check if there is more convinient way
-      clone.css('width', $(this).css('width'));
-      clone.css('height', $(this).css('height'));
+  var countRequests = 0;
+  var isProductDrag = false;
 
-      clone.css('z-index', 500);
+  $(draggablePattern, handler.container).draggable(
+    {
+      revert: true,
+      revertDuration: 300,
+      zIndex: 500,
 
-      return clone;
-    },
-    start: function(event, ui) {
-      isDropped = false;
-      $('.cart-tray').addClass('cart-tray-active');
-      $('.cart-tray').addClass('cart-tray-moving');
-    },
-    stop: function(event, ui) {
-      if (!isDropped) {
-        $('.cart-tray').removeClass('cart-tray-active');
-        $('.cart-tray').removeClass('cart-tray-moving');
-      }
-    },
-  });
+      helper: function()
+      {
+        var clone = $(this)
+          .clone()
+          .css(
+            {
+              'width':   $(this).outerWidth() + 'px',
+              'height':  $(this).outerHeight() + 'px'
+            }
+          );
 
-  $('.cart-tray').droppable({
-    tolerance: 'touch',
-    over: function(event, ui) {
-      $('.cart-tray .tray-area').addClass('droppable');
-   },
-    out: function(event, ui) {
-      $('.cart-tray .tray-area').removeClass('droppable');
-    },
-    drop: function(event, ui) {
-      if (!isDropped) {
-        isDropped = true;
-        $('.cart-tray').removeClass('cart-tray-moving');
-        $('.cart-tray').addClass('cart-tray-adding');
+        $(this).addClass('drag-owner');
+
+        return clone;
+      },
+
+      start: function(event, ui)
+      {
+        isProductDrag = true;
+        $('.cart-tray').not('.cart-tray-adding')
+          .addClass('cart-tray-active')
+          .addClass('cart-tray-moving')
+          .attr('style', '');
+      },
+
+      stop: function(event, ui)
+      {
+        isProductDrag = false;
+        $('.cart-tray').not('.cart-tray-adding')
+          .fadeOut(
+            cartTrayFadeOutDuration,
+            function() {
+              $(this)
+                .removeClass('cart-tray-active')
+                .removeClass('cart-tray-moving');
+            }
+          );
+
+        $('.drag-owner').removeClass('drag-owner');
+      },
+    }
+  );
+
+  $('.cart-tray').droppable(
+    {
+      tolerance: 'touch',
+
+      over: function(event, ui)
+      {
+        $('.cart-tray .tray-area').addClass('droppable');
+      },
+
+      out: function(event, ui)
+      {
         $('.cart-tray .tray-area').removeClass('droppable');
-        core.post(
-          URLHandler.buildURL({}),
-          {target: 'cart', action: 'add', product_id: $(ui.draggable).attr('id')},
-          function(XMLHttpRequest, textStatus, data, isValid) {
-            $('.cart-tray').removeClass('cart-tray-adding');
-            $('.cart-tray').addClass('cart-tray-added');
-            setTimeout(function() {
-                $('.cart-tray').removeClass('cart-tray-active');
-                $('.cart-tray').removeClass('cart-tray-added');
-              }, 3000
+      },
+
+      drop: function(event, ui)
+      {
+        if (isProductDrag) {
+          $('.cart-tray')
+            .removeClass('cart-tray-moving')
+            .addClass('cart-tray-adding')
+            .find('.tray-area')
+            .removeClass('droppable');
+
+          countRequests++;
+
+          var m = $(ui.draggable)
+            .attr('class')
+            .match(/productid-([0-9]+)/);
+          if (m) {
+            core.post(
+              URLHandler.buildURL({}),
+              {
+                target:     'cart',
+                action:     'add',
+                product_id: m[1]
+              },
+              function(XMLHttpRequest, textStatus, data, isValid)
+              {
+                countRequests--;
+                if (0 == countRequests) {
+                  $('.cart-tray')
+                    .removeClass('cart-tray-adding')
+                    .addClass('cart-tray-added');
+                  setTimeout(
+                    function() {
+                      $('.cart-tray').not('.cart-tray-adding')
+                        .fadeOut(
+                          cartTrayFadeOutDuration,
+                          function() {
+                            $(this)
+                            .removeClass('cart-tray-active')
+                            .removeClass('cart-tray-added');
+                          }
+                        );
+                    },
+                    3000
+                  );
+                }
+              }
             );
           }
-        );
-      }
-    },
-  });
+        }
+      },
+    }
+  );
 }
 
 ProductsList.prototype.listeners.quickLookButtons = function(handler)

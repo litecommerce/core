@@ -100,7 +100,8 @@ ul.products-list li
 
 .products .product-cell .drag-n-drop-handle,
 .products .product-cell .quicklook,
-.products .product-cell:hover .ui-draggable-dragging .quicklook
+.products .product-cell:hover .ui-draggable-dragging .quicklook,
+.products .product-cell:hover .drag-owner .quicklook
 {
   visibility: hidden;
 }
@@ -126,8 +127,6 @@ ul.products-list li
 {
   top: 35%;
 }
-
-
 
 .products-grid .product-name,
 .products-grid .product-thumbnail,
