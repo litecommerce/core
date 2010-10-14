@@ -69,17 +69,17 @@ class QuickLook extends \XLite\View\Button\Regular
         return 'Quick look';
     }
 
-    /**
-     * getId
+    /** 
+     * getClass
      *
      * @return string
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getId()
+    protected function getClass()
     {
-        return $this->getProduct()->getProductId();
+        return parent::getClass() . ' productid-' . $this->getProduct()->getProductId();
     }
 
     /**

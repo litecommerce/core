@@ -69,11 +69,12 @@ Base.prototype.getSuperclass = function()
 // Call parent method by name nad arguments list
 Base.prototype.callSupermethod = function(name, args)
 {
-    return this.getSuperclass()[name].apply(this, args);
+    superClass = this.getSuperclass();
+
+    return superClass[name].apply(this, args);
 }
 
 // Core definition
-
 window.core = {
   isReady: false,
 
@@ -204,6 +205,22 @@ window.core = {
         eval('new ' + className + '();');
       }
     );
+  },
+
+  // Return value of variable that is given in class attribute: e.g. class="superclass productid-100001 test"
+  getValueFromClass: function(obj, prefix)
+  {
+    classes = $(obj).attr('class').split(' ');
+    var x = 0;
+
+    for(x in classes) {
+      className = classes[x].split('-', 2); 
+      if (className[0] == prefix) {
+        return className[1];
+      }   
+    }
+
+    return null;
   }
   
 };

@@ -11,85 +11,82 @@
  * @since     3.0.0
  */
 
+function ProductsListView(base)
+{
+  ProductsListView.superclass.constructor.apply(this, arguments);
+}
+
+extend(ProductsListView, ListView);
+
 // Products list class
-
-extend(ProductsList, ItemsList);
-
-function ProductsList(cell, URLParams, URLAJAXParams)
+function ProductsListController(base)
 {
-  if (!cell) {
-    return;
-  }
-
-  this.callSupermethod('constructor', arguments);
+  ProductsListController.superclass.constructor.apply(this, arguments);
 }
 
-// Set new display mode
-ProductsList.prototype.changeDisplayMode = function(handler)
+extend(ProductsListController, ListsController);
+
+ProductsListController.prototype.name = 'ProductsListController';
+
+ProductsListController.prototype.getListView = function()
 {
-  return this.process('displayMode', $(handler).attr('class'));
+  return new ProductsListView(this.base);
 }
 
-// Change sort criterion
-ProductsList.prototype.changeSortByMode = function(handler)
+ProductsListView.prototype.postprocess = function(isSuccess, initial) 
 {
-  return this.process('sortBy', handler.options[handler.selectedIndex].value);
-}
+  ProductsListView.superclass.postprocess.apply(this, arguments);
 
-// Change sort order
-ProductsList.prototype.changeSortOrder = function()
-{
-  return this.process('sortOrder', ('asc' == this.URLParams.sortOrder) ? 'desc' : 'asc');
-}
+  var o = this;
 
-// Open the QuickLook popup
-ProductsList.prototype.openQuickLookPopup = function(button)
-{
-  this.URLAJAXParams['target'] = 'quick_look';
-  this.URLAJAXParams['product_id'] = $(button).attr('id');
+  if (isSuccess) {
 
-  return !popup.load(URLHandler.buildURL(this.URLAJAXParams), 'product-quicklook', false, 50000);
-}
+    // Register "Changing display mode" handler
+    $('.display-modes a', this.base).click(
+      function() {
+        return !o.load({'displayMode': $(this).attr('class')});
+      }
+    );
 
-ProductsList.prototype.listeners.displayModes = function(handler)
-{
-  $('.display-modes a', handler.container).click(
-    function() {
-      return !handler.changeDisplayMode(this);
-    }
-  );
-}
+    // Register "Sort by" selector handler
+    $('select.sort-crit', this.base).change(
+      function () {
+        return !o.load({'sortBy': $(this).val()});
+      }
+    );
 
-ProductsList.prototype.listeners.sortByModes = function(handler)
-{
-  $('select.sort-crit', handler.container).change(
-    function() {
-      return !handler.changeSortByMode(this);
-    }
-  );
-}
+    // Register "ASC/DESC" selector handler
+    $('a.sort-order', this.base).click(
+      function () {
+        // TODO sort order value should be not defined from the content of a.sort-order
+        return !o.load({'sortOrder': $(this).html().charCodeAt(0) == 8595 ? 'desc' : 'asc'});
+      }
+    );
 
-ProductsList.prototype.listeners.sortOrderModes = function(handler)
-{
-  $('a.sort-order', handler.container).click(
-    function() {
-      return !handler.changeSortOrder();
-    }
-  );
-}
+    // Register "Quick look" button handler
+    $('.quicklook button.action', this.base).click(
+      function () {
+        return !popup.load(
+          URLHandler.buildURL({
+            'target' : 'quick_look',
+            'product_id' : core.getValueFromClass(this, 'productid')
+          }), 
+          'product-quicklook', 
+          false, 
+          50000
+        );
+      }
+    );
 
-// TODO - to improve
-ProductsList.prototype.listeners.dragNDrop = function(handler)
-{
-  var cartTrayFadeOutDuration = 400;
+    var cartTrayFadeOutDuration = 400;
 
-  var draggablePattern = '.products-grid .product, .products-list .product';
-  var draggableMarkPattern = '.products-grid .product .drag-n-drop-handle, .products-list .product .drag-n-drop-handle';
+    var draggablePattern = '.products-grid .product, .products-list .product';
+    var draggableMarkPattern = '.products-grid .product .drag-n-drop-handle, .products-list .product .drag-n-drop-handle';
 
-  var countRequests = 0;
-  var isProductDrag = false;
+    var countRequests = 0;
+    var isProductDrag = false;
 
-  $(draggablePattern, handler.container).draggable(
+    $(draggablePattern, this.base).draggable(
     {
       revert: 'invalid',
       revertDuration: 300,
@@ -109,7 +106,7 @@ ProductsList.prototype.listeners.dragNDrop = function(handler)
         $(this).addClass('drag-owner');
 
         return clone;
-      },
+      }, // helper()
 
       start: function(event, ui)
       {
@@ -118,7 +115,7 @@ ProductsList.prototype.listeners.dragNDrop = function(handler)
           .addClass('cart-tray-active')
           .addClass('cart-tray-moving')
           .attr('style', '');
-      },
+      }, // start()
 
       stop: function(event, ui)
       {
@@ -140,11 +137,11 @@ ProductsList.prototype.listeners.dragNDrop = function(handler)
           );
 
         $('.drag-owner').removeClass('drag-owner');
-      },
+      }, // stop()
     }
-  );
+    ); // $(draggablePattern, this.base).draggable
 
-  $('.cart-tray').droppable(
+    $('.cart-tray').droppable(
     {
       tolerance: 'touch',
 
@@ -170,9 +167,8 @@ ProductsList.prototype.listeners.dragNDrop = function(handler)
 
           countRequests++;
 
-          var m = $(ui.draggable)
-            .attr('class')
-            .match(/productid-([0-9]+)/);
+          var m = core.getValueFromClass($(ui.draggable), 'productid');
+
           if (m) {
             core.post(
               URLHandler.buildURL({}),
@@ -216,23 +212,22 @@ ProductsList.prototype.listeners.dragNDrop = function(handler)
                       }
                     },
                     3000
-                  );
-                }
-              }
-            );
-          }
-        }
-      },
+                  ); // setTimeout()
+                } // if (0 == countRequests)
+              } // function(XMLHttpRequest, textStatus, data, isValid)
+            ); // core.post()
+          } // if (m) 
+        } // if (isProductDrag)
+      }, // drop()
     }
-  );
-}
+    ); // $('.cart-tray').droppable()
 
-ProductsList.prototype.listeners.quickLookButtons = function(handler)
-{
-  $('.products .product .quicklook button.action', handler.container).click(
-    function() {
-      return !handler.openQuickLookPopup(this);
-    }
-  );
-}
+  } // if (isSuccess)
+} // ProductsListView.prototype.postprocess()
+
+
+/**
+ * Load product lists controller  
+ */
+core.autoload(ProductsListController);
 

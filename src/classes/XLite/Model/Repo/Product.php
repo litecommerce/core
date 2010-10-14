@@ -250,9 +250,7 @@ class Product extends \XLite\Model\Repo\Base\I18n
      */
     public function search(\XLite\Core\CommonCell $cnd, $countOnly = false)
     {
-        $queryBuilder = $countOnly
-            ? $this->createPureQueryBuilder()
-            : $this->createQueryBuilder();
+        $queryBuilder = $this->createQueryBuilder();
 
         $this->currentSearchCnd = $cnd;
 

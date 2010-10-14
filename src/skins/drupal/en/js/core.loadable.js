@@ -63,6 +63,9 @@ ALoadable.prototype.titlePattern = 'h1:eq(0)';
 // Page title element pattern in request's response data
 ALoadable.prototype.titleRequestPattern = 'h1:eq(0)';
 
+// Container element pattern in request's response data
+ALoadable.prototype.containerRequestPattern = 'div.ajax-container-loadable';
+
 
 // Check base
 ALoadable.prototype.checkBase = function(base)
@@ -121,6 +124,11 @@ ALoadable.prototype.getParams = function(params)
 
   if ('undefined' == typeof(params.target) && this.widgetTarget) {
     params.target = this.widgetTarget;
+  }
+
+  // TODO remove if it will be no use!!
+  if ('undefined' == typeof(params.sessionCell) && this.sessionCell) {
+    params.sessionCell = this.sessionCell;
   }
 
   if ('undefined' == typeof(params.action)) {
@@ -182,16 +190,17 @@ ALoadable.prototype.extractRequestData = function(div)
 ALoadable.prototype.placeRequestData = function(box)
 {
   // Update page title
-  var title = $(this.titleRequestPattern, box).eq(0);
-  if (this.updatePageTitle && 1 == title.length) {
+  if (this.updatePageTitle) {
+    var title = $(this.titleRequestPattern, box).eq(0);
     $(this.titlePattern).eq(0).html(title.html());
   }
 
-  // Update widget body
-  box = box.children().eq(1);
+  box = $(this.containerRequestPattern, box);
 
   var id = 'temporary-ajax-id-' + (new Date()).getTime();
+
   box.addClass(id);
+
   this.base.trigger('reload', [box]);
   this.base.replaceWith(box);
   this.base = $('.' + id);
