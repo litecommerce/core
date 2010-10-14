@@ -82,9 +82,10 @@ ProductsListView.prototype.postprocess = function(isSuccess, initial)
 
     var draggablePattern = '.products-grid .product, .products-list .product';
     var draggableMarkPattern = '.products-grid .product .drag-n-drop-handle, .products-list .product .drag-n-drop-handle';
+    var cartTray = $('.cart-tray').eq(0);
 
     var countRequests = 0;
-    var isProductDrag = false;
+    cartTray.data('isProductDrag', false);
 
     $(draggablePattern, this.base).draggable(
     {
@@ -94,24 +95,25 @@ ProductsListView.prototype.postprocess = function(isSuccess, initial)
 
       helper: function()
       {
-        var clone = $(this)
+        var base = $(this);
+        var clone = base
           .clone()
           .css(
             {
-              'width':   $(this).outerWidth() + 'px',
-              'height':  $(this).outerHeight() + 'px'
+              'width':   base.outerWidth() + 'px',
+              'height':  base.outerHeight() + 'px'
             }
           );
 
-        $(this).addClass('drag-owner');
+        base.addClass('drag-owner');
 
         return clone;
       }, // helper()
 
       start: function(event, ui)
       {
-        isProductDrag = true;
-        $('.cart-tray').not('.cart-tray-adding').not('.cart-tray-added')
+        cartTray.data('isProductDrag', true);
+        cartTray.not('.cart-tray-adding').not('.cart-tray-added')
           .addClass('cart-tray-active')
           .addClass('cart-tray-moving')
           .attr('style', '');
@@ -119,12 +121,12 @@ ProductsListView.prototype.postprocess = function(isSuccess, initial)
 
       stop: function(event, ui)
       {
-        isProductDrag = false;
-        $('.cart-tray').not('.cart-tray-adding').not('.cart-tray-added')
+        cartTray.data('isProductDrag', false);
+        cartTray.not('.cart-tray-adding').not('.cart-tray-added')
           .fadeOut(
             cartTrayFadeOutDuration,
             function() {
-              if (isProductDrag) {
+              if (cartTray.data('isProductDrag')) {
                 $(this).show();
 
               } else {
@@ -141,24 +143,25 @@ ProductsListView.prototype.postprocess = function(isSuccess, initial)
     }
     ); // $(draggablePattern, this.base).draggable
 
-    $('.cart-tray').droppable(
+    cartTray.droppable(
     {
       tolerance: 'touch',
 
       over: function(event, ui)
       {
-        $('.cart-tray .tray-area').addClass('droppable');
+        cartTray.find('.tray-area').addClass('droppable');
       },
 
       out: function(event, ui)
       {
-        $('.cart-tray .tray-area').removeClass('droppable');
+        cartTray.find('.tray-area').removeClass('droppable');
       },
 
       drop: function(event, ui)
       {
-        if (isProductDrag) {
-          $('.cart-tray')
+        var pid = core.getValueFromClass(ui.draggable, 'productid');
+        if (pid) {
+          cartTray
             .removeClass('cart-tray-moving')
             .removeClass('cart-tray-added')
             .addClass('cart-tray-adding')
@@ -167,41 +170,50 @@ ProductsListView.prototype.postprocess = function(isSuccess, initial)
 
           countRequests++;
 
-          var m = core.getValueFromClass($(ui.draggable), 'productid');
+          core.post(
+            URLHandler.buildURL({}),
+            {
+              target:     'cart',
+              action:     'add',
+              product_id: pid
+            },
+            function(XMLHttpRequest, textStatus, data, isValid)
+            {
+              countRequests--;
+              if (!isValid) {
+                core.trigger(
+                  'message',
+                  {
+                    text: 'An error occurred during adding the product to cart. Please refresh the page and try to drag the product to cart again or contact the store administrator.',
+                    type: 'error'
+                  }
+                );
+              }
 
-          if (m) {
-            core.post(
-              URLHandler.buildURL({}),
-              {
-                target:     'cart',
-                action:     'add',
-                product_id: m[1]
-              },
-              function(XMLHttpRequest, textStatus, data, isValid)
-              {
-                countRequests--;
-                if (0 == countRequests) {
-                  $('.cart-tray')
+              if (0 == countRequests) {
+                if (isValid) {
+                  cartTray
                     .removeClass('cart-tray-adding')
                     .addClass('cart-tray-added');
+
                   setTimeout(
                     function() {
-                      if (isProductDrag) {
-                        $('.cart-tray')
+                      if (cartTray.data('isProductDrag')) {
+                        cartTray
                           .removeClass('cart-tray-added')
                           .addClass('cart-tray-moving');
 
                       } else {
-                        $('.cart-tray').not('.cart-tray-adding')
-                          .fadeOut(
+                        cartTray.not('.cart-tray-adding')
+                         .fadeOut(
                             cartTrayFadeOutDuration,
                             function() {
-                              if (isProductDrag) {
+                              if (cartTray.data('isProductDrag')) {
                                 $(this)
                                   .removeClass('cart-tray-added')
                                   .addClass('cart-tray-moving')
                                   .show();
-
+  
                               } else {
                                 $(this)
                                 .removeClass('cart-tray-active')
@@ -213,14 +225,20 @@ ProductsListView.prototype.postprocess = function(isSuccess, initial)
                     },
                     3000
                   ); // setTimeout()
-                } // if (0 == countRequests)
-              } // function(XMLHttpRequest, textStatus, data, isValid)
-            ); // core.post()
-          } // if (m) 
+
+                } else {
+                  cartTray
+                    .removeClass('cart-tray-adding')
+                    .removeClass('cart-tray-active');
+
+                }
+              } // if (0 == countRequests)
+            } // function(XMLHttpRequest, textStatus, data, isValid)
+          ); // core.post()
         } // if (isProductDrag)
       }, // drop()
     }
-    ); // $('.cart-tray').droppable()
+    ); // cartTray.droppable()
 
   } // if (isSuccess)
 } // ProductsListView.prototype.postprocess()
