@@ -210,17 +210,11 @@ window.core = {
   // Return value of variable that is given in class attribute: e.g. class="superclass productid-100001 test"
   getValueFromClass: function(obj, prefix)
   {
-    classes = $(obj).attr('class').split(' ');
-    var x = 0;
+    var m = $(obj)
+      .attr('class')
+      .match(new RegExp(prefix + '-([^ ]+)( |$)'));
 
-    for(x in classes) {
-      className = classes[x].split('-', 2); 
-      if (className[0] == prefix) {
-        return className[1];
-      }   
-    }
-
-    return null;
+    return m ? m[1] : null;
   }
   
 };
