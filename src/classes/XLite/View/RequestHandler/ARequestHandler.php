@@ -78,6 +78,32 @@ abstract class ARequestHandler extends \XLite\View\AView
     }
 
     /**
+     * Return name of this class
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getWidgetClass()
+    {
+        return get_class($this);
+    }
+
+    /**
+     * Return target to retrive this widget from AJAX
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getWidgetTarget()
+    {
+        return '';
+    }
+
+    /**
      * Check if passed request data are correspond to the current widget
      *
      * There are two cases:

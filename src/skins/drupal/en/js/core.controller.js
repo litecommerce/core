@@ -22,7 +22,7 @@ function AController(base)
 
   if (base) {
 
-    if (base instanceof Array) {
+    if (base.length > 1) {
 
       // Multiple binding
       for (var i = 0; i < base.length; i++) {

@@ -40,15 +40,17 @@ class Category extends \XLite\View\ItemsList\Product\Customer\ACustomer
     /**
      * Widget parameter names
      */
-
     const PARAM_CATEGORY_ID = 'category_id';
 
     /**
      * Allowed sort criterions
      */
-
     const SORT_BY_MODE_DEFAULT = 'cp.orderby';
 
+    /**
+     * Widget target 
+     */
+    const WIDGET_TARGET = 'category';
 
     /**
      * Return class name for the list pager
@@ -153,8 +155,20 @@ class Category extends \XLite\View\ItemsList\Product\Customer\ACustomer
         parent::__construct($params);
     }
 
+    /** 
+     * Return target to retrive this widget from AJAX
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getWidgetTarget()
+    {
+        return self::WIDGET_TARGET; 
+    }
 
-    /**
+    /** 
      * Return list of targets allowed for this widget
      *
      * @return array
@@ -165,10 +179,11 @@ class Category extends \XLite\View\ItemsList\Product\Customer\ACustomer
     public static function getAllowedTargets()
     {
         $result = parent::getAllowedTargets();
-        $result[] = 'category';
+        $result[] = self::WIDGET_TARGET;
     
         return $result;
     }
+
 
     /**
      * Returns CSS classes for the container element

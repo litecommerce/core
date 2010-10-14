@@ -677,5 +677,19 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
         return $this->getCart()->isProductAdded($product->getProductId());
     }
 
-
+    /** 
+     * Return list of targets allowed for this widget
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getAllowedTargets()
+    {
+        $result = parent::getAllowedTargets();
+        $result[] = self::getWidgetTarget();
+    
+        return $result;
+    }
 }

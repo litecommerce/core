@@ -53,7 +53,7 @@ $(document).ready(
 
       }
 
-      ALoadable.prototype.titleRequestPattern = 'h2:eq(0)';
+      ALoadable.prototype.titleRequestPattern = 'h2.ajax-title-loadable:eq(0)';
     }
 
   }

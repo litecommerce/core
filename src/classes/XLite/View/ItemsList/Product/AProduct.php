@@ -169,7 +169,7 @@ abstract class AProduct extends \XLite\View\ItemsList\AItemsList
         $list = parent::getJSFiles();
 
         // Static call of the non-static function
-        $list[] = self::getDir() . '/products_list.js';
+        $list[] = self::getDir() . '/controller.js';
 
         return $list;
     }
