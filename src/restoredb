@@ -1,10 +1,38 @@
 #!/usr/local/php-532/bin/php -q
 <?php
+// vim: set ts=4 sw=4 sts=4 et:
 
-function _do_query_upload($sqlfile, $connection = null, $ignoreErrors = false) {
+/**
+ * LiteCommerce
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to licensing@litecommerce.com so we can send you a copy immediately.
+ * 
+ * @category   LiteCommerce
+ * @package    XLite
+ * @subpackage Service
+ * @author     Creative Development LLC <info@cdev.ru> 
+ * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version    SVN: $Id$
+ * @link       http://www.litecommerce.com/
+ * @see        ____file_see____
+ * @since      3.0.0
+ */
+
+function _do_query_upload($sqlfile, $__connection, $ignoreErrors = false) {
 	echo '+++ ' . $sqlfile . PHP_EOL;
 	ob_start();
-	query_upload($sqlfile, $connection, $ignoreErrors);
+	mysql_query('START TRANSACTION', $__connection);
+	query_upload($sqlfile, $__connection, $ignoreErrors);
+	mysql_query('COMMIT', $__connection);
 	$output = ob_get_contents();
 	ob_end_clean();
 	$output = strip_tags($output);
@@ -31,7 +59,7 @@ OUT;
 	exit;
 }
 
-chdir(dirname(__FILE__));
+chdir(__DIR__);
 
 define('LC_DO_NOT_REBUILD_CACHE', true);
 require_once './top.inc.php';
@@ -43,70 +71,64 @@ $config = parse_ini_file('etc/config.local.php');
 $config['hostspec'] .= empty($config['socket'])
 	? (empty($config['port']) ? '' : ':' . $config['port'])
 	: ':' . $config['socket'];
-$connection = mysql_connect($config['hostspec'], $config['username'], $config['password']);
-mysql_select_db($config['database']);
+$__connection = mysql_connect($config['hostspec'], $config['username'], $config['password']);
+mysql_select_db($config['database'], $__connection);
 
-_do_query_upload('sql/xlite_tables.sql', $connection, true);
-_do_query_upload('sql/xlite_data.sql', $connection, true);
-_do_query_upload('sql/xlite_lng_en.sql', $connection, true);
-_do_query_upload('sql/xlite_lng_de.sql', $connection, true);
-_do_query_upload('sql/states_US.sql', $connection, true);
-_do_query_upload('sql/states_GB.sql', $connection, true);
-_do_query_upload('sql/states_CA.sql', $connection, true);
+_do_query_upload('sql/xlite_tables.sql', $__connection, true);
+_do_query_upload('sql/xlite_data.sql', $__connection, true);
+_do_query_upload('sql/xlite_lng_en.sql', $__connection, true);
+_do_query_upload('sql/xlite_lng_de.sql', $__connection, true);
+_do_query_upload('sql/states_US.sql', $__connection, true);
+_do_query_upload('sql/states_GB.sql', $__connection, true);
+_do_query_upload('sql/states_CA.sql', $__connection, true);
 
 if (!isset($argv[1]) || $argv[1] != 'demo') {
-	_do_query_upload('sql/xlite_demo.sql', $connection, true);
+	_do_query_upload('sql/xlite_demo.sql', $__connection, true);
 }
 
 require_once 'classes/XLite/Module/AModule.php';
 require_once 'classes/XLite/Base/IPatcher.php';
 
 // modules
-$modules = opendir('classes/XLite/Module');
 
-while (($dir = readdir($modules)) !== false) {
-	if (
-		substr($dir, 0, 1) != '.'
-		&& is_dir('classes/XLite/Module/' . $dir)
-		&& file_exists('classes/XLite/Module/' . $dir . '/Main.php')
-	) {
+foreach (glob('classes/XLite/Module/*/Main.php') as $f) {
+	require_once $f;
+	$class = str_replace('/', '\\', substr($f, 7, -4));
+	$obj = new $class();
 
-		require_once 'classes/XLite/Module/' . $dir . '/Main.php';
-		$class = '\XLite\Module\\' . $dir . '\Main';
-		$obj = new $class();
+	mysql_query(
+		'REPLACE INTO xlite_modules SET name = \'' . $dir . '\', mutual_modules = \'' . implode(',', $obj->getMutualModulesList()) . '\', type = \'' . $obj->getModuleType(). '\', installed = 1, version = \'' . $obj->getVersion() . '\', dependencies = \'' . implode(',', $obj->getDependenciesList()) . '\'',
+		$__connection
+	);
 
-		mysql_query('REPLACE INTO xlite_modules SET name = \'' . $dir . '\', mutual_modules = \'' . implode(',', $obj->getMutualModulesList()) . '\', type = \'' . $obj->getModuleType(). '\', installed = 1, version = \'' . $obj->getVersion() . '\', dependencies = \'' . implode(',', $obj->getDependenciesList()) . '\'');
-
-		$sqlFile = 'classes/XLite/Module/' . $dir . '/install.sql';
-		if (file_exists($sqlFile)) {
-			_do_query_upload($sqlFile, $connection, true);
-		}
+	$sqlFile = dirname($f) . '/install.sql';
+	if (file_exists($sqlFile)) {
+		_do_query_upload($sqlFile, $__connection, true);
 	}
 }
 
-closedir($modules);
-
-_do_query_upload('sql/demo/xlite_demo_user.sql', $connection, true);
+_do_query_upload('sql/demo/xlite_demo_user.sql', $__connection, true);
 
 if (isset($argv[1]) && $argv[1] == 'demo') {
 
-    _do_query_upload('sql/demo/xlite_demo_data.sql', $connection, true);
-	_do_query_upload('sql/demo/xlite_demo_store.sql', $connection, true);
-	_do_query_upload('sql/demo/xlite_demo_orders.sql', $connection, true);
-	_do_query_upload('sql/local/xlite_test_accounts.sql', $connection, true);
+    _do_query_upload('sql/demo/xlite_demo_data.sql', $__connection, true);
+	_do_query_upload('sql/demo/xlite_demo_store.sql', $__connection, true);
+	_do_query_upload('sql/demo/xlite_demo_orders.sql', $__connection, true);
+	_do_query_upload('sql/local/xlite_test_accounts.sql', $__connection, true);
 
 	if (isset($argv[2]) && $argv[2] == 'all') {
-		_do_query_upload('sql/local/xlite_all_modules.sql', $connection, true);
+		_do_query_upload('sql/local/xlite_all_modules.sql', $__connection, true);
 	}
 
 } elseif (isset($argv[1]) && in_array($argv[1], array('standalone', 'st', 's', 'stand'))) {
-	_do_query_upload('sql/local/xlite_modules_standalone.sql', $connection, true);
+	_do_query_upload('sql/local/xlite_modules_standalone.sql', $__connection, true);
+
 } else {
-	_do_query_upload('sql/local/xlite_modules_drupal.sql', $connection, true);
+	_do_query_upload('sql/local/xlite_modules_drupal.sql', $__connection, true);
 }
 
 if (file_exists('sql/local/xlite_local_demo.sql')) {
-	_do_query_upload('sql/local/xlite_local_demo.sql', $connection, true);
+	_do_query_upload('sql/local/xlite_local_demo.sql', $__connection, true);
 }
 
 echo 'Remove the var/* sub-directories' . PHP_EOL . PHP_EOL;
@@ -117,5 +139,6 @@ echo 'Remove the var/* sub-directories' . PHP_EOL . PHP_EOL;
 \Includes\Utils\FileManager::unlinkRecursive('var/datacache');
 \Includes\Utils\FileManager::unlinkRecursive('var/log');
 
-mysql_close($connection);
-
+if (is_resource($__connection)) {
+	mysql_close($__connection);
+}
