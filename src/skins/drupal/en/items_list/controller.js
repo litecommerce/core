@@ -57,8 +57,9 @@ function ListView(base)
 {
   ListView.superclass.constructor.apply(this, arguments);
 
-  this.widgetClass = core.getValueFromClass(base, 'widgetclass');
+  this.widgetClass  = core.getValueFromClass(base, 'widgetclass');
   this.widgetTarget = core.getValueFromClass(base, 'widgettarget');
+  this.sessionCell  = core.getValueFromClass(base, 'sessioncell');
 }
  
 extend(ListView, ALoadable);

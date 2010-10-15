@@ -38,6 +38,12 @@ namespace XLite\Model;
  */
 class Layout extends \XLite\Base
 {
+    /**
+     * Repository paths constants 
+     */
+    const COMMON_REPOSITORY_PATH = 'common';
+    const SKIN_REPOSITORY_PATH = 'skins';
+
     public $skin = null;
 
     public $skinCustomer = null;
@@ -56,12 +62,24 @@ class Layout extends \XLite\Base
     */    
     public $list = array();
 
+    /**
+     * __construct 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
     public function __construct()
     {
         foreach (array('skin', 'locale') as $name) {
+
             if (!isset($this->$name)) {
+
                 $this->$name = \XLite::getInstance()->getOptions(array('skin_details', $name));
+
             }
+
         }
 
         $this->skinCustomer = \XLite::getInstance()->getOptions(array('skin_details', 'skin'));
@@ -79,6 +97,20 @@ class Layout extends \XLite\Base
     public function getSkinURL($url)
     {
         return $this->getPath() . $url;
+    }
+
+    /** 
+     * Return full URL by the common repository-related one
+     *
+     * @param string $url relative URL
+     *
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getCommonRepositoryURL($url)
+    {
+        return $this->getCommonPath() . $url;
     }
 
     /**
@@ -109,6 +141,15 @@ class Layout extends \XLite\Base
         return $this->get('path') . $templateName;
     }
 
+    /**
+     * hasLayout 
+     * 
+     * @param string $widgetName name of widget
+     *  
+     * @return boolean
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
     function hasLayout($widgetName)
     {
         return isset($this->list[$widgetName]);
@@ -136,14 +177,33 @@ class Layout extends \XLite\Base
      */
     public function getPath()
     {
-        return 'skins/' . $this->getShortPath();
+        return self::SKIN_REPOSITORY_PATH . '/' . $this->getShortPath();
     }
 
+    /**
+     * Returns the layout path
+     * 
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getCommonPath()
+    {   
+        return self::SKIN_REPOSITORY_PATH . '/' . self::COMMON_REPOSITORY_PATH . '/';
+    }
 
+    /**
+     * Return customer path
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
     public function getPathCustomer()
     {
         if (!isset($this->pathCustomer)) {
-            $this->pathCustomer = sprintf('skins/%s/%s/', $this->skinCustomer, $this->locale);
+            $this->pathCustomer = sprintf(self::SKIN_REPOSITORY_PATH . '/%s/%s/', $this->skinCustomer, $this->locale);
         }
         
         return $this->pathCustomer;
@@ -152,7 +212,7 @@ class Layout extends \XLite\Base
     function getSkins($includeAdmin = false)
     {
         $list = array();
-        $dir = 'skins';
+        $dir = self::SKIN_REPOSITORY_PATH;
         $dh = opendir($dir);
 
         if ($dh) {
@@ -177,7 +237,7 @@ class Layout extends \XLite\Base
     function getLocales($skin)
     {
         $list = array();
-        $dir = 'skins/' . $skin . '/';
+        $dir = self::SKIN_REPOSITORY_PATH . '/' . $skin . '/';
         $dh = @opendir($dir);
         if ($dh) {
             while (($file = readdir($dh)) !== false) {

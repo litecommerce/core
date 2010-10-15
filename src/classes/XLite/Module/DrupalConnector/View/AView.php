@@ -124,9 +124,39 @@ abstract class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
     {
         $data = parent::prepareResources($data);
 
+        return self::modifyResources($data);
+    }
+
+    /** 
+     * Prepare common resources list
+     * 
+     * @param mixed $data data to prepare
+     *  
+     * @return array
+     * @access protected
+     * @since  3.0.0
+     */
+    protected static function prepareCommonResources($data)
+    {
+        $data = parent::prepareCommonResources($data);
+    
+        return self::modifyResources($data);
+    }
+
+    /** 
+     * Modify resources list
+     * 
+     * @param mixed $data data to prepare
+     *  
+     * @return array
+     * @access protected
+     * @since  3.0.0
+     */
+    protected static function modifyResources($data)
+    {
         if (\XLite\Module\DrupalConnector\Handler::getInstance()->checkCurrentCMS()) {
             $data = self::modifyResourcePaths($data);
-        }
+        }   
 
         return $data;
     }
