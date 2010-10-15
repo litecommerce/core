@@ -142,7 +142,7 @@ abstract class ARequestHandler extends \XLite\View\AView
         parent::initView();
 
         if ($this->checkSessionCell()) {
-            \XLite\Model\Session::getInstance()->set($this->getSessionCell(), $this->getRequestParamsHash());
+            \XLite\Core\Session::getInstance()->set($this->getSessionCell(), $this->getRequestParamsHash());
         }
     }
 
@@ -174,7 +174,7 @@ abstract class ARequestHandler extends \XLite\View\AView
         if (!isset($this->savedRequestParams)) {
 
             // Cache the session cell (variable) associatd with the current widget
-            $this->savedRequestParams = \XLite\Model\Session::getInstance()->get(
+            $this->savedRequestParams = \XLite\Core\Session::getInstance()->get(
                 $this->getSessionCell()
             );
 

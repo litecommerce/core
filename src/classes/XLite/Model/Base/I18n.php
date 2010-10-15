@@ -85,7 +85,7 @@ abstract class I18n extends \XLite\Model\AEntity
      */
     protected function getDefaultLanguageCode()
     {
-        return \XLite\Model\Session::getInstance()->getLanguage()->code;
+        return \XLite\Core\Session::getInstance()->getLanguage()->code;
     }
 
     /**

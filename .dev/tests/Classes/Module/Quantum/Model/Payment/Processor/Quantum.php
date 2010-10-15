@@ -65,7 +65,7 @@ class XLite_Tests_Module_Quantum_Model_Payment_Processor_Quantum extends XLite_T
 
         $oid = $order->getOrderId();
         $tid = $t->getTransactionId();
-        $sid = \Xlite\Model\Session::getInstance()->getID();
+        $sid = \XLite\Core\Session::getInstance()->getID();
         $amount = $t->getValue();
 
         $urla = \XLite::getInstance()->getShopUrl('admin.php?target=payment_return&amp;txn_id_name=ID', true);

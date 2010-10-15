@@ -679,7 +679,7 @@ abstract class AView extends \XLite\Core\Handler
      */
     public function getCurrentLanguage()
     {
-        return \XLite\Model\Session::getInstance()->getLanguage();
+        return \XLite\Core\Session::getInstance()->getLanguage();
     }
 
     /**

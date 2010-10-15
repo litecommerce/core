@@ -89,7 +89,7 @@ class Auth extends \XLite\Base
     {
         if ($result = $profile->isPersistent) {
 
-            \XLite\Model\Session::getInstance()->restart();
+            \XLite\Core\Session::getInstance()->restart();
 
             // check for the fisrt time login
             if (!$profile->get('first_login')) {
@@ -103,7 +103,7 @@ class Auth extends \XLite\Base
             $profile->update();
 
             // save to session
-            \XLite\Model\Session::getInstance()->set('profile_id', $profile->get('profile_id'));
+            \XLite\Core\Session::getInstance()->set('profile_id', $profile->get('profile_id'));
 
             $this->rememberLogin($profile->get('login'));
         }
@@ -138,7 +138,7 @@ class Auth extends \XLite\Base
     protected function clearSessionVars()
     {
         foreach ($this->sessionVarsToClear as $name) {
-            \XLite\Model\Session::getInstance()->set($name, null);
+            \XLite\Core\Session::getInstance()->set($name, null);
         }
     }
 
@@ -159,11 +159,11 @@ class Auth extends \XLite\Base
         $result = false;
 
         if (!empty($hashString)) {
-            $result = \XLite\Model\Session::getInstance()->get(self::SESSION_SECURE_HASH_CELL) === $hashString;
+            $result = \XLite\Core\Session::getInstance()->get(self::SESSION_SECURE_HASH_CELL) === $hashString;
         }
 
         // Using this method, it's not possible to log in several times
-        \XLite\Model\Session::getInstance()->set(self::SESSION_SECURE_HASH_CELL, null);
+        \XLite\Core\Session::getInstance()->set(self::SESSION_SECURE_HASH_CELL, null);
 
         return $result;
     }
@@ -229,7 +229,7 @@ class Auth extends \XLite\Base
      */
     public function logoff()
     {
-        $session = \XLite\Model\Session::getInstance();
+        $session = \XLite\Core\Session::getInstance();
         $session->set('last_profile_id', $session->get('profile_id'));
 
         $this->clearSessionVars();
@@ -262,7 +262,7 @@ class Auth extends \XLite\Base
         $isCurrent = false;
 
         if (empty($profileId)) {
-            $profileId = \XLite\Model\Session::getInstance()->get('profile_id');
+            $profileId = \XLite\Core\Session::getInstance()->get('profile_id');
             $isCurrent = true;
         }
 
@@ -406,7 +406,7 @@ class Auth extends \XLite\Base
      */
     public function setSecureHash($hashString)
     {
-        \XLite\Model\Session::getInstance()->set(self::SESSION_SECURE_HASH_CELL, $hashString);
+        \XLite\Core\Session::getInstance()->set(self::SESSION_SECURE_HASH_CELL, $hashString);
     }
 
 

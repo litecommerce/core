@@ -125,7 +125,7 @@ class TopMessage extends \XLite\Base\Singleton
                     self::FIELD_TYPE => $type,
                 );
                 $this->messages = $messages;
-                \XLite\Model\Session::getInstance()->set('topMessages', $messages);
+                \XLite\Core\Session::getInstance()->topMessages = $messages;
                 $result = true;
             }
         }
@@ -216,7 +216,7 @@ class TopMessage extends \XLite\Base\Singleton
      */
     public function getMessages()
     {
-        $messages = \XLite\Model\Session::getInstance()->get('topMessages');
+        $messages = \XLite\Core\Session::getInstance()->get('topMessages');
         if (!is_array($messages)) {
             $messages = array();
         }
@@ -247,6 +247,6 @@ class TopMessage extends \XLite\Base\Singleton
      */
     public function clear()
     {
-        \XLite\Model\Session::getInstance()->set('topMessages', array());
+        \XLite\Core\Session::getInstance()->topMessages = array();
     }
 }

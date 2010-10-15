@@ -68,7 +68,7 @@ abstract class AAdmin extends \XLite\Controller\AController
         }
 
         $form = new \XLite\Model\XliteForm();
-        $result = $form->find('form_id = \'' . addslashes($this->xlite_form_id) . '\' AND session_id = \'' . \XLite\Model\Session::getInstance()->getID() . '\'');
+        $result = $form->find('form_id = \'' . addslashes($this->xlite_form_id) . '\' AND session_id = \'' . \XLite\Core\Session::getInstance()->getID() . '\'');
 
         if (!$result) {
             $form->collectGarbage();

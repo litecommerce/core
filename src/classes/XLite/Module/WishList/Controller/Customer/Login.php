@@ -47,10 +47,10 @@ class Login extends \XLite\Controller\Customer\Login implements \XLite\Base\IDec
     protected function getRedirectFromLoginURL()
     {
         $result = parent::getRedirectFromLoginURL();
-        $productId = \XLite\Model\Session::getInstance()->get(self::SESSION_CELL_WL_PRODUCT_TO_ADD);
+        $productId = \XLite\Core\Session::getInstance()->get(self::SESSION_CELL_WL_PRODUCT_TO_ADD);
 
         if (isset($productId)) {
-            \XLite\Model\Session::getInstance()->set(self::SESSION_CELL_WL_PRODUCT_TO_ADD, null);
+            \XLite\Core\Session::getInstance()->set(self::SESSION_CELL_WL_PRODUCT_TO_ADD, null);
             $result = $this->buildURL('wishlist', 'add', array('product_id' => $productId));
         }
 
