@@ -421,7 +421,7 @@ abstract class AProfile extends \XLite\View\Model\AModel
      */
     public function getProfileId()
     {
-        return $this->getRequestProfileId() ?: \XLite\Model\Session::getInstance()->get('profile_id');
+        return $this->getRequestProfileId() ?: \XLite\Core\Session::getInstance()->profile_id;
     }
 
     /**

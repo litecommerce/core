@@ -56,7 +56,7 @@ abstract class I18n extends \XLite\Model\Repo\ARepo
         }
 
         if (is_null($code)) {
-            $code = \XLite\Model\Session::getInstance()->getLanguage()->code;
+            $code = \XLite\Core\Session::getInstance()->getLanguage()->code;
         }
 
         $qb->add('select', 'translations', true);

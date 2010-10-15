@@ -63,12 +63,12 @@ class Cart extends \XLite\Model\Order
 
         // Create new instance of the object (if it is not already created)
         if (!isset(static::$instances[$className])) {
-            $orderId = \XLite\Model\Session::getInstance()->get('order_id');
+            $orderId = \XLite\Core\Session::getInstance()->order_id;
 
             if ($orderId) {
                 $cart = \XLite\Core\Database::getRepo('XLite\Model\Cart')->find($orderId);
                 if ($cart && self::STATUS_TEMPORARY != $cart->getStatus()) {
-                    \XLite\Model\Session::getInstance()->set('order_id', 0);
+                    \XLite\Core\Session::getInstance()->order_id = 0;
                     $cart = null;
                 }
             }
@@ -102,7 +102,7 @@ class Cart extends \XLite\Model\Order
             \XLite\Core\Database::getEM()->persist($cart);
             \XLite\Core\Database::getEM()->flush();
 
-            \XLite\Model\Session::getInstance()->set('order_id', $cart->getOrderId());
+            \XLite\Core\Session::getInstance()->order_id = $cart->getOrderId();
 
         }
 
@@ -123,7 +123,7 @@ class Cart extends \XLite\Model\Order
     {
         $className = get_called_class();
         static::$instances[$className] = $cart;
-        \XLite\Model\Session::getInstance()->set('order_id', $cart->getOrderId());
+        \XLite\Core\Session::getInstance()->order_id = $cart->getOrderId();
     }
 
     /**
@@ -203,7 +203,7 @@ class Cart extends \XLite\Model\Order
     {
         parent::prepareBeforeRemove();
 
-        \XLite\Model\Session::getInstance()->set('order_id', null);
+        unset(\XLite\Core\Session::getInstance()->order_id);
     }
 
     /**

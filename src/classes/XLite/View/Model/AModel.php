@@ -434,7 +434,7 @@ abstract class AModel extends \XLite\View\Dialog
      */
     protected function getSavedForms()
     {
-        return \XLite\Model\Session::getInstance()->get(self::SAVED_FORMS);
+        return \XLite\Core\Session::getInstance()->get(self::SAVED_FORMS);
     }
 
     /**
@@ -481,7 +481,7 @@ abstract class AModel extends \XLite\View\Dialog
             unset($savedData[$this->getFormName()]);
         }
 
-        \XLite\Model\Session::getInstance()->set(self::SAVED_FORMS, empty($savedData) ? null : $savedData);
+        \XLite\Core\Session::getInstance()->set(self::SAVED_FORMS, empty($savedData) ? null : $savedData);
     }
 
     /**

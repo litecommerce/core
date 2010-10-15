@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage Model
+ * @subpackage Core
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -26,7 +26,7 @@
  * @since      3.0.0
  */
 
-namespace XLite\Module\DrupalConnector\Model;
+namespace XLite\Module\DrupalConnector\Core;
 
 /**
  * Session
@@ -35,56 +35,46 @@ namespace XLite\Module\DrupalConnector\Model;
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class Session extends \XLite\Model\Session implements \XLite\Base\IDecorator
+abstract class Session extends \XLite\Core\Session implements \XLite\Base\IDecorator
 {
     /**
-     * Return path for cookies
-     * 
+     * Get URL path for Set-Cookie
+     *
+     * @param boolean $secure Secure protocol or not
+     *
      * @return string
      * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getPath()
+    protected function getCookiePath($secure = false)
     {
         return \XLite\Module\DrupalConnector\Handler::getInstance()->checkCurrentCMS()
-            ? base_path() 
-            : parent::getPath();
+            ? base_path()
+            : parent::getCookiePath();
     }
 
     /**
-     * Constructor
-     * 
-     * @return void
-     * @access public
+     * Get parsed URL for Set-Cookie
+     *
+     * @param boolean $secure Secure protocol or not
+     *
+     * @return array
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function __construct()
+    protected function getCookieURL($secure = false)
     {
-        parent::__construct();
-
         if (defined('LC_CONNECTOR_INITIALIZED')) {
-            $this->options['https_host'] = $_SERVER['HTTP_HOST'];
-            $this->options['http_host']  = $_SERVER['HTTP_HOST'];
+            $url = ($secure ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+            $url = parse_url($url);
 
-            $url = parse_url($_SERVER['REQUEST_URI']);
-
-            $this->options['web_dir']    = $url['path'];
-            $this->options['web_dir_wo_slash'] = preg_replace('/\/$/Ss', '', $this->options['web_dir']);
+        } else {
+            $url = parent::getCookieURL($secure);
         }
-    }
 
-    /**
-     * Destructor
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function __destruct()
-    {
-        $this->writeClose();
+        return $url;
     }
 
     /**
@@ -99,13 +89,18 @@ abstract class Session extends \XLite\Model\Session implements \XLite\Base\IDeco
     {
         global $language;
 
+        $result = null;
+
         if (
             isset($language)
             && is_object($language)
             && $language instanceof \stdClass
-            && \XLite\Core\Database::getRepo('\XLite\Model\Language')->findOneByCode($language->language)
         ) {
-            $result = $language->language;
+            $lng = \XLite\Core\Database::getRepo('XLite\Model\Language')->findOneByCode($language->language);
+            if ($lng) {
+                $result = $language->language;
+                $lng->detach();
+            }
         }
 
         return isset($result)

@@ -561,7 +561,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
      */
     public function getSessionTtl()
     {
-        return \XLite\Model\Session::getInstance()->getTtl();
+        return \XLite\Model\Session::TTL;
     }
 }
 

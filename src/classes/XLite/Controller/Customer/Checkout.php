@@ -667,7 +667,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
         }
 
         if (!$cart) {
-            \XLite\Model\Session::getInstance()->set('order_id', null);
+            \XLite\Core\Session::getInstance()->order_id = null;
             // TODO - add top message
             $this->setReturnUrl($this->buildURL('cart'));
 
@@ -763,8 +763,8 @@ class Checkout extends \XLite\Controller\Customer\Cart
     {
         $this->getCart()->processSucceed();
 
-        \XLite\Model\Session::getInstance()->set('last_order_id', $this->getCart()->getOrderId());
-        \XLite\Model\Session::getInstance()->set('order_id', null);
+        \XLite\Core\Session::getInstance()->last_order_id = $this->getCart()->getOrderId();
+        unset(\XLite\Core\Session::getInstance()->order_id);
 
         \XLite\Core\Database::getEM()->persist($this->getCart());
         \XLite\Core\Database::getEM()->flush();

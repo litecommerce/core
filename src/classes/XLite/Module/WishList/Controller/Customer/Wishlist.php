@@ -136,7 +136,7 @@ class Wishlist extends \XLite\Controller\Customer\ACustomer
             $this->setReturnUrl($this->buildURL('login'));
 
             // Product to add after login
-            \XLite\Model\Session::getInstance()->set(self::SESSION_CELL_WL_PRODUCT_TO_ADD, $this->getProductId());
+            \XLite\Core\Session::getInstance()->set(self::SESSION_CELL_WL_PRODUCT_TO_ADD, $this->getProductId());
         }
     }
 

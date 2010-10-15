@@ -76,7 +76,7 @@ class URLManager extends AUtils
         }
 
         if ($isSecure) {
-            $session = \XLite\Model\Session::getInstance();
+            $session = \XLite\Core\Session::getInstance();
             $url .= (false !== strpos($url, '?') ? '&' : '?') . $session->getName() . '=' . $session->getID();
         }
 

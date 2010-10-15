@@ -1,3 +1,5 @@
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+
 DROP TABLE IF EXISTS xlite_categories;
 CREATE TABLE xlite_categories (
   category_id int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -527,12 +529,27 @@ CREATE TABLE xlite_search_stat (
 
 DROP TABLE IF EXISTS xlite_sessions;
 CREATE TABLE xlite_sessions (
-  id varchar(32) NOT NULL default '',
-  expiry int(11) unsigned NOT NULL default '0',
-  data text NOT NULL,
-  PRIMARY KEY  (id),
+  id int(11) NOT NULL auto_increment,
+  sid char(32) NOT NULL,
+  expiry int(11) unsigned NOT NULL default 0,
+  PRIMARY KEY id (id),
+  UNIQUE KEY sid (sid),
   KEY expiry (expiry)
 ) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
+
+DROP TABLE IF EXISTS xlite_session_cells;
+CREATE TABLE xlite_session_cells (
+  `cell_id` int(11) NOT NULL auto_increment,
+  `id` int(11) NOT NULL default 0,
+  `name` varchar(255) NOT NULL,
+  `value` text,
+  `type` varchar(16) NOT NULL,
+  PRIMARY KEY (cell_id),
+  KEY id (id),
+  UNIQUE KEY iname (id, name),
+  CONSTRAINT `xlite_session_to_cells` FOREIGN KEY (`id`) REFERENCES `xlite_sessions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
+
 
 DROP TABLE IF EXISTS xlite_shipping_methods;
 CREATE TABLE xlite_shipping_methods (

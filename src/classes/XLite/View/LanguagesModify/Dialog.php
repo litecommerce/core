@@ -197,7 +197,7 @@ class Dialog extends \XLite\View\Dialog
     {
         $this->defineLabels();
 
-        $data = \XLite\Model\Session::getInstance()->get('labelsSearch');
+        $data = \XLite\Core\Session::getInstance()->get('labelsSearch');
 
         return intval($data['page']);
     }
@@ -231,7 +231,7 @@ class Dialog extends \XLite\View\Dialog
      */
     public function getSearchSubstring()
     {
-        $data = \XLite\Model\Session::getInstance()->get('labelsSearch');
+        $data = \XLite\Core\Session::getInstance()->get('labelsSearch');
 
         return is_array($data) && isset($data['name']) ? $data['name'] : '';
     }
@@ -246,7 +246,7 @@ class Dialog extends \XLite\View\Dialog
      */
     public function isSearchAll()
     {
-        $data = \XLite\Model\Session::getInstance()->get('labelsSearch');
+        $data = \XLite\Core\Session::getInstance()->get('labelsSearch');
 
         return is_array($data) && !isset($data['name']);
     }
@@ -261,7 +261,7 @@ class Dialog extends \XLite\View\Dialog
      */
     public function isSearch()
     {
-        return is_array(\XLite\Model\Session::getInstance()->get('labelsSearch'));
+        return is_array(\XLite\Core\Session::getInstance()->get('labelsSearch'));
     }
 
     /**
@@ -398,7 +398,7 @@ class Dialog extends \XLite\View\Dialog
             $this->labelsCount = 0;
             $this->labels = array();
 
-            $data = \XLite\Model\Session::getInstance()->get('labelsSearch');
+            $data = \XLite\Core\Session::getInstance()->get('labelsSearch');
 
             if (is_array($data)) {
 
@@ -435,7 +435,7 @@ class Dialog extends \XLite\View\Dialog
                         ->findFrame($start, $this->limit);
                 }
 
-                \XLite\Model\Session::getInstance()->set('labelsSearch', $data);
+                \XLite\Core\Session::getInstance()->set('labelsSearch', $data);
             }
         }
     }

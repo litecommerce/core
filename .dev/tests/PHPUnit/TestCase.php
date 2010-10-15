@@ -258,7 +258,6 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
         
 //        if ($this->needAppInit()) {
 //            \XLite\Core\Converter::getInstance()->__destruct();
-//            \XLite\Core\Session::getInstance()->__destruct();
 //            \XLite\Core\Database::getInstance()->__destruct();
 //            $this->app->__destruct();
 //        }

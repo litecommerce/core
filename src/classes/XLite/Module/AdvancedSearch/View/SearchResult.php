@@ -97,7 +97,7 @@ class SearchResult extends \XLite\View\SearchResult implements \XLite\Base\IDeco
     protected function getSearchParamValue($name)
     {
         if (!isset($this->searchParams)) {
-            $this->searchParams = \XLite\Model\Session::getInstance()->get('search');
+            $this->searchParams = \XLite\Core\Session::getInstance()->get('search');
             if (!is_array($this->searchParams)) {
                 $this->searchParams = array();
             }

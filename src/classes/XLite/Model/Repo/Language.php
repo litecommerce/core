@@ -123,9 +123,6 @@ class Language extends \XLite\Model\Repo\Base\I18n
         $data = $this->getFromCache('status', array('status' => \XLite\Model\Language::ENABLED));
         if (!isset($data)) {
             $data = $this->defineByStatusQuery(\XLite\Model\Language::ENABLED)->getQuery()->getResult();
-            foreach ($data as $item) {
-                $this->_em->detach($item);
-            }
             $this->saveToCache($data, 'status', array('status' => \XLite\Model\Language::ENABLED));
         }
 

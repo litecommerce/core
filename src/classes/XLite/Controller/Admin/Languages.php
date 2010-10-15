@@ -65,7 +65,7 @@ class Languages extends \XLite\Controller\Admin\AAdmin
             $data['name'] = \XLite\Core\Request::getInstance()->name;
         }
 
-        \XLite\Model\Session::getInstance()->set(
+        \XLite\Core\Session::getInstance()->set(
             'labelsSearch',
             $data
         );
