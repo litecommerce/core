@@ -324,7 +324,7 @@ class Session extends \XLite\Base\Singleton
                 0,
                 $this->getCookiePath(true),
                 $this->getCookieDomain(true),
-                true,
+                false,
                 true
             );
         }
