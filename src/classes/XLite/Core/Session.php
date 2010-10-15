@@ -90,20 +90,6 @@ class Session extends \XLite\Base\Singleton
     }
 
     /**
-     * Destructor
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function __destruct()
-    {
-        $this->session->updateExpiry();
-        \XLite\Core\Database::getEM()->flush();
-    }
-
-    /**
      * Getter
      * 
      * @param string $name Session cell name
