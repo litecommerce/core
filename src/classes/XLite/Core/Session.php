@@ -187,11 +187,11 @@ class Session extends \XLite\Base\Singleton
      * Clear expired sessions and other obsolete data
      * 
      * @return void
-     * @access public
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function clearGardage()
+    protected function clearGardage()
     {
         \XLite\Core\Database::getRepo('XLite\Model\Session')->removeExpired();
     }
@@ -206,6 +206,13 @@ class Session extends \XLite\Base\Singleton
      */
     public function restart()
     {
+        if (!\XLite\Core\Database::getEM()->contains($this->session)) {
+            $this->session = \XLite\Core\Database::getEM()->merge($this->session);
+        }
+
+        \XLite\Core\Database::getEM()->remove($this->session);
+        \XLite\Core\Database::getEM()->flush();
+
         $this->createSession();
         $this->setCookie();
     }
@@ -272,11 +279,11 @@ class Session extends \XLite\Base\Singleton
      * Create session 
      * 
      * @return void
-     * @access public
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function createSession()
+    protected function createSession()
     {
         $this->session = new \XLite\Model\Session();
 
@@ -297,7 +304,7 @@ class Session extends \XLite\Base\Singleton
      */
     protected function setCookie()
     {
-        if (!headers_sent()) {
+        if (!headers_sent() && 'cli' != PHP_SAPI) {
 
             $arg = $this->getName();
 
@@ -403,7 +410,6 @@ class Session extends \XLite\Base\Singleton
 
         return $url['path'];
     }
-
 
     /**
      * Return current form ID

@@ -87,7 +87,8 @@ class Auth extends \XLite\Base
      */
     protected function loginProfile(\XLite\Model\Profile $profile)
     {
-        if ($result = $profile->isPersistent) {
+        $result = $profile->isPersistent;
+        if ($result) {
 
             \XLite\Core\Session::getInstance()->restart();
 
@@ -103,7 +104,7 @@ class Auth extends \XLite\Base
             $profile->update();
 
             // save to session
-            \XLite\Core\Session::getInstance()->set('profile_id', $profile->get('profile_id'));
+            \XLite\Core\Session::getInstance()->profile_id = $profile->get('profile_id');
 
             $this->rememberLogin($profile->get('login'));
         }
