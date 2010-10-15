@@ -167,9 +167,10 @@ class Session extends \XLite\Model\Repo\ARepo
      */
     public function isPublicSessionIdValid($sid)
     {
-        return (bool)preg_match(
-            '/^[' . preg_quote(implode('', $this->chars), '/') . ']{' . self::PUBLIC_SESSION_ID_LENGTH . '}$/Ss',
-            $sid
-        );
+        return is_string($sid)
+            && (bool)preg_match(
+                '/^[' . preg_quote(implode('', $this->chars), '/') . ']{' . self::PUBLIC_SESSION_ID_LENGTH . '}$/Ss',
+                $sid
+            );
     }
 }
