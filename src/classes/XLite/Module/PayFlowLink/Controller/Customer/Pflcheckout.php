@@ -98,7 +98,6 @@ class Pflcheckout extends \XLite\Controller\Customer\Checkout
 </HTML>
 <?php
         $this->success();
-        $this->session->writeClose();
         exit;
     }
 }

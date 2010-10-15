@@ -85,7 +85,7 @@ class Login extends \XLite\Controller\Admin\AAdmin
             \XLite\Core\TopMessage::getInstance()->add('Invalid login or password', \XLite\Core\TopMessage::ERROR);
             $returnUrl = $this->buildUrl('login');
 
-        } elseif ($this->xlite->session->isRegistered('lastWorkingURL')) {
+        } elseif (isset($this->session->lastWorkingURL)) {
             $returnUrl = $this->xlite->session->get('lastWorkingURL');
             $this->xlite->session->set('lastWorkingURL', null);
 
@@ -112,8 +112,7 @@ class Login extends \XLite\Controller\Admin\AAdmin
 
             if (strlen($sidebar_box_statuses) > 0) {
                 $sidebar_box_statuses = unserialize($sidebar_box_statuses);
-                $this->session->set('sidebar_box_statuses', $sidebar_box_statuses);
-                $this->session->writeClose();
+                $this->session->sidebar_box_statuses = $sidebar_box_statuses;
 
             } else {
                 $profile->set('sidebar_boxes', serialize($this->session->get('sidebar_box_statuses')));
@@ -124,8 +123,7 @@ class Login extends \XLite\Controller\Admin\AAdmin
     
     function clearSBStatuses()
     {
-        $this->session->set('sidebar_box_statuses', null);
-        $this->session->writeClose();
+        unset($this->session->sidebar_box_statuses);
     }
     
     function getSecure()

@@ -62,7 +62,6 @@ class eSelect extends \XLite\Controller\Customer\Checkout
             $this->session->set('eSelectQueued', null);
             $this->session->set('last_order_id', $oid);
             $this->session->set('order_id', $oid);
-            $this->session->writeClose();
 
             $order = $this->get('order');
             $payment = \XLite\Model\PaymentMethod::factory('eselect_cc');
@@ -78,7 +77,6 @@ class eSelect extends \XLite\Controller\Customer\Checkout
         if ($oid) {
             $this->session->set('last_order_id', $oid);
             $this->session->set('order_id', $oid);
-            $this->session->writeClose();
         }
 
     }
