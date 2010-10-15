@@ -137,6 +137,9 @@ class Session extends \XLite\Model\AEntity
     public function __get($name)
     {
         $cell = $this->getCellByName($name);
+        if ($cell) {
+            $cell->detach();
+        }
 
         return $cell ? $cell->getValue() : null;
     }
@@ -173,6 +176,8 @@ class Session extends \XLite\Model\AEntity
         }
 
         \XLite\Core\Database::getEM()->flush();
+
+        $cell->detach();
     }
 
     /**
@@ -188,6 +193,9 @@ class Session extends \XLite\Model\AEntity
     public function __isset($name)
     {
         $cell = $this->getCellByName($name);
+        if ($cell) {
+            $cell->detach();
+        }
 
         return isset($cell);
     }
