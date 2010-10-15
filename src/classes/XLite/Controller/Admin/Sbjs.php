@@ -107,7 +107,7 @@ class Sbjs extends \XLite\Controller\Admin\AAdmin
 
     function getSidebarBoxStatuses()
     {
-        if (!$this->session->isRegistered('sidebar_box_statuses'))
+        if (!isset($this->session->sidebar_box_statuses))
         {
             $this->sidebar_box_statuses = array();
         	if ($this->auth->is('logged')) 
@@ -123,8 +123,7 @@ class Sbjs extends \XLite\Controller\Admin\AAdmin
 
     function setSidebarBoxStatuses()
     {
-        $this->session->set('sidebar_box_statuses', $this->sidebar_box_statuses);
-        $this->session->writeClose();
+        $this->session->sidebar_box_statuses = $this->sidebar_box_statuses;
         
         if ($this->auth->is('logged'))
         {

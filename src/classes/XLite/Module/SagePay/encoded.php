@@ -86,8 +86,6 @@ function func_SagePayDirect_process($_this, $order)
         $response['termUrl'] = $_this->get('returnUrl');
         echo func_SagePayDirect_getRedirectForm($response);
 
-        $_this->session->writeClose();
-
         exit;
     } else { //if ($response['Status'] == "OK") {
         func_SagePay_response_handling($response, $order, $_this);

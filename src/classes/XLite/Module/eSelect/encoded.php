@@ -86,7 +86,6 @@ function func_eSelect_process($cart, $_this)
     if ($response_msg == "Y") {
         // VBV
         $_this->session->set('eSelectQueued', $cart->get('order_id'));
-        $_this->session->writeClose();
 
         $redirectForm = func_eSelect_getMpiInLineForm($mpi_response);
         echo $redirectForm;

@@ -23,7 +23,6 @@ $cart->set('detailLabels', $cart_labels);
     $cart->set('status', "I");
     $cart->update();
     $_this->session->set('order_id', $cart->get('order_id'));
-    $_this->session->writeClose();
 
     $cart->setComplex('details.authcode', $_GET['acode']); $cart->setComplex('detailLabels.authcode', "AuthCode");
     $cart->setComplex('details.reference', $_GET['ref']); $cart->setComplex('detailLabels.reference', "Reference");

@@ -1654,8 +1654,6 @@ EOT;
         $this->session->set('ups_license', $license);
         $this->session->set('ups_license_update_time', $time);
 
-        $this->session->writeClose();
-
         return 0;
     }
 

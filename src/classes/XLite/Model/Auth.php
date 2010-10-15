@@ -839,8 +839,7 @@ class Auth extends \XLite\Base
 
                     // logoff action
                     $this->logoff();
-                    $this->session->set('sidebar_box_statuses', null);
-                    $this->session->writeClose();
+                    unset($this->session->sidebar_box_statuses);
                 }
 
                 return self::IP_INVALID;
