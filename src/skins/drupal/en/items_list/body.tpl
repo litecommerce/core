@@ -11,7 +11,7 @@
  * @since     3.0.0
  *}
 
-<div class="items-list widgetclass-{getWidgetClass()} widgettarget-{getWidgetTarget()}">
+<div class="items-list widgetclass-{getWidgetClass()} widgettarget-{getWidgetTarget()} sessioncell-{getSessionCell()}">
 
   <div class="list-pager">{pager.display()}</div>
 

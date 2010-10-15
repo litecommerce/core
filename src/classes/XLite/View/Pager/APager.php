@@ -59,7 +59,7 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
 
 
     /**
-     * cuurentPageId
+     * currentPageId
      * FIXME: due to old-style params mapping we cannot use the "pageId" name here:
      * it will be overriden by the "PARAM_PAGE_ID" request parameter
      * 
@@ -67,7 +67,7 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
      * @access protected
      * @since  3.0.0
      */
-    protected $cuurentPageId;
+    protected $currentPageId;
 
     /**
      * pagesCount 

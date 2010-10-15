@@ -147,6 +147,20 @@ abstract class AView extends \XLite\Core\Handler
         return \XLite\Model\Layout::getInstance()->getSkinURL($url);
     }
 
+    /**  
+     * Return full URL by the common repository-related one
+     * 
+     * @param string $url relative URL
+     *  
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected static function getCommonRepositoryURL($url)
+    {    
+        return \XLite\Model\Layout::getInstance()->getCommonRepositoryURL($url);
+    }    
+
     /**
      * Prepare resources list
      * 
@@ -161,6 +175,19 @@ abstract class AView extends \XLite\Core\Handler
         return is_array($data) ? array_map(array('self', __FUNCTION__), $data) : self::getSkinURL($data);
     }
 
+    /**  
+     * Prepare resources list from common repository
+     * 
+     * @param mixed $data data to prepare
+     *  
+     * @return array
+     * @access protected
+     * @since  3.0.0
+     */
+    protected static function prepareCommonResources($data)
+    {    
+        return is_array($data) ? array_map(array('self', __FUNCTION__), $data) : self::getCommonRepositoryURL($data);
+    }    
 
     /**
      * Return current template
@@ -465,7 +492,10 @@ abstract class AView extends \XLite\Core\Handler
     public function getResources()
     {
         return self::getResourcesSchema(
-            $this->prepareResources($this->getJSFiles()),
+            array_merge(
+                $this->prepareCommonResources($this->getCommonFiles()), // prepare common JS files
+                $this->prepareResources($this->getJSFiles()) // prepare JS files specific for the skin + widget
+            ),
             $this->prepareResources($this->getCSSFiles())
         );
     }
@@ -585,11 +615,6 @@ abstract class AView extends \XLite\Core\Handler
     public function getJSFiles()
     {
         $list = array(
-            'js/common.js',
-            'js/core.js',
-            'js/core.controller.js',
-            'js/core.loadable.js',
-            'js/core.popup.js',
             'js/php.js',
             'js/jquery.mousewheel.js',
         );
@@ -600,6 +625,27 @@ abstract class AView extends \XLite\Core\Handler
 
         return $list;
     }
+
+    /**  
+     * Register files from common repository
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCommonFiles()
+    {    
+        $list = array(
+            'js/common.js',
+            'js/core.js',
+            'js/core.controller.js',
+            'js/core.loadable.js',
+            'js/core.popup.js',
+        );
+
+        return $list;
+    }    
 
     /**
      * Return list of all registered resources 
