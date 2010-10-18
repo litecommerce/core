@@ -701,9 +701,9 @@ class Taxes extends \XLite\Controller\Admin\AAdmin
             'cond'   => 'city',
             'values' => array(),
         );
-        $pr = new \XLite\Model\Profile();
-        foreach ($pr->findAll() as $p) {
-            $cities['values'][$p->get('shipping_city')] = $p->get('shipping_city');
+        $cities = \XLite\Core\Database::getRepo('XLite\Model\Address')->findAllCities();
+        foreach ($cities as $c) {
+            $cities['values'][$c] = $c;
         }
         if (isset($cities['values'][''])) {
             unset($cities['values']['']);

@@ -112,7 +112,7 @@ class Sbjs extends \XLite\Controller\Admin\AAdmin
             $this->sidebar_box_statuses = array();
         	if ($this->auth->is('logged')) 
         	{
-        		$this->sidebar_box_statuses = unserialize($this->auth->getComplex('profile.sidebar_boxes'));
+        		$this->sidebar_box_statuses = unserialize($this->auth->getProfile()->getSidebarBoxes());
         	}
         }
         else
@@ -127,8 +127,8 @@ class Sbjs extends \XLite\Controller\Admin\AAdmin
         
         if ($this->auth->is('logged'))
         {
-            $profile = $this->auth->get('profile');
-            $profile->set('sidebar_boxes', serialize($this->sidebar_box_statuses));
+            $profile = $this->auth->getProfile();
+            $profile->setSidebarBoxes(serialize($this->sidebar_box_statuses));
             $profile->update();
         }
     }

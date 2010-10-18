@@ -20,13 +20,13 @@
   </div>
 
   <div class="user-address-form">
-    <strong>{cart.profile.shipping_firstname} {cart.profile.shipping_lastname}</strong><br />
+    <strong>{cart.profile.shipping_address.firstname} {cart.profile.shipping_address.lastname}</strong><br />
     <br />
-    {cart.profile.shipping_address}<br />
-    {cart.profile.shipping_city}, {cart.profile.shippingState.state}, {cart.profile.shipping_zipcode}<br />
-    {cart.profile.shippingCountry.country}<br />
+    {cart.profile.shipping_address.street}<br />
+    {cart.profile.shipping_address.city}, {cart.profile.shipping_address.state.state}, {cart.profile.shipping_address.zipcode}<br />
+    {cart.profile.shipping_address.country.country}<br />
     <br />
-    {cart.profile.shipping_phone}
+    {cart.profile.shipping_address.phone}
   </div>
 
 </div>

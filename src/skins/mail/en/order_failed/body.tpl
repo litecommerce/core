@@ -12,7 +12,7 @@
  *}
 <html>
 <body>
-Dear {order.profile.billing_firstname:h} {order.profile.billing_lastname:h}!
+Dear {order.profile.billing_address.firstname:h} {order.profile.billing_address.lastname:h}!
 <p>
 Your order # {order.order_id:r} has failed or been declined by the shop administration.<br>
 <p>

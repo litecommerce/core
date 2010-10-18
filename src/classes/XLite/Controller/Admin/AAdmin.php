@@ -217,8 +217,7 @@ abstract class AAdmin extends \XLite\Controller\AController
     function getRecentAdmins()
     {
         if ($this->auth->isLogged() && is_null($this->recentAdmins)) {
-            $profile = new \XLite\Model\Profile();
-            $this->recentAdmins = $profile->findAll("access_level>='".$this->getComplex('auth.adminAccessLevel')."' AND last_login>'0'", "last_login ASC", null, "0, 7");
+            $this->recentAdmins = \XLite\Core\Database::getRepo('XLite\Model\Profile')->findRecentAdmins();
         }
         return $this->recentAdmins;
     }
@@ -355,7 +354,7 @@ EOT;
                 isset(\XLite\Core\Request::getInstance()->login) && isset(\XLite\Core\Request::getInstance()->password)
             )
         ) {
-            $login = $this->xlite->auth->getComplex('profile.login');
+            $login = $this->xlite->auth->getProfile()->getLogin();
             $post_login = \XLite\Core\Request::getInstance()->login;
             $post_password = \XLite\Core\Request::getInstance()->password;
 
@@ -364,9 +363,9 @@ EOT;
 
             if (!empty($post_login) && !empty($post_password)){
                 $post_password = $this->xlite->auth->encryptPassword($post_password);
-                $profile = new \XLite\Model\Profile();
-                if ($profile->find("login='".addslashes($post_login)."' AND ". "password='".addslashes($post_password)."'")) {
-                    if ($profile->get('enabled') && $profile->is('admin')) {
+                $profile = \XLite\Core\Database::getRepo('XLite\Model\Profile')->findByLoginPassword($post_login, $post_password, 0);
+                if (isset($profile)) {
+                    if ($profile->isEnabled() && $this->auth->isAdmin($profile)) {
                         return true;
                     }
                 }

@@ -11,6 +11,8 @@
  * @since     3.0.0
  *}
 
+<script IF="getTopInlineJSCode()" type="text/javascript">{getTopInlineJSCode():r}</script>
+
 <widget template="{getDir()}/header.tpl" />
 
   <widget class="{getFormClass()}" name="{getFormName()}" />
@@ -22,4 +24,5 @@
 
 <widget template="{getDir()}/footer.tpl" />
 
-<script IF="getInlineJSCode()" type="text/javascript">{getInlineJSCode():r}</script>
+<script IF="getBottomInlineJSCode()" type="text/javascript">{getBottomInlineJSCode():r}</script>
+

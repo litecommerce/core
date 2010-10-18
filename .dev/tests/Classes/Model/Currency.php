@@ -51,8 +51,8 @@ class XLite_Tests_Model_Currency extends XLite_Tests_TestCase
             $this->fail('check code unique failed');
 
         } catch (\PDOException $e) {
-            $this->assertEquals(
-                'SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry \'XXX\' for key 2',
+            $this->assertRegExp(
+                '/SQLSTATE\[23000\]/',
                 $e->getMessage(),
                 'check code unique'
             );

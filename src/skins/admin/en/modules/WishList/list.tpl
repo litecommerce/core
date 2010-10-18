@@ -48,7 +48,7 @@ function delete_warning()
     	<td><a href="admin.php?target=wishlist&wishlist_id={wishlist.wishlist_id:h}"><u>{wishlist.wishlist_id:h}</u></a></td>
     	<td align="center">{date_format(wishlist.date)}</td>	
     	<td><a href="admin.php?target=profile&profile_id={wishlist.profile.profile_id}"><u>{wishlist.profile.login:h}</u></a></td>
-    	<td nowrap>{wishlist.profile.billing_lastname:h} {wishlist.profile.billing_firstname:h}</td>
+    	<td nowrap>{wishlist.profile.billing_address.lastname:h} {wishlist.profile.billing_address.firstname:h}</td>
     	<td nowrap><a href="admin.php?target=wishlist&wishlist_id={wishlist.wishlist_id:h}"><u>See details</u>&nbsp;&gt;&gt;</a></td>
     </tr>
 

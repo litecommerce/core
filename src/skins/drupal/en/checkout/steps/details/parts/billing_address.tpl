@@ -16,13 +16,13 @@
   <h2>Billing address</h2>
 
   <div class="user-address-form">
-    <strong>{cart.profile.billing_firstname} {cart.profile.billing_lastname}</strong><br />
+    <strong>{cart.profile.billing_address.firstname} {cart.profile.billing_address.lastname}</strong><br />
     <br />
-    {cart.profile.billing_address}<br />
-    {cart.profile.billing_city}, {cart.profile.billingState.state}, {cart.profile.billing_zipcode}<br />
-    {cart.profile.billingCountry.country}<br />
+    {cart.profile.billing_address.street}<br />
+    {cart.profile.billing_address.city}, {cart.profile.billing_address.state.state}, {cart.profile.billing_address.zipcode}<br />
+    {cart.profile.billing_address.country.country}<br />
     <br />
-    {cart.profile.billing_phone}
+    {cart.profile.billing_address.phone}
   </div>
 
 </div>

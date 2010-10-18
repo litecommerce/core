@@ -51,7 +51,7 @@ implements \XLite\Base\IDecorator
         $pid = lc_connector_get_display_profile_id();
 
         return $pid 
-            ? new \XLite\Model\Profile($pid)
+            ? \XLite\Core\Database::getRepo('XLite\Model\Profile')->find($pid)
             : parent::getProfile();
     }
 }

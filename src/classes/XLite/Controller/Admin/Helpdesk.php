@@ -57,9 +57,9 @@ class Helpdesk extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionSend()
     {
-        $name = $this->auth->getProfile()->get('billing_firstname')
+        $name = $this->auth->getProfile()->getBillingAddress()->getFirstname()
             . ' '
-            . $this->auth->getProfile()->get('billing_lastname');
+            . $this->auth->getProfile()->getBillingAddress()->getLastname();
 
 
         $email = $this->config->Company->site_administrator;

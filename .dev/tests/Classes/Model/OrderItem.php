@@ -456,10 +456,9 @@ class XLite_Tests_Model_OrderItem extends XLite_Tests_TestCase
     {
         $order = new \XLite\Model\Order();
 
-        $profile = new \XLite\Model\Profile();
-        $list = $profile->findAll();
-        $profile = array_shift($list);
-        unset($list);
+        $profiles = \XLite\Core\Database::getRepo('XLite\Model\Profile')->findAll();
+        $profile = array_shift($profiles);
+        unset($profiles);
 
         $order->map($this->testOrder);
         $order->setCurrency(\XLite\Core\Database::getRepo('XLite\Model\Currency')->find(840));

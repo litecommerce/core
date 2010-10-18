@@ -1,6 +1,6 @@
-INSERT INTO `xlite_orders` SET order_id = 1, profile_id = 1, orig_profile_id = 1, total = '20.7599', subtotal = '17.9900', is_order = 1, date = 1283939344, status = 'P', taxes = 'a:1:{s:3:\"Tax\";s:4:\"0.00\";}';
+INSERT INTO `xlite_orders` SET order_id = 1, profile_id = 3, orig_profile_id = 2, total = '20.7599', subtotal = '17.9900', is_order = 1, date = 1283939344, status = 'P', taxes = 'a:1:{s:3:\"Tax\";s:4:\"0.00\";}';
 INSERT INTO xlite_payment_transactions (transaction_id,order_id,method_id,method_name,method_local_name,status,value,type,note) VALUES (1,1,5,'MoneyOrdering','Money Ordering','S',20.7599,'sale','');
-INSERT INTO `xlite_orders` SET order_id = 2, profile_id = 1, orig_profile_id = 3, total = '121.1137', subtotal= '116.9100',is_order = 1, date = 1283867845, status = 'C', taxes = 'a:1:{s:3:\"Tax\";s:4:\"0.00\";}';
+INSERT INTO `xlite_orders` SET order_id = 2, profile_id = 4, orig_profile_id = 2, total = '121.1137', subtotal= '116.9100',is_order = 1, date = 1283867845, status = 'C', taxes = 'a:1:{s:3:\"Tax\";s:4:\"0.00\";}';
 INSERT INTO xlite_payment_transactions (transaction_id,order_id,method_id,method_name,method_local_name,status,value,type,note) VALUES (2,2,5,'MoneyOrdering','Money Ordering','S',121.1137,'sale','');
 
 INSERT INTO `xlite_order_items` SET item_id=1, order_id=1, object_id=3002, object_type='product', name='Binary Mom', sku='00000', price='17.9900', amount=1, subtotal='17.9900', total='17.9900';

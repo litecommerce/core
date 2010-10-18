@@ -12,9 +12,9 @@
  *}
 <html>
 <body>
-Dear {profile.billing_firstname:h} {profile.billing_lastname:h}!
+Dear {profile.billing_address.firstname:h} {profile.billing_address.lastname:h}!
 <p>
-Your membership "{profile.membership:h}" has expired.<br>
+Your membership "{profile.membership.name:h}" has expired.<br>
 <p>
 {signature:h}
 </body>

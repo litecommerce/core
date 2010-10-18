@@ -833,7 +833,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
         if (!isset($this->profile)) {
             $pid = $this->getProfileId();
             if ($pid) {
-                $this->profile = new \XLite\Model\Profile($pid);
+                $this->profile = \XLite\Core\Database::getRepo('XLite\Model\Profile')->find($pid);
             }
         }
 
@@ -853,7 +853,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
     public function setProfile($profile) 
     {
         $this->profile = $profile;
-        $this->setProfileId(isset($profile) ? $profile->get('profile_id') : 0);
+        $this->setProfileId(isset($profile) ? $profile->getProfileId() : 0);
     }
     
     /**
@@ -869,7 +869,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
         if (!isset($this->origProfile)) {
             $pid = $this->getOrigProfileId();
             if ($pid) {
-                $this->origProfile = new \XLite\Model\Profile($pid);
+                $this->origProfile = \XLite\Core\Database::getRepo('XLite\Model\Profile')->find($pid);
             }
         }
 
@@ -891,7 +891,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
     public function setOrigProfile($profile) 
     {
         $this->origProfile = $profile;
-        $this->setOrigProfileId(isset($profile) ? $profile->get('profile_id') : 0);
+        $this->setOrigProfileId(isset($profile) ? $profile->getProfileId() : 0);
     }
 
     /**
@@ -909,7 +909,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
         $this->setOrigProfile($prof);
 
         $p = $prof->cloneObject();
-        $p->set('order_id', $this->getOrderId());
+        $p->setOrderId($this->getOrderId());
         $p->update();
 
         $this->setProfile($p);
@@ -1186,10 +1186,10 @@ class Order extends \XLite\Model\Base\ModifierOwner
                 $mail->selectCustomerLayout();
                 $profile = $this->getProfile();
                 if ($profile) {
-                    $mail->set('charset', $profile->getComplex('billingCountry.charset'));
+                    $mail->set('charset', $profile->getBillingAddress()->getCountry()->getCharset());
                     $mail->compose(
                         \XLite\Core\Config::getInstance()->Company->orders_department,
-                        $profile->get('login'),
+                        $profile->getLogin(),
                         'order_created'
                     );
                     $mail->send();
@@ -1251,10 +1251,10 @@ class Order extends \XLite\Model\Base\ModifierOwner
         $mail->selectCustomerLayout();
         $profile = $this->getProfile();
         if ($profile) {
-            $mail->set('charset', $profile->getComplex('billingCountry.charset'));
+            $mail->set('charset', $profile->getBillingAddress()->getCountry()->getCharset());
             $mail->compose(
                 \XLite\Core\Config::getInstance()->Company->site_administrator,
-                $profile->get('login'),
+                $profile->getLogin(),
                 'order_processed'
             );
             $mail->send();
@@ -1298,10 +1298,10 @@ class Order extends \XLite\Model\Base\ModifierOwner
         $mail->selectCustomerLayout();
         $profile = $this->getProfile();
         if ($profile) {
-            $mail->set('charset', $profile->getComplex('billingCountry.charset'));
+            $mail->set('charset', $profile->getBillingAddress()->getCountry()->getCharset());
             $mail->compose(
                 \XLite\Core\Config::getInstance()->Company->orders_department,
-                $profile->get('login'),
+                $profile->getLogin(),
                 'order_failed'
             );
             $mail->send();

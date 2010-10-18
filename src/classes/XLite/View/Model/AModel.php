@@ -41,8 +41,8 @@ abstract class AModel extends \XLite\View\Dialog
      * Widget param names
      */
 
-    const PARAM_MODEL_OBJECT  = 'modelObject';
-
+    const PARAM_MODEL_OBJECT      = 'modelObject';
+    const PARAM_USE_BODY_TEMPLATE = 'useBodyTemplate';
 
     /**
      * Indexes in field schemas
@@ -192,6 +192,15 @@ abstract class AModel extends \XLite\View\Dialog
      */
     protected $schemaHidden = array();
 
+    /**
+     * The list of fields (fiel names) that must be excluded from the array of data for mapping to the object
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $excludedFields = array();
 
     /**
      * This object will be used if another one is not pased
@@ -307,6 +316,7 @@ abstract class AModel extends \XLite\View\Dialog
     {
         $method = __FUNCTION__ . ucfirst($section);
 
+        // Return the method getFormFieldsForSection<SectionName>
         return method_exists($this, $method) ? $this->$method() : $this->translateSchema($section);
     }
 
@@ -361,7 +371,23 @@ abstract class AModel extends \XLite\View\Dialog
             self::PARAM_MODEL_OBJECT => new \XLite\Model\WidgetParam\Object(
                 'Object', $this->getDefaultModelObject(), false, get_class($this->getDefaultModelObject())
             ),
+            self::PARAM_USE_BODY_TEMPLATE => new \XLite\Model\WidgetParam\Bool(
+                'Use default body template', false
+            ),
         );
+    }
+
+    /**
+     * useBodyTemplate 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function useBodyTemplate()
+    {
+        return $this->getParam(self::PARAM_USE_BODY_TEMPLATE) ? true : parent::useBodyTemplate();
     }
 
     /**
@@ -408,7 +434,7 @@ abstract class AModel extends \XLite\View\Dialog
      */
     protected function setModelProperties(array $data)
     {
-        $this->getModelObject()->setProperties($data);
+        $this->prepareObjectForMapping()->map($data);
     }
 
     /**
@@ -558,7 +584,9 @@ abstract class AModel extends \XLite\View\Dialog
      */
     protected function postprocessSuccessAction()
     {
-        if (method_exists($this, $method = __FUNCTION__ . ucfirst($this->currentAction))) {
+        $method = __FUNCTION__ . ucfirst($this->currentAction);
+
+        if (method_exists($this, $method)) {
             // Run the corresponded function
             $this->$method();
         }
@@ -577,8 +605,10 @@ abstract class AModel extends \XLite\View\Dialog
     protected function postprocessErrorAction()
     {
         \XLite\Core\TopMessage::getInstance()->addBatch($this->getErrorMessages(), \XLite\Core\TopMessage::ERROR);
+        
+        $method = __FUNCTION__ . ucfirst($this->currentAction);
 
-        if (method_exists($this, $method = __FUNCTION__ . ucfirst($this->currentAction))) {
+        if (method_exists($this, $method)) {
             // Run corresponded function
             $this->$method();
         }
@@ -629,7 +659,9 @@ abstract class AModel extends \XLite\View\Dialog
         $class = $data[self::SCHEMA_CLASS];
 
         $method = 'prepareFieldParams' . \XLite\Core\Converter::convertToCamelCase($name);
+        
         if (method_exists($this, $method)) {
+            // Call the corresponded method
             $this->$method($data);
         }
 
@@ -939,14 +971,27 @@ abstract class AModel extends \XLite\View\Dialog
     }
 
     /**
-     * Some JavaScript code to insert
+     * Some JavaScript code to insert at the begin of form page 
      *
      * @return string
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getInlineJSCode()
+    protected function getTopInlineJSCode()
+    {
+        return null;
+    }
+
+    /**
+     * Some JavaScript code to insert at the end of form page 
+     *
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getBottomInlineJSCode()
     {
         return null;
     }
@@ -1002,7 +1047,16 @@ abstract class AModel extends \XLite\View\Dialog
      */
     protected function performActionModify()
     {
-        return $this->callActionHandler($this->getModelObject()->isPersistent ? 'update' : 'create');
+        if ($this->getModelObject()->isPersistent()) {
+            $this->currentAction = 'update';
+            $result = $this->callActionHandler('update');
+
+        } else {
+            $this->currentAction = 'create';
+            $result = $this->callActionHandler('create');
+        }
+
+        return $result;
     }
 
     /**
@@ -1048,10 +1102,34 @@ abstract class AModel extends \XLite\View\Dialog
             $value = $this->getRequestData($name);
 
             if (!isset($value)) {
-                $value = $this->getModelObject()->get($name);
+                $value = $this->getModelObjectValue($name);
             }
         }
 
+        return $value;
+    }
+
+    /**
+     * Retrieve property from the model object
+     * 
+     * @param mixed $name field/property name
+     *  
+     * @return mixed
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getModelObjectValue($name)
+    {
+        $methodName = 'get' . \XLite\Core\Converter::getInstance()->convertToCamelCase($name);
+
+        $value = null;
+
+        if (method_exists($this->getModelObject(), $methodName)) {
+            // Call the corresponded method
+            $value = $this->getModelObject()->$methodName();
+        }
+       
         return $value;
     }
 
@@ -1072,7 +1150,7 @@ abstract class AModel extends \XLite\View\Dialog
      * Check if widget is visible
      *
      * @return bool
-     * @access public
+     * @access protected
      * @since  3.0.0
      */
     protected function isVisible()
@@ -1096,8 +1174,10 @@ abstract class AModel extends \XLite\View\Dialog
         $this->currentAction = $action;
         $this->defineRequestData($data);
 
+        $requestData = $this->prepareDataForMapping();
+
         // Map model object with the request data
-        $this->setModelProperties($this->getRequestData());
+        $this->setModelProperties($this->prepareDataForMapping());
 
         // Do not call "callActionHandler()" method if model object is not valid
         $result = $this->isValid() && $this->callActionHandler();
@@ -1105,11 +1185,63 @@ abstract class AModel extends \XLite\View\Dialog
         if ($result) {
             $this->postprocessSuccessAction();
         } else {
-            $this->saveFormData($this->getRequestData());
+            $this->saveFormData($this->prepareDataForMapping());
             $this->postprocessErrorAction();
         }
 
         return $result;
+    }
+
+    /**
+     * Add field into the list of excluded fields
+     * 
+     * @param string $fieldName Field name
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function excludeField($fieldName) 
+    {
+        $this->excludedFields[] = $fieldName;
+    }
+
+    /**
+     * Prepare posted data for mapping to the object
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function prepareDataForMapping()
+    {
+        $data = $this->getRequestData();
+
+        // Remove fields in the $exludedFields list from the data for mapping
+        if (!empty($this->excludedFields)) {
+            foreach ($data as $key => $value) {
+                if (in_array($key, $this->excludedFields)) {
+                    unset($data[$key]);
+                }
+            }
+        }
+
+        return $data;
+    }
+
+    /**
+     * Prepare object for mapping 
+     * 
+     * @return \XLite\Model\AEntity
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function prepareObjectForMapping()
+    {
+        return $this->getModelObject();
     }
 
     /**
@@ -1216,4 +1348,3 @@ abstract class AModel extends \XLite\View\Dialog
         $this->startCurrentForm();
     }
 }
-

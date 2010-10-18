@@ -92,7 +92,7 @@
       ss:Type="Number">{order.order_id}</Data></Cell>
     <Cell><Data ss:Type="String"><widget template="common/order_status.tpl"></Data></Cell>
     <Cell ss:StyleID="s35"><Data ss:Type="String">{time_format(order.date)}</Data></Cell>
-    <Cell><Data ss:Type="String">{order.profile.billing_title:t} {order.profile.billing_firstname:t} {order.profile.billing_lastname:t}</Data></Cell>
+    <Cell><Data ss:Type="String">{order.profile.billing_address.title:t} {order.profile.billing_address.firstname:t} {order.profile.billing_address.lastname:t}</Data></Cell>
     <Cell ss:StyleID="s32"><Data ss:Type="Number">{order.subtotal}</Data></Cell>
     <Cell ss:StyleID="s32"><Data ss:Type="Number">{order.tax}</Data></Cell>
     <Cell ss:StyleID="s32"><Data ss:Type="Number">{order.shipping_cost}</Data></Cell>
@@ -159,78 +159,62 @@
    </Row>
    <Row>
     <Cell><Data ss:Type="String">Name:</Data></Cell>
-    <Cell><Data ss:Type="String">{order.profile.billing_title:t} {order.profile.billing_firstname:t} {order.profile.billing_lastname:t}</Data></Cell>
+    <Cell><Data ss:Type="String">{order.profile.billing_address.title:t} {order.profile.billing_address.firstname:t} {order.profile.billing_address.lastname:t}</Data></Cell>
    </Row>
    <Row>
     <Cell><Data ss:Type="String">Phone:</Data></Cell>
-    <Cell><Data ss:Type="String">{order.profile.billing_phone:t}</Data></Cell>
-   </Row>
-   <Row>
-    <Cell><Data ss:Type="String">Fax:</Data></Cell>
-    <Cell><Data ss:Type="String">{order.profile.billing_fax:t}</Data></Cell>
-   </Row>
-   <Row>
-    <Cell><Data ss:Type="String">Company:</Data></Cell>
-    <Cell><Data ss:Type="String">{order.profile.billing_company:t}</Data></Cell>
+    <Cell><Data ss:Type="String">{order.profile.billing_address.phone:t}</Data></Cell>
    </Row>
    <Row>
     <Cell><Data ss:Type="String">Address:</Data></Cell>
-    <Cell><Data ss:Type="String">{order.profile.billing_address:t}</Data></Cell>
+    <Cell><Data ss:Type="String">{order.profile.billing_address.street:t}</Data></Cell>
    </Row>
    <Row>
     <Cell><Data ss:Type="String">City:</Data></Cell>
-    <Cell><Data ss:Type="String">{order.profile.billing_city:t}</Data></Cell>
+    <Cell><Data ss:Type="String">{order.profile.billing_address.city:t}</Data></Cell>
    </Row>
    <Row>
     <Cell><Data ss:Type="String">State:</Data></Cell>
-    <Cell><Data ss:Type="String">{order.profile.billingState.state:t}</Data></Cell>
+    <Cell><Data ss:Type="String">{order.profile.billing_address.state.state:t}</Data></Cell>
    </Row>
    <Row>
     <Cell><Data ss:Type="String">Country:</Data></Cell>
-    <Cell><Data ss:Type="String">{order.profile.billingCountry.country:t}</Data></Cell>
+    <Cell><Data ss:Type="String">{order.profile.billing_address.country.country:t}</Data></Cell>
    </Row>
    <Row>
     <Cell><Data ss:Type="String">Zip code:</Data></Cell>
-    <Cell><Data ss:Type="String">{order.profile.billing_zipcode:t}</Data></Cell>
+    <Cell><Data ss:Type="String">{order.profile.billing_address.zipcode:t}</Data></Cell>
    </Row>
    <Row ss:AutoFitHeight="0" ss:Height="21.75">
     <Cell ss:StyleID="s28"><Data ss:Type="String">Shipping Info</Data></Cell>
    </Row>
    <Row>
     <Cell><Data ss:Type="String">Name:</Data></Cell>
-    <Cell><Data ss:Type="String">{order.profile.shipping_title:t} {order.profile.shipping_firstname:t} {order.profile.shipping_lastname:t}</Data></Cell>
+    <Cell><Data ss:Type="String">{order.profile.shipping_address.title:t} {order.profile.shipping_address.firstname:t} {order.profile.shipping_address.lastname:t}</Data></Cell>
    </Row>
    <Row>
     <Cell><Data ss:Type="String">Phone:</Data></Cell>
-    <Cell><Data ss:Type="String">{order.profile.shipping_phone:t}</Data></Cell>
-   </Row>
-   <Row>
-    <Cell><Data ss:Type="String">Fax:</Data></Cell>
-    <Cell><Data ss:Type="String">{order.profile.shipping_fax:t}</Data></Cell>
-   </Row>
-   <Row>
-    <Cell><Data ss:Type="String">Company:</Data></Cell>
-    <Cell><Data ss:Type="String">{order.profile.shipping_company:t}</Data></Cell>
+    <Cell><Data ss:Type="String">{order.profile.shipping_address.phone:t}</Data></Cell>
    </Row>
    <Row>
     <Cell><Data ss:Type="String">Address:</Data></Cell>
-    <Cell><Data ss:Type="String">{order.profile.shipping_address:t}</Data></Cell>
+    <Cell><Data ss:Type="String">{order.profile.shipping_address.street:t}</Data></Cell>
    </Row>
    <Row>
     <Cell><Data ss:Type="String">City:</Data></Cell>
-    <Cell><Data ss:Type="String">{order.profile.shipping_city:t}</Data></Cell>
+    <Cell><Data ss:Type="String">{order.profile.shipping_address.city:t}</Data></Cell>
    </Row>
    <Row>
     <Cell><Data ss:Type="String">State:</Data></Cell>
-    <Cell><Data ss:Type="String">{order.profile.shippingState.state:t}</Data></Cell>
+    <Cell><Data ss:Type="String">{order.profile.shipping_address.state.state:t}</Data></Cell>
    </Row>
    <Row>
     <Cell><Data ss:Type="String">Country:</Data></Cell>
-    <Cell><Data ss:Type="String">{order.profile.shippingCountry.country:t}</Data></Cell>
+    <Cell><Data ss:Type="String">{order.profile.shipping_address.country.country:t}</Data></Cell>
    </Row>
    <Row>
     <Cell><Data ss:Type="String">Zip code:</Data></Cell>
-    <Cell><Data ss:Type="String">{order.profile.shipping_zipcode:t}</Data></Cell>
+    <Cell><Data ss:Type="String">{order.profile.shipping_address.zipcode:t}</Data></Cell>
    </Row>
    <Row ss:AutoFitHeight="0" ss:Height="21">
     <Cell ss:StyleID="s28"><Data ss:Type="String">Products ordered</Data></Cell>

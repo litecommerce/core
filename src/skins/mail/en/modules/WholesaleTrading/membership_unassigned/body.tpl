@@ -13,7 +13,7 @@
 <html>
 <head><title>Membership revoked</title></head>
 <body>
-<p>Dear {profile.billing_firstname:h} {profile.billing_lastname:h}!
+<p>Dear {profile.billing_address.firstname:h} {profile.billing_address.lastname:h}!
 <p>
 Your "{oldMembership}" membership has been revoked.
 <p>

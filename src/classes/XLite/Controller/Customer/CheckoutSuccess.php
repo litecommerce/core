@@ -118,7 +118,7 @@ class CheckoutSuccess extends \XLite\Controller\Customer\ACustomer
     {
         $order = $this->getOrder();
         if ($order && $order->getProfile()) {
-            $charset = $order->getProfile()->getComplex('billingCountry.charset');
+            $charset = $order->getProfile()->getBillingAddress()->getCountry()->getCharset();
         }
 
         return (isset($charset) && $charset)

@@ -145,6 +145,7 @@ class Country extends \XLite\Model\Repo\ARepo
             ->addSelect('s')
             ->leftJoin('c.states', 's')
             ->where('c.enabled = :enabled')
+            ->addOrderBy('s.state', 'ASC')
             ->setParameter('enabled', true);
     }
 

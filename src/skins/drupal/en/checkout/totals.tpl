@@ -14,5 +14,5 @@
  *}
 <div class="cart-totals checkout-totals">
   <h2>Summary</h2>
-  <widget template="shopping_cart/totals.tpl" />
+  <widget template="shopping_cart/parts/totals.tpl" />
 </div>

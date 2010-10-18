@@ -1,0 +1,84 @@
+/* vim: set ts=2 sw=2 sts=2 et: */
+
+/**
+ * ____file_title____
+ *
+ * @author    Creative Development LLC <info@cdev.ru>
+ * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   SVN: $Id: style.css 4004 2010-09-17 07:01:06Z max $
+ * @link      http://www.litecommerce.com/
+ * @since     3.0.0
+ */
+
+/* Address modify dialog */
+.address-dialog h2 {
+  color: #84b8df;
+  font-size: 28px;
+  padding-bottom: 25px;
+}
+
+.address-dialog h4 {
+  color: #336699;
+  font-size: 14px;
+  font-weight: normal;
+  padding-bottom: 10px;
+}
+
+.address-dialog .address-plain
+{
+  font-size: 12px;
+  -moz-border-radius:5px 5px 5px 5px;
+  border-style:solid;
+  border-width:1px;
+  padding:20px;
+  margin-left: 30px;
+  margin-bottom: 30px;
+  width: 300px;
+  border-color:#DFDFDF;
+  background-color: #F4F4F4;
+
+}
+
+.address-dialog button.button-proceed
+{
+  margin-right: 100px;
+}
+
+.address-dialog label {
+  font-size: 14px;
+  font-weight: normal;
+  color: #53769d;
+  padding-left: 28px;
+  vertical-align: middle;
+  background-position: left 5px;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.address-dialog tr td
+{
+  padding: 0px 5px 6px 0px;
+}
+
+.address-dialog input
+{
+  border-width: 1px;
+  border-color: #000000;
+  width: 300px;
+  font-size: 12px;
+}
+
+.address-dialog input.name {
+  height: 17px;
+  border: 1px solid #ddd;
+}
+
+.address-dialog .button {
+  padding: 0px;
+  text-align: center;
+}
+
+

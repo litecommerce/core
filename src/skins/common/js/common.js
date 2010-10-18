@@ -621,3 +621,80 @@ function checkAll(flag, form, prefix) {
 	}
 }
 
+/*
+	Find element by classname
+*/
+function getElementsByClassName(clsName) {
+  var elem, cls;
+	var arr = []; 
+	var elems = document.getElementsByTagName("*");
+	
+	for (var i = 0; (elem = elems[i]); i++) {
+		if (elem.className == clsName)
+			arr[arr.length] = elem;
+	}
+
+	return arr;
+}
+
+/*
+  Opener/Closer HTML block
+*/
+function visibleBox(id,skipOpenClose) {
+	elm1 = document.getElementById("open" + id);
+	elm2 = document.getElementById("close" + id);
+	elm3 = document.getElementById("box" + id);
+
+	if(!elm3)
+		return false;
+
+	if (skipOpenClose) {
+		elm3.style.display = (elm3.style.display == "") ? "none" : "";
+
+	} else if(elm1) {
+		if (elm1.style.display == "") {
+			elm1.style.display = "none";
+
+			if (elm2)
+				elm2.style.display = "";
+
+			elm3.style.display = "none";
+			var class_objs = getElementsByClassName('DialogBox');
+			for (var i = 0; i < class_objs.length; i++) {
+				class_objs[i].style.height = "1%";
+			}
+
+		} else {
+			elm1.style.display = "";
+			if (elm2)
+				elm2.style.display = "none";
+
+			elm3.style.display = "";
+		}
+	}
+
+  return true;
+}
+
+function switchVisibleBox(id) {
+	var box = document.getElementById(id);
+	var plus = document.getElementById(id + '_plus');
+	var minus = document.getElementById(id + '_minus');
+	if (!box || !plus || !minus)
+		return false;
+
+	if (box.style.display == 'none') {
+		box.style.display = '';
+		plus.style.display = 'none';
+		minus.style.display = '';
+
+	} else {
+        box.style.display = 'none';
+        minus.style.display = 'none';
+		plus.style.display = '';
+	}
+
+	return true;
+}
+
+

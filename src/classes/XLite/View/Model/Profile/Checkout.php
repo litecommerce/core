@@ -16,11 +16,11 @@
  *
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage ____sub_package____
+ * @subpackage View
  * @author     Creative Development LLC <info@cdev.ru>
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    SVN: $Id$
+ * @version    SVN: $Id: Checkout.php 3788 2010-08-14 22:23:55Z vvs $
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      3.0.0
@@ -31,10 +31,9 @@ namespace XLite\View\Model\Profile;
 /**
  * \XLite\View\Model\Profile\Checkout
  *
- * @package    XLite
- * @subpackage ____sub_package____
- * @see        ____class_see____
- * @since      3.0.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
 class Checkout extends \XLite\View\Model\Profile\Main
 {
@@ -60,16 +59,16 @@ class Checkout extends \XLite\View\Model\Profile\Main
      * @see    ____func_see____
      * @since  3.0.0
      */
-	protected function prepareMainSections(array $sections)
-	{
-		unset($sections[self::SECTION_ACCESS]);
+    protected function prepareMainSections(array $sections)
+    {
+        unset($sections[self::SECTION_ACCESS]);
 
         if (\XLite\Model\Auth::getInstance()->isLogged()) {
-			unset($sections[self::SECTION_MAIN]);
+            unset($sections[self::SECTION_MAIN]);
         }
 
-		return $sections;
-	}
+        return $sections;
+    }
 
     /**
      * Prepare secret hash string to log in anonymous user
@@ -121,7 +120,7 @@ class Checkout extends \XLite\View\Model\Profile\Main
         if (empty($password)) {
             // 2) Password is already defined and saved.
             // In this case where is only one approach - to log in using secret hash
-            $password = $this->getModelObject()->get('password');
+            $password = $this->getModelObject()->getPassword();
 
             if (empty($password)) {
                 // 3) Generate new password
@@ -152,7 +151,7 @@ class Checkout extends \XLite\View\Model\Profile\Main
     {
         return is_object(
             \XLite\Model\Auth::getInstance()->login(
-                $this->getModelObject()->get('login'), $password, $secureHash
+                $this->getModelObject()->getLogin(), $password, $secureHash
             )
         );
     }
@@ -215,7 +214,7 @@ class Checkout extends \XLite\View\Model\Profile\Main
     {
         return $this->getRequestData('login')
             && \XLite\Model\Auth::getInstance()->isLogged()
-            && \XLite\Model\Auth::getInstance()->getProfile()->get('login') !== $this->getModelObject()->get('login');
+            && \XLite\Model\Auth::getInstance()->getProfile()->getLogin() !== $this->getModelObject()->getLogin();
     }
 
     /**
@@ -232,7 +231,7 @@ class Checkout extends \XLite\View\Model\Profile\Main
 
         // Anonymous user has no primary account, only the one associated with current order
         if ($this->isAnonymousUser()) {
-            $this->getModelObject()->set('order_id', \XLite\Model\Cart::getInstance()->getOrderId());
+            $this->getModelObject()->setOrderId(\XLite\Model\Cart::getInstance()->getOrderId());
         }
 
         $result = parent::performActionModify();

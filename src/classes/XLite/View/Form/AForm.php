@@ -134,7 +134,7 @@ abstract class AForm extends \XLite\View\AView
      */
     protected function getFormParams()
     {
-        $params = $this->getCommonFormParams() + $this->getParam(self::PARAM_FORM_PARAMS);
+        $params = array_merge($this->getCommonFormParams(), $this->getParam(self::PARAM_FORM_PARAMS));
 
         if ('post' === $this->getParam(self::PARAM_FORM_METHOD)) {
             $this->setReturnURLParam($params);

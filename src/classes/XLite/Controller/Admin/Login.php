@@ -108,14 +108,14 @@ class Login extends \XLite\Controller\Admin\AAdmin
     {
         if ($this->auth->isLogged()) {
             $profile = $this->auth->getProfile();
-            $sidebar_box_statuses = $profile->get('sidebar_boxes');
+            $sidebar_box_statuses = $profile->getSidebarBoxes();
 
             if (strlen($sidebar_box_statuses) > 0) {
                 $sidebar_box_statuses = unserialize($sidebar_box_statuses);
                 $this->session->sidebar_box_statuses = $sidebar_box_statuses;
 
             } else {
-                $profile->set('sidebar_boxes', serialize($this->session->get('sidebar_box_statuses')));
+                $profile->setSidebarBoxes(serialize($this->session->get('sidebar_box_statuses')));
                 $profile->update();
             }
         }

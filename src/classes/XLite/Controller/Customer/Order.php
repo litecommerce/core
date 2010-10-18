@@ -109,7 +109,7 @@ class Order extends \XLite\Controller\Customer\ACustomer
         return $this->session->get('last_order_id') == \XLite\Core\Request::getInstance()->order_id
             || (
                 $this->auth->isLogged()
-                && $this->auth->getProfile()->get('profile_id') == $this->getOrder()->get('orig_profile_id')
+                && $this->auth->getProfile()->getProfileId() == $this->getOrder()->get('orig_profile_id')
             );
     }
 
@@ -140,7 +140,7 @@ class Order extends \XLite\Controller\Customer\ACustomer
      */
     public function getCharset()
     {
-        $charset = $this->getOrder()->getProfile()->getComplex('billingCountry.charset');
+        $charset = $this->getOrder()->getProfile()->getBillingAddress()->getCountry()->getCharset();
 
         return $charset ? $charset : parent::getCharset();
     }

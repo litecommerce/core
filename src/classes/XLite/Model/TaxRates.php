@@ -520,23 +520,13 @@ array("condition" => "state=District of Columbia", "action" => array(
 
     function setProfile($profile)
     {
-        if ($this->config->Taxes->use_billing_info) {
+        $address = $this->config->Taxes->use_billing_info ? $profile->getBillingAddress() : $profile->getShippingAddress();
 
-            // billing destionation
-
-            $this->_conditionValues['state'] = $profile->getComplex('billingState.state_id');
-            $this->_conditionValues['country'] = $profile->getComplex('billingCountry.code');
-            $this->_conditionValues['city'] = $profile->get('billing_city');
-            $this->_conditionValues['zip'] = $profile->get('billing_zipcode');
-
-        } else {
-
-            // shipping destination
-
-            $this->_conditionValues['state'] = $profile->getComplex('shippingState.state_id');
-            $this->_conditionValues['country'] = $profile->getComplex('shippingCountry.code');
-            $this->_conditionValues['city'] = $profile->get('shipping_city');
-            $this->_conditionValues['zip'] = $profile->get('shipping_zipcode');
+        if (isset($address)) {
+            $this->_conditionValues['state'] = $address->getStateId();
+            $this->_conditionValues['country'] = $address->getCountryCode();
+            $this->_conditionValues['city'] = $address->getCity();
+            $this->_conditionValues['zip'] = $address->getZipcode();
         }
 
         /* TODO - rework
@@ -546,8 +536,7 @@ array("condition" => "state=District of Columbia", "action" => array(
         }
         */
 
-        $m = \XLite\Core\Database::getRepo('\XLite\Model\Membership')->find($profile->get('membership'));
-        $this->_conditionValues['membership'] = $m ? $m->membership_id : 0;
+        $this->_conditionValues['membership'] = $profile->getMembershipId();
     }
 
     /**

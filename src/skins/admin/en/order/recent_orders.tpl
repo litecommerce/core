@@ -28,7 +28,7 @@
     <td nowrap>
 		<table border=0 cellpadding=0 cellspacing=0 width=100%>
 		<tr>
-    		<td width=90% nowrap><a href="admin.php?target=order&order_id={order.order_id}" onClick="this.blur()">{order.profile.billing_title:h} {order.profile.billing_firstname:h} {order.profile.billing_lastname:h}</a></td>
+    		<td width=90% nowrap><a href="admin.php?target=order&order_id={order.order_id}" onClick="this.blur()">{order.profile.billing_address.title:h} {order.profile.billing_address.firstname:h} {order.profile.billing_address.lastname:h}</a></td>
     		<td width=10% nowrap align=right>(<a href="admin.php?target=order&order_id={order.order_id}" onClick="this.blur()">{order.profile.login}</a>)</td>
 		</tr>
 		</table>

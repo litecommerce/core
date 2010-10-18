@@ -40,16 +40,6 @@ namespace XLite\Controller\Admin;
 class Users extends \XLite\Controller\Admin\AAdmin
 {
     /**
-     * params 
-     * 
-     * @var    array
-     * @access public
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    public $params = array('target', 'mode');
-
-    /**
      * users 
      * 
      * @var    array
@@ -67,15 +57,10 @@ class Users extends \XLite\Controller\Admin\AAdmin
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function init()
+    protected function doActionOrders()
     {
-    	parent::init();
-
-        if ('orders' == \XLite\Core\Request::getInstance()->mode) {
-            $this->search_orders();
-            $this->redirect();
-            exit;
-        }
+        $this->searchOrders();
+        $this->redirect();
     }
 
     /**
@@ -88,275 +73,195 @@ class Users extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionSearch()
     {
-        $searchParams = $this->session->get('admin_users_search');
+        $postedData = \XLite\Core\Request::getInstance()->posted_data;
 
-        if (!is_array($searchParams)) {
-            $searchParams = $this->getDefaultSearchConditions();
-        }
-
-        if (isset(\XLite\Core\Request::getInstance()->substring)) {
-            $searchParams['substring'] = \XLite\Core\Request::getInstance()->substring;
-        }
-
-        if (isset(\XLite\Core\Request::getInstance()->membership)) {
-            $searchParams['membership'] = \XLite\Core\Request::getInstance()->membership;
-        }
-
-        if (isset(\XLite\Core\Request::getInstance()->user_type)) {
-            $searchParams['user_type'] = \XLite\Core\Request::getInstance()->user_type;
-        }
-
-        $this->session->set('admin_users_search', $searchParams);
+        $this->setSearchParams($postedData);
 
         $this->set('returnUrl', $this->buildUrl('users', '', array('mode' => 'search')));
     }
 
     /**
-     * Do action 'search' - save search parameters in the session
+     * Do action 'reset' - reset search parameters in the session
      * 
      * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function doActionList() {
-        $this->set('returnUrl', $this->buildUrl('users', '', array('mode' => 'list')));
+    protected function doActionReset()
+    {
+        $this->setSearchParams(null);
+
+        $this->set('returnUrl', $this->buildUrl('users', '', array('mode' => 'search')));
     }
 
     /**
-     * getSearchQuery 
+     * setSearchParams 
      * 
-     * @param array $field_values
-     * @param array $keywords
-     * @param string $logic
+     * @param array $data Array of search parameters in format of 'fieldName' => 'fieldValue'
      *  
      * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getSearchQuery($field_values, $keywords, $logic)
+    protected function setSearchParams($data)
     {
-        $search = array();
-        $logic = ' ' . trim($logic) . ' ';
+        $searchParams = new \XLite\Core\CommonCell(); 
 
-        foreach ($field_values as $field_value => $condition) {
-
-            if ($condition) {
-
-                $query = array();
-
-                foreach ($keywords as $keyword) {
-                    $query[] = $field_value . " LIKE '%" . addslashes($keyword) . "%' ";
-                }
-
-                $search[] = (count($keywords) > 1 ? '(' . implode($logic, $query) . ')' :  implode('', $query));
+        if (isset($data) && is_array($data)) {
+            foreach ($data as $key => $value) {
+                $searchParams->$key = $value;
             }
         }
 
-        $search_query = implode(' OR ',$search);
-
-        return $search_query;
+        $this->session->set('admin_users_search', $searchParams);
     }
 
     /**
-     * getUsers 
+     * Returns the advanced search form fields in format 'fieldName' => 'defaultValue'
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getAdvancedSearchFields()
+    {
+        return array(
+            'user_type'       => '',
+            'membership'      => '%',
+            'state'           => 0,
+            'country'         => '',
+            'address_pattern' => '',
+            'phone'           => '',
+            'date_type'       => '',
+        );
+    }
+
+    /**
+     * searchOrders 
      * 
      * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getUsers()
+    protected function searchOrders()
+    {
+        $profile = \XLite\Core\Database::getRepo('XLite\Model\Profile')
+            ->find(\XLite\Core\Request::getInstance()->profile_id);
+
+        if (isset($profile)) {
+
+            $login = $profile->getLogin();
+
+            $urlParams = array(
+                'mode'  => 'search',
+                'login' => $login,
+            );
+
+            $this->set('returnUrl', $this->buildUrl('order_list', '', $urlParams));
+
+        } else {
+            $this->set('returnUrl', $this->backUrl);
+        }
+    }
+
+    /**
+     * getSearchParams 
+     * 
+     * @param string $paramName Parameter name
+     *  
+     * @return mixed
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getSearchParams($paramName = null)
+    {
+        $searchParams = $this->session->get('admin_users_search');
+
+        $searchParams = isset($searchParams) ? $searchParams : new \XLite\Core\CommonCell();
+
+        $searchParams->order_id = 0;
+
+        if (isset($paramName)) {
+
+            $result = isset($searchParams->$paramName) ? $searchParams->$paramName : null;
+
+            if (isset($result) && in_array($paramName, array('startDate', 'endDate'))) {
+                $result = strtotime($result);
+            }
+        
+        } else {
+            $result = $searchParams;
+        }
+
+        return $result;
+    }
+
+    /**
+     * isAdvancedOptionSelected 
+     * 
+     * @return bool
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isAdvancedOptionSelected()
+    {
+        $result = false;
+        
+        $searchParams = $this->getSearchParams();
+
+        $fields = $this->getAdvancedSearchFields();
+
+        foreach ($fields as $fieldName => $defaultValue) {
+            if (isset($searchParams->$fieldName) && $defaultValue != $searchParams->$fieldName) {
+                $result = true;
+                break;
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Get users according to the search conditions
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getUsers()
     {
         $mode = (isset(\XLite\Core\Request::getInstance()->mode) ? \XLite\Core\Request::getInstance()->mode : '');
 
-        if ('' == $mode || 'orders' == $mode) {
-            return array();
-        }
+        $searchParams = $this->getSearchParams();
 
-        if (is_null($this->users)) {
-
-            $where = array();
-
-            if ('list' == $mode) {
-                $searchParams = $this->getDefaultSearchConditions();
-
-            } else {
-                $searchParams = $this->getConditions();
+        if ('search' == $mode) {
+            
+            if (!isset($this->users)) {
+                $this->users = \XLite\Core\Database::getRepo('XLite\Model\Profile')->search($searchParams);
             }
-
-            // build WHERE condition for profile info
-            if (!empty($searchParams['substring'])) {
-
-                $substring = stripslashes($searchParams['substring']);
-        		$keywords = explode(' ', trim($substring));
-                $field_values = array(
-                    'login'              => true,
-                    'billing_firstname'  => true,
-                    'billing_lastname'   => true,
-                    'shipping_firstname' => true,
-                    'shipping_lastname'  => true
-                );
-
-                $where[] = '(' . $this->getSearchQuery($field_values, $keywords, 'OR') . ')';
-            }
-
-            if ('%' == $searchParams['membership']) { // default is ALL
-                $where[] = "membership LIKE '%'";
-
-            } elseif ('' == $searchParams['membership']) { // NO membership set
-                $where[] = "membership = ''";
-
-            } elseif ('pending_membership' == $searchParams['membership']) { // pending
-                $where[] = '(pending_membership != membership AND LENGTH(pending_membership) > 0)';
-
-            } else { // search for the specified members otherwise
-                $where[] = "membership = '" . addslashes($searchParams['membership']) . "'";
-            }
-
-            // build WHERE condition for usertype
-            $access_level = $this->auth->getAccessLevel($searchParams['user_type']);
-
-            if (!is_null($access_level)) {
-                $where[] = 'access_level = ' . $access_level;
-
-            } elseif (is_null($access_level) && 'all' != $searchParams['user_type']) {
-                $where[] = 'access_level = -1';
-            }
-
-            $profile = new \XLite\Model\Profile();
-            $profile->fetchKeysOnly = true;
-            $profile->fetchObjIdxOnly = false;
-
-            $this->users = $profile->findAll($this->_buildWhere($where), 'login');
         }
 
         return $this->users;
     }
 
     /**
-     * _buildWhere 
-     * 
-     * @param array $where
-     *  
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function _buildWhere($where)
-    {
-        return join(' AND ',$where);
-    }
-
-    /**
-     * getCount 
+     * Get count of users found
      * 
      * @return int
-     * @access protected
+     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getCount()
+    public function getUsersCount()
     {
-        return count($this->get('users'));
-    }
-
-    /**
-     * search_orders 
-     * 
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function search_orders()
-    {
-        $profile = new \XLite\Model\Profile($this->profile_id);
-        $profile->read();
-        $login = $profile->get('login');
-
-        if (strlen($login) > 0) {
-            $login = urlencode($login);
-            $year = $this->config->Company->start_year;
-            $date = getdate(time());
-            $urlParams = array(
-                'mode'           => 'search',
-                'login'          => $login,
-                'startDateDay'   => 1,
-                'startDateMonth' => 1,
-                'startDateYear'  => $year,
-                'endDateDay'     => $date['mday'],
-                'endDateMonth'   => $date['mon'],
-                'endDateYear'    => $date['year']
-            );
-
-            $this->set('returnUrl', $this->buildUrl('order_list', '', $urlParams));
-
-        } else {
-        	$this->set('returnUrl', $this->backUrl);
-        }
-    }
-
-    /**
-     * Get search conditions
-     * 
-     * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getConditions()
-    {
-        $searchParams = $this->session->get('admin_users_search');
-
-        if (!is_array($searchParams)) {
-            $searchParams = $this->getDefaultSearchConditions();
-            $this->session->set('searchParams', $searchParams);
-        }
-
-        return $searchParams;
-    }
-
-    /**
-     * Get search condition parameter by name
-     * 
-     * @param string $paramName 
-     *  
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getCondition($paramName)
-    {
-        $return = null;
-        $searchParams = $this->getConditions();
-
-        if (isset($searchParams[$paramName])) {
-            $return = $searchParams[$paramName];
-        }
-
-        return $return;
-    }
-
-    /**
-     * Get the default search conditions array
-     * 
-     * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getDefaultSearchConditions()
-    {
-        return array(
-            'substring'  => '',
-            'membership' => '%',
-            'user_type'  => 'all'
-        );
+        return count($this->getUsers());
     }
 
 }
-

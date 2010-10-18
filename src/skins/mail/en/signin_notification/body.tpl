@@ -29,47 +29,39 @@
 </tr>
 <tr>
     <td align="right">Title:</td>
-    <td>{profile.billing_title}</td>
+    <td>{profile.billing_address.title}</td>
 </tr>
 <tr>
     <td align="right">First Name:</td>
-    <td>{profile.billing_firstname}</td>
+    <td>{profile.billing_address.firstname}</td>
 </tr>
 <tr>
     <td align="right">Last Name:</td>
-    <td>{profile.billing_lastname}</td>
-</tr>
-<tr>
-    <td align="right">Company:</td>
-    <td>{profile.billing_company}</td>        
+    <td>{profile.billing_address.lastname}</td>
 </tr>
 <tr>
     <td align="right">Phone:</td>
-    <td>{profile.billing_phone}</td>    
-</tr>
-<tr>
-    <td align="right">Fax:</td>
-    <td>{profile.billing_fax}</td>
+    <td>{profile.billing_address.phone}</td>    
 </tr>
 <tr>
     <td align="right">Address:</td>
-    <td>{profile.billing_address}</td>
+    <td>{profile.billing_address.street}</td>
 </tr>
 <tr>
     <td align="right">City:</td>
-    <td>{profile.billing_city}</td>
+    <td>{profile.billing_address.city}</td>
 </tr>
 <tr>
     <td align="right">State:</td>
-    <td>{profile.billingState.state}</td>
+    <td>{profile.billing_address.state.state}</td>
 </tr>
 <tr>
     <td align="right">Country:</td>
-    <td>{profile.billingCountry.country}</td>
+    <td>{profile.billing_address.country.country}</td>
 </tr>
 <tr>
     <td align="right">Zip code:</td>
-    <td>{profile.billing_zipcode}</td>
+    <td>{profile.billing_address.zipcode}</td>
 </tr>
 
 <tr>
@@ -84,47 +76,39 @@
 </tr>
 <tr>
     <td align="right">Title:</td>
-    <td>{profile.shipping_title}</td>
+    <td>{profile.shipping_address.title}</td>
 </tr>
 <tr>
     <td align="right">First Name:</td>
-    <td>{profile.shipping_firstname}</td>
+    <td>{profile.shipping_address.firstname}</td>
 </tr>
 <tr>
     <td align="right">Last Name:</td>
-    <td>{profile.shipping_lastname}</td>
-</tr>
-<tr>
-    <td align="right">Company:</td>
-    <td>{profile.shipping_company}</td>        
+    <td>{profile.shipping_address.lastname}</td>
 </tr>
 <tr>
     <td align="right">Phone:</td>
-    <td>{profile.shipping_phone}</td>    
-</tr>
-<tr>
-    <td align="right">Fax:</td>
-    <td>{profile.shipping_fax}</td>
+    <td>{profile.shipping_address.phone}</td>    
 </tr>
 <tr>
     <td align="right">Address:</td>
-    <td>{profile.shipping_address}</td>
+    <td>{profile.shipping_address.street}</td>
 </tr>
 <tr>
     <td align="right">City:</td>
-    <td>{profile.shipping_city}</td>
+    <td>{profile.shipping_address.city}</td>
 </tr>
 <tr>
     <td align="right">State:</td>
-    <td>{profile.shippingState.state}</td>
+    <td>{profile.shipping_address.state.state}</td>
 </tr>
 <tr>
     <td align="right">Country:</td>
-    <td>{profile.shippingCountry.country}</td>
+    <td>{profile.shipping_address.country.country}</td>
 </tr>
 <tr>
     <td align="right">Zip code:</td>
-    <td>{profile.shipping_zipcode}</td>
+    <td>{profile.shipping_address.zipcode}</td>
 </tr>
 
 <tr>
@@ -137,11 +121,11 @@
 </tr>
 <tr>
     <td align="right">Sign-up membership:</td>
-    <td>{profile.pending_membership}</td>
+    <td>{profile.pending_membership.name}</td>
 </tr>
 <tr>
     <td align="right">Granted membership:</td>
-    <td>{profile.membership}</td>
+    <td>{profile.membership.name}</td>
 </tr>
 <tr>
     <td colspan="2">&nbsp;</td>

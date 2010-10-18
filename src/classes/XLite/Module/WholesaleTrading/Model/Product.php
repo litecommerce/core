@@ -411,7 +411,7 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
 
             $sqlStr = "product_id = " . $this->get('product_id');
             $sqlStr .= $this->auth->isLogged()
-                ? " AND (membership = 0 OR membership = '" . $this->auth->getProfile()->get('membership') . "')"
+                ? " AND (membership = 0 OR membership = '" . $this->auth->getProfile()->getMembershipId() . "')"
                 : " AND membership = 0";
             $wholesale_pricing = $wp->findAll($sqlStr);
 
@@ -422,7 +422,7 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
 
                 } elseif (
                     $this->auth->isLogged()
-                    && $this->auth->getProfile()->get('membership') == $wp->get('membership')
+                    && $this->auth->getProfile()->getMembershipId() == $wp->get('membership')
                     && $wholesale_pricing[$wholesale_pricing_hash[$wp->get('amount')]]->get('membership') == 0
                 ) {
                     $wholesale_pricing_hash[$wp->get('amount')] = $wpIdx;

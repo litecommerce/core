@@ -216,7 +216,7 @@ class Product extends \XLite\Model\Repo\Base\I18n
     }
 
     /**
-     * Call corresponded method to handle a serch condition
+     * Call corresponded method to handle a search condition
      * 
      * @param mixed                      $value        condition data
      * @param string                     $key          condition name

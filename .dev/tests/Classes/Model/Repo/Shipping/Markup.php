@@ -115,11 +115,10 @@ class XLite_Tests_Model_Repo_Shipping_Markup extends XLite_Tests_TestCase
         $order = new \XLite\Model\Order();
 
         if ($profile) {
-            $profile = new \XLite\Model\Profile();
-            $list = $profile->findAll();
-            $profile = array_shift($list);
-            $profileId = $profile->get('profile_id');
-            unset($list);
+            $profiles = \XLite\Core\Database::getRepo('XLite\Model\Profile')->findAll();
+            $profile = array_shift($profiles);
+            $profileId = $profile->getProfileId();
+            unset($profiles);
 
         } else {
             $profileId = 0;

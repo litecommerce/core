@@ -165,7 +165,7 @@ class XLite_Tests_Model_Repo_Order extends XLite_Tests_TestCase
         // By email
         \XLite\Core\Database::getEM()->clear();
         $cnd = new \XLite\Core\CommonCell();
-        $cnd->{$repo::P_EMAIL} = $o1->getOrigProfile()->get('email');
+        $cnd->{$repo::P_EMAIL} = $o1->getOrigProfile()->getLogin();
 
         $list = $repo->search($cnd);
 
@@ -249,10 +249,9 @@ class XLite_Tests_Model_Repo_Order extends XLite_Tests_TestCase
     {
         $order = new \XLite\Model\Order();
 
-        $profile = new \XLite\Model\Profile();
-        $list = $profile->findAll();
-        $profile = array_shift($list);
-        unset($list);
+        $profiles = \XLite\Core\Database::getRepo('XLite\Model\Profile')->findAll();
+        $profile = array_shift($profiles);
+        unset($profiles);
 
         $order->map($this->testOrder);
         $order->setCurrency(\XLite\Core\Database::getRepo('XLite\Model\Currency')->find(840));

@@ -88,20 +88,20 @@ class XLite_Tests_Module_Quantum_Model_Payment_Processor_Quantum extends XLite_T
       <input type="hidden" name="post_return_url_declined" value="$urld" />
       <input type="hidden" name="ID" value="$tid" />
       <input type="hidden" name="amount" value="$amount" />
-      <input type="hidden" name="BADDR1" value="Billing street, 1" />
+      <input type="hidden" name="BADDR1" value="51 apt, 87 street" />
       <input type="hidden" name="BZIP1" value="73003" />
-      <input type="hidden" name="FNAME" value="Guest" />
-      <input type="hidden" name="LNAME" value="Guest" />
+      <input type="hidden" name="FNAME" value="Admin" />
+      <input type="hidden" name="LNAME" value="Admin" />
       <input type="hidden" name="BCITY" value="Edmond" />
-      <input type="hidden" name="BSTATE" value="38" />
+      <input type="hidden" name="BSTATE" value="Oklahoma" />
       <input type="hidden" name="BCOUNTRY" value="US" />
       <input type="hidden" name="BCUST_EMAIL" value="rnd_tester@cdev.ru" />
-      <input type="hidden" name="SFNAME" value="Guest" />
-      <input type="hidden" name="SLNAME" value="Guest" />
-      <input type="hidden" name="SADDR1" value="Shipping street, 1" />
-      <input type="hidden" name="SCITY" value="New York" />
-      <input type="hidden" name="SSTATE" value="34" />
-      <input type="hidden" name="SZIP1" value="10001" />
+      <input type="hidden" name="SFNAME" value="Admin" />
+      <input type="hidden" name="SLNAME" value="Admin" />
+      <input type="hidden" name="SADDR1" value="51 apt, 87 street" />
+      <input type="hidden" name="SCITY" value="Edmond" />
+      <input type="hidden" name="SSTATE" value="Oklahoma" />
+      <input type="hidden" name="SZIP1" value="73003" />
       <input type="hidden" name="SCOUNTRY" value="US" />
       <input type="hidden" name="PHONE" value="0123456789" />
       <input type="hidden" name="trans_method" value="CC" />
@@ -337,8 +337,7 @@ HTML;
     {
         $order = new \XLite\Model\Order();
 
-        $profile = new \XLite\Model\Profile();
-        $list = $profile->findAll();
+        $list = \XLite\Core\Database::getRepo('XLite\Model\Profile')->findAll();
         $profile = array_shift($list);
         unset($list);
 

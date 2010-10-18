@@ -149,7 +149,7 @@ class Search extends \XLite\View\OrderList\AOrderList
         $cnd = $cnd ?: new \XLite\Core\CommonCell();
 
         if (!$this->getProfile()->isAdmin()) {
-            $cnd->profileId = $this->getProfile()->get('profile_id');
+            $cnd->profileId = $this->getProfile()->getProfileId();
         }
 
         $cnd->orderBy = array('o.' . $this->conditions['sortCriterion'], $this->conditions['sortOrder']);

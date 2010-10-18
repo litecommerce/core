@@ -367,7 +367,6 @@ class Category extends \XLite\Controller\Admin\Catalog
                 $category->map($properties);
 
                 $code = $this->getCurrentLanguage();
-                $category->getTranslation($code)->id = $category->category_id;
                 $category->getTranslation($code)->name = $properties['name'];
                 $category->getTranslation($code)->description = $properties['description'];
                 $category->getTranslation($code)->meta_tags = $properties['meta_tags'];

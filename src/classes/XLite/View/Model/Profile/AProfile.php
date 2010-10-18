@@ -59,7 +59,7 @@ abstract class AProfile extends \XLite\View\Model\AModel
      * @since  3.0.0
      */
     protected $addressSchema = array(
-        'type' => array(
+        'address_type' => array(
             self::SCHEMA_CLASS    => '\XLite\View\FormField\Select\AddressType',
             self::SCHEMA_LABEL    => 'Address type',
             self::SCHEMA_REQUIRED => true,
@@ -78,22 +78,14 @@ abstract class AProfile extends \XLite\View\Model\AModel
             self::SCHEMA_LABEL    => 'Lastname',
             self::SCHEMA_REQUIRED => true,
         ),
-        'company' => array(
-            self::SCHEMA_CLASS    => '\XLite\View\FormField\Input\Text',
-            self::SCHEMA_LABEL    => 'Company',
-        ),
         'phone' => array(
             self::SCHEMA_CLASS    => '\XLite\View\FormField\Input\Text',
             self::SCHEMA_LABEL    => 'Phone',
             self::SCHEMA_REQUIRED => true,
         ),
-        'fax' => array(
+        'street' => array(
             self::SCHEMA_CLASS    => '\XLite\View\FormField\Input\Text',
-            self::SCHEMA_LABEL    => 'Fax',
-        ),
-        'address' => array(
-            self::SCHEMA_CLASS    => '\XLite\View\FormField\Input\Text',
-            self::SCHEMA_LABEL    => 'Address',
+            self::SCHEMA_LABEL    => 'Street',
             self::SCHEMA_REQUIRED => true,
         ),
         'city' => array(
@@ -101,7 +93,7 @@ abstract class AProfile extends \XLite\View\Model\AModel
             self::SCHEMA_LABEL    => 'City',
             self::SCHEMA_REQUIRED => true,
         ),
-        'state' => array(
+        'state_id' => array(
             self::SCHEMA_CLASS    => '\XLite\View\FormField\Select\State',
             self::SCHEMA_LABEL    => 'State',
             self::SCHEMA_REQUIRED => true,
@@ -111,7 +103,7 @@ abstract class AProfile extends \XLite\View\Model\AModel
             self::SCHEMA_LABEL    => 'Other state',
             self::SCHEMA_REQUIRED => false,
         ),
-        'country' => array(
+        'country_code' => array(
             self::SCHEMA_CLASS    => '\XLite\View\FormField\Select\Country',
             self::SCHEMA_LABEL    => 'Country',
             self::SCHEMA_REQUIRED => true,
@@ -189,7 +181,13 @@ abstract class AProfile extends \XLite\View\Model\AModel
      */
     protected function getDefaultModelObject()
     {
-        return new \XLite\Model\Profile($this->getProfileId());
+        $obj = \XLite\Core\Database::getRepo('XLite\Model\Profile')->find($this->getProfileId());
+    
+        if (!isset($obj)) {
+            $obj = new \XLite\Model\Profile();
+        }
+
+        return $obj;
     }
 
     /**
@@ -217,10 +215,52 @@ abstract class AProfile extends \XLite\View\Model\AModel
      */
     protected function setStateSelectorIds(array &$fields, $section)
     {
-        $fields[$section . '_country']->setStateSelectorIds(
-            $fields[$section . '_state']->getFieldId(),
+        $fields[$section . '_country_code']->setStateSelectorIds(
+            $fields[$section . '_state_id']->getFieldId(),
             $fields[$section . '_custom_state']->getFieldId()
         );
+    }
+
+    /**
+     * Retrieve property from the model object
+     *
+     * @param string $name field/property name
+     *
+     * @return mixed
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getModelObjectValue($name)
+    {
+        $value = null;
+        
+        if (preg_match('/^(shipping|billing)_(.*)$/', $name, $match)) {
+
+            $addressType = $match[1];
+            $name = $match[2];
+
+            $methodName = 'get' . \XLite\Core\Converter::getInstance()->convertToCamelCase($addressType) . 'Address';
+
+            if (method_exists($this->getModelObject(), $methodName)) {
+                // Call getter method
+                $addressObject = $this->getModelObject()->$methodName();
+            }
+
+            if (isset($addressObject)) {
+
+                $methodName = 'get' . \XLite\Core\Converter::getInstance()->convertToCamelCase($name);
+
+                if (method_exists($addressObject, $methodName)) {
+                    // Call getter method
+                    $value = $addressObject->$methodName();
+                }
+            }
+
+        } else {
+            $value = parent::getModelObjectValue($name);
+        }
+
+        return $value;
     }
 
     /**
@@ -270,7 +310,7 @@ abstract class AProfile extends \XLite\View\Model\AModel
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getInlineJSCode()
+    protected function getBottomInlineJSCode()
     {
         return $this->getWidget(array(), '\XLite\View\JS\StatesList')->getContent();
     }
@@ -329,6 +369,87 @@ abstract class AProfile extends \XLite\View\Model\AModel
         }
 
         return $result;
+    }
+
+    /**
+     * prepareDataForMapping 
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function prepareDataForMapping()
+    {
+        $data = parent::prepareDataForMapping();
+
+        if (!empty($data)) {
+
+            $addresses = array();
+
+            foreach ($data as $key => $value) {
+
+                if (preg_match('/^(shipping|billing)_(.*)$/', $key, $match)) {
+                
+                    $addressType = $match[1];
+                    $fieldName = $match[2];
+
+                    if (!isset($addresses[$addressType])) {
+
+                        $addresses[$addressType] = new \XLite\Model\Address();
+                        
+                        if ('billing' == $addressType) {
+                            $addresses[$addressType]->setIsBilling(1);
+                        
+                        } else {
+                            $addresses[$addressType]->setIsShipping(1);
+                        }
+                    }
+
+                    $methodName = 'set' . \XLite\Core\Converter::getInstance()->convertToCamelCase($fieldName);
+
+                    if (method_exists($addresses[$addressType], $methodName)) {
+                        // Call setter method
+                        $addresses[$addressType]->$methodName($value);
+                        unset($data[$key]);
+                    }
+                }
+            }
+
+            if (isset($data['shipAsBill'])) {
+                unset($addresses['shipping']);
+                $addresses['billing']->setIsShipping(1);
+
+                unset($data['shipAsBill']);
+            }
+
+            if (!empty($addresses)) {
+                $data['addresses'] = new \Doctrine\Common\Collections\ArrayCollection(array_values($addresses));
+            }
+        }
+
+        return $data;
+    }
+
+    /**
+     * Populate model object properties by the passed data
+     *
+     * @param array $data data to set
+     *
+     * @return void
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function setModelProperties(array $data)
+    {
+        parent::setModelProperties($data);
+
+        if (!empty($data['addresses'])) {
+            foreach ($data['addresses'] as $address) {
+                $address->setProfile($this->prepareObjectForMapping());
+                $this->prepareObjectForMapping()->addAddresses($address);
+            }
+        }
     }
 
 

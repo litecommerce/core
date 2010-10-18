@@ -282,7 +282,7 @@ abstract class ACustomer extends \XLite\Controller\AController
         $charset = false;
 
         if ($this->getCart() && $this->getCart()->getProfile()) {
-            $charset = $this->getCart()->getProfile()->getComplex('billingCountry.charset');
+            $charset = $this->getCart()->getProfile()->getBillingAddress()->getCountry()->getCharset();
         }
 
         return $charset ? $charset : parent::getCharset();
