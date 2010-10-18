@@ -16,14 +16,6 @@
 <script language="JavaScript">
 <!--
 
-var SelectedProfileLevel = 0;
-
-function CheckOrders(level)
-{
-	level = (level == 0) ? false : true;
-    document.forms['user_profile'].elements['Orders'].disabled = level;
-}
-
 function deleteProfile()
 {
 	if (confirm('Are you sure you want to delete the selected user?')) { 
@@ -51,22 +43,35 @@ function searchOrders()
   <table border="0" width="100%">
 
     <tr class="TableHead">
-      <td width=10>&nbsp;</td>
-      <td nowrap align=left>Login</td>
-      <td nowrap align=left>Username</td>
-      <td nowrap align=left width=110>Created</td>
-      <td nowrap align=left width=110>Last login</td>
+      <td width="10">&nbsp;</td>
+      <td nowrap align="left">Login/E-mail</td>
+      <td nowrap align="left">Username</td>
+      <td nowrap align="left">Access level</td>
+      <td nowrap align="left">Orders count</td>
+      <td nowrap align="left" width="110">Created</td>
+      <td nowrap align="left" width="110">Last login</td>
     </tr>
 
     <tr FOREACH="namedWidgets.searchResults.pageData,id,user" class="{getRowClass(id,##,#TableRow#)}">
-      <td align="center" width="10"><input type="radio" name="profile_id" value="{user.profile_id}" checked="{isSelected(id,#0#)}" onClick="this.blur();CheckOrders('{user.access_level}')"></td>
-      <td nowrap><a href="{buildUrl(#profile#,##,_ARRAY_(#profile_id#^user.profile_id))}"><u>{user.login:h}</u></a></td>
-      <td nowrap><a href="{buildUrl(#profile#,##,_ARRAY_(#profile_id#^user.profile_id))}">{user.billing_address.firstname:h}&nbsp;{user.billing_address.lastname:h}</a></td>
-      <td nowrap align=left width=110>{if:user.added}{time_format(user.added):h}{else:}Never{end:}</td>
-      <td nowrap align=left width=110>{if:user.last_login}{time_format(user.last_login):h}{else:}Never{end:}</td>
-
-      <script language="JavaScript" IF="isSelected(id,#0#)">SelectedProfileLevel='{user.access_level}';</script>
-
+      <td align="center" width="10"><input type="radio" name="profile_id" value="{user.profile_id}" checked="{isSelected(id,#0#)}"></td>
+      <td nowrap><a href="{buildUrl(#profile#,##,_ARRAY_(#profile_id#^user.profile_id))}"><u>{user.login:h}</u></a>{if:!user.status=#E#} (disabled account){end:}</td>
+      <td nowrap><a href="{buildUrl(#address_book#,##,_ARRAY_(#profile_id#^user.profile_id))}"><u>{if:user.billing_address.firstname&user.billing_address.lastname}{user.billing_address.firstname:h}&nbsp;{user.billing_address.lastname:h}{else:}n/a{end:}</u></a></td>
+      <td nowrap align="left">
+      {if:user.access_level=0}
+        Customer
+        {if:user.membership}
+        <br /><b>membership:</b> {user.membership.getName()}
+        {end:}
+        {if:user.pending_membership}
+        <br /><b>requested for membership:</b> {user.pending_membership.getName()}
+        {end:}
+      {else:}
+        Administrator
+      {end:}
+      </td>
+      <td nowrap align="left">{if:user.orders_count}<a href="{buildUrl(#order_list#,##,_ARRAY_(#mode#^#search#,#login#^user.login))}"><u>{user.orders_count}</u></a>{else:}n/a{end:}</td>
+      <td nowrap align="left">{if:user.added}{time_format(user.added):h}{else:}Unknown{end:}</td>
+      <td nowrap align="left">{if:user.last_login}{time_format(user.last_login):h}{else:}Never{end:}</td>
     </tr>
 
   </table>
@@ -75,19 +80,9 @@ function searchOrders()
 
   <p align="left">
     
-    <input type="button" name="Delete" value="Delete" onClick="javascript: deleteProfile();" />
-    &nbsp;&nbsp;
-    <input type="button" name="Orders" value="User's order history" onClick="javascript: searchOrders();" />
+    <input type="button" name="Delete" value="Delete selected profile" onClick="javascript: deleteProfile();" />
 
   </p>
 
 </form>
-
-<script language="JavaScript">
-<!--
-
-CheckOrders(SelectedProfileLevel);
-
-// -->
-</script>
 
