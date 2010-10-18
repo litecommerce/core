@@ -264,7 +264,9 @@ class Rate extends \XLite\Base\SuperClass
      */
     public function getMethodId()
     {
-        return $this->getMethod()->getMethodId();
+        $method = $this->getMethod();
+        
+        return isset($method) ? $this->getMethod()->getMethodId() : null;
     }
 
     /**
@@ -277,7 +279,9 @@ class Rate extends \XLite\Base\SuperClass
      */
     public function getMethodName()
     {
-        return $this->getMethod()->getName();
+        $method = $this->getMethod();
+
+        return isset($method) ? $this->getMethod()->getName() : null;
     }
 
 }
