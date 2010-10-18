@@ -16,7 +16,7 @@
     <tr>
       {displayListPart(#captions#)}
     </tr>
-    <tr FOREACH="getPageData(),product" class="product-cell {getProductClasses(product)}">
+    <tr FOREACH="getPageData(),product" class="product-cell {getProductCellClass(product)}">
       <td FOREACH="getNestedViewList(#columns#,_ARRAY_(#product#^product)),column">{column.display()}</td>
     </tr>
   </table>
