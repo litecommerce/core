@@ -13,4 +13,4 @@
  * @ListChild (list="itemsList.product.grid.customer.info", weight="998")
  * @ListChild (list="itemsList.product.list.customer.photo", weight="998")
  *}
-<div alt="Added to cart" class="added-to-cart" IF="isProductAdded(product)"></div>
+<div alt="Added to cart" class="added-to-cart{if:!isProductAdded(product)} hidden{end:}"></div>

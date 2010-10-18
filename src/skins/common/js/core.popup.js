@@ -100,6 +100,10 @@ popup.loadByLink = function(link)
 // Postprocess request
 popup.postprocessRequest = function(XMLHttpRequest, textStatus, data, isValid)
 {
+  if (!this.elementId) {
+    return;
+  }
+
   if (4 != XMLHttpRequest.readyState) {
 
     // Connection failed

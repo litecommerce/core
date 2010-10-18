@@ -49,8 +49,6 @@ abstract class APage extends \XLite\View\Product\Details\Customer\ACustomer
     {
         $list = parent::getJSFiles();
 
-        $list[] = 'js/core.controller.js';
-        $list[] = 'js/core.loadable.js';
         $list[] = 'js/jquery.blockUI.js';
         $list[] = self::getDir() . '/controller.js';
 
