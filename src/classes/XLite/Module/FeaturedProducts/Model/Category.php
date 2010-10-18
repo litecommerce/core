@@ -29,14 +29,25 @@
 namespace XLite\Module\FeaturedProducts\Model;
 
 /**
- * \XLite\Module\FeaturedProducts\Model\Category 
- * 
+ * Category
+ *
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
 class Category extends \XLite\Model\Category implements \XLite\Base\IDecorator
 {
+    /**
+     * Featured products (relation)
+     *
+     * @var    \Doctrine\Common\Collections\ArrayCollection
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @OneToMany (targetEntity="XLite\Module\FeaturedProducts\Model\FeaturedProduct", mappedBy="category", cascade={"all"})
+     */
+    protected $featuredProducts;
+
     /**
      * Cached featured products list
      * 
@@ -45,94 +56,6 @@ class Category extends \XLite\Model\Category implements \XLite\Base\IDecorator
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $featuredProducts = null;
+    protected $featuredProductsList = null;
 
-
-    /**
-     * Get featured products list
-     * 
-     * @param string $orderby orderby string
-     *  
-     * @return array of \XLite\Module\FeaturedProducts\Model\FeaturedProduct objects
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getFeaturedProducts($orderby = null)
-    {
-        if (!isset($this->featuredProducts)) {
-
-            $featuredProduct = new \XLite\Module\FeaturedProducts\Model\FeaturedProduct();
-
-            foreach ($featuredProduct->findAll('category_id = \'' . $this->category_id . '\'', $orderby) as $handler) {
-                $_featuredProducts = array();
-                $_featuredProducts = $handler;
-                $_featuredProducts->set('product', $handler->getProduct());
-
-                $this->featuredProducts[] = $_featuredProducts;
-            }
-        }
-
-        return $this->featuredProducts;
-    }
-
-    /**
-     * Add specified products to the featured products list
-     * 
-     * @param array $products Array of \XLite\Model\Product objects
-     *  
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function addFeaturedProducts($products)
-    {
-        if (is_array($products)) {
-            foreach ($products as $product) {
-    			$fp = new \XLite\Module\FeaturedProducts\Model\FeaturedProduct();
-    			$fp->set('category_id', $this->category_id);
-       			$fp->set('product_id', $product->get('product_id'));
-        		if (!$fp->isExists()) {
-            		$fp->create();
-    			}
-    		}
-        }
-    }
-
-    /**
-     * Delete specified products from the featured products list
-     * 
-     * @param array $products Array of \XLite\Model\Product objects
-     *  
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function deleteFeaturedProducts($products)
-    {
-        if (is_array($products)) {
-            foreach ($products as $product) {
-    			$fp = new \XLite\Module\FeaturedProducts\Model\FeaturedProduct();
-    			$fp->set('category_id', $this->category_id);
-    			$fp->set('product_id', $product->get('product_id'));
-    			$fp->delete();
-    		}
-        }
-    }
-
-    /**
-     * Delete product
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function delete()
-    {
-        $this->deleteFeaturedProducts($this->getFeaturedProducts());
-        parent::delete();
-    }
 }

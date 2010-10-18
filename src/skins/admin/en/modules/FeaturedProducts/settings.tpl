@@ -10,9 +10,10 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-{if:option.isName(#featured_products_look#)}
-    <select name="{option.name}">
-        <option value="list" selected="{option.isSelected(#list#)}">List</option>
-        <option value="grid" selected="{option.isSelected(#grid#)}">Grid</option>
-    </select>
-    {end:}
+{if:option.name=#featured_products_look#}
+  <select name="{option.name}">
+    <option value="list" selected="{option.value=#list#}">List</option>
+    <option value="grid" selected="{option.value=#grid#}">Grid</option>
+    <option value="table" selected="{option.value=#table#}">Table</option>
+  </select>
+{end:}

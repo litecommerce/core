@@ -152,11 +152,11 @@ class Search extends \XLite\View\ItemsList\Product\Admin\AAdmin
      * getSearchParams 
      * 
      * @return array
-     * @access protected
+     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getSearchParams()
+    static public function getSearchParams()
     {
         return array(
             \XLite\Model\Repo\Product::P_SUBSTRING         => self::PARAM_SUBSTRING,
@@ -209,21 +209,6 @@ class Search extends \XLite\View\ItemsList\Product\Admin\AAdmin
     }
 
     /**
-     * Fetch param value from current session
-     *
-     * @param string $param parameter name
-     *
-     * @return mixed
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected function getSavedRequestParam($param)
-    {
-        return (self::PARAM_SEARCH_IN_SUBCATS === $param) ? null : parent::getSavedRequestParam($param);
-    }
-
-    /**
      * Return params list to use for search
      *
      * @return \XLite\Core\CommonCell
@@ -237,6 +222,11 @@ class Search extends \XLite\View\ItemsList\Product\Admin\AAdmin
 
         foreach ($this->getSearchParams() as $modelParam => $requestParam) {
             $result->$modelParam = $this->getParam($requestParam);
+        }
+
+        if (empty($result->{self::PARAM_CATEGORY_ID})) {
+            unset($result->{self::PARAM_CATEGORY_ID});
+            unset($result->{self::PARAM_SEARCH_IN_SUBCATS});
         }
 
         return $result;

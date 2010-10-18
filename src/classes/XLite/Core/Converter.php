@@ -458,7 +458,7 @@ class Converter extends \XLite\Base\Singleton
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function getPlaneClassName(\XLite\Base $obj)
+    public static function getPlainClassName(\XLite\Base $obj)
     {
         return str_replace('\\', '', get_class($obj));
     }

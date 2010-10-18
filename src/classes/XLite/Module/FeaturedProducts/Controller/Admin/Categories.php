@@ -38,20 +38,46 @@ namespace XLite\Module\FeaturedProducts\Controller\Admin;
 class Categories extends \XLite\Controller\Admin\Categories implements \XLite\Base\IDecorator
 {
     /**
-     * init 
-     * 
+     * doActionSearchFeaturedProducts
+     * TODO: Rework using ItemsList
+     *
      * @return void
-     * @access public
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function init() 
+    protected function doActionSearchFeaturedProducts()
     {
-        parent::init();
+        $sessionCell    = \XLite\Module\FeaturedProducts\Model\FeaturedProduct::SESSION_CELL_NAME;
+        $searchParams   = \XLite\View\ItemsList\Product\Admin\Search::getSearchParams();
+        $productsSearch = array();
+        $cBoxFields     = array(
+            \XLite\View\ItemsList\Product\Admin\Search::PARAM_SEARCH_IN_SUBCATS
+        );
 
-        if (!isset(\XLite\Core\Request::getInstance()->search_category)) {
-            \XLite\Core\Request::getInstance()->search_category = \XLite\Core\Request::getInstance()->category_id;
+        foreach ($searchParams as $modelParam => $requestParam) {
+            if (isset(\XLite\Core\Request::getInstance()->$requestParam)) {
+                $productsSearch[$modelParam] = \XLite\Core\Request::getInstance()->$requestParam;
+            }
         }
+
+        foreach ($cBoxFields as $requestParam) {
+            $productsSearch[$modelParam] = isset(\XLite\Core\Request::getInstance()->$requestParam)
+                ? 1
+                : 0;
+        }
+
+        $this->session->set($sessionCell, $productsSearch);
+        $this->set('returnUrl',
+            $this->buildUrl(
+                'categories',
+                '',
+                array(
+                    'mode' => 'search_featured_products',
+                    'category_id' => \XLite\Core\Request::getInstance()->category_id
+                )
+            )
+        );
     }
 
     /**
@@ -65,81 +91,180 @@ class Categories extends \XLite\Controller\Admin\Categories implements \XLite\Ba
     protected function doActionAddFeaturedProducts()
     {
         if (isset(\XLite\Core\Request::getInstance()->product_ids)) {
-            $products = array();
 
-            foreach (\XLite\Core\Request::getInstance()->product_ids as $product_id => $value) {
-                $products[] = new \XLite\Model\Product($product_id);
+            $pids = array_keys(\XLite\Core\Request::getInstance()->product_ids);
+
+            $products = \XLite\Core\Database::getRepo('\XLite\Model\Product')
+                ->findByIds($pids);
+
+            $category = $this->category_id
+                ? \XLite\Core\Database::getRepo('\XLite\Model\Category')->find($this->category_id)
+                : null;
+
+            // Retreive existing featured products list of that category
+
+            $existingLinksIds = array();
+            $existingLinks = $this->getFeaturedProductsList();
+            if ($existingLinks) {
+                foreach ($existingLinks as $k => $v) {
+                    $existingLinksIds[] = $v->getProduct()->getProductId();
+                }
             }
 
-            $category = new \XLite\Model\Category($this->category_id);
-            $category->addFeaturedProducts($products);
+            if ($products) {
+
+                foreach ($products as $product) {
+
+                    if (in_array($product->getProductId(), $existingLinksIds)) {
+                        \XLite\Core\TopMessage::getInstance()->add(
+                            'The product SKU#"' . $product->getSku() . '" is already set as featured for the category',
+                            \XLite\Core\TopMessage::WARNING
+                        );
+                        continue;
+                    }
+
+                    $fp = new \XLite\Module\FeaturedProducts\Model\FeaturedProduct();
+                    $fp->setProduct($product);
+
+                    if ($category) {
+                        $fp->setCategory($category);
+                    }
+                    \XLite\Core\Database::getEM()->persist($fp);
+                }
+            }
+
+            \XLite\Core\Database::getEM()->flush();
         }
     }
 
     /**
-     * getProducts 
-     * 
+     * Get Featured products search result
+     *
      * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getProducts()
+    public function getFeaturedSearchResult()
     {
-        if (\XLite\Core\Request::getInstance()->mode != 'search') {
+        if ('search_featured_products' !== \XLite\Core\Request::getInstance()->mode) {
             return array();
         }
 
-        $p = new \XLite\Model\Product();
-        $result = $p->advancedSearch(
-            $this->substring,
-            $this->search_productsku,
-            $this->search_category,
-            $this->subcategory_search
-        );
-        $this->productsFound = count($result);
+        $cnd = $this->session->get(\XLite\Module\FeaturedProducts\Model\FeaturedProduct::SESSION_CELL_NAME);
+
+        $result = \XLite\Core\Database::getRepo('\XLite\Model\Product')->search($cnd);
+        $this->featuredSearchResultCount = count($result);
 
         return $result;
+    }
+
+    /**
+     * Get featured products list
+     * 
+     * @return array of \XLite\Module\FeaturedProducts\Model\FeaturedProduct objects
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getFeaturedProductsList()
+    {
+        return \XLite\Core\Database::getRepo('\XLite\Module\FeaturedProducts\Model\FeaturedProduct')
+            ->getFeaturedProducts($this->category_id);
     }
 
     /**
      * Process action 'update_featured_products'
      * 
      * @return void
-     * @access public
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
     protected function doActionUpdateFeaturedProducts()
     {
         // Delete featured products if it was requested
-        $deleteProducts = \XLite\Core\Request::getInstance()->delete;
-        
-        if (!is_null($deleteProducts) && is_array($deleteProducts) && !empty($deleteProducts)) {
+        $toDelete = \XLite\Core\Request::getInstance()->delete;
 
-            foreach (array_keys($deleteProducts) as $productId) {
-                $products[] = new \XLite\Model\Product($productId);
-            }
+        if ($toDelete) {
 
-            $category = new \XLite\Model\Category(\XLite\Core\Request::getInstance()->category_id);
+            $records = \XLite\Core\Database::getRepo('\XLite\Module\FeaturedProducts\Model\FeaturedProduct')
+                ->findByIds(array_keys($toDelete));
 
-            if ($category->isExists() || 0 === intval(\XLite\Core\Request::getInstance()->category_id)) {
-                $category->deleteFeaturedProducts($products);
+            if ($records) {
+                foreach ($records as $rec) {
+                    \XLite\Core\Database::getEM()->remove($rec);
+                }
             }
         }
 
         // Update order_by of featured products list is it was requested
-        $orderProducts = \XLite\Core\Request::getInstance()->orderbys;
+        $orderbys = \XLite\Core\Request::getInstance()->orderbys;
 
-        if (!is_null($orderProducts) && is_array($orderProducts) && !empty($orderProducts)) {
+        if ($orderbys) {
+            $records = \XLite\Core\Database::getRepo('\XLite\Module\FeaturedProducts\Model\FeaturedProduct')
+                ->findByIds(array_keys($orderbys));
 
-            foreach ($orderProducts as $productId => $orderBy) {
-                $fp = new \XLite\Module\FeaturedProducts\Model\FeaturedProduct();
-                $fp->set('category_id', \XLite\Core\Request::getInstance()->category_id);
-                $fp->set('product_id', $productId);
-                $fp->set('order_by', $orderBy);
-                $fp->update();
+            if ($records) {
+                foreach ($records as $rec) {
+                    $cell = array();
+                    $cell['order_by'] = abs(intval($orderbys[$rec->getId()]));
+                    $rec->map($cell);
+                    \XLite\Core\Database::getEM()->persist($rec);
+                }
             }
         }
+        \XLite\Core\Database::getEM()->flush();
     }
+
+    /**
+     * Get search conditions
+     *
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getConditions()
+    {
+        $searchParamsOrig = $this->session->get(\XLite\Module\FeaturedProducts\Model\FeaturedProduct::SESSION_CELL_NAME);
+        $searchSpecs      = \XLite\View\ItemsList\Product\Admin\Search::getSearchParams();
+        $searchParams     = array();
+
+        foreach ($searchSpecs as $modelParam => $requestParam) {
+            $searchParams[$requestParam] = isset($searchParamsOrig[$modelParam])
+                ? $searchParamsOrig[$modelParam]
+                : null;
+        }
+
+        if (!is_array($searchParams)) {
+            $searchParams = array();
+        }
+
+        return $searchParams;
+    }
+
+    /**
+     * Get search condition parameter by name
+     *
+     * @param string $paramName
+     *
+     * @return mixed
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCondition($paramName)
+    {
+        $searchParams = $this->getConditions();
+
+        if (isset($searchParams[$paramName])) {
+            $return = $searchParams[$paramName];
+        }
+
+        return isset($searchParams[$paramName])
+            ? $searchParams[$paramName]
+            : null;
+    }
+ 
 }

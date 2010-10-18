@@ -29,8 +29,8 @@
 namespace XLite\Module\FeaturedProducts\Model;
 
 /**
- * \XLite\Module\FeaturedProducts\Model\Product
- * 
+ * Product
+ *
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
@@ -38,21 +38,19 @@ namespace XLite\Module\FeaturedProducts\Model;
 class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
 {
     /**
-     * Delete featured product
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
+     * Featured products (relation)
+     *
+     * @var    \Doctrine\Common\Collections\ArrayCollection
+     * @access protected
+     * @see    ____var_see____
      * @since  3.0.0
+     * @OneToMany (targetEntity="XLite\Module\FeaturedProducts\Model\FeaturedProduct", mappedBy="product", cascade={"all"})
      */
-    public function delete()
-    {
-        $this->db->query("DELETE FROM " . \XLite\Module\FeaturedProducts\Main::FEATURED_PRODUCTS_TABLE . " WHERE product_id='" . $this->get('product_id') . "'");
-        parent::delete();
-    }
+    protected $featuredProducts;
 
     /**
      * Remove all unused featured product records
+     * TODO: rewrite in accordance with the new core
      * 
      * @return void
      * @access public

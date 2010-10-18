@@ -29,97 +29,72 @@
 namespace XLite\Module\FeaturedProducts\Model;
 
 /**
- * \XLite\Module\FeaturedProducts\Model\FeaturedProduct 
- * 
+ * Featured Product
+ *
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
+ * @Entity
+ * @Table (name="featured_products",
+ *         indexes={
+ *              @Index(name="category_id", columns={"category_id"})
+ *         }
+ * )
  */
-class FeaturedProduct extends \XLite\Model\AModel
+
+class FeaturedProduct extends \XLite\Model\AEntity
 {
     /**
-     * fields 
-     * 
-     * @var    array
-     * @access protected
-     * @since  3.0.0
+     * Session cell name
      */
-    protected $fields = array(
-        'product_id'  => 0,
-        'category_id' => 0,
-        'order_by'    => 0,
-    );
-    
+    const SESSION_CELL_NAME = 'featuredProductsSearch';
+
     /**
-     * primaryKey 
-     * 
-     * @var    string
+     * Product + category link unique id
+     *
+     * @var    integer
      * @access protected
+     * @see    ____var_see____
      * @since  3.0.0
+     * @Id
+     * @GeneratedValue (strategy="AUTO")
+     * @Column (type="integer")
      */
-    protected $primaryKey = array('category_id','product_id');
-    
+    protected $id;
+
     /**
-     * alias 
-     * 
-     * @var    string
+     * Sort position
+     *
+     * @var    integer
      * @access protected
+     * @see    ____var_see____
      * @since  3.0.0
+     * @Column (type="integer")
      */
-    protected $alias = 'featured_products';
-    
+    protected $order_by = 0;
+
     /**
-     * product 
-     * 
+     * Product (relation)
+     *
      * @var    \XLite\Model\Product
      * @access protected
+     * @see    ____var_see____
      * @since  3.0.0
+     * @ManyToOne (targetEntity="XLite\Model\Product", inversedBy="featuredProducts")
+     * @JoinColumn (name="product_id", referencedColumnName="product_id")
      */
-    protected $product = null;
-
+    protected $product;
 
     /**
-     * defaultOrder
+     * Category (relation)
      *
-     * @var    string
-     * @access public
+     * @var    \XLite\Model\Category
+     * @access protected
+     * @see    ____var_see____
      * @since  3.0.0
+     * @ManyToOne (targetEntity="XLite\Model\Category", inversedBy="featuredProducts")
+     * @JoinColumn (name="category_id", referencedColumnName="category_id")
      */
-    public $defaultOrder = 'order_by';
+    protected $category;
 
-
-    /**
-     * getProduct 
-     * FIXME - must be protected; see Module/FeaturedProducts/Model/Category.php
-     * 
-     * @return \XLite\Model\Product
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getProduct()
-    {
-        if (!isset($this->product)) {
-            $this->product = new \XLite\Model\Product($this->get('product_id'));
-        }
-
-        return $this->product;
-    }
-
-    /**
-     * Filter 
-     * FIXME - must be protected;
-     * but current approach does not allow this;
-     * see Module/FeaturedProducts/ModelCategory.php
-     * 
-     * @return bool
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function filter()
-    {
-        return $this->getProduct()->isExists() ? $this->getProduct()->filter() : false;
-    }
 }
-

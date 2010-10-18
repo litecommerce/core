@@ -30,6 +30,8 @@ namespace XLite\Controller\Admin;
 
 /**
  * Users list controller
+ * TODO: Rewrite the search functionality using sessionCell and ItemsList
+ * (in similar way as it was done for products). Remove hardcoded session cell admin_users_search
  * 
  * @package XLite
  * @see     ____class_see____

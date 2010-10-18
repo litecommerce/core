@@ -43,7 +43,6 @@ class Search extends \XLite\View\Form\AForm
 
     const PARAM_MODE = 'mode';
 
-
     /**
      * Current form name
      *
@@ -80,49 +79,6 @@ class Search extends \XLite\View\Form\AForm
         return 'search';
     }
 
-    /** 
-     * Define widget parameters
-     *
-     * @return void
-     * @access protected
-     * @since  1.0.0
-     */
-    protected function defineWidgetParams()
-    {
-        parent::defineWidgetParams();
-
-        $this->widgetParams += array(
-            self::PARAM_MODE => new \XLite\Model\WidgetParam\String('Mode', 'search'),
-        );
-    }
-
-    /**
-     * Open and close form tags
-     * 
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getTemplate()
-    {
-        return 'form/' . ($this->getParam(self::PARAM_END) ? 'end' : 'start_order_search') . '.tpl';
-    }
-
-
-    /**
-     * Initialization 
-     * 
-     * @return void
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function initView()
-    {
-        parent::initView();
-
-        $this->widgetParams[self::PARAM_FORM_PARAMS]->appendValue($this->getFormDefaultParams());
-    }
-
     /**
      * getFormDefaultParams 
      * 
@@ -130,13 +86,9 @@ class Search extends \XLite\View\Form\AForm
      * @access protected
      * @since  3.0.0
      */
-    protected function getFormDefaultParams()
+    protected function getDefaultParams()
     {
-        return array(
-            'mode'  => $this->getParam(self::PARAM_MODE),
-        );
+        return parent::getDefaultParams() + array(self::PARAM_MODE => 'search');
     }
 
-
 }
-

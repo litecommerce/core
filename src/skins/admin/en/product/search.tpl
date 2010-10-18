@@ -13,32 +13,32 @@
 
 <widget class="\XLite\View\Form\Product\Search\Admin\Main" name="search_form" />
 
-  <table border=0>
+  <table border="0">
 
     	<tr>
-    		<td class="FormButton" noWrap height=10>Product SKU</td>
-    		<td width=10 height=10></td>
-    		<td height=10><input size=6 name="sku" value="{sku}"></td>
+    		<td class="FormButton" nowrap="nowrap" height="10">Product SKU</td>
+    		<td width="10" height="10"></td>
+    		<td height="10"><input size="6" name="sku" value="{getCondition(#sku#):r}"></td>
     	</tr>
 
     	<tr>
-    		<td class="FormButton" noWrap height=10>Product Title</td>
-    		<td width=10 height=10></td>
-    		<td height=10><input size=30 name="substring" value="{substring}"></td>
+    		<td class="FormButton" nowrap="nowrap" height="10">Product Title</td>
+    		<td width="10" height="10"></td>
+    		<td height="10"><input size="30" name="substring" value="{getCondition(#substring#):r}"></td>
     	</tr>
 
     	<tr>
-    		<td class="FormButton" noWrap height=10>In category</td>
-    		<td width=10 height=10><font class="ErrorMessage">*</font></td>
-    		<td height=10>
-          <widget class="\XLite\View\CategorySelect" fieldName="categoryId" selectedCategoryId="{categoryId}" allOption />
+    		<td class="FormButton" nowrap="nowrap" height="10">In category</td>
+    		<td width="10" height="10"><font class="ErrorMessage">*</font></td>
+    		<td height="10">
+          <widget class="\XLite\View\CategorySelect" fieldName="categoryId" selectedCategoryId="{getCondition(#categoryId#):r}" allOption />
         </td>
   	  </tr>
 
     	<tr>
-    		<td class="FormButton" noWrap height=10 colspan="3">
+    		<td class="FormButton" nowrap="nowrap" height="10" colspan="3">
     			Search in subcategories
-    			<input type="checkbox" name="searchInSubcats" checked="{searchInSubcats|!mode=#search#}" value="1">
+    			<input type="checkbox" name="searchInSubcats" checked="{getCondition(#searchInSubcats#)|!mode=#search#}" value="1">
     		</td>
       </tr>
 
@@ -49,11 +49,11 @@
       {displayViewListContent(#product.search.conditions#)}
 
       <tr>
-        <td colspan=3>&nbsp;</td>
+        <td colspan="3">&nbsp;</td>
       </tr>
 
     	<tr>
-    		<td colspan=3><widget class="\XLite\View\Button\Submit" label="Search" /></td>
+    		<td colspan="3"><widget class="\XLite\View\Button\Submit" label="Search" /></td>
       </tr>
 
   </table>

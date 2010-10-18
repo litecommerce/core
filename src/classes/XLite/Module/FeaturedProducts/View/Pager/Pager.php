@@ -26,38 +26,69 @@
  * @since      3.0.0
  */
 
-namespace XLite\View\Form\Product\Search\Admin;
+namespace XLite\Module\FeaturedProducts\View\Pager;
 
 /**
- * Main 
+ * Common pager 
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @package    XLite
+ * @see        ____class_see____
+ * @since      3.0.0
  */
-class Main extends \XLite\View\Form\Product\Search\Admin\AAdmin
+class Pager extends \XLite\View\Pager\APager
 {
     /**
-     * getDefaultTarget
-     *
-     * @return string
+     * Return number of items per page
+     * 
+     * @return int
      * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getDefaultTarget()
+    protected function getItemsPerPageDefault()
     {
-        return 'product_list';
+        return 0;
     }
 
     /**
-     * getDefaultAction
-     *
-     * @return string
+     * Return number of pages to display
+     * 
+     * @return integer
      * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getDefaultAction()
+    protected function getPagesPerFrame()
     {
-        return 'search';
+        return 0;
     }
+
+    /**
+     * Hide "pages" part of widget
+     * 
+     * @return boolean 
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isPagesListVisible()
+    {   
+        return false;
+    } 
+
+    /**
+     * Hide "items per page" part of widget
+     * 
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isItemsPerPageVisible()
+    {
+        return false;
+
+    }
+
+
 }

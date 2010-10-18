@@ -60,7 +60,7 @@ abstract class ASearch extends \XLite\View\Form\Product\AProduct
      */
     protected function getDefaultFormMethod()
     {
-        return 'get';
+        return 'post';
     }
 
     /**

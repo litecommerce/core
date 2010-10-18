@@ -654,4 +654,16 @@ abstract class AItemsList extends \XLite\View\Container
 
         return $list;
     }
+
+    /**
+     * Get session cell name for the certain list items widget
+     *
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    static public function getSessionCellName()
+    {
+        return str_replace('\\', '', get_called_class());
+    }
 }

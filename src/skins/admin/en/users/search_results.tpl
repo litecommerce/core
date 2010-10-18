@@ -45,18 +45,18 @@ function DeleteProfile()
 
     <tr class="TableHead">
       <td width=10>&nbsp;</td>
-      <td nowrap align=left>Login</td>
-      <td nowrap align=left>Username</td>
-      <td nowrap align=left width=110>First login</td>
-      <td nowrap align=left width=110>Last login</td>
+      <td nowrap align="left">Login</td>
+      <td nowrap align="left">Username</td>
+      <td nowrap align="left" width="110">First login</td>
+      <td nowrap align="left" width="110">Last login</td>
     </tr>
 
     <tr FOREACH="namedWidgets.searchResults.pageData,id,user" class="{getRowClass(id,##,#TableRow#)}">
       <td align="center" width="10"><input type="radio" name="profile_id" value="{user.profile_id}" checked="{isSelected(id,#0#)}" onClick="this.blur();CheckOrders('{user.access_level}')"></td>
       <td nowrap><a href="{buildUrl(#profile#,##,_ARRAY_(#profile_id#^user.profile_id))}"><u>{user.login:h}</u></a></td>
       <td nowrap><a href="{buildUrl(#profile#,##,_ARRAY_(#profile_id#^user.profile_id))}">{user.billing_firstname:h}&nbsp;{user.billing_lastname:h}</a></td>
-      <td nowrap align=left width=110>{if:user.first_login}{time_format(user.first_login):h}{else:}Never{end:}</td>
-      <td nowrap align=left width=110>{if:user.last_login}{time_format(user.last_login):h}{else:}Never{end:}</td>
+      <td nowrap align="left" width="110">{if:user.first_login}{time_format(user.first_login):h}{else:}Never{end:}</td>
+      <td nowrap align="left" width="110">{if:user.last_login}{time_format(user.last_login):h}{else:}Never{end:}</td>
 
       <script language="JavaScript" IF="isSelected(id,#0#)">SelectedProfileLevel='{user.access_level}';</script>
 

@@ -65,33 +65,6 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
     
 
     /**
-     * fillForm 
-     * FIXME - to remove
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function init()
-    {
-        parent::init();
-
-        $startDate = $this->getDateValue('startDate');
-        $endDate = $this->getDateValue('endDate');
-
-        if (0 == $startDate || 0 == $endDate) {
-            $date = getdate(time());
-            $startDate = mktime(0, 0, 0, $date['mon'], 1, $date['year']);
-            $endDate = mktime(0, 0, 0, $date['mon'], $date['mday'], $date['year']);
-        }
-
-        $this->startDate = $startDate;
-        $this->endDate = $endDate;
-
-    }
-
-    /**
      * getDateValue 
      * FIXME - to remove
      * 
@@ -104,7 +77,7 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
      */
     public function getDateValue($fieldName)
     {
-        $dateValue = \XLite\Core\Request::getInstance()->$fieldName;;
+        $dateValue = \XLite\Core\Request::getInstance()->$fieldName;
 
         if (!isset($dateValue)) {
             $nameDay   = $fieldName . 'Day';
@@ -127,6 +100,109 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
         return $dateValue;
 
     }
+
+    /**
+     * doActionSearch 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionSearch()
+    {
+        $ordersSearch = array();
+        $searchParams   = \XLite\View\ItemsList\Order\Admin\Search::getSearchParams();
+
+        // Prepare dates
+
+        $this->startDate = $this->getDateValue('startDate');
+        $this->endDate   = $this->getDateValue('endDate');
+
+        if (
+            0 === $this->startDate
+            || 0 === $this->endDate
+            || $this->startDate > $this->endDate
+        ) {
+            $date = getdate(time());
+            $this->startDate = mktime(0, 0, 0, $date['mon'], 1, $date['year']);
+            $this->endDate   = mktime(0, 0, 0, $date['mon'], $date['mday'], $date['year']);
+        }
+        
+        foreach ($searchParams as $modelParam => $requestParam) {
+            if (\XLite\Model\Repo\Order::P_DATE === $requestParam) {
+                $ordersSearch[$requestParam] = array($this->startDate, $this->endDate);
+            } elseif (isset(\XLite\Core\Request::getInstance()->$requestParam)) {
+                $ordersSearch[$requestParam] = \XLite\Core\Request::getInstance()->$requestParam;
+            }
+        }
+        
+        $this->session->set(\XLite\View\ItemsList\Order\Admin\Search::getSessionCellName(), $ordersSearch);
+        $this->set('returnUrl', $this->buildUrl('order_list', '', array('mode' => 'search')));
+    }
+
+    /**
+     * Get search conditions
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getConditions()
+    {
+        $searchParams = $this->session->get(\XLite\View\ItemsList\Order\Admin\Search::getSessionCellName());
+
+        if (!is_array($searchParams)) {
+            $searchParams = array();
+        }
+
+        return $searchParams;
+    }
+
+    /**
+     * Get search condition parameter by name
+     * 
+     * @param string $paramName 
+     *  
+     * @return mixed
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCondition($paramName)
+    {
+        $searchParams = $this->getConditions();
+
+        if (isset($searchParams[$paramName])) {
+            $return = $searchParams[$paramName];
+        }
+
+        return isset($searchParams[$paramName])
+            ? $searchParams[$paramName]
+            : null;
+    }
+
+    /**
+     * Get date condition parameter (start or end)
+     * 
+     * @param bool $start Start date flag, otherwise - end date 
+     *  
+     * @return mixed
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getDateCondition($start = true)
+    {
+        $dates = $this->getCondition(\XLite\Model\Repo\Order::P_DATE);
+        $n = (true === $start) ? 0 : 1;
+
+        return isset($dates) && isset($dates[$n])
+            ? $dates[$n]
+            : null;
+    }
+
 
     /**
      * doActionExportXls 
@@ -182,4 +258,3 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
         return '<?xml version="1.0"?>'."\n";;
     }*/
 }
-
