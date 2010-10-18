@@ -19,17 +19,16 @@
     {foreach:getProductRows(),row}
       <tr>
         {foreach:row,idx,product}
-        <td IF="product" class="product-cell">
-          <div class="{getProductCellClass(product)}">
-            {displayListPart(#info#,_ARRAY_(#product#^product))}
-          </div>
-        </td>
-        <td IF="!product">&nbsp;</td>
+          <td IF="product" class="product-cell">
+            <div class="{getProductCellClass(product)}">
+              {displayListPart(#info#,_ARRAY_(#product#^product))}
+            </div>
+          </td>
+          <td IF="!product">&nbsp;</td>
         {end:}
       </tr>
-      {end:}
+    {end:}
 
-    </tbody>
   </table>
 
   <div IF="isShowMoreLink()">
