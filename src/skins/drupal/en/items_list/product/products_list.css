@@ -11,7 +11,11 @@
  * @since     3.0.0
  */
 
-.products .added-to-cart
+.products .added-to-cart {
+  display: none;
+}
+
+.product.product-added .added-to-cart
 {
   display: block;
   position: absolute;

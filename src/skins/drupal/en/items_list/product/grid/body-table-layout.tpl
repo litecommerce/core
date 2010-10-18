@@ -20,7 +20,7 @@
       <tr>
         {foreach:row,idx,product}
         <td IF="product" class="product-cell">
-          <div class="product productid-{product.getProductId()}">
+          <div class="{getProductCellClass(product)}">
             {displayListPart(#info#,_ARRAY_(#product#^product))}
           </div>
         </td>
