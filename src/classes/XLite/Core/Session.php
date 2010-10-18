@@ -193,7 +193,7 @@ class Session extends \XLite\Base\Singleton
      */
     protected function clearGardage()
     {
-        xlite()->repo('Model\Session')->removeExpired();
+        xlite()->repo('Session')->removeExpired();
     }
 
     /**
@@ -232,7 +232,7 @@ class Session extends \XLite\Base\Singleton
         list($sid, $source) = $this->detectPublicSessionId();
 
         if ($sid) {
-            $this->session = xlite()->repo('Model\Session')
+            $this->session = xlite()->repo('Session')
                 ->findOneBySid($sid);
 
             if ($this->session) {
@@ -268,7 +268,7 @@ class Session extends \XLite\Base\Singleton
             }
         }
 
-        if ($sid && !xlite()->repo('Model\Session')->isPublicSessionIdValid($sid)) {
+        if ($sid && !xlite()->repo('Session')->isPublicSessionIdValid($sid)) {
             $sid = null;
         }
 
@@ -287,7 +287,7 @@ class Session extends \XLite\Base\Singleton
     {
         $this->session = new \XLite\Model\Session();
 
-        $this->session->setSid(xlite()->repo('Model\Session')->generatePublicSessionId());
+        $this->session->setSid(xlite()->repo('Session')->generatePublicSessionId());
         $this->session->updateExpiry();
 
         xlite()->em()->persist($this->session);
@@ -464,7 +464,7 @@ class Session extends \XLite\Base\Singleton
     public function getLanguage()
     {
         if (!isset($this->language)) {
-            $this->language = xlite()->repo('Model\Language')
+            $this->language = xlite()->repo('Language')
                 ->findOneByCode($this->getCurrentLanguage());
 
             if ($this->language) {
@@ -553,7 +553,7 @@ class Session extends \XLite\Base\Singleton
         $idx = 999999;
         $found = false;
         $first = false;
-        foreach (xlite()->repo('Model\Language')->findActiveLanguages() as $lng) {
+        foreach (xlite()->repo('Language')->findActiveLanguages() as $lng) {
             if (!$first) {
                 $first = $lng->code;
             }
