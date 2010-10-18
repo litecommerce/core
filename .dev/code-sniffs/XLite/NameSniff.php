@@ -35,7 +35,7 @@ class XLite_NameSniff extends XLite_ReqCodesSniff
 		'refresh', 'postprocess', 'preprocess', 'include', 'truncate', 'inc', 'map', 'strip', 'calc', 'compile', 'request', 'modify',
 		'normalize', 'filter', 'sanitize', 'fill', 'import', 'export', 'stop', 'start', 'perform', 'correct', 'rebuild', 'merge',
         'apply', 'translate', 'enable', 'disable', 'detach', 'attach', 'read', 'resize', 'search', 'uninstall', 'flush', 'compare',
-		'mask', 'pay', 'clone', 'login', 'exclude'
+		'mask', 'pay', 'clone', 'login', 'exclude', 'restart',
 
 		// FIXME - rename later
 		'processed', 'checked', 'declined', 'queued', 'unchecked', 'checkout',
@@ -49,7 +49,7 @@ class XLite_NameSniff extends XLite_ReqCodesSniff
 	protected $reservedMethodNames = array(
 		'postUpdate', 'postRemove', 'postPersist', 't', 'trigger',
 		'_doFetch', '_doContains', '_doSave', '_doDelete', // for classes/XLite/Core/FileCache.php
-		'lbl',
+		'lbl', 'repo', 'em',
 	);
 
     public function register()
