@@ -58,6 +58,16 @@ class QuickAccess
     protected $translation;
 
     /**
+     * Entities cache
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $entities = array();
+
+    /**
      * Constructor
      * 
      * @return void
@@ -69,6 +79,24 @@ class QuickAccess
     {
         $this->em = \XLite\Core\Database::getEntityManager();
         $this->translation = \XLite\Core\Translation::getInstance();
+
+        $entities = \XLite\Core\Database::getCacheDriver()->fetch('quickEntities');
+
+        if (!is_array($entities) || !$entities) {
+            foreach ($this->em->getMetadataFactory()->getAllMetadata() as $md) {
+                if (
+                    !$md->isMappedSuperclass
+                    && preg_match('/^XLite\\\(?:Module\\\([a-z0-9]+)\\\)?Model\\\(.+)$/iSs', $md->name, $m)
+                ) {
+                    $key = ($m[1] ? $m[1] . '\\' : '') . $m[2];
+                    $entities[$key] = $md->name;
+                }
+            }
+
+            \XLite\Core\Database::getCacheDriver()->save('quickEntities', $entities);
+        }
+
+        $this->entities = $entities;
     }
 
     /**
@@ -96,9 +124,14 @@ class QuickAccess
      */
     public function repo($name)
     {
-        $name = ltrim($name, '\\');
-        if (0 != strncasecmp($name, 'XLite\\', 6)) {
-            $name = 'XLite\\' . $name;
+        if (isset($this->entities[$name])) {
+            $name = $this->entities[$name];
+
+        } else {
+            $name = ltrim($name, '\\');
+            if (0 != strncasecmp($name, 'XLite\\', 6)) {
+                $name = 'XLite\\' . $name;
+            }
         }
 
         return $this->em->getRepository($name);
