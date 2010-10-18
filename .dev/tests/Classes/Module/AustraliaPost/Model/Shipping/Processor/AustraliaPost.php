@@ -110,14 +110,13 @@ class XLite_Tests_Module_AustraliaPost_Model_Shipping_Processor_AustraliaPost ex
      */
     public function testGetRates()
     {
-        $this->markTestSkipped('temporary skipped');
-
         $processor = new \XLite\Module\AustraliaPost\Model\Shipping\Processor\AustraliaPost();
 
         // Test on anonymous order
 
         $tmpConfig = \XLite\Base::getInstance()->config->Company;
-
+        
+        \XLite\Base::getInstance()->config->Shipping->def_calc_shippings_taxes = true;
         \XLite\Base::getInstance()->config->Company->location_country = 'AU';
         \XLite\Base::getInstance()->config->Company->location_zipcode = '3146';
 
@@ -126,19 +125,19 @@ class XLite_Tests_Module_AustraliaPost_Model_Shipping_Processor_AustraliaPost ex
 
         \XLite\Base::getInstance()->config->Company = $tmpConfig;
 
-        $this->assertTrue(is_array($rates), 'getRates() must return an array');
+        $this->assertTrue(is_array($rates), 'getRates() must return an array (#1)');
 
-        $this->assertEquals(5, count($rates), 'Count of rates is not match with an expected value ');
+        $this->assertEquals(5, count($rates), 'Count of rates is not match with an expected value (#1)');
 
-        $this->assertEquals($rates, $ratesCached, 'Cached rates does not match an original rates');
+        $this->assertEquals($rates, $ratesCached, 'Cached rates does not match an original rates (#1)');
 
         foreach ($rates as $rate) {
-            $this->assertTrue($rate instanceof \XLite\Model\Shipping\Rate, 'getRates() must return an array of \XLite\Model\Shipping\Rate instances');
-            $this->assertTrue($rate->getMethod() instanceof \XLite\Model\Shipping\Method, 'Wrong method object returned');
-            $this->assertEquals('aupost', $rate->getMethod()->getProcessor(), 'Wrong method returned (processor does not match)');
+            $this->assertTrue($rate instanceof \XLite\Model\Shipping\Rate, 'getRates() must return an array of \XLite\Model\Shipping\Rate instances (#1)');
+            $this->assertTrue($rate->getMethod() instanceof \XLite\Model\Shipping\Method, 'Wrong method object returned (#1)');
+            $this->assertEquals('aupost', $rate->getMethod()->getProcessor(), 'Wrong method returned (processor does not match) (#1)');
 
-            $this->assertNotEquals(0, $rate->getBaseRate(), 'Base rate is zero');
-            $this->assertEquals(0, $rate->getMarkupRate(), 'Markup rate is not zero');
+            $this->assertNotEquals(0, $rate->getBaseRate(), 'Base rate is zero (#1)');
+            $this->assertEquals(0, $rate->getMarkupRate(), 'Markup rate is not zero (#1)');
         }
 
         // Test on an array with input data
@@ -156,32 +155,33 @@ class XLite_Tests_Module_AustraliaPost_Model_Shipping_Processor_AustraliaPost ex
 
         $rates = $processor->getRates($data);
 
-        $this->assertTrue(is_array($rates), 'getRates() must return an array');
+        $this->assertTrue(is_array($rates), 'getRates() must return an array (#2)');
 
-        $this->assertEquals(2, count($rates), 'Count of rates is not match with an expected value ');
+        $this->assertEquals(2, count($rates), 'Count of rates is not match with an expected value (#2)');
 
         foreach ($rates as $rate) {
-            $this->assertTrue($rate instanceof \XLite\Model\Shipping\Rate, 'getRates() must return an array of \XLite\Model\Shipping\Rate instances');
-            $this->assertTrue($rate->getMethod() instanceof \XLite\Model\Shipping\Method, 'Wrong method object returned');
-            $this->assertEquals('aupost', $rate->getMethod()->getProcessor(), 'Wrong method returned (processor does not match)');
+            $this->assertTrue($rate instanceof \XLite\Model\Shipping\Rate, 'getRates() must return an array of \XLite\Model\Shipping\Rate instances (#2)');
+            $this->assertTrue($rate->getMethod() instanceof \XLite\Model\Shipping\Method, 'Wrong method object returned (#2)');
+            $this->assertEquals('aupost', $rate->getMethod()->getProcessor(), 'Wrong method returned (processor does not match) (#2)');
 
-            $this->assertNotEquals(0, $rate->getBaseRate(), 'Base rate is zero');
-            $this->assertEquals(0, $rate->getMarkupRate(), 'Markup rate is not zero');
+            $this->assertNotEquals(0, $rate->getBaseRate(), 'Base rate is zero (#2)');
+            $this->assertEquals(0, $rate->getMarkupRate(), 'Markup rate is not zero (#2)');
         }
 
         // Test on anonymous order if config.Company.location_country != 'AU'
         
         $tmpConfig = \XLite\Base::getInstance()->config->Company;
 
+        \XLite\Base::getInstance()->config->Shipping->def_calc_shippings_taxes = true;
         \XLite\Base::getInstance()->config->Company->location_country = 'US';
 
         $rates = $processor->getRates($this->getTestOrder(false));
 
         \XLite\Base::getInstance()->config->Company = $tmpConfig;
 
-        $this->assertTrue(is_array($rates), 'getRates() must return an array');
+        $this->assertTrue(is_array($rates), 'getRates() must return an array (#3)');
 
-        $this->assertEquals(0, count($rates), 'Count of rates is not match with an expected value ');
+        $this->assertEquals(0, count($rates), 'Count of rates is not match with an expected value (#3)');
 
         // Test on anonymous order and disabled default shipping rates calculation
 
@@ -196,9 +196,9 @@ class XLite_Tests_Module_AustraliaPost_Model_Shipping_Processor_AustraliaPost ex
         \XLite\Base::getInstance()->config->Shipping = $tmpConfig1;
         \XLite\Base::getInstance()->config->Company = $tmpConfig2;
 
-        $this->assertTrue(is_array($rates), 'getRates() must return an array');
+        $this->assertTrue(is_array($rates), 'getRates() must return an array (#4)');
 
-        $this->assertEquals(0, count($rates), 'Count of rates is not match with an expected value ');
+        $this->assertEquals(0, count($rates), 'Count of rates is not match with an expected value (#4)');
 
         // Disable aupost methods for further testing
 

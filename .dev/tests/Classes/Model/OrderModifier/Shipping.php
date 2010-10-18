@@ -38,8 +38,6 @@ class XLite_Tests_Model_OrderModifier_Shipping extends XLite_Tests_TestCase
      */
     public function testCalculate()
     {
-        $this->markTestSkipped('temporary skipped');
-
         $order = $this->getTestOrder();
 
         \XLite\Base::getInstance()->config->Shipping->shipping_enabled = 'N';
@@ -64,7 +62,7 @@ class XLite_Tests_Model_OrderModifier_Shipping extends XLite_Tests_TestCase
         $order->calculate();
 
         $this->assertEquals(100, $order->getShippingId(), 'Wrong shipping_id');
-        $this->assertEquals(5.6782, $order->getTotalByModifier(\XLite\Model\OrderModifier\Shipping::MODIFIER_SHIPPING), 'Wrong shipping cost calculated');
+        $this->assertEquals(6.9458, $order->getTotalByModifier(\XLite\Model\OrderModifier\Shipping::MODIFIER_SHIPPING), 'Wrong shipping cost calculated');
     }
 
     /**
@@ -98,8 +96,6 @@ class XLite_Tests_Model_OrderModifier_Shipping extends XLite_Tests_TestCase
      */
     public function testGetSelectedRate()
     {
-        $this->markTestSkipped('temporary skipped');
-
         $order = $this->getTestOrder();
 
         $order->setShippingId(101);
@@ -149,7 +145,8 @@ class XLite_Tests_Model_OrderModifier_Shipping extends XLite_Tests_TestCase
         $rate = $order->getSelectedRate();
 
         if (isset($rate)) {
-            $this->assertEquals($rate->getMethodId(), $order->getShippingId(), 'getSelectedRate() set up wrong shipping_id (2)');
+            $this->assertNull($rate->getMethodId(), 'rate->getMethodId() must return null');
+            $this->assertEquals(0, $order->getShippingId(), 'order->getShippingId() must return 0');
 
         } else {
             $this->assertEquals(0, $order->getShippingId(), 'getSelectedRate() set up wrong shipping_id (3)');
@@ -196,8 +193,6 @@ class XLite_Tests_Model_OrderModifier_Shipping extends XLite_Tests_TestCase
      */
     public function testIsShippingEnabled()
     {
-        $this->markTestSkipped('temporary skipped');
-
         $order = $this->getTestOrder();
 
         // Test on existing profile
