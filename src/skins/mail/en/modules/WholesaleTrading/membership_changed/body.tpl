@@ -13,7 +13,7 @@
 <html>
 <head><title>Membership changed</title></head>
 <body>
-<p>Dear {profile.billing_firstname:h} {profile.billing_lastname:h}!
+<p>Dear {profile.billing_address.firstname:h} {profile.billing_address.lastname:h}!
 <p>
 Your membership has changed from "{oldMembership}" to "{newMembership}".
 <p>

@@ -110,8 +110,7 @@ class XLite_Tests_Model_OrderDetail extends XLite_Tests_TestCase
     {
         $order = new \XLite\Model\Order();
 
-        $profile = new \XLite\Model\Profile();
-        $list = $profile->findAll();
+        $list = \XLite\Core\Database::getRepo('XLite\Model\Profile')->findAll();
         $profile = array_shift($list);
         unset($list);
 

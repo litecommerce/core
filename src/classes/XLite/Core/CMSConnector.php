@@ -102,7 +102,8 @@ abstract class CMSConnector extends \XLite\Base\Singleton
 
     /**
      * getProfileWhereCondition 
-     * 
+     * TODO: remove this method
+     *
      * @param int $cmsUserId CMS user Id
      *  
      * @return string
@@ -132,10 +133,10 @@ abstract class CMSConnector extends \XLite\Base\Singleton
 
         // Not initialized
         if (!$profile->isRead) {
-            $profile->find($this->getProfileWhereCondition($cmsUserId));
+            $profile->findOneBy(array_merge($this->getProfileDBFields($cmsUserId), array('order_id' => 0)));
         }
 
-        return $profile->get('profile_id');
+        return $profile->getProfileId();
     }
 
     /**

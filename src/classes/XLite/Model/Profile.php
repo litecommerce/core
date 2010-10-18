@@ -29,440 +29,469 @@
 namespace XLite\Model;
 
 /**
- * Class Profile provides access to user profile data
+ * The "profile" model class
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
+ * 
+ * @Entity (repositoryClass="XLite\Model\Repo\Profile")
+ * @Table (name="profiles")
  */
-class Profile extends \XLite\Model\AModel
+class Profile extends \XLite\Model\AEntity
 {
     /**
-     * Object properties (table filed => default value)
+     * Profile unique ID 
      * 
-     * @var    array
+     * @var    int
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
+     * @Id
+     * @GeneratedValue (strategy="AUTO")
+     * @Column         (type="integer", length="11", nullable=false)
      */
-    protected $fields = array(
-        'profile_id'            => 0,
-        'order_id'              => '0',
-        'login'                 => '',
-        'password'              => '',
-        'password_hint'         => '',
-        'password_hint_answer'  => '',
-        'access_level'          => '0',
-        'cms_profile_id'        => '0',
-        'cms_name'              => '',
-        'billing_type'          => 'R',
-        'billing_title'         => '',
-        'billing_firstname'     => '',
-        'billing_lastname'      => '',
-        'billing_company'       => '',
-        'billing_phone'         => '',
-        'billing_fax'           => '',
-        'billing_address'       => '',
-        'billing_city'          => '',
-        'billing_state'         => '',
-        'billing_custom_state'  => '',
-        'billing_country'       => '',
-        'billing_zipcode'       => '',
-        'shipping_type'         => 'R',
-        'shipping_title'        => '',
-        'shipping_firstname'    => '',
-        'shipping_lastname'     => '',
-        'shipping_company'      => '',
-        'shipping_phone'        => '',
-        'shipping_fax'          => '',
-        'shipping_address'      => '',
-        'shipping_city'         => '',
-        'shipping_state'        => '',
-        'shipping_custom_state' => '',
-        'shipping_country'      => '',
-        'shipping_zipcode'      => '',
-        'extra_fields'          => '',
-        'card_name'             => '',
-        'card_type'             => '',
-        'card_number'           => '',
-        'card_expire'           => '',
-        'card_cvv2'             => '',
-        'first_login'           => '0',
-        'last_login'            => '0',
-        'status'                => 'E',
-        'referer'               => '',
-        'membership'            => 0,
-        'pending_membership'    => 0,
-        'sidebar_boxes'         => '',
-        'language'              => 'en',
-    );
-        
-    public $_securefields = array(
-        'profile_id'   => 0,
-        'access_level' => '0',
-        'first_login'  => '0',
-        'last_login'   => '0',
-        'membership'   => 0,
-    );
-
-    public $_adminSecurefields = array(
-        'last_login' => '0'
-    );
+    protected $profile_id;
 
     /**
-     * Auto-increment file name
-     * 
+     * Login (e-mail)
+     *
      * @var    string
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
+     * @Column (type="string", length="128")
      */
-    protected $autoIncrement = 'profile_id';
+    protected $login = '';
 
     /**
-     * Table alias 
-     * 
+     * Password
+     *
      * @var    string
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
+     * @Column (type="string", length="32")
      */
-    protected $alias = 'profiles';
+    protected $password = '';
 
     /**
-     * Default order file name
-     * 
+     * Password hint
+     *
      * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     *
+     * @Column (type="string", length="128")
+     */
+    protected $password_hint = '';
+
+    /**
+     * Password hint answer
+     *
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     *
+     * @Column (type="string", length="128")
+     */
+    protected $password_hint_answer = '';
+
+    /**
+     * Access level
+     *
+     * @var    int
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     *
+     * @Column (type="integer", length="11")
+     */
+    protected $access_level = 0;
+
+    /**
+     * CMS profile Id (TODO: move it to CMS connector)
+     *
+     * @var    int
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     *
+     * @Column (type="integer", length="11")
+     */
+    protected $cms_profile_id = 0;
+
+    /**
+     * CMS name (TODO: move it to CMS connector)
+     *
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     *
+     * @Column (type="string", length="32")
+     */
+    protected $cms_name = '';
+
+    /**
+     * Timestamp of profile creation date
+     *
+     * @var    int
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     *
+     * @Column (type="integer", length="11")
+     */
+    protected $added = 0;
+
+    /**
+     * Timestamp of first login event
+     *
+     * @var    int
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     *
+     * @Column (type="integer", length="11")
+     */
+    protected $first_login = 0;
+
+    /**
+     * Timestamp of last login event
+     *
+     * @var    int
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     *
+     * @Column (type="integer", length="11")
+     */
+    protected $last_login = 0;
+
+    /**
+     * Profile status
+     *
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     *
+     * @Column (type="string", length="1")
+     */
+    protected $status = '';
+
+    /**
+     * Referer
+     *
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     *
+     * @Column (type="string", length="255")
+     */
+    protected $referer = '';
+
+    /**
+     * Membership Id
+     *
+     * @var    int
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     *
+     * @Column (type="integer", nullable=false)
+     */
+    protected $membership_id = 0;
+
+    /**
+     * Pending membership Id
+     *
+     * @var    int
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     *
+     * @Column (type="integer", nullable=false)
+     */
+    protected $pending_membership_id = 0;
+
+    /**
+     * Order Id
+     *
+     * @var    int
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     *
+     * @Column (type="integer", length="11")
+     */
+    protected $order_id = 0;
+
+    /**
+     * Language code
+     *
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     *
+     * @Column (type="string", length="2")
+     */
+    protected $language = '';
+
+    /**
+     * Sidebar boxes (stores info about opened and closed sidebar boxes in admin area)
+     *
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     *
+     * @Column (type="text")
+     */
+    protected $sidebar_boxes = '';
+
+    /**
+     * Membership: many-to-one relation with memberships table
+     * 
+     * @var    \Doctrine\Common\Collections\ArrayCollection
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     *
+     * @ManyToOne (targetEntity="XLite\Model\Membership")
+     * @JoinColumn (name="membership_id", referencedColumnName="membership_id")
+     */
+    protected $membership;
+
+    /**
+     * Pending membership: many-to-one relation with memberships table
+     * 
+     * @var    \Doctrine\Common\Collections\ArrayCollection
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     *
+     * @ManyToOne (targetEntity="XLite\Model\Membership")
+     * @JoinColumn (name="pending_membership_id", referencedColumnName="membership_id")
+     */
+    protected $pending_membership;
+
+    /**
+     * Address book: one-to-many relation with address book entity
+     * 
+     * @var    \Doctrine\Common\Collections\ArrayCollection
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     *
+     * @OneToMany (targetEntity="XLite\Model\Address", mappedBy="profile", cascade={"all"})
+     */
+    protected $addresses;
+
+    /**
+     * The count of orders placed by the user 
+     * 
+     * @var    int
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $orders_count = null;
+
+    /**
+     * Prepare object for its creation in the database
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function prepareCreate()
+    {
+        // Assign a profile creation date/time
+        $this->setAdded(time());
+
+        // Assign current language
+        $language = $this->getLanguage();
+
+        if (empty($language)) {
+            $this->setLanguage(\XLite\Core\Translation::getCurrentLanguageCode());
+        }
+
+        // Assign status 'Enabled' if not defined
+        if (empty($this->status)) {
+            $this->setStatus('E');
+        }
+
+        // Assign membership if passed membership_id
+        if (0 < intval($this->membership_id)) {
+
+            $membership = \XLite\Core\Database::getRepo('XLite\Model\Membership')->find(intval($this->membership_id));
+
+            if (isset($membership)) {
+                $this->setMembership($membership);
+            }
+        }
+
+        // Assign pending_membership if passed pending_membership_id
+        if (0 < intval($this->pending_membership_id)) {
+
+            $membership = \XLite\Core\Database::getRepo('XLite\Model\Membership')->find(intval($this->pending_membership_id));
+
+            if (isset($membership)) {
+                $this->setPendingMembership($membership);
+            }
+        }
+
+    }
+
+    /**
+     * Returns address by its type (shipping or billing)
+     * 
+     * @param string $atype Address type: b - billing, s - shipping
+     *  
+     * @return \XLite\Model\Address
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getAddressByType($atype = 'b')
+    {
+        $result = null;
+
+        $addresses = $this->getAddresses();
+
+        if (isset($addresses) && 0 < count($addresses)) {
+
+            foreach ($addresses as $address) {
+
+                if (('b' == $atype && $address->getIsBilling()) || ('s' == $atype && $address->getIsShipping())) {
+                    $result = $address;
+                    break;
+                }
+            }
+
+            if (!isset($result)) {
+                $result = $addresses->current();
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Returns billing address 
+     * 
+     * @return \XLite\Model\Address
      * @access public
-     * @see    ____var_see____
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    public $defaultOrder = 'login';
-
-    public $_range = 'order_id = \'0\'';
+    public function getBillingAddress()
+    {
+        return $this->getAddressByType('b');
+    }
 
     /**
-     * Address field names
+     * Returns shipping address 
      * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
+     * @return \XLite\Model\Address
+     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    protected $addressFields = array(
-        'title',   'firstname', 'lastname', 'company', 'phone',
-        'fax',     'address',   'city',     'state',   'custom_state',
-        'country', 'zipcode',
-    );
+    public function getShippingAddress()
+    {
+        return $this->getAddressByType('s');
+    }
 
+    /**
+     * Returns the number of orders places by the user
+     * 
+     * @return int
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getOrdersCount()
+    {
+        if (!isset($this->orders_count)) {
+    
+            $cnd = new \XLite\Core\CommonCell();
+            $cnd->profileId = $this->profile_id;
 
+            $this->orders_count = \XLite\Core\Database::getRepo('XLite\Model\Order')->search($cnd, true);
+        }
+
+        return $this->orders_count;
+    }
+ 
     /**
      * Check if profile is enabled
      * 
      * @return bool
      * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function isEnabled()
     {
-        return 'E' == strtoupper($this->get('status'));
+        return 'E' == strtoupper($this->getStatus());
     }
 
     /**
-     * Search profile by login 
+     * Enable user profile
      * 
-     * @param string $login user's login
-     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function enable() 
+    {
+        $this->setStatus('E');
+    }
+
+    /**
+     * Disable user profile
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function disable() 
+    {
+        $this->setStatus('D');
+    }
+
+    /**
+     * Create an entity profile in the database
+     * 
      * @return bool
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function findByLogin($login)
+    public function create()
     {
-        return $this->find('login = \'' . addslashes($login) . '\'');
+        $this->prepareCreate();
+
+        return parent::create();
     }
 
     /**
-     * Search profile by login and password
+     * Check if billing and shipping addresses are equal or not
+     * TODO: review method after implementing at one-step-checkout
      *
-     * @param string $login    user's login
-     * @param string $password user's password
-     *
-     * @return bool
-     * @access public
-     * @since  3.0.0
-     */
-    public function findForAuth($login, $password)
-    {
-        if ((bool) \XLite\Core\Request::getInstance()->anonymous) {
-            $this->_range = 'order_id = \'' . \XLite\Model\Cart::getInstance()->get('order_id') . '\'';
-        }
-    
-        return $this->findByLogin($login) && ($this->get('password') === $password) && $this->isEnabled();
-    }
-
-
-    /**
-    * Modifies safe properties (excluding adminSecurefields).
-    * Useful when a admin edit(create) profile.
-    *
-    * @access public
-    * @param array $data The properties data to modify
-    **/
-    function modifyAdminProperties($properties) 
-    {
-        if (is_array($properties)) {
-            $this->unsetProperties($this->_adminSecurefields);
-            $this->setProperties($properties);
-        }
-    }
-
-    /**
-    * Modifies safe properties (excluding securefields).
-    * Useful when a customer edits his own profile.
-    *
-    * @access public
-    * @param array $data The properties data to modify
-    **/
-    function modifyCustomerProperties($properties) 
-    {
-        if (is_array($properties)) {
-            $this->unsetProperties($this->_securefields);
-            $this->setProperties($properties);
-        }
-    }
-
-    /**
-     * Returns the specified property of this object. Read the object data from dataase if necessary 
-     * 
-     * @param string $property field name
-     *  
-     * @return mixed
-     * @access public
-     * @since  3.0
-     */
-    public function get($property)
-    {
-        switch ($property) {
-            case 'billing_name':
-                $result = trim($this->get('billing_firstname') . ' ' . $this->get('billing_lastname'));
-                break;
-
-            case 'shipping_name':
-                $result = trim($this->get('shipping_firstname') . ' ' . $this->get('shipping_lastname'));
-                break;
-
-            default:
-                $result = parent::get($property);
-        }
-
-        return $result;
-    }
-
-    function getBillingState() 
-    {
-        return \XLite\Core\Database::getRepo('\XLite\Model\State')->findById(
-            $this->get('billing_state'),
-            $this->get('billing_custom_state')
-        );
-    }
-
-    function getShippingState() 
-    {
-        return \XLite\Core\Database::getRepo('\XLite\Model\State')->findById(
-            $this->get('shipping_state'),
-            $this->get('shipping_custom_state')
-        );
-    }
-
-    function getBillingCountry() 
-    {
-        return \XLite\Core\Database::getRepo('XLite\Model\Country')->find($this->get('billing_country'));
-    }
-    function getShippingCountry() 
-    {
-        return \XLite\Core\Database::getRepo('XLite\Model\Country')->find($this->get('shipping_country'));
-    }
-
-    function enable() 
-    {
-        $this->set('status', "E");
-    }
-
-    function disable() 
-    {
-        $this->set('status', "D");
-    }
-
-    function isExists($login = '') 
-    {
-        $p = new \XLite\Model\Profile();
-
-        return $p->find('login = \'' . addslashes($login) . '\'');
-    }
-
-    function isValid()
-    {
-        return parent::isExists();
-    }
-
-    function isAdmin() 
-    {
-        return \XLite\Model\Auth::getInstance()->isAdmin($this);
-    }
-
-    function toXML() 
-    {
-        $id = "profile_" . $this->get('profile_id');
-        $xml = parent::toXML();
-        return "<profile id=\"$id\">\n$xml</profile>\n";
-    }
-
-    /**
-    * Import a row from outside. 
-    * It will modify the memberships model
-    * SO you need to save it after all.
-    */
-    function _import(array $options) 
-    {
-        static $line;
-        if (!isset($line)) $line = 1; else $line++;
-        echo "<b>line# $line:</b> ";
-
-        $properties = $options['properties'];
-        if (isset($properties['membership']) && $properties['membership']) {
-            $membership = \XLite\Core\Database::getRepo('\XLite\Model\Membership')->findOneByName($properties['membership'], false);
-            if (!$membership) {
-                $membership = new \XLite\Model\Membership();
-                $membership->name = $properties['membership'];
-                \XLite\Core\Database::getEM()->persist($membership);
-                \XLite\Core\Database::getEM()->flush();
-            }
-
-            $properties['membership'] = $membership->membership_id;
-
-        } else {
-            $properties['membership'] = 0;
-        }
-
-        $this->_convertProperties($properties, $options['md5_import']);
-        $existent = false;
-        $profile = new \XLite\Model\Profile();
-        $login =  $properties['login'];
-        if (empty($login)) {
-            echo "<font color=red>WARNING!</font> Ignoring import row: \"login\" property not found<br>\n";
-            return;
-        }
-        if ($profile->find("login='" . addslashes($login) . "'")) {
-            $profile->set('properties', $properties);
-            echo "Updating user: ";
-            $profile->update();
-        } else {
-            $profile->set('properties', $properties);
-            echo "Creating user: ";
-            $profile->create();
-        }
-
-        \Includes\Utils\Operator::flush($login . '<br />' . "\n");
-    }
-
-    function _convertProperties(array &$p, $md5_import = '') 
-    {
-        // X-CART Gold/Pro compatibility check for profile import
-        if (!empty($p['status'])) {
-            if ($p['status'] == 1 || $p['status'] == 'Y' || $p['status'] == 'y' || $p['status'] == 'E') {
-                $p['status'] = 'E';
-            } else {
-                $p['status'] = 'D';
-            }
-        }
-        if (isset($p['password'])) {
-            if ($md5_import == "yes")
-                $p['password'] = $p['password'];
-            else
-                $p['password'] = md5($p['password']);
-        }
-        if (isset($p['billing_state'])) {
-            $p['billing_state'] = $this->_convertState($p['billing_state']);
-        }
-        if (isset($p['billing_country'])) {
-            $p['billing_country'] = $this->_convertCountry($p['billing_country']);
-        }
-        if (isset($p['shipping_state'])) {
-            $p['shipping_state'] = $this->_convertState($p['shipping_state']);
-        }
-        if (isset($p['shipping_country'])) {
-            $p['shipping_country'] = $this->_convertCountry($p['shipping_country']);
-        }
-    }
-
-    function _convertState($value)
-    {
-        $state = \XLite\Core\Database::getRepo('\XLite\Model\State')->findOneByCode($value);
-
-        if (!$state) {
-            $state = \XLite\Core\Database::getRepo('\XLite\Model\State')->findOneByState($value);
-        }
-
-        if (!$state) {
-            $state = \XLite\Core\Database::getRepo('\XLite\Model\State')->find(intval($value));
-        }
-
-
-        return $state ? $state->state_id : -1;
-    }
-
-    function _convertCountry($value)
-    {
-        $country = \XLite\Core\Database::getRepo('XLite\Model\Country')->find($value);
-        if (!$country) {
-            $country = \XLite\Core\Database::getRepo('XLite\Model\Country')->findOneByCountry($value);
-        }
-
-        return $country ? $country->code : '';
-    }
-
-    function getImportFields($layout = null) 
-    {
-        $layout = array();
-        if (!is_null($this->config->ImportExport->user_layout)) {
-            $layout = explode(',', $this->config->ImportExport->user_layout);
-        }
-        // build import fields list
-        $fields = array();
-        $fields['NULL'] = false;
-        $result = array();
-        // get object properties ad prepare import fields list
-        foreach ($this->fields as $name => $value) {
-            if ($name == "profile_id" || $name == "order_id" || $name == "sidebar_boxes" || $name == "extra_fields" || $name == "password_hint" || $name == "password_hint_answer") {
-                continue;
-            }
-            $fields[$name] = false;
-        }
-        // get count(fields) of fields array
-        foreach ($fields as $field) {
-            $result[] = $fields;
-        }
-        // fill fields array with the default layout
-        foreach ($result as $id => $fields) {
-            if (isset($layout[$id])) {
-                $selected = $layout[$id];
-                $result[$id][$selected] = true;
-            }
-        }
-        return $result;
-    }
-    
-    function _beforeSave()
-    {
-        $this->auth->_reReadProfiles(true);
-        parent::_beforeSave();
-    }
-
-    /**
-     * Check - billing and shuipping addresses are equal or not
-     * 
      * @return boolean
      * @access public
      * @see    ____func_see____
@@ -470,13 +499,31 @@ class Profile extends \XLite\Model\AModel
      */
     public function isSameAddress()
     {
-        $result = $this->isValid();
+        $result = false;
+        
+        $billingAddress = $this->getBillingAddress();
+        $shippingAddress = $this->getShippingAddress();
 
-        if ($result) {
-            foreach ($this->addressFields as $name) {
-                if ($this->get('billing_' . $name) != $this->get('shipping_' . $name)) {
-                    $result = false;
-                    break;
+        if (isset($billingAddress) && isset($shippingAddress)) {
+
+            $result = true;
+
+            if ($billingAddress->getAddressId() != $shippingAddress->getAddressId()) {
+
+                $addressFields = $billingAddress->getAddressFields();
+
+                foreach ($addressFields as $name) {
+
+                    $methodName = 'get' . \XLite\Core\Converter::getInstance()->convertToCamelCase($name);
+
+                    if (method_exists($billingAddress, $methodName)) {
+
+                        // Compare field values of billing and shipping addresses
+                        if ($billingAddress->$methodName() != $shippingAddress->$methodName()) {
+                            $result = false;
+                            break;
+                        }
+                    }
                 }
             }
         }
@@ -485,23 +532,63 @@ class Profile extends \XLite\Model\AModel
     }
 
     /**
-     * Returns shipping address fields 
+     * Clone current profile object
+     * 
+     * @return \XLite\Model\Profile
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function cloneObject() 
+    {
+        $newProfile = clone $this;
+
+        $newProfile->setProfileId(null);
+
+        $newProfile->resetAddresses();
+
+        $newProfile->update();
+
+        $billingAddress = $this->getBillingAddress();
+
+        if (isset($billingAddress)) {
+            
+            $newBillingAddress = clone $billingAddress;
+            $newBillingAddress->setAddressId(null);
+            $newBillingAddress->setProfile($newProfile);
+            $newBillingAddress->setProfileId($newProfile->getProfileId());
+            $newBillingAddress->update();
+
+            $newProfile->addAddresses($newBillingAddress);
+        }
+
+        if (!$this->isSameAddress()) {
+            
+            $newShippingAddress = clone $this->getShippingAddress();
+            $newShippingAddress->setAddressId(null);
+            $newShippingAddress->setProfile($newProfile);
+            $newShippingAddress->setProfileId($newProfile->getProfileId());
+            $newShippingAddress->update();
+
+            $newProfile->addAddresses($newShippingAddress);
+        }
+
+        $newProfile->update();
+
+        return $newProfile;
+    }
+
+    /**
+     * Reset addresses
      * 
      * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getShippingAddress()
+    public function resetAddresses()
     {
-        $result = array();
-
-        foreach ($this->addressFields as $name) {
-            $result[$name] = $this->get('shipping_' . $name);
-        }
-
-        return $result;
+        $this->addresses = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
 }
-

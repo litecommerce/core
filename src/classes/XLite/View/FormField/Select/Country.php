@@ -168,7 +168,7 @@ class Country extends \XLite\View\FormField\Select\Regular
 
     /**
      * Pass the DOM Id fo the "States" selectbox
-     * NOTE: this function is public since it's called from the View_Model_Profile_Base_Abstract class
+     * NOTE: this function is public since it's called from the View_Model_Profile_AProfile class
      * 
      * @param string $selectorId DOM Id of the "States" selectbox
      *  

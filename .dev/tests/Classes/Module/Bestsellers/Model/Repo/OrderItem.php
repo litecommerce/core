@@ -234,12 +234,8 @@ class XLite_Tests_Module_Bestsellers_Model_Repo_OrderItem extends XLite_Tests_Te
     {
         $order = new \XLite\Model\Order();
 
-        $profile = new \XLite\Model\Profile();
-
-        $list = $profile->findAll();
-
+        $list = \XLite\Core\Database::getRepo('XLite\Model\Profile')->findAll();
         $profile = array_shift($list);
-
         unset($list);
 
         $order->map($this->testOrder);

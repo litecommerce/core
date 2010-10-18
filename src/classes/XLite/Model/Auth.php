@@ -87,26 +87,26 @@ class Auth extends \XLite\Base
      */
     protected function loginProfile(\XLite\Model\Profile $profile)
     {
-        $result = $profile->isPersistent;
+        $result = $profile->isPersistent();
         if ($result) {
 
             \XLite\Core\Session::getInstance()->restart();
 
             // check for the fisrt time login
-            if (!$profile->get('first_login')) {
+            if (!$profile->getFirstLogin()) {
                 // set first login date
-                $profile->set('first_login', time());
+                $profile->setFirstLogin(time());
             }
             // set last login date
-            $profile->set('last_login', time());
+            $profile->setLastLogin(time());
 
             // update profile
             $profile->update();
 
             // save to session
-            \XLite\Core\Session::getInstance()->profile_id = $profile->get('profile_id');
+            \XLite\Core\Session::getInstance()->profile_id = $profile->getProfileId();
 
-            $this->rememberLogin($profile->get('login'));
+            $this->rememberLogin($profile->getLogin());
         }
 
         return $result;
@@ -125,7 +125,7 @@ class Auth extends \XLite\Base
      */
     protected function checkProfileAccessibility(\XLite\Model\Profile $profile)
     {
-        return $this->isAdmin($this->getProfile()) || $this->getProfile()->get('profile_id') == $profile->get('profile_id');
+        return $this->isAdmin($this->getProfile()) || $this->getProfile()->getProfileId() == $profile->getProfileId();
     }
 
     /**
@@ -210,10 +210,11 @@ class Auth extends \XLite\Base
                 $password = self::encryptPassword($password);
             }
 
-            $profile = new \XLite\Model\Profile();
-
             // Deny login if user not found
-            if ($profile->findForAuth($login, $password)) {
+            $orderId = \XLite\Core\Request::getInstance()->anonymous ? \XLite\Model\Cart::getInstance()->getOrderId() : 0;
+            $profile = \XLite\Core\Database::getRepo('XLite\Model\Profile')->findByLoginPassword($login, $password, $orderId);
+
+            if (isset($profile)) {
                 return $this->loginProfile($profile) ? $profile : self::RESULT_ACCESS_DENIED;
             }
         }
@@ -262,14 +263,16 @@ class Auth extends \XLite\Base
         $result = null;
         $isCurrent = false;
 
-        if (empty($profileId)) {
+        if (!isset($profileId)) {
             $profileId = \XLite\Core\Session::getInstance()->get('profile_id');
             $isCurrent = true;
         }
 
-        if (!empty($profileId)) {
-            $profile = \XLite\Model\CachingFactory::getObject(__METHOD__ . $profileId, '\XLite\Model\Profile', array($profileId));
-            if ($profile->isValid() && ($isCurrent || $this->checkProfile($profile))) {
+        if (isset($profileId)) {
+            
+            $profile = \XLite\Core\Database::getRepo('XLite\Model\Profile')->find($profileId);
+            
+            if ($isCurrent || $this->checkProfile($profile)) {
                 $result = $profile;
             }
         }
@@ -316,7 +319,7 @@ class Auth extends \XLite\Base
      */
     public function isAdmin(\XLite\Model\Profile $profile)
     {
-        return $profile->get('access_level') >= $this->getAdminAccessLevel();
+        return $profile->getAccessLevel() >= $this->getAdminAccessLevel();
     }
 
     /**
@@ -431,10 +434,11 @@ class Auth extends \XLite\Base
     }
     
     /**
-    * Copies profile billing info into shipping info.
-    *
-    * @param Profile $profile The Profile instance
-    */
+     * Copies profile billing info into shipping info.
+     * TODO: to remove
+     *
+     * @param Profile $profile The Profile instance
+     */
     function copyBillingInfo($profile) 
     {
         $properties = $profile->get('properties');
@@ -462,16 +466,16 @@ class Auth extends \XLite\Base
     function register($profile) 
     {
         // check whether the user is registered
-        if ($profile->isExists($profile->get('login'))) {
+        if ($profile->isExists($profile->getLogin())) {
             // user already exists
             return USER_EXISTS;
         }
-        if (!$profile->get('status')) {
+        if (!$profile->getStatus()) {
             // enable profile (set status to "E") if not enabled
             $profile->enable();
         }
-        if (strlen($profile->get('password')) > 0) {
-            $profile->set('password', self::encryptPassword($profile->get('password')));
+        if (strlen($profile->getPassword()) > 0) {
+            $profile->setPassword(self::encryptPassword($profile->getPassword()));
             $anonymous = false;
         } else {
             $this->setComplex('session.anonymous', true);
@@ -489,7 +493,7 @@ class Auth extends \XLite\Base
                 $referer = $_COOKIE['LCReferrerCookie'];
             }
             // save referer
-            $profile->set('referer', $referer);
+            $profile->setReferer($referer);
         }
         // create profile
         $profile->create();
@@ -503,7 +507,7 @@ class Auth extends \XLite\Base
             $mailer->set('charset', $this->xlite->config->Company->locationCountry->charset);
             $mailer->compose(
                 $this->config->Company->site_administrator,
-                $profile->get('login'),
+                $profile->getLogin(),
                 'signin_notification'
             );
             $mailer->send();
@@ -530,23 +534,23 @@ class Auth extends \XLite\Base
     function modify($profile) 
     {
         // check whether another user exists with the same login
-        $another = new \XLite\Model\Profile();
-        $login = addslashes($profile->get('login'));
-        $profile_id = $profile->get('profile_id');
-        if ($another->find("login='$login' AND profile_id!='$profile_id'")) {
+        if (\XLite\Core\Database::getRepo('XLite\Model\Profile')->findUserWithSameLogin($profile)) {
             return USER_EXISTS;
         }
+
         if ($this->session->get('anonymous')) {
             $this->clearAnonymousPassword($profile);
+        
         } else {
-            $another = new \XLite\Model\Profile($profile->get('profile_id'));
-            if (strlen($another->get('password')) == 0) {
+            // TODO: recheck it
+            $another = \XLite\Core\Database::getRepo('XLite\Model\Profile')->find($profile->getProfileId());
+            
+            if (strlen($another->getPassword()) == 0) {
                 $this->clearAnonymousPassword($profile);
             }
         }
-        if (strlen($profile->get('password')) > 0) {
-            $profile->set('password', 
-            self::encryptPassword($profile->get('password')));
+        if (strlen($profile->getPassword()) > 0) {
+            $profile->setPassword(self::encryptPassword($profile->getPassword()));
         } else {
             $this->clearAnonymousPassword($profile);
         }
@@ -556,7 +560,7 @@ class Auth extends \XLite\Base
 
         // update current shopping cart/order data
         $cartProfile = \XLite\Model\Cart::getInstance()->getProfile();
-        if ($cartProfile->get('order_id')) {
+        if ($cartProfile->getOrderId()) {
             $cartProfile->modifyCustomerProperties(\XLite\Core\Request::getInstance()->getData());
             $this->copyBillingInfo($cartProfile);
             $cartProfile->update();
@@ -574,7 +578,7 @@ class Auth extends \XLite\Base
         $mailer->set('charset', $this->xlite->config->Company->locationCountry->charset);
         $mailer->compose(
             $this->config->Company->users_department,
-            $profile->get('login'),
+            $profile->getLogin(),
             'profile_modified'
         );
         $mailer->send();
@@ -591,7 +595,7 @@ class Auth extends \XLite\Base
 
     function clearAnonymousPassword($profile)
     {
-        $profile->set('password', null);
+        $profile->setPassword(null);
         if (isset($_REQUEST['password'])) {
             unset($_REQUEST['password']);
         }
@@ -635,7 +639,7 @@ class Auth extends \XLite\Base
         $profile->read();
         // get current profile from session
         $current = $this->getComplex('session.profile_id');
-        if ($current == $profile->get('profile_id')) {
+        if ($current == $profile->getProfileId()) {
             // log off first
             $this->logoff();
         }
@@ -646,7 +650,7 @@ class Auth extends \XLite\Base
         $mailer->set('charset', $this->xlite->config->Company->locationCountry->charset);
         $mailer->compose(
             $this->config->Company->users_department,
-            $profile->get('login'),
+            $profile->getLogin(),
             'profile_deleted'
         );
         $mailer->send();
@@ -670,7 +674,7 @@ class Auth extends \XLite\Base
         $options = \XLite::getInstance()->getOptions('host_details');
 
         foreach (array($options['http_host'], $options['https_host']) as $host) {
-            @setcookie('last_login', $login, time() + 3600 * 24 * $this->config->General->login_lifetime, '/', func_parse_host($host));
+            @setcookie('recent_login', $login, time() + 3600 * 24 * $this->config->General->login_lifetime, '/', func_parse_host($host));
         }
     }
 
@@ -679,7 +683,7 @@ class Auth extends \XLite\Base
     */
     function remindLogin() 
     {
-        return isset($_COOKIE['last_login']) ? $_COOKIE['last_login'] : "";
+        return isset($_COOKIE['recent_login']) ? $_COOKIE['recent_login'] : "";
     }
 
     /**
@@ -695,7 +699,7 @@ class Auth extends \XLite\Base
 
         if (
             (is_int($profile) && ACCESS_DENIED === $profile)
-            || ($profile instanceof Profile && !$profile->is('admin'))
+            || ($profile instanceof Profile && !$this->isAdmin($profile))
         ) {
 
             $this->sendFailedAdminLogin($profile);
@@ -759,7 +763,7 @@ class Auth extends \XLite\Base
 
         $profile = $this->getProfile();
 
-        $currentLevel = $profile ? $profile->get('access_level') : 0;
+        $currentLevel = $profile ? $profile->getAccessLevel() : 0;
 
         return $currentLevel >= $resource->getAccessLevel();
     }
@@ -852,18 +856,29 @@ class Auth extends \XLite\Base
 
     function requestRecoverPassword($email) 
     {
-        $profile = new \XLite\Model\Profile();
-        if (!$profile->find("login='$email'")) {
+        $profile = \XLite\Core\Database::getRepo('XLite\Model\Profile')->findByLogin($email);
+        
+        if (!isset($profile)) {
             return false;
         }
+        
         $mailer = new \XLite\Model\Mailer();
-        $mailer->url = $this->xlite->getShopUrl("cart.php?target=recover_password&action=confirm&email=".urlencode($profile->get('login'))."&request_id=".$profile->get('password'));
+        
+        $mailer->url = $this->xlite->getShopUrl(
+            'cart.php?target=recover_password&action=confirm&email=' . 
+            urlencode($profile->getLogin()) . 
+            '&request_id=' . 
+            $profile->getPassword()
+        );
+        
         $mailer->set('charset', $this->xlite->config->Company->locationCountry->charset);
+        
         $mailer->compose(
             $this->config->Company->users_department,
-            $profile->get('login'),
+            $profile->getLogin(),
             'recover_request'
         );
+
         $mailer->send();
 
         return true;
@@ -871,8 +886,9 @@ class Auth extends \XLite\Base
     
     function recoverPassword($email, $requestID) 
     {
-        $profile = new \XLite\Model\Profile();
-        if (!$profile->find("login='$email'") || $profile->get('password') != $requestID) {
+        $profile = \XLite\Core\Database::getRepo('XLite\Model\Profile')->findByLogin($email);
+        
+        if (!isset($profile) || $profile->getPassword() != $requestID) {
             return false;
         }
 
@@ -880,16 +896,18 @@ class Auth extends \XLite\Base
         $mailer = new \XLite\Model\Mailer();
         $mailer->set('email', $email);
         $mailer->set('new_password', $pass);
-        $profile->set('password', md5($pass));
+        $profile->setPassword(md5($pass));
         $profile->update();
         $mailer->set('profile', $profile);
-        $mailer->set('charset', $profile->getComplex('billingCountry.charset'));
+        $mailer->set('charset', $profile->getComplex('billingCountry.charset')); // TODO: replace to language.charset
         $mailer->compose(
                 $this->config->Company->users_department,
-                $profile->get('login'),
+                $profile->getLogin(),
                 "recover_recover"
                 );
         $mailer->send();
         return true;
     }
+
 }
+

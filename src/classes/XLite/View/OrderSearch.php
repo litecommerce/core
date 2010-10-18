@@ -114,7 +114,7 @@ class OrderSearch extends \XLite\View\Dialog
         $cnd = new \XLite\Core\CommonCell();
 
         if (!$this->getProfile()->isAdmin()) {
-            $cnd->profileId = $this->getProfile()->get('profile_id');
+            $cnd->profileId = $this->getProfile()->getProfileId();
         }
 
         $cnd->orderBy = array('o.' . $this->conditions['sortCriterion'], $this->conditions['sortOrder']);
@@ -189,7 +189,7 @@ class OrderSearch extends \XLite\View\Dialog
 
         if (\XLite::isAdminZone()) {
             if (\XLite\Core\Request::getInstance()->profile_id) {
-                $result = new \XLite\Model\Profile(\XLite\Core\Request::getInstance()->profile_id);
+                $result = \XLite\Core\Database::getRepo('XLite\Model\Profile')->find(\XLite\Core\Request::getInstance()->profile_id);
                 if (!$result->isExists()) {
                     $result = null;
                 }

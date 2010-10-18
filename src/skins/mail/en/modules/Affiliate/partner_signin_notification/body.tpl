@@ -29,47 +29,43 @@
 </tr>
 <tr>
     <td align="right">Title:</td>
-    <td>{profile.billing_title}</td>
+    <td>{profile.billing_address.title}</td>
 </tr>
 <tr>
     <td align="right">First Name:</td>
-    <td>{profile.billing_firstname}</td>
+    <td>{profile.billing_address.firstname}</td>
 </tr>
 <tr>
     <td align="right">Last Name:</td>
-    <td>{profile.billing_lastname}</td>
-</tr>
-<tr>
-    <td align="right">Company:</td>
-    <td>{profile.billing_company}</td>        
+    <td>{profile.billing_address.lastname}</td>
 </tr>
 <tr>
     <td align="right">Phone:</td>
-    <td>{profile.billing_phone}</td>    
+    <td>{profile.billing_address.phone}</td>    
 </tr>
 <tr>
     <td align="right">Fax:</td>
-    <td>{profile.billing_fax}</td>
+    <td>{profile.billing_address.fax}</td>
 </tr>
 <tr>
     <td align="right">Address:</td>
-    <td>{profile.billing_address}</td>
+    <td>{profile.billing_address.street}</td>
 </tr>
 <tr>
     <td align="right">City:</td>
-    <td>{profile.billing_city}</td>
+    <td>{profile.billing_address.city}</td>
 </tr>
 <tr>
     <td align="right">State:</td>
-    <td>{profile.billingState.state}</td>
+    <td>{profile.billing_address.state.state}</td>
 </tr>
 <tr>
     <td align="right">Country:</td>
-    <td>{profile.billingCountry.country}</td>
+    <td>{profile.billing_address.country.country}</td>
 </tr>
 <tr>
     <td align="right">Zip code:</td>
-    <td>{profile.billing_zipcode}</td>
+    <td>{profile.billing_address.zipcode}</td>
 </tr>
 
 <tr>

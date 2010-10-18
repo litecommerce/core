@@ -275,4 +275,51 @@ abstract class AEntity
     {
         return (bool) $this->{'get' . $this->getMethodName($this->getRepository()->getPrimaryKeyField())}();
     }
+
+    /**
+     * Update entity
+     * 
+     * @return bool
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function update()
+    {
+        \XLite\Core\Database::getEM()->persist($this);
+        \XLite\Core\Database::getEM()->flush();
+
+        return true;
+    }
+
+    /**
+     * Create entity
+     * 
+     * @return bool
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function create()
+    {
+        return $this->update();
+    }
+
+    /**
+     * Delete entity
+     * 
+     * @return bool
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function delete()
+    {
+        \XLite\Core\Database::getEM()->remove($this);
+        \XLite\Core\Database::getEM()->flush();
+        \XLite\Core\Database::getEM()->clear();
+
+        return true;
+    }
+
 }

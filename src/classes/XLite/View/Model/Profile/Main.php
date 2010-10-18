@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage ____sub_package____
+ * @subpackage View
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -31,10 +31,9 @@ namespace XLite\View\Model\Profile;
 /**
  * \XLite\View\Model\Profile\Main 
  * 
- * @package    XLite
- * @subpackage ____sub_package____
- * @see        ____class_see____
- * @since      3.0.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
 class Main extends \XLite\View\Model\Profile\AProfile
 {
@@ -89,13 +88,12 @@ class Main extends \XLite\View\Model\Profile\AProfile
             self::SCHEMA_LABEL    => 'Account status',
             self::SCHEMA_REQUIRED => true,
         ),
-        'membership' => array(
+        'membership_id' => array(
             self::SCHEMA_CLASS    => '\XLite\View\FormField\Select\Membership',
             self::SCHEMA_LABEL    => 'Membership',
             self::SCHEMA_REQUIRED => false,
         ),
     );
-
 
     /**
      * Return name of web form widget class
@@ -125,13 +123,13 @@ class Main extends \XLite\View\Model\Profile\AProfile
      * Return fields list by the corresponding schema
      * 
      * @return array
-     * @access public
+     * @access protected
      * @since  3.0.0
      */
     protected function getFormFieldsForSectionMain()
     {
         // Create new profile - password is required
-        if (!$this->getModelObject()->isPersistent) {
+        if (!$this->getModelObject()->isPersistent()) {
             foreach (array('password', 'password_conf') as $field) {
                 if (isset($this->mainSchema[$field])) {
                     $this->mainSchema[$field][self::SCHEMA_REQUIRED] = true;
@@ -146,7 +144,7 @@ class Main extends \XLite\View\Model\Profile\AProfile
      * Return fields list by the corresponding schema
      * 
      * @return array
-     * @access public
+     * @access protected
      * @since  3.0.0
      */
     protected function getFormFieldsForSectionAccess()
@@ -185,16 +183,18 @@ class Main extends \XLite\View\Model\Profile\AProfile
         $result = true;
         $data = $this->getRequestData();
 
-        if (isset($this->sections[self::SECTION_MAIN]) && (!empty($data['password']) || !empty($data['password_conf']))) {
+        if (
+            isset($this->sections[self::SECTION_MAIN]) 
+            && (!empty($data['password']) || !empty($data['password_conf']))
+        ) {
 
-            if (!($result = $data['password'] === $data['password_conf'])) {
+            if ($data['password'] != $data['password_conf']) {
+                $result = false;
                 \XLite\Core\TopMessage::getInstance()->addError('Password and its confirmation do not match');
             }
 
         } else {
-
-            $this->getModelObject()->unsetProperty('password');
-            $this->getModelObject()->unsetProperty('password_conf');
+            $this->getModelObject()->setPassword('');
         }
 
         return $result;
@@ -302,9 +302,11 @@ class Main extends \XLite\View\Model\Profile\AProfile
     {
         $result = true;
 
-        $profile = new \XLite\Model\Profile();
-        if ($profile->findByLogin($this->getModelObject()->get('login'))) {
-            $result = $profile->get('profile_id') === $this->getModelObject()->get('profile_id');
+        $profile = \XLite\Core\Database::getRepo('XLite\Model\Profile')
+            ->findByLogin($this->getModelObject()->getLogin());
+
+        if (isset($profile)) {
+            $result = $profile->getProfileId() === $this->getModelObject()->getProfileId();
         }
 
         return $result;

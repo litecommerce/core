@@ -180,12 +180,18 @@ class Cart extends \XLite\View\Dialog
      */
     public function getEstimateAddress()
     {
+        $string = '';
+
         $address = \XLite\Model\Shipping::getInstance()->getDestinationAddress($this->getCart());
 
-        $country = \XLite\Core\Database::getRepo('XLite\Model\Country')->find($address['country']);
-        $state = \XLite\Core\Database::getRepo('XLite\Model\State')->find($address['state']);
+        if (is_array($address)) {
+            $country = \XLite\Core\Database::getRepo('XLite\Model\Country')->find($address['country']);
+            $state = \XLite\Core\Database::getRepo('XLite\Model\State')->find($address['state']);
+        }
 
-        $string = $country->getCountry();
+        if (isset($country)) {
+            $string = $country->getCountry();
+        }
 
         if ($state) {
             $string .= ' ' . $state->getState();

@@ -16,7 +16,7 @@
     <td><label for="cc_name">{t(#Cardholder name#)}:</label></td>
     <td class="marker">*</td>
     <td>
-      <input type="text" name="payment[name]" id="cc_name" value="{cart.profile.billing_firstname} {cart.profile.billing_lastname}" />
+      <input type="text" name="payment[name]" id="cc_name" value="{cart.profile.billing_address.firstname} {cart.profile.billing_address.lastname}" />
     </td>
   </tr>
 

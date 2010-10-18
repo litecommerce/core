@@ -11,13 +11,13 @@
  * @since     3.0.0
  *}
 
-<td nowrap="nowrap">
-  <label for="{getFieldId()}">{getParam(#label#)}</label>
+<td class="table-label {getFieldId()}-label">
+  <label for="{getFieldId()}">{getParam(#label#)}:</label>
 </td>
-<td class="star">
+<td class="Star">
   {if:getParam(#required#)}*{else:}&nbsp;{end:}
 </td>
-<td width="100%">
+<td class="table-value {getFieldId()}-value">
   <widget template="{getDir()}/{getFieldTemplate()}" />
   <div class="form-field-comment {getFieldId()}-comment">{getParam(#comment#):r}</div>
   <script IF="getInlineJSCode()" type="text/javascript">{getInlineJSCode():r}</script>

@@ -27,7 +27,7 @@
     </td>
    <td align="right" valign="top" nowrap="nowrap" width="100%">
    	  <br />
-      Welcome <span class="FormButton"><span IF="!auth.profile.billing_firstname=##">{auth.profile.billing_title} {auth.profile.billing_firstname} {auth.profile.billing_lastname}</span><span IF="auth.profile.billing_firstname=##">{auth.profile.login}</span></span>!<br>
+      Welcome <span class="FormButton"><span IF="!auth.profile.billing_address.firstname=##">{auth.profile.billing_address.title} {auth.profile.billing_address.firstname} {auth.profile.billing_address.lastname}</span><span IF="auth.profile.billing_address.firstname=##">{auth.profile.login}</span></span>!<br>
       (<span class="FormButton">{auth.profile.login}</span> logged in)</span>
       <span IF="recentAdmins">,&nbsp;<a href="admin.php?target=recent_login"><u>login history </u></a></span>
       </span>
@@ -89,10 +89,7 @@
 <widget target="wysiwyg" template="common/dialog.tpl" head="HTML design import/export" body="wysiwyg.tpl" />
 *}
 
-<widget class="\XLite\View\Model\Profile\Main" />
-
-{*<widget target="profile" class="\XLite\View\RegisterForm" head="Modify profile" name="profileForm" IF="{getRequestParamValue(#mode#)=#modify#|getRequestParamValue(#mode#)=##}" />
-<widget target="profile" class="\XLite\View\RegisterForm" head="Add new user" name="registerForm" IF="{getRequestParamValue(#mode#)=#register#}" />*}
+<widget class="\XLite\View\Tabs\AdminProfile" />
 
 <widget target="order_list,order,advanced_security" module="AdvancedSecurity" template="modules/AdvancedSecurity/advanced_security.tpl">
 <widget module="AntiFraud" target='order' IF="{mode}" mode="{mode}" template="common/dialog.tpl" body="modules/AntiFraud/tracking/message.tpl" head="AntiFraud Service Notification">

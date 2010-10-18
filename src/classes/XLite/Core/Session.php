@@ -539,7 +539,7 @@ class Session extends \XLite\Base\Singleton
         $languages = array();
 
         if (\XLite\Model\Auth::getInstance()->isLogged()) {
-            $languages[] = \XLite\Model\Auth::getInstance()->getProfile()->get('language');
+            $languages[] = \XLite\Model\Auth::getInstance()->getProfile()->getLanguage();
         }
 
         if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {

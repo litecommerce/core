@@ -770,7 +770,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
         \XLite\Core\Database::getEM()->flush();
 
         // anonymous checkout: logoff
-        if ($this->auth->getProfile() && $this->auth->getProfile()->get('order_id')) {
+        if ($this->auth->getProfile() && $this->auth->getProfile()->getOrderId()) {
             $this->auth->logoff();
         }
     }

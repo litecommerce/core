@@ -37,12 +37,24 @@ namespace XLite\Controller\Admin;
  */
 class Main extends \XLite\Controller\Admin\AAdmin
 {
-    function handleRequest()
+    /**
+     * handleRequest 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function handleRequest()
     {
         if ($this->auth->is('logged')) {
-            if ($this->auth->getComplex('profile.billing_firstname') == "") {
+
+            // It is supposed that billingFirstname will be empty only after installation
+            $billingFirstname = $this->auth->getProfile()->getBillingAddress()->getFirstname();
+
+            if (empty($billingFirstname)) {
                 // switch first-time logged admin to edit profile page
-                $this->redirect("admin.php?target=profile&profile_id=".$this->auth->getComplex('profile.profile_id'));
+                $this->redirect('admin.php?target=profile&profile_id=' . $this->auth->getProfile()->getProfileId());
                 return;
             }
         }

@@ -180,10 +180,9 @@ class XLite_Tests_Model_Shipping extends XLite_Tests_TestCase
         $order = new \XLite\Model\Order();
 
         if ($profile) {
-            $profile = new \XLite\Model\Profile();
-            $list = $profile->findAll();
+            $list = \XLite\Core\Database::getRepo('XLite\Model\Profile')->findAll();
             $profile = array_shift($list);
-            $profileId = $profile->get('profile_id');
+            $profileId = $profile->getProfileId();
             unset($list);
 
         } else {

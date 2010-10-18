@@ -418,13 +418,12 @@ class XLite_Tests_Model_OrderModifier_Shipping extends XLite_Tests_TestCase
     {
         $order = new \XLite\Model\Order();
 
-        $profile = new \XLite\Model\Profile();
-        $list = $profile->findAll();
-        $profile = array_shift($list);
-        unset($list);
+        $profiles = \XLite\Core\Database::getRepo('XLite\Model\Profile')->findAll();
+        $profile = array_shift($profiles);
+        unset($profiles);
 
         $order->setCurrency(\XLite\Core\Database::getRepo('XLite\Model\Currency')->find(840));
-        $order->setProfileId($profile->get('profile_id'));
+        $order->setProfileId($profile->getProfileId());
 
         $productIds = array(4059, 4004, 4005, 4006, 4007, 4008);
 

@@ -30,6 +30,7 @@ namespace XLite\Model;
 
 /**
  * ____description____
+ * TODO: remove class
  * 
  * @package XLite
  * @see     ____class_see____

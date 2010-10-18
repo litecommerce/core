@@ -273,12 +273,12 @@ class AuthorizeNetSIM extends \XLite\Model\Payment\Base\WebBased
             $string
         );
 
-        $bState = $this->getOrder()->getProfile()->getComplex('billingState.code')
-            ? $this->getOrder()->getProfile()->getComplex('billingState.code')
+        $bState = $this->getOrder()->getProfile()->getBillingAddress()->getState()->getCode()
+            ? $this->getOrder()->getProfile()->getBillingAddress()->getState()->getCode()
             : 'n/a';
 
-        $sState = $this->getOrder()->getProfile()->getComplex('shippingState.code')
-            ? $this->getOrder()->getProfile()->getComplex('shippingState.code')
+        $sState = $this->getOrder()->getProfile()->getShippingAddress()->getState()->getCode()
+            ? $this->getOrder()->getProfile()->getShippingAddress()->getState()->getCode()
             : 'n/a';
 
         switch ($this->transaction->getType()) {
@@ -301,23 +301,23 @@ class AuthorizeNetSIM extends \XLite\Model\Payment\Base\WebBased
             'x_amount'        => round($this->transaction->getValue(), 2),
             'x_currency_code' => $this->getSetting('currency'),
             'x_method'        => 'CC',
-            'x_first_name'    => $this->getOrder()->getProfile()->get('billing_firstname'),
-            'x_last_name'     => $this->getOrder()->getProfile()->get('billing_lastname'),
-            'x_phone'         => $this->getOrder()->getProfile()->get('billing_phone'),
-            'x_email'         => $this->getOrder()->getProfile()->get('login'),
-            'x_cust_id'       => $this->getOrder()->getProfile()->get('login'),
-            'x_address'       => $this->getOrder()->getProfile()->get('billing_address'),
-            'x_city'          => $this->getOrder()->getProfile()->get('billing_city'),
+            'x_first_name'    => $this->getOrder()->getProfile()->getBillingAddress()->getFirstname(),
+            'x_last_name'     => $this->getOrder()->getProfile()->getBillingAddress()->getLastname(),
+            'x_phone'         => $this->getOrder()->getProfile()->getBillingAddress()->getPhone(),
+            'x_email'         => $this->getOrder()->getProfile()->getLogin(),
+            'x_cust_id'       => $this->getOrder()->getProfile()->getLogin(),
+            'x_address'       => $this->getOrder()->getProfile()->getBillingAddress()->getStreet(),
+            'x_city'          => $this->getOrder()->getProfile()->getBillingAddress()->getCity(),
             'x_state'         => $bState,
-            'x_zip'           => $this->getOrder()->getProfile()->get('billing_zipcode'),
-            'x_country'       => $this->getOrder()->getProfile()->getComplex('billingCountry.country'),
-            'x_ship_to_first_name' => $this->getOrder()->getProfile()->get('shipping_firstname'),
-            'x_ship_to_last_name'  => $this->getOrder()->getProfile()->get('shipping_lastname'),
-            'x_ship_to_address'    => $this->getOrder()->getProfile()->get('shipping_address'),
-            'x_ship_to_city'       => $this->getOrder()->getProfile()->get('shipping_city'),
+            'x_zip'           => $this->getOrder()->getProfile()->getBillingAddress()->getZipcode(),
+            'x_country'       => $this->getOrder()->getProfile()->getBillingAddress()->getCountry()->getCountry(),
+            'x_ship_to_first_name' => $this->getOrder()->getProfile()->getShippingAddres()->getFirstname(),
+            'x_ship_to_last_name'  => $this->getOrder()->getProfile()->getShippingAddress()->getLastname(),
+            'x_ship_to_address'    => $this->getOrder()->getProfile()->getShippingAddress()->getStreet(),
+            'x_ship_to_city'       => $this->getOrder()->getProfile()->getShippingAddress()->getCity(),
             'x_ship_to_state'      => $sState,
-            'x_ship_to_zip'        => $this->getOrder()->getProfile()->get('shipping_zipcode'),
-            'x_ship_to_country'    => $this->getOrder()->getProfile()->getComplex('shippingCountry.country'),
+            'x_ship_to_zip'        => $this->getOrder()->getProfile()->getShippingAddress()->getZipcode(),
+            'x_ship_to_country'    => $this->getOrder()->getProfile()->getShippingAddress()->getCountry()->getCountry(),
             'x_invoice_num'        => $this->transaction->getTransactionId(),
             'x_relay_response'     => 'TRUE',
             'x_relay_url'          => $this->getReturnURL('x_invoice_num'),

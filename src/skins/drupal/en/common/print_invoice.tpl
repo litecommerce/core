@@ -109,39 +109,31 @@ A:active  {
     <tr><td colspan="2"><hr width="80%" align=left></td></tr>
 	<tr>
 		<td nowrap>Name</td>
-		<td>{order.profile.billing_title} {order.profile.billing_firstname:h} {order.profile.billing_lastname:h}</td>
+		<td>{order.profile.billing_address.title} {order.profile.billing_address.firstname:h} {order.profile.billing_address.lastname:h}</td>
 	</tr>
 	<tr>
 		<td nowrap>Phone</td>
-		<td>{order.profile.billing_phone:h}</td>
-	</tr>
-	<tr>
-		<td nowrap>Fax</td>
-		<td>{order.profile.billing_fax:h}</td>
-	</tr>
-	<tr>
-		<td nowrap>Company</td>
-		<td>{order.profile.billing_company:h}</td>
+		<td>{order.profile.billing_address.phone:h}</td>
 	</tr>
 	<tr>
 		<td nowrap>Address</td>
-		<td>{order.profile.billing_address:h}</td>
+		<td>{order.profile.billing_address.street:h}</td>
 	</tr>
 	<tr>
 		<td nowrap>City</td>
-		<td>{order.profile.billing_city:h}</td>
+		<td>{order.profile.billing_address.city:h}</td>
 	</tr>
 	<tr>
 		<td nowrap>State</td>
-		<td>{order.profile.billingState.state:h}</td>
+		<td>{order.profile.billing_address.state.state:h}</td>
 	</tr>
 	<tr>
 		<td nowrap>Country</td>
-		<td>{order.profile.billingCountry.country:h}</td>
+		<td>{order.profile.billing_address.country.country:h}</td>
 	</tr>
 	<tr>
 		<td nowrap>Zip code</td>
-		<td>{order.profile.billing_zipcode:h}</td>
+		<td>{order.profile.billing_address.zipcode:h}</td>
 	</tr>
 	<tr>
 		<td>&nbsp;</td>
@@ -157,39 +149,31 @@ A:active  {
     <tr><td colspan="2"><hr width="80%" align=left></td></tr>
 	<tr>
 		<td nowrap>Name</td>
-		<td>{order.profile.shipping_title} {order.profile.shipping_firstname:h} {order.profile.shipping_lastname:h}</td>
+		<td>{order.profile.shipping_address.title} {order.profile.shipping_address.firstname:h} {order.profile.shipping_address.lastname:h}</td>
 	</tr>
 	<tr>
 		<td nowrap>Phone</td>
-		<td>{order.profile.shipping_phone:h}</td>
-	</tr>
-	<tr>
-		<td nowrap>Fax</td>
-		<td>{order.profile.shipping_fax:h}</td>
-	</tr>
-	<tr>
-		<td nowrap>Company</td>
-		<td>{order.profile.shipping_company:h}</td>
+		<td>{order.profile.shipping_address.phone:h}</td>
 	</tr>
 	<tr>
 		<td nowrap>Address</td>
-		<td>{order.profile.shipping_address:h}</td>
+		<td>{order.profile.shipping_address.street:h}</td>
 	</tr>
 	<tr>
 		<td nowrap>City</td>
-		<td>{order.profile.shipping_city:h}</td>
+		<td>{order.profile.shipping_address.city:h}</td>
 	</tr>
 	<tr>
 		<td nowrap>State</td>
-		<td>{order.profile.shippingState.state:h}</td>
+		<td>{order.profile.shipping_address.state.state:h}</td>
 	</tr>
 	<tr>
 		<td nowrap>Country</td>
-		<td>{order.profile.shippingCountry.country:h}</td>
+		<td>{order.profile.shipping_address.country.country:h}</td>
 	</tr>
 	<tr>
 		<td nowrap>Zip code</td>
-		<td>{order.profile.shipping_zipcode:h}</td>
+		<td>{order.profile.shipping_address.zipcode:h}</td>
 	</tr>
 	<tr>
 		<td>&nbsp;</td>

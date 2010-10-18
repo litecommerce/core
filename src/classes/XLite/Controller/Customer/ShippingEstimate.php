@@ -92,9 +92,9 @@ class ShippingEstimate extends \XLite\Controller\Customer\ACustomer
                     $this->getCart()->setDetail('shipping_estimate_zipcode', \XLite\Core\Request::getInstance()->zipcode);
 
                 } else {
-                    $profile->set('shipping_country', $country->getCode());
-                    $profile->set('shipping_zipcode', \XLite\Core\Request::getInstance()->zipcode);
-                    $profile->update();
+                    $profile->getShippingAddress()->setCountryCode($country->getCode());
+                    $profile->getShippingAddress()->setZipcode(\XLite\Core\Request::getInstance()->zipcode);
+                    $profile->getShippingAddress()->update();
                 }
 
                 $this->updateCart();

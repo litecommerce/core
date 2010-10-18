@@ -238,34 +238,50 @@ class Shipping extends \XLite\Base\Singleton
         
         if (is_object($order->getProfile())) {
 
-            // Order profail exist
+            // Profile is exists
 
-            $address = $order->getProfile()->getShippingAddress();
+            $addressObj = $order->getProfile()->getShippingAddress();
 
-        } elseif ($order->getDetail('shipping_estimate_country') && $order->getDetail('shipping_estimate_zipcode')) {
-
-            // Estimated shipping
-            $address = array(
-                'address' => '',
-                'city'    => '',
-                'state'   => '',
-                'zipcode' => $order->getDetail('shipping_estimate_zipcode')->getValue(),
-                'country' => $order->getDetail('shipping_estimate_country')->getValue()
-            );
-
-        } else {
-
-            // Anonymous address
-            $config = \XLite\Base::getInstance()->config->Shipping;
-
-            if ($config->def_calc_shippings_taxes) {
+            if ($addressObj instanceof \XLite\Model\Address) {
                 $address = array(
-                    'address' => $config->anonymous_address,
-                    'city'    => $config->anonymous_city,
-                    'state'   => $config->anonymous_state,
-                    'zipcode' => $config->anonymous_zipcode,
-                    'country' => $config->anonymous_country
+                    'address' => $addressObj->getStreet(),
+                    'city'    => $addressObj->getCity(),
+                    'state'   => $addressObj->getStateId(),
+                    'zipcode' => $addressObj->getZipcode(),
+                    'country' => $addressObj->getCountryCode()
                 );
+            }
+
+        }
+
+        if (!isset($address)) {
+
+            if ($order->getDetail('shipping_estimate_country') && $order->getDetail('shipping_estimate_zipcode')) {
+
+                // Estimated shipping requested
+
+                $address = array(
+                    'address' => '',
+                    'city'    => '',
+                    'state'   => '',
+                    'zipcode' => $order->getDetail('shipping_estimate_zipcode')->getValue(),
+                    'country' => $order->getDetail('shipping_estimate_country')->getValue()
+                );
+
+            } else {
+
+                // Anonymous address
+                $config = \XLite\Base::getInstance()->config->Shipping;
+
+                if ($config->def_calc_shippings_taxes) {
+                    $address = array(
+                        'address' => $config->anonymous_address,
+                        'city'    => $config->anonymous_city,
+                        'state'   => $config->anonymous_state,
+                        'zipcode' => $config->anonymous_zipcode,
+                        'country' => $config->anonymous_country
+                    );
+                }
             }
         }
 

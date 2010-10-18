@@ -14,18 +14,17 @@
 <td class="bill">
   <strong>Billing address</strong>
   <p>
-    {order.profile.billing_title} {order.profile.billing_firstname:h} {order.profile.billing_lastname:h}
+    {order.profile.billing_address.title} {order.profile.billing_address.firstname:h} {order.profile.billing_address.lastname:h}
   </p>
 
   <p>
-    {order.profile.billing_address:h}<br />
-    {order.profile.billing_city:h}, {order.profile.billingState.state:h}, {order.profile.billing_zipcode:h}<br />
-    {order.profile.billing_company:h}
+    {order.profile.billing_address.street:h}<br />
+    {order.profile.billing_address.city:h}, {order.profile.billing_address.state.state:h}, {order.profile.billing_address.zipcode:h}<br />
+    {order.profile.billing_address.country.country:h}
   </p>
 
-  <p IF="order.profile.billing_phone|order.profile.billing_fax">
-    {if:order.profile.billing_phone}Phone: {order.profile.billing_phone:h}<br />{end:}
-    {if:order.profile.billing_fax}Fax: {order.profile.billing_fax:h}{end:}
+  <p IF="order.profile.billing_address.phone">
+    Phone: {order.profile.billing_address.phone:h}
   </p>
 
   <p class="last">
@@ -37,18 +36,17 @@
 <td class="ship">
   <strong>Shipping address</strong>
   <p>
-    {order.profile.shipping_title} {order.profile.shipping_firstname:h} {order.profile.shipping_lastname:h}
+    {order.profile.shipping_address.title} {order.profile.shipping_address.firstname:h} {order.profile.shipping_address.lastname:h}
   </p>
 
   <p>
-    {order.profile.shipping_address:h}<br />
-    {order.profile.shipping_city:h}, {order.profile.shippingState.state:h}, {order.profile.shipping_zipcode:h}<br />
-    {order.profile.shipping_company:h}
+    {order.profile.shipping_address.street:h}<br />
+    {order.profile.shipping_address.city:h}, {order.profile.shipping_address.state.state:h}, {order.profile.shipping_address.zipcode:h}<br />
+    {order.profile.shipping_address.country.country:h}
   </p>
 
-  <p IF="order.profile.shipping_phone|order.profile.shipping_fax" class="last">
-    {if:order.profile.shipping_phone}Phone: {order.profile.shipping_phone:h}<br />{end:}
-    {if:order.profile.shipping_fax}Fax: {order.profile.shipping_fax:h}{end:}
+  <p IF="order.profile.shipping_address.phone" class="last">
+    Phone: {order.profile.shipping_address.phone:h}
   </p>
 </td>
 

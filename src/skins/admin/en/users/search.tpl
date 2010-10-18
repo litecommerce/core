@@ -13,7 +13,9 @@
 
 <widget template="common/dialog.tpl" head="User search" body="users/search_form.tpl" />
 
-<span IF="getRequestParamValue(#mode#)=#search#|getRequestParamValue(#mode#)=#list#">{count} account(s) found
+<span IF="mode=#search#|mode=#list#">
   <br />
-  <widget template="common/dialog.tpl" head="Search results" body="users/search_results.tpl" IF="{count}" />
+  {getUsersCount()} account(s) found
+  <br />
+  <widget template="common/dialog.tpl" head="Search results" body="users/search_results.tpl" IF="{getUsersCount()}" />
 </span>

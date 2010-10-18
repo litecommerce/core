@@ -144,7 +144,7 @@ class Checkout extends \XLite\View\Model\Profile\Checkout implements \XLite\Base
      */
     protected function prepareLCProfile(\stdClass $user)
     {
-        $this->getModelObject()->set('cms_profile_id', $user->uid);
+        $this->getModelObject()->setCmsProfileId($user->uid);
         $this->setPasswords($user->password);
     }
 

@@ -67,17 +67,17 @@ class XLite_Tests_Model_Order extends XLite_Tests_TestCase
 
         $this->assertEquals(
             $order->getProfileId(),
-            $order->getProfile()->get('profile_id'),
+            $order->getProfile()->getProfileId(),
             'check profile id'
         );
         $this->assertNotEquals(
             $order->getOrigProfileId(),
-            $order->getProfile()->get('profile_id'),
+            $order->getProfile()->getProfileId(),
             'check orig profile id'
         );
         $this->assertEquals(
             $order->getOrderId(),
-            $order->getProfile()->get('order_id'),
+            $order->getProfile()->getOrderId(),
             'check profile\'s order id'
         );
 
@@ -211,10 +211,9 @@ class XLite_Tests_Model_Order extends XLite_Tests_TestCase
 	{
         $order = new \XLite\Model\Order();
 
-        $profile = new \XLite\Model\Profile();
-        $list = $profile->findAll();
-        $profile = array_shift($list);
-        unset($list);
+        $profiles = \XLite\Core\Database::getRepo('XLite\Model\Profile')->findAll();
+        $profile = array_shift($profiles);
+        unset($profiles);
 
         $order->map($this->testOrder);
         $order->setCurrency(\XLite\Core\Database::getRepo('XLite\Model\Currency')->find(840));
@@ -661,17 +660,17 @@ class XLite_Tests_Model_Order extends XLite_Tests_TestCase
 
         $this->assertEquals(
             $order->getProfileId(),
-            $order->getProfile()->get('profile_id'),
+            $order->getProfile()->getProfileId(),
             'check profile id'
         );
         $this->assertNotEquals(
             $order->getOrigProfileId(),
-            $order->getProfile()->get('profile_id'),
+            $order->getProfile()->getProfileId(),
             'check orig profile id'
         );
         $this->assertEquals(
             $order->getOrderId(),
-            $order->getProfile()->get('order_id'),
+            $order->getProfile()->getOrderId(),
             'check profile\'s order id'
         );
     }
@@ -689,7 +688,7 @@ class XLite_Tests_Model_Order extends XLite_Tests_TestCase
 
         $order->setProfile($p);
 
-        $this->assertEquals($p->get('profile_id'), $order->getProfileId(), 'check profile id #2');
+        $this->assertEquals($p->getProfileId(), $order->getProfileId(), 'check profile id #2');
     }
 
     public function testGetOrigProfile()
@@ -704,13 +703,13 @@ class XLite_Tests_Model_Order extends XLite_Tests_TestCase
 
         $this->assertNotEquals(
             $order->getProfileId(),
-            $order->getOrigProfile()->get('profile_id'),
+            $order->getOrigProfile()->getProfileId(),
             'check profile id'
         );
 
         $this->assertEquals(
             0,
-            $order->getOrigProfile()->get('order_id'),
+            $order->getOrigProfile()->getOrderId(),
             'check order id'
         );
 
@@ -718,7 +717,7 @@ class XLite_Tests_Model_Order extends XLite_Tests_TestCase
 
         $this->assertEquals(
             $order->getProfileId(),
-            $order->getOrigProfile()->get('profile_id'),
+            $order->getOrigProfile()->getProfileId(),
             'check empty profile'
         );
     }
@@ -778,7 +777,7 @@ class XLite_Tests_Model_Order extends XLite_Tests_TestCase
 
         $order->setOrigProfile($p);
 
-        $this->assertEquals($p->get('profile_id'), $order->getOrigProfileId(), 'check profile id #2');
+        $this->assertEquals($p->getProfileId(), $order->getOrigProfileId(), 'check profile id #2');
     }
 
     public function testGetEventFingerprint()
@@ -975,10 +974,9 @@ class XLite_Tests_Model_Order extends XLite_Tests_TestCase
     {
         $order = new \XLite\Model\Order();
 
-        $profile = new \XLite\Model\Profile();
-        $list = $profile->findAll();
-        $profile = array_shift($list);
-        unset($list);
+        $profiles = \XLite\Core\Database::getRepo('XLite\Model\Profile')->findAll();
+        $profile = array_shift($profiles);
+        unset($profiles);
 
         $order->map($this->testOrder);
         $order->setCurrency(\XLite\Core\Database::getRepo('XLite\Model\Currency')->find(840));

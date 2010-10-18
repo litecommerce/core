@@ -718,3 +718,157 @@ TABLE.SubHeader {
 	WIDTH: 1px;
 	HEIGHT: 1px;
 }
+
+li.address-text-title,
+li.address-text-firstname,
+li.address-text-lastname,
+li.address-text-city,
+li.address-text-state_id,
+li.address-text-zipcode
+{
+  display: inline; 
+}
+
+li.address-text-street,
+li.address-text-phone {
+  padding-top: 5px;
+}
+
+.address-text-comma-title,
+.address-text-comma-firstname,
+.address-text-comma-lastname,
+.address-text-comma-street,
+.address-text-comma-zipcode,
+.address-text-comma-country_code,
+.address-text-comma-phone {
+  display: none;
+}
+
+.address-text-label-title,
+.address-text-label-firstname,
+.address-text-label-lastname,
+.address-text-label-street,
+.address-text-label-city,
+.address-text-label-state_id,
+.address-text-label-zipcode,
+.address-text-label-country_code
+{
+  display: none;
+}
+
+ul.address-box {
+  -moz-border-radius:5px 5px 5px 5px;
+  border-style:solid;
+  border-width:1px;
+  float: left;
+  margin-right: 20px;
+  margin-bottom: 20px;
+  padding:20px;
+  width: 300px;
+  height: 140px;
+  border-color:#DFDFDF;
+  background-color: #F4F4F4;
+}
+
+.address-center-button {
+  text-align: center;
+  padding-top: 60px;
+}
+
+.address-text {
+  font-family: Helvetica,Arial,sans-serif;
+  font-size: 14px;
+}
+
+img.address-type-icon {
+  display: block;
+  padding: 5px 5px 5px 5px;
+}
+
+.address-form-label {
+  width: 100px;
+}
+
+.address-form-element {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+button.delete-address {
+  border: 0px;
+  vertical-align: middle;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-position: left center;
+  background-image: url(images/icon_trash.png);
+  height: 24px;
+  padding-left: 15px;
+  padding-right: 5px;
+  cursor: pointer;
+}
+
+button.delete-address span {
+  font-family: Helvetica,Arial,sans-serif;
+  font-size: 10px;
+  color: #666666;
+  text-decoration: underline;
+}
+
+button.delete-address {
+}
+
+.header {
+  font-weight: bold;
+  font-size: 13px;
+  color: #333333;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  border-bottom-style: solid;
+  border-width: 1px;
+}
+
+.table tr td {
+  padding-left: 25px;
+  padding-bottom: 10px;
+  font-size: 11px;
+  font-weight: bold;
+}
+
+.table-label {
+  width: 150px;
+  white-space: nowrap;
+}
+
+.table-value {
+}
+
+#referer,
+#added,
+#last-login,
+#language,
+#orders-count {
+  font-weight: normal;
+}
+
+.table input,
+.table select
+{
+  border-width: 1px;
+  border-color: #000000;
+  font-size: 12px;
+}
+
+.profile-form input,
+.profile-form select
+{
+  width: 300px;
+}
+
+.model-form-buttons {
+  padding-top: 25px;
+}
+
+.profile-form .button
+{
+  padding-left: 240px;
+}
