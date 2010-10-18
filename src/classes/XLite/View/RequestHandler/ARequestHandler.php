@@ -74,7 +74,7 @@ abstract class ARequestHandler extends \XLite\View\AView
      */
     protected function getSessionCell()
     {
-        return \XLite\Core\Converter::getPlaneClassName($this);
+        return \XLite\Core\Converter::getPlainClassName($this);
     }
 
     /**

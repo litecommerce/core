@@ -15,8 +15,8 @@
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
  * @category   LiteCommerce
- * @package    XLite
- * @subpackage View
+ * @package    Tests
+ * @subpackage Classes
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -26,38 +26,33 @@
  * @since      3.0.0
  */
 
-namespace XLite\View\Form\Product\Search\Admin;
-
-/**
- * Main 
- * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
- */
-class Main extends \XLite\View\Form\Product\Search\Admin\AAdmin
+class XLite_Tests_Module_FeaturedProducts_Main extends XLite_Tests_TestCase
 {
-    /**
-     * getDefaultTarget
-     *
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getDefaultTarget()
+    public function testGetDescription()
     {
-        return 'product_list';
+        $this->assertEquals('This module enables featured products list', $this->getMain()->getDescription(), 'Wrong description');
     }
 
-    /**
-     * getDefaultAction
-     *
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getDefaultAction()
+    public function testGetVersion()
     {
-        return 'search';
+        $this->assertEquals('3.0', $this->getMain()->getVersion(), 'Wrong version');
     }
+
+
+    public function testShowSettingsForm()
+    {
+        $this->assertTrue($this->getMain()->showSettingsForm(), 'Wrong flag to show settings form');
+    }
+
+    public function testGetModuleType()
+    {
+        $this->assertEquals(\XLite\Module\FeaturedProducts\Main::MODULE_GENERAL, $this->getMain()->getModuleType(), 'Wrong module type');
+    }
+
+    protected function getMain()
+    {
+        return new \XLite\Module\FeaturedProducts\Main;
+    }
+
 }
+

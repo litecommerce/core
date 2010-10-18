@@ -39,6 +39,16 @@ namespace XLite\Controller\Admin;
 class ProductList extends \XLite\Controller\Admin\AAdmin
 {
     /**
+     * params 
+     * 
+     * @var    array
+     * @access public
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    public $params = array('target', 'mode');
+
+    /**
      * doActionUpdate 
      * 
      * @return void
@@ -63,5 +73,80 @@ class ProductList extends \XLite\Controller\Admin\AAdmin
     {
         \XLite\Core\Database::getRepo('\XLite\Model\Product')->deleteInBatchById($this->getToDelete());
     }
-}
 
+    /**
+     * doActionSearch 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionSearch()
+    {   
+        $sessionCell    = \XLite\View\ItemsList\Product\Admin\Search::getSessionCellName();
+        $searchParams   = \XLite\View\ItemsList\Product\Admin\Search::getSearchParams();
+        $productsSearch = array();
+        $cBoxFields     = array(
+            \XLite\View\ItemsList\Product\Admin\Search::PARAM_SEARCH_IN_SUBCATS
+        );
+        
+        foreach ($searchParams as $modelParam => $requestParam) {
+            if (isset(\XLite\Core\Request::getInstance()->$requestParam)) {
+                $productsSearch[$requestParam] = \XLite\Core\Request::getInstance()->$requestParam;
+            }
+        }
+ 
+        foreach ($cBoxFields as $requestParam) {
+            $productsSearch[$requestParam] = isset(\XLite\Core\Request::getInstance()->$requestParam)
+                ? 1
+                : 0;
+        }
+        
+        $this->session->set($sessionCell, $productsSearch);
+        $this->set('returnUrl', $this->buildUrl('product_list', '', array('mode' => 'search')));
+    }
+
+    /**
+     * Get search conditions
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getConditions()
+    {
+        $searchParams = $this->session->get(\XLite\View\ItemsList\Product\Admin\Search::getSessionCellName());
+
+        if (!is_array($searchParams)) {
+            $searchParams = array();
+        }
+
+        return $searchParams;
+    }
+
+    /**
+     * Get search condition parameter by name
+     * 
+     * @param string $paramName 
+     *  
+     * @return mixed
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCondition($paramName)
+    {
+        $searchParams = $this->getConditions();
+
+        if (isset($searchParams[$paramName])) {
+            $return = $searchParams[$paramName];
+        }
+
+        return isset($searchParams[$paramName])
+            ? $searchParams[$paramName]
+            : null;
+    }
+
+}

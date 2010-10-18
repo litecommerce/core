@@ -707,11 +707,15 @@ INSERT INTO xlite_product_detailed_images SET `id` = '4024', `alt` = 'Stuffed Ba
 INSERT INTO xlite_product_detailed_images SET `id` = '4024', `path` = 'demo_store_p4024.jpeg', `mime` = 'image/jpeg', `width` = '400', `height` = '454', `size` = '26961', `is_zoom` = 1, `orderby` = '-1', `enabled` = 1;
 
 -- Featured products
-INSERT INTO xlite_featured_products VALUES (4006,0,10);
-INSERT INTO xlite_featured_products VALUES (3002,0,20);
-INSERT INTO xlite_featured_products VALUES (4059,0,30);
-INSERT INTO xlite_featured_products VALUES (4043,0,40);
-INSERT INTO xlite_featured_products VALUES (4020,0,50);
+INSERT INTO xlite_featured_products VALUES (1,4006,NULL,10);
+INSERT INTO xlite_featured_products VALUES (2,3002,NULL,20);
+INSERT INTO xlite_featured_products VALUES (3,4059,NULL,30);
+INSERT INTO xlite_featured_products VALUES (4,4043,NULL,40);
+INSERT INTO xlite_featured_products VALUES (5,4020,NULL,50);
+INSERT INTO xlite_featured_products VALUES (6,4047,1004,10);
+INSERT INTO xlite_featured_products VALUES (7,4015,1004,20);
+INSERT INTO xlite_featured_products VALUES (8,4012,1004,30);
+
 
 -- Temporary
 UPDATE xlite_categories SET html_block = '<img alt="" src="data:image/jpg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEP

@@ -156,7 +156,7 @@ class Search extends \XLite\View\ItemsList\Order\Admin\AAdmin
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getSearchParams()
+    static public function getSearchParams()
     {
         return array(
             \XLite\Model\Repo\Order::P_ORDER_ID => self::PARAM_ORDER_ID,
@@ -222,11 +222,6 @@ class Search extends \XLite\View\ItemsList\Order\Admin\AAdmin
 
         foreach ($this->getSearchParams() as $modelParam => $requestParam) {
             $result->$modelParam = $this->getParam($requestParam);
-        }
-
-        // FIXME
-        if ($this->startDate < $this->endDate) {
-            $result->{\XLite\Model\Repo\Order::P_DATE} = array($this->startDate, $this->endDate);
         }
 
         return $result;

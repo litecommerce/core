@@ -42,6 +42,15 @@ class FeaturedProducts extends \XLite\View\ItemsList\Product\Customer\ACustomer
      */
     const PARAM_CATEGORY_ID = 'category_id';
 
+    /**
+     * Featured products
+     * 
+     * @var    mixed
+     * @access protected
+     * @see    ____var_see____
+     * @since  1.0.0
+     */
+    protected $featuredProducts = null;
 
     /**
      * Return title
@@ -66,8 +75,7 @@ class FeaturedProducts extends \XLite\View\ItemsList\Product\Customer\ACustomer
      */
     protected function getPagerClass()
     {
-        // TODO - rework
-        return null;
+        return '\XLite\Module\FeaturedProducts\View\Pager\Pager';
     }
 
     /**
@@ -125,16 +133,23 @@ class FeaturedProducts extends \XLite\View\ItemsList\Product\Customer\ACustomer
      */
     protected function getData(\XLite\Core\CommonCell $cnd, $countOnly = false)
     {
-        $featuredProducts = $this->getCategory()->getFeaturedProducts();
-        $products = array();
+        if (!isset($this->featuredProducts)) {
 
-        if (is_array($featuredProducts)) {
-            foreach ($featuredProducts as $fp) {
-                $products[] = $fp->get('product');
+            $products = array();
+
+            $fp = \XLite\Core\Database::getRepo('\XLite\Module\FeaturedProducts\Model\FeaturedProduct')
+                ->getFeaturedProducts($this->category_id);
+
+            foreach ($fp as $product) {
+                $products[] = $product->getProduct();
             }
+        
+            $this->featuredProducts = $products;
         }
 
-        return $products;
+        return true === $countOnly
+            ? count($this->featuredProducts)
+            : $this->featuredProducts;
     }
 
     /**
@@ -149,7 +164,6 @@ class FeaturedProducts extends \XLite\View\ItemsList\Product\Customer\ACustomer
     {
         return parent::isVisible() && !$this->get('page');
     }
-
 
     /**
      * Return list of targets allowed for this widget

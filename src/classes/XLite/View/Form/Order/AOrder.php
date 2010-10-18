@@ -37,4 +37,28 @@ namespace XLite\View\Form\Order;
  */
 abstract class AOrder extends \XLite\View\Form\AForm
 {
+    /**
+     * getDefaultFormMethod
+     *
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getDefaultFormMethod()
+    {
+        return 'post';
+    }
+
+    /**
+     * getDefaultParams
+     *
+     * @return array
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultParams()
+    {
+        return parent::getDefaultParams() + array('mode' => 'search');
+    }
 }

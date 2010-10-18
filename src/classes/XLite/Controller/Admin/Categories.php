@@ -38,6 +38,16 @@ namespace XLite\Controller\Admin;
 class Categories extends \XLite\Controller\Admin\Catalog
 {
     /**
+     * FIXME- backward compatibility 
+     * 
+     * @var    array
+     * @access public
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    public $params = array('target', 'category_id', 'page', 'backUrl');
+
+    /**
      * getModelObject
      *
      * @return \XLite\Model\AModel
