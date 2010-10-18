@@ -22,6 +22,23 @@ extend(ProductsListView, ListView);
 function ProductsListController(base)
 {
   ProductsListController.superclass.constructor.apply(this, arguments);
+
+  core.bind(
+    'updateCart',
+    function(event, data) {
+      for (var i = 0; i < data.items.length; i++) {
+        if (data.items[i].object_type == 'product') {
+          productPattern = '.productid-' + data.items[i].object_id + ' .added-to-cart';
+          if (data.items[i].quantity > 0) {
+            $(productPattern, base).removeClass('hidden');
+          } else {
+            $(productPattern, base).addClass('hidden');
+          }
+        }
+      }
+    }
+  );
+
 }
 
 extend(ProductsListController, ListsController);
@@ -82,7 +99,7 @@ ProductsListView.prototype.postprocess = function(isSuccess, initial)
 
     var draggablePattern = '.products-grid .product, .products-list .product';
     var draggableMarkPattern = '.products-grid .product .drag-n-drop-handle, .products-list .product .drag-n-drop-handle';
-    var cartTray = $('.cart-tray').eq(0);
+    var cartTray = $('.cart-tray', this.base).eq(0);
 
     var countRequests = 0;
     cartTray.data('isProductDrag', false);
