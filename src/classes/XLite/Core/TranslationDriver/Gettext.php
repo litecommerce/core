@@ -115,10 +115,18 @@ class Gettext extends \XLite\Core\TranslationDriver\ATranslationDriver
                 \Includes\Utils\FileManager::mkdirRecursive(LC_LOCALE_DIR);
             }
 
+            if (!file_exists(LC_TMP_DIR)) {
+                \Includes\Utils\FileManager::mkdirRecursive(LC_TMP_DIR);
+            }
+
             $result = file_exists(LC_LOCALE_DIR)
                 && is_dir(LC_LOCALE_DIR)
                 && is_readable(LC_LOCALE_DIR)
-                && is_writable(LC_LOCALE_DIR);
+                && is_writable(LC_LOCALE_DIR)
+                && file_exists(LC_TMP_DIR)
+                && is_dir(LC_TMP_DIR)
+                && is_readable(LC_TMP_DIR)
+                && is_writable(LC_TMP_DIR);
         }
 
         return $result;
@@ -223,13 +231,15 @@ class Gettext extends \XLite\Core\TranslationDriver\ATranslationDriver
      * 
      * @param string $code Language code
      *  
-     * @return void
+     * @return boolean
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
     protected function checkIndex($code)
     {
+        $result = true;
+
         $path = LC_LOCALE_DIR . LC_DS . $this->getLocaleByCode($code) . LC_DS . self::CATEGORY;
         if (!file_exists($path)) {
             \Includes\Utils\FileManager::mkdirRecursive($path);
@@ -238,12 +248,14 @@ class Gettext extends \XLite\Core\TranslationDriver\ATranslationDriver
         $path .= LC_DS . $this->getDomain($code) . '.mo';
         if (!file_exists($path)) {
             if ($this->getMsgFmtExecutable()) {
-                $this->createIndexFileBin($path, $code);
+                $result = $this->createIndexFileBin($path, $code);
 
             } else {
-                $this->createIndexFile($path, $code);
+                $result = $this->createIndexFile($path, $code);
             }
         }
+
+        return $result;
     }
 
     /**
@@ -329,6 +341,9 @@ class Gettext extends \XLite\Core\TranslationDriver\ATranslationDriver
 
         $result = false;
 
+        if (!file_exists(LC_TMP_DIR)) {
+            \Includes\Utils\FileManager::mkdirRecursive(LC_TMP_DIR);
+        }
         $poPath = LC_TMP_DIR . 'translate.' . $code . '.po';
         $fp = @fopen($poPath, 'wb');
         if ($fp) {
