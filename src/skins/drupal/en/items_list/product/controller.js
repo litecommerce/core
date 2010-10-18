@@ -28,11 +28,11 @@ function ProductsListController(base)
     function(event, data) {
       for (var i = 0; i < data.items.length; i++) {
         if (data.items[i].object_type == 'product') {
-          productPattern = '.productid-' + data.items[i].object_id + ' .added-to-cart';
+          productPattern = '.product.productid-' + data.items[i].object_id;
           if (data.items[i].quantity > 0) {
-            $(productPattern, base).removeClass('hidden');
+            $(productPattern, base).addClass('product-added');
           } else {
-            $(productPattern, base).addClass('hidden');
+            $(productPattern, base).removeClass('product-added');
           }
         }
       }
@@ -98,7 +98,7 @@ ProductsListView.prototype.postprocess = function(isSuccess, initial)
     var cartTrayFadeOutDuration = 400;
 
     var draggablePattern = '.products-grid .product, .products-list .product';
-    var draggableMarkPattern = '.products-grid .product .drag-n-drop-handle, .products-list .product .drag-n-drop-handle';
+
     var cartTray = $('.cart-tray', this.base).eq(0);
 
     var countRequests = 0;

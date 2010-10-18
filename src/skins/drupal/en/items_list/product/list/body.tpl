@@ -22,7 +22,7 @@
        * nor table-cell (becase it is not supported by IE6/IE7),
        * nor a single table with border-spacing and negative margins (because we need borders around two cells)
        *}
-      <table class="product productid-{product.getProductId()}">
+      <table class="{getProductCellClass(product)}">
         <tr>
           {*
            * Since there is no way to make a TD having a relative position, we need a container

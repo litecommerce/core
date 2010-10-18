@@ -665,17 +665,34 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
     /**
      * Checks whether a product was added to the cart
      * 
-     * @param int $product The product to look for
+     * @param \XLite\Model\Product $product The product to look for
      *
      * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isProductAdded($product)
+    {
+        return $this->getCart()->isProductAdded($product->getProductId());
+    }
+
+    /** 
+     * Return class attribute for the product cell
+     * 
+     * @param \XLite\Model\Product $product The product to look for
+     *
+     * @return string
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function isProductAdded($product)
-    {
-        return $this->getCart()->isProductAdded($product->getProductId());
-    }
+    public function getProductCellClass($product)
+    {   
+        return 'product productid-' 
+            . $product->getProductId() 
+            . ($this->isProductAdded($product) ? ' product-added' : '');
+    }   
 
     /** 
      * Return list of targets allowed for this widget
