@@ -27,6 +27,26 @@
  */
 
 /**
+ * Quick access helper
+ * 
+ * @param boolean $restart Restart helper
+ *  
+ * @return \XLite\Core\QuickAccess
+ * @see    ____func_see____
+ * @since  3.0.0
+ */
+function xlite($restart = false)
+{
+    static $obj = null;
+
+    if (!isset($obj) || $restart) {
+        $obj = new \XLite\Core\QuickAccess();
+    }
+
+    return $obj;
+}
+
+/**
 * Prints Javascript code to refresh the browser output page.
 */
 function func_refresh_start()
