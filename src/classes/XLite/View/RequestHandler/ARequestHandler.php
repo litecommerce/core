@@ -91,19 +91,6 @@ abstract class ARequestHandler extends \XLite\View\AView
     }
 
     /**
-     * Return target to retrive this widget from AJAX
-     * 
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    protected function getWidgetTarget()
-    {
-        return '';
-    }
-
-    /**
      * Check if passed request data are correspond to the current widget
      *
      * There are two cases:
@@ -217,6 +204,20 @@ abstract class ARequestHandler extends \XLite\View\AView
                 }
             }
         }
+    }
+
+
+    /**
+     * Return target to retrive this widget from AJAX
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected static function getWidgetTarget()
+    {
+        return '';
     }
 
 
