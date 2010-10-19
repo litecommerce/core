@@ -163,7 +163,7 @@ class Category extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * @see    ____func_see____
      * @since  1.0.0
      */
-    protected function getWidgetTarget()
+    protected static function getWidgetTarget()
     {
         return self::WIDGET_TARGET; 
     }

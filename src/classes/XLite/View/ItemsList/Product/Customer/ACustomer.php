@@ -705,7 +705,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
     public static function getAllowedTargets()
     {
         $result = parent::getAllowedTargets();
-        $result[] = self::getWidgetTarget();
+        $result[] = static::getWidgetTarget();
     
         return $result;
     }
