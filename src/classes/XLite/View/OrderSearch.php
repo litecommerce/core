@@ -196,9 +196,9 @@ class OrderSearch extends \XLite\View\Dialog
             }
 
         } else {
-            $result = \XLite\Model\Auth::getInstance()->getProfile(\XLite\Core\Request::getInstance()->profile_id);
+            $result = \XLite\Core\Auth::getInstance()->getProfile(\XLite\Core\Request::getInstance()->profile_id);
             if (!$result) {
-                $result = \XLite\Model\Auth::getInstance()->getProfile();
+                $result = \XLite\Core\Auth::getInstance()->getProfile();
             }
         }
 

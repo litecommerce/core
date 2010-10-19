@@ -76,7 +76,7 @@ class Addresses extends \XLite\View\Model\Profile\AProfile
      */
     protected function checkAccess()
     {
-        return \XLite\Model\Auth::getInstance()->isLogged();
+        return \XLite\Core\Auth::getInstance()->isLogged();
     }
 
     /**

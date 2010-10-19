@@ -259,7 +259,7 @@ class ExpressCheckout extends \XLite\Controller\Customer\ACustomer
                     $this->auth->getProfile()->update();
                 }
                                                         
-                \XLite\Model\Auth::getInstance()->getProfile()->read();
+                \XLite\Core\Auth::getInstance()->getProfile()->read();
 
                 $this->getCart()->set('paymentMethod', $pm);
 

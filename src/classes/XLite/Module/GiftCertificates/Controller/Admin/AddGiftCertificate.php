@@ -96,7 +96,7 @@ class AddGiftCertificate extends \XLite\Controller\Admin\AAdmin
         $this->gc->set('send_via', 'E');
         $this->gc->set('border', 'no_border');
 
-        $auth = \XLite\Model\Auth::getInstance();
+        $auth = \XLite\Core\Auth::getInstance();
 
         if ($auth->isLogged()) {
             $profile = $auth->getProfile();

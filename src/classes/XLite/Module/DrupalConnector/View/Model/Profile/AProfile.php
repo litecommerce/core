@@ -77,7 +77,7 @@ abstract class AProfile extends \XLite\View\Model\Profile\AProfile implements \X
     protected function checkAccess()
     {
         return \XLite\Module\DrupalConnector\Handler::getInstance()->checkCurrentCMS()
-            ? !(user_is_logged_in() && !\XLite\Model\Auth::getInstance()->isLogged())
+            ? !(user_is_logged_in() && !\XLite\Core\Auth::getInstance()->isLogged())
             : parent::checkAccess();
     }
 

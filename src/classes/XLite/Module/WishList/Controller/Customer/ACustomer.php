@@ -61,7 +61,7 @@ class ACustomer extends \XLite\Controller\Customer\ACustomer implements \XLite\B
      */
     public function getWishList()
     {
-        $profile = \XLite\Model\Auth::getInstance()->getProfile(\XLite\Core\Request::getInstance()->profile_id);
+        $profile = \XLite\Core\Auth::getInstance()->getProfile(\XLite\Core\Request::getInstance()->profile_id);
 
         if (!isset($this->wishlist) && isset($profile)) {
             $this->wishlist = new \XLite\Module\WishList\Model\WishList();

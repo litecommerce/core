@@ -81,7 +81,7 @@ class Checkout extends \XLite\View\Model\Profile\Checkout implements \XLite\Base
      */
     protected function addUsernameField()
     {
-        if (!user_is_logged_in() && !\XLite\Model\Auth::getInstance()->isLogged()) {
+        if (!user_is_logged_in() && !\XLite\Core\Auth::getInstance()->isLogged()) {
             $this->mainSchema = $this->getUsernameField() + $this->mainSchema;
         }
     }
@@ -115,7 +115,7 @@ class Checkout extends \XLite\View\Model\Profile\Checkout implements \XLite\Base
         return \XLite\Module\DrupalConnector\Handler::getInstance()->checkCurrentCMS()
             && !$this->isAnonymousUser()
             && !user_is_logged_in()
-            && !\XLite\Model\Auth::getInstance()->isLogged();
+            && !\XLite\Core\Auth::getInstance()->isLogged();
     }
 
     /**

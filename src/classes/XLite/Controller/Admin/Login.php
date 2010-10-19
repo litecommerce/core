@@ -52,7 +52,7 @@ class Login extends \XLite\Controller\Admin\AAdmin
 
     public function getAccessLevel()
     {
-        return \XLite\Model\Auth::getInstance()->getCustomerAccessLevel();
+        return \XLite\Core\Auth::getInstance()->getCustomerAccessLevel();
     }
 
     function fillForm()
@@ -79,7 +79,7 @@ class Login extends \XLite\Controller\Admin\AAdmin
             \XLite\Core\Request::getInstance()->password
         );
 
-        if (is_int($profile) && ACCESS_DENIED === $profile) {
+        if (is_int($profile) && \XLite\Core\Auth::RESULT_ACCESS_DENIED === $profile) {
 
             $this->set('valid', false);
             \XLite\Core\TopMessage::getInstance()->add('Invalid login or password', \XLite\Core\TopMessage::ERROR);

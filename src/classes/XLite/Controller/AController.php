@@ -92,7 +92,7 @@ abstract class AController extends \XLite\Core\Handler
      */
     protected function checkAccess()
     {
-        return \XLite\Model\Auth::getInstance()->isAuthorized($this);
+        return \XLite\Core\Auth::getInstance()->isAuthorized($this);
     }
 
     /**

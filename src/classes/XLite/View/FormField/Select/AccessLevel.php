@@ -57,7 +57,7 @@ class AccessLevel extends \XLite\View\FormField\Select\Regular
      */
     protected function getDefaultOptions()
     {
-        return \XLite\Model\Auth::getInstance()->getUserTypesRaw();
+        return \XLite\Core\Auth::getInstance()->getUserTypesRaw();
     }
 
     /**
@@ -69,7 +69,7 @@ class AccessLevel extends \XLite\View\FormField\Select\Regular
      */
     protected function checkFieldValue()
     {
-        return in_array($this->getValue(), \XLite\Model\Auth::getInstance()->getAccessLevelsList());
+        return in_array($this->getValue(), \XLite\Core\Auth::getInstance()->getAccessLevelsList());
     }
 }
 

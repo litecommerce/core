@@ -35,7 +35,7 @@ namespace XLite\Module\Affiliate\Model;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Auth extends \XLite\Model\Auth implements \XLite\Base\IDecorator
+class Auth extends \XLite\Core\Auth implements \XLite\Base\IDecorator
 {
     function isAuthenticated($profile)
     {

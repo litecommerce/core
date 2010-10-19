@@ -63,7 +63,7 @@ class PartnerRegisterForm extends \XLite\View\RegisterForm implements \XLite\Bas
             }
             // register partner
             $result = $this->auth->registerPartner($this->profile);
-            if ($result == ACCESS_DENIED) {
+            if ($result == \XLite\Core\Auth::ACCESS_DENIED) {
                 $this->set('invalidPassword', true);
             } else {
                 $this->set('valid', true);

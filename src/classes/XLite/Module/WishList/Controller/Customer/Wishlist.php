@@ -113,7 +113,7 @@ class Wishlist extends \XLite\Controller\Customer\ACustomer
     protected function doActionAdd()
     {
         // Only logged in user can use the wishlist
-        if (\XLite\Model\Auth::getInstance()->isLogged()) {
+        if (\XLite\Core\Auth::getInstance()->isLogged()) {
 
             // Search if product is already in wishlist
             list($status, $product) = $this->getWishListProduct()->searchWishListItem(

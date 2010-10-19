@@ -63,7 +63,7 @@ class Checkout extends \XLite\View\Model\Profile\Main
     {
         unset($sections[self::SECTION_ACCESS]);
 
-        if (\XLite\Model\Auth::getInstance()->isLogged()) {
+        if (\XLite\Core\Auth::getInstance()->isLogged()) {
             unset($sections[self::SECTION_MAIN]);
         }
 
@@ -81,7 +81,7 @@ class Checkout extends \XLite\View\Model\Profile\Main
     protected function prepareProfileSecureHash()
     {
         $result = \XLite\Core\Converter::generateRandomToken();
-        \XLite\Model\Auth::getInstance()->setSecureHash($result);
+        \XLite\Core\Auth::getInstance()->setSecureHash($result);
 
         return $result;
     }
@@ -150,7 +150,7 @@ class Checkout extends \XLite\View\Model\Profile\Main
     protected function loginProfile($password, $secureHash)
     {
         return is_object(
-            \XLite\Model\Auth::getInstance()->login(
+            \XLite\Core\Auth::getInstance()->login(
                 $this->getModelObject()->getLogin(), $password, $secureHash
             )
         );
@@ -182,7 +182,7 @@ class Checkout extends \XLite\View\Model\Profile\Main
      */
     protected function isAnonymousUser()
     {
-        return !\XLite\Model\Auth::getInstance()->isLogged();
+        return !\XLite\Core\Auth::getInstance()->isLogged();
     }
 
     /**
@@ -213,8 +213,8 @@ class Checkout extends \XLite\View\Model\Profile\Main
     protected function isPassedEmailDifferent()
     {
         return $this->getRequestData('login')
-            && \XLite\Model\Auth::getInstance()->isLogged()
-            && \XLite\Model\Auth::getInstance()->getProfile()->getLogin() !== $this->getModelObject()->getLogin();
+            && \XLite\Core\Auth::getInstance()->isLogged()
+            && \XLite\Core\Auth::getInstance()->getProfile()->getLogin() !== $this->getModelObject()->getLogin();
     }
 
     /**
@@ -237,10 +237,10 @@ class Checkout extends \XLite\View\Model\Profile\Main
         $result = parent::performActionModify();
 
         // Log in on success
-        if ($result && !\XLite\Model\Auth::getInstance()->isLogged()) {
+        if ($result && !\XLite\Core\Auth::getInstance()->isLogged()) {
 
             // This request var will modify the behaviour
-            // of the "\XLite\Model\Auth::findForAuth()" method
+            // of the "\XLite\Core\Auth::findForAuth()" method
             if ($this->isAnonymousUser()) {
                 \XLite\Core\Request::getInstance()->anonymous = true;
             }
