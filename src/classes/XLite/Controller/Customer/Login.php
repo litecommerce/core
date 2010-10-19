@@ -117,14 +117,14 @@ class Login extends \XLite\Controller\Customer\ACustomer
         $data = \XLite\Core\Request::getInstance()->getData();
         $token = empty($data[self::SECURE_TOKEN]) ? null : $data[self::SECURE_TOKEN];
 
-        return \XLite\Model\Auth::getInstance()->login($data['login'], $data['password'], $token);
+        return \XLite\Core\Auth::getInstance()->login($data['login'], $data['password'], $token);
     }
 
     function action_login()
     {
         $this->profile = $this->performLogin();
 
-        if ($this->profile === ACCESS_DENIED) {
+        if ($this->profile === \XLite\Core\Auth::RESULT_ACCESS_DENIED) {
             $this->set('valid', false);
             return;
         }

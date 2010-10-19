@@ -48,7 +48,7 @@ class Base extends \XLite\Base\Singleton
      */
     protected static $singletons = array(
         'xlite'    => 'XLite',
-        'auth'     => '\XLite\Model\Auth',
+        'auth'     => '\XLite\Core\Auth',
         'session'  => '\XLite\Core\Session',
         'db'       => '\XLite\Model\Database',
         'logger'   => '\XLite\Logger',

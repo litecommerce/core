@@ -808,7 +808,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      */
     public function isCurrentIpValid()
     {
-        return $this->auth->isValidAdminIP($this, true) == \XLite\Model\Auth::IP_VALID;
+        return $this->auth->isValidAdminIP($this, true) == \XLite\Core\Auth::IP_VALID;
     }
 
     /**

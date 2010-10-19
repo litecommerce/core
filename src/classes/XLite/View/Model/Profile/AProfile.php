@@ -325,7 +325,7 @@ abstract class AProfile extends \XLite\View\Model\AModel
      */
     protected function getSubmitButtonLabel()
     {
-        return \XLite\Model\Auth::getInstance()->isLogged() ? 'Update profile' : 'Create new account';
+        return \XLite\Core\Auth::getInstance()->isLogged() ? 'Update profile' : 'Create new account';
     }
 
     /**
@@ -465,7 +465,7 @@ abstract class AProfile extends \XLite\View\Model\AModel
         $profile = parent::getModelObject();
 
         // Reset profile if it's not valid
-        if (!\XLite\Model\Auth::getInstance()->checkProfile($profile)) {
+        if (!\XLite\Core\Auth::getInstance()->checkProfile($profile)) {
             $profile = \XLite\Model\CachingFactory::getObject(__METHOD__, '\XLite\Model\Profile');
         }
 

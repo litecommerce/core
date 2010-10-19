@@ -239,7 +239,7 @@ class AdminMain extends \XLite\View\Model\AModel
     protected function setModelProperties(array $data)
     {
         if (isset($data['password'])) {
-            $data['password'] = \XLite\Model\Auth::encryptPassword($data['password']);
+            $data['password'] = \XLite\Core\Auth::encryptPassword($data['password']);
         }
 
         parent::setModelProperties($data);

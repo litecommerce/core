@@ -151,7 +151,7 @@ abstract class AAdmin extends \XLite\Controller\AController
         // auto-login request
 /*
         if (!$this->auth->is('logged') && isset(\XLite\Core\Request::getInstance()->login) && isset(\XLite\Core\Request::getInstance()->password)) {
-            if ($this->auth->adminLogin(\XLite\Core\Request::getInstance()->login, \XLite\Core\Request::getInstance()->password) === ACCESS_DENIED) {
+            if ($this->auth->adminLogin(\XLite\Core\Request::getInstance()->login, \XLite\Core\Request::getInstance()->password) === \XLite\Core\Auth::RESULT_ACCESS_DENIED) {
                 die('ACCESS DENIED');
             }
         }

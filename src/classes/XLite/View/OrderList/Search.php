@@ -108,7 +108,7 @@ class Search extends \XLite\View\OrderList\AOrderList
      */
     protected function getProfile()
     {
-        return \XLite\Model\Auth::getInstance()->getProfile(\XLite\Core\Request::getInstance()->profile_id);
+        return \XLite\Core\Auth::getInstance()->getProfile(\XLite\Core\Request::getInstance()->profile_id);
     }
 
     /**

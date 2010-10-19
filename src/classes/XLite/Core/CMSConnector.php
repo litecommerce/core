@@ -434,7 +434,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
      */
     public function getProfile($cmsUserId)
     {
-        return \XLite\Model\Auth::getInstance()->getProfile($this->getProfileIdByCMSId($cmsUserId));
+        return \XLite\Core\Auth::getInstance()->getProfile($this->getProfileIdByCMSId($cmsUserId));
     }
 
 

@@ -84,7 +84,7 @@ class Cart extends \XLite\Model\Order
 
             static::$instances[$className] = $cart;
 
-            $auth = \XLite\Model\Auth::getInstance();
+            $auth = \XLite\Core\Auth::getInstance();
 
             if ($auth->isLogged()) {
                 if ($auth->getProfile()->getProfileId() != $cart->getProfileId()) {
@@ -221,7 +221,7 @@ class Cart extends \XLite\Model\Order
         if (self::STATUS_TEMPORARY == $this->getStatus()) {
             $this->setDate(time());
 
-            $profile = \XLite\Model\Auth::getInstance()->getProfile();
+            $profile = \XLite\Core\Auth::getInstance()->getProfile();
             if ($profile->getOrderId()) {
                 // anonymous checkout:
                 // use the current profile as order profile

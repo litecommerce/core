@@ -164,7 +164,7 @@ class Main extends \XLite\View\Model\Profile\AProfile
     protected function setModelProperties(array $data)
     {
         if (isset($data['password'])) {
-            $data['password'] = \XLite\Model\Auth::encryptPassword($data['password']);
+            $data['password'] = \XLite\Core\Auth::encryptPassword($data['password']);
         }
 
         parent::setModelProperties($data);
@@ -258,8 +258,8 @@ class Main extends \XLite\View\Model\Profile\AProfile
      */
     protected function performActionCreate()
     {
-        // FIXME: Uncomment this after the "register" funcion of "\XLite\Model\Auth" class will be refactored
-        // return !$this->checkPassword() ?: \XLite\Model\Auth::getInstance()->register($this->getModelObject());
+        // FIXME: Uncomment this after the "register" funcion of "\XLite\Core\Auth" class will be refactored
+        // return !$this->checkPassword() ?: \XLite\Core\Auth::getInstance()->register($this->getModelObject());
 
         return $this->checkPassword() ? parent::performActionCreate() : false;
     }
@@ -285,8 +285,8 @@ class Main extends \XLite\View\Model\Profile\AProfile
      */
     protected function performActionDelete()
     {
-        // FIXME: Uncomment this after the "unregister" funcion of "\XLite\Model\Auth" class will be refactored
-        // return \XLite\Model\Auth::getInstance()->unregister($this->getModelObject());
+        // FIXME: Uncomment this after the "unregister" funcion of "\XLite\Core\Auth" class will be refactored
+        // return \XLite\Core\Auth::getInstance()->unregister($this->getModelObject());
 
         return parent::performActionDelete();
     }

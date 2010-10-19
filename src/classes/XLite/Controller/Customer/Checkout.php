@@ -131,7 +131,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
      */
     protected function isRegistrationNeeded()
     {
-        return !\XLite\Model\Auth::getInstance()->isLogged() || !$this->checkProfile();
+        return !\XLite\Core\Auth::getInstance()->isLogged() || !$this->checkProfile();
     }
 
     /**

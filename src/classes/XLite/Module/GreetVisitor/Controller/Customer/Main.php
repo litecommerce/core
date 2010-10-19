@@ -52,7 +52,7 @@ class Main extends \XLite\Controller\Customer\Main implements \XLite\Base\IDecor
         parent::startPage();
 
         $options = \XLite::getInstance()->getOptions('host_details');
-        $auth    = \XLite\Model\Auth::getInstance();
+        $auth    = \XLite\Core\Auth::getInstance();
 
         if ($auth->isLogged()) {
             $first_last = $auth->getComplex('profile.billing_firstname') . ' ' . $auth->getComplex('profile.billing_lastname');
