@@ -195,10 +195,10 @@
 	</target>
 
 	<target name="comparison">
-        <exec executable="svn" dir="${buildDir}" >
+        <!--exec executable="svn" dir="${buildDir}" >
             <arg line="checkout svn://svn.crtdev.local/repo/comparison/main comparison" />
         </exec>
-        <ant antfile="${buildDir}/comparison/build.xml" target="cc" dir="${buildDir}/comparison" />
+        <ant antfile="${buildDir}/comparison/build.xml" target="cc" dir="${buildDir}/comparison" /-->
 	</target>
 
 	<target name="create-build">
