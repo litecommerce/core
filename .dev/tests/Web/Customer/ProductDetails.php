@@ -76,7 +76,7 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
         }
 
         // Gallery
-        if ($product->getActiveDetailedImages()) {
+        if ($product->getImages()) {
             $this->assertElementPresent(
                 "//form[@class='product-details hproduct']"
                 . "/div[@class='image']"
@@ -95,7 +95,7 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
                 'check gallery items'
             );
             $this->assertEquals(
-                count($product->getActiveDetailedImages()),
+                count($product->getImages()),
                 $this->getJSExpression("$('div.product-details .image .product-image-gallery li a').length"),
                 'check gallery length'
             );
