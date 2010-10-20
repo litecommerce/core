@@ -297,7 +297,11 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     public function getImage()
     {
         if (!isset($this->image)) {
-            $this->image = $this->getImages()->get(0);
+
+            $this->image = isset($this->images)
+                ? $this->images->get(0)
+                : \XLite\Core\Database::getRepo('\XLite\Model\Image\Product\Image')
+                    ->findOneByProductId($this->getProductId());
         }
 
         return $this->image;
