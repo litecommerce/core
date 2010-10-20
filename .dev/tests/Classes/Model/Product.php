@@ -95,42 +95,6 @@ class XLite_Tests_Model_Product extends XLite_Tests_Model_AProduct
 	}
 
 	/**
-	 * testThumbnail 
-	 * 
-	 * @return void
-	 * @access public
-	 * @see    ____func_see____
-	 * @since  3.0.0
-	 */
-	public function testThumbnail()
-	{
-		$entity = new \XLite\Model\Product();
-
-		$entity->setThumbnail(new \XLite\Model\Image\Product\Thumbnail(array('id' => 15090)));
-
-		// Check key
-		$this->assertEquals(15090, $entity->getThumbnail()->getId());
-	}
-
-	/**
-     * testImage
-     *
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function testImage()
-    {
-        $entity = new \XLite\Model\Product();
-
-        $entity->setImage(new \XLite\Model\Image\Product\Image(array('id' => 15090)));
-
-        // Check key
-        $this->assertEquals(15090, $entity->getImage()->getId());
-    }
-
-	/**
 	 * testAddOptionGroups 
 	 * 
 	 * @return void

@@ -11,5 +11,5 @@
  * @since     3.0.0
  * @ListChild (list="cart.item", weight="20")
  *}
-<td class="item-thumbnail" IF="item.hasThumbnail()"><a href="{item.getURL()}"><widget class="\XLite\View\Image" image="{item.getThumbnail()}" alt="{item.getName()}" maxWidth="80" maxHeight="80" centerImage="0" /></a></td>
-<td class="item-thumbnail" IF="!item.hasThumbnail()">&nbsp;</td>
+<td class="item-thumbnail" IF="item.hasImage()"><a href="{item.getURL()}"><widget class="\XLite\View\Image" image="{item.getImage()}" alt="{item.getName()}" maxWidth="80" maxHeight="80" centerImage="0" /></a></td>
+<td class="item-thumbnail" IF="!item.hasImage()">&nbsp;</td>

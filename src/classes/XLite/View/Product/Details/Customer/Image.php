@@ -67,7 +67,7 @@ class Image extends \XLite\View\Product\Details\Customer\ACustomer
      */
     protected function getTemplate()
     {
-        return $this->getProduct()->hasZoomImage()
+        return $this->getProduct()->hasImage()
             ? $this->getDir() . '/parts/image-zoom.tpl'
             : $this->getDefaultTemplate();
     }
@@ -82,7 +82,7 @@ class Image extends \XLite\View\Product\Details\Customer\ACustomer
      */
     protected function getZoomImageURL()
     {
-        return $this->getProduct()->getZoomImage()->getURL();
+        return $this->getProduct()->getImage()->getURL();
     }
 
     /**

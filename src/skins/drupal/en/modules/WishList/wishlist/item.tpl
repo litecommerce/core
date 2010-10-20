@@ -18,8 +18,8 @@
 
 <td class="item-thumbnail" IF="item.hasImage()">
   <a href="{item.getUrl()}">
-    <widget class="\XLite\View\Image" image="{item.getThumbnail()}" alt="{item.name}" maxWidth="75" maxHeight="75" IF="item.getThumbnail()" />
-    <img src="{item.imageURL}" alt="{item.name}" IF="!item.getThumbnail()"/>
+    <widget class="\XLite\View\Image" image="{item.getImage()}" alt="{item.name}" maxWidth="75" maxHeight="75" IF="item.getImage()" />
+    <img src="{item.imageURL}" alt="{item.name}" IF="!item.getImage()"/>
   </a>
 </td>
 

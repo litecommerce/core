@@ -117,14 +117,14 @@ interface IOrderItem
     public function getSku();
 
     /**
-     * getThumbnail 
+     * getImage 
      * 
      * @return \XLite\Model\Base\Image or null
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getThumbnail();
+    public function getImage();
 
     /**
      * getFreeShipping 

@@ -187,41 +187,27 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     protected $category_products;
 
     /**
-     * Product thumbnail
-     *
-     * @var    \XLite\Mode\Image\Product\Thumbnail
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     *
-     * @OneToOne (targetEntity="XLite\Model\Image\Product\Thumbnail", mappedBy="product", cascade={"all"})
-     */
-    protected $thumbnail;
-
-    /**
      * Product image
      *
-     * @var    \XLite\Mode\Image\Product\Image
+     * @var    \XLite\Model\Image\Product\Image
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     *
-     * @OneToOne (targetEntity="XLite\Model\Image\Product\Image", mappedBy="product", cascade={"all"})
      */
     protected $image;
 
     /**
-     * Product detailed images
+     * Product images
      *
      * @var    \XLite\Model\Image\Product\Image
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @OneToMany (targetEntity="XLite\Model\Image\Product\Detailed", mappedBy="product", cascade={"all"})
+     * @OneToMany (targetEntity="XLite\Model\Image\Product\Image", mappedBy="product", cascade={"all"})
      * @OrderBy ({"orderby" = "ASC"})
      */
-    protected $detailed_images;
+    protected $images;
 
     /**
      * Product extra fields 
@@ -234,16 +220,6 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      * TODO[DOCTRINE] - add tags
      */
     protected $extra_fields = array();
-
-    /**
-     * Active detailed images (cache)
-     * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected $activeDetailedImages;
 
     /**
      * Get object unique id 
@@ -311,16 +287,20 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     }
 
     /**
-     * Get thumbnail 
+     * Get image 
      * 
-     * @return \XLite\Model\Image\Product\Thumbnail
+     * @return \XLite\Model\Image\Product\Image
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getThumbnail()
+    public function getImage()
     {
-        return $this->thumbnail;
+        if (!isset($this->image)) {
+            $this->image = $this->getImages()->get(0);
+        }
+
+        return $this->image;
     }
 
     /**
@@ -415,19 +395,6 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     }
 
     /**
-     * Check if product has thumbnail or not
-     * 
-     * @return bool
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function hasThumbnail()
-    {
-        return !is_null($this->getThumbnail()) && $this->getThumbnail()->isPersistent();
-    }
-
-    /**
      * Check if product has image or not
      *
      * @return bool
@@ -438,19 +405,6 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     public function hasImage()
     {
         return !is_null($this->getImage()) && $this->getImage()->isPersistent();
-    }
-
-    /**
-     * Return thumbnail URL 
-     * 
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getThumbnailURL()
-    {
-        return $this->getThumbnail()->getURL();
     }
 
     /**
@@ -583,14 +537,14 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getActiveDetailedImages()
+    public function getImages()
     {
-        if (!isset($this->activeDetailedImages)) {
-            $this->activeDetailedImages = \XLite\Core\Database::getRepo('\XLite\Model\Image\Product\Detailed')
-                ->findActiveByProductId($this->getProductId());
+        if (!isset($this->images)) {
+            $this->images = \XLite\Core\Database::getRepo('\XLite\Model\Image\Product\Image')
+                ->findByProductId($this->getProductId());
         }
 
-        return $this->activeDetailedImages;
+        return $this->images;
     }
 
     /**
@@ -601,45 +555,9 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function countActiveDetailedImages()
+    public function countImages()
     {
-        return count($this->getActiveDetailedImages());
-    }
-
-
-    /**
-     * Check - has product zoom image or not
-     *
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function hasZoomImage()
-    {
-        return !is_null($this->getZoomImage());
-    }
-
-    /**
-     * Get zoom image 
-     * 
-     * @return \XLite\Model\Image\Product\Detailed
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getZoomImage()
-    {
-        $result = null;
-
-        foreach ($this->getActiveDetailedImages() as $image) {
-            if ($image->getIsZoom()) {
-                $result = $image;
-                break;
-            }
-        }
-
-        return $result;
+        return count($this->getImages());
     }
 
     /**

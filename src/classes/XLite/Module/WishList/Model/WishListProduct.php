@@ -101,7 +101,7 @@ class WishListProduct extends \XLite\Model\AModel
      */
     function getThumbnail()
     {
-        return ($product = $this->getProduct()) ? $product->getThumbnail() : null;
+        return ($product = $this->getProduct()) ? $product->getImage() : null;
     }
     
     function getOrderItem() 

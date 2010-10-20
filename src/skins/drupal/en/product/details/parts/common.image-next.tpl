@@ -12,5 +12,5 @@
  *
  * @ListChild (list="product.details.page.image.photo", weight="15")
  *}
-<a IF="product.getActiveDetailedImages()" class="arrow right-arrow" href="javascript:void(0);"><img src="images/spacer.gif" alt="Next image" /></a>
-<span IF="!product.getActiveDetailedImages()" class="arrow right-arrow"></span>
+<a IF="product.getImages()&!product.countImages()=1" class="arrow right-arrow" href="javascript:void(0);"><img src="images/spacer.gif" alt="Next image" /></a>
+<span IF="!product.getImages()|product.countImages()=1" class="arrow right-arrow"></span>

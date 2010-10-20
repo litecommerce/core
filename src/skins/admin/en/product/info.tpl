@@ -136,26 +136,6 @@
 </tr>
 
 <tr>
-  <td class=ProductDetails valign=top height="15" width="140"><font class="FormButton">Thumbnail</font><br>(in products list)</td>
-  <td class=ProductDetails valign="middle">
-<img IF="product.hasThumbnail()" src="{product.thumbnailURL:h}" border=0></img>
-<br>
-<span IF="thumbnail_read_only" class="ErrorMessage">WARNING! File cannot be uploaded!<br>Please check and correct file permissions.<br></span>
-<widget class="\XLite\View\ImageUpload" field="thumbnail" actionName="images" formName="modify_form" object="{product}">
-</td>
-</tr>
-
-<tr>
-  <td class=ProductDetails valign=top height="15"><font class="FormButton">Image</font><br>(on product details page)</td>
-  <td class=ProductDetails valign="middle">
-<img IF="product.hasImage()" src="{product.imageURL:h}" border=0></img>
-<br>
-<span IF="image_read_only" class="ErrorMessage">WARNING! File cannot be uploaded!<br>Please check and correct file permissions.<br></span>
-<widget class="\XLite\View\ImageUpload" field="image" actionName="images" formName="modify_form" object="{product}">
-</td>
-</tr>
-
-<tr>
     <td class="FormButton">Product page title </td>
 	<td><input name="{getNamePostedData(#meta_title#)}" value="{product.meta_title}" size=50></td>
 </tr>

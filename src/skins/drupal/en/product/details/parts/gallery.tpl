@@ -12,7 +12,7 @@
  *}
 <div class="product-image-gallery">
   <ul>
-    <li FOREACH="product.getActiveDetailedImages(),i,image" class="{getListItemClass(i)}">
+    <li FOREACH="product.getImages(),i,image" class="{getListItemClass(i)}">
       <a href="{image.getFrontURL()}" rel="gallery" rev="width: {image.getWidth()}, height: {image.getHeight()}" title="{image.getAlt()}"><widget class="\XLite\View\Img" image="{image}" alt="{image.getAlt()}" maxWidth="60" maxHeight="60" /></a>
       <widget class="\XLite\View\Img" className="middle" style="display: none;" image="{image}" maxWidth="{getWidgetMaxWidth()}" />
     </li>
@@ -22,3 +22,4 @@
 <script type="text/javascript">
 var lightBoxImagesDir = '{getLightBoxImagesDir()}';
 </script>
+
