@@ -61,7 +61,7 @@ class XLite_Web_Customer_FeaturedProducts extends XLite_Web_Customer_ACustomer
 
         foreach ($fps as $product) {
 
-            $url = $product->getThumbnailURL();
+            $url = $product->getImageURL();
 
             $this->assertElementPresent(
                 "//img[@src='$url']",
@@ -90,7 +90,7 @@ class XLite_Web_Customer_FeaturedProducts extends XLite_Web_Customer_ACustomer
 
         foreach ($fps as $product) {
 
-            $url = $product->getThumbnailURL();
+            $url = $product->getImageURL();
 
             $this->assertElementPresent(
                 "//img[@src='$url']",
