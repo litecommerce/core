@@ -353,42 +353,42 @@ class OrderItem extends \XLite\Model\Base\ModifierOwner
     }
 
     /**
-     * Check if item has a thumbnail
+     * Check if item has a image
      * 
      * @return bool
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function hasThumbnail()
+    public function hasImage()
     {
-        return !is_null($this->getThumbnail()) && (bool)$this->getThumbnail()->getImageId();
+        return !is_null($this->getImage()) && (bool)$this->getImage()->getImageId();
     }
 
     /**
-     * Get item thumbnail URL
+     * Get item image URL
      * 
      * @return string
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getThumbnailURL()
+    public function getImageURL()
     {
-        return $this->getThumbnail()->getURL();
+        return $this->getImage()->getURL();
     }
 
     /**
-     * Get item thumbnail
+     * Get item image
      *
      * @return \XLite\Model\Base\Image
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getThumbnail()
+    public function getImage()
     {
-        return $this->getObject()->getThumbnail();
+        return $this->getObject()->getImage();
     }
  
     /**

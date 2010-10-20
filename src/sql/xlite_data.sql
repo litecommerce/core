@@ -73,7 +73,7 @@ INSERT INTO `xlite_config` VALUES (205,'prices_include_tax','Taxes','checkbox',2
 INSERT INTO `xlite_config` VALUES (207,'price_format','General','text',630,'$ %s');
 INSERT INTO `xlite_config` VALUES (210,'products_per_page','General','text',250,'10');
 INSERT INTO `xlite_config` VALUES (211,'products_per_page_admin','General','text',410,'10');
-INSERT INTO `xlite_config` VALUES (212,'product_layout','ImportExport',NULL,0,'sku,name,category,brief_description,description,thumbnail,image,price,tax_class,weight,order_by,enabled,NULL');
+INSERT INTO `xlite_config` VALUES (212,'product_layout','ImportExport',NULL,0,'sku,name,category,brief_description,description,price,tax_class,weight,order_by,enabled,NULL');
 INSERT INTO `xlite_config` VALUES (214,'proxy','Security','text',25,'');
 INSERT INTO `xlite_config` VALUES (216,'recent_orders','General','text',440,'10');
 INSERT INTO `xlite_config` VALUES (217,'redirect_to_cart','General','checkbox',300,'Y');

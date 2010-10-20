@@ -14,7 +14,7 @@
 
   <li class="hproduct item" FOREACH="getSideBarData(),product">
 
-    <a IF="isShowThumbnails()" class="url product-thumbnail" href="{buildURL(#product#,##,_ARRAY_(#product_id#^product.product_id,#category_id#^product.category.category_id))}"><widget class="\XLite\View\Image" image="{product.getThumbnail()}" maxWidth="45" maxHeight="45" alt="{product.name}" className="photo" /></a>
+    <a IF="isShowThumbnails()" class="url product-thumbnail" href="{buildURL(#product#,##,_ARRAY_(#product_id#^product.product_id,#category_id#^product.category.category_id))}"><widget class="\XLite\View\Image" image="{product.getImage()}" maxWidth="45" maxHeight="45" alt="{product.name}" className="photo" /></a>
 
     <div class="body">
 

@@ -29,7 +29,7 @@
 namespace XLite\Model\Image\Product;
 
 /**
- * Product
+ * Product image
  * 
  * @package XLite
  * @see     ____class_see____
@@ -41,6 +41,28 @@ namespace XLite\Model\Image\Product;
 class Image extends \XLite\Model\Base\Image
 {
     /**
+     * Alternative image text
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Column (type="string", length="255")
+     */
+    protected $alt = '';
+
+    /**
+     * Image position 
+     * 
+     * @var    integer
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Column (type="integer")
+     */
+    protected $orderby = 0;
+
+    /**
      * Relation to a product entity
      *
      * @var    \Doctrine\Common\Collections\ArrayCollection
@@ -48,7 +70,7 @@ class Image extends \XLite\Model\Base\Image
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @OneToOne   (targetEntity="XLite\Model\Product", inversedBy="image", fetch="LAZY")
+     * @ManyToOne  (targetEntity="XLite\Model\Product", inversedBy="product_images")
      * @JoinColumn (name="id", referencedColumnName="product_id")
      */
     protected $product;

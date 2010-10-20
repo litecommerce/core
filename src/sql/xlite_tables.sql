@@ -345,36 +345,6 @@ CREATE TABLE xlite_products (
 
 DROP TABLE IF EXISTS xlite_product_images;
 CREATE TABLE xlite_product_images (
-  image_id int(11) unsigned NOT NULL AUTO_INCREMENT,
-  id int(11) NOT NULL DEFAULT '0',
-  path varchar(512) NOT NULL DEFAULT '',
-  mime varchar(64) NOT NULL DEFAULT 'image/jpeg',
-  width int(11) NOT NULL DEFAULT '0',
-  height int(11) NOT NULL DEFAULT '0',
-  size int(11) NOT NULL DEFAULT '0',
-  date int(11) NOT NULL DEFAULT '0',
-  hash varchar(32) NOT NULL DEFAULT '',
-  PRIMARY KEY (image_id),
-  KEY id (id)
-) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
-
-DROP TABLE IF EXISTS xlite_product_thumbnails;
-CREATE TABLE xlite_product_thumbnails (
-  image_id int(11) unsigned NOT NULL AUTO_INCREMENT,
-  id int(11) NOT NULL DEFAULT '0',
-  path varchar(512) NOT NULL DEFAULT '',
-  mime varchar(64) NOT NULL DEFAULT 'image/jpeg',
-  width int(11) NOT NULL DEFAULT '0',
-  height int(11) NOT NULL DEFAULT '0',
-  size int(11) NOT NULL DEFAULT '0',
-  date int(11) NOT NULL DEFAULT '0',
-  hash varchar(32) NOT NULL DEFAULT '',
-  PRIMARY KEY (image_id),
-  KEY id (id)
-) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
-
-DROP TABLE IF EXISTS xlite_product_detailed_images;
-CREATE TABLE xlite_product_detailed_images (
   `image_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `id` int(11) NOT NULL DEFAULT '0',
   `path` varchar(512) NOT NULL DEFAULT '',
@@ -386,8 +356,6 @@ CREATE TABLE xlite_product_detailed_images (
   `hash` varchar(32) NOT NULL DEFAULT '',
   `alt` varchar(255) NOT NULL default '',
   `orderby` int(11) NOT NULL DEFAULT 0,
-  `is_zoom` tinyint(1) NOT NULL DEFAULT 0,
-  `enabled` tinyint(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (image_id),
   KEY id (id)
 ) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;

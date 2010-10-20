@@ -176,12 +176,6 @@ class Image extends \XLite\Model\AModel
     protected static function getDefaultImageClasses()
     {
         $list = array(
-            'product_thumbnail' => array(
-                'comment'     => 'Product thumbnails',
-                'tableName'   => 'products',
-                'fieldPrefix' => 'thumbnail',
-                'idField'     => 'product_id'
-            ),
             'product_image' => array(
                 'comment'     => 'Product images',
                 'tableName'   => 'products',

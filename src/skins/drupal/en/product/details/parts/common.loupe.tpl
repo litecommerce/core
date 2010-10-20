@@ -12,4 +12,5 @@
  *
  * @ListChild (list="product.details.page.image", weight="15")
  *}
-<a IF="product.getActiveDetailedImages()" href="javascript:void(0);" class="loupe"><img src="images/spacer.gif" alt="Zoom image" /></a>
+
+<a IF="product.getImages()&!product.countImages()=1" href="javascript:void(0);" class="loupe"><img src="images/spacer.gif" alt="Zoom image" /></a>

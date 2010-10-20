@@ -91,22 +91,6 @@ class Product extends \XLite\Controller\Admin\Catalog
     }
 
     /**
-     * Return list of product image types
-     * 
-     * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getImageTypes()
-    {
-        return array(
-            'thumbnail' => '\XLite\Model\Image\Product\Thumbnail',
-            'image'     => '\XLite\Model\Image\Product\Image',
-        );
-    }
-
-    /**
      * Return list of the CategoryProduct entities
      *
      * @param \XLite\Model\Product $product current product
@@ -132,55 +116,6 @@ class Product extends \XLite\Controller\Admin\Catalog
         }
 
         return array('category_products' => new \Doctrine\Common\Collections\ArrayCollection($data));
-    }
-
-    /**
-     * Return list of the Image/Thumbnail entities
-     *
-     * @param \XLite\Model\Product $product current product
-     *  
-     * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getProductImages(\XLite\Model\Product $product)
-    {
-        $data = array();
-
-        foreach ($this->getImageTypes() as $type => $class) {
-
-            if (!empty($_FILES[$this->getPrefixPostedData()]['tmp_name'][$type])) {
-
-                // Retrieve product thumbnail/image using the __get() method
-                $image = $product->$type;
-
-                // Check if it's a new image
-                // NOTE: the "isPersistent()" check is required for the proxies
-                if (isset($image) && $image->isPersistent()) {
-                    // Persistent image for existsing product.
-                    // Do not fill the "data" array, but only populate data
-                    // into existsing entity (see below)
-                    $reference = $image;
-                } else {
-                    // New image. Save it in the "data" array.
-                    // It will be automatically persisted (added to the DB),
-                    // since the "Product" model defines the "cascade" options
-                    // for the image fields
-                    $reference = $data[$type] = new $class(
-                        array('id' => $product->getProductId(), 'product' => $product)
-                    );
-                }
-
-                // Set image properties and copy its file
-                $reference->loadFromLocalFile(
-                    $_FILES[$this->getPrefixPostedData()]['tmp_name'][$type],
-                    $_FILES[$this->getPrefixPostedData()]['name'][$type]
-                );
-            }
-        }
-
-        return $data;
     }
 
     /**
@@ -259,7 +194,7 @@ class Product extends \XLite\Controller\Admin\Catalog
             // Create associations (categories and images)
             \XLite\Core\Database::getRepo('\XLite\Model\Product')->update(
                 $product,
-                $this->getCategoryProducts($product) + $this->getProductImages($product)
+                $this->getCategoryProducts($product)
             );
 
             // Add the ID of created product to the return URL
@@ -287,7 +222,7 @@ class Product extends \XLite\Controller\Admin\Catalog
         // Update all data
         \XLite\Core\Database::getRepo('\XLite\Model\Product')->update(
             $product,
-            $this->getCategoryProducts($product) + $this->getProductImages($product)
+            $this->getCategoryProducts($product)
         );
     }
 
@@ -299,28 +234,18 @@ class Product extends \XLite\Controller\Admin\Catalog
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function doActionAddDetailedImage()
+    protected function doActionAddImage()
     {
-        $img = new \XLite\Model\Image\Product\Detailed();
+        $img = new \XLite\Model\Image\Product\Image();
 
         if ($img->loadFromRequest('postedData', 'image')) {
 
             $data = \XLite\Core\Request::getInstance()->getData();
-            $data['is_zoom'] = isset($data['is_zoom']) && $data['is_zoom'];
 
             $img->map($data);
 
-            if ($img->getIsZoom()) {
-                foreach ($this->getProduct()->getDetailedImages() as $i) {
-                    if ($i->getIsZoom()) {
-                        $i->setIsZoom(false);
-                        \XLite\Core\Database::getEM()->persist($i);
-                    }
-                }
-            }
-
             $img->setProduct($this->getProduct());
-            $this->getProduct()->getDetailedImages()->add($img);
+            $this->getProduct()->getImages()->add($img);
 
             \XLite\Core\Database::getEM()->persist($img);
             \XLite\Core\Database::getEM()->flush();
@@ -345,13 +270,13 @@ class Product extends \XLite\Controller\Admin\Catalog
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function doActionDeleteDetailedImage()
+    protected function doActionDeleteImage()
     {
-        $img = \XLite\Core\Database::getRepo('\XLite\Model\Image\Product\Detailed')
+        $img = \XLite\Core\Database::getRepo('\XLite\Model\Image\Product\Image')
             ->find(\XLite\Core\Request::getInstance()->image_id);
 
         if ($img) {
-            $img->getProduct()->getDetailedImages()->removeElement($img);
+            $img->getProduct()->getImages()->removeElement($img);
             \XLite\Core\Database::getEM()->remove($img);
             \XLite\Core\Database::getEM()->flush();
 
@@ -369,14 +294,14 @@ class Product extends \XLite\Controller\Admin\Catalog
     }
 
     /**
-     * Update detailed image
+     * Update image
      * 
      * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function doActionUpdateDetailedImages()
+    protected function doActionUpdateImages()
     {
         $zoomId = 0;
         if (isset(\XLite\Core\Request::getInstance()->is_zoom)) {
@@ -385,17 +310,12 @@ class Product extends \XLite\Controller\Admin\Catalog
         }
 
         foreach (\XLite\Core\Request::getInstance()->alt as $imageId => $alt) {
-            $img = \XLite\Core\Database::getRepo('\XLite\Model\Image\Product\Detailed')
+            $img = \XLite\Core\Database::getRepo('\XLite\Model\Image\Product\Image')
                 ->find($imageId);
 
             if ($img) {
                 $img->setAlt($alt);
                 $img->setOrderby(\XLite\Core\Request::getInstance()->orderby[$imageId]);
-                $img->setIsZoom($zoomId == $imageId);
-                $img->setEnabled(
-                    isset(\XLite\Core\Request::getInstance()->enabled[$imageId])
-                    && \XLite\Core\Request::getInstance()->enabled[$imageId]
-                );
 
                 \XLite\Core\Database::getEM()->persist($img);
             }
@@ -470,7 +390,7 @@ class Product extends \XLite\Controller\Admin\Catalog
     public $pages = array(
     	'info'            => 'Product info',
         'extra_fields'    => 'Extra fields',
-        'detailed_images' => 'Detailed images',
+        'images'          => 'Product images',
     );
 
     /**
@@ -485,10 +405,8 @@ class Product extends \XLite\Controller\Admin\Catalog
     	'info'            => 'product/info.tpl',
         'extra_fields'    => 'product/extra_fields_form.tpl',
         'default'         => 'product/info.tpl',
-        'detailed_images' => 'product/detailed_images.tpl',
+        'images'          => 'product/product_images.tpl',
     );
-
-
 
 
 

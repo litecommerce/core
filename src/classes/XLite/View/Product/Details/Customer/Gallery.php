@@ -78,7 +78,7 @@ class Gallery extends \XLite\View\Product\Details\Customer\ACustomer
     protected function isVisible()
     {
         return parent::isVisible()
-            && $this->getProduct()->getActiveDetailedImages();
+            && $this->getProduct()->countImages() > 1;
     }
 
     /**
