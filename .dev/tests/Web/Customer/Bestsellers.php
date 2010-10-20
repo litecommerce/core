@@ -61,7 +61,7 @@ class XLite_Web_Customer_Bestsellers extends XLite_Web_Customer_ACustomer
 
         foreach ($best as $product) {
 
-            $url = $product->getThumbnailURL();
+            $url = $product->getImageURL();
 
             $this->assertElementPresent(
                 "//img[@src='$url']",
@@ -91,7 +91,7 @@ class XLite_Web_Customer_Bestsellers extends XLite_Web_Customer_ACustomer
 
         foreach ($best1 as $product) {
 
-            $url = $product->getThumbnailURL();
+            $url = $product->getImageURL();
 
             $this->assertElementPresent(
                 "//img[@src='$url']",
@@ -104,7 +104,7 @@ class XLite_Web_Customer_Bestsellers extends XLite_Web_Customer_ACustomer
 
             if (!in_array($product, $best1)) {
 
-                $url = $product->getThumbnailURL();
+                $url = $product->getImageURL();
 
                 $this->assertElementNotPresent(
                     "//img[@src='$url']",

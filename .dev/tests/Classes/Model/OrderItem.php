@@ -295,42 +295,42 @@ class XLite_Tests_Model_OrderItem extends XLite_Tests_TestCase
         $this->assertEquals(0, $item->getWeight(), 'check weight #3');
     }
 
-    public function testHasThumbnail()
+    public function testHasImage()
     {
         $order = $this->getTestOrder();
 
         $item = $order->getItems()->get(0);
 
         $this->assertEquals(
-            (bool)$this->getProduct()->getThumbnail()->getImageId(),
-            $item->hasThumbnail(),
+            (bool)$this->getProduct()->getImage()->getImageId(),
+            $item->hasImage(),
             'check thumbnail'
         );
     }
 
-    public function testGetThumbnailURL()
+    public function testGetImageURL()
     {
         $order = $this->getTestOrder();
 
         $item = $order->getItems()->get(0);
 
         $this->assertEquals(
-            $this->getProduct()->getThumbnail()->getURL(),
-            $item->getThumbnailURL(),
+            $this->getProduct()->getImage()->getURL(),
+            $item->getImageURL(),
             'check thumbnail url'
         );
 
     }
 
-    public function testGetThumbnail()
+    public function testGetImage()
     {
         $order = $this->getTestOrder();
 
         $item = $order->getItems()->get(0);
 
         $this->assertEquals(
-            $this->getProduct()->getThumbnail(),
-            $item->getThumbnail(),
+            $this->getProduct()->getImage(),
+            $item->getImage(),
             'check thumbnail'
         );
     }
