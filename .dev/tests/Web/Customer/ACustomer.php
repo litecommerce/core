@@ -77,4 +77,57 @@ class XLite_Web_Customer_ACustomer extends XLite_Web_AWeb
             ->findByEnabled(true);
     }
 
+    /**
+     * Returns ID of a LiteCommerce widget in the list of LC Connector blocks (returns only the first Drupal block displaying the widget)
+     *
+     * @param string $widgetClass Class of the widget to look for
+     *
+     * @return int
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function findWidgetID($widgetClass)
+    {
+        $pdo = $this->query('SELECT delta FROM drupal_lc_connector_blocks WHERE code="'.addslashes($widgetClass).'" LIMIT 1');
+        $r = $pdo->fetch();
+        $pdo->closeCursor();
+
+        $id = is_array($r) ? array_shift($r) : null;
+
+        return $id;
+    }
+
+    /**
+     * Sets a widget parameter
+     * 
+     * @param int    $widgetId ID of the widget in the list of LC Connector blocks
+     * @param string $param    Param name
+     * @param string $value    Param value
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function setWidgetParam($widgetId, $param, $value)
+    {
+        $this->query("UPDATE drupal_lc_connector_block_settings SET value='".addslashes($value)."' WHERE delta='".addslashes($widgetId)."' AND name='".addslashes($param)."'");
+    }
+
+    /**
+     * Executes an SQL query
+     *
+     * @param string $query SQL query to execute
+     *
+     * @return Doctrine\DBAL\Driver\PDOStatement
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function query($query)
+    {
+        return \XLite\Core\Database::getEM()->getConnection()->executeQuery($query, array());
+    }
+
 }
