@@ -430,45 +430,12 @@ class XLite_Web_Customer_TopCategories extends XLite_Web_Customer_ACustomer
      */
     protected function setDisplayMode($mode = 'path')
     {
-        $id = $this->findWidgetID();
+        $id = $this->findWidgetID('\\XLite\\View\\TopCategories');
         $this->assertFalse(is_null($id), "Can't find the widget in the database");
 
         $r = $this->query("UPDATE drupal_lc_connector_block_settings SET value='$mode' WHERE delta='$id' AND name='displayMode'");
     }
 
-    /**
-     * Returns ID of TopCategories widget in the list of LC Connector blocks
-     * 
-     * @return int
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function findWidgetID()
-    {
-        $pdo = $this->query('SELECT delta FROM drupal_lc_connector_blocks WHERE code="\\\XLite\\\View\\\TopCategories" LIMIT 1');
-        $r = $pdo->fetch();
-        $pdo->closeCursor();
-
-        $id = is_array($r) ? array_shift($r) : null;
-    
-        return $id;
-    }
-
-    /**
-     * Executes an SQL query 
-     * 
-     * @param string $query SQL query to execute
-     *  
-     * @return Doctrine\DBAL\Driver\PDOStatement
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function query($query)
-    {
-        return \XLite\Core\Database::getEM()->getConnection()->executeQuery($query, array());
-    }
 
 }
  
