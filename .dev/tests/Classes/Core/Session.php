@@ -59,12 +59,12 @@ class XLite_Tests_Core_Session extends XLite_Tests_TestCase
         $id = $session->getID();
 
         $session->aaa = 123;
-        $this->assertNotNull($session->aaa, 'check empty value');
+        $this->assertNotNull($session->aaa, 'check value');
 
         $session->restart();
 
         $this->assertNotEquals($id, $session->getID(), 'check id');
-        $this->assertNull($session->aaa, 'check empty value');
+        $this->assertEquals(123, $session->aaa, 'check value #2');
     }
 
     public function testGetName()
