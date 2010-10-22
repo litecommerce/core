@@ -126,6 +126,7 @@ mark_templates = off
 default_image = "images/no_image.png"
 default_image_width = 140
 default_image_height = 140
+unsharp_mask_filter_on_resize = off
 
 ;
 ; ----------------------
