@@ -343,16 +343,6 @@ abstract class XLite_Web_Customer_AProductList extends XLite_Web_Customer_ACusto
                 "A test $id product is displayed with a wrong price ($mode mode)"
             );
 
-            // test a product image
-            if (isset($listedProduct['imgSrc'])) {
-                $this->assertEquals(
-                    $imgUrl = $product->getImageURL(),
-                    $listedProduct['imgSrc'],
-                    "A test $id product has a wrong image src ($mode mode)"
-                );
-            }
-
-
             if ($this->testProductLinks) {
 
                 // test a link to the product page
