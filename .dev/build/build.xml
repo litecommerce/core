@@ -101,14 +101,6 @@
 		<copy todir="${buildDir}/src/sql/local">
 			<fileset file="${sourceDir}/src/sql/local/xlite_all_modules.sql" />
 		</copy>
-        <copy todir="${buildDir}/src/images/product_detailed_images">
-            <fileset dir="${srcDir}/images/product_detailed_images">
-				<include name="**/*.jpg" />
-                <include name="**/*.jpeg" />
-                <include name="**/*.gif" />
-                <include name="**/*.png" />
-			</fileset>
-        </copy>
         <copy todir="${buildDir}/src/skins">
             <fileset dir="${buildDir}/src/skins_original" />
         </copy>
