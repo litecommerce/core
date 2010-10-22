@@ -58,25 +58,25 @@ abstract class XLite_Web_Customer_AProductList extends XLite_Web_Customer_ACusto
         $this->setDisplayMode('table');
         $this->testProductsData();
     }
-*/
+
     public function testPagerTableMode()
     {
         $this->setDisplayMode('table');
         $this->testPager();
     }
-/*
+
     public function testDisplayModeSwitchTableMode()
     {
         $this->setDisplayMode('table');
         $this->testDisplayModeSwitch();
     }
-
+*/
     public function testSortingTableMode()
     {
         $this->setDisplayMode('table');
         $this->testSorting();
     }
-
+/*
     // List mode
 
     public function testBasicStructureListMode()
@@ -488,17 +488,23 @@ abstract class XLite_Web_Customer_AProductList extends XLite_Web_Customer_ACusto
         );
 
         foreach ($modes as $m){
+
             $linkSelector = "$listSelector .list-header ul.display-modes li.list-type-$m a";
             $productsSelector = "$listSelector .products .products-$m";
+
             $this->assertElementPresent(
                 "css=$linkSelector",
-                "Link for $m mode is missing ($mode mode)"
+                "Link for $m mode is missing ($mode initial mode)"
             );
+
             $this->click("css=$linkSelector");
-            $this->waitForCondition("selenium.browserbot.getCurrentWindow().$('$productsSelector-c:visible').length > 0");
-            /*
-             * Test becomes skipped (not failed) if a mode has not been switched
-             */
+            $this->waitForAjaxProgress();
+
+            $this->assertElementPresent(
+                "css=$productsSelector",
+                "$productsSelector is missing after clicking '$m' mode ($mode initial mode)"
+            );
+
         }
 
     }
@@ -967,7 +973,7 @@ abstract class XLite_Web_Customer_AProductList extends XLite_Web_Customer_ACusto
         $this->waitForCondition("selenium.browserbot.getCurrentWindow().$('$listSelector .blockUI.wait-block:visible').length > 0");
 
         // wait until the progress bar is hidden
-        $this->waitForCondition("selenium.browserbot.getCurrentWindow().$('$listSelector .blockUI.wait-block:visible').length = 0");
+        $this->waitForCondition("selenium.browserbot.getCurrentWindow().$('$listSelector .blockUI.wait-block:visible').length <= 0");
  
     }
 
