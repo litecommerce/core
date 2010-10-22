@@ -303,6 +303,8 @@ class Converter extends \XLite\Base\Singleton
 
             $type = $types[$type];
 
+            // start: Current resizing method: using GD functions
+
             $func = 'imagecreatefrom' . $type;
             if (function_exists($func)) {
 
@@ -337,11 +339,14 @@ class Converter extends \XLite\Base\Singleton
                     );
                     imagedestroy($imageResource);
 
-                    require_once LC_LIB_DIR . 'phpunsharpmask.php';
+                    if (\XLite::getInstance()->getOptions(array('images', 'unsharp_mask_filter_on_resize'))) {
+                        
+                        require_once LC_LIB_DIR . 'phpunsharpmask.php';
 
-                    $unsharpImage = UnsharpMask($newImage);
-                    if ($unsharpImage) {
-                        $newImage = $unsharpImage;
+                        $unsharpImage = UnsharpMask($newImage);
+                        if ($unsharpImage) {
+                            $newImage = $unsharpImage;
+                        }
                     }
 
                     $func = 'image' . $type;
@@ -356,6 +361,39 @@ class Converter extends \XLite\Base\Singleton
                     $result = $result ? $image : false;
                 }
             }
+
+            // end: Current resizing method: using GD functions
+
+/*
+            // start: Resizing method using PHPThumb() library
+            // http://phpthumb.sourceforge.net/
+            // TODO: implement complete integration or remove the code
+
+            include_once LC_LIB_DIR . 'PHPThumb' . LC_DS . 'phpthumb.class.php';
+            include_once LC_LIB_DIR . 'PHPThumb' . LC_DS . 'phpThumb.config.php';
+
+            $pt = new \phpThumb();
+
+            foreach ($PHPTHUMB_CONFIG as $key => $value) {
+                $keyname = 'config_' . $key;
+                $pt->setParameter($keyname, $value);
+                if (!eregi('password|mysql', $key)) {
+                    $pt->DebugMessage('setParameter('.$keyname.', '.$pt->phpThumbDebugVarDump($value).')', __FILE__, __LINE__);
+                }
+            }
+
+            $pt->rawImageData = $image->body;
+            $pt->setParameter('w', $width);
+            $pt->setParameter('h', $heigth);
+            $pt->fltr[] = 'usm|80|0.5|3';
+            $pt->GenerateThumbnail();
+            $pt->RenderOutput();
+
+            $result = $pt->outputImageData;
+            
+            // end: Resizing method using PHPThumb() library
+*/
+
         }
 
         return $result;
