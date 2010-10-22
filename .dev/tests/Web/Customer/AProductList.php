@@ -26,6 +26,9 @@
  * @since      3.0.0
  */
 
+// Disable the time limit, otherwise some tests may fail due to PHP breaking the script
+set_time_limit(1200); // 20 minutes
+
 require_once __DIR__ . '/ACustomer.php';
 
 abstract class XLite_Web_Customer_AProductList extends XLite_Web_Customer_ACustomer
@@ -39,6 +42,8 @@ abstract class XLite_Web_Customer_AProductList extends XLite_Web_Customer_ACusto
 
     protected $currentMode = '';
 
+    protected $testProductLinks = false;
+
     /*
      *
      * TESTS
@@ -46,7 +51,7 @@ abstract class XLite_Web_Customer_AProductList extends XLite_Web_Customer_ACusto
      */
 
     // Table mode
-/*
+
     public function testBasicStructureTableMode()
     {
         $this->setDisplayMode('table');
@@ -70,13 +75,13 @@ abstract class XLite_Web_Customer_AProductList extends XLite_Web_Customer_ACusto
         $this->setDisplayMode('table');
         $this->testDisplayModeSwitch();
     }
-*/
+
     public function testSortingTableMode()
     {
         $this->setDisplayMode('table');
         $this->testSorting();
     }
-/*
+
     // List mode
 
     public function testBasicStructureListMode()
@@ -140,8 +145,6 @@ abstract class XLite_Web_Customer_AProductList extends XLite_Web_Customer_ACusto
         $this->setDisplayMode('grid', 3);
         $this->testSorting();
     }
-
-*/
 
 
     /*
@@ -274,7 +277,6 @@ abstract class XLite_Web_Customer_AProductList extends XLite_Web_Customer_ACusto
 
     }
 
-
     /**
      * Test whether the widget displays all products and with correct product data
      * 
@@ -304,6 +306,9 @@ abstract class XLite_Web_Customer_AProductList extends XLite_Web_Customer_ACusto
             "The widget displays a wrong number of products ($mode mode)"
         );
 
+        // Make sure the products are displayed with a correct structure
+        $this->testPagerProducts(array_values($listedProducts), $productsCount, 1);
+
         // Make sure that the page displays all products and the products have correct data
         foreach($products as $product) {
 
@@ -323,29 +328,50 @@ abstract class XLite_Web_Customer_AProductList extends XLite_Web_Customer_ACusto
             );
 
             // test a product sku
+            if (isset($listedProduct['sku'])) {
+                $this->assertEquals(
+                    $product->getSku(),
+                    $listedProduct['sku'],
+                    "A test $id product is displayed with a wrong sku ($mode mode)"
+                );
+            }
+
+            // test a product price
             $this->assertEquals(
-                $name = $product->getSku(),
-                $listedProduct['sku'],
-                "A test $id product is displayed with a wrong sku ($mode mode)"
+                (float)$product->getPrice(),
+                (float)$listedProduct['parsedPrice'],
+                "A test $id product is displayed with a wrong price ($mode mode)"
             );
 
-/*
-            // TODO: this test fails due to a timeout
+            // test a product image
+            if (isset($listedProduct['imgSrc'])) {
+                $this->assertEquals(
+                    $imgUrl = $product->getImageURL(),
+                    $listedProduct['imgSrc'],
+                    "A test $id product has a wrong image src ($mode mode)"
+                );
+            }
 
-            // test a link to the product page
-            $this->open($listedProduct['nameUrl']);
-            $this->assertJqueryPresent(
-                "h1.fn.title:contains($name)",
-                "Product $id doesn't link to the product page ($mode mode)"
-            );
-*/
 
-            // TODO: find a way to check a formatted price against the product price property
+            if ($this->testProductLinks) {
+
+                // test a link to the product page
+                $this->getJSExpression('window.location = "'.$listedProduct['nameUrl'].'";');
+                $this->waitForPageToLoad(180000);
+                $this->assertElementPresent(
+                    "css=h1.fn.title",
+                    "Product $id doesn't link to a product page ($mode mode)"
+                );
+                $title = $this->getJSExpression("$('h1.fn.title').html()");
+                $this->assertEquals(
+                    $name,
+                    $title,
+                    "Product $id links to a wrong product page ($mode mode)"
+                );
+
+           }
 
         }
-
-        // Make sure the products are displayed with a correct structure
-        $this->testPagerProducts(array_values($listedProducts), $productsCount, 1);
 
     }
 
@@ -399,7 +425,7 @@ abstract class XLite_Web_Customer_AProductList extends XLite_Web_Customer_ACusto
                 );
 
                 $this->click($link);
-                sleep(15);
+                $this->waitForAjaxProgress();
             }
 
         }
@@ -429,7 +455,7 @@ abstract class XLite_Web_Customer_AProductList extends XLite_Web_Customer_ACusto
                 );
 
                 $this->click($link);
-                sleep(15);
+                $this->waitForAjaxProgress();
             }
 
         }
@@ -440,16 +466,13 @@ abstract class XLite_Web_Customer_AProductList extends XLite_Web_Customer_ACusto
             "'Previous page' link is missing on the $page page ($mode mode)"
         );
 
-
         /*
          * Now check how changing the number of products per page affects the pager
          */
 
-        $max = ($productsCount>9) ? 9 : $productsCount;
-
         $productsSelector = "$listSelector .products .product";
-/*
-        for ($perPage=1; $perPage < $max; $perPage++) {
+
+        for ($perPage=1; $perPage <= $productsCount; $perPage++) {
 
             $inputSelector = "$listSelector .list-pager .pager-items-total input.page-length";
 
@@ -457,9 +480,9 @@ abstract class XLite_Web_Customer_AProductList extends XLite_Web_Customer_ACusto
                 "css=$inputSelector",
                 "Input element is missing ($perPage products per page, $mode mode)"
             );
-            $this->type($inputSelector, 1);
-
-            // TODO: find a way to submit the form
+            $this->type("css=$inputSelector", $perPage);
+            $this->keyPress("css=$inputSelector", '\\13');
+            $this->waitForAjaxProgress();
 
             $this->assertEquals(
                 $perPage,
@@ -468,9 +491,16 @@ abstract class XLite_Web_Customer_AProductList extends XLite_Web_Customer_ACusto
             );
 
         }
-*/
+
     }
 
+    /**
+     * Test how the mode switching links work
+     * 
+     * @return void
+     * @access protected
+     * @since  3.0.0
+     */
     protected function testDisplayModeSwitch()
     {
         $mode = $this->getDisplayMode();
@@ -510,10 +540,19 @@ abstract class XLite_Web_Customer_AProductList extends XLite_Web_Customer_ACusto
     }
 
 
+    /**
+     * Test the sorting options
+     * 
+     * @return void
+     * @access protected
+     * @since  3.0.0
+     */
     protected function testSorting()
     {
         $mode = $this->getDisplayMode();
         $listSelector = $this->getListSelector();
+        $selector = "$listSelector .list-header .sort-box select.sort-crit";
+        $orderSelector = "$listSelector .list-header .sort-box a.sort-order";
 
         // Display all products and store displayed product data for further reference
         $productsCount = $this->countAllTestProducts();
@@ -523,16 +562,84 @@ abstract class XLite_Web_Customer_AProductList extends XLite_Web_Customer_ACusto
         $this->resetBrowser();
         $this->openTestPage();
 
-        $allProducts = array_values($this->getListedProducts());
+        $optionLabels = array(
+            'Name'=>'name',
+            'Price'=>'price',
+//            'Default'=>'name',   // for some reasons the default sort method is neither by name nor by id; can't find a way to test it
+        );
+        if ($mode=='table') {
+            $optionLabels['SKU'] = 'sku';
+        }
 
-        $optionLabels = array('Default', 'Price', 'Name', 'SKU');
-        $selector = "$listSelector .list-header .sort-box select";
+        $sortOrder = 'asc';
 
-        foreach ($optionLabels as $label) {
+        foreach ($optionLabels as $label=>$field) {
 
-            $this->select($selector, "label=$label");
+            $this->assertElementPresent(
+                "css=$selector",
+                "Mode selector is missing ($label label, $field field, $mode mode)"
+            );
+            $this->select("css=$selector", "label=$label");
+            $this->waitForAjaxProgress();
+
+            $this->testSortedProducts($field, $label, $mode, ($sortOrder=='asc'));
+
+            $this->assertElementPresent(
+                "css=$orderSelector",
+                "Asc/Desc link is missing ($label label, $field field, $mode mode)"
+            );
+            $this->click("css=$orderSelector");
+            $this->waitForAjaxProgress();
+            $sortOrder = ($sortOrder == 'asc') ? 'desc' : 'asc';
+
+            $this->testSortedProducts($field, $label, $mode, ($sortOrder=='asc'));
 
         }
+    }
+
+    /**
+     * Test whether sorted products are displayed in the correct order
+     * 
+     * @param string  $field    Name of the field to compare
+     * @param string  $label    Name of the selected sort option
+     * @param string  $mode     Current display mode
+     * @param boolean $ascOrder Whether it is an ascending order, or not
+     *  
+     * @return void
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function testSortedProducts($field, $label, $mode, $ascOrder)
+    {
+        $products = $this->getListedProducts($mode);
+
+        $last = null;
+
+        foreach($products as $product) {
+
+            if (is_null($last)) {
+
+                $last = $product;
+
+            } else {
+
+                if ($ascOrder) {
+
+                    $this->assertTrue(
+                        in_array($field, array('price')) ? (strnatcasecmp($product[$field], $last[$field]) >= 0) : ($product[$field] >= $last[$field]),
+                        "Wrong order ($label label, $field field, '$product[$field]', '$last[$field]', ASC, $mode mode)"
+                    );
+
+                } else {
+
+                    $this->assertTrue(
+                        in_array($field, array('price')) ? (strnatcasecmp($product[$field], $last[$field]) <= 0) : ($product[$field] <= $last[$field]),
+                        "Wrong order ($label label, $field field, '$product[$field]', '$last[$field]', DESC, $mode mode)"
+                    );
+                }
+            }
+        }
+
     }
 
 
@@ -870,6 +977,7 @@ abstract class XLite_Web_Customer_AProductList extends XLite_Web_Customer_ACusto
             $product['nameUrl'] = $this->getJSExpression("$('$nameSelector')");
             $product['sku'] = $this->getJSExpression("$('$productSelector .product-sku').html()");
             $product['price'] = $this->getJSExpression("$('$productSelector .product-price').html()");
+            $product['parsedPrice'] = preg_replace("/^\D*(\d+\.\d+)\D*$/", "\\1", $product['price']);
             $product['imgUrl'] = $this->getJSExpression("$('$productSelector a.product-thumbnail')");
             $product['imgSrc'] = $this->getJSExpression("$('$productSelector a.product-thumbnail img').attr('src')");
             $product['imgAlt'] = $this->getJSExpression("$('$productSelector a.product-thumbnail img').attr('alt')");
@@ -970,7 +1078,8 @@ abstract class XLite_Web_Customer_AProductList extends XLite_Web_Customer_ACusto
         $listSelector = $this->getListSelector();
 
         // wait until the progress bar appears
-        $this->waitForCondition("selenium.browserbot.getCurrentWindow().$('$listSelector .blockUI.wait-block:visible').length > 0");
+        // it is commented due to the fact that sometimes the progress bar disappers faster than selenium checks whether it is visible
+        // $this->waitForCondition("selenium.browserbot.getCurrentWindow().$('$listSelector .blockUI.wait-block:visible').length > 0");
 
         // wait until the progress bar is hidden
         $this->waitForCondition("selenium.browserbot.getCurrentWindow().$('$listSelector .blockUI.wait-block:visible').length <= 0");
