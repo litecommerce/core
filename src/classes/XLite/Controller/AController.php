@@ -549,11 +549,10 @@ abstract class AController extends \XLite\Core\Handler
     }
 
     /**
-     * Return current page title
+     * Return the current page title (for the content area)
      * 
      * @return string
      * @access public
-     * @see    ____func_see____
      * @since  3.0.0
      */
     public function getTitle()
@@ -561,6 +560,29 @@ abstract class AController extends \XLite\Core\Handler
         return null;
     }
 
+    /**
+     * Check whether the title is to be displayed in the content area 
+     * 
+     * @return boolean
+     * @access public
+     * @since  3.0.0
+     */
+    public function isTitleVisible()
+    {
+        return true;
+    }
+
+    /**
+     * Return the page title (for the <title> tag)
+     * 
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getPageTitle()
+    {
+        return $this->getTitle();
+    }
 
     /**
      * Check if an error occured

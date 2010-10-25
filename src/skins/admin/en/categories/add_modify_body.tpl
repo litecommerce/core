@@ -50,15 +50,20 @@
     </tr>
 
     <tr>
+      <td class="FormButton" valign="top">Category page title</td>
+      <td>&nbsp;</td>
+      <td>
+        <select name="show_title">
+          <option value="1" selected="{category.show_title=#1#}">Use the category name</option>
+          <option value="0" selected="{category.show_title=#0#}">Hide</option>
+        </select>
+    </tr>
+
+
+    <tr>
       <td class="FormButton" valign="top">Description</td>
       <td>&nbsp;</td>
       <td><textarea name="description" cols="50" rows="10">{category.description}</textarea></td>
-    </tr>
-
-    <tr>
-      <td class="FormButton" valign="top">HTML code block (to use instead of the name and description)</td>
-      <td>&nbsp;</td>
-      <td><textarea name="html_block" cols="50" rows="10">{category.getHtmlBlock():h}</textarea></td>
     </tr>
 
     <tr>
@@ -94,7 +99,7 @@
     </tr>  
 
     <tr>
-      <td class="FormButton">Category page title<br />('title' tag)</td>
+      <td class="FormButton">HTML title ('title' tag)</td>
       <td>&nbsp;</td>
       <td><input name="meta_title" value="{category.meta_title}" size="50" /></td>
     </tr>

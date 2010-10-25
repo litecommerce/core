@@ -12,7 +12,7 @@ CREATE TABLE xlite_categories (
   threshold_bestsellers int(11) unsigned NOT NULL DEFAULT '1',
   enabled int(1) NOT NULL DEFAULT '1',
   clean_url varchar(255) NOT NULL DEFAULT '',
-  html_block TEXT NOT NULL,
+  show_title int(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (category_id),
   KEY views_stats (views_stats),
   KEY membership (membership_id),

@@ -199,6 +199,7 @@ class Category extends \XLite\Controller\Admin\Catalog
             'enabled',
             'membership_id',
             'clean_url',
+            'show_title',
         );
 
         if (!$isNewObject) {
