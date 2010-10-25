@@ -308,19 +308,6 @@ abstract class ACustomer extends \XLite\Controller\AController
     }
 
     /**
-     * Return header for the ceter part of current page
-     *
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getContentHeader()
-    {
-        return $this->getTitle();
-    }
-
-    /**
      * Get current currency 
      * TODO - rework
      * 

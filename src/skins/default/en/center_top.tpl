@@ -11,7 +11,7 @@
  * @since     3.0.0
  *}
 
-<h1 class="title" id="page-title" IF="getContentHeader()">{getContentHeader():h}</h1>
+<h1 class="title" id="page-title" IF="getTitle()">{getTitle():h}</h1>
 
 <!-- [catalog] {{{ -->
 <widget class="\XLite\View\Category" />

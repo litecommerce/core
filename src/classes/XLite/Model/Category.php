@@ -165,16 +165,16 @@ class Category extends \XLite\Model\Base\I18n
     protected $clean_url = '';
 
     /**
-     * HTML code to use instead category name and description
+     * Whether to display the category title, or not
+     * 1 - display, 0 - no
      * 
-     * @var    string
+     * @var    integer
      * @access protected
-     * @see    ____var_see____
      * @since  3.0.0
      *
-     * @Column (type="text", nullable=false)
+     * @Column (type="integer", length="1", nullable=false)
      */
-    protected $html_block = '';
+    protected $show_title = 1;
 
     /**
      * Many-to-one relation with memberships table

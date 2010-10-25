@@ -141,7 +141,7 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
     }
 
     /**
-     * getTitle
+     * Returns the page title (for the content area)
      *
      * @return string
      * @access public
@@ -151,9 +151,24 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
     {
         $object = $this->getModelObject();
 
+        return $object ? $object->getName() : parent::getTitle();
+    }
+
+    /**
+     * Returns the page title (for the <title> tag)
+     * 
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getPageTitle()
+    {
+        $object = $this->getModelObject();
+
         return $object
-            ? ($object->getMetaTitle() ?: $object->getName())
-            : null;
+            ? ($object->getMetaTitle() ?: $this->getTitle())
+            : parent::getTitle();
+ 
     }
 
     /**

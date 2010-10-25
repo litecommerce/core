@@ -38,6 +38,18 @@ namespace XLite\Controller\Customer;
 class Category extends \XLite\Controller\Customer\Catalog
 {
     /**
+     * Check whether the category title is visible in the content area
+     * 
+     * @return boolean
+     * @access protected
+     * @since  3.0.0
+     */
+    public function isTitleVisible()
+    {
+        return ($this->getModelObject()->getShowTitle() == 1);
+    }
+
+    /**
      * getModelObject
      *
      * @return \XLite\Model\AModel
@@ -48,7 +60,6 @@ class Category extends \XLite\Controller\Customer\Catalog
     {
         return $this->getCategory();
     }
-
 
     /**
      * handleRequest 
@@ -62,16 +73,4 @@ class Category extends \XLite\Controller\Customer\Catalog
         is_null($this->getCategory()) ? $this->setReturnUrl($this->buildURL('main')) : parent::handleRequest();
     }
 
-    /**
-     * Return header for the ceter part of current page
-     *
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getContentHeader()
-    {
-        return $this->getCategory()->getHtmlBlock() ?: parent::getContentHeader();
-    }
 }
