@@ -152,19 +152,6 @@ abstract class XLite_Web_Customer_AProductList extends XLite_Web_Customer_ACusto
      */
 
     /**
-     * Resets the browser and instantiates a new browser session
-     * 
-     * @return void
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function resetBrowser()
-    {
-        $this->stop();
-        $this->start();
-    }
-
-    /**
      * Opens the current test page
      * 
      * @return void
@@ -983,20 +970,6 @@ abstract class XLite_Web_Customer_AProductList extends XLite_Web_Customer_ACusto
 
         return $products;
         
-    }
-
-    /**
-     * Returns ID of the widget implementing a product list
-     * 
-     * @return int
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getWidgetId()
-    {
-        $id = $this->findWidgetID($this->widgetClass);
-        $this->assertFalse(is_null($id), "Can't find the widget in the database");
-        return $id;
     }
 
     /**

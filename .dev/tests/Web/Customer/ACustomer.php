@@ -99,6 +99,20 @@ class XLite_Web_Customer_ACustomer extends XLite_Web_AWeb
     }
 
     /**
+     * Returns ID of the widget implementing a product list
+     *
+     * @return int
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getWidgetId()
+    {
+        $id = $this->findWidgetID($this->widgetClass);
+        $this->assertFalse(is_null($id), "Can't find the widget in the database");
+        return $id;
+    }
+
+    /**
      * Sets a widget parameter
      * 
      * @param int    $widgetId ID of the widget in the list of LC Connector blocks
@@ -128,6 +142,19 @@ class XLite_Web_Customer_ACustomer extends XLite_Web_AWeb
     protected function query($query)
     {
         return \XLite\Core\Database::getEM()->getConnection()->executeQuery($query, array());
+    }
+
+    /**
+     * Resets the browser and instantiates a new browser session
+     *
+     * @return void
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function resetBrowser()
+    {
+        $this->stop();
+        $this->start();
     }
 
 }
