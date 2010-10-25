@@ -10,9 +10,9 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<ul class="lc-subcategory-list" IF="category.getSubcategories()">
+<ul class="subcategory-list" IF="category.getSubcategories()">
   <li FOREACH="category.getSubcategories(),subcategory">
-    <a href="{buildURL(#category#,##,_ARRAY_(#category_id#^subcategory.category_id))}" class="lc-subcategory-name">{subcategory.name}</a>
+    <a href="{buildURL(#category#,##,_ARRAY_(#category_id#^subcategory.category_id))}" class="subcategory-name">{subcategory.name}</a>
   </li>
   <li FOREACH="getViewList(#subcategories.childs#),w">
     {w.display()}

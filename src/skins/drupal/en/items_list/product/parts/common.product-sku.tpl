@@ -12,4 +12,4 @@
  *
  * @ListChild (list="itemsList.product.table.customer.columns", weight="10")
  *}
-{if:product.sku}{product.sku}{else:}&nbsp;{end:}
+<span class="product-sku">{if:product.sku}{product.sku}{else:}&nbsp;{end:}</span>
