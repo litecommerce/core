@@ -38,6 +38,9 @@ namespace XLite\View;
  */
 class CategorySelect extends \XLite\View\AView
 {
+    /**
+     * Category selector options constants
+     */
     const PARAM_ALL_OPTION           = 'allOption';
     const PARAM_NONE_OPTION          = 'noneOption';
     const PARAM_ROOT_OPTION          = 'rootOption';
@@ -47,10 +50,44 @@ class CategorySelect extends \XLite\View\AView
     const PARAM_IGNORE_CURRENT_PATH  = 'ignoreCurrentPath';
 
 
+    /**
+     * categories 
+     * 
+     * @var    mixed
+     * @access protected
+     * @see    ____var_see____
+     * @since  1.0.0
+     */
     protected $categories = null;
 
+    /**
+     * field 
+     * 
+     * @var    mixed
+     * @access public
+     * @see    ____var_see____
+     * @since  1.0.0
+     */
     public $field;
+
+    /**
+     * formName 
+     * 
+     * @var    mixed
+     * @access public
+     * @see    ____var_see____
+     * @since  1.0.0
+     */
     public $formName;
+
+    /**
+     * selectedCategory 
+     * 
+     * @var    mixed
+     * @access public
+     * @see    ____var_see____
+     * @since  1.0.0
+     */
     public $selectedCategory = null;
 
 
@@ -84,7 +121,7 @@ class CategorySelect extends \XLite\View\AView
             self::PARAM_FIELD_NAME           => new \XLite\Model\WidgetParam\String('Field name', ''),
             self::PARAM_SELECTED_CATEGORY_ID => new \XLite\Model\WidgetParam\Int('Selected category id', 0),
             self::PARAM_CURRENT_CATEGORY_ID  => new \XLite\Model\WidgetParam\Int('Current category id', 0),
-            self::PARAM_IGNORE_CURRENT_PATH  => new \XLite\Model\WidgetParam\Bool('Ignore current path', false)
+            self::PARAM_IGNORE_CURRENT_PATH  => new \XLite\Model\WidgetParam\Bool('Ignore current path', false),
         );
     }
 
@@ -161,6 +198,7 @@ class CategorySelect extends \XLite\View\AView
     protected function isCategorySelected(\XLite\Model\Category $category)
     {
         $categoryId = $this->getParam(self::PARAM_SELECTED_CATEGORY_ID);
+
         if (!is_numeric($categoryId) || 1 > $categoryId) {
             $categoryId = 0;
         }
@@ -182,6 +220,7 @@ class CategorySelect extends \XLite\View\AView
         if (is_null($this->selectedCategory) && !is_null($this->field)) {
             $this->selectedCategory = $this->get("component." . $this->field);
         }
+
         return $this->selectedCategory;
     }
     
@@ -199,11 +238,9 @@ class CategorySelect extends \XLite\View\AView
     protected function setFieldName($name)
     {
         $this->formField = $name;
-        $pos = strpos($name, "[");
-        if ($pos===false) {
-            $this->field = $name;
-        } else {
-            $this->field = substr($name, $pos+1, -1);
-        }
+
+        $pos = strpos($name, '[');
+
+        $this->field = (false === $pos) ? $name : substr($name, $pos + 1, -1);
     }
 }

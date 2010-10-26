@@ -31,9 +31,9 @@ namespace XLite\View\Pager;
 /**
  * Abstract pager class
  * 
- * @package    XLite
- * @see        ____class_see____
- * @since      3.0.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
 abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
 {
@@ -466,7 +466,7 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
         return $this->getPageId() == $pageId;
     }
 
-     /**
+    /**
      * Return current page Id 
      * 
      * @return void

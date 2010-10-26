@@ -31,9 +31,9 @@ namespace XLite\View\RequestHandler;
 /**
  * Abstract base which can populate its params from request and session
  * 
- * @package    XLite
- * @see        ____class_see____
- * @since      3.0.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
 abstract class ARequestHandler extends \XLite\View\AView
 {
@@ -177,7 +177,7 @@ abstract class ARequestHandler extends \XLite\View\AView
     /**
      * Set param values using the request or session
      *
-     * @param array $params param values to modify
+     * @param array &$params param values to modify
      *
      * @return void
      * @access protected

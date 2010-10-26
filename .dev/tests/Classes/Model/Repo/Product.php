@@ -106,6 +106,35 @@ class XLite_Tests_Model_Repo_Product extends XLite_Tests_Model_AProduct
         // Also, the order is checked (SORT_BY_MODE_NAME, SORT_ORDER_ASC)
         $this->assertEquals(16280, $result[0]->getProductId(), 'ID of the first found product does not match'); // Pea
         $this->assertEquals(15091, $result[1]->getProductId(), 'ID of the first second product does not match'); // Peach
+
+
+        $cnd->{\XLite\Model\Repo\Product::P_SUBSTRING} = 'Apple Radish';
+
+        $result = \XLite\Core\Database::getRepo('\XLite\Model\Product')->search($cnd, true);
+
+        $this->assertEquals(0, $result, 'There should be no Apple Radish by default');
+
+
+        $cnd->{\XLite\Model\Repo\Product::P_INCLUDING} = \XLite\Model\Repo\Product::INCLUDING_ANY;
+
+        $result = \XLite\Core\Database::getRepo('\XLite\Model\Product')->search($cnd, true);
+
+        $this->assertEquals(2, $result, 'There should be 2 "Apple or Radish" products');
+
+
+        $cnd->{\XLite\Model\Repo\Product::P_INCLUDING} = \XLite\Model\Repo\Product::INCLUDING_ALL;
+
+        $result = \XLite\Core\Database::getRepo('\XLite\Model\Product')->search($cnd, true);
+
+        $this->assertEquals(0, $result, 'There should be no Apple AND Radish products');
+
+
+        $cnd->{\XLite\Model\Repo\Product::P_SUBSTRING} = 'Radish sativus';
+
+        $result = \XLite\Core\Database::getRepo('\XLite\Model\Product')->search($cnd, true);
+
+        $this->assertEquals(1, $result, 'There should be 1 "Radish AND sativus" product');
+
     }
 
     /**
@@ -126,6 +155,7 @@ class XLite_Tests_Model_Repo_Product extends XLite_Tests_Model_AProduct
 
         // 4 products should be found
         $this->assertEquals(3, count($result), 'Number of found product does not match');
+
         // Check category IDs
         foreach ($result as $entity) {
             $this->assertEquals(14009, $entity->getCategoryId(), 'Category ID of the product "' . $entity->getName() . '" does not match');
@@ -147,7 +177,7 @@ class XLite_Tests_Model_Repo_Product extends XLite_Tests_Model_AProduct
 
         $result = \XLite\Core\Database::getRepo('\XLite\Model\Product')->search($cnd, true);
 
-        // 4 products should be found
+        // 5 products should be found
         $this->assertEquals(5, $result, 'Number of found product does not match');
     }
 
@@ -166,8 +196,8 @@ class XLite_Tests_Model_Repo_Product extends XLite_Tests_Model_AProduct
 
         $result = \XLite\Core\Database::getRepo('\XLite\Model\Product')->search($cnd, true);
 
-        // 4 products should be found
-        $this->assertEquals(9, $result, 'Number of found product does not match');
+        // 8 products should be found
+        $this->assertEquals(8, $result, 'Number of found product does not match');
     }
 
     /**

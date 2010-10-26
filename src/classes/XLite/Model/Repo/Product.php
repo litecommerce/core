@@ -55,6 +55,10 @@ class Product extends \XLite\Model\Repo\Base\I18n
     const P_BY_DESCR          = 'by_descr';
     const P_BY_SKU            = 'by_sku';
 
+    const INCLUDING_ALL = 'all';
+    const INCLUDING_ANY = 'any';
+    const INCLUDING_PHRASE = 'phrase';
+
     /**
      * currentSearchCnd 
      * 
@@ -230,12 +234,12 @@ class Product extends \XLite\Model\Repo\Base\I18n
 
             $cnd = new \Doctrine\ORM\Query\Expr\Orx();
 
-            $isAll = ('all' === $including);
+            $isAll = (self::INCLUDING_ALL === $including);
 
             if (
                 empty($including)
                 || empty($searchWords)
-                || 'phrase' === $including
+                || self::INCLUDING_PHRASE === $including
             ) {
                 // EXACT PHRASE method (or if NONE is selected)
                 foreach ($this->getSubstringSearchFields() as $field) {
@@ -285,6 +289,7 @@ class Product extends \XLite\Model\Repo\Base\I18n
             }
 
             $queryBuilder->andWhere($cnd);
+
         }
     }
 
@@ -301,6 +306,8 @@ class Product extends \XLite\Model\Repo\Base\I18n
     protected function getSearchWords($value)
     {
         $value = trim($value);
+
+        $result = array();
 
         if (preg_match_all('/"([^"]+)"/', $value, $match)) {
 
