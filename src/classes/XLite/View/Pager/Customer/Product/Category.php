@@ -31,9 +31,9 @@ namespace XLite\View\Pager\Customer\Product;
 /**
  * Pager for the category products page
  * 
- * @package    XLite
- * @see        ____class_see____
- * @since      3.0.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
 class Category extends \XLite\View\Pager\Customer\Product\AProduct
 {

@@ -31,9 +31,9 @@ namespace XLite\View\ItemsList;
 /**
  * Base class for all lists 
  * 
- * @package    XLite
- * @see        ____class_see____
- * @since      3.0.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
 abstract class AItemsList extends \XLite\View\Container
 {
@@ -537,7 +537,7 @@ abstract class AItemsList extends \XLite\View\Container
      * Check if widget is visible
      *
      * @return bool
-     * @access public
+     * @access protected
      * @since  3.0.0
      */
     protected function isVisible()

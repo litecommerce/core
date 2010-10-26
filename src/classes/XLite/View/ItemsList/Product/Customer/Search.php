@@ -205,7 +205,13 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
                 'Category ID', 0
             ),
             self::PARAM_INCLUDING => new \XLite\Model\WidgetParam\Set(
-                'Including', 'phrase', array('all', 'any', 'phrase')
+                'Including', 
+                \XLite\Model\Repo\Product::INCLUDING_PHRASE, 
+                array(
+                    \XLite\Model\Repo\Product::INCLUDING_ALL,
+                    \XLite\Model\Repo\Product::INCLUDING_ANY,
+                    \XLite\Model\Repo\Product::INCLUDING_PHRASE,
+                )
             ),
             self::PARAM_BY_TITLE => new \XLite\Model\WidgetParam\Checkbox(
                 'Search in title', 0
