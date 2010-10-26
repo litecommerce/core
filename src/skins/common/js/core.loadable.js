@@ -202,8 +202,14 @@ ALoadable.prototype.placeRequestData = function(box)
   box.addClass(id);
 
   this.base.trigger('reload', [box]);
-  this.base.replaceWith(box);
-  this.base = $('.' + id);
+
+  if (0 < box.length) {
+    this.base.replaceWith(box);
+    this.base = $('.' + id);
+  } else {
+    this.base.empty();
+  }
+
   this.base.removeClass(id);
 
   return true;

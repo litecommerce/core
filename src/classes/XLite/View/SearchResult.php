@@ -29,7 +29,8 @@
 namespace XLite\View;
 
 /**
- * Search result
+ * Search result 
+ * TODO REMOVE THIS CLASS!!!!! \XLite\View\ItemsList\Product\Customer\Search  is used instead
  * 
  * @package XLite
  * @see     ____class_see____
@@ -136,11 +137,13 @@ class SearchResult extends \XLite\View\ItemsList\Product\AProduct
     protected function getData(\XLite\Core\CommonCell $cnd, $countOnly = false)
     {
         if (is_null($this->data)) {
+
             $this->data = array();
 
             $p = new \XLite\Model\Product();
 
             $this->data = $p->advancedSearch(\XLite\Core\Request::getInstance()->substring, '', 0, true, false, true);
+
             if (!isset(\XLite\Core\Request::getInstance()->pageID)) {
                 $searchStat = new \XLite\Model\SearchStat();
                 $searchStat->add(\XLite\Core\Request::getInstance()->substring, count($this->data));

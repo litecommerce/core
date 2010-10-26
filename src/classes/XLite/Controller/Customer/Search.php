@@ -38,26 +38,6 @@ namespace XLite\Controller\Customer;
 class Search extends \XLite\Controller\Customer\ACustomer
 {
     /**
-     * Controller parameters
-     * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected $params = array('target', 'substring');
-
-    /**
-     * Products list (cache)
-     * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected $products = null;
-
-    /**
      * Common method to determine current location 
      * 
      * @return string
@@ -66,46 +46,102 @@ class Search extends \XLite\Controller\Customer\ACustomer
      */ 
     protected function getLocation()
     {
-        return 'Search Results';
+        return 'Search results';
     }
 
-    /**
-     * Initialize controller
-     *
+    /** 
+     * doActionSearch TODO refactor with XLite\Controller\Admin\ProductList::doActionSearch() 
+     * 
      * @return void
-     * @access public
+     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    public function init()
-    {
-        parent::init();
+    protected function doActionSearch()
+    {   
+        $sessionCell    = \XLite\View\ItemsList\Product\Customer\Search::getSessionCellName();
+        $searchParams   = \XLite\View\ItemsList\Product\Customer\Search::getSearchParams();
 
-        if (!isset(\XLite\Core\Request::getInstance()->action)) {
-            $this->session->set('productListURL', $this->getUrl());
-        }
-    }
+        $productsSearch = array();
+
+        $cBoxFields     = array(
+            \XLite\View\ItemsList\Product\Customer\Search::PARAM_SEARCH_IN_SUBCATS
+        );  
     
-    /**
-     * Get products list
+        foreach ($searchParams as $modelParam => $requestParam) {
+            if (isset(\XLite\Core\Request::getInstance()->$requestParam)) {
+                $productsSearch[$requestParam] = \XLite\Core\Request::getInstance()->$requestParam;
+            }   
+        }   
+ 
+        foreach ($cBoxFields as $requestParam) {
+            $productsSearch[$requestParam] = isset(\XLite\Core\Request::getInstance()->$requestParam)
+                ? 1 
+                : 0;
+        }   
+    
+        $this->session->set($sessionCell, $productsSearch);
+        $this->set('returnUrl', $this->buildUrl('search', '', array('mode' => 'search')));
+
+    }
+
+    /** 
+     * Get search conditions TODO refactor with XLite\Controller\Admin\ProductList::getConditions()
      * 
-     * @return array of \XLite\Model\Product
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getConditions()
+    {
+        $searchParams = $this->session->get(\XLite\View\ItemsList\Product\Customer\Search::getSessionCellName());
+
+        if (!is_array($searchParams)) {
+            $searchParams = array();
+        }   
+
+        return $searchParams;
+    }
+
+    /** 
+     * Get search condition parameter by name TODO refactor with XLite\Controller\Admin\ProductList::getCondition()
+     * 
+     * @param string $paramName name of parameter 
+     *  
+     * @return mixed
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getProducts()
+    public function getCondition($paramName)
     {
-        if (is_null($this->products)) {
+        $searchParams = $this->getConditions();
 
-            $p = new \XLite\Model\Product();
-            $this->products = $p->advancedSearch($this->get('substring'), '', 0, true, false, true);
-            if ($this->get('pageID') == null) {
-                $searchStat = new \XLite\Model\SearchStat();
-                $searchStat->add($this->get('substring'), count($this->products));
-            }
-        }
+        if (isset($searchParams[$paramName])) {
+            $return = $searchParams[$paramName];
+        }   
 
-        return $this->products;
+        return isset($searchParams[$paramName])
+            ? $searchParams[$paramName]
+            : null;
     }
+
+    /** 
+     * Return 'checked' attribute for parameter.
+     * 
+     * @param string $paramName Name of parameter
+     * @param mixed  $value     Value to check with
+     *  
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getChecked($paramName, $value = 'Y')
+    {   
+        return $value === $this->getCondition($paramName) ? 'checked' : ''; 
+    }   
+
 }
 

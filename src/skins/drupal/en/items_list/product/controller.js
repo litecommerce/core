@@ -50,7 +50,7 @@ ProductsListController.prototype.getListView = function()
   return new ProductsListView(this.base);
 }
 
-ProductsListView.prototype.postprocess = function(isSuccess, initial) 
+ProductsListView.prototype.postprocess = function(isSuccess, initial)
 {
   ProductsListView.superclass.postprocess.apply(this, arguments);
 
@@ -96,12 +96,10 @@ ProductsListView.prototype.postprocess = function(isSuccess, initial)
     );
 
     var cartTrayFadeOutDuration = 400;
-
     var draggablePattern = '.products-grid .product, .products-list .product';
-
     var cartTray = $('.cart-tray', this.base).eq(0);
-
     var countRequests = 0;
+
     cartTray.data('isProductDrag', false);
 
     $(draggablePattern, this.base).draggable(

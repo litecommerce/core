@@ -68,6 +68,8 @@ abstract class CMSConnector extends \XLite\Base\Singleton
         '\XLite\View\PoweredBy'     => '\'Powered by\' block',
 
         '\XLite\View\ItemsList\Product\Customer\Category' => 'Category products list',
+        '\XLite\View\Search'                              => 'Search product list',
+        '\XLite\View\Form\Product\Search\Customer\Simple' => 'Products search simple form',
     );
 
     /**

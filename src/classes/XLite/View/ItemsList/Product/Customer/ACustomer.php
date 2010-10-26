@@ -31,9 +31,9 @@ namespace XLite\View\ItemsList\Product\Customer;
 /**
  * ACustomer 
  * 
- * @package    XLite
- * @see        ____class_see____
- * @since      3.0.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
 abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
 {
@@ -628,8 +628,8 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
 
         // FIXME
         foreach (array('Page\QuickLook', 'Image', 'Gallery') as $class) {
-            $list = array_merge($list, 
-                $list,
+            $list = array_merge(
+                $list, 
                 $this->getWidget(array(), '\XLite\View\Product\Details\Customer\\' . $class)->getCSSFiles()
             );
         }
@@ -705,7 +705,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
     public static function getAllowedTargets()
     {
         $result = parent::getAllowedTargets();
-        $result[] = static::getWidgetTarget();
+        $result[] = self::getWidgetTarget();
     
         return $result;
     }

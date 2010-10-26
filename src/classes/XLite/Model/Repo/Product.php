@@ -28,7 +28,7 @@
 
 namespace XLite\Model\Repo;
 
-// TODO - reuires the multiple inheritance
+// TODO - requires the multiple inheritance
 // TODO - must also extends \XLite\Model\Repo\the \XLite\Model\Repo\Base\Searchable
 
 /**
@@ -50,7 +50,10 @@ class Product extends \XLite\Model\Repo\Base\I18n
     const P_SEARCH_IN_SUBCATS = 'searchInSubcats';
     const P_ORDER_BY          = 'orderBy';
     const P_LIMIT             = 'limit';
-    
+    const P_INCLUDING         = 'including';    
+    const P_BY_TITLE          = 'by_title';
+    const P_BY_DESCR          = 'by_descr';
+    const P_BY_SKU            = 'by_sku';
 
     /**
      * currentSearchCnd 
@@ -61,7 +64,16 @@ class Product extends \XLite\Model\Repo\Base\I18n
      * @since  3.0.0
      */
     protected $currentSearchCnd = null;
-   
+
+    /**
+     * Search inner cache
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $searchCache = array();
 
     /**
      * Return list of handling search params 
@@ -98,7 +110,7 @@ class Product extends \XLite\Model\Repo\Base\I18n
     }
 
     /**
-     * List of fields to use in search by substring
+     * List of fields to use in search by substring TODO !REFACTOR!
      * 
      * @return array
      * @access protected
@@ -107,11 +119,51 @@ class Product extends \XLite\Model\Repo\Base\I18n
      */
     protected function getSubstringSearchFields()
     {
-        return array(
-            'translations.name',
-            'translations.brief_description',
-            'translations.description',
-        );
+        $result = array();
+
+        if (
+            'Y' !== $this->currentSearchCnd->{self::P_BY_TITLE}
+            && 'Y' !== $this->currentSearchCnd->{self::P_BY_DESCR}
+            && 'Y' !== $this->currentSearchCnd->{self::P_BY_SKU}
+        ) {
+
+            $result = array(
+                'p.sku',
+                'translations.name',
+                'translations.brief_description',
+                'translations.description',
+            );
+
+        } else {
+
+            if ('Y' === $this->currentSearchCnd->{self::P_BY_TITLE}) {
+                $result = array(
+                    'translations.name',
+                );
+            }
+
+            if ('Y' === $this->currentSearchCnd->{self::P_BY_DESCR}) {
+                $result = array_merge(
+                    $result,
+                    array(
+                        'translations.brief_description',
+                        'translations.description',
+                    )
+                );
+            }
+
+            if ('Y' === $this->currentSearchCnd->{self::P_BY_SKU}) {
+                $result = array_merge(
+                    $result,
+                    array(
+                        'p.sku',
+                    )
+                );
+            }
+
+        }
+
+        return $result;
     }
 
     /**
@@ -171,14 +223,100 @@ class Product extends \XLite\Model\Repo\Base\I18n
     protected function prepareCndSubstring(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
         if (!empty($value)) {
+
+            $including = $this->currentSearchCnd->{self::P_INCLUDING};
+
+            $searchWords = $this->getSearchWords($value);
+
             $cnd = new \Doctrine\ORM\Query\Expr\Orx();
 
-            foreach ($this->getSubstringSearchFields() as $field) {
-                $cnd->add($field . ' LIKE :substring');
+            $isAll = ('all' === $including);
+
+            if (
+                empty($including)
+                || empty($searchWords)
+                || 'phrase' === $including
+            ) {
+                // EXACT PHRASE method (or if NONE is selected)
+                foreach ($this->getSubstringSearchFields() as $field) {
+                    $cnd->add($field . ' LIKE :substring');
+                }
+
+                $queryBuilder->setParameter('substring', '%' . $value . '%');
+
+            } else {
+
+                foreach ($this->getSubstringSearchFields() as $field) {
+
+                    if ($isAll) {
+
+                        $fieldCnd = new \Doctrine\ORM\Query\Expr\Andx();
+
+                    }
+
+                    foreach ($searchWords as $index => $word) {
+
+                        $fieldWhere = $field . ' LIKE :word' . $index;
+
+                        if ($isAll) {
+                            // Collect AND expressions for one field
+                            $fieldCnd->add($fieldWhere);
+
+                        } else {
+                            // Collect OR expressions
+                            $cnd->add($field . ' LIKE :word' . $index);
+
+                        }
+
+                        $queryBuilder->setParameter('word' . $index, '%' . $word . '%');
+                    }
+
+                    if ($isAll) {
+                        // Add AND expression into OR main expression 
+                        // (
+                        //    ((field1 LIKE word1) AND (field1 LIKE word2)) 
+                        //        OR 
+                        //    ((field2 LIKE word1) AND (field2 LIKE word2))
+                        // ) 
+                        $cnd->add($fieldCnd);
+
+                    }
+                }
             }
 
-            $queryBuilder->andWhere($cnd)->setParameter('substring', '%' . $value . '%');
+            $queryBuilder->andWhere($cnd);
         }
+    }
+
+    /**
+     * Return search words for "All" and "Any" INCLUDING parameter
+     * 
+     * @param string $value search string
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getSearchWords($value)
+    {
+        $value = trim($value);
+
+        if (preg_match_all('/"([^"]+)"/', $value, $match)) {
+
+            $result = $match[1];
+
+            $value = str_replace($match[0], '', $value);
+
+        }
+
+        return array_merge(
+            (array)$result,
+            array_map(
+                'trim',
+                explode(' ', $value)
+            )
+        );
     }
 
     /**
@@ -250,21 +388,29 @@ class Product extends \XLite\Model\Repo\Base\I18n
      */
     public function search(\XLite\Core\CommonCell $cnd, $countOnly = false)
     {
-        $queryBuilder = $this->createQueryBuilder();
+        $cndHash = serialize($cnd);
 
-        $this->currentSearchCnd = $cnd;
+        if (empty($this->searchCache[$cndHash])) {
 
-        foreach ($this->currentSearchCnd as $key => $value) {
-            $this->callSearchConditionHandler($value, $key, $queryBuilder);
-        }
+            $queryBuilder = $this->createQueryBuilder();
 
-        if ($countOnly) {
-            $queryBuilder->select('COUNT(p.product_id)');
+            $this->currentSearchCnd = $cnd;
+
+            foreach ($this->currentSearchCnd as $key => $value) {
+                $this->callSearchConditionHandler($value, $key, $queryBuilder);
+            }
+
+            if ($countOnly) {
+                $queryBuilder->select('COUNT(p.product_id)');
+            }
+
+            $this->searchCache[$cndHash] = $queryBuilder->getQuery()->getResult();
+
         }
 
         return $countOnly
-            ? $queryBuilder->getQuery()->getSingleScalarResult()
-            : $queryBuilder->getQuery()->getResult();
+            ? count($this->searchCache[$cndHash])
+            : $this->searchCache[$cndHash];
     }
 
 
@@ -285,6 +431,8 @@ class Product extends \XLite\Model\Repo\Base\I18n
         if (!\XLite::isAdminZone()) {
             $result->andWhere('p.enabled = :enabled')->setParameter('enabled', true);
         }
+
+        $result->groupBy('p.product_id');
 
         return $result;
     }
