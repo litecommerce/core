@@ -13,6 +13,8 @@
 
 <div class="items-list widgetclass-{getWidgetClass()} widgettarget-{getWidgetTarget()} sessioncell-{getSessionCell()}">
 
+  <h2 IF="isHeadVisible()" class="items-list-title" >{getHead()}</h2>
+
   <div class="list-pager">{pager.display()}</div>
 
   <div IF="isHeaderVisible()" class="list-header">{displayViewListContent(#itemsList.header#)}</div>

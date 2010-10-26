@@ -559,6 +559,19 @@ abstract class AItemsList extends \XLite\View\Container
     }
 
     /**
+     * Check if head title is visible
+     * 
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function isHeadVisible()
+    {
+        return false;
+    }
+
+    /**
      * isFooterVisible 
      * 
      * @return bool

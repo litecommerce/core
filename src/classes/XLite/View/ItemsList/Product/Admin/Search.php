@@ -31,9 +31,9 @@ namespace XLite\View\ItemsList\Product\Admin;
 /**
  * Search 
  * 
- * @package    XLite
- * @see        ____class_see____
- * @since      3.0.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
 class Search extends \XLite\View\ItemsList\Product\Admin\AAdmin
 {
@@ -149,7 +149,7 @@ class Search extends \XLite\View\ItemsList\Product\Admin\AAdmin
     }
 
     /**
-     * getSearchParams 
+     * Return search parameters
      * 
      * @return array
      * @access public
@@ -205,7 +205,10 @@ class Search extends \XLite\View\ItemsList\Product\Admin\AAdmin
     {
         parent::defineRequestParams();
 
-        $this->requestParams = array_merge($this->requestParams, $this->getSearchParams());
+        $this->requestParams = array_merge(
+            $this->requestParams, 
+            \XLite\View\ItemsList\Product\Admin\Search::getSearchParams()
+        );
     }
 
     /**
@@ -220,7 +223,7 @@ class Search extends \XLite\View\ItemsList\Product\Admin\AAdmin
     {
         $result = parent::getSearchCondition();
 
-        foreach ($this->getSearchParams() as $modelParam => $requestParam) {
+        foreach (\XLite\View\ItemsList\Product\Admin\Search::getSearchParams() as $modelParam => $requestParam) {
             $result->$modelParam = $this->getParam($requestParam);
         }
 
