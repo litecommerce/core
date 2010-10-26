@@ -363,7 +363,7 @@ class Profile extends \XLite\Model\AEntity
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getAddressByType($atype = 'b')
+    protected function getAddressByType($atype = \XLite\Model\Address::BILLING)
     {
         $result = null;
 
@@ -373,7 +373,10 @@ class Profile extends \XLite\Model\AEntity
 
             foreach ($addresses as $address) {
 
-                if (('b' == $atype && $address->getIsBilling()) || ('s' == $atype && $address->getIsShipping())) {
+                if (
+                    (\XLite\Model\Address::BILLING == $atype && $address->getIsBilling())
+                    || (\XLite\Model\Address::SHIPPING == $atype && $address->getIsShipping())
+                ) {
                     $result = $address;
                     break;
                 }
@@ -397,7 +400,7 @@ class Profile extends \XLite\Model\AEntity
      */
     public function getBillingAddress()
     {
-        return $this->getAddressByType('b');
+        return $this->getAddressByType(\XLite\Model\Address::BILLING);
     }
 
     /**
@@ -410,7 +413,7 @@ class Profile extends \XLite\Model\AEntity
      */
     public function getShippingAddress()
     {
-        return $this->getAddressByType('s');
+        return $this->getAddressByType(\XLite\Model\Address::SHIPPING);
     }
 
     /**
@@ -529,6 +532,22 @@ class Profile extends \XLite\Model\AEntity
         }
 
         return $result;
+    }
+
+    /**
+     * Check - billing and shipping addresses are equal or not
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isEqualAddress()
+    {
+        $billingAddress = $this->getBillingAddress();
+        $shippingAddress = $this->getShippingAddress();
+
+        return isset($billingAddress) && isset($shippingAddress) && $billingAddress->getAddressId() == $shippingAddress->getAddressId();
     }
 
     /**

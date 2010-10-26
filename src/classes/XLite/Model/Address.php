@@ -39,6 +39,14 @@ namespace XLite\Model;
  */
 class Address extends \XLite\Model\AEntity
 {
+
+    /**
+     * Address type codes 
+     */
+    const BILLING  = 'b';
+    const SHIPPING = 's';
+
+
     /**
      * Unique id 
      * 
@@ -220,7 +228,7 @@ class Address extends \XLite\Model\AEntity
     protected $profile;
 
     /**
-     * getState 
+     * Get state 
      * 
      * @return \XLite\Model\State
      * @access public
@@ -229,11 +237,59 @@ class Address extends \XLite\Model\AEntity
      */
     public function getState()
     {
-        return \XLite\Core\Database::getRepo('XLite\Model\State')->findOneByStateId($this->getStateId());
+        $state = null;
+
+        if ($this->getStateId()) {
+
+            // Real state object
+            $state = \XLite\Core\Database::getRepo('XLite\Model\State')
+                ->findOneByStateId($this->getStateId());
+
+        } elseif ($this->getCustomState()) {
+
+            // Custom state
+            $state = new \XLite\Model\State;
+            $state->setState($this->getCustomState());
+        }
+
+        return $state;
     }
 
     /**
-     * getCountry 
+     * Set state
+     *
+     * @param mixed $state State object or state id or custom state name
+     *
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setState($state)
+    {
+        if (is_object($state) && $state instanceof \XLite\Model\State) {
+
+            // Set by state object
+            $this->setStateId($state->getStateId());
+            $this->setCustomState('');
+
+        } elseif (is_integer($state)) {
+
+            // Set by state id
+            $this->setStateId($state);
+            $this->setCustomState('');
+
+        } elseif (is_string($state)) {
+
+            // Set custom state
+            $this->setStateId(0);
+            $this->setCustomState($state);
+
+        }
+    }
+
+    /**
+     * Get country 
      * 
      * @return \XLite\Model\Country
      * @access public
@@ -242,7 +298,170 @@ class Address extends \XLite\Model\AEntity
      */
     public function getCountry()
     {
-        return \XLite\Core\Database::getRepo('XLite\Model\Country')->find($this->getCountryCode());
+        return \XLite\Core\Database::getRepo('XLite\Model\Country')
+            ->find($this->getCountryCode());
+    }
+
+    /**
+     * Set country 
+     *
+     * @param mixed $country Country object or code
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setCountry($country)
+    {
+        if (is_object($country) && $country instanceof \XLite\Model\Country) {
+
+            // Set by object
+            $this->setCountryCode($country->getCode());
+
+        } elseif (is_string($country)) {
+
+            // Set by code
+            $this->setCountryCode($country);
+        }
+    }
+
+    /**
+     * Get full name 
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getName()
+    {
+        return trim($this->getFirstname() . ' ' . $this->getLastname());
+    }
+
+    /**
+     * Set full name 
+     *
+     * @param string $value Full name
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setName($value)
+    {
+        list($first, $last) = explode(' ', trim($value), 2);
+
+        $this->setFirstname(trim($first));
+        $this->setLastname(trim($last));
+    }
+
+    /**
+     * Get billing address-specified required fields 
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getBillingRequiredFields()
+    {
+        return array(
+            'name',
+            'street',
+            'city',
+            'zipcode',
+            'state',
+            'country',
+        );
+    }
+
+    /**
+     * Get shipping address-specified required fields 
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getShippingRequiredFields()
+    {
+        return array(
+            'name',
+            'street',
+            'city',
+            'zipcode',
+            'state',
+            'country',
+        );
+    }
+
+    /**
+     * Get required fields by address type 
+     * 
+     * @param string $atype Address type code
+     *  
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getRequiredFieldsByType($atype)
+    {
+        switch ($atype) {
+            case self::BILLING:
+                $list = $this->getBillingRequiredFields();
+                break;
+
+            case self::SHIPPING:
+                $list = $this->getShippingRequiredFields();
+                break;
+
+            default:
+                // TODO - add throw exception
+        }
+
+        return $list;
+    }
+
+    /**
+     * Get required and empty fields 
+     * 
+     * @param string $atype Address type code
+     *  
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getRequiredEmptyFields($atype)
+    {
+        $result = array();
+
+        foreach ($this->getRequiredFieldsByType($atype) as $name) {
+            $method = 'get' . \XLite\Core\Converter::getInstance()->convertToCamelCase($name);
+            if (!$this->$method()) {
+                $result[] = $name;
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Check - address is completed or not
+     * 
+     * @param string $atype Address type code
+     *  
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isCompleted($atype)
+    {
+        return 0 == count($this->getRequiredEmptyFields($atype));
     }
 
     public static function getAddressFields()
@@ -256,7 +475,7 @@ class Address extends \XLite\Model\AEntity
             'zipcode',
             'state_id',
             'custom_state',
-            'country_code'    
+            'country_code',
         );
     }
 
