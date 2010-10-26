@@ -135,6 +135,13 @@ class XLite_Tests_Model_Repo_Product extends XLite_Tests_Model_AProduct
 
         $this->assertEquals(1, $result, 'There should be 1 "Radish AND sativus" product');
 
+
+        $cnd->{\XLite\Model\Repo\Product::P_SUBSTRING} = 'Radish "consumed throughout"';
+
+        $result = \XLite\Core\Database::getRepo('\XLite\Model\Product')->search($cnd, true);
+
+        $this->assertEquals(1, $result, 'There should be 1 "Radish AND sativus" product');
+
     }
 
     /**
