@@ -13,7 +13,7 @@
 
 {displayViewListContent(#itemsList.product.cart#)}
 
-<div class="{getContainerClass()}">
+<div class="products">
 
   <table class="products-grid grid-{getParam(#gridColumns#)}-columns">
     {foreach:getProductRows(),row}

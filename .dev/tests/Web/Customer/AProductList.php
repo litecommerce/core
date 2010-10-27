@@ -34,7 +34,7 @@ require_once __DIR__ . '/ACustomer.php';
 abstract class XLite_Web_Customer_AProductList extends XLite_Web_Customer_ACustomer
 {
 
-    protected $widgetContainerClass = '';
+    protected $widgetContainerClass = '.items-list';
     
     protected $widgetClass = '';
 
@@ -186,7 +186,7 @@ abstract class XLite_Web_Customer_AProductList extends XLite_Web_Customer_ACusto
      */
     protected function getListSelector()
     {
-        return '.items-list';
+        return $this->widgetContainerClass;
     }
 
     /**

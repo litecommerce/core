@@ -31,7 +31,7 @@ require_once __DIR__ . '/AProductList.php';
 class XLite_Web_Customer_CategoryProducts extends XLite_Web_Customer_AProductList
 {
 
-    protected $widgetContainerClass = 'category-products';
+    protected $widgetContainerClass = '.items-list.category-products';
     
     protected $widgetClass = '\\XLite\\View\\ItemsList\\Product\\Customer\\Category';
 
