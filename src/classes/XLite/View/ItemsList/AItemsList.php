@@ -679,4 +679,18 @@ abstract class AItemsList extends \XLite\View\Container
     {
         return str_replace('\\', '', get_called_class());
     }
+
+    /**
+     * Returns a list of CSS classes (separated with a space character) to be attached to the items list
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getListCSSClasses()
+    {
+        return 'items-list';
+    }
+
 }

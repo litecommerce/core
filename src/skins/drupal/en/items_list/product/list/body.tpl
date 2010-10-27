@@ -13,7 +13,7 @@
 
 {displayViewListContent(#itemsList.product.cart#)}
 
-<div class="{getContainerClass()}">
+<div class="products">
 
   <ul class="products-list" IF="getPageData()">
     <li FOREACH="getPageData(),product" class="product-cell">

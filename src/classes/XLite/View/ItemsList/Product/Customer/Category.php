@@ -193,9 +193,9 @@ class Category extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getContainerClass()
+    public function getListCSSClasses()
     {
-        return parent::getContainerClass() . ' category-products';
+        return parent::getListCSSClasses() . ' category-products';
     }
 
 }

@@ -10,7 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<div class="{getContainerClass()}">
+<div class="products">
 
   <table class="products-table" IF="getPageData()">
     <tr>
