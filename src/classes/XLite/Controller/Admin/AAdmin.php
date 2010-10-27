@@ -402,7 +402,7 @@ EOT;
      */
     protected function sanitizeCleanURL($cleanUrl)
     {
-        return substr(trim(preg_replace('/[^a-z0-9 \/\.]+/Sis', '', $cleanUrl)), 0, 200);
+        return substr(trim(preg_replace('/[^a-z0-9 \/\._-]+/Sis', '', $cleanUrl)), 0, 200);
     }
 
     /**
