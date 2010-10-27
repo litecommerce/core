@@ -102,6 +102,18 @@ ListView.prototype.postprocess = function(isSuccess, initial)
         return !o.load({'itemsPerPage': count});
       }
     );
+
+    // Fix for Opera. Opera does not interpret onChange event if client presses Enter key.
+    if ($.browser.opera) {
+      $('input.page-length', this.base).bind('keypress',
+        function (e) {
+          if (e.keyCode == '13') {
+            $(this).change();
+          }
+        }
+      );
+    }
+
   }
 }
 
