@@ -230,67 +230,112 @@ class Product extends \XLite\Model\Repo\Base\I18n
 
             $including = $this->currentSearchCnd->{self::P_INCLUDING};
 
-            $searchWords = $this->getSearchWords($value);
+            $including = empty($including) ? self::INCLUDING_PHRASE : $including;
 
-            $cnd = new \Doctrine\ORM\Query\Expr\Orx();
-
-            $isAll = (self::INCLUDING_ALL === $including);
-
-            if (
-                empty($including)
-                || empty($searchWords)
-                || self::INCLUDING_PHRASE === $including
-            ) {
-                // EXACT PHRASE method (or if NONE is selected)
-                foreach ($this->getSubstringSearchFields() as $field) {
-                    $cnd->add($field . ' LIKE :substring');
-                }
-
-                $queryBuilder->setParameter('substring', '%' . $value . '%');
-
-            } else {
-
-                foreach ($this->getSubstringSearchFields() as $field) {
-
-                    if ($isAll) {
-
-                        $fieldCnd = new \Doctrine\ORM\Query\Expr\Andx();
-
-                    }
-
-                    foreach ($searchWords as $index => $word) {
-
-                        $fieldWhere = $field . ' LIKE :word' . $index;
-
-                        if ($isAll) {
-                            // Collect AND expressions for one field
-                            $fieldCnd->add($fieldWhere);
-
-                        } else {
-                            // Collect OR expressions
-                            $cnd->add($field . ' LIKE :word' . $index);
-
-                        }
-
-                        $queryBuilder->setParameter('word' . $index, '%' . $word . '%');
-                    }
-
-                    if ($isAll) {
-                        // Add AND expression into OR main expression 
-                        // (
-                        //    ((field1 LIKE word1) AND (field1 LIKE word2)) 
-                        //        OR 
-                        //    ((field2 LIKE word1) AND (field2 LIKE word2))
-                        // ) 
-                        $cnd->add($fieldCnd);
-
-                    }
-                }
-            }
+            $cnd = $this->{'getCndSubstring' . ucfirst($including)} ($queryBuilder, $value);
 
             $queryBuilder->andWhere($cnd);
 
         }
+    }
+
+    /**
+     * Prepare certain search condition (EXACT PHRASE method)
+     * 
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder query builder to prepare
+     * @param string                     $value        condition data
+     *  
+     * @return \Doctrine\ORM\Query\Expr\Base condition class
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getCndSubstringPhrase(\Doctrine\ORM\QueryBuilder $queryBuilder, $value) 
+    {
+        $cnd = new \Doctrine\ORM\Query\Expr\Orx();
+
+        // EXACT PHRASE method (or if NONE is selected)
+        foreach ($this->getSubstringSearchFields() as $field) {
+            $cnd->add($field . ' LIKE :substring');
+        }
+
+        $queryBuilder->setParameter('substring', '%' . $value . '%');
+
+        return $cnd;
+    }
+
+    /**
+     * Prepare certain search condition (ALL WORDS method)
+     * 
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder query builder to prepare
+     * @param string                     $value        condition data
+     *  
+     * @return \Doctrine\ORM\Query\Expr\Base condition class
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getCndSubstringAll(\Doctrine\ORM\QueryBuilder $queryBuilder, $value) 
+    {
+        $searchWords = $this->getSearchWords($value);
+
+        $cnd = new \Doctrine\ORM\Query\Expr\Orx();
+
+        foreach ($this->getSubstringSearchFields() as $field) {
+
+            $fieldCnd = new \Doctrine\ORM\Query\Expr\Andx();
+
+            foreach ($searchWords as $index => $word) {
+
+                // Collect AND expressions for one field
+                $fieldCnd->add($field . ' LIKE :word' . $index);
+
+                $queryBuilder->setParameter('word' . $index, '%' . $word . '%');
+
+            }
+
+            // Add AND expression into OR main expression
+            // (
+            //    ((field1 LIKE word1) AND (field1 LIKE word2))
+            //        OR
+            //    ((field2 LIKE word1) AND (field2 LIKE word2))
+            // )
+            $cnd->add($fieldCnd);
+        }
+
+        return $cnd;
+    }
+
+    /**
+     * Prepare certain search condition for substring (ANY WORDS method)
+     * 
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder query builder to prepare
+     * @param string                     $value        condition data
+     *  
+     * @return \Doctrine\ORM\Query\Expr\Base condition class
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getCndSubstringAny(\Doctrine\ORM\QueryBuilder $queryBuilder, $value) 
+    {
+        $searchWords = $this->getSearchWords($value);
+
+        $cnd = new \Doctrine\ORM\Query\Expr\Orx();
+
+        foreach ($this->getSubstringSearchFields() as $field) {
+
+            foreach ($searchWords as $index => $word) {
+
+                // Collect OR expressions
+                $cnd->add($field . ' LIKE :word' . $index);
+
+                $queryBuilder->setParameter('word' . $index, '%' . $word . '%');
+
+            }
+        }
+
+        return $cnd;
     }
 
     /**
