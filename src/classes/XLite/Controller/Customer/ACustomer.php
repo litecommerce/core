@@ -307,19 +307,5 @@ abstract class ACustomer extends \XLite\Controller\AController
         return parent::handleRequest();
     }
 
-    /**
-     * Get current currency 
-     * TODO - rework
-     * 
-     * @return \XLite\Model\Currency
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getCurrentCurrency()
-    {
-        return \XLite\Core\Database::getRepo('XLite\Model\Currency')
-            ->find(840);
-    }
 }
 

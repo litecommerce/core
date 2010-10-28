@@ -151,7 +151,7 @@ abstract class AAdmin extends \XLite\Controller\AController
         // auto-login request
 /*
         if (!$this->auth->is('logged') && isset(\XLite\Core\Request::getInstance()->login) && isset(\XLite\Core\Request::getInstance()->password)) {
-            if ($this->auth->adminLogin(\XLite\Core\Request::getInstance()->login, \XLite\Core\Request::getInstance()->password) === \XLite\Core\Auth::RESULT_ACCESS_DENIED) {
+            if ($this->auth->loginAdministrator(\XLite\Core\Request::getInstance()->login, \XLite\Core\Request::getInstance()->password) === \XLite\Core\Auth::RESULT_ACCESS_DENIED) {
                 die('ACCESS DENIED');
             }
         }
@@ -166,19 +166,6 @@ abstract class AAdmin extends \XLite\Controller\AController
             $this->session->set('lastWorkingURL', $this->get('url'));
             $this->redirect(
                 $this->buildUrl('login')
-            );
-
-        } elseif (
-            !$this->isIgnoredTarget()
-            && 'Y' == $this->config->Security->admin_ip_protection
-            && !$this->auth->isValidAdminIP($this)
-            && !(\XLite\Core\Request::getInstance()->target == 'payment_method' && \XLite\Core\Request::getInstance()->action == 'callback')
-        ) {
-
-            // IP check
-
-            $this->redirect(
-                $this->buildUrl('login', '', array('mode' => 'access_denied'))
             );
 
         } else {

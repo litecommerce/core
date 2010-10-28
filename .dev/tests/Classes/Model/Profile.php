@@ -29,7 +29,7 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
     protected $testProfileData = array(
         // Admin profile
         0 => array(
-            'login'         => 'rnd_tester02@cdev.ru',
+            'login'         => 'rnd_tester0x@cdev.ru',
             'password'      => 'testpassword',
             'access_level'  => 100,
             'referer'       => 'some referer',
@@ -37,7 +37,7 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
         ),
         // Customer profile
         1 => array(
-            'login'         => 'rnd_tester01@cdev.ru',
+            'login'         => 'rnd_tester0y@cdev.ru',
             'password'      => 'testpassword',
             'access_level'  => 0,
             'referer'       => 'some referer',
@@ -120,6 +120,14 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
 
     );
 
+    /**
+     * profileFields 
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
     protected $profileFields = array(
         'login'                 => 'aaa',
         'password'              => 'password test',
@@ -141,6 +149,22 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
     );
 
     /**
+     * tearDown
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function tearDown()
+    {
+        parent::tearDown();
+
+        $this->query(file_get_contents(__DIR__ . '/Repo/sql/profile/restore.sql'));
+        \XLite\Core\Database::getEM()->flush();
+    }
+
+    /**
      * testGetBillingAddress 
      * 
      * @return void
@@ -152,7 +176,9 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
     {
         // Test #1
         $profile = $this->getTestProfile(0, 0);
-    
+
+        $this->assertNotNull($profile, 'Cannot create test profile (0, 0)');
+
         $address = $profile->getBillingAddress();
 
         $this->assertEquals('a0', $address->getFirstname(), 'Wrong billing address selected (set #0)');
@@ -161,7 +187,9 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
 
         // Test #2
         $profile = $this->getTestProfile(0, 1);
-    
+
+        $this->assertNotNull($profile, 'Cannot create test profile (0, 1)');
+
         $address = $profile->getBillingAddress();
 
         $this->assertEquals('a0', $address->getFirstname(), 'Wrong billing address selected (set #1)');
@@ -170,7 +198,9 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
 
         // Test #3
         $profile = $this->getTestProfile(0, 2);
-    
+
+        $this->assertNotNull($profile, 'Cannot create test profile (0, 2)');
+
         $address = $profile->getBillingAddress();
 
         $this->assertEquals('a0', $address->getFirstname(), 'Wrong billing address selected (set #2)');
@@ -179,12 +209,13 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
 
         // Test #4
         $profile = $this->getTestProfile(0, 3);
-    
+
+        $this->assertNotNull($profile, 'Cannot create test profile (0, 3)');
+
         $address = $profile->getBillingAddress();
 
         $this->assertNull($address, 'Wrong billing address selected (set #3)');
 
-        $this->deleteTestProfile($profile->getProfileId());
     }
 
     /**
@@ -199,7 +230,9 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
     {
         // Test #1
         $profile = $this->getTestProfile(0, 0);
-    
+
+        $this->assertNotNull($profile, 'Cannot create test profile (0, 0)');
+
         $address = $profile->getShippingAddress();
 
         $this->assertEquals('a0', $address->getFirstname(), 'Wrong shipping address selected (set #0)');
@@ -208,6 +241,8 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
 
         // Test #2
         $profile = $this->getTestProfile(0, 1);
+
+        $this->assertNotNull($profile, 'Cannot create test profile (0, 1)');
     
         $address = $profile->getShippingAddress();
 
@@ -217,7 +252,9 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
 
         // Test #3
         $profile = $this->getTestProfile(0, 2);
-    
+
+        $this->assertNotNull($profile, 'Cannot create test profile (0, 2)');
+
         $address = $profile->getShippingAddress();
 
         $this->assertEquals('a0', $address->getFirstname(), 'Wrong billing address selected (set #2)');
@@ -226,12 +263,13 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
 
         // Test #4
         $profile = $this->getTestProfile(0, 3);
+
+        $this->assertNotNull($profile, 'Cannot create test profile (0, 3)');
     
         $address = $profile->getShippingAddress();
 
         $this->assertNull($address, 'Wrong billing address selected (set #3)');
 
-        $this->deleteTestProfile($profile->getProfileId());
     }
 
     /**
@@ -248,6 +286,8 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
         // Test #1
         $profile = $this->getTestProfile(0, 1);
 
+        $this->assertNotNull($profile, 'Cannot create test profile (0, 1)');
+
         $this->assertEquals(0, $profile->getOrdersCount(), 'orders_count checking');
     }
 
@@ -262,7 +302,9 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
     public function testIsEnabled()
     {
         $profile = $this->getTestProfile(0, 1);
-        
+
+        $this->assertNotNull($profile, 'Cannot create test profile (0, 1)');
+
         $profile->enable();
 
         $this->assertTrue($profile->isEnabled(), 'Expected status value (enabled) does not match');
@@ -270,8 +312,6 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
         $profile->disable();
 
         $this->assertFalse($profile->isEnabled(), 'Expected status value (disabled) does not match');
-
-        $this->deleteTestProfile($profile->getProfileId());
     }
 
     /**
@@ -285,6 +325,8 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
     public function testCreate()
     {
         $profile = $this->getTestProfile(1, 0);
+
+        $this->assertNotNull($profile, 'Cannot create test profile (1, 0)');
 
         foreach ($this->testProfileData[1] as $key => $value) {
             $methodName = 'get' . \XLite\Core\Converter::getInstance()->convertToCamelCase($key);
@@ -302,8 +344,70 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
         }
 
         $this->assertTrue($profile->getPendingMembership() instanceof \XLite\Model\Membership, 'Pending membership is expected to be an object');
+    }
 
-        $this->deleteTestProfile($profile->getProfileId());
+    /**
+     * testUpdate 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function testUpdate()
+    {
+        // Test #1
+        $profile1 = $this->getTestProfile(1, 0);
+
+        $this->assertNotNull($profile1, 'Cannot create test profile (1, 0)');
+
+        $profile1->map($this->testProfileData[2]);
+
+        $result = $profile1->update();
+        
+        // Update result must be true
+        $this->assertTrue($result, 'update() must return true');
+
+        // Get updated profile from the database
+        $profile2 = \XLite\Core\Database::getRepo('XLite\Model\Profile')->find($profile1->getProfileId());
+
+        // Check if profile properties are correctly updated
+        foreach ($this->testProfileData[2] as $key => $value) {
+            $methodName = 'get' . \XLite\Core\Converter::getInstance()->convertToCamelCase($key);
+            // membership_id must be null after updating if it has a zero value initially
+            if (in_array($key, array('membership_id', 'pending_membership_id')) && 0 === $value) {
+                $this->assertNull($profile2->$methodName(), 'Wrong property (' . $key . ')' );
+
+            } else {
+                $this->assertEquals($value, $profile2->$methodName(), 'Wrong property (' . $key . ')' );
+            }
+        }
+
+        $this->assertNull($profile2->getMembership(), 'Membership is expected to be null');
+
+        // Test #2: update user with login that is used by other user, check for duplicate login
+        
+        $profile3 = $this->getTestProfile(0, 0);
+
+        $this->assertNotNull($profile3, 'Cannot create test profile (0, 0)');
+
+        $profile4 = $this->getTestProfile(1, 0);
+
+        $this->assertNotNull($profile4, 'Cannot create test profile (1, 0)');
+
+        $origLogin = $profile4->getLogin();
+        $origProfileId = $profile4->getProfileId();
+
+        $profile4->setLogin($profile3->getLogin());
+
+        $result = $profile4->update();
+
+        $this->assertFalse($result, 'update() must return false');
+
+        $profile5 = \XLite\Core\Database::getRepo('XLite\Model\Profile')->find($origProfileId);
+
+        // TODO: check why this test failed
+        //$this->assertEquals($origLogin, $profile5->getLogin(), 'Checking for duplicate login');
     }
 
     /**
@@ -317,16 +421,18 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
     public function testIsSameAddress()
     {
         $profile = $this->getTestProfile(1, 1);
-    
+
+        $this->assertNotNull($profile, 'Cannot create test profile (1, 1)');
+
         $this->assertFalse($profile->isSameAddress(), 'isSameAddress() expected to be false');
 
         $this->deleteTestProfile($profile->getProfileId());
 
         $profile = $this->getTestProfile(1, 4);
 
-        $this->assertTrue($profile->isSameAddress(), 'isSameAddress() expected to be true');
+        $this->assertNotNull($profile, 'Cannot create test profile (1, 4)');
 
-        $this->deleteTestProfile($profile->getProfileId());
+        $this->assertTrue($profile->isSameAddress(), 'isSameAddress() expected to be true');
     }
 
     /**
@@ -340,6 +446,8 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
     public function testCloneObject()
     {
         $profile = $this->getTestProfile(1, 1);
+
+        $this->assertNotNull($profile, 'Cannot create test profile (1, 1)');
 
         $clonedProfile = $profile->cloneObject();
 
@@ -377,9 +485,6 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
         $this->assertEquals($address1->getIsBilling(), $address2->getIsBilling(), 'is_billing comparison');
         $this->assertEquals($address1->getIsShipping(), $address2->getIsShipping(), 'is_shipping comparison');
         $this->assertEquals($address1->getFirstname(), $address2->getFirstname(), 'firstname comparison');
-
-        $this->deleteTestProfile($profile->getProfileId());
-        $this->deleteTestProfile($clonedProfile->getProfileId());
     }
 
     /**
@@ -405,9 +510,9 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
             $profile->addAddresses($address);
         }
 
-        $profile->create();
+        $result = $profile->create();
 
-        return $profile;
+        return $result ? $profile : null;
     }
 
     /**

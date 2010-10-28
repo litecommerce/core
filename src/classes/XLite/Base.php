@@ -54,6 +54,7 @@ class Base extends \XLite\Base\Singleton
         'logger'   => '\XLite\Logger',
         'config'   => '\XLite\Core\Config',
         'layout'   => '\XLite\Model\Layout',
+        'mailer'   => '\XLite\Core\Mailer',
     );
 
 

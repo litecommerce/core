@@ -451,4 +451,19 @@ class XLite_Tests_Model_Repo_Profile extends XLite_Tests_TestCase
         $this->assertEquals(6, $profile2->getProfileId(), 'check profile_id');
     }
 
+    /**
+     * testFindCountOfAdminAccounts 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function testFindCountOfAdminAccounts()
+    {
+        $adminsCount = \XLite\Core\Database::getRepo('XLite\Model\Profile')->findCountOfAdminAccounts();
+    
+        $this->assertEquals(2, $adminsCount, 'Checking the count of administrator accounts');
+    }
+
 }

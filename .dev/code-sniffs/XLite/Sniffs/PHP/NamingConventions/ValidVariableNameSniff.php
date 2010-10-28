@@ -35,7 +35,7 @@ class XLite_Sniffs_PHP_NamingConventions_ValidVariableNameSniff extends XLite_Ab
 {
 
 	protected $allowVars = array(
-		'_GET', '_POST', '_SERVER', 'GLOBALS', '_REQUEST', '_FILES',
+		'_GET', '_POST', '_SERVER', '_COOKIE', 'GLOBALS', '_REQUEST', '_FILES',
 	);
 
     /**

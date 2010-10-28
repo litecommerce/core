@@ -11,4 +11,4 @@
  * @since     3.0.0
  * @ListChild (list="menu.management", weight="20")
  *}
-<a href="admin.php?target=users">Users</a>
+<a href="admin.php?target=users&mode=search">Users</a>

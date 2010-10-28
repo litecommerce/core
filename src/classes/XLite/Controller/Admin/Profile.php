@@ -71,22 +71,45 @@ class Profile extends \XLite\Controller\Admin\AAdmin
      */
     protected function actionPostprocessModify()
     {
-
         $params = array();
 
-        $profileId = $this->getModelForm()->getModelObject()->getProfileId();
+        if ($this->getModelForm()->isRegisterMode()) {
 
-        if (isset($profileId)) {
+            // New profile is registered
 
-            // Update existsing profile: get profile ID from request
+            if ($this->isActionError()) {
+
+                // Return back to register page
+                $params = array('mode' => self::getRegisterMode());
+
+            } else {
+                
+                // Send notification to the user
+                \XLite\Core\Mailer::sendProfileCreatedUserNotification($this->getModelForm()->getModelObject());
+
+                // Send notification to the users department
+                \XLite\Core\Mailer::sendProfileCreatedAdminNotification($this->getModelForm()->getModelObject());
+
+                // Return to the created profile page
+                $params = array('profile_id' => $this->getModelForm()->getModelObject()->getProfileId());
+            }
+
+        } else {
+
+            // Existsing profile is updated
+
+            // Send notification to the user
+            \XLite\Core\Mailer::sendProfileUpdatedUserNotification($this->getModelForm()->getModelObject());
+
+            // Send notification to the users department
+            \XLite\Core\Mailer::sendProfileUpdatedAdminNotification($this->getModelForm()->getModelObject());
+
+            // Get profile ID from modified profile model
+            $profileId = $this->getModelForm()->getModelObject()->getProfileId();
+
+            // Return to the profile page
             $params = array('profile_id' => $profileId);
 
-        } elseif ($this->getModelForm()->isRegisterMode()) {
-
-            // Create new: getID of created profile or return to register page
-            $params = $this->isActionError()
-                ? array('mode' => self::getRegisterMode())
-                : array('profile_id' => $this->getModelForm()->getProfileId(false));
         }
 
         if (!empty($params)) {
@@ -104,7 +127,12 @@ class Profile extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionDelete()
     {
+        $userLogin = $this->getModelForm()->getModelObject()->getLogin();
+
         $result = $this->getModelForm()->performAction('delete');
+
+        // Send notification to the user
+        \XLite\Core\Mailer::sendProfileDeletedAdminNotification($userLogin);
 
         $this->setReturnUrl($this->buildURL('users', '', array('mode' => 'search')));
     }

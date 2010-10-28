@@ -276,8 +276,26 @@ class AdminMain extends \XLite\View\Model\AModel
         return $result;
     }
 
+    protected function checkProfileData()
+    {
+        $result = $this->checkPassword();
+
+        if ($result) {
+            // Check if profile with specified login is already exists
+            $sameProfile = \XLite\Core\Database::getRepo('XLite\Model\Profile')->findUserWithSameLogin($this->getModelObject());
+            
+            if (isset($sameProfile)) {
+                $formFields = $this->getFormFields();
+                $this->addErrorMessage('login', 'User with specified email is already registered', $formFields[self::SECTION_MAIN]);
+                $result = false;
+            }
+        }
+
+        return $result;
+    }
+
     /**
-     * Return list of the class-specific sections 
+      Return list of the class-specific sections 
      * 
      * @return array
      * @access protected
@@ -432,7 +450,7 @@ class AdminMain extends \XLite\View\Model\AModel
      */
     protected function performActionCreate()
     {
-        return $this->checkPassword() ? parent::performActionCreate() : false;
+        return $this->checkProfileData() ? parent::performActionCreate() : false;
     }
 
     /**
@@ -444,7 +462,7 @@ class AdminMain extends \XLite\View\Model\AModel
      */
     protected function performActionUpdate()
     {
-        return $this->checkPassword() ? parent::performActionUpdate() : false;
+        return $this->checkProfileData() ? parent::performActionUpdate() : false;
     }
 
     /**
@@ -468,12 +486,7 @@ class AdminMain extends \XLite\View\Model\AModel
      */
     protected function performActionValidateInput()
     {
-        $result = true;
-
-        $profile = new \XLite\Model\Profile();
-        if ($profile->findByLogin($this->getModelObject()->get('login'))) {
-            $result = $profile->get('profile_id') === $this->getModelObject()->get('profile_id');
-        }
+        $result = \XLite\Core\Database::getRepo('XLite\Model\Profile')->findUserWithSameLogin($this->getModelObject());
 
         return $result;
     }
@@ -501,7 +514,7 @@ class AdminMain extends \XLite\View\Model\AModel
      */
     public function isRegisterMode()
     {
-        return \XLite\Controller\Admin\Profile::isRegisterMode();
+        return \XLite\Controller\Admin\Profile::getInstance()->isRegisterMode();
     }
 
     /**

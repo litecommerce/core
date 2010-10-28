@@ -98,7 +98,7 @@ class AdminProfile extends \XLite\View\Tabs\ATabs
     {
         parent::init();
 
-        if (\XLite\Controller\Admin\Profile::isRegisterMode()) {
+        if (\XLite\Controller\Admin\Profile::getInstance()->isRegisterMode()) {
             foreach ($this->tabs as $key => $tab) {
                 if ('profile' != $key) {
                     unset($this->tabs[$key]);
