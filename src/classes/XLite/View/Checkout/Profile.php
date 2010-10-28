@@ -46,10 +46,10 @@ class Profile extends \XLite\View\AView
      * @see    ____func_see____
      * @since  3.0.0
      */
-	protected function getDefaultTemplate()
-	{
+    protected function getDefaultTemplate()
+    {
         return 'checkout/profile.tpl';
-	}
+    }
 
     /**
      * Check - separate profile will be crerate after order placing procedure or not
@@ -77,11 +77,27 @@ class Profile extends \XLite\View\AView
         return $this->getCart()->getProfile()->getLogin();
     }
 
+    /**
+     * Get Profile page URL 
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     public function getProfileURL()
     {
         return $this->buildURL('profile');
     }
 
+    /**
+     * Get Logoff URL 
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     public function getLogoffURL()
     {
         return $this->buildURL('login', 'logoff');

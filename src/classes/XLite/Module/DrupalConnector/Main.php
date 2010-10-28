@@ -38,11 +38,12 @@ namespace XLite\Module\DrupalConnector;
 class Main extends \XLite\Module\AModule
 {
     /**
-     * Module type
-     *
-     * @var    int
-     * @access protected
-     * @since  3.0
+     * Get module type 
+     * 
+     * @return integer
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
      */
     public function getModuleType()
     {
@@ -50,11 +51,12 @@ class Main extends \XLite\Module\AModule
     }
 
     /**
-     * Module version
-     *
-     * @var    string
-     * @access protected
-     * @since  3.0
+     * Get version 
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
      */
     public function getVersion()
     {
@@ -62,11 +64,12 @@ class Main extends \XLite\Module\AModule
     }
 
     /**
-     * Module description
-     *
-     * @var    string
-     * @access protected
-     * @since  3.0
+     * Get description 
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
      */
     public function getDescription()
     {
@@ -74,11 +77,12 @@ class Main extends \XLite\Module\AModule
     }
 
     /**
-     * Determines if we need to show settings form link
-     *
-     * @return bool
+     * Show settings form flag
+     * 
+     * @return boolean
      * @access public
-     * @since  3.0
+     * @see    ____func_see____
+     * @since  3.0.0
      */
     public function showSettingsForm()
     {

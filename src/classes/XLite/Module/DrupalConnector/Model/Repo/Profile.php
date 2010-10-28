@@ -68,8 +68,7 @@ class Profile extends \XLite\Model\Repo\Profile implements \XLite\Base\IDecorato
     {
         $qb = $this->_em->createQueryBuilder();
 
-        return $qb
-            ->update($this->_entityName, 'p')
+        return $qb->update($this->_entityName, 'p')
             ->set('p.cms_name', $qb->expr()->literal(''))
             ->set('p.cms_profile_id', 0)
             ->andWhere('p.cms_name = :cmsName AND p.cms_profile_id = :cmsProfileId')
@@ -92,9 +91,10 @@ class Profile extends \XLite\Model\Repo\Profile implements \XLite\Base\IDecorato
     {
         $qb = $this->_em->createQueryBuilder();
 
-        return $qb
-            ->update($this->_entityName, 'p')
-            ->set('p.cms_name', $qb->expr()->literal(\XLite\Module\DrupalConnector\Handler::getInstance()->getCMSName()))
+        $cmsName = $qb->expr()->literal(\XLite\Module\DrupalConnector\Handler::getInstance()->getCMSName());
+
+        return $qb->update($this->_entityName, 'p')
+            ->set('p.cms_name', $cmsName)
             ->set('p.cms_profile_id', $cmsProfileId)
             ->andWhere('p.profile_id = :profileId')
             ->setParameter('profileId', $profileId);

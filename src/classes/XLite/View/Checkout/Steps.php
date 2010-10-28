@@ -66,10 +66,10 @@ class Steps extends \XLite\View\AView
      * @see    ____func_see____
      * @since  3.0.0
      */
-	protected function getDefaultTemplate()
-	{
+    protected function getDefaultTemplate()
+    {
         return 'checkout/steps.tpl';
-	}
+    }
 
     /**
      * Get steps 

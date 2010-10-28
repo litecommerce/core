@@ -142,7 +142,9 @@ class Checkout extends \XLite\Controller\Customer\Cart
             $tmpProfile->setProfileId(0);
             $tmpProfile->setLogin($login);
 
-            $profile = \XLite\Core\Request::getInstance()->create_profile
+            $request = \XLite\Core\Request::getInstance();
+
+            $profile = $request->create_profile
                 ? \XLite\Core\Database::getRepo('XLite\Model\Profile')->findUserWithSameLogin($tmpProfile)
                 : null;
 
@@ -177,7 +179,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
 
                 $this->getCart()->setProfile($profile);
 
-                \XLite\Core\Session::getInstance()->order_create_profile = (bool)\XLite\Core\Request::getInstance()->create_profile;
+                \XLite\Core\Session::getInstance()->order_create_profile = (bool)$request->create_profile;
                 $this->getCart()->setOrigProfile($profile);
 
                 \XLite\Core\Database::getEM()->flush();
@@ -398,7 +400,8 @@ class Checkout extends \XLite\Controller\Customer\Cart
     {
         $this->checkHtaccess();
 
-        $pm = \XLite\Core\Database::getRepo('XLite\Model\Payment\Method')->find(\XLite\Core\Request::getInstance()->methodId);
+        $pm = \XLite\Core\Database::getRepo('XLite\Model\Payment\Method')
+            ->find(\XLite\Core\Request::getInstance()->methodId);
         if (!$pm) {
             \XLite\Core\TopMessage::getInstance()->add(
                 'No payment method selected',
@@ -543,7 +546,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
 
             if (\XLite\Model\Payment\Transaction::PROLONGATION == $result) {
                 $this->set('silent', true);
-                exit(0);
+                exit (0);
 
             } elseif ($this->getCart()->isOpen()) {
 
@@ -561,9 +564,10 @@ class Checkout extends \XLite\Controller\Customer\Cart
 
             } else {
 
-                $this->getCart()->setStatus(
-                    $this->getCart()->isPayed() ? \XLite\Model\Order::STATUS_PROCESSED : \XLite\Model\Order::STATUS_QUEUED
-                );
+                $status = $this->getCart()->isPayed()
+                    ? \XLite\Model\Order::STATUS_PROCESSED
+                    : \XLite\Model\Order::STATUS_QUEUED;
+                $this->getCart()->setStatus($status);
 
                 $this->processSucceed();
                 $this->setReturnUrl(

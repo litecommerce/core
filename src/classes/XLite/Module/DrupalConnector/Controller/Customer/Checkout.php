@@ -69,7 +69,11 @@ class Checkout extends \XLite\Controller\Customer\Checkout implements \XLite\Bas
 
         parent::updateProfile();
 
-        if ($this->valid && \XLite\Core\CMSConnector::isCMSStarted() && isset(\XLite\Core\Request::getInstance()->create_profile)) {
+        if (
+            $this->valid
+            && \XLite\Core\CMSConnector::isCMSStarted()
+            && isset(\XLite\Core\Request::getInstance()->create_profile)
+        ) {
 
             // Save username is session (temporary, wait place order procedure)
             \XLite\Core\Session::getInstance()->order_username = \XLite\Core\Request::getInstance()->create_profile

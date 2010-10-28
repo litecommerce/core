@@ -37,7 +37,15 @@ namespace XLite\Module\DrupalConnector\Controller\Customer;
  */
 class Cmsconnector extends \XLite\Controller\Customer\ACustomer
 {
-    public $params = array('target', 'id');
+    /**
+     * Controller parameters 
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $params = array('target', 'id');
 
     /**
      * Must be accessible
@@ -52,13 +60,14 @@ class Cmsconnector extends \XLite\Controller\Customer\ACustomer
     }
 
     /**
-     * Landing from another system action 
+     * Landing from another system action
      * 
      * @return void
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    function action_landing()
+    protected function doActionLanding()
     {
         $link = new \XLite\Module\DrupalConnector\Model\LandingLink();
 

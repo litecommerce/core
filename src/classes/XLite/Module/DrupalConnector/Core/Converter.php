@@ -59,7 +59,7 @@ class Converter extends \XLite\Core\Converter implements \XLite\Base\IDecorator
      */
     public static function buildURL($target = '', $action = '', array $params = array(), $interface = null)
     {
-        if ($target == '') {
+        if ('' == $target) {
             $target = \XLite::TARGET_DEFAULT;
         }
 
@@ -82,7 +82,7 @@ class Converter extends \XLite\Core\Converter implements \XLite\Base\IDecorator
         } else {
 
             // Drupal URL
-    	    $result = self::buildDrupalURL($target, $action, $params);
+            $result = self::buildDrupalURL($target, $action, $params);
 
         }
 

@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage ____sub_package____
+ * @subpackage Controller
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -31,10 +31,9 @@ namespace XLite\Module\DrupalConnector\Controller\Customer;
 /**
  * \XLite\Module\DrupalConnector\Controller\Customer\Profile 
  * 
- * @package    XLite
- * @subpackage ____sub_package____
- * @see        ____class_see____
- * @since      3.0.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
 class Profile extends \XLite\Controller\Customer\Profile implements \XLite\Base\IDecorator
 {
