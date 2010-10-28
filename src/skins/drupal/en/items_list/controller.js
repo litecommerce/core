@@ -57,7 +57,8 @@ function ListView(base)
 {
   ListView.superclass.constructor.apply(this, arguments);
 
-  this.widgetClass = core.getCommentedData(base, 'widgetclass');
+  this.widgetClass  = core.getCommentedData(base, 'widget_class');
+  this.widgetTarget = core.getCommentedData(base, 'widget_target');
 }
  
 extend(ListView, ALoadable);
