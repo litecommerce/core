@@ -1586,5 +1586,30 @@ abstract class AView extends \XLite\Core\Handler
     {
         // It's only the example
     }
+
+    /**
+     * Display plain array as JS array
+     * 
+     * @param array $data plain array
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function displayCommentedData(array $data)
+    {
+        echo '<!--' . "\r\n";
+        $result = array();
+
+        foreach ($data as $key => $value) {
+
+            $result[] = '\'' . $key . '\': \'' . $value . '\'';
+
+        }
+
+        echo implode(',' . "\r\n", $result);
+        echo '-->' . "\r\n";
+    }
 }
 

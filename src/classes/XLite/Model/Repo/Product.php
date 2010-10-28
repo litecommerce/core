@@ -165,7 +165,7 @@ class Product extends \XLite\Model\Repo\Base\I18n
      * @return array
      * @access protected
      * @see    ____func_see____
-     * @since  1.0.0
+     * @since  3.0.0
      */
     protected function getConditionBy()
     {
@@ -182,7 +182,7 @@ class Product extends \XLite\Model\Repo\Base\I18n
      * @return array
      * @access protected
      * @see    ____func_see____
-     * @since  1.0.0
+     * @since  3.0.0
      */
     protected function getSubstringSearchFieldsByTitle()
     {
@@ -197,7 +197,7 @@ class Product extends \XLite\Model\Repo\Base\I18n
      * @return array
      * @access protected
      * @see    ____func_see____
-     * @since  1.0.0
+     * @since  3.0.0
      */
     protected function getSubstringSearchFieldsByDescr()
     {
@@ -213,7 +213,7 @@ class Product extends \XLite\Model\Repo\Base\I18n
      * @return array
      * @access protected
      * @see    ____func_see____
-     * @since  1.0.0
+     * @since  3.0.0
      */
     protected function getSubstringSearchFieldsBySKU()
     {
@@ -398,7 +398,7 @@ class Product extends \XLite\Model\Repo\Base\I18n
      * @return void
      * @access protected
      * @see    ____func_see____
-     * @since  1.0.0
+     * @since  3.0.0
      */
     protected function getSearchWords($value)
     {
