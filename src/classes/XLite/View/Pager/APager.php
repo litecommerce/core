@@ -88,13 +88,13 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
     protected $itemsPerPage;
 
     /**
-     * pageURLs 
+     * Cached pages 
      * 
      * @var    array
      * @access protected
      * @since  3.0.0
      */
-    protected $pageURLs;
+    protected $pages = null;
 
 
     /**
@@ -294,45 +294,6 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
     }
 
     /**
-     * Returns a page Id by its notation
-     * 
-     * @param string $index Page notation (first, last, next, previous)
-     *  
-     * @return int
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getPageIdByNotation($index)
-    {
-        $result = array(
-            self::PAGE_FIRST    => 0,
-            self::PAGE_PREVIOUS => max(0, $this->getPageId() - 1),
-            self::PAGE_LAST     => $this->getPagesCount() - 1,
-            self::PAGE_NEXT     => min($this->getPagesCount() - 1, $this->getPageId() + 1),
-        );
-
-        return isset($result[$index]) ? $result[$index] : $index;
-    }
-
-    /**
-     * Checks whether a page is disabled by its notation
-     * 
-     * @param string $notation Page notation (first, last, next, previous)
-     *  
-     * @return boolean
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function isDisabledNotation($notation)
-    {
-        return $this->isCurrentPage($this->getPageIdByNotation($notation));
-    }
-
-
-
-
-    /**
      * Build page URL by page ID
      *
      * @param int $pageId page ID
@@ -343,7 +304,7 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
      */
     protected function buildUrlByPageId($pageId)
     {
-        return $this->getList()->getActionURL(array(self::PARAM_PAGE_ID => $this->getPageIdByNotation($pageId)));
+        return $this->getList()->getActionURL(array(self::PARAM_PAGE_ID => $pageId));
     }
 
     /**
@@ -392,70 +353,171 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
     }
 
     /**
-     * isFurthermostPage 
+     * Return ID of the first page
      * 
-     * @param string $type link type (first / previous / next / last)
-     *  
-     * @return bool
+     * @return int
      * @access protected
      * @since  3.0.0
      */
-    protected function isFurthermostPage($type)
+    protected function getFirstPageId()
     {
-        switch ($type) {
-
-            case self::PAGE_FIRST:
-                $result = (0 < $this->getFrameStartPage());
-                break;
-
-            case self::PAGE_LAST:
-                $result = ($this->getFrameStartPage() + $this->getFrameLength()) < $this->getPagesCount();
-                break;
-
-            default:
-                $result = false;
-        }
-
-        return $result;
+        return 0;
     }
 
     /**
-     * definePageUrls 
+     * Return ID of the previous page
+     * 
+     * @return int
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getPreviousPageId()
+    {
+        return max(0, $this->getPageId() - 1);
+    }
+
+    /**
+     * Return ID of the last page
+     * 
+     * @return int
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getLastPageId()
+    {
+        return (int)$this->getPagesCount() - 1;
+    }
+
+    /**
+     * Return ID of the next page
      * 
      * @return void
      * @access protected
      * @since  3.0.0
      */
-    protected function definePageUrls()
+    protected function getNextPageId()
     {
-        for ($i = 0; $i < $this->getPagesCount(); $i++) {
-            $this->pageURLs[$i] = $this->buildUrlByPageId($i);
-        }
-
-        $this->pageURLs = array_slice($this->pageURLs, $this->getFrameStartPage(), $this->getFrameLength(), true);
+        return min((int)$this->getPagesCount() - 1, $this->getPageId() + 1);
     }
 
     /**
-     * Get pages URL list 
+     * Return an array with information on the pages to be displayed
      * 
      * @return array
      * @access protected
      * @since  3.0.0
      */
-    protected function getPageUrls()
+    protected function getPages()
     {
-        if (!isset($this->pageURLs)) {
-            $this->pageURLs = array();
-            $this->definePageUrls();
+
+        if (is_null($this->pages)) {
+
+            $this->pages = array();
+
+            // Define the list of pages
+
+            $id = $this->getPreviousPageId();
+            $this->pages[] = array(
+                'type'  => 'previous-page',
+                'num'   => $id,
+                'title' => $this->t('Previous page'),
+            );
+    
+            $firstId = $this->getFirstPageId();
+            if ($this->getFrameStartPage() > 0) {
+                $this->pages[] = array(
+                    'type'  => 'first-page',
+                    'num'   => $firstId,
+                    'title' => $this->t('First page'),
+                );
+                $this->pages[] = array(
+                    'type'  => 'more-pages',
+                    'num'   => null,
+                    'title' => '',
+                );
+            }
+
+            $from = $this->getFrameStartPage();
+            $till = min($this->getPagesCount()+1, $this->getFrameStartPage()+$this->getFrameLength());
+            for ($i = $from; $i < $till; $i++) {
+                $this->pages[] = array(
+                    'type'  => 'item',
+                    'num'   => $i,
+                    'title' => '',
+                );
+            }
+    
+            $lastId = $this->getLastPageId();
+            if ($this->getFrameStartPage() < $this->getPagesCount() - $this->getFrameLength()) {
+                $this->pages[] = array(
+                    'type'  => 'more-pages',
+                    'num'   => null,
+                    'title' => '',
+                );
+                $this->pages[] = array(
+                    'type'  => 'last-page',
+                    'num'   => $lastId,
+                    'title' => $this->t('Last page'),
+                );
+            }
+
+            $id = $this->getNextPageId();
+            $this->pages[] = array(
+                'type'  => 'next-page',
+                'num'   => $id,
+                'title' => $this->t('Next page'),
+            );
+
+
+            // Now prepare data for the view
+       
+ 
+            foreach($this->pages as $k=>$page) {
+
+                $num = isset($page['num']) ? $page['num'] : null;
+                $type = $page['type'];
+
+                $isItem = !is_null($num) && ($type == 'item');
+                $isOmitedItems = $type == 'more-pages';
+                $isSpecialItem = !$isItem && !$isOmitedItems;
+
+                $isCurrent = !is_null($num) && $this->isCurrentPage($num);
+                $isSelected = $isItem && $isCurrent;
+                $isDisabled = $isSpecialItem && $isCurrent;
+                $isActive = !$isSelected && !$isOmitedItems && !$isDisabled;
+                $this->pages[$k]['text'] = ($isItem || ($type=='first-page') || ($type=='last-page')) ? ($num+1) : ( $isOmitedItems ? '...' : '&nbsp;' );
+                $this->pages[$k]['page'] = is_null($num) ? null : $num;
+                $this->pages[$k]['href'] = (is_null($num) || $isSelected || $isDisabled) ? null : $this->buildUrlByPageId($num);
+
+                $classes = array(
+                    'item'        => $isSpecialItem,
+                    'selected'    => $isSelected,
+                    'disabled'    => $isDisabled,
+                    'active'      => $isActive,
+                    $this->pages[$k]['page'] => $isItem,
+                    $type => true,
+                );
+                $css = array();
+                foreach ($classes as $class=>$enabled) {
+                    if ($enabled) {
+                        $css[] = $class;
+                    }
+                }
+                $this->pages[$k]['classes'] = join(' ', $css);
+    
+            }
+
         }
 
-        return $this->pageURLs;
+        return $this->pages;
+
     }
 
+
     /**
-     * isCurrentPage 
+     * Check whether the page is currently selected
      * 
-     * @param int $pageId current page ID
+     * @param int $pageId ID of the page to check
      *  
      * @return bool
      * @access protected
@@ -467,9 +529,9 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
     }
 
     /**
-     * Return current page Id 
+     * Return ID of the current page
      * 
-     * @return void
+     * @return int
      * @access protected
      * @since  3.0.0
      */
