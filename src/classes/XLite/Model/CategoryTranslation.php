@@ -34,8 +34,9 @@ namespace XLite\Model;
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
+ *
  * @Entity
- * @Table (name="category_translations")
+ * @Table  (name="category_translations")
  */
 class CategoryTranslation extends \XLite\Model\Base\Translation
 {
@@ -46,7 +47,8 @@ class CategoryTranslation extends \XLite\Model\Base\Translation
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @Column (type="string", length="255", nullable=false)
+     *
+     * @Column (type="string", length="255")
      */
     protected $name;
 
@@ -57,7 +59,8 @@ class CategoryTranslation extends \XLite\Model\Base\Translation
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @Column (type="text", nullable=false)
+     *
+     * @Column (type="text")
      */
     protected $description;
 
@@ -68,7 +71,8 @@ class CategoryTranslation extends \XLite\Model\Base\Translation
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @Column (type="string", length="255", nullable=false)
+     *
+     * @Column (type="string", length="255")
      */
     protected $meta_tags;
 
@@ -79,7 +83,8 @@ class CategoryTranslation extends \XLite\Model\Base\Translation
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @Column (type="text", nullable=false)
+     *
+     * @Column (type="text")
      */
     protected $meta_desc;
 
@@ -90,7 +95,8 @@ class CategoryTranslation extends \XLite\Model\Base\Translation
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @Column (type="string", length="255", nullable=false)
+     *
+     * @Column (type="string", length="255")
      */   
     protected $meta_title;
 }

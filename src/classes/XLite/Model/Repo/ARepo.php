@@ -28,8 +28,6 @@
 
 namespace XLite\Model\Repo;
 
-use XLite\Core\Database as DB, XLite\Core\Converter;
-
 /**
  * Abstract repository
  * 
@@ -144,7 +142,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     {
         $key = $this->getHashPrefix('cells');
 
-        $cacheCells = DB::getCacheDriver()->fetch($key);
+        $cacheCells = \XLite\Core\Database::getCacheDriver()->fetch($key);
 
         if (!is_array($cacheCells)) {
 
@@ -152,11 +150,11 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
 
             list($cacheCells, $relations) = $this->postprocessCacheCells($cacheCells);
 
-            DB::getCacheDriver()->save($key, $cacheCells, self::CACHE_DEFAULT_TTL);
+            \XLite\Core\Database::getCacheDriver()->save($key, $cacheCells, self::CACHE_DEFAULT_TTL);
 
             // Save relations to current model cache cells from related models
             foreach ($relations as $model => $cells) {
-                DB::getRepo($model)->addCacheRelations($cells);
+                \XLite\Core\Database::getRepo($model)->addCacheRelations($cells);
             }
         }
 
@@ -240,7 +238,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     {
         $key = $this->getHashPrefix('externalCells');
 
-        $cacheCells = DB::getCacheDriver()->fetch($key);
+        $cacheCells = \XLite\Core\Database::getCacheDriver()->fetch($key);
         if (!is_array($cacheCells)) {
             $cacheCells = array();
         }
@@ -254,7 +252,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
             }
         }
 
-        DB::getCacheDriver()->save($key, $cacheCells, self::CACHE_DEFAULT_TTL);
+        \XLite\Core\Database::getCacheDriver()->save($key, $cacheCells, self::CACHE_DEFAULT_TTL);
     }
 
     /**
@@ -267,7 +265,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      */
     public function getRelatedCacheCells()
     {
-        $cacheCells = DB::getCacheDriver()->fetch(
+        $cacheCells = \XLite\Core\Database::getCacheDriver()->fetch(
             $this->getHashPrefix('externalCells')
         );
 
@@ -292,7 +290,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
         $cell = $this->getCacheCells($name);
         if ($cell) {
 
-            $result = DB::getCacheDriver()->fetch(
+            $result = \XLite\Core\Database::getCacheDriver()->fetch(
                 $this->getCellHash($name, $cell, $params)
             );
 
@@ -329,7 +327,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
                 $data->detach();
             }
 
-            DB::getCacheDriver()->save(
+            \XLite\Core\Database::getCacheDriver()->save(
                 $this->getCellHash($name, $cell, $params),
                 $data,
                 self::CACHE_DEFAULT_TTL
@@ -403,7 +401,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      */
     protected function getCacheHashGeneratorName($name)
     {
-        return 'getCacheHash' . Converter::convertToCamelCase($name);
+        return 'getCacheHash' . \XLite\Core\Converter::convertToCamelCase($name);
     }
 
     /**
@@ -418,7 +416,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      */
     protected function getCacheParamsConverterName($name)
     {
-        return 'convertRecordToParams' . Converter::convertToCamelCase($name);
+        return 'convertRecordToParams' . \XLite\Core\Converter::convertToCamelCase($name);
     }
 
     /**
@@ -466,14 +464,14 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
             }
 
             // Delete cell
-            DB::getCacheDriver()->delete(
+            \XLite\Core\Database::getCacheDriver()->delete(
                 $this->getCellHash($name, $cell, $params)
             );
         }
 
         // Delete related cache cells
         foreach ($this->getRelatedCacheCells() as $model => $cells) {
-            $repo = DB::getRepo($model);
+            $repo = \XLite\Core\Database::getRepo($model);
             foreach ($cells as $cell) {
                 $repo->deleteCache($cell);
             }
@@ -492,7 +490,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      */
     public function deleteCache($name = '')
     {
-        DB::getCacheDriver()->deleteByPrefix($this->getHashPrefix() . '.' . $name);
+        \XLite\Core\Database::getCacheDriver()->deleteByPrefix($this->getHashPrefix() . '.' . $name);
     }
 
     /**
@@ -584,7 +582,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     {
         $alias = $alias ?: $this->getDefaultAlias();
 
-        return $this->assignDefaultOrderBy(parent::createQueryBuilder($alias), $alias);
+        return parent::createQueryBuilder($alias);
     }
 
     /**
@@ -661,7 +659,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
 
         if ($ids) {
             $qb = $this->createQueryBuilder();
-            $keys = DB::buildInCondition($qb, $ids);
+            $keys = \XLite\Core\Database::buildInCondition($qb, $ids);
             $alias = $this->getMainAlias($qb);
             $qb->andWhere($alias . '.' . $this->_class->identifier[0] . ' IN (' . implode(', ', $keys) . ')');
 
@@ -868,12 +866,9 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function performInsert(array $data)
+    protected function performInsert(array $data = array())
     {
-        $entity = new $this->_entityName;
-        $entity->map($data);
-
-        $this->getEntityManager()->persist($entity);
+        $this->getEntityManager()->persist($entity = new $this->_entityName($data));
 
         return $entity;
     }
@@ -889,7 +884,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function performUpdate(\XLite\Model\AEntity $entity, array $data)
+    protected function performUpdate(\XLite\Model\AEntity $entity, array $data = array())
     {
         $entity->map($data);
     }
@@ -943,11 +938,9 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
                 // Get entity by ID (if needed: $matches[3] == {''|'ById'}) 
                 $entity = empty($matches[3]) ? $commonArg : $this->getById($commonArg);
 
-                // Check arguments. Some methods (e.g. "delete()") don't use the second argument
-                $data = isset($args[1]) ? $args[1] : null;
-
-                // Perform action
-                $result = $this->$method($entity, $data);
+                // Check arguments and perform action.
+                // For all methods the second argument can be ommited
+                $result = isset($args[1]) ? $this->$method($entity, $args[1]) : $this->$method($entity);
 
             } else {
 

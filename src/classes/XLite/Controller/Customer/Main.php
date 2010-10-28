@@ -35,20 +35,8 @@ namespace XLite\Controller\Customer;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Main extends \XLite\Controller\Customer\ACustomer
+class Main extends \XLite\Controller\Customer\Category
 {
-    /**
-     * Return current (or default) category object
-     *
-     * @return \XLite\Model\Category
-     * @access public
-     * @since  3.0.0 EE
-     */
-    public function getCategory()
-    {
-        return new \XLite\Model\Category();
-    }
-
     /**
      * handleRequest 
      * 

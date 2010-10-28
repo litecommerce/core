@@ -468,6 +468,26 @@ class Product extends \XLite\Model\Repo\Base\I18n
         }
     }
 
+    /**
+     * Adds additional condition to the query for checking if product is enabled
+     *
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder query builder object
+     * @param string                     $alias        entity alias
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function addEnabledCondition(\Doctrine\ORM\QueryBuilder $queryBuilder, $alias = null)
+    {
+        if (!\XLite::isAdminZone()) {
+            $queryBuilder
+                ->andWhere(($alias ?: $queryBuilder->getRootAlias()) . '.enabled = :enabled')
+                ->setParameter('enabled', true);
+        }
+    }
+
 
     /**
      * Common search
@@ -512,34 +532,13 @@ class Product extends \XLite\Model\Repo\Base\I18n
      */
     public function createQueryBuilder($alias = null)
     {
-        $result = parent::createQueryBuilder($alias);
+        $this->addEnabledCondition($result = parent::createQueryBuilder($alias), $alias);
 
         if (!\XLite::isAdminZone()) {
             $result->andWhere('p.enabled = :enabled')->setParameter('enabled', true);
         }
 
         $result->groupBy('p.product_id');
-
-        return $result;
-    }
-
-    /**
-     * Create a new QueryBuilder instance that is prepopulated for this entity name
-     *
-     * @param string $alias Table alias
-     *
-     * @return \Doctrine\ORM\QueryBuilder
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function createPureQueryBuilder($alias = null)
-    {
-        $result = parent::createPureQueryBuilder($alias);
-
-        if (!\XLite::isAdminZone()) {
-            $result->andWhere('p.enabled = :enabled')->setParameter('enabled', true);
-        }
 
         return $result;
     }

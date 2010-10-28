@@ -430,7 +430,7 @@ class Module extends \XLite\Model\AEntity
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function create($name)
+    public function create($name = null)
     {
         // Seet common properties
         $this->setName($name);

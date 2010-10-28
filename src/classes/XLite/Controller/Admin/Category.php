@@ -49,9 +49,63 @@ class Category extends \XLite\Controller\Admin\Catalog
         return $this->getCategory();
     }
 
+    /**
+     * doActionAddChild 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionAddChild()
+    {
+        if ($properties = $this->validateCategoryData(true)) {
+            $category = \XLite\Core\Database::getRepo('XLite\Model\Category')
+                ->insert(array('parent_id' => $this->getCategoryId()) + $properties);
 
+            $this->setReturnUrl($this->buildURL('categories', '', array('category_id' => $category->getCategoryId())));
+        }
+    }
+
+    /**
+     * doActionModify 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionModify()
+    {
+        if ($properties = $this->validateCategoryData()) {
+            \XLite\Core\Database::getRepo('XLite\Model\Category')
+                ->updateById($properties['category_id'], $properties);
+
+            $this->setReturnUrl($this->buildURL('categories', '', array('category_id' => $properties['category_id'])));
+        }
+    }
+
+
+    /**
+     * Return current (or default) category object
+     *
+     * @return \XLite\Model\Category
+     * @access public
+     * @since  3.0.0 EE
+     */
+    public function getCategory()
+    {
+        return ('add_child' === \XLite\Core\Request::getInstance()->mode) 
+            ? new \XLite\Model\Category()
+            : parent::getCategory();
+    }
+
+
+
+    // FIXME - must be revised
 
     public $page = "category_modify";
+
     public $pages = array(
         "category_modify" => "Add/Modify category",
     );
@@ -64,32 +118,15 @@ class Category extends \XLite\Controller\Admin\Catalog
     public $params = array('target', 'category_id', 'mode', 'message', 'page');
     public $order_by = 0;
 
-    protected $addModes = array(
-        'add_child',
-        'add_before',
-        'add_after'
-    );
-
-    /**
-     * Initialize controller 
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function init()
+    function init()
     {
         parent::init();
 
-        if (!in_array($this->mode, $this->addModes) && $this->mode == "modify") {
-
+        if ($this->mode != "add" && $this->mode == "modify") {
             $this->pages['category_modify'] = "Modify category";
-
             if ($this->config->General->enable_categories_extra_fields) {
                 $this->pages['extra_fields'] = "Extra fields";
             }
-
         } else {
             $this->pages['category_modify'] = "Add new category";
         }
@@ -112,41 +149,6 @@ class Category extends \XLite\Controller\Admin\Catalog
             $this->extraFields = (count($extraFields) > 0) ? $extraFields : null;
         }
         return $this->extraFields;
-    }
-
-    /**
-     * Get category_id of the parent category
-     * 
-     * @return int
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getParentCategoryId($categoryId)
-    {
-        return \XLite\Core\Database::getRepo('XLite\Model\Category')->getParentCategoryId($categoryId ? $categoryId : $this->getCategoryId());
-    }
-    
-    /**
-     * Get \XLite\Model\Category object of current category
-     * 
-     * @return \XLite\Model\Category
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getCategory()
-    {
-        if (is_null($this->category) && !in_array($this->mode, $this->addModes)) {
-
-            $this->category = \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategory($this->getCategoryId());
-        }
-
-        if (is_null($this->category)) {
-            $this->category = new \XLite\Model\Category();
-        }
-
-        return $this->category;
     }
 
     /**
@@ -261,127 +263,9 @@ class Category extends \XLite\Controller\Admin\Catalog
      */
     protected function isCleanURLUnique($cleanURL, $categoryId = null)
     {
-        $result = \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategoryByCleanUrl($cleanURL);
+        $result = \XLite\Core\Database::getRepo('XLite\Model\Category')->findOneByCleanUrl($cleanURL);
 
         return !isset($result) || (!is_null($categoryId) && intval($categoryId ) == intval($result->getCategoryId()));
-    }
-
-    /**
-     * action_modify 
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function action_modify()
-    {
-        if ($properties = $this->validateCategoryData()) {
-
-            $code = $this->getCurrentLanguage();
-
-            // update category
-            $category = \XLite\Core\Database::getEM()->find('XLite\Model\Category', $properties['category_id']);
-
-            $category->map($properties);
-            $category->getTranslation($code)->name = $properties['name'];
-            $category->getTranslation($code)->description = $properties['description'];
-            $category->getTranslation($code)->meta_tags = $properties['meta_tags'];
-            $category->getTranslation($code)->meta_desc = $properties['meta_desc'];
-            $category->getTranslation($code)->meta_title = $properties['meta_title'];
-
-            \XLite\Core\Database::getEM()->persist($category);
-            \XLite\Core\Database::getEM()->flush();
-
-            \XLite\Core\Database::getRepo('XLite\Model\Category')->cleanCache();
-
-            // update category image
-//            $image = $category->get('image');
-//            $image->handleRequest();
-        }
-    }
-
-    /**
-     * add_child action
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function action_add_child()
-    {
-        $this->addCategory('child');
-    }
-
-    /**
-     * add_before action
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function action_add_before()
-    {
-        $this->addCategory('before');
-    }
-
-    /**
-     * add_after action
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function action_add_after()
-    {
-        $this->addCategory('after');
-    }
-
-    /**
-     * Add category common action
-     * 
-     * @param string $operation Name of method
-     *  
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function addCategory($operation)
-    {
-        if (in_array($operation, array('child', 'before', 'after'))) {
-
-            if ($properties = $this->validateCategoryData(true)) {
-
-                // create category
-                if ('child' == $operation) {
-                    $category = \XLite\Core\Database::getRepo('XLite\Model\Category')->addChild($this->getCategoryId());
-
-                } else {
-                    $category = \XLite\Core\Database::getRepo('XLite\Model\Category')->addSibling($this->getCategoryId(), ('before' == $operation));
-                }
-
-                // Add category properties
-                $category->map($properties);
-
-                $code = $this->getCurrentLanguage();
-                $category->getTranslation($code)->name = $properties['name'];
-                $category->getTranslation($code)->description = $properties['description'];
-                $category->getTranslation($code)->meta_tags = $properties['meta_tags'];
-                $category->getTranslation($code)->meta_desc = $properties['meta_desc'];
-                $category->getTranslation($code)->meta_title = $properties['meta_title'];
-
-                \XLite\Core\Database::getEM()->persist($category);
-                \XLite\Core\Database::getEM()->flush();
-
-                \XLite\Core\Database::getRepo('XLite\Model\Category')->cleanCache();
-            }
-
-            $this->redirect('admin.php?target=categories&category_id=' . $category->category_id);
-        }
     }
 
     function action_icon()
@@ -487,5 +371,4 @@ class Category extends \XLite\Controller\Admin\Catalog
             }
         }
     }
-
 }

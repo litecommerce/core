@@ -49,7 +49,7 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
      */
     protected function checkCategoryLink(\XLite\Model\Category $category, $includeCurrent)
     {
-        return $includeCurrent || $this->getCategoryId() !== $category->category_id;
+        return $includeCurrent || $this->getCategoryId() !== $category->getCategoryId();
     }
 
     /**
@@ -65,7 +65,7 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
     protected function getCategoryURL(\XLite\Model\Category $category, $includeCurrent)
     {
         return $this->checkCategoryLink($category, $includeCurrent) 
-            ? $this->buildURL('category', '', array('category_id' => $category->category_id))
+            ? $this->buildURL('category', '', array('category_id' => $category->getCategoryId()))
             : null;
     }
 
@@ -96,25 +96,13 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
         parent::addBaseLocation();
 
         $categoryPath = \XLite\Core\Database::getRepo('\XLite\Model\Category')
-            ->getCategoryPath(\XLite\Core\Request::getInstance()->category_id);
+            ->getCategoryPath($this->getCategoryId());
 
         foreach ($categoryPath as $category) {
             if (0 < $category->category_id) {
                 $this->locationPath->addNode($this->getCategoryLocation($category, $includeCurrent));
             }
         }
-    }
-
-    /**
-     * Return current category Id
-     *
-     * @return int
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getCategoryId()
-    {
-        return \XLite\Core\Request::getInstance()->category_id;
     }
 
 

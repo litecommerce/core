@@ -144,8 +144,9 @@
 
 <br />
 
+Not available right now
 
-<form name="move_form" action="admin.php" method="post">
+{*<form name="move_form" action="admin.php" method="post">
 
   <input type="hidden" name="target" value="categories" />
   <input type="hidden" name="action" value="move_after" />
@@ -174,6 +175,6 @@
 
   </table>
 
-</form>
+</form>*}
 {end:}
 

@@ -12,6 +12,6 @@
  *}
 
 <select id="{getFieldId()}" name="{getName()}"{getAttributesCode():h} />
-  <option FOREACH="getOptions(),category" value="{category.getCategoryId()}" style="padding-left: {category.getIndentation(15)}px;" selected="{isCategorySelected(category.getCategoryId())}">{category.getName()}</option>
+  <option FOREACH="getOptions(),category" value="{category.getCategoryId()}" style="padding-left: {getIndentation(category,15)}px;" selected="{isCategorySelected(category.getCategoryId())}">{category.getName()}</option>
 </select>
 

@@ -204,11 +204,11 @@ class Order extends \XLite\Model\Order implements \XLite\Base\IDecorator
      * @param \XLite\Model\ShippingRate $b Second shipping rate
      *  
      * @return integer
-     * @access public
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function compareShippingRates(\XLite\Model\ShippingRate $a, \XLite\Model\ShippingRate $b)
+    protected function compareShippingRates(\XLite\Model\ShippingRate $a, \XLite\Model\ShippingRate $b)
     {
         $class_a = $a->getComplex('shipping.class');
         $class_b = $b->getComplex('shipping.class');

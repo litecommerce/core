@@ -28,8 +28,6 @@
 
 namespace XLite\Model;
 
-use XLite\Core\Database as DB, XLite\Core\Converter;
-
 /**
  * Abstract entity 
  * 
@@ -167,7 +165,7 @@ abstract class AEntity
         }
 
         if (!isset(self::$methodNames[$class][$name])) {
-            self::$methodNames[$class][$name] = Converter::convertToCamelCase($name);
+            self::$methodNames[$class][$name] = \XLite\Core\Converter::convertToCamelCase($name);
         }
 
         return self::$methodNames[$class][$name];
@@ -183,7 +181,7 @@ abstract class AEntity
      */
     public function getRepository()
     {
-        return DB::getRepo(get_called_class());
+        return \XLite\Core\Database::getRepo(get_class($this));
     }
 
     /**

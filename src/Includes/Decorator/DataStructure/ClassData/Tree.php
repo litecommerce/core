@@ -49,34 +49,50 @@ class Tree extends \Includes\DataStructure\Hierarchical\Tree
 
 
     /**
-     * Search class parent by the class name
+     * Search possible parent for a node
      *
-     * @param \Includes\Decorator\DataStructure\ClassData\Node $node node to get info
+     * @param \Includes\DataStructure\Node\Tree $node node to get info
      *
-     * @return \Includes\Decorator\DataStructure\ClassData\Node
+     * @return \Includes\DataStructure\Node\Tree
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getNodeParent(\Includes\Decorator\DataStructure\ClassData\Node $node)
+    protected function getNodeLogicalParentKey(\Includes\DataStructure\Node\Tree $node)
     {
-        $parent = $this->root;
-        $parentClass = $node->__get(\Includes\Decorator\ADecorator::N_PARENT_CLASS);
-
-        // Check if parent class is already add to the tree
-        if ($parentClass && !($parent = $this->find($parentClass))) {
-
-            // If not, create the stub for the parent node
-            $this->addChildNode(
-                $this->root,
-                $parent = \Includes\Decorator\DataStructure\ClassData\Node::createStubNode(
-                    array(\Includes\Decorator\ADecorator::N_CLASS => $parentClass)
-                )
-            );
-        }
-
-        return $parent;
+        return $node->__get(\Includes\Decorator\ADecorator::N_PARENT_CLASS);
     }
+
+    /**
+     * Check and prepare current element data
+     * 
+     * @param \SplFileInfo $fileInfo file descriptor
+     *  
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function prepareNodeData($fileinfo)
+    {
+        return \Includes\Decorator\Utils\ClassData\Parser::parse($fileinfo);
+    }
+
+    /**
+     * Check constrains
+     * 
+     * @param \Includes\DataStructure\Node\Tree $node node to check
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function checkAddedNode(\Includes\DataStructure\Node\Tree $node)
+    {
+        \Includes\Decorator\Utils\ClassData\Verifier::checkNode($node);
+    }
+
 
     /**
      * Change node data and parent
@@ -85,11 +101,11 @@ class Tree extends \Includes\DataStructure\Hierarchical\Tree
      * @param \Includes\DataStructure\Node\Tree $node   node to get data
      *
      * @return void
-     * @access protected
+     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function replantNode(\Includes\DataStructure\Node\Tree $parent, \Includes\DataStructure\Node\Tree $node)
+    public function replantNode(\Includes\DataStructure\Node\Tree $parent, \Includes\DataStructure\Node\Tree $node)
     {
         // Duplacate definition
         if (($child = $this->find($node->getKey())) && !$child->isStub()) {
@@ -100,84 +116,20 @@ class Tree extends \Includes\DataStructure\Hierarchical\Tree
     }
 
     /**
-     * Add class descriptor to the tree
-     *
-     * @param array $data class node info
-     *
-     * @return \Includes\Decorator\DataStructure\ClassData\Node
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function addNode(array $data)
-    {
-        $node   = new \Includes\Decorator\DataStructure\ClassData\Node($data);
-        $parent = $this->getNodeParent($node);
-
-        // Add or replace node
-        $this->replantNode($parent, $node) ?: $this->addChildNode($parent, $node);
-
-        return $node;
-    }
-
-    /**
-     * Remove the stub nodes
-     *
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function collectGarbage()
-    {
-        foreach ($this->index as $node) {
-            !$node->isStub() ?: $this->removeNode($node);
-        }
-    }
-
-
-    /**
-     * Walk through the PHP files tree and collect classes info
-     *
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function create()
-    {
-        // Iterate over all PHP files in the "classes" directory
-        foreach (\Includes\Utils\FileFilter::filterByExtension(LC_CLASSES_DIR, 'php') as $fileInfo) {
-
-            // Check if file contains class definition
-            if ($data = \Includes\Decorator\Utils\ClassData\Parser::parse($fileInfo)) {
-
-                // Create node in the classes tree
-                $node = $this->addNode($data);
-
-                // Check constrains
-                \Includes\Decorator\Utils\ClassData\Verifier::checkNode($node);
-            }
-        }
-
-        // Remove the stub nodes
-        $this->collectGarbage();
-    }
-
-
-    /**
      * Constructor
      *
+     * @param string $nodeClass node class name
+     *  
      * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function __construct()
+    public function __construct($nodeClass = null)
     {
-        parent::__construct();
+        parent::__construct($nodeClass);
 
         // Walk through the PHP files tree and collect classes info
-        $this->create();
+        $this->createFromArray(\Includes\Utils\FileFilter::filterByExtension(LC_CLASSES_DIR, 'php'));
     }
 }

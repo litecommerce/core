@@ -38,16 +38,6 @@ namespace XLite\Controller\Admin;
 class Categories extends \XLite\Controller\Admin\Catalog
 {
     /**
-     * FIXME- backward compatibility 
-     * 
-     * @var    array
-     * @access public
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    public $params = array('target', 'category_id', 'page', 'backUrl');
-
-    /**
      * getModelObject
      *
      * @return \XLite\Model\AModel
@@ -59,124 +49,37 @@ class Categories extends \XLite\Controller\Admin\Catalog
         return $this->getCategory();
     }
 
-
     /**
-     * category 
-     * 
-     * @var    mixed
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected $category = array();
-
-    /**
-     * Controller initialization
+     * doActionDelete 
      * 
      * @return void
-     * @access public
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function init()
+    protected function doActionDelete()
     {
-        if ('delete' == \XLite\Core\Request::getInstance()->mode) {
-            $deleteMode = 'delete' . ('1' == \XLite\Core\Request::getInstance()->subcats ? '_subcats' : '');
-            $this->set('deleteMode', $deleteMode);
-        }
+        $parentId = $this->getCategory()->getParent()->getCategoryId();
+        $category = \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategory($this->getCategoryId());
 
-        $errorData = array();
-        $integritySuccess = \XLite\Core\Database::getRepo('\XLite\Model\Category')->checkTreeIntegrity($errorData);
+        \XLite\Core\Database::getRepo('XLite\Model\Category')
+            ->{'delete' . (((bool) \XLite\Core\Request::getInstance()->subcats) ? 'Subcategories' : '')}($category);
 
-        if (!$integritySuccess) {
-            \XLite\Core\TopMessage::getInstance()->add(
-                'Categories tree integrity has broken (' . $errorData['msg'] . ')',
-                \XLite\Core\TopMessage::ERROR
-            );
-        }
+        $this->setReturnUrl($this->buildURL('categories', '', array('category_id' => $parentId)));
     }
+
 
     /**
      * Get categories list
      * 
-     * @param int $categoryId Category Id
-     *  
      * @return array
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getCategories($categoryId = null)
+    public function getCategories()
     {
-        return \XLite\Core\Database::getRepo('\XLite\Model\Category')->getCategories($categoryId ?: $this->getCategoryId());
-    }
-
-    /**
-     * Get subcategories list
-     * 
-     * @param int $categoryId Category Id
-     *  
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getSubcategories($categoryId)
-    {
-        $categories = $this->getCategories($categoryId);
-
-        array_shift($categories);
-
-        return $categories;
-    }
-
-    /**
-     * Get category data
-     * 
-     * @param int $categoryId Category Id
-     *  
-     * @return \XLite\Model\Category
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getCategory($categoryId = null)
-    {
-        if (!isset($this->category[$categoryId])) {
-            $this->category[$categoryId] = \XLite\Core\Database::getRepo('\XLite\Model\Category')->getCategory($categoryId ?: $this->getCategoryId());
-        }
-
-        return $this->category[$categoryId];
-    }
-
-    /**
-     * Get parent category 
-     * 
-     * @param int $categoryId Category Id
-     *  
-     * @return \XLite\Model\Category
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getParentCategory($categoryId = null)
-    {
-        return \XLite\Core\Database::getRepo('\XLite\Model\Category')->getParentCategory($categoryId ?: $this->getCategoryId());
-    }
-
-    /**
-     * Check if category is a leaf node 
-     * 
-     * @param int $categoryId Category Id
-     *  
-     * @return bool
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function isCategoryLeafNode($categoryId = null)
-    {
-        return \XLite\Core\Database::getRepo('\XLite\Model\Category')->isCategoryLeafNode($categoryId ?: $this->getCategoryId());
+        return $this->getCategory()->getSubcategories();
     }
 
     /**
@@ -190,150 +93,5 @@ class Categories extends \XLite\Controller\Admin\Catalog
     public function getMemberships()
     {
         return \XLite\Core\Database::getRepo('\XLite\Model\Membership')->findAllMemberships();
-    }
-
-    /**
-     * Check if categories are on the root level 
-     * 
-     * @param array $categories Array of \XLite\Model\Category objects
-     *  
-     * @return bool
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function isRootCategories($categories)
-    {
-        $result = false;
-
-        if (!empty($categories) && is_array($categories)) {
-
-            $counter = 0;
-
-            foreach($categories as $category) {
-
-                $counter += (1 == $category->getDepth() ? 1 : 0);
-
-                if ($counter > 1) {
-                    $result = true;
-                    break;
-                }
-            }
-        }
-
-        return $result;
-    }
-
-    /**
-     * 'delete' action: Delete category and all subcategories
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function action_delete()
-    {
-        $this->deleteCategories(false);
-    }
-
-    /**
-     * 'delete_subcats' action: Delete subcategories only
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function action_delete_subcats()
-    {
-        $this->deleteCategories(true);
-    }
-
-    /**
-     * Delete subcategories method 
-     * 
-     * @param bool $subcategoriesOnly Delete subcategories only flag
-     *  
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function deleteCategories($subcategoriesOnly = false)
-    {
-        $categoryId = $this->getCategoryId();
-
-        if ($subcategoriesOnly) {
-            $redirectParam = '&category_id=' . $categoryId;
-
-        } else {
-            $parentCategory = \XLite\Core\Database::getRepo('\XLite\Model\Category')->getParentCategory($categoryId);
-            $redirectParam = (!is_null($parentCategory) ? '&category_id=' . $parentCategory->getCategoryId() : '');
-        }
-
-        \XLite\Core\Database::getRepo('\XLite\Model\Category')->deleteCategory($categoryId, $subcategoriesOnly);
-
-        $this->redirect('admin.php?target=categories' . $redirectParam);
-    }
-
-    /**
-     * 'move_after' action: Move category after other category
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function action_move_after()
-    {
-        $categoryId = $this->getCategoryId();
-        $move2CategoryId = \XLite\Core\Request::getInstance()->moveTo;
-
-        \XLite\Core\Database::getRepo('\XLite\Model\Category')->moveNode($categoryId, $move2CategoryId);
-
-        $this->redirect('admin.php?target=categories');
-    }
-
-    /**
-     * 'move_as_child' action: Make category child of other category
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function action_move_as_child()
-    {
-        $categoryId = $this->getCategoryId();
-        $move2CategoryId = \XLite\Core\Request::getInstance()->moveTo;
-
-        \XLite\Core\Database::getRepo('\XLite\Model\Category')->moveNode($categoryId, $move2CategoryId, true);
-
-        $this->redirect('admin.php?target=categories');
-    }
-
-    /**
-     * Prepare location path from category path 
-     * 
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getLocationPath()
-    {
-        $result = array();
-
-        $categoryPath = \XLite\Core\Database::getRepo('\XLite\Model\Category')->getCategoryPath($this->getCategoryId());
-
-        if (is_array($categoryPath)) {
-            
-            foreach ($categoryPath as $category) {
-                $result[$category->name] = 'admin.php?target=categories&category_id=' . $category->getCategoryId();
-            }
-        }
-
-        return $result;
     }
 }

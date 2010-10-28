@@ -52,7 +52,7 @@ class XLite_Tests_Model_Repo_Product extends XLite_Tests_Model_AProduct
         return new \XLite\Core\CommonCell(
             array(
                 \XLite\Model\Repo\Product::P_SKU => '',
-                \XLite\Model\Repo\Product::P_CATEGORY_ID => 0,
+                \XLite\Model\Repo\Product::P_CATEGORY_ID => 1,
                 \XLite\Model\Repo\Product::P_SUBSTRING => '',
                 \XLite\Model\Repo\Product::P_SEARCH_IN_SUBCATS => true,
                 \XLite\Model\Repo\Product::P_ORDER_BY => array(

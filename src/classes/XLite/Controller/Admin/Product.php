@@ -38,25 +38,6 @@ namespace XLite\Controller\Admin;
 class Product extends \XLite\Controller\Admin\Catalog
 {
     /**
-     * Get product category id
-     *
-     * @return int
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getCategoryId()
-    {
-        $categoryId = parent::getCategoryId();
-
-        if (empty($categoryId) && !$this->isNew()) {
-            $categoryId = $this->getProduct()->getCategoryId();
-        }
-
-        return $categoryId;
-    }
-
-
-    /**
      * Return current (or default) product object
      *
      * @return \XLite\Model\Product
@@ -326,6 +307,25 @@ class Product extends \XLite\Controller\Admin\Catalog
         \XLite\Core\TopMessage::getInstance()->add(
             'The detailed images have been successfully updated'
         );
+    }
+
+
+    /**
+     * Get product category id
+     *
+     * @return int
+     * @access public
+     * @since  3.0.0
+     */
+    public function getCategoryId()
+    {
+        $categoryId = parent::getCategoryId();
+
+        if (empty($categoryId) && !$this->isNew()) {
+            $categoryId = $this->getProduct()->getCategoryId();
+        }
+
+        return $categoryId;
     }
 
     /**

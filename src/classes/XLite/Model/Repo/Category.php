@@ -38,250 +38,32 @@ namespace XLite\Model\Repo;
 class Category extends \XLite\Model\Repo\Base\I18n
 {
     /**
-     * className
-     * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * ID of the root pseudo-category 
      */
-    protected $className = '\XLite\Model\Category';
+    const CATEGORY_ID_ROOT = 1;
+
 
     /**
-     * Flag to ignore cache when gathering data
+     * Define the Doctrine query
      * 
-     * @var    bool
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected $ignoreCache = false;
-
-    /**
-     * Define cache cells 
-     * 
-     * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function defineCacheCells()
-    {
-        $list = parent::defineCacheCells();
-
-        $list['Details'] = array(
-            self::ATTRS_CACHE_CELL    => array('category_id'),
-            self::RELATION_CACHE_CELL => array(
-                '\XLite\Model\Membership',
-                '\XLite\Model\Image\Category\Image',
-            ),
-        );
-
-        $list['FullTree'] = array(
-            self::ATTRS_CACHE_CELL    => array('category_id'),
-            self::RELATION_CACHE_CELL => array(
-                '\XLite\Model\CategoryProducts',
-                '\XLite\Model\Image\Category\Image',
-            ),
-        );
-
-        $list['FullTreeHash'] = array(
-            self::ATTRS_CACHE_CELL => array('category_id'),
-            self::RELATION_CACHE_CELL => array(
-                '\XLite\Model\CategoryProducts',
-                '\XLite\Model\Image\Category\Image',
-            ),
-        );
-
-        $list['NodePath'] = array(
-            self::ATTRS_CACHE_CELL    => array('category_id'),
-            self::RELATION_CACHE_CELL => array(
-                '\XLite\Model\Membership',
-                '\XLite\Model\Image\Category\Image',
-            ),
-        );
-
-        $list['ByCleanUrl'] = array(
-            self::ATTRS_CACHE_CELL    => array('clean_url'),
-            self::RELATION_CACHE_CELL => array(
-                '\XLite\Model\Membership',
-                '\XLite\Model\Image\Category\Image',
-            ),
-        );
-
-        $list['LeafNodes'] = array();
-
-        $list['MaxRightPos'] = array();
-
-        return $list;
-    }
-
-    /**
-     * Clean all cache cells
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function cleanCache()
-    {
-        $keys = array(
-            'Details',
-            'FullTree',
-            'FullTreeHash',
-            'NodePath',
-            'LeafNodes',
-            'MaxRightPos'
-        );
-
-        foreach ($keys as $key) {
-            $this->deleteCache($key);
-        }
-    }
-
-    /**
-     * Adds additional condition to the query for checking if category is enabled
-     * 
-     * @param \Doctrine\ORM\QueryBuilder $qb    Query builder object
-     * @param string                     $alias Entity alias
-     *  
      * @return \Doctrine\ORM\QueryBuilder
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function addEnabledCondition(\Doctrine\ORM\QueryBuilder $qb, $alias = 'c')
+    protected function defineMaxRightPosQuery()
     {
-        if (!\XLite::getInstance()->isAdminZone()) {
-            $qb->andWhere($alias . '.enabled = 1');
-        }
-
-        return $qb;
+        return $this->createPureQueryBuilder()
+            ->select('MAX(c.rpos)')
+            ->groupBy('c.category_id')
+            ->setMaxResults(1);
     }
 
     /**
-     * Get the category details
+     * Define the Doctrine query
+     *
+     * @param int $categoryId category Id
      * 
-     * @param integer $categoryId Node Id
-     *  
-     * @return \XLite\Model\Category
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getNode($categoryId)
-    {
-        $categoryId = intval($categoryId);
-
-        $data = ($this->ignoreCache) ?
-            null :
-            $this->getFromCache('Details', array('category_id' => $categoryId));
-
-        if (!isset($data)) {
-
-            $data = $this->defineNodeQuery($categoryId)->getQuery()->getResult();
-
-            if (!empty($data)) {
-                $data = array_shift($data);
-
-                if (isset($data)) {
-                    $this->saveToCache($data, 'Details', array('category_id' => $categoryId));
-                }
-            } else {
-                $data = null;
-            }
-        }
-
-        return $data;
-    }
-
-    /**
-     * Defines the query for node details selection
-     * 
-     * @param int $categoryId Node Id
-     *  
-     * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function defineNodeQuery($categoryId)
-    {
-        $categoryId = intval($categoryId);
-
-        $qb = $this->createQueryBuilder('c')
-            ->addSelect('m', 'i')
-            ->leftJoin('c.membership', 'm')
-            ->leftJoin('c.image', 'i')
-            ->andWhere('c.category_id = :categoryId')
-            ->setMaxResults(1)
-            ->setParameter('categoryId', $categoryId);
-
-        return $this->addEnabledCondition($qb, 'c');
-    }
-
-    /**
-     * Get the categories tree
-     * 
-     * @param int $categoryId Node Id
-     *  
-     * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getFullTree($categoryId = 0)
-    {
-        $categoryId = intval($categoryId);
-
-        $data = ($this->ignoreCache) ?
-            null :
-            $this->getFromCache('FullTree', array('category_id' => $categoryId));
-
-        if (!isset($data)) {
-
-            $validParent = true;
-
-            if (0 < $categoryId) {
-
-                $parentCategory = $this->getNode($categoryId);
-
-                if (!isset($parentCategory)) {
-                    $validParent = false;
-                }
-            }
-
-            if ($validParent) {
-
-                $data = $this->defineFullTreeQuery($categoryId)->getQuery()->getResult();
-
-                $dataTmp = array();
-
-                foreach ($data as $id => $nd) {
-                    $node = $nd[0];
-                    $node->setProductsCount($nd['products_count']);
-                    $dataTmp[$id] = $node;
-                }
-
-                $data = $dataTmp;
-
-            } else {
-                // The specified category does not exists
-                $data = array();
-            }
-
-            $this->saveToCache($data, 'FullTree', array('category_id' => $categoryId));
-        }
-
-        return $data;
-    }
-
-    /**
-     * Defines the query for categories tree selection
-     * 
-     * @param int $categoryId Node Id
-     *  
      * @return \Doctrine\ORM\QueryBuilder
      * @access protected
      * @see    ____func_see____
@@ -289,192 +71,171 @@ class Category extends \XLite\Model\Repo\Base\I18n
      */
     protected function defineFullTreeQuery($categoryId)
     {
-        $qb = $this->createQueryBuilder('c')
-            ->addSelect('i')
-            ->addSelect('count(p.product_id) as products_count')
-            ->leftJoin('c.category_products', 'p')
-            ->leftJoin('c.image', 'i')
-            ->groupBy('c.category_id')
-            ->orderBy('c.lpos');
+        if (!isset($categoryId)) {
+            $categoryId = $this->getRootCategoryId();
+        }
 
-        return $this->addSubTreeCondition($qb, $categoryId);
+        $queryBuilder = $this->createQueryBuilder();
+        $this->addSubTreeCondition($queryBuilder, $categoryId);
+        
+        return $queryBuilder;
     }
 
     /**
-     * Add the conditions for the current subtree
-     * NOTE: function is public since it's needed to the Product model repository
-     * 
-     * @param \Doctrine\ORM\QueryBuilder $qb         query builder to modify
-     * @param int                        $categoryId current category ID
-     *  
-     * @return \Doctrine\ORM\QueryBuilder
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function addSubTreeCondition(\Doctrine\ORM\QueryBuilder $qb, $categoryId)
-    {
-        $category = $this->getNode($categoryId);
-
-        if (isset($category) && $category instanceof $this->className) {
-            $qb->andWhere($qb->expr()->between('c.lpos', $category->getLpos(), $category->getRpos()));
-        }
-
-        return $this->addEnabledCondition($qb, 'c');
-    }
-
-    /**
-     * Get category from hash 
-     * 
-     * @param int $categoryId Category Id
-     *  
-     * @return \XLite\Model\Category
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getCategoryFromHash($categoryId)
-    {
-        $categoryId = intval($categoryId);
-
-        $hash = ($this->ignoreCache) ? 
-            null : 
-            $this->getFromCache('FullTreeHash');
-
-        $data = $this->getFullTree();
-
-        $result = null;
-
-        // Build hash if it isn't built yet
-        if (!isset($hash) && is_array($data)) {
-
-            $hash = array();
-
-            foreach ($data as $index => $category) {
-                $hash[$category->getCategoryId()] = $index;
-            }
-
-            $this->saveToCache($hash, 'FullTreeHash');
-        }
-
-        // Gathering needed category object from hash
-        if (isset($hash) && isset($hash[$categoryId]) && isset($data[$hash[$categoryId]])) {
-            $result = $data[$hash[$categoryId]];
-        }
-
-        return $result;
-    }
-
-    /**
-     * Get the array of category ancestors
-     * 
-     * @param mixed $categoryId Node identifier
-     *  
-     * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getNodePath($categoryId)
-    {
-        $categoryId = intval($categoryId);
-
-        $data = ($this->ignoreCache) ? 
-            null : 
-            $this->getFromCache('NodePath', array('category_id' => $categoryId));
-
-        if (!isset($data)) {
-
-            if (0 < $categoryId) {
-
-                $category = $this->getNode($categoryId);
-
-                if (isset($category)) {
-                    $data = $this->defineNodePathQuery($categoryId)->getQuery()->getResult();
-                }
-            }
-
-            if (!isset($data)) {
-                $data = array();
-            }
-
-            $this->saveToCache($data, 'NodePath', array('category_id' => $categoryId));
-
-        }
-
-        return $data;
-    }
-
-    /**
-     * Defines the query for category path selection
-     * 
-     * @param int $categoryId Node Id
-     *  
+     * Define the Doctrine query
+     *
+     * @param int $categoryId category Id
+     *
      * @return \Doctrine\ORM\QueryBuilder
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function defineNodePathQuery($categoryId)
+    protected function defineSubcategoriesQuery($categoryId)
     {
-        $categoryId = intval($categoryId);
-
-        $category = $this->getNode($categoryId);
-
-        if (isset($category) && $category instanceof $this->className) {
-
-            $qb = $this->createQueryBuilder('n');
-
-            $qb ->andWhere($qb->expr()->lte('n.lpos', $category->getLpos()))
-                ->andWhere($qb->expr()->gte('n.rpos', $category->getRpos()));
-
-            $qb->orderby('n.lpos');
-        }
-
-        return $qb;
+        return $this->createQueryBuilder()
+            ->andWhere('c.parent_id = :parentId')
+            ->setParameter('parentId', $categoryId);
     }
 
     /**
-     * Get the leaf nodes of tree
-     * 
-     * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getLeafNodes()
-    {
-        $data = ($this->ignoreCache) ? 
-            null : 
-            $this->getFromCache('LeafNodes');
-
-        if (!isset($data)) {
-
-            $data = $this->defineLeafNodesQuery()->getQuery()->getResult();
-
-            $this->saveToCache($data, 'LeafNodes');
-
-        }
-
-        return $data;
-    }
-
-    /**
-     * Defines the query for leaf nodes selection
+     * Define the Doctrine query
+     *
+     * @param int $categoryId category Id
      * 
      * @return \Doctrine\ORM\QueryBuilder
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function defineLeafNodesQuery()
+    protected function defineCategoryPathQuery($categoryId)
     {
-        return $this->createQueryBuilder('n')
-            ->andWhere('n.rpos = n.lpos + 1');
+        $queryBuilder = $this->createQueryBuilder();
+        $category = $this->getCategory($categoryId);
+
+        $this->addSubTreeCondition($queryBuilder, $categoryId, 'lpos', 1, $category->getLpos());
+        $this->addSubTreeCondition($queryBuilder, $categoryId, 'rpos', $category->getRpos(), $this->getMaxRightPos());
+
+        return $queryBuilder;
     }
 
     /**
-     * Get the maximum right position in the tree
+     * Define the Doctrine query
+     *
+     * @param int $categoryId category Id
+     * 
+     * @return \Doctrine\ORM\QueryBuilder
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineCategoryDepthQuery($categoryId)
+    {
+        return $this->defineCategoryPathQuery($categoryId)
+            ->select('COUNT(c.category_id) - 1')
+            ->setMaxResults(1);
+    }
+
+    /**
+     * Define the Doctrine query
+     *
+     * @param int $productId product Id
+     * 
+     * @return \Doctrine\ORM\QueryBuilder
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineSearchByProductIdQuery($productId)
+    {
+        return $this->createQueryBuilder()
+            ->innerJoin('c.category_products', 'cp')
+            ->andWhere('cp.product_id = :productId')
+            ->setParameter('productId', $productId)
+            ->addOrderBy('cp.orderby', 'ASC');
+    }
+
+    /**
+     * Define the Doctrine query
+     *
+     * @param string $index        field name
+     * @param int    $relatedIndex related index value
+     * @param int    $offset       increment
+     *
+     * @return \Doctrine\ORM\QueryBuilder
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineUpdateIndexQuery($index, $relatedIndex, $offset = 2)
+    {
+        $expr = new \Doctrine\ORM\Query\Expr();
+
+        return $this->createPureQueryBuilder()
+            ->update($this->_entityName, 'c')
+            ->set('c.' . $index, 'c.' . $index . ' + :offset')
+            ->andWhere($expr->gt('c.' . $index, ':relatedIndex'))
+            ->setParameters(array('offset' => $offset, 'relatedIndex' => $relatedIndex));
+    }
+
+
+    /**
+     * Adds additional condition to the query for checking if category is enabled
+     *
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder query builder object
+     * @param string                     $alias        entity alias
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function addEnabledCondition(\Doctrine\ORM\QueryBuilder $queryBuilder, $alias = null)
+    {
+        if ($this->getEnabledCondition()) {
+            $queryBuilder
+                ->andWhere(($alias ?: $this->getDefaultAlias()) . '.enabled = :enabled')
+                ->setParameter('enabled', true);
+        }
+    }
+
+    /**
+     * Adds additional condition to the query to order categories
+     *
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder query builder object
+     * @param string                     $alias        entity alias
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function addOrderByCondition(\Doctrine\ORM\QueryBuilder $queryBuilder, $alias = null)
+    {
+        $queryBuilder
+            ->addOrderBy(($alias ?: $this->getDefaultAlias()) . '.lpos', 'ASC');
+    }
+
+    /**
+     * Adds additional condition to the query to order categories
+     *
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder query builder object
+     * @param string                     $alias        entity alias
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function addExcludeRootCondition(\Doctrine\ORM\QueryBuilder $queryBuilder, $alias = null)
+    {
+        $queryBuilder
+            ->andWhere(($alias ?: $this->getDefaultAlias()) . '.category_id <> :rootId')
+            ->setParameter('rootId', $this->getRootCategoryId());
+    }
+
+    /**
+     * Return maximum index in the "nested set" tree
      * 
      * @return int
      * @access protected
@@ -483,477 +244,201 @@ class Category extends \XLite\Model\Repo\Base\I18n
      */
     protected function getMaxRightPos()
     {
-        $data = ($this->ignoreCache) ? 
-            null : 
-            $this->getFromCache('MaxRightPos');
-
-        if (!isset($data)) {
-
-            $qb = \XLite\Core\Database::getQB();
-            $qb ->select('max(n.rpos) as maxrpos')
-                ->from($this->_entityName, 'n');
-
-            $data = $qb->getQuery()->getSingleScalarResult();
-
-            if (isset($data)) {
-                $this->saveToCache($data, 'MaxRightPos');
-            
-            } else {
-                $data = 0;
-            }
-        }
-
-        return $data;
+        return $this->defineMaxRightPosQuery()
+            ->getQuery()
+            ->getSingleScalarResult();
     }
 
     /**
-     * Add node into the tree before or after specified node on the same level
-     * 
-     * @param int  $categoryId  Node Id
-     * @param bool $placeBefore Flag: true - place new node before specified, false - place after
-     *  
-     * @return \XLite\Model\Category
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function addSibling($categoryId, $placeBefore = true)
-    {
-        $this->ignoreCache = true;
-
-        $errorMsg = null;
-
-        $result = null;
-
-        $categoryId = intval($categoryId);
-
-        $parentCategory = $this->getNode($categoryId);
-
-        if ($parentCategory instanceof $this->className) {
-
-            if ($placeBefore) {
-                $relatedIndex = $parentCategory->getLpos();
-                $equalFlag = true;
-                $newLpos = $relatedIndex;
-                $newRpos = $relatedIndex + 1;
-
-            } else {
-                $relatedIndex = $parentCategory->getRpos();
-                $equalFlag = false;
-                $newLpos = $relatedIndex + 1;
-                $newRpos = $relatedIndex + 2;
-            }
-
-            $newDepth = $parentCategory->getDepth();
-
-            // Increase lpos field for parent and all right nodes
-            $qb = $this->defineUpdateIndexesQuery('lpos', 2, $relatedIndex, $equalFlag);
-            $qb->getQuery()->execute();
-
-            // Increase rpos field for parent and all right nodes
-            $qb = $this->defineUpdateIndexesQuery('rpos', 2, $relatedIndex, $equalFlag);
-            $qb->getQuery()->execute();
-
-            // Create an empty category node in the database
-            $result = $this->createNode($newLpos, $newRpos, $newDepth, $errorMsg);
-
-        } else {
-            $errorMsg = 'The specified category is not exist';
-        }
-
-        if (isset($errorMsg)) {
-            \XLite\Core\TopMessage::getInstance()->add(
-                $errorMsg,
-                \XLite\Core\TopMessage::ERROR
-            );
-        }
-
-        $this->ignoreCache = false;
-
-        return $result;
-    }
-
-    /**
-     * Add node into the tree as a child of specified node 
-     * 
-     * @param int $categoryId Node Id
-     *  
-     * @return \XLite\Model\Category
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function addChild($categoryId = 0)
-    {
-        $this->ignoreCache = true;
-
-        $errorMsg = null;
-
-        $result = null;
-
-        $skipUpdate = false;
-
-        $categoryId = intval($categoryId);
-
-        // If category_id is 0 then suppose that parent is root
-        if (0 == $categoryId) {
-            // get lpos as 0 and rpos as a max(rpos)
-            $parentLpos = 0;
-            $parentRpos = $this->getMaxRightPos();
-            $parentDepth = 0;
-
-            if (0 == $parentRpos) {
-                $skipUpdate = true;
-            }
-
-        } else {
-
-            // Check if category exists
-            $parentCategory = $this->getNode($categoryId);
-
-            if (isset($parentCategory) && $parentCategory instanceof $this->className) {
-                // get lpos and rpos from parent category
-                $parentLpos = $parentCategory->getLpos();
-                $parentRpos = $parentCategory->getRpos();
-                $parentDepth = $parentCategory->getDepth();
-            
-            } else {
-                // Category does not exist, return error
-                $errorMsg = 'The specified parent category is not exist';
-            }
-        }
-
-
-        if (!isset($errorMsg)) {
-
-            if (!$skipUpdate) {
-
-                // Increase lpos field for all right nodes
-                $qb = $this->defineUpdateIndexesQuery('lpos', 2, $parentLpos);
-                $qb->getQuery()->execute();
-
-                // Increase rpos field for parent and all right nodes
-                $qb = $this->defineUpdateIndexesQuery('rpos', 2, $parentLpos);
-                $qb->getQuery()->execute();
-            }
-
-            // Create an empty category node in the database
-            $result = $this->createNode($parentLpos + 1, $parentLpos + 2, $parentDepth + 1, $errorMsg);
-        }
-               
-        if (isset($errorMsg)) {
-            \XLite\Core\TopMessage::getInstance()->add(
-                $errorMsg,
-                \XLite\Core\TopMessage::ERROR
-            );
-        }
-
-        $this->ignoreCache = false;
-
-        return $result;
-    }
-
-    /**
-     * defineUpdateIndexesQuery 
-     * 
-     * @param string $index        Index to update: 'lpos' or 'rpos'
-     * @param int    $offset       Offset value
-     * @param int    $relatedIndex Related index value
-     * @param bool   $orEqualFlag  Flag for condition function choosing
-     *  
-     * @return \Doctrine\ORM\QueryBuilder
+     * Prepare data for a new category node
+     *
+     * @param array                 $data   category properties
+     * @param \XLite\Model\Category $parent parent category object
+     *
+     * @return array
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function defineUpdateIndexesQuery($index, $offset, $relatedIndex, $orEqualFlag = false)
+    protected function prepareNewCategoryData(array $data, \XLite\Model\Category $parent = null)
     {
-        $gtFunc = 'gt' . ($orEqualFlag ? 'e' : '');
-        $alias = 'c';
-        $column = $alias . '.' . $index;
+        if (!isset($parent)) {
+            $parent = $this->getCategory($data['parent_id']);
+        }
 
-        $qb = \XLite\Core\Database::getQB();
-        $qb ->update($this->_entityName, $alias)
-            ->set($column, $column . ' + :offset')
-            ->andWhere(
-                // $gtFunc: 'gt' or 'gte'
-                $qb->expr()->$gtFunc($column, ':relatedIndex')
-            )
-            ->setParameters(
-                array(
-                    'offset'     => $offset,
-                    'relatedIndex' => $relatedIndex
-                )
-            );
-
-        return $qb;
+        return array('lpos' => $parent->getLpos() + 1, 'rpos' => $parent->getLpos() + 2, 'parent' => $parent) + $data;
     }
 
     /**
-     * Create a node of category in the database
-     * 
-     * @param int    $lpos      lpos value
-     * @param int    $rpos      rpos value
-     * @param int    $depth     depth value
-     * @param string &$errorMsg Variable for error message
+     * Prepare data for a the "updateQuickFlags()" method
+     *
+     * @param int $sc_all     the "subcategories_count_all" flag value
+     * @param int $sc_enabled the "subcategories_count_enabled" flag value
      *  
-     * @return \XLite\Model\Category
+     * @return array
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function createNode($lpos, $rpos, $depth, &$errorMsg)
+    protected function prepareQuickFlags($sc_all, $sc_enabled)
     {
-        $node = new \XLite\Model\Category();
-        $node->setLpos($lpos);
-        $node->setRpos($rpos);
-        $node->setDepth($depth);
-
-        \XLite\Core\Database::getEM()->persist($node);
-        \XLite\Core\Database::getEM()->flush();
-
-        if ($node->getCategoryId() > 0) {
-            $result = $node;
-
-        } else {
-            $result = null;
-            $errorMsg = 'Error of a category creation: object could not be created in the database.';
-        }
-        
-        return $result;
+        return array(
+            'subcategories_count_all'     => $sc_all,
+            'subcategories_count_enabled' => $sc_enabled,
+        );
     }
 
     /**
-     * Move node and its subnodes within tree
+     * Update quick flags for a category
      * 
-     * @param int  $nodeId        Source node Id
-     * @param int  $destNodeId    Destination node Id
-     * @param bool $attachAsChild Trigger: add as a child or place after destination node
+     * @param \XLite\Model\Category $entity category
+     * @param array                 $flags  flags to set
      *  
+     * @return void
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function updateQuickFlags(\XLite\Model\Category $entity, array $flags)
+    {
+        foreach ($flags as $name => $delta) {
+            $entity->getQuickFlags()->$name += $delta;
+        }
+
+        // Do not change to $this->update() or $this->performUpdate():
+        // it will cause the unfinite recursion
+        parent::performUpdate($entity);
+    }
+
+
+    /**
+     * Insert single entity
+     *
+     * @param array $data data to save
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function performInsert(array $data = array())
+    {
+        // Parent category is always exists
+        $parent = $this->getCategory($data['parent_id']);
+
+        // Update indexes in the nested set
+        $this->defineUpdateIndexQuery('lpos', $parent->getLpos())->getQuery()->execute();
+        $this->defineUpdateIndexQuery('rpos', $parent->getLpos())->getQuery()->execute();
+
+        // Create record in DB
+        $entity = parent::performInsert($this->prepareNewCategoryData($data, $parent));
+
+        // Update quick flags
+        $this->updateQuickFlags($parent, $this->prepareQuickFlags(1, $entity->getEnabled() ? 1 : -1));
+
+        return $entity;
+    }
+
+    /**
+     * Update single entity
+     *
+     * @param \XLite\Model\AEntity $entity entity to use
+     * @param array                $data   data to save
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function performUpdate(\XLite\Model\AEntity $entity, array $data = array())
+    {
+        // Update quick flags (if needed)
+        if (isset($data['enabled']) && ($entity->getEnabled() xor ((bool) $data['enabled']))) {
+            $this->updateQuickFlags($entity->getParent(), $this->prepareQuickFlags(0, $entity->getEnabled() ? -1 : 1));
+        }
+
+        parent::performUpdate($entity, $data);
+    }
+
+    /**
+     * Delete single entity
+     *
+     * @param \XLite\Model\AEntity $entity entity to detach
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function performDelete(\XLite\Model\AEntity $entity)
+    {
+        // Recursively delete all childs
+        $this->deleteSubcategories($entity);
+
+        // Index delta
+        $width = $entity->getRpos() - $entity->getLpos() + 1;
+
+        // Update indexes in the nested set
+        $this->defineUpdateIndexQuery('lpos', $entity->getRpos(), -$width)->getQuery()->execute();
+        $this->defineUpdateIndexQuery('rpos', $entity->getRpos(), -$width)->getQuery()->execute();
+
+        // Update quick flags
+        $this->updateQuickFlags($entity->getParent(), $this->prepareQuickFlags(-1, $entity->getEnabled() ? -1 : 0));
+    
+        parent::performDelete($entity);    
+    }
+
+
+    /**
+     * Return the reserved ID of root category
+     *
+     * @return int
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getRootCategoryId()
+    {
+        return self::CATEGORY_ID_ROOT;
+    }
+
+    /**
+     * Return the ctegory enabled condition
+     * 
      * @return bool
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function moveNode($nodeId, $destNodeId, $attachAsChild = false)
+    public function getEnabledCondition()
     {
-        $this->ignoreCache = true;
-
-        $errorMsg = '';
-
-        $nodeId = intval($nodeId);
-        $destNodeId = intval($destNodeId);
-
-        // Get source node data
-        $srcNode = $this->getNode($nodeId);
-
-        if (isset($srcNode) && $srcNode->getCategoryId() > 0) {
-
-            $src = $dst = array();
-
-            $src['lpos'] = $srcNode->getLpos();
-            $src['rpos'] = $srcNode->getRpos();
-            $src['depth'] = $srcNode->getDepth();
-
-            $dst['rpos'] = $dst['lpos'] = 0;
-            $dst['depth'] = 1;
-
-            if (0 < $destNodeId) {
-                // Get destination node data
-                $destNode = $this->getNode($destNodeId);
-
-                if (isset($destNode) && $destNode->getCategoryId() > 0) {
-                    $dst['lpos'] = $destNode->getLpos();
-                    $dst['rpos'] = $destNode->getRpos();
-                    $dst['depth'] = $destNode->getDepth();
-                
-                } else {
-                    $errorMsg = sprintf('Destination category (%d) specified incorrectly', $destNodeId);
-                }
-            }
-
-            if (!$attachAsChild && $src['lpos'] - $dst['rpos'] == 1) {
-                $errorMsg = sprintf(
-                    'Category #%d (%d, %d) is already located after category #%d (%d, %d)', 
-                    $nodeId, 
-                    $src['lpos'], 
-                    $src['rpos'], 
-                    $destNodeId, 
-                    $dst['lpos'], 
-                    $dst['rpos']
-                );
-            }
-
-            if (empty($errorMsg)) {
-
-                // Mark all nodes within moving subtree as locked
-                $qb1 = $this->defineLockNodesQuery($src['lpos'], $src['rpos'], 1);
-
-                // Modify lpos value for affected nodes excluding locked nodes
-                $qb2 = \XLite\Core\Database::getQB();
-                $qb2->update($this->_entityName, 'c')
-                    ->set('c.lpos', 'c.lpos + :offset')
-                    ->andwhere('c.locked = 0');
-
-                // Modify rpos value for affected nodes excluding locked nodes
-                $qb3 = \XLite\Core\Database::getQB();
-                $qb3->update($this->_entityName, 'c')
-                    ->set('c.rpos', 'c.rpos + :offset')
-                    ->andwhere('c.locked = 0');
-
-                // Offset for applying to the affected nodes excluding nodes within moving subtree
-                $adjustmentOffset = ($srcNode->getSubCategoriesCount() + 1) * 2;
-
-                // Depth offset between source and destination nodes
-                $depthOffset = $dst['depth'] - $src['depth'];
-
-                // Attach source node to the destination node as a first child
-                if ($attachAsChild) {
-
-                    // Offset for applying to the nodes within moving subtree
-                    $nodeOffset = $dst['lpos'] + 1 - $src['lpos'];
-
-                    // Increase the depth offset
-                    if (0 < $destNodeId) {
-                        $depthOffset++;
-                    }
-
-                    // If source node the left of destination node...
-                    if ($src['lpos'] < $dst['lpos']) {
-
-                        $adjustmentOffset *= -1;
-                        $nodeOffset += $adjustmentOffset;
-
-                        $qb2 ->andWhere($qb2->expr()->between('c.lpos', $src['rpos']+1, $dst['lpos']));
-
-                        // If destination node already has children
-                        if ($dst['rpos'] - $dst['lpos'] > 1) {
-                            $qb3 ->andWhere($qb3->expr()->between('c.rpos', $src['rpos']+1, $dst['lpos']-1));
-
-                        } else {
-                            $qb3 ->andWhere($qb3->expr()->between('c.rpos', $src['rpos']+1, $dst['rpos']-1));
-                        }
-
-                    } elseif ($src['rpos'] < $dst['rpos']) {
-                        // If source node is within destination node's subtree...
-                        $qb2 ->andWhere($qb2->expr()->between('c.lpos', $dst['lpos']+1, $src['lpos']-1));
-                        $qb3 ->andWhere($qb3->expr()->gt('c.rpos', $dst['lpos']));
-                        $qb3 ->andWhere($qb3->expr()->lt('c.lpos', $src['lpos']));
-
-                    } else {
-                        // If source node is the right of destination node and not in its subtree...
-
-                        // If destination node already has children
-                        if ($dst['rpos'] - $dst['lpos'] > 1) {
-                            $qb2 ->andWhere($qb2->expr()->between('c.lpos', $dst['lpos']+1, $src['lpos']));
-                            $qb3 ->andWhere($qb3->expr()->between('c.rpos', $dst['lpos']+1, $src['lpos']));
-
-                        } else { 
-                            $qb2 ->andWhere($qb2->expr()->between('c.lpos', $dst['rpos'], $src['rpos']));
-                            $qb3 ->andWhere($qb3->expr()->between('c.rpos', $dst['rpos'], $src['lpos']));
-                        }
-
-                    }
-                
-                } else {
-                    // Place source node after the destination node
-
-                    // Offset for applying to the nodes within moving subtree
-                    $nodeOffset = $dst['rpos'] + 1 - $src['lpos'];
-
-                    // If source node the left of destination node...
-                    if ($src['lpos'] < $dst['lpos']) {
-
-                        $adjustmentOffset *= -1;
-                        $nodeOffset += $adjustmentOffset;
-
-                        $qb2 ->andWhere($qb2->expr()->between('c.lpos', $src['rpos']+1, $dst['rpos']));
-                        $qb3 ->andWhere($qb3->expr()->between('c.rpos', $src['rpos']+1, $dst['rpos']));
-
-                    } else {
-                        // If source node the right of destination node...
-                        $qb2 ->andWhere($qb2->expr()->between('c.lpos', $dst['rpos']+1, $src['lpos']-1));
-                        $qb3 ->andWhere($qb3->expr()->between('c.rpos', $dst['rpos']+1, $src['lpos']-1));
-                    }
-                }
-
-                $qb2 ->setParameter('offset', $adjustmentOffset);
-                $qb3 ->setParameter('offset', $adjustmentOffset);
-
-                    
-                // Remove lock status and change lpos and rpos values of nodes within moving subtree
-                $qb4 = $this->defineLockNodesQuery($src['lpos'], $src['rpos'], 0);
-                $qb4->set('c.lpos', 'c.lpos + :offset')
-                    ->set('c.rpos', 'c.rpos + :offset')
-                    ->set('c.depth', 'c.depth + :depthOffset')
-                    ->setParameter('offset', $nodeOffset)
-                    ->setParameter('depthOffset', $depthOffset);
-
-                // Execute queries
-                $qb1->getQuery()->execute();
-                $qb2->getQuery()->execute();
-                $qb3->getQuery()->execute();
-                $qb4->getQuery()->execute();
-
-                \XLite\Core\Database::getEM()->flush();
-                \XLite\Core\Database::getEM()->clear();
-
-                // Clean common cache
-                $this->cleanCache();
-            }
-
-        } else {
-            // If source node is not exists
-            $errorMsg = 'Category for moving is not specified or does not exists';
-        }
-
-        // Prepare diagnostic message if operation could not be complete
-        if (!empty($errorMsg)) {
-            \XLite\Core\TopMessage::getInstance()->add(
-                $errorMsg,
-                \XLite\Core\TopMessage::ERROR
-            );
-        }
-
-        $this->ignoreCache = false;
-
-        return empty($errorMsg);
+        return !\XLite::isAdminZone();
     }
 
     /**
-     * Define query to mark nodes between specified lpos and rpos as locked
-     * 
-     * @param int $lpos       Left position
-     * @param int $rpos       Right position
-     * @param int $lockStatus Required lock status
-     *  
+     * Create a new QueryBuilder instance that is prepopulated for this entity name
+     *
+     * @param string $alias Table alias
+     *
      * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
+     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function defineLockNodesQuery($lpos, $rpos, $lockStatus = 1)
+    public function createQueryBuilder($alias = null)
     {
-        $qb = \XLite\Core\Database::getQB();
-        $qb ->update($this->_entityName, 'c')
-            ->set('c.locked', $lockStatus ? 1 : 0)
-            ->andwhere($qb->expr()->gte('c.lpos', ':lpos'))
-            ->andWhere($qb->expr()->lte('c.rpos', ':rpos'))
-            ->andWhere($qb->expr()->eq('c.locked', $lockStatus ? 0 : 1))
-            ->setParameters(
-                array(
-                    'lpos'   => intval($lpos),
-                    'rpos'   => intval($rpos)
-                )
-            );
+        $qb = parent::createQueryBuilder($alias);
+
+        $this->addEnabledCondition($qb, $alias);
+        $this->addOrderByCondition($qb, $alias);
+        $this->addExcludeRootCondition($qb, $alias);
 
         return $qb;
     }
 
     /**
-     * Get category details
+     * find() with cache
      * 
-     * @param int $categoryId Category Id
+     * @param int $categoryId category ID
      *  
      * @return \XLite\Model\Category
      * @access public
@@ -962,71 +447,41 @@ class Category extends \XLite\Model\Repo\Base\I18n
      */
     public function getCategory($categoryId)
     {
-        $categoryId = intval($categoryId);
-
-        $category = $this->getNode($categoryId);
-
-        return $category;
+        return $this->find($categoryId);
     }
 
     /**
-     * Get the categories tree
-     * 
-     * @param int $categoryId Parent category Id
-     *  
+     * Return full list of categories
+     *
+     * @param int $rootId ID of the subtree root
+     *
      * @return array
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getCategories($categoryId = 0)
+    public function getCategories($rootId = null)
     {
-        return $this->getFullTree($categoryId);
+        return $this->defineFullTreeQuery($rootId)
+            ->getQuery()
+            ->getResult();
     }
 
     /**
-     * Get a plain list of subcategories of the specified category 
-     * 
-     * @param int $categoryId Parent category Id
-     *  
+     * Return list of subcategories (one level)
+     *
+     * @param int $rootId ID of the subtree root
+     *
      * @return array
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getCategoriesPlainList($categoryId = 0)
+    public function getSubcategories($rootId)
     {
-        $result = array();
-
-        $categoryId = intval($categoryId);
-
-        if (0 < $categoryId) {
-            $cat = $this->getNode($categoryId);
-        }
-
-        if (!empty($cat)) {
-            $depth = $cat->getDepth() + 1;
-            $lpos = $cat->getLpos();
-            $rpos = $cat->getRpos();
-
-        } else {
-            $depth = 1;
-            $lpos = 0;
-            $rpos = $this->getMaxRightPos()+1;
-        }
-
-        $categories = $this->getFullTree($categoryId);
-
-        if (is_array($categories)) {
-
-            foreach ($categories as $category) {
-                if ($category->getDepth() == $depth && $category->getLpos() > $lpos && $category->getRpos() < $rpos) {
-                    $result[] = $category;
-                }
-            }
-        }
-
-        return $result;
+        return $this->defineSubcategoriesQuery($rootId)
+            ->getQuery()
+            ->getResult();
     }
 
     /**
@@ -1041,243 +496,26 @@ class Category extends \XLite\Model\Repo\Base\I18n
      */
     public function getCategoryPath($categoryId)
     {
-        return $this->getNodePath($categoryId);
+        return $this->defineCategoryPathQuery($categoryId)
+            ->getQuery()
+            ->getResult();
     }
 
     /**
-     * Get the parent category of a specified category
+     * Get depth of the category path
      * 
      * @param int $categoryId Category Id
-     *  
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getParentCategory($categoryId)
-    {
-        $path = $this->getNodePath($categoryId);
-
-        return count($path) > 1 ? $path[count($path)-2] : null;
-    }
-
-    /**
-     * Get the category Id of a parent category of a specified category 
-     * 
-     * @param int $categoryId Category Id
-     *  
-     * @return int
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getParentCategoryId($categoryId)
-    {
-        $result = $this->getParentCategory($categoryId);
-        
-        return isset($result) ? $result->getCategoryId() : null;
-    }
-
-    /**
-     * Check if specified category is a leaf node of a categories tree
-     * 
-     * @param int $categoryId Category Id
-     *  
-     * @return bool
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function isCategoryLeafNode($categoryId)
-    {
-        $result = false;
-
-        $leafNodes = $this->getLeafNodes();
-
-        if (is_array($leafNodes)) {
-            foreach ($leafNodes as $node) {
-                if ($node->getCategoryId() == $categoryId) {
-                    $result = true;
-                    break;
-                }
-            }
-        }
-
-        return $result;
-    }
-
-    /**
-     * Get the categories list that is assigned to the specified product
-     * TODO: rewrite this method or move to the Product model
-     * Problem: Category::getProductId() method called when updating category (on flush() calling)
-     * 
-     * @param int $productId Product Id
      *  
      * @return array
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getCategoriesOfProduct($productId)
+    public function getCategoryDepth($categoryId)
     {
-        $data = ($this->ignoreCache) ? 
-            null : 
-            $this->getFromCache('categories_of_product', array('product_id' => $productId));
-
-        if (!isset($data)) {
-
-            $data = $this->defineCategoriesOfProduct()->getQuery()->getResult();
-
-            if (!empty($data)) {
-                $data = array_shift($data);
-            }
-
-            $this->saveToCache($data, 'categories_of_product', array('product_id' => $productId));
-        }
-
-        return $data;
-    }
-
-    /**
-     * Define the query for product categories selection
-     * 
-     * @param int $productId Product Id
-     *  
-     * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function defineCategoriesOfProduct($productId)
-    {
-        return $this->createQueryBuilder('c')
-            ->leftJoin('c.category_products', 'cp')
-            ->andWhere('cp.product_id = :productId')
-            ->setParameter('productId', $productId);
-    }
-
-    /**
-     * Get category by clean_url
-     * FIXME
-     * 
-     * @param string $cleanUrl Clean URL value
-     *  
-     * @return \XLite\Model\Category
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getCategoryByCleanUrl($cleanUrl)
-    {
-        $key = md5($cleanUrl);
-
-        $data = ($this->ignoreCache) ? 
-            null : 
-            $this->getFromCache('ByCleanUrl', array('clean_url' => $key));
-
-        if (!isset($data)) {
-
-            $data = $this->defineCategoryByCleanUrl($cleanUrl)->getQuery()->getResult();
-
-            if (!empty($data)) {
-                $data = array_shift($data);
-
-            } else {
-                $data = null;
-            }
-            
-            $this->saveToCache($data, 'ByCleanUrl', array('clean_url' => $key));
-        }
-
-        return $data;
-    }
-
-    /**
-     * Define the query for category selection by specified clean Url
-     * 
-     * @param string $cleanUrl Category clean Url
-     *  
-     * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function defineCategoryByCleanUrl($cleanUrl)
-    {
-        $qb = $this->createQueryBuilder('c')
-            ->andWhere('c.clean_url = :cleanUrl')
-            ->setParameter('cleanUrl', $cleanUrl);
-
-        return $this->addEnabledCondition($qb, 'c');
-    }
-
-    /**
-     * Delete category and all subcategories
-     * 
-     * @param int  $categoryId  Category Id
-     * @param bool $subcatsOnly Flag: true - delete subcategories only, false - delete specified node and its subcategories
-     *  
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function deleteCategory($categoryId = 0, $subcatsOnly = false)
-    {
-        $this->ignoreCache = true;
-
-        $result = true;
-
-        $categoriesToDelete = $this->getFullTree($categoryId);
-
-        if (!empty($categoriesToDelete)) {
-
-            // Initialize indexes 
-            $rpos = 0;
-            $lpos = $this->getMaxRightPos();
-
-            // Calculate offset for indexes recalculation
-            $offset = (count($categoriesToDelete) - ($subcatsOnly ? 1 : 0)) * 2;
-
-            foreach ($categoriesToDelete as $category) {
-
-                if (!($subcatsOnly && $categoryId == $category->getCategoryId())) {
-
-                    // Calculate left and right indexes of the removed tree
-                    $lpos = ($category->getLpos() < $lpos) ? $category->getLpos() : $lpos;
-                    $rpos = ($category->getRpos() > $rpos) ? $category->getRpos() : $rpos;
-
-                    \XLite\Core\Database::getEM()->remove($category);
-                }
-            }
-
-            \XLite\Core\Database::getEM()->flush();
-            \XLite\Core\Database::getEM()->clear();
-
-            // If nodes were removed - recalculate indexes 
-            if (0 < $rpos) {
-
-                // Decrease lpos fields for all right nodes
-                $qb = $this->defineUpdateIndexesQuery('lpos', -$offset, $lpos);
-                $qb->getQuery()->execute();
- 
-                // Decrease rpos fields for all right nodes
-                $qb = $this->defineUpdateIndexesQuery('rpos', -$offset, $rpos);
-                $qb->getQuery()->execute();
-
-                \XLite\Core\Database::getEM()->flush();
-
-                // Clean common cache
-                $this->cleanCache();
-            }
-        
-        } else {
-            $result = false;
-        }
-
-        $this->ignoreCache = false;
-
-        return $result;
+        return $this->defineCategoryDepthQuery($categoryId)
+            ->getQuery()
+            ->getSingleScalarResult();
     }
 
     /**
@@ -1292,521 +530,78 @@ class Category extends \XLite\Model\Repo\Base\I18n
      */
     public function findAllByProductId($productId)
     {
-        return $this->createQueryBuilder()
-            ->innerJoin('c.category_products', 'cp')
-            ->andWhere('cp.product_id = :productId')
-            ->setParameter('productId', $productId)
-            ->addOrderBy('cp.orderby', 'ASC')
+        return $this->defineSearchByProductIdQuery($productId)
             ->getQuery()
             ->getResult();
     }
 
     /**
-     * Check categories tree integrity 
+     * Create new DB entry.
+     * This function is used to create new QuickFlags entry
      * 
-     * @return bool
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function checkTreeIntegrity(&$errorData)
-    {       
-        $result = true;
-        $errorData = array();
-
-        $this->ignoreCache = true;
-
-        // Get full tree
-        $categories = $this->getFullTree();
-
-        if (!empty($categories)) {
-
-            $hashLpos = $hashRpos = array();
-            $maxIndex = count($categories) * 2;
-
-            // Scan categories tree and generate hashes of indexes
-            foreach ($categories as $category) {
-
-                $lpos = $category->getLpos();
-                $rpos = $category->getRpos();
-                $catId = $category->getCategoryId();
-
-                // Fail if on of indexes exceeds the maximum allowed index value
-                if ($lpos > $maxIndex || $rpos > $maxIndex) {
-                    $result = false;
-                    $errorData = array(
-                        'category_id' => $catId,
-                        'lpos'        => $lpos,
-                        'rpos'        => $rpos,
-                        'msg'         => 'One of indexes exceeds the maximum allowed index value (' . $maxIndex . ')'
-                    );
-                    break;
-                }
-
-                // Generate hashes
-                if (!isset($hashLpos[$lpos])) {
-                    $hashLpos[$lpos] = $catId;
-
-                    if (!isset($hashRpos[$rpos])) {
-                        $hashRpos[$rpos] = $catId;
-
-                    } else {
-                        // Fail if duplicate of rpos found
-                        $result = false;
-                        $errorData = array(
-                            'category_id' => $catId,
-                            'lpos'        => $lpos,
-                            'rpos'        => $rpos,
-                            'msg'         => 'duplicate of rpos found (#' . $hashRpos[$rpos] . ')'
-                        );
-                        break;
-                    }
-
-                } else {
-                    // Fail if duplicate of lpos found
-                    $result = false;
-                    $errorData = array(
-                        'category_id' => $catId,
-                        'lpos'        => $lpos,
-                        'rpos'        => $rpos,
-                        'msg'         => 'duplicate of lpos found (#' . $hashLpos[$lpos] . ')'
-                    );
-                    break;
-                }
-            }
-
-            // Check if indexes are consistent
-            if ($result && count($hashLpos) == count($hashRpos)) {
-
-                $index = 0;
-
-                // Launch index from 0 to max value while hashes are not empty
-                while ($result && $index <= $maxIndex && !empty($hashLpos) && !empty($hashRpos)) {
-
-                    $index++;
-
-                    // Empty hashes on index value if hash for this index found
-                    if (isset($hashLpos[$index])) {
-                        unset($hashLpos[$index]);
-
-                    } elseif (isset($hashRpos[$index])) {
-                        unset($hashRpos[$index]);
-
-                    } else {
-                        // Fail if index not found in both hashes
-                        $result = false;
-                        $errorData = array(
-                            'index' => $index,
-                            'msg'   => 'index not found in lpos neither rpos'
-                        );
-                    }
-                }
-
-            } elseif ($result) {
-                // Fail if hashes have different count of elements
-                $result = false;
-                $errorData = array(
-                    'count(lpos)' => count($hashLpos),
-                    'count(rpos)' => count($hashRpos),
-                    'msg' => 'the number of unique lpos and rpos indexes differs'
-                );
-            }
-        }
-
-        $this->ignoreCache = false;
-
-        return $result;
-    }
-
-    //TODO: All methods below must be rewied and refactored
-
-    /**
-     * Parse $data due to the following grammar:
-     *
-     *   NAME_CHAR ::= ( [^/] | "//" | "||")
-     *   CATEGORY_NAME ::= NAME_CHAR CATEGORY_NAME | NAME_CHAR
-     *   CATEGORY_PATH ::= CATEGORY_NAME "/" CATEGORY_PATH | CATEGORY_NAME
-     *   
-     * If $allowMultyCategories == true, then
-     *
-     *   DATA ::= CATEGORY_PATH "|" DATA | CATEGORY_PATH
-     *   
-     * If $allowMultyCategories == false, then
-     *
-     *   DATA ::= CATEGORY_PATH
-     *
-     * @param array $data                 Array od data
-     * @param bool  $allowMultyCategories Flag of multicategories
+     * @param array $data entity properties
      *  
-     * @return array
-     * @access protected
+     * @return \XLite\Model\Category
+     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    /*
-    protected function parseCategoryField($data, $allowMultyCategories) 
+    public function insert(array $data)
     {
-        $i = 0;
-        $state = 'S';
-        $path = array();
-        $list = array();
-        $lastSlash = -1;
-        $lastDiv = -1;
-        $word = '';
+        $entity = parent::insert($data);
 
-        for ($i = 0; strlen($data) >= $i; $i++) {
+        // Create new record for the QuickFlags model
+        \XLite\Core\Database::getRepo('\XLite\Model\Category\QuickFlags')->insert(
+            array('category_id' => $entity->getCategoryId())
+        );
 
-            if (strlen($data) == $i) {
-                $char = '';
-
-            } else {
-                $char = $data{$i};
-            }
-
-            if ('/' == $char) {
-
-                if ('/' == $state) {
-                    $word .= '/';
-                    $state = 'S';
-
-                } else {
-                    $state = '/';
-                }
-
-            } else {
-               
-                if ('|' == $char) {
-
-                    if ('|' == $state) {
-                        $word .= '|';
-                        $state = 'S';
-
-                    } else {
-                        $state = '|';
-                    }
-
-                } else {
-                    
-                    if ('/' == $state) {
-                        $path[] = $word;
-                        $word = $char;
-                        $state = 'S';
-
-                    } else {
-                       
-                        if ('|' == $state || '' == $char) {
-
-                            $path[] = $word;
-
-                            if ($allowMultyCategories) {
-                                $list[] = $path;
-                                $path = array();
-                            }
-
-                            $word = $char;
-                            $state = 'S';
-
-                        } else {
-                            $word .= $char;
-                        }
-                    }
-                }
-            }
-        }
-
-        if ($allowMultyCategories) {
-            $result = $list;
-        
-        } else {
-            $result = $path;
-        }
-
-        return $result;
+        return $entity;
     }
-    */
 
     /**
-     * createCategoryField
+     * Delete subtree
      *
-     * if $categorySet is an array, creates the string in c1|c2|...|cn format
-     * due to the specification given above. If $categorySet is a single category,
-     * creates an export string for the single category in format component1/...
+     * @param \XLite\Model\AEntity $entity          entity to detach
+     * @param bool                 $isRecursiveCall flag to detect recursion
      *
-     * @param mixed $categorySet ____param_comment____
-     *  
      * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    /*
-    public function createCategoryField($categorySet) 
+    public function deleteSubcategories(\XLite\Model\AEntity $entity, $isRecursiveCall = false)
     {
-        if (is_array($categorySet)) {
-
-            $paths = array();
-
-            foreach ($categorySet as $category) {
-                $paths[] = $this->createCategoryField($category);
-            }
-
-            $result =  implode('|', $paths);
-
-        } else {
-
-            $path = $this->getNodePath($categorySet->getCategoryId());
-
-            for ($i = 0; count($path) > $i; $i++) {
-                $path[$i] = str_replace('/', '//', str_replace('|', '||', $path[$i]->name));
-            }
-
-            $result = implode('/', $path);
+        foreach ($entity->getSubcategories() as $category) {
+            $category->hasSubcategories() ? $this->deleteSubcategories($category, true) : $this->performDelete($category);
         }
 
-        return $result;
+        !$isRecursiveCall ?: $this->flushChanges();
     }
-    */
-    
-    /**
-     * createRecursive 
-     * 
-     * @param mixed $name ____param_comment____
-     *  
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    /*
-    public function createRecursive($name) 
-    {
-        if (!is_array($name)) {
-            $path = $this->parseCategoryField($name, false);
 
-        } else {
-            $path = $name;
-        }
-
-        $topID = $this->getComplex('topCategory.category_id');
-        $categoryId = $topID;
-
-        foreach ($path as $n) {
-
-            $category = new \XLite\Model\Category();
-
-            if ($category->find('name=\'' . addslashes($n) . '\' AND parent=' . $categoryId)) {
-                $categoryId = $category->getCategoryId();
-                continue;
-            }
-
-            $category->set('name', $n);
-            $category->set('parent', $categoryId);
-            $category->create();
-            $categoryId = $category->getCategoryId();
-        }
-
-        return new \XLite\Model\Category($categoryId);
-    }
-    */
 
     /**
-     * findCategory 
-     * 
-     * @param mixed $path ____param_comment____
-     *  
+     * Add the conditions for the current subtree
+     *
+     * NOTE: function is public since it's needed to the Product model repository
+     *
+     * @param \Doctrine\ORM\QueryBuilder $qb         query builder to modify
+     * @param int                        $categoryId current category ID
+     * @param string                     $field      name of the field to use
+     * @param int                        $lpos       left position
+     * @param int                        $rpos       right position
+     *
      * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    /*
-    public function findCategory($path) 
+    public function addSubTreeCondition(\Doctrine\ORM\QueryBuilder $qb, $categoryId, $field = 'lpos', $lpos = null, $rpos = null)
     {
-        if (!is_array($path)) {
-            $path = $this->parseCategoryField($path, false);
-        }
+        $category = $this->getCategory($categoryId);
 
-        $topID = $this->getComplex('topCategory.category_id');
-        $categoryId = $topID;
-        $notFound = false;
+        $lpos = $lpos ?: $category->getLpos();
+        $rpos = $rpos ?: $category->getRpos();
 
-        foreach ($path as $n) {
-
-            $category = new \XLite\Model\Category();
-
-            if ($category->find('name=\'' . addslashes($n) . '\' AND parent=' . $categoryId)) {
-                $categoryId = $category->getCategoryId();
-                continue;
-
-            } else {
-                $notFound = true;
-                break;
-            }
-        }
-
-        return $notFound ? null : new \XLite\Model\Category($categoryId);
+        $qb->andWhere($qb->expr()->between('c.' . $field, $lpos, $rpos));
     }
-    */
-
-    /**
-     * filterRule 
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    /*
-    public function filterRule()
-    {
-        $result = true;
-
-        if ($this->auth->is('logged')) {
-            $membership = $this->auth->getComplex('profile.membership');
-
-        } else {
-            $membership = '';
-        }
-
-        if (
-            !$this->is('enabled') 
-            || '' == trim($this->get('name')) 
-            || !$this->_compareMembership($this->get('membership'), $membership)
-            ) {
-
-            $result = false;
-        }
-
-        return $result;
-    }
-    */
-
-    /**
-     * filter 
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    /*
-    public function filter() 
-    {
-        $result = parent::filter(); // default
-
-        if ($result && !$this->xlite->is('adminZone')) {
-
-            $foundResult = false;
-
-            if ($this->db->cacheEnabled) {
-
-                global $categoriesFiltered;
-
-                if (!isset($categoriesFiltered) || (isset($categoriesFiltered) && !is_array($categoriesFiltered))) {
-                    $categoriesFiltered = array();
-                }
-
-                $cid = $this->get('category_id');
-
-                if (isset($categoriesFiltered[$cid])) {
-                    $foundResult = $categoriesFiltered[$cid];
-                }
-            }
-
-            if (!$foundResult) {
-
-                $result = $this->filterRule();
-
-                if ($result) {
-
-                    // check parent categories
-                    $parent = $this->getParentCategory();
-
-                    if (isset($parent)) {
-                        $result = $result && \XLite\Model\CachingFactory::getObjectFromCallback(
-                            __METHOD__ . $parent->get('category_id'), $parent, 'filter'
-                        );
-                    }
-                }
-
-                if ($this->db->cacheEnabled) {
-                    $categoriesFiltered[$cid] = $result;
-                }
-
-            } else {
-                $result = $foundResult;
-            }
-        }
-
-        return $result;
-    }
-    */
-    
-    /**
-     * _compareMembership 
-     * 
-     * @param mixed $categoryMembership ____param_comment____
-     * @param mixed $userMembership     ____param_comment____
-     *  
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    /*
-    public function _compareMembership($categoryMembership, $userMembership) 
-    {
-        return 'all' == $categoryMembership 
-            || '%' == $categoryMembership 
-            || '_%' == $categoryMembership 
-            && $userMembership 
-            || $categoryMembership == $userMembership;
-    }
-    */
-
-    /**
-     * toXML 
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    /*
-    public function toXML() 
-    {
-        $id = 'category_' . $this->get('category_id');
-        $xml = parent::toXML();
-
-        return "<category id=\"$id\">\n$xml\n</category>\n";
-    }
-    */
-    
-    /**
-     * fieldsToXML 
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    /*
-    public function fieldsToXML() 
-    {
-        $xml = '';
-
-        if ($this->hasImage()) {
-
-            // include image in XML dump
-            $image = $this->getImage();
-
-            if ('D' == $image->get('source')) {
-                $xml .= '<image><![CDATA[' . base64_encode($image->get('data')) . ']]></image>';
-                
-            }
-        }
-
-        return parent::fieldsToXML() . $xml;
-    }
-    */
 }

@@ -35,8 +35,24 @@ namespace Includes\DataStructure\Node;
  * @see        ____class_see____
  * @since      3.0.0
  */
-abstract class Tree extends \Includes\DataStructure\Node\ANode
+class Tree extends \Includes\DataStructure\Node\ANode
 {
+    /**
+     * Flag for so called "stub" nodes
+     */
+    const IS_STUB = 'isStub';
+
+
+    /**
+     * Node key field
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $key;
+
     /**
      * Child nodes list 
      * 
@@ -56,8 +72,23 @@ abstract class Tree extends \Includes\DataStructure\Node\ANode
      * @see    ____func_see____
      * @since  3.0.0
      */
-    abstract public function getKey();
+    public function getKey()
+    {
+        return $this->__get($this->key);
+    }
 
+    /**
+     * Check if this node is the "stub" node
+     * 
+     * @return bool
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isStub()
+    {
+        return $this->__isset(self::IS_STUB);
+    }
 
     /**
      * Add child node
@@ -106,7 +137,10 @@ abstract class Tree extends \Includes\DataStructure\Node\ANode
      */
     public function replant(self $parent, self $node)
     {
+        $this->__unset(self::IS_STUB);
+
         $this->setData($node->getData());
+
         $parent->addChild($this);
     }
 
@@ -125,5 +159,44 @@ abstract class Tree extends \Includes\DataStructure\Node\ANode
         }
 
         $this->parent->removeChild($this);
+    }
+
+    /**
+     * Add stub node to the tree
+     *
+     * @param string $key new node key
+     *
+     * @return self
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function createStubNode($key)
+    {
+        return new static(array($this->key => $key, self::IS_STUB => true));
+    }
+
+    /**
+     * Constructor 
+     * 
+     * @param array  $data data to set
+     * @param string $key  node key field
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function __construct(array $data = null, $key = null)
+    {
+        if (empty($key)) {
+            if (empty($this->key)) {
+                throw new \Exception('Empty key is not available for the tree nodes');
+            }
+        } else {
+            $this->key = $key;
+        }
+
+        parent::__construct($data);
     }
 }

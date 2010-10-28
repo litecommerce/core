@@ -49,6 +49,19 @@ abstract class ANode extends \Includes\DataStructure\Cell
 
 
     /**
+     * Return node parent 
+     * 
+     * @return self
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getParent()
+    {
+        return $this->parent;
+    }
+
+    /**
      * (Un)Set reference to parent node
      *
      * @param self $parent parent node ref

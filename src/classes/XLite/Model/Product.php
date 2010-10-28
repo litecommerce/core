@@ -484,11 +484,7 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     public function getURL()
     {
         return $this->getProductId()
-            ? \XLite\Core\Converter::buildURL(
-                'product',
-                '',
-                array('product_id' => $this->getProductId())
-            )
+            ? \XLite\Core\Converter::buildURL('product', '', array('product_id' => $this->getProductId()))
             : null;
     }
 

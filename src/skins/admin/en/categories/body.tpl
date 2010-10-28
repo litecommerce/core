@@ -11,7 +11,7 @@
  * @since     3.0.0
  *}
 
-<table border="0" width="100%" IF="category">
+<table border="0" width="100%" IF="category&!getRootCategoryId()=category.getCategoryId()">
 
   <tr>
 
@@ -57,8 +57,8 @@
         <tr>
           <td nowrap>Parent category:</td>
           <td>&nbsp;</td>
-          {if:parentCategory.category_id}
-          <td class="FormButton"><a href="admin.php?target=categories&category_id={parentCategory.category_id}">{parentCategory.name}</a></td>
+          {if:!getRootCategoryId()=category.parent.getCategoryId()}
+          <td class="FormButton"><a href="admin.php?target=categories&category_id={category.parent.getCategoryId()}">{category.parent.getName()}</a></td>
           {else:}
           <td class="FormButton"><a href="admin.php?target=categories">[Root Level]</a></td>
           {end:}
@@ -80,11 +80,11 @@
 
 </table>
 
-<p IF="!categories">There are no categories</p>
-
 <p>
 
-<form name="CategoryForm" method="post" action="admin.php">
+<span IF="!category.hasSubcategories()">There are no categories</span>
+
+<form name="CategoryForm" method="post" action="admin.php" IF="category.hasSubcategories()">
 
   <table border="0" cellpadding="3" cellspacing="1" width="90%">
 
@@ -95,34 +95,20 @@
       </th>
     </tr>
 
-    <tr FOREACH="categories,id,cat" class="{getRowClass(id,##,#TableRow#)}">
+    <tr FOREACH="getCategories(),id,cat" class="{getRowClass(id,##,#TableRow#)}">
 
       <td width="100%">
-        <img src="images/spacer.gif" height="1" width="{cat.getIndentation(20)}" />
         <a href="admin.php?target=categories&category_id={cat.category_id}" title="Click here to access/add subcategories" onClick="this.blur()"><font class="ItemsList"><u>{cat.name:h}</u></font></a> ({cat.products_count} products){if:!cat.enabled}&nbsp;&nbsp;<font color=red>(disabled)</font>{end:}
       </td>
 
       <td nowrap>
-        &nbsp;&nbsp;
-        <input type="button" value="Add before" onClick="onAddBeforeClick('{cat.category_id}')" />
+        <input type="button" value="Add child" onClick="onAddChildClick('{cat.category_id}')" />
       </td>
 
       <td nowrap>
-        &nbsp;&nbsp;
-        <input type="button" value="Add after" onClick="onAddAfterClick('{cat.category_id}')" />
-      </td>
-
-      <td nowrap>
-        &nbsp;&nbsp;
-        <input type="button" value="Add child" onClick="onAddChildClick('{cat.category_id}')" IF="isCategoryLeafNode(cat.category_id)" />
-      </td>
-
-      <td nowrap>
-        &nbsp;&nbsp;
-        &nbsp;&nbsp;
         <input type="button" value="Delete" onClick="onDeleteClick('{cat.category_id}')" />
         &nbsp;&nbsp;
-        <input type="button" value="Delete subcategories" onClick="onDeleteSubcatsClick('{cat.category_id}')" IF="!isCategoryLeafNode(cat.category_id)" />
+        <input type="button" value="Delete subcategories" onClick="onDeleteSubcatsClick('{cat.category_id}')" IF="cat.hasSubcategories()" />
       </td>
 
     </tr>
@@ -139,10 +125,10 @@
   <table border="0" cellpadding="3" cellspacing="1" width="90%">
 
     <tr>
-      <td IF="!categories">
-        <input id="add" type="button" value="Add category" onClick="onAddClick()">
+      <td>
+        <input id="add" type="button" value="Add category" onClick="onAddChildClick({getCategoryId()})">
       </td>		
-      <td align="right" IF="category&category.getSubCategoriesCount()|isRootCategories(categories)">
+      <td align="right" IF="category.getSubCategoriesCount()">
         <input id="delete_all_button" type="button" value="Delete all" onClick="onDeleteClick({category.category_id})">
       </td>		
     </tr>
@@ -153,11 +139,6 @@
 
 <script language="javascript">
 
-function onAddClick()
-{
-    document.location = "admin.php?target=category&mode=add_child";
-}
-
 function onDeleteClick(category_id)
 {
 	document.location = "admin.php?target=categories&category_id=" + category_id + "&mode=delete";
@@ -165,18 +146,8 @@ function onDeleteClick(category_id)
 
 function onDeleteSubcatsClick(category_id)
 {
-	document.location = "admin.php?target=categories&category_id=" + category_id + "&mode=delete&subcats=1";
-}	
-
-function onAddBeforeClick(category_id)
-{
-	document.location = "admin.php?target=category&category_id=" + category_id + "&mode=add_before";
-}	
-
-function onAddAfterClick(category_id)
-{
-	document.location = "admin.php?target=category&category_id=" + category_id + "&mode=add_after";
-}	
+  document.location = "admin.php?target=categories&category_id=" + category_id + "&mode=delete&subcats=1";
+}
 
 function onAddChildClick(category_id)
 {

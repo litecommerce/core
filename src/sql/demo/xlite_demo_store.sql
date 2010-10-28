@@ -1,13 +1,23 @@
 
 -- Categories [7]
 
-INSERT INTO `xlite_categories` VALUES (3002,3,4,1,0,0,0,1,1,'downloadables','');
-INSERT INTO `xlite_categories` VALUES (1004,5,14,1,0,0,0,1,1,'toys','');
-INSERT INTO `xlite_categories` VALUES (4004,10,11,2,0,0,0,1,1,'puzzles','');
-INSERT INTO `xlite_categories` VALUES (1003,6,7,2,0,0,0,1,1,'cube-goodies','');
-INSERT INTO `xlite_categories` VALUES (4003,8,9,2,0,0,0,1,1,'science-toys','');
-INSERT INTO `xlite_categories` VALUES (4002,12,13,2,0,0,0,1,1,'rc-toys','');
-INSERT INTO `xlite_categories` VALUES (1002,1,2,1,0,0,0,1,1,'apparel','');
+INSERT INTO `xlite_categories` VALUES (1,0,1,16,0,1,'',1);
+INSERT INTO `xlite_categories` VALUES (1002,1,2,3,0,1,'apparel',1);
+INSERT INTO `xlite_categories` VALUES (3002,1,4,5,0,1,'downloadables',1);
+INSERT INTO `xlite_categories` VALUES (1004,1,6,15,0,1,'toys',1);
+INSERT INTO `xlite_categories` VALUES (1003,1004,7,8,0,1,'cube-goodies',1);
+INSERT INTO `xlite_categories` VALUES (4003,1004,9,10,0,1,'science-toys',1);
+INSERT INTO `xlite_categories` VALUES (4004,1004,11,12,0,1,'puzzles',1);
+INSERT INTO `xlite_categories` VALUES (4002,1004,13,14,0,1,'rc-toys',1);
+
+INSERT INTO xlite_category_quick_flags VALUES (1,1,3,3);
+INSERT INTO xlite_category_quick_flags VALUES (2,1002,0,0);
+INSERT INTO xlite_category_quick_flags VALUES (3,3002,0,0);
+INSERT INTO xlite_category_quick_flags VALUES (4,1004,4,4);
+INSERT INTO xlite_category_quick_flags VALUES (5,4004,0,0);
+INSERT INTO xlite_category_quick_flags VALUES (6,1003,0,0);
+INSERT INTO xlite_category_quick_flags VALUES (7,4003,0,0);
+INSERT INTO xlite_category_quick_flags VALUES (8,4002,0,0);
 
 INSERT INTO `xlite_category_images` VALUES (101,3002,'demo_store_c3002.jpeg','image/jpeg',154,160,10267,1278412215,'');
 INSERT INTO `xlite_category_images` VALUES (102,1004,'demo_store_c1004.jpeg','image/jpeg',140,160,12860,1278412215,'');
@@ -17,6 +27,7 @@ INSERT INTO `xlite_category_images` VALUES (105,4003,'demo_store_c4003.jpeg','im
 INSERT INTO `xlite_category_images` VALUES (106,4002,'demo_store_c4002.jpeg','image/jpeg',160,156,13711,1278412215,'');
 INSERT INTO `xlite_category_images` VALUES (107,1002,'demo_store_c1002.jpeg','image/jpeg',156,160,11592,1278412215,'');
 
+INSERT INTO `xlite_category_translations` VALUES (1,'en',1,'','','','','');
 INSERT INTO `xlite_category_translations` VALUES (101,'en',3002,'Downloadables','','','','');
 INSERT INTO `xlite_category_translations` VALUES (102,'en',1004,'Toys','','','','');
 INSERT INTO `xlite_category_translations` VALUES (103,'en',4004,'Puzzles','','','','');

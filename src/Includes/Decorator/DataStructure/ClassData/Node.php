@@ -38,36 +38,15 @@ namespace Includes\Decorator\DataStructure\ClassData;
 class Node extends \Includes\DataStructure\Node\Tree
 {
     /**
-     * Flag for so called "stub" nodes
-     */
-    const IS_STUB = 'isStub';
-
-
-    /**
-     * Return node key (class name)
+     * Node key field
      * 
-     * @return string
-     * @access public
-     * @see    ____func_see____
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
      * @since  3.0.0
      */
-    public function getKey()
-    {
-        return $this->__get(\Includes\Decorator\ADecorator::N_CLASS);
-    }
+    protected $key = \Includes\Decorator\ADecorator::N_CLASS;
 
-    /**
-     * Check if this node is the "stub" node
-     * 
-     * @return bool
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function isStub()
-    {
-        return $this->__isset(self::IS_STUB);
-    }
 
     /**
      * Get tag value from class comment
@@ -104,39 +83,5 @@ class Node extends \Includes\DataStructure\Node\Tree
         }
 
         parent::addChild($node);
-    }
-
-    /**
-     * "Re-plant" node: move the sub-tree from root to the already created sub-tree
-     *
-     * @param self $parent new parent (root to re-plant to)
-     * @param self $node   new node to retrieve data
-     *
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function replant(self $parent, self $node)
-    {
-        $this->__unset(self::IS_STUB);
-
-        parent::replant($parent, $node);
-    }
-
-
-    /**
-     * Add stub node to the tree
-     *
-     * @param array $data data to set
-     *
-     * @return self
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function createStubNode(array $data = array())
-    {
-        return new static($data + array(self::IS_STUB => true));
     }
 }
