@@ -506,7 +506,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * 
      * @param int $categoryId Category Id
      *  
-     * @return array
+     * @return int
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
