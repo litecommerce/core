@@ -1027,6 +1027,21 @@ abstract class AController extends \XLite\Core\Handler
     }
 
     /**
+     * Get current currency 
+     * TODO - rework
+     * 
+     * @return \XLite\Model\Currency
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCurrentCurrency()
+    {
+        return \XLite\Core\Database::getRepo('XLite\Model\Currency')
+            ->find(840);
+    }
+
+    /**
      * Return the reserved ID of root category
      *
      * @return int
@@ -1051,4 +1066,5 @@ abstract class AController extends \XLite\Core\Handler
     {
         return intval(\XLite\Core\Request::getInstance()->category_id) ?: $this->getRootCategoryId();
     }
+
 }

@@ -177,8 +177,8 @@ class Profile extends \XLite\Model\Repo\ARepo
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder QueryBuilder instance
      * @param string                     $value        Searchable value
      * @param string                     $fieldName    Searchable parameter name
-     * @param string                     $alias        Profile entity alias
      * @param bool                       $exactCmp     Flag: use exact comparison (=) or 'LIKE'
+     * @param string                     $alias        Profile entity alias
      *  
      * @return void
      * @access protected
@@ -468,7 +468,7 @@ class Profile extends \XLite\Model\Repo\ARepo
 
         if (isset($this->currentSearchCnd->$paramDatePeriod)) {
 
-            $endDate = mktime();
+            $endDate = time();
 
             if ('M' == $this->currentSearchCnd->$paramDatePeriod) {
                 $startDate = mktime(0, 0, 0, date('n', $endDate), 1, date('Y', $endDate));
@@ -587,9 +587,28 @@ class Profile extends \XLite\Model\Repo\ARepo
             ->setParameters(
                 array(
                     'login'     => $profile->getLogin(),
-                    'profileId' => $profile->getProfileId()
+                    'profileId' => $profile->getProfileId() ?: 0
                 )
             );
+    }
+
+    /**
+     * Define query for findCountOfAdminAccounts() 
+     * 
+     * @return \Doctrine\ORM\PersistentCollection
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineFindCountOfAdminAccountsQuery()
+    {
+        return $this->createQueryBuilder()
+            ->select('COUNT(p.profile_id)')
+            ->andWhere('p.access_level >= :adminAccessLevel')
+            ->andWhere('p.status = :status')
+            ->andWhere('p.order_id = 0')
+            ->setParameter('adminAccessLevel', \XLite\Base::getInstance()->auth->getAdminAccessLevel())
+            ->setParameter('status', 'E');
     }
 
     /**
@@ -689,14 +708,31 @@ class Profile extends \XLite\Model\Repo\ARepo
      */
     public function findUserWithSameLogin(\XLite\Model\Profile $profile) 
     {
-        try {
-            $result = $this->defineFindUserWithSameLoginQuery($profile)->getQuery()->getSingleResult();
+        $result = $this->defineFindUserWithSameLoginQuery($profile)->getQuery()->getResult();
+
+        if (!empty($result)) {
+            $result = array_shift($result);
         
-        } catch (\Doctrine\ORM\NoResultException $exception) {
+        } else {
             $result = null;
         }
 
         return $result;
+    }
+
+    /**
+     * Find the count of administrator accounts 
+     * 
+     * @return int
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function findCountOfAdminAccounts()
+    {
+        $result = $this->defineFindCountOfAdminAccountsQuery()->getQuery()->getSingleScalarResult();
+    
+        return intval($result);
     }
 
 }

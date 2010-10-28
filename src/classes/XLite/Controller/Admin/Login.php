@@ -49,16 +49,33 @@ class Login extends \XLite\Controller\Admin\AAdmin
         return 'login.tpl';
     }
 
-
+    /**
+     * getAccessLevel 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     public function getAccessLevel()
     {
         return \XLite\Core\Auth::getInstance()->getCustomerAccessLevel();
     }
 
-    function fillForm()
+    /**
+     * fillForm 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function fillForm()
     {
         parent::fillForm();
+        
         $login = $this->get('login');
+        
         if (empty($login)) {
             $this->set('login', $this->auth->remindLogin());
         }
@@ -74,7 +91,7 @@ class Login extends \XLite\Controller\Admin\AAdmin
      */
     protected function doActionLogin()
     {
-        $profile = $this->auth->adminLogin(
+        $profile = $this->auth->loginAdministrator(
             \XLite\Core\Request::getInstance()->login,
             \XLite\Core\Request::getInstance()->password
         );

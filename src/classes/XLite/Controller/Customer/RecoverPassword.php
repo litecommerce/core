@@ -29,7 +29,8 @@
 namespace XLite\Controller\Customer;
 
 /**
- * ____description____
+ * Password recovery controller
+ * TODO: full refactoring is needed
  * 
  * @package XLite
  * @see     ____class_see____
@@ -66,11 +67,11 @@ class RecoverPassword extends \XLite\Controller\Customer\ACustomer
         return 'Recover password';
     }
 
-    function action_recover_password()
+    protected function action_recover_password()
     {
         // show recover message if email is valid
-        if ($this->auth->requestRecoverPassword($this->get('email'))) {
-            $this->set('mode', "recoverMessage"); // redirect to passwordMessage mode
+        if ($this->requestRecoverPassword($this->get('email'))) {
+            $this->set('mode', 'recoverMessage'); // redirect to passwordMessage mode
             $this->set('link_mailed', true); // redirect to passwordMessage mode
         } else {
             $this->set('valid', false);
@@ -78,13 +79,70 @@ class RecoverPassword extends \XLite\Controller\Customer\ACustomer
         }
     }
 
-    function action_confirm()
+    protected function action_confirm()
     {
         if (!is_null($this->get('email')) && isset($_GET['request_id'])) {
-            if ($this->auth->recoverPassword($this->get('email'), $_GET['request_id'])) {
-                $this->set('mode', "recoverMessage");
+            if ($this->recoverPassword($this->get('email'), $_GET['request_id'])) {
+                $this->set('mode', 'recoverMessage');
             }
         }
+    }
+
+    /**
+     * requestRecoverPassword 
+     * 
+     * @param mixed $email ____param_comment____
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function requestRecoverPassword($email) 
+    {
+        $profile = \XLite\Core\Database::getRepo('XLite\Model\Profile')->findByLogin($email);
+        
+        if (isset($profile)) {
+            \XLite\Core\Mailer::sendRecoverPasswordRequest($profile->getLogin(), $profile->getPassword());
+        }
+
+        return isset($profile);
+    }
+    
+    /**
+     * recoverPassword 
+     * 
+     * @param mixed $email     ____param_comment____
+     * @param mixed $requestID ____param_comment____
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function recoverPassword($email, $requestID) 
+    {
+        $result = true;
+
+        $profile = \XLite\Core\Database::getRepo('XLite\Model\Profile')->findByLogin($email);
+        
+        if (!isset($profile) || $profile->getPassword() != $requestID) {
+            $result = false;
+
+        } else {
+
+            $pass = generate_code();
+            $profile->setPassword(md5($pass));
+
+            $result = $profile->update();
+
+            if ($result) {
+                // Send notification to the user
+                \XLite\Core\Mailer::sendRecoverPasswordConfirmation($email, $pass);
+            }
+        }
+
+        return $result;
     }
 
 }

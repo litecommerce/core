@@ -20,6 +20,11 @@
 <p align="left">
 <table border="0" cellspacing="0" cellpadding="2">
 
+<tr>
+    <td align="right">Email:</td>
+    <td>{profile.login:h}</td>
+</tr>
+
 <!-- ********************** BILLING ADDRESS *************************** -->
 
 <tr>

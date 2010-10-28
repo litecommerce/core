@@ -35,8 +35,8 @@ namespace XLite\Model;
  * @see     ____class_see____
  * @since   3.0.0
  * 
- * @Entity (repositoryClass="XLite\Model\Repo\Profile")
- * @Table (name="profiles")
+ * @Entity (repositoryClass="\XLite\Model\Repo\Profile")
+ * @Table  (name="profiles")
  */
 class Profile extends \XLite\Model\AEntity
 {
@@ -208,7 +208,7 @@ class Profile extends \XLite\Model\AEntity
      *
      * @Column (type="integer", nullable=false)
      */
-    protected $membership_id = 0;
+    protected $membership_id = null;
 
     /**
      * Pending membership Id
@@ -220,7 +220,7 @@ class Profile extends \XLite\Model\AEntity
      *
      * @Column (type="integer", nullable=false)
      */
-    protected $pending_membership_id = 0;
+    protected $pending_membership_id = null;
 
     /**
      * Order Id
@@ -326,29 +326,34 @@ class Profile extends \XLite\Model\AEntity
             $this->setLanguage(\XLite\Core\Translation::getCurrentLanguageCode());
         }
 
+        // Assign referer value
+        if (empty($this->referer) && isset($_SERVER['HTTP_REFERER'])) {
+
+            // TODO: move setting up cookie to the up level of application (e.g. session start method)
+            if (!isset($_COOKIE['LCReferrerCookie'])) {
+
+                $referer = $_SERVER['HTTP_REFERER'];
+
+                setcookie(
+                    'LCReferrerCookie',
+                    $referer,
+                    time() + 3600 * 24 * 180,
+                    '/',
+                    \XLite::getInstance()->getOptions(
+                        array('host_details', 'http_host')
+                    )
+                );
+
+            } else {
+                $referer = $_COOKIE['LCReferrerCookie'];
+            }
+
+            $this->setReferer($referer);
+        }
+
         // Assign status 'Enabled' if not defined
         if (empty($this->status)) {
-            $this->setStatus('E');
-        }
-
-        // Assign membership if passed membership_id
-        if (0 < intval($this->membership_id)) {
-
-            $membership = \XLite\Core\Database::getRepo('XLite\Model\Membership')->find(intval($this->membership_id));
-
-            if (isset($membership)) {
-                $this->setMembership($membership);
-            }
-        }
-
-        // Assign pending_membership if passed pending_membership_id
-        if (0 < intval($this->pending_membership_id)) {
-
-            $membership = \XLite\Core\Database::getRepo('XLite\Model\Membership')->find(intval($this->pending_membership_id));
-
-            if (isset($membership)) {
-                $this->setPendingMembership($membership);
-            }
+            $this->enable();
         }
 
     }
@@ -477,6 +482,19 @@ class Profile extends \XLite\Model\AEntity
     }
 
     /**
+     * Returns true if profile has an administrator access level 
+     * 
+     * @return true
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isAdmin()
+    {
+        return $this->getAccessLevel() >= \XLite\Core\Auth::getInstance()->getAdminAccessLevel();
+    }
+
+    /**
      * Create an entity profile in the database
      * 
      * @return bool
@@ -489,6 +507,88 @@ class Profile extends \XLite\Model\AEntity
         $this->prepareCreate();
 
         return parent::create();
+    }
+
+    /**
+     * Update an entity in the database 
+     * 
+     * @return bool
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function update($cloneMode = false)
+    {
+        // Check if user with specified e-mail address is already exists
+        if (!$cloneMode) {
+            $sameProfile = \XLite\Core\Database::getRepo('XLite\Model\Profile')->findUserWithSameLogin($this);
+        }
+
+        if (isset($sameProfile)) {
+
+            \XLite\Core\TopMessage::addError('Specified e-mail address is already used by other user.');
+            $result = false;
+
+        } else {
+
+            // Assign membership if passed membership_id
+            if (0 < intval($this->membership_id)) {
+
+                $membership = \XLite\Core\Database::getRepo('XLite\Model\Membership')->find(intval($this->membership_id));
+            }
+        
+            if (isset($membership)) {
+                $this->setMembership($membership);
+            
+            } else {
+                $this->membership = null;
+                $this->setMembershipId(null);
+            }
+
+            // Assign pending_membership if passed pending_membership_id
+            if (0 < intval($this->pending_membership_id)) {
+
+                $pendingMembership = \XLite\Core\Database::getRepo('XLite\Model\Membership')
+                    ->find(intval($this->pending_membership_id));
+            }
+        
+            if (isset($pendingMembership)) {
+                $this->setPendingMembership($pendingMembership);
+            
+            } else {
+                $this->pending_membership = null;
+                $this->setPendingMembershipId(null);
+            }
+
+            // Do an entity update
+            $result = parent::update();
+        }
+
+        return $result;
+    }
+
+    /**
+     * Delete an entity profile from the database
+     * 
+     * @return bool
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function delete()
+    {
+        // Check if the deleted profile is a last admin profile
+        if ($this->isAdmin() && 1 == \XLite\Core\Database::getRepo('XLite\Model\Profile')->findCountOfAdminAccounts()) {
+
+            $result = false;
+
+            \XLite\Core\TopMessage::addError('The only remaining active administrator profile cannot be deleted.');
+
+        } else {
+            $result = parent::delete();
+        }
+
+        return $result;
     }
 
     /**
@@ -566,7 +666,7 @@ class Profile extends \XLite\Model\AEntity
 
         $newProfile->resetAddresses();
 
-        $newProfile->update();
+        $newProfile->update(true);
 
         $billingAddress = $this->getBillingAddress();
 
@@ -609,5 +709,6 @@ class Profile extends \XLite\Model\AEntity
     {
         $this->addresses = new \Doctrine\Common\Collections\ArrayCollection();
     }
+
 
 }

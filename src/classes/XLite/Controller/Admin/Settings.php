@@ -800,7 +800,8 @@ class Settings extends \XLite\Controller\Admin\AAdmin
 
     /**
      * isCurrentIpValid 
-     * 
+     * TODO: remove this
+     *
      * @return void
      * @access public
      * @see    ____func_see____
@@ -808,7 +809,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
      */
     public function isCurrentIpValid()
     {
-        return $this->auth->isValidAdminIP($this, true) == \XLite\Core\Auth::IP_VALID;
+        return true;
     }
 
     /**

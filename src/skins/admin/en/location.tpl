@@ -16,15 +16,15 @@
 <span IF="target=#categories#">&nbsp;::&nbsp;<a href="admin.php?target=categories" class="NavigationPath">Categories</a></span>
 <span IF="target=#category#">&nbsp;::&nbsp;<a href="admin.php?target=categories" class="NavigationPath">Categories</a></span>
 <span FOREACH="locationPath,cname,curl">&nbsp;::&nbsp;<a href="{curl:r}" class="NavigationPath">{cname}</a></span>
-<span IF="target=#profile#&mode=#modify#">&nbsp;::&nbsp;<a href="admin.php?target=users" class="NavigationPath">Users</a>&nbsp;::&nbsp;Modify profile</span>
-<span IF="target=#profile#&mode=##">&nbsp;::&nbsp;<a href="admin.php?target=users" class="NavigationPath">Users</a>&nbsp;::&nbsp;Modify profile</span>
-<span IF="target=#address_book#">&nbsp;::&nbsp;<a href="admin.php?target=users" class="NavigationPath">Users</a>&nbsp;::&nbsp;Modify profile&nbsp;::&nbsp;Address book</span>
+<span IF="target=#profile#&mode=#modify#">&nbsp;::&nbsp;<a href="admin.php?target=users&mode=search" class="NavigationPath">Users</a>&nbsp;::&nbsp;Modify profile</span>
+<span IF="target=#profile#&mode=##">&nbsp;::&nbsp;<a href="admin.php?target=users&mode=search" class="NavigationPath">Users</a>&nbsp;::&nbsp;Modify profile</span>
+<span IF="target=#address_book#">&nbsp;::&nbsp;<a href="admin.php?target=users&mode=search" class="NavigationPath">Users</a>&nbsp;::&nbsp;Modify profile&nbsp;::&nbsp;Address book</span>
 <span IF="target=#profile#&mode=#delete#">&nbsp;::&nbsp;Delete profile</span>
-<span IF="target=#profile#&mode=#register#">&nbsp;::&nbsp;<a href="admin.php?target=users" class="NavigationPath">Users</a>&nbsp;::&nbsp;<a href="admin.php?target=profile&mode=register" class="NavigationPath">Add new user</a></span>
+<span IF="target=#profile#&mode=#register#">&nbsp;::&nbsp;<a href="admin.php?target=users&mode=search" class="NavigationPath">Users</a>&nbsp;::&nbsp;<a href="admin.php?target=profile&mode=register" class="NavigationPath">Add new user</a></span>
 <span IF="target=#modules#">&nbsp;::&nbsp;<a href="admin.php?target=modules" class="NavigationPath">Modules</a></span>
 <span IF="target=#module#">&nbsp;::&nbsp;<a href="admin.php?target=modules" class="NavigationPath">Modules</a>&nbsp;::&nbsp;{page} settings</span>
 <span IF="target=#settings#">&nbsp;::&nbsp;<a href="admin.php?target=settings" class="NavigationPath">General Settings</a></span>
-<span IF="target=#users#">&nbsp;::&nbsp;<a href="admin.php?target=users" class="NavigationPath">Users</a></span>
+<span IF="target=#users#">&nbsp;::&nbsp;<a href="admin.php?target=users&mode=search" class="NavigationPath">Users</a></span>
 <span IF="target=#extra_fields#">&nbsp;::&nbsp;Global extra fields</span>
 <span IF="target=#product#">&nbsp;::&nbsp;Add new product</span>
 <span IF="target=#product#">&nbsp;::&nbsp;<a href="{backUrl:r}" class="NavigationPath">Product list</a>&nbsp;::&nbsp;Edit product "{product.name:h}"</span>

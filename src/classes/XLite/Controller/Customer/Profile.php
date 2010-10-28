@@ -84,9 +84,23 @@ class Profile extends \XLite\Controller\Customer\ACustomer
         $result = $this->getModelForm()->performAction('create');
 
         // Return to the created account page or to the register page
-        $params = $this->isActionError()
-            ? array('mode' => self::getRegisterMode())
-            : array('profile_id' => $this->getModelForm()->getProfileId(false));
+        if ($this->isActionError()) {
+
+            // Return back to register page
+            $params = array('mode' => self::getRegisterMode());
+
+        } else {
+
+            // Send notification to the user
+            \XLite\Core\Mailer::sendProfileCreatedUserNotification($this->getModelForm()->getModelObject());
+
+            // Send notification to the users department
+            \XLite\Core\Mailer::sendProfileCreatedAdminNotification($this->getModelForm()->getModelObject());
+
+            // Send notification to the user
+            $params = array('profile_id' => $this->getModelForm()->getProfileId(false));
+        }
+
         $this->setReturnUrl($this->buildURL('profile', '', $params));
 
         return $result;
@@ -102,13 +116,41 @@ class Profile extends \XLite\Controller\Customer\ACustomer
      */
     protected function doActionUpdate()
     {
-        return $this->getModelForm()->performAction('update');
+        $result = $this->getModelForm()->performAction('update');
+
+        if ($result) {
+
+            // Send notification to the user
+            \XLite\Core\Mailer::sendProfileUpdatedUserNotification($this->getModelForm()->getModelObject());
+
+            // Send notification to the users department
+            \XLite\Core\Mailer::sendProfileUpdatedAdminNotification($this->getModelForm()->getModelObject());
+        }
+
+        return $result;
     }
 
+    /**
+     * doActionDelete 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     protected function doActionDelete()
     {
-    }
+        $userLogin = $this->getModelForm()->getModelObject()->getLogin();
 
+        $result = $this->getModelForm()->performAction('delete');
+    
+        if ($result) {
+            // Send notification to the users department
+            \XLite\Core\Mailer::sendProfileDeletedAdminNotification($userLogin);
+        }
+
+        return $result;
+    }
 
     /**
      * Return value for the "register" mode param

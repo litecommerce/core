@@ -906,7 +906,9 @@ abstract class AModel extends \XLite\View\Dialog
      */
     protected function prepareErrorMessage($message, array $data)
     {
-        $sectionTitle = $data[self::SECTION_PARAM_WIDGET]->getLabel();
+        if (isset($data[self::SECTION_PARAM_WIDGET])) {
+            $sectionTitle = $data[self::SECTION_PARAM_WIDGET]->getLabel();
+        }
 
         if (!empty($sectionTitle)) {
             $message = $sectionTitle . ': ' . $message;
