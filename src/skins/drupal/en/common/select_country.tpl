@@ -10,7 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<select name="{field}"{if:onchange} onchange="{onchange}"{end:}{if:fieldId} id="{fieldId}"{end:}>
-   <option value="">Select one..</option>
+<select name="{field}"{if:onchange} onchange="{onchange}"{end:}{if:fieldId} id="{fieldId}"{end:} class="{getParam(#className#)} field-country">
+   <option value="">{t(#Select one...#)}</option>
    <option FOREACH="getCountries(),v" value="{v.code:r}" selected="{v.code=country}">{v.country}</option>
 </select>

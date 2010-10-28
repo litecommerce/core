@@ -625,6 +625,35 @@ class Order extends \XLite\Model\Base\ModifierOwner
     }
 
     /**
+     * Return list of available payment methods
+     * 
+     * @return array
+     * @access public
+     * @since  3.0.0
+     */
+    public function getPaymentMethods()
+    {
+        return \XLite\Core\Database::getRepo('XLite\Model\Payment\Method')
+            ->findAllActive();
+    }
+
+    /**
+     * Renew payment method 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function renewPaymentMethod()
+    {
+        $method = $this->getPaymentMethod();
+        if ($method) {
+            $this->setPaymentMethod();
+        }
+    }
+
+    /**
      * Get payment method 
      * 
      * @return \XLite\Model\Payment\Method or null
@@ -636,9 +665,27 @@ class Order extends \XLite\Model\Base\ModifierOwner
     {
         $t = $this->getFirstOpenPaymentTransaction();
 
+        if (!$t && $this->getProfile() && $this->getProfile()->getLastPaymentId()) {
+
+            $list = $this->getPaymentMethods();
+            $found = false;
+
+            foreach ($list as $pm) {
+                if ($pm->getMethodId() == $this->getProfile()->getLastPaymentId()) {
+                    $this->setPaymentMethod($pm);
+                    $found = true;
+                    break;
+                }
+            }
+
+            if ($found) {
+                $t = $this->getFirstOpenPaymentTransaction();
+            }
+        }
+
         return $t ? $t->getPaymentMethod() : null;
     }
-   
+  
     /**
      * Set payment method 
      * 

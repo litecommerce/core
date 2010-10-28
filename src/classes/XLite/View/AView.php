@@ -101,7 +101,6 @@ abstract class AView extends \XLite\Core\Handler
         self::RESOURCE_CSS => array(),
     );
 
-
     /**
      * "Named" widgets cache
      * 
@@ -121,7 +120,6 @@ abstract class AView extends \XLite\Core\Handler
      */
     protected $viewLists = array();
 
-
     /**
      * Return widget default template
      *
@@ -131,7 +129,6 @@ abstract class AView extends \XLite\Core\Handler
      * @since  3.0.0
      */
     abstract protected function getDefaultTemplate();
-
 
     /**
      * Return full URL by the skindir-related one
@@ -642,6 +639,7 @@ abstract class AView extends \XLite\Core\Handler
             'js/core.controller.js',
             'js/core.loadable.js',
             'js/core.popup.js',
+            'js/core.form.js',
         );
 
         return $list;
@@ -1490,7 +1488,6 @@ abstract class AView extends \XLite\Core\Handler
     {
         return $this->getListName() . '.' . $part;
     }
-
 
     /**
      * Display a nested view list

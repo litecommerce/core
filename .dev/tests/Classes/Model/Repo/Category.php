@@ -203,6 +203,11 @@ OUT;
         \XLite\Core\Database::getEM()->flush();*/
     }
 
+    public function testDump()
+    {
+        // TODO - remove after tests reworked
+    }
+
     /**
      * Convert array to string 
      * 

@@ -683,6 +683,13 @@ INSERT INTO xlite_language_labels (label_id, name) VALUES (103, 'Zone details ha
 INSERT INTO xlite_language_labels (label_id, name) VALUES (104, 'New zone has been created successfully');
 INSERT INTO xlite_language_labels (label_id, name) VALUES (105, 'This product has been added to your bag');
 INSERT INTO xlite_language_labels (label_id, name) VALUES (106, 'Your shopping bag - X items');
+INSERT INTO xlite_language_labels (label_id, name) VALUES (107, 'Greetings, X');
+INSERT INTO xlite_language_labels (label_id, name) VALUES (108, 'X items');
+INSERT INTO xlite_language_labels (label_id, name) VALUES (109, 'This email address is used for an existing account. Enter another email address or sign in');
+INSERT INTO xlite_language_labels (label_id, name) VALUES (110, 'This user name is used for an existing account. Enter another user name or sign in');
+INSERT INTO xlite_language_labels (label_id, name) VALUES (111, 'I accept Terms and Conditions');
+INSERT INTO xlite_language_labels (label_id, name) VALUES (112, 'Place order X');
+
 
 INSERT INTO xlite_zones VALUES (1,'Default zone (all addresses)',1);
 

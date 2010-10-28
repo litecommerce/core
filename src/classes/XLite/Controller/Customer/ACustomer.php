@@ -117,13 +117,17 @@ abstract class ACustomer extends \XLite\Controller\AController
     protected function updateCart()
     {
         $cart = $this->getCart();
-        \XLite\Core\Database::getEM()->persist($cart);
         \XLite\Core\Database::getEM()->flush();
+
+        $total = $cart->getTotal();
 
         $cart->normalizeItems();
         $cart->calculate();
 
-        \XLite\Core\Database::getEM()->persist($cart);
+        if ($total != $cart->getTotal()) {
+            $cart->renewPaymentMethod();
+        }
+
         \XLite\Core\Database::getEM()->flush();
 
         $this->assembleEvent();
@@ -134,13 +138,15 @@ abstract class ACustomer extends \XLite\Controller\AController
     /**
      * Assemble updateCart event 
      * 
-     * @return void
+     * @return boolean
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
     protected function assembleEvent()
     {
+        $result = false;
+
         $old = $this->initialCartFingerprint;
         $new = $this->getCart()->getEventFingerprint();
         $items = array();
@@ -175,7 +181,10 @@ abstract class ACustomer extends \XLite\Controller\AController
 
         if ($items) {
             \XLite\Core\Event::updateCart(array('items' => $items));
+            $result = true;
         }
+
+        return $result;
     }
 
     /**

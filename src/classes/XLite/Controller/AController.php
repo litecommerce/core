@@ -104,7 +104,7 @@ abstract class AController extends \XLite\Core\Handler
      */
     protected function getDefaultRedirectCode()
     {
-        return \XLite\Core\Request::getInstance()->isAJAX() ? 200 : 302;
+        return \XLite\Core\Request::getInstance()->isAJAX() ? 270 : 302;
     }
 
     /**
@@ -146,7 +146,24 @@ abstract class AController extends \XLite\Core\Handler
         \XLite\Core\Event::getInstance()->display();
         \XLite\Core\Event::getInstance()->clear();
 
-        \XLite\Core\Operator::redirect($location, false, $this->getParam(self::PARAM_REDIRECT_CODE));
+        \XLite\Core\Operator::redirect(
+            $location,
+            $this->getRedirectMode(),
+            $this->getParam(self::PARAM_REDIRECT_CODE)
+        );
+    }
+
+    /**
+     * Get redirect mode - force redirect or not
+     * 
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getRedirectMode()
+    {
+        return false;
     }
 
     /**

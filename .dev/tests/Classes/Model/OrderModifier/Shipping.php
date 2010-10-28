@@ -59,6 +59,9 @@ class XLite_Tests_Model_OrderModifier_Shipping extends XLite_Tests_TestCase
 
         \XLite\Base::getInstance()->config->Shipping->shipping_enabled = 'Y';
 
+        $list = $order->getShippingRates();
+        $order->setSelectedRate($list[0]);
+
         $order->calculate();
 
         $this->assertEquals(100, $order->getShippingId(), 'Wrong shipping_id');
@@ -104,11 +107,10 @@ class XLite_Tests_Model_OrderModifier_Shipping extends XLite_Tests_TestCase
         $this->assertTrue($rate instanceof \XLite\Model\Shipping\Rate, 'getSelectedRate() must return an instance of \XLite\Model\Shipping\Rate');
         $this->assertEquals(101, $rate->getMethodId(), 'getSelectedRate() returned wrong rate');
 
-        $order->setShippingId(0);
+        $order->setSelectedRate(null);
         $rate = $order->getSelectedRate();
 
-        $this->assertTrue($rate instanceof \XLite\Model\Shipping\Rate, 'getSelectedRate() must return an instance of \XLite\Model\Shipping\Rate');
-        $this->assertEquals(100, $rate->getMethodId(), 'getSelectedRate() returned wrong rate');
+        $this->assertFalse($rate instanceof \XLite\Model\Shipping\Rate, 'getSelectedRate() must return an instance of \XLite\Model\Shipping\Rate');
     }
 
     /**
@@ -180,7 +182,12 @@ class XLite_Tests_Model_OrderModifier_Shipping extends XLite_Tests_TestCase
     {
         $order = $this->getTestOrder();
 
-        $this->assertEquals($order->isShippingSelected(), $order->isShippingAvailable(), 'isShippingAvailable() must return value equal to isShippingSelected()');
+        $order->setShippingId(101);
+        $this->assertEquals($order->isShippingSelected(), $order->isShippingAvailable(), 'isShippingAvailable() must return value equal to isShippingSelected() if shipping method is selected');
+
+        $order->setSelectedRate(null);
+        $this->assertNotEquals($order->isShippingSelected(), $order->isShippingAvailable(), 'isShippingAvailable() must NOT return value equal to isShippingSelected() if shipping method is NOT selected');
+
     }
 
     /**
@@ -254,7 +261,10 @@ class XLite_Tests_Model_OrderModifier_Shipping extends XLite_Tests_TestCase
     {
         $order = $this->getTestOrder();
 
-        $this->assertTrue($order->isShippingSelected(), 'isShippingSelected() must return true');
+        $this->assertFalse($order->isShippingSelected(), 'isShippingSelected() must return false if shipping method not selected');
+
+        $order->setShippingId(101);
+        $this->assertTrue($order->isShippingSelected(), 'isShippingSelected() must return true if shipping method selected');
     }
 
     /**

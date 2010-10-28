@@ -128,6 +128,13 @@ class XLite_Tests_AllTests
         $includes = false;
         if (defined('INCLUDE_ONLY_TESTS')) {
             $includes = array_map('trim', explode(' ', INCLUDE_ONLY_TESTS));
+            if (in_array('NOWEB', $includes)) {
+                if (!defined('SELENIUM_DISABLED')) {
+                    define('SELENIUM_DISABLED', true);
+                }
+                $k = array_search('NOWEB', $includes);
+                unset($includes[$k]);
+            }
         }
 
         // Include abstract classes

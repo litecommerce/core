@@ -259,6 +259,30 @@ class Profile extends \XLite\Model\AEntity
     protected $sidebar_boxes = '';
 
     /**
+     * Last selected shipping id 
+     * 
+     * @var    integer
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     *
+     * @Column (type="integer")
+     */
+    protected $last_shipping_id;
+
+    /**
+     * Last selected payment id 
+     * 
+     * @var    integer
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     *
+     * @Column (type="integer")
+     */
+    protected $last_payment_id;
+
+    /**
      * Membership: many-to-one relation with memberships table
      * 
      * @var    \Doctrine\Common\Collections\ArrayCollection
@@ -372,23 +396,13 @@ class Profile extends \XLite\Model\AEntity
     {
         $result = null;
 
-        $addresses = $this->getAddresses();
-
-        if (isset($addresses) && 0 < count($addresses)) {
-
-            foreach ($addresses as $address) {
-
-                if (
-                    (\XLite\Model\Address::BILLING == $atype && $address->getIsBilling())
-                    || (\XLite\Model\Address::SHIPPING == $atype && $address->getIsShipping())
-                ) {
-                    $result = $address;
-                    break;
-                }
-            }
-
-            if (!isset($result)) {
-                $result = $addresses->current();
+        foreach ($this->getAddresses() as $address) {
+            if (
+                (\XLite\Model\Address::BILLING == $atype && $address->getIsBilling())
+                || (\XLite\Model\Address::SHIPPING == $atype && $address->getIsShipping())
+            ) {
+                $result = $address;
+                break;
             }
         }
 

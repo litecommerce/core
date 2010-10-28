@@ -72,19 +72,6 @@ class Checkout extends \XLite\View\Dialog
     }
 
     /**
-     * Return widget class name for current step 
-     * 
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getStepWidgetClass()
-    {
-        return $this->getCurrentStep()->getWidgetClass();
-    }
-
-
-    /**
      * Get a list of CSS files required to display the widget properly
      * FIXME - decompose these files
      *
@@ -96,8 +83,8 @@ class Checkout extends \XLite\View\Dialog
     {
         $list = parent::getCSSFiles();
 
-        $list[] = 'shopping_cart/cart.css';
-        $list[] = 'checkout/checkout.css';
+//        $list[] = 'shopping_cart/cart.css';
+//        $list[] = 'checkout/checkout.css';
 
         return $list;
     }
@@ -113,13 +100,13 @@ class Checkout extends \XLite\View\Dialog
     public function getJSFiles()
     {
         $list = parent::getJSFiles();
-        $list[] = 'checkout/check_cc.js';
-        $list[] = 'checkout/checkout.js';
-        $list[] = 'shopping_cart/delivery.js';
+
+//        $list[] = 'checkout/check_cc.js';
+        $list[] = 'checkout/controller.js';
+//        $list[] = 'shopping_cart/delivery.js';
 
         return $list;
     }
-
 
     /**
      * Return list of targets allowed for this widget
@@ -132,6 +119,7 @@ class Checkout extends \XLite\View\Dialog
     public static function getAllowedTargets()
     {
         $result = parent::getAllowedTargets();
+
         $result[] = 'checkout';
     
         return $result;

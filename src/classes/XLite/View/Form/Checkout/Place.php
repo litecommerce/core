@@ -35,32 +35,8 @@ namespace XLite\View\Form\Checkout;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Place extends \XLite\View\Form\AForm
+class Place extends \XLite\View\Form\Checkout\ACheckout
 {
-    /**
-     * Current form name 
-     * 
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getFormName()
-    {
-        return 'checkout';
-    }
-
-    /**
-     * getDefaultTarget 
-     * 
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getDefaultTarget()
-    {
-        return 'checkout';
-    }
-
     /**
      * getDefaultAction 
      * 

@@ -105,6 +105,12 @@ INSERT INTO xlite_language_label_translations (id, code, label) VALUES (103, 'en
 INSERT INTO xlite_language_label_translations (id, code, label) VALUES (104, 'en', 'New zone has been created successfully');
 INSERT INTO xlite_language_label_translations (id, code, label) VALUES (105, 'en', 'This product has been added to <a href="{{href}}">your bag</a>');
 INSERT INTO xlite_language_label_translations (id, code, label) VALUES (106, 'en', 'Your shopping bag &mdash; {{count}} items');
+INSERT INTO xlite_language_label_translations (id, code, label) VALUES (107, 'en', 'Greetings, {{name}}');
+INSERT INTO xlite_language_label_translations (id, code, label) VALUES (108, 'en', '{{count}} items');
+INSERT INTO xlite_language_label_translations (id, code, label) VALUES (109, 'en', 'This email address is used for an existing account. Enter another email address or <a href="{{URL}}" class="log-in">sign in</a>');
+INSERT INTO xlite_language_label_translations (id, code, label) VALUES (110, 'en', 'This user names is used for an existing account. Enter another user name or <a href="{{URL}}" class="log-in">sign in</a>');
+INSERT INTO xlite_language_label_translations (id, code, label) VALUES (111, 'en', 'I accept <a href="{{URL}}">Terms &amp; Conditions</a>');
+INSERT INTO xlite_language_label_translations (id, code, label) VALUES (112, 'en', 'Place order: {{total}}');
 
 -- Language names
 INSERT INTO xlite_language_translations (code, id, name) VALUES ('en',1,'Afar');

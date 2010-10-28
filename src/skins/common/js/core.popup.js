@@ -49,6 +49,9 @@ popup.load = function(url, id, unblockCallback, timeout)
     } else if (url.constructor == HTMLAnchorElement) {
       method = 'loadByLink';
 
+    } else if (url.constructor == HTMLButtonElement) {
+      method = 'loadByButton';
+
     }
 
     if (method) {
@@ -56,9 +59,8 @@ popup.load = function(url, id, unblockCallback, timeout)
       this.currentUnblockCallback = unblockCallback;
       this.openAsWait();
 
-      if (id) {
-        this.elementId = id;
-      }
+      this.elementId = id ? id : null;
+
       this.isPostRequest = false;
       result = this[method](url, timeout);
     }
@@ -70,23 +72,22 @@ popup.load = function(url, id, unblockCallback, timeout)
 // Load by URL
 popup.loadByURL = function(url, timeout)
 {
-  return core.get(url, this.postprocessRequestCallback, null, timeout);
+  return core.get(
+    url,
+    this.postprocessRequestCallback,
+    null,
+    {
+      timeout: timeout
+    }
+  );
 }
 
 // Load by form element
 popup.loadByForm = function(form)
 {
-  form = $(form).eq(0);
+  form = $(form).get(0);
 
-  if ('POST' == form.attr('method').toUpperCase()) {
-    this.isPostRequest = true;
-    var result = core.post(form.attr('action'), form.serialize(), this.postprocessRequestCallback);
-
-  } else {
-    var result = core.get(form.attr('action'), this.postprocessRequestCallback, form.serialize());
-  }
-
-  return result;
+  return form ? form.submitBackground(this.postprocessRequestCallback) : false;
 }
 
 // Load by link element 
@@ -94,13 +95,43 @@ popup.loadByLink = function(link)
 {
   link = $(link).eq(0);
 
-  return (1 == link.length && link.attr('href')) ? core.get(link.attr('href'), this.postprocessRequestCallback) : false;
+  return (1 == link.length && link.attr('href'))
+    ? core.get(link.attr('href'), this.postprocessRequestCallback)
+    : false;
+}
+
+// Load by button element 
+popup.loadByButton = function(button)
+{
+  var result = false;
+
+  button = $(button);
+
+  if (button.attr('onclick') && -1 !== button.attr('onclick').toString().search(/\.location[ ]*=[ ]*['"].+['"]/)) {
+
+    // By onclick attribute
+    var m = button.attr('onclick').toString().match(/\.location[ ]*=[ ]*['"](.+)['"]/);
+    result = core.get(m[1], this.postprocessRequestCallback);
+
+  } else if (button.data('location')) {
+
+    // By kQuery data cell
+    result = core.get(button.data('location'), this.postprocessRequestCallback);
+
+  } else if (0 < button.parents('form').length) {
+
+    // By button's form
+    result = this.loadByForm($(button).parents('form').eq(0));
+  
+  }
+
+  return result;
 }
 
 // Postprocess request
 popup.postprocessRequest = function(XMLHttpRequest, textStatus, data, isValid)
 {
-  if (!this.elementId) {
+  if (null !== this.elementId && !this.elementId) {
     return;
   }
 
@@ -141,6 +172,7 @@ popup.postprocessRequest = function(XMLHttpRequest, textStatus, data, isValid)
 
     // Load new content
     this.place(data);
+    core.trigger('afterPopupPlace');
 
   } else {
 
@@ -150,9 +182,9 @@ popup.postprocessRequest = function(XMLHttpRequest, textStatus, data, isValid)
   }
 }
 
-popup.postprocessRequestCallback = function(XMLHttpRequest, textStatus, data, isValid)
+popup.postprocessRequestCallback = function()
 {
-  return popup.postprocessRequest(XMLHttpRequest, textStatus, data, isValid);
+  return popup.postprocessRequest.apply(popup, arguments);
 }
 
 // Place request data
@@ -178,12 +210,14 @@ popup.postprocess = function()
   $('.blockMsg h1#page-title.title').remove();
 
   var o = this;
-  $('.blockMsg form').submit(
-    function(event) {
-      event.stopPropagation();
+
+  $('.blockMsg form').commonController(
+    'enableBackgroundSubmit',
+    function() {
       o.freezePopup();
-      o.load(this, o.elementId, o.currentUnblockCallback);
-      return false;
+    },
+    function() {
+      o.postprocessRequestCallback.apply(o, arguments);
     }
   );
 }
@@ -225,7 +259,7 @@ popup.unfreezePopup = function()
 // Open as wait box
 popup.openAsWait = function()
 {
-  this.open('<div class="block-wait"></div>');
+  this.open('<div class="block-wait"><div></div></div>');
 }
 
 // Open-n-display popup

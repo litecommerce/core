@@ -78,6 +78,7 @@ class Cart extends \XLite\Model\Order
                 $cart->setStatus(self::STATUS_TEMPORARY);
                 $cart->setProfileId(0);
 
+                \XLite\Core\Database::getEM()->persist($cart);
                 // TODO - rework
                 $cart->setCurrency(\XLite::getController()->getCurrentCurrency());
             }
@@ -89,9 +90,9 @@ class Cart extends \XLite\Model\Order
             if ($auth->isLogged()) {
                 if ($auth->getProfile()->getProfileId() != $cart->getProfileId()) {
                     $cart->setProfile($auth->getProfile());
+                    $cart->setOrigProfile($auth->getProfile());
                     $cart->calculate();
                 }
-
 
             } elseif ($cart->getProfileId()) {
 

@@ -38,18 +38,6 @@ namespace XLite\View\Form\Checkout;
 class PaymentMethod extends \XLite\View\Form\Checkout\ACheckout
 {
     /**
-     * Current form name 
-     * 
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getFormName()
-    {
-        return 'payment_method';
-    }
-
-    /**
      * getDefaultAction 
      * 
      * @return string

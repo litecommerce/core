@@ -47,6 +47,7 @@ class CountrySelect extends \XLite\View\FormField
     const PARAM_FIELD_NAME = 'field';
     const PARAM_COUNTRY    = 'country';
     const PARAM_FIELD_ID   = 'fieldId';
+    const PARAM_CLASS_NAME = 'className';
 
 
     /**
@@ -76,6 +77,7 @@ class CountrySelect extends \XLite\View\FormField
             self::PARAM_ALL        => new \XLite\Model\WidgetParam\Bool('All', false),
             self::PARAM_FIELD_NAME => new \XLite\Model\WidgetParam\String('Field name', ''),
             self::PARAM_FIELD_ID   => new \XLite\Model\WidgetParam\String('Field ID', ''),
+            self::PARAM_CLASS_NAME => new \XLite\Model\WidgetParam\String('Class name', ''),
             self::PARAM_COUNTRY    => new \XLite\Model\WidgetParam\String('Value', '')
         );
     }
@@ -102,8 +104,8 @@ class CountrySelect extends \XLite\View\FormField
     protected function getCountries()
     {
         return $this->isEnabledOnly()
-            ? \XLite\Core\Database::getRepo('XLite\Model\Country')->findByEnabled(true)
-            : \XLite\Core\Database::getRepo('XLite\Model\Country')->findAll();
+            ? \XLite\Core\Database::getRepo('XLite\Model\Country')->findAllEnabled()
+            : \XLite\Core\Database::getRepo('XLite\Model\Country')->findAllCountries();
     }
 }
 

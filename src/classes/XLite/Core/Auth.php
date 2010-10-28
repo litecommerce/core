@@ -68,10 +68,10 @@ class Auth extends \XLite\Base
      * @param \XLite\Model\Profile $profile Profile object
      *  
      * @return bool
-     * @access protected
+     * @access public
      * @since  3.0.0
      */
-    protected function loginProfile(\XLite\Model\Profile $profile)
+    public function loginProfile(\XLite\Model\Profile $profile)
     {
         $result = $profile->isPersistent();
 
@@ -290,13 +290,14 @@ class Auth extends \XLite\Base
         $isCurrent = false;
 
         if (!isset($profileId)) {
-            $profileId = \XLite\Core\Session::getInstance()->get('profile_id');
+            $profileId = \XLite\Core\Session::getInstance()->profile_id;
             $isCurrent = true;
         }
 
         if (isset($profileId)) {
             
-            $profile = \XLite\Core\Database::getRepo('XLite\Model\Profile')->find($profileId);
+            $profile = \XLite\Core\Database::getRepo('XLite\Model\Profile')
+                ->find($profileId);
             
             if ($isCurrent || $this->checkProfile($profile)) {
                 $result = $profile;
@@ -386,7 +387,7 @@ class Auth extends \XLite\Base
     {
         return array(
             'customer' => 'Customer', 
-            'admin'    => 'Admin'
+            'admin'    => 'Admin',
         );
     }
 

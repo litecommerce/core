@@ -156,26 +156,22 @@ class SessionCell extends \XLite\Model\AEntity
 
         switch ($type) {
             case 'boolean':
-                $result = $value ? 1 : 0;
-                break;
-
             case 'integer':
             case 'double':
             case 'string':
-                $result = $value;
                 break;
 
             case 'array':
             case 'object':
-                $result = serialize($value);
+                $value = serialize($value);
                 break;
 
             default:
-                $result = null;
+                $value = null;
                 $type = '';
         }
 
-        $this->value = $result;
+        $this->value = $value;
         $this->type = $type;
     }
 
