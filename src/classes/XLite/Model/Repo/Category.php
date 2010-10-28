@@ -149,7 +149,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
     protected function defineSearchByProductIdQuery($productId)
     {
         return $this->createQueryBuilder()
-            ->innerJoin('c.category_products', 'cp')
+            ->innerJoin('c.categoryProducts', 'cp')
             ->andWhere('cp.product_id = :productId')
             ->setParameter('productId', $productId)
             ->addOrderBy('cp.orderby', 'ASC');
