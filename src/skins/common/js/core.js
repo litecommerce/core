@@ -224,7 +224,7 @@ window.core = {
 
     for (var i = 0; i < children.length; i ++) {
       if (8 === children[i].nodeType) {
-        m = children[i].data.match(new RegExp(prefix + '\': \'([^ ]+)\''));
+        m = children[i].data.match(new RegExp(prefix + '-([^;]+)(;|$)'));
       }
     }
 

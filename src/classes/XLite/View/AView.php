@@ -1604,12 +1604,12 @@ abstract class AView extends \XLite\Core\Handler
 
         foreach ($data as $key => $value) {
 
-            $result[] = '\'' . $key . '\': \'' . $value . '\'';
+            $result[] = $key . '-' . $value . ';';
 
         }
 
-        echo implode(',' . "\r\n", $result);
-        echo '-->' . "\r\n";
+        echo implode("\r\n", $result);
+        echo "\r\n" . '-->' . "\r\n";
     }
 }
 
