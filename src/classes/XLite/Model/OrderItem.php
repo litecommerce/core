@@ -388,7 +388,7 @@ class OrderItem extends \XLite\Model\Base\ModifierOwner
      */
     public function getImage()
     {
-        return $this->getObject()->getImage();
+        return $this->getProduct()->getImage();
     }
  
     /**
