@@ -1,0 +1,21 @@
+#! /usr/local/php-530/bin/php
+<?php
+/**
+ * Example file - copy this file to /u/$USER/bin
+ *
+ * $Id: pear-phpunit 2805 2008-04-14 16:52:19Z sb $
+ */
+
+set_include_path(get_include_path() . PATH_SEPARATOR . '/usr/local/share/pear/');
+@date_default_timezone_set(@date_default_timezone_get());
+
+require_once 'PHPUnit/Util/Filter.php';
+
+PHPUnit_Util_Filter::addFileToFilter(__FILE__, 'PHPUNIT');
+
+$i = count($_SERVER['argv']) - 1;
+if (!preg_match('/AllTests.php$/Ss', $_SERVER['argv'][$i])) {
+	define('INCLUDE_ONLY_TESTS', $_SERVER['argv'][$i]);
+}
+
+require 'PHPUnit/TextUI/Command.php';
