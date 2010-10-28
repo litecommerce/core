@@ -434,6 +434,8 @@ CREATE TABLE xlite_profiles (
   order_id int(11) NOT NULL default '0',
   sidebar_boxes TEXT NOT NULL,
   language varchar(2) NOT NUll default 'en',
+  last_shipping_id int(11) default NULL,
+  last_payment_id int(11) default NULL,
   PRIMARY KEY (profile_id),
   KEY (cms_profile_id),
   KEY login (login),

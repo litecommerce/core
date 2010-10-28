@@ -226,6 +226,34 @@ ALoadable.prototype.postprocess = function(isSuccess, initial)
         this.loadable = o;
       }
     );
+
+    if (!initial && 'undefined' != typeof(window.CommonForm)) {
+      this.base.filter('form').each(
+        function() {
+          new CommonForm(this);
+        }
+      );
+
+      $('form', this.base).each(
+        function() {
+          new CommonForm(this);
+        }
+      );
+
+      this.base.filter('*:input').each(
+        function() {
+          new CommonElement(this);
+        }
+      );
+
+      $('*:input', this.base).each(
+        function() {
+          new CommonElement(this);
+        }
+      );
+
+    }
+
   }
 }
 
@@ -251,24 +279,38 @@ ALoadable.prototype.shade = function()
         message: '<div></div>',
         css: {
           width: '30%',
-          top: '35%',
-          left: '35%',
           zIndex: 16000
         },
         overlayCSS: {
           opacity: 0.1,
           zIndex: 15000
-        }
+        },
+        centerY: true,
+        centerX: true
       }
     );
 
     $('.blockElement')
       .css({padding: null, border: null, margin: null, textAlign: null, color: null, backgroundColor: null, cursor: null})
-      .addClass('wait-block');
+      .addClass('block-wait');
 
     $('.blockOverlay')
-      .css({padding: null, border: null, margin: null, textAlign: null, color: null, backgroundColor: null, cursor: null})
-      .addClass('wait-block-overlay');
+      .css({padding: null, border: null, margin: null, textAlign: null, color: null, backgroundColor: null, cursor: null});
+
+    if (this.getShadeBase().height() < $('.blockMsg').outerHeight() + 5) {
+      $('.blockMsg').addClass('mini-block-wait');
+    }
+
+    if (this.getShadeBase().height() < $('.blockMsg').outerHeight()) {
+      $('.blockMsg div').remove();
+    }
+
+    $('.blockMsg').css(
+      {
+        'top':  Math.round((this.getShadeBase().height() - $('.blockMsg').outerHeight()) / 2) + 'px',
+        'left': Math.round((this.getShadeBase().width() - $('.blockMsg').outerWidth()) / 2) + 'px'
+      }
+    );
 
   } else if (this.blockWidget) {
 
@@ -308,26 +350,19 @@ ALoadable.prototype.getShadeBase = function() {
 // Event blocker
 ALoadable.prototype.blocker = function(event) {
   event.stopPropagation();
+
   return false;
 }
 
-// Submit specified POST form
+// Submit specified form
 ALoadable.prototype.submitForm = function(form, callback)
 {
-  var result = false;
-
-  if ('undefined' == typeof(form.validate) || form.validate()) {
-    form = $(form);
-
-    core.post(
-      form.attr('action'),
-      form.serialize(),
-      callback
-    );
-
-    result = true;
-  }
-
-  return result;
+  return form.submitBackground(
+    callback,
+    false,
+    {
+      rpc: 'POST' == $(form).attr('method').toUpperCase()
+    }
+  );
 }
 

@@ -129,49 +129,79 @@ window.core = {
   },
 
   // Get HTML data from server
-  get: function(url, callback, data, timeout)
+  get: function(url, callback, data, options)
   {
-    return $.ajax(
+    options = options || {};
+
+    options = $.extend(
       {
-        async: true,
-        cache: false,
-        complete: function(XMLHttpRequest, textStatus)
+        async:       true,
+        cache:       false,
+        complete:    function(XMLHttpRequest, textStatus)
           {
+            var callCallback = core.preprocessResponse(XMLHttpRequest, options, callback);
             data = core.processResponse(XMLHttpRequest);
-            return callback ? callback(XMLHttpRequest, textStatus, data) : true;
+
+            return (callCallback && callback) ? callback(XMLHttpRequest, textStatus, data) : true;
           },
         contentType: 'text/html',
         global:      false,
-        timeout:     (timeout==null) ? 15000 : timeout,
+        timeout:     15000,
         type:        'GET',
         url:         url,
         data:        data
-      }
+      },
+      options
     );
+
+    return $.ajax(options);
   },
 
   // Post form data to server
-  post: function(url, data, callback)
+  post: function(url, callback, data, options)
   {
-    return $.ajax(
+    options = options || {};
+
+    options = $.extend(
       {
-        async: true,
-        cache: false,
-        complete: function(XMLHttpRequest, textStatus)
+        async:       true,
+        cache:       false,
+        complete:    function(XMLHttpRequest, textStatus)
           {
+            var callCallback = core.preprocessResponse(XMLHttpRequest, options, callback);
             data = core.processResponse(XMLHttpRequest);
             var notValid = !!XMLHttpRequest.getResponseHeader('not-valid');
 
-            return callback ? callback(XMLHttpRequest, textStatus, data, !notValid) : true;
+            return (callCallback && callback) ? callback(XMLHttpRequest, textStatus, data, !notValid) : true;
           },
         contentType: 'application/x-www-form-urlencoded',
-        global: false,
-        timeout: 15000,
-        type: 'POST',
-        url: url,
-        data: data
-      }
+       global:      false,
+        timeout:     15000,
+        type:        'POST',
+        url:         url,
+        data:        data
+      },
+      options
     );
+
+    return $.ajax(options);
+  },
+
+  // Response preprocess (run callback or not)
+  preprocessResponse: function(xhr, options, callback)
+  {
+    var result = true;
+
+    if (270 == xhr.status && xhr.getResponseHeader('Location') && (!options || !options.rpc)) {
+      core.get(
+        xhr.getResponseHeader('Location'),
+        callback
+      );
+
+      result = false;
+    }
+
+    return result;
   },
 
   // Process response from server
@@ -193,6 +223,47 @@ window.core = {
     return (4 == xhr.readyState && 200 == xhr.status) ? xhr.responseText : false;
   },
 
+  showInternalError: function()
+  {
+    return this.showError(this.t('Javascript core internal error. Page will be refreshed automatically'));
+  },
+
+  showServerError: function()
+  {
+    return this.showError(this.t('Background request to server side is failed. Page will be refreshed automatically'));
+  },
+
+  showError: function(message)
+  {
+    core.trigger(
+      'message',
+      [{'type': 'error', 'message': message}]
+    );
+  },
+
+  languageLabels: [],
+
+  t: function(label, substitute)
+  {
+    var found = false;
+    for (var i = 0; i < this.languageLabels.length && !found; i++) {
+      if (this.languageLabels[i].name == label) {
+        label = this.languageLabels[i].label;
+        found = true;
+      }
+    }
+
+    // TODO - add request languale label from server-side
+
+    if (substitute) {
+      for (var i in substitute) {
+        label = label.replace(new RegExp('{{' + i + '}}'), substitute[i]);
+      }
+    }
+
+    return label;
+  },
+
   autoload: function(className)
   {
     if ('function' == typeof(className)) {
@@ -202,7 +273,14 @@ window.core = {
 
     $(document).ready(
       function() {
-        eval('new ' + className + '();');
+        if ('undefined' != typeof(window[className])) {
+          if ('function' == typeof(window[className].autoload)) {
+            window[className].autoload();
+
+          } else {
+            eval('new ' + className + '();');
+          }
+        }
       }
     );
   },

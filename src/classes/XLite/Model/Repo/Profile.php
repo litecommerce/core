@@ -584,6 +584,7 @@ class Profile extends \XLite\Model\Repo\ARepo
             ->andWhere('p.login = :login')
             ->andWhere('p.profile_id != :profileId')
             ->andWhere('p.order_id = 0')
+            ->setMaxResults(1)
             ->setParameters(
                 array(
                     'login'     => $profile->getLogin(),

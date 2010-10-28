@@ -26,7 +26,9 @@ function MinicartController(base)
   core.bind(
     'updateCart',
     function(event, data) {
-      o.block.load();
+      if (data.items) {
+        o.block.load();
+      }
     }
   );
 }

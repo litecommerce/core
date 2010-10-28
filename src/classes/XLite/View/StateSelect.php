@@ -46,8 +46,8 @@ class StateSelect extends \XLite\View\FormField
     const PARAM_FIELD_NAME = 'field';
     const PARAM_STATE      = 'state';
     const PARAM_FIELD_ID   = 'fieldId';
-    const PARAM_ONCHANGE   = 'onchange';
     const PARAM_IS_LINKED  = 'isLinked';
+    const PARAM_CLASS_NAME = 'className';
 
 
     /**
@@ -86,8 +86,8 @@ class StateSelect extends \XLite\View\FormField
         $this->widgetParams += array(
             self::PARAM_FIELD_NAME => new \XLite\Model\WidgetParam\String('Field name', ''),
             self::PARAM_FIELD_ID   => new \XLite\Model\WidgetParam\String('Field ID', ''),
-            self::PARAM_STATE      => new \XLite\Model\WidgetParam\String('Value', ''),
-            self::PARAM_ONCHANGE   => new \XLite\Model\WidgetParam\String('onchange event handler', ''),
+            self::PARAM_STATE      => new \XLite\Model\WidgetParam\Object('Selected state', null, false, '\XLite\Model\State'),
+            self::PARAM_CLASS_NAME => new \XLite\Model\WidgetParam\String('Class name', ''),
             self::PARAM_IS_LINKED  => new \XLite\Model\WidgetParam\Bool('Linked with country selector', 0),
         );
     }
@@ -101,7 +101,42 @@ class StateSelect extends \XLite\View\FormField
      */
     protected function getStates()
     {
-        return \XLite\Core\Database::getRepo('\XLite\Model\State')->findAllStates();
+        $states = array();
+
+        if (
+            $this->getParam(self::PARAM_STATE)
+            && $this->getParam(self::PARAM_STATE)->getCountry()
+        ) {
+            $states = $this->getParam(self::PARAM_STATE)->getCountry()->getStates();
+        }
+
+        return $states;;
+    }
+
+    /**
+     * Check - current state is custom state or not
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isCustomState()
+    {
+        return !$this->getParam(self::PARAM_STATE) || !$this->getParam(self::PARAM_STATE)->getStateId();
+    }
+
+    /**
+     * Get current state value 
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getStateValue()
+    {
+        return $this->getParam(self::PARAM_STATE) ? $this->getParam(self::PARAM_STATE)->getState() : '';
     }
 
     /**
@@ -133,22 +168,30 @@ class StateSelect extends \XLite\View\FormField
     }
 
     /**
-     * Register JS files
-     *
-     * @return array
+     * Get javascript data block
+     * 
+     * @return string
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getJSFiles()
+    public function getJSDataDefinitionBlock()
     {
-        $list = parent::getJSFiles();
+        $code = 'var CountriesStates = {};' . "\n";
 
-        if ($this->getParam(self::PARAM_IS_LINKED)) {
-            $list[] = 'common/select_state.js';
+        foreach ($this->getCountriesStates() as $countryCode => $states) {
+            $code .= 'CountriesStates.' . $countryCode . ' = [' . "\n";
+            $i = 1;
+            $length = count($states);
+            foreach ($states as $stateCode => $state) {
+                $code .= '{state_code: "' . $stateCode . '", state: "' . $state . '"}'
+                    . ($i == $length ? '' : ',')
+                    . "\n";
+                $i++;
+            }
+            $code .= '];' . "\n";
         }
 
-        return $list;
+        return $code;
     }
 }
-

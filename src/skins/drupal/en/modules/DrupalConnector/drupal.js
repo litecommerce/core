@@ -56,6 +56,91 @@ $(document).ready(
       ALoadable.prototype.titleRequestPattern = 'h2.ajax-title-loadable:eq(0)';
     }
 
+    // Extend Checkout main widget
+    if ('undefined' != typeof(window.CheckoutView)) {
+
+      var postprocess = CheckoutView.prototype.postprocess;
+
+      // Add behavior for 'Create new profile' selector
+      CheckoutView.prototype.postprocess = function(isSuccess, initial)
+      {
+        postprocess.apply(this, arguments);
+
+        if (isSuccess && $('form.create .selector #create_profile_chk', this.base).length) {
+
+          var o = this;
+
+          $('form.create .selector #create_profile_chk', this.base).unbind('click');
+
+          var toggle = function() {
+            var isVisible = 1 == $('.username:visible', this.form).length;
+
+            if (this.checked) {
+              $('.username-verified', this.form).hide();
+              $('.username', this.form).show();
+
+              if (!isVisible && this.form.validate(true)) {
+                $(this.form).submit();
+              }
+
+            } else {
+              $('.username', this.form).hide();
+
+              if (isVisible) {
+                $(this.form).submit();
+              }
+            }
+
+            o.refreshState();
+          }
+
+          toggle.call($('form.create .selector #create_profile_chk', this.base).get(0));
+          $('form.create .selector #create_profile_chk', this.base).click(toggle);
+
+          $('.profile form.create .username input', this.base).bind(
+            'invalid',
+            function() {
+              $('.username-verified', this.form).hide();
+              o.refreshState();
+            }
+          );
+
+          $('.profile form.create', this.base)
+            .bind(
+              'beforeSubmit',
+              function() {
+                $('.username-verified', this).hide();
+              }
+            )
+            .bind(
+              'afterSubmit',
+              function() {
+                var showUsernameVerifiedNote = 1 == $('#create_profile_chk:checked', this).length;
+                if (showUsernameVerifiedNote) {
+                  var input = $('.username input', this).get(0);
+                  showUsernameVerifiedNote = input.value && input.validate(true);
+                }
+
+                if (showUsernameVerifiedNote) {
+                  $('.username-verified', this).show();
+
+                } else {
+                  $('.username-verified', this).hide();
+                }
+              }
+            );
+
+          if ($('.profile form.create #create_profile_chk input:checked', this.base).length) {
+            var input = $('.profile form.create .username input', this.base).get(0);
+            if (input.value && input.validate(true) && !input.isChanged()) {
+              $('.profile form.create .username-verified', this.base).show();
+            }
+          }
+        }
+      }
+
+    }
+
   }
 );
 

@@ -10,7 +10,6 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-
-<widget template="checkout/cart.tpl" />
-<widget class="{getStepWidgetClass()}" />
-
+<div class="checkout-block">
+  {displayViewListContent(#checkout.main#)}
+</div>

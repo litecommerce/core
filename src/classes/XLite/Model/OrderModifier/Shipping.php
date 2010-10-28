@@ -199,6 +199,12 @@ class Shipping extends \XLite\Model\Order implements \XLite\Base\IDecorator
 
             if (!empty($rates)) {
 
+                if (!$this->getShippingId() && $this->getProfile() && $this->getProfile()->getLastShippingId()) {
+
+                    // Remember last shipping id
+                    $this->setShippingId($this->getProfile()->getLastShippingId());
+                }
+
                 if (0 < intval($this->getShippingId())) {
                     // Set selected rate from the rates list if shipping_id is already assigned
 
@@ -209,11 +215,6 @@ class Shipping extends \XLite\Model\Order implements \XLite\Base\IDecorator
                             break;
                         }
                     }
-                }
-
-                if (!isset($selectedRate)) {
-                    // Set first availabled rate as a selected rate
-                    $selectedRate = array_shift($rates);
                 }
             }
 
@@ -281,7 +282,7 @@ class Shipping extends \XLite\Model\Order implements \XLite\Base\IDecorator
      */
     public function isShippingAvailable()
     {
-        return $this->isShippingSelected();
+        return $this->isDeliveryAvailable();
     }
 
     /**

@@ -48,6 +48,22 @@ class Event extends \XLite\Base\Singleton
     protected $events = array();
 
     /**
+     * Trigger invalidElement event
+     * 
+     * @param string $name    Element name
+     * @param string $message Error message
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function invalidElement($name, $message)
+    {
+        self::__callStatic('invalidElement', array(array('name' => $name, 'message' => $message)));
+    }
+
+    /**
      * Short event creation
      * 
      * @param string $name      Event name

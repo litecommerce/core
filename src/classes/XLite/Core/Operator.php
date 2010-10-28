@@ -62,7 +62,19 @@ class Operator extends \XLite\Base\Singleton
      */
     protected static function setHeaderLocation($location, $code = 302)
     {
-        header('Location: ' . $location, true, $code);
+        if (headers_sent()) {
+            echo (
+                '<script type="text/javascript">' . "\n"
+                . '<!--' . "\n"
+                . 'self.location=\'' . $location . '\';' . "\n"
+                . '-->' . "\n"
+                . '</script>' . "\n"
+                . '<noscript><a href="' . $location . '">Click here to redirect</a></noscript><br /><br />'
+            );
+
+        } else {
+            header('Location: ' . $location, true, $code);
+        }
     }
 
     /**

@@ -252,6 +252,9 @@ class XLite_Tests_Module_AustraliaPost_Model_Shipping_Processor_AustraliaPost ex
 
             $product = $this->getProduct($productId);
 
+            if (!$product) {
+                continue;
+            }
             if ($index % 2) {
                 $product->setFreeShipping(true);
             }

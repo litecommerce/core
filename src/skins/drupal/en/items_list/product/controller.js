@@ -187,11 +187,6 @@ ProductsListView.prototype.postprocess = function(isSuccess, initial)
 
           core.post(
             URLHandler.buildURL({}),
-            {
-              target:     'cart',
-              action:     'add',
-              product_id: pid
-            },
             function(XMLHttpRequest, textStatus, data, isValid)
             {
               countRequests--;
@@ -248,7 +243,15 @@ ProductsListView.prototype.postprocess = function(isSuccess, initial)
 
                 }
               } // if (0 == countRequests)
-            } // function(XMLHttpRequest, textStatus, data, isValid)
+            },
+            {
+              target:     'cart',
+              action:     'add',
+              product_id: pid
+            },
+            {
+              rpc: true
+            }
           ); // core.post()
         } // if (isProductDrag)
       }, // drop()

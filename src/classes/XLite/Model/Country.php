@@ -115,6 +115,7 @@ class Country extends \XLite\Model\AEntity
      * @see    ____var_see____
      * @since  3.0.0
      * @OneToMany (targetEntity="XLite\Model\State", mappedBy="country", cascade={"all"})
+     * @OrderBy ({"state" = "ASC"})
      */
     protected $states;
 

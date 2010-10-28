@@ -64,6 +64,11 @@ class Country extends \XLite\Model\Repo\ARepo
                 '\XLite\Model\State',
             ),
         );
+        $list['enabled'] = array(
+            self::RELATION_CACHE_CELL => array(
+                '\XLite\Model\State',
+            ),
+        );
         $list['states'] = array(
             self::RELATION_CACHE_CELL => array(
                 '\XLite\Model\State',
@@ -71,6 +76,44 @@ class Country extends \XLite\Model\Repo\ARepo
         );
 
         return $list;
+    }
+
+    /**
+     * Find all enabled countries 
+     * 
+     * @return \Doctrine\Common\Collections\ArrayCollection
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function findAllEnabled()
+    {
+        $data = $this->getFromCache('enabled');
+        if (!isset($data)) {
+            $data = $this->defineAllEnabledQuery()
+                ->getQuery()
+                ->getResult();
+            $this->saveToCache($data, 'enabled');
+        }
+
+        return $data;
+    }
+
+    /**
+     * Define query builder for findAllEnabled()
+     *
+     * @return \Doctrine\ORM\QueryBuilder
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineAllEnabledQuery()
+    {
+        return $this->createQueryBuilder()
+            ->addSelect('s')
+            ->leftJoin('c.states', 's')
+            ->andWhere('c.enabled = :enable')
+            ->setParameter('enable', true);
     }
 
     /**
@@ -164,10 +207,13 @@ class Country extends \XLite\Model\Repo\ARepo
         $result = array();
 
         foreach ($data as $row) {
-            $result[$row->code] = array();
+            if (0 < count($row->getStates())) {
+                $code = $row->getCode();
+                $result[$code] = array();
 
-            foreach ($row->states as $state) {
-                $result[$row->code][$state->state_id] = $state->state;
+                foreach ($row->getStates() as $state) {
+                    $result[$code][$state->getStateId()] = $state->getState();
+                }
             }
         }
 

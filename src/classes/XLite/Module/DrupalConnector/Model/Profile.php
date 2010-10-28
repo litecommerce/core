@@ -55,4 +55,31 @@ class Profile extends \XLite\Model\Profile implements \XLite\Base\IDecorator
         }
     }
 
+    /**
+     * Get CMS profile 
+     * 
+     * @return object or null
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCMSProfile()
+    {
+        $profile = null;
+
+        if (
+            \XLite\Core\CMSConnector::isCMSStarted()
+            && $this->getCMSProfileId()
+            && $this->getCMSName() == \XLite\Module\DrupalConnector\Handler::getInstance()->getCMSName()
+            && function_exists('user_load')
+        ) {
+            $profile = user_load($this->getCMSProfileId());
+            if (!$profile) {
+                $profile = null;
+            }
+        }
+
+        return $profile;
+    }
+
 }
