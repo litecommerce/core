@@ -154,7 +154,7 @@ class CategorySelect extends \XLite\View\AView
 
         if (!empty($this->categories) && $categoryId > 0 && $this->getParam(self::PARAM_IGNORE_CURRENT_PATH)) {
 
-            $currentCategory = \XLite\Core\Database::getRepo('\XLite\Model\Category')->getCategoryFromHash($categoryId);
+            $currentCategory = \XLite\Core\Database::getRepo('\XLite\Model\Category')->getCategory($categoryId);
 
             $categories = array();
 
@@ -242,5 +242,23 @@ class CategorySelect extends \XLite\View\AView
         $pos = strpos($name, '[');
 
         $this->field = (false === $pos) ? $name : substr($name, $pos + 1, -1);
+    }
+
+    /**
+     * getIndentation 
+     * 
+     * @param \XLite\Model\Category $category   category model object
+     * @param int                   $multiplier level's multiplier
+     *  
+     * @return int
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getIndentation(\XLite\Model\Category $category, $multiplier)
+    {
+        return \XLite\Core\Database::getRepo('\XLite\Model\Category')->getCategoryDepth(
+            $category->getCategoryId()
+        ) * $multiplier - 1;
     }
 }

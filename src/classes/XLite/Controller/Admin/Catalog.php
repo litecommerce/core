@@ -104,18 +104,6 @@ abstract class Catalog extends \XLite\Controller\Admin\AAdmin
         }
     }
 
-    /**
-     * Return current category Id
-     *
-     * @return int
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getCategoryId()
-    {
-        return intval(\XLite\Core\Request::getInstance()->category_id);
-    }
-
 
     /**
      * getModelObject

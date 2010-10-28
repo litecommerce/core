@@ -13,8 +13,8 @@
 <font class="NavigationPath">
 <a href="admin.php" class="NavigationPath">Admin menu</a>
 <span IF="target=#access_denied#">&nbsp;::&nbsp;<font class="NavigationPath">ACCESS DENIED</font></span>
-<span IF="target=#categories#">&nbsp;::&nbsp;<a href="admin.php?target=categories&category_id=0" class="NavigationPath">Categories</a></span>
-<span IF="target=#category#">&nbsp;::&nbsp;<a href="admin.php?target=categories&category_id=0" class="NavigationPath">Categories</a></span>
+<span IF="target=#categories#">&nbsp;::&nbsp;<a href="admin.php?target=categories" class="NavigationPath">Categories</a></span>
+<span IF="target=#category#">&nbsp;::&nbsp;<a href="admin.php?target=categories" class="NavigationPath">Categories</a></span>
 <span FOREACH="locationPath,cname,curl">&nbsp;::&nbsp;<a href="{curl:r}" class="NavigationPath">{cname}</a></span>
 <span IF="target=#profile#&mode=#modify#">&nbsp;::&nbsp;<a href="admin.php?target=users" class="NavigationPath">Users</a>&nbsp;::&nbsp;Modify profile</span>
 <span IF="target=#profile#&mode=##">&nbsp;::&nbsp;<a href="admin.php?target=users" class="NavigationPath">Users</a>&nbsp;::&nbsp;Modify profile</span>

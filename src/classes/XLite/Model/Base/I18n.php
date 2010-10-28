@@ -70,9 +70,9 @@ abstract class I18n extends \XLite\Model\AEntity
      */
     public function __construct(array $data = array())
     {
-        parent::__construct($data);
-
         $this->translations = new \Doctrine\Common\Collections\ArrayCollection();
+
+        parent::__construct($data);
     }
 
     /**
@@ -214,7 +214,7 @@ abstract class I18n extends \XLite\Model\AEntity
      */
     public function hasTranslation($code = null)
     {
-        if (is_null($code)) {
+        if (!isset($code)) {
             $code = $this->getDefaultLanguageCode();
         }
 
@@ -259,7 +259,7 @@ abstract class I18n extends \XLite\Model\AEntity
      */
     protected static function getLanguagesQuery()
     {
-        if (is_null(self::$languagesQuery)) {
+        if (!isset(self::$languagesQuery)) {
             self::$languagesQuery = array_fill_keys(
                 \XLite\Core\Database::getRepo('\XLite\Model\Language')->getLanguagesQuery(),
                 false
@@ -285,5 +285,4 @@ abstract class I18n extends \XLite\Model\AEntity
             $t->detach();
         }
     }
-
 }

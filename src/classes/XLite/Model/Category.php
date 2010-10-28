@@ -35,13 +35,13 @@ namespace XLite\Model;
  * @see     ____class_see____
  * @since   3.0.0
  *
- * @Entity
- * @Table (name="categories")
+ * @Entity (repositoryClass="\XLite\Model\Repo\Category")
+ * @Table  (name="categories")
  */
 class Category extends \XLite\Model\Base\I18n
 {
     /**
-     * Node unique id 
+     * Node unique ID 
      * 
      * @var    integer
      * @access protected
@@ -53,6 +53,18 @@ class Category extends \XLite\Model\Base\I18n
      * @Column (type="integer", length="11", nullable=false)
      */
     protected $category_id;
+
+    /**
+     * Node parent ID
+     * 
+     * @var    integer
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     *
+     * @Column (type="integer", length="11", nullable=false)
+     */
+    protected $parent_id;
 
     /**
      * Node left value 
@@ -79,18 +91,6 @@ class Category extends \XLite\Model\Base\I18n
     protected $rpos;
 
     /**
-     * Node depth within categories tree
-     * 
-     * @var    float
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     *
-     * @Column (type="integer", length="11", nullable=false)
-     */
-    protected $depth = 0;
-
-    /**
      * Node status
      * 1 - enabled, 0 - disabled
      * 
@@ -101,32 +101,7 @@ class Category extends \XLite\Model\Base\I18n
      *
      * @Column (type="integer", length="1", nullable=false)
      */
-    protected $enabled = 0;
-
-    /**
-     * Node views counter
-     * 
-     * @var    integer
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     *
-     * @Column (type="integer", length="11", nullable=false)
-     */
-    protected $views_stats = 0;
-
-    /**
-     * Node lock status:
-     * if set up to 1 then node is marked for moving within tree
-     * 
-     * @var    integer
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     *
-     * @Column (type="integer", length="1", nullable=false)
-     */
-    protected $locked = 0;
+    protected $enabled = true;
 
     /**
      * Node membership level
@@ -141,18 +116,6 @@ class Category extends \XLite\Model\Base\I18n
     protected $membership_id = 0;
 
     /**
-     * Threshold bestsellers
-     * 
-     * @var    integer
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     *
-     * @Column (type="integer", length="11", nullable=false)
-     */
-    protected $threshold_bestsellers = 1;
-
-    /**
      * Node clean (SEO-friendly) URL
      * 
      * @var    string
@@ -162,7 +125,7 @@ class Category extends \XLite\Model\Base\I18n
      *
      * @Column (type="string", length="255", nullable=false)
      */
-    protected $clean_url = '';
+    protected $cleanUrl = '';
 
     /**
      * Whether to display the category title, or not
@@ -174,7 +137,21 @@ class Category extends \XLite\Model\Base\I18n
      *
      * @Column (type="integer", length="1", nullable=false)
      */
-    protected $show_title = 1;
+    protected $show_title = true;
+
+
+    /**
+     * Some cached flags
+     * 
+     * @var    \XLite\Model\Category\QuickFlags
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     * 
+     * @OneToOne   (targetEntity="XLite\Model\Category\QuickFlags", cascade={"all"})
+     * @JoinColumn (name="category_id", referencedColumnName="category_id")
+     */
+    protected $quickFlags;
 
     /**
      * Many-to-one relation with memberships table
@@ -184,7 +161,7 @@ class Category extends \XLite\Model\Base\I18n
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @ManyToOne (targetEntity="XLite\Model\Membership")
+     * @ManyToOne  (targetEntity="XLite\Model\Membership")
      * @JoinColumn (name="membership_id", referencedColumnName="membership_id")
      */
     protected $membership;
@@ -197,7 +174,7 @@ class Category extends \XLite\Model\Base\I18n
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @ManyToOne (targetEntity="XLite\Model\Image\Category\Image")
+     * @ManyToOne  (targetEntity="XLite\Model\Image\Category\Image")
      * @JoinColumn (name="category_id", referencedColumnName="id")
      */
     protected $image;
@@ -213,18 +190,21 @@ class Category extends \XLite\Model\Base\I18n
      * @OneToMany (targetEntity="XLite\Model\CategoryProducts", mappedBy="category", cascade={"all"})
      * @OrderBy   ({"orderby" = "ASC"})
      */
-    protected $category_products;
+    protected $categoryProducts;
 
     /**
-     * The number of products assigned to the category
-     * (Real-time calculated)
-     *
-     * @var    float
+     * Parent category
+     * 
+     * @var    self
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
+     * @ManyToOne  (targetEntity="XLite\Model\Category")
+     * @JoinColumn (name="parent_id", referencedColumnName="category_id")
      */
-    protected $products_count = 0;
+    protected $parent;
+
 
     /**
      * Check if category has image 
@@ -240,20 +220,6 @@ class Category extends \XLite\Model\Base\I18n
     }
 
     /**
-     * Get subcategories plain list of the category
-     * 
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getSubcategories()
-    {
-        return \XLite\Core\Database::getRepo('XLite\Model\Category')
-            ->getCategoriesPlainList($this->getCategoryId());
-    }
-
-    /**
      * Get the number of subcategories 
      * 
      * @return integer
@@ -263,7 +229,8 @@ class Category extends \XLite\Model\Base\I18n
      */
     public function getSubCategoriesCount()
     {
-        return ($this->getRpos() - $this->getLpos() - 1) / 2;
+        return $this->getQuickFlags()
+            ->{'getSubcategoriesCount' . ($this->getRepository()->getEnabledCondition() ? 'Enabled' : 'All')}();
     }
 
     /**
@@ -276,10 +243,20 @@ class Category extends \XLite\Model\Base\I18n
      */
     public function hasSubcategories()
     {
-        $data = \XLite\Core\Database::getRepo('XLite\Model\Category')
-            ->getCategoryFromHash($this->getCategoryId());
+        return 0 < $this->getSubCategoriesCount();
+    }
 
-        return isset($data) && 0 < $data->getSubCategoriesCount();
+    /**
+     * Return subcategories list
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getSubcategories()
+    {
+        return $this->getRepository()->getSubcategories($this->getCategoryId());
     }
 
     /**
@@ -292,88 +269,25 @@ class Category extends \XLite\Model\Base\I18n
      */
     public function getStringPath()
     {
-        $path = \XLite\Core\Database::getRepo('\XLite\Model\Category')
-            ->getCategoryPath($this->getCategoryId());
-
-        $location = array();
-
-        foreach ($path as $p) {
-            $location[] = $p->name;
-        }
-
-        return implode('/', $location);
+        return implode('/', array_map(
+            function (\XLite\Model\Category $category) { return $category->getName(); },
+            $this->getRepository()->getCategoryPath($this->getCategoryId())
+        ));
     }
 
     /**
-     * Check if category has neither products nor subcategories
-     * 
-     * @return bool
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function isEmpty()
-    {
-        $data = \XLite\Core\Database::getRepo('\XLite\Model\Category')
-            ->getCategoryFromHash($this->getCategoryId());
-
-        return !isset($data) || (0 == $data->getProductsCount() && 0 == $data->getSubCategoriesCount());
-    }
-
-    /**
-     * Check if category exists
-     * 
-     * @return bool
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function isExists()
-    {
-        return 0 < $this->getCategoryId();
-    }
-
-    /**
-     * Get the number of products assigned to the category
+     * Return number of products associated with the category
+     *
+     * TODO: check if result of "getProducts()" is cached by Doctrine
      * 
      * @return int
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getProductsNumber()
+    public function getProductsCount()
     {
-        $data = \XLite\Core\Database::getRepo('\XLite\Model\Category')
-            ->getCategoryFromHash($this->getCategoryId());
-
-        return isset($data) ? $data->getProductsCount() : 0;
-    }
-
-    /**
-     * Calculate indentation for displaying category in the tree 
-     * 
-     * @param int    $multiplier Custom multiplier
-     * @param string $str        String that must be repeated by $multiplier
-     *  
-     * @return int
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getIndentation($multiplier = 0, $str = null)
-    {
-        if (0 < $this->getDepth()) {
-            $depth = $this->getDepth();
-
-        } else {
-            $data = \XLite\Core\Database::getRepo('\XLite\Model\Category')
-                ->getCategoryFromHash($this->getCategoryId());
-            $depth = isset($data) ? $data->getDepth() : 1;
-        }
-
-        $indentation = ($depth - 1) * $multiplier;
-
-        return isset($str) ? str_repeat($str, $indentation) : $indentation;
+        return count($this->getProducts());
     }
 
     /**
@@ -392,6 +306,8 @@ class Category extends \XLite\Model\Base\I18n
         if (!isset($cnd)) {
             $cnd = new \XLite\Core\CommonCell();
         }
+
+        // Main condition for this search
         $cnd->{\XLite\Model\Repo\Product::P_CATEGORY_ID} = $this->getCategoryId();
 
         return \XLite\Core\Database::getRepo('XLite\Model\Product')->search($cnd, $countOnly);

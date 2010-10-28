@@ -28,7 +28,7 @@ From this page, you can build and maintain the store in a very easy way!
             <td colspan=5>&nbsp;</td>
         </tr>
         <tr>
-            <widget template="menu_item.tpl" href="admin.php?target=categories&category_id=0" icon="menu/icon_categories.gif" text="<span class='MainMenuItemHeader'>Categories</span><br>Setup your online catalog structure">
+            <widget template="menu_item.tpl" href="admin.php?target=categories" icon="menu/icon_categories.gif" text="<span class='MainMenuItemHeader'>Categories</span><br>Setup your online catalog structure">
             <td width="1%">&nbsp;&nbsp;</td>
             <widget template="menu_item.tpl" href="admin.php?target=orders_stats" icon="menu/icon_statistics.gif" text="<span class='MainMenuItemHeader'>Statistics</span><br>Review statistics on various aspects of your store's operation">
         </tr>

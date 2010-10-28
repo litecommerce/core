@@ -1025,4 +1025,30 @@ abstract class AController extends \XLite\Core\Handler
     {
         return 'toDelete';
     }
+
+    /**
+     * Return the reserved ID of root category
+     *
+     * @return int
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getRootCategoryId()
+    {
+        return \XLite\Core\Database::getRepo('\XLite\Model\Category')->getRootCategoryId();
+    }
+
+    /**
+     * Return current category Id
+     *
+     * @return int
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCategoryId()
+    {
+        return intval(\XLite\Core\Request::getInstance()->category_id) ?: $this->getRootCategoryId();
+    }
 }

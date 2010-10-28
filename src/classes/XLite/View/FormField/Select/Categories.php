@@ -76,5 +76,23 @@ class Categories extends \XLite\View\FormField\Select\Multiple
     {
         return (bool) \Includes\Utils\Doctrine\Entity::searchInArray($this->getValue(), 'category_id', $categoryId);
     }
+
+    /**
+     * getIndentation 
+     * 
+     * @param \XLite\Model\Category $category   category model object
+     * @param int                   $multiplier level's multiplier
+     *  
+     * @return int
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getIndentation(\XLite\Model\Category $category, $multiplier)
+    {
+        return \XLite\Core\Database::getRepo('\XLite\Model\Category')->getCategoryDepth(
+            $category->getCategoryId()
+        ) * $multiplier - 1;
+    }
 }
 

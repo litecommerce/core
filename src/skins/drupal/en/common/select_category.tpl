@@ -17,7 +17,7 @@
    <option value="" IF="getParam(#rootOption#)" class="CenterBorder">[Root Level]</option>
 	{foreach:getCategories(),key,category}
 	{if:!category.category_id=getParam(#currentCategoryId#)}
-    <option value="{category.category_id:r}" selected="{isCategorySelected(category)}" style="padding-left: {category.getIndentation(15)}px;">{category.name:h}</option>
+    <option value="{category.category_id:r}" selected="{isCategorySelected(category)}" style="padding-left: {getIndentation(category,15)}px;">{category.name:h}</option>
   {end:}
 	{end:}
   <option value="" IF="isDisplayNoCategories()">-- No categories --</option>

@@ -38,22 +38,6 @@ namespace XLite\Controller\Customer;
 class Product extends \XLite\Controller\Customer\Catalog
 {
     /**
-     * Get product category id
-     *
-     * @return int
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getCategoryId()
-    {
-        $categoryId = parent::getCategoryId();
-
-        return $categoryId
-            ? $categoryId
-            : ($this->getProduct() ? $this->getProduct()->getCategoryId() : null);
-    }
-
-    /**
      * Add the base part of the location path
      * 
      * @return void
@@ -91,6 +75,22 @@ class Product extends \XLite\Controller\Customer\Catalog
         return \XLite\Core\Request::getInstance()->product_id;
     }
 
+
+    /**
+     * Get product category id
+     *
+     * @return int
+     * @access public
+     * @since  3.0.0
+     */
+    public function getCategoryId()
+    {
+        $categoryId = parent::getCategoryId();
+
+        return $categoryId
+            ? $categoryId
+            : ($this->getProduct() ? $this->getProduct()->getCategoryId() : null);
+    }
 
     /**
      * getDescription 

@@ -101,7 +101,7 @@ abstract class AProcessor extends \XLite\Base\SuperClass
      * @see    ____func_see____
      * @since  3.0.0
      */
-    abstract public function getRates($order, $ignoreCache= false);
+    abstract public function getRates($order, $ignoreCache = false);
 
     /**
      * Returns processor's shipping methods 

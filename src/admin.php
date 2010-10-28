@@ -14,7 +14,7 @@
  * @since      3.0.0
  */
 
-include_once './top.inc.php';
+include_once __DIR__ . '/top.inc.php';
 
 XLite::getInstance()->run(true)->getViewer()->display();
 

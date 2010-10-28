@@ -3,22 +3,20 @@
 DROP TABLE IF EXISTS xlite_categories;
 CREATE TABLE xlite_categories (
   category_id int(11) unsigned NOT NULL AUTO_INCREMENT,
+  parent_id int(11) NOT NULL DEFAULT '0',
   lpos int(11) NOT NULL DEFAULT '0',
   rpos int(11) NOT NULL DEFAULT '0',
-  depth int(11) NOT NULL DEFAULT '0',
-  views_stats int(11) NOT NULL DEFAULT '0',
-  locked int(1) NOT NULL DEFAULT '0',
   membership_id int(11) DEFAULT '0',
-  threshold_bestsellers int(11) unsigned NOT NULL DEFAULT '1',
   enabled int(1) NOT NULL DEFAULT '1',
-  clean_url varchar(255) NOT NULL DEFAULT '',
+  cleanUrl varchar(255) NOT NULL DEFAULT '',
   show_title int(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (category_id),
-  KEY views_stats (views_stats),
-  KEY membership (membership_id),
-  KEY threshold_bestsellers (threshold_bestsellers),
+  KEY parent_id (parent_id),
+  KEY lpos (lpos),
+  KEY rpos (rpos),
+  KEY membership_id (membership_id),
   KEY enabled (enabled),
-  KEY clean_url (clean_url)
+  KEY clean_url (cleanUrl)
 ) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 DROP TABLE IF EXISTS xlite_category_images;
@@ -49,16 +47,27 @@ CREATE TABLE xlite_category_products (
   KEY xlite_product_links_category (category_id)
 ) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
+DROP TABLE IF EXISTS xlite_category_quick_flags;
+CREATE TABLE xlite_category_quick_flags (
+  id int(11) unsigned NOT NULL AUTO_INCREMENT,
+  category_id int(11) unsigned NOT NULL DEFAULT '0',
+  subcategories_count_all int(11) NOT NULL DEFAULT '0',
+  subcategories_count_enabled int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (id),
+  UNIQUE KEY (category_id),
+  CONSTRAINT `xlite_ck_flags_to_categories` FOREIGN KEY (`category_id`) REFERENCES `xlite_categories` (`category_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
+
 DROP TABLE IF EXISTS xlite_category_translations;
 CREATE TABLE xlite_category_translations (
   label_id int(11) NOT NULL AUTO_INCREMENT,
   code char(2) NOT NULL,
   id int(11) NOT NULL DEFAULT '0',
-  name char(255) NOT NULL,
-  description text NOT NULL,
-  meta_tags varchar(255) NOT NULL DEFAULT '',
-  meta_desc text NOT NULL,
-  meta_title varchar(255) NOT NULL DEFAULT '',
+  name char(255),
+  description text,
+  meta_tags varchar(255) DEFAULT '',
+  meta_desc text,
+  meta_title varchar(255) DEFAULT '',
   PRIMARY KEY (label_id),
   KEY ci (code,id),
   KEY i (id)

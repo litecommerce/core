@@ -102,12 +102,12 @@ Use this section to define additional {if:target=#extra_fields#}global {end:}pro
         <select id="categories_{ef.field_id}" name="extra_fields[{ef.field_id}][categories][]" multiple size=7>
             {foreach:getCategories(),cat}
             	{if:ef.isCategorySelected(cat.category_id)}
-            	<option value="{cat.category_id}" selected style="padding-left: {cat.getIndentation(15)}px;">{cat.stringPath:h}</option>
+            	<option value="{cat.category_id}" selected style="padding-left: {getIndentation(cat,15)}px;">{cat.stringPath:h}</option>
             	{end:}
             {end:}
             {foreach:getCategories(),cat}
             	{if:!ef.isCategorySelected(cat.category_id)}
-            	<option value="{cat.category_id}" style="padding-left: {cat.getIndentation(15)}px;">{cat.stringPath:h}</option>
+            	<option value="{cat.category_id}" style="padding-left: {getIndentation(cat,15)}px;">{cat.stringPath:h}</option>
             	{end:}
             {end:}
         </select><br />
@@ -168,7 +168,7 @@ Use this section to define additional {if:target=#extra_fields#}global {end:}pro
     <td>&nbsp;</td>
     <td>
         <select name="add_categories[]" multiple size=7>
-            <option FOREACH="getCategories(),cat" value="{cat.category_id}" selected="{isCategorySelected(#add_categories#,cat.category_id)}" style="padding-left: {cat.getIndentation(15)}px;">{cat.stringPath:h}</option>
+            <option FOREACH="getCategories(),cat" value="{cat.category_id}" selected="{isCategorySelected(#add_categories#,cat.category_id)}" style="padding-left: {getIndentation(cat,15)}px;">{cat.stringPath:h}</option>
         </select>
     </td>
 </tr>

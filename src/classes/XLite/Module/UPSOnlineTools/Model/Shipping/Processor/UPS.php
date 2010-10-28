@@ -93,16 +93,17 @@ class UPS extends \XLite\Model\Shipping\Processor\AProcessor implements \XLite\B
     }
 
     /**
-     * Returns offline shipping rates 
-     * 
-     * @param \XLite\Model\Order $order Order object
-     *  
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
+     * Returns processor's shipping methods rates
+     *                                           
+     * @param mixed $order       Order object or an array with input data
+     * @param bool  $ignoreCache Flag: if true then do not get rates from cache
+     *                                                                         
+     * @return array                                                           
+     * @access public                                                          
+     * @see    ____func_see____                                                
+     * @since  3.0.0                                                           
      */
-    public function getRates($order)
+    public function getRates($order, $ignoreCache = false)
     {
         $rates = array();
 
