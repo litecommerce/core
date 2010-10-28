@@ -75,16 +75,6 @@ class Product extends \XLite\Model\Repo\Base\I18n
     protected $currentSearchCnd = null;
 
     /**
-     * Search inner cache
-     * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected $searchCache = array();
-
-    /**
      * Return list of handling search params 
      * 
      * @return array
@@ -492,29 +482,21 @@ class Product extends \XLite\Model\Repo\Base\I18n
      */
     public function search(\XLite\Core\CommonCell $cnd, $countOnly = false)
     {
-        $cndHash = serialize($cnd);
+        $queryBuilder = $this->createQueryBuilder();
 
-        if (empty($this->searchCache[$cndHash])) {
+        $this->currentSearchCnd = $cnd;
 
-            $queryBuilder = $this->createQueryBuilder();
-
-            $this->currentSearchCnd = $cnd;
-
-            foreach ($this->currentSearchCnd as $key => $value) {
-                $this->callSearchConditionHandler($value, $key, $queryBuilder);
-            }
-
-            if ($countOnly) {
-                $queryBuilder->select('COUNT(p.product_id)');
-            }
-
-            $this->searchCache[$cndHash] = $queryBuilder->getQuery()->getResult();
-
+        foreach ($this->currentSearchCnd as $key => $value) {
+            $this->callSearchConditionHandler($value, $key, $queryBuilder);
         }
 
-        return $countOnly
-            ? count($this->searchCache[$cndHash])
-            : $this->searchCache[$cndHash];
+        if ($countOnly) {
+            $queryBuilder->select('COUNT(p.product_id)');
+        }
+
+        $result = $queryBuilder->getQuery()->getResult();
+
+        return $countOnly ? count($result) : $result;
     }
 
 
