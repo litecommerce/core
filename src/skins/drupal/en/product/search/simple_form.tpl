@@ -13,6 +13,6 @@
 
 <div class="simple-search-product-form">
   <widget class="\XLite\View\Form\Product\Search\Customer\Main" name="simple_products_search" />
-    <input class="form-text" size=30 name="substring" value="{substring}">
+    <input type="text" class="form-text" size=30 name="substring" value="{substring}">
   <widget name="simple_products_search" end />
 </div>
