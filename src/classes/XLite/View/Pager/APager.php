@@ -486,7 +486,7 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
                 $isDisabled = $isSpecialItem && $isCurrent;
                 $isActive = !$isSelected && !$isOmitedItems && !$isDisabled;
                 $this->pages[$k]['text'] = ($isItem || ($type=='first-page') || ($type=='last-page')) ? ($num+1) : ( $isOmitedItems ? '...' : '&nbsp;' );
-                $this->pages[$k]['page'] = is_null($num) ? null : $num;
+                $this->pages[$k]['page'] = is_null($num) ? null : "page-$num";
                 $this->pages[$k]['href'] = (is_null($num) || $isSelected || $isDisabled) ? null : $this->buildUrlByPageId($num);
 
                 $classes = array(
