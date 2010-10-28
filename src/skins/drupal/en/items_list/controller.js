@@ -78,7 +78,7 @@ ListView.prototype.postprocess = function(isSuccess, initial)
     // Register page click handler
     $('.pager a', this.base).click(
       function() {
-        return !o.load({'pageId': $(this).attr('class')});
+        return !o.load({'pageId': core.getValueFromClass(this, 'page')});
       }
     );
 
