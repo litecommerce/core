@@ -109,7 +109,8 @@
 			<arg line="${buildDir}/src/restoredb demo all" />
 		</exec>
         <exec executable="/usr/local/php-530/bin/php" dir="${buildDir}/src">
-            <arg line="${sourceDir}/.dev/build/build-classes.php" />
+			<arg line="${sourceDir}/src/cart.php" />
+			<!-- <arg line="${sourceDir}/.dev/build/build-classes.php" /> -->
         </exec>
 	</target>
 
