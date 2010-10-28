@@ -298,11 +298,13 @@ window.core = {
   // Return value of variable that is given in comment block: e.g. <!-- 'productid': '100001', 'var': 'value', -->"
   getCommentedData: function(obj, prefix)
   {
-    var children = obj.get(0).childNodes;
-
-    for (var i = 0; i < children.length; i ++) {
-      if (8 === children[i].nodeType) {
-        m = children[i].data.match(new RegExp(prefix + '-([^;]+)(;|$)'));
+    var children = $(obj).get(0).childNodes;
+    var re = new RegExp(prefix + '-([^;]+)(;|$)');
+    var m = false;
+    
+    for (var i = 0; i < children.length && !m; i++) {
+      if (8 === children[i].nodeType && -1 != children[i].data.search(re)) {
+        m = children[i].data.match(re);
       }
     }
 
