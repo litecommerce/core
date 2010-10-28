@@ -215,8 +215,22 @@ window.core = {
       .match(new RegExp(prefix + '-([^ ]+)( |$)'));
 
     return m ? m[1] : null;
+  },
+
+  // Return value of variable that is given in comment block: e.g. <!-- 'productid': '100001', 'var': 'value', -->"
+  getCommentedData: function(obj, prefix)
+  {
+    var children = obj.get(0).childNodes;
+
+    for (var i = 0; i < children.length; i ++) {
+      if (8 === children[i].nodeType) {
+        m = children[i].data.match(new RegExp(prefix + '\': \'([^ ]+)\''));
+      }
+    }
+
+    return m ? m[1] : null;
   }
-  
+
 };
 
 // HTTP requester detection

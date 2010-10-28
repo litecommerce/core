@@ -336,5 +336,17 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
         return $result;
     }
 
+    /** 
+     * Returns CSS classes for the container element
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getListCSSClasses()
+    {
+        return parent::getListCSSClasses() . ' products-search-result';
+    }
 
 }

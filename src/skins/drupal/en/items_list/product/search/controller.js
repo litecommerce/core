@@ -26,7 +26,7 @@ core.bind(
           var o = this;
 
           // handle "Search" button in the search products form
-          if ('search' == core.getValueFromClass(this.base, 'widgettarget')) {
+          if ($(this.base).hasClass('products-search-result')) {
             $('.search-product-form form').unbind('submit').submit(
               function (event)
               {

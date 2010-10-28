@@ -42,6 +42,10 @@ abstract class ARequestHandler extends \XLite\View\AView
      */
     const PARAM_SESSION_CELL = 'sessionCell';
 
+    /**
+     * Key of JS array to send
+     */
+    const WIDGET_CLASS = 'widgetclass';
 
     /**
      * List of so called "request" params - which take values from request (if passed)
@@ -83,11 +87,26 @@ abstract class ARequestHandler extends \XLite\View\AView
      * @return string
      * @access protected
      * @see    ____func_see____
-     * @since  1.0.0
+     * @since  3.0.0
      */
     protected function getWidgetClass()
     {
         return get_class($this);
+    }
+
+    /**
+     * Return data to send to JS
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getJSData()
+    {
+        return array(
+            self::WIDGET_CLASS => $this->getWidgetClass(),
+        );
     }
 
     /**
