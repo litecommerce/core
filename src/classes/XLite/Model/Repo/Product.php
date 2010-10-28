@@ -51,13 +51,18 @@ class Product extends \XLite\Model\Repo\Base\I18n
     const P_ORDER_BY          = 'orderBy';
     const P_LIMIT             = 'limit';
     const P_INCLUDING         = 'including';    
-    const P_BY_TITLE          = 'by_title';
-    const P_BY_DESCR          = 'by_descr';
-    const P_BY_SKU            = 'by_sku';
+    const P_BY_TITLE          = 'byTitle';
+    const P_BY_DESCR          = 'byDescr';
+    const P_BY_SKU            = 'bySKU';
 
-    const INCLUDING_ALL = 'all';
-    const INCLUDING_ANY = 'any';
-    const INCLUDING_PHRASE = 'phrase';
+    const INCLUDING_ALL     = 'all';
+    const INCLUDING_ANY     = 'any';
+    const INCLUDING_PHRASE  = 'phrase';
+
+    const TITLE_FIELD       = 'translations.name';
+    const BRIEF_DESCR_FIELD = 'translations.brief_description';
+    const DESCR_FIELD       = 'translations.description';
+    const SKU_FIELD         = 'p.sku';
 
     /**
      * currentSearchCnd 
@@ -123,51 +128,98 @@ class Product extends \XLite\Model\Repo\Base\I18n
      */
     protected function getSubstringSearchFields()
     {
+        $conditionsBy = $this->getConditionBy();
+
+        $allEmpty = true;
+
+        foreach ($conditionsBy as $conditionBy) {
+            if ('Y' === $this->currentSearchCnd->{$conditionBy}) {
+                $allEmpty = false;
+            }
+        }
+
+        // if ALL parameters is FALSE then we search by ALL parameters
+        if ($allEmpty) {
+            foreach ($conditionsBy as $conditionBy) {
+                $this->currentSearchCnd->{$conditionBy} = 'Y';
+            }
+        }
+
         $result = array();
 
-        if (
-            'Y' !== $this->currentSearchCnd->{self::P_BY_TITLE}
-            && 'Y' !== $this->currentSearchCnd->{self::P_BY_DESCR}
-            && 'Y' !== $this->currentSearchCnd->{self::P_BY_SKU}
-        ) {
+        foreach ($conditionsBy as $conditionBy) {
 
-            $result = array(
-                'p.sku',
-                'translations.name',
-                'translations.brief_description',
-                'translations.description',
-            );
+            $conditionFields = ('Y' === $this->currentSearchCnd->{$conditionBy})
+                ? $this->{'getSubstringSearchFields' . ucfirst($conditionBy)}()
+                : array();
 
-        } else {
-
-            if ('Y' === $this->currentSearchCnd->{self::P_BY_TITLE}) {
-                $result = array(
-                    'translations.name',
-                );
-            }
-
-            if ('Y' === $this->currentSearchCnd->{self::P_BY_DESCR}) {
-                $result = array_merge(
-                    $result,
-                    array(
-                        'translations.brief_description',
-                        'translations.description',
-                    )
-                );
-            }
-
-            if ('Y' === $this->currentSearchCnd->{self::P_BY_SKU}) {
-                $result = array_merge(
-                    $result,
-                    array(
-                        'p.sku',
-                    )
-                );
-            }
-
+            $result = array_merge($result, $conditionFields);
         }
 
         return $result;
+    }
+
+    /**
+     * Return conditions parameters that are responsible for substring set of fields.
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getConditionBy()
+    {
+        return array(
+            self::P_BY_TITLE,
+            self::P_BY_DESCR,
+            self::P_BY_SKU,
+        );
+    }
+
+    /**
+     * Return fields set for title search
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getSubstringSearchFieldsByTitle()
+    {
+        return array(
+            self::TITLE_FIELD,
+        );
+    }
+
+    /**
+     * Return fields set for description search
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getSubstringSearchFieldsByDescr()
+    {
+        return array(
+            self::BRIEF_DESCR_FIELD,
+            self::DESCR_FIELD,
+        );
+    }
+
+    /**
+     * Return fields set for SKU search
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function getSubstringSearchFieldsBySKU()
+    {
+        return array(
+            self::SKU_FIELD,
+        );
     }
 
     /**
