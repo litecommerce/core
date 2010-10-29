@@ -35,7 +35,7 @@ namespace XLite\Core;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Translation extends \XLite\Base\Singleton
+class Translation extends \XLite\Base\Singleton implements \XLite\Base\IREST
 {
     /**
      * Current language code 
@@ -214,5 +214,41 @@ class Translation extends \XLite\Base\Singleton
 
         return $driver;
     }
+
+    /**
+     * Get REST entity names 
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getRESTNames()
+    {
+        return array (
+            'translation',
+        );
+    }
+
+    /**
+     * Get translation as REST 
+     * 
+     * @param string $id        Label name
+     * @param array  $arguments Arguments
+     *  
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getTranslationREST($id, $arguments)
+    {
+        if (!is_array($arguments) || !$arguments) {
+            $arguments = array();
+        }
+
+        return $this->translate($id, $arguments);
+    }
+
 }
 

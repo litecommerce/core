@@ -64,6 +64,19 @@ class Checkout extends \XLite\Controller\Customer\Checkout implements \XLite\Bas
                     array('URL' => $this->getLoginURL())
                 );
                 \XLite\Core\Event::invalidElement('username', $label);
+
+            } elseif (
+                \XLite\Core\Request::getInstance()->email
+                && user_load(array('mail' => \XLite\Core\Request::getInstance()->email))
+            ) {
+
+                // E-mail is already exists in Drupal DB
+                $this->valid = false;
+                $label = $this->t(
+                    'This email address is used for an existing account. Enter another user name or sign in',
+                    array('URL' => $this->getLoginURL())
+                );
+                \XLite\Core\Event::invalidElement('email', $label);
             }
         }
 

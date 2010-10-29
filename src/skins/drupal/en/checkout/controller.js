@@ -155,6 +155,10 @@ CheckoutView.prototype.postprocess = function(isSuccess, initial)
 
     var o = this;
 
+    var refreshStateCallback = function() {
+      o.refreshState();
+    }
+
     // Profile block
 
     // Check and save email
@@ -180,7 +184,9 @@ CheckoutView.prototype.postprocess = function(isSuccess, initial)
           return o.resetAfterSubmit(event);
         }
       )
-      .commonController('submitOnlyChanged', true);
+      .commonController('submitOnlyChanged', true)
+      .bind('invalid', refreshStateCallback)
+      .bind('valid', refreshStateCallback);
 
     $('.profile .create #create_profile_chk', this.base).change(
       function() {
@@ -511,7 +517,7 @@ CheckoutView.prototype.refreshSignificantShippingFields = function(element)
 
 CheckoutView.prototype.refreshState = function()
 {
-  var box = $('.steps', this.base).eq(0);
+  var box = $('.step.current', this.base).eq(0);
 
   // Create profile form is valid
   var isSameAddress = true;
@@ -522,7 +528,7 @@ CheckoutView.prototype.refreshState = function()
 
   var result = !!profileIsCreate;
 
-  if (box.hasClass('step-1')) {
+  if (box.hasClass('shipping-step')) {
 
     // Shipping step
 
@@ -542,18 +548,19 @@ CheckoutView.prototype.refreshState = function()
         if (profileIsCreate) {
           $('.shipping-step .email-not-defined', this.base).hide();
 
-        } else {
+        } else if (!$('#create_profile_email', form).get(0).validate(true) || !$('#create_profile_email', form).val()) {
           $('.shipping-step .email-not-defined', this.base).show();
         }
 
       } else {
+        $('.shipping-step .email-not-defined', this.base).hide();
         $('.shipping-step .address-not-completed', this.base).show();
       }
     }
 
     result = result && profileIsCreate && shippingAddressIsValid && shippingMethodIsSelected;
 
-  } else if (box.hasClass('step-2')) {
+  } else if (box.hasClass('payment-step')) {
 
     // Payment step
 
@@ -567,7 +574,7 @@ CheckoutView.prototype.refreshState = function()
 
     result = result && paymentMethodIsSelected && billingAddressIsCompleted;
 
-  } else if (box.hasClass('step-3')) {
+  } else if (box.hasClass('review-step')) {
 
     // Order review step
 
