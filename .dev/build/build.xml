@@ -195,9 +195,6 @@
 	</target>
 
 	<target name="create-build">
-		<delete>
-			<fileset dir="${buildDir}/.dev" />
-		</delete>
 		<tar destfile="${buildDir}/litecommerce-${version}.${label}-api.tgz" basedir="${buildDir}/api" compression="gzip" />
 		<copy todir="/u/xcart/lc_night_builds" overwrite="true">
 			<fileset dir="${buildDir}/output" />
