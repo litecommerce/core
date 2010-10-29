@@ -101,9 +101,9 @@ class Operator extends AUtils
             } else {
                 header('Location: ' . $location, true, $code);
             }
-
-            exit (0);
         }
+
+        exit (0);
     }
 
     /**
@@ -136,7 +136,7 @@ class Operator extends AUtils
         echo $message;
 
         // Send extra whitespace before flushing
-        if ($dummyFlush) {
+        if ($dummyFlush && 'cli' != PHP_SAPI) {
             echo str_repeat(' ', static::getDummyBufferLength());
         }
 
