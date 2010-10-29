@@ -111,6 +111,14 @@ INSERT INTO xlite_language_label_translations (id, code, label) VALUES (109, 'en
 INSERT INTO xlite_language_label_translations (id, code, label) VALUES (110, 'en', 'This user names is used for an existing account. Enter another user name or <a href="{{URL}}" class="log-in">sign in</a>');
 INSERT INTO xlite_language_label_translations (id, code, label) VALUES (111, 'en', 'I accept <a href="{{URL}}">Terms &amp; Conditions</a>');
 INSERT INTO xlite_language_label_translations (id, code, label) VALUES (112, 'en', 'Place order: {{total}}');
+INSERT INTO xlite_language_label_translations (id, code, label) VALUES (113, 'en', 'Enter a correct email');
+INSERT INTO xlite_language_label_translations (id, code, label) VALUES (114, 'en', 'Enter an integer');
+INSERT INTO xlite_language_label_translations (id, code, label) VALUES (115, 'en', 'Enter a number');
+INSERT INTO xlite_language_label_translations (id, code, label) VALUES (116, 'en', 'Zero cannot be used');
+INSERT INTO xlite_language_label_translations (id, code, label) VALUES (117, 'en', 'Enter a positive number');
+INSERT INTO xlite_language_label_translations (id, code, label) VALUES (118, 'en', 'Enter a negative number');
+INSERT INTO xlite_language_label_translations (id, code, label) VALUES (119, 'en', 'This field is required');
+
 
 -- Language names
 INSERT INTO xlite_language_translations (code, id, name) VALUES ('en',1,'Afar');

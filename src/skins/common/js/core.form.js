@@ -394,12 +394,8 @@ CommonElement.prototype.validate = function(silent, noFocus)
     if (!res.status && res.apply) {
       result = false;
 
-      var label = this.getLabel();
-      if (label) {
-        res.message = res.message.replace(/Field/, '\'' + label + '\' field');
-      }
-
       if (!silent) {
+        res.message = core.t(res.message);
         this.markAsInvalid(res.message, validators[i].key);
 
         if (!noFocus) {
@@ -443,6 +439,10 @@ CommonElement.prototype.markAsInvalid = function(message, key, serverSideError)
 // Unmark element as invalid (validation is passed)
 CommonElement.prototype.unmarkAsInvalid = function()
 {
+  if (this.$element.hasClass('validation-error')) {
+    this.$element.trigger('valid');
+  }
+
   this.$element
     .data('lastValidationError', null)
     .data('lastValidationKey', null)
@@ -787,7 +787,7 @@ CommonElement.prototype.validateEmail = function()
 
   return {
     status:  !apply || !this.element.value.length || this.element.value.search(re) !== -1,
-    message: 'Field is not e-mail address! Please correct',
+    message: 'Enter a correct email',
     apply:   apply
   };
 }
@@ -801,7 +801,7 @@ CommonElement.prototype.validateInteger = function()
 
   return {
     status:  !apply || !this.element.value.length || (!isNaN(value) && value == Math.round(value)),
-    message: 'Field is not integer! Please correct',
+    message: 'Enter an integer',
     apply:   apply
   };
 }
@@ -813,7 +813,7 @@ CommonElement.prototype.validateFloat = function()
 
   return {
     status:  !apply || !this.element.value.length || !isNaN(parseFloat(this.element.value)),
-    message: 'Field is not float! Please correct',
+    message: 'Enter a number',
     apply:   apply
   };
 }
@@ -827,7 +827,7 @@ CommonElement.prototype.validatePositive = function()
 
   return {
     status:  !apply || !this.element.value.length || (!isNaN(value) && 0 <= value),
-    message: 'Field is not positive! Please correct',
+    message: 'Enter a positive number',
     apply:   apply
   };
 }
@@ -841,7 +841,7 @@ CommonElement.prototype.validateNegative = function()
 
   return {
     status:  !apply || !this.element.value.length || (!isNaN(value) && 0 >= value),
-    message: 'Field is not negative! Please correct',
+    message: 'Enter a negative number',
     apply:   apply
   };
 }
@@ -849,11 +849,13 @@ CommonElement.prototype.validateNegative = function()
 // Non-zero number
 CommonElement.prototype.validateNonZero = function()
 {
+  var apply = this.element.constructor == HTMLInputElement || this.element.constructor == HTMLTextAreaElement;
+
   var value = parseFloat(this.element.value);
 
   return {
     status:  !apply || !this.element.value.length || (!isNaN(value) && 0 != value),
-    message: 'Field is zero! Please correct',
+    message: 'Zero cannot be used',
     apply:   apply
   };
 }
@@ -865,7 +867,7 @@ CommonElement.prototype.validateRange = function()
 
   var result = {
     status:  true,
-    message: 'Field is invalid! Please correct',
+    message: 'This field is required',
     apply:   apply
   };
 

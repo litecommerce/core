@@ -38,7 +38,7 @@ namespace XLite\Model\Repo;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Product extends \XLite\Model\Repo\Base\I18n
+class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
 {
     /**
      * Allowable search params 
@@ -570,5 +570,49 @@ class Product extends \XLite\Model\Repo\Base\I18n
         }
 
         return $result;
+    }
+
+    /**
+     * Get REST entity names 
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getRESTNames()
+    {
+        return array (
+            'product',
+        );
+    }
+
+    /**
+     * Get product data as REST 
+     * 
+     * @param integer $id Product id
+     *  
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getProductREST($id)
+    {
+        $product = $this->find($id);
+
+        $data = null;
+
+        if ($product) {
+            foreach ($this->_class->fieldNames as $name) {
+                $mname = 'get' . \XLite\Core\Converter::convertToCamelCase($name);
+                $data[$name] = $product->$mname();
+            }
+
+            $data['name'] = $product->getName();
+            $data['description'] = $product->getDescription();
+        }
+
+        return $data;
     }
 }

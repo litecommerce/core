@@ -254,6 +254,18 @@ window.core = {
     }
 
     // TODO - add request languale label from server-side
+    if (!found) {
+      var loadedLabel = core.rest.get('translation', label, false);
+      if (loadedLabel) {
+        this.languageLabels.push(
+          {
+            name:  label,
+            label: loadedLabel
+          }
+        );
+        label = loadedLabel;
+      }
+    }
 
     if (substitute) {
       for (var i in substitute) {
@@ -262,6 +274,81 @@ window.core = {
     }
 
     return label;
+  },
+
+  rest: {
+
+    lastResponse: null,
+
+    request: function(type, name, id, data, callback)
+    {
+      if (!type || !name) {
+        return false;
+      }
+
+      this.lastResponse = null;
+
+      var xhr = $.ajax(
+        {
+          async: false !== callback,
+          cache: false,
+          complete: function(xhr, status) {
+            return this.callback(xhr, status, callback);
+          },
+          context: this,
+          data: data,
+          timeout: 15000,
+          type: ('get' == type ? 'GET' : 'POST'),
+          url: URLHandler.buildURL(
+            {
+              target: 'rest',
+              action: type,
+              name:   name,
+              id:     id
+            }
+          )
+        }
+      );
+
+      if (false === callback) {
+        xhr = (this.lastResponse && this.lastResponse.status == 'success') ? this.lastResponse.data : null;
+      }
+
+      return xhr;
+    },
+
+    get: function(name, id, callback) {
+      return this.request('get', name, id, null, callback);
+    },
+
+    post: function(name, id, data, callback) {
+      return this.request('post', name, id, data, callback);
+    },
+
+    put: function(name, data, callback) {
+      return this.request('put', name, null, data, callback);
+    },
+
+    delete: function(name, id, callback) {
+      return this.request('delete', name, id, null, callback);
+    },
+
+    callback: function(xhr, status, callback)
+    {
+      try {
+        var data = $.parseJSON(xhr.responseText);
+
+      } catch(e) {
+        var data = null;
+      }
+
+      if (false === callback) {
+        core.rest.lastResponse = data;
+
+      } else if (callback) {
+        callback(xhr, status, data);
+      }
+    }
   },
 
   autoload: function(className)

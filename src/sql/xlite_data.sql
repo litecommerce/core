@@ -689,7 +689,13 @@ INSERT INTO xlite_language_labels (label_id, name) VALUES (109, 'This email addr
 INSERT INTO xlite_language_labels (label_id, name) VALUES (110, 'This user name is used for an existing account. Enter another user name or sign in');
 INSERT INTO xlite_language_labels (label_id, name) VALUES (111, 'I accept Terms and Conditions');
 INSERT INTO xlite_language_labels (label_id, name) VALUES (112, 'Place order X');
-
+INSERT INTO xlite_language_labels (label_id, name) VALUES (113, 'Enter a correct email');
+INSERT INTO xlite_language_labels (label_id, name) VALUES (114, 'Enter an integer');
+INSERT INTO xlite_language_labels (label_id, name) VALUES (115, 'Enter a number');
+INSERT INTO xlite_language_labels (label_id, name) VALUES (116, 'Zero cannot be used');
+INSERT INTO xlite_language_labels (label_id, name) VALUES (117, 'Enter a positive number');
+INSERT INTO xlite_language_labels (label_id, name) VALUES (118, 'Enter a negative number');
+INSERT INTO xlite_language_labels (label_id, name) VALUES (119, 'This field is required');
 
 INSERT INTO xlite_zones VALUES (1,'Default zone (all addresses)',1);
 

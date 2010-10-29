@@ -61,7 +61,7 @@ $(document).ready(
 
       var postprocess = CheckoutView.prototype.postprocess;
 
-      // Add behavior for 'Create new profile' selector
+      // Decorate postprocess method
       CheckoutView.prototype.postprocess = function(isSuccess, initial)
       {
         postprocess.apply(this, arguments);
@@ -72,7 +72,12 @@ $(document).ready(
 
           $('form.create .selector #create_profile_chk', this.base).unbind('click');
 
-          var toggle = function() {
+          var refreshStateCallback = function() {
+            o.refreshState();
+          }
+
+          var toggle = function()
+          {
             var isVisible = 1 == $('.username:visible', this.form).length;
 
             if (this.checked) {
@@ -136,6 +141,31 @@ $(document).ready(
               $('.profile form.create .username-verified', this.base).show();
             }
           }
+
+          $('.profile form.create #create_profile_username', this.base)
+            .bind('invalid', refreshStateCallback)
+            .bind('valid', refreshStateCallback);
+        }
+      }
+
+      var refreshState = CheckoutView.prototype.refreshState;
+
+      // Decorate refreshState method
+      CheckoutView.prototype.refreshState = function()
+      {
+        refreshState.apply(this, arguments);
+
+        var shippingMethodsIsExists = 0 < $('ul.shipping-rates input', this.base).length;
+        if (
+          shippingMethodsIsExists
+          && !$('.shipping-step .address-not-completed:visible', this.base).length
+          && !$('.shipping-step .email-not-defined:visible', this.base).length
+          && (!$('#create_profile_username', this.base).get(0).validate(true) || !$('#create_profile_username', this.base).val())
+        ) {
+          $('.shipping-step .username-not-defined', this.base).show();
+
+        } else {
+          $('.shipping-step .username-not-defined', this.base).hide();
         }
       }
 
