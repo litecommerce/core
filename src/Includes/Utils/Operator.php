@@ -116,7 +116,13 @@ class Operator extends AUtils
      */
     public static function refresh()
     {
-        static::redirect(\Includes\Utils\URLManager::getSelfURL());
+        if ('cli' != PHP_SAPI) {
+            static::redirect(\Includes\Utils\URLManager::getSelfURL());
+        
+        } elseif (!defined('REBUILD_CACHE_SECOND_STEP')) {
+            define('REBUILD_CACHE_SECOND_STEP', 1);
+            static::buildLCCache();
+        }
     }
 
     /**
