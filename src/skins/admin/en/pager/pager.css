@@ -38,7 +38,8 @@ ul.pager li {
   border: 1px solid #fff;
 }
 
-ul.pager li a {
+ul.pager li a,
+ul.pager li span {
   border: 0;
   display: table-cell;
   text-decoration: none;
@@ -55,7 +56,12 @@ ul.pager li:hover {
   border-color: #b1c9e0;
 }
 
-ul.pager li.selected a {
+ul.pager li.disabled
+{
+  display: none;
+}
+
+ul.pager li.selected span {
   background: #869cb1 none;
   color: #fff;
   cursor: text;
@@ -63,25 +69,21 @@ ul.pager li.selected a {
 }
 
 ul.pager li.spacer,
-ul.pager li.furthermost {
+ul.pager li.more-pages {
   border: none;
   width: 0.3em;
 }
 
-ul.pager li.furthermost {
+ul.pager li.more-pages {
   vertical-align: bottom;
 }
 
-ul.pager li.previous {
+ul.pager li.previous-page {
   background: transparent url(images/arrow_pager_left.png) no-repeat center center;
 }
 
-ul.pager li.next {
+ul.pager li.next-page {
   background: transparent url(images/arrow_pager_right.png) no-repeat center center;
-}
-
-ul.pager li.disabled a {
-  cursor: text;
 }
 
 div.pager-items-total {
