@@ -158,6 +158,8 @@ class XLite_Web_Customer_Subcategories extends XLite_Web_Customer_ACustomer
             }
         }
 
+        $this->assertNotNull($category, 'getTestCategory() returned null');
+
         return $category;
 
     }

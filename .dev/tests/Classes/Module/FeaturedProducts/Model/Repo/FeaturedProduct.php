@@ -57,8 +57,9 @@ class XLite_Tests_Module_FeaturedProducts_Model_Repo_FeaturedProduct extends XLi
             foreach ($list as $p) {
                 $p->detach();
             }
-
         }
+
+        $this->assertNotNull($this->product, 'getProduct() returned null, object expected');
 
         return $this->product;
     }
@@ -86,6 +87,8 @@ class XLite_Tests_Module_FeaturedProducts_Model_Repo_FeaturedProduct extends XLi
             \XLite\Core\Database::getEM()->flush();
         }
 
+        $this->assertNotNull($this->category, 'getCategory() returned null, object expected');
+
         return $this->category;
     }
 
@@ -99,6 +102,8 @@ class XLite_Tests_Module_FeaturedProducts_Model_Repo_FeaturedProduct extends XLi
 
         \XLite\Core\Database::getEM()->persist($fProduct);
         \XLite\Core\Database::getEM()->flush();
+
+        $this->assertNotNull($fProduct, 'getTestFeaturedProduct() returned null, object expected');
 
         return $fProduct;
     }

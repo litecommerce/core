@@ -29,7 +29,7 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
     protected $testProfileData = array(
         // Admin profile
         0 => array(
-            'login'         => 'rnd_tester0x@cdev.ru',
+            'login'         => 'rnd_tester01@cdev.ru',
             'password'      => 'testpassword',
             'access_level'  => 100,
             'referer'       => 'some referer',
@@ -37,7 +37,7 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
         ),
         // Customer profile
         1 => array(
-            'login'         => 'rnd_tester0y@cdev.ru',
+            'login'         => 'rnd_tester03@cdev.ru',
             'password'      => 'testpassword',
             'access_level'  => 0,
             'referer'       => 'some referer',
@@ -177,8 +177,6 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
         // Test #1
         $profile = $this->getTestProfile(0, 0);
 
-        $this->assertNotNull($profile, 'Cannot create test profile (0, 0)');
-
         $address = $profile->getBillingAddress();
 
         $this->assertEquals('a0', $address->getFirstname(), 'Wrong billing address selected (set #0)');
@@ -187,8 +185,6 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
 
         // Test #2
         $profile = $this->getTestProfile(0, 1);
-
-        $this->assertNotNull($profile, 'Cannot create test profile (0, 1)');
 
         $address = $profile->getBillingAddress();
 
@@ -199,9 +195,9 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
         // Test #3
         $profile = $this->getTestProfile(0, 2);
 
-        $this->assertNotNull($profile, 'Cannot create test profile (0, 2)');
-
         $address = $profile->getBillingAddress();
+
+        $this->assertNotNull($address, 'Check that address is not null (0,2)');
 
         $this->assertEquals('a0', $address->getFirstname(), 'Wrong billing address selected (set #2)');
 
@@ -209,8 +205,6 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
 
         // Test #4
         $profile = $this->getTestProfile(0, 3);
-
-        $this->assertNotNull($profile, 'Cannot create test profile (0, 3)');
 
         $address = $profile->getBillingAddress();
 
@@ -231,8 +225,6 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
         // Test #1
         $profile = $this->getTestProfile(0, 0);
 
-        $this->assertNotNull($profile, 'Cannot create test profile (0, 0)');
-
         $address = $profile->getShippingAddress();
 
         $this->assertEquals('a0', $address->getFirstname(), 'Wrong shipping address selected (set #0)');
@@ -242,8 +234,6 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
         // Test #2
         $profile = $this->getTestProfile(0, 1);
 
-        $this->assertNotNull($profile, 'Cannot create test profile (0, 1)');
-    
         $address = $profile->getShippingAddress();
 
         $this->assertEquals('a1', $address->getFirstname(), 'Wrong billing address selected (set #1)');
@@ -253,9 +243,9 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
         // Test #3
         $profile = $this->getTestProfile(0, 2);
 
-        $this->assertNotNull($profile, 'Cannot create test profile (0, 2)');
-
         $address = $profile->getShippingAddress();
+
+        $this->assertNotNull($address, 'Check that address is not null (0,2)');
 
         $this->assertEquals('a0', $address->getFirstname(), 'Wrong billing address selected (set #2)');
 
@@ -264,8 +254,6 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
         // Test #4
         $profile = $this->getTestProfile(0, 3);
 
-        $this->assertNotNull($profile, 'Cannot create test profile (0, 3)');
-    
         $address = $profile->getShippingAddress();
 
         $this->assertNull($address, 'Wrong billing address selected (set #3)');
@@ -286,8 +274,6 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
         // Test #1
         $profile = $this->getTestProfile(0, 1);
 
-        $this->assertNotNull($profile, 'Cannot create test profile (0, 1)');
-
         $this->assertEquals(0, $profile->getOrdersCount(), 'orders_count checking');
     }
 
@@ -302,8 +288,6 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
     public function testIsEnabled()
     {
         $profile = $this->getTestProfile(0, 1);
-
-        $this->assertNotNull($profile, 'Cannot create test profile (0, 1)');
 
         $profile->enable();
 
@@ -325,8 +309,6 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
     public function testCreate()
     {
         $profile = $this->getTestProfile(1, 0);
-
-        $this->assertNotNull($profile, 'Cannot create test profile (1, 0)');
 
         foreach ($this->testProfileData[1] as $key => $value) {
             $methodName = 'get' . \XLite\Core\Converter::getInstance()->convertToCamelCase($key);
@@ -359,8 +341,6 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
         // Test #1
         $profile1 = $this->getTestProfile(1, 0);
 
-        $this->assertNotNull($profile1, 'Cannot create test profile (1, 0)');
-
         $profile1->map($this->testProfileData[2]);
 
         $result = $profile1->update();
@@ -389,11 +369,7 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
         
         $profile3 = $this->getTestProfile(0, 0);
 
-        $this->assertNotNull($profile3, 'Cannot create test profile (0, 0)');
-
         $profile4 = $this->getTestProfile(1, 0);
-
-        $this->assertNotNull($profile4, 'Cannot create test profile (1, 0)');
 
         $origLogin = $profile4->getLogin();
         $origProfileId = $profile4->getProfileId();
@@ -422,15 +398,11 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
     {
         $profile = $this->getTestProfile(1, 1);
 
-        $this->assertNotNull($profile, 'Cannot create test profile (1, 1)');
-
         $this->assertFalse($profile->isSameAddress(), 'isSameAddress() expected to be false');
 
         $this->deleteTestProfile($profile->getProfileId());
 
         $profile = $this->getTestProfile(1, 4);
-
-        $this->assertNotNull($profile, 'Cannot create test profile (1, 4)');
 
         $this->assertTrue($profile->isSameAddress(), 'isSameAddress() expected to be true');
     }
@@ -446,8 +418,6 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
     public function testCloneObject()
     {
         $profile = $this->getTestProfile(1, 1);
-
-        $this->assertNotNull($profile, 'Cannot create test profile (1, 1)');
 
         $clonedProfile = $profile->cloneObject();
 
@@ -511,6 +481,8 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
         }
 
         $result = $profile->create();
+
+        $this->assertNotNull($profile, sprintf('Profile creation failed (%d, %d)', $selectedProfileId, $selectedAddressesId));
 
         return $result ? $profile : null;
     }
