@@ -711,7 +711,7 @@ class Profile extends \XLite\Model\AEntity
             $newProfile->addAddresses($newShippingAddress);
         }
 
-        $newProfile->update();
+        $newProfile->update(true);
 
         return $newProfile;
     }
