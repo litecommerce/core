@@ -101,13 +101,12 @@ class XLite_Tests_Module_FeaturedProducts_Model_FeaturedProduct extends XLite_Te
 
         $id = $fp->getId();
 
-        \XLite\Core\Database::getEM()->remove($fp);
-        \XLite\Core\Database::getEM()->flush();
+        $fp->delete();
 
-        $fp = \XLite\Core\Database::getRepo('\XLite\Module\FeaturedProducts\Model\FeaturedProduct')
+        $fp2 = \XLite\Core\Database::getRepo('\XLite\Module\FeaturedProducts\Model\FeaturedProduct')
             ->find($id);
 
-        $this->assertNull($fp, 'Check removed featured link');
+        $this->assertNull($fp2, 'Check removed featured link');
     }
 
     protected function getProduct()
@@ -120,8 +119,9 @@ class XLite_Tests_Module_FeaturedProducts_Model_FeaturedProduct extends XLite_Te
             foreach ($list as $p) {
                 $p->detach();
             }
-
         }
+
+        $this->assertNotNull($this->product, 'getProduct() returned null');
 
         return $this->product;
     }
@@ -148,6 +148,8 @@ class XLite_Tests_Module_FeaturedProducts_Model_FeaturedProduct extends XLite_Te
 
             \XLite\Core\Database::getEM()->flush();
         }
+
+        $this->assertNotNull($this->category, 'getCategory() returned null');
 
         return $this->category;
     }

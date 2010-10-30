@@ -330,7 +330,11 @@ HTML;
 
     protected function getProduct()
     {
-        return \XLite\Core\Database::getRepo('XLite\Model\Product')->findOneByEnabled(true);
+        $result = \XLite\Core\Database::getRepo('XLite\Model\Product')->findOneByEnabled(1);
+
+        $this->assertNotNull($result, 'getProduct() returned null');
+        
+        return $result;
     }
 
     protected function getTestOrder()
