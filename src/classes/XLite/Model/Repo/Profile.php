@@ -583,12 +583,13 @@ class Profile extends \XLite\Model\Repo\ARepo
         return $this->createQueryBuilder('p')
             ->andWhere('p.login = :login')
             ->andWhere('p.profile_id != :profileId')
-            ->andWhere('p.order_id = 0')
+            ->andWhere('p.order_id = :orderId')
             ->setMaxResults(1)
             ->setParameters(
                 array(
                     'login'     => $profile->getLogin(),
-                    'profileId' => $profile->getProfileId() ?: 0
+                    'profileId' => $profile->getProfileId() ?: 0,
+                    'orderId'   => $profile->getOrderId() ?: 0
                 )
             );
     }
