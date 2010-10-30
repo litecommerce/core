@@ -191,7 +191,12 @@ class XLite_Web_Customer_DragNDrop extends XLite_Web_Customer_ACustomer
         $this->skipCoverage();
 
         $product = $this->getActiveProduct();
-        $this->open('store/category//category_id-' . $product->getCategory()->getCategoryId());
+
+        $category = $product->getCategory();
+
+        $this->assertNotNull($category, '$product->getCategory() returned null');
+
+        $this->open('store/category//category_id-' . $category->getCategoryId());
 
         return $product;
     }

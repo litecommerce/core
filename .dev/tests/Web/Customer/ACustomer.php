@@ -67,8 +67,12 @@ class XLite_Web_Customer_ACustomer extends XLite_Web_AWeb
 
     protected function getActiveProduct()
     {
-        return \XLite\Core\Database::getRepo('XLite\Model\Product')
+        $result = \XLite\Core\Database::getRepo('XLite\Model\Product')
             ->findOneByEnabled(true);
+    
+        $this->assertNotNull($result, 'getActiveProduct() returned null');
+
+        return $result;
     }
 
     protected function getActiveProducts()

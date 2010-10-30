@@ -81,6 +81,8 @@ class XLite_Web_Customer_CategoryProducts extends XLite_Web_Customer_AProductLis
             }
         }
 
+        $this->assertNotNull($category, 'getTestCategory() returned null');
+
         return $category;
 
     }

@@ -401,8 +401,13 @@ class Profile extends \XLite\Model\AEntity
                 (\XLite\Model\Address::BILLING == $atype && $address->getIsBilling())
                 || (\XLite\Model\Address::SHIPPING == $atype && $address->getIsShipping())
             ) {
+                // Select address if its type is same as a requested type...
                 $result = $address;
                 break;
+
+            } elseif (!isset($result)) {
+                // ...else select first address
+                $result = $address;
             }
         }
 
