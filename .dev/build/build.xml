@@ -110,11 +110,11 @@
 		</exec>
 		<!-- Rebuild cache: first pass -->
 		<exec executable="/usr/local/php-530/bin/php" dir="${buildDir}/src">
-			<arg line="${sourceDir}/src/cart.php" />
+			<arg line="${buildDir}/src/cart.php" />
 		</exec>
 		<!-- Rebuild cache: second pass -->
         <exec executable="/usr/local/php-530/bin/php" dir="${buildDir}/src">
-			<arg line="${sourceDir}/src/cart.php" />
+			<arg line="${buildDir}/src/cart.php" />
         </exec>
 	</target>
 

@@ -83,7 +83,7 @@ name = "var/log/xlite.log.php"
 level = LOG_DEBUG
 ident = "XLite"
 suppress_errors = Off
-suppress_logging_errors = Off
+suppress_log_errors = Off
 
 ;
 ; Skin details
