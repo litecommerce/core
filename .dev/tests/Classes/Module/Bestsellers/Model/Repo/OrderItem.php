@@ -32,15 +32,15 @@ class XLite_Tests_Module_Bestsellers_Model_Repo_OrderItem extends XLite_Tests_Te
     /**
      *  Product id constants
      */
-    const PR1 = 15090;
-    const PR2 = 16281;
-    const PR3 = 16280;
-    const PR4 = 16282;
+    const PR1 = 4004;
+    const PR2 = 4043;
+    const PR3 = 4045;
+    const PR4 = 4049;
 
     /**
      *  Category id for the PR1 product
      */
-    const CATEGORY = 14015;
+    const CATEGORY = 1002;
 
 
     /**
@@ -92,7 +92,7 @@ class XLite_Tests_Module_Bestsellers_Model_Repo_OrderItem extends XLite_Tests_Te
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function setUp()
+/*    protected function setUp()
     {   
         parent::setUp();
 
@@ -102,7 +102,7 @@ class XLite_Tests_Module_Bestsellers_Model_Repo_OrderItem extends XLite_Tests_Te
 
         \XLite\Core\Database::getEM()->flush();
     }   
-
+ */
     /** 
      * tearDown
      *
@@ -111,7 +111,7 @@ class XLite_Tests_Module_Bestsellers_Model_Repo_OrderItem extends XLite_Tests_Te
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function tearDown()
+/*    protected function tearDown()
     {
         parent::tearDown();
 
@@ -121,7 +121,7 @@ class XLite_Tests_Module_Bestsellers_Model_Repo_OrderItem extends XLite_Tests_Te
 
         \XLite\Core\Database::getEM()->flush();
     }
-
+ */
     /**
      *  Test of bestseller for the root category
      * 
@@ -260,7 +260,7 @@ class XLite_Tests_Module_Bestsellers_Model_Repo_OrderItem extends XLite_Tests_Te
             $p = \XLite\Core\Database::getRepo('XLite\Model\Product')->find($index);
 
             if (!isset($p)) {
-                $this->markTestSkipped('Product #' . $index . ' not found in DB!');
+                $this->assertFalse(true, 'Product #' . $index . ' not found in DB!');
             }
             $item->setProduct($p);
             $item->setAmount($amount);
