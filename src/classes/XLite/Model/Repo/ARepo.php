@@ -868,7 +868,8 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      */
     protected function performInsert(array $data = array())
     {
-        $this->getEntityManager()->persist($entity = new $this->_entityName($data));
+        $entity = new $this->_entityName($data);
+        $this->getEntityManager()->persist($entity);
 
         return $entity;
     }
@@ -903,7 +904,6 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     {
         $this->getEntityManager()->remove($entity);
     }
-
 
     /**
      * Perform some common operations to modify records
