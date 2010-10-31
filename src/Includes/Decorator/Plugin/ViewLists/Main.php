@@ -38,7 +38,42 @@ namespace Includes\Decorator\Plugin\ViewLists;
 class Main extends \Includes\Decorator\Plugin\APlugin
 {
     /**
-     * getMappedPHPClasses 
+     * Predefined tag names
+     */
+
+    const TAG_LIST_CHILD = 'ListChild';
+
+
+    /**
+     * Parameters for the tags
+     */
+
+    const PARAM_TAG_LIST_CHILD_CLASS      = 'class';
+    const PARAM_TAG_LIST_CHILD_LIST       = 'list';
+    const PARAM_TAG_LIST_CHILD_WEIGHT     = 'weight';
+    const PARAM_TAG_LIST_CHILD_FIRST      = 'first';
+    const PARAM_TAG_LIST_CHILD_LAST       = 'last';
+    const PARAM_TAG_LIST_CHILD_CONTROLLER = 'controller';
+    
+
+    /**
+     * There are some reserved words for the "weight" param of the "ListChild" tag
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getReservedWeightValues()
+    {
+        return array(
+            self::PARAM_TAG_LIST_CHILD_FIRST => \XLite\Model\ViewList::POSITION_FIRST,
+            self::PARAM_TAG_LIST_CHILD_LAST  => \XLite\Model\ViewList::POSITION_LAST,
+        );
+    }
+
+    /**
+     * Get list of classes defined the "ListChild" tag
      * 
      * @return array
      * @access protected
@@ -47,16 +82,15 @@ class Main extends \Includes\Decorator\Plugin\APlugin
      */
     protected function getMappedPHPClasses()
     {
-        return array_filter(
-            \Includes\Decorator::getInstance()->getClassesTree()->getIndex(),
+        return static::getClassesTree()->findByCallback(
             function (\Includes\Decorator\DataStructure\ClassData\Node $node) {
-                return !is_null($node->getTag('ListChild'));
+                return !is_null($node->getTag(constant(__CLASS__ . '::TAG_LIST_CHILD')));
             }
         );
     }
 
     /**
-     * getRepo 
+     * Return the model repository for the "\XLite\Model\ViewList" class
      * 
      * @return \XLite\Model\Repo\ViewList
      * @access protected
@@ -69,7 +103,7 @@ class Main extends \Includes\Decorator\Plugin\APlugin
     }
 
     /**
-     * clearAll 
+     * Remove existing lists from database
      * 
      * @return void
      * @access protected
@@ -82,18 +116,165 @@ class Main extends \Includes\Decorator\Plugin\APlugin
     }
 
     /**
-     * handlePHPClasses 
+     * Check the weight-related attributes
+     * 
+     * @param array &$data data to prepare
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function prepareWeightAttrs(array &$data)
+    {
+        // The "weight" attribute has a high priority
+        if (!isset($data[self::PARAM_TAG_LIST_CHILD_WEIGHT])) {
+
+            // "First" and "last" - the reserved keywords for the "weight" attribute values
+            foreach ($this->getReservedWeightValues() as $origKey => $modelKey) {
+
+                if (isset($data[$origKey])) {
+                    $data[self::PARAM_TAG_LIST_CHILD_WEIGHT] = $modelKey;
+                }
+            }
+        }
+
+        // Set default value
+        if (!isset($data[self::PARAM_TAG_LIST_CHILD_WEIGHT])) {
+            $data[self::PARAM_TAG_LIST_CHILD_WEIGHT] = \XLite\Model\ViewList::POSITION_LAST;
+        }
+    }
+
+    /**
+     * Check for so called list "preprocessors"
+     *
+     * @param array &$data data to use
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function preparePreprocessors(array &$data)
+    {
+        if (isset($data[self::PARAM_TAG_LIST_CHILD_CONTROLLER])) {
+            // ...
+        }
+    }
+
+    /**
+     * Check for so called list "preprocessors" in module
+     *
+     * @param array  &$data  data to use
+     * @param string $module module name
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function prepareListByModule(array &$data, $module)
+    {
+        $class  = \Includes\Decorator\Utils\ModulesManager::getClassNameByModuleName($module);
+        $method = 'modifyViewLists';
+
+        if (method_exists($class, $method)) {
+            $class::$method($data);
+        }
+    }
+
+    /**
+     * Prepare attributes of the "ListChild" tag
+     * 
+     * @param array  $data  tag attributes
+     * @param string $class widget class
+     *  
+     * @return array
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function prepareListChildTagData(array $data, $class)
+    {
+        // Set "child" attribute
+        if (isset($class)) {
+            $data['child'] = $class;
+        }
+
+        // Check the weight-related attributes
+        $this->prepareWeightAttrs($data);
+
+        // Check for preprocessors
+        $this->preparePreprocessors($data);
+
+        return $data;
+    }
+
+    /**
+     * Return all defined "ListChild" tag attributes
+     *
+     * @param \Includes\Decorator\DataStructure\ClassData\Node $node class tree node
+     *  
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getAllListChildTagAttributes(\Includes\Decorator\DataStructure\ClassData\Node $node)
+    {
+        $data = array();
+
+        // It's allowed to define several tags per class
+        foreach ($node->getTag(self::TAG_LIST_CHILD) as $attrs) {
+
+            // Prepare attributes and save them into the list
+            $data[] = $this->prepareListChildTagData(
+                $attrs,
+                \Includes\Decorator\Utils\ClassData\Operator::getFinalClass($node->getClass())
+            );
+        }
+
+        return $data;
+    }
+
+    /**
+     * Return all defined "ListChild" tags
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getAllListChildTags()
+    {
+        $data = array();
+
+        // Iterate over all classes which define the "ListChild" tag
+        foreach ($this->getMappedPHPClasses() as $node) {
+
+            // Add tag attributes to the list
+            $data = array_merge($data, $this->getAllListChildTagAttributes($node));
+        }
+
+        // Check modules for the list modifiers
+        // TODO: check if it's really useful
+        foreach (\Includes\Decorator\Utils\ModulesManager::getActiveModules() as $module) {
+            $this->prepareListByModule($data, $module['name']);
+        }
+
+        return $data;
+    }
+
+    /**
+     * Create lists
      * 
      * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function handlePHPClasses()
+    protected function createLists()
     {
-        /* foreach ($this->getMappedPHPClasses() as $node) {
-
-        } */ 
+        $this->getRepo()->insertInBatch($this->getAllListChildTags());
     }
 
 
@@ -111,6 +292,48 @@ class Main extends \Includes\Decorator\Plugin\APlugin
         $this->clearAll();
 
         // Create new
-        $this->handlePHPClasses();
+        $this->createLists();
+    }
+
+    /**
+     * Hook handler to prepare class tags
+     * 
+     * @param array &$matches parser result
+     *  
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function executeHookHandlerPrepareTags(array &$matches)
+    {
+        // Find all self::TAG_LIST_CHILD tags in the class definition
+        if ($keys = array_keys($matches[1], self::TAG_LIST_CHILD)) {
+            $lists = array();
+
+            // preg_match_all() returns numeric keys
+            foreach ($keys as $key) {
+
+                // Parse tag and convert string into hash array
+                $data = \Includes\Decorator\Utils\ClassData\Parser::parseTagValue($matches[2][$key]);
+
+                // Check attributes
+                if (!isset($data[self::PARAM_TAG_LIST_CHILD_LIST])) {
+                    throw new \Exception(
+                        'The "' . self::PARAM_TAG_LIST_CHILD_LIST . '" is required for the "' . self::TAG_LIST_CHILD . '" tag'
+                    );
+                }
+
+                // This tag will contain several defenitions
+                $lists[] = $data;
+
+                // To prevent usage of these keys in "array_combine()" function
+                unset($matches[1][$key], $matches[2][$key]);
+            }
+
+            // So, these are new values to use in "array_combine()" function
+            $matches[1][] = self::TAG_LIST_CHILD;
+            $matches[2][] = $lists;
+        }
     }
 }

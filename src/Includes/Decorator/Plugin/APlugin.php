@@ -35,10 +35,10 @@ namespace Includes\Decorator\Plugin;
  * Available hooks:
  *
  * - required:
- * --- void run()
+ * --- run()
  *
  * - optional:
- * --- array prepareTags(array &$result, array $matches)
+ * --- prepareTags(array &$matches)
  *
  * 
  * @package XLite

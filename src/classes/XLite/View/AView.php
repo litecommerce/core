@@ -1161,7 +1161,7 @@ abstract class AView extends \XLite\Core\Handler
         return \XLite\Core\Database::getRepo('\XLite\Model\ViewList')->findClassList(
             $this->getViewListClass(),
             $list,
-            \XLite::isAdminZone() ? \XLite\Model\ViewList::ADMIN_INTERFACE : \XLite\Model\ViewList::CUSTOMER_INTERFACE
+            \XLite::isAdminZone() ? \XLite\Model\ViewList::INTERFACE_ADMIN : \XLite\Model\ViewList::INTERFACE_CUSTOMER
         );
     }
 

@@ -82,7 +82,7 @@ class ViewList extends \XLite\Model\Repo\ARepo
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function findClassList($class, $list, $zone = \XLite\Model\ViewList::CUSTOMER_INTERFACE)
+    public function findClassList($class, $list, $zone = \XLite\Model\ViewList::INTERFACE_CUSTOMER)
     {
         $data = $this->getFromCache('class_list', array('class' => $class, 'list' => $list, 'zone' => $zone));
         if (!isset($data)) {
@@ -115,4 +115,3 @@ class ViewList extends \XLite\Model\Repo\ARepo
             ->setParameter('zone', $zone);
     }
 }
-

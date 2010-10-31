@@ -58,7 +58,7 @@ abstract class Factory extends \Includes\Pattern\APattern
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getClassHandler($class)
+    protected static function getClassHandler($class)
     {
         if (!isset(static::$classHandlers[$class])) {
             static::$classHandlers[$class] = new \ReflectionClass($class);
@@ -80,7 +80,7 @@ abstract class Factory extends \Includes\Pattern\APattern
      */
     public static function create($class, array $args = array())
     {
-        $handler = $this->getClassHandler($class);
+        $handler = static::getClassHandler($class);
 
         return $handler->hasMethod('__construct') ? $handler->newInstanceArgs($args) : $handler->newInstance();
     }

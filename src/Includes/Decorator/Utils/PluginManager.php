@@ -35,10 +35,10 @@ namespace Includes\Decorator\Utils;
  * Available hooks:
  *
  * - required:
- * --- void run()
+ * --- run()
  *
  * - optional:
- * --- array prepareTags(array &$result, array $matches)
+ * --- prepareTags(array &$matches)
  *
  * 
  * @package XLite
@@ -82,16 +82,6 @@ abstract class PluginManager extends \Includes\Decorator\Utils\AUtils
      * @since  3.0.0
      */
     protected static $plugins;
-
-    /**
-     * Cache of the plugin instances
-     * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected static $instancesCache = array();
 
 
     /**
@@ -148,6 +138,7 @@ abstract class PluginManager extends \Includes\Decorator\Utils\AUtils
     protected static function checkConfigData(array $data)
     {
         if (empty($data[self::SECTION_PLUGINS])) {
+
             throw new \Exception('There is no section "' . self::SECTION_PLUGINS . '" in the "' . self::FILE_INI . '" file');
         }
     }
@@ -172,7 +163,7 @@ abstract class PluginManager extends \Includes\Decorator\Utils\AUtils
                 static::checkConfigData($data);
 
                 // Save plugins list
-                static::$plugins = array_keys(array_filter($data[self::SECTION_PLUGINS]));
+                static::$plugins = array_fill_keys(array_keys(array_filter($data[self::SECTION_PLUGINS])), null);
 
             } else {
 
@@ -186,25 +177,25 @@ abstract class PluginManager extends \Includes\Decorator\Utils\AUtils
     /**
      * Return instance of a plugin
      * 
-     * @param string $plugin plugin name
+     * @param string $name plugin name
      *  
      * @return \Includes\Decorator\Plugin\APlugin
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected static function getPluginInstance($plugin)
+    protected static function getPluginInstance($name)
     {
-        if (!isset(static::$instancesCache[$plugin])) {
+        if (!isset(static::$plugins[$name])) {
 
-            if (!is_subclass_of(static::getPluginClass($plugin), self::CLASS_BASE)) {
-                throw new \Exception('Plugin "' . $plugin . '" does not extend the "' . self::CLASS_BASE . '" class');
+            if (!is_subclass_of(static::getPluginClass($name), self::CLASS_BASE)) {
+                throw new \Exception('Plugin "' . $name . '" does not extend the "' . self::CLASS_BASE . '" class');
             }
 
-            static::$instancesCache[$plugin] = call_user_func(array(static::getPluginClass($plugin), 'getInstance'));
+            static::$plugins[$name] = \Includes\Pattern\Factory::create(static::getPluginClass($name));
         }
 
-        return static::$instancesCache[$plugin];
+        return static::$plugins[$name];
     }
 
     /**
@@ -243,7 +234,7 @@ abstract class PluginManager extends \Includes\Decorator\Utils\AUtils
      *
      * @param string $plugin plugin name
      * @param string $hook   hook name
-     * @param array  $args   handler call arguments  
+     * @param array  &$args  handler call arguments
      *
      * @return void
      * @access protected
@@ -259,8 +250,8 @@ abstract class PluginManager extends \Includes\Decorator\Utils\AUtils
     /**
      * Check and execute hook handlers
      * 
-     * @param string $hook hook name
-     * @param array  $args arguments of the hook handler call
+     * @param string $hook  hook name
+     * @param array  &$args arguments of the hook handler call
      *  
      * @return void
      * @access public
@@ -269,7 +260,7 @@ abstract class PluginManager extends \Includes\Decorator\Utils\AUtils
      */
     public static function invokeHook($hook, array $args = array())
     {
-        foreach (static::getPlugins() as $plugin) {
+        foreach (static::getPlugins() as $plugin => $instance) {
             !static::checkPluginHook($plugin, $hook) ?: static::executeHookHandler($plugin, $hook, $args);
         }
     }

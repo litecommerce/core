@@ -206,7 +206,7 @@ class CacheManager extends \Includes\Decorator\Utils\AUtils
         // Main procedure: instantiate and run Decorator here
         \Includes\Utils\Operator::executeWithCustomMaxExecTime(
             self::TIME_LIMIT,
-            array(\Includes\Decorator::getInstance(), 'buildCache')
+            array(new \Includes\Decorator(), 'buildCache')
         );
 
         // Perform redirect (needed for two-step cache generation)

@@ -141,6 +141,20 @@ class ModulesManager extends AUtils
 
 
     /**
+     * Get class name by module name
+     *
+     * @param string $moduleName module name to use
+     *
+     * @return string
+     * @access public
+     * @since  3.0
+     */
+    public static function getClassNameByModuleName($moduleName)
+    {
+        return '\XLite\Module\\' . $moduleName . '\Main';
+    }
+
+    /**
      * Retrieve module name from class name
      *
      * @param string $className class name to parse

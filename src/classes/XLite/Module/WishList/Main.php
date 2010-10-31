@@ -88,13 +88,16 @@ class Main extends \XLite\Module\AModule
 
     /**
      * Modify view lists 
+     * FIXME - to remove
      * 
+     * @param array $data annotation data
+     *  
      * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function modifyViewLists()
+    public static function modifyViewLists(array &$data)
     {
         $tpls = array(  
             'shopping_cart/parts/item.name.tpl',

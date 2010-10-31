@@ -37,4 +37,19 @@ namespace Includes\Decorator\Utils\ClassData;
  */
 abstract class Operator extends \Includes\Decorator\Utils\ClassData\AClassData
 {
+    /**
+     * Find final class in the classes tree
+     * FIXME
+     * 
+     * @param string $class child class name
+     *  
+     * @return string|null
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getFinalClass($class)
+    {
+        return is_null(static::getClassesTree()->find($class)) ? null : \Includes\Decorator::getFinalClass($class);
+    }
 }

@@ -34,23 +34,30 @@ namespace XLite\Model;
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
+ *
  * @Entity (repositoryClass="\XLite\Model\Repo\ViewList")
- * @Table (name="view_lists", indexes={@index(name="clzw", columns={"class", "list", "zone", "weight"})})
+ * @Table  (name="view_lists",
+ *          indexes={
+ *              @index(name="clzw", columns={"class", "list", "zone", "weight"})
+ *          }
+ * )
  */
 class ViewList extends \XLite\Model\AEntity
 {
     /**
      * Predefined weights 
      */
-    const FIRST_POSITION = 0;
-    const LAST_POSITION = 16777215;
+
+    const POSITION_FIRST = 0;
+    const POSITION_LAST  = 16777215;
 
 
     /**
      * Predefined interfaces
      */
-    const CUSTOMER_INTERFACE = 'customer';
-    const ADMIN_INTERFACE = 'admin';
+
+    const INTERFACE_CUSTOMER = 'customer';
+    const INTERFACE_ADMIN    = 'admin';
 
 
     /**
@@ -60,9 +67,10 @@ class ViewList extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Id
      * @GeneratedValue (strategy="AUTO")
-     * @Column (type="integer", length="11", nullable=false)
+     * @Column         (type="integer", length="11", nullable=false)
      */
     protected $list_id;
 
@@ -73,7 +81,8 @@ class ViewList extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @Column (type="string", length="64", nullable=false)
+     *
+     * @Column (type="string", length="255", nullable=false)
      */
     protected $class = '';
 
@@ -84,7 +93,8 @@ class ViewList extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @Column (type="string", length="64", nullable=false)
+     *
+     * @Column (type="string", length="255", nullable=false)
      */
     protected $list;
 
@@ -95,9 +105,10 @@ class ViewList extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="string", length="16", nullable=false)
      */
-    protected $zone = self::CUSTOMER_INTERFACE;
+    protected $zone = self::INTERFACE_CUSTOMER;
 
     /**
      * Child class name
@@ -106,7 +117,8 @@ class ViewList extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @Column (type="string", length="64", nullable=false)
+     *
+     * @Column (type="string", length="255", nullable=false)
      */
     protected $child = '';
 
@@ -117,6 +129,7 @@ class ViewList extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="integer", length="11", nullable=false)
      */
     protected $weight = 0;
@@ -128,7 +141,8 @@ class ViewList extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @Column (type="string", length="255", nullable=false)
+     *
+     * @Column (type="string", length="1024", nullable=false)
      */
     protected $tpl = '';
 }
