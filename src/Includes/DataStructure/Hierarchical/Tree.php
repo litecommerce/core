@@ -277,7 +277,7 @@ class Tree extends \Includes\DataStructure\Hierarchical\AHierarchical
      *
      * @param string|int $key key to search
      *
-     * @return \Includes\DataStructure\Node\Tree
+     * @return \Includes\DataStructure\Node\Tree|null
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -285,6 +285,21 @@ class Tree extends \Includes\DataStructure\Hierarchical\AHierarchical
     public function find($key)
     {
         return isset($this->index[$key]) ? $this->index[$key] : null;
+    }
+
+    /**
+     * Find nodes using a callback function 
+     * 
+     * @param mixed $callback callback to execute
+     *  
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function findByCallback($callback)
+    {
+        return array_filter($this->index, $callback);
     }
 
     /**

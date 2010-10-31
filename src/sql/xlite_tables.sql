@@ -590,23 +590,12 @@ CREATE TABLE xlite_forms (
 DROP TABLE IF EXISTS xlite_view_lists;
 CREATE TABLE xlite_view_lists (
   list_id int(11) NOT NULL auto_increment PRIMARY KEY,
-  class varchar(64) NOT NULL default '',
-  list varchar(32) NOT NULL default '',
-  child varchar(64) NOT NULL default '',
-  weight int(11) NOT NULL default 0,
-  callback varchar(64) NOT NULL default '',
-  KEY cl (class, list, weight)
-) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
-
-DROP TABLE IF EXISTS xlite_view_lists;
-CREATE TABLE xlite_view_lists (
-  list_id int(11) NOT NULL auto_increment PRIMARY KEY,
-  class varchar(64) NOT NULL default '',
-  list varchar(64) NOT NULL default '',
+  class varchar(255) NOT NULL default '',
+  list varchar(255) NOT NULL default '',
   zone varchar(16) NOT NULL default 'customer',
-  child varchar(64) NOT NULL default '',
+  child varchar(255) NOT NULL default '',
   weight mediumint unsigned NOT NULL default 0,
-  tpl varchar(255) NOT NULL default '',
+  tpl varchar(1024) NOT NULL default '',
   KEY clzw (class, list, zone, weight)
 ) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 

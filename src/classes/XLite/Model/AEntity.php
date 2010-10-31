@@ -69,8 +69,10 @@ abstract class AEntity
      * @since  3.0.0                                                              
      */                                                                           
     public function __construct(array $data = array())                            
-    {                                                                             
-        empty($data) ?: $this->map($data);                                        
+    {
+        if (!empty($data)) {
+            $this->map($data);
+        }
     }
 
     /**
@@ -86,17 +88,18 @@ abstract class AEntity
     public function map(array $data)
     {
         foreach ($data as $key => $value) {
-            $method = 'set' . $this->getMethodName($key);
-            if (method_exists($this, $method)) {
-                // $method is assembled from 'set' + getMethodName()
-                $this->$method($value);
+
+            // Map only existing properties
+            if (property_exists($this, $key)) {
+
+                // Call the "__set()" method
+                $this->$key = $value;
             }
         }
     }
 
     /**
      * Common getter
-     * FIXME - to remove
      * 
      * @param string $name Property name
      *  
@@ -107,13 +110,12 @@ abstract class AEntity
      */
     public function __get($name)
     {
-        // Accessor name assembled into getAccessor() method
+        // Accessor method name
         return $this->{'get' . $this->getMethodName($name)}();
     }
 
     /**
      * Common setter
-     * FIXME - to remove
      * 
      * @param string $name  Property name
      * @param mixed  $value Property value
@@ -125,13 +127,12 @@ abstract class AEntity
      */
     public function __set($name, $value)
     {
-        // Mutator name assembled into getMutator() method
+        // Mutator method name
         return $this->{'set' . $this->getMethodName($name)}($value);
     }
 
     /**
      * Common unset
-     * FIXME - to remove
      *
      * @param string $name Property name
      *

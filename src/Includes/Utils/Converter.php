@@ -77,12 +77,9 @@ class Converter extends AUtils
     {
         $result = array();
 
-        if (1 < count($parts = explode($separator, $query))) {
-            foreach ($parts as $part) {
-                if (1 < count($tokens = explode($glue, trim($part)))) {
-                    $result[$tokens[0]] = trim($tokens[1], $quotes);
-                }
-            }
+        foreach (explode($separator, $query) as $part) {
+            $tokens = explode($glue, trim($part));
+            $result[$tokens[0]] = isset($tokens[1]) ? trim($tokens[1], $quotes) : '';
         }
 
         return $result;

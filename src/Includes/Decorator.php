@@ -37,38 +37,6 @@ namespace Includes;
  */
 class Decorator extends Decorator\ADecorator
 {
-    /**
-     * Classes tree
-     * 
-     * @var    \Includes\Decorator\DataStructure\ClassData\Tree
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected $classesTree;
-
-
-    /**
-     * Return (and initialize, if needed) classes tree
-     *
-     * @return \Includes\Decorator\DataStructure\ClassData\Tree
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getClassesTree()
-    {
-        if (!isset($this->classesTree)) {
-            $this->classesTree = new \Includes\Decorator\DataStructure\ClassData\Tree();
-        }
-
-        return $this->classesTree;
-    }
-
-
-
-
-
     /////////////////////////////// TO REWORK ///////////////////////////////
 
     /**
@@ -174,7 +142,7 @@ class Decorator extends Decorator\ADecorator
      * @access protected
      * @since  3.0
      */
-    protected $classesInfo = array();
+    protected static $classesInfo = array();
 
     /**
      * Class decorators info
@@ -183,7 +151,7 @@ class Decorator extends Decorator\ADecorator
      * @access protected
      * @since  3.0
      */
-    protected $classDecorators = array();
+    protected static $classDecorators = array();
 
     /**
      * List of module dependencies 
@@ -232,15 +200,6 @@ class Decorator extends Decorator\ADecorator
     protected $cacheDriver = null;
 
     /**
-     * View list childs
-     * 
-     * @var    array
-     * @access protected
-     * @since  3.0
-     */
-    protected $viewListChilds = array();
-
-    /**
      * Template patches
      * 
      * @var    array
@@ -248,16 +207,6 @@ class Decorator extends Decorator\ADecorator
      * @since  3.0
      */
     protected $templatePatches = array();
-
-    /**
-     * View lists preprocessors 
-     * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected $viewListPreprocessors = array();
 
     /**
      * Multilanguages classes
@@ -464,8 +413,8 @@ class Decorator extends Decorator\ADecorator
         if (!isset($cache)) {
             $cache = array();
 
-            foreach ($this->classDecorators as $root => $list) {
-                if (isset($this->classesInfo[$root]) && $this->classesInfo[$root][self::INFO_ENTITY]) {
+            foreach (static::$classDecorators as $root => $list) {
+                if (isset(static::$classesInfo[$root]) && static::$classesInfo[$root][self::INFO_ENTITY]) {
                     $cache[] = $root;
                     $cache = array_merge($cache, array_keys($list));
                 }
@@ -530,20 +479,6 @@ class Decorator extends Decorator\ADecorator
     protected function prepareModuleController($class)
     {
         return preg_replace('/\\\XLite\\\(Module\\\[\w]+\\\)Controller(\\\[\w\\\]*)/Ss', '\\\\XLite\\\\Controller$2', $class);
-    }
-
-    /**
-     * Check if current class implements the "\XLite\Base\IViewChild" interface
-     * 
-     * @param string $comment Class comment
-     *  
-     * @return bool
-     * @access protected
-     * @since  3.0
-     */
-    protected function isViewChild($comment)
-    {
-        return (bool)preg_match('/@ListChild\W/Ssi', $comment);
     }
 
     /**
@@ -699,10 +634,10 @@ class Decorator extends Decorator\ADecorator
      */
     protected function createClassTreeFull()
     {
-        foreach ($this->getClassesTree()->getIndex() as $node) {
+        foreach (static::getClassesTree()->getIndex() as $node) {
 
             // Save data
-            $this->classesInfo[$node->__get(self::N_CLASS)] = array(
+            static::$classesInfo[$node->__get(self::N_CLASS)] = array(
                 self::INFO_FILE          => $node->__get(self::N_FILE_PATH),
                 self::INFO_CLASS_ORIG    => $node->__get(self::N_CLASS),
                 self::INFO_EXTENDS       => $node->__get(self::N_PARENT_CLASS),
@@ -711,10 +646,6 @@ class Decorator extends Decorator\ADecorator
                 self::INFO_ENTITY        => !is_null($node->getTag('Entity')),
                 self::INFO_CLASS_COMMENT => ($classComment = $node->__get(self::N_CLASS_COMMENT)),
             );
-
-            if ($this->isViewChild($classComment)) {
-                $this->viewListChilds[$node->__get(self::N_FILE_PATH)] = $node->__get(self::N_CLASS);
-            }
 
             if (in_array('\XLite\Base\IPatcher', $node->__get(self::N_INTERFACES))) {
                 $this->templatePatches[] = $node->__get(self::N_CLASS);
@@ -740,7 +671,7 @@ class Decorator extends Decorator\ADecorator
      */
     protected function normalizeModuleControllerNames()
     {
-        foreach ($this->classesInfo as $class => $info) {
+        foreach (static::$classesInfo as $class => $info) {
 
             // Only rename classes which are not decorates controllers
             if (
@@ -753,23 +684,23 @@ class Decorator extends Decorator\ADecorator
                 $newClass = $this->prepareModuleController($class);
 
                 // Error - such controller is already defined in LC core or in other module
-                if (isset($this->classesInfo[$newClass])) {
+                if (!is_null(static::getClassesTree()->find($newClass))) {
                     echo (sprintf(self::CONTROLLER_ERR_MSG, \Includes\Decorator\Utils\ModulesManager::getModuleNameByClassName($class), $class));
                     die (1);
                 }
 
                 // Rename and save data
-                $this->classesInfo[$newClass] = array_merge($info, array(self::INFO_CLASS => $newClass));
-                unset($this->classesInfo[$class]);
+                static::$classesInfo[$newClass] = array_merge($info, array(self::INFO_CLASS => $newClass));
+                unset(static::$classesInfo[$class]);
                 $this->normalizedControllers[$class] = $newClass;
             }
         }
 
         // Rename classes in the "INFO_EXTENDS" field
-        foreach ($this->classesInfo as $class => $info) {
+        foreach (static::$classesInfo as $class => $info) {
 
             if (isset($this->normalizedControllers[$info[self::INFO_EXTENDS]])) {
-                $this->classesInfo[$class][self::INFO_EXTENDS]
+                static::$classesInfo[$class][self::INFO_EXTENDS]
                     = $this->normalizedControllers[$info[self::INFO_EXTENDS]];
             }
         }
@@ -784,26 +715,26 @@ class Decorator extends Decorator\ADecorator
      */
     protected function createDecoratorTree()
     {
-        foreach ($this->classesInfo as $class => $info) {
+        foreach (static::$classesInfo as $class => $info) {
 
             if ($info[self::INFO_IS_DECORATOR]) {
 
                 // Create new node
-                if (!isset($this->classDecorators[$info[self::INFO_EXTENDS]])) {
-                    $this->classDecorators[$info[self::INFO_EXTENDS]] = array();
+                if (!isset(static::$classDecorators[$info[self::INFO_EXTENDS]])) {
+                    static::$classDecorators[$info[self::INFO_EXTENDS]] = array();
                 }
 
                 // Save class name and its priority (equals to module priority)
-                $this->classDecorators[$info[self::INFO_EXTENDS]][$class] = $this->getModulePriority(
+                static::$classDecorators[$info[self::INFO_EXTENDS]][$class] = $this->getModulePriority(
                     \Includes\Decorator\Utils\ModulesManager::getModuleNameByClassName($class)
                 );
             }
 
             // These fields are not needed
             if (empty($info[self::INFO_EXTENDS])) {
-                unset($this->classesInfo[$class][self::INFO_EXTENDS]);
+                unset(static::$classesInfo[$class][self::INFO_EXTENDS]);
             }
-            unset($this->classesInfo[$class][self::INFO_IS_DECORATOR]);
+            unset(static::$classesInfo[$class][self::INFO_IS_DECORATOR]);
         }
     }
 
@@ -816,7 +747,7 @@ class Decorator extends Decorator\ADecorator
      */
     protected function mergeClassAndDecoratorTrees()
     {
-        foreach ($this->classDecorators as $class => $decorators) {
+        foreach (static::$classDecorators as $class => $decorators) {
 
             // Sort decorated classes by module priority and invert decorator chain
             arsort($decorators, SORT_NUMERIC);
@@ -826,28 +757,28 @@ class Decorator extends Decorator\ADecorator
 
             // Each decorator class extends a next one in decorator chain
             foreach ($decorators as $decorator) {
-                $this->classesInfo[$currentClass][self::INFO_EXTENDS] = $decorator;
+                static::$classesInfo[$currentClass][self::INFO_EXTENDS] = $decorator;
                 $currentClass = $decorator;
             }
 
             // So called "root" class - class extended by decorators
             $rootClass = $class . self::ROOT_CLASS_SUFFIX;
 
-            $this->classesInfo[$currentClass][self::INFO_EXTENDS] = $rootClass;
-            $this->classesInfo[$class][self::INFO_IS_ROOT_CLASS] = true;
+            static::$classesInfo[$currentClass][self::INFO_EXTENDS] = $rootClass;
+            static::$classesInfo[$class][self::INFO_IS_ROOT_CLASS] = true;
 
             // Wrong class name
-            if (!isset($this->classesInfo[$class][self::INFO_FILE])) {
+            if (!isset(static::$classesInfo[$class][self::INFO_FILE])) {
                 echo (sprintf(self::UNDEFINED_CLASS_MSG, $class));
                 die (2);
             }
 
             // Assign new (reserved) name to root class and save other info
-            $this->classesInfo[$rootClass] = array(
-                self::INFO_FILE         => $this->classesInfo[$class][self::INFO_FILE],
+            static::$classesInfo[$rootClass] = array(
+                self::INFO_FILE         => static::$classesInfo[$class][self::INFO_FILE],
                 self::INFO_CLASS        => $rootClass,
                 self::INFO_CLASS_ORIG   => $class,
-                self::INFO_EXTENDS_ORIG => $this->classesInfo[$class][self::INFO_EXTENDS_ORIG],
+                self::INFO_EXTENDS_ORIG => static::$classesInfo[$class][self::INFO_EXTENDS_ORIG],
                 self::INFO_CLASS_TYPE   => 'abstract',
             );
         }
@@ -895,7 +826,7 @@ class Decorator extends Decorator\ADecorator
         $this->mergeClassAndDecoratorTrees();
 
         // Write file to the cache directory
-        foreach ($this->classesInfo as $class => $info) {
+        foreach (static::$classesInfo as $class => $info) {
             $this->writeClassFile($class, $info);
         }
 
@@ -912,7 +843,7 @@ class Decorator extends Decorator\ADecorator
         \Includes\Decorator\Utils\PluginManager::invokeHook('run');
 
         // Regenerate view lists
-        $this->regenerateViewLists();
+        $this->assembleTemplateLists();
 
         // Collect patches to DB
         $this->collectPatches();
@@ -920,7 +851,7 @@ class Decorator extends Decorator\ADecorator
         // Store files in APC
         if (function_exists('apc_compile_file')) {
             apc_clear_cache();
-            foreach ($this->classesInfo as $class => $info) {
+            foreach (static::$classesInfo as $class => $info) {
                 apc_compile_file(LC_CLASSES_CACHE_DIR . $this->getFileByClass($class));
             }
         }
@@ -1234,26 +1165,26 @@ PHP;
     {
         foreach ($this->multilangs as $class) {
 
-            $decorated = isset($this->classDecorators[$class]);
-            $fn = LC_CLASSES_CACHE_DIR . $this->classesInfo[$class]['file'];
-            if (isset($this->classDecorators[$class])) {
+            $decorated = isset(static::$classDecorators[$class]);
+            $fn = LC_CLASSES_CACHE_DIR . static::$classesInfo[$class]['file'];
+            if (isset(static::$classDecorators[$class])) {
                 $fn = preg_replace('/\.php/S', 'Abstract$0', $fn);
             }
 
             $tclass = $class . 'Translation';
-            if (!isset($this->classesInfo[$tclass])) {
+            if (!isset(static::$classesInfo[$tclass])) {
                 // TODO - add error logging
                 continue;
             }
 
-            $tfn = LC_CLASSES_CACHE_DIR . $this->classesInfo[$tclass]['file'];
-            if (isset($this->classDecorators[$tclass])) {
+            $tfn = LC_CLASSES_CACHE_DIR . static::$classesInfo[$tclass]['file'];
+            if (isset(static::$classDecorators[$tclass])) {
                 $tfn = preg_replace('/\.php/S', 'Abstract$0', $tfn);
             }
 
             $tfiles = array($tfn);
-            if (isset($this->classDecorators[$tclass])) {
-                foreach ($this->classDecorators[$tclass] as $f) {
+            if (isset(static::$classDecorators[$tclass])) {
+                foreach (static::$classDecorators[$tclass] as $f) {
                     $tfiles[] = LC_CLASSES_CACHE_DIR . $f['file'];
                 }
             }
@@ -1414,9 +1345,9 @@ DATA;
 
         if (preg_match_all('/^\s+(?:protected|public|private)\s+\$\S+/Sm', $data, $match)) {
             $match = array_pop($match[0]);
-            $pos = strpos($data, $match);
-            $pos = strpos($data, ';', $pos) + 1;
-            $data = substr($data, 0, $pos) . "\n\n" . $block . substr($data, $pos);
+            $pos   = strpos($data, $match);
+            $pos   = strpos($data, ';', $pos) + 1;
+            $data  = substr($data, 0, $pos) . "\n\n" . $block . substr($data, $pos);
 
         } else {
             $data = preg_replace('/\s+class\s+[^{]+{\s+/Ss', '$0' . $block, $data);
@@ -1446,79 +1377,20 @@ DATA;
     }
 
     /**
-     * Regenerate view lists 
+     * getViewListChildren 
      * 
-     * @return void
+     * @return array
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function regenerateViewLists()
+    protected function getViewListChildren()
     {
-        $this->viewListPreprocessors = array();
-
-        // Create new
-        foreach ($this->viewListChilds as $relativePath => $class) {
-
-            $class = $this->getFinalClass($class);
-
-            if (!$class) {
-                continue;
+        return static::getClassesTree()->findByCallback(
+            function (\Includes\Decorator\DataStructure\ClassData\Node $node) {
+                return !is_null($node->getTag('ListChild'));
             }
-
-            $comment = $this->getClassComment(file_get_contents(LC_CLASSES_CACHE_DIR . $relativePath));
-
-            foreach ($this->getListChildsByComment(substr(trim($comment), 0, -2)) as $list) {
-
-                if (isset($list['class']) && !isset($this->classesInfo[$list['class']])) {
-                    $this->addDecorationError(
-                        LC_CLASSES_CACHE_DIR . $relativePath,
-                        'Class ' . $list['class'] . ' is not found (specified in @ListChild comment attribute)'
-                    );
-
-                } else {
-
-                    \XLite\Core\Database::getEM()->persist(
-                        $this->createViewList($list, $class)
-                    );
-                }
-            }
-        }
-
-        // Assemble anniotaions from templates
-        $this->assembleTemplateLists();
-
-        \XLite\Core\Database::getEM()->flush();
-
-        // Global modules preprocessing
-        foreach (array_keys($this->classesInfo) as $class) {
-            if (preg_match('/^\\\XLite\\\Module\\\[\w]+\\\Main$$/', $class) && method_exists($class, 'modifyViewLists')) {
-                $class::modifyViewLists();
-            }
-        }
-
-        // Static preprocessing
-        foreach ($this->viewListPreprocessors as $class => $lists) {
-            foreach ($lists as $list => $preprocessors) {
-                $data = \XLite\Core\Database::getQB()
-                    ->select('v')
-                    ->from('ViewList', 'v')
-                    ->where('v.class = :class AND v.list = :list')
-                    ->setParameters(array('class' => $class, 'list' => $list))
-                    ->getQuery()
-                    ->getResult();
-
-                if ($data) {
-                    foreach ($preprocessors as $preprocessor) {
-                        $preprocessor[0]::$preprocessor[1]($data);
-                    }
-                }
-            }
-        }
-
-        \XLite\Core\Database::getEM()->flush();
-
-        $this->viewListPreprocessors = array();
+        );
     }
 
     /**
@@ -1550,16 +1422,16 @@ DATA;
         }
 
         if (isset($list['first'])) {
-            $viewList->weight = $viewList::FIRST_POSITION;
+            $viewList->weight = $viewList::POSITION_FIRST;
 
         } elseif (isset($list['last']) || !isset($list['weight'])) {
-            $viewList->weight = $viewList::LAST_POSITION;
+            $viewList->weight = $viewList::POSITION_LAST;
 
         } else {
             $viewList->weight = min(
-                $viewList::LAST_POSITION,
+                $viewList::POSITION_LAST,
                 max(
-                    $viewList::FIRST_POSITION,
+                    $viewList::POSITION_FIRST,
                     intval($list['weight'])
                 )
             );
@@ -1567,31 +1439,6 @@ DATA;
 
         if ($class) {
             $viewList->child = $class;
-        }
-
-        if (isset($list['controller']) && $list['controller']) {
-            $tmp = explode('::', $list['controller'], 2);
-
-            $preprocessor = false;
-
-            if ($tmp[0] && !isset($tmp[1]) && $class) {
-                $preprocessor = array($class, $list['controller']);
-
-            } elseif ($tmp[0] && isset($tmp[1]) && $tmp[1] && isset($this->classesInfo[$tmp[0]])) {
-                $preprocessor = $tmp;
-            }
-
-            if ($preprocessor) {
-                if (!isset($this->viewListPreprocessors[$list['class']])) {
-                    $this->viewListPreprocessors[$list['class']] = array();
-                }
-
-                if (!isset($this->viewListPreprocessors[$list['class']][$list['list']])) {
-                    $this->viewListPreprocessors[$list['class']][$list['list']] = array();
-                }
-
-                $this->viewListPreprocessors[$list['class']][$list['list']][] = $preprocessor;
-            }
         }
 
         return $viewList;
@@ -1657,6 +1504,8 @@ DATA;
                 }
             }
         }
+
+        \XLite\Core\Database::getEM()->flush();
     }
 
     /**
@@ -1676,12 +1525,12 @@ DATA;
             $path = substr($path, strlen(LC_SKINS_DIR));
             $tmp = explode(LC_DS, $path);
             $zone = 'admin' == $tmp[0]
-                ? \XLite\Model\ViewList::ADMIN_INTERFACE
-                : \XLite\Model\ViewList::CUSTOMER_INTERFACE;
+                ? \XLite\Model\ViewList::INTERFACE_ADMIN
+                : \XLite\Model\ViewList::INTERFACE_CUSTOMER;
 
             foreach ($this->getListChildsByComment(trim($match[1])) as $list) {
 
-                if (isset($list['class']) && !isset($this->classesInfo[$list['class']])) {
+                if (isset($list['class']) && !isset(static::$classesInfo[$list['class']])) {
 
                     $this->addDecorationError(
                         $path,
@@ -1700,6 +1549,8 @@ DATA;
                     \XLite\Core\Database::getEM()->persist($viewList);
                 }
             }
+
+            \XLite\Core\Database::getEM()->flush();
         }
     }
 
@@ -1770,29 +1621,24 @@ DATA;
      * @param string $class Class-decorator
      *  
      * @return string
-     * @access protected
+     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getFinalClass($class)
+    public static function getFinalClass($class)
     {
-        if (!isset($this->classesInfo[$class])) {
-
-            // Class not found
-            $result = null;
-
-        } elseif (isset($this->classDecorators[$class])) {
+        if (isset(static::$classDecorators[$class])) {
 
             // Class already final
             $result = $class;
 
         } elseif (
-            $this->classesInfo[$class][self::INFO_EXTENDS_ORIG] != $this->classesInfo[$class][self::INFO_EXTENDS]
-            && isset($this->classDecorators[$this->classesInfo[$class][self::INFO_EXTENDS_ORIG]])
+            static::$classesInfo[$class][self::INFO_EXTENDS_ORIG] != static::$classesInfo[$class][self::INFO_EXTENDS]
+            && isset(static::$classDecorators[static::$classesInfo[$class][self::INFO_EXTENDS_ORIG]])
         ) {
 
             // Class is decorator
-            $result = $this->classesInfo[$class][self::INFO_EXTENDS_ORIG];
+            $result = static::$classesInfo[$class][self::INFO_EXTENDS_ORIG];
 
         } else {
             $result = $class;

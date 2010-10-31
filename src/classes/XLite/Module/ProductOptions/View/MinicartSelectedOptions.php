@@ -34,6 +34,7 @@ namespace XLite\Module\ProductOptions\View;
  * @package XLite
  * @see     ____class_see____
  * @since   3.0
+ *
  * @ListChild (list="minicart.horizontal.item", weight="15")
  * @ListChild (list="minicart.vertical.item", weight="15")
  */

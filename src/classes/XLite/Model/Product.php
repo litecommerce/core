@@ -37,15 +37,15 @@ namespace XLite\Model;
  * 
  * @Entity (repositoryClass="\XLite\Model\Repo\Product")
  * @Table  (name="products",
- *         indexes={
+ *          indexes={
  *              @Index(name="price", columns={"price"}),
  *              @Index(name="sku", columns={"sku"}),
  *              @Index(name="enabled", columns={"enabled"}),
- *              @Index(name="weight", columns={"weight"}),
+*               @Index(name="weight", columns={"weight"}),
  *              @Index(name="tax_class", columns={"tax_class"}),
  *              @Index(name="free_shipping", columns={"free_shipping"}),
  *              @Index(name="clean_url", columns={"clean_url"})
- *         }
+ *          }
  * )
  */
 class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrderItem

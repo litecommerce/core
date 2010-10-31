@@ -49,6 +49,19 @@ class Node extends \Includes\DataStructure\Node\Tree
 
 
     /**
+     * Alias
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getClass()
+    {
+        return $this->getKey();
+    }
+
+    /**
      * Get tag value from class comment
      * 
      * @param string $name tag name

@@ -139,6 +139,9 @@ abstract class Parser extends \Includes\Decorator\Utils\ClassData\AClassData
      */
     protected static function prepareTags(array $matches)
     {
+        // Invoke plugins
+        \Includes\Decorator\Utils\PluginManager::invokeHook('prepareTags', array(&$matches));
+
         return array_combine(array_map('strtolower', $matches[1]), $matches[2]);
     }
 

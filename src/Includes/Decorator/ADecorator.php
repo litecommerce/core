@@ -35,7 +35,7 @@ namespace Includes\Decorator;
  * @see        ____class_see____
  * @since      3.0.0
  */
-abstract class ADecorator extends \Includes\Pattern\Singleton
+abstract class ADecorator
 {
     /**
      * Indexes in "classesInfo" array
@@ -66,4 +66,33 @@ abstract class ADecorator extends \Includes\Pattern\Singleton
     const N_PARENT_CLASS  = 'parentClass';
     const N_INTERFACES    = 'interfaces';
     const N_FILE_PATH     = 'filePath';
+
+
+    /**
+     * Classes tree
+     *
+     * @var    \Includes\Decorator\DataStructure\ClassData\Tree
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected static $classesTree;
+
+
+    /**
+     * Return (and initialize, if needed) classes tree
+     *
+     * @return \Includes\Decorator\DataStructure\ClassData\Tree
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function getClassesTree()
+    {
+        if (!isset(static::$classesTree)) {
+            static::$classesTree = new \Includes\Decorator\DataStructure\ClassData\Tree();
+        }
+
+        return static::$classesTree;
+    }
 }

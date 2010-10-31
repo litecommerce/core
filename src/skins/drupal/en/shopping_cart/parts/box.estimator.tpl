@@ -12,7 +12,7 @@
  * @ListChild (list="cart.panel.box", weight="10")
  *}
 <div class="estimator">
-  {if:isShippingEstimate()}
+  {if:isShippingEstimate()&cart.shippingMethod}
 
     <ul>
       <li><span>{t(#Shipping#)}:</span> {cart.shippingMethod.getName():h} ({formatPrice(getShippingCost(),cart.getCurrency())})</li>
