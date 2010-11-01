@@ -1684,6 +1684,10 @@ function change_config(&$params)
         $_params['mysqlport'] = '';
     }
 
+    if (!isset($_params['mysqlsock'])) {
+        $_params['mysqlsock'] = '';
+    }
+
     // check whether the authcode is set in params. 
 
     $new_config = '';
