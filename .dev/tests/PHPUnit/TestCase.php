@@ -221,6 +221,7 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
         } catch (\Doctrine\ORM\ORMException $e) {
             if ('The EntityManager is closed.' == $e->getMessage()) {
                 \XLite\Core\Database::getInstance()->startEntityManager();
+                xlite(true);
 
             } else {
                 throw $e;

@@ -37,6 +37,8 @@ namespace XLite\Controller\Customer;
  */
 class Checkout extends \XLite\Controller\Customer\Cart
 {
+    protected $requestData;
+
     /**
      * Check for order min/max total 
      * 
@@ -120,6 +122,9 @@ class Checkout extends \XLite\Controller\Customer\Cart
      */
     protected function doActionUpdateProfile()
     {
+        $form = new \XLite\View\Form\Checkout\UpdateProfile;
+        $this->requestData = $form->getRequestData();
+
         $this->updateProfile();
         $this->updateShippingAddress();
         $this->updateBillingAddress();
@@ -135,16 +140,14 @@ class Checkout extends \XLite\Controller\Customer\Cart
      */
     protected function updateProfile()
     {
-        $login = \XLite\Core\Request::getInstance()->email;
+        $login = $this->requestData['email'];
 
         if (isset($login)) {
             $tmpProfile = new \XLite\Model\Profile;
             $tmpProfile->setProfileId(0);
             $tmpProfile->setLogin($login);
 
-            $request = \XLite\Core\Request::getInstance();
-
-            $profile = $request->create_profile
+            $profile = $this->requestData['create_profile']
                 ? \XLite\Core\Database::getRepo('XLite\Model\Profile')->findUserWithSameLogin($tmpProfile)
                 : null;
 
@@ -179,7 +182,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
 
                 $this->getCart()->setProfile($profile);
 
-                \XLite\Core\Session::getInstance()->order_create_profile = (bool)$request->create_profile;
+                \XLite\Core\Session::getInstance()->order_create_profile = (bool)$this->requestData['create_profile'];
                 $this->getCart()->setOrigProfile($profile);
 
                 \XLite\Core\Database::getEM()->flush();
@@ -197,56 +200,33 @@ class Checkout extends \XLite\Controller\Customer\Cart
      */
     protected function updateShippingAddress()
     {
-        $data = \XLite\Core\Request::getInstance()->shippingAddress;
-        $profile = $this->getCartProfile();
+        $data = $this->requestData['shippingAddress'];
 
         if (is_array($data)) {
+            $profile = $this->getCartProfile();
             $address = $profile->getShippingAddress();
             $andAsBilling = false;
 
-            if (!$address || \XLite\Core\Request::getInstance()->save_as_new) {
+            if (!$address || $data['save_as_new']) {
                 if ($address) {
                     $andAsBilling = $address->getIsBilling();
                     $address->setIsBilling(false);
                     $address->setIsShipping(false);
-                    \XLite\Core\Database::getEM()->persist($address);
                 }
                 $address = new \XLite\Model\Address;
                 $address->setProfile($profile);
                 $address->setIsShipping(true);
                 $address->setIsBilling($andAsBilling);
                 $profile->addAddresses($address);
+                \XLite\Core\Database::getEM()->persist($address);
             }
 
-            // State preprocess
-            if (isset($data['state'])) {
-                if (isset($data['is_custom_state']) && $data['is_custom_state']) {
-                    $data['custom_state'] = $data['state'];
-                    $data['state_id'] = 0;
-
-                } else {
-                    $data['custom_state'] = '';
-                    $data['state_id'] = $data['state'];
-                }
-
-                unset($data['state']);
-            }
-
-            // Country preprocess
-            if (isset($data['country'])) {
-                $data['country_code'] = $data['country'];
-                unset($data['country']);
-            }
-
-            $address->map($data);
+            $address->map($this->prepareAddressData($data));
 
             if (!$profile->getBillingAddress()) {
                 // Same address as default behavior
                 $address->setIsBilling(true);
             }
-
-            \XLite\Core\Database::getEM()->persist($address);
-            \XLite\Core\Database::getEM()->flush();
 
             $this->updateCart();
 
@@ -264,10 +244,10 @@ class Checkout extends \XLite\Controller\Customer\Cart
      */
     protected function updateBillingAddress()
     {
-        $data = \XLite\Core\Request::getInstance()->billingAddress;
+        $data = $this->requestData['billingAddress'];
         $profile = $this->getCartProfile();
 
-        if (\XLite\Core\Request::getInstance()->same_address) {
+        if ($this->requestData['same_address']) {
 
             // Shipping and billing are same addresses
             $address = $profile->getBillingAddress();
@@ -275,7 +255,6 @@ class Checkout extends \XLite\Controller\Customer\Cart
 
                 // Unselect old billing address
                 $address->setIsBilling(false);
-                \XLite\Core\Database::getEM()->persist($address);
             }
 
             $address = $profile->getShippingAddress();
@@ -283,71 +262,44 @@ class Checkout extends \XLite\Controller\Customer\Cart
     
                 // Link shipping and billing address
                 $address->setIsBilling(true);
-                \XLite\Core\Database::getEM()->persist($address);
-                \XLite\Core\Database::getEM()->flush();
 
             } else {
                 $this->valid = false;
             }
 
         } elseif (
-            isset(\XLite\Core\Request::getInstance()->same_address)
-            && !\XLite\Core\Request::getInstance()->same_address
+            isset($this->requestData['same_address'])
+            && !$this->requestData['same_address']
         ) {
 
             // Unlink shipping and billing addresses 
             $address = $profile->getShippingAddress();
             if ($address && $address->getIsBilling()) {
                 $address->setIsBilling(false);
-                \XLite\Core\Database::getEM()->persist($address);
-                \XLite\Core\Database::getEM()->flush();
             }
         }
 
-        if (!\XLite\Core\Request::getInstance()->same_address && is_array($data)) {
+        if (!$this->requestData['same_address'] && is_array($data)) {
 
             // Save separate billing address
             $address = $profile->getBillingAddress();
             $andAsShipping = false;
 
-            if (!$address || \XLite\Core\Request::getInstance()->save_as_new) {
+            if (!$address || $data['save_as_new']) {
                 if ($address) {
                     $andAsShipping = $address->getIsShipping();
                     $address->setIsBilling(false);
                     $address->setIsShipping(false);
-                    \XLite\Core\Database::getEM()->persist($address);
                 }
                 $address = new \XLite\Model\Address;
                 $address->setProfile($profile);
                 $address->setIsBilling(true);
                 $address->setIsShipping($andAsShipping);
                 $profile->addAddresses($address);
+                \XLite\Core\Database::getEM()->persist($address);
             }
 
-            // State preprocess
-            if (isset($data['state'])) {
-                if (isset($data['is_custom_state']) && $data['is_custom_state']) {
-                    $data['custom_state'] = $data['state'];
-
-                } else {
-                    $data['state_id'] = $data['state'];
-                }
-
-                unset($data['state']);
-            }
-
-            // Country preprocess
-            if (isset($data['country'])) {
-                $data['country_code'] = $data['country'];
-                unset($data['country']);
-            }
-
-            $address->map($data);
-
-            \XLite\Core\Database::getEM()->persist($address);
-            \XLite\Core\Database::getEM()->flush();
-
-            $this->updateCart();
+            $address->map($this->prepareAddressData($data));
 
             \XLite\Core\Event::updateCart(
                 array(
@@ -357,6 +309,48 @@ class Checkout extends \XLite\Controller\Customer\Cart
                 )
             );
         }
+
+        $this->updateCart();
+
+    }
+
+    /**
+     * Prepare address data 
+     * 
+     * @param array $data Address data
+     *  
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function prepareAddressData(array $data)
+    {
+        // State preprocess
+        if (isset($data['state'])) {
+            if ($data['state']->getStateId()) {
+                $data['custom_state'] = '';
+                $data['state_id'] = $data['state']->getStateId();
+
+            } else {
+                $data['custom_state'] = $data['state']->getState();
+                $data['state_id'] = 0;
+            }
+
+            $data['state']->detach();
+            unset($data['state']);
+        }
+
+        // Country preprocess
+        if (isset($data['country'])) {
+            $data['country_code'] = $data['country']->getCode();
+            $data['country']->detach();
+            unset($data['country']);
+        }
+
+        unset($data['save_as_new']);
+
+        return $data;
     }
 
     /**

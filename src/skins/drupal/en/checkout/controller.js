@@ -12,49 +12,14 @@
  */
 
 /**
- * Controller
- */
-
-function CheckoutController(base)
-{
-  CheckoutController.superclass.constructor.apply(this, arguments);
-
-  if (this.base.length) {
-    this.block = new CheckoutView(this.base);
-  }
-}
-
-extend(CheckoutController, AController);
-
-// Controller name
-CheckoutController.prototype.name = 'CheckoutController';
-
-// Find pattern
-CheckoutController.prototype.findPattern = '.checkout-block';
-
-// Controller associated main widget
-CheckoutController.prototype.block = null;
-
-// Initialize controller
-CheckoutController.prototype.initialize = function()
-{
-  var o = this;
-
-  this.base.bind(
-    'reload',
-    function(event, box) {
-      o.bind(box);
-    }
-  );
-}
-
-/**
  * Main widget
  */
 
 function CheckoutView(base)
 {
   CheckoutView.superclass.constructor.apply(this, arguments);
+
+  this.commonBase = this.base.parents('.checkout-block').eq(0);
 
   var o = this;
 
@@ -115,6 +80,15 @@ function CheckoutView(base)
 
 extend(CheckoutView, ALoadable);
 
+CheckoutView.autoload = function()
+{
+  $('.checkout-block .steps').each(
+    function() {
+      new CheckoutView(this);
+    }
+  );
+}
+
 // Shade widget
 CheckoutView.prototype.shadeWidget = true;
 
@@ -125,7 +99,7 @@ CheckoutView.prototype.updatePageTitle = false;
 CheckoutView.prototype.widgetTarget = 'checkout';
 
 // Widget class name
-CheckoutView.prototype.widgetClass = '\\XLite\\View\\Checkout';
+CheckoutView.prototype.widgetClass = '\\XLite\\View\\Checkout\\Steps';
 
 // Update item quantity action TTL
 CheckoutView.prototype.updateActionTTL = 2000;
@@ -162,7 +136,7 @@ CheckoutView.prototype.postprocess = function(isSuccess, initial)
     // Profile block
 
     // Check and save email
-    $('.profile .create #create_profile_email', this.base)
+    $('.profile .create #create_profile_email', this.commonBase)
       .parents('form')
       .eq(0)
       .commonController(
@@ -188,7 +162,7 @@ CheckoutView.prototype.postprocess = function(isSuccess, initial)
       .bind('invalid', refreshStateCallback)
       .bind('valid', refreshStateCallback);
 
-    $('.profile .create #create_profile_chk', this.base).change(
+    $('.profile .create #create_profile_chk', this.commonBase).change(
       function() {
         if (this.form.validate(true)) {
           $(this.form).submit();
@@ -198,7 +172,7 @@ CheckoutView.prototype.postprocess = function(isSuccess, initial)
 
     // Built-in login popup
     if ($('#account-links a.log-in').length) {
-      $('.login button', this.base)
+      $('.login button', this.commonBase)
         .commonController('processLocation')
         .click(
           function(event) {
@@ -404,7 +378,6 @@ CheckoutView.prototype.buildWidgetRequestURL = function(params)
 
 CheckoutView.prototype.resetAfterSubmit = function(event)
 {
-  this.base.get(0).controller.selfUpdated = false;
   this.refreshState();
 }
 
@@ -458,11 +431,6 @@ CheckoutView.prototype.postprocessAction = function(XMLHttpRequest, textStatus, 
   } else {
     this.unshade();
   }
-}
-
-// Get base element for shade / unshade operation
-CheckoutView.prototype.getShadeBase = function() {
-  return this.base.parents('#content').eq(0);
 }
 
 CheckoutView.prototype.refreshSignificantShippingFields = function(element)
@@ -521,7 +489,7 @@ CheckoutView.prototype.refreshState = function()
 
   // Create profile form is valid
   var isSameAddress = true;
-  var form = $('.profile form.create', this.base).eq(0);
+  var form = $('.profile form.create', this.commonBase).eq(0);
   var userIsRegistered = 0 == form.length
   var profileIsCreate = userIsRegistered
     || (form.get(0).validate(true) && !form.get(0).isChanged() && $('#create_profile_email', form).val())
@@ -774,4 +742,4 @@ BillingAddressView.prototype.postprocess = function(isSuccess, initial)
 }
 
 // Autoload
-core.autoload(CheckoutController);
+core.autoload(CheckoutView);

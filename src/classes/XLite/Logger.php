@@ -78,19 +78,6 @@ class Logger extends \XLite\Base\Singleton
     protected $errorTypes = null;
 
     /**
-     * Files repositories paths
-     * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected $filesRepositories = array(
-        LC_COMPILE_DIR => 'compiled classes repository',
-        LC_ROOT_DIR    => 'lc root',
-    );
-
-    /**
      * Options 
      * 
      * @var    array
@@ -291,103 +278,7 @@ class Logger extends \XLite\Base\Singleton
      */
     protected function getBackTrace()
     {
-        $patterns = array_keys($this->filesRepositories);
-        $placeholders = preg_replace('/^(.+)$/Ss', '<\1>/', array_values($this->filesRepositories));
-
-        $trace = array();
-        foreach (debug_backtrace(false) as $l) {
-            $parts = array();
-            if (isset($l['file'])) {
-
-                $parts[] = 'file ' . str_replace($patterns, $placeholders, $l['file']);
-
-            } elseif (isset($l['class']) && isset($l['function'])) {
-
-                $parts[] = 'method ' . $l['class'] . '::' . $l['function'] . $this->getBackTraceArgs($l);
-
-            } elseif (isset($l['function'])) {
-
-                $parts[] = 'function ' . $l['function'] . $this->getBackTraceArgs($l);
-
-            }
-
-            if (isset($l['line'])) {
-                $parts[] = $l['line'];
-            }
-
-            if ($parts) {
-                $trace[] = implode(' : ', $parts);
-            }
-        }
-
-        return array_slice($trace, 3);
-    }
-
-    /**
-     * Get back trace function or method arguments 
-     * 
-     * @param array $l Back trace record
-     *  
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getBackTraceArgs(array $l)
-    {
-        $args = array();
-        if (!isset($l['args'])) {
-            $l['args'] = array();
-        }
-        foreach ($l['args'] as $arg) {
-
-            if (is_bool($arg)) {
-                $args[] = $arg ? 'true' : 'false';
-
-            } elseif (is_int($arg) || is_float($arg)) {
-                $args[] = $arg;
-
-            } elseif (is_string($arg)) {
-                if (is_callable($arg)) {
-                    $args[] = 'lambda function';
-
-                } else {
-                    $args[] = '\'' . $arg . '\'';
-                }
-
-            } elseif (is_resource($arg)) {
-
-                $args[] = strval($arg);
-
-            } elseif (is_array($arg)) {
-                if (is_callable($arg)) {
-                    $args[] = 'callback ' . $this->detectClassName($arg[0]) . '::' . $arg[1];
-
-                } else {
-                    $args[] = 'array{' . count($arg) . '}';
-                }
-
-            } elseif (is_object($arg)) {
-                if (
-                    is_callable($arg)
-                    && class_exists('Closure')
-                    && $arg instanceof Closure
-                ) {
-                    $args[] = 'anonymous function';
-
-                } else {
-                    $args[] = 'object of ' . $this->detectClassName($arg);
-                }
-
-            } elseif (!isset($arg)) {
-                $args[] = 'null';
-
-            } else {
-                $args[] = 'variable of ' . gettype($arg);
-            }
-        }
-
-        return '(' . implode(', ', $args) . ')';
+        return \XLite\Core\Operator::getInstance()->getBackTrace(3);
     }
 
     /**

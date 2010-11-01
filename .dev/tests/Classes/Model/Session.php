@@ -133,8 +133,11 @@ class XLite_Tests_Model_Session extends XLite_Tests_TestCase
 
     protected function getTestSession()
     {
+        $id = \XLite\Core\Session::getInstance()->getID();
         foreach (\XLite\Core\Database::getRepo('XLite\Model\Session')->findAll() as $s) {
-            \XLite\Core\Database::getEM()->remove($s);
+            if ($s->getSid() != $id) {
+                \XLite\Core\Database::getEM()->remove($s);
+            }
         }
         \XLite\Core\Database::getEM()->flush();
 

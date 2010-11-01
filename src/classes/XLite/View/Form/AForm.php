@@ -316,6 +316,55 @@ abstract class AForm extends \XLite\View\AView
     }
 
     /**
+     * Get validator 
+     * 
+     * @return \XLite\Core\Validator\HashArray
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getValidator()
+    {
+        return new \XLite\Core\Validator\HashArray();
+    }
+
+    /**
+     * Get request data 
+     * 
+     * @return mixed
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getRequestData()
+    {
+        $data = null;
+        $validator = $this->getValidator();
+
+        try {
+            $validator->validate(\XLite\Core\Request::getInstance()->getData());
+            $data = $validator->sanitize(\XLite\Core\Request::getInstance()->getData());
+
+        } catch (\XLite\Core\Validator\Exception $exception) {
+            $message = $this->t($exception->getMessage(), $exception->getLabelArguments());
+
+            if ($exception->isInternal()) {
+                \XLite\Logger::getInstance()->log($message, LOG_ERR);
+
+            } else {
+                \XLite\Core\Event::invalidElement(
+                    $exception->getPath(),
+                    $message
+                );
+            }
+
+            
+        }
+
+        return $data;
+    }
+
+    /**
      * Return current form reference
      * 
      * @return \XLite\View\Model\AModel
