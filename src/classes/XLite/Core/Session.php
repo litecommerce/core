@@ -210,20 +210,19 @@ class Session extends \XLite\Base\Singleton
             $this->session = xlite()->em()->merge($this->session);
         }
 
-        $cells = \XLite\Core\Database::getRepo('XLite\Model\SessionCell')->findById($this->session->getId());
+        $cells = xlite()->repo('SessionCell')->findById($this->session->getId());
 
-        xlite()->em()->remove($this->session);
-        xlite()->em()->flush();
+        $old = $this->session;
+        $oldId = $this->session->getId();
 
         $this->createSession();
 
-        foreach ($cells as $cell) {
-            $cell->detach();
-            $cell->setCellId(null);
+        foreach (xlite()->repo('SessionCell')->findById($oldId) as $cell) {
             $cell->setId($this->session->getId());
-
-            \XLite\Core\Database::getEM()->persist($cell);
         }
+
+        xlite()->em()->remove($old);
+
         \XLite\Core\Database::getEM()->flush();
 
         $this->setCookie();

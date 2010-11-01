@@ -404,10 +404,6 @@ class Profile extends \XLite\Model\AEntity
                 // Select address if its type is same as a requested type...
                 $result = $address;
                 break;
-
-            } elseif (!isset($result)) {
-                // ...else select first address
-                $result = $address;
             }
         }
 

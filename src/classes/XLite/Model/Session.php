@@ -37,6 +37,7 @@ namespace XLite\Model;
  *
  * @Entity (repositoryClass="\XLite\Model\Repo\Session")
  * @Table  (name="sessions")
+ * @HasLifecycleCallbacks
  */
 class Session extends \XLite\Model\AEntity
 {
@@ -216,6 +217,10 @@ class Session extends \XLite\Model\AEntity
         $cell = $this->getCellByName($name);
 
         if ($cell) {
+            if (!\XLite\Core\Database::getEM()->contains($cell)) {
+                $cell = \XLite\Core\Database::getEM()->merge($cell);
+            }
+
             \XLite\Core\Database::getEM()->remove($cell);
             \XLite\Core\Database::getEM()->flush();
         }

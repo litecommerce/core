@@ -197,9 +197,7 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
 
         $address = $profile->getBillingAddress();
 
-        $this->assertNotNull($address, 'Check that address is not null (0,2)');
-
-        $this->assertEquals('a0', $address->getFirstname(), 'Wrong billing address selected (set #2)');
+        $this->assertNull($address, 'Check that address is null (0,2)');
 
         $this->deleteTestProfile($profile->getProfileId());
 
@@ -245,9 +243,7 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
 
         $address = $profile->getShippingAddress();
 
-        $this->assertNotNull($address, 'Check that address is not null (0,2)');
-
-        $this->assertEquals('a0', $address->getFirstname(), 'Wrong billing address selected (set #2)');
+        $this->assertNull($address, 'Check that address is null (0,2)');
 
         $this->deleteTestProfile($profile->getProfileId());
 

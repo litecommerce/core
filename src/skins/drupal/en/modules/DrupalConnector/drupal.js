@@ -66,11 +66,11 @@ $(document).ready(
       {
         postprocess.apply(this, arguments);
 
-        if (isSuccess && $('form.create .selector #create_profile_chk', this.base).length) {
+        if (isSuccess && $('form.create .selector #create_profile_chk', this.commonBase).length) {
 
           var o = this;
 
-          $('form.create .selector #create_profile_chk', this.base).unbind('click');
+          $('form.create .selector #create_profile_chk', this.commonBase).unbind('click');
 
           var refreshStateCallback = function() {
             o.refreshState();
@@ -99,10 +99,10 @@ $(document).ready(
             o.refreshState();
           }
 
-          toggle.call($('form.create .selector #create_profile_chk', this.base).get(0));
-          $('form.create .selector #create_profile_chk', this.base).click(toggle);
+          toggle.call($('form.create .selector #create_profile_chk', this.commonBase).get(0));
+          $('form.create .selector #create_profile_chk', this.commonBase).click(toggle);
 
-          $('.profile form.create .username input', this.base).bind(
+          $('.profile form.create .username input', this.commonBase).bind(
             'invalid',
             function() {
               $('.username-verified', this.form).hide();
@@ -110,7 +110,7 @@ $(document).ready(
             }
           );
 
-          $('.profile form.create', this.base)
+          $('.profile form.create', this.commonBase)
             .bind(
               'beforeSubmit',
               function() {
@@ -135,14 +135,14 @@ $(document).ready(
               }
             );
 
-          if ($('.profile form.create #create_profile_chk input:checked', this.base).length) {
-            var input = $('.profile form.create .username input', this.base).get(0);
+          if ($('.profile form.create #create_profile_chk:checked', this.commonBase).length) {
+            var input = $('.profile form.create .username input', this.commonBase).get(0);
             if (input.value && input.validate(true) && !input.isChanged()) {
-              $('.profile form.create .username-verified', this.base).show();
+              $('.profile form.create .username-verified', this.commonBase).show();
             }
           }
 
-          $('.profile form.create #create_profile_username', this.base)
+          $('.profile form.create #create_profile_username', this.commonBase)
             .bind('invalid', refreshStateCallback)
             .bind('valid', refreshStateCallback);
         }
@@ -160,7 +160,7 @@ $(document).ready(
           shippingMethodsIsExists
           && !$('.shipping-step .address-not-completed:visible', this.base).length
           && !$('.shipping-step .email-not-defined:visible', this.base).length
-          && (!$('#create_profile_username', this.base).get(0).validate(true) || !$('#create_profile_username', this.base).val())
+          && (!$('#create_profile_username', this.commonBase).get(0).validate(true) || !$('#create_profile_username', this.commonBase).val())
         ) {
           $('.shipping-step .username-not-defined', this.base).show();
 

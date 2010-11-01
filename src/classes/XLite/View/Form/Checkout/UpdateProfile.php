@@ -48,5 +48,73 @@ class UpdateProfile extends \XLite\View\Form\Checkout\ACheckout
     {
         return 'update_profile';
     }
+
+    /**
+     * Get validator
+     *
+     * @return \XLite\Core\Validator\HashArray
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getValidator()
+    {
+        $validator = parent::getValidator();
+
+        $validator->addPair(
+            'email',
+            new \XLite\Core\Validator\String\Email,
+            \XLite\Core\Validator\Pair\APair::SOFT
+        );
+        $validator->addPair(
+            'create_profile',
+            new \XLite\Core\Validator\String\Switcher(),
+            \XLite\Core\Validator\Pair\APair::SOFT
+        );
+        $validator->addPair(
+            'same_address',
+            new \XLite\Core\Validator\String\Switcher(),
+            \XLite\Core\Validator\Pair\APair::SOFT
+        );
+
+        // Shipping address
+        $shippingAddress = $validator->addPair(
+            'shippingAddress',
+            new \XLite\Core\Validator\HashArray,
+            \XLite\Core\Validator\Pair\APair::SOFT
+        );
+        $shippingAddress->addPair('name', new \XLite\Core\Validator\String(true));
+        $shippingAddress->addPair('street', new \XLite\Core\Validator\String(true));
+        $shippingAddress->addPair('city', new \XLite\Core\Validator\String(true));
+        $shippingAddress->addPair('zipcode', new \XLite\Core\Validator\String(true));
+        $shippingAddress->addPair('phone', new \XLite\Core\Validator\String());
+        $shippingAddress->addPair(new \XLite\Core\Validator\Pair\CountryState());
+        $shippingAddress->addPair(
+            'save_as_new',
+            new \XLite\Core\Validator\String\Switcher(),
+            \XLite\Core\Validator\Pair\APair::SOFT
+        );
+
+        // Billing address
+        $billingAddress = $validator->addPair(
+            'billingAddress',
+            new \XLite\Core\Validator\HashArray,
+            \XLite\Core\Validator\Pair\APair::SOFT
+        );
+        $billingAddress->addPair('name', new \XLite\Core\Validator\String(true));
+        $billingAddress->addPair('street', new \XLite\Core\Validator\String(true));
+        $billingAddress->addPair('city', new \XLite\Core\Validator\String(true));
+        $billingAddress->addPair('zipcode', new \XLite\Core\Validator\String(true));
+        $billingAddress->addPair('phone', new \XLite\Core\Validator\String());
+        $billingAddress->addPair(new \XLite\Core\Validator\Pair\CountryState());
+        $billingAddress->addPair(
+            'save_as_new',
+            new \XLite\Core\Validator\String\Switcher(),
+            \XLite\Core\Validator\Pair\APair::SOFT
+        );
+
+        return $validator;
+    }
+
 }
 

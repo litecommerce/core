@@ -88,11 +88,13 @@ abstract class AEntity
     public function map(array $data)
     {
         foreach ($data as $key => $value) {
+            // Map only existing properties with setter methods or direct
+            $method = 'set' . $this->getMethodName($key);
+            if (method_exists($this, $method)) {
+                // $method is assembled from 'set' + getMethodName()
+                $this->$method($value);
 
-            // Map only existing properties
-            if (property_exists($this, $key)) {
-
-                // Call the "__set()" method
+            } elseif (property_exists($this, $key)) {
                 $this->$key = $value;
             }
         }

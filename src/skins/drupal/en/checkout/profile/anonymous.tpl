@@ -26,4 +26,5 @@
     <widget class="\XLite\View\Button\Link" label="Login here" location="{getLoginURL()}" />
   </div>
 
+  <div class="clear"></div>
 <widget name="createProfile" end />

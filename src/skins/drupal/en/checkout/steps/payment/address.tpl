@@ -30,7 +30,7 @@
       <hr />
 
       <div class="save">
-        <input type="checkbox" id="save_billing_address" name="save_as_new" value="1" />
+        <input type="checkbox" id="save_billing_address" name="billingAddress[save_as_new]" value="1" />
         <label for="save_billing_address">{t(#Save as new#)}</label>
       </div>
     {end:}
