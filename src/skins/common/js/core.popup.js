@@ -216,8 +216,8 @@ popup.postprocess = function()
     function() {
       o.freezePopup();
     },
-    function() {
-      o.postprocessRequestCallback.apply(o, arguments);
+    function(event) {
+      o.postprocessRequestCallback.apply(o, Array.prototype.slice.call(arguments, 1));
     }
   );
 }

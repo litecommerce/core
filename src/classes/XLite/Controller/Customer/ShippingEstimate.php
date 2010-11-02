@@ -72,41 +72,48 @@ class ShippingEstimate extends \XLite\Controller\Customer\ACustomer
      */
     protected function doActionSetDestination()
     {
-        $profile = $this->getCart()->getProfile();
-
         $country = \XLite\Core\Database::getRepo('XLite\Model\Country')
             ->find(\XLite\Core\Request::getInstance()->country);
 
-        if ($country && $country->getEnabled() && \XLite\Core\Request::getInstance()->zipcode) {
+        if (\XLite\Core\Request::getInstance()->is_custom_state) {
+            $state = new \XLite\Model\State;
+            $state->setState(\XLite\Core\Request::getInstance()->state);
 
-            $address = \XLite\Model\Shipping::getInstance()->getDestinationAddress($this->getCart());
+        } else {
+            $state = \XLite\Core\Database::getRepo('XLite\Model\State')->find(\XLite\Core\Request::getInstance()->state);
+        
+        }
 
-            if (
-                !$address
-                || $address['country'] != $country->getCode()
-                || $address['zipcode'] != \XLite\Core\Request::getInstance()->zipcode
-            ) {
+        if (
+            $country
+            && $country->getEnabled()
+            && $state
+            && $state->getState()
+            && \XLite\Core\Request::getInstance()->zipcode
+        ) {
 
-                if (!$profile) {
-                    $this->getCart()->setDetail('shipping_estimate_country', $country->getCode());
-                    $this->getCart()->setDetail('shipping_estimate_zipcode', \XLite\Core\Request::getInstance()->zipcode);
-
-                } else {
-                    $profile->getShippingAddress()->setCountryCode($country->getCode());
-                    $profile->getShippingAddress()->setZipcode(\XLite\Core\Request::getInstance()->zipcode);
-                    $profile->getShippingAddress()->update();
-                }
-
-                $this->updateCart();
-
-                \XLite\Core\Event::updateCart(
-                    array(
-                        'items'            => array(),
-                        'shipping_address' => \XLite\Model\Shipping::getInstance()->getDestinationAddress($this->getCart()),
-                    )
-                );
-
+            $address = $this->getCartProfile()->getShippingAddress();
+            if (!$address) {
+                $address = new \XLite\Model\Address;
+                $address->setProfile($profile);
+                $address->setIsShipping(true);
+                $profile->addAddresses($address);
+                \XLite\Core\Database::getEM()->persist($address);
             }
+
+            $address->setCountryCode($country->getCode());
+            $address->setState($state->getStateId() ? $state : $state->getState());
+            $address->setZipcode(\XLite\Core\Request::getInstance()->zipcode);
+            $address->update();
+
+            $this->updateCart();
+
+            \XLite\Core\Event::updateCart(
+                array(
+                    'items'            => array(),
+                    'shipping_address' => \XLite\Model\Shipping::getInstance()->getDestinationAddress($this->getCart()),
+                )
+            );
 
             $this->valid = true;
 

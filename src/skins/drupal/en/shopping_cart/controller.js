@@ -12,60 +12,6 @@
  */
 
 /**
- * Controller
- */
-
-function CartController(base)
-{
-  this.callSupermethod('constructor', arguments);
-
-  if (this.base.length) {
-    this.block = new CartView(this.base);
-
-    var o = this;
-
-    core.bind(
-      'updateCart',
-      function(event, data) {
-        if (o.selfUpdated) {
-          o.block.cartUpdated = true;
-
-        } else {
-          o.block.load();
-        }
-      }
-    );
-  }
-}
-
-extend(CartController, AController);
-
-// Controller name
-CartController.prototype.name = 'CartController';
-
-// Find pattern
-CartController.prototype.findPattern = '#cart';
-
-// Controller associated main widget
-CartController.prototype.block = null;
-
-// Self-updated status
-CartController.prototype.selfUpdated = false;
-
-// Initialize controller
-CartController.prototype.initialize = function()
-{
-  var o = this;
-
-  this.base.bind(
-    'reload',
-    function(event, box) {
-      o.bind(box);
-    }
-  );
-}
-
-/**
  * Main widget
  */
 
@@ -75,12 +21,28 @@ function CartView(base)
 
   var o = this;
 
-  this.postprocessActionCallback = function (XMLHttpRequest, textStatus, data, isValid) {
-    return o.postprocessAction(XMLHttpRequest, textStatus, data, isValid);
-  }
+  core.bind(
+    'updateCart',
+    function() {
+      if (o.selfUpdated) {
+        o.cartUpdated = true;
+      } else {
+        o.load();
+      }
+    }
+  );
 }
 
 extend(CartView, ALoadable);
+
+CartView.autoload = function()
+{
+  $('#cart').each(
+    function() {
+      new CartView(this);
+    }
+  );
+}
 
 // Shade widget
 CartView.prototype.shadeWidget = true;
@@ -94,11 +56,8 @@ CartView.prototype.widgetTarget = 'cart';
 // Widget class name
 CartView.prototype.widgetClass = '\\XLite\\View\\Cart';
 
-// Update item quantity action TTL
-CartView.prototype.updateActionTTL = 2000;
-
-// Update quantity timeout resource
-CartView.prototype.submitTO = null;
+// Widget updated status
+CartView.prototype.selfUpdated = false;
 
 // Cart silence updated status
 CartView.prototype.cartUpdated = false;
@@ -113,55 +72,41 @@ CartView.prototype.postprocess = function(isSuccess, initial)
     var o = this;
 
     // Remove item
-    $('.selected-product form input.remove', this.base).parents('form').eq(0).submit(
-      function(event) {
-        return o.removeItem(event, this);
-      }
-    );
+    $('.selected-product form input.remove', this.base).parents('form').eq(0)
+      .commonController(
+        'enableBackgroundSubmit', 
+        function() {
+          return o.preprocessAction();
+        },
+        function (event, XMLHttpRequest, textStatus, data, isValid) {
+          return o.postprocessAction(XMLHttpRequest, textStatus, data, isValid);
+        }      
+      );
 
     // Update item
-    var delayedUpdate = function(event) {
-      if (o.submitTO) {
-        clearTimeout(o.submitTO);
-        o.submitTO = null;
-      }
-
-      var i = this;
-      o.submitTO = setTimeout(
+    $('.selected-product form.update-quantity', this.base)
+      .commonController(
+        'enableBackgroundSubmit',
         function() {
-          $(i).blur();
+          return o.preprocessAction();
         },
-        o.updateActionTTL
-      );
-    }
-
-    $('.selected-product input.quantity', this.base)
-      .each(
-        function() {
-          $(this).parents('form').get(0).initialValue = this.value;
+        function (event, XMLHttpRequest, textStatus, data, isValid) {
+          return o.postprocessAction(XMLHttpRequest, textStatus, data, isValid);
         }
       )
-      .blur(
-        function(event) {
-          return $(this.form).submit();
-        }
-      )
-      .keypress(delayedUpdate)
-      .data('min', 1)
-      .mousewheel(delayedUpdate)
-      .parents('form').eq(0)
-      .submit(
-        function(event) {
-          return o.updateQuantity(event, this);
-        }
-      );
+      .commonController('submitOnlyChanged', true);
 
     // Clear cart
-    $('form .clear-bag', this.base).parents('form').eq(0).submit(
-      function(event) {
-        return o.clearCart(event, this);
-      }
-    );
+    $('form .clear-bag', this.base).parents('form').eq(0)
+      .commonController(
+        'enableBackgroundSubmit',
+        function() {
+          return o.preprocessAction();
+        },
+        function (event, XMLHttpRequest, textStatus, data, isValid) {
+          return o.postprocessAction(XMLHttpRequest, textStatus, data, isValid);
+        }      
+      );
 
     // Shipping estimator
     $('.estimator button.estimate', this.base).parents('form').eq(0).submit(
@@ -178,63 +123,30 @@ CartView.prototype.postprocess = function(isSuccess, initial)
   }
 }
 
-// Remove item
-CartView.prototype.removeItem = function(event, form)
+CartView.prototype.preprocessAction = function()
 {
-  if (!this.base.get(0).controller.selfUpdated && this.submitForm(form, this.postprocessActionCallback)) {
-    if (this.submitTO) {
-      clearTimeout(this.submitTO);
-      this.submitTO = null;
-    }
-    this.base.get(0).controller.selfUpdated = true;
+  var result = false;
+
+  if (!this.selfUpdated) {
+    this.selfUpdated = true;
     this.shade();
+    result = true;
   }
 
-  return false;
-}
-
-// Update quantity
-CartView.prototype.updateQuantity = function(event, form)
-{
-  var value = $('input.quantity', form).get(0).value;
-  if (!this.base.get(0).controller.selfUpdated && form.initialValue != value && this.submitForm(form, this.postprocessActionCallback)) {
-    if (this.submitTO) {
-      clearTimeout(this.submitTO);
-      this.submitTO = null;
-    }
-    this.base.get(0).controller.selfUpdated = true;
-    this.shade();
-  }
-
-  return false;
-}
-
-// Clear cart
-CartView.prototype.clearCart = function(event, form)
-{
-  if (!this.base.get(0).controller.selfUpdated && this.submitForm(form, this.postprocessActionCallback)) {
-    if (this.submitTO) {
-      clearTimeout(this.submitTO);
-      this.submitTO = null;
-    }
-    this.shade();
-    this.base.get(0).controller.selfUpdated = true;
-  }
-
-  return false;
+  return result;
 }
 
 // Open Shipping estimator popup
 CartView.prototype.openShippingEstimator = function(event, elm)
 {
-  if (!this.base.get(0).controller.selfUpdated && !this.submitTO) {
+  if (!this.selfUpdated && !this.submitTO) {
     var o = this;
-    this.base.get(0).controller.selfUpdated = true;
+    this.selfUpdated = true;
     popup.load(
       elm,
       null,
       function(event) {
-        o.closeShippingEstimatorHandler();
+        o.closePopupHandler();
       }
     );
   }
@@ -243,20 +155,20 @@ CartView.prototype.openShippingEstimator = function(event, elm)
 }
 
 // Clse Shipping estimator popup handler
-CartView.prototype.closeShippingEstimatorHandler = function()
+CartView.prototype.closePopupHandler = function()
 {
   if (this.cartUpdated) {
     this.load();
   }
 
-  this.base.get(0).controller.selfUpdated = false;
+  this.selfUpdated = false;
   this.cartUpdated = false;
 }
 
 // Form POST processor
 CartView.prototype.postprocessAction = function(XMLHttpRequest, textStatus, data, isValid)
 {
-  this.base.get(0).controller.selfUpdated = false;
+  this.selfUpdated = false;
   this.cartUpdated = false;
 
   if (isValid) {
@@ -272,4 +184,4 @@ CartView.prototype.getShadeBase = function() {
   return this.base.parents('#content').eq(0);
 }
 
-core.autoload(CartController);
+core.autoload(CartView);

@@ -184,7 +184,12 @@ class Cart extends \XLite\View\Dialog
 
         if (is_array($address)) {
             $country = \XLite\Core\Database::getRepo('XLite\Model\Country')->find($address['country']);
-            $state = \XLite\Core\Database::getRepo('XLite\Model\State')->find($address['state']);
+            if ($address['state']) {
+                $state = \XLite\Core\Database::getRepo('XLite\Model\State')->find($address['state']);
+
+            } elseif ($this->getCart()->getProfile() && $this->getCart()->getProfile()->getShippingAddress()) {
+                $state = $this->getCart()->getProfile()->getShippingAddress()->getState();
+            }
         }
 
         if (isset($country)) {
@@ -192,7 +197,7 @@ class Cart extends \XLite\View\Dialog
         }
 
         if ($state) {
-            $string .= ' ' . $state->getState();
+            $string .= ', ' . ($state->getCode() ?: $state->getState());
         }
 
         $string .= ', ' . $address['zipcode'];

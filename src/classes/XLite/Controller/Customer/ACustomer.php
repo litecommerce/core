@@ -316,5 +316,33 @@ abstract class ACustomer extends \XLite\Controller\AController
         return parent::handleRequest();
     }
 
+    /**
+     * Get or create cart profile 
+     * 
+     * @return \XLite\Model\Profile
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getCartProfile()
+    {
+        $profile = $this->getCart()->getProfile();
+
+        if (!$profile) {
+            $profile = new \XLite\Model\Profile;
+            $profile->setOrderId($this->getCart()->getorderId());
+            $profile->create();
+
+            $this->getCart()->setProfile($profile);
+
+            \XLite\Core\Auth::getInstance()->loginProfile($profile);
+
+            \XLite\Core\Database::getEM()->persist($profile);
+            \XLite\Core\Database::getEM()->flush();
+        }
+
+        return $profile;
+    }
+
 }
 

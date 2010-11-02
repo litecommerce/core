@@ -83,16 +83,14 @@ class ShippingEstimate extends \XLite\View\AView
     }
 
     /**
-     * Check - specified country selected or not
+     * Get selected country code 
      * 
-     * @param \XLite\Model\Country $country Country
-     *  
-     * @return boolean
+     * @return string
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function isCountrySelected(\XLite\Model\Country $country)
+    public function getCountryCode()
     {
         $address = \XLite\Model\Shipping::getInstance()->getDestinationAddress($this->getCart());
 
@@ -105,7 +103,50 @@ class ShippingEstimate extends \XLite\View\AView
             $c = \XLite\Core\Config::getInstance()->General->default_country;
         }
 
-        return $country->getCode() == $c;
+        return $c;
+    }
+
+    /**
+     * Get state 
+     * 
+     * @return \XLite\Model\State
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getState()
+    {
+        $address = \XLite\Model\Shipping::getInstance()->getDestinationAddress($this->getCart());
+
+        $state = null;
+
+
+            // From getDestinationAddress()
+        if ($address && isset($address['state']) && $address['state']) {
+            $state = \XLite\Core\Database::getRepo('XLite\Model\State')->find($address['state']);
+
+        } elseif (
+            $this->getCart()->getProfile()
+            && $this->getCart()->getProfile()->getShippingAddress()
+            && $this->getCart()->getProfile()->getShippingAddress()->getState()
+        ) {
+
+            // From shipping address
+            $state = $this->getCart()->getProfile()->getShippingAddress()->getState();
+
+        } elseif (
+            !$address
+            && \XLite\Core\Config::getInstance()->Shipping->def_calc_shippings_taxes
+            && \XLite\Core\Config::getInstance()->Shipping->anonymous_custom_state
+        ) {
+
+            // From config
+            $state = new \XLite\Model\State();
+            $state->setState(\XLite\Core\Config::getInstance()->Shipping->anonymous_custom_state);
+
+        }
+
+        return $state;
     }
 
     /**

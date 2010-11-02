@@ -27,18 +27,16 @@ core.bind(
 
           $('.item-change-options a', this.base).click(
             function(event) {
-              return o.changeOptions(event, this);
+              return !popup.load(
+                this,
+                null,
+                function() {
+                  o.closePopupHandler();
+                }
+              );
             }
           );
         }
-      }
-    );
-    decorate(
-      'CartView',
-      'changeOptions',
-      function(event, link)
-      {
-        return !popup.load(link.href);
       }
     );
   }
