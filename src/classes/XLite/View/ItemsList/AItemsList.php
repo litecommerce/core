@@ -420,12 +420,8 @@ abstract class AItemsList extends \XLite\View\Container
     {
         if (!isset($this->commonParams)) {
             $this->commonParams = array(
-                'action' => '',
                 self::PARAM_SESSION_CELL => $this->getSessionCell()
             );
-        
-            $this->commonParams += $this->getRequestParamsHash();
-            $this->commonParams += $this->getPager()->getRequestParamsHash();
         }
 
         return $this->commonParams;
@@ -692,5 +688,4 @@ abstract class AItemsList extends \XLite\View\Container
     {
         return 'items-list';
     }
-
 }

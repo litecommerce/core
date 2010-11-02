@@ -136,6 +136,19 @@ abstract class ARequestHandler extends \XLite\View\AView
     }
 
     /**
+     * Check if we need to manage request params 
+     * 
+     * @return bool
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function checkRequestParams()
+    {
+        return $this->getRequestParams() && $this->checkSessionCell();
+    }
+
+    /**
      * Called before the includeCompiledFile()
      *
      * Here we save all passed request params into the session.
@@ -150,7 +163,7 @@ abstract class ARequestHandler extends \XLite\View\AView
     {
         parent::initView();
 
-        if ($this->checkSessionCell()) {
+        if ($this->checkRequestParams()) {
             \XLite\Core\Session::getInstance()->set($this->getSessionCell(), $this->getRequestParamsHash());
         }
     }
@@ -285,7 +298,7 @@ abstract class ARequestHandler extends \XLite\View\AView
      */
     public function setWidgetParams(array $params)
     {
-        if ($this->getRequestParams() && $this->checkSessionCell()) {
+        if ($this->checkRequestParams() && !$this->isCloned) {
             $this->setWidgetRequestParamValues($params);
         }
 
