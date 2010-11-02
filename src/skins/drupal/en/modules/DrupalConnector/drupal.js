@@ -53,6 +53,7 @@ $(document).ready(
 
       }
 
+      ALoadable.prototype.titlePattern = '#page-title';
       ALoadable.prototype.titleRequestPattern = 'h2.ajax-title-loadable:eq(0)';
     }
 

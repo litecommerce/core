@@ -220,6 +220,15 @@ CommonForm.prototype.postprocessBackgroundSubmit = function()
   this.getElements().commonController('postprocessBackgroundSubmit');
 }
 
+// Form has any changed state watcher's elements
+CommonForm.prototype.hasChangedWatcher = function()
+{
+  return 0 < this.getElements().filter(
+    function() {
+      return this.isChangedWatcher();
+    }
+  ).length;
+}
 
 // Check - form changed or not
 CommonForm.prototype.isChanged = function(onlyVisible)
@@ -539,6 +548,18 @@ CommonElement.prototype.markAsWatcher = function(beforeCallback)
   if ('undefined' != typeof($.fn.mousewheel)) {
     o.$element.mousewheel(delayedUpdate);
   }
+}
+
+// Element is state watcher
+CommonElement.prototype.isWatcher = function()
+{
+  return 'undefined' != typeof(this.element.selfSubmitting);
+}
+
+// Element is changed state watcher
+CommonElement.prototype.isChangedWatcher = function()
+{
+  return this.isWatcher() && this.element.selfSubmitTO;
 }
 
 // Check - element changed or not

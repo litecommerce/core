@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Shipping estimator
+ * Shipping estimator : address : country
  *  
  * @author    Creative Development LLC <info@cdev.ru> 
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -9,5 +9,9 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
+ * @ListChild (list="shippingEstimator.address", weight="10")
  *}
-{displayViewListContent(#shippingEstimator.main#)}
+<li class="country">
+  <label for="destination_country">{t(#Country#)}</label>
+  <widget class="\XLite\View\CountrySelect" field="country" fieldId="destination_country" country="{getCountryCode()}" />
+</li>
