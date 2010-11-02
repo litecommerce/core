@@ -31,9 +31,9 @@ namespace XLite\Module\Bestsellers\View\Pager;
 /**
  * Common pager 
  * 
- * @package    XLite
- * @see        ____class_see____
- * @since      3.0.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
 class Pager extends \XLite\View\Pager\APager
 {

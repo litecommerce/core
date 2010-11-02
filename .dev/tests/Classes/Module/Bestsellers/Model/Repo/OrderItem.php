@@ -84,44 +84,6 @@ class XLite_Tests_Module_Bestsellers_Model_Repo_OrderItem extends XLite_Tests_Te
         2 => self::PR2,
     );
 
-    /** 
-     * setUp
-     *
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-/*    protected function setUp()
-    {   
-        parent::setUp();
-
-        \XLite\Core\Database::getEM()->clear();
-
-        $this->query(file_get_contents(__DIR__ . '/sql/product/setup.sql'));
-
-        \XLite\Core\Database::getEM()->flush();
-    }   
- */
-    /** 
-     * tearDown
-     *
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-/*    protected function tearDown()
-    {
-        parent::tearDown();
-
-        \XLite\Core\Database::getEM()->clear();
-
-        $this->query(file_get_contents(__DIR__ . '/sql/product/restore.sql'));
-
-        \XLite\Core\Database::getEM()->flush();
-    }
- */
     /**
      *  Test of bestseller for the root category
      * 
@@ -138,7 +100,7 @@ class XLite_Tests_Module_Bestsellers_Model_Repo_OrderItem extends XLite_Tests_Te
         $order = $this->getTestOrder(
             \XLite\Model\Order::STATUS_PROCESSED,
             array(
-                self::PR1 => 50,
+                self::PR1 => 500,
                 self::PR2 => 40,
                 self::PR4 => 30,
             )
@@ -199,9 +161,9 @@ class XLite_Tests_Module_Bestsellers_Model_Repo_OrderItem extends XLite_Tests_Te
         $order = $this->getTestOrder(
             \XLite\Model\Order::STATUS_COMPLETED,
             array(
-                self::PR1 => 50,
-                self::PR2 => 40,
-                self::PR4 => 30,
+                self::PR1 => 500,
+                self::PR2 => 400,
+                self::PR4 => 300,
             )   
         );  
 

@@ -33,7 +33,6 @@ require_once __DIR__ . '/ACustomer.php';
 
 abstract class XLite_Web_Customer_AProductList extends XLite_Web_Customer_ACustomer
 {
-
     protected $widgetContainerClass = '.items-list';
     
     protected $widgetClass = '';
@@ -70,6 +69,7 @@ abstract class XLite_Web_Customer_AProductList extends XLite_Web_Customer_ACusto
         $this->testPager();
     }
 
+
     public function testDisplayModeSwitchTableMode()
     {
         $this->setDisplayMode('table');
@@ -95,6 +95,7 @@ abstract class XLite_Web_Customer_AProductList extends XLite_Web_Customer_ACusto
         $this->setDisplayMode('list');
         $this->testProductsData();
     }
+
 
     public function testPagerListMode()
     {
@@ -145,7 +146,6 @@ abstract class XLite_Web_Customer_AProductList extends XLite_Web_Customer_ACusto
         $this->setDisplayMode('grid', 3);
         $this->testSorting();
     }
-
 
     /*
      * HELPER FUNCTIONS
@@ -204,56 +204,65 @@ abstract class XLite_Web_Customer_AProductList extends XLite_Web_Customer_ACusto
 
         // Set the pager to display more than one page
         $count = $this->countAllTestProducts();
+
         $this->configurePager(ceil($count/2), true);
 
         /*
          * Test all top UI elements
          */
+        $this->setVisible('SortBySelector');
+        $this->setVisible('DisplayModeSelector');
 
-        $this->setWidgetParam($this->getWidgetId(), 'showSortBySelector', true);
-        $this->setWidgetParam($this->getWidgetId(), 'showDisplayModeSelector', true);
         $this->resetBrowser();
+
         $this->openTestPage();
 
         $selector = $this->getListSelector();
 
         $elements = array(
             "$selector" => "Widget is missing ($mode mode)",
-            "$selector .products-$mode" => "Mode contianer element is missing ($mode mode)",
+            "$selector .products-$mode" => "Mode container element is missing ($mode mode)",
             "$selector .list-header" => "List header is missing",
             "$selector .list-header .display-modes" => "Display Mode box is missing",
             "$selector .list-header .sort-box" => "Sort Box is missing",
         );
+
         if ($mode != 'table') {
+
             $elements["$selector .cart-tray"] = "Cart tray is missing";
         }
 
         foreach ($elements as $s=>$message) {
+
             $this->assertJqueryPresent($s, "$message ($mode mode)");
         }
 
         /*
          * Now test how UI elements are enabled/disabled
          */
-
         $options = array(false, true);
 
         foreach ($options as $sortBox) {
 
             foreach ($options as $displayMode) {
 
-                $this->setWidgetParam($this->getWidgetId(), 'showSortBySelector', $sortBox);
-                $this->setWidgetParam($this->getWidgetId(), 'showDisplayModeSelector', $displayMode);
+                $sortBox = $sortBox ? $this->setVisible('SortBySelector') : $this->setHidden('SortBySelector');
+
+                $displayMode = $displayMode ? $this->setVisible('DisplayModeSelector') : $this->setHidden('DisplayModeSelector');
+
                 $this->resetBrowser(); 
+
                 $this->openTestPage();
 
                 $sortBoxMethod = $sortBox ? "assertElementPresent" : "assertElementNotPresent";
+
                 $displayModeMethod = $displayMode ? "assertElementPresent" : "assertElementNotPresent";
 
                 $this->$sortBoxMethod(
                     "css=$selector .list-header .sort-box",
                     "Failed assertion ($mode mode): sort box = ".(string)$sortBox."; display mode selector = ".(string)$displayMode
                 );
+
                 $this->$displayModeMethod(
                     "css=$selector .list-header .display-modes",
                     "Failed assertion ($mode mode): display mode selector = ".(string)$displayMode."; sort box = ".(string)$sortBox
@@ -261,7 +270,6 @@ abstract class XLite_Web_Customer_AProductList extends XLite_Web_Customer_ACusto
 
             }
         }
-
     }
 
     /**
@@ -277,6 +285,7 @@ abstract class XLite_Web_Customer_AProductList extends XLite_Web_Customer_ACusto
 
         // Configure the pager to display all test products on one page
         $productsCount = $this->countAllTestProducts();
+
         $this->configurePager($productsCount, true);
         $this->resetBrowser();
         $this->openTestPage();
@@ -484,7 +493,8 @@ abstract class XLite_Web_Customer_AProductList extends XLite_Web_Customer_ACusto
         $listSelector = $this->getListSelector();
 
         $this->configurePager(9, true);
-        $this->setWidgetParam($this->getWidgetId(), 'showDisplayModeSelector', true);
+
+        $this->setVisible('DisplayModeSelector');
         $this->resetBrowser();
         $this->openTestPage();
 
@@ -535,7 +545,9 @@ abstract class XLite_Web_Customer_AProductList extends XLite_Web_Customer_ACusto
         $productsCount = $this->countAllTestProducts();
 
         $this->configurePager($productsCount, true);
-        $this->setWidgetParam($this->getWidgetId(), 'showSortBySelector', true);
+
+        $this->setVisible('SortBySelector');
+
         $this->resetBrowser();
         $this->openTestPage();
 
@@ -942,26 +954,29 @@ abstract class XLite_Web_Customer_AProductList extends XLite_Web_Customer_ACusto
             "Number of product cells differs from the number of products"
         );
 
-        for ($i=0; $i<$count; $i++) {
+        for ($i = 0; $i < $count; $i++) {
+
             $class = $this->getJSExpression("$('$selector').eq($i).attr('class')");
+
             $id = preg_replace('/^.*productid-([0-9]+).*$/', '\\1', $class);
 
             $productSelector = "$selector.productid-$id";
             $product = array('id' => $id);    
 
-            $nameSelector = ($mode=='table') ? "$productSelector a.product-link" : "$productSelector h3.product-name a";
-            $product['name'] = $this->getJSExpression("$('$nameSelector').html()");
-            $product['nameUrl'] = $this->getJSExpression("$('$nameSelector')");
-            $product['sku'] = $this->getJSExpression("$('$productSelector .product-sku').html()");
-            $product['price'] = $this->getJSExpression("$('$productSelector .product-price').html()");
-            $product['parsedPrice'] = preg_replace("/^\D*(\d+\.\d+)\D*$/", "\\1", $product['price']);
-            $product['imgUrl'] = $this->getJSExpression("$('$productSelector a.product-thumbnail')");
-            $product['imgSrc'] = $this->getJSExpression("$('$productSelector a.product-thumbnail img').attr('src')");
-            $product['imgAlt'] = $this->getJSExpression("$('$productSelector a.product-thumbnail img').attr('alt')");
-            $product['description'] = $this->getJSExpression("$('$productSelector .product-description').html()");
+            $nameSelector               = ($mode=='table') ? "$productSelector a.product-link" : "$productSelector h3.product-name a";
+
+            $product['name']            = $this->getJSExpression("$('$nameSelector').html()");
+            $product['nameUrl']         = $this->getJSExpression("$('$nameSelector')");
+            $product['sku']             = $this->getJSExpression("$('$productSelector .product-sku').html()");
+            $product['price']           = $this->getJSExpression("$('$productSelector .product-price').html()");
+            $product['parsedPrice']     = preg_replace("/^\D*(\d+\.\d+)\D*$/", "\\1", $product['price']);
+            $product['imgUrl']          = $this->getJSExpression("$('$productSelector a.product-thumbnail')");
+            $product['imgSrc']          = $this->getJSExpression("$('$productSelector a.product-thumbnail img').attr('src')");
+            $product['imgAlt']          = $this->getJSExpression("$('$productSelector a.product-thumbnail img').attr('alt')");
+            $product['description']     = $this->getJSExpression("$('$productSelector .product-description').html()");
             
-            foreach ($product as $k=>$v) {
-                $product[$k] = ($v==='null') ? null : $v;
+            foreach ($product as $k => $v) {
+                $product[$k] = ($v === 'null') ? null : $v;
             }
 
            $products[$id] = $product;
@@ -984,13 +999,24 @@ abstract class XLite_Web_Customer_AProductList extends XLite_Web_Customer_ACusto
      */
     protected function configurePager($itemsPerPage, $showSelector = true)
     {
-        $this->setWidgetParam($this->getWidgetId(), 'showItemsPerPageSelector', $showSelector);
+        if ($showSelector) {
+
+            $this->setVisible('ItemsPerPageSelector');
+
+        } else {
+
+            $this->setHidden('ItemsPerPageSelector');
+
+        }
 
         $allItems = ($itemsPerPage == 'all');
+
         $this->setWidgetParam($this->getWidgetId(), 'showAllItemsPerPage', $allItems);
 
         if (!$allItems && (int)$itemsPerPage) {
+
             $this->setWidgetParam($this->getWidgetId(), 'itemsPerPage', (int)$itemsPerPage);
+
         }
 
     }
@@ -1012,9 +1038,10 @@ abstract class XLite_Web_Customer_AProductList extends XLite_Web_Customer_ACusto
         $this->setWidgetParam($this->getWidgetId(), 'displayMode', $mode);
 
         if (!is_null($columns)) {
-            $this->setWidgetParam($this->getWidgetId(), 'gridColumns', $columns);
-        }
 
+            $this->setWidgetParam($this->getWidgetId(), 'gridColumns', $columns);
+
+        }
     }
 
     /**
@@ -1045,9 +1072,43 @@ abstract class XLite_Web_Customer_AProductList extends XLite_Web_Customer_ACusto
         // $this->waitForCondition("selenium.browserbot.getCurrentWindow().$('$listSelector .blockUI.wait-block:visible').length > 0");
 
         // wait until the progress bar is hidden
-        $this->waitForCondition("selenium.browserbot.getCurrentWindow().$('$listSelector .blockUI.wait-block:visible').length <= 0");
+        $this->waitForCondition("selenium.browserbot.getCurrentWindow().$('$listSelector .blockUI.block-wait:visible').length <= 0", 300000);
  
     }
 
+    /**
+     * Set as visible and return visibility 
+     * 
+     * @param string $part part of widget
+     *  
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function setVisible($part)
+    {
+        $this->setWidgetParam($this->getWidgetId(), 'show' . $part, true);
+
+        return true;
+    }
+
+
+    /**  
+     * Set as hidden and return visibility 
+     * 
+     * @param string $part part of widget
+     *  
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function setHidden($part)
+    {
+        $this->setWidgetParam($this->getWidgetId(), 'show' . $part, false);
+
+        return false;
+    }
 
 }

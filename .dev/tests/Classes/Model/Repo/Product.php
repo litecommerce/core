@@ -203,8 +203,8 @@ class XLite_Tests_Model_Repo_Product extends XLite_Tests_Model_AProduct
 
         $result = \XLite\Core\Database::getRepo('\XLite\Model\Product')->search($cnd, true);
 
-        // 8 products should be found
-        $this->assertEquals(8, $result, 'Number of found product does not match');
+        // 9 products should be found
+        $this->assertEquals(9, $result, 'Number of found product does not match');
     }
 
     /**

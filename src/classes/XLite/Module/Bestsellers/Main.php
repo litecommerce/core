@@ -37,12 +37,24 @@ namespace XLite\Module\Bestsellers;
  */
 class Main extends \XLite\Module\AModule
 {
+
+    /**
+     * isFree 
+     * 
+     * @var    boolean
+     * @access public
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    public $isFree = true;
+
     /**
      * Module type
-     *
-     * @var    int
-     * @access protected
-     * @since  3.0
+     * 
+     * @return integer
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
      */
     public function getModuleType()
     {
@@ -51,10 +63,11 @@ class Main extends \XLite\Module\AModule
 
     /**
      * Module version
-     *
-     * @var    string
-     * @access protected
-     * @since  3.0
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
      */
     public function getVersion()
     {
@@ -63,24 +76,24 @@ class Main extends \XLite\Module\AModule
 
     /**
      * Module description
-     *
-     * @var    string
-     * @access protected
-     * @since  3.0
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
      */
     public function getDescription()
     {
         return 'This module enables bestsellers list';
     }
 
-    public $isFree = true;
-
     /**
      * Determines if we need to show settings form link
-     *
-     * @return bool
+     * 
+     * @return boolean
      * @access public
-     * @since  3.0
+     * @see    ____func_see____
+     * @since  3.0.0
      */
     public function showSettingsForm()
     {
