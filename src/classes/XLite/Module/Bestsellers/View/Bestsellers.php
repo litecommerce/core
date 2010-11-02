@@ -33,7 +33,6 @@ namespace XLite\Module\Bestsellers\View;
  * 
  * @package XLite
  * @see     ____class_see____
- * @see        ____class_see____
  * @since   3.0.0
  */
 class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
@@ -116,15 +115,17 @@ class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
             ),
         );
 
-        $this->widgetParams[self::PARAM_WIDGET_TYPE]->setValue(
-            $this->config->Bestsellers->bestsellers_menu
+        $widgetType = $this->config->Bestsellers->bestsellers_menu
             ? self::WIDGET_TYPE_SIDEBAR
-            : self::WIDGET_TYPE_CENTER
-        );
+            : self::WIDGET_TYPE_CENTER;
+
+        $this->widgetParams[self::PARAM_WIDGET_TYPE]->setValue($widgetType);
 
         $this->widgetParams[self::PARAM_DISPLAY_MODE]->setValue(self::DISPLAY_MODE_LIST);
         $this->widgetParams[self::PARAM_GRID_COLUMNS]->setValue(3);
-        $this->widgetParams[self::PARAM_SHOW_THUMBNAIL]->setValue('Y' == $this->config->Bestsellers->bestsellers_thumbnails);
+        $this->widgetParams[self::PARAM_SHOW_THUMBNAIL]->setValue(
+            'Y' == $this->config->Bestsellers->bestsellers_thumbnails
+        );
         $this->widgetParams[self::PARAM_SHOW_DESCR]->setValue(true);
         $this->widgetParams[self::PARAM_SHOW_PRICE]->setValue(true);
         $this->widgetParams[self::PARAM_SHOW_ADD2CART]->setValue(true);
@@ -164,13 +165,13 @@ class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
     {
         if (is_null($this->bestsellProducts)) {
 
-            $limit = (int)(self::WIDGET_TYPE_SIDEBAR == $this->getParam(self::PARAM_WIDGET_TYPE)
+            $limit = self::WIDGET_TYPE_SIDEBAR == $this->getParam(self::PARAM_WIDGET_TYPE)
                 ? $this->getParam(self::PARAM_SIDEBAR_MAX_ITEMS)
-                : $this->config->Bestsellers->number_of_bestsellers);
+                : $this->config->Bestsellers->number_of_bestsellers;
 
             $this->bestsellProducts = \XLite\Core\Database::getRepo('XLite\Model\Product')
                 ->findBestsellers(
-                    $limit,
+                    (int)$limit,
                     $this->getRootId()
                 );
         }

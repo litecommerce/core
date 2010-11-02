@@ -10,6 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
+{* TODO: REMOVE? we are using items_list/products/* templates instead*}
 <div class="{getListTitleClass()}">{getCount()} results found</div>
 
 <widget template="products_list/body.tpl" />
