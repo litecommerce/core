@@ -85,8 +85,8 @@ ProductsListView.prototype.postprocess = function(isSuccess, initial)
       function () {
         return !popup.load(
           URLHandler.buildURL({
-            'target' : 'quick_look',
-            'product_id' : core.getValueFromClass(this, 'productid')
+            'target':     'quick_look',
+            'product_id': core.getValueFromClass(this, 'productid')
           }), 
           'product-quicklook', 
           false, 
@@ -186,7 +186,12 @@ ProductsListView.prototype.postprocess = function(isSuccess, initial)
           countRequests++;
 
           core.post(
-            URLHandler.buildURL({}),
+            URLHandler.buildURL(
+              {
+                target: 'cart',
+                action: 'add'
+              }
+            ),
             function(XMLHttpRequest, textStatus, data, isValid)
             {
               countRequests--;

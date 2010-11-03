@@ -178,10 +178,12 @@ class Session extends \XLite\Model\AEntity
     {
         // Check if cell exists (need to perform update or delete)
         $cell = $this->getCellByName($name);
-        if (!$cell && isset($value)) {
+        if (!$cell) {
 
             // Cell not found - create new
-            static::getSessionCellRepo()->insertCell($this->getId(), $name, $value);
+            if (isset($value)) {
+                static::getSessionCellRepo()->insertCell($this->getId(), $name, $value);
+            }
 
         } elseif (isset($value)) {       
 
