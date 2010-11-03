@@ -38,47 +38,119 @@ namespace XLite\Model\Repo;
 class SessionCell extends \XLite\Model\Repo\ARepo
 {
     /**
-     * Find cell by session id and name
+     * Return data to indentify cell in SQL queries
      *
-     * @param string $sid  Session id
-     * @param string $name Cell name
-     * 
-     * @return \XLite\Model\SessionCell or null
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function findOneByIdAndName($sid, $name)
-    {
-        try {
-            $cell = $this->defineOneByIdAndNameQuery($sid, $name)
-                ->getQuery()
-                ->getSingleResult();
-
-        } catch (\Doctrine\ORM\NoResultException $exception) {
-            $cell = null;
-        }
-
-        return $cell;
-    }
-
-    /**
-     * Define query for findOneByIdAndName() method
+     * @param \XLite\Model\SessionCell $cell cell to use
      *
-     * @param string $sid  Session id
-     * @param string $name Cell name
-     * 
-     * @return \Doctrine\ORM\QueryBuilder
+     * @return array
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function defineOneByIdAndNameQuery($sid, $name)
+    protected function getCellIdentifier(\XLite\Model\SessionCell $cell)
     {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.id = :id AND s.name = :name')
-            ->setMaxResults(1)
-            ->setParameter('id', $sid)
-            ->setParameter('name', $name);
+        return array(
+            'cell_id' => $cell->getCellId(),
+        );
+    }
+
+    /**
+     * Prepare data for cell insert 
+     * 
+     * @param int    $id    session ID
+     * @param string $name  cell name
+     * @param mixed  $value data to store
+     *  
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function prepareDataForNewCell($id, $name, $value)
+    {
+        return array(
+            'id'    => $id,
+            'name'  => $name,
+        ) + $this->prepareDataForExistingCell($value);
+    }
+
+    /**
+     * Prepare data for cell update
+     *
+     * @param mixed                    $value data to store
+     * @param \XLite\Model\SessionCell $cell  cell to update
+     *
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function prepareDataForExistingCell($value, \XLite\Model\SessionCell $cell = null)
+    {
+        return array(
+            'value' => \XLite\Model\SessionCell::prepareValueForSet($value),
+            'type'  => \XLite\Model\SessionCell::getTypeByValue($value),
+        );
+    }
+
+
+    /**
+     * Insert new cell
+     *
+     * @param int    $id    session ID
+     * @param string $name  cell name
+     * @param mixed  $value data to store
+     *
+     * @return int
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function insertCell($id, $name, $value)
+    {
+        $this->getEntityManager()->getConnection()->insert(
+            $this->_class->getTableName(),
+            $this->prepareDataForNewCell($id, $name, $value)
+        );
+
+        return $this->getEntityManager()->getConnection()->lastInsertId();
+    }
+
+    /**
+     * Update existsing cell
+     *
+     * @param \XLite\Model\SessionCell $cell  cell to update
+     * @param mixed                    $value value to set
+     *
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function updateCell(\XLite\Model\SessionCell $cell, $value)
+    {
+        $this->getEntityManager()->getConnection()->update(
+            $this->_class->getTableName(),
+            $this->prepareDataForExistingCell($value, $cell),
+            $this->getCellIdentifier($cell)
+        );
+    }
+
+    /**
+     * Delete cell
+     *
+     * @param \XLite\Model\SessionCell $cell cell to delete
+     *
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function removeCell(\XLite\Model\SessionCell $cell)
+    {
+        $this->getEntityManager()->getConnection()->delete(
+            $this->_class->getTableName(),
+            $this->getCellIdentifier($cell)
+        );
     }
 }

@@ -34,6 +34,7 @@ namespace XLite\Model;
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
+ *
  * @Entity (repositoryClass="\XLite\Model\Repo\SessionCell")
  * @Table  (name="session_cells")
  */
@@ -49,7 +50,7 @@ class SessionCell extends \XLite\Model\AEntity
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
-     * @Column         (type="integer")
+     * @Column         (type="integer", nullable=false)
      */
     protected $cell_id;
 
@@ -61,7 +62,7 @@ class SessionCell extends \XLite\Model\AEntity
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @Column (type="integer")
+     * @Column (type="integer", nullable=false)
      */
     protected $id;
 
@@ -73,7 +74,7 @@ class SessionCell extends \XLite\Model\AEntity
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @Column (type="string", length="255")
+     * @Column (type="string", length="255", nullable=false)
      */
     protected $name;
 
@@ -99,7 +100,106 @@ class SessionCell extends \XLite\Model\AEntity
      *
      * @Column (type="string", length="16")
      */
-    protected $type = '';
+    protected $type;
+
+
+    /**
+     * Automatically get variable type
+     *
+     * @param mixed $value variable to check
+     *
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getTypeByValue($value)
+    {
+        return in_array($type = gettype($value), array('NULL', 'unknown type')) ? null : $type;
+    }
+
+    /**
+     * Common getter
+     *
+     * NOTE: this function is designed as "static public" to use in repository
+     * NOTE: customize this method instead of the "getValue()" one
+     * 
+     * @param mixed  $value value to prepare
+     * @param string $type  field type
+     *  
+     * @return mixed
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function prepareValueForGet($value, $type = null)
+    {
+        switch ($type ?: static::getTypeByValue($value)) {
+
+            case 'boolean':
+                $value = (bool) $value;
+                break;
+
+            case 'integer':
+                $value = intval($value);
+                break;
+
+            case 'double':
+                $value = doubleval($value);
+                break;
+
+            case 'string':
+                $value = $value;
+                break;
+
+            case 'array':
+            case 'object':
+                $value = unserialize($value);
+                break;
+
+            default:
+                $value = null;
+        }
+
+        return $value;
+    }
+
+    /**
+     * Common setter
+     *
+     * NOTE: this function is designed as "static public" to use in repository
+     * NOTE: customize this method instead of the "getValue()" one
+     *
+     * @param mixed  $value value to prepare
+     * @param string $type  field type
+     *
+     * @return mixed
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function prepareValueForSet($value, $type = null)
+    {
+        switch ($type ?: static::getTypeByValue($value)) {
+
+            case 'boolean':
+            case 'integer':
+            case 'double':
+            case 'string':
+                break;
+
+            case 'array':
+            case 'object':
+                $value = serialize($value);
+                break;
+
+            default:
+                $value = null;
+        }
+
+        return $value;
+    }
+
 
     /**
      * Get value 
@@ -111,33 +211,7 @@ class SessionCell extends \XLite\Model\AEntity
      */
     public function getValue()
     {
-        switch ($this->getType()) {
-            case 'boolean':
-                $result = (bool)$this->value;
-                break;
-
-            case 'integer':
-                $result = intval($this->value);
-                break;
-
-            case 'double':
-                $result = doubleval($this->value);
-                break;
-
-            case 'string':
-                $result = $this->value;
-                break;
-
-            case 'array':
-            case 'object':
-                $result = unserialize($this->value);
-                break;
-
-            default:
-                $result = null;
-        }
-
-        return $result;
+        return static::prepareValueForGet($this->value, $this->getType());
     }
 
     /**
@@ -152,40 +226,22 @@ class SessionCell extends \XLite\Model\AEntity
      */
     public function setValue($value)
     {
-        $type = gettype($value);
-
-        switch ($type) {
-            case 'boolean':
-            case 'integer':
-            case 'double':
-            case 'string':
-                break;
-
-            case 'array':
-            case 'object':
-                $value = serialize($value);
-                break;
-
-            default:
-                $value = null;
-                $type = '';
-        }
-
-        $this->value = $value;
-        $this->type = $type;
+        $this->value = static::prepareValueForSet($value, $type = static::getTypeByValue($value));
+        $this->type  = $type;
     }
 
     /**
-     * Dump setter for 'type' property 
+     * Disallowed method
      * 
+     * @param string $type type to set
+     *  
      * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function setType()
+    public function setType($type)
     {
+        throw new \Exception('It\'s not possible to change value type for the existsing cell.');
     }
-
 }
-

@@ -86,7 +86,8 @@ class XLite_Tests_Model_Session extends XLite_Tests_TestCase
         $this->assertTrue(time() < $session->getExpiry(), 'check new expiry #2');
     }
 
-    public function testGetCellByName()
+    // Is now protected 
+    /*public function testGetCellByName()
     {
         $session = $this->getTestSession();
 
@@ -104,7 +105,7 @@ class XLite_Tests_Model_Session extends XLite_Tests_TestCase
 
         $cell = $session->getCellByName('zzz');
         $this->assertNull($cell, 'empty cell #2');
-    }
+    }*/
 
     public function testCells()
     {

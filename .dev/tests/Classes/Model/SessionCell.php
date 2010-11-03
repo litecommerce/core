@@ -41,7 +41,7 @@ class XLite_Tests_Model_SessionCell extends XLite_Tests_TestCase
         $this->assertEquals(2, $session->bbb, 'test bbb');
         $this->assertEquals(3, $session->ccc, 'test ccc');
 
-        $cell = \XLite\Core\Database::getRepo('XLite\Model\SessionCell')->findOneByIdAndName($session->getId(), 'aaa');
+        $cell = \XLite\Core\Database::getRepo('XLite\Model\SessionCell')->findOneBy(array('id' => $session->getId(), 'name' => 'aaa'));
 
         $this->assertTrue(0 < $cell->getCellId(), 'test cell id');
         $this->assertEquals($session->getId(), $cell->getId(), 'test sid');
@@ -57,11 +57,17 @@ class XLite_Tests_Model_SessionCell extends XLite_Tests_TestCase
         $session->aaa = 4;
         $this->assertEquals(4, $session->aaa, 'test aaa');
 
-        $cell = \XLite\Core\Database::getRepo('XLite\Model\SessionCell')->findOneByIdAndName($session->getId(), 'aaa');
+        $cell = \XLite\Core\Database::getRepo('XLite\Model\SessionCell')->findOneBy(array('id' => $session->getId(), 'name' => 'aaa'));
         $this->assertEquals('integer', $cell->getType(), 'test type');
 
-        $cell->setType('boolean');
-        $this->assertEquals('integer', $cell->getType(), 'test type');
+        try {
+            $cell->setType('boolean');
+        } catch (\Exception $e) {
+            $this->assertEquals('integer', $cell->getType(), 'test type');
+            return;
+        }
+
+        $this->fail('The "setType()" was not thrown the exception');
     }
 
     public function testDelete()
@@ -74,7 +80,7 @@ class XLite_Tests_Model_SessionCell extends XLite_Tests_TestCase
         $this->assertNull($session->aaa, 'empty aaa');
         $this->assertNull($session->bbb, 'empty bbb');
 
-        $cell = \XLite\Core\Database::getRepo('XLite\Model\SessionCell')->findOneByIdAndName($session->getId(), 'aaa');
+        $cell = \XLite\Core\Database::getRepo('XLite\Model\SessionCell')->findOneBy(array('id' => $session->getId(), 'name' => 'aaa'));
         $this->assertNull($cell, 'not exists cell');
     }
 
@@ -82,7 +88,7 @@ class XLite_Tests_Model_SessionCell extends XLite_Tests_TestCase
     {
         $session = $this->getTestSession();
 
-        $cell = \XLite\Core\Database::getRepo('XLite\Model\SessionCell')->findOneByIdAndName($session->getId(), 'aaa');
+        $cell = \XLite\Core\Database::getRepo('XLite\Model\SessionCell')->findOneBy(array('id' => $session->getId(), 'name' => 'aaa'));
 
         $this->assertEquals('integer', $cell->getType(), 'test type');
 
@@ -99,7 +105,7 @@ class XLite_Tests_Model_SessionCell extends XLite_Tests_TestCase
         $this->assertEquals(1.99, $cell->getValue(), 'test value #4');
 
         $cell->setValue(null);
-        $this->assertEquals('', $cell->getType(), 'test type #5');
+        $this->assertEquals(null, $cell->getType(), 'test type #5');
         $this->assertNull($cell->getValue(), 'test value #5');
 
         $cell->setValue(true);
