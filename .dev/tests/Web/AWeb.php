@@ -26,6 +26,6 @@
  * @since      3.0.0
  */
 
-class XLite_Web_AWeb extends XLite_Tests_SeleniumTestCase
+abstract class XLite_Web_AWeb extends XLite_Tests_SeleniumTestCase
 {
 }
