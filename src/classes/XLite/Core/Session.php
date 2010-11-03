@@ -319,25 +319,30 @@ class Session extends \XLite\Base\Singleton
 
             $arg = $this->getName();
 
-            setcookie(
-                $arg,
-                $this->session->getSid(),
-                0,
-                $this->getCookiePath(),
-                $this->getCookieDomain(),
-                false,
-                true
-            );
+            $httpDomain = $this->getCookieDomain();
+            $httpsDomain = $this->getCookieDomain(true);
 
             setcookie(
                 $arg,
                 $this->session->getSid(),
                 0,
-                $this->getCookiePath(true),
-                $this->getCookieDomain(true),
+                $this->getCookiePath(),
+                $httpDomain,
                 false,
                 true
             );
+
+            if ($httpDomain != $httpsDomain) {
+                setcookie(
+                    $arg,
+                    $this->session->getSid(),
+                    0,
+                    $this->getCookiePath(true),
+                    $httpsDomain,
+                    false,
+                    true
+                );
+            }
         }
     }
 
@@ -563,21 +568,19 @@ class Session extends \XLite\Base\Singleton
         // Process query
         $idx = 999999;
         $found = false;
-        $first = false;
         foreach (xlite()->repo('Language')->findActiveLanguages() as $lng) {
-            if (!$first) {
-                $first = $lng->code;
+            if (!$found) {
+                $found = $lng->getCode();
             }
-            $key = array_search($lng->code, $languages);
+
+            $key = array_search($lng->getCode(), $languages);
             if (false !== $key && $key < $idx) {
                 $idx = $key;
-                $found = $lng->code;
+                $found = $lng->getCode();
             }
         }
 
-        return $found
-            ? $found
-            : ($first ? $first : 'en');
+        return $found ?: 'en';
     }
 
 }

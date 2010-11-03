@@ -102,7 +102,6 @@ class SessionCell extends \XLite\Model\AEntity
      */
     protected $type;
 
-
     /**
      * Automatically get variable type
      *
@@ -115,7 +114,9 @@ class SessionCell extends \XLite\Model\AEntity
      */
     public static function getTypeByValue($value)
     {
-        return in_array($type = gettype($value), array('NULL', 'unknown type')) ? null : $type;
+        $type = gettype($value);
+
+        return in_array($type, array('NULL', 'unknown type')) ? null : $type;
     }
 
     /**
@@ -134,7 +135,9 @@ class SessionCell extends \XLite\Model\AEntity
      */
     public static function prepareValueForGet($value, $type = null)
     {
-        switch ($type ?: static::getTypeByValue($value)) {
+        $type = $type ?: static::getTypeByValue($value);
+
+        switch ($type) {
 
             case 'boolean':
                 $value = (bool) $value;
@@ -180,7 +183,9 @@ class SessionCell extends \XLite\Model\AEntity
      */
     public static function prepareValueForSet($value, $type = null)
     {
-        switch ($type ?: static::getTypeByValue($value)) {
+        $type = $type ?: static::getTypeByValue($value);
+
+        switch ($type) {
 
             case 'boolean':
             case 'integer':
@@ -226,8 +231,8 @@ class SessionCell extends \XLite\Model\AEntity
      */
     public function setValue($value)
     {
-        $this->value = static::prepareValueForSet($value, $type = static::getTypeByValue($value));
-        $this->type  = $type;
+        $this->type  = static::getTypeByValue($value);
+        $this->value = static::prepareValueForSet($value, $this->type);
     }
 
     /**

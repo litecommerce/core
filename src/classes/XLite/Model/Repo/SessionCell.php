@@ -93,7 +93,6 @@ class SessionCell extends \XLite\Model\Repo\ARepo
         );
     }
 
-
     /**
      * Insert new cell
      *
@@ -137,7 +136,7 @@ class SessionCell extends \XLite\Model\Repo\ARepo
     }
 
     /**
-     * Delete cell
+     * Remove cell
      *
      * @param \XLite\Model\SessionCell $cell cell to delete
      *
