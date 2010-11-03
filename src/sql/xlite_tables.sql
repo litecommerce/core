@@ -498,7 +498,7 @@ CREATE TABLE xlite_session_cells (
   `id` int(11) NOT NULL default 0,
   `name` varchar(255) NOT NULL,
   `value` text,
-  `type` varchar(16) NOT NULL,
+  `type` varchar(16),
   PRIMARY KEY (cell_id),
   KEY id (id),
   UNIQUE KEY iname (id, name),

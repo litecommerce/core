@@ -37,19 +37,19 @@ class XLite_Tests_Model_Repo_SessionCell extends XLite_Tests_TestCase
     {
         $session = $this->getTestSession();
 
-        $cell = \XLite\Core\Database::getRepo('XLite\Model\SessionCell')->findOneByIdAndName($session->getId(), 'aaa');
+        $cell = \XLite\Core\Database::getRepo('XLite\Model\SessionCell')->findOneBy(array('id' => $session->getId(), 'name' => 'aaa'));
 
         $this->assertNotNull($cell, 'check cell');
         $this->assertEquals(1, $cell->getValue(), 'check value');
 
-        $cell = \XLite\Core\Database::getRepo('XLite\Model\SessionCell')->findOneByIdAndName($session->getId(), 'bbb');
+        $cell = \XLite\Core\Database::getRepo('XLite\Model\SessionCell')->findOneBy(array('id' => $session->getId(), 'name' => 'bbb'));
         $this->assertNotNull($cell, 'check cell #2');
         $this->assertEquals(2, $cell->getValue(), 'check value #2');
 
-        $cell = \XLite\Core\Database::getRepo('XLite\Model\SessionCell')->findOneByIdAndName(0, 'aaa');
+        $cell = \XLite\Core\Database::getRepo('XLite\Model\SessionCell')->findOneBy(array('id' => 0, 'name' => 'aaa'));
         $this->assertNull($cell, 'check empty cell #1');
 
-        $cell = \XLite\Core\Database::getRepo('XLite\Model\SessionCell')->findOneByIdAndName($session->getId(), 'zzz');
+        $cell = \XLite\Core\Database::getRepo('XLite\Model\SessionCell')->findOneBy(array('id' => $session->getId(), 'name' => 'zzz'));
         $this->assertNull($cell, 'check empty cell #2');
     }
 
