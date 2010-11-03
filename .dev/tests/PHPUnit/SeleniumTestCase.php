@@ -18,16 +18,66 @@
 
 require_once 'PHPUnit/Extensions/SeleniumTestCase.php';
 
+/**
+ * Selenium test case 
+ * 
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
+ */
 abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumTestCase
 {
+    /**
+     * Selenioum common TTL 
+     */
     const SELENIUM_TTL = 60000;
+
 
     /**
      * Prefix for all classes with test cases
      */
     const CLASS_PREFIX = 'XLite_Web_';
 
-    static public $cssProcessedFiles = array();
+
+    /**
+     * Processed CSS files 
+     * 
+     * @var    array
+     * @access public
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected static $cssProcessedFiles = array();
+
+    /**
+     * Calidated pages URL list
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected static $validatedPages = array();
+
+    /**
+     * Validate every page or not
+     * 
+     * @var    boolean
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $validatePage = false;
+
+    /**
+     * Validate CSS flag
+     *
+     * @var    boolean
+     * @access protected
+     * @see    ____var_see____
+     * @since  1.0.0
+     */
+    protected $validateCSS = true;
 
     /**
      * Process W3C HTML validation warnings as errors
@@ -113,6 +163,14 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
 */
     );
 
+    /**
+     * Unknown nut allowed CSS properties list
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
     protected $unknownCSSProperty = array(
         'zoom',
         'border-radius',
@@ -148,15 +206,50 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
         $this->coverageScriptUrl = defined('SELENIUM_COVERAGE_URL')
             ? SELENIUM_COVERAGE_URL . '/phpunit_coverage.php'
             : SELENIUM_SOURCE_URL . '/phpunit_coverage.php';
+
+        if (defined('W3C_VALIDATION')) {
+            $this->validatePage = true;
+        }
+
         parent::__construct($name, $data, $browser);
     }
 
     /**
+     * Run test 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function runTest()
+    {
+        try {
+            parent::runTest();
+
+        } catch (\Exception $exception) {
+            try {
+                $this->stop();
+
+            } catch (\RuntimeException $e) {
+                throw $e;
+            }
+            throw $exception;
+        }
+    }
+
+    /**
+     * Get code coverage 
+     * 
      * @return array
-     * @since  Method available since Release 3.2.0
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.2.0
      */
     protected function getCodeCoverage()
     {
+        $result = array();
+
         if (!empty($this->coverageScriptUrl)) {
             $url = sprintf(
               '%s?PHPUNIT_SELENIUM_TEST_ID=%s',
@@ -166,15 +259,15 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
 
             $buffer = @file_get_contents($url);
 
-            if ($buffer !== FALSE) {
+            if ($buffer !== false) {
                 $buffer = unserialize($buffer);
-                if ($buffer !== FALSE) {
-                    return $this->matchLocalAndRemotePaths($buffer);
+                if ($buffer !== false) {
+                    $result = $this->matchLocalAndRemotePaths($buffer);
                 }
             }
         }
 
-        return array();
+        return $result;
     }
 
     /**
@@ -199,7 +292,12 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
         $class = str_replace(self::CLASS_PREFIX, '', empty($class) ? $trace['class'] : $class);
         $method = lcfirst(str_replace('test', '', empty($method) ? $trace['function'] : $method));
 
-        return $class . ' : ' . str_repeat(' ', 30 - strlen($this->browserName)) . $this->browserName . ' [' . $method . ']. ' . $message;
+        return $class
+            . ' : '
+            . str_repeat(' ', 30 - strlen($this->browserName))
+            . $this->browserName
+            . ' [' . $method . ']. '
+            . $message;
     }
 
     /**
@@ -240,37 +338,193 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
         $this->stop();
 
         $message = $this->getMessage('', get_called_class(), $this->name);
-        echo "\n" . sprintf('%\'.-86s', trim($message));
+        echo (PHP_EOL . sprintf('%\'.-86s', trim($message)));
     }
 
+    /**
+     * Improved version of 'typeKeys' Selenium command
+     * 
+     * @param string $locator Locator
+     * @param string $value   Type values
+     *  
+     * @return mixed
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function typeKeys($locator, $value)
+    {
+        $this->__call('type', array($locator, substr($value, 0, -1)));
+
+        return $this->__call('typeKeys', array($locator, substr($value, -1)));
+    }
+
+    /**
+     * Toggle checkbox by jQuery 
+     * 
+     * @param string  $jqueryExpression jQuery locator
+     * @param boolean $checked          Status
+     *  
+     * @return boolean Current status
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function toggleByJquery($jqueryExpression, $checked = null)
+    {
+        $checked = isset($checked) ? $checked : !$this->getJSExpression('$("' . $jqueryExpression . '").get(0).checked');
+        $this->getJSExpression('$("' . $jqueryExpression . '").get(0).checked = ' . ($checked ? 'true' : 'false'));
+        $this->getJSExpression('$("' . $jqueryExpression . '").change()');
+
+        return (bool)$this->getJSExpression('$("' . $jqueryExpression . '").get(0).checked');
+    }
+
+    /**
+     * Get JS expression 
+     * 
+     * @param string $expression javascript expression
+     *  
+     * @return mixed
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     public function getJSExpression($expression)
     {
         return $this->getEval('selenium.browserbot.getCurrentWindow().' . $expression);
     }
 
+    /**
+     * Assert jQuery locator present 
+     * 
+     * @param string $pattern jQuery locator
+     * @param string $message Fail message
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     public function assertJqueryPresent($pattern, $message = null)
     {
         $this->assertTrue(
             0 < intval($this->getJSExpression("$('" . $pattern . "').length")),
-            $message
+            $message ?: 'jQuery pattern \'' . $pattern . '\' is NOT present'
         );
     }
 
+    /**
+     * Assert jQuery locator NOT present
+     * 
+     * @param string $pattern jQuery locator
+     * @param string $message Fail message
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     public function assertJqueryNotPresent($pattern, $message = null)
     {
         $this->assertEquals(
             0,
             intval($this->getJSExpression("$('" . $pattern . "').length")),
-            $message
+            $message ?: 'jQuery pattern \'' . $pattern . '\' is PRESENT'
         );
     }
 
+    /**
+     * Wait inline progress mark
+     * 
+     * @param string $jqueryExpression jQuery input locator
+     * @param string $message          Fail message
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function waitInlineProgress($jqueryExpression, $message = null)
+    {
+        $this->waitForCondition(
+            'selenium.browserbot.getCurrentWindow().$("' . $jqueryExpression . '").parents().eq(0).find(".single-progress-mark").length > 0',
+            10000,
+            'check inline progress mark for ' . $jqueryExpression . ' (' . $message . ')'
+        );
+        $this->waitForCondition(
+            'selenium.browserbot.getCurrentWindow().$("' . $jqueryExpression . '").parents().eq(0).find(".single-progress-mark").length == 0',
+            15000,
+            'check GONE inline progress mark for ' . $jqueryExpression . ' (' . $message . ')'
+        );
+    }
+
+    /**
+     * Assert input error note present 
+     * 
+     * @param string $jqueryExpression jQuery input locator
+     * @param string $message          Fail message
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function assertInputErrorPresent($jqueryExpression, $message = null)
+    {
+        $cnt = intval($this->getJSExpression('$("' . $jqueryExpression . '").parents().eq(0).find(".error").length'));
+        $this->assertTrue(
+            1 == $cnt,
+            ($message ?: 'check error for ' . $jqueryExpression)
+        );
+    }
+
+    /**
+     * Assert input error note NOT present
+     *
+     * @param string $jqueryExpression jQuery input locator
+     * @param string $message          Fail message
+     *
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function assertInputErrorNotPresent($jqueryExpression, $message = null)
+    {
+        $cnt = intval($this->getJSExpression('$("' . $jqueryExpression . '").parents().eq(0).find(".error").length'));
+        $this->assertTrue(
+            0 == $cnt,
+            ($message ?: 'check no-error for ' . $jqueryExpression)
+        );
+    }
+
+    /**
+     * Skip coverage for current Selenium session
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     protected function skipCoverage()
     {
         $this->openAndWait('');
         $this->createCookie('no_xdebug_coverage=1');
     }
 
+    /**
+     * Drag-n-drop with delay
+     * 
+     * @param string $locatorFrom   Begin locator
+     * @param string $locatorMiddle Middle position locator 
+     * @param string $locatorTo     Finish locator
+     * @param int    $delay         Delay (seconds)
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     protected function dragAndDropDelay($locatorFrom, $locatorMiddle, $locatorTo, $delay = 1)
     {
         $this->mouseDownAt($locatorFrom, '0,+10');
@@ -283,28 +537,63 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
         $this->mouseUpAt($locatorTo, '0,+10');
     }
 
-    public function __call($command, $arguments)
+    /**
+     * Common command interrupter
+     * 
+     * @param string $command   Command name
+     * @param array  $arguments Arguments array
+     *  
+     * @return mixed
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function __call($command, array $arguments)
     {
+        $result = null;
+
         try {
 
-            return parent::__call($command, $arguments);
+            $result = parent::__call($command, $arguments);
+
+            if (
+                preg_match('/^(?:open|submit)(?:AndWait)?$/Ssi', $command)
+                && $this->validatePage
+            ) {
+                $url = $arguments[0];
+                if (!isset(static::$validatedPages[$url])) {
+                    static::$validatedPages[$url] = true;
+                    $this->validate();
+                }
+            }
 
         } catch (RuntimeException $e) {
 
-            if (
-                $e->getMessage() == 'Could not connect to the Selenium RC server.'
-                || preg_match('/^The response from the Selenium RC server is invalid: Timed out after \d+ms$/Ss', $e->getMessage())
-            ) {
+            $message = $e->getMessage();
 
-                $this->markTestSkipped($e->getMessage());
+            if (
+                'Could not connect to the Selenium RC server.' == $message
+                || preg_match('/^The response from the Selenium RC server is invalid: Timed out after \d+ms$/Ss', $message)
+            ) {
+                
+                if ($command == 'waitForCondition' || preg_match('/AndWait$/Ss', $command)) {
+                    $this->fail(
+                        'Timeout failed (' . $arguments[1] . 'ms): '
+                        . (isset($arguments[2]) ? $arguments[2] : $arguments[0])
+                    );
+
+                } else {
+                    $this->markTestSkipped($e->getMessage());
+                }
 
             } else {
 
                 throw $e;
 
             }
-
         }
+
+        return $result;
     }
 
     /**
@@ -328,8 +617,23 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
 
         $this->validateHTML($html);
 
-        return;
+        if ($this->validateCSS) {
+            $this->validatePageCSS();
+        }
+    }
 
+    /**
+     * Validate page CSS 
+     * 
+     * @param string $html Page HTML code
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function validatePageCSS($html)
+    {
         $dom = new DOMDocument();
         $dom->loadHTML($html);
         $xpath = new DOMXPath($dom);
@@ -344,9 +648,12 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
                 $url = $this->baseURL . $url;
             }
 
-            if (!in_array($url, XLite_Tests_SeleniumTestCase::$cssProcessedFiles)) {
-                $this->validateCSS(trim(file_get_contents($url)), $url);
-                XLite_Tests_SeleniumTestCase::$cssProcessedFiles[] = $url;
+            if (!in_array($url, static::$cssProcessedFiles)) {
+                $css = @file_get_contents($url);
+                static::$cssProcessedFiles[] = $url;
+                if ($css) {
+                    $this->validateCSS(trim($css), $url);
+                }
             }
         }
     }
@@ -367,7 +674,7 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
 
         $ch = curl_init();
 
-//        curl_setopt($ch, CURLOPT_URL, 'http://w3c.crtdev.local/check');
+        //curl_setopt($ch, CURLOPT_URL, 'http://w3c.crtdev.local/check');
         curl_setopt($ch, CURLOPT_URL, 'http://validator.w3.org/check');
         curl_setopt($ch, CURLOPT_HEADER, false);
         curl_setopt($ch, CURLOPT_TIMEOUT, 30);
@@ -395,7 +702,11 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
             $descr = $xpath->query('pre/code', $node)->item(0)->nodeValue;
 
             if ($em && $title && $descr && $this->isW3CHTMLError($title)) {
-                $this->fail('W3C HTML validation fail: ' . $title . '(' . $em . ')' . " in block\n" . $descr);
+                $this->fail(
+                    'W3C HTML validation fail (' . $this->getLocation() . '): '
+                    . $title . '(' . $em . ')'
+                    . ' in block' . PHP_EOL . $descr
+                );
             }
         }
 
@@ -432,21 +743,35 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
                         $str .= "\n" . $descr;
                     }
 
-                    $this->fail('[WARNING] ' . $str);
+                    $this->fail(
+                        'W3C HTML validation warning (' . $this->getLocation() . '): '
+                        . $str
+                    );
                 }
             }
         }
     }
 
-    private function validateCSS($data, $url)
+    /**
+     * Validate CSS 
+     * 
+     * @param string $data CSS code
+     * @param string $url  CSS script URL
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function validateCSS($data, $url)
     {
         $post = array(
-            'text' => $data,
-            'lang' => 'en',
-            'profile' => 'css3',
+            'text'       => $data,
+            'lang'       => 'en',
+            'profile'    => 'css3',
             'usermedium' => 'all',
-            'type' => 'none',
-            'warning' => '1'
+            'type'       => 'none',
+            'warning'    => '1',
         );
 
         $ch = curl_init();
@@ -494,7 +819,7 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
 
         if ($errors) {
             $this->fail(
-                'W3C CSS validation fail (' . $url. '):' . PHP_EOL
+                'W3C CSS validation fail (' . $url . '):' . PHP_EOL
                 . "\t" . implode(PHP_EOL . "\t", $errors) . PHP_EOL
             );
         }
@@ -515,7 +840,7 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
         return !in_array(
             $name,
             array(
-                'Attribute "autocomplete" is not a valid attribute'
+                'Attribute "autocomplete" is not a valid attribute',
             )
         );
     }

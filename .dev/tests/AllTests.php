@@ -27,18 +27,13 @@
  */
 
 if (false === defined('PHPUnit_MAIN_METHOD')) {
-	define('PHPUnit_MAIN_METHOD', 'XLite_Tests_AllTests::main');
+    define('PHPUnit_MAIN_METHOD', 'XLite_Tests_AllTests::main');
 }
 
 // PHPUnit classes
 define('PATH_TESTS', realpath(__DIR__));
 define('PATH_ROOT', realpath(__DIR__ . '/../..'));
-
-if (file_exists(PATH_ROOT . '/src')) {
-    define('PATH_SRC', realpath(PATH_ROOT . '/src'));
-} else {
-    define('PATH_SRC', realpath(PATH_ROOT . '/src'));
-}
+define('PATH_SRC', realpath(PATH_ROOT . '/src'));
 
 set_include_path(
     get_include_path()
@@ -100,34 +95,35 @@ PHPUnit_Util_Filter::addDirectoryToFilter(PATH_SRC . '/var/run/classes/XLite/Mod
  */
 class XLite_Tests_AllTests
 {
-	/**
-	 * Test suite main method
-	 * 
-	 * @return void
-	 * @access public
-	 * @see    ____func_see____
-	 * @since  1.0.0
-	 */
-	public static function main()
+    /**
+     * Test suite main method
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function main()
     {
         PHPUnit_TextUI_TestRunner::run(self::suite());
     }
 
-	/**
-	 * Creates the phpunit test suite 
-	 * 
-	 * @return XLite_Tests_TestSuite
-	 * @access public
-	 * @see    ____func_see____
-	 * @since  1.0.0
-	 */
-	public static function suite()
+    /**
+     * Creates the phpunit test suite 
+     * 
+     * @return XLite_Tests_TestSuite
+     * @access public
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    public static function suite()
     {
         $suite = new XLite_Tests_TestSuite('LiteCommerce - AllTests');
 
         $includes = false;
         if (defined('INCLUDE_ONLY_TESTS')) {
             $includes = array_map('trim', explode(',', INCLUDE_ONLY_TESTS));
+
             if (in_array('NOWEB', $includes)) {
                 if (!defined('SELENIUM_DISABLED')) {
                     define('SELENIUM_DISABLED', true);
@@ -135,6 +131,23 @@ class XLite_Tests_AllTests
                 $k = array_search('NOWEB', $includes);
                 unset($includes[$k]);
             }
+
+            if (in_array('ONLYWEB', $includes)) {
+                if (!defined('UNITS_DISABLED')) {
+                    define('UNITS_DISABLED', true);
+                }
+                $k = array_search('ONLYWEB', $includes);
+                unset($includes[$k]);
+            }
+
+            if (in_array('W3C', $includes)) {
+                if (!defined('W3C_VALIDATION')) {
+                    define('W3C_VALIDATION', true);
+                }
+                $k = array_search('W3C', $includes);
+                unset($includes[$k]);
+            }
+
         }
 
         // Include abstract classes
@@ -151,23 +164,25 @@ class XLite_Tests_AllTests
         }
 
         // Classes tests
-		$classesDir  = dirname( __FILE__ ) . DIRECTORY_SEPARATOR . 'Classes' . DIRECTORY_SEPARATOR;
-		$pattern     = '/^' . str_replace('/', '\/', preg_quote($classesDir)) . '(.*)\.php$/';
+        if (!defined('UNITS_DISABLED')) {
+            $classesDir  = dirname( __FILE__ ) . DIRECTORY_SEPARATOR . 'Classes' . DIRECTORY_SEPARATOR;
+            $pattern     = '/^' . str_replace('/', '\/', preg_quote($classesDir)) . '(.*)\.php$/';
 
-        $dirIterator = new RecursiveDirectoryIterator($classesDir);
-        $iterator    = new RecursiveIteratorIterator($dirIterator, RecursiveIteratorIterator::CHILD_FIRST);
+            $dirIterator = new RecursiveDirectoryIterator($classesDir);
+            $iterator    = new RecursiveIteratorIterator($dirIterator, RecursiveIteratorIterator::CHILD_FIRST);
 
-        foreach ($iterator as $filePath => $fileObject) {
-            if (
-                preg_match($pattern, $filePath, $matches)
-                && !empty($matches[1])
-                && !preg_match('/\/Abstract.php/Ss', $filePath)
-                && (!$includes || in_array($matches[1], $includes))
-            ) {
-                require_once $filePath;
-                $suite->addTestSuite(XLite_Tests_TestCase::CLASS_PREFIX . str_replace(DIRECTORY_SEPARATOR, '_', $matches[1]));
+            foreach ($iterator as $filePath => $fileObject) {
+                if (
+                    preg_match($pattern, $filePath, $matches)
+                    && !empty($matches[1])
+                    && !preg_match('/\/Abstract.php/Ss', $filePath)
+                    && (!$includes || in_array($matches[1], $includes))
+                ) {
+                    require_once $filePath;
+                    $suite->addTestSuite(XLite_Tests_TestCase::CLASS_PREFIX . str_replace(DIRECTORY_SEPARATOR, '_', $matches[1]));
+                }
             }
-        }	
+        }
 
         // Web tests
         if (!defined('SELENIUM_DISABLED')) {
@@ -204,4 +219,3 @@ class XLite_Tests_AllTests
 if (PHPUnit_MAIN_METHOD === 'XLite_Tests_AllTests::main') {
     XLite_Tests_AllTests::main();
 }
-

@@ -28,7 +28,7 @@
 
 require_once __DIR__ . '/../AWeb.php';
 
-class XLite_Web_Customer_ACustomer extends XLite_Web_AWeb
+abstract class XLite_Web_Customer_ACustomer extends XLite_Web_AWeb
 {
 
     protected function logIn($user = 'master', $password = 'master')
