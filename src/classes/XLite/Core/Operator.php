@@ -264,6 +264,7 @@ class Operator extends \XLite\Base\Singleton
         if (!isset($l['args'])) {
             $l['args'] = array();
         }
+
         foreach ($l['args'] as $arg) {
 
             if (is_bool($arg)) {
@@ -289,7 +290,7 @@ class Operator extends \XLite\Base\Singleton
                     $args[] = 'callback ' . $this->detectClassName($arg[0]) . '::' . $arg[1];
 
                 } else {
-                    $args[] = 'array{' . count($arg) . '}';
+                    $args[] = 'array(' . count($arg) . ')';
                 }
 
             } elseif (is_object($arg)) {

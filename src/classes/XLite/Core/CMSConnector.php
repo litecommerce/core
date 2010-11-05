@@ -89,7 +89,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
 
 
     /**
-     * getProfileDBFields 
+     * Get profiled DB condition fields list
      * 
      * @param int $cmsUserId CMS user Id
      *  
@@ -99,7 +99,10 @@ abstract class CMSConnector extends \XLite\Base\Singleton
      */
     protected function getProfileDBFields($cmsUserId)
     {
-        return array('cms_profile_id' => intval($cmsUserId), 'cms_name' => $this->getCMSName());
+        return array(
+            'cms_profile_id' => intval($cmsUserId),
+            'cms_name'       => $this->getCMSName(),
+        );
     }
 
     /**
@@ -131,14 +134,16 @@ abstract class CMSConnector extends \XLite\Base\Singleton
      */
     protected function getProfileIdByCMSId($cmsUserId)
     {
-        $profile = \XLite\Model\CachingFactory::getObject(__METHOD__ . $cmsUserId, '\XLite\Model\Profile');
+        $profile = \XLite\Core\Database::getRepo('XLite\Model\Profile')->findOneBy(
+            array_merge(
+                $this->getProfileDBFields($cmsUserId),
+                array(
+                    'order_id' => 0,
+                )
+            )
+        );
 
-        // Not initialized
-        if (!$profile->isRead) {
-            $profile->findOneBy(array_merge($this->getProfileDBFields($cmsUserId), array('order_id' => 0)));
-        }
-
-        return $profile->getProfileId();
+        return $profile ? $profile->getProfileId() : null;
     }
 
     /**
@@ -151,11 +156,14 @@ abstract class CMSConnector extends \XLite\Base\Singleton
      */
     protected function getCleanURLTargets()
     {
-        return array('category', 'product');
+        return array(
+            'category',
+            'product',
+        );
     }
 
     /**
-     * getCategoryCleanURL 
+     * Get category clean URL by category id
      * 
      * @param int   $id     category ID
      * @param array $params URL params
@@ -167,19 +175,16 @@ abstract class CMSConnector extends \XLite\Base\Singleton
      */
     protected function getCategoryCleanURL($id, array $params = array())
     {
-        $url = null;
         $category = \XLite\Core\Database::getRepo('\XLite\Model\Category')->find($id);
 
-        if (isset($category) && $category->getCleanUrl()) {
-            $url =  \Includes\Utils\URLManager::trimTrailingSlashes($category->getCleanUrl());
-            $url .= '/' . \Includes\Utils\Converter::buildQuery($params, '-', '/');
-        }
-
-        return $url;
+        return (isset($category) && $category->getCleanUrl())
+            ? \Includes\Utils\URLManager::trimTrailingSlashes($category->getCleanUrl())
+                . '/' . \Includes\Utils\Converter::buildQuery($params, '-', '/')
+            : null;
     }
 
     /**
-     * getProductCleanURL 
+     * Get product Clean URL by product id
      * 
      * @param int $productId product ID
      *  
@@ -195,8 +200,10 @@ abstract class CMSConnector extends \XLite\Base\Singleton
         $result = null;
 
         if (isset($product) && $product->getCleanUrl()) {
-            $result = $product->getCleanUrl()
-                . (preg_match('/(\.html|\/htm)$/Ss', $url) ? '.html' : '');
+            $result = $product->getCleanUrl();
+            if (!preg_match('/\.html?$/Ss', $result)) {
+                $result .= '.html';
+            }
         }
 
         return $result;

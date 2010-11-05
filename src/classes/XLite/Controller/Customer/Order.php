@@ -106,10 +106,10 @@ class Order extends \XLite\Controller\Customer\ACustomer
      */
     protected function checkOrderAccess()
     {
-        return $this->session->get('last_order_id') == \XLite\Core\Request::getInstance()->order_id
+        return $this->session->last_order_id == \XLite\Core\Request::getInstance()->order_id
             || (
-                $this->auth->isLogged()
-                && $this->auth->getProfile()->getProfileId() == $this->getOrder()->get('orig_profile_id')
+                \XLite\Core\Auth::getInstance()->isLogged()
+                && \XLite\Core\Auth::getInstance()->getProfile()->getProfileId() == $this->getOrder()->getOrigProfileId()
             );
     }
 
@@ -123,8 +123,8 @@ class Order extends \XLite\Controller\Customer\ACustomer
      */
     public function getOrder()
     {
-        if (is_null($this->order)) {
-            $this->order = new \XLite\Model\Order(intval(\XLite\Core\Request::getInstance()->order_id));
+        if (!isset($this->order)) {
+            $this->order = \XLite\Core\Database::getRepo('XLite\Model\Order')->find(intval(\XLite\Core\Request::getInstance()->order_id));
         }
 
         return $this->order;
