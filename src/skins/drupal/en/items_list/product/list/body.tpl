@@ -28,8 +28,8 @@
            * Since there is no way to make a TD having a relative position, we need a container
            * in order to position Absolute and Relative elements in nested lists 
            *}
-          <td class="product-photo"><div class="container">{displayListPart(#photo#,_ARRAY_(#product#^product))}</div></td>
-          <td class="product-info"><div class="container">{displayListPart(#info#,_ARRAY_(#product#^product))}</div></td>
+          <td class="product-photo"><div class="product-photo">{displayListPart(#photo#,_ARRAY_(#product#^product))}</div></td>
+          <td class="product-info"><div class="product-info">{displayListPart(#info#,_ARRAY_(#product#^product))}</div></td>
         </tr>
       </table>
     </li>

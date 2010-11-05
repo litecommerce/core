@@ -10,7 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  * 
- * @ListChild (list="itemsList.product.grid.customer.info", weight="10")
+ * @ListChild (list="itemsList.product.grid.customer.info.photo", weight="10")
  *}
 <a IF="isShowThumbnails()&product.hasImage()" href="{buildURL(#product#,##,_ARRAY_(#product_id#^product.product_id,#category_id#^category_id))}" class="product-thumbnail">
   <widget class="\XLite\View\Image" image="{product.getImage()}" maxWidth="{getIconWidth()}" maxHeight="{getIconHeight()}" alt="{product.name}" />

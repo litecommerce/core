@@ -10,7 +10,7 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  * 
- * @ListChild (list="itemsList.product.grid.customer.info", weight="999")
+ * @ListChild (list="itemsList.product.grid.customer.info.photo", weight="999")
  * @ListChild (list="itemsList.product.list.customer.photo", weight="999")
  *}
-<div class="quicklook"><widget class="\XLite\View\Button\QuickLook" product="{product}" style="action" /></div>
+<div class="quicklook"><a href="{buildURL(#product#,##,_ARRAY_(#product_id#^product.product_id,#category_id#^category_id))}" class="quicklook-link quicklook-link-{product.product_id}">&nbsp;</a></div>

@@ -89,7 +89,8 @@ ul.products-list li
 
 
 .products div.product,      /* Position nested elements inside a product tag */
-.products td .container     /* Tables and table cells cannot be relative, so we position tags inside a wrapper in table cells */
+.products div.product-info,     /* Tables and table cells cannot be relative, so we position tags inside a wrapper in table cells */
+.products div.product-photo
 {
   position: relative;
 }
@@ -121,16 +122,20 @@ ul.products-list li
 {
   width: 100%;
   position: absolute;
-  top: 40%;
+  bottom: 8px;
   left: 0;
-  text-align: center;
   z-index: 100;
 }
 
-.products .products-list .quicklook
+.products .product .quicklook a.quicklook-link
 {
-  top: 35%;
+  display: block;
+  width: 53px;
+  height: 53px;
+  margin: 0 auto;
+  background: transparent url(images/icon_quick_look.png) no-repeat top left;
 }
+
 
 .products-grid .product-name,
 .products-grid .product-thumbnail,

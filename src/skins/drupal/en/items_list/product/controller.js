@@ -81,12 +81,12 @@ ProductsListView.prototype.postprocess = function(isSuccess, initial)
     );
 
     // Register "Quick look" button handler
-    $('.quicklook button.action', this.base).click(
+    $('.quicklook a.quicklook-link', this.base).click(
       function () {
         return !popup.load(
           URLHandler.buildURL({
             'target':     'quick_look',
-            'product_id': core.getValueFromClass(this, 'productid')
+            'product_id': core.getValueFromClass(this, 'quicklook-link')
           }), 
           'product-quicklook', 
           false, 

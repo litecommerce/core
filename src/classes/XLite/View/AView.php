@@ -1486,7 +1486,7 @@ abstract class AView extends \XLite\Core\Handler
      */
     protected function getNestedListName($part)
     {
-        return $this->getListName() . '.' . $part;
+        return (is_null($this->viewListName) ? $this->getListName() : $this->viewListName) . '.' . $part;
     }
 
     /**
