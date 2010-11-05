@@ -121,6 +121,7 @@ class XLite_Tests_AllTests
         $suite = new XLite_Tests_TestSuite('LiteCommerce - AllTests');
 
         $includes = false;
+        $includeTests = array();
         if (defined('INCLUDE_ONLY_TESTS')) {
             $includes = array_map('trim', explode(',', INCLUDE_ONLY_TESTS));
 
@@ -148,6 +149,13 @@ class XLite_Tests_AllTests
                 unset($includes[$k]);
             }
 
+            foreach ($includes as $k => $v) {
+                $tmp = explode(':', $v, 2);
+                $includes[$k] = $tmp[0];
+                if (isset($tmp[1])) {
+                    $includeTests[$tmp[0]] = $tmp[1];
+                }
+            }
         }
 
         // Include abstract classes
@@ -178,16 +186,24 @@ class XLite_Tests_AllTests
                     && !preg_match('/\/Abstract.php/Ss', $filePath)
                     && (!$includes || in_array($matches[1], $includes))
                 ) {
+                    $class = XLite_Tests_TestCase::CLASS_PREFIX
+                        . str_replace(DIRECTORY_SEPARATOR, '_', $matches[1]);
+
                     require_once $filePath;
-                    $suite->addTestSuite(XLite_Tests_TestCase::CLASS_PREFIX . str_replace(DIRECTORY_SEPARATOR, '_', $matches[1]));
+                    $suite->addTestSuite($class);
+
+                    if (isset($includeTests[$matches[1]])) {
+                        $class::$testsRange = array($includeTests[$matches[1]]);
+                    }
+
                 }
             }
         }
 
         // Web tests
         if (!defined('SELENIUM_DISABLED')) {
-            $classesDir  = dirname( __FILE__ ) . DIRECTORY_SEPARATOR . 'Web' . DIRECTORY_SEPARATOR;
-            $pattern     = '/^' . str_replace('/', '\/', preg_quote($classesDir)) . '(.*)\.php$/';
+            $classesDir = dirname( __FILE__ ) . DIRECTORY_SEPARATOR . 'Web' . DIRECTORY_SEPARATOR;
+            $pattern    = '/^' . str_replace('/', '\/', preg_quote($classesDir)) . '(.*)\.php$/';
 
             $dirIterator = new RecursiveDirectoryIterator($classesDir);
             $iterator    = new RecursiveIteratorIterator($dirIterator, RecursiveIteratorIterator::CHILD_FIRST);
@@ -200,11 +216,16 @@ class XLite_Tests_AllTests
                     && !preg_match('/\/A[A-Z]/Ss', $filePath)
                     && (!$includes || in_array($matches[1], $includes))
                 ) {
+
+                    $class = XLite_Tests_SeleniumTestCase::CLASS_PREFIX
+                        . str_replace(DIRECTORY_SEPARATOR, '_', $matches[1]);
+
                     require_once $filePath;
-                    $suite->addTestSuite(
-                        XLite_Tests_SeleniumTestCase::CLASS_PREFIX
-                        . str_replace(DIRECTORY_SEPARATOR, '_', $matches[1])
-                    );
+                    $suite->addTestSuite($class);
+
+                    if (isset($includeTests[$matches[1]])) {
+                        $class::$testsRange = array($includeTests[$matches[1]]);
+                    }
                 }
             } 
         }

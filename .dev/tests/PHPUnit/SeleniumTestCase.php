@@ -40,6 +40,16 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
 
 
     /**
+     * Tests range
+     *
+     * @var    array
+     * @access public
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    public static $testsRange = array();
+
+    /**
      * Processed CSS files 
      * 
      * @var    array
@@ -225,7 +235,14 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
     protected function runTest()
     {
         try {
-            parent::runTest();
+
+            $shortName = lcfirst(substr($this->name, 4));
+            if (self::$testsRange && !in_array($shortName, self::$testsRange)) {
+                $this->markTestSkipped();
+
+            } else {
+                parent::runTest();
+            }
 
         } catch (\Exception $exception) {
             try {
