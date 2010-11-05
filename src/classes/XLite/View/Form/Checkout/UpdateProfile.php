@@ -77,17 +77,23 @@ class UpdateProfile extends \XLite\View\Form\Checkout\ACheckout
             \XLite\Core\Validator\Pair\APair::SOFT
         );
 
+        $onlyCalculate = (bool)\XLite\Core\Request::getInstance()->only_calculate;
+        $mode = $onlyCalculate
+            ? \XLite\Core\Validator\Pair\APair::SOFT
+            : \XLite\Core\Validator\Pair\APair::STRICT;
+        $nonEmpty = !$onlyCalculate;
+
         // Shipping address
         $shippingAddress = $validator->addPair(
             'shippingAddress',
             new \XLite\Core\Validator\HashArray,
             \XLite\Core\Validator\Pair\APair::SOFT
         );
-        $shippingAddress->addPair('name', new \XLite\Core\Validator\String(true));
-        $shippingAddress->addPair('street', new \XLite\Core\Validator\String(true));
-        $shippingAddress->addPair('city', new \XLite\Core\Validator\String(true));
+        $shippingAddress->addPair('name', new \XLite\Core\Validator\String($nonEmpty), $mode);
+        $shippingAddress->addPair('street', new \XLite\Core\Validator\String($nonEmpty), $mode);
+        $shippingAddress->addPair('city', new \XLite\Core\Validator\String($nonEmpty), $mode);
         $shippingAddress->addPair('zipcode', new \XLite\Core\Validator\String(true));
-        $shippingAddress->addPair('phone', new \XLite\Core\Validator\String());
+        $shippingAddress->addPair('phone', new \XLite\Core\Validator\String(), $mode);
         $shippingAddress->addPair(new \XLite\Core\Validator\Pair\CountryState());
         $shippingAddress->addPair(
             'save_as_new',

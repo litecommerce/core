@@ -71,7 +71,7 @@ $(document).ready(
 
           var o = this;
 
-          $('form.create .selector #create_profile_chk', this.commonBase).unbind('click');
+          $('form.create .selector #create_profile_chk', this.commonBase).unbind('change');
 
           var refreshStateCallback = function() {
             o.refreshState();
@@ -101,7 +101,14 @@ $(document).ready(
           }
 
           toggle.call($('form.create .selector #create_profile_chk', this.commonBase).get(0));
-          $('form.create .selector #create_profile_chk', this.commonBase).click(toggle);
+          $('form.create .selector #create_profile_chk', this.commonBase).change(
+            function() {
+              toggle.call(this);
+              if (this.form.validate(true)) {
+                $(this.form).submit();
+              }
+            }
+          );
 
           $('.profile form.create .username input', this.commonBase).bind(
             'invalid',
@@ -157,15 +164,17 @@ $(document).ready(
         refreshState.apply(this, arguments);
 
         var shippingMethodsIsExists = 0 < $('ul.shipping-rates input', this.base).length;
+        var username = $('#create_profile_username', this.commonBase).get(0);
         if (
           shippingMethodsIsExists
+          && username
           && !$('.shipping-step .address-not-completed:visible', this.base).length
           && !$('.shipping-step .email-not-defined:visible', this.base).length
-          && (!$('#create_profile_username', this.commonBase).get(0).validate(true) || !$('#create_profile_username', this.commonBase).val())
+          && (!username.validate(true) || !$('#create_profile_username', this.commonBase).val())
         ) {
           $('.shipping-step .username-not-defined', this.base).show();
 
-        } else {
+        } else if (username) {
           $('.shipping-step .username-not-defined', this.base).hide();
         }
       }
