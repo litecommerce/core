@@ -27,6 +27,25 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
     const IMAP_USER = 'rnd_tester';
     const IMAP_PASS = '7qnDjKzVoc6Qcb7b';
 
+
+    /**
+     * Tests range 
+     * 
+     * @var    array
+     * @access public
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    public static $testsRange = array();
+
+    /**
+     * Message length 
+     * 
+     * @var    integer
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
     protected static $messageLength = 70;
 
     /**
@@ -48,8 +67,6 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
      * @since  1.0.0
      */
     private $lastMessage = 0;
-
-    private $app = null;
 
     /**
      * Parameters registering when test starts
@@ -272,6 +289,14 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
         $this->writeMetricLog();
     }
 
+    /**
+     * Write metric log 
+     * 
+     * @return void
+     * @access private
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     private function writeMetricLog()
     {
         $trace = debug_backtrace();
@@ -315,6 +340,17 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
         } 
     }
 
+    /**
+     * Check warning 
+     * 
+     * @param mixed  $func      Closure (function) or list of closures
+     * @param string $errorCode Error code
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     protected function checkWarning($func, $errorCode)
     {
         if ($this->isFunction($func)) {
@@ -355,6 +391,16 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
 
     }
 
+    /**
+     * Check - is fuunction (closure) or not
+     * 
+     * @param \Closure $func Function
+     *  
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     protected function isFunction($func) {
         return is_object($func) && get_class($func) == 'Closure';
     }
@@ -463,6 +509,25 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
     protected function query($sql)
     {
         \XLite\Core\Database::getEM()->getConnection()->executeQuery($sql, array());
+    }
+
+    /**
+     * Run test 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function runTest()
+    {
+        $shortName = lcfirst(substr($this->name, 4));
+        if (self::$testsRange && !in_array($shortName, self::$testsRange)) {
+            $this->markTestSkipped();
+
+        } else {
+            parent::runTest();
+        }
     }
 }
 
