@@ -59,7 +59,7 @@ class Order extends \XLite\View\Dialog
      */
     protected function getHead()
     {
-        return 'Order #' . $this->getOrder()->get('order_id');
+        return 'Order #' . $this->getOrder()->getOrderId();
     }
 
     /**
@@ -84,7 +84,7 @@ class Order extends \XLite\View\Dialog
      */
     public function getOrder()
     {
-        if (is_null($this->order)) {
+        if (!isset($this->order)) {
             $this->order = \XLite\Core\Database::getRepo('\XLite\Model\Order')->find(
                 intval(\XLite\Core\Request::getInstance()->order_id)
             );
@@ -103,7 +103,7 @@ class Order extends \XLite\View\Dialog
      */
     protected function isVisible()
     {
-        return parent::isVisible() && !is_null($this->getOrder());
+        return parent::isVisible() && $this->getOrder();
     }
 
     /**

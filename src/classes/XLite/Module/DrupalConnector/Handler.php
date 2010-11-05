@@ -464,7 +464,7 @@ class Handler extends \XLite\Core\CMSConnector
         $result = array();
 
         $profile = \LC_Connector_Handler_Profile::getInstance()->getProfile($args[1]);
-        if ($profile && $profile->isRead) {
+        if ($profile) {
             $result['profile_id'] = $profile->getProfileId();
         }
 

@@ -117,6 +117,14 @@ class OrderSearch extends \XLite\View\Dialog
             $cnd->profileId = $this->getProfile()->getProfileId();
         }
 
+        if (!isset($this->conditions['sortCriterion']) || !$this->conditions['sortCriterion']) {
+            $this->conditions['sortCriterion'] = 'order_id';
+        }
+
+        if (!isset($this->conditions['sortOrder']) || !$this->conditions['sortOrder']) {
+            $this->conditions['sortOrder'] = 'ASC';
+        }
+
         $cnd->orderBy = array('o.' . $this->conditions['sortCriterion'], $this->conditions['sortOrder']);
         $cnd->orderId = $this->conditions['order_id'];
         $cnd->status = $this->conditions['status'];
