@@ -30,6 +30,21 @@ require_once __DIR__ . '/AProductList.php';
 
 class XLite_Web_Customer_SearchProducts extends XLite_Web_Customer_AProductList
 {
+    const SUBMIT_BUTTON = "//table[@class='search-form-main-part']/tbody/tr/td/button[@class='search-form-submit' and @type='submit']";
+
+    const SUBSTRING = "//table[@class='search-form-main-part']/tbody/tr/td/input[@type='text' and @name='substring']";
+
+    const LESS_SEARCH_OPTIONS = "//td[@class='less-search-options-cell']/a[text()='Less search options']";
+
+    const ADV_BOX = "//table[@id='advanced_search_options' and @class='advanced-search-options']";
+
+    const SELECT_CATEGORY = "//table[@id='advanced_search_options' and @class='advanced-search-options']/tbody/tr/td/select[@name='categoryId']";
+
+    const OPTION_CATEGORY_TOYS = "Toys";
+
+    const OPTION_CATEGORY_DOWNLOADABLES = "Downloadables";
+
+
     protected $widgetContainerClass = '.items-list.products-search-result';
     
     protected $widgetClass = '\\XLite\\View\\Search';
@@ -37,6 +52,7 @@ class XLite_Web_Customer_SearchProducts extends XLite_Web_Customer_AProductList
     protected $isOpen = false;
 
     protected $doNotOpenNew = false;
+
 
     protected function openTestPage()
     {
@@ -73,6 +89,87 @@ class XLite_Web_Customer_SearchProducts extends XLite_Web_Customer_AProductList
             "No appropriate input box in simple search form"
         );
     }
+
+    public function testSearchSubstring()
+    {
+        $this->configurePager($this->getAllTestProducts());
+
+        $this->openTestPage();
+
+        $this->assertElementPresent(self::SUBSTRING, 'No substring field');
+        $this->type(self::SUBSTRING,'mom');
+
+        $this->assertElementPresent(self::SUBMIT_BUTTON, 'No search products button');
+        $this->click(self::SUBMIT_BUTTON);
+
+        $this->waitForAjaxProgress();
+
+        $this->checkCounter(2);
+
+        // Check Advanced box hide/show
+        $this->click(self::LESS_SEARCH_OPTIONS);
+        $this->assertVisible(self::ADV_BOX, 'Hidden advanced box');
+
+        $this->click(self::LESS_SEARCH_OPTIONS);
+        $this->assertNotVisible(self::ADV_BOX, 'Visible advanced box');
+
+        $this->click(self::LESS_SEARCH_OPTIONS);
+
+        // Check including options
+        $this->type(self::SUBSTRING, 'search mom');
+
+        $this->checkIncluding('any', 6);
+        $this->checkIncluding('all', 1);
+        $this->checkIncluding('phrase', 0);
+
+        // Check category selector
+        $this->type(self::SUBSTRING, 'search');
+
+        // Check 'Toys' category search
+        $this->assertElementPresent(self::SELECT_CATEGORY, 'No category selector!');
+
+        $this->select(self::SELECT_CATEGORY, self::OPTION_CATEGORY_TOYS);
+
+        $this->click(self::SUBMIT_BUTTON);
+
+        $this->waitForAjaxProgress();
+
+        $this->checkCounter(2);
+
+        // Check 'Downloadables' category search
+        $this->select(self::SELECT_CATEGORY, self::OPTION_CATEGORY_DOWNLOADABLES);
+
+        $this->click(self::SUBMIT_BUTTON);
+
+        $this->waitForAjaxProgress();
+
+        $this->checkCounter(3);
+    }
+
+    protected function checkIncluding($type, $count)
+    {
+        $this->click("//label[@for='including-$type']/input[@id='including-$type' and @type='radio' and @name='including' and @value='$type']");
+
+        $this->click(self::SUBMIT_BUTTON);
+
+        $this->waitForAjaxProgress();
+
+        $this->checkCounter($count);
+    }
+
+    protected function checkCounter($count)
+    {
+        $this->assertElementPresent(
+            "//div[@class='items-list products-search-result']/h2[@class='items-list-title' and text()='$count products found']",
+            '"Search found" string is wrong. must be ' . $count
+        );
+
+        $this->assertElementPresent(
+            "//div[@class='items-list products-search-result']/div[@class='list-pager']/div[@class='pager-items-total']/span[@class='records-count' and text()='$count']",
+            'Records counter is wrong - must be ' . $count
+        );
+    }
+
 
     protected function countAllTestProducts()
     {
