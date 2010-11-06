@@ -37,48 +37,16 @@ namespace XLite\Module\FeaturedProducts\Controller\Admin;
  */
 class Categories extends \XLite\Controller\Admin\Categories implements \XLite\Base\IDecorator
 {
+
     /**
-     * doActionSearchFeaturedProducts
-     * TODO: Rework using ItemsList
+     * FIXME- backward compatibility
      *
-     * @return void
-     * @access protected
-     * @see    ____func_see____
+     * @var    array
+     * @access public
+     * @see    ____var_see____
      * @since  3.0.0
      */
-    protected function doActionSearchFeaturedProducts()
-    {
-        $sessionCell    = \XLite\Module\FeaturedProducts\Model\FeaturedProduct::SESSION_CELL_NAME;
-        $searchParams   = \XLite\View\ItemsList\Product\Admin\Search::getSearchParams();
-        $productsSearch = array();
-        $cBoxFields     = array(
-            \XLite\View\ItemsList\Product\Admin\Search::PARAM_SEARCH_IN_SUBCATS
-        );
-
-        foreach ($searchParams as $modelParam => $requestParam) {
-            if (isset(\XLite\Core\Request::getInstance()->$requestParam)) {
-                $productsSearch[$modelParam] = \XLite\Core\Request::getInstance()->$requestParam;
-            }
-        }
-
-        foreach ($cBoxFields as $requestParam) {
-            $productsSearch[$modelParam] = isset(\XLite\Core\Request::getInstance()->$requestParam)
-                ? 1
-                : 0;
-        }
-
-        $this->session->set($sessionCell, $productsSearch);
-        $this->set('returnUrl',
-            $this->buildUrl(
-                'categories',
-                '',
-                array(
-                    'mode' => 'search_featured_products',
-                    'category_id' => \XLite\Core\Request::getInstance()->category_id
-                )
-            )
-        );
-    }
+    public $params = array('category_id');
 
     /**
      * doActionAddFeaturedProducts 
@@ -97,9 +65,11 @@ class Categories extends \XLite\Controller\Admin\Categories implements \XLite\Ba
             $products = \XLite\Core\Database::getRepo('\XLite\Model\Product')
                 ->findByIds($pids);
 
-            $category = $this->category_id
-                ? \XLite\Core\Database::getRepo('\XLite\Model\Category')->find($this->category_id)
-                : null;
+            if (!$this->categoryId) {
+                $this->categoryId = \XLite\Core\Database::getRepo('\XLite\Model\Category')->getRootCategoryId();
+            }
+
+            $category = \XLite\Core\Database::getRepo('\XLite\Model\Category')->find($this->categoryId);
 
             // Retreive existing featured products list of that category
 
@@ -135,42 +105,6 @@ class Categories extends \XLite\Controller\Admin\Categories implements \XLite\Ba
 
             \XLite\Core\Database::getEM()->flush();
         }
-    }
-
-    /**
-     * Get Featured products search result
-     *
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getFeaturedSearchResult()
-    {
-        if ('search_featured_products' !== \XLite\Core\Request::getInstance()->mode) {
-            return array();
-        }
-
-        $cnd = $this->session->get(\XLite\Module\FeaturedProducts\Model\FeaturedProduct::SESSION_CELL_NAME);
-
-        $result = \XLite\Core\Database::getRepo('\XLite\Model\Product')->search($cnd);
-        $this->featuredSearchResultCount = count($result);
-
-        return $result;
-    }
-
-    /**
-     * Get featured products list
-     * 
-     * @return array of \XLite\Module\FeaturedProducts\Model\FeaturedProduct objects
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getFeaturedProductsList()
-    {
-        return \XLite\Core\Database::getRepo('\XLite\Module\FeaturedProducts\Model\FeaturedProduct')
-            ->getFeaturedProducts($this->category_id);
     }
 
     /**
@@ -227,15 +161,7 @@ class Categories extends \XLite\Controller\Admin\Categories implements \XLite\Ba
      */
     protected function getConditions()
     {
-        $searchParamsOrig = $this->session->get(\XLite\Module\FeaturedProducts\Model\FeaturedProduct::SESSION_CELL_NAME);
-        $searchSpecs      = \XLite\View\ItemsList\Product\Admin\Search::getSearchParams();
-        $searchParams     = array();
-
-        foreach ($searchSpecs as $modelParam => $requestParam) {
-            $searchParams[$requestParam] = isset($searchParamsOrig[$modelParam])
-                ? $searchParamsOrig[$modelParam]
-                : null;
-        }
+        $searchParams = $this->session->get(\XLite\Module\FeaturedProducts\View\Admin\FeaturedProducts::getSessionCellName());
 
         if (!is_array($searchParams)) {
             $searchParams = array();
@@ -246,9 +172,9 @@ class Categories extends \XLite\Controller\Admin\Categories implements \XLite\Ba
 
     /**
      * Get search condition parameter by name
-     *
-     * @param string $paramName
-     *
+     * 
+     * @param string $paramName 
+     *  
      * @return mixed
      * @access public
      * @see    ____func_see____
@@ -266,5 +192,19 @@ class Categories extends \XLite\Controller\Admin\Categories implements \XLite\Ba
             ? $searchParams[$paramName]
             : null;
     }
- 
+
+    /**
+     * Get featured products list
+     *
+     * @return array of \XLite\Module\FeaturedProducts\Model\FeaturedProduct objects
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getFeaturedProductsList()
+    {
+        return \XLite\Core\Database::getRepo('\XLite\Module\FeaturedProducts\Model\FeaturedProduct')
+            ->getFeaturedProducts($this->category_id);
+    }
+
 }

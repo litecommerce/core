@@ -467,11 +467,11 @@ INSERT INTO xlite_options SET option_id = 4073, group_id = 4018, enabled = 1;
 INSERT INTO xlite_option_translations (id, code, name) VALUES (4073, 'en', 'Twilight');
 
 -- Featured products
-INSERT INTO xlite_featured_products VALUES (1,4006,NULL,10);
-INSERT INTO xlite_featured_products VALUES (2,3002,NULL,20);
-INSERT INTO xlite_featured_products VALUES (3,4059,NULL,30);
-INSERT INTO xlite_featured_products VALUES (4,4043,NULL,40);
-INSERT INTO xlite_featured_products VALUES (5,4020,NULL,50);
+INSERT INTO xlite_featured_products VALUES (1,4006,1,10);
+INSERT INTO xlite_featured_products VALUES (2,3002,1,20);
+INSERT INTO xlite_featured_products VALUES (3,4059,1,30);
+INSERT INTO xlite_featured_products VALUES (4,4043,1,40);
+INSERT INTO xlite_featured_products VALUES (5,4020,1,50);
 INSERT INTO xlite_featured_products VALUES (6,4047,1004,10);
 INSERT INTO xlite_featured_products VALUES (7,4015,1004,20);
 INSERT INTO xlite_featured_products VALUES (8,4012,1004,30);

@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage Core
+ * @subpackage View
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -26,29 +26,65 @@
  * @since      3.0.0
  */
 
-namespace XLite\Module\FeaturedProducts\Core;
+namespace XLite\Module\FeaturedProducts\View\Form;
 
 /**
- * ____description____
+ * List 
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class CMSConnector extends \XLite\Core\CMSConnector implements \XLite\Base\IDecorator
+class Update extends \XLite\View\Form\AForm
 {
     /**
-     * Constructor
-     * 
-     * @return void
+     * Return form name
+     *
+     * @return string
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function __construct()
+    protected function getFormName()
     {
-        parent::__construct();
-
-        $this->widgetsList['\XLite\Module\FeaturedProducts\View\Customer\FeaturedProducts'] = 'Featured products';
+        return 'update_fproducts';
     }
+
+    /**
+     * getDefaultTarget
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultTarget()
+    {
+        return 'categories';
+    }
+
+    /**
+     * getDefaultAction
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultAction()
+    {
+        return 'update_featured_products';
+    }
+
+    /**
+     * Get form parameters
+     *
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getFormParams()
+    {
+        return parent::getFormParams() + array('categoryId' => $this->getCategoryId());
+    }
+
 }

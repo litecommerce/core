@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage Core
+ * @subpackage View
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -26,29 +26,54 @@
  * @since      3.0.0
  */
 
-namespace XLite\Module\FeaturedProducts\Core;
+namespace XLite\Module\FeaturedProducts\View\Form;
 
 /**
- * ____description____
+ * Search
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class CMSConnector extends \XLite\Core\CMSConnector implements \XLite\Base\IDecorator
+class Search extends \XLite\View\Form\Product\Search\Admin\AAdmin
 {
     /**
-     * Constructor
-     * 
-     * @return void
+     * getDefaultTarget
+     *
+     * @return string
      * @access protected
-     * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function __construct()
+    protected function getDefaultTarget()
     {
-        parent::__construct();
-
-        $this->widgetsList['\XLite\Module\FeaturedProducts\View\Customer\FeaturedProducts'] = 'Featured products';
+        return 'product_list';
     }
+
+    /**
+     * getDefaultAction
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultAction()
+    {
+        return 'search_featured_products';
+    }
+
+    /**
+     * getDefaultParams
+     *
+     * @return array
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDefaultParams()
+    {
+        $params = parent::getDefaultParams();
+        $params[\XLite\Controller\AController::RETURN_URL] = \Includes\Utils\URLManager::getSelfURL() . '&mode=search_featured_products';
+
+        return $params;
+    }
+
 }
