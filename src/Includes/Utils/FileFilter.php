@@ -38,51 +38,106 @@ namespace Includes\Utils;
 class FileFilter extends AUtils
 {
     /**
+     * Directory to iterate over
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $dir;
+
+    /**
+     * Mode 
+     * 
+     * @var    int
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $mode;
+
+    /**
+     * Cache 
+     * 
+     * @var    \Includes\Utils\FileFilter\FilterIterator
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $iterator;
+
+
+    /**
      * Return the directory iterator
      * 
-     * @param string $dir  folder to iterate
-     * @param int    $mode iteration mode
-     *  
-     * @return void
+     * @return \RecursiveIteratorIterator
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected static function getUnfilteredIterator($dir, $mode)
+    protected function getUnfilteredIterator()
     {
-        return new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($dir), $mode);
+        return new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($this->dir), $this->mode);
     }
 
 
     /**
      * Return the directory iterator
      * 
-     * @param string $dir  folder to iterate
-     * @param int    $mode iteration mode
-     *  
      * @return \Includes\Utils\FileFilter\FilterIterator
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function getIterator($dir, $mode = \RecursiveIteratorIterator::LEAVES_ONLY)
+    public function getIterator()
     {
-        return new \Includes\Utils\FileFilter\FilterIterator(static::getUnfilteredIterator($dir, $mode));
+        if (!isset($this->iterator)) {
+            $this->iterator = new \Includes\Utils\FileFilter\FilterIterator(static::getUnfilteredIterator());
+        }
+
+        return $this->iterator;
     }
 
     /**
-     * Return the directory iterator filtered by file extension
-     * 
-     * @param string $dir       folder to iterate
-     * @param string $extension file extension for use in filtering
-     *  
-     * @return \Includes\Utils\FileFilter\FilterIterator
+     * Return the directory iterator filtered by som criteria
+     *
+     * Predefined callbacks:
+     *
+     * - typeDir
+     * - typeFile
+     * - extension
+     * - pattern
+     *
+     *
+     * @param mixed $callback sort callback/criteria
+     *
+     * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function filterByExtension($dir, $extension)
+    public function filterBy($callback)
     {
-        return static::getIterator($dir)->addFilter('byExtension', array($extension));
+        $args = func_get_args();
+        array_shift($args);
+
+        $this->getIterator()->addFilter($callback, $args);
+    }
+
+    /**
+     * Constructor
+     * 
+     * @param string $dir directory to iterate over
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function __construct($dir, $mode = \RecursiveIteratorIterator::LEAVES_ONLY)
+    {
+        $this->dir  = $dir;
+        $this->mode = $mode;
     }
 }

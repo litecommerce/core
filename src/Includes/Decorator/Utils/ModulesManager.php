@@ -35,7 +35,7 @@ namespace Includes\Decorator\Utils;
  * @see        ____class_see____
  * @since      3.0.0
  */
-class ModulesManager extends AUtils
+abstract class ModulesManager extends AUtils
 {
     /**
      * Pattern to get module name by class name

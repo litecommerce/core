@@ -49,6 +49,45 @@ class Tree extends \Includes\DataStructure\Hierarchical\Tree
 
 
     /**
+     * Get iterator for class files
+     * 
+     * @return \Includes\Utils\FileFilter
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getFileIterator()
+    {
+        $filter = new \Includes\Utils\FileFilter(LC_CLASSES_DIR);
+
+        $filter->filterBy('extension', 'php');
+        $filter->filterBy('pattern', $this->getPathPattern());
+
+        return $filter->getIterator();
+    }
+
+    /**
+     * Pattern to check file paths
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getPathPattern()
+    {
+        $quotedDS   = preg_quote(LC_DS, '/');
+        $optionalDS = '(' . $quotedDS . '|$)';
+
+        $palceholder   = '@';
+        $modulePattern = $quotedDS . 'Module' . $quotedDS . $palceholder . $optionalDS;
+        $modulesList   = array_keys(\Includes\Decorator\Utils\ModulesManager::getActiveModules());
+
+        return '/^(.((?!' . str_replace($palceholder, '\w+', $modulePattern) . ')|' 
+            . str_replace($palceholder, '(' . implode('|', $modulesList) . ')', $modulePattern) . '))*$/i';
+    }
+
+    /**
      * Search possible parent for a node
      *
      * @param \Includes\DataStructure\Node\Tree $node node to get info
@@ -130,6 +169,7 @@ class Tree extends \Includes\DataStructure\Hierarchical\Tree
         parent::__construct($nodeClass);
 
         // Walk through the PHP files tree and collect classes info
-        $this->createFromArray(\Includes\Utils\FileFilter::filterByExtension(LC_CLASSES_DIR, 'php'));
+        $this->createFromArray($this->getFileIterator());
     }
 }
+

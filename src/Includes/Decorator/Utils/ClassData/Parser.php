@@ -236,24 +236,6 @@ abstract class Parser extends \Includes\Decorator\Utils\ClassData\AClassData
         return $data;
     }
 
-    /**
-     * Check if the corresponded module is active
-     * 
-     * @param array $data data returned by parser
-     *  
-     * @return bool
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected static function isModuleEnabled(array &$data)
-    {
-        return \Includes\Decorator\Utils\ModulesManager::checkClass(
-            static::getField($data, self::N_CLASS),
-            static::getField($data, self::N_PARENT_CLASS)
-        );
-    }
-
 
     /**
      * Parse value of a phpDocumenter tag
@@ -305,6 +287,6 @@ abstract class Parser extends \Includes\Decorator\Utils\ClassData\AClassData
             $data = array_replace_recursive($data, static::$postprocess($result + array(self::N_FILE_PATH => $path)));
         }
 
-        return (empty($data) || !static::isModuleEnabled($data)) ? null : $data;
+        return empty($data) ? null : $data;
     }
 }

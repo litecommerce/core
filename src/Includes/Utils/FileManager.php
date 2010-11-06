@@ -157,12 +157,9 @@ class FileManager extends AUtils
     public static function unlinkRecursive($dir)
     {
         if (static::isDir($dir)) {
-            $iterator = \Includes\Utils\FileFilter::getIterator(
-                $dir,
-                \RecursiveIteratorIterator::CHILD_FIRST
-            );
+            $filter = new \Includes\Utils\FileFilter($dir, \RecursiveIteratorIterator::CHILD_FIRST);
 
-            foreach ($iterator as $file) {
+            foreach ($filter->getIterator() as $file) {
                 $file->isDir() ? rmdir($file->getPathname()) : unlink($file->getPathname());
             }
 
@@ -225,10 +222,6 @@ class FileManager extends AUtils
      */
     public static function getRelativePath($path, $compareTo, $extension = 'php')
     {
-        return preg_replace(
-            '/^' . preg_quote($compareTo, '/') . '(.*)\.' . $extension . '$/i',
-            '$1.' . $extension,
-            $path
-        );
+        return preg_replace('/^' . preg_quote($compareTo, '/') . '(.*)\.' . $extension . '$/i', '$1.' . $extension, $path);
     }
 }

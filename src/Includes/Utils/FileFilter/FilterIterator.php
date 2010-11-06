@@ -35,7 +35,7 @@ namespace Includes\Utils\FileFilter;
  * @see        ____class_see____
  * @since      3.0.0
  */
-final class FilterIterator extends \FilterIterator
+class FilterIterator extends \FilterIterator
 {
     /**
      * List of filter functions
@@ -62,25 +62,65 @@ final class FilterIterator extends \FilterIterator
     }
 
     /**
+     * Get file extension 
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getFileExtension()
+    {
+        return strtolower(pathinfo($this->getFileInfo()->getBasename(), PATHINFO_EXTENSION));
+    }
+
+    /**
      * Execute passed filter function
      * 
-     * @param array $filter callback and params
+     * @param array $data callback info
      *  
      * @return bool
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function executeCallbackFunction($filter)
+    protected function executeFilterCallback(array $data)
     {
-        list($callback, $params) = $filter;
-
-        return (bool) call_user_func_array($callback, $params);
+        return (bool) call_user_func_array(
+            $data[0],
+            array_merge(empty($data[1]) ? array() : $data[1], array($this->getFileInfo()))
+        );
     }
 
 
     /**
-     * Check file extension
+     * The filter callback
+     *
+     * @return bool
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function filterByTypeDir()
+    {
+        return $this->getFileInfo()->isDir();
+    }
+
+    /**
+     * The filter callback
+     *
+     * @return bool
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function filterByTypeFile()
+    {
+        return $this->getFileInfo()->isFile();
+    }
+
+    /**
+     * The filter callback
      * 
      * @param string $extension extension to compare with
      *  
@@ -91,8 +131,22 @@ final class FilterIterator extends \FilterIterator
      */
     protected function filterByExtension($extension)
     {
-        return !$this->getFileInfo()->isFile()
-            || ($extension !== strtolower(pathinfo($this->getFileInfo()->getBasename(), PATHINFO_EXTENSION)));
+        return $this->filterByTypeFile() && ($this->getFileExtension() === strtolower($extension));
+    }
+
+    /**
+     * The filter callback
+     *
+     * @param string $pattern pattern to use
+     *
+     * @return bool
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function filterByPattern($pattern)
+    {
+        return preg_match($pattern, $this->getPathname());
     }
 
 
@@ -106,7 +160,13 @@ final class FilterIterator extends \FilterIterator
      */
     public function accept()
     {
-        return !((bool) array_filter($this->filterCallbacks, array($this, 'executeCallbackFunction')));
+        $result = true;
+
+        foreach ($this->filterCallbacks as $data) {
+            if (!($result = $this->executeFilterCallback($data))) break;
+        }
+
+        return $result;
     }
 
     /**
@@ -115,16 +175,16 @@ final class FilterIterator extends \FilterIterator
      * @param mixed $callback callback function
      * @param array $params   call params
      *  
-     * @return self
+     * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
     public function addFilter($callback, array $params = array())
     {
-        $callback = is_array($callback) ? $callback : array($this, 'filter' . ucfirst($callback));
-        $this->filterCallbacks[] = array($callback, $params);
-
-        return $this;
+        $this->filterCallbacks[] = array(
+            is_array($callback) ? $callback : array($this, 'filterBy' . ucfirst($callback)),
+            $params,
+        );
     }
 }

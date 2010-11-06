@@ -80,13 +80,26 @@ class Main extends \Includes\Decorator\Plugin\APlugin
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getMappedPHPClasses()
+    protected function getAnnotatedPHPClasses()
     {
         return static::getClassesTree()->findByCallback(
             function (\Includes\Decorator\DataStructure\ClassData\Node $node) {
                 return !is_null($node->getTag(constant(__CLASS__ . '::TAG_LIST_CHILD')));
             }
         );
+    }
+
+    /**
+     * Return list of templates to parse 
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getTemplates()
+    {
+        return array();
     }
 
     /**
@@ -237,6 +250,47 @@ class Main extends \Includes\Decorator\Plugin\APlugin
     }
 
     /**
+     * Return all "ListChild" tags defined in PHP classes
+     *
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getListChildTagsFromPHP()
+    {
+        $data = array();
+
+        // Iterate over all classes which define the "ListChild" tag
+        foreach ($this->getAnnotatedPHPClasses() as $node) {
+
+            // Add tag attributes to the list
+            $data = array_merge($data, $this->getAllListChildTagAttributes($node));
+        }
+
+        return $data;
+    }
+
+    /**
+     * Return all "ListChild" tags defined in templates
+     *
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getListChildTagsFromTemplates()
+    {
+        $data = array();
+
+        // Iterate over all templates
+        foreach ($this->getTemplates() as $template) {
+        }
+
+        return $data;
+    }
+
+    /**
      * Return all defined "ListChild" tags
      * 
      * @return array
@@ -246,14 +300,8 @@ class Main extends \Includes\Decorator\Plugin\APlugin
      */
     protected function getAllListChildTags()
     {
-        $data = array();
-
-        // Iterate over all classes which define the "ListChild" tag
-        foreach ($this->getMappedPHPClasses() as $node) {
-
-            // Add tag attributes to the list
-            $data = array_merge($data, $this->getAllListChildTagAttributes($node));
-        }
+        // Collect all "ListChild" tags
+        $data = array_merge($this->getListChildTagsFromPHP(), $this->getListChildTagsFromTemplates());
 
         // Check modules for the list modifiers
         // TODO: check if it's really useful
