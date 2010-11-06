@@ -26,7 +26,7 @@
  * @since      3.0.0
  */
 
-namespace XLite\Module\FeaturedProducts\View;
+namespace XLite\Module\FeaturedProducts\View\Customer;
 
 /**
  * Featured products widget 

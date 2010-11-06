@@ -11,10 +11,7 @@
  * @since     3.0.0
  *}
 
-<form method="post" action="admin.php" IF="featuredProductsList">
-
-  <input FOREACH="allparams,_name,_val" type="hidden" name="{_name}" value="{_val:r}" />
-  <input type="hidden" name="action" value="update_featured_products" />
+<widget class="\XLite\Module\FeaturedProducts\View\Form\Update" name="fpupdate_form" IF="featuredProductsList" />
 
   <table border="0" cellpadding="0" cellspacing="0" width="100%">
 
@@ -49,101 +46,17 @@
 
   <widget class="\XLite\View\Button\Submit" label="Update" />
 
-</form>
+<widget name="fpupdate_form" end />
 
 <br /><br />
 
-<font class="AdminTitle">Add featured products</font>
+<widget template="common/dialog.tpl" head="Add featured products" body="modules/FeaturedProducts/product/search.tpl" />
 
-<br /><br />
+{* Open <form ...> tag *}
+<widget class="\XLite\Module\FeaturedProducts\View\Form\Add" name="products_form" />
 
-<form method="post" action="admin.php">
-  
-  <input FOREACH="allparams,_name,_val" type="hidden" name="{_name}" value="{_val:r}" />
-  <input type="hidden" name="action" value="search_featured_products" />
+  {* List of products *}
+  <widget class="\XLite\Module\FeaturedProducts\View\Admin\FeaturedProducts" />
 
-  <table border="0" cellpadding="3" cellspacing="1">
-
-      <tr>
-        <td class="FormButton" nowrap="nowrap" height="10">Product SKU</td>
-        <td width="10" height="10"></td>
-        <td height="10"><input size="6" name="sku" value="{getCondition(#sku#):r}"></td>
-      </tr>
-
-      <tr>
-        <td class="FormButton" nowrap="nowrap" height="10">Product Title</td>
-        <td width="10" height="10"></td>
-        <td height="10"><input size="30" name="substring" value="{getCondition(#substring#):r}"></td>
-      </tr>
-
-      <tr>
-        <td class="FormButton" nowrap="nowrap" height="10">In category</td>
-        <td width="10" height="10"><font class="ErrorMessage">*</font></td>
-        <td height="10">
-          <widget class="\XLite\View\CategorySelect" fieldName="categoryId" selectedCategoryId="{getCondition(#categoryId#):r}" allOption />
-        </td>
-      </tr>
-
-      <tr>
-        <td class="FormButton" nowrap="nowrap" height="10" colspan="3">
-          Search in subcategories
-          <input type="checkbox" name="searchInSubcats" checked="{getCondition(#searchInSubcats#)|!mode=#search_featured_products#}" value="1">
-        </td>
-      </tr>
-
-      <tr>
-        <td colspan="3">&nbsp;</td>
-      </tr>
-
-      <tr>
-        <td colspan="3"><widget class="\XLite\View\Button\Submit" label="Search" /></td>
-      </tr>
-
-  </table>
-
-</form>
-
-<br /><br />
-
-<form method="post" IF="featuredSearchResult">
-
-  <input FOREACH="allparams,_name,_val" type="hidden" name="{_name}" value="{_val:r}" />
-  <input type="hidden" name="action" value="add_featured_products" />
-
-  <table border="0" cellpadding="0" cellspacing="0" width="100%">
-
-    <tr>
-
-      <td bgcolor="#dddddd">
-
-        <table cellpadding="2" cellspacing="1" border="0" width="100%">
-
-          <tr class="TableHead" bgcolor="#ffffff">
-            <th>Add</th>
-            <th>SKU</th>
-            <th>Title</th>
-          </tr>
-
-          <tr bgcolor="#ffffff" FOREACH="featuredSearchResult,product">
-            <td align="center"><input type="checkbox" name="product_ids[{product.product_id}]" /></td>
-            <td>{product.sku}</td>
-            <td>{product.name:h}</td>
-          </tr>
-
-        </table>
-
-      </td>
-    </tr>
-
-  </table>
-
-  <br />
-
-  <widget class="\XLite\View\Button\Submit" label="Add" />
-
-</form>
-
-<span IF="getRequestParamValue(#mode#)=#search_featured_products#">
-  <br /><br />
-  {featuredSearchResultCount} product(s) found
-</span>
+{* Close </form> tag *}
+<widget name="products_form" end />

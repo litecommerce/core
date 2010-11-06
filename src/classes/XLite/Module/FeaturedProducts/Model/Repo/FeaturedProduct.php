@@ -57,8 +57,12 @@ class FeaturedProduct extends \XLite\Model\Repo\ARepo
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function findByCategoryId($categoryId = 0)
+    protected function findByCategoryId($categoryId)
     {
+        if (!is_numeric($categoryId) || $categoryId <= 0) {
+            $categoryId = \XLite\Core\Database::getRepo('\XLite\Model\Category')->getRootCategoryId();
+        }
+
         return $this->defineByCategoryIdQuery($categoryId)->getQuery()->getResult();
     }
 
@@ -89,15 +93,9 @@ class FeaturedProduct extends \XLite\Model\Repo\ARepo
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getFeaturedProducts($categoryId = 0)
+    public function getFeaturedProducts($categoryId)
     {
-        return $categoryId > 0
-            ? $this->findByCategoryId($categoryId)
-            : $this->createQueryBuilder()
-                ->andWhere('f.category IS NULL')
-                ->getQuery()
-                ->getResult();
-
+        return $this->findByCategoryId($categoryId);
     }
 
 }
