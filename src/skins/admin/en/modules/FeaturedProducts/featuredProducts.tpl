@@ -11,9 +11,10 @@
  * @since     3.0.0
  *}
 
-<widget class="\XLite\Module\FeaturedProducts\View\Form\Update" name="fpupdate_form" IF="featuredProductsList" />
+{if:featuredProductsList}
+  <widget class="\XLite\Module\FeaturedProducts\View\Form\Update" name="fpupdate_form" />
 
-  <table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
 
     <tr>
       <td bgcolor="#dddddd">
@@ -40,13 +41,19 @@
       </td>
     </tr>
 
-  </table>
+    </table>
 
   <br />
 
   <widget class="\XLite\View\Button\Submit" label="Update" />
 
-<widget name="fpupdate_form" end />
+  <widget name="fpupdate_form" end />
+
+{else:}
+
+  <p>{t(#No featured products defined for this category#)}</p>
+
+{end:}
 
 <br /><br />
 
