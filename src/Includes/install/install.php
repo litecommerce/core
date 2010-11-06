@@ -1123,6 +1123,29 @@ function doInstallDatabase($trigger, &$params, $silentMode = false)
 }
 
 /**
+ * Generate a cache of classes
+ * 
+ * @return bool
+ * @access public
+ * @see    ____func_see____
+ * @since  3.0.0
+ */
+function doBuildCache()
+{
+    $data = parse_ini_file(LC_CONFIG_DIR . constant('LC_CONFIG_FILE'));
+
+    $url = 'http://' . $data['http_host'] . $data['web_dir'];
+
+    $url_request = $url . '/cart.php';
+
+    // Pass 1
+    inst_http_request($url_request);
+
+    // Pass 2
+    inst_http_request($url_request);
+}
+
+/**
  * Create required directories and files
  * 
  * @param array  $params     Database access data and other parameters
