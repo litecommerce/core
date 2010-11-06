@@ -73,6 +73,8 @@ class Categories extends \XLite\Controller\Admin\Categories implements \XLite\Ba
 
             // Retreive existing featured products list of that category
 
+            $this->category_id = $this->categoryId;
+
             $existingLinksIds = array();
             $existingLinks = $this->getFeaturedProductsList();
             if ($existingLinks) {
