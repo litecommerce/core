@@ -43,6 +43,7 @@ define('LC_ROOT_DIR',          rtrim(LC_DIR, LC_DS) . LC_DS);
 define('LC_CLASSES_DIR',       LC_ROOT_DIR . 'classes' . LC_DS);
 define('LC_VAR_DIR',           LC_ROOT_DIR . 'var' . LC_DS);
 define('LC_LIB_DIR',           LC_ROOT_DIR . 'lib' . LC_DS);
+define('LC_SKINS_DIR',         LC_ROOT_DIR . 'skins' . LC_DS);
 define('LC_CONFIG_DIR',        LC_ROOT_DIR . 'etc' . LC_DS);
 define('LC_INCLUDES_DIR',      LC_ROOT_DIR . 'Includes' . LC_DS);
 define('LC_COMPILE_DIR',       LC_VAR_DIR . 'run' . LC_DS);

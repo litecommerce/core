@@ -26,7 +26,7 @@
  * @since      3.0.0
  */
 
-namespace Includes\Decorator\DataStructure\ClassData;
+namespace Includes\Decorator\Data\Classes;
 
 /**
  * Tree 
@@ -45,13 +45,13 @@ class Tree extends \Includes\DataStructure\Hierarchical\Tree
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $nodeClass = '\Includes\Decorator\DataStructure\ClassData\Node';
+    protected $nodeClass = '\Includes\Decorator\Data\Classes\Node';
 
 
     /**
      * Get iterator for class files
      * 
-     * @return \Includes\Utils\FileFilter
+     * @return \Includes\Utils\FileFilter\FilterIterator
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -61,30 +61,9 @@ class Tree extends \Includes\DataStructure\Hierarchical\Tree
         $filter = new \Includes\Utils\FileFilter(LC_CLASSES_DIR);
 
         $filter->filterBy('extension', 'php');
-        $filter->filterBy('pattern', $this->getPathPattern());
+        $filter->filterBy('pattern', \Includes\Decorator\Utils\ModulesManager::getPathPatternForPHP());
 
         return $filter->getIterator();
-    }
-
-    /**
-     * Pattern to check file paths
-     * 
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getPathPattern()
-    {
-        $quotedDS   = preg_quote(LC_DS, '/');
-        $optionalDS = '(' . $quotedDS . '|$)';
-
-        $palceholder   = '@';
-        $modulePattern = $quotedDS . 'Module' . $quotedDS . $palceholder . $optionalDS;
-        $modulesList   = array_keys(\Includes\Decorator\Utils\ModulesManager::getActiveModules());
-
-        return '/^(.((?!' . str_replace($palceholder, '\w+', $modulePattern) . ')|' 
-            . str_replace($palceholder, '(' . implode('|', $modulesList) . ')', $modulePattern) . '))*$/i';
     }
 
     /**

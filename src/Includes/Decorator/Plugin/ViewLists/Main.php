@@ -83,7 +83,7 @@ class Main extends \Includes\Decorator\Plugin\APlugin
     protected function getAnnotatedPHPClasses()
     {
         return static::getClassesTree()->findByCallback(
-            function (\Includes\Decorator\DataStructure\ClassData\Node $node) {
+            function (\Includes\Decorator\Data\Classes\Node $node) {
                 return !is_null($node->getTag(constant(__CLASS__ . '::TAG_LIST_CHILD')));
             }
         );
@@ -97,9 +97,10 @@ class Main extends \Includes\Decorator\Plugin\APlugin
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getTemplates()
+    protected function getAnnotatedTemplates()
     {
         return array();
+        // return static::getTemplatesList();
     }
 
     /**
@@ -225,14 +226,14 @@ class Main extends \Includes\Decorator\Plugin\APlugin
     /**
      * Return all defined "ListChild" tag attributes
      *
-     * @param \Includes\Decorator\DataStructure\ClassData\Node $node class tree node
+     * @param \Includes\Decorator\Data\Classes\Node $node class tree node
      *  
      * @return array
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getAllListChildTagAttributes(\Includes\Decorator\DataStructure\ClassData\Node $node)
+    protected function getAllListChildTagAttributes(\Includes\Decorator\Data\Classes\Node $node)
     {
         $data = array();
 
@@ -284,7 +285,7 @@ class Main extends \Includes\Decorator\Plugin\APlugin
         $data = array();
 
         // Iterate over all templates
-        foreach ($this->getTemplates() as $template) {
+        foreach ($this->getAnnotatedTemplates() as $template) {
         }
 
         return $data;
@@ -341,47 +342,5 @@ class Main extends \Includes\Decorator\Plugin\APlugin
 
         // Create new
         $this->createLists();
-    }
-
-    /**
-     * Hook handler to prepare class tags
-     * 
-     * @param array &$matches parser result
-     *  
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function executeHookHandlerPrepareTags(array &$matches)
-    {
-        // Find all self::TAG_LIST_CHILD tags in the class definition
-        if ($keys = array_keys($matches[1], self::TAG_LIST_CHILD)) {
-            $lists = array();
-
-            // preg_match_all() returns numeric keys
-            foreach ($keys as $key) {
-
-                // Parse tag and convert string into hash array
-                $data = \Includes\Decorator\Utils\ClassData\Parser::parseTagValue($matches[2][$key]);
-
-                // Check attributes
-                if (!isset($data[self::PARAM_TAG_LIST_CHILD_LIST])) {
-                    throw new \Exception(
-                        'The "' . self::PARAM_TAG_LIST_CHILD_LIST . '" is required for the "' . self::TAG_LIST_CHILD . '" tag'
-                    );
-                }
-
-                // This tag will contain several defenitions
-                $lists[] = $data;
-
-                // To prevent usage of these keys in "array_combine()" function
-                unset($matches[1][$key], $matches[2][$key]);
-            }
-
-            // So, these are new values to use in "array_combine()" function
-            $matches[1][] = self::TAG_LIST_CHILD;
-            $matches[2][] = $lists;
-        }
     }
 }

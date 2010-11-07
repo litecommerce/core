@@ -1387,7 +1387,7 @@ DATA;
     protected function getViewListChildren()
     {
         return static::getClassesTree()->findByCallback(
-            function (\Includes\Decorator\DataStructure\ClassData\Node $node) {
+            function (\Includes\Decorator\Data\Classes\Node $node) {
                 return !is_null($node->getTag('ListChild'));
             }
         );
