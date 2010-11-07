@@ -59,8 +59,8 @@ abstract class ADecorator
      * Class node field names
      */
 
-    const N_NAME_SPACE    = 'nameSpace';
-    const N_CLASS_COMMENT = 'classComment';
+    const N_NAMESPACE     = 'namespace';
+    const N_CLASS_COMMENT = 'comment';
     const N_TAGS          = 'tags';
     const N_CLASS         = 'class';
     const N_PARENT_CLASS  = 'parentClass';
@@ -69,20 +69,37 @@ abstract class ADecorator
 
 
     /**
+     * Aliases
+     */
+
+    const N_TEMPLATE_COMMENT = self::N_CLASS_COMMENT;
+
+
+    /**
      * Classes tree
      *
-     * @var    \Includes\Decorator\DataStructure\ClassData\Tree
+     * @var    \Includes\Decorator\Data\Classes\Tree
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      */
     protected static $classesTree;
 
+    /**
+     * List of .tpl files
+     * 
+     * @var    \Includes\Decorator\Data\Templates\List
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected static $templatesList;
+
 
     /**
      * Return (and initialize, if needed) classes tree
      *
-     * @return \Includes\Decorator\DataStructure\ClassData\Tree
+     * @return \Includes\Decorator\Data\Classes\Tree
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -90,9 +107,26 @@ abstract class ADecorator
     protected static function getClassesTree()
     {
         if (!isset(static::$classesTree)) {
-            static::$classesTree = new \Includes\Decorator\DataStructure\ClassData\Tree();
+            static::$classesTree = new \Includes\Decorator\Data\Classes\Tree();
         }
 
         return static::$classesTree;
+    }
+
+    /**
+     * Return templates list
+     * 
+     * @return \Includes\Decorator\Data\Templates\Collection
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function getTemplatesList()
+    {
+        if (!isset(static::$templatesList)) {
+            static::$templatesList = new \Includes\Decorator\Data\Templates\Collection();
+        }
+
+        return static::$templatesList;
     }
 }

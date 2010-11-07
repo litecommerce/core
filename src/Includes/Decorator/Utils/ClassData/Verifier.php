@@ -40,14 +40,14 @@ abstract class Verifier extends \Includes\Decorator\Utils\ClassData\AClassData
     /**
      * Check if node is valid
      * 
-     * @param \Includes\Decorator\DataStructure\ClassData\Node $node node to check
+     * @param \Includes\Decorator\Data\Classes\Node $node node to check
      *  
      * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function checkNode(\Includes\Decorator\DataStructure\ClassData\Node $node)
+    public static function checkNode(\Includes\Decorator\Data\Classes\Node $node)
     {
         // TODO: move the "checkClassCommentAttributes" method here
     }

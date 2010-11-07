@@ -31,29 +31,13 @@ namespace Includes\Decorator\Plugin;
 /**
  * Abstract base class for all plugins
  *
- *
  * Available hooks:
+ * - run() [the "executeHookHandlerRun()" method]
  *
- * - required:
- * --- run()
- *
- * - optional:
- * --- prepareTags(array &$matches)
- *
- * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
 abstract class APlugin extends \Includes\Decorator\ADecorator
 {
-    /**
-     * Main plugin' hook (required)
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    abstract public function executeHookHandlerRun();
 }

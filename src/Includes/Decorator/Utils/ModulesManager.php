@@ -134,9 +134,32 @@ abstract class ModulesManager extends AUtils
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getModuleDependencies()
+    protected static function getModuleDependencies()
     {
         // TODO: check the top-level methods
+    }
+
+    /**
+     * Return pattern to file path againist active modules list
+     * 
+     * @param string $rootPath name of the directory with modules
+     *  
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function getPathPattern($rootPath)
+    {
+        $quotedDS   = preg_quote(LC_DS, '/');
+        $optionalDS = '(' . $quotedDS . '|$)';
+
+        $palceholder   = '@';
+        $modulePattern = $quotedDS . $rootPath . $quotedDS . $palceholder . $optionalDS;
+
+        return '/^(.((?!' . str_replace($palceholder, '\w+', $modulePattern) . ')|'
+            . str_replace($palceholder, '(' . implode('|', array_keys(static::getActiveModules())) . ')', $modulePattern)
+            . '))*$/i';
     }
 
 
@@ -204,33 +227,28 @@ abstract class ModulesManager extends AUtils
     }
 
     /**
-     * Check if class is a core class or is defined in active module
+     * Return pattern to check PHP file paths
      * 
-     * @param string $className name of the class to check
-     *  
-     * @return bool
+     * @return string
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function isEnabledClass($className)
+    public static function getPathPatternForPHP()
     {
-        return static::isActiveModule(static::getModuleNameByClassName($className));
+        return static::getPathPattern('Module');
     }
 
     /**
-     * Check if all passed classed is
-     * 
-     * @param string $name    class name
-     * @param string $extends parent class name (optional)
-     *  
-     * @return void
+     * Return pattern to check .tpl file paths
+     *
+     * @return string
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function checkClass($name, $extends = null)
+    public static function getPathPatternForTemplates()
     {
-        return !empty($name) && static::isEnabledClass($name) && (empty($extends) || static::isEnabledClass($extends));
+        return static::getPathPattern('modules');
     }
 }

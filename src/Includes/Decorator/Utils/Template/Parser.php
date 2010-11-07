@@ -26,75 +26,78 @@
  * @since      3.0.0
  */
 
-namespace Includes\Decorator\DataStructure\ClassData;
+namespace Includes\Decorator\Utils\Template;
 
 /**
- * Node 
+ * Parser 
  * 
  * @package    XLite
  * @see        ____class_see____
  * @since      3.0.0
  */
-class Node extends \Includes\DataStructure\Node\Tree
+abstract class Parser extends \Includes\Decorator\Utils\AParser
 {
     /**
-     * Node key field
-     * 
-     * @var    string
+     * List of parsers
+     *
+     * NOTE: do not remove this (re)declaration:
+     * it's needed for the correct work of the PHP late static binding
+     *
+     * @var    array
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $key = \Includes\Decorator\ADecorator::N_CLASS;
+    protected static $parsers = array();
 
 
     /**
-     * Alias
-     * 
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getClass()
-    {
-        return $this->getKey();
-    }
-
-    /**
-     * Get tag value from class comment
-     * 
-     * @param string $name tag name
-     *  
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getTag($name)
-    {
-        $tags = $this->__get(\Includes\Decorator\ADecorator::N_TAGS);
-
-        return isset($tags[$name = strtolower($name)]) ? $tags[$name] : null;
-    }
-
-    /**
-     * Add child node
+     * Define main pattern
      *
-     * @param self $node node to add
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function getPatternParserMain()
+    {
+        return '/.*(?:\s*(\{\*.*@(\w+)\s*(?:\()?(.*?)\s*(?:\))?(?=$|@\w+).*\*\}))?\s*/USmi';
+    }
+
+    /**
+     * Get schema for the data returned by certain parser
+     *
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function getSchemaParserMain()
+    {
+        return array(
+            self::N_TEMPLATE_COMMENT => 1,
+        );
+    }
+
+
+    /**
+     * Static constructor
      *
      * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function addChild(self $node)
+    public static function __constructStatic()
     {
-        // An unexpected logical error (replacement in non-root node)
-        if (isset($this->children[$node->getKey()], $this->parent)) {
-            throw new \Exception('Duplicate child class - "' . $node->getKey() . '"');
-        }
-
-        parent::addChild($node);
+        // Parse tags
+        static::registerParser(
+            'Main',
+            static::getPatternParserMain(),
+            static::getSchemaParserMain(),
+            array('static', 'postprocessParserTags')
+        );
     }
 }
+
+\Includes\Decorator\Utils\Template\Parser::__constructStatic();

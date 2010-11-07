@@ -31,15 +31,8 @@ namespace Includes\Decorator\Utils;
 /**
  * Plugins manager 
  *
- *
  * Available hooks:
- *
- * - required:
- * --- run()
- *
- * - optional:
- * --- prepareTags(array &$matches)
- *
+ * - run()
  * 
  * @package XLite
  * @see     ____class_see____
