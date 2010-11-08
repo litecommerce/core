@@ -52,7 +52,7 @@ class PartnerProducts extends \XLite\Module\Affiliate\Controller\Partner
     {
         parent::addBaseLocation();
 
-        $this->locationPath->addNode(new \XLite\Model\Location('Banners', $this->buildURL('partner_banners')));
+        $this->addLocationNode('Banners', $this->buildURL('partner_banners'));
     }
 
     /**

@@ -55,10 +55,11 @@
       </table>
     </noscript>
 <!-- [center] -->
-{if:!target=#main#}
-<widget template="location.tpl">
-<p />
-{end:}
+
+<!-- [breadcrumbs] {{{ -->
+<widget class="\XLite\View\Location" />
+<!-- [/breadcrumbs] }}} -->
+
 <widget target="access_denied" template="access_denied.tpl" />
 <widget class="\XLite\View\AdvBlock" />
 <widget template="common/dialog.tpl" head="Customer zone warning" body="customer_zone_warning.tpl" IF="{getCustomerZoneWarning()}" />

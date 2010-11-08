@@ -26,22 +26,24 @@
  * @since      3.0.0
  */
 
-namespace XLite\View;
+namespace XLite\View\Location;
 
 /**
- * Bread crumbs widget
+ * Node 
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Location extends \XLite\View\AView
+class Node extends \XLite\View\AView
 {
     /**
      * Widget param names
      */
 
-    const PARAM_NODES = 'nodes';
+    const PARAM_NAME     = 'name';
+    const PARAM_LINK     = 'list';
+    const PARAM_SUBNODES = 'subnodes';
 
 
     /**
@@ -54,7 +56,7 @@ class Location extends \XLite\View\AView
      */
     protected function getDefaultTemplate()
     {
-        return 'location.tpl';
+        return 'location/node.tpl';
     }
 
     /**
@@ -70,40 +72,33 @@ class Location extends \XLite\View\AView
         parent::defineWidgetParams();
 
         $this->widgetParams += array(
-            self::PARAM_NODES => new \XLite\Model\WidgetParam\Collection(
-                'Breadcrumbs', $this->getLocationPath()
+            self::PARAM_NAME => new \XLite\Model\WidgetParam\String(
+                'Name', ''
+            ),
+            self::PARAM_LINK => new \XLite\Model\WidgetParam\String(
+                'Link', ''
+            ),
+            self::PARAM_SUBNODES => new \XLite\Model\WidgetParam\Collection(
+                'Subnodes', array()               
             ),
         );
     }
 
 
     /**
-     * Return breadcrumbs 
+     * Static method to create nodes in controller classes
      * 
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getNodes()
-    {
-        return $this->getParam(self::PARAM_NODES);
-    }
-
-
-    /**
-     * Get a list of CSS files
+     * @param string $name     node title
+     * @param string $link     node link
+     * @param array  $subnodes node subnodes
      *
-     * @return array
-     * @access public
+     * @return static
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getCSSFiles()
+    public static function create($name, $link = null, array $subnodes = null)
     {
-        $list = parent::getCSSFiles();
-        $list[] = 'location/location.css';
-
-        return $list;
+        return new static(array(self::PARAM_NAME => $name, self::PARAM_LINK => $link, self::PARAM_SUBNODES => $subnodes));
     }
 }

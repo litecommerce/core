@@ -38,75 +38,6 @@ namespace XLite\Controller\Customer;
 abstract class Catalog extends \XLite\Controller\Customer\ACustomer
 {
     /**
-     * Determines if we need to return categoty link or not 
-     * 
-     * @param \XLite\Model\Category $category       category model object to use
-     * @param bool                  $includeCurrent flag
-     *  
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function checkCategoryLink(\XLite\Model\Category $category, $includeCurrent)
-    {
-        return $includeCurrent || $this->getCategoryId() !== $category->getCategoryId();
-    }
-
-    /**
-     * Return link to category page 
-     * 
-     * @param \XLite\Model\Category $category       category model object to use
-     * @param bool                  $includeCurrent flag
-     *  
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getCategoryURL(\XLite\Model\Category $category, $includeCurrent)
-    {
-        return $this->checkCategoryLink($category, $includeCurrent) 
-            ? $this->buildURL('category', '', array('category_id' => $category->getCategoryId()))
-            : null;
-    }
-
-    /**
-     * Return category name and link 
-     * 
-     * @param \XLite\Model\Category $category       category model object to use_
-     * @param bool                  $includeCurrent flag
-     *  
-     * @return \XLite\Model\Location
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getCategoryLocation(\XLite\Model\Category $category, $includeCurrent)
-    {
-        return new \XLite\Model\Location($category->name, $this->getCategoryURL($category, $includeCurrent));
-    }
-
-    /**
-     * Add the base part of the location path
-     * 
-     * @return void
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function addBaseLocation($includeCurrent = false)
-    {
-        parent::addBaseLocation();
-
-        $categoryPath = \XLite\Core\Database::getRepo('\XLite\Model\Category')
-            ->getCategoryPath($this->getCategoryId());
-
-        foreach ($categoryPath as $category) {
-            if (0 < $category->category_id) {
-                $this->locationPath->addNode($this->getCategoryLocation($category, $includeCurrent));
-            }
-        }
-    }
-
-
-    /**
      * getModelObject
      *
      * @return \XLite\Model\AModel
@@ -114,6 +45,72 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
      * @since  3.0.0
      */
     abstract protected function getModelObject();
+
+
+    /**
+     * Return path for the current category
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getCategoryPath()
+    {
+        return \XLite\Core\Database::getRepo('\XLite\Model\Category')->getCategoryPath($this->getCategoryId());
+    }
+
+    /**
+     * Return link to category page
+     *
+     * @param \XLite\Model\Category $category category model object to use
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getCategoryURL(\XLite\Model\Category $category)
+    {
+        return $this->buildURL('category', '', array('category_id' => $category->getCategoryId()));
+    }
+
+    /**
+     * Prepare subnodes for the location path node
+     *
+     * @param \XLite\Model\Category $category node category
+     *
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getLocationNodeSubnodes(\XLite\Model\Category $category)
+    {
+        $nodes = array();
+
+        foreach ($category->getSubcategories() as $category) {
+            $nodes[] = \XLite\View\Location\Node::create($category->getName(), $this->getCategoryURL($category));
+        }
+
+        return $nodes;
+    }
+
+    /**
+     * Add part to the location nodes list
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function addBaseLocation()
+    {
+        parent::addBaseLocation();
+
+        foreach ($this->getCategoryPath() as $category) {
+            $this->addLocationNode($category->getName(), $this->getCategoryURL($category), $this->getLocationNodeSubnodes($category));
+        }
+    }
 
     /**
      * Return current (or default) category object
@@ -124,8 +121,7 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
      */
     public function getCategory()
     {
-        return \XLite\Core\Database::getRepo('XLite\Model\Category')
-            ->getCategory($this->getCategoryId());
+        return \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategory($this->getCategoryId());
     }
 
     /**
@@ -137,9 +133,7 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
      */
     public function getTitle()
     {
-        $object = $this->getModelObject();
-
-        return $object ? $object->getName() : parent::getTitle();
+        return $this->getModelObject()->getName() ?: parent::getTitle();
     }
 
     /**
@@ -151,11 +145,7 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
      */
     public function getPageTitle()
     {
-        $object = $this->getModelObject();
-
-        return $object
-            ? ($object->getMetaTitle() ?: $this->getTitle())
-            : parent::getTitle();
+        return $this->getModelObject()->getMetaTitle() ?: ($this->getTitle() ?: parent::getTitle());
  
     }
 
@@ -168,9 +158,7 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
      */
     public function getDescription()
     {
-        return $this->getModelObject()
-            ? $this->getModelObject()->getDescription()
-            : null;
+        return $this->getModelObject()->getDescription();
     }
 
     /**
@@ -182,11 +170,7 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
      */
     public function getMetaDescription()
     {
-        $object = $this->getModelObject();
-
-        return $object
-            ? ($object->getMetaDesc() ?: $this->getDescription())
-            : null;
+        return $this->getModelObject()->getMetaDesc() ?: $this->getDescription();
     }
 
     /**
@@ -198,8 +182,6 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
      */
     public function getKeywords()
     {
-        return $this->getModelObject()
-            ? $this->getModelObject()->getMetaTags()
-            : null;
+        return $this->getModelObject()->getMetaTags();
     }
 }
