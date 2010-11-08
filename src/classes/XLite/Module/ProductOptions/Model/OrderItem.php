@@ -163,6 +163,19 @@ class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
     }
 
     /**
+     * Count item product options 
+     * 
+     * @return integer
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function countProductOptions()
+    {
+        return count($this->getProductOptions());
+    }
+
+    /**
      * Get price 
      * 
      * @return float

@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Order buttons / links panel
+ * Order tracking link
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -9,10 +9,8 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- * @ListChild (list="order.childs", weight="20")
+ * @ListChild (list="order.links", weight="30")
  *}
-<ul class="links">
-  {displayViewListContent(#order.links#)}
-</ul>
-
-<hr class="tiny" />
+<li class="track">
+  <a href="#"><span>{t(#Track package#)}</span></a>
+</li>

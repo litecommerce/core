@@ -11,21 +11,21 @@
  * @since     3.0.0
  * @ListChild (list="invoice.base", weight="40")
  *}
-<ul class="invoice-totals">
+<table cellspacing="0" class="totals">
 
-  <li>
-    <em>{t(#Subtotal#)}:</em>
-    {order.getSubtotal():p}
-  </li>
+  <tr>
+    <td class="title">{t(#Subtotal#)}:</td>
+    <td class="value">{formatPrice(order.getSubtotal(),order.getCurrency())}</td>
+  </tr>
 
-  <li FOREACH="order.getVisibleSavedModifiers(),modifier" class="{modifier.getCode()} {modifier.getSubcode()}">
-    <em>{t(modifier.getName())}:</em>
-    {if:modifier.isAvailable(modifier.getSubcode())}{modifier.getSurcharge():p}{else:}{t(#n/a#)}{end:}
-  </li>
+  <tr FOREACH="order.getVisibleSavedModifiers(),modifier" class="{modifier.getCode()} {modifier.getSubcode()}">
+    <td class="title">{t(modifier.getName())}:</td>
+    <td class="value">{if:modifier.isAvailable(modifier.getSubcode())}{formatPrice(modifier.getSurcharge(),order.getCurrency())}{else:}{t(#n/a#)}{end:}
+  </tr>
 
-  <li class="grand-total">
-    <em>{t(#Grand total#)}:</em>
-    {order.getTotal():p}
-  </li>
+  <tr class="total">
+    <td class="title">{t(#Grand total#)}:</td>
+    <td class="value">{formatPrice(order.getTotal(),order.getCurrency())}</td>
+  </tr>
 
-</ul>
+</table>

@@ -9,6 +9,8 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- * @ListChild (list="order.links", weight="20")
+ * @ListChild (list="order.links", weight="10")
  *}
-<a href="{buildUrl(#order_list#)}" class="last">Back to order list</a>
+<li class="back">
+  <a href="{buildUrl(#order_list#)}"><strong>&larr;</strong><span>{t(#Back to order list#)}</span></a>
+</li>

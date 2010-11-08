@@ -924,7 +924,7 @@ abstract class AView extends \XLite\Core\Handler
         return $this->date_format(
             $base,
             $field,
-            $this->config->General->date_format . ' ' . $this->config->General->time_format
+            $this->config->General->date_format . ', ' . $this->config->General->time_format
         );
     }
 

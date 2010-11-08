@@ -55,7 +55,7 @@ class CheckoutSuccess extends \XLite\Controller\Customer\ACustomer
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $order = null;
+    protected $order;
 
     /**
      * Common method to determine current location 
@@ -81,13 +81,21 @@ class CheckoutSuccess extends \XLite\Controller\Customer\ACustomer
         return 'Thank you for your order';
     }
 
-    function handleRequest()
+    /**
+     * Handles the request.
+     * Parses the request variables if necessary. Attempts to call the specified action function 
+     * 
+     * @return void
+     * @access public
+     * @since  3.0.0
+     */
+    public function handleRequest()
     {
         // security check on return page
-        $order_id = \XLite\Core\Request::getInstance()->order_id;
+        $orderId = \XLite\Core\Request::getInstance()->order_id;
         if (
-            $order_id != $this->session->get('last_order_id') &&
-            $order_id != $this->getCart()->getOrderId()
+            $orderId != $this->session->get('last_order_id')
+            && $orderId != $this->getCart()->getOrderId()
         ) {
             $this->redirect($this->buildUrl('cart'));
 
@@ -114,19 +122,15 @@ class CheckoutSuccess extends \XLite\Controller\Customer\ACustomer
         return $this->order;
     }
 
-    function getCharset()
-    {
-        $order = $this->getOrder();
-        if ($order && $order->getProfile()) {
-            $charset = $order->getProfile()->getBillingAddress()->getCountry()->getCharset();
-        }
-
-        return (isset($charset) && $charset)
-            ? $charset
-            : parent::getCharset();
-    }
-
-    function getSecure()
+    /**
+     * Get secure controller status
+     * 
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getSecure()
     {
         return $this->config->Security->customer_security;
     }

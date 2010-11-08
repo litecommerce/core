@@ -11,15 +11,4 @@
  * @since     3.0.0
  * @ListChild (list="invoice.bottom", weight="20")
  *}
-<td class="payment">
-  <strong>{t(#Payment method#)}:</strong>
-  {foreach:order.getActivePaymentTransactions(),t}
-    {t.paymentMethod.getName():h}<br />
-  {end:}
-</td>
-
-<td class="shipping">
-  <strong>{t(#Shipping method#)}:</strong>
-  {if:order.getShippingMethod()}{order.shippingMethod.name:h}{else:}n/a{end:}
-</td>
-
+{displayViewListContent(#invoice.bottom.methods#)}

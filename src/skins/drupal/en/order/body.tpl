@@ -10,4 +10,6 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-{displayViewListContent(#order.childs#)}
+<div class="order-box">
+  {displayViewListContent(#order.childs#,_ARRAY_(#order#^getOrder()))}
+</div>

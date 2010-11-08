@@ -11,6 +11,6 @@
  * @since     3.0.0
  * @ListChild (list="invoice.item.name", weight="20")
  *}
-<ul IF="item.getProductOptions()" class="item-options-list">
+<ul IF="item.countProductOptions()" class="item-options-list">
   <li FOREACH="item.getProductOptions(),option">{option.getName()}: {option.getValue()}</li>
 </ul>
