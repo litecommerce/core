@@ -29,3 +29,7 @@ div.blockMsg div.block-subcontainer {
   padding: 2em;
 }
 
+.products a.quicklook-link
+{
+  text-decoration: none;
+}

@@ -16,6 +16,7 @@
 .product-image-gallery li
 {
   list-style: none;
+  background-image: none;
   float: left;
   vertical-align: middle;
   text-align: center;
