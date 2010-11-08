@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Order status
+ * Order shipping status
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -9,6 +9,6 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- * @ListChild (list="order.title", weight="20")
+ * @ListChild (list="order.status", weight="10")
  *}
-<div class="status-{order.status}"><widget template="common/order_status.tpl" /></div>
+<div class="shipping order-status-{order.getStatus()}"><widget template="common/order_status.tpl" order="{getOrder()}" /></div>

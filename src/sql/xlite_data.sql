@@ -24,7 +24,7 @@ INSERT INTO `xlite_config` VALUES (51,'company_phone','Company','text',410,'(555
 INSERT INTO `xlite_config` VALUES (52,'company_website','Company','text',370,'http://');
 INSERT INTO `xlite_config` VALUES (65,'customer_presentation','General','separator',200,'');
 INSERT INTO `xlite_config` VALUES (66,'customer_security','Security','checkbox',0,'Y');
-INSERT INTO `xlite_config` VALUES (67,'date_format','General','select',660,'%m/%d/%Y');
+INSERT INTO `xlite_config` VALUES (67,'date_format','General','select',660,'%b %d, %Y');
 INSERT INTO `xlite_config` VALUES (68,'decimal_delim','General','select',650,'.');
 INSERT INTO `xlite_config` VALUES (70,'defaultSources','Images','serialized',0,'');
 INSERT INTO `xlite_config` VALUES (71,'default_country','General','country',310,'US');

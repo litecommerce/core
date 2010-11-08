@@ -58,6 +58,19 @@ class Order extends \XLite\Controller\Customer\ACustomer
     private $order = null;
 
     /**
+     * Return the current page title (for the content area)
+     * 
+     * @return string
+     * @access public
+     * @since  3.0.0
+     */
+    public function getTitle()
+    {
+        return 'Order #' . $this->getOrder()->getOrderId()
+            . ', ' . date('M d, Y, H:i', $this->getOrder()->getDate());
+    }
+
+    /**
      * Add the base part of the location path
      * 
      * @return void
@@ -93,6 +106,7 @@ class Order extends \XLite\Controller\Customer\ACustomer
     public function checkAccess()
     {
         return parent::checkAccess()
+            && $this->getOrder()
             && $this->checkOrderAccess();
     }
 

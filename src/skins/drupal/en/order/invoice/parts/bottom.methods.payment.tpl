@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Order buttons / links panel
+ * Invoice payment methods
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -9,10 +9,11 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- * @ListChild (list="order.childs", weight="20")
+ * @ListChild (list="invoice.bottom.methods", weight="20")
  *}
-<ul class="links">
-  {displayViewListContent(#order.links#)}
-</ul>
-
-<hr class="tiny" />
+<td class="payment">
+  <strong>{t(#Payment method#)}:</strong>
+  {foreach:order.getActivePaymentTransactions(),t}
+    {t.paymentMethod.getName():h}<br />
+  {end:}
+</td>

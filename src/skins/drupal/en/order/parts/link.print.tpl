@@ -9,6 +9,8 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- * @ListChild (list="order.links", weight="10")
+ * @ListChild (list="order.links", weight="20")
  *}
-<a href="{buildUrl(#invoice#,##,_ARRAY_(#order_id#^order.order_id,#printable#^#1#))}" class="printable first"><img src="images/spacer.gif" alt="" /><span>Print invoice</span></a>
+<li class="print">
+  <a href="{buildUrl(#invoice#,##,_ARRAY_(#order_id#^order.order_id,#printable#^#1#))}"><span>{t(#Print invoice#)}</span></a>
+</li>

@@ -11,42 +11,4 @@
  * @since     3.0.0
  * @ListChild (list="invoice.bottom", weight="10")
  *}
-<td class="bill">
-  <strong>Billing address</strong>
-  <p>
-    {order.profile.billing_address.title} {order.profile.billing_address.firstname:h} {order.profile.billing_address.lastname:h}
-  </p>
-
-  <p>
-    {order.profile.billing_address.street:h}<br />
-    {order.profile.billing_address.city:h}, {order.profile.billing_address.state.state:h}, {order.profile.billing_address.zipcode:h}<br />
-    {order.profile.billing_address.country.country:h}
-  </p>
-
-  <p IF="order.profile.billing_address.phone">
-    Phone: {order.profile.billing_address.phone:h}<br />
-  </p>
-
-  <p class="last">
-    E-mail: <a href="mailto:{order.profile.login:h}">{order.profile.login:h}</a>
-  </p>
-
-</td>
-
-<td class="ship">
-  <strong>Shipping address</strong>
-  <p>
-    {order.profile.shipping_address.title} {order.profile.shipping_address.firstname:h} {order.profile.shipping_address.lastname:h}
-  </p>
-
-  <p>
-    {order.profile.shipping_address.street:h}<br />
-    {order.profile.shipping_address.city:h}, {order.profile.shipping_address.state.state:h}, {order.profile.shipping_address.zipcode:h}<br />
-    {order.profile.shipping_address.country.country:h}
-  </p>
-
-  <p IF="order.profile.shipping_address.phone" class="last">
-    Phone: {order.profile.shipping_address.phone:h}<br />
-  </p>
-</td>
-
+{displayViewListContent(#invoice.bottom.address#)}

@@ -10,16 +10,16 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  */
-.invoice-items .item-options-list {
+.invoice-box .items .item-options-list {
   margin: 0px;
   padding: 0px;
   margin-left: 20px;
   list-style: none;
 }
 
-.invoice-items .item-options-list li {
+.invoice-box .items .item-options-list li {
   margin: 0px;
   padding: 0px;
   list-style: none;
+  background: transparent none;
 }
-

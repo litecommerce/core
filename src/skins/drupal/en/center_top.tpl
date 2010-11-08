@@ -11,7 +11,7 @@
  * @since     3.0.0
  *}
 
-<h1 class="title{if:!isTitleVisible()} hidden-title{end:}" id="page-title" title="{getTitle():h}" IF="getTitle()">{getTitle():h}</h1>
+<h1 class="title{if:!isTitleVisible()} hidden-title{end:}" id="page-title" IF="getTitle()">{getTitle():h}</h1>
 
 <!-- [catalog] {{{ -->
 <widget class="\XLite\View\Category" />
@@ -46,7 +46,6 @@
 <!-- [/profile] }}} -->
 
 <!-- [checkout] {{{ -->
-<widget target="checkoutSuccess" template="checkout/success.tpl" />
 <widget module="GoogleCheckout" template="common/dialog.tpl" body="modules/GoogleCheckout/google_checkout_dialog.tpl" head="Google Checkout payment module" IF="{target=#googlecheckout#&!valid}" />
 <!-- [/checkout] }}} -->
 

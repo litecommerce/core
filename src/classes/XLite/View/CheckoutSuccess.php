@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage View
+ * @subpackage Cart
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -29,92 +29,68 @@
 namespace XLite\View;
 
 /**
- * Invoice widget
+ * Checkout success page
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
- * @ListChild (list="order.childs", weight="30")
+ *
+ * @ListChild (list="center")
  */
-class Invoice extends \XLite\View\AView
+class CheckoutSuccess extends \XLite\View\AView
 {
     /**
-     * Widget parameter names
-     */
-
-    const PARAM_ORDER = 'order';
-
-    /**
-     * Define widget parameters
+     * Return widget default template
      *
-     * @return void
-     * @access protected
-     * @since  1.0.0
-     */
-    protected function defineWidgetParams()
-    {
-        parent::defineWidgetParams();
-
-        $this->widgetParams += array(
-            self::PARAM_ORDER => new \XLite\Model\WidgetParam\Object(
-                'Order', null, false, '\XLite\Model\Order'
-            ),
-        );
-    }
-
-    /**
-     * Return default template
-     * 
      * @return string
      * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getDefaultTemplate()
     {
-        return 'order/invoice/body.tpl';
+        return 'checkout/success.tpl';
     }
 
     /**
-     * Get order 
+     * Get continue URL 
      * 
-     * @return \XLite\Model\Order
+     * @return string
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getOrder()
+    public function getContinueURL()
     {
-        return $this->getParam(self::PARAM_ORDER);
+        $url = $this->session->get('continueURL');
+
+        if (!$url && isset($_SERVER['HTTP_REFERER'])) {
+            $url = $_SERVER['HTTP_REFERER'];
+        }
+
+        if (!$url) {
+            $url = $this->buildURL('main');
+        }
+
+        return $url;
     }
 
     /**
-     * Check widget visibility
+     * Return list of allowed targets
      * 
-     * @return boolean
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function isVisible()
-    {
-        return parent::isVisible()
-            && $this->getOrder();
-    }
-
-    /**
-     * Register CSS files
-     *
      * @return array
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getCSSFiles()
+    public static function getAllowedTargets()
     {
-        $list = parent::getCSSFiles();
+        $list = parent::getAllowedTargets();
 
-        $list[] = 'order/invoice/style.css';
+        $list[] = 'checkoutSuccess';
 
         return $list;
     }
+
 }
+
