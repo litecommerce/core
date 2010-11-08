@@ -59,6 +59,7 @@ abstract class AController extends \XLite\Core\Handler
      * 
      * @var    \XLite\Model\ActionError\Abstract
      * @access protected
+     * @see    ____var_see____
      * @since  3.0.0
      */
     protected $actionStatus;
@@ -66,8 +67,9 @@ abstract class AController extends \XLite\Core\Handler
     /**
      * Breadcrumbs 
      * 
-     * @var    \XLite\Model\LocationPath
+     * @var    \XLite\View\Location
      * @access protected
+     * @see    ____var_see____
      * @since  3.0.0
      */
     protected $locationPath;
@@ -88,6 +90,7 @@ abstract class AController extends \XLite\Core\Handler
      *
      * @return bool
      * @access protected
+     * @see    ____var_see____
      * @since  3.0.0
      */
     protected function checkAccess()
@@ -112,6 +115,7 @@ abstract class AController extends \XLite\Core\Handler
      * 
      * @return string
      * @access protected
+     * @see    ____var_see____
      * @since  3.0.0
      */
     protected function getDefaultReturnURL()
@@ -126,6 +130,7 @@ abstract class AController extends \XLite\Core\Handler
      *  
      * @return void
      * @access protected
+     * @see    ____var_see____
      * @since  3.0.0
      */
     protected function redirect($url = null)
@@ -180,27 +185,69 @@ abstract class AController extends \XLite\Core\Handler
     }
 
     /**
-     * Add the base part of the location path
-     * 
-     * @return void
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function addBaseLocation()
-    {
-        $this->locationPath->addNode(new \XLite\Model\Location('Home', $this->buildURL()));
-    }
-
-    /**
      * Common method to determine current location 
      * 
      * @return string
      * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getLocation()
     {
         return null;
+    }
+
+    /**
+     * Add part to the location nodes list
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function addBaseLocation()
+    {
+    }
+
+    /**
+     * Add node to the location line
+     * 
+     * @param string $name     node title
+     * @param string $link     node link
+     * @param array  $subnodes node subnodes
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function addLocationNode($name, $link = null, array $subnodes = null)
+    {
+        $this->locationPath[] = \XLite\View\Location\Node::create($name, $link, $subnodes);
+    }
+
+    /**
+     * Method to create the location line
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineLocationPath()
+    {
+        $this->locationPath = array();
+
+        // Common element for all location lines
+        $this->addLocationNode('Home', $this->buildURL());
+
+        // Ability to add part to the line
+        $this->addBaseLocation();
+
+        // Ability to define last element in path via short function
+        if ($params = (array) $this->getLocation()) {
+            call_user_func_array(array('static', 'addLocationNode'), $params);
+        }
     }
 
     /**
@@ -226,11 +273,6 @@ abstract class AController extends \XLite\Core\Handler
     protected function defineWidgetParams()
     {
         parent::defineWidgetParams();
-
-        $this->widgetParams += array(
-            self::PARAM_TARGET => new \XLite\Model\WidgetParam\String('Target', null),
-            self::PARAM_ACTION => new \XLite\Model\WidgetParam\String('Action', null),
-        );
 
         $this->widgetParams += array(
             self::PARAM_REDIRECT_CODE => new \XLite\Model\WidgetParam\Int('Redirect code', $this->getDefaultRedirectCode()),
@@ -316,7 +358,7 @@ abstract class AController extends \XLite\Core\Handler
      */
     public function getTarget()
     {
-        return $this->getParam(self::PARAM_TARGET);
+        return \XLite\Core\Request::getInstance()->target;
     }
 
     /**
@@ -328,7 +370,7 @@ abstract class AController extends \XLite\Core\Handler
      */
     public function getAction()
     {
-        return $this->getParam(self::PARAM_ACTION);
+        return \XLite\Core\Request::getInstance()->action;
     }
 
     /**
@@ -348,22 +390,17 @@ abstract class AController extends \XLite\Core\Handler
     }
 
     /**
-     * Return current location path 
-     * 
-     * @return \XLite\Model\LocationPath
+     * Return current location path
+     *
+     * @return \XLite\View\Location
      * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function getLocationPath()
     {
         if (!isset($this->locationPath)) {
-
-            $this->locationPath = new \XLite\Model\LocationPath();
-            $this->addBaseLocation();
-
-            if ($this->getLocation()) {
-                $this->locationPath->addNode(new \XLite\Model\Location($this->getLocation()));
-            }
+            $this->defineLocationPath();
         }
 
         return $this->locationPath;
@@ -1083,5 +1120,4 @@ abstract class AController extends \XLite\Core\Handler
     {
         return intval(\XLite\Core\Request::getInstance()->category_id) ?: $this->getRootCategoryId();
     }
-
 }

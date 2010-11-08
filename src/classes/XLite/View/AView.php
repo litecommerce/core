@@ -1572,6 +1572,7 @@ abstract class AView extends \XLite\Core\Handler
 
     /**
      * So called "static constructor".
+     *
      * NOTE: do not call the "parent::__constructStatic()" explicitly: it will be called automatically
      * 
      * @return void

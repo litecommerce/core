@@ -199,19 +199,13 @@ class SendFriend extends \XLite\Controller\Customer\Catalog
      * @access protected
      * @since  3.0.0
      */
-    protected function addBaseLocation($includeCurrent = false)
+    protected function addBaseLocation()
     {
-        parent::addBaseLocation(true);
+        parent::addBaseLocation();
 
-        $this->locationPath->addNode(
-            new \XLite\Model\Location(
-                $this->getProduct()->get('name'),
-                $this->buildURL(
-                    'product',
-                    '',
-                    array('product_id' => $this->getProduct()->get('product_id'))
-                )
-            )
+        $this->addLocationNode(
+            $this->getProduct()->getName(),
+            $this->buildURL('product', '', array('product_id' => $this->getProduct()->getProductId()))
         );
     }
 

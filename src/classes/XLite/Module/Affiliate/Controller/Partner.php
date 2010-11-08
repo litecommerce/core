@@ -53,8 +53,8 @@ class Partner extends \XLite\Controller\AController
     {
         parent::addBaseLocation();
 
-        if ('partner' !== \XLite\Core\Request::getInstance()->target) {
-            $this->locationPath->addNode(new \XLite\Model\Location('Partner zone', $this->buildURL('partner')));
+        if ('partner' !== $this->getTarget()) {
+            $this->addLocationNode('Partner zone', $this->buildURL('partner'));
         }
     }
 

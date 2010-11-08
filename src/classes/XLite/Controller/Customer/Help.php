@@ -37,21 +37,19 @@ namespace XLite\Controller\Customer;
  */
 class Help extends \XLite\Controller\Customer\ACustomer
 {
-    public $params = array('target', "mode");
-
-
     /**
-     * Add the base part of the location path
-     * 
-     * @return void
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function addBaseLocation()
+     * Add part to the location nodes list
+     *                                    
+     * @return void                                  
+     * @access protected                             
+     * @see    ____func_see____                      
+     * @since  3.0.0                                 
+     */                                              
+    protected function addBaseLocation() 
     {
         parent::addBaseLocation();
 
-        $this->locationPath->addNode(new \XLite\Model\Location('Help zone'));
+        $this->addLocationNode('Help zone');                                                
     }
 
     /**
@@ -63,21 +61,13 @@ class Help extends \XLite\Controller\Customer\ACustomer
      */
     protected function getLocation()
     {
-        $location = parent::getLocation();
+        $modes = array(
+            'terms_conditions'  => 'Terms & Conditions',
+            'privacy_statement' => 'Privacy statement',
+            'contactus'         => 'Contact us',
+        );
 
-        switch ($this->get('mode')) {
-            case 'terms_conditions':
-                $location = 'Terms & Conditions';
-                break;
-            case 'privacy_statement':
-                $location = 'Privacy statement';
-                break;
-            case 'contactus':
-                $location = 'Contact us';
-                break;
-        }
-
-        return $location;
+        return isset($modes[$mode = \XLite\Core\Request::getInstance()->mode]) ? $modes[$mode] : parent::getLocation();
     }
 
 

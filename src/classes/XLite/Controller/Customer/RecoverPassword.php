@@ -52,7 +52,7 @@ class RecoverPassword extends \XLite\Controller\Customer\ACustomer
     {
         parent::addBaseLocation();
 
-        $this->locationPath->addNode(new \XLite\Model\Location('Help zone'));
+        $this->addLocationNode('Help zone');
     }
 
     /**

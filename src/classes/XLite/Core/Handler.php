@@ -64,7 +64,8 @@ abstract class Handler extends \XLite\Base
      * 
      * @var    array
      * @access protected
-     * @since  3.0.0 EE
+     * @see    ____var_see____
+     * @since  3.0.0
      */
     protected $widgetParams;
 

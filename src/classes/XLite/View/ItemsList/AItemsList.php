@@ -623,6 +623,7 @@ abstract class AItemsList extends \XLite\View\Container
      *
      * @return string
      * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function getActionURL(array $params = array())
@@ -631,10 +632,11 @@ abstract class AItemsList extends \XLite\View\Container
     }
 
     /**
-     * Get a list of JavaScript files required to display the widget properly
+     * Get a list of JavaScript files
      *
      * @return array
      * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function getJSFiles()
@@ -649,10 +651,11 @@ abstract class AItemsList extends \XLite\View\Container
     }
 
     /**
-     * Get a list of CSS files required to display the widget properly
+     * Get a list of CSS files
      *
      * @return array
      * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function getCSSFiles()
@@ -669,6 +672,7 @@ abstract class AItemsList extends \XLite\View\Container
      *
      * @return string
      * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     static public function getSessionCellName()

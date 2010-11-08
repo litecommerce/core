@@ -152,30 +152,6 @@ class Category extends \XLite\Controller\Admin\Catalog
     }
 
     /**
-     * Prepare location path from category path 
-     * 
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getLocationPath()
-    {
-        $result = array();
-
-        $categoryPath = \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategoryPath($this->getCategoryId());
-
-        if (is_array($categoryPath)) {
-            
-            foreach ($categoryPath as $category) {
-                $result[$category->name] = 'admin.php?target=categories&category_id=' . $category->category_id;
-            }
-        }
-
-        return $result;
-    }
-
-    /**
      * Validate values passed from the REQUEST for updating/creating category 
      * 
      * @param bool $isNewObject Flag - is a data for a new category or for updaing existing category

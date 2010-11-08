@@ -38,18 +38,6 @@ namespace XLite\Controller\Customer;
 class Product extends \XLite\Controller\Customer\Catalog
 {
     /**
-     * Add the base part of the location path
-     * 
-     * @return void
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function addBaseLocation($includeCurrent = false)
-    {
-        parent::addBaseLocation(true);
-    }
-
-    /**
      * Common method to determine current location 
      * 
      * @return string
@@ -58,9 +46,7 @@ class Product extends \XLite\Controller\Customer\Catalog
      */
     protected function getLocation()
     {
-        return $this->getProduct()
-            ? $this->getProduct()->getName()
-            : null;
+        return $this->getProduct()->getName();
     }
 
     /**
@@ -72,7 +58,7 @@ class Product extends \XLite\Controller\Customer\Catalog
      */
     protected function getProductId()
     {
-        return \XLite\Core\Request::getInstance()->product_id;
+        return intval(\XLite\Core\Request::getInstance()->product_id);
     }
 
 
@@ -85,11 +71,7 @@ class Product extends \XLite\Controller\Customer\Catalog
      */
     public function getCategoryId()
     {
-        $categoryId = parent::getCategoryId();
-
-        return $categoryId
-            ? $categoryId
-            : ($this->getProduct() ? $this->getProduct()->getCategoryId() : null);
+        return parent::getCategoryId() ?: $this->getProduct()->getCategoryId();
     }
 
     /**

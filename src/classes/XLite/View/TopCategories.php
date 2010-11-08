@@ -75,7 +75,7 @@ class TopCategories extends \XLite\View\SideBarBox
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $pathIds = null;
+    protected $pathIds;
 
 
     /**
@@ -140,7 +140,8 @@ class TopCategories extends \XLite\View\SideBarBox
      *
      * @return void
      * @access protected
-     * @since  1.0.0
+     * @see    ____func_see____
+     * @since  3.0.0
      */
     protected function defineWidgetParams()
     {

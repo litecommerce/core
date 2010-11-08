@@ -39,6 +39,7 @@ class Order extends \XLite\Controller\Customer\ACustomer
 {
     /**
      * Controller parameters
+     * FIXME - to remove
      * 
      * @var    array
      * @access protected
@@ -51,11 +52,12 @@ class Order extends \XLite\Controller\Customer\ACustomer
      * Order (cache)
      * 
      * @var    \XLite\Model\Order
-     * @access private
+     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      */
-    private $order = null;
+    protected $order;
+
 
     /**
      * Return the current page title (for the content area)
@@ -75,13 +77,14 @@ class Order extends \XLite\Controller\Customer\ACustomer
      * 
      * @return void
      * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
     protected function addBaseLocation()
     {
         parent::addBaseLocation();
 
-        $this->locationPath->addNode(new \XLite\Model\Location('Search orders', $this->buildURL('order_list')));
+        $this->addLocationNode('Search orders', $this->buildURL('order_list'));
     }
 
     /**
@@ -105,9 +108,7 @@ class Order extends \XLite\Controller\Customer\ACustomer
      */
     public function checkAccess()
     {
-        return parent::checkAccess()
-            && $this->getOrder()
-            && $this->checkOrderAccess();
+        return parent::checkAccess() && $this->getOrder() && $this->checkOrderAccess();
     }
 
     /**
@@ -172,4 +173,3 @@ class Order extends \XLite\Controller\Customer\ACustomer
         return $this->config->Security->customer_security;
     }
 }
-
