@@ -10,8 +10,11 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *
+ * @ListChild (list="product.details.page.info.buttons", weight="10")
  * @ListChild (list="product.details.page.info.buttons-added", weight="10")
+ * @ListChild (list="product.details.quicklook.info.buttons", weight="20")
+ * @ListChild (list="product.details.quicklook.info.buttons-added", weight="20")
  *}
 <div class="buttons-row">
-  {displayViewListContent(#product.details.page.info.buttons-added.cart-buttons#)}
+  {displayListPart(#cart-buttons#)}
 </div>
