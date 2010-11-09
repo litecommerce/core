@@ -165,9 +165,11 @@ $(document).ready(
 
         var shippingMethodsIsExists = 0 < $('ul.shipping-rates input', this.base).length;
         var username = $('#create_profile_username', this.commonBase).get(0);
+        var isCreate = $('#create_profile_chk', this.commonBase).get(0) && $('#create_profile_chk', this.commonBase).get(0).checked;
         if (
           shippingMethodsIsExists
           && username
+          && isCreate
           && !$('.shipping-step .address-not-completed:visible', this.base).length
           && !$('.shipping-step .email-not-defined:visible', this.base).length
           && (!username.validate(true) || !$('#create_profile_username', this.commonBase).val())

@@ -247,7 +247,7 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
 
         $this->assertJqueryNotPresent('ul.payments li input:checked', 'payment is not selected');
 
-        $this->toggleByJquery('#pmethod30', true);
+        $this->toggleByJquery('#pmethod6', true);
 
         $this->waitForCondition(
             'selenium.browserbot.getCurrentWindow().$(".current .button-row button.disabled").length == 0',
@@ -357,28 +357,8 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
 
         $this->assertJqueryPresent('.current .non-agree', 'non-agree style is applyed always');
 
-        // Checkout with Quantum gateway
+        // Checkout with Check payment method
         $this->click('css=.current .button-row button');
-        $this->waitForCondition(
-            'selenium.browserbot.getCurrentWindow().document.getElementsByTagName("form")[0].ccnum',
-            20000
-        );
-
-        // Type test credit card data
-        $this->type('//input[@name="ccnum"]', '4111111111111111');
-        $this->select('//select[@name="ccyr"]', 'value=2011');
-        $this->type('//input[@name="CVV2"]', '666');
-
-        // Payment gateway processing - Selenium TTL prolongation
-        $this->setTimeout(120000);
-        $this->clickAndWait('//input[@type="submit"]');
-
-        $this->waitForCondition(
-            'selenium.browserbot.getCurrentWindow().document.getElementsByTagName("form")[0].ccnum.value == "1111"',
-            10000
-        );
-        $this->setTimeout(self::SELENIUM_TTL);
-        $this->clickAndWait('//input[@type="SUBMIT"]');
 
         // Go to shop
         $this->waitForCondition('selenium.browserbot.getCurrentWindow().location.href.search(/checkoutSuccess/) != -1');
@@ -397,8 +377,8 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
         $this->assertNotNull($order, 'check order');
 
         $this->assertEquals(1, count($order->getPaymentTransactions()), 'check payment transactions count');
-        $this->assertEquals('S', $order->getPaymentTransactions()->get(0)->getStatus(), 'check payment transaction status');
-        $this->assertTrue($order->isPayed(), 'check order payed status');
+        $this->assertEquals('W', $order->getPaymentTransactions()->get(0)->getStatus(), 'check payment transaction status');
+        $this->assertFalse($order->isPayed(), 'check order payed status');
     }
 
     public function testLogged()
@@ -445,7 +425,6 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
         $this->submitAndWait('css=#user-login');
 
         $product = $this->addToCart();
-
 
         if ($this->getJSExpression('$(".previous.shipping-step").length')) {
 
@@ -561,7 +540,7 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
             'John Smith bbb'
         );
 
-        $this->toggleByJquery('#pmethod30', true);
+        $this->toggleByJquery('#pmethod6', true);
 
         $this->click('css=.current .button-row button');
         $this->waitForCondition(
@@ -695,7 +674,7 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
 
     protected function fillPaymentStep()
     {
-        $this->toggleByJquery('#pmethod30', true);
+        $this->toggleByJquery('#pmethod6', true);
 
         $this->waitForCondition(
             'selenium.browserbot.getCurrentWindow().$(".current .button-row button.disabled").length == 0',

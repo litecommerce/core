@@ -656,7 +656,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
     /**
      * Get payment method 
      * 
-     * @return \XLite\Model\Payment\Method or null
+     * @return \XLite\Model\Payment\Method|null
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -665,27 +665,44 @@ class Order extends \XLite\Model\Base\ModifierOwner
     {
         $t = $this->getFirstOpenPaymentTransaction();
 
-        if (!$t && $this->getProfile() && $this->getProfile()->getLastPaymentId()) {
+        if (!$t) {
+            if ($this->isOpen()) {
+                $t = $this->assignLastPaymentMethod();
 
-            $list = $this->getPaymentMethods();
-            $found = false;
+            } else {
+                $t = $this->getPaymentTransactions()->last();
 
-            foreach ($list as $pm) {
-                if ($pm->getMethodId() == $this->getProfile()->getLastPaymentId()) {
-                    $this->setPaymentMethod($pm);
-                    $found = true;
-                    break;
-                }
-            }
-
-            if ($found) {
-                $t = $this->getFirstOpenPaymentTransaction();
             }
         }
 
         return $t ? $t->getPaymentMethod() : null;
     }
   
+    /**
+     * Assign last used payment method 
+     * 
+     * @return \XLite\Model\Payment\Transaction|null
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function assignLastPaymentMethod()
+    {
+        $found = false;
+
+        if ($this->getProfile() && $this->getProfile()->getLastPaymentId()) {
+            foreach ($this->getPaymentMethods() as $pm) {
+                if ($pm->getMethodId() == $this->getProfile()->getLastPaymentId()) {
+                    $this->setPaymentMethod($pm);
+                    $found = true;
+                    break;
+                }
+            }
+        }
+
+        return $found ? $this->getFirstOpenPaymentTransaction() : null;
+    }
+
     /**
      * Set payment method 
      * 
