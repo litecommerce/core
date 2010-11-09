@@ -396,6 +396,16 @@ window.core = {
     }
 
     return m ? m[1] : null;
+  },
+
+  // Toggle link text and toggle obj visibility
+  toggleText : function (link, text, obj)
+  {
+    if (undefined === link.prevValue) {
+      link.prevValue = $(link).html();
+    }
+    $(link).html($(link).html() === text ? link.prevValue : text);
+    $(obj).toggle();
   }
 
 };
