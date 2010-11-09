@@ -92,7 +92,7 @@ $(document).ready(
             } else {
               $('.username', this.form).hide();
 
-              if (isVisible) {
+              if (isVisible && $('#create_profile_email', this.form).val()) {
                 $(this.form).submit();
               }
             }
