@@ -99,8 +99,7 @@ class Main extends \Includes\Decorator\Plugin\APlugin
      */
     protected function getAnnotatedTemplates()
     {
-        return array();
-        // return static::getTemplatesList();
+        return static::getTemplatesCollection()->getList();
     }
 
     /**
@@ -127,6 +126,34 @@ class Main extends \Includes\Decorator\Plugin\APlugin
     protected function clearAll()
     {
         $this->getRepo()->deleteInBatch($this->getRepo()->findAll());
+    }
+
+    /**
+     * Define main pattern
+     *
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getPatternParserMain()
+    {
+        return '/\{\*(?:[^\*]|(?:\*+[^\*\}]))*@' . self::TAG_LIST_CHILD . '\s*.*(?:[^\*]|(?:\*+[^\*\}]))*\*+\}/USsi';
+    }
+
+    /**
+     * Get schema for the data returned by certain parser
+     *
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getSchemaParserMain()
+    {
+        return array(
+            self::N_TEMPLATE_COMMENT => 0,
+        );
     }
 
     /**
@@ -200,20 +227,14 @@ class Main extends \Includes\Decorator\Plugin\APlugin
     /**
      * Prepare attributes of the "ListChild" tag
      * 
-     * @param array  $data  tag attributes
-     * @param string $class widget class
+     * @param array $data tag attributes
      *  
      * @return array
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function prepareListChildTagData(array $data, $class)
+    protected function prepareListChildTagData(array $data)
     {
-        // Set "child" attribute
-        if (isset($class)) {
-            $data['child'] = $class;
-        }
-
         // Check the weight-related attributes
         $this->prepareWeightAttrs($data);
 
@@ -233,18 +254,19 @@ class Main extends \Includes\Decorator\Plugin\APlugin
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getAllListChildTagAttributes(\Includes\Decorator\Data\Classes\Node $node)
+    protected function getAllListChildTagAttributes(array $nodes, $callback)
     {
         $data = array();
 
-        // It's allowed to define several tags per class
-        foreach ($node->getTag(self::TAG_LIST_CHILD) as $attrs) {
+        // Iterate over all nodes
+        foreach ($nodes as $node) {
 
-            // Prepare attributes and save them into the list
-            $data[] = $this->prepareListChildTagData(
-                $attrs,
-                \Includes\Decorator\Utils\ClassData\Operator::getFinalClass($node->getClass())
-            );
+            // It's allowed to define several tags per class
+            foreach ($node->getTag(self::TAG_LIST_CHILD) as $attrs) {
+
+                // Prepare attributes and save them into the list
+                $data[] = $this->prepareListChildTagData($attrs) + $callback($node);
+            }
         }
 
         return $data;
@@ -260,16 +282,14 @@ class Main extends \Includes\Decorator\Plugin\APlugin
      */
     protected function getListChildTagsFromPHP()
     {
-        $data = array();
-
-        // Iterate over all classes which define the "ListChild" tag
-        foreach ($this->getAnnotatedPHPClasses() as $node) {
-
-            // Add tag attributes to the list
-            $data = array_merge($data, $this->getAllListChildTagAttributes($node));
-        }
-
-        return $data;
+        return $this->getAllListChildTagAttributes(
+            $this->getAnnotatedPHPClasses(),
+            function (\Includes\DataStructure\Cell $node) {
+                return array(
+                    'child' => \Includes\Decorator\Utils\ClassData\Operator::getFinalClass($node->getClass()),
+                );
+            }
+        );
     }
 
     /**
@@ -282,13 +302,17 @@ class Main extends \Includes\Decorator\Plugin\APlugin
      */
     protected function getListChildTagsFromTemplates()
     {
-        $data = array();
-
-        // Iterate over all templates
-        foreach ($this->getAnnotatedTemplates() as $template) {
-        }
-
-        return $data;
+        return $this->getAllListChildTagAttributes(
+            $this->getAnnotatedTemplates(),
+            function (\Includes\DataStructure\Cell $node) {
+                return array(
+                    'tpl'  => ($tpl = substr($node->{constant(__CLASS__ . '::N_FILE_PATH')}, strlen(LC_SKINS_DIR))),
+                    'zone' => ('admin' === substr($tpl, 0, strpos($tpl, LC_DS)))
+                        ? \XLite\Model\ViewList::INTERFACE_ADMIN
+                        : \XLite\Model\ViewList::INTERFACE_CUSTOMER,
+                );
+            }
+        );
     }
 
     /**
@@ -339,6 +363,14 @@ class Main extends \Includes\Decorator\Plugin\APlugin
     {
         // Truncate old
         $this->clearAll();
+
+        // Register templates parser
+        \Includes\Decorator\Utils\Template\Parser::registerParser(
+            'Main',
+            $this->getPatternParserMain(),
+            $this->getSchemaParserMain(),
+            array('static', 'postprocessParserTags')
+        );
 
         // Create new
         $this->createLists();

@@ -590,10 +590,10 @@ CREATE TABLE xlite_forms (
 DROP TABLE IF EXISTS xlite_view_lists;
 CREATE TABLE xlite_view_lists (
   list_id int(11) NOT NULL auto_increment PRIMARY KEY,
-  class varchar(255) NOT NULL default '',
+  class varchar(512) NOT NULL default '',
   list varchar(255) NOT NULL default '',
   zone varchar(16) NOT NULL default 'customer',
-  child varchar(255) NOT NULL default '',
+  child varchar(512) default '',
   weight mediumint unsigned NOT NULL default 0,
   tpl varchar(1024) NOT NULL default '',
   KEY clzw (class, list, zone, weight)

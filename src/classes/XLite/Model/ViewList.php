@@ -82,7 +82,7 @@ class ViewList extends \XLite\Model\AEntity
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @Column (type="string", length="255", nullable=false)
+     * @Column (type="string", length="512", nullable=false)
      */
     protected $class = '';
 
@@ -118,9 +118,9 @@ class ViewList extends \XLite\Model\AEntity
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @Column (type="string", length="255", nullable=false)
+     * @Column (type="string", length="512")
      */
-    protected $child = '';
+    protected $child;
 
     /**
      * Child weight
