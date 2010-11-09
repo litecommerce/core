@@ -131,7 +131,7 @@ class Auth extends \XLite\Base
     protected function clearSessionVars()
     {
         foreach ($this->getSessionVarsToClear() as $name) {
-            \XLite\Core\Session::getInstance()->set($name, null);
+            unset(\XLite\Core\Session::getInstance()->$name);
         }
     }
 
@@ -177,12 +177,14 @@ class Auth extends \XLite\Base
     {
         $result = false;
 
+        $cell = self::SESSION_SECURE_HASH_CELL;
+
         if (!empty($hashString)) {
-            $result = \XLite\Core\Session::getInstance()->get(self::SESSION_SECURE_HASH_CELL) === $hashString;
+            $result = \XLite\Core\Session::getInstance()->$cell === $hashString;
         }
 
         // Using this method, it's not possible to log in several times
-        \XLite\Core\Session::getInstance()->set(self::SESSION_SECURE_HASH_CELL, null);
+        unset(\XLite\Core\Session::getInstance()->$cell);
 
         return $result;
     }
@@ -258,7 +260,7 @@ class Auth extends \XLite\Base
     public function logoff()
     {
         $session = \XLite\Core\Session::getInstance();
-        $session->set('last_profile_id', $session->get('profile_id'));
+        $session->last_profile_id = $session->profile_id;
 
         $this->clearSessionVars();
     }
@@ -428,7 +430,8 @@ class Auth extends \XLite\Base
      */
     public function setSecureHash($hashString)
     {
-        \XLite\Core\Session::getInstance()->set(self::SESSION_SECURE_HASH_CELL, $hashString);
+        $cell = self::SESSION_SECURE_HASH_CELL;
+        \XLite\Core\Session::getInstance()->$cell = $hashString;
     }
 
     /**
@@ -444,7 +447,7 @@ class Auth extends \XLite\Base
     protected function rememberLogin($login) 
     {
         $options = \XLite::getInstance()->getOptions('host_details');
-        $ttl = time() + 3600 * 24 * intval($this->config->General->login_lifetime);
+        $ttl = time() + 86400 * intval($this->config->General->login_lifetime);
 
         foreach (array($options['http_host'], $options['https_host']) as $host) {
             @setcookie('recent_login', $login, $ttl, '/', func_parse_host($host));
