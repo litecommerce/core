@@ -46,7 +46,7 @@ class Product extends \XLite\Controller\Customer\Catalog
      */
     protected function getLocation()
     {
-        return $this->getProduct()->getName();
+        return $this->getProduct() ? $this->getProduct()->getName() : null;
     }
 
     /**

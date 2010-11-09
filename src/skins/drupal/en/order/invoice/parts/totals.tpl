@@ -20,7 +20,7 @@
 
   <tr FOREACH="order.getVisibleSavedModifiers(),modifier" class="{modifier.getCode()} {modifier.getSubcode()}">
     <td class="title">{t(modifier.getName())}:</td>
-    <td class="value">{if:modifier.isAvailable(modifier.getSubcode())}{formatPrice(modifier.getSurcharge(),order.getCurrency())}{else:}{t(#n/a#)}{end:}
+    <td class="value">{if:modifier.isAvailable(modifier.getSubcode())}{formatPrice(modifier.getSurcharge(),order.getCurrency())}{else:}{t(#n/a#)}{end:}</td>
   </tr>
 
   <tr class="total">

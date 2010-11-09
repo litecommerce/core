@@ -389,6 +389,10 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
      */
     public function toggleByJquery($jqueryExpression, $checked = null)
     {
+        if (0 == intval($this->getJSExpression('$("' . $jqueryExpression . '").length'))) {
+            $this->fail($jqueryExpression . ' jQuery expression not found');
+        }
+
         $checked = isset($checked) ? $checked : !$this->getJSExpression('$("' . $jqueryExpression . '").get(0).checked');
         $this->getJSExpression('$("' . $jqueryExpression . '").get(0).checked = ' . ($checked ? 'true' : 'false'));
         $this->getJSExpression('$("' . $jqueryExpression . '").change()');
