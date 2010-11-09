@@ -329,7 +329,7 @@ window.core = {
       return this.request('put', name, null, data, callback);
     },
 
-    delete: function(name, id, callback) {
+    'delete': function(name, id, callback) {
       return this.request('delete', name, id, null, callback);
     },
 
