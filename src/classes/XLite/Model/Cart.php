@@ -227,9 +227,6 @@ class Cart extends \XLite\Model\Order
                 // anonymous checkout:
                 // use the current profile as order profile
                 $this->setProfileId($this->getProfile()->getProfileId());
-
-            } else {
-                $this->setProfileCopy($profile);
             }
         }
     }

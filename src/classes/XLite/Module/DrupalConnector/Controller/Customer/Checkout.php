@@ -166,6 +166,22 @@ class Checkout extends \XLite\Controller\Customer\Checkout implements \XLite\Bas
     }
 
     /**
+     * Clone profile and move profile to original profile
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function cloneProfile()
+    {
+        parent::cloneProfile();
+
+        $this->getCart()->getProfile()->setCMSName('');
+        $this->getCart()->getProfile()->setCMSProfileId(0);
+    }
+
+    /**
      * Get redirect mode - force redirect or not
      * 
      * @return boolean
