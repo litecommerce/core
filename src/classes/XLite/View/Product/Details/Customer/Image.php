@@ -45,6 +45,22 @@ class Image extends \XLite\View\Product\Details\Customer\ACustomer
      */
     const ZOOM_MAX_WIDTH = 460;
 
+    /**
+     * Zoom coefficient
+     */
+    const K_ZOOM = 1.3;
+
+    /**
+     * Image max width on product details page and Quick Look box
+     */
+    const IMG_MAX_WIDTH_PD = 330;
+    const IMG_MAX_WIDTH_QL = 300;
+
+    /**
+     * Relative horizontal position of the zoom box
+     */
+    const ZOOM_ADJUST_X_PD = 97;
+    const ZOOM_ADJUST_X_QL = 32;
 
     /**
      * Return widget default template
@@ -67,9 +83,34 @@ class Image extends \XLite\View\Product\Details\Customer\ACustomer
      */
     protected function getTemplate()
     {
-        return $this->getProduct()->hasImage()
+        return ($this->isZoom())
             ? $this->getDir() . '/parts/image-zoom.tpl'
             : $this->getDefaultTemplate();
+    }
+
+    /**
+     * Check if the product has any image to ZOOM
+     *
+     * @return boolean
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function isZoom()
+    {
+        $isZoom = false;
+
+        if ($this->getProduct()->hasImage()) {
+
+            foreach($this->getProduct()->getImages() as $img) {
+   
+                if ($img->getWidth() > self::K_ZOOM * $this->getWidgetMaxWidth()) {
+                    $isZoom = true;
+                    break;
+                } 
+            }
+        }
+
+        return $isZoom;
     }
 
     /**
@@ -141,7 +182,33 @@ class Image extends \XLite\View\Product\Details\Customer\ACustomer
      */
     public function getWidgetMaxWidth()
     {
-        return strpos($this->viewListName, 'quicklook') ? 300 : 330;
+        return strpos($this->viewListName, 'quicklook')
+            ? self::IMG_MAX_WIDTH_QL
+            : self::IMG_MAX_WIDTH_PD;
+    }
+
+    /**
+     * Get image container max height
+     *
+     * @return boolean
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getWidgetMaxHeight()
+    {
+        $maxHeight = 0;
+
+        if ($this->getProduct()->hasImage()) {
+            foreach($this->getProduct()->getImages() as $img) {
+                if ($img->getWidth() > $this->getWidgetMaxWidth()) {
+                    $maxHeight = max($img->getHeight() * $this->getWidgetMaxWidth() / $img->getWidth(), $maxHeight);
+                } else {
+                    $maxHeight = max($img->getHeight(), $maxHeight);
+                }
+            }
+        }
+
+        return ceil($maxHeight);
     }
 
     /**
@@ -154,7 +221,9 @@ class Image extends \XLite\View\Product\Details\Customer\ACustomer
      */
     public function getZoomAdjustX()
     {
-        return strpos($this->viewListName, 'quicklook') ? 32 : 97;
-    } 
+        return strpos($this->viewListName, 'quicklook')
+            ? self::ZOOM_ADJUST_X_QL
+            : self::ZOOM_ADJUST_X_PD;
+    }
 
 }

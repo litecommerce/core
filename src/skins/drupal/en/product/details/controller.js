@@ -116,16 +116,15 @@ ProductDetailsView.prototype.gallery = null;
 // Zoom layer max. width
 ProductDetailsView.prototype.zoomMaxWidth = 460;
 
+// Zoom layer max. width
+ProductDetailsView.prototype.kZoom = 1.3;
+
 // Postprocess widget
 ProductDetailsView.prototype.postprocess = function(isSuccess, initial)
 {
   this.callSupermethod('postprocess', arguments);
 
   if (isSuccess) {
-
-    // Fix box width
-    $('.image .product-photo', this.base)
-      .css('width', $('.image .product-photo img', this.base).attr('width') + 'px');
 
     // Save gallery list items
     this.gallery = $('.image .product-image-gallery li', this.base);
@@ -155,12 +154,12 @@ ProductDetailsView.prototype.postprocess = function(isSuccess, initial)
     )
 
     // Cloud zoom
-    if (!initial) {
-      var cloud = $('.cloud-zoom', this.base);
+    var cloud = $('.cloud-zoom', this.base);
 
-      if (cloud.length && !cloud.data('zoom')) {
-        cloud.CloudZoom();
-      }
+    if ($('.product-image-gallery li a').length) {
+      this.selectImage(0);
+    } else if (cloud.length && !cloud.data('zoom')) {
+      cloud.CloudZoom();
     }
 
     // Gallery
@@ -288,12 +287,19 @@ ProductDetailsView.prototype.selectImage = function(pos)
     .attr('width', middle.attr('width'))
     .attr('height', middle.attr('height'));
 
-  $('.image .product-photo', this.base)
-    .css('width', middle.attr('width') + 'px');
+  // Calculate image padding
+  var padX = Math.max(0, parseInt($('.image .product-photo', this.base).css('width')) - middle.attr('width'));
+  var padY = Math.max(0, parseInt($('.image .product-photo', this.base).css('height')) - middle.attr('height'));
+
+  $('.image .product-photo img', this.base)
+    .attr('src',    middle.attr('src'))
+    .attr('width',  middle.attr('width'))
+    .attr('height', middle.attr('height'))
+    .css('padding', padY/2 + 'px ' + padX/2 + 'px');
 
   eval('var tmp = {' + $('a', next).attr('rev') + '}');
 
-  if (tmp.width > middle.attr('width') || tmp.height > middle.attr('height')) {
+  if (tmp.width > middle.attr('width') * this.kZoom || tmp.height > middle.attr('height') * this.kZoom) {
     cloud.CloudZoom();
 
   } else {
@@ -322,7 +328,13 @@ ProductDetailsView.prototype.addProductToCart = function(event, form)
   }
 
   if (this.submitForm(form, callback)) {
-    this.shade();
+
+    if (popup && popup.elementId == 'product-quicklook') {
+      popup.openAsWait();
+    } else {
+      this.shade();
+    }
+
     this.base.get(0).controller.selfAdded = true;
   }
 

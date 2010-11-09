@@ -15,9 +15,11 @@
     {displayViewListContent(#product.details.quicklook#)}
   <widget name="add_to_cart" end />
 
-  {* FIXME - to remove *}
-  <script type="text/javascript" src="{getShopUrl(getSkinURL(#product/details/controller.js#))}"></script>
-  <script type="text/javascript">$('.cloud-zoom, .cloud-zoom-gallery').CloudZoom();</script>
-
   {displayViewListContent(#product.details.quicklook.rotator#)}
 </div>
+
+<script type="text/javascript">
+//<![CDATA[
+new ProductDetailsController($('div.product-quicklook')); 
+//]]>
+</script>

@@ -548,7 +548,7 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     }
 
     /**
-     * Count active detailed images 
+     * Count product images 
      * 
      * @return integer
      * @access public
