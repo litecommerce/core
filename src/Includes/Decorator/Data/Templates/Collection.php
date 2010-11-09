@@ -87,14 +87,14 @@ class Collection
      *
      * @param array $node node data
      *
-     * @return \Includes\DataStructure\Cell
+     * @return \Includes\Decorator\Data\Templates\Node
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
     protected function createNode(array $data = array())
     {
-        return new \Includes\DataStructure\Cell($data);
+        return new \Includes\Decorator\Data\Templates\Node($data);
     }
 
     /**

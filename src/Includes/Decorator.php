@@ -123,19 +123,6 @@ class Decorator extends Decorator\ADecorator
     protected $maxExecutionTime = null;
 
     /**
-     * Tags in decorator comments 
-     * 
-     * @var    array
-     * @access protected
-     * @since  3.0
-     */
-    protected $commentFields = array(
-        self::INFO_FILE         => 'file   ',
-        self::INFO_CLASS_ORIG   => 'class  ',
-        self::INFO_EXTENDS_ORIG => 'extends',
-    );
-
-    /**
      * Classes info
      * 
      * @var    array
@@ -217,16 +204,6 @@ class Decorator extends Decorator\ADecorator
      * @since  3.0.0
      */
     protected $multilangs = array();
-
-    /**
-     * Optional class annotations attributes 
-     * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected $optionalClassAttributes = array('subpackage', 'mappedsuperclass');
 
     /**
      * Method name translation records
@@ -654,10 +631,6 @@ class Decorator extends Decorator\ADecorator
             if ($this->isMultilang($node->__get(self::N_PARENT_CLASS))) {
                 $this->multilangs[] = $node->__get(self::N_CLASS);
             }
-    
-            if ($classComment || !preg_match(self::INTERFACE_COMMENT_PATTERN, file_get_contents(LC_CLASSES_DIR . '/' . $node->__get(self::N_FILE_PATH)))) {
-                $this->checkClassCommentAttributes($classComment, $node->__get(self::N_FILE_PATH));
-            }
         }
     }
 
@@ -842,9 +815,6 @@ class Decorator extends Decorator\ADecorator
         // Run registered plugins
         \Includes\Decorator\Utils\PluginManager::invokeHook('run');
 
-        // Regenerate view lists
-        $this->assembleTemplateLists();
-
         // Collect patches to DB
         $this->collectPatches();
 
@@ -1001,95 +971,6 @@ PHP;
         // Renew meta data ceche
         foreach ($repos as $name) {
             \XLite\Core\Database::getRepo($name);
-        }
-    }
-
-    /**
-     * Check class comment attributes 
-     * 
-     * @param string $comment  Class comment
-     * @param string $filePath File path
-     *  
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function checkClassCommentAttributes($comment, $filePath)
-    {
-        $errors = array();
-
-        if (!is_string($comment)) {
-            $errors[] = 'The class is not commented';
-
-        } else {
-            $attributes = $this->parseComment(substr(trim($comment), 0, -2));
-
-            // Check required attributes
-            foreach (array('package', 'see', 'since') as $a) {
-                if (!isset($attributes[$a]) || 0 == strlen($attributes[$a][0])) {
-                    $errors[] = sprintf($this->errorMsgAttribute, '@' . $a);
-                }
-                unset($attributes[$a]);
-            }
-
-            // Check @ListChild
-            if (isset($attributes['listchild'])) {
-                $lists = array();
-                foreach ($attributes['listchild'] as $value) {
-                    $lists[] = $this->parseCommentAttribute($value);
-                }
-
-                foreach ($lists as $list) {
-                    if (!isset($list['list'])) {
-                        $errors[] = '@ListChild attribute has not "list" parameter';
-
-                    } elseif (isset($list['zone']) && !in_array($list['zone'], array('', true, 'customer', 'admin'))) {
-                        $errors[] = '@ListChild attribute has "zone" parameter with wrong value';
-                    }
-                }
-
-                unset($attributes['listchild']);
-            }
-
-            $hasEntity = false;
-            $hasDoctrineAttribute = false;
-            foreach ($this->doctrineClassAttributes as $a) {
-                $key = strtolower($a);
-                if (isset($attributes[$key])) {
-                    if ('entity' == $key) {
-                        $hasEntity = true;
-                    }
-                    $hasDoctrineAttribute = true;
-                    unset($attributes[$key]);
-                }
-            }
-
-            if (isset($attributes['haslifecyclecallbacks'])) {
-                $hasDoctrineAttribute = true;
-                unset($attributes['haslifecyclecallbacks']);
-            }
-
-            if ($hasDoctrineAttribute && !$hasEntity) {
-                $errors[] = 'Class has not @Entity attribute, but has some Doctrine class attributes';
-            }
-
-            // Remove optional attributes
-            foreach ($this->optionalClassAttributes as $a) {
-                if (isset($attributes[$a])) {
-                    unset($attributes[$a]);
-                }
-            }
-
-            // Unknown attributes
-            foreach ($attributes as $a => $attr) {
-                $errors[] = 'Class has unknown attribute @' . $a;
-            }
-
-        }
-
-        if ($errors) {
-            $this->addDecorationError($filePath, $errors);
         }
     }
 
@@ -1374,245 +1255,6 @@ DATA;
         $data = preg_replace('/^\}/Sm', "\n" . $block . "\n" . '$0', $data, 1);
 
         file_put_contents($fn, $data);
-    }
-
-    /**
-     * getViewListChildren 
-     * 
-     * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getViewListChildren()
-    {
-        return static::getClassesTree()->findByCallback(
-            function (\Includes\Decorator\Data\Classes\Node $node) {
-                return !is_null($node->getTag('ListChild'));
-            }
-        );
-    }
-
-    /**
-     * Create view list record
-     * 
-     * @param array  $list  List data
-     * @param string $class Widget class name
-     *  
-     * @return \XLite\Model\ViewList
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function createViewList(array $list, $class = null)
-    {
-        if (!isset($list['class'])) {
-            $list['class'] = '';
-        }
-
-        $viewList = new \XLite\Model\ViewList();
-
-
-        $viewList->class = $list['class'];
-        $viewList->list = $list['list'];
-
-        if (isset($list['zone'])) {
-            $viewList->zone = $list['zone'];
-
-        }
-
-        if (isset($list['first'])) {
-            $viewList->weight = $viewList::POSITION_FIRST;
-
-        } elseif (isset($list['last']) || !isset($list['weight'])) {
-            $viewList->weight = $viewList::POSITION_LAST;
-
-        } else {
-            $viewList->weight = min(
-                $viewList::POSITION_LAST,
-                max(
-                    $viewList::POSITION_FIRST,
-                    intval($list['weight'])
-                )
-            );
-        }
-
-        if ($class) {
-            $viewList->child = $class;
-        }
-
-        return $viewList;
-    }
-
-    /**
-     * Get list childs by comment 
-     * 
-     * @param string $comment Class or template comment
-     *  
-     * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getListChildsByComment($comment)
-    {
-        $attributes = $this->parseComment($comment);
-        $lists = array();
-
-        if (isset($attributes['listchild'])) {
-            foreach ($attributes['listchild'] as $value) {
-                $list = $this->parseCommentAttribute($value);
-                if (isset($list['list']) && $list['list']) {
-                    $lists[] = $list;
-                }
-            }
-        }
-
-        return $lists;
-    }
-
-    /**
-     * Assemble templates list childs
-     * 
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function assembleTemplateLists()
-    {
-        $sep = preg_quote(LC_DS, '/');
-        $pattern = '/^'
-            . preg_quote(LC_SKINS_DIR, '/')
-            . '\w+' . $sep
-            . '\w+' . $sep
-            . 'modules' . $sep
-            . '(\w+)' . $sep
-            . '/Ss';
-
-        $iterator = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator(LC_SKINS_DIR));
-        foreach ($iterator as $fileInfo) {
-            if ($fileInfo->isFile()) {
-                $pathInfo = pathinfo($fileInfo->getPathname());
-
-                if (
-                    !empty($pathInfo['extension'])
-                    && 'tpl' === strtolower($pathInfo['extension'])
-                    && (!preg_match($pattern, $fileInfo->getPathname(), $match) || \Includes\Decorator\Utils\ModulesManager::getActiveModules($match[1]))
-                ) {
-                    $this->collectTemplateLists($fileInfo->getPathname());
-                }
-            }
-        }
-
-        \XLite\Core\Database::getEM()->flush();
-    }
-
-    /**
-     * Collect template list childs
-     * 
-     * @param string $path Template path
-     *  
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function collectTemplateLists($path)
-    {
-        if (preg_match('/\{\*\*(.+)\*\}/USs', file_get_contents($path), $match)) {
-
-            $path = substr($path, strlen(LC_SKINS_DIR));
-            $tmp = explode(LC_DS, $path);
-            $zone = 'admin' == $tmp[0]
-                ? \XLite\Model\ViewList::INTERFACE_ADMIN
-                : \XLite\Model\ViewList::INTERFACE_CUSTOMER;
-
-            foreach ($this->getListChildsByComment(trim($match[1])) as $list) {
-
-                if (isset($list['class']) && !isset(static::$classesInfo[$list['class']])) {
-
-                    $this->addDecorationError(
-                        $path,
-                        'Class ' . $list['class'] . ' is not found (specified in @ListChild comment attribute)'
-                    );
-
-                } else {
-
-                    if (!isset($list['zone'])) {
-                        $list['zone'] = $zone;
-                    }
-
-                    $viewList = $this->createViewList($list);
-                    $viewList->tpl = $path;
-
-                    \XLite\Core\Database::getEM()->persist($viewList);
-                }
-            }
-
-            \XLite\Core\Database::getEM()->flush();
-        }
-    }
-
-    /**
-     * Parse comment attributes
-     * 
-     * @param string $comment Comment
-     *  
-     * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function parseComment($comment)
-    {
-        $comment = preg_replace('/^\s+\*\s/Sm', '', $comment);
-        $parts = preg_split('/^\@/Sm', $comment);
-
-        array_shift($parts);
-
-        $attributes = array();
-        foreach ($parts as $part) {
-            $part = trim(str_replace("\n", ' ', $part));
-            $tmp = preg_split('/\W/Ss', $part, 2);
-
-            $tmp[0] = strtolower($tmp[0]);
-
-            if (!isset($attributes[$tmp[0]])) {
-                $attributes[$tmp[0]] = array();
-            }
-
-            $attributes[$tmp[0]][] = isset($tmp[1]) ? trim($tmp[1]) : true;
-        }
-
-        return $attributes;
-    }
-
-    /**
-     * Parse comment attribute 
-     * 
-     * @param string $value Comment attribute
-     *  
-     * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function parseCommentAttribute($value)
-    {
-        $parameters = array();
-
-        $parts = preg_split('/(?:\(|\s|,)([\w_]+)/USs', substr($value, 0, -1), -1, PREG_SPLIT_DELIM_CAPTURE);
-        array_shift($parts);
-
-        for ($i = 0; $i < count($parts); $i += 2) {
-            $tmp = explode('=', trim($parts[$i] . $parts[$i + 1]), 2);
-            $parameters[$tmp[0]] = isset($tmp[1])
-                ? preg_replace('/^[^"]*"(.+)"[^"]*$/Ss', '$1', $tmp[1])
-                : true;
-        }
-
-        return $parameters;
     }
 
     /**

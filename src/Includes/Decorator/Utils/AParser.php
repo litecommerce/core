@@ -29,7 +29,9 @@
 namespace Includes\Decorator\Utils;
 
 /**
- * AParser 
+ * AParser
+ *
+ * TODO: simplify code 
  * 
  * @package XLite
  * @see     ____class_see____
@@ -44,6 +46,15 @@ abstract class AParser extends \Includes\Decorator\ADecorator
     const PARSER_PATTERN        = 'pattern';
     const PARSER_SCHEMA         = 'schema';
     const PARSER_POSTPROCESSORS = 'postprocessors';
+    const PARSER_BEHAVIOR       = 'behavior';
+
+
+    /**
+     * Parser behavior on fail: stop stack execution, continue etc.
+     */
+
+    const BEHAVIOR_STOP      = 1;
+    const BEHAVIOR_CONTIONUE = 2;
 
 
     /**
@@ -206,7 +217,7 @@ abstract class AParser extends \Includes\Decorator\ADecorator
      */
     protected static function getTags($comment)
     {
-        return preg_match_all('/@(\w+)\s*(?:\()?(.*?)\s*(?:\))?(?=$|@\w+)/Smi', $comment, $matches)
+        return preg_match_all('/@(\w+)\s*(?:\()?(.*?)\s*(?:\))?(?=$|^.*@\w+)/Smi', $comment, $matches)
             ? static::prepareTags($matches)
             : array();
     }
@@ -241,8 +252,14 @@ abstract class AParser extends \Includes\Decorator\ADecorator
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function registerParser($name, $pattern, array $schema = null, array $postprocessor = null)
-    {
+    public static function registerParser(
+        $name,
+        $pattern,
+        array $schema = null,
+        array $postprocessor = null,
+        $behavior = self::BEHAVIOR_STOP
+    ) {
+
         if (!isset(static::$parsers[$name])) {
 
             static::$parsers[$name] = array(
@@ -263,6 +280,8 @@ abstract class AParser extends \Includes\Decorator\ADecorator
         if (isset($postprocessor)) {
             static::$parsers[$name][self::PARSER_POSTPROCESSORS][] = $postprocessor;
         }
+
+        static::$parsers[$name][self::PARSER_BEHAVIOR] = $behavior;
     }
 
     /**
@@ -285,7 +304,12 @@ abstract class AParser extends \Includes\Decorator\ADecorator
 
             // Stop stack execution if current parser returned "false"
             if (false === ($result = static::applyPattern($parser[self::PARSER_PATTERN], $content))) {
-                break;
+
+                // Check the parser behavior flag and stop stack execution (if needed)
+                if (self::BEHAVIOR_STOP == $parser[self::PARSER_BEHAVIOR]) {
+                    unset($data);
+                    break;
+                }
             }
 
             // Apply schema

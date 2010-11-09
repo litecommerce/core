@@ -88,12 +88,12 @@ abstract class ADecorator
     /**
      * List of .tpl files
      * 
-     * @var    \Includes\Decorator\Data\Templates\List
+     * @var    \Includes\Decorator\Data\Templates\Collection
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected static $templatesList;
+    protected static $templatesCollection;
 
 
     /**
@@ -121,12 +121,12 @@ abstract class ADecorator
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected static function getTemplatesList()
+    protected static function getTemplatesCollection()
     {
-        if (!isset(static::$templatesList)) {
-            static::$templatesList = new \Includes\Decorator\Data\Templates\Collection();
+        if (!isset(static::$templatesCollection)) {
+            static::$templatesCollection = new \Includes\Decorator\Data\Templates\Collection();
         }
 
-        return static::$templatesList;
+        return static::$templatesCollection;
     }
 }

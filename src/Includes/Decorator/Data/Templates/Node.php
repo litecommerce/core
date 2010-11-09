@@ -26,27 +26,31 @@
  * @since      3.0.0
  */
 
-namespace Includes\Decorator\Utils\Template;
+namespace Includes\Decorator\Data\Templates;
 
 /**
- * Parser 
+ * Node 
  * 
  * @package    XLite
  * @see        ____class_see____
  * @since      3.0.0
  */
-abstract class Parser extends \Includes\Decorator\Utils\AParser
+class Node extends \Includes\DataStructure\Cell
 {
     /**
-     * List of parsers
-     *
-     * NOTE: do not remove this (re)declaration:
-     * it's needed for the correct work of the PHP late static binding
-     *
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
+     * Get tag value from class comment
+     * 
+     * @param string $name tag name
+     *  
+     * @return string
+     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    protected static $parsers = array();
+    public function getTag($name)
+    {
+        $tags = $this->__get(\Includes\Decorator\ADecorator::N_TAGS);
+
+        return isset($tags[$name = strtolower($name)]) ? $tags[$name] : null;
+    }
 }
