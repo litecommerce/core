@@ -413,6 +413,8 @@ INSERT INTO `xlite_config_translations` VALUES (229,'en',314,'Other state (speci
 INSERT INTO `xlite_config_translations` VALUES (230,'en',315,'State','');
 INSERT INTO `xlite_config_translations` VALUES (231,'en',316,'Zip/postal code','');
 
+INSERT INTO `xlite_config_translations` VALUES (232,'en', 350, 'Check templates status in runtime', '');
+
 
 -- Memberships
 INSERT INTO xlite_membership_translations (id, code, name) VALUES (1, 'en', 'Gold');

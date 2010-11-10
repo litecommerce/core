@@ -45,7 +45,7 @@ class Collection
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $list;
+    protected $list = array();
 
 
     /**

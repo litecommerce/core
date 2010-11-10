@@ -42,7 +42,7 @@
 {*
 <widget module="Bestsellers" class="\XLite\Module\Bestsellers\View\Bestsellers" template="common/dialog.tpl" IF="{!config.Bestsellers.bestsellers_menu}" name="bestsellerswidget">
 *}
-<widget module="FeaturedProducts" class="\XLite\Module\FeaturedProducts\View\FeaturedProducts" template="common/dialog.tpl">
+<widget module="FeaturedProducts" class="\XLite\Module\FeaturedProducts\View\Customer\FeaturedProducts" template="common/dialog.tpl">
 <widget module="Promotion" target="checkout" mode="bonusList" template="common/dialog.tpl" body="modules/Promotion/bonus_list.tpl" head="You qualify for a special offer">
 <widget module="Promotion" target="checkout" template="common/dialog.tpl" body="modules/Promotion/coupon_failed.tpl" head="The discount coupon cannot be used" mode="couponFailed">
 <widget module="Promotion" target="cart" template="common/dialog.tpl" body="modules/Promotion/discount_coupon.tpl" head="Discount coupon" IF="{showDCForm}">

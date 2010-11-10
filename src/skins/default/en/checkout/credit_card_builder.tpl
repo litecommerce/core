@@ -11,7 +11,7 @@
  * @since     3.0.0
  *}
 <form action="{cart.paymentMethod.getFormURL(cart)}" method="{cart.paymentMethod.getFormMethod()}" name="cc_form" class="cc-auto-form">
-<input FOREACH="cart.paymentMethod.getFields(),name,value" type="hidden" name="{name}" value="{value:r}">
+<input FOREACH="cart.paymentMethod.getFields(),name,value" type="hidden" name="{name}" value="{value:r}" />
 
 <p>By clicking "SUBMIT" you agree with our "Terms &amp; Conditions" and "Privacy statement".</p>
 <br />
