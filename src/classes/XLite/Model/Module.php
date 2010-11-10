@@ -131,7 +131,7 @@ class Module extends \XLite\Model\AEntity
 
     /**
      * Version
-     * 
+     *
      * @var    string
      * @access protected
      * @see    ____var_see____
@@ -139,6 +139,28 @@ class Module extends \XLite\Model\AEntity
      * @Column (type="string", length="12")
      */
     protected $version = '1.0';
+
+    /**
+     * Last version
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Column (type="string", length="32")
+     */
+    protected $last_version = '';
+
+    /**
+     * Last update
+     * 
+     * @var    integer
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Column (type="integer", length="11")
+     */
+    protected $last_update = 0;
 
     /**
      * Main class 
@@ -149,6 +171,16 @@ class Module extends \XLite\Model\AEntity
      * @since  3.0.0
      */
     protected $mainClass = null; 
+
+    /**
+     * Icon 
+     * 
+     * @var    \Xite\Model\Image
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $icon = null; 
 
     /**
      * Set enabled status
@@ -293,7 +325,7 @@ class Module extends \XLite\Model\AEntity
 
     /**
      * Set mutual modules list
-     * 
+     *
      * @param mixed $modules Modules list (string or array)
      *  
      * @return void
@@ -317,7 +349,7 @@ class Module extends \XLite\Model\AEntity
      * @since  3.0.0
      */
     public function getDependencies()
-    { 
+    {
         return $this->dependencies
             ? explode(',', $this->dependencies)
             : array();
@@ -434,8 +466,8 @@ class Module extends \XLite\Model\AEntity
     {
         // Seet common properties
         $this->setName($name);
-        $this-setInstalled(self::NOT_INSTALLED);
-        $this-setEnabled(false);
+        $this->setInstalled(self::NOT_INSTALLED);
+        $this->setEnabled(false);
 
         $status = self::INSTALLED;
 
@@ -602,5 +634,60 @@ class Module extends \XLite\Model\AEntity
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Get module icon 
+     * TODO: implement the module icons functionality
+     * 
+     * @return \XLite\Model\Image
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getIcon()
+    {
+        return $this->icon;
+    }
+
+    /**
+     * Check if module has icon 
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function hasIcon()
+    {
+        return !is_null($this->getIcon());
+    }
+
+    /**
+     * Check if newer version exists
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function updateAvailable()
+    {
+        return -1 === version_compare($this->getVersion(), $this->last_version);
+    }
+
+    /**
+     * Get external page URL
+     * TODO: rework this when modules management is implemented
+     *       on LiteCommerce site
+     *
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getExternalPageURL()
+    {
+        return '#' . $this->getName();
     }
 }

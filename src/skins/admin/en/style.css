@@ -11,19 +11,26 @@
  * @since     3.0.0
  */
 
-BODY,P,DIV,TH,TD,P,INPUT,SELECT,TEXTAREA {
-        FONT-FAMILY: Verdana, Arial, Helvetica, Sans-serif; 
-        COLOR: #000000; font-size: 10px;
+body,
+p,
+div,
+th,
+td,
+p,
+input,
+span,
+textarea,
+button
+{
+  color: #333;
+  font-size: 12px;
+  font-family: Helvetica, Arial, Sans-serif; 
 }
 
-BODY {
-	margin-top: 0 px; 
-	margin-bottom: 0 px; 
-	margin-left: 0 px; 
-	margin-right: 0 px; 
-	background-color: #FFFFFF;
-    margin: 0px; 
-    padding: 0px;
+body {
+	background-color: #fff;
+  margin: 0; 
+  padding: 0;
 }
 
 FORM {
@@ -38,24 +45,23 @@ BODY.PopUp {
         MARGIN-TOP: 5 px; MARGIN-BOTTOM: 5 px; MARGIN-LEFT: 5 px; MARGIN-RIGHT: 5 px; 
         BACKGROUND-COLOR: #FFFFFF;
 }
-A:link {
-        COLOR: #000000; TEXT-DECORATION: none;
-}
-A:visited {
-        COLOR: #000000; TEXT-DECORATION: none;
-}
-A:hover {
-        COLOR: #000000; TEXT-DECORATION: underline;
-}
-A:active  {
-        COLOR: #000000; TEXT-DECORATION: none;
+
+a:link,
+a:visited,
+a:hover,
+a:active
+{
+  color: #2c5fa6;
+  text-decoration: underline;
 }
 
 h1 {
-  font-size: 24px;
+  font-size: 30px;
   font-weight: normal;
-  line-height: 34px;
-  margin-bottom: 17px;
+  line-height: 36px;
+  margin-bottom: 20px;
+  font-family: "Trebuchet MS", Helvetica, Sans-serif;  
+  color: #69a4c9;
 }
 
 H2 {
@@ -87,7 +93,16 @@ ul,
         BACKGROUND-COLOR: #B2B2B3;
 }
 .SidebarTitle {
-        BACKGROUND-COLOR: #E5EBEF; COLOR: #000000; FONT-WEIGHT: bold;
+  background: #fff url(images/sidebartitle_back.gif) repeat-x left bottom;
+  color: #000;
+  font-weight: bold;
+}
+.SidebarBox a {
+  color: #000;
+  text-decoration: none;
+}
+.SidebarBox a:hover {
+  text-decoration: underline;
 }
 .SidebarItems{
         COLOR: #373B3D; TEXT-DECORATION: none;
@@ -179,8 +194,14 @@ ul,
 .NavigationPath:active {
         COLOR: #294F6C; TEXT-DECORATION: none;
 }
-.FormButton {
-        COLOR: #00224C; FONT-WEIGHT: bold; 
+a.FormButton:link,
+a.FormButton:active,
+a.FormButton:visited,
+a.FormButton:hover
+{
+  color: #00224c;
+  font-weight: bold;
+  text-decoration: none;
 }
 .DialogMainButton {
 }   
@@ -245,7 +266,7 @@ table.data-table td {
 }
 
 table.data-table tr.highlight td {
-  background-color: #eee;
+  background-color: #f2f2f2;
 }
 
 table.data-table .extender {
@@ -320,27 +341,28 @@ hr.tiny {
   border-top: 1px solid #cdcdcd;
 }
 
-button {
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-  border: 1px solid #81a4c1;
-  vertical-align: middle;
-  background-color: transparent;
-  background-repeat: repeat-x;
-  background-position: center center;
-  background-image: url(images/button_bg_light.png);
-  height: 24px;
-  padding-left: 5px;
-  padding-right: 5px;
+input[type="submit"],
+input[type="button"],
+input[type="reset"],
+button 
+{
+  -moz-border-radius: 13px;
+  -webkit-border-radius: 13px;
+  border-radius: 13px;
+  background: #eff8fe url(images/button_bg_light.png) repeat-x center top;
+  border: 1px solid #cadce8;
+  color: #2c5fa6;
   cursor: pointer;
+  font-size: 12px;
+  height: 26px;
+  line-height: 1em;
+  margin: 7px 7px 7px 0;
+  padding: 3px 10px 4px;
+  font-size: 12px;
 }
 
 button span {
   color: #0e55a6;
-  font-size: 13px;
-  padding-bottom: 1px;
-  display: block;
   vertical-align: middle;
 }
 
@@ -352,8 +374,8 @@ button:hover {
 
 button.main {
   height: 30px;
-  padding-left: 9px;
-  padding-right: 6px;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 button.main span {
@@ -872,3 +894,4 @@ button.delete-address {
 {
   padding-left: 240px;
 }
+

@@ -46,7 +46,7 @@ class ModulesModify extends \XLite\View\Dialog
      */
     protected function getHead()
     {
-        return 'Modules';
+        return 'Manage Add-ons';
     }
 
     /**

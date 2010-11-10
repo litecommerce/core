@@ -45,7 +45,7 @@
   <td nobr width="150" valign="top">
     {displayViewListContent(#menus#)}
   </td>
-  <td width="10">&nbsp;</td>
+  <td width="20">&nbsp;</td>
   <td valign="top">
     <noscript>
       <table border=0 width=500 cellpadding=2 cellspacing=0 align=center>

@@ -56,13 +56,25 @@ abstract class AModule
      * @access protected
      * @since  3.0
      */
-    protected function getModuleName()
+    protected function getModuleCode()
     {
         if (!preg_match('/XLite\\\Module\\\(\w+)\\\Main/S', get_class($this), $matches)) {
             // TODO - throw exception
         }
 
         return $matches[1];
+    }
+
+    /**
+     * Return module name
+     * 
+     * @return string
+     * @access protected
+     * @since  3.0
+     */
+    public function getModuleName()
+    {
+        return $this->getModuleCode();
     }
 
     /**

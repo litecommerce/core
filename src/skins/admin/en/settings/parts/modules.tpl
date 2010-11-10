@@ -11,4 +11,4 @@
  * @since     3.0.0
  * @ListChild (list="menu.settings", weight="20")
  *}
-<a href="admin.php?target=modules" class="SidebarItem">Modules</a>
+<a href="admin.php?target=modules" class="SidebarItem">Add-ons</a>

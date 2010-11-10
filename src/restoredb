@@ -97,7 +97,7 @@ foreach (glob('classes/XLite/Module/*/Main.php') as $f) {
 	$obj = new $class();
 
 	mysql_query(
-		'REPLACE INTO xlite_modules SET name = \'' . basename(dirname($f)) . '\', mutual_modules = \'' . implode(',', $obj->getMutualModulesList()) . '\', type = \'' . $obj->getModuleType(). '\', installed = 1, version = \'' . $obj->getVersion() . '\', dependencies = \'' . implode(',', $obj->getDependenciesList()) . '\'',
+		'REPLACE INTO xlite_modules SET name = \'' . basename(dirname($f)) . '\', mutual_modules = \'' . implode(',', $obj->getMutualModulesList()) . '\', type = \'' . $obj->getModuleType(). '\', installed = 1, version = \'' . $obj->getVersion() . '\', last_version = \'' . $obj->getVersion() . '\', dependencies = \'' . implode(',', $obj->getDependenciesList()) . '\'',
 		$__connection
 	);
 
