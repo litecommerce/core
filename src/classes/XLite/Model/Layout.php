@@ -30,134 +30,99 @@ namespace XLite\Model;
 
 /**
  * Layoue manager
- * TODO[SINGLETON] - must extends \XLite\Model\the Base\Singleton
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Layout extends \XLite\Base
+class Layout extends \XLite\Base\Singleton
 {
     /**
-     * Repository paths constants 
+     * Repository paths 
      */
-    const COMMON_REPOSITORY_PATH = 'common';
-    const SKIN_REPOSITORY_PATH = 'skins';
 
-    public $skin = null;
+    const PATH_SKIN   = 'skins';
+    const PATH_COMMON = 'common';
+    const PATH_ADMIN  = 'admin';
 
-    public $skinCustomer = null;
-
-    public $locale = null;
-
-    protected $path = null;
-
-    protected $pathCustomer = null;
 
     /**
-    * Skin templates list.
-    *
-    * @var Elements $elements Skin templates list.
-    * @access private
-    */    
-    public $list = array();
+     * Current locale
+     *
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $skin;
 
     /**
-     * __construct 
+     * Current skin
+     *
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $locale;
+
+    /**
+     * Current skin path
      * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  1.0.0
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
      */
-    public function __construct()
-    {
-        foreach (array('skin', 'locale') as $name) {
+    protected $path;
 
-            if (!isset($this->$name)) {
+    /**
+     * Layouts list 
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $list = array();
 
-                $this->$name = \XLite::getInstance()->getOptions(array('skin_details', $name));
 
-            }
+    // ------------------------------ Common getters -
 
-        }
-
-        $this->skinCustomer = \XLite::getInstance()->getOptions(array('skin_details', 'skin'));
-    }
 
     /**
      * Return full URL by the skindir-related one
      *
-     * @param string $url relative URL
+     * @param string $url Relative URL
      *
      * @return string
      * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function getSkinURL($url)
     {
-        return $this->getPath() . $url;
+        return $this->path . $url;
     }
 
     /** 
      * Return full URL by the common repository-related one
      *
-     * @param string $url relative URL
+     * @param string $url Relative URL
      *
      * @return string
      * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getCommonRepositoryURL($url)
+    public function getCommonSkinURL($url)
     {
-        return $this->getCommonPath() . $url;
+        return self::PATH_SKIN . '/' . self::PATH_COMMON . '/' . $url;
     }
 
     /**
-    * Adds layout template file for the specified widget
-    *
-    * @param string $widgetName The widget name
-    * @param string $templateName The template file name
-    * @access public
-    */
-    function addLayout($widgetName, $templateName)
-    {
-        $this->list[$widgetName] = $templateName;
-    }
-
-    /**
-    * Returns the widget template file name for this layout.
-    *
-    * @param string $widgetName The name of widget
-    * @access public
-    * @return string The widget tamplate name
-    */
-    function getLayout($templateName)
-    {
-        if (isset($this->list[$templateName])) {
-            $templateName = $this->list[$templateName];
-        }
-
-        return $this->getPath() . $templateName;
-    }
-
-    /**
-     * hasLayout 
-     * 
-     * @param string $widgetName name of widget
-     *  
-     * @return boolean
-     * @see    ____func_see____
-     * @since  1.0.0
-     */
-    function hasLayout($widgetName)
-    {
-        return isset($this->list[$widgetName]);
-    }
-
-    /**
-     * getShortPath 
-     * 
+     * Return last part of the skin URL
+     *
      * @return string
      * @access public
      * @see    ____func_see____
@@ -167,93 +132,131 @@ class Layout extends \XLite\Base
     {
         return $this->skin . '/' . $this->locale . '/';
     }
-    
+
     /**
      * Returns the layout path
-     * 
+     *
      * @return string
      * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
     public function getPath()
     {
-        return self::SKIN_REPOSITORY_PATH . '/' . $this->getShortPath();
+        return $this->path;
     }
 
+
+    // ------------------------------ Layout routines -
+
+
     /**
-     * Returns the layout path
+     * Override a template by a custom one
      * 
-     * @return string
+     * @param string $originalTemplate Template to override
+     * @param string $overrideTemplate Custom template
+     *  
+     * @return null
      * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getCommonPath()
-    {   
-        return self::SKIN_REPOSITORY_PATH . '/' . self::COMMON_REPOSITORY_PATH . '/';
+    public function addLayout($originalTemplate, $overrideTemplate)
+    {
+        $this->list[$originalTemplate] = $overrideTemplate;
     }
 
     /**
-     * Return customer path
+     * Returns the widget template file name for this layout
      * 
+     * @param string $template Template to check
+     *  
      * @return string
      * @access public
      * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getLayout($template)
+    {
+        return $this->path . (isset($this->list[$template]) ? $this->list[$template] : $template);
+    }
+
+    /**
+     * Check if template is ovveriden by a module
+     * 
+     * @param string $template Template to check
+     *  
+     * @return boolean
+     * @see    ____func_see____
      * @since  1.0.0
      */
-    public function getPathCustomer()
+    public function hasLayout($template)
     {
-        if (!isset($this->pathCustomer)) {
-            $this->pathCustomer = sprintf(self::SKIN_REPOSITORY_PATH . '/%s/%s/', $this->skinCustomer, $this->locale);
-        }
-        
-        return $this->pathCustomer;
-    }
-    
-    function getSkins($includeAdmin = false)
-    {
-        $list = array();
-        $dir = self::SKIN_REPOSITORY_PATH;
-        $dh = opendir($dir);
-
-        if ($dh) {
-            while (($file = readdir($dh)) !== false) {
-                if (
-                    is_dir($dir . LC_DS . $file)
-                    && substr($file, 0, 1) != '.'
-                    && ($file != 'admin' || $includeAdmin)
-                    && $file != 'mail'
-                    && $file != 'CVS'
-                ) {
-                    $list[] = $file;
-                }
-            }
-
-            closedir($dh);
-        }
-
-        return $list;
+        return isset($this->list[$template]);
     }
 
-    function getLocales($skin)
+
+    // ------------------------------ Initialization routines -
+
+
+    /**
+     * Set current skin as the admin one
+     * 
+     * @return null
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setAdminSkin()
     {
-        $list = array();
-        $dir = self::SKIN_REPOSITORY_PATH . '/' . $skin . '/';
-        $dh = @opendir($dir);
-        if ($dh) {
-            while (($file = readdir($dh)) !== false) {
-                if (
-                    is_dir($dir . $file)
-                    && substr($file, 0, 1) != '.'
-                    && $file != 'CVS'
-                ) {
-                    $list[] = $file;
-                }
-            }
-
-            closedir($dh);
-        }
-
-        return $list;
+        $this->skin = self::PATH_ADMIN;
+        $this->setPath();
     }
 
+    /**
+     * Set some class properties
+     *
+     * @return null
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function setOptions()
+    {
+        $options = \XLite::getInstance()->getOptions('skin_details');
+
+        foreach (array('skin', 'locale') as $name) {
+            isset($this->$name) ?: ($this->$name = $options[$name]);
+        }
+
+        $this->setPath();
+    }
+
+    /**
+     * Set current skin path
+     * 
+     * @return null
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function setPath()
+    {
+        $this->path = self::PATH_SKIN . '/' . $this->skin . '/' . $this->locale . '/';
+    }
+
+    /**
+     * Constructor
+     *
+     * @return null
+     * @access protected
+     * @see    ____func_see____
+     * @since  1.0.0
+     */
+    protected function __construct()
+    {
+        parent::__construct();
+
+        $this->setOptions();
+    }
 }

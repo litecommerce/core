@@ -382,7 +382,7 @@ class XLite extends \XLite\Base
 
         // Set skin for admin area
         if (true === self::$adminZone) {
-            \XLite\Model\Layout::getInstance()->skin = 'admin';
+            \XLite\Model\Layout::getInstance()->setAdminSkin();
         }
 
         return $this;

@@ -153,60 +153,24 @@ abstract class AView extends \XLite\Core\Handler
     abstract protected function getDefaultTemplate();
 
     /**
-     * Return full URL by the skindir-related one
-     * 
-     * @param string $url relative URL
-     *  
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected static function getSkinURL($url)
-    {
-        return static::$layout->getSkinURL($url);
-    }
-
-    /**  
-     * Return full URL by the common repository-related one
-     * 
-     * @param string $url relative URL
-     *  
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected static function getCommonRepositoryURL($url)
-    {    
-        return static::$layout->getCommonRepositoryURL($url);
-    }    
-
-    /**
      * Prepare resources list
      * 
-     * @param mixed $data data to prepare
+     * @param array   $data     Data to prepare
+     * @param boolean $isCommon Flag to determine how to prepare URL
      *  
      * @return array
      * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    protected static function prepareResources($data)
+    protected static function prepareResources(array $data, $isCommon = false)
     {
-        return is_array($data) ? array_map(array('self', __FUNCTION__), $data) : self::getSkinURL($data);
-    }
+        foreach ($data as &$file) {
+            $file = static::$layout->{'get' . ($isCommon ? 'Common' : '') . 'SkinURL'}($file);
+        }
 
-    /**  
-     * Prepare resources list from common repository
-     * 
-     * @param mixed $data data to prepare
-     *  
-     * @return array
-     * @access protected
-     * @since  3.0.0
-     */
-    protected static function prepareCommonResources($data)
-    {    
-        return is_array($data) ? array_map(array('self', __FUNCTION__), $data) : self::getCommonRepositoryURL($data);
-    }    
+        return $data;
+    }
 
     /**
      * Return current template
@@ -465,10 +429,10 @@ abstract class AView extends \XLite\Core\Handler
     {
         return self::getResourcesSchema(
             array_merge(
-                $this->prepareCommonResources($this->getCommonFiles()), // prepare common JS files
-                $this->prepareResources($this->getJSFiles()) // prepare JS files specific for the skin + widget
+                static::prepareResources($this->getCommonFiles(), true), // prepare common JS files
+                static::prepareResources($this->getJSFiles()) // prepare JS files specific for the skin + widget
             ),
-            $this->prepareResources($this->getCSSFiles())
+            static::prepareResources($this->getCSSFiles())
         );
     }
 

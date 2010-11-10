@@ -19,10 +19,10 @@
   <meta IFF="metaDescription" name="description" content="{metaDescription:r}" />
   <meta IFF="keywords" name="keywords" content="{keywords:r}" />
 
-  <link href="{getSkinURL(#style.css#)}" rel="stylesheet" type="text/css" />
+  <link href="{%\XLite\Model\Layout::getInstance()->getSkinURL('style.css')%}" rel="stylesheet" type="text/css" />
   <link FOREACH="getCSSResources(),file" href="{file}" rel="stylesheet" type="text/css" />
 
-  <script type="text/javascript" src="{getSkinURL(#js/jquery-1.3.2.js#)}"></script>
-  <script type="text/javascript" src="{getSkinURL(#js/jquery-ui.1.7.2.js#)}"></script>
+  <script type="text/javascript" src="{%\XLite\Model\Layout::getInstance()->getSkinURL('js/jquery-1.3.2.js')%}"></script>
+  <script type="text/javascript" src="{%\XLite\Model\Layout::getInstance()->getSkinURL('js/jquery-ui.1.7.2.js')%}"></script>
   <script FOREACH="getJSResources(),file" type="text/javascript" src="{file}"></script>
 </head>

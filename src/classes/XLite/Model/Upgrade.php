@@ -313,7 +313,8 @@ Please correct errors above and click reload or click the button below to force 
     }
 
     // FIXME - not needed?
-    function patchTemplate($zone, $template, $patch, $re = '')
+    // FIXME - method os commented since the $layout->getSkins() and $layout->getLocales() fuctions was removed
+    /*function patchTemplate($zone, $template, $patch, $re = '')
     {
         $layout = Layout::getInstance();
         if ($zone == CUSTOMER_SKINS) {
@@ -346,7 +347,7 @@ Please correct errors above and click reload or click the button below to force 
             }
         }
         return true;
-    }
+    }*/
 
     function getPatchDescription($patch)
     {

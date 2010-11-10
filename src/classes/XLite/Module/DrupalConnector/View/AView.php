@@ -100,47 +100,35 @@ abstract class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
     /**
      * Add the relative part to the resources' URLs 
      * 
-     * @param mixed $data data to prepare
+     * @param array $data data to prepare
      *  
      * @return array
      * @access protected
      * @since  3.0.0
      */
-    protected static function modifyResourcePaths($data)
+    protected static function modifyResourcePaths(array $data)
     {
-        return is_array($data) ? array_map(array('self', __FUNCTION__), $data) : self::getDrupalRelativePath() . $data;
+        foreach ($data as &$file) {
+            $file = static::getDrupalRelativePath() . $file;
+        }
+
+        return $data;
     }
 
     /**
      * Prepare resources list
-     * 
-     * @param mixed $data data to prepare
-     *  
+     *
+     * @param array   $data     Data to prepare
+     * @param boolean $isCommon Flag to determine how to prepare URL
+     *
      * @return array
      * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    protected static function prepareResources($data)
+    protected static function prepareResources(array $data, $isCommon = false)
     {
-        $data = parent::prepareResources($data);
-
-        return self::modifyResources($data);
-    }
-
-    /** 
-     * Prepare common resources list
-     * 
-     * @param mixed $data data to prepare
-     *  
-     * @return array
-     * @access protected
-     * @since  3.0.0
-     */
-    protected static function prepareCommonResources($data)
-    {
-        $data = parent::prepareCommonResources($data);
-    
-        return self::modifyResources($data);
+        return static::modifyResources(parent::prepareResources($data, $isCommon));
     }
 
     /** 
@@ -152,10 +140,10 @@ abstract class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
      * @access protected
      * @since  3.0.0
      */
-    protected static function modifyResources($data)
+    protected static function modifyResources(array $data)
     {
         if (\XLite\Module\DrupalConnector\Handler::getInstance()->checkCurrentCMS()) {
-            $data = self::modifyResourcePaths($data);
+            $data = static::modifyResourcePaths($data);
         }   
 
         return $data;

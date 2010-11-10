@@ -208,8 +208,8 @@ class Mailer extends \XLite\View\AView
     public function selectCustomerLayout()
     {
         $layout = \XLite\Model\Layout::getInstance();
-        $this->templatesSkin = $layout->get('skin');
-        $layout->set('skin', \XLite::getInstance()->getOptions(array('skin_details', 'skin')));
+        $this->templatesSkin = $layout->getSkin();
+        $layout->setCustomerSkin();
     }
 
     /**
