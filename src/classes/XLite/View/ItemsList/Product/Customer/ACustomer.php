@@ -374,9 +374,14 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      */
     protected function getProductRows()
     {
-        $rows = array_chunk($this->getPageData(), $this->getParam(self::PARAM_GRID_COLUMNS));
-        $last = count($rows) - 1;
-        $rows[$last] = array_pad($rows[$last], $this->getParam(self::PARAM_GRID_COLUMNS), false);
+        $data = $this->getPageData();
+        $rows = array();
+
+        if (!empty($data)) {
+            $rows = array_chunk($data, $this->getParam(self::PARAM_GRID_COLUMNS));
+            $last = count($rows) - 1;
+            $rows[$last] = array_pad($rows[$last], $this->getParam(self::PARAM_GRID_COLUMNS), false);
+        }
 
         return $rows;
     }
