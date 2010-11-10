@@ -818,6 +818,15 @@ class Decorator extends Decorator\ADecorator
         // Collect patches to DB
         $this->collectPatches();
 
+        // Create templates cache
+        $flexy = \XLite\Core\FlexyCompiler::getInstance();
+        foreach (static::getTemplatesCollection()->getList() as $template) {
+            $flexy->prepare(
+                \Includes\Utils\FileManager::getRelativePath($template->__get(self::N_FILE_PATH), LC_ROOT_DIR, 'tpl'),
+                true
+            );
+        }
+
         // Store files in APC
         if (function_exists('apc_compile_file')) {
             apc_clear_cache();
@@ -825,6 +834,7 @@ class Decorator extends Decorator\ADecorator
                 apc_compile_file(LC_CLASSES_CACHE_DIR . $this->getFileByClass($class));
             }
         }
+
 
         file_put_contents(LC_CLASSES_CACHE_DIR . self::LC_CACHE_BUILD_INDICATOR, date('r'));
     }

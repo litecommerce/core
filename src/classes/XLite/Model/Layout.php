@@ -138,7 +138,7 @@ class Layout extends \XLite\Base
             $templateName = $this->list[$templateName];
         }
 
-        return $this->get('path') . $templateName;
+        return $this->getPath() . $templateName;
     }
 
     /**

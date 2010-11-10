@@ -32,7 +32,7 @@ If you are a registered customer, please <a href="{buildURL(#profile#,##,_ARRAY_
 <br>
 <span IF="userExists" class="ErrorMessage">&gt;&gt;&nbsp;The user is already registered! Please select another e-mail.&nbsp;&lt;&lt;</span>
 
-<widget class="\XLite\View\Form\Profile\Register" name="registration_form" />
+<widget class="\XLite\View\Form\Profile\Main" name="registration_form" />
 
 <table width="100%" border="0" cellspacing="0" cellpadding="2">
 

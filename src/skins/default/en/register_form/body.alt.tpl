@@ -18,7 +18,7 @@ Note that fields marked with an asterisk <font class="Star">*</font> are mandato
 <widget module="Promotion" template="modules/Promotion/bonus_points.tpl">
 <p>
 
-<widget class="\XLite\View\Form\Profile\Register" name="registration_form" />
+<widget class="\XLite\View\Form\Profile\Main" name="registration_form" />
 
 <table IF="success|!valid">
 <tr IF="success">

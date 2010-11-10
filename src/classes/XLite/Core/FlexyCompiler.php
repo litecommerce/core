@@ -83,24 +83,6 @@ class FlexyCompiler extends \XLite\Base\Singleton
     protected $patches;
 
 
-    /**
-     * Set new file for compile 
-     * 
-     * @param string $file template to compile
-     *  
-     * @return void
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function init($file)
-    {
-        $this->file   = $file;
-        $this->source = file_get_contents($file);
-        
-        $this->urlRewrite = array('images' => \XLite::getInstance()->getShopUrl(\XLite\Model\Layout::getInstance()->getSkinURL('images')));
-    }
-
-
     public $substitutionStart = array();
     public $substitutionEnd = array();
     public $substitutionValue = array();
@@ -1194,6 +1176,128 @@ class FlexyCompiler extends \XLite\Base\Singleton
                 );
             }
         }
+    }
+
+
+    /**
+     * Flag 
+     * 
+     * @var    boolean
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $checkTemplateStatus = true;
+
+    /**
+     * Pattern to parse template paths
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $pathPattern;
+
+    /**
+     * Compile and save template
+     * 
+     * @param string  $original relative file path
+     * @param boolean $force    flag to force compilation
+     *  
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function prepare($original, $force = false)
+    {
+        $compiled = LC_COMPILE_DIR . $original . '.php';
+        $original = LC_ROOT_DIR . $original;
+
+        if (($this->checkTemplateStatus && !$this->checkTemplateStatus($original, $compiled)) || $force) {
+
+            // Create directory for compiled template (if not exists)
+            $dir = dirname($compiled);
+            if (!file_exists($dir)) {
+                \Includes\Utils\FileManager::mkdirRecursive($dir, 0755);
+            }
+
+            file_put_contents($compiled, $this->parse($original));
+            touch($compiled, filemtime($original));
+        }
+
+        return $compiled;
+    }
+
+    /**
+     * Check if template is up-to-date
+     * 
+     * @param string $original original template
+     * @param string $compiled compiled one
+     *  
+     * @return bool
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function checkTemplateStatus($original, $compiled)
+    {
+        return file_exists($compiled) && (filemtime($compiled) === filemtime($original));
+    }
+
+    /**
+     * Return URL for the images directory 
+     * 
+     * @param string $file current template
+     *  
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getImagesURL($file)
+    {
+        return preg_match('/' . $this->pathPattern . '/', $file, $matches) ? $matches[1] : '';
+    }
+
+    /**
+     * Set new file for compile 
+     * 
+     * @param string $file template to compile
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function init($file)
+    {
+        $this->file   = $file;
+        $this->source = file_get_contents($file);
+
+        $this->urlRewrite = array(
+            'images' => \Includes\Utils\URLManager::getShopURL($this->getImagesURL($file) . 'images'),
+        );
+    }
+
+    /**
+     * Constructor
+     * 
+     * @return null
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function __construct()
+    {
+        parent::__construct();
+
+        $this->pathPattern = preg_quote(LC_ROOT_DIR, '/') . '(skins' . preg_quote(LC_DS, '/') 
+            . '\w+' . preg_quote(LC_DS, '/') . '\w+' . preg_quote(LC_DS, '/') . ').*';
+
+        $this->checkTemplateStatus 
+            = \XLite\Core\Config::getInstance()->Perfomance->check_templates_status;
     }
 }
 

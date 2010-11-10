@@ -15,7 +15,6 @@
 
 <!-- [catalog] {{{ -->
 <widget class="\XLite\View\Category" />
-<widget class="\XLite\View\Product" />
 <!-- [/catalog] }}} -->
 
 <!-- [main] {{{ -->

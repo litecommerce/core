@@ -61,6 +61,28 @@ abstract class AView extends \XLite\Core\Handler
 
 
     /**
+     * Object instance cache
+     * FIXME[SINGLETONS] - to remove
+     * 
+     * @var    \XLite\Core\FlexyCompiler
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected static $flexy;
+
+    /**
+     * Object instance cache
+     * FIXME[SINGLETONS] - to remove
+     * 
+     * @var    \XLite\Model\Layout
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected static $layout;
+
+    /**
      * Deep count
      * 
      * @var    integer
@@ -141,7 +163,7 @@ abstract class AView extends \XLite\Core\Handler
      */
     protected static function getSkinURL($url)
     {
-        return \XLite\Model\Layout::getInstance()->getSkinURL($url);
+        return static::$layout->getSkinURL($url);
     }
 
     /**  
@@ -155,7 +177,7 @@ abstract class AView extends \XLite\Core\Handler
      */
     protected static function getCommonRepositoryURL($url)
     {    
-        return \XLite\Model\Layout::getInstance()->getCommonRepositoryURL($url);
+        return static::$layout->getCommonRepositoryURL($url);
     }    
 
     /**
@@ -210,37 +232,7 @@ abstract class AView extends \XLite\Core\Handler
      */
     protected function getTemplateFile($template = null)
     {
-        return \XLite\Model\Layout::getInstance()->getLayout($template ?: $this->getTemplate());
-    }
-
-    /**
-     * Return compiled template file name
-     *
-     * @param string $template template file name (optional)
-     *  
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getDisplayFile($template = null)
-    {
-        return LC_COMPILE_DIR . $this->getTemplateFile($template) . '.php';
-    }
-
-    /**
-     * Check if template is up-to-date
-     * 
-     * @param string $original original template
-     * @param string $compiled compiled one
-     *  
-     * @return bool
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function checkTemplateStatus($original, $compiled)
-    {
-        return file_exists($compiled) && (filemtime($compiled) === filemtime($original));
+        return static::$layout->getLayout($template ?: $this->getTemplate());
     }
 
     /**
@@ -406,24 +398,7 @@ abstract class AView extends \XLite\Core\Handler
      */
     protected function includeCompiledFile($original = null)
     {
-        // Template files: source and compiled
-        // NOTE: do not change call order
-        $compiled = $this->getDisplayFile($original);
-        $original = LC_ROOT_DIR . $this->getTemplateFile($original);
-
-        // Only compile if some criteria is match
-        if (!$this->checkTemplateStatus($original, $compiled)) {
-
-            // Create directory for compiled template (if not exists)
-            $dir = dirname($compiled);
-            if (!file_exists($dir)) {
-                \Includes\Utils\FileManager::mkdirRecursive($dir, 0755);
-            }
-
-            // Save compiled data and checng file access time to prevent repeated compiling
-            file_put_contents($compiled, \XLite\Core\FlexyCompiler::getInstance()->parse($original));
-            touch($compiled, filemtime($original));
-        }
+        $compiled = static::$flexy->prepare($this->getTemplateFile($original));
 
         // Execute PHP code from compiled template
         $cnt = \XLite\View\AView::$countDeep++;
@@ -1183,7 +1158,7 @@ abstract class AView extends \XLite\Core\Handler
         while ((list($key, $node) = each($list)) && ($node->getWeight() <= $weight));
 
         // Prepare properties
-        $properties['tpl']    = \XLite\Model\Layout::getInstance()->getShortPath() . $properties['tpl'];
+        $properties['tpl']    = static::$layout->getShortPath() . $properties['tpl'];
         $properties['weight'] = $weight;
         $properties['list']   = $node->getList();
 
@@ -1204,7 +1179,7 @@ abstract class AView extends \XLite\Core\Handler
     protected function defineViewList($list)
     {
         $widgets    = array();
-        $pathLength = strlen(\XLite\Model\Layout::getInstance()->getShortPath());
+        $pathLength = strlen(static::$layout->getShortPath());
         $hash       = array();
 
         foreach ($this->getViewListChildren($list) as $widget) {
@@ -1226,7 +1201,7 @@ abstract class AView extends \XLite\Core\Handler
                     $widget->child
                 );
 
-            } elseif ($widget->tpl && 0 === strncmp(\XLite\Model\Layout::getInstance()->getShortPath(), $widget->tpl, $pathLength)) {
+            } elseif ($widget->tpl && 0 === strncmp(static::$layout->getShortPath(), $widget->tpl, $pathLength)) {
 
                 // List child is template
                 $w = $this->getWidget(
@@ -1582,7 +1557,8 @@ abstract class AView extends \XLite\Core\Handler
      */
     public static function __constructStatic()
     {
-        // It's only the example
+        static::$flexy  = \XLite\Core\FlexyCompiler::getInstance();
+        static::$layout = \XLite\Model\Layout::getInstance();
     }
 
     /**

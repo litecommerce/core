@@ -49,4 +49,55 @@ abstract class Parser extends \Includes\Decorator\Utils\AParser
      * @since  3.0.0
      */
     protected static $parsers = array();
+
+
+    /**
+     * Define main pattern
+     *
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function getPatternParserMain()
+    {
+        return '/\{\*(?:[^\*]|(?:\*+[^\*\}]))*@\w+\s*.*(?:[^\*]|(?:\*+[^\*\}]))*\*+\}/USsi';
+    }
+
+    /**
+     * Get schema for the data returned by certain parser
+     *
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function getSchemaParserMain()
+    {
+        return array(
+            self::N_TEMPLATE_COMMENT => 0,
+        );
+    }
+
+    
+    /**
+     * So called static constructor
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function __constructStatic()
+    {
+        static::registerParser(
+            'Main',
+            static::getPatternParserMain(),
+            static::getSchemaParserMain(),
+            array('static', 'postprocessParserTags')
+        );
+    }
 }
+
+// Call the static constructor
+\Includes\Decorator\Utils\Template\Parser::__constructStatic();
