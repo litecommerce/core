@@ -46,7 +46,7 @@ class XLite_Tests_Core_Session extends XLite_Tests_TestCase
         unset($session->aaa);
 
         // Second session read this cell early and use cached value
-        $this->assertNotNull($s->aaa, 'check empty value #2');
+        $this->assertNull($s->aaa, 'check empty value #2');
 
         // Current session has not removed cell
         $this->assertNull($session->aaa, 'check empty value #3');
@@ -82,5 +82,24 @@ class XLite_Tests_Core_Session extends XLite_Tests_TestCase
             \XLite\Core\Database::getRepo('XLite\Model\Session')->isPublicSessionIdValid(\XLite\Core\Session::getInstance()->getID()),
             'check id'
         );
+    }
+
+    public function testCreateFormId()
+    {
+        $session = \XLite\Core\Session::getInstance();
+
+        $fid = $session->createFormId();
+
+        $this->assertRegExp('/^[a-z0-9]{32}$/Ssi', $fid, 'check form id format');
+
+        $fid2 = $session->createFormId();
+
+        $this->assertEquals($fid, $fid2, 'check dumplicate form id');
+
+        $session->restart();
+
+        $fid3 = $session->createFormId();
+
+        $this->assertNotEquals($fid, $fid3, 'check dumplicate form id #2');
     }
 }

@@ -578,13 +578,15 @@ CREATE TABLE xlite_upgrades (
   KEY date (date)
 ) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
-DROP TABLE IF EXISTS xlite_forms;
-CREATE TABLE xlite_forms (
-  form_id varchar(32) NOT NULL default '',
-  session_id varchar(32) NOT NULL default '',
-  date int(11) NOT NULL default '0',
-  PRIMARY KEY  (form_id,session_id),
-  KEY date (date)
+DROP TABLE IF EXISTS xlite_form_ids;
+CREATE TABLE xlite_form_ids (
+  id int(11) NOT NULL auto_increment PRIMARY KEY,
+  session_id int(11) NOT NULL,
+  form_id varchar(32) NOT NULL,
+  date int(11) NOT NULL,
+  KEY session_id (session_id),
+  UNIQUE KEY fs(form_id, session_id),
+  CONSTRAINT `xlite_session_to_forms` FOREIGN KEY session_id (`session_id`) REFERENCES `xlite_sessions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 DROP TABLE IF EXISTS xlite_view_lists;

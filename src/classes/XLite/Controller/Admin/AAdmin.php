@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage ____sub_package____
+ * @subpackage Controller
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -29,7 +29,7 @@
 namespace XLite\Controller\Admin;
 
 /**
- * \XLite\Controller\Admin\AAdmin 
+ * Abstarct admin-zone controller 
  * 
  * @package XLite
  * @see     ____class_see____
@@ -47,36 +47,45 @@ abstract class AAdmin extends \XLite\Controller\AController
     public function checkAccess()
     {
         return (parent::checkAccess() || $this->isPublicZone())
-            && $this->checkXliteForm();
+            && $this->checkFormId();
     }
 
     /**
-     * isXliteFormValid 
+     * Check - form id is valid or not
      * 
      * @return bool
      * @access protected
      * @since  3.0.0
      */
-    protected function isXliteFormValid()
+    protected function isFormIdValid()
     {
-        if (!$this->xlite->config->Security->form_id_protection) {
-            return true;
-        }
+        \XLite\Core\Database::getRepo('XLite\Model\FormId')->removeExpired();
 
-        if ('payment_method' == $this->target && 'callback' == $this->action) {
-            return true;
-        }
+        $request = \XLite\Core\Request::getInstance();
+        $result = true;
 
-        $form = new \XLite\Model\XliteForm();
-        $result = $form->find('form_id = \'' . addslashes($this->xlite_form_id) . '\' AND session_id = \'' . \XLite\Core\Session::getInstance()->getID() . '\'');
+        if (\Xlite\Core\Config::getInstance()->Security->form_id_protection) {
 
-        if (!$result) {
-            $form->collectGarbage();
+            if (!isset($request->xlite_form_id) || !$request->xlite_form_id) {
+                $result = false;
+
+            } else {
+
+                $form = \XLite\Core\Database::getRepo('XLite\Model\FormId')->findOneBy(
+                    array(
+                        'form_id'    => $request->xlite_form_id,
+                        'session_id' => \XLite\Core\Session::getInstance()->getID(),
+                    )
+                );
+                $result = isset($form);
+                if ($form) {
+                    $form->detach();
+                }
+            }
         }
 
         return $result;
     }
-
 
     /**
      * This function called after template output
@@ -95,15 +104,15 @@ abstract class AAdmin extends \XLite\Controller\AController
     }
 
     /**
-     * checkXliteForm 
+     * Check form id
      * 
      * @return bool
      * @access public
      * @since  3.0.0
      */
-    public function checkXliteForm()
+    public function checkFormId()
     {
-        return $this->getTarget() || $this->isIgnoredTarget() || $this->isXliteFormValid();
+        return $this->getTarget() || $this->isIgnoredTarget() || $this->isFormIdValid();
     }
 
     /**
@@ -302,64 +311,107 @@ EOT;
         return array();
     }
 
-    // FIXME - check this function carefully
-    function isIgnoredTarget()
+    /**
+     * Check - curent target and action is ignored (form id validation is disabled) or not
+     * 
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isIgnoredTarget()
     {
-        $ignoreTargets = array
-        (
-            "image" => array("*"),
-            "callback" => array("*"),
-            "upgrade" => array('version', "upgrade")
-        );
-
-        
+        $result = false;
                             
-        if (
-            isset($ignoreTargets[\XLite\Core\Request::getInstance()->target]) 
-            && (
-                in_array("*", $ignoreTargets[\XLite\Core\Request::getInstance()->target]) 
-                || (isset(\XLite\Core\Request::getInstance()->action) && in_array(\XLite\Core\Request::getInstance()->action, $ignoreTargets[\XLite\Core\Request::getInstance()->target]))
-            )
-        ) {
-            return true;
-        }
+        if ($this->isRuleExists($this->defineIngnoredTargets())) {
+            $result = true;
 
-        $specialIgnoreTargets = array
-        (
-            "db" => array('backup', "delete"),
-            "files" => array('tar', "tar_skins", "untar_skins"),
-            "wysiwyg" => array('export', "import")
-        );
+        } else {
 
-        if (
-            isset($specialIgnoreTargets[\XLite\Core\Request::getInstance()->target]) 
-            && (
-                in_array("*", $specialIgnoreTargets[\XLite\Core\Request::getInstance()->target]) 
-                || (isset(\XLite\Core\Request::getInstance()->action) && in_array(\XLite\Core\Request::getInstance()->action, $specialIgnoreTargets[\XLite\Core\Request::getInstance()->target]))
-            ) 
-            && (
-                isset(\XLite\Core\Request::getInstance()->login) && isset(\XLite\Core\Request::getInstance()->password)
-            )
-        ) {
-            $login = $this->xlite->auth->getProfile()->getLogin();
-            $post_login = \XLite\Core\Request::getInstance()->login;
-            $post_password = \XLite\Core\Request::getInstance()->password;
+            $request = \XLite\Core\Request::getInstance();
 
-            if ($login != $post_login)
-                return false;
+            if (
+                $this->isRuleExists($this->defineSpecialIngnoredTargets())
+                && isset($request->login)
+                && isset($request->password)
+                && \XLite\Core\Auth::getInstance()->isLogged()
+                && \XLite\Core\Auth::getInstance()->getProfile()->getLogin() == $request->login
+            ) {
+                $login = \XLite\Core\Auth::getInstance()->getProfile()->getLogin();
+                $postLogin = $request->login;
+                $postPassword = $request->password;
 
-            if (!empty($post_login) && !empty($post_password)){
-                $post_password = $this->xlite->auth->encryptPassword($post_password);
-                $profile = \XLite\Core\Database::getRepo('XLite\Model\Profile')->findByLoginPassword($post_login, $post_password, 0);
-                if (isset($profile)) {
-                    if ($profile->isEnabled() && $this->auth->isAdmin($profile)) {
-                        return true;
+                if (!empty($postLogin) && !empty($postPassword)){
+                    $postPassword = \XLite\Core\Auth::getInstance()->encryptPassword($postPassword);
+                    $profile = \XLite\Core\Database::getRepo('XLite\Model\Profile')
+                        ->findByLoginPassword($postLogin, $postPassword, 0);
+
+                    if (isset($profile)) {
+                        $profile->detach();
+                        if ($profile->isEnabled() && \XLite\Core\Auth::getInstance()->isAdmin($profile)) {
+                            $result = true;
+                        }
                     }
                 }
             }
         }
         
-        return false;
+        return $result;
+    }
+
+    /**
+     * Define common ingnored targets 
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineIngnoredTargets()
+    {
+        return array(
+            'callback'       => '*',
+            'payment_method' => 'callback',
+        );
+    }
+
+    /**
+     * Define special ingnored targets 
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineSpecialIngnoredTargets()
+    {
+        return array(
+            'db'      => array('backup', 'delete'),
+            'files'   => array('tar', 'tar_skins', 'untar_skins'),
+            'wysiwyg' => array('export', 'import'),
+        );
+    }
+
+    /**
+     * Check - rule is exists with current targe and action or not
+     * 
+     * @param array $rules Rules
+     *  
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isRuleExists(array $rules)
+    {
+        $request = \XLite\Core\Request::getInstance();
+
+        return isset($rules[$request->target])
+            && (
+                in_array('*', $rules[$request->target])
+                || (isset($request->action) && in_array($request->action, $rules[$request->target]))
+            );
+
     }
 
     // FIXME - check if it's needed

@@ -1096,55 +1096,66 @@ class FlexyCompiler extends \XLite\Base\Singleton
 
         return array($expr, $key, $forvar);
     }
+
     function removeBraces($str)
     {
         if (substr($str, 0, 1) == '{') {
             $str = substr($str, 1);
         }
-        if ($str{strlen($str)-1} == '}') {
-            $str = substr($str, 0, strlen($str)-1);
+
+        if ($str{strlen($str) - 1} == '}') {
+            $str = substr($str, 0, strlen($str) - 1);
         }
+
         return $str;
     }
 
-    function getXliteFormIDText()
+    protected function getXliteFormIDText()
     {
-        if (!isset(\XLite::getInstance()->_xlite_form_id_text) || !isset(\XLite::getInstance()->_xlite_form_id_text)) {
-            \XLite::getInstance()->_xlite_form_id_text = $this->flexyEcho("{session.getXliteFormID()}");
+        static $formId = null;
+
+        if (!isset($formId)) {
+            $formId = $this->flexyEcho('{session.createFormId()}');
         }
 
-        return \XLite::getInstance()->_xlite_form_id_text;
+        return $formId;
     }
 
-    function attachFormID($token_index)
+    protected function attachFormID($tokenIndex)
     {
-        if (!\XLite::isAdminZone()) return;
+        if (\XLite::isAdminZone()) {
 
-        $token = $this->tokens[$token_index];
-        $token['name'] = empty($token['name']) ? '' : strtolower($token['name']);
+            $token = $this->tokens[$tokenIndex];
+            $token['name'] = empty($token['name']) ? '' : strtolower($token['name']);
 
-        // sign each form with generated form_id
-        if (($token['type'] == "tag") && ($token['name'] == 'form')) {
-            $gen_form_id = $this->getXliteFormIDText();
-            $this->subst($token['end'], 0, "<input type='hidden' name='xlite_form_id' value=\"$gen_form_id\" />");
-        }
+            // sign each form with generated form_id
+            if ('tag' == $token['type'] && 'form' == $token['name']) {
+                $genFormId = $this->getXliteFormIDText();
+                $this->subst(
+                    $token['end'],
+                    0,
+                    '<input type="hidden" name="xlite_form_id" value="' . $genFormId . '" />'
+                );
+            }
 
-        // attach form_id to all links inside attributes (in case they contain javascript links)
-        if ($token['type'] == "attribute-value") {
-            $str = $this->getTokenText($token_index);
-            $this->_addFormIdToActions($str, $token['start']);
-        }
+            // attach form_id to all links inside attributes (in case they contain javascript links)
+            if ('attribute-value' == $token['type']) {
+                $str = $this->getTokenText($tokenIndex);
+                $this->_addFormIdToActions($str, $token['start']);
+            }
 
-        // attach form_id to all links inside scripts
-        static $script_start = null;
-        if (($token['type'] == "tag") && ($token['name'] == "script")) {
-            $script_start = $token['end'];
-        }
-        if (($token['type'] == "close-tag") && ($token['name'] == "script") && isset($script_start)) {
-            $script_end = $token['start'];
-            $script_body = substr($this->source, $script_start, $script_end-$script_start);
-            $this->_addFormIdToActions($script_body, $script_start);
-            $script_start = null;
+            // attach form_id to all links inside scripts
+            static $script_start = null;
+            if ('tag' == $token['type'] && 'script' == $token['name']) {
+                $script_start = $token['end'];
+
+            } elseif ('close-tag' == $token['type'] && 'script' == $token['name'] && isset($script_start)) {
+
+                $script_end = $token['start'];
+                $script_body = substr($this->source, $script_start, $script_end-$script_start);
+                $this->_addFormIdToActions($script_body, $script_start);
+                $script_start = null;
+            }
         }
     }
 
@@ -1175,8 +1186,8 @@ class FlexyCompiler extends \XLite\Base\Singleton
             $link_symbol = $matches[1];
             $pos = strpos($block['body'], $action_text);
             if ($pos !== false) {
-                $gen_form_id = $this->getXliteFormIDText();
-                $echo = $link_symbol . 'xlite_form_id=' . $gen_form_id . '&action=';
+                $genFormId = $this->getXliteFormIDText();
+                $echo = $link_symbol . 'xlite_form_id=' . $genFormId . '&action=';
                 $this->subst(
                     $text_start + $block['start'] + $pos, $text_start + $block['start'] + $pos + strlen($action_text),
                     $echo
