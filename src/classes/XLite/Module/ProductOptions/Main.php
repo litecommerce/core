@@ -62,6 +62,19 @@ class Main extends \XLite\Module\AModule
     }
 
     /**
+     * Module name
+     *
+     * @var    string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getModuleName()
+    {
+        return 'Product Options';
+    }
+
+    /**
      * Module description
      *
      * @return string

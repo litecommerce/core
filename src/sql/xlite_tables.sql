@@ -181,6 +181,8 @@ CREATE TABLE xlite_modules (
   type int(1) unsigned NOT NULL default '0',
   version varchar(12) NOT NULL default '',
   installed int(1) unsigned NOT NULL default 0,
+  last_update int(11) default NULL,
+  last_version varchar(32) NOT NULL default '',
   PRIMARY KEY (module_id),
   UNIQUE KEY (name),
   KEY enabled (enabled),

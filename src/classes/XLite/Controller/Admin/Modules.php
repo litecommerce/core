@@ -85,8 +85,14 @@ class Modules extends \XLite\Controller\Admin\AAdmin
     public function getModules($type = null)
     {
         if (is_null($this->modules) || $type !== $this->currentModuleType) {
-            $this->currentModuleType = $type;
-            $this->modules = \XLite\Core\Database::getRepo('\XLite\Model\Module')->findByType($type);
+
+            if (!is_null($type)) {
+                $this->currentModuleType = $type;
+                $this->modules = \XLite\Core\Database::getRepo('\XLite\Model\Module')->findByType($type);
+            } else {
+                $this->modules = \XLite\Core\Database::getRepo('\XLite\Model\Module')->findAllModules();
+            }
+
         }
 
         return $this->modules;
@@ -94,6 +100,7 @@ class Modules extends \XLite\Controller\Admin\AAdmin
 
     /**
      * Update modules list
+     * TODO: remove as no longer used
      * 
      * @return void
      * @access protected
@@ -120,6 +127,52 @@ class Modules extends \XLite\Controller\Admin\AAdmin
 
         \XLite\Core\Database::getEM()->flush();
         \XLite::setCleanUpCacheFlag(true);
+    }
+
+    /**
+     * Enable module
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionEnable()
+    {
+        $this->set('returnUrl', $this->buildUrl('modules'));
+
+        $id = \XLite\Core\Request::getInstance()->module_id;
+
+        if ($module = \XLite\Core\Database::getRepo('\XLite\Model\Module')->find($id)) {
+            $module->setEnabled(true);
+            $module->disableDepended();
+            \XLite\Core\Database::getEM()->persist($module);
+            \XLite\Core\Database::getEM()->flush();
+            \XLite::setCleanUpCacheFlag(true);
+        }
+    }
+
+    /**
+     * Disable module
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doActionDisable()
+    {
+        $this->set('returnUrl', $this->buildUrl('modules'));
+
+        $id = \XLite\Core\Request::getInstance()->module_id;
+
+        if ($module = \XLite\Core\Database::getRepo('\XLite\Model\Module')->find($id)) {
+            $module->setEnabled(false);
+            $module->disableDepended();
+            \XLite\Core\Database::getEM()->persist($module);
+            \XLite\Core\Database::getEM()->flush();
+            \XLite::setCleanUpCacheFlag(true);
+        }
     }
 
     /**

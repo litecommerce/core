@@ -15,53 +15,86 @@
   <input type="hidden" name="action" value="update">
   <input type="hidden" name="module_type" value="{key}" />
 
-  <h2>{t(caption)}</h2>
+  <table cellspacing="0" cellpadding="0" class="data-table modules-list">
 
-  <table cellspacing="1" class="data-table">
-
-    <tr>
-      <th>{t(#Active#)}<br /><input type="checkbox" class="column-selector" /></th>
-      <th>{t(#Title#)}</th>
-			<th class="extender">{t(#Description#)}</th>
-      <th>{t(#Dependencies#)}</th>
-			<th>{t(#Version#)}</th>
-      <th>{t(#Status#)}</th>
-      <th>&nbsp;</th>
-		</tr>
-
-		<tr FOREACH="getModules(key),module_idx,module" class="{getRowClass(module_idx,##,#highlight#)}">
-      <td class="active">
+		<tr FOREACH="mm.findAll(),module_idx,module" class="{if:!module.getEnabled()} disabled{end:}">
+      <td class="icon" width="90">
         <a name="{module.getName()}"></a>
-        <input type="checkbox" name="active_modules[]" value="{module.getModuleId()}"{if:module.getEnabled()} checked="checked"{end:}{if:!canEnable(module)} disabled="disabled"{end:} />
+        <div class="icon-container">
+
+          {if:!module.getEnabled()}
+            <div class="addon-disabled">
+              <img src="images/spacer.gif" width="48" height="48" alt ="" />
+            </div>
+          {end:}
+ 
+          <div class="module-icon">
+            {if:module.hasIcon()}
+              <img src="{module.icon.getURL()}" border="0" />
+            {else:}
+              <img src="images/addon_default.png" width="48" height="48" border="0" />
+            {end:}
+          </div>
+          
+       </div>
       </td>
-      <td{if:module.getEnabled()} class="enabled"{end:}>{module.getName()}</td>
-      <td>{module.getDescription()}</td>
-      <td class="dependencies">
-        {if:module.getDependencies()}
-          <ul>
-            <li FOREACH="module.getDependenciesModules(),depend">
-              <a href="#{depend.getName()}">{depend.getName()}</a>
-              [ {if:depend.getEnabled()}<span class="good">{t(#enabled#)}</span>{else:}<span class="none">{t(#disabled#)}</span>{end:} ]
-            </li>
-          </ul>
-        {else:}
-          {t(#none#)}
+      <td width="40%">
+        <div class="name">{module.getModuleName()}</div>
+        <div class="version">{t(#Version#)}: {module.getVersion()}</div>
+        <div class="actions">
+          {if:module.getEnabled()}
+            <a href="{buildUrl(#modules#,#disable#,_ARRAY_(#module_id#^module.getModuleId()))}">{t(#Disable#)}</a>
+          {else:}
+            {if:!module.canEnable()}
+              <span class="disabled">{t(#Enable#)}</span>
+            {else:}
+              <a href="{buildUrl(#modules#,#enable#,_ARRAY_(#module_id#^module.getModuleId()))}">{t(#Enable#)}</a>
+            {end:}
+          {end:}
+          {if:module.enabled&module.showSettingsForm()}
+            <a href="{module.getSettingsFormLink()}">{t(#Settings#)}</a>
+          {end:}
+          {if:!module.enabled}
+            <a class="uninstall" href="{buildUrl(#admin#,#uninstall#,_ARRAY_(#module_id#^module.getModuleId()))}" onclick="javascript: return confirmUninstall();">{t(#Uninstall#)}</a>
+          {end:}
+
+        </div>
+
+        {if:!module.canEnable()}
+        <div class="dependencies">
+          {t(#Add-on cannot be enabled.#)}
+          {if:module.getDependencies()}
+            <br />
+            {t(#The following add-on(s) must be enabled:#)}
+            <ul>
+              <li FOREACH="module.getDependenciesModules(),depend">
+                <a href="#{depend.getName()}">{depend.getName()}</a>
+                [ {if:depend.getEnabled()}<span class="good">{t(#enabled#)}</span>{else:}<span class="none">{t(#disabled#)}</span>{end:} ]
+              </li>
+            </ul>
+          {end:}
+        </div>
         {end:}
+
+        {if:module.updateAvailable()}
+          <div class="upgrade-note">
+            {t(#A new version is available#)}
+            <br /><br />
+            <widget class="\XLite\View\Button\Submit" label="{t(#Upgrade#)}" /> {t(#to v.#)}{module.last_version}
+          </div>
+        {end:}
+
       </td>
-      <td>{module.getVersion()}</td>
-      <td class="status">{getModuleStatus(module):h}</td>
-      <td>
-        {if:module.enabled&module.showSettingsForm()}
-          <a href="{module.getSettingsFormLink()}">{t(#Configure#)}</a>
-        {end:}
-        <a href="{buildUrl(#admin#,#uninstall#,_ARRAY_(#module_id#^module.getModuleId()))}" onclick="javascript: return confirmUninstall();">{t(#Uninstall#)}</a>
+      <td width="60%">
+        <div class="description">
+          {module.getDescription()}
+        </div>
+        <div class="module-url">
+          <a href="{module.getExternalPageURL()}" target="_blank">{t(#Visit add-on\'s page#)}</a>
+        </div>
       </td>
 		</tr>    
 
   </table>
-
-  <div class="buttons">
-    <widget class="\XLite\View\Button\Submit" label="Update" />
-  </div>
 
 </form>

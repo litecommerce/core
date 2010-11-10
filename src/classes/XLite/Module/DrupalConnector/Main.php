@@ -64,8 +64,21 @@ class Main extends \XLite\Module\AModule
     }
 
     /**
-     * Get description 
-     * 
+     * Module name
+     *
+     * @var    string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0
+     */
+    public function getModuleName()
+    {
+        return 'Drupal Connector';
+    }
+
+    /*
+     * Get description
+     *
      * @return string
      * @access public
      * @see    ____func_see____
