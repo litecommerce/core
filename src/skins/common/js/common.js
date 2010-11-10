@@ -151,7 +151,7 @@ function openDialog(selector, additionalOptions)
       open: function(event) {
         $('.ui-dialog').css(
           {
-            overflow: 'visible',
+            overflow: 'visible'
           }
         );
       }
