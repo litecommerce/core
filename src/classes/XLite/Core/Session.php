@@ -72,6 +72,16 @@ class Session extends \XLite\Base\Singleton
     protected $language;
 
     /**
+     * Last form id 
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $lastFormId;
+
+    /**
      * Constructor
      * 
      * @return void
@@ -206,6 +216,8 @@ class Session extends \XLite\Base\Singleton
      */
     public function restart()
     {
+        $this->lastFormId = null;
+
         if (!xlite()->em()->contains($this->session)) {
             $this->session = xlite()->em()->merge($this->session);
         }
@@ -428,45 +440,37 @@ class Session extends \XLite\Base\Singleton
     }
 
     /**
-     * Return current form ID
-     * TODO - to revise
+     * Create form id
      *
-     * @return string
+     * @return string Form id
      * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getXliteFormID()
+    public function createFormId()
     {
-        if (!isset(self::$xliteFormId)) {
-            self::$xliteFormId = $this->generateXliteFormID();
+        if (!isset($this->lastFormId)) {
+            $formId = new \XLite\Model\FormId;
+            $formId->setSessionId($this->session->getId());
+            \Xlite\Core\Database::getEM()->persist($formId);
+
+            $this->lastFormId = $formId->getFormId();
         }
 
-        return self::$xliteFormId;
+        return $this->lastFormId;
     }
 
     /**
-     * Generate new form ID
-     * TODO - to revise
+     * Get model 
      * 
-     * @return string
-     * @access protected
+     * @return \XLite\Model\Session
+     * @access public
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function generateXliteFormID()
+    public function getModel()
     {
-        $form = new \XLite\Model\XliteForm();
-
-        $formId = md5(uniqid(mt_rand(0, time())));
-        $sessId = $this->session->getSid();
-
-        $form->set('form_id', $formId);
-        $form->set('session_id', $sessId);
-        $form->set('date', time());
-        $form->create();
-
-        $form->collectGarbage($sessId);
-
-        return $formId;
+        return $this->session;
     }
 
     /**
