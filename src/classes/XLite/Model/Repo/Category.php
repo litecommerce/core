@@ -447,7 +447,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
      */
     public function getCategory($categoryId)
     {
-        return $this->find($categoryId);
+        return $this->find(intval($categoryId));
     }
 
     /**
