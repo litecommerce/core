@@ -384,7 +384,7 @@ abstract class XLite_Web_Customer_AProductList extends XLite_Web_Customer_ACusto
         $this->testPagerStructure($productsCount, $productsCount, 1);
 
         // Now test how the pager displays products split into several pages
-        $pagesCount = ($productsCount > 4) ? 4 : 1;
+        $pagesCount = ($productsCount > 3) ? 3 : 1;
         $perPage = ($productsCount > $pagesCount) ? ceil($productsCount/$pagesCount) : $productCount;
         $this->configurePager($perPage, true);
 

@@ -75,7 +75,7 @@ class XLite_Web_Customer_CategoryProducts extends XLite_Web_Customer_AProductLis
 
         foreach ($categories as $one) {
             $count = $one->getProductsNumber();
-            if ($count && ($count > $max) && ($count < 50)) {
+            if ($count && ($count > $max) && ($count < 10)) {
                 $category = $one;
                 $max = $count;
             }
