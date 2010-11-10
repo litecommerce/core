@@ -44,39 +44,49 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
         );
 
         // Image block
-        if ($product->hasZoomImage()) {
+        if ($product->hasImage()) {
 
-            $listSelector = "css=div.product-details form.product-details.hproduct .image .product-photo-box"; 
+            $image = $product->getImages()->get(0); // the default image
+            $kZoom = \XLite\View\Product\Details\Customer\Image::K_ZOOM;
+            $maxWidth = \XLite\View\Product\Details\Customer\Image::IMG_MAX_WIDTH_PD;
 
-            $this->assertElementPresent(
-                $listSelector,
-                'check product-photo-box'
-            );
+            $cloudZoom = $image->getWidth() > $kZoom * $maxWidth;
 
-            $this->assertElementPresent(
-                "$listSelector .product-photo div#wrap a.cloud-zoom#pimage_".$productId." img.photo.product-thumbnail",
-                'check image'
-            );
+            if ($cloudZoom) {
 
-            $imageRel = $this->getJSExpression("$('a.cloud-zoom#pimage_$productId').attr('rel')");
-            $this->assertEquals(
-                $imageRel,
-                "adjustX: 97, showTitle: false, tintOpacity: 0.5, tint: '#fff', lensOpacity: 0",
-                "check image rel attribute"
-            );
+                $listSelector = "css=div.product-details form.product-details.hproduct .image .product-photo-box"; 
 
-            $this->assertElementPresent(
-                "$listSelector a.arrow.left-arrow img",
-                'check left arrow'
-            );
-            $this->assertElementPresent(
-                "$listSelector a.arrow.right-arrow img",
-                'check right arrow'
-            );
+                $this->assertElementPresent(
+                    $listSelector,
+                    'check product-photo-box'
+                );
+
+                $this->assertElementPresent(
+                    "$listSelector .product-photo div#wrap a.cloud-zoom#pimage_".$productId." img.photo.product-thumbnail",
+                    'check image'
+                );
+
+                $imageRel = $this->getJSExpression("$('a.cloud-zoom#pimage_$productId').attr('rel')");
+                $this->assertEquals(
+                    $imageRel,
+                    "adjustX: 97, showTitle: false, tintOpacity: 0.5, tint: '#fff', lensOpacity: 0",
+                    "check image rel attribute"
+                );
+
+                $this->assertElementPresent(
+                    "$listSelector a.arrow.left-arrow img",
+                    'check left arrow'
+                );
+                $this->assertElementPresent(
+                    "$listSelector a.arrow.right-arrow img",
+                    'check right arrow'
+                );
+
+            }
         }
 
         // Gallery
-        if ($product->getImages()) {
+        if ($product->countImages() > 1) {
             $this->assertElementPresent(
                 "//form[@class='product-details hproduct']"
                 . "/div[@class='image']"
