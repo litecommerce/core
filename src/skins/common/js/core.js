@@ -16,24 +16,24 @@
  */
 
 // OOP extends emulation
-function extend(child, parent) {
+function extend(child, p) {
   var F = function() { };
-  F.prototype = parent.prototype;
+  F.prototype = p.prototype;
   child.prototype = new F();
   child.prototype.constructor = child;
-  child.superclass = parent.prototype;
+  child.superclass = p.prototype;
 }
 
 // Decorate / add method
-function decorate(class, methodName, method)
+function decorate(c, methodName, method)
 {
-  class = getClassByName(class);
+  c = getClassByName(c);
 
   var result = false;
 
-  if (class) {
-    method.previousMethod = 'undefined' == typeof(class.prototype[methodName]) ? null : class.prototype[methodName];
-    class.prototype[methodName] = method;
+  if (c) {
+    method.previousMethod = 'undefined' == typeof(c.prototype[methodName]) ? null : c.prototype[methodName];
+    c.prototype[methodName] = method;
     result = true;
   }
 
@@ -41,16 +41,16 @@ function decorate(class, methodName, method)
 }
 
 // Get class object by name (or object)
-function getClassByName(class)
+function getClassByName(c)
 {
-  if (class && class.constructor == String) {
-    class = eval('(("undefined" != typeof(window.' + class + ') && ' + class + '.constructor == Function) ? ' + class + ' : null)');
+  if (c && c.constructor == String) {
+    c = eval('(("undefined" != typeof(window.' + c + ') && ' + c + '.constructor == Function) ? ' + c + ' : null)');
 
-  } else if (!class || class.constructor != Function) {
-    class = null;
+  } else if (!c || c.constructor != Function) {
+    c = null;
   }
 
-  return class;
+  return c;
 }
 
 // Base class
