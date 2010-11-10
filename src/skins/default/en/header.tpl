@@ -10,20 +10,19 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
+
 <head>
-<title>{if:getPageTitle()}{getPageTitle()}{end:}</title>
-<meta http-equiv="Content-Type" content="text/html; charset={charset}" />
-<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
-<meta IFF="!metaDescription" name="description" content="The powerful shopping cart software for web stores and e-commerce enabled stores is based on PHP / PHP4 with SQL database with highly configurable implementation based on templates." />
-<meta IFF="metaDescription" name="description" content="{metaDescription:r}" />
-<meta IFF="keywords" name="keywords" content="{keywords:r}" />
-<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+  <title>{if:getPageTitle()}{getPageTitle()}{end:}</title>
+  <meta http-equiv="Content-Type" content="text/html; charset={charset}" />
+  <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+  <meta IFF="!metaDescription" name="description" content="The powerful shopping cart software for web stores and e-commerce enabled stores is based on PHP / PHP4 with SQL database with highly configurable implementation based on templates." />
+  <meta IFF="metaDescription" name="description" content="{metaDescription:r}" />
+  <meta IFF="keywords" name="keywords" content="{keywords:r}" />
 
-<link href="{getSkinURL(#style.css#)}" rel="stylesheet" type="text/css" />
-<link FOREACH="getCSSResources(),file" href="{file}" rel="stylesheet" type="text/css" />
+  <link href="{%\XLite\Model\Layout::getInstance()->getSkinURL('style.css')%}" rel="stylesheet" type="text/css" />
+  <link FOREACH="getCSSResources(),file" href="{file}" rel="stylesheet" type="text/css" />
 
-<script type="text/javascript" src="{getSkinURL(#js/jquery-1.3.2.js#)}"></script>
-<script type="text/javascript" src="{getSkinURL(#js/jquery-ui.1.7.2.js#)}"></script>
-<script FOREACH="getJSResources(),file" type="text/javascript" src="{file}"></script>
-
+  <script type="text/javascript" src="{%\XLite\Model\Layout::getInstance()->getSkinURL('js/jquery-1.3.2.js')%}"></script>
+  <script type="text/javascript" src="{%\XLite\Model\Layout::getInstance()->getSkinURL('js/jquery-ui.1.7.2.js')%}"></script>
+  <script FOREACH="getJSResources(),file" type="text/javascript" src="{file}"></script>
 </head>
