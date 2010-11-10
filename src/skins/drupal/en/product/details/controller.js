@@ -116,6 +116,9 @@ ProductDetailsView.prototype.gallery = null;
 // Zoom layer max. width
 ProductDetailsView.prototype.zoomMaxWidth = 460;
 
+// Zoom widget 
+ProductDetailsView.prototype.zoomWidget = false;
+
 // Zoom layer max. width
 ProductDetailsView.prototype.kZoom = 1.3;
 
@@ -156,9 +159,18 @@ ProductDetailsView.prototype.postprocess = function(isSuccess, initial)
     // Cloud zoom
     var cloud = $('.cloud-zoom', this.base);
 
+    if (cloud.length) {
+      this.zoomWidget = true;
+      
+      var imageWrapper = $(document.createElement('div')).addClass('wrapper');
+      cloud.wrap(imageWrapper);
+    }
+
     if ($('.product-image-gallery li a').length) {
+      // TODO: improve to skip additional JS manipulations
+      // like resizing etc when it is not needed
       this.selectImage(0);
-    } else if (cloud.length && !cloud.data('zoom')) {
+    } else if (this.zoomWidget && !cloud.data('zoom')) {
       cloud.CloudZoom();
     }
 
@@ -269,41 +281,52 @@ ProductDetailsView.prototype.selectImage = function(pos)
   next = this.gallery.eq(pos);
   next.addClass('selected');
 
-  var cloud = $('.cloud-zoom', this.base);
+  if (this.zoomWidget) {
+    
+    var cloud = $('.cloud-zoom', this.base);
 
-  if (cloud.data('zoom')) {
-    cloud.data('zoom').destroy();
+    if (cloud.data('zoom')) {
+      cloud.data('zoom').destroy();
 
-  } else {
-    cloud.unbind('click', this.linkClickHandler);
+    } else {
+      cloud.unbind('click', this.linkClickHandler);
+    }
+
+    cloud.attr('href', $('a', next).attr('href'));
   }
-
-  cloud.attr('href', $('a', next).attr('href'));
 
   var middle = $('img.middle', next).eq(0)
 
-  $('img', cloud)
-    .attr('src', middle.attr('src'))
-    .attr('width', middle.attr('width'))
-    .attr('height', middle.attr('height'));
+  if (middle) {
 
-  // Calculate image padding
-  var padX = Math.max(0, parseInt($('.image .product-photo', this.base).css('width')) - middle.attr('width'));
-  var padY = Math.max(0, parseInt($('.image .product-photo', this.base).css('height')) - middle.attr('height'));
+    $('.image .product-photo img', this.base)
+      .hide()
+      .attr('src',    middle.attr('src'))
+      .attr('width',  middle.attr('width'))
+      .attr('height', middle.attr('height'))
+      .show();
 
-  $('.image .product-photo img', this.base)
-    .attr('src',    middle.attr('src'))
-    .attr('width',  middle.attr('width'))
-    .attr('height', middle.attr('height'))
-    .css('padding', padY/2 + 'px ' + padX/2 + 'px');
+    // Center align images
+    var shiftX = Math.max(0, parseInt($('.image .product-photo', this.base).css('width')) - middle.attr('width'));
+    var shiftY = Math.max(0, parseInt($('.image .product-photo', this.base).css('height')) - middle.attr('height'));
+
+    if (this.zoomWidget) {
+      $('.image .product-photo .wrapper').css('padding', shiftY/2 + 'px ' + shiftX/2 + 'px');
+      $('img', cloud).css('padding', 0);
+    } else {
+      $('.image .product-photo img').css('padding', shiftY/2 + 'px ' + shiftX/2 + 'px');
+    }
+  }
 
   eval('var tmp = {' + $('a', next).attr('rev') + '}');
 
-  if (tmp.width > middle.attr('width') * this.kZoom || tmp.height > middle.attr('height') * this.kZoom) {
-    cloud.CloudZoom();
+  if (this.zoomWidget) {
 
-  } else {
-    cloud.click(this.linkClickHandler);
+    if (tmp.width > middle.attr('width') * this.kZoom || tmp.height > middle.attr('height') * this.kZoom) {
+      cloud.CloudZoom();
+    } else {
+      cloud.click(this.linkClickHandler);
+    }
   }
 }
 

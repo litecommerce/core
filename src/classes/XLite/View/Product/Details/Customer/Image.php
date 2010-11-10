@@ -63,6 +63,16 @@ class Image extends \XLite\View\Product\Details\Customer\ACustomer
     const ZOOM_ADJUST_X_QL = 32;
 
     /**
+     * Product has any image to ZOOM
+     *
+     * @var    boolean
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $isZoom = null;
+
+    /**
      * Return widget default template
      *
      * @return string
@@ -83,7 +93,7 @@ class Image extends \XLite\View\Product\Details\Customer\ACustomer
      */
     protected function getTemplate()
     {
-        return ($this->isZoom())
+        return ($this->hasZoomImage())
             ? $this->getDir() . '/parts/image-zoom.tpl'
             : $this->getDefaultTemplate();
     }
@@ -95,22 +105,25 @@ class Image extends \XLite\View\Product\Details\Customer\ACustomer
      * @access protected
      * @since  3.0.0
      */
-    protected function isZoom()
+    protected function hasZoomImage()
     {
-        $isZoom = false;
+        if (is_null($this->isZoom)) {
+            
+            $this->isZoom = false;
 
-        if ($this->getProduct()->hasImage()) {
+            if ($this->getProduct()->hasImage()) {
 
-            foreach($this->getProduct()->getImages() as $img) {
+                foreach($this->getProduct()->getImages() as $img) {
    
-                if ($img->getWidth() > self::K_ZOOM * $this->getWidgetMaxWidth()) {
-                    $isZoom = true;
-                    break;
-                } 
+                    if ($img->getWidth() > self::K_ZOOM * $this->getWidgetMaxWidth()) {
+                        $this->isZoom= true;
+                        break;
+                    } 
+                }
             }
         }
-
-        return $isZoom;
+        
+        return $this->isZoom;
     }
 
     /**
@@ -138,7 +151,6 @@ class Image extends \XLite\View\Product\Details\Customer\ACustomer
     {
         return min($this->getProduct()->getImage()->getWidth(), self::ZOOM_MAX_WIDTH);
     }
-
 
     /**
      * Register JS files
@@ -188,7 +200,7 @@ class Image extends \XLite\View\Product\Details\Customer\ACustomer
     }
 
     /**
-     * Get image container max height
+     * Get product image container max height
      *
      * @return boolean
      * @access protected
@@ -212,7 +224,8 @@ class Image extends \XLite\View\Product\Details\Customer\ACustomer
     }
 
     /**
-     * Return a relative horizontal position of the zoom box depending on whether it is a quicklook popup, or not
+     * Return a relative horizontal position of the zoom box 
+     * depending on whether it is a quicklook popup, or not
      * 
      * @return int
      * @access public
