@@ -139,6 +139,11 @@ echo 'Remove the var/* sub-directories' . PHP_EOL . PHP_EOL;
 \Includes\Utils\FileManager::unlinkRecursive('var/datacache');
 \Includes\Utils\FileManager::unlinkRecursive('var/log');
 
+if (function_exists('apc_clear_cache')) {
+    echo 'Clear APC cache' . PHP_EOL . PHP_EOL;
+    apc_clear_cache();
+}
+
 if (is_resource($__connection)) {
 	mysql_close($__connection);
 }
