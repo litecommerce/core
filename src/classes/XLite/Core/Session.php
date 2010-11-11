@@ -385,6 +385,40 @@ class Session extends \XLite\Base\Singleton
     }
 
     /**
+     * Load session by public session id 
+     * 
+     * @param string $sid Public session id
+     *  
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function loadBySid($sid)
+    {
+        $session = \XLite\Core\Database::getRepo('XLite\Model\Session')->findOneBy(
+            array(
+                'sid' => $sid,
+            )
+        );
+
+        $result = false;
+
+        if ($session) {
+            $result = true;
+            \XLite\Core\Database::getEM()->remove($this->session);
+            \XLite\Core\Database::getEM()->flush();
+
+            $this->session = $session;
+            $this->lastFormId = null;
+
+            $this->setCookie();
+        }
+
+        return $result;
+    }
+
+    /**
      * Get parsed URL for Set-Cookie
      * 
      * @param boolean $secure Secure protocol or not

@@ -89,7 +89,7 @@ class LandingLink extends \XLite\Model\AModel
         $this->setProperties(
             array(
                 'link_id'    => md5(mt_rand(0, time())),
-                'session_id' => $this->xlite->session->getID(),
+                'session_id' => \XLite\Core\Session::getInstance()->getID(),
                 'expiry'     => time() + self::TTL,
             )
         );

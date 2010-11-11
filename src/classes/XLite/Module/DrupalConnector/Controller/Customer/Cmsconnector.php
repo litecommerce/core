@@ -77,8 +77,7 @@ class Cmsconnector extends \XLite\Controller\Customer\ACustomer
             && preg_match(\XLite\Module\DrupalConnector\Model\LandingLink::ID_PATTERN, $this->get('id'))
             && $link->find('link_id = \'' . $this->get('id') . '\'')
         ) {
-            $this->xlite->session->setID($link->get('session_id'));
-            $this->xlite->session->_fetchData();
+            \XLite\Core\Session::getInstance()->loadBySid($link->get('session_id'));
 
             $link->delete();
         }
