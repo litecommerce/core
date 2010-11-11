@@ -559,6 +559,27 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
     }
 
     /**
+     * Wait for local window-based condition 
+     * 
+     * @param string  $condition Condition
+     * @param integer $ttl       TTL (msec)
+     * @param string  $message   Fail message
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function waitForLocalCondition($condition, $ttl = 10000, $message = null)
+    {
+        $this->waitForCondition(
+            'selenium.browserbot.getCurrentWindow().' . $condition,
+            $ttl,
+            $message
+        );
+    }
+
+    /**
      * Common command interrupter
      * 
      * @param string $command   Command name
