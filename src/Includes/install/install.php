@@ -842,9 +842,9 @@ function checkMysqlVersion(&$errorMsg, &$value, $isConnected = false)
                 $result = false;
                 $errorMsg = 'MySQL version must be ' . constant('LC_MYSQL_VERSION_MIN') . ' as a minimum.';
 
-            } elseif ((version_compare($version, "5.0.50") >= 0 && version_compare($version, "5.0.52") < 0)) {
-                $result = false;
-                $errorMsg = 'The version of MySQL which is currently used (' . $version . ') contains known bugs, that is why LiteCommerce may operate incorrectly. It is recommended to update MySQL to a more stable version.';
+//            } elseif ((version_compare($version, "5.0.50") >= 0 && version_compare($version, "5.0.52") < 0)) {
+//                $result = false;
+//                $errorMsg = 'The version of MySQL which is currently used (' . $version . ') contains known bugs, that is why LiteCommerce may operate incorrectly. It is recommended to update MySQL to a more stable version.';
             }
 
         } else {
