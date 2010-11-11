@@ -832,14 +832,10 @@ class Decorator extends Decorator\ADecorator
             );
         }
 
-        // Store files in APC
-        if (function_exists('apc_compile_file')) {
+        // Clear APC
+        if (function_exists('apc_clear_cache')) {
             apc_clear_cache();
-            foreach (static::$classesInfo as $class => $info) {
-                apc_compile_file(LC_CLASSES_CACHE_DIR . $this->getFileByClass($class));
-            }
         }
-
 
         file_put_contents(LC_CLASSES_CACHE_DIR . self::LC_CACHE_BUILD_INDICATOR, date('r'));
     }
