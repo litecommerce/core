@@ -206,7 +206,8 @@ class Module extends \XLite\Model\Repo\ARepo
     }
 
     /**
-     * Find by type 
+     * Find by type
+     * TODO: remove
      * 
      * @param integer $type Type
      *  
@@ -222,6 +223,7 @@ class Module extends \XLite\Model\Repo\ARepo
 
     /**
      * Define query builder for findByType()
+     * TODO: remove
      * 
      * @param integer $type Type
      *  
@@ -273,6 +275,7 @@ class Module extends \XLite\Model\Repo\ARepo
 
     /**
      * Find all module by depend module name
+     * TODO: rework
      * 
      * @param string $depend Module name
      *  
@@ -288,6 +291,7 @@ class Module extends \XLite\Model\Repo\ARepo
 
     /**
      * Define query builder for findByType()
+     * TODO: rework
      *
      * @param string $depend Depend module name
      *

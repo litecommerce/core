@@ -65,7 +65,7 @@
 <widget template="common/dialog.tpl" head="Customer zone warning" body="customer_zone_warning.tpl" IF="{getCustomerZoneWarning()}" />
 <widget target="main" template="common/dialog.tpl" head="Welcome to the Administrator Zone" body="menu.tpl" />
 <widget class="\XLite\View\ModulesModify" />
-<widget target="module" template="common/dialog.tpl" head="Module {page} settings" body="general_settings.tpl" />
+<widget target="module" template="common/dialog.tpl" head="&quot;{page}&quot; add-on settings" body="general_settings.tpl" />
 
 <widget name="categoriesWidget" target="categories" template="common/dialog.tpl" head="Manage categories" body="categories/body.tpl" IF="!mode=#delete#" />
 <widget module="FeaturedProducts" template="common/dialog.tpl" head="Featured products" body="modules/FeaturedProducts/featuredProducts.tpl" IF="{namedWidgets.categoriesWidget.visible}" />

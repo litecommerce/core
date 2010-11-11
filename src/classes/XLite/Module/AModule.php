@@ -49,69 +49,7 @@ abstract class AModule
     const MODULE_GENERAL   = 5;
     const MODULE_3RD_PARTY = 6;
 
-    /**
-     * Return module name by class name
-     * 
-     * @return string
-     * @access protected
-     * @since  3.0
-     */
-    protected function getModuleCode()
-    {
-        if (!preg_match('/XLite\\\Module\\\(\w+)\\\Main/S', get_class($this), $matches)) {
-            // TODO - throw exception
-        }
-
-        return $matches[1];
-    }
-
-    /**
-     * Return module name
-     * 
-     * @return string
-     * @access protected
-     * @since  3.0
-     */
-    public function getModuleName()
-    {
-        return $this->getModuleCode();
-    }
-
-    /**
-     * Easy way to register payment method
-     * 
-     * @param string $name payment method name
-     *  
-     * @return void
-     * @access protected
-     * @since  3.0
-     */
-    protected function registerPaymentMethod($name)
-    {
-        $method = new \XLite\Model\PaymentMethod();
-        $class  = 'Module\\' . $this->getModuleName() . '\Model\PaymentMethod\\' . \XLite\Core\Converter::convertToCamelCase($name);
-
-        return $method->registerMethod($name, $class);
-    }
-
-    /**
-     * Easy way to register shipping module 
-     * 
-     * @param string $name shipping module name
-     *  
-     * @return void
-     * @access protected
-     * @since  3.0
-     */
-    protected function registerShippingModule($name)
-    {
-        $shipping = new \XLite\Model\Shipping();
-        $class  = 'Module\\' . $this->getModuleName() . '\Model\Shipping\\' . \XLite\Core\Converter::convertToCamelCase($name);
-
-        return $shipping->registerShippingModule($name, $class);
-    }
-
-    /**
+   /**
      * Method to initialize concrete module instance
      *
      * @return void
@@ -123,10 +61,24 @@ abstract class AModule
     }
 
     /**
+     * Return module name
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0
+     */
+    public function getModuleName()
+    {
+        return $this->getModuleCode();
+    }
+
+    /**
      * Return module type 
      * 
      * @return int
      * @access public
+     * @see    ____func_see____
      * @since  3.0
      */
     public function getModuleType()
@@ -139,6 +91,7 @@ abstract class AModule
      * 
      * @return string
      * @access public
+     * @see    ____func_see____
      * @since  3.0
      */
     abstract public function getVersion();
@@ -148,6 +101,7 @@ abstract class AModule
      * 
      * @return string
      * @access public
+     * @see    ____func_see____
      * @since  3.0
      */
     abstract public function getDescription();
@@ -157,6 +111,7 @@ abstract class AModule
      * 
      * @return bool
      * @access public
+     * @see    ____func_see____
      * @since  3.0
      */
     public function showSettingsForm()
@@ -169,6 +124,7 @@ abstract class AModule
      * 
      * @return mixed
      * @access public
+     * @see    ____func_see____
      * @since  3.0
      */
     public function getSettingsForm()
@@ -181,9 +137,10 @@ abstract class AModule
      *
      * @return array
      * @access public
+     * @see    ____func_see____
      * @since  3.0
      */
-    public function getDependenciesList()
+    public function getDependencies()
     {
         return array();
     }
@@ -193,9 +150,10 @@ abstract class AModule
      * 
      * @return array
      * @access public
+     * @see    ____func_see____
      * @since  3.0
      */
-    public function getMutualModulesList()
+    public function getMutualModules()
     {
         return array();
     }
@@ -210,7 +168,7 @@ abstract class AModule
      */
     public function getPostInstallationNotes()
     {
-        return null;
+        return '';
     }
 
     /**
@@ -223,7 +181,7 @@ abstract class AModule
      */
     public function getPostUninstallationNotes()
     {
-        return null;
+        return '';
     }
 
     /**
@@ -265,6 +223,100 @@ abstract class AModule
         return true;
     }
 
+    /**
+     * Get module icon 
+     * TODO: implement the module icons functionality
+     * 
+     * @return \XLite\Model\Image
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getIcon()
+    {
+        return $this->icon;
+    }
+
+    /**
+     * Check if module has icon 
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function hasIcon()
+    {
+        return !is_null($this->getIcon());
+    }
+
+    /**
+     * Get external page URL
+     * TODO: rework this when modules management is implemented
+     *       on LiteCommerce site
+     *
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getExternalPageURL()
+    {
+        return '#' . $this->getModuleCode();
+    }
+
+    /**
+     * Return module name by class name
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0
+     */
+    protected function getModuleCode()
+    {
+        if (!preg_match('/XLite\\\Module\\\(\w+)\\\Main/S', get_class($this), $matches)) {
+            // TODO - throw exception
+        }
+
+        return $matches[1];
+    }
+
+    /**
+     * Easy way to register payment method
+     * 
+     * @param string $name payment method name
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0
+     */
+    protected function registerPaymentMethod($name)
+    {
+        $method = new \XLite\Model\PaymentMethod();
+        $class  = 'Module\\' . $this->getModuleCode() . '\Model\PaymentMethod\\' . \XLite\Core\Converter::convertToCamelCase($name);
+
+        return $method->registerMethod($name, $class);
+    }
+
+    /**
+     * Easy way to register shipping module 
+     * 
+     * @param string $name shipping module name
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0
+     */
+    protected function registerShippingModule($name)
+    {
+        $shipping = new \XLite\Model\Shipping();
+        $class  = 'Module\\' . $this->getModuleCode() . '\Model\Shipping\\' . \XLite\Core\Converter::convertToCamelCase($name);
+
+        return $shipping->registerShippingModule($name, $class);
+    }
 
     /**
      * Adds layout template file for the specified widget
@@ -281,4 +333,5 @@ abstract class AModule
     {
         \XLite\Model\Layout::getInstance()->addLayout($widgetName, $templateName);
     }
+
 }

@@ -10,14 +10,14 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<form IF="mm.findAll()" action="admin.php" method="post" name="modules_form_{key}" class="modules-list">
+<form IF="mm.findAllModules()" action="admin.php" method="post" name="modules_form_{key}" class="modules-list">
   <input type="hidden" name="target" value="modules">
   <input type="hidden" name="action" value="update">
   <input type="hidden" name="module_type" value="{key}" />
 
   <table cellspacing="0" cellpadding="0" class="data-table modules-list">
 
-		<tr FOREACH="mm.findAll(),module_idx,module" class="{if:!module.getEnabled()} disabled{end:}">
+		<tr FOREACH="mm.findAllModules(),module_idx,module" class="{if:!module.getEnabled()} disabled{end:}">
       <td class="icon" width="90">
         <a name="{module.getName()}"></a>
         <div class="icon-container">
@@ -51,7 +51,7 @@
               <a href="{buildUrl(#modules#,#enable#,_ARRAY_(#module_id#^module.getModuleId()))}">{t(#Enable#)}</a>
             {end:}
           {end:}
-          {if:module.enabled&module.showSettingsForm()}
+          {if:module.showSettingsForm()}
             <a href="{module.getSettingsFormLink()}">{t(#Settings#)}</a>
           {end:}
           {if:!module.enabled}
@@ -68,7 +68,7 @@
             {t(#The following add-on(s) must be enabled:#)}
             <ul>
               <li FOREACH="module.getDependenciesModules(),depend">
-                <a href="#{depend.getName()}">{depend.getName()}</a>
+                <a href="#{depend.getName()}">{depend.getModuleName()}</a>
                 [ {if:depend.getEnabled()}<span class="good">{t(#enabled#)}</span>{else:}<span class="none">{t(#disabled#)}</span>{end:} ]
               </li>
             </ul>
@@ -76,7 +76,7 @@
         </div>
         {end:}
 
-        {if:module.updateAvailable()}
+        {if:module.isUpdateAvailable()}
           <div class="upgrade-note">
             {t(#A new version is available#)}
             <br /><br />
