@@ -38,14 +38,17 @@ namespace Includes\Decorator\Data\Classes;
 class Node extends \Includes\DataStructure\Node\Tree
 {
     /**
-     * Node key field
-     * 
-     * @var    string
+     * Return name of the key field
+     *
+     * @return string
      * @access protected
-     * @see    ____var_see____
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    protected $key = \Includes\Decorator\ADecorator::N_CLASS;
+    protected function getKeyField()
+    {
+        return \Includes\Decorator\ADecorator::N_CLASS;
+    }
 
 
     /**

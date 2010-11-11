@@ -35,23 +35,13 @@ namespace Includes\DataStructure\Node;
  * @see        ____class_see____
  * @since      3.0.0
  */
-class Tree extends \Includes\DataStructure\Node\ANode
+abstract class Tree extends \Includes\DataStructure\Node\ANode
 {
     /**
      * Flag for so called "stub" nodes
      */
     const IS_STUB = 'isStub';
 
-
-    /**
-     * Node key field
-     * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected $key;
 
     /**
      * Child nodes list 
@@ -65,6 +55,17 @@ class Tree extends \Includes\DataStructure\Node\ANode
 
 
     /**
+     * Return name of the key field
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    abstract protected function getKeyField();
+
+
+    /**
      * Get node key 
      * 
      * @return string|int
@@ -74,7 +75,7 @@ class Tree extends \Includes\DataStructure\Node\ANode
      */
     public function getKey()
     {
-        return $this->__get($this->key);
+        return $this->__get($this->getKeyField());
     }
 
     /**
@@ -171,32 +172,8 @@ class Tree extends \Includes\DataStructure\Node\ANode
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function createStubNode($key)
+    public static function createStubNode($key)
     {
-        return new static(array($this->key => $key, self::IS_STUB => true));
-    }
-
-    /**
-     * Constructor 
-     * 
-     * @param array  $data data to set
-     * @param string $key  node key field
-     *  
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function __construct(array $data = null, $key = null)
-    {
-        if (empty($key)) {
-            if (empty($this->key)) {
-                throw new \Exception('Empty key is not available for the tree nodes');
-            }
-        } else {
-            $this->key = $key;
-        }
-
-        parent::__construct($data);
+        return new static(array(self::IS_STUB => true));
     }
 }

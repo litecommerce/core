@@ -35,7 +35,7 @@ namespace Includes\Decorator\Data\Templates;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Collection
+class Collection extends \Includes\DataStructure\Hierarchical\AHierarchical
 {
     /**
      * Templates list cache
@@ -120,6 +120,21 @@ class Collection
         }
     }
 
+
+    /**
+     * Find nodes using a callback function
+     *
+     * @param mixed $callback callback to execute
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function findByCallback($callback)
+    {
+        return array_filter($this->getList(), $callback);
+    }
 
     /**
      * Return templates list

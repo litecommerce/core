@@ -78,7 +78,7 @@ class Tree extends \Includes\DataStructure\Hierarchical\AHierarchical
      */
     protected function collectGarbage()
     {
-        foreach ($this->index as $node) {
+        foreach ($this->getIndex() as $node) {
             !$node->isStub() ?: $this->removeNode($node);
         }   
     }
@@ -118,12 +118,12 @@ class Tree extends \Includes\DataStructure\Hierarchical\AHierarchical
         if (!isset($parent)) {
 
             if ($create) {
+
                 // Add so called "stub" node
-                $this->addChildNode(
-                    $this->root,
-                    $parent = call_user_func_array(array($node, 'createStubNode'), array($key))
-                );
+                $this->addChildNode($this->root, $parent = $node::createStubNode($key));
+
             } else {
+
                 // Use root node as the parent one
                 $parent = $this->root; 
             }
@@ -299,7 +299,7 @@ class Tree extends \Includes\DataStructure\Hierarchical\AHierarchical
      */
     public function findByCallback($callback)
     {
-        return array_filter($this->index, $callback);
+        return array_filter($this->getIndex(), $callback);
     }
 
     /**

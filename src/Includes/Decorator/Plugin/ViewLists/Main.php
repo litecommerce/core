@@ -73,6 +73,21 @@ class Main extends \Includes\Decorator\Plugin\APlugin
     }
 
     /**
+     * Common function to filter classes and templates
+     * 
+     * @param \Includes\DataStructure\Hierarchical\AHierarchical $set set of entities
+     *  
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getAnnotatedEntites(\Includes\DataStructure\Hierarchical\AHierarchical $set)
+    {
+        return $set->findByCallback(array($this, 'filterCallback'));
+    }
+
+    /**
      * Get list of classes defined the "ListChild" tag
      * 
      * @return array
@@ -82,11 +97,7 @@ class Main extends \Includes\Decorator\Plugin\APlugin
      */
     protected function getAnnotatedPHPClasses()
     {
-        return static::getClassesTree()->findByCallback(
-            function (\Includes\Decorator\Data\Classes\Node $node) {
-                return !is_null($node->getTag(constant(__CLASS__ . '::TAG_LIST_CHILD')));
-            }
-        );
+        return $this->getAnnotatedEntites(static::getClassesTree());
     }
 
     /**
@@ -99,7 +110,7 @@ class Main extends \Includes\Decorator\Plugin\APlugin
      */
     protected function getAnnotatedTemplates()
     {
-        return static::getTemplatesCollection()->getList();
+        return $this->getAnnotatedEntites(static::getTemplatesCollection());
     }
 
     /**
@@ -234,7 +245,7 @@ class Main extends \Includes\Decorator\Plugin\APlugin
         foreach ($nodes as $node) {
 
             // It's allowed to define several tags per class
-            foreach ((array) $node->getTag(self::TAG_LIST_CHILD) as $attrs) {
+            foreach ($node->getTag(self::TAG_LIST_CHILD) as $attrs) {
 
                 // Prepare attributes and save them into the list
                 $data[] = $this->prepareListChildTagData($attrs) + $callback($node);
@@ -322,6 +333,21 @@ class Main extends \Includes\Decorator\Plugin\APlugin
         $this->getRepo()->insertInBatch($this->getAllListChildTags());
     }
 
+
+    /**
+     * Method to filter classes and templates
+     *
+     * @param \Includes\DataStructure\Cell $node current node
+     *
+     * @return bool
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function filterCallback(\Includes\DataStructure\Cell $node)
+    {
+        return !is_null($node->getTag(self::TAG_LIST_CHILD));
+    }
 
     /**
      * Generate widget lists
