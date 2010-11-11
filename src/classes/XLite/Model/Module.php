@@ -86,39 +86,6 @@ class Module extends \XLite\Model\AEntity
     protected $enabled = false;
 
     /**
-     * Dependencies 
-     * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     * @Column (type="string", length="1024")
-     */
-    protected $dependencies = '';
-
-    /**
-     * Mutual modules list
-     * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     * @Column (type="string", length="1024")
-     */
-    protected $mutual_modules = '';
-
-    /**
-     * Type 
-     * 
-     * @var    integer
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     * @Column (type="integer")
-     */
-    protected $type = \XLite\Module\AModule::MODULE_GENERAL;
-
-    /**
      * Installed status
      * 
      * @var    integer
@@ -128,17 +95,6 @@ class Module extends \XLite\Model\AEntity
      * @Column (type="integer")
      */
     protected $installed = self::NOT_INSTALLED;
-
-    /**
-     * Version
-     *
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     * @Column (type="string", length="12")
-     */
-    protected $version = '1.0';
 
     /**
      * Last version
@@ -173,16 +129,6 @@ class Module extends \XLite\Model\AEntity
     protected $mainClass = null; 
 
     /**
-     * Icon 
-     * 
-     * @var    \Xite\Model\Image
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected $icon = null; 
-
-    /**
      * Set enabled status
      * 
      * @param boolean $enabled Enabled status
@@ -205,7 +151,8 @@ class Module extends \XLite\Model\AEntity
     }
 
     /**
-     * Get inverted dependencies 
+     * Get inverted dependencies
+     * TODO:
      * 
      * @return array
      * @access public
@@ -214,7 +161,8 @@ class Module extends \XLite\Model\AEntity
      */
     public function getInvertedDependencies()
     {
-        return $this->getRepository()->findAllByDepend($this->getName());
+        //return $this->getRepository()->findAllByDepend($this->getName());
+        return array();
     }
 
     /**
@@ -311,68 +259,6 @@ class Module extends \XLite\Model\AEntity
     }
 
     /**
-     * Get mutual modules 
-     * 
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getMutualModules()
-    {
-        return explode(',', $this->mutual_modules);
-    }
-
-    /**
-     * Set mutual modules list
-     *
-     * @param mixed $modules Modules list (string or array)
-     *  
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function setMutualModules($modules)
-    {
-        $this->mutual_modules = is_string($modules)
-            ? $modules
-            : implode(',', $modules);
-    }
-
-    /**
-     * Get dependencies modules 
-     * 
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getDependencies()
-    {
-        return $this->dependencies
-            ? explode(',', $this->dependencies)
-            : array();
-    }
-
-    /**
-     * Set dependencies modules list
-     * 
-     * @param mixed $modules Modules list (string or array)
-     *  
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function setDependencies($modules)
-    {
-        $this->dependencies = is_string($modules)
-            ? $modules
-            : implode(',', $modules);
-    }
-
-    /**
      * Get dependencies modules 
      * 
      * @return array
@@ -405,12 +291,15 @@ class Module extends \XLite\Model\AEntity
         }
 
         // Check dependencies
-        if ($status && $this->getDependencies()) {
+        if ($status) {
+
             foreach ($this->getDependenciesModules() as $module) {
+
                 if (!$module->getEnabled()) {
                     $status = false;
                     break;
                 }
+
             }
         }
 
@@ -474,12 +363,6 @@ class Module extends \XLite\Model\AEntity
         $mainClass = $this->getMainClass();
 
         if ($mainClass) {
-
-            // Set properties
-            $this->setMutualModules($mainClass->getMutualModulesList());
-            $this->setDependencies($mainClass->getDependenciesList());
-            $this->setType($mainClass->getModuleType());
-            $this->setVersion($mainClass->getVersion());
 
             // Install SQL dump
             $installSQLPath = LC_MODULES_DIR . $name . LC_DS . 'install.sql';
@@ -637,33 +520,6 @@ class Module extends \XLite\Model\AEntity
     }
 
     /**
-     * Get module icon 
-     * TODO: implement the module icons functionality
-     * 
-     * @return \XLite\Model\Image
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getIcon()
-    {
-        return $this->icon;
-    }
-
-    /**
-     * Check if module has icon 
-     * 
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function hasIcon()
-    {
-        return !is_null($this->getIcon());
-    }
-
-    /**
      * Check if newer version exists
      * 
      * @return boolean
@@ -671,23 +527,9 @@ class Module extends \XLite\Model\AEntity
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function updateAvailable()
+    public function isUpdateAvailable()
     {
         return -1 === version_compare($this->getVersion(), $this->last_version);
     }
 
-    /**
-     * Get external page URL
-     * TODO: rework this when modules management is implemented
-     *       on LiteCommerce site
-     *
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getExternalPageURL()
-    {
-        return '#' . $this->getName();
-    }
 }

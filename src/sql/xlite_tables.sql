@@ -176,19 +176,12 @@ CREATE TABLE xlite_modules (
   module_id int(6) NOT NULL auto_increment,
   name varchar(64) NOT NULL default '',
   enabled int(1) unsigned NOT NULL default '0',
-  dependencies varchar(1024) NOT NULL default '',
-  mutual_modules varchar(1024) NOT NULL default '',
-  type int(1) unsigned NOT NULL default '0',
-  version varchar(12) NOT NULL default '',
   installed int(1) unsigned NOT NULL default 0,
   last_update int(11) default NULL,
   last_version varchar(32) NOT NULL default '',
   PRIMARY KEY (module_id),
   UNIQUE KEY (name),
-  KEY enabled (enabled),
-  KEY dependencies (dependencies),
-  KEY mutual_modules (mutual_modules),
-  KEY type (type)
+  KEY enabled (enabled)
 ) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 DROP TABLE IF EXISTS xlite_order_items;

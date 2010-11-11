@@ -517,9 +517,14 @@ class Decorator extends Decorator\ADecorator
                 $module = $module['name'];
 
                 // Fetch dependencies from db
+                // FIXME: rework this, dependencies no longer stored in the DB
+                /*
                 $dependencies = \Includes\Utils\Database::fetchColumn(
                     'SELECT dependencies FROM xlite_modules WHERE name = \'' . addslashes($module) . '\''
                 );
+                */
+                $dependencies = array();
+
                 $this->moduleDependencies[$module] = empty($dependencies)
                     ? array()
                     : explode(',', $dependencies);
