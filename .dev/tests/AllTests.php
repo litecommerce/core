@@ -193,7 +193,7 @@ class XLite_Tests_AllTests
                     $suite->addTestSuite($class);
 
                     if (isset($includeTests[$matches[1]])) {
-                        $class::$testsRange = array($includeTests[$matches[1]]);
+                        eval($class . '::$testsRange = array($includeTests[$matches[1]]);');
                     }
 
                 }
@@ -224,7 +224,7 @@ class XLite_Tests_AllTests
                     $suite->addTestSuite($class);
 
                     if (isset($includeTests[$matches[1]])) {
-                        $class::$testsRange = array($includeTests[$matches[1]]);
+                        eval($class . '::$testsRange = array($includeTests[$matches[1]]);');
                     }
                 }
             } 
