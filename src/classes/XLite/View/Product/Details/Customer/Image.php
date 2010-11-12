@@ -41,24 +41,20 @@ namespace XLite\View\Product\Details\Customer;
 class Image extends \XLite\View\Product\Details\Customer\ACustomer
 {
     /**
-     * Cloud zoom layer maximum width
+     * Widget params names
      */
-    const PARAM_ZOOM_MAX_WIDTH = 'zoomMaxWidth';
 
-    /**
-     * Zoom coefficient
-     */
+    // Cloud zoom layer maximum width
+    const PARAM_ZOOM_MAX_WIDTH = 'zoomMaxWidth';
+    
+    // Zoom coefficient
     const PARAM_K_ZOOM = 'kZoom';
 
-    /**
-     * Image max width on product details page and Quick Look box
-     */
+    // Image max width on product details page and Quick Look box
     const PARAM_IMG_MAX_WIDTH_PD = 'imgMaxWidthPD';
     const PARAM_IMG_MAX_WIDTH_QL = 'imgMaxWidthQL';
 
-    /**
-     * Relative horizontal position of the zoom box
-     */
+    // Relative horizontal position of the zoom box
     const PARAM_ZOOM_ADJUST_X_PD = 'zoomAdjustXPD';
     const PARAM_ZOOM_ADJUST_X_QL = 'zoomAdjustXQL';
 
@@ -136,7 +132,7 @@ class Image extends \XLite\View\Product\Details\Customer\ACustomer
 
                 foreach($this->getProduct()->getImages() as $img) {
    
-                    if ($img->getWidth() > $this->getParam('kZoom') * $this->getWidgetMaxWidth()) {
+                    if ($img->getWidth() > $this->getParam(self::PARAM_K_ZOOM) * $this->getWidgetMaxWidth()) {
                         $this->isZoom= true;
                         break;
                     } 
@@ -170,7 +166,7 @@ class Image extends \XLite\View\Product\Details\Customer\ACustomer
      */
     protected function getZoomWidth()
     {
-        return min($this->getProduct()->getImage()->getWidth(), $this->getParam('zoomMaxWidth'));
+        return min($this->getProduct()->getImage()->getWidth(), $this->getParam(self::PARAM_ZOOM_MAX_WIDTH));
     }
 
     /**
@@ -213,11 +209,11 @@ class Image extends \XLite\View\Product\Details\Customer\ACustomer
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getWidgetMaxWidth()
+    protected function getWidgetMaxWidth()
     {
         return strpos($this->viewListName, 'quicklook')
-            ? $this->getParam('imgMaxWidthQL')
-            : $this->getParam('imgMaxWidthPD');
+            ? $this->getParam(self::PARAM_IMG_MAX_WIDTH_QL)
+            : $this->getParam(self::PARAM_IMG_MAX_WIDTH_PD);
     }
 
     /**
@@ -256,8 +252,23 @@ class Image extends \XLite\View\Product\Details\Customer\ACustomer
     public function getZoomAdjustX()
     {
         return strpos($this->viewListName, 'quicklook')
-            ? $this->getParam('zoomAdjustXQL')
-            : $this->getParam('zoomAdjustXPD');
+            ? $this->getParam(self::PARAM_ZOOM_ADJUST_X_QL)
+            : $this->getParam(self::PARAM_ZOOM_ADJUST_X_PD);
+    }
+
+    /**
+     * Return data to send to JS
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getJSData()
+    {
+        return array(
+            'kZoom' => $this->getParam(self::PARAM_K_ZOOM)
+        );
     }
 
 }
