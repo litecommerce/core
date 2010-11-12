@@ -113,8 +113,13 @@ class Category extends \XLite\Model\Repo\Base\I18n
         $queryBuilder = $this->createQueryBuilder();
         $category = $this->getCategory($categoryId);
 
-        $this->addSubTreeCondition($queryBuilder, $categoryId, 'lpos', 1, $category->getLpos());
-        $this->addSubTreeCondition($queryBuilder, $categoryId, 'rpos', $category->getRpos(), $this->getMaxRightPos());
+        if ($category) {
+            $this->addSubTreeCondition($queryBuilder, $categoryId, 'lpos', 1, $category->getLpos());
+            $this->addSubTreeCondition($queryBuilder, $categoryId, 'rpos', $category->getRpos(), $this->getMaxRightPos());
+
+        } else {
+            // TODO - add throw exception
+        }
 
         return $queryBuilder;
     }
@@ -266,7 +271,11 @@ class Category extends \XLite\Model\Repo\Base\I18n
             $parent = $this->getCategory($data['parent_id']);
         }
 
-        return array('lpos' => $parent->getLpos() + 1, 'rpos' => $parent->getLpos() + 2, 'parent' => $parent) + $data;
+        return array(
+            'lpos' => $parent->getLpos() + 1,
+            'rpos' => $parent->getLpos() + 2,
+            'parent' => $parent
+        ) + $data;
     }
 
     /**
@@ -322,18 +331,25 @@ class Category extends \XLite\Model\Repo\Base\I18n
      */
     protected function performInsert(array $data = array())
     {
+        $entity = null;
+
         // Parent category is always exists
         $parent = $this->getCategory($data['parent_id']);
 
-        // Update indexes in the nested set
-        $this->defineUpdateIndexQuery('lpos', $parent->getLpos())->getQuery()->execute();
-        $this->defineUpdateIndexQuery('rpos', $parent->getLpos())->getQuery()->execute();
+        if ($parent) {
+            // Update indexes in the nested set
+            $this->defineUpdateIndexQuery('lpos', $parent->getLpos())->getQuery()->execute();
+            $this->defineUpdateIndexQuery('rpos', $parent->getLpos())->getQuery()->execute();
 
-        // Create record in DB
-        $entity = parent::performInsert($this->prepareNewCategoryData($data, $parent));
+            // Create record in DB
+            $entity = parent::performInsert($this->prepareNewCategoryData($data, $parent));
 
-        // Update quick flags
-        $this->updateQuickFlags($parent, $this->prepareQuickFlags(1, $entity->getEnabled() ? 1 : -1));
+            // Update quick flags
+            $this->updateQuickFlags($parent, $this->prepareQuickFlags(1, $entity->getEnabled() ? 1 : -1));
+
+        } else {
+            // TODO - add throw excception
+        }
 
         return $entity;
     }
@@ -599,9 +615,13 @@ class Category extends \XLite\Model\Repo\Base\I18n
     {
         $category = $this->getCategory($categoryId);
 
-        $lpos = $lpos ?: $category->getLpos();
-        $rpos = $rpos ?: $category->getRpos();
+        if ($category) {
+            $lpos = $lpos ?: $category->getLpos();
+            $rpos = $rpos ?: $category->getRpos();
 
-        $qb->andWhere($qb->expr()->between('c.' . $field, $lpos, $rpos));
+            $qb->andWhere($qb->expr()->between('c.' . $field, $lpos, $rpos));
+        }
+
+        return isset($category);
     }
 }

@@ -166,6 +166,10 @@ class XLite_Tests_Module_ProductOptions_Model_Repo_OptionGroup extends XLite_Tes
                 $p->detach();
             }
 
+            if (!$this->product) {
+                $this->fail('Can not find enabled product');
+            }
+
             // Clean option groups
             foreach ($this->product->getOptionGroups() as $group) {
                 \XLite\Core\Database::getEM()->remove($group);

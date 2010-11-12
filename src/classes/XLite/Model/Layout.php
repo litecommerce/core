@@ -91,6 +91,19 @@ class Layout extends \XLite\Base\Singleton
 
 
     /**
+     * Return skin name
+     *
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getSkin()
+    {
+        return $this->skin;
+    }
+
+    /**
      * Return full URL by the skindir-related one
      *
      * @param string $url Relative URL
@@ -209,7 +222,48 @@ class Layout extends \XLite\Base\Singleton
      */
     public function setAdminSkin()
     {
-        $this->skin = self::PATH_ADMIN;
+        $this->setSkin(self::PATH_ADMIN);
+    }
+
+    /**
+     * Set current skin as the mail one
+     * 
+     * @return null
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setMailSkin()
+    {
+        $this->setSkin(\XLite\Model\Mailer::MAIL_SKIN);
+    }
+
+    /**
+     * Set current skin as the customer one
+     * 
+     * @return null
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setCustomerSkin()
+    {
+        $this->setOptions();
+    }
+
+    /**
+     * Set current skin 
+     * 
+     * @param string $skin New skin
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setSkin($skin)
+    {
+        $this->skin = $skin;
         $this->setPath();
     }
 

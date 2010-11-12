@@ -6,7 +6,6 @@ DELETE FROM xlite_category_quick_flags;
 DELETE FROM xlite_products;
 DELETE FROM xlite_product_translations;
 DELETE FROM xlite_product_images;
-DELETE FROM xlite_product_thumbnails;
 
 INSERT INTO xlite_categories VALUES (1,0,1,6,0,1,'',1);
 INSERT INTO xlite_categories VALUES (14015,1,2,3,0,1,'fruit',1);
@@ -60,12 +59,3 @@ INSERT INTO `xlite_product_images` (`image_id`, `id`, `path`, `mime`, `width`, `
 INSERT INTO `xlite_product_images` (`image_id`, `id`, `path`, `mime`, `width`, `height`, `size`, `date`, `hash`) VALUES (8,15091,'demo_p15091.jpeg','image/jpeg',480,480,163746,1280314462,'');
 INSERT INTO `xlite_product_images` (`image_id`, `id`, `path`, `mime`, `width`, `height`, `size`, `date`, `hash`) VALUES (9,15067,'demo_p15067.jpeg','image/jpeg',319,480,99541,1280314462,'');
 
-INSERT INTO `xlite_product_thumbnails` (`image_id`, `id`, `path`, `mime`, `width`, `height`, `size`, `date`, `hash`) VALUES (1,15090,'demo_t15090.jpeg','image/jpeg',160,152,12605,1280314462,'');
-INSERT INTO `xlite_product_thumbnails` (`image_id`, `id`, `path`, `mime`, `width`, `height`, `size`, `date`, `hash`) VALUES (2,16281,'demo_t16281.jpeg','image/jpeg',160,150,12191,1280314462,'');
-INSERT INTO `xlite_product_thumbnails` (`image_id`, `id`, `path`, `mime`, `width`, `height`, `size`, `date`, `hash`) VALUES (3,16280,'demo_t16280.jpeg','image/jpeg',160,107,8073,1280314462,'');
-INSERT INTO `xlite_product_thumbnails` (`image_id`, `id`, `path`, `mime`, `width`, `height`, `size`, `date`, `hash`) VALUES (4,16282,'demo_t16282.jpeg','image/jpeg',160,127,10863,1280314462,'');
-INSERT INTO `xlite_product_thumbnails` (`image_id`, `id`, `path`, `mime`, `width`, `height`, `size`, `date`, `hash`) VALUES (5,15121,'demo_t15121.jpeg','image/jpeg',160,154,13303,1280314462,'');
-INSERT INTO `xlite_product_thumbnails` (`image_id`, `id`, `path`, `mime`, `width`, `height`, `size`, `date`, `hash`) VALUES (6,15123,'demo_t15123.jpeg','image/jpeg',160,113,10966,1280314462,'');
-INSERT INTO `xlite_product_thumbnails` (`image_id`, `id`, `path`, `mime`, `width`, `height`, `size`, `date`, `hash`) VALUES (7,15068,'demo_t15068.jpeg','image/jpeg',160,160,7998,1280314462,'');
-INSERT INTO `xlite_product_thumbnails` (`image_id`, `id`, `path`, `mime`, `width`, `height`, `size`, `date`, `hash`) VALUES (8,15091,'demo_t15091.jpeg','image/jpeg',160,160,9412,1280314462,'');
-INSERT INTO `xlite_product_thumbnails` (`image_id`, `id`, `path`, `mime`, `width`, `height`, `size`, `date`, `hash`) VALUES (9,15067,'demo_t15067.jpeg','image/jpeg',106,160,6487,1280314462,'');

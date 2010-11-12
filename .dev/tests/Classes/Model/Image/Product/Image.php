@@ -113,6 +113,10 @@ class XLite_Tests_Model_Image_Product_Image extends XLite_Tests_TestCase
         if (!isset($this->product)) {
             $this->product = \XLite\Core\Database::getRepo('XLite\Model\Product')->findOneByEnabled(true);
 
+            if (!$this->product) {
+                $this->fail('Enabeld product not found');
+            }
+
             // Remove old detailed images
             foreach ($this->product->getImages() as $i) {
                  \XLite\Core\Database::getEM()->remove($i);

@@ -222,7 +222,7 @@ class Subcategories extends \XLite\View\Dialog
      */
     protected function hasSubcategories()
     {
-        return $this->getCategory()->hasSubcategories();
+        return $this->getCategory() ? $this->getCategory()->hasSubcategories() : false;
     }
 
     /**
@@ -235,7 +235,7 @@ class Subcategories extends \XLite\View\Dialog
      */
     protected function getSubcategories()
     {
-        return $this->getCategory()->getSubcategories();
+        return $this->getCategory() ? $this->getCategory()->getSubcategories() : array();
     }
 
 
@@ -250,6 +250,7 @@ class Subcategories extends \XLite\View\Dialog
     public static function getAllowedTargets()
     {
         $result = parent::getAllowedTargets();
+
         $result[] = 'main';
         $result[] = 'category';
     
