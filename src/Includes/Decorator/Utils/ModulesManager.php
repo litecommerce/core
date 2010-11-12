@@ -28,10 +28,6 @@
 
 namespace Includes\Decorator\Utils;
 
-// FIXME - must be moved into the class
-define('LC_DS_QUOTED', preg_quote(LC_DS, '/'));
-define('LC_DS_OPTIONAL', '(' . LC_DS_QUOTED . '|$)');
-
 /**
  * ModulesManager 
  * 
@@ -146,19 +142,22 @@ abstract class ModulesManager extends AUtils
     /**
      * Return pattern to file path againist active modules list
      * 
-     * @param string $rootPath name of the root directory
-     * @param string $dir      name of the directory with modules
+     * @param string $rootPath name of the directory with modules
      *  
      * @return string
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected static function getPathPattern($rootPath, $dir)
+    protected static function getPathPattern($rootPath)
     {
-        $modulePattern = $dir . LC_DS_QUOTED . ($palceholder = '@') . LC_DS_OPTIONAL;
+        $quotedDS   = preg_quote(LC_DS, '/');
+        $optionalDS = '(' . $quotedDS . '|$)';
 
-        return '/^' . $rootPath . '(.((?!' . str_replace($palceholder, '\w+', $modulePattern) . ')|'
+        $palceholder   = '@';
+        $modulePattern = $quotedDS . $rootPath . $quotedDS . $palceholder . $optionalDS;
+
+        return '/^(.((?!' . str_replace($palceholder, '\w+', $modulePattern) . ')|'
             . str_replace($palceholder, '(' . implode('|', array_keys(static::getActiveModules())) . ')', $modulePattern)
             . '))*$/i';
     }
@@ -237,7 +236,7 @@ abstract class ModulesManager extends AUtils
      */
     public static function getPathPatternForPHP()
     {
-        return static::getPathPattern(preg_quote(LC_CLASSES_DIR, '/') . '\w+', 'Module');
+        return static::getPathPattern('Module');
     }
 
     /**
@@ -250,6 +249,6 @@ abstract class ModulesManager extends AUtils
      */
     public static function getPathPatternForTemplates()
     {
-        return static::getPathPattern(preg_quote(LC_SKINS_DIR, '/') . '\w+' . LC_DS_QUOTED . '\w+', 'modules');
+        return static::getPathPattern('modules');
     }
 }
