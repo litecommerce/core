@@ -154,11 +154,17 @@ abstract class ModulesManager extends AUtils
         $quotedDS   = preg_quote(LC_DS, '/');
         $optionalDS = '(' . $quotedDS . '|$)';
 
-        $palceholder   = '@';
-        $modulePattern = $quotedDS . $rootPath . $quotedDS . $palceholder . $optionalDS;
+        $placeholder   = '@';
 
-        return '/^(.((?!' . str_replace($palceholder, '\w+', $modulePattern) . ')|'
-            . str_replace($palceholder, '(' . implode('|', array_keys(static::getActiveModules())) . ')', $modulePattern)
+        if ('modules' == $rootPath) {
+            $modulePattern = '\/skins\/\w+\/\w{2}' . $quotedDS . $rootPath . $quotedDS . $placeholder . $optionalDS;
+
+        } else {
+            $modulePattern = $quotedDS . $rootPath . $quotedDS . $placeholder . $optionalDS;
+        }
+
+        return '/^(.((?!' . str_replace($placeholder, '\w+', $modulePattern) . ')|'
+            . str_replace($placeholder, '(' . implode('|', array_keys(static::getActiveModules())) . ')', $modulePattern)
             . '))*$/i';
     }
 
