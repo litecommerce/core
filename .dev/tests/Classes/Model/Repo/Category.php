@@ -192,6 +192,31 @@ class XLite_Tests_Model_Repo_Category extends XLite_Tests_TestCase
      * @see    ____func_see____
      * @since  3.0.0
      */
+    public function testGetSiblings()
+    {
+        $list = $this->getRepo()->getSiblings(14017);
+
+        $this->assertType(
+            'array',
+            $list,
+            'List of categories must be of the "array" type'
+        );
+
+        $this->assertEquals(
+            2,
+            count($list),
+            'Number of fetched categories must be "2"'
+        );
+    }
+
+    /**
+     * test 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     public function testGetSubcategories()
     {
         foreach (array(array(1, 2), array(14015, 3)) as $index => $data) {
