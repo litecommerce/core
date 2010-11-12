@@ -192,6 +192,24 @@ abstract class AItemsList extends \XLite\View\Container
     }
 
     /**
+     * prepare CSS file list for use with pager
+     * 
+     * @param array $list CSS file list
+     *  
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function preparePagerCSSFiles($list)
+    {
+        return array_merge(
+            $list,
+            self::getPager()->getCSSFiles()
+        );
+    }
+
+    /**
      * Return file name for the center part template
      *
      * @return string
@@ -560,7 +578,7 @@ abstract class AItemsList extends \XLite\View\Container
      * @return boolean
      * @access protected
      * @see    ____func_see____
-     * @since  1.0.0
+     * @since  3.0.0
      */
     protected function isHeadVisible()
     {
@@ -568,9 +586,22 @@ abstract class AItemsList extends \XLite\View\Container
     }
 
     /**
+     * Check if pager is visible
+     * 
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isPagerVisible()
+    {
+        return true;
+    }
+
+    /**
      * isFooterVisible 
      * 
-     * @return bool
+     * @return boolean
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -663,6 +694,8 @@ abstract class AItemsList extends \XLite\View\Container
         $list = parent::getCSSFiles();
         // Static call of the non-static function
         $list[] = self::getDir() . '/items_list.css';
+
+        $list = self::preparePagerCSSFiles($list);
 
         return $list;
     }

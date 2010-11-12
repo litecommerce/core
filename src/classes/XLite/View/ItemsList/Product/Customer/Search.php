@@ -73,11 +73,37 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * @return boolean
      * @access protected
      * @see    ____func_see____
-     * @since  1.0.0
+     * @since  3.0.0
      */
     protected function isHeadVisible()
     {
         return true;
+    }
+
+    /** 
+     * Check if header is visible
+     * 
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isHeaderVisible()
+    {   
+        return 0 < $this->getItemsCount();
+    }   
+
+    /**
+     * Check if pager is visible
+     * 
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isPagerVisible()
+    {
+        return 0 < $this->getItemsCount();
     }
 
     /**
