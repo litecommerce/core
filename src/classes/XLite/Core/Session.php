@@ -203,7 +203,7 @@ class Session extends \XLite\Base\Singleton
      */
     protected function clearGardage()
     {
-        xlite()->repo('Session')->removeExpired();
+        \XLite\Core\Database::getRepo('XLite\Model\Session')->removeExpired();
     }
 
     /**
@@ -218,22 +218,22 @@ class Session extends \XLite\Base\Singleton
     {
         $this->lastFormId = null;
 
-        if (!xlite()->em()->contains($this->session)) {
-            $this->session = xlite()->em()->merge($this->session);
+        if (!\XLite\Core\Database::getEM()->contains($this->session)) {
+            $this->session = \XLite\Core\Database::getEM()->merge($this->session);
         }
 
-        $cells = xlite()->repo('SessionCell')->findById($this->session->getId());
+        $cells = \XLite\Core\Database::getRepo('XLite\Model\SessionCell')->findById($this->session->getId());
 
         $old = $this->session;
         $oldId = $this->session->getId();
 
         $this->createSession();
 
-        foreach (xlite()->repo('SessionCell')->findById($oldId) as $cell) {
+        foreach (\XLite\Core\Database::getRepo('XLite\Model\SessionCell')->findById($oldId) as $cell) {
             $cell->setId($this->session->getId());
         }
 
-        xlite()->em()->remove($old);
+        \XLite\Core\Database::getEM()->remove($old);
 
         \XLite\Core\Database::getEM()->flush();
 
@@ -255,12 +255,12 @@ class Session extends \XLite\Base\Singleton
         list($sid, $source) = $this->detectPublicSessionId();
 
         if ($sid) {
-            $this->session = xlite()->repo('Session')
+            $this->session = \XLite\Core\Database::getRepo('XLite\Model\Session')
                 ->findOneBySid($sid);
 
             if ($this->session) {
                 $this->session->updateExpiry();
-                xlite()->em()->flush();
+                \XLite\Core\Database::getEM()->flush();
             }
         }
 
@@ -291,7 +291,7 @@ class Session extends \XLite\Base\Singleton
             }
         }
 
-        if ($sid && !xlite()->repo('Session')->isPublicSessionIdValid($sid)) {
+        if ($sid && !\XLite\Core\Database::getRepo('XLite\Model\Session')->isPublicSessionIdValid($sid)) {
             $sid = null;
         }
 
@@ -310,11 +310,11 @@ class Session extends \XLite\Base\Singleton
     {
         $this->session = new \XLite\Model\Session();
 
-        $this->session->setSid(xlite()->repo('Session')->generatePublicSessionId());
+        $this->session->setSid(\XLite\Core\Database::getRepo('XLite\Model\Session')->generatePublicSessionId());
         $this->session->updateExpiry();
 
-        xlite()->em()->persist($this->session);
-        xlite()->em()->flush();
+        \XLite\Core\Database::getEM()->persist($this->session);
+        \XLite\Core\Database::getEM()->flush();
     }
 
     /**
@@ -518,7 +518,7 @@ class Session extends \XLite\Base\Singleton
     public function getLanguage()
     {
         if (!isset($this->language)) {
-            $this->language = xlite()->repo('Language')
+            $this->language = \XLite\Core\Database::getRepo('XLite\Model\Language')
                 ->findOneByCode($this->getCurrentLanguage());
 
             if ($this->language) {
@@ -606,7 +606,7 @@ class Session extends \XLite\Base\Singleton
         // Process query
         $idx = 999999;
         $found = false;
-        foreach (xlite()->repo('Language')->findActiveLanguages() as $lng) {
+        foreach (\XLite\Core\Database::getRepo('XLite\Model\Language')->findActiveLanguages() as $lng) {
             if (!$found) {
                 $found = $lng->getCode();
             }
