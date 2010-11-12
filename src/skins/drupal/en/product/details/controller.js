@@ -161,7 +161,11 @@ ProductDetailsView.prototype.postprocess = function(isSuccess, initial)
 
     if (cloud.length) {
       this.zoomWidget = true;
-      
+
+      if (core.getCommentedData(cloud, 'kZoom')) {
+        this.kZoom = core.getCommentedData(cloud, 'kZoom');
+      }
+
       var imageWrapper = $(document.createElement('div')).addClass('wrapper');
       cloud.wrap(imageWrapper);
     }
@@ -321,7 +325,6 @@ ProductDetailsView.prototype.selectImage = function(pos)
   eval('var tmp = {' + $('a', next).attr('rev') + '}');
 
   if (this.zoomWidget) {
-
     if (tmp.width > middle.attr('width') * this.kZoom || tmp.height > middle.attr('height') * this.kZoom) {
       cloud.CloudZoom();
     } else {
