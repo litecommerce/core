@@ -37,15 +37,15 @@ namespace XLite;
  */
 abstract class Singleton
 {
-	/**
-	 * xlite 
-	 * 
-	 * @var    string
-	 * @access public
-	 * @see    ____var_see____
-	 * @since  3.0.0
-	 */
-	public static $xlite = '\XLite';
+    /**
+     * xlite 
+     * 
+     * @var    string
+     * @access public
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    public static $xlite = '\XLite';
 
     /**
      * request 
@@ -67,35 +67,35 @@ abstract class Singleton
      */
     public static $layout = '\XLite\Model\Layout';
 
-	/**
-	 * session 
-	 * 
-	 * @var    string
-	 * @access public
-	 * @see    ____var_see____
-	 * @since  3.0.0
-	 */
-	public static $session = '\XLite\Core\Session';
+    /**
+     * session 
+     * 
+     * @var    string
+     * @access public
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    public static $session = '\XLite\Core\Session';
 
-	/**
-	 * config 
-	 * 
-	 * @var    string
-	 * @access public
-	 * @see    ____var_see____
-	 * @since  3.0.0
-	 */
-	public static $config = '\XLite\Core\Config';
+    /**
+     * config 
+     * 
+     * @var    string
+     * @access public
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    public static $config = '\XLite\Core\Config';
 
-	/**
-	 * flexy 
-	 * 
-	 * @var    string
-	 * @access public
-	 * @see    ____var_see____
-	 * @since  3.0.0
-	 */
-	public static $flexy = '\XLite\Core\FlexyCompiler';
+    /**
+     * flexy 
+     * 
+     * @var    string
+     * @access public
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    public static $flexy = '\XLite\Core\FlexyCompiler';
 
 
     /**
