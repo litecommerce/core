@@ -28,6 +28,10 @@
 
 namespace Includes\Decorator\Utils;
 
+// FIXME - must be moved into the class
+define('LC_DS_QUOTED', preg_quote(LC_DS, '/'));
+define('LC_DS_OPTIONAL', '(' . LC_DS_QUOTED . '|$)');
+
 /**
  * ModulesManager 
  * 
@@ -142,28 +146,19 @@ abstract class ModulesManager extends AUtils
     /**
      * Return pattern to file path againist active modules list
      * 
-     * @param string $rootPath name of the directory with modules
+     * @param string $rootPath name of the root directory
+     * @param string $dir      name of the directory with modules
      *  
      * @return string
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected static function getPathPattern($rootPath)
+    protected static function getPathPattern($rootPath, $dir)
     {
-        $quotedDS   = preg_quote(LC_DS, '/');
-        $optionalDS = '(' . $quotedDS . '|$)';
+        $modulePattern = $dir . LC_DS_QUOTED . ($placeholder = '@') . LC_DS_OPTIONAL;
 
-        $placeholder   = '@';
-
-        if ('modules' == $rootPath) {
-            $modulePattern = '\/skins\/\w+\/\w{2}' . $quotedDS . $rootPath . $quotedDS . $placeholder . $optionalDS;
-
-        } else {
-            $modulePattern = $quotedDS . $rootPath . $quotedDS . $placeholder . $optionalDS;
-        }
-
-        return '/^(.((?!' . str_replace($placeholder, '\w+', $modulePattern) . ')|'
+        return '/^' . $rootPath . '(.((?!' . str_replace($placeholder, '\w+', $modulePattern) . ')|'
             . str_replace($placeholder, '(' . implode('|', array_keys(static::getActiveModules())) . ')', $modulePattern)
             . '))*$/i';
     }
@@ -242,7 +237,7 @@ abstract class ModulesManager extends AUtils
      */
     public static function getPathPatternForPHP()
     {
-        return static::getPathPattern('Module');
+        return static::getPathPattern(preg_quote(LC_CLASSES_DIR, '/') . '\w+', 'Module');
     }
 
     /**
@@ -255,6 +250,6 @@ abstract class ModulesManager extends AUtils
      */
     public static function getPathPatternForTemplates()
     {
-        return static::getPathPattern('modules');
+        return static::getPathPattern(preg_quote(LC_SKINS_DIR, '/') . '\w+' . LC_DS_QUOTED . '\w+', 'modules');
     }
 }
