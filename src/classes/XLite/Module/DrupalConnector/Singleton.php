@@ -45,5 +45,5 @@ abstract class Singleton extends \XLite\Singleton implements \XLite\Base\IDecora
      * @see    ____var_see____
      * @since  3.0.0
      */
-	public static $drupalHandler = '\XLite\Module\DrupalConnector\Handler';
+    public static $drupalHandler = '\XLite\Module\DrupalConnector\Handler';
 }
