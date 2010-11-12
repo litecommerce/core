@@ -187,15 +187,6 @@ class Decorator extends Decorator\ADecorator
     protected $cacheDriver = null;
 
     /**
-     * Template patches
-     * 
-     * @var    array
-     * @access protected
-     * @since  3.0
-     */
-    protected $templatePatches = array();
-
-    /**
      * Multilanguages classes
      * 
      * @var    array
@@ -629,10 +620,6 @@ class Decorator extends Decorator\ADecorator
                 self::INFO_CLASS_COMMENT => ($classComment = $node->__get(self::N_CLASS_COMMENT)),
             );
 
-            if (in_array('\XLite\Base\IPatcher', $node->__get(self::N_INTERFACES))) {
-                $this->templatePatches[] = $node->__get(self::N_CLASS);
-            }
-
             if ($this->isMultilang($node->__get(self::N_PARENT_CLASS))) {
                 $this->multilangs[] = $node->__get(self::N_CLASS);
             }
@@ -819,9 +806,6 @@ class Decorator extends Decorator\ADecorator
 
         // Run registered plugins
         \Includes\Decorator\Utils\PluginManager::invokeHook('run');
-
-        // Collect patches to DB
-        $this->collectPatches();
 
         // Create templates cache
         $flexy = \XLite\Core\FlexyCompiler::getInstance();
@@ -1298,90 +1282,5 @@ DATA;
         }
 
         return $result;
-    }
-
-    /**
-     * Collect template patches
-     * 
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function collectPatches()
-    {
-        // Truncate old
-        foreach (\XLite\Core\Database::getRepo('\XLite\Model\TemplatePatch')->findAll() as $r) {
-            \XLite\Core\Database::getEM()->remove($r);
-        }
-        \XLite\Core\Database::getEM()->flush();
-
-        // Create new
-        foreach ($this->templatePatches as $class) {
-            $patches = $class::getPatches();
-            if (isset($patches[$class::PATCHER_CELL_TYPE])) {
-                $patches = array($patches);
-            }
-
-            foreach ($patches as $patch) {
-
-                $valid = true;
-
-                $templatePatch = new \XLite\Model\TemplatePatch();
-
-                $templatePatch->patch_type = isset($patch[$class::PATCHER_CELL_TYPE])
-                    ? $patch[$class::PATCHER_CELL_TYPE]
-                    : $class::CUSTOM_PATCH_TYPE;
-                list($templatePatch->zone, $templatePatch->lang, $templatePatch->tpl) = explode(
-                    ':',
-                    $patch[$class::PATCHER_CELL_TPL],
-                    3
-                );
-
-                if (!$templatePatch->tpl) {
-                    continue;
-                }
-
-                if (
-                    $class::XPATH_PATCH_TYPE == $patch[$class::PATCHER_CELL_TYPE]
-                    && isset($patch[$class::XPATH_CELL_QUERY])
-                    && $patch[$class::XPATH_CELL_QUERY]
-                    && isset($patch[$class::XPATH_CELL_BLOCK])
-                ) {
-                    $templatePatch->xpath_query = $patch[$class::XPATH_CELL_QUERY];
-                    $templatePatch->xpath_insert_type = isset($patch[$class::XPATH_CELL_QUERY_INSERT_TYPE])
-                        ? $patch[$class::XPATH_CELL_QUERY_INSERT_TYPE]
-                        : $class::XPATH_INSERT_BEFORE;
-                    $templatePatch->xpath_block = $patch[$class::XPATH_CELL_BLOCK];
-
-                } elseif (
-                    $class::REGEXP_PATCH_TYPE == $patch[$class::PATCHER_CELL_TYPE]
-                    && isset($patch[$class::REGEXP_CELL_PATTERN])
-                    && $patch[$class::REGEXP_CELL_PATTERN]
-                    && isset($patch[$class::REGEXP_CELL_REPLACE])
-                ) {
-                    $templatePatch->regexp_pattern = $patch[$class::REGEXP_CELL_PATTERN];
-                    $templatePatch->regexp_replace = $patch[$class::REGEXP_CELL_REPLACE];
-
-                } elseif (
-                    $class::CUSTOM_PATCH_TYPE == $patch[$class::PATCHER_CELL_TYPE]
-                    && isset($patch[$class::CUSTOM_CELL_CALLBACK])
-                    && $patch[$class::CUSTOM_CELL_CALLBACK]
-                    && method_exists($class, $class::CUSTOM_CELL_CALLBACK)
-                ) {
-                    $templatePatch->custom_callback = $class . '::' . $patch[$class::CUSTOM_CELL_CALLBACK];
-
-                } else {
-                    $valid = false;
-                    // TODO - add decoration error logging
-                }
-
-                if ($valid) {
-                    \XLite\Core\Database::getEM()->persist($templatePatch);
-                }
-            }
-
-            \XLite\Core\Database::getEM()->flush();
-        }
     }
 }

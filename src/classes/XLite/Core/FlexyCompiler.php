@@ -184,8 +184,8 @@ class FlexyCompiler extends \XLite\Base\Singleton
     protected function getZone($zone)
     {
         return 'admin' == $zone
-            ? \XLite\Base\IPatcher::ADMIN_INTERFACE
-            : \XLite\Base\IPatcher::CUSTOMER_INTERFACE;
+            ? \XLite\Base\IPatcher::INTERFACE_ADMIN
+            : \XLite\Base\IPatcher::INTERFACE_CUSTOMER;
     }
 
     /**

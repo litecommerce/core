@@ -43,7 +43,6 @@ class Main extends \Includes\Decorator\Plugin\APlugin
 
     const TAG_LIST_CHILD = 'ListChild';
 
-
     /**
      * Parameters for the tags
      */
@@ -84,7 +83,7 @@ class Main extends \Includes\Decorator\Plugin\APlugin
      */
     protected function getAnnotatedEntites(\Includes\DataStructure\Hierarchical\AHierarchical $set)
     {
-        return $set->findByCallback(array($this, 'filterCallback'));
+        return $set->findByCallback(array($this, 'filterByListChildTag'));
     }
 
     /**
@@ -114,19 +113,6 @@ class Main extends \Includes\Decorator\Plugin\APlugin
     }
 
     /**
-     * Return the model repository for the "\XLite\Model\ViewList" class
-     * 
-     * @return \XLite\Model\Repo\ViewList
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getRepo()
-    {
-        return \XLite\Core\Database::getRepo('\XLite\Model\ViewList');
-    }
-
-    /**
      * Remove existing lists from database
      * 
      * @return void
@@ -136,7 +122,8 @@ class Main extends \Includes\Decorator\Plugin\APlugin
      */
     protected function clearAll()
     {
-        $this->getRepo()->deleteInBatch($this->getRepo()->findAll());
+        \XLite\Core\Database::getRepo('\XLite\Model\ViewList')->clearAll();
+        \XLite\Core\Database::getRepo('\XLite\Model\TemplatePatch')->clearAll();
     }
 
     /**
@@ -330,7 +317,7 @@ class Main extends \Includes\Decorator\Plugin\APlugin
      */
     protected function createLists()
     {
-        $this->getRepo()->insertInBatch($this->getAllListChildTags());
+        \XLite\Core\Database::getRepo('\XLite\Model\ViewList')->insertInBatch($this->getAllListChildTags());
     }
 
 
@@ -344,7 +331,7 @@ class Main extends \Includes\Decorator\Plugin\APlugin
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function filterCallback(\Includes\DataStructure\Cell $node)
+    public function filterByListChildTag(\Includes\DataStructure\Cell $node)
     {
         return !is_null($node->getTag(self::TAG_LIST_CHILD));
     }

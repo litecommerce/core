@@ -967,6 +967,18 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
         return $result;
     }
 
+    /**
+     * Delete all records in associated table
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function clearAll()
+    {
+        $this->deleteInBatch($this->findAll());
+    }
 
     /**
      * Return name of the primary key field.
