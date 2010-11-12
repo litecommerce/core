@@ -265,7 +265,7 @@ class FileCache extends \Doctrine\Common\Cache\AbstractCache
      */
     protected function getPathById($id)
     {
-        return $this->path . LC_DS . $id . '.php';
+        return $this->path . LC_DS . str_replace('\\', '_', $id) . '.php';
     }
 
     /**
@@ -283,6 +283,7 @@ class FileCache extends \Doctrine\Common\Cache\AbstractCache
         $result = true;
 
         $ttl = intval(file_get_contents($path, false, null, $this->headerLength, $this->ttlLength));
+
         if (0 < $ttl && time() > $ttl) {
             unlink($path);
             $result = false;

@@ -233,11 +233,14 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
     protected function getItemsPerPage()
     {
         if (!isset($this->itemsPerPage)) {
+
             $current = $this->getParam(self::PARAM_ITEMS_PER_PAGE);
+
             $this->itemsPerPage = max(
                 min($this->getItemsPerPageMax(), $current),
                 max($this->getItemsPerPageMin(), $current)
             );
+
         }
 
         return $this->itemsPerPage;
@@ -409,14 +412,13 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
      */
     protected function getPages()
     {
-
         if (is_null($this->pages)) {
 
             $this->pages = array();
 
             // Define the list of pages
-
             $id = $this->getPreviousPageId();
+
             $this->pages[] = array(
                 'type'  => 'previous-page',
                 'num'   => $id,
@@ -424,12 +426,15 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
             );
     
             $firstId = $this->getFirstPageId();
+
             if ($this->getFrameStartPage() > 0) {
+
                 $this->pages[] = array(
                     'type'  => 'first-page',
                     'num'   => $firstId,
                     'title' => $this->t('First page'),
                 );
+
                 $this->pages[] = array(
                     'type'  => 'more-pages',
                     'num'   => null,
@@ -438,7 +443,9 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
             }
 
             $from = $this->getFrameStartPage();
+
             $till = min($this->getPagesCount()+1, $this->getFrameStartPage()+$this->getFrameLength());
+
             for ($i = $from; $i < $till; $i++) {
                 $this->pages[] = array(
                     'type'  => 'item',
@@ -448,12 +455,15 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
             }
     
             $lastId = $this->getLastPageId();
+
             if ($this->getFrameStartPage() < $this->getPagesCount() - $this->getFrameLength()) {
+
                 $this->pages[] = array(
                     'type'  => 'more-pages',
                     'num'   => null,
                     'title' => '',
                 );
+
                 $this->pages[] = array(
                     'type'  => 'last-page',
                     'num'   => $lastId,
@@ -468,41 +478,50 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
                 'title' => $this->t('Next page'),
             );
 
-
             // Now prepare data for the view
-       
- 
-            foreach($this->pages as $k=>$page) {
+            foreach ($this->pages as $k => $page) {
 
                 $num = isset($page['num']) ? $page['num'] : null;
                 $type = $page['type'];
 
-                $isItem = !is_null($num) && ($type == 'item');
-                $isOmitedItems = $type == 'more-pages';
+                $isItem        = !is_null($num) && ('item' === $type);
+                $isOmitedItems = 'more-pages' === $type;
                 $isSpecialItem = !$isItem && !$isOmitedItems;
 
-                $isCurrent = !is_null($num) && $this->isCurrentPage($num);
+                $isCurrent  = !is_null($num) && $this->isCurrentPage($num);
                 $isSelected = $isItem && $isCurrent;
                 $isDisabled = $isSpecialItem && $isCurrent;
-                $isActive = !$isSelected && !$isOmitedItems && !$isDisabled;
-                $this->pages[$k]['text'] = ($isItem || ($type=='first-page') || ($type=='last-page')) ? ($num+1) : ( $isOmitedItems ? '...' : '&nbsp;' );
-                $this->pages[$k]['page'] = is_null($num) ? null : "page-$num";
-                $this->pages[$k]['href'] = (is_null($num) || $isSelected || $isDisabled) ? null : $this->buildUrlByPageId($num);
+                $isActive   = !$isSelected && !$isOmitedItems && !$isDisabled;
+
+                $this->pages[$k]['text'] = ($isItem || ('first-page' === $type) || ('last-page' === $type))
+                        ? ($num + 1) 
+                        : ($isOmitedItems ? '...' : '&nbsp;');
+
+                $this->pages[$k]['page'] = is_null($num) 
+                    ? null 
+                    : 'page-' . $num;
+
+                $this->pages[$k]['href'] = (is_null($num) || $isSelected || $isDisabled) 
+                    ? null 
+                    : $this->buildUrlByPageId($num);
 
                 $classes = array(
-                    'item'        => $isSpecialItem,
-                    'selected'    => $isSelected,
-                    'disabled'    => $isDisabled,
-                    'active'      => $isActive,
-                    $this->pages[$k]['page'] => $isItem,
-                    $type => true,
+                    'item'                      => $isSpecialItem,
+                    'selected'                  => $isSelected,
+                    'disabled'                  => $isDisabled,
+                    'active'                    => $isActive,
+                    $this->pages[$k]['page']    => $isItem,
+                    $type                       => true,
                 );
+
                 $css = array();
-                foreach ($classes as $class=>$enabled) {
+
+                foreach ($classes as $class => $enabled) {
                     if ($enabled) {
                         $css[] = $class;
                     }
                 }
+
                 $this->pages[$k]['classes'] = join(' ', $css);
     
             }
@@ -642,7 +661,9 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
     public function getCSSFiles()
     {
         $list = parent::getCSSFiles();
+
         $list[] = $this->getDir() . '/pager.css';
+
         $list[] = 'common/grid-list.css';
 
         return $list;

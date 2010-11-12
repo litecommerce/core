@@ -245,7 +245,9 @@ abstract class AController extends \XLite\Core\Handler
         $this->addBaseLocation();
 
         // Ability to define last element in path via short function
-        if ($params = (array) $this->getLocation()) {
+        $params = (array) $this->getLocation();
+
+        if ($params) {
             call_user_func_array(array('static', 'addLocationNode'), $params);
         }
     }
@@ -331,6 +333,7 @@ abstract class AController extends \XLite\Core\Handler
         if (isset($action)) {
             $method = __FUNCTION__ . \XLite\Core\Converter::convertToCamelCase($action);
             if (method_exists($this, $method)) {
+                // Call action method
                 $this->$method();
             }
         }

@@ -231,17 +231,4 @@ class OrderList extends \XLite\Controller\Customer\ACustomer
         parent::set($name, $value);
     }
 
-    /**
-     * Get page title
-     *
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getTitle()
-    {
-        return 'Orders list';
-    }
 }
-
