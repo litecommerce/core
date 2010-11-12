@@ -65,12 +65,12 @@ class Image extends \XLite\Model\Base\Image
     /**
      * Relation to a product entity
      *
-     * @var    \Doctrine\Common\Collections\ArrayCollection
+     * @var    \XLite\Model\Order
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @ManyToOne  (targetEntity="XLite\Model\Product", inversedBy="product_images")
+     * @ManyToOne  (targetEntity="XLite\Model\Product", inversedBy="images")
      * @JoinColumn (name="id", referencedColumnName="product_id")
      */
     protected $product;

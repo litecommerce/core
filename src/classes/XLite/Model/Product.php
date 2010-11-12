@@ -199,7 +199,7 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     /**
      * Product images
      *
-     * @var    \XLite\Model\Image\Product\Image
+     * @var    \Doctrine\Common\Collections\Collection
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
@@ -296,12 +296,8 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      */
     public function getImage()
     {
-        if (!isset($this->image)) {
-
-            $this->image = isset($this->images)
-                ? $this->images->get(0)
-                : \XLite\Core\Database::getRepo('\XLite\Model\Image\Product\Image')
-                    ->findOneByProductId($this->getProductId());
+        if (!isset($this->image) && $this->getImages()) {
+            $this->image = $this->getImages()->get(0);
         }
 
         return $this->image;
@@ -527,24 +523,6 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     public function getOrderBy($categoryId = null)
     {
         return $this->getLink($categoryId)->getOrderBy();
-    }
-
-    /**
-     * Get active detailed images 
-     * 
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getImages()
-    {
-        if (!isset($this->images)) {
-            $this->images = \XLite\Core\Database::getRepo('\XLite\Model\Image\Product\Image')
-                ->findByProductId($this->getProductId());
-        }
-
-        return $this->images;
     }
 
     /**

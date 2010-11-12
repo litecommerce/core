@@ -133,7 +133,7 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
      */
     public function getTitle()
     {
-        return $this->getModelObject()->getName() ?: parent::getTitle();
+        return ($this->getModelObject() && $this->getModelObject()->getName()) ?: parent::getTitle();
     }
 
     /**
@@ -145,7 +145,7 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
      */
     public function getPageTitle()
     {
-        return $this->getModelObject()->getMetaTitle() ?: ($this->getTitle() ?: parent::getTitle());
+        return ($this->getModelObject() && $this->getModelObject()->getMetaTitle()) ?: ($this->getTitle() ?: parent::getTitle());
  
     }
 

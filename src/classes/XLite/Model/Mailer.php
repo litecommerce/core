@@ -356,7 +356,7 @@ class Mailer extends \XLite\View\AView
         if (isset($this->templatesSkin)) {
             // Restore layout
             $layout = \XLite\Model\Layout::getInstance();
-            $layout->set('skin', $this->templatesSkin);
+            $layout->setSkin($this->templatesSkin);
             $this->templatesSkin = null;
         }
 
@@ -379,8 +379,8 @@ class Mailer extends \XLite\View\AView
         // replace layout with mailer skinned
         if ($switchLayout) {
             $layout = \XLite\Model\Layout::getInstance();
-            $skin = $layout->get('skin');
-            $layout->set('skin', self::MAIL_SKIN);
+            $skin = $layout->getSkin();
+            $layout->setMailSkin();
 
         } else {
             // FIXME
@@ -393,7 +393,7 @@ class Mailer extends \XLite\View\AView
 
         // restore old skin
         if ($switchLayout) {
-            $layout->set('skin', $skin);
+            $layout->setSkin($skin);
         }
 
         return $text;

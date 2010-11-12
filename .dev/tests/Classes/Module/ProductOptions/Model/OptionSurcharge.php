@@ -186,6 +186,10 @@ class XLite_Tests_Module_ProductOptions_Model_OptionSurcharge extends XLite_Test
                 $p->detach();
             }
 
+            if (!$this->product) {
+                $this->fail('Can not find enabled product');
+            }
+
             // Clean option groups
             foreach ($this->product->getOptionGroups() as $group) {
                 \XLite\Core\Database::getEM()->remove($group);

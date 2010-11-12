@@ -41,6 +41,20 @@ class MailImageParser extends \XLite\Core\FlexyCompiler
     public $images;
     public $counter;
 
+    /**
+     * Constructor
+     * FIXME - we must found anoither way... now it is antipattern Public Morozov
+     * 
+     * @return null
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
     function flexy() { }
 
     function postprocess() 

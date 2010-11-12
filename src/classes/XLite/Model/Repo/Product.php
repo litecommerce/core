@@ -248,10 +248,13 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
         if (empty($this->currentSearchCnd->{self::P_SEARCH_IN_SUBCATS})) {
             $queryBuilder->andWhere('cp.category_id = :categoryId')
                 ->setParameter('categoryId', $value);
+
         } else {
             $queryBuilder->leftJoin('cp.category', 'c');
 
-            \XLite\Core\Database::getRepo('\XLite\Model\Category')->addSubTreeCondition($queryBuilder, $value);
+            if (!\XLite\Core\Database::getRepo('XLite\Model\Category')->addSubTreeCondition($queryBuilder, $value)) {
+                // TODO - add throw exception
+            }
         }
     }
 

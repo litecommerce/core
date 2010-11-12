@@ -74,7 +74,7 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
     /**
      * Get product options list
      * 
-     * @return array of \XLite\Module\ProductOptions\Model\ProductOption
+     * @return array(\XLite\Module\ProductOptions\Model\OptionGroup)
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -82,7 +82,7 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
     public function getActiveOptions()
     {
         if (!isset($this->productOptions)) {
-            $this->productOptions = \XLite\Core\Database::getRepo('\XLite\Module\ProductOptions\Model\OptionGroup')
+            $this->productOptions = \XLite\Core\Database::getRepo('XLite\Module\ProductOptions\Model\OptionGroup')
                 ->findActiveByProductId($this->getProductId());
         }
 
