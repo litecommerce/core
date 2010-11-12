@@ -40,6 +40,7 @@ interface IPatcher
     /**
      *  Common patch record cell names
      */
+
     const PATCHER_CELL_TYPE = 'type';
     const PATCHER_CELL_TPL  = 'tpl';
 
@@ -47,6 +48,7 @@ interface IPatcher
     /**
      * XPath-based patch specific record cell names 
      */
+
     const XPATH_CELL_QUERY       = 'query';
     const XPATH_CELL_INSERT_TYPE = 'insertType';
     const XPATH_CELL_BLOCK       = 'block';
@@ -55,36 +57,41 @@ interface IPatcher
     /**
      * XPath-based patch insertion mode
      */
+
     const XPATH_INSERT_BEFORE    = 'before';
     const XPATH_INSERT_AFTER     = 'after';
     const XPATH_REPLACE          = 'replace';
 
 
     /**
-     * egular expression-based patch specific record cell names
+     * Regular expression-based patch specific record cell names
      */
+
     const REGEXP_CELL_PATTERN = 'pattern';
     const REGEXP_CELL_REPLACE = 'replace';
 
     /**
      * Callback-based patch specific record cell names 
      */
+
     const CUSTOM_CELL_CALLBACK = 'callback';
 
 
     /**
-     *  Patch types
+     * Patch types
      */
-    const XPATH_PATCH_TYPE  = 'xpath';
-    const REGEXP_PATCH_TYPE = 'regexp';
-    const CUSTOM_PATCH_TYPE = 'custom';
+
+    const PATCH_TYPE_XPATH  = 'xpath';
+    const PATCH_TYPE_REGEXP = 'regexp';
+    const PATCH_TYPE_CUSTOM = 'custom';
 
 
     /**
      * Interface codes
      */
-    const ADMIN_INTERFACE    = 'admin';
-    const CUSTOMER_INTERFACE = 'customer';
+
+    const INTERFACE_ADMIN    = 'admin';
+    const INTERFACE_CUSTOMER = 'customer';
 
 
     /**
