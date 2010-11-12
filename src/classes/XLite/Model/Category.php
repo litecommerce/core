@@ -260,6 +260,19 @@ class Category extends \XLite\Model\Base\I18n
     }
 
     /**
+     * Return siblings list
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getSiblings()
+    {
+        return $this->getRepository()->getSiblings($this->getCategoryId());
+    }
+
+    /**
      * Gets full path to the category as a string: <parent category>/.../<category name>
      * 
      * @return string
