@@ -78,7 +78,7 @@ class OrderSearch extends \XLite\View\Dialog
      */
     protected function getHead()
     {
-        return 'Search orders';
+        return $this->getTotalCount() . ' orders';
     }
 
     /**
@@ -104,11 +104,14 @@ class OrderSearch extends \XLite\View\Dialog
     protected function getConditions()
     {
         if (!isset($this->conditions)) {
+
             $this->conditions = $this->session->get('orders_search');
+
             if (!is_array($this->conditions)) {
                 $this->conditions = array();
                 $this->session->set('orders_search', $this->conditions);
             }
+
         }
 
         $cnd = new \XLite\Core\CommonCell();
@@ -126,8 +129,14 @@ class OrderSearch extends \XLite\View\Dialog
         }
 
         $cnd->orderBy = array('o.' . $this->conditions['sortCriterion'], $this->conditions['sortOrder']);
-        $cnd->orderId = $this->conditions['order_id'];
-        $cnd->status = $this->conditions['status'];
+
+        if (isset($this->conditions['order_id'])) {
+            $this->cnd->orderId = $this->conditions['order_id'];
+        }   
+
+        if (isset($this->conditions['status'])) {
+            $this->cnd->status = $this->conditions['status'];
+        }   
 
         if ($this->conditions['startDate'] < $this->conditions['endDate']) {
             $cnd->date = array($this->conditions['startDate'], $this->conditions['endDate']);
@@ -196,15 +205,21 @@ class OrderSearch extends \XLite\View\Dialog
         $result = null;
 
         if (\XLite::isAdminZone()) {
+
             if (\XLite\Core\Request::getInstance()->profile_id) {
-                $result = \XLite\Core\Database::getRepo('XLite\Model\Profile')->find(\XLite\Core\Request::getInstance()->profile_id);
+
+                $result = \XLite\Core\Database::getRepo('XLite\Model\Profile')
+                    ->find(\XLite\Core\Request::getInstance()->profile_id);
+
                 if (!$result->isExists()) {
                     $result = null;
                 }
             }
 
         } else {
+
             $result = \XLite\Core\Auth::getInstance()->getProfile(\XLite\Core\Request::getInstance()->profile_id);
+
             if (!$result) {
                 $result = \XLite\Core\Auth::getInstance()->getProfile();
             }

@@ -107,8 +107,8 @@ class Subcategories extends \XLite\View\Dialog
     /**
      * Check if widget is visible
      *
-     * @return bool
-     * @access public
+     * @return boolean
+     * @access protected
      * @since  3.0.0
      */
     protected function isVisible()

@@ -11,6 +11,7 @@
  * @since     3.0.0
  *}
 <div class="orders-list {getClassIdentifier()}">
+
   {displayViewListContent(#orders.childs#)}
 
 <script type="text/javascript">

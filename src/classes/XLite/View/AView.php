@@ -764,14 +764,22 @@ abstract class AView extends \XLite\Core\Handler
     protected function isSelected($val1, $val2, $val3 = null)
     {
         if (isset($val1) && isset($val3)) {
+
             $method = 'get';
+
             if ($val1 instanceof \XLite\Model\AEntity) {
+
                 $method .= \XLite\Core\Converter::convertToCamelCase($val2);
+
             }
 
+            // Get value with get() method and compare it with third value
             $result = $val1->$method() == $val3;
+
         } else {
+
             $result = $val1 == $val2;
+
         }
 
         return $result;
@@ -780,7 +788,7 @@ abstract class AView extends \XLite\Core\Handler
     /**
      * Truncates the baseObject property value to specified length 
      * 
-     * @param mixed  $basei      string or object instance to get field value from
+     * @param mixed  $base       string or object instance to get field value from
      * @param mixed  $field      string length or field to get value
      * @param int    $length     field length to truncate to
      * @param string $etc        string to add to truncated field value
@@ -1107,7 +1115,7 @@ abstract class AView extends \XLite\Core\Handler
     /**
      * addViewListChild 
      * 
-     * @param array $list       list to modify
+     * @param array &$list      list to modify
      * @param array $properties node properties
      * @param int   $weight     node position
      *  
@@ -1447,7 +1455,7 @@ abstract class AView extends \XLite\Core\Handler
     /**
      * Get a nested view list 
      * 
-     * @param string $list      Suffix of the nested list name
+     * @param string $part      Suffix of the nested list name
      * @param array  $arguments List common arguments
      *  
      * @return array
@@ -1537,7 +1545,8 @@ abstract class AView extends \XLite\Core\Handler
      */
     public function displayCommentedData(array $data)
     {
-        echo '<!--' . "\r\n";
+        echo ('<!--' . "\r\n");
+
         $result = array();
 
         foreach ($data as $key => $value) {
@@ -1546,8 +1555,8 @@ abstract class AView extends \XLite\Core\Handler
 
         }
 
-        echo implode("\r\n", $result);
-        echo "\r\n" . '-->' . "\r\n";
+        echo (implode("\r\n", $result));
+        echo ("\r\n" . '-->' . "\r\n");
     }
 }
 

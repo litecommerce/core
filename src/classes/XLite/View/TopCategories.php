@@ -188,13 +188,20 @@ class TopCategories extends \XLite\View\SideBarBox
         if (!isset($this->pathIds)) {
 
             $this->pathIds = array();
-            $categoriesPath = \XLite\Core\Database::getRepo('\XLite\Model\Category')->getCategoryPath($this->getCategoryId());
+
+            $categoriesPath = \XLite\Core\Database::getRepo('\XLite\Model\Category')
+                ->getCategoryPath($this->getCategoryId());
 
             if (is_array($categoriesPath)) {
+
                 foreach ($categoriesPath as $category) {
+
                     $this->pathIds[] = $category->getCategoryId();
+
                 }
+
             }
+
         }
 
         return in_array($category->getCategoryId(), $this->pathIds);
@@ -203,8 +210,8 @@ class TopCategories extends \XLite\View\SideBarBox
     /**
      * Assemble item CSS class name 
      * 
-     * @param int                  $index    item number
-     * @param intr                 $count    items count
+     * @param integer               $index    item number
+     * @param integer               $count    items count
      * @param \XLite\Model\Category $category current category
      *  
      * @return string
@@ -248,8 +255,8 @@ class TopCategories extends \XLite\View\SideBarBox
     /**
      * Assemble list item link class name
      *
-     * @param integer              $i        item number
-     * @param integer              $count    items count
+     * @param integer               $i        item number
+     * @param integer               $count    items count
      * @param \XLite\Model\Category $category current category
      *
      * @return string
@@ -266,9 +273,9 @@ class TopCategories extends \XLite\View\SideBarBox
     /**
      * Assemble list item link class name
      *
-     * @param integer              $i        item number
-     * @param integer              $count    items count
-     * @param \XLite\Model\Category $category current category
+     * @param integer           $i        item number
+     * @param integer           $count    items count
+     * @param \XLite\View\AView $category current category FIXME! this variable is not used 
      *
      * @return string
      * @access protected

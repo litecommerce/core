@@ -11,12 +11,8 @@
  * @since     3.0.0
  * @ListChild (list="orders.search.base", weight="20")
  *}
-{if:getTotalCount()}
-  <widget class="\XLite\View\Form\Order\Search" name="order_search_form" />
-
-    <table cellspacing="0" class="form-table search-orders">
-      {displayViewListContent(#orders.search.conditions#)}
-    </table>
-
-  <widget name="order_search_form" end />
-{end:}
+<widget class="\XLite\View\Form\Order\Search" name="order_search_form" />
+  <table cellspacing="0" class="form-table search-orders">
+    {displayViewListContent(#orders.search.conditions#)}
+  </table>
+<widget name="order_search_form" end />
