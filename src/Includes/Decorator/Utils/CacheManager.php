@@ -112,7 +112,7 @@ class CacheManager extends \Includes\Decorator\Utils\AUtils
      */
     protected static function isRebuildNeeded()
     {
-        return !defined('LC_DO_NOT_REBUILD_CACHE') && (!static::isCacheDirExists() || static::isDeveloperMode());
+        return !static::isCacheDirExists() || static::isDeveloperMode();
     }
 
     /**
@@ -247,7 +247,7 @@ class CacheManager extends \Includes\Decorator\Utils\AUtils
             static::buildLCCache();
         }
 
-        if (!defined('LC_DO_NOT_REBUILD_CACHE') && !static::isDoctrineProxiesExist()) {
+        if (!static::isDoctrineProxiesExist()) {
             static::buildDoctrineProxies();
         }
     }

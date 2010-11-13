@@ -77,4 +77,6 @@ require_once (LC_INCLUDES_DIR . 'Autoloader.php');
 require_once (LC_INCLUDES_DIR . 'prepend.php');
 
 // Check and (if needed) rebild classes cache
-\Includes\Decorator\Utils\CacheManager::rebuildCache();
+if (!defined('LC_DO_NOT_REBUILD_CACHE')) {
+    \Includes\Decorator\Utils\CacheManager::rebuildCache();
+}
