@@ -54,7 +54,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
         'AdminIP'     => 'Admin IP protection',
         'Captcha'     => 'Captcha protection',
         'Environment' => 'Environment',
-        'Perfomance'  => 'Perfomance',
+        'Performance'  => 'Performance',
     );
 
     /**
