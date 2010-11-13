@@ -463,15 +463,14 @@ class Config extends \XLite\Model\Repo\Base\I18n
 
         // Existing option: unset key fields
         if ($option) {
-            unset($fields['name']);
-            unset($fields['category']);
+            $option->setValue($fields['value']);
 
         } else {
             // Create a new option
             $option = new \XLite\Model\Config();
+            $option->map($fields);
         }
 
-        $option->map($fields);
         \XLite\Core\Database::getEM()->persist($option);
         \XLite\Core\Database::getEM()->flush();
     }
