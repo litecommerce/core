@@ -1297,7 +1297,7 @@ class FlexyCompiler extends \XLite\Base\Singleton
             . '\w+' . preg_quote(LC_DS, '/') . '\w+' . preg_quote(LC_DS, '/') . ').*';
 
         $this->checkTemplateStatus 
-            = \XLite\Core\Config::getInstance()->Perfomance->check_templates_status;
+            = \XLite\Core\Config::getInstance()->Performance->check_templates_status;
     }
 }
 
