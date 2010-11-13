@@ -26,7 +26,7 @@
  * @since      3.0.0
  */
 
-namespace Includes\Decorator\Utils\ClassData;
+namespace Includes\Decorator\Utils;
 
 /**
  * Parser 
@@ -35,7 +35,7 @@ namespace Includes\Decorator\Utils\ClassData;
  * @see        ____class_see____
  * @since      3.0.0
  */
-abstract class Parser extends \Includes\Decorator\Utils\AParser
+abstract class Parser extends \Includes\Decorator\Utils\Base\Parser
 {
     /**
      * List of parsers
@@ -158,4 +158,4 @@ abstract class Parser extends \Includes\Decorator\Utils\AParser
     }
 }
 
-\Includes\Decorator\Utils\ClassData\Parser::__constructStatic();
+\Includes\Decorator\Utils\Parser::__constructStatic();

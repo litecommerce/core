@@ -102,7 +102,7 @@ abstract class PluginManager extends \Includes\Decorator\Utils\AUtils
      */
     protected static function getPluginClass($plugin)
     {
-        return '\Includes\Decorator\Plugin\\' . $plugin . '\Main';
+        return '\Includes\Decorator\Plugin\\' . str_replace('_', '\\', $plugin) . '\Main';
     }
 
     /**
@@ -131,7 +131,6 @@ abstract class PluginManager extends \Includes\Decorator\Utils\AUtils
     protected static function checkConfigData(array $data)
     {
         if (empty($data[self::SECTION_PLUGINS])) {
-
             throw new \Exception('There is no section "' . self::SECTION_PLUGINS . '" in the "' . self::FILE_INI . '" file');
         }
     }
@@ -155,8 +154,12 @@ abstract class PluginManager extends \Includes\Decorator\Utils\AUtils
                 $data = static::parseConfigFile();
                 static::checkConfigData($data);
 
+                // Set plugins order
+                $plugins = array_filter($data[self::SECTION_PLUGINS]);
+                asort($plugins, SORT_NUMERIC);
+
                 // Save plugins list
-                static::$plugins = array_fill_keys(array_keys(array_filter($data[self::SECTION_PLUGINS])), null);
+                static::$plugins = array_fill_keys(array_keys($plugins), null);
 
             } else {
 
@@ -181,11 +184,11 @@ abstract class PluginManager extends \Includes\Decorator\Utils\AUtils
     {
         if (!isset(static::$plugins[$name])) {
 
-            if (!is_subclass_of(static::getPluginClass($name), self::CLASS_BASE)) {
+            if (!is_subclass_of($class = static::getPluginClass($name), self::CLASS_BASE)) {
                 throw new \Exception('Plugin "' . $name . '" does not extend the "' . self::CLASS_BASE . '" class');
             }
 
-            static::$plugins[$name] = \Includes\Pattern\Factory::create(static::getPluginClass($name));
+            static::$plugins[$name] = \Includes\Pattern\Factory::create($class);
         }
 
         return static::$plugins[$name];

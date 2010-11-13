@@ -26,7 +26,7 @@
  * @since      3.0.0
  */
 
-namespace Includes\Decorator\Data\Templates;
+namespace Includes\Decorator\Plugin\Templates\Data\Templates;
 
 /**
  * List 
@@ -79,7 +79,7 @@ class Collection extends \Includes\DataStructure\Hierarchical\AHierarchical
     protected function prepareNodeData($fileinfo)
     {
         // return null;
-        return \Includes\Decorator\Utils\Template\Parser::parse($fileinfo);
+        return \Includes\Decorator\Plugin\Templates\Utils\Parser::parse($fileinfo);
     }
 
     /**
@@ -87,14 +87,14 @@ class Collection extends \Includes\DataStructure\Hierarchical\AHierarchical
      *
      * @param array $node node data
      *
-     * @return \Includes\Decorator\Data\Templates\Node
+     * @return \Includes\Decorator\Plugin\Templates\Data\Templates\Node
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
     protected function createNode(array $data = array())
     {
-        return new \Includes\Decorator\Data\Templates\Node($data);
+        return new \Includes\Decorator\Plugin\Templates\Data\Templates\Node($data);
     }
 
     /**

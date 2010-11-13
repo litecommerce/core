@@ -26,78 +26,70 @@
  * @since      3.0.0
  */
 
-namespace Includes\Decorator\Utils\Template;
+namespace Includes\Decorator\Plugin\Templates\Plugin\Compiler;
 
 /**
- * Parser 
- * 
- * @package    XLite
- * @see        ____class_see____
- * @since      3.0.0
+ * Decorator plugin to patch templates
+ *
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
-abstract class Parser extends \Includes\Decorator\Utils\AParser
+class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
 {
     /**
-     * List of parsers
-     *
-     * NOTE: do not remove this (re)declaration:
-     * it's needed for the correct work of the PHP late static binding
-     *
-     * @var    array
+     * Instance of the Flexy compiler
+     * 
+     * @var    \Xlite\Core\FlexyCompiler
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected static $parsers = array();
+    protected static $flexy;
 
 
     /**
-     * Define main pattern
-     *
-     * @return string
+     * Static templates compilation
+     * 
+     * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected static function getPatternParserMain()
+    protected function createTemplatesCache()
     {
-        return '/\{\*(?:[^\*]|(?:\*+[^\*\}]))*@\w+\s*.*(?:[^\*]|(?:\*+[^\*\}]))*\*+\}/USsi';
+        foreach (static::getTemplatesCollection()->getList() as $template) {
+            static::$flexy->prepare(
+                \Includes\Utils\FileManager::getRelativePath($template->__get(self::N_FILE_PATH), LC_ROOT_DIR, 'tpl'),
+                true
+            );
+        }
     }
 
-    /**
-     * Get schema for the data returned by certain parser
-     *
-     * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected static function getSchemaParserMain()
-    {
-        return array(
-            self::N_TEMPLATE_COMMENT => 0,
-        );
-    }
 
-    
     /**
-     * So called static constructor
+     * Execute "run" hook handler
      * 
      * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function __constructStatic()
+    public function executeHookHandlerRun()
     {
-        static::registerParser(
-            'Main',
-            static::getPatternParserMain(),
-            static::getSchemaParserMain(),
-            array('static', 'postprocessParserTags')
-        );
+        $this->createTemplatesCache();
+    }
+
+    /**
+     * Constructor
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function __construct()
+    {
+        static::$flexy = \Xlite\Core\FlexyCompiler::getInstance();
     }
 }
-
-// Call the static constructor
-\Includes\Decorator\Utils\Template\Parser::__constructStatic();

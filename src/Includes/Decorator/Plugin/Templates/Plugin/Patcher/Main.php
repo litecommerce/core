@@ -26,16 +26,16 @@
  * @since      3.0.0
  */
 
-namespace Includes\Decorator\Plugin\TemplatePatcher;
+namespace Includes\Decorator\Plugin\Templates\Plugin\Patcher;
 
 /**
  * Decorator plugin to patch templates
- * 
+ *
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Main extends \Includes\Decorator\Plugin\APlugin
+class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
 {
     /**
      * Interface for so called "patcher" classes
@@ -187,7 +187,7 @@ class Main extends \Includes\Decorator\Plugin\APlugin
     }
 
     /**
-     * Generate widget lists
+     * Execute "run" hook handler
      * 
      * @return void
      * @access public

@@ -26,10 +26,10 @@
  * @since      3.0.0
  */
 
-namespace Includes\Decorator\Utils;
+namespace Includes\Decorator\Utils\Base;
 
 /**
- * AParser
+ * Parser
  *
  * TODO: simplify code 
  * 
@@ -37,7 +37,7 @@ namespace Includes\Decorator\Utils;
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class AParser extends \Includes\Decorator\ADecorator
+abstract class Parser extends \Includes\Decorator\Utils\AUtils
 {
     /**
      * Indexes in the $parsers array

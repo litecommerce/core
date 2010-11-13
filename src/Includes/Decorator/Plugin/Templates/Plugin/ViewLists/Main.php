@@ -26,7 +26,7 @@
  * @since      3.0.0
  */
 
-namespace Includes\Decorator\Plugin\ViewLists;
+namespace Includes\Decorator\Plugin\Templates\Plugin\ViewLists;
 
 /**
  * Decorator plugin to generate widget lists
@@ -35,7 +35,7 @@ namespace Includes\Decorator\Plugin\ViewLists;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Main extends \Includes\Decorator\Plugin\APlugin
+class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
 {
     /**
      * Predefined tag names
@@ -256,7 +256,7 @@ class Main extends \Includes\Decorator\Plugin\APlugin
             $this->getAnnotatedPHPClasses(),
             function (\Includes\DataStructure\Cell $node) {
                 return array(
-                    'child' => \Includes\Decorator\Utils\ClassData\Operator::getFinalClass($node->getClass()),
+                    'child' => \Includes\Decorator\Utils\Operator::getFinalClass($node->getClass()),
                 );
             }
         );
@@ -337,7 +337,7 @@ class Main extends \Includes\Decorator\Plugin\APlugin
     }
 
     /**
-     * Generate widget lists
+     * Execute "run" hook handler
      * 
      * @return void
      * @access public
