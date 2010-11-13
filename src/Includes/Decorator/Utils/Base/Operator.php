@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage Includes
+ * @subpackage Includes_Decorator_Utils
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -26,30 +26,15 @@
  * @since      3.0.0
  */
 
-namespace Includes\Decorator\Utils\ClassData;
+namespace Includes\Decorator\Utils\Base;
 
 /**
  * Operator 
  * 
- * @package    XLite
- * @see        ____class_see____
- * @since      3.0.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
-abstract class Operator extends \Includes\Decorator\Utils\ClassData\AClassData
+abstract class Operator extends \Includes\Decorator\Utils\AUtils
 {
-    /**
-     * Find final class in the classes tree
-     * FIXME
-     * 
-     * @param string $class child class name
-     *  
-     * @return string|null
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function getFinalClass($class)
-    {
-        return is_null(static::getClassesTree()->find($class)) ? null : \Includes\Decorator::getFinalClass($class);
-    }
 }

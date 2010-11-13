@@ -26,29 +26,30 @@
  * @since      3.0.0
  */
 
-namespace Includes\Decorator\Utils\ClassData;
+namespace Includes\Decorator\Utils;
 
 /**
- * Verifier 
+ * Operator 
  * 
  * @package    XLite
  * @see        ____class_see____
  * @since      3.0.0
  */
-abstract class Verifier extends \Includes\Decorator\Utils\ClassData\AClassData
+abstract class Operator extends \Includes\Decorator\Utils\Base\Operator
 {
     /**
-     * Check if node is valid
+     * Find final class in the classes tree
+     * FIXME
      * 
-     * @param \Includes\Decorator\Data\Classes\Node $node node to check
+     * @param string $class child class name
      *  
-     * @return void
+     * @return string|null
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function checkNode(\Includes\Decorator\Data\Classes\Node $node)
+    public static function getFinalClass($class)
     {
-        // TODO: move the "checkClassCommentAttributes" method here
+        return is_null(static::getClassesTree()->find($class)) ? null : \Includes\Decorator::getFinalClass($class);
     }
 }

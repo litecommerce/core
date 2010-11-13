@@ -807,15 +807,6 @@ class Decorator extends Decorator\ADecorator
         // Run registered plugins
         \Includes\Decorator\Utils\PluginManager::invokeHook('run');
 
-        // Create templates cache
-        $flexy = \XLite\Core\FlexyCompiler::getInstance();
-        foreach (static::getTemplatesCollection()->getList() as $template) {
-            $flexy->prepare(
-                \Includes\Utils\FileManager::getRelativePath($template->__get(self::N_FILE_PATH), LC_ROOT_DIR, 'tpl'),
-                true
-            );
-        }
-
         // Clear APC
         if (function_exists('apc_clear_cache')) {
             apc_clear_cache();

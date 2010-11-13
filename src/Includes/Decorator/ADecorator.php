@@ -86,17 +86,6 @@ abstract class ADecorator
     protected static $classesTree;
 
     /**
-     * List of .tpl files
-     * 
-     * @var    \Includes\Decorator\Data\Templates\Collection
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected static $templatesCollection;
-
-
-    /**
      * Return (and initialize, if needed) classes tree
      *
      * @return \Includes\Decorator\Data\Classes\Tree
@@ -111,22 +100,5 @@ abstract class ADecorator
         }
 
         return static::$classesTree;
-    }
-
-    /**
-     * Return templates list
-     * 
-     * @return \Includes\Decorator\Data\Templates\Collection
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected static function getTemplatesCollection()
-    {
-        if (!isset(static::$templatesCollection)) {
-            static::$templatesCollection = new \Includes\Decorator\Data\Templates\Collection();
-        }
-
-        return static::$templatesCollection;
     }
 }

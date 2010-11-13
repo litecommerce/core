@@ -93,7 +93,7 @@ class Tree extends \Includes\DataStructure\Hierarchical\Tree
      */
     protected function prepareNodeData($fileinfo)
     {
-        return \Includes\Decorator\Utils\ClassData\Parser::parse($fileinfo);
+        return \Includes\Decorator\Utils\Parser::parse($fileinfo);
     }
 
     /**
@@ -108,7 +108,7 @@ class Tree extends \Includes\DataStructure\Hierarchical\Tree
      */
     protected function checkAddedNode(\Includes\DataStructure\Node\Tree $node)
     {
-        \Includes\Decorator\Utils\ClassData\Verifier::checkNode($node);
+        \Includes\Decorator\Utils\Verifier::checkNode($node);
     }
 
 

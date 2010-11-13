@@ -26,31 +26,15 @@
  * @since      3.0.0
  */
 
-namespace Includes\Decorator\Data\Templates;
+namespace Includes\Decorator\Plugin\Templates\Plugin;
 
 /**
- * Node 
+ * APlugin 
  * 
- * @package    XLite
- * @see        ____class_see____
- * @since      3.0.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
-class Node extends \Includes\DataStructure\Cell
+abstract class APlugin extends \Includes\Decorator\Plugin\Templates\ATemplates
 {
-    /**
-     * Get tag value from class comment
-     * 
-     * @param string $name tag name
-     *  
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getTag($name)
-    {
-        $tags = $this->__get(\Includes\Decorator\ADecorator::N_TAGS);
-
-        return isset($tags[$name = strtolower($name)]) ? $tags[$name] : null;
-    }
 }
