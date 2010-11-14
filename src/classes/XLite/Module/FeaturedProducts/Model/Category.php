@@ -59,4 +59,21 @@ class Category extends \XLite\Model\Category implements \XLite\Base\IDecorator
      */
     protected $featuredProductsList = null;
 
+
+    /**
+     * Constructor
+     *
+     * @param array $data entity properties
+     *
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function __construct(array $data = array())
+    {
+        $this->featuredProducts = new \Doctrine\Common\Collections\ArrayCollection();
+
+        parent::__construct($data);
+    }
 }

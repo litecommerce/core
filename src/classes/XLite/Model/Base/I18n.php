@@ -34,6 +34,7 @@ namespace XLite\Model\Base;
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
+ *
  * @MappedSuperclass
  */
 abstract class I18n extends \XLite\Model\AEntity

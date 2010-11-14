@@ -48,4 +48,22 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
      * @OneToMany (targetEntity="XLite\Module\FeaturedProducts\Model\FeaturedProduct", mappedBy="product", cascade={"all"})
      */
     protected $featuredProducts;
+
+
+    /**
+     * Constructor
+     *
+     * @param array $data entity properties
+     *
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function __construct(array $data = array())
+    {
+        $this->featuredProducts = new \Doctrine\Common\Collections\ArrayCollection();
+
+        parent::__construct($data);
+    }
 }

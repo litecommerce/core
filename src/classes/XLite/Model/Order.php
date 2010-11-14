@@ -1485,4 +1485,24 @@ class Order extends \XLite\Model\Base\ModifierOwner
             }
         }
     }
+
+    /**
+     * Constructor
+     *
+     * @param array $data entity properties
+     *
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function __construct(array $data = array())
+    {
+        $this->details              = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->items                = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->saved_modifiers      = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->payment_transactions = new \Doctrine\Common\Collections\ArrayCollection();
+
+        parent::__construct($data);
+    }
 }

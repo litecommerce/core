@@ -125,5 +125,23 @@ class Country extends \XLite\Model\AEntity
      * @OrderBy   ({"state" = "ASC"})
      */
     protected $states;
+
+
+    /**
+     * Constructor
+     *
+     * @param array $data entity properties
+     *
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function __construct(array $data = array())
+    {
+        $this->states = new \Doctrine\Common\Collections\ArrayCollection();
+
+        parent::__construct($data);
+    }
 }
 

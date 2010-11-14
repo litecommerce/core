@@ -234,7 +234,7 @@ abstract class AModule
      */
     public function getIcon()
     {
-        return $this->icon;
+        return null;
     }
 
     /**

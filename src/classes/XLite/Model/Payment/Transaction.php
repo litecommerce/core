@@ -266,4 +266,21 @@ class Transaction extends \XLite\Model\AEntity
     {
         return self::STATUS_SUCCESS == $this->getStatus();
     }
+
+    /**
+     * Constructor
+     *
+     * @param array $data entity properties
+     *
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function __construct(array $data = array())
+    {
+        $this->data = new \Doctrine\Common\Collections\ArrayCollection();
+
+        parent::__construct($data);
+    }
 }
