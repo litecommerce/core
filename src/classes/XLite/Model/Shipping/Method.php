@@ -35,8 +35,9 @@ namespace XLite\Model\Shipping;
  * @subpackage Model
  * @see        ____class_see____
  * @since      3.0.0
+ *
  * @Entity (repositoryClass="XLite\Model\Repo\Shipping\Method")
- * @Table (name="shipping_methods")
+ * @Table  (name="shipping_methods")
  */
 class Method extends \XLite\Model\Base\I18n
 {
@@ -47,9 +48,10 @@ class Method extends \XLite\Model\Base\I18n
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Id
      * @GeneratedValue (strategy="AUTO")
-     * @Column (type="integer", length="11", nullable=false)
+     * @Column         (type="integer", length="11", nullable=false)
      */
     protected $method_id;
 
@@ -60,6 +62,7 @@ class Method extends \XLite\Model\Base\I18n
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="string", length="255", nullable=false)
      */
     protected $processor = '';
@@ -71,6 +74,7 @@ class Method extends \XLite\Model\Base\I18n
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="string", length="255", nullable=false)
      */
     protected $carrier = '';
@@ -82,6 +86,7 @@ class Method extends \XLite\Model\Base\I18n
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="string", length="255", nullable=false)
      */
     protected $code = '';
@@ -93,6 +98,7 @@ class Method extends \XLite\Model\Base\I18n
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="integer", length="1", nullable=false)
      */
     protected $enabled = '0';
@@ -104,6 +110,7 @@ class Method extends \XLite\Model\Base\I18n
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="integer", length="11", nullable=false)
      */
     protected $position = 0;
@@ -119,5 +126,4 @@ class Method extends \XLite\Model\Base\I18n
      * @OneToMany (targetEntity="XLite\Model\Shipping\Markup", mappedBy="shipping_method", cascade={"persist","remove"})
      */
     protected $shipping_markups;
-
 }

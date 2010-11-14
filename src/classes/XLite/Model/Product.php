@@ -184,7 +184,7 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      * @OneToMany (targetEntity="XLite\Model\CategoryProducts", mappedBy="product", cascade={"all"})
      * @OrderBy   ({"orderby" = "ASC"})
      */
-    protected $category_products;
+    protected $categoryProducts;
 
     /**
      * Product image

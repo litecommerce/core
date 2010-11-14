@@ -34,8 +34,9 @@ namespace XLite\Model\Payment;
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
+ *
  * @Entity (repositoryClass="\XLite\Model\Repo\Payment\Method")
- * @Table (name="payment_methods")
+ * @Table  (name="payment_methods")
  */
 class Method extends \XLite\Model\Base\I18n
 {
@@ -46,6 +47,7 @@ class Method extends \XLite\Model\Base\I18n
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Id
      * @GeneratedValue (strategy="AUTO")
      * @Column         (type="integer")
@@ -59,6 +61,7 @@ class Method extends \XLite\Model\Base\I18n
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="string", length="128")
      */
     protected $service_name;
@@ -70,6 +73,7 @@ class Method extends \XLite\Model\Base\I18n
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="string", length="64")
      */
     protected $class;
@@ -81,6 +85,7 @@ class Method extends \XLite\Model\Base\I18n
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="integer")
      */
     protected $orderby = 0;
@@ -92,6 +97,7 @@ class Method extends \XLite\Model\Base\I18n
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="boolean")
      */
     protected $enabled = true;

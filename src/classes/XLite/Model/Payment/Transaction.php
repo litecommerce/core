@@ -36,13 +36,14 @@ namespace XLite\Model\Payment;
  * @since   3.0.0
  *
  * @Entity (repositoryClass="\XLite\Model\Repo\Payment\Transaction")
- * @Table (name="payment_transactions")
+ * @Table  (name="payment_transactions")
  */
 class Transaction extends \XLite\Model\AEntity
 {
     /**
      * Transaction status codes
      */
+
     const STATUS_INITIALIZED = 'I';
     const STATUS_INPROGRESS  = 'P';
     const STATUS_SUCCESS     = 'S';
@@ -53,6 +54,7 @@ class Transaction extends \XLite\Model\AEntity
     /**
      * Transaction initialization result
      */
+
     const PROLONGATION = 'R';
     const COMPLETED    = 'C';
 
@@ -89,7 +91,7 @@ class Transaction extends \XLite\Model\AEntity
      * @var    string
      * @access protected
      * @see    ____var_see____
-     *  @since  3.0.0
+     * @since  3.0.0
      * 
      * @Column (type="string", length="255")
      */

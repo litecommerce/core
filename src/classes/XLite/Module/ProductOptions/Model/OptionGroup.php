@@ -34,24 +34,28 @@ namespace XLite\Module\ProductOptions\Model;
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
+ *
  * @Entity (repositoryClass="\XLite\Module\ProductOptions\Model\Repo\OptionGroup")
- * @Table (name="option_groups")
+ * @Table  (name="option_groups")
  */
 class OptionGroup extends \XLite\Model\Base\I18n
 {
     /**
-     *  Option group type
+     * Option group type
      */
+
     const GROUP_TYPE = 'g'; // Standard options list
     const TEXT_TYPE  = 't'; // Textarea
 
     /**
-     *  Option group visualization types
+     * Option group visualization types
      */
+
     const SELECT_VISIBLE   = 's'; // As select box (type = GROUP_TYPE)
     const RADIO_VISIBLE    = 'r'; // As radio buttons (type = GROUP_TYPE)
     const TEXTAREA_VISIBLE = 't'; // As textarea (type = TEXT_TYPE)
     const INPUT_VISIBLE    = 'i'; // As input box (type = TEXT_TYPE)
+
 
     /**
      * Group unique id 
@@ -60,9 +64,10 @@ class OptionGroup extends \XLite\Model\Base\I18n
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Id
      * @GeneratedValue (strategy="AUTO")
-     * @Column (type="integer")
+     * @Column         (type="integer")
      */
     protected $group_id;
 
@@ -73,6 +78,7 @@ class OptionGroup extends \XLite\Model\Base\I18n
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="integer")
      */
     protected $orderby = 0;
@@ -84,6 +90,7 @@ class OptionGroup extends \XLite\Model\Base\I18n
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="string", length="1")
      */
     protected $type = self::GROUP_TYPE;
@@ -95,6 +102,7 @@ class OptionGroup extends \XLite\Model\Base\I18n
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="string", length="1")
      */
     protected $view_type = self::SELECT_VISIBLE;
@@ -106,6 +114,7 @@ class OptionGroup extends \XLite\Model\Base\I18n
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="integer")
      */
     protected $cols = 0;
@@ -117,6 +126,7 @@ class OptionGroup extends \XLite\Model\Base\I18n
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="integer")
      */
     protected $rows = 0;
@@ -128,6 +138,7 @@ class OptionGroup extends \XLite\Model\Base\I18n
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="boolean")
      */
     protected $enabled = false;
@@ -139,7 +150,8 @@ class OptionGroup extends \XLite\Model\Base\I18n
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @ManyToOne (targetEntity="XLite\Model\Product", inversedBy="optionGroups")
+     *
+     * @ManyToOne  (targetEntity="XLite\Model\Product", inversedBy="optionGroups")
      * @JoinColumn (name="product_id", referencedColumnName="product_id")
      */
     protected $product;
@@ -151,6 +163,7 @@ class OptionGroup extends \XLite\Model\Base\I18n
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @OneToMany (targetEntity="XLite\Module\ProductOptions\Model\Option", mappedBy="group", cascade={"all"})
      */
     protected $options;

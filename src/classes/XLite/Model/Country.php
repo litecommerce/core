@@ -34,12 +34,12 @@ namespace XLite\Model;
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
+ *
  * @Entity (repositoryClass="\XLite\Model\Repo\Country")
- * @Table (name="countries")
+ * @Table  (name="countries")
  */
 class Country extends \XLite\Model\AEntity
 {
-
     /**
      * Country name
      * 
@@ -47,6 +47,7 @@ class Country extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="string", length="50", nullable=false)
      */
     protected $country;
@@ -58,6 +59,7 @@ class Country extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Id
      * @Column (type="string", length="2", nullable=false, unique=true)
      */
@@ -70,6 +72,7 @@ class Country extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="string", length="32", nullable=false)
      */
     protected $language = '';
@@ -81,6 +84,7 @@ class Country extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="string", length="32", nullable=false)
      */
     protected $charset = 'iso-8859-1';
@@ -92,6 +96,7 @@ class Country extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="boolean", nullable=false)
      */
     protected $enabled = false;
@@ -103,6 +108,7 @@ class Country extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="boolean", nullable=false)
      */
     protected $eu_member = false;
@@ -114,10 +120,10 @@ class Country extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @OneToMany (targetEntity="XLite\Model\State", mappedBy="country", cascade={"all"})
-     * @OrderBy ({"state" = "ASC"})
+     * @OrderBy   ({"state" = "ASC"})
      */
     protected $states;
-
 }
 

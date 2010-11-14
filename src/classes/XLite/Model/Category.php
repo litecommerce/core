@@ -50,7 +50,7 @@ class Category extends \XLite\Model\Base\I18n
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
-     * @Column (type="integer", length="11", nullable=false)
+     * @Column         (type="integer", length="11", nullable=false)
      */
     protected $category_id;
 
