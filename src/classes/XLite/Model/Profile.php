@@ -115,7 +115,7 @@ class Profile extends \XLite\Model\AEntity
     protected $access_level = 0;
 
     /**
-     * CMS profile Id (TODO: move it to CMS connector)
+     * CMS profile Id
      *
      * @var    int
      * @access protected
@@ -127,7 +127,7 @@ class Profile extends \XLite\Model\AEntity
     protected $cms_profile_id = 0;
 
     /**
-     * CMS name (TODO: move it to CMS connector)
+     * CMS name
      *
      * @var    string
      * @access protected
@@ -290,7 +290,7 @@ class Profile extends \XLite\Model\AEntity
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @ManyToOne (targetEntity="XLite\Model\Membership")
+     * @ManyToOne  (targetEntity="XLite\Model\Membership")
      * @JoinColumn (name="membership_id", referencedColumnName="membership_id")
      */
     protected $membership;
@@ -303,7 +303,7 @@ class Profile extends \XLite\Model\AEntity
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @ManyToOne (targetEntity="XLite\Model\Membership")
+     * @ManyToOne  (targetEntity="XLite\Model\Membership")
      * @JoinColumn (name="pending_membership_id", referencedColumnName="membership_id")
      */
     protected $pending_membership;
@@ -724,6 +724,4 @@ class Profile extends \XLite\Model\AEntity
     {
         $this->addresses = new \Doctrine\Common\Collections\ArrayCollection();
     }
-
-
 }

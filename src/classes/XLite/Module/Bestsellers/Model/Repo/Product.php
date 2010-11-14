@@ -69,7 +69,7 @@ class Product extends \XLite\Model\Repo\Product implements \XLite\Base\IDecorato
         $qb = $this->createQueryBuilder()
             ->leftJoin('p.order_item', 'o')
             ->innerJoin('o.order', 'ord')
-            ->leftJoin('p.category_products', 'cp')
+            ->leftJoin('p.categoryProducts', 'cp')
             ->leftJoin('cp.category', 'c')
             ->addSelect('sum(o.amount) as product_amount')
             ->andWhere('p.enabled = :enabled')

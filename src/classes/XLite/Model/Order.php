@@ -34,18 +34,20 @@ namespace XLite\Model;
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
- * @Entity (repositoryClass="\XLite\Model\Repo\Order")
- * @Table (name="orders")
+ *
+ * @Entity                (repositoryClass="\XLite\Model\Repo\Order")
+ * @Table                 (name="orders")
  * @HasLifecycleCallbacks
- * @InheritanceType ("SINGLE_TABLE")
- * @DiscriminatorColumn (name="is_order", type="integer", length="1")
- * @DiscriminatorMap ({"1" = "XLite\Model\Order", "0" = "XLite\Model\Cart"})
+ * @InheritanceType       ("SINGLE_TABLE")
+ * @DiscriminatorColumn   (name="is_order", type="integer", length="1")
+ * @DiscriminatorMap      ({"1" = "XLite\Model\Order", "0" = "XLite\Model\Cart"})
  */
 class Order extends \XLite\Model\Base\ModifierOwner
 {
     /**
      * Order statuses 
      */
+
     const STATUS_TEMPORARY  = 'T';
     const STATUS_INPROGRESS = 'I';
     const STATUS_QUEUED     = 'Q';
@@ -68,6 +70,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Id
      * @GeneratedValue (strategy="AUTO")
      * @Column         (type="integer")
@@ -81,6 +84,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="integer")
      */
     protected $profile_id;
@@ -92,6 +96,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="integer")
      */
     protected $orig_profile_id = 0;
@@ -103,6 +108,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="integer")
      */
     protected $shipping_id = 0;
@@ -114,6 +120,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="string", length="32")
      */
     protected $tracking = '';
@@ -125,6 +132,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="integer")
      */
     protected $date;
@@ -136,6 +144,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="string", length="1")
      */
     protected $status = self::STATUS_INPROGRESS;
@@ -147,6 +156,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="string", length="65535")
      */
     protected $notes = '';
@@ -158,6 +168,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="array")
      */
     protected $taxes = array();
@@ -171,7 +182,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * @since  3.0.0
      *
      * @OneToMany (targetEntity="XLite\Model\OrderDetail", mappedBy="order", cascade={"all"})
-     * @OrderBy ({"name" = "ASC"})
+     * @OrderBy   ({"name" = "ASC"})
      */
     protected $details;
 
@@ -196,7 +207,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * @since  3.0.0
      *
      * @OneToMany (targetEntity="XLite\Model\OrderModifier", mappedBy="owner", cascade={"all"})
-     * @OrderBy ({"id" = "ASC"})
+     * @OrderBy   ({"id" = "ASC"})
      */
     protected $saved_modifiers;
 
@@ -220,7 +231,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @ManyToOne (targetEntity="XLite\Model\Currency")
+     * @ManyToOne  (targetEntity="XLite\Model\Currency")
      * @JoinColumn (name="currency_id", referencedColumnName="currency_id")
      */
     protected $currency;

@@ -34,8 +34,9 @@ namespace XLite\Model;
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
+ *
  * @Entity (repositoryClass="XLite\Model\Repo\Zone")
- * @Table (name="zones")
+ * @Table  (name="zones")
  */
 class Zone extends \XLite\Model\AEntity
 {
@@ -46,9 +47,10 @@ class Zone extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Id
      * @GeneratedValue (strategy="AUTO")
-     * @Column (type="integer", length="11", nullable=false)
+     * @Column         (type="integer", length="11", nullable=false)
      */
     protected $zone_id;
 
@@ -59,6 +61,7 @@ class Zone extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="string", length="64", nullable=false)
      */
     protected $zone_name = '';
@@ -70,6 +73,7 @@ class Zone extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="integer", length="1", nullable=false)
      */
     protected $is_default = 0;
@@ -81,6 +85,7 @@ class Zone extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @OneToMany (targetEntity="XLite\Model\ZoneElement", mappedBy="zone", cascade={"all"})
      */
     protected $zone_elements;

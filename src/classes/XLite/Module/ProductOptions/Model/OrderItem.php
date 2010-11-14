@@ -46,7 +46,7 @@ class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
      * @since  3.0.0
      *
      * @OneToMany (targetEntity="XLite\Module\ProductOptions\Model\OrderItemOption", mappedBy="order_item", cascade={"all"})
-     * @OrderBy ({"orderby"="ASC", "option_id"="ASC"})
+     * @OrderBy   ({"orderby"="ASC", "option_id"="ASC"})
      */
     protected $options;
 

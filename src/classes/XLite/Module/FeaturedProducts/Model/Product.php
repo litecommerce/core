@@ -44,31 +44,8 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @OneToMany (targetEntity="XLite\Module\FeaturedProducts\Model\FeaturedProduct", mappedBy="product", cascade={"all"})
      */
     protected $featuredProducts;
-
-    /**
-     * Remove all unused featured product records
-     * TODO: rewrite in accordance with the new core
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function collectGarbage()
-    {
-        parent::collectGarbage();
-
-        $products_table = $this->db->getTableByAlias('products');
-        $sql = "SELECT f.product_id FROM " . \XLite\Module\FeaturedProducts\Main::FEATURED_PRODUCTS_TABLE . " f LEFT OUTER JOIN $products_table p ON f.product_id=p.product_id WHERE p.product_id IS NULL";
-        $result = $this->db->getAll($sql);
-
-        if (is_array($result) && count($result) > 0) {
-            foreach ($result as $info) {
-                $this->db->query("DELETE FROM " . \XLite\Module\FeaturedProducts\Main::FEATURED_PRODUCTS_TABLE . " WHERE product_id='" . $info['product_id'] . "'");
-            }
-        }
-    }
 }

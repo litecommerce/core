@@ -44,6 +44,7 @@ class Category extends \XLite\Model\Category implements \XLite\Base\IDecorator
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @OneToMany (targetEntity="XLite\Module\FeaturedProducts\Model\FeaturedProduct", mappedBy="category", cascade={"all"})
      */
     protected $featuredProducts;

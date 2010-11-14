@@ -36,13 +36,13 @@ namespace XLite\Model;
  * @since   3.0.0
  *
  * @Entity (repositoryClass="XLite\Model\Repo\OrderItem")
- * @Table (name="order_items",
- *         indexes={
- *              @Index (name="orderby", columns={"orderby"}),
- *              @Index (name="product_id", columns={"product_id"}),
- *              @Index (name="price", columns={"price"}),
- *              @Index (name="amount", columns={"amount"})
- *         }
+ * @Table  (name="order_items",
+ *          indexes={
+ *               @Index (name="orderby", columns={"orderby"}),
+ *               @Index (name="product_id", columns={"product_id"}),
+ *               @Index (name="price", columns={"price"}),
+ *               @Index (name="amount", columns={"amount"})
+ *          }
  * )
  */
 class OrderItem extends \XLite\Model\Base\ModifierOwner
@@ -156,7 +156,7 @@ class OrderItem extends \XLite\Model\Base\ModifierOwner
      * @see    ____var_see____
      * @since  3.0.0
      * 
-     * @OneToOne    (targetEntity="XLite\Model\Product")
+     * @OneToOne   (targetEntity="XLite\Model\Product")
      * @JoinColumn (name="object_id", referencedColumnName="product_id")
      */
     protected $product;

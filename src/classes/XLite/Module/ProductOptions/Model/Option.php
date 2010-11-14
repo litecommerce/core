@@ -34,8 +34,9 @@ namespace XLite\Module\ProductOptions\Model;
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
+ *
  * @Entity (repositoryClass="\XLite\Module\ProductOptions\Model\Repo\Option")
- * @Table (name="options")
+ * @Table  (name="options")
  */
 class Option extends \XLite\Model\Base\I18n
 {
@@ -46,9 +47,10 @@ class Option extends \XLite\Model\Base\I18n
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Id
      * @GeneratedValue (strategy="AUTO")
-     * @Column (type="integer")
+     * @Column         (type="integer")
      */
     protected $option_id;
 
@@ -59,6 +61,7 @@ class Option extends \XLite\Model\Base\I18n
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="integer")
      */
     protected $orderby = 0;
@@ -70,6 +73,7 @@ class Option extends \XLite\Model\Base\I18n
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="boolean")
      */
     protected $enabled = false;
@@ -81,7 +85,8 @@ class Option extends \XLite\Model\Base\I18n
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @ManyToOne (targetEntity="XLite\Module\ProductOptions\Model\OptionGroup", inversedBy="options")
+     *
+     * @ManyToOne  (targetEntity="XLite\Module\ProductOptions\Model\OptionGroup", inversedBy="options")
      * @JoinColumn (name="group_id", referencedColumnName="group_id")
      */
     protected $group;
@@ -93,6 +98,7 @@ class Option extends \XLite\Model\Base\I18n
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @OneToMany (targetEntity="XLite\Module\ProductOptions\Model\OptionException", mappedBy="option", cascade={"all"})
      */
     protected $exceptions;
@@ -104,6 +110,7 @@ class Option extends \XLite\Model\Base\I18n
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @OneToMany (targetEntity="XLite\Module\ProductOptions\Model\OptionSurcharge", mappedBy="option", cascade={"all"})
      */
     protected $surcharges;
@@ -184,6 +191,5 @@ class Option extends \XLite\Model\Base\I18n
         }
 
         return $result;
-
     }
 }

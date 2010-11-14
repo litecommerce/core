@@ -803,7 +803,6 @@ class Decorator extends Decorator\ADecorator
 
         // Generate models
         \Includes\Decorator\Utils\PluginManager::invokeHook('preprocess');
-        // $this->generateModels();
         $this->postGenerateModels();
 
         // Run registered plugins
@@ -849,33 +848,6 @@ class Decorator extends Decorator\ADecorator
 
         return $this->cacheDriver;
     }
-
-    /**
-     * Generate models 
-     * 
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-/*    protected function generateModels()
-    {
-        $entityGenerator = new \Doctrine\ORM\Tools\EntityGenerator();
-
-        $entityGenerator->setGenerateAnnotations(true);
-        $entityGenerator->setGenerateStubMethods(true);
-        $entityGenerator->setRegenerateEntityIfExists(false);
-        $entityGenerator->setUpdateEntityIfExists(true);
-        $entityGenerator->setNumSpaces(4);
-        $entityGenerator->setClassToExtend('\XLite\Model\AEntity');
-
-        $entityGenerator->generate(
-            \Includes\Decorator\Utils\Doctrine\EntityManager::getAllMetadata(),
-            LC_CLASSES_CACHE_DIR
-        );
-
-        $this->postGenerateModels();
-    }*/
 
     /**
      * Additional models generation
