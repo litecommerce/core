@@ -455,4 +455,21 @@ class Zone extends \XLite\Model\AEntity
         return $found;
     }
 
+    /**
+     * Constructor
+     *
+     * @param array $data entity properties
+     *
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function __construct(array $data = array())
+    {
+        $this->zone_elements    = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->shipping_markups = new \Doctrine\Common\Collections\ArrayCollection();
+
+        parent::__construct($data);
+    }
 }

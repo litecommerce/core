@@ -546,4 +546,20 @@ class OrderItem extends \XLite\Model\Base\ModifierOwner
         $this->total = $this->getOrder()->getCurrency()->roundValue($value);
     }
 
+    /**
+     * Constructor
+     *
+     * @param array $data entity properties
+     *
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function __construct(array $data = array())
+    {
+        $this->saved_modifiers = new \Doctrine\Common\Collections\ArrayCollection();
+
+        parent::__construct($data);
+    }
 }

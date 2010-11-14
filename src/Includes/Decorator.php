@@ -803,7 +803,6 @@ class Decorator extends Decorator\ADecorator
 
         // Generate models
         \Includes\Decorator\Utils\PluginManager::invokeHook('preprocess');
-        $this->postGenerateModels();
 
         // Run registered plugins
         \Includes\Decorator\Utils\PluginManager::invokeHook('run');
@@ -847,89 +846,6 @@ class Decorator extends Decorator\ADecorator
         }
 
         return $this->cacheDriver;
-    }
-
-    /**
-     * Additional models generation
-     * 
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function postGenerateModels()
-    {
-        $repos = array();
-
-        foreach (\Includes\Decorator\Plugin\Doctrine\Utils\EntityManager::getAllMetadata() as $metadata) {
-            $path = LC_CLASSES_CACHE_DIR . DIRECTORY_SEPARATOR . str_replace('\\', DIRECTORY_SEPARATOR, $metadata->name) . '.php';
-            $data = file_get_contents($path);
-
-            if (preg_match('/\ * @Entity/Ssi', $data)) {
-                $repos[] = $metadata->name;   
-            }
-
-            $additionalMethods = array();
-
-            $relations = array();
-
-            foreach ($metadata->associationMappings as $an => $av) {
-
-                if (
-                    $av['type'] == $metadata::ONE_TO_MANY
-                    || $av['type'] == $metadata::MANY_TO_MANY
-                ) {
-                    $relations[] = $an;
-                }
-            }
-
-            // Constructor update
-            if ($relations) {
-                $relationsInit = '        $this->'
-                    . implode(' = new \Doctrine\Common\Collections\ArrayCollection();' . "\n" . '        $this->', $relations)
-                    . ' = new \Doctrine\Common\Collections\ArrayCollection();' . "\n";
-
-                $pos = strpos(' __construct(', $data);
-                if (false !== $pos) {
-                    $pos = strpos('    }' . "\n", $data, $pos);
-                    if (false !== $pos) {
-                        $data = substr($data, 0, $pos) . $relationsInit . substr($data, $pos);
-                    }
-
-                } else {
-                    $additionalMethods[] = <<<PHP
-    /**
-     * Constructor
-     *
-     * @param array \$data entity properties
-     *
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function __construct(array \$data = array())
-    {
-$relationsInit
-
-        parent::__construct(\$data);
-    }
-PHP;
-
-                }
-            }
-
-            if ($additionalMethods) {
-                $data = str_replace("\n" . '}', "\n\n" . implode("\n\n", $additionalMethods) . "\n\n" . '}', $data);
-            }
-
-            file_put_contents($path, $data);
-        }
-
-        // Renew meta data ceche
-        foreach ($repos as $name) {
-            \XLite\Core\Database::getRepo($name);
-        }
     }
 
     /**

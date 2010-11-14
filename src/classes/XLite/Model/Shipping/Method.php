@@ -126,4 +126,22 @@ class Method extends \XLite\Model\Base\I18n
      * @OneToMany (targetEntity="XLite\Model\Shipping\Markup", mappedBy="shipping_method", cascade={"persist","remove"})
      */
     protected $shipping_markups;
+
+
+    /**
+     * Constructor
+     *            
+     * @param array $data entity properties
+     *                                     
+     * @return void                        
+     * @access public                      
+     * @see    ____func_see____            
+     * @since  3.0.0                       
+     */                                    
+    public function __construct(array $data = array())
+    {                                                 
+        $this->shipping_markups = new \Doctrine\Common\Collections\ArrayCollection();
+
+        parent::__construct($data);
+    }
 }

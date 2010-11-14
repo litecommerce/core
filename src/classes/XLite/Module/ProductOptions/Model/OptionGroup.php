@@ -302,4 +302,20 @@ class OptionGroup extends \XLite\Model\Base\I18n
         return $result;
     }
 
+    /**
+     * Constructor
+     *
+     * @param array $data entity properties
+     *
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function __construct(array $data = array())
+    {
+        $this->options = new \Doctrine\Common\Collections\ArrayCollection();
+
+        parent::__construct($data);
+    }
 }
