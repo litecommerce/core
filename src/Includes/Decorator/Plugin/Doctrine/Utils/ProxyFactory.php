@@ -26,7 +26,7 @@
  * @since      3.0.0
  */
 
-namespace Includes\Decorator\Utils\Doctrine;
+namespace Includes\Decorator\Plugin\Doctrine\Utils;
 
 /**
  * ProxyFactory 
@@ -35,7 +35,7 @@ namespace Includes\Decorator\Utils\Doctrine;
  * @see        ____class_see____
  * @since      3.0.0
  */
-class ProxyFactory extends \Includes\Decorator\Utils\AUtils
+class ProxyFactory extends \Includes\Decorator\Plugin\Doctrine\ADoctrine
 {
     /**
      * Name of the property containing proxy code template 
@@ -222,6 +222,6 @@ CODE;
         $property = new \ReflectionProperty($factory, static::CODE_TEMPLATE_PROPERTY);
 
         $property->setAccessible(true);
-        $property->setValue(static::$proxyClassTemplate);
+        $property->setValue($factory, static::$proxyClassTemplate);
     }
 }

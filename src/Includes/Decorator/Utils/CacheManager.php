@@ -40,12 +40,21 @@ class CacheManager extends \Includes\Decorator\Utils\AUtils
     /**
      * Text to display while working with cache 
      */
+
     const MESSAGE = 'Re-building cache, please wait...';
 
     /**
      * Time limit to build cache 
      */
+
     const TIME_LIMIT = 180;
+
+    /**
+     * Cache building steps
+     */
+
+    const STEP_FIRST  = 'stepFirst';
+    const STEP_SECOND = 'stepSecond';
 
 
     /**
@@ -56,11 +65,7 @@ class CacheManager extends \Includes\Decorator\Utils\AUtils
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected static $cacheDirs = array(
-        LC_CLASSES_CACHE_DIR,
-        LC_SKINS_CACHE_DIR,
-        LC_LOCALE_DIR,
-    );
+    protected static $cacheDirs = array(LC_CLASSES_CACHE_DIR, LC_SKINS_CACHE_DIR, LC_LOCALE_DIR);
 
 
     /**
@@ -87,45 +92,6 @@ class CacheManager extends \Includes\Decorator\Utils\AUtils
     protected static function isDeveloperMode()
     {
         return 'Y' === \Includes\Utils\Database::fetchColumn(self::getDevmodeQuery());
-    }
-
-    /**
-     * Check if classes cache directory exists
-     *
-     * @return bool
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected static function isCacheDirExists()
-    {
-        return \Includes\Utils\FileManager::isFileReadable(LC_CLASSES_CACHE_DIR . \Includes\Decorator::LC_CACHE_BUILD_INDICATOR);
-    }
-
-    /**
-     * Check if we need to rebuild classes cache
-     * 
-     * @return bool
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected static function isRebuildNeeded()
-    {
-        return !static::isCacheDirExists() || static::isDeveloperMode();
-    }
-
-    /**
-     * Check id the Doctrine proxy classes are already generated 
-     * 
-     * @return bool
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected static function isDoctrineProxiesExist()
-    {
-        return \Includes\Utils\FileManager::isDirReadable(LC_PROXY_CACHE_DIR);
     }
 
     /**
@@ -188,14 +154,59 @@ class CacheManager extends \Includes\Decorator\Utils\AUtils
     }
 
     /**
-     * Build LC classes cache.
+     * Return name of the file, which indicates the cache state
      *
+     * @param string $step current step name
+     *
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function getCacheStateIndicatorfileName($step)
+    {
+        return LC_COMPILE_DIR . '.cacheGenerated.' . $step;
+    }
+
+    /**
+     * Check if cache rebuild is needed
+     * 
+     * @param string $step current step name
+     *  
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function isRebuildNeeded($step)
+    {
+        return !\Includes\Utils\FileManager::isExists(static::getCacheStateIndicatorfileName($step));
+    }
+
+    /**
+     * Set the cache vilidity indicator 
+     *
+     * @param string $step current step name
+     *
+     * @return null
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function complete($step)
+    {
+        \Includes\Utils\FileManager::write(static::getCacheStateIndicatorfileName($step), date('r'));
+    }
+
+    /**
+     * Perform some actions on current cache generation step
+     * 
      * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected static function buildLCCache()
+    protected static function buildCacheStepFirst()
     {
         // Show the "Please wait" message
         static::showMessage();
@@ -208,47 +219,48 @@ class CacheManager extends \Includes\Decorator\Utils\AUtils
             self::TIME_LIMIT,
             array(new \Includes\Decorator(), 'buildCache')
         );
-
-        // Perform redirect (needed for two-step cache generation)
-        \Includes\Utils\Operator::refresh();
     }
 
     /**
-     * Build the Doctrine proxy classes 
-     * 
+     * Perform some actions on current cache generation step
+     *
      * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected static function buildDoctrineProxies()
+    protected static function buildCacheStepSecond()
     {
-        // Create the proxies folder
-        \Includes\Utils\FileManager::mkdirRecursive(LC_PROXY_CACHE_DIR);
-
-        // Create model proxy classes (second step of cache generation)
-        \Includes\Decorator\Utils\Doctrine\EntityManager::generateProxyClasses();
+        // Run registered plugins
+        \Includes\Decorator\Utils\PluginManager::invokeHook('postprocess');
     }
 
 
     /**
      * Rebuild classes cache 
      * 
-     * @param bool $force flag to force cache rebuild
-     *  
      * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function rebuildCache($force = false)
+    public static function rebuildCache()
     {
-        if (static::isRebuildNeeded() || $force) {
-            static::buildLCCache();
-        }
+        // Two steps of cache building
+        foreach (array(self::STEP_FIRST, self::STEP_SECOND) as $step) {
 
-        if (!static::isDoctrineProxiesExist()) {
-            static::buildDoctrineProxies();
+            // Check if a step is passed
+            if (static::isRebuildNeeded($step)) {
+
+                // Perform step-specific actions
+                call_user_func(array('static', 'buildCache' . ucfirst($step)));
+
+                // Perform some actions on complete
+                static::complete($step);
+
+                // Perform redirect (needed for two-step cache generation)
+                \Includes\Utils\Operator::refresh();
+            }
         }
     }
 

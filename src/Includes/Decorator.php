@@ -802,7 +802,9 @@ class Decorator extends Decorator\ADecorator
         $this->buildMultilangs();
 
         // Generate models
-        $this->generateModels();
+        \Includes\Decorator\Utils\PluginManager::invokeHook('preprocess');
+        // $this->generateModels();
+        $this->postGenerateModels();
 
         // Run registered plugins
         \Includes\Decorator\Utils\PluginManager::invokeHook('run');
@@ -811,8 +813,6 @@ class Decorator extends Decorator\ADecorator
         if (function_exists('apc_clear_cache')) {
             apc_clear_cache();
         }
-
-        file_put_contents(LC_CLASSES_CACHE_DIR . self::LC_CACHE_BUILD_INDICATOR, date('r'));
     }
 
     /**
@@ -858,7 +858,7 @@ class Decorator extends Decorator\ADecorator
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function generateModels()
+/*    protected function generateModels()
     {
         $entityGenerator = new \Doctrine\ORM\Tools\EntityGenerator();
 
@@ -875,7 +875,7 @@ class Decorator extends Decorator\ADecorator
         );
 
         $this->postGenerateModels();
-    }
+    }*/
 
     /**
      * Additional models generation
@@ -889,7 +889,7 @@ class Decorator extends Decorator\ADecorator
     {
         $repos = array();
 
-        foreach (\Includes\Decorator\Utils\Doctrine\EntityManager::getAllMetadata() as $metadata) {
+        foreach (\Includes\Decorator\Plugin\Doctrine\Utils\EntityManager::getAllMetadata() as $metadata) {
             $path = LC_CLASSES_CACHE_DIR . DIRECTORY_SEPARATOR . str_replace('\\', DIRECTORY_SEPARATOR, $metadata->name) . '.php';
             $data = file_get_contents($path);
 
