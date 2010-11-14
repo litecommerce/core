@@ -26,7 +26,7 @@
  * @since      3.0.0
  */
 
-namespace Includes\Decorator\Utils\Doctrine;
+namespace Includes\Decorator\Plugin\Doctrine\Utils;
 
 /**
  * EntityManager 
@@ -35,7 +35,7 @@ namespace Includes\Decorator\Utils\Doctrine;
  * @see        ____class_see____
  * @since      3.0.0
  */
-class EntityManager extends ADoctrine
+abstract class EntityManager extends \Includes\Decorator\Plugin\Doctrine\ADoctrine
 {
     /**
      * Entity manager
@@ -46,26 +46,6 @@ class EntityManager extends ADoctrine
      * @since  3.0.0
      */
     protected static $handler;
-
-    /**
-     * Proxy factory 
-     * 
-     * @var    Doctrine\ORM\Proxy\ProxyFactory
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected static $proxyFactory;
-
-    /**
-     * Metadata factory 
-     * 
-     * @var    Doctrine\ORM\Mapping\ClassMetadataFactory
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected static $metadataFactory;
 
 
     /**
@@ -132,32 +112,6 @@ class EntityManager extends ADoctrine
     }
 
     /**
-     * Perform some actions after creation of the ProxyFactory object
-     * NOTE - tt's the hack
-     * 
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected static function prepareProxyFactory()
-    {
-        \Includes\Decorator\Utils\Doctrine\ProxyFactory::modifyCodeTemplate(static::$proxyFactory);
-    }
-
-    /**
-     * Perform some actions after creation of the MetadataFactory object
-     * 
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected static function prepareMetadataFactory()
-    {
-    }
-
-    /**
      * Return instance of the entity manager 
      * 
      * @return Doctrine\ORM\EntityManager
@@ -176,7 +130,7 @@ class EntityManager extends ADoctrine
 
     /**
      * Return instance of the proxy factory 
-     * 
+     *
      * @return Doctrine\ORM\Proxy\ProxyFactory
      * @access protected
      * @see    ____func_see____
@@ -184,12 +138,12 @@ class EntityManager extends ADoctrine
      */
     protected static function getProxyFactory()
     {
-        if (!isset(static::$proxyFactory)) {
-            static::$proxyFactory = static::getHandler()->getProxyFactory();
-            static::prepareProxyFactory();
-        }
+        // NOTE: it's the hack
+        \Includes\Decorator\Plugin\Doctrine\Utils\ProxyFactory::modifyCodeTemplate(
+            $factory = static::getHandler()->getProxyFactory()
+        );
 
-        return static::$proxyFactory;
+        return $factory;
     }
 
     /**
@@ -202,14 +156,76 @@ class EntityManager extends ADoctrine
      */
     protected static function getMetadataFactory()
     {
-        if (!isset(static::$metadataFactory)) {
-            static::$metadataFactory = static::getHandler()->getMetadataFactory();
-            static::prepareMetadataFactory();
-        }
-
-        return static::$metadataFactory;
+        return static::getHandler()->getMetadataFactory();
     }
 
+    /**
+     * Return all classes metadata
+     * FIXME - change to protected 
+     *
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getAllMetadata()
+    {
+        return static::getMetadataFactory()->getAllMetadata();
+    }
+
+    /**
+     * Return list of callbacks to configure the EntityGenerator
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function getEntityGeneratorConfigCallbacks()
+    {
+        return array(
+            array('setGenerateAnnotations', array(true)),
+            array('setGenerateStubMethods', array(true)),
+            array('setRegenerateEntityIfExists', array(false)),
+            array('setUpdateEntityIfExists', array(true)),
+            array('setNumSpaces', array(4)),
+            array('setClassToExtend', array('\XLite\Model\AEntity')),
+        );
+    }
+
+    /**
+     * Return the Doctrine tools
+     * 
+     * @return \Doctrine\ORM\Tools\EntityGenerator
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function getEntityGenerator()
+    {
+        $generator = new \Doctrine\ORM\Tools\EntityGenerator();
+
+        foreach (static::getEntityGeneratorConfigCallbacks() as $data) {
+            list($method, $args) = $data;
+            call_user_func_array(array($generator, $method), $args);
+        }
+
+        return $generator;
+    }
+
+
+    /**
+     * Generate models
+     *
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function generateModels()
+    {
+        static::getEntityGenerator()->generate(static::getAllMetadata(), LC_CLASSES_CACHE_DIR);
+    }
 
     /**
      * Generate proxies
@@ -219,21 +235,8 @@ class EntityManager extends ADoctrine
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function generateProxyClasses()
+    public static function generateProxies()
     {
         static::getProxyFactory()->generateProxyClasses(static::getAllMetadata(), LC_PROXY_CACHE_DIR);
-    }
-
-    /**
-     * Return all classes metadata 
-     * 
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function getAllMetadata()
-    {
-        return static::getMetadataFactory()->getAllMetadata();
     }
 }

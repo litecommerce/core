@@ -35,8 +35,24 @@ namespace Includes\Utils;
  * @see        ____class_see____
  * @since      3.0.0
  */
-class FileManager extends AUtils
+class FileManager extends \Includes\Utils\AUtils
 {
+    /**
+     * Return the default filesystem permissions
+     * 
+     * @param string $path file path (optional)
+     *  
+     * @return int|null
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function getDefaultFilePermissions($path = null)
+    {
+        return null;
+    }
+
+
     /**
      * Checks whether a file or directory exists
      *
@@ -223,5 +239,29 @@ class FileManager extends AUtils
     public static function getRelativePath($path, $compareTo, $extension = 'php')
     {
         return preg_replace('/^' . preg_quote($compareTo, '/') . '(.*)\.' . $extension . '$/i', '$1.' . $extension, $path);
+    }
+
+    /**
+     * Write data to a file
+     * 
+     * @param string $path        file path
+     * @param string $data        data to write
+     * @param int    $permissions permisions to set
+     * @param int    $flags       some optional flags
+     *  
+     * @return int
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function write($path, $data, $permissions = null, $flags = 0)
+    {
+        $result = file_put_contents($path, $data, $flags);
+
+        if (isset($permissions) || !is_null($permissions = static::getDefaultFilePermissions())) {
+            $result = chmod($path, $permissions) && $result;
+        }
+
+        return $result;
     }
 }
