@@ -493,4 +493,25 @@ EOT;
     {
         return $this->getRequestDataByPrefix($this->getPrefixToDelete());
     }
+
+
+
+    /**
+     * FIXME - to remove
+     * 
+     * @return bool
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isTested()
+    {
+        return in_array(
+            get_class($this),
+            array(
+                'XLite\Controller\Admin\Login',
+                'XLite\Controller\Admin\Main',
+            )
+        );
+    }
 }
