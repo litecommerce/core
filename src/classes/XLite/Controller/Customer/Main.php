@@ -52,16 +52,22 @@ class Main extends \XLite\Controller\Customer\Category
             // switch to cart in Add-on mode
             $addOnModePage = $this->config->General->add_on_mode_page;
 
-            if ($addOnModePage != "cart.php") {
+            if ('cart.php' !== $addOnModePage) {
+
                 $this->redirect($addOnModePage);
 
             } else {
-            	parent::handleRequest();
+
+                parent::handleRequest();
+
             }
 
         } else {
+
             parent::handleRequest();
+
         }
+
     }
 
     /**

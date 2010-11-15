@@ -139,7 +139,10 @@ class Order extends \XLite\Controller\Customer\ACustomer
     public function getOrder()
     {
         if (!isset($this->order)) {
-            $this->order = \XLite\Core\Database::getRepo('XLite\Model\Order')->find(intval(\XLite\Core\Request::getInstance()->order_id));
+
+            $this->order = \XLite\Core\Database::getRepo('XLite\Model\Order')
+                ->find(intval(\XLite\Core\Request::getInstance()->order_id));
+
         }
 
         return $this->order;
