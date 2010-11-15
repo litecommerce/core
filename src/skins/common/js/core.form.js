@@ -376,7 +376,7 @@ CommonElement.prototype.validate = function(silent, noFocus)
   var result = true;
 
   // Hidden input always validate successfull
-  if (this.element.constructor == HTMLInputElement && 'hidden' == this.element.type) {
+  if (isElement(this.element, 'input') && 'hidden' == this.element.type) {
     return true;
   }
 
@@ -570,14 +570,14 @@ CommonElement.prototype.isChanged = function(onlyVisible)
   }
 
   if (
-    (this.element.constructor == HTMLInputElement && -1 != $.inArray(this.element.type, ['text', 'password', 'hidden']))
-    || this.element.constructor == HTMLSelectElement
-    || this.element.constructor == HTMLTextAreaElement
+    (isElement(this.element, 'input') && -1 != $.inArray(this.element.type, ['text', 'password', 'hidden']))
+    || isElement(this.element, 'select')
+    || isElement(this.element, 'textarea')
   ) {
     return this.element.initialValue != this.element.value;
   }
 
-  if (this.element.constructor == HTMLInputElement && -1 != $.inArray(this.element.type, ['checkbox', 'radio'])) {
+  if (isElement(this.element, 'input') && -1 != $.inArray(this.element.type, ['checkbox', 'radio'])) {
     return this.element.initialValue != this.element.checked;
   }
 
@@ -588,13 +588,13 @@ CommonElement.prototype.isChanged = function(onlyVisible)
 CommonElement.prototype.saveValue = function()
 {
   if (
-    (this.element.constructor == HTMLInputElement && -1 != $.inArray(this.element.type, ['text', 'password', 'hidden']))
-    || this.element.constructor == HTMLSelectElement
-    || this.element.constructor == HTMLTextAreaElement
+    (isElement(this.element, 'input') && -1 != $.inArray(this.element.type, ['text', 'password', 'hidden']))
+    || isElement(this.element, 'select')
+    || isElement(this.element, 'textarea')
   ) {
     this.element.initialValue = this.element.value;
 
-  } else if (this.element.constructor == HTMLInputElement && -1 != $.inArray(this.element.type, ['checkbox', 'radio'])) {
+  } else if (isElement(this.element, 'input') && -1 != $.inArray(this.element.type, ['checkbox', 'radio'])) {
     this.element.initialValue = this.element.checked;
   }
 }
@@ -651,7 +651,7 @@ CommonElement.prototype.linkWithCountry = function()
     var stateSwitcher = document.createElement('input');
     stateSwitcher.type = 'hidden';
     stateSwitcher.name = this.element.name.replace(/state/, 'is_custom_state');
-    stateSwitcher.value = this.element.constructor == HTMLInputElement ? '1' : '';
+    stateSwitcher.value = isElement(this.element, 'input') ? '1' : '';
     country.form.appendChild(stateSwitcher);
     new CommonElement(stateSwitcher);
 
@@ -708,7 +708,7 @@ CommonElement.prototype.linkWithCountry = function()
       if ('undefined' == typeof(CountriesStates[this.value])) {
 
         // As input box
-        if (this.stateInput.constructor != HTMLInputElement) {
+        if (!isElement(this.stateInput, 'input')) {
           replaceElement.call(this, 'input');
           this.stateInput.value = o.lastStateText;
         }
@@ -718,7 +718,7 @@ CommonElement.prototype.linkWithCountry = function()
     } else {
 
         // As select box
-        if (this.stateInput.constructor == HTMLSelectElement) {
+        if (isElement(this.stateInput, 'select')) {
           $('option', this.stateInput).remove();
 
         } else {
@@ -804,7 +804,7 @@ CommonElement.prototype.validateEmail = function()
     'gi'
   );
 
-  var apply = this.element.constructor == HTMLInputElement || this.element.constructor == HTMLTextAreaElement;
+  var apply = isElement(this.element, 'input') || isElement(this.element, 'textarea');
 
   return {
     status:  !apply || !this.element.value.length || this.element.value.search(re) !== -1,
@@ -816,7 +816,7 @@ CommonElement.prototype.validateEmail = function()
 // Integer
 CommonElement.prototype.validateInteger = function()
 {
-  var apply = this.element.constructor == HTMLInputElement || this.element.constructor == HTMLTextAreaElement;
+  var apply = isElement(this.element, 'input') || isElement(this.element, 'textarea');
 
   var value = parseFloat(this.element.value);
 
@@ -830,7 +830,7 @@ CommonElement.prototype.validateInteger = function()
 // Float
 CommonElement.prototype.validateFloat = function()
 {
-  var apply = this.element.constructor == HTMLInputElement || this.element.constructor == HTMLTextAreaElement;
+  var apply = isElement(this.element, 'input') || isElement(this.element, 'textarea');
 
   return {
     status:  !apply || !this.element.value.length || !isNaN(parseFloat(this.element.value)),
@@ -842,7 +842,7 @@ CommonElement.prototype.validateFloat = function()
 // Positive number
 CommonElement.prototype.validatePositive = function()
 {
-  var apply = this.element.constructor == HTMLInputElement || this.element.constructor == HTMLTextAreaElement;
+  var apply = isElement(this.element, 'input') || isElement(this.element, 'textarea');
 
   var value = parseFloat(this.element.value);
 
@@ -856,7 +856,7 @@ CommonElement.prototype.validatePositive = function()
 // Negative number
 CommonElement.prototype.validateNegative = function()
 {
-  var apply = this.element.constructor == HTMLInputElement || this.element.constructor == HTMLTextAreaElement;
+  var apply = isElement(this.element, 'input') || isElement(this.element, 'textarea');
 
   var value = parseFloat(this.element.value);
 
@@ -870,7 +870,7 @@ CommonElement.prototype.validateNegative = function()
 // Non-zero number
 CommonElement.prototype.validateNonZero = function()
 {
-  var apply = this.element.constructor == HTMLInputElement || this.element.constructor == HTMLTextAreaElement;
+  var apply = isElement(this.element, 'input') || isElement(this.element, 'textarea');
 
   var value = parseFloat(this.element.value);
 
@@ -884,7 +884,7 @@ CommonElement.prototype.validateNonZero = function()
 // Range (min - max) number
 CommonElement.prototype.validateRange = function()
 {
-  var apply = this.element.constructor == HTMLInputElement || this.element.constructor == HTMLTextAreaElement;
+  var apply = isElement(this.element, 'input') || isElement(this.element, 'textarea');
 
   var result = {
     status:  true,
@@ -934,14 +934,14 @@ core.autoload(CommonForm);
     this.each(
       function() {
         if ('undefined' == typeof(this.commonController)) {
-          if (this.constructor == HTMLFormElement) {
+          if (isElement(this.constructor, 'form')) {
             new CommonForm(this);
 
           } else if (
-            this.constructor == HTMLInputElement
-            || this.constructor == HTMLSelectElement
-            || this.constructor == HTMLTextAreaElement
-            || this.constructor == HTMLButtonElement
+            isElement(this.constructor, 'input')
+            || isElement(this.constructor, 'select')
+            || isElement(this.constructor, 'textarea')
+            || isElement(this.constructor, 'button')
           ) {
             new CommonElement(this);
           }

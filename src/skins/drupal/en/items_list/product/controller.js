@@ -102,6 +102,23 @@ ProductsListView.prototype.postprocess = function(isSuccess, initial)
 
     cartTray.data('isProductDrag', false);
 
+    if ($.browser.msie) {
+      $(draggablePattern, this.base).find('a')
+        .each(
+          function() {
+            this.defferHref = this.href;
+            this.href = 'javascript:void(0);';
+          }
+        )
+        .click(
+          function() {
+            if (!o.base.hasClass('ie-link-blocker')) {
+              self.location = this.defferHref;
+            }
+          }
+        );
+    }
+
     $(draggablePattern, this.base).draggable(
     {
       revert: 'invalid',
@@ -120,7 +137,16 @@ ProductsListView.prototype.postprocess = function(isSuccess, initial)
             }
           );
 
-        base.addClass('drag-owner');
+        base.addClass('drag-owner')
+        if ($.browser.msie) {
+          base.addClass('ie-link-blocker');
+        }
+
+        clone.find('a').click(
+          function() {
+            return false;
+          }
+        );
 
         return clone;
       }, // helper()
@@ -154,6 +180,17 @@ ProductsListView.prototype.postprocess = function(isSuccess, initial)
           );
 
         $('.drag-owner').removeClass('drag-owner');
+
+        if ($.browser.msie) {
+          var downer = $('.drag-owner');
+          setTimeout(
+            function() {
+              downer.removeClass('ie-link-blocker');
+            },
+            1000
+          );
+        }
+
       }, // stop()
     }
     ); // $(draggablePattern, this.base).draggable
