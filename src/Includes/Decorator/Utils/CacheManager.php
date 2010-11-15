@@ -53,8 +53,8 @@ class CacheManager extends \Includes\Decorator\Utils\AUtils
      * Cache building steps
      */
 
-    const STEP_FIRST  = 'stepFirst';
-    const STEP_SECOND = 'stepSecond';
+    const STEP_FIRST  = 'first';
+    const STEP_SECOND = 'second';
 
 
     /**
@@ -65,7 +65,14 @@ class CacheManager extends \Includes\Decorator\Utils\AUtils
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected static $cacheDirs = array(LC_CLASSES_CACHE_DIR, LC_SKINS_CACHE_DIR, LC_LOCALE_DIR);
+    protected static $cacheDirs = array(
+        LC_COMPILE_DIR,
+        LC_LOCALE_DIR,
+        LC_DATACACHE_DIR,
+        LC_IMAGES_CACHE_DIR,
+        LC_LOG_DIR,
+        LC_TMP_DIR,
+    );
 
 
     /**
@@ -165,7 +172,7 @@ class CacheManager extends \Includes\Decorator\Utils\AUtils
      */
     protected static function getCacheStateIndicatorfileName($step)
     {
-        return LC_COMPILE_DIR . '.cacheGenerated.' . $step;
+        return LC_COMPILE_DIR . '.cacheGenerated.' . $step . '.step';
     }
 
     /**
@@ -184,7 +191,7 @@ class CacheManager extends \Includes\Decorator\Utils\AUtils
     }
 
     /**
-     * Set the cache vilidity indicator 
+     * Set the cache validity indicator 
      *
      * @param string $step current step name
      *
@@ -196,6 +203,23 @@ class CacheManager extends \Includes\Decorator\Utils\AUtils
     protected static function complete($step)
     {
         \Includes\Utils\FileManager::write(static::getCacheStateIndicatorfileName($step), date('r'));
+    }
+
+    /**
+     * Remove cache validity indicator
+     *
+     * @param string $step current step name
+     *
+     * @return null
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function clear($step)
+    {
+        if (\Includes\Utils\FileManager::isExists($file = static::getCacheStateIndicatorfileName($step))) {
+            \Includes\Utils\FileManager::delete($file);
+        }
     }
 
     /**
@@ -253,7 +277,7 @@ class CacheManager extends \Includes\Decorator\Utils\AUtils
             if (static::isRebuildNeeded($step)) {
 
                 // Perform step-specific actions
-                call_user_func(array('static', 'buildCache' . ucfirst($step)));
+                call_user_func(array('static', 'buildCacheStep' . ucfirst($step)));
 
                 // Perform some actions on complete
                 static::complete($step);
@@ -274,6 +298,12 @@ class CacheManager extends \Includes\Decorator\Utils\AUtils
      */
     public static function cleanupCache()
     {
+        // Remove cache validity indicators
+        foreach (array(self::STEP_FIRST, self::STEP_SECOND) as $step) {
+            static::clear($step);
+        }
+
+        // Remove all cache directories
         array_walk(static::$cacheDirs, array('\Includes\Utils\FileManager', 'unlinkRecursive'));
     }
 }
