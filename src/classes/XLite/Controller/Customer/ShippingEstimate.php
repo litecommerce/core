@@ -94,6 +94,7 @@ class ShippingEstimate extends \XLite\Controller\Customer\ACustomer
 
             $address = $this->getCartProfile()->getShippingAddress();
             if (!$address) {
+                $profile = $this->getCartProfile();
                 $address = new \XLite\Model\Address;
                 $address->setProfile($profile);
                 $address->setIsShipping(true);
@@ -120,6 +121,7 @@ class ShippingEstimate extends \XLite\Controller\Customer\ACustomer
             $this->setInternalRedirect();
 
         } else {
+            \XLite\Core\TopMessage::addError('Shipping address is invalid');
 
             $this->valid = false;
 
