@@ -655,7 +655,7 @@ CommonElement.prototype.linkWithCountry = function()
     country.form.appendChild(stateSwitcher);
     new CommonElement(stateSwitcher);
 
-    this.element.currentCountryCode = country.value;
+    this.element.currentCountryCode = false;
     country.stateInput = this.element;
 
     var o = this;
@@ -934,14 +934,14 @@ core.autoload(CommonForm);
     this.each(
       function() {
         if ('undefined' == typeof(this.commonController)) {
-          if (isElement(this.constructor, 'form')) {
+          if (isElement(this, 'form')) {
             new CommonForm(this);
 
           } else if (
-            isElement(this.constructor, 'input')
-            || isElement(this.constructor, 'select')
-            || isElement(this.constructor, 'textarea')
-            || isElement(this.constructor, 'button')
+            isElement(this, 'input')
+            || isElement(this, 'select')
+            || isElement(this, 'textarea')
+            || isElement(this, 'button')
           ) {
             new CommonElement(this);
           }

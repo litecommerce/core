@@ -16,11 +16,15 @@
 
   <widget class="\XLite\View\Form\Cart\ShippingEstimator\Change" name="change" />
 
-    <widget class="\XLite\View\ShippingList" />
+    {if:cart.getShippingRates()}
+      <widget class="\XLite\View\ShippingList" />
 
-    <div class="buttons main">
-      <widget class="\XLite\View\Button\Submit" label="Choose method" style="action" />
-    </div>
+      <div class="buttons main">
+        <widget class="\XLite\View\Button\Submit" label="Choose method" style="action" />
+      </div>
+    {else:}
+      <p class="error">{t(#Shipping methods are not available#)}</p>
+    {end:}
 
   <widget name="change" end />
 

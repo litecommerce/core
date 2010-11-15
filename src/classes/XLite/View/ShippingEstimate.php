@@ -120,8 +120,7 @@ class ShippingEstimate extends \XLite\View\AView
 
         $state = null;
 
-
-            // From getDestinationAddress()
+        // From getDestinationAddress()
         if ($address && isset($address['state']) && $address['state']) {
             $state = \XLite\Core\Database::getRepo('XLite\Model\State')->find($address['state']);
 
