@@ -39,6 +39,8 @@ define('LC_LOCALE_DIR', LC_VAR_DIR . 'locale');
 
 define('LC_DATACACHE_DIR', LC_VAR_DIR . 'datacache');
 
+define('LC_LOG_DIR', LC_VAR_DIR . 'log' . LC_DS);
+
 // Skins directories
 define('LC_CUSTOMER_AREA_SKIN', LC_SKINS_DIR . 'default' . LC_DS . 'en' . LC_DS);
 define('LC_ADMIN_AREA_SKIN', LC_SKINS_DIR . 'admin' . LC_DS . 'en' . LC_DS);

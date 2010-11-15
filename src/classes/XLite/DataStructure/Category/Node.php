@@ -37,4 +37,16 @@ namespace XLite\DataStructure\Category;
  */
 class Node extends \Includes\DataStructure\Node\Tree
 {
+    /**
+     * Return name of the key field
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getKeyField()
+    {
+        return 'category_id';
+    }
 }

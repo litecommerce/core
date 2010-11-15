@@ -176,7 +176,7 @@ class FileManager extends \Includes\Utils\AUtils
             $filter = new \Includes\Utils\FileFilter($dir, \RecursiveIteratorIterator::CHILD_FIRST);
 
             foreach ($filter->getIterator() as $file) {
-                $file->isDir() ? rmdir($file->getPathname()) : unlink($file->getPathname());
+                $file->isDir() ? rmdir($file->getPathname()) : static::delete($file->getPathname());
             }
 
             rmdir($dir);
@@ -263,5 +263,20 @@ class FileManager extends \Includes\Utils\AUtils
         }
 
         return $result;
+    }
+
+    /**
+     * Delete file
+     * 
+     * @param string $path file path
+     *  
+     * @return int
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function delete($path)
+    {
+        return unlink($path);
     }
 }
