@@ -175,7 +175,7 @@ window.core = {
             return (callCallback && callback) ? callback(XMLHttpRequest, textStatus, data, !notValid) : true;
           },
         contentType: 'application/x-www-form-urlencoded',
-       global:      false,
+        global:      false,
         timeout:     15000,
         type:        'POST',
         url:         url,
@@ -429,3 +429,13 @@ $(document).ready(
     core.savedEvents = [];
   }
 );
+
+/**
+ * Common functions
+ */
+
+// Check - specified object is HTML element or not
+function isElement(obj, type)
+{
+  return obj && typeof(obj.tagName) != 'undefined' && obj.tagName.toLowerCase() == type;
+}
