@@ -31,6 +31,14 @@ require_once __DIR__ . '/ACustomer.php';
 class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
 {
 
+    /**
+     * Test the basic structure
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     public function testStructure()
     {
         $list = $this->getListSelector();
@@ -79,6 +87,307 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
               
     }
 
+    /**
+     * Test how the Quicklook popup displays product options
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function testProductOptions()
+    {
+        list($product, $selector) = $this->popupTestProduct('apparel', 3002);
+        $id = $product->getProductId();
+
+        $this->assertTrue(method_exists($product, 'hasOptions'), "ProductOptions module is not enabled");
+        $this->assertTrue($product->hasOptions(), "Product $id doesn't have options");
+
+        // Collect data on displayed options
+
+        $fieldInput = array();
+        $field = "$selector ul.product-options li.product-option input";
+        $count = (int)$this->getJSExpression("$('$field').length");
+        for($i=0; $i<$count; $i++) {
+            $name = $this->getJSExpression("$('$field').eq($i).attr('name')");
+            $type = $this->getJSExpression("$('$field').eq($i).attr('type')");
+            $value = $this->getJSExpression("$('$field').eq($i).attr('value')");
+            $fieldInput[$type][$name][$value] = $value;
+        }
+
+        $fieldArea = array();
+        $field = "$selector ul.product-options li.product-option textarea";
+        $count = $this->getJSExpression("$('$field').size()");
+        for($i=0; $i<$count; $i++) {
+            $name = $this->getJSExpression("$('$field').eq($i).attr('name')");
+            $fieldArea[$name] = $name;
+        }
+
+        $fieldSelect = array();
+        $field = "$selector ul.product-options li.product-option select";
+        $count = $this->getJSExpression("$('$field').size()");
+        for($i=0; $i<$count; $i++) {
+            $name = $this->getJSExpression("$('$field').eq($i).attr('name')");
+            $fieldSelect[$name] = null;
+            $values = array();
+            $field2 = "$field.eq($i) option";
+            $count2 = $this->getJSExpression("$('$field2').size()");
+            for($j=0; $j++; $j<$count2) {
+                $value = $this->getJSExpression("$('$field2').eq($i).attr('value')");
+                $fieldSelect[$name][$value] = $value;
+            }
+        }
+
+        foreach($product->getActiveOptions() as $optionGroup) {
+
+            $name = $optionGroup->getDisplayName();
+            $groupId = $optionGroup->getGroupId();
+            $type = $optionGroup->getType() . $optionGroup->getViewType();
+
+            $this->assertJqueryPresent(
+                "$selector ul.product-options li.product-option strong.subtitle:contains($name)",
+                "Option name is missing ($name)"
+            );
+
+
+            switch ($optionGroup->getType() . $optionGroup->getViewType()) {
+
+                case $optionGroup::TEXT_TYPE . $optionGroup::INPUT_VISIBLE:
+                    $this->assertTrue(
+                        isset($fieldInput['text']["product_options[$groupId]"]),
+                        "A text field is missing: $groupId"
+                    );
+                    break;
+
+                case $optionGroup::TEXT_TYPE . $optionGroup::TEXTAREA_VISIBLE:
+                    $this->assertTrue(
+                        isset($fieldArea["product_options[$groupId]"]),
+                        "A text-area field is missing: $groupId"
+                    );
+                    break;
+
+                case $optionGroup::GROUP_TYPE . $optionGroup::SELECT_VISIBLE:
+                    foreach ($optionGroup->getOptions() as $option) {
+                        $id = $option->getOptionId();
+                        $name = $option->getName();
+                        $this->assertTrue(
+                            isset($fieldSelect["product_options[$groupId]"][$id]),
+                            "A select option is missing: $groupId, $id"
+                        );
+                    }
+                    break;
+
+                case $optionGroup::GROUP_TYPE . $optionGroup::RADIO_VISIBLE:
+                    foreach ($optionGroup->getOptions() as $option) {
+                        $id = $option->getOptionId();
+                        $name = $option->getName();
+                        $this->assertTrue(
+                            isset($fieldInput['radio']["product_options[$groupId]"][$id]),
+                            "A radio option is missing: $groupId, $id"
+                        );
+                    }
+                    break;
+
+                default:
+                    $this->assertTrue(false, "Wrong option type: ".$optionGroup->getType() . $optionGroup->getViewType());
+
+
+            }
+
+        }
+
+    }
+
+    /**
+     * Test how the Quicklook popup displays an image gallery and the image zoomer
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function testGalleryAndZoomer()
+    {
+
+        $products = array(
+            array('url'=>'apparel', 'id'=>4004),
+            array('url'=>'toys', 'id'=>4024),
+        );
+
+        foreach ($products as $p) {
+
+            list($product, $selector) = $this->popupTestProduct($p['url'], $_id = $p['id']);
+
+            // Base use case
+            $this->mouseOver("css=div.mousetrap");
+
+            $this->assertJqueryPresent('#cloud-zoom-big:visible', "Zoomer layout #1 ($_id)");
+            $this->assertJqueryPresent('.cloud-zoom-lens:visible', "Zoomer lens #1 ($_id");
+
+            $this->mouseOut("css=div.mousetrap");
+
+            $this->waitForCondition(
+                'selenium.browserbot.getCurrentWindow().$("#cloud-zoom-big:visible").length == 0',
+                2000,
+                "Zoomer is shown when the mouse cursors is out of the bounds ($_id)"
+            );
+
+            $this->assertJqueryNotPresent('#cloud-zoom-big:visible', "Zoomer layout #2 ($_id)");
+            $this->assertJqueryNotPresent('#cloud-zoom-lens:visible', "Zoomer lens #2 ($_id)");
+
+            $this->assertElementPresent("css=$selector .product-image-gallery ul li a", "Gallery links are missing ($_id)");
+
+            // Gallery based use cases
+            $length = intval($this->getJSExpression("$('$selector .product-image-gallery ul li a').length"));
+
+            for ($idx = 2; $idx < $length + 1; $idx++) {
+                $i = $idx - 1;
+
+                $this->click("//div[@class='product-image-gallery']/ul/li[position()=$idx]/a");
+
+                $src = $this->getJSExpression("$('$selector .product-image-gallery ul li:eq($i) img.middle').attr('src')");
+                $w = $this->getJSExpression("$('$selector .product-image-gallery ul li:eq($i) img.middle').attr('width')");
+                $h = $this->getJSExpression("$('$selector .product-image-gallery ul li:eq($i) img.middle').attr('height')");
+
+                $this->waitForCondition(
+                    'selenium.browserbot.getCurrentWindow().$("'.$selector.' .cloud-zoom img").attr("src") == "' . $src . '"',
+                    2000,
+                    "Image change is failed [$idx image] ($_id)"
+                );
+
+
+                $rev = $this->getJSExpression("$('$selector .product-image-gallery ul li:eq($i) a').attr('rev')");
+                if (!preg_match('/width: (\d+), height: (\d+)/', $rev, $m)) {
+                    $this->fail("Rev attribute has a wrong format [$idx image] ($_id)");
+                }
+
+                if ($this->isZoomEnabled($m[1])) {
+
+                    $style = $this->getJSExpression("$('$selector .product-photo').attr('style')");
+                    $this->assertTrue(
+                        strpos(" $style", 'width: '.$w.'px;') > 0,
+                        "Style check is failed [$idx image] ($_id)"
+                    );
+
+                    $imgSrc = $this->getJSExpression("$('$selector .product-photo #wrap a.cloud-zoom img').attr('src')");
+                    $this->assertEquals($imgSrc, $src, "URL check failed [$idx image] ($_id)");
+
+
+                    $this->mouseOver("css=div.mousetrap");
+
+                    $this->assertJqueryPresent('#cloud-zoom-big:visible', "Zoomer layout #3 [$idx image]  ($_id)");
+                    $this->assertJqueryPresent('.cloud-zoom-lens:visible', "Zoomer lens #3 [$idx image] ($_id)");
+
+                } else {
+
+                    $this->assertElementNotPresent("css=div.mousetrap", "Zoomer elements are shown for small images [$idx image] ($_id)");
+
+                }
+            }
+        }
+    }
+
+
+    /**
+     * Test how the Quicklook popup displays and acts on cart buttons
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function testAdd2Cart()
+    {
+        list($product, $selector) = $this->popupTestProduct('toys', 4024);
+        $id = $product->getProductId();
+
+        // This assertion requires the minicart widget to be visible on the page
+        $qty = intval($this->getJSExpression("$('.minicart-items-number').html()"));
+
+        $formSelector = "css=$selector form.product-details.hproduct";
+        $cartButtonSelector = "$formSelector .product-details-info .product-buttons button.bright.add2cart";
+        $buyButtonSelector = "$formSelector .product-details-info .product-buttons-added button.action.buy-more";
+        $continueButtonSelector = "$formSelector .product-details-info .product-buttons-added button.bright.continue";
+
+        $this->assertElementPresent($cartButtonSelector, "Add-to-cart button is missing (#1)");
+        $this->assertElementNotPresent($buyButtonSelector, "Buy-now button is visible (#1)");
+        $this->assertElementNotPresent($continueButtonSelector, "Continue-button is visible (#1)");
+
+        $this->click($cartButtonSelector);
+
+        $qty++;
+
+        $this->waitForCondition(
+            "selenium.browserbot.getCurrentWindow().$('.BlockMsg-product-quicklook:visible').length <= 0",
+            10000,
+            "Add-to-cart button doesn't close Quicklook popups"
+        );
+
+        $this->waitForCondition(
+            'selenium.browserbot.getCurrentWindow().$(".minicart-items-number").html() == ' . $qty,
+            10000,
+            "Minicart widget displays a wrong qty (#1)"
+        );
+
+        $this->popupQuicklook($id);
+
+        $this->assertElementNotPresent($cartButtonSelector, "Add-to-cart button is visible (#1)");
+        $this->assertElementPresent($buyButtonSelector, "Buy-now button is missing (#2)");
+        $this->assertElementPresent($continueButtonSelector, "Continue-button is missing (#2)");
+
+        $this->click($buyButtonSelector);
+
+        $qty++;
+
+        $this->waitForCondition(
+            "selenium.browserbot.getCurrentWindow().$('.BlockMsg-product-quicklook:visible').length <= 0",
+            10000,
+            "Buy-now button doesn't close Quicklook popups"
+        );
+
+        $this->waitForCondition(
+            'selenium.browserbot.getCurrentWindow().$(".minicart-items-number").html() == ' . $qty,
+            10000,
+            "Minicart widget displays a wrong qty (#1)"
+        );
+
+
+        // TODO - Continue button
+
+        // TODO - rework after Inventory tracking module is changed
+
+    }
+
+    /**
+     * Open a category page and popup a Quicklook for a product.
+     * Returns a list of a product object and a CSS selector to the Quicklook popup
+     * 
+     * @param string  $categoryUrl URL of a category page
+     * @param integer $productId   Product ID
+     *  
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function popupTestProduct($categoryUrl, $productId)
+    {
+        $list = $this->getListSelector();
+        $this->open($categoryUrl);
+        $this->switchDisplayMode('grid');
+
+        $id = $productId;
+
+        $product = \XLite\Core\Database::getRepo('XLite\Model\Product')->find($id);
+        $this->assertNotNull($product, "Product $id is not found in the DB");
+
+        $this->popupQuicklook($id);
+
+        $selector = ".BlockMsg-product-quicklook .product-quicklook";
+        $this->assertElementPresent("css=$selector", "Quicklook popup for the $id product is missing on the page");
+
+        return array($product, $selector);
+    }
 
     /**
      * Test whether a Quicklook popup for a product has a correct structure. Returns link to a product page.
@@ -119,7 +428,7 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
         // Product page link (is returned by the method)
         $link = $this->getJSExpression("$('$selector a.product-more-link')");
 
-        // Gallery
+       // Gallery
         if ($product->countImages() > 1) {
             $this->assertElementNotPresent("css=$selector .loupe", "Zoom icon is shown in the Quicklook popup (product $id)");
             $this->assertElementPresent("css=$selector .product-image-gallery ul li a[rel='gallery'] img", "Image links are missing in the image gallery (product $id)");
@@ -140,12 +449,8 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
         if ($product->hasImage()) {
 
             $image = $product->getImages()->get(0); // the default image
-            $kZoom = \XLite\View\Product\Details\Customer\Image::K_ZOOM;
-            $maxWidth = \XLite\View\Product\Details\Customer\Image::IMG_MAX_WIDTH_QL;
 
-            $cloudZoom = $image->getWidth() > $kZoom * $maxWidth;
-
-            if ($cloudZoom) {
+            if ($this->isZoomEnabled($image->getWidth())) {
 
                 $this->assertElementPresent(
                     "css=$selector .product-photo div#wrap a.cloud-zoom#pimage_".$id." img.photo.product-thumbnail",
@@ -168,6 +473,24 @@ class XLite_Web_Customer_QuickLook extends XLite_Web_Customer_ACustomer
         return $link;
 
     }
+
+    /**
+     * Checks whether the zoomer function is to be enabled for an image width
+     * 
+     * @param integer $width Image width
+     *  
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isZoomEnabled($width)
+    {
+        $kZoom = 1.3; // see skins/drupal/en/product/details/controller.js
+        $maxWidth = 300; // see \XLite\View\Product\Details\Customer\Image
+        return $width > $kZoom * $maxWidth;
+    }
+
 
     /**
      * Closes a Quicklook popup
