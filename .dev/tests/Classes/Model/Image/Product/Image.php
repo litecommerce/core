@@ -51,7 +51,6 @@ class XLite_Tests_Model_Image_Product_Image extends XLite_Tests_TestCase
             $this->assertEquals(1, $i->getOrderby(), 'check orderby (' . $n . ')');
 
             $this->assertEquals('image/jpeg', $i->getMime(), 'check mime type (' . $n . ')');
-
         }
 
         $i = $this->getProduct()->getImages()->get(0);
@@ -126,6 +125,10 @@ class XLite_Tests_Model_Image_Product_Image extends XLite_Tests_TestCase
             \XLite\Core\Database::getEM()->persist($this->product);
             \XLite\Core\Database::getEM()->flush();
 
+            if (!$this->product) {
+                $this->fail('Product can not found');
+            }
+
             foreach ($this->images as $path) {
                 $i = new \XLite\Model\Image\Product\Image();
 
@@ -135,9 +138,9 @@ class XLite_Tests_Model_Image_Product_Image extends XLite_Tests_TestCase
                 $i->loadFromLocalFile(LC_ROOT_DIR . 'images' . LC_DS . 'product' . LC_DS . $path);
                 $i->setAlt($path);
                 $i->setOrderby(1);
+                \XLite\Core\Database::getEM()->persist($i);
             }
 
-            \XLite\Core\Database::getEM()->persist($this->product);
             \XLite\Core\Database::getEM()->flush();
 
         }

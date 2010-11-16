@@ -48,16 +48,6 @@ class Session extends \XLite\Model\AEntity
 
 
     /**
-     * Session cell repository (cache)
-     *
-     * @var    \XLite\Model\Repo\SessionCell
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected static $sessionCellRepository;
-
-    /**
      * Session increment id 
      * 
      * @var    integer
@@ -115,11 +105,7 @@ class Session extends \XLite\Model\AEntity
      */
     protected static function getSessionCellRepo()
     {
-        if (!isset(static::$sessionCellRepository)) {
-            static::$sessionCellRepository = \XLite\Core\Database::getRepo('XLite\Model\SessionCell');
-        }
-
-        return static::$sessionCellRepository;
+        return \XLite\Core\Database::getRepo('XLite\Model\SessionCell');
     }
 
 
