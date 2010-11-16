@@ -38,6 +38,11 @@ namespace XLite\View;
 class Category extends \XLite\View\AView
 {
     /**
+     * WEB LC root postprocessing constant
+     */
+    const WEB_LC_ROOT       = '{{WEB_LC_ROOT}}';
+
+    /**
      * Return widget default template
      *
      * @return string
@@ -54,7 +59,7 @@ class Category extends \XLite\View\AView
      * Check widget visibility 
      * 
      * @return bool
-     * @access public
+     * @access protected
      * @since  3.0.0
      */
     protected function isVisible()
@@ -62,6 +67,53 @@ class Category extends \XLite\View\AView
         return parent::isVisible() && $this->getCategory()->getDescription();
     }
 
+
+    /**
+     * Return description with postprocessing WEB LC root constant
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getDescription()
+    {
+        return str_replace(
+            $this->getWebPreprocessingTags(),
+            $this->getWebPreprocessingUrls(),
+            $this->getCategory()->getDescription()
+        );
+    }
+
+    /**
+     * getWebPreprocessingTags 
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getWebPreprocessingTags()
+    {
+        return array(
+            self::WEB_LC_ROOT,
+        );
+    }
+
+    /**
+     * getWebPreprocessingUrls 
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getWebPreprocessingUrls()
+    {
+        return array(
+            \Xlite::getInstance()->getShopUrl(),
+        );
+    }
 
     /**
      * Return list of targets allowed for this widget

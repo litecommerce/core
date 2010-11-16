@@ -10,4 +10,4 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<div class="category-description">{category.getDescription():h}</div>
+<div class="category-description">{getDescription():h}</div>

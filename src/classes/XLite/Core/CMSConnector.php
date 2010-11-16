@@ -545,17 +545,31 @@ abstract class CMSConnector extends \XLite\Base\Singleton
 
         // By category
         if (!$cleanUrl) {
+
             $parts = preg_split('\'/\'', $path, 2, PREG_SPLIT_NO_EMPTY);
+
             $category = \XLite\Core\Database::getRepo('\XLite\Model\Category')->findOneByCleanUrl($parts[0]);
 
             if ($category) {
+
                 $params  = array('category_id' => $category->getCategoryId());
+
                 if (!empty($parts[1])) {
-                    $params += \Includes\Utils\Converter::parseQuery($parts[1], '-', '/');
+
+                    $query = \Includes\Utils\Converter::parseQuery($parts[1], '-', '/');
+
+                    if (is_array($query)) {
+
+                        $params += $query;
+
+                    }
+
                 }
 
                 $cleanUrl = \XLite\Core\Converter::buildURL('category', '', $params);
+
             }
+
         }
 
         return $cleanUrl;
