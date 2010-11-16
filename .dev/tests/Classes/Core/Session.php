@@ -46,7 +46,7 @@ class XLite_Tests_Core_Session extends XLite_Tests_TestCase
         unset($session->aaa);
 
         // Second session read this cell early and use cached value
-        $this->assertNull($s->aaa, 'check empty value #2');
+        $this->assertNotNull($s->aaa, 'check empty value #2');
 
         // Current session has not removed cell
         $this->assertNull($session->aaa, 'check empty value #3');

@@ -121,7 +121,7 @@ class XLite_Tests_Model_Session extends XLite_Tests_TestCase
 
         $this->assertTrue(isset($session->zzz), 'check isset');
 
-        unset($session->zzz);;
+        unset($session->zzz);
 
         $this->assertFalse(isset($session->zzz), 'check isset #2');
 
@@ -143,7 +143,6 @@ class XLite_Tests_Model_Session extends XLite_Tests_TestCase
         \XLite\Core\Database::getEM()->flush();
 
         $session = new \XLite\Model\Session();
-
         $session->map($this->testSession);
 
         \XLite\Core\Database::getEM()->persist($session);
