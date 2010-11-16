@@ -113,7 +113,10 @@ class XLite_Tests_Model_Image_Product_Image extends XLite_Tests_TestCase
             $this->product = \XLite\Core\Database::getRepo('XLite\Model\Product')->findOneByEnabled(true);
 
             if (!$this->product) {
-                $this->fail('Enabeld product not found');
+                $this->fail('Enabled product not found');
+
+            } elseif (!$this->product->getProductId()) {
+                $this->fail('Product has not product_id');
             }
 
             // Remove old detailed images
@@ -125,13 +128,10 @@ class XLite_Tests_Model_Image_Product_Image extends XLite_Tests_TestCase
             \XLite\Core\Database::getEM()->persist($this->product);
             \XLite\Core\Database::getEM()->flush();
 
-            if (!$this->product) {
-                $this->fail('Product can not found');
-            }
-
             foreach ($this->images as $path) {
                 $i = new \XLite\Model\Image\Product\Image();
 
+                $i->setId($this->product->getProductId());
                 $i->setProduct($this->product);
                 $this->product->getImages()->add($i);
 
