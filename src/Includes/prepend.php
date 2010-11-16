@@ -73,19 +73,19 @@ require_once (LC_ROOT_DIR . 'Includes' . LC_DS . 'functions.php');
 
 // Common error reporting settings
 $path = LC_VAR_DIR . 'log' . LC_DS . 'php_errors.log.' . date('Y-m-d') . '.php';
-if (!file_exists(dirname($path))) {
+if (!file_exists(dirname($path)) && is_writable(LC_VAR_DIR)) {
     \Includes\Utils\FileManager::mkdirRecursive(dirname($path));
 }
 
-if (!file_exists($path) || 16 > filesize($path)) {
+if ((!file_exists($path) || 16 > filesize($path)) && is_writable(dirname($path))) {
     file_put_contents($path, '<' . '?php die(1); ?' . '>' . "\n");
+    ini_set('error_log', $path);
 }
 
-ini_set('error_log', $path);
 ini_set('log_errors', 1);
 
 unset($path);
 
 // Set default memory limit
-func_set_memory_limit('32M');
+func_set_memory_limit('64M');
 
