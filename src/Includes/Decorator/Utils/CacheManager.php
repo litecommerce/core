@@ -69,8 +69,6 @@ class CacheManager extends \Includes\Decorator\Utils\AUtils
         LC_COMPILE_DIR,
         LC_LOCALE_DIR,
         LC_DATACACHE_DIR,
-        LC_IMAGES_CACHE_DIR,
-        LC_LOG_DIR,
         LC_TMP_DIR,
     );
 
