@@ -51,8 +51,13 @@ class XLite_Web_Customer_Minicart extends XLite_Web_Customer_ACustomer
 
         $this->open('store/product//product_id-' . $product->getProductId());
 
-        $this->assertElementPresent("//button[@type='submit']/span[text()='Add to Bag']");
-        $this->clickAndWait("//button[@type='submit']/span[text()='Add to Bag']");
+        $this->assertElementPresent("//button[@type='submit']/span[text()='Add to Bag']", 'check Add to Bag button');
+        $this->click("//button[@type='submit' and @class='bright add2cart']");
+        $this->waitForLocalCondition(
+            '$(".lc-minicart-horizontal .minicart-items-number").html() == "1"',
+            10000,
+            'wait minicart'
+        );
 
         $this->assertElementPresent(
             "//div[@id='lc-minicart-horizontal']"
@@ -99,10 +104,20 @@ class XLite_Web_Customer_Minicart extends XLite_Web_Customer_ACustomer
         $product = $this->getActiveProduct();
 
         $this->open('store/product//product_id-' . $product->getProductId());
-        $this->clickAndWait("//button[@type='submit']/span[text()='Add to Bag']");
- 
+        $this->click("//button[@type='submit' and @class='bright add2cart']");
+        $this->waitForLocalCondition(
+            '$(".lc-minicart-horizontal .minicart-items-number").html() == "1"',
+            10000,
+            'wait minicart'
+        );
+
         $this->open('store/product//product_id-' . $product->getProductId());
-        $this->clickAndWait("//button[@type='submit']/span[text()='Add to Bag']");
+        $this->click("//button[@type='submit' and @class='action buy-more']");
+        $this->waitForLocalCondition(
+            '$(".lc-minicart-horizontal .minicart-items-number").html() == "2"',
+            10000,
+            'wait minicart'
+        );
  
         $this->assertElementPresent(
             "//div[@id='lc-minicart-horizontal']"
@@ -141,10 +156,20 @@ class XLite_Web_Customer_Minicart extends XLite_Web_Customer_ACustomer
         $product = $this->getActiveProduct();
 
         $this->open('store/product//product_id-' . $product->getProductId());
-        $this->clickAndWait("//button[@type='submit']/span[text()='Add to Bag']");
+        $this->click("//button[@type='submit' and @class='bright add2cart']");
+        $this->waitForLocalCondition(
+            '$(".lc-minicart-horizontal .minicart-items-number").html() == "1"',
+            10000,
+            'wait minicart'
+        );
 
         $this->open('store/product//product_id-' . $product->getProductId());
-        $this->clickAndWait("//button[@type='submit']/span[text()='Add to Bag']");
+        $this->click("//button[@type='submit' and @class='action buy-more']");
+        $this->waitForLocalCondition(
+            '$(".lc-minicart-horizontal .minicart-items-number").html() == "2"',
+            10000,
+            'wait minicart'
+        );
 
         foreach ($this->getActiveProducts() as $p) {
             if ($p->getProductId() != $product->getProductId()) {
@@ -154,7 +179,12 @@ class XLite_Web_Customer_Minicart extends XLite_Web_Customer_ACustomer
         }
 
         $this->open('store/product//product_id-' . $product->getProductId());
-        $this->clickAndWait("//button[@type='submit']/span[text()='Add to Bag']");
+        $this->click("//button[@type='submit' and @class='bright add2cart']");
+        $this->waitForLocalCondition(
+            '$(".lc-minicart-horizontal .minicart-items-number").html() == "3"',
+            10000,
+            'wait minicart'
+        );
 
         $this->assertElementPresent(
             "//div[@id='lc-minicart-horizontal']"
@@ -193,7 +223,12 @@ class XLite_Web_Customer_Minicart extends XLite_Web_Customer_ACustomer
         $product = $this->getActiveProduct();
 
         $this->open('store/product//product_id-' . $product->getProductId());
-        $this->clickAndWait("//button[@type='submit']/span[text()='Add to Bag']");
+        $this->click("//button[@type='submit' and @class='bright add2cart']");
+        $this->waitForLocalCondition(
+            '$(".lc-minicart-horizontal .minicart-items-number").html() == "1"',
+            10000,
+            'wait minicart'
+        );
 
         $this->assertJqueryNotPresent(
             '#lc-minicart-horizontal .items-list:visible',

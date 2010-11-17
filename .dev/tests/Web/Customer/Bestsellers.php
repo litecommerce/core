@@ -48,24 +48,30 @@ class XLite_Web_Customer_Bestsellers extends XLite_Web_Customer_ACustomer
         );
         
         $this->assertElementPresent(
-            "//div[@class='items-list XLiteModuleBestsellersViewBestsellers']",
+            "//h2[text()='Bestsellers']"
+            . "/following-sibling::div[@class='content']"
+            . "/div[@class='items-list']",
             'check bestsellers block'
         );
 
         $this->assertElementPresent(
-            "//div[@class='items-list XLiteModuleBestsellersViewBestsellers']/table[@class='list-body list-body-grid list-body-grid-4-columns']",
+            "//h2[text()='Bestsellers']"
+            . "/following-sibling::div[@class='content']"
+            . "/div[@class='items-list']"
+            . "/div[@class='products']"
+            . "/table[@class='products-grid grid-3-columns']",
             'Check table'
         );
 
-        $best = $this->findBestsellers();
+        foreach ($this->findBestsellers() as $product) {
 
-        foreach ($best as $product) {
-
-            $url = $product->getImageURL();
+            $id = $product->getProductId();
 
             $this->assertElementPresent(
-                "//img[@src='$url']",
-                'Check ' . $url . ' element'
+                "//h2[text()='Bestsellers']"
+                . "/following-sibling::div[@class='content']"
+                . "/descendant::div[@class='product productid-$id ui-draggable']",
+                'Check ' . $id . ' element'
             );  
 
         }
@@ -81,42 +87,25 @@ class XLite_Web_Customer_Bestsellers extends XLite_Web_Customer_ACustomer
         );  
     
         $this->assertElementPresent(
-            "//div[@class='items-list XLiteModuleBestsellersViewBestsellers']",
+            "//h2[text()='Bestsellers']"
+            . "/following-sibling::div[@class='content']"
+            . "/div[@class='items-list']",
             'check bestsellers block'
         );  
 
-        $best = $this->findBestsellers();
+        foreach ($this->findBestsellers(0, 3002) as $product) {
 
-        $best1 = $this->findBestsellers(0, 3002);
-
-        foreach ($best1 as $product) {
-
-            $url = $product->getImageURL();
+            $id = $product->getProductId();
 
             $this->assertElementPresent(
-                "//img[@src='$url']",
-                'Check ' . $url . ' element'
-            );  
-
-        }   
-
-        foreach ($best as $product) {
-
-            if (!in_array($product, $best1)) {
-
-                $url = $product->getImageURL();
-
-                $this->assertElementNotPresent(
-                    "//img[@src='$url']",
-                    'Check ' . $url . ' element'
-                );  
-
-            }
+                "//h2[text()='Bestsellers']"
+                . "/following-sibling::div[@class='content']"
+                . "/descendant::div[@class='product productid-$id ui-draggable']",
+                'Check ' . $id . ' element in category 3002'
+            );
 
         }
-
     }
-
 
     /** 
      *  Wrapper for the REPO findBestsellers method
@@ -131,7 +120,8 @@ class XLite_Web_Customer_Bestsellers extends XLite_Web_Customer_ACustomer
      */
     protected function findBestsellers($count = 0, $cat = 0)
     {   
-        return \XLite\Core\Database::getRepo('XLite\Model\OrderItem')->findBestsellers($count, $cat);
+        return \XLite\Core\Database::getRepo('XLite\Model\Product')
+            ->findBestsellers($count, $cat);
     }   
 
 }

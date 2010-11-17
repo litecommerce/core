@@ -43,8 +43,11 @@ class XLite_Web_Customer_CategoryPage extends XLite_Web_Customer_ACustomer
         $categories = \XLite\Core\Database::getRepo('XLite\Model\Category')->findByEnabled(true);
 
         foreach($categories as $category) {
+            if ($category->getCategoryId() == 1) {
+                continue;
+            }
             $url = $this->getCategoryURL($category->getCategoryId());
-            $this->open($url);
+            $this->openAndWait($url);
             $this->testCategoryPage($category);
         }
 
@@ -66,20 +69,20 @@ class XLite_Web_Customer_CategoryPage extends XLite_Web_Customer_ACustomer
         $titleSelector = "h1#page-title.title";
         $this->assertElementPresent(
             "css=$titleSelector",
-            "A category title is missing"
+            "A category title is missing (" . $category->getCategoryId() . ")"
         );
-        $title = $this->getJSExpression("$('$titleSelector').attr('title')");
+        $title = $this->getJSExpression("$('$titleSelector').html()");
         $this->assertEquals(
             $category->getName(),
             $title,
-            "A category displays a wrong title"
+            "A category displays a wrong title (" . $category->getCategoryId() . ")"
         );
 
         // Description
         $method = $category->getDescription() ? "assertElementPresent" : "assertElementNotPresent";
         $this->$method(
             "css=.category-description",
-            "Wrong category description ($method, $title)"
+            "Wrong category description ($method, $title) (" . $category->getCategoryId() . ")"
         );
 
     }

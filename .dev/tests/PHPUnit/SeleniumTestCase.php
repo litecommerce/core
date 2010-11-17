@@ -574,7 +574,7 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
     {
         $this->waitForCondition(
             'selenium.browserbot.getCurrentWindow().' . $condition,
-            $ttl,
+            isset($ttl) ? $ttl : 10000,
             $message
         );
     }
@@ -599,7 +599,7 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
             $result = parent::__call($command, $arguments);
 
             if (
-                preg_match('/^(?:open|submit)(?:AndWait)?$/Ssi', $command)
+                preg_match('/^open(?:AndWait)?$/Ssi', $command)
                 && $this->validatePage
             ) {
                 $url = $arguments[0];
@@ -618,10 +618,15 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
                 || preg_match('/^The response from the Selenium RC server is invalid: Timed out after \d+ms$/Ss', $message)
             ) {
                 
-                if ($command == 'waitForCondition' || preg_match('/AndWait$/Ss', $command)) {
+                if ($command == 'waitForCondition') {
                     $this->fail(
                         'Timeout failed (' . $arguments[1] . 'ms): '
                         . (isset($arguments[2]) ? $arguments[2] : $arguments[0])
+                    );
+
+                } elseif (preg_match('/AndWait$/Ss', $command)) {
+                    $this->fail(
+                        'Timeout failed for ' . $command . ' command with pattern ' . $arguments[0]
                     );
 
                 } else {
