@@ -382,7 +382,7 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a -d "${OUTPUT_DIR}/${DRUPAL_DI
 
 	if [ -f $LOGO_IMAGE ]; then
 		[ -d ${OUTPUT_DIR}/${DRUPAL_DIRNAME}/profiles/litecommerce ] && cp $LOGO_IMAGE ${OUTPUT_DIR}/${DRUPAL_DIRNAME}/profiles/litecommerce/lc_logo.png
-		cp $LOGO_IMAGE ${OUTPUT_DIR}/${DRUPAL_DIRNAME}/themes/lccms/logo.png
+		cp $LOGO_IMAGE ${OUTPUT_DIR}/${DRUPAL_DIRNAME}/sites/all/themes/lc3/logo.png
 	else
 		echo "Warning! Logo image file $LOGO_IMAGE not found"
 	fi
@@ -416,10 +416,10 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a -d "${OUTPUT_DIR}/${DRUPAL_DI
 		echo "  + Bettercrumbs v.$VERSION module for Drupal is completed"
 
 		# Pack LCCMS theme
-		cd ${OUTPUT_DIR}/${DRUPAL_DIRNAME}/themes
-		tar -czf ${OUTPUT_DIR}/lccms_theme-${VERSION}.tgz lccms
+		cd ${OUTPUT_DIR}/${DRUPAL_DIRNAME}/sites/all/themes
+		tar -czf ${OUTPUT_DIR}/lc3_theme-${VERSION}.tgz lc3
 
-		echo "  + LCCMS v.$VERSION theme for Drupal is completed"
+		echo "  + LC3 v.$VERSION theme for Drupal is completed"
 
 	else
 
