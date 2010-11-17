@@ -22,9 +22,9 @@
   right: 8px;
   top: 8px;
   z-index: 20;
-  width: 19px;
+  width: 24px;
   height: 24px;
-  background: transparent url(images/bag/small.png) no-repeat left top;
+  background: transparent url(images/icon_added.png) no-repeat left top;
 }
 
 table.products-grid,
