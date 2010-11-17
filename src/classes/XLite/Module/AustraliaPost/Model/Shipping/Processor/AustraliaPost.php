@@ -165,10 +165,16 @@ class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor implement
                     $http = new \HTTP_Request2($postUrl);
                     $http->setConfig('timeout', 5);
 
-                    $result = $http->send()->getBody();
+                    try {
+                        $result = $http->send()->getBody();
 
-                    // Save result in cache even if rate is failed
-                    $this->saveDataInCache($postUrl, $result);
+                        // Save result in cache even if rate is failed
+                        $this->saveDataInCache($postUrl, $result);
+
+                    } catch (\HTTP_Request2_Exception $exception) {
+                        $errorMsg = $exception->getMessage();
+                        break;
+                    }
                 }
             
                 $response = $this->parseResponse($result);
@@ -189,7 +195,7 @@ class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor implement
                     $rate->setExtraData($extraData);
                 }
 
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 $errorMsg = $e->getMessage();
                 break;
             }
@@ -221,17 +227,13 @@ class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor implement
     {
         $result = array();
 
-        $preparsedData = explode("\n", $stringData);
-
-        foreach ($preparsedData as $data) {
+        foreach (explode("\n", $stringData) as $data) {
 
             $data = trim($data);
 
             if (!empty($data)) {
-                list($key, $value) = explode('=', $data);
-                $key = trim($key);
-                $value = trim($value);
-                $result[$key] = $value;
+                list($key, $value) = explode('=', $data, 2);
+                $result[trim($key)] = trim($value);
             }
         }
 
