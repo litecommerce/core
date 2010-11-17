@@ -56,6 +56,11 @@ class CacheManager extends \Includes\Decorator\Utils\AUtils
     const STEP_FIRST  = 'first';
     const STEP_SECOND = 'second';
 
+    /**
+     * Flag to determine whether progress bar is shown
+     */
+
+    protected static $progressBarStarted = false;
 
     /**
      * List of cache directories 
@@ -153,9 +158,12 @@ class CacheManager extends \Includes\Decorator\Utils\AUtils
      */
     protected static function showMessage()
     {
-        \Includes\Utils\Operator::flush(
-            ('cli' == PHP_SAPI) ? static::getPlainMessage() : static::getHTMLMessage()
-        );
+        if (!static::$progressBarStarted) {
+            \Includes\Utils\Operator::flush(
+                ('cli' == PHP_SAPI) ? static::getPlainMessage() : static::getHTMLMessage()
+            );
+            static::$progressBarStarted = true;
+        }
     }
 
     /**
@@ -215,7 +223,7 @@ class CacheManager extends \Includes\Decorator\Utils\AUtils
      */
     protected static function clear($step)
     {
-        if (\Includes\Utils\FileManager::isExists($file = static::getCacheStateIndicatorfileName($step))) {
+        if ($file = static::getCacheStateIndicatorfileName($step)) {
             \Includes\Utils\FileManager::delete($file);
         }
     }
@@ -230,9 +238,6 @@ class CacheManager extends \Includes\Decorator\Utils\AUtils
      */
     protected static function buildCacheStepFirst()
     {
-        // Show the "Please wait" message
-        static::showMessage();
-
         // Delete cache folders
         static::cleanupCache();
 
@@ -273,6 +278,9 @@ class CacheManager extends \Includes\Decorator\Utils\AUtils
 
             // Check if a step is passed
             if (static::isRebuildNeeded($step)) {
+            
+                // Show the "Please wait" message
+                static::showMessage();
 
                 // Perform step-specific actions
                 call_user_func(array('static', 'buildCacheStep' . ucfirst($step)));
@@ -287,6 +295,21 @@ class CacheManager extends \Includes\Decorator\Utils\AUtils
     }
 
     /**
+     * Clean up the cache validity indicators
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function cleanupCacheIndicators()
+    {
+        foreach (array(self::STEP_FIRST, self::STEP_SECOND) as $step) {
+            static::clear($step);
+        }
+    }
+ 
+    /**
      * Clean up the cache 
      * 
      * @return void
@@ -296,11 +319,6 @@ class CacheManager extends \Includes\Decorator\Utils\AUtils
      */
     public static function cleanupCache()
     {
-        // Remove cache validity indicators
-        foreach (array(self::STEP_FIRST, self::STEP_SECOND) as $step) {
-            static::clear($step);
-        }
-
         // Remove all cache directories
         array_walk(static::$cacheDirs, array('\Includes\Utils\FileManager', 'unlinkRecursive'));
     }
