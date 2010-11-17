@@ -44,9 +44,7 @@ class XLite_Web_Customer_Cart extends XLite_Web_Customer_ACustomer
     {
         $product = \XLite\Core\Database::getRepo('XLite\Model\Product')
             ->createQueryBuilder()
-            ->innerJoin('p.detailed_images', 'd')
-            ->andWhere('d.is_zoom = :true')
-            ->setParameter('true', true)
+            ->innerJoin('p.images', 'd')
             ->setMaxResults(1)
             ->getQuery()
             ->getSingleResult();
@@ -354,15 +352,7 @@ class XLite_Web_Customer_Cart extends XLite_Web_Customer_ACustomer
     {
         $product = $this->addToCart();
 
-        $this->type(
-            "//td[@class='item-qty']"
-            . "/form[@method='post']"
-            . "/div"
-            . "/input[@type='text']",
-            ''
-        );
-
-        $this->keyPress(
+        $this->typeKeys(
             "//td[@class='item-qty']"
             . "/form[@method='post']"
             . "/div"
@@ -376,31 +366,16 @@ class XLite_Web_Customer_Cart extends XLite_Web_Customer_ACustomer
             'check quantity update'
         );
 
-        $this->type(
+        $this->typeKeys(
             "//td[@class='item-qty']"
             . "/form[@method='post']"
             . "/div"
             . "/input[@type='text']",
-            ''
+            '-3'
         );
 
-        $this->keyPress(
-            "//td[@class='item-qty']"
-            . "/form[@method='post']"
-            . "/div"
-            . "/input[@type='text']",
-            '-'
-        );
-        $this->keyPress(
-            "//td[@class='item-qty']"
-            . "/form[@method='post']"
-            . "/div"
-            . "/input[@type='text']",
-            '3'
-        );
-
-        $this->waitForCondition(
-            'selenium.browserbot.getCurrentWindow().$("h1#page-title").html().search(/ 1 items/) != -1',
+        $this->waitForLocalCondition(
+            '$(".item-qty .quantity").parents().eq(0).find(".error").length == 1',
             30000,
             'check quantity update #2'
         );
@@ -483,10 +458,16 @@ class XLite_Web_Customer_Cart extends XLite_Web_Customer_ACustomer
             'change method'
         );
 
-        $this->waitForCondition(
-            'selenium.browserbot.getCurrentWindow().$(".box .estimator ul li").html().search(/' . $name . '/) != -1',
+        $this->waitForLocalCondition(
+            '$(".box .estimator ul li").html()',
             60000,
             'check close estimator'
+        );
+
+        $this->waitForLocalCondition(
+            '$(".box .estimator ul li").html().search(/' . $name . '/) != -1',
+            3000,
+            'check close estimator and set shipping method'
         );
 
         $this->assertElementNotPresent(
@@ -515,7 +496,7 @@ class XLite_Web_Customer_Cart extends XLite_Web_Customer_ACustomer
             "//div[@class='box']"
             . "/div[@class='estimator']"
             . "/ul"
-            . "/li[contains(text(),'United States, 10001')]",
+            . "/li[contains(text(),'United States, AL, 10001')]",
             'check address'
         );
 

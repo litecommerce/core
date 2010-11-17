@@ -188,7 +188,7 @@ class XLite_Web_Customer_Authentication extends XLite_Web_Customer_ACustomer
             
         );
         $this->assertElementPresent(
-            "css=div.error",
+            "css=#status-messages li.error",
             "Error message is not shown after submitting a wrong username"
         );
 
@@ -214,12 +214,12 @@ class XLite_Web_Customer_Authentication extends XLite_Web_Customer_ACustomer
             "'Greatings' text is missing"
         );
 
-        // Check Your Account link
+        // Check My Account link
         $this->assertElementPresent(
-            "link=Your account",
-            "Your Account link is not shown for a signed-in user"
+            "link=My account",
+            "My Account link is not shown for a signed-in user"
         );
-        $this->clickAndWait("link=Your account");
+        $this->clickAndWait("link=My account");
         $this->assertElementPresent(
             "//h1[@id='page-title'][text()='master']",
             "'My Account' link opens a page that doesn't show a user name in its title"
@@ -267,7 +267,7 @@ class XLite_Web_Customer_Authentication extends XLite_Web_Customer_ACustomer
             
         );
         $this->assertElementPresent(
-            "css=div.error",
+            "css=#status-messages li.error",
             "Error message is not shown after submitting a wrong username in Password form"
         );
 

@@ -82,14 +82,14 @@ class XLite_Web_Customer_Breadcrumbs extends XLite_Web_Customer_ACustomer
 
         // Third node: "Puzzles" (link, not expandable)
         $this->assertElementPresent(
-            $this->mainBlockLocator . '/span/div[@class="location-node"]'
+            $this->mainBlockLocator . '/span/div[@class="location-node expandable"]'
             . '/a[@class="location-title" and text()="Puzzles"]',
-            'check third breadcrumb (must be "Puzzles", link, not expandable)'
+            'check third breadcrumb (must be "Puzzles", link, expandable)'
         );
 
         // Forth node: "Pyramid Brain Twist" (text)
         $this->assertElementPresent(
-            $this->mainBlockLocator . '/span[text()="Pyramid Brain Twist"]',
+            $this->mainBlockLocator . '/span/div[@class="location-node" and contains(text(),"Pyramid Brain Twist")]',
             'check forth breadcrumb (must be "Pyramid Brain Twist", text)'
         );
 
