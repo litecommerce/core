@@ -31,9 +31,9 @@ class XLite_Tests_Model_Image_Product_Image extends XLite_Tests_TestCase
     protected $product;
 
     protected $images = array(
-        'demo_store_p4004.jpeg',
-        'demo_store_d4004_1.jpeg',
-        'demo_store_d4012_1.jpeg',
+        'demo_p15067.jpeg',
+        'demo_p15068.jpeg',
+        'demo_p15090.jpeg',
     );
 
     protected function setUp()
@@ -55,11 +55,11 @@ class XLite_Tests_Model_Image_Product_Image extends XLite_Tests_TestCase
 
         $i = $this->getProduct()->getImages()->get(0);
 
-        $this->assertEquals(489, $i->getWidth(), 'check width');
-        $this->assertEquals(500, $i->getHeight(), 'check height');
-        $this->assertEquals(115220, $i->getSize(), 'check size');
+        $this->assertEquals(319, $i->getWidth(), 'check width');
+        $this->assertEquals(480, $i->getHeight(), 'check height');
+        $this->assertEquals(99541, $i->getSize(), 'check size');
         $this->assertTrue(is_numeric($i->getDate()), 'check date');
-        $this->assertEquals('13cd524a77cf8ccc8cfad5a0d261152a', $i->getHash(), 'check hash');
+        $this->assertEquals('53b0ffdc354306d7c58c72c027f41d45', $i->getHash(), 'check hash');
 
         $this->assertEquals(
             $this->getProduct()->getProductId(),
