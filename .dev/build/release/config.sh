@@ -4,7 +4,8 @@
 #
 
 # LiteCommerce version (no spaces allowed as it's used as part of distributive name)
-XLITE_VERSION="3.x-dev"
+#XLITE_VERSION="3.x-dev"
+XLITE_VERSION="3.0.0-alpha2"
 
 # LiteCommerce SVN repository
 XLITE_SVN="svn://svn.crtdev.local/repo/xlite/main/src"
@@ -26,24 +27,13 @@ DRUPAL_DIRNAME="drupal"
 
 # LiteCommerce modules for including to the distributives
 XLITE_MODULES="
-AdvancedSearch
 AustraliaPost
 AuthorizeNet
 Bestsellers
-DetailedImages
 DrupalConnector
 FeaturedProducts
-GiftCertificates
-GoogleCheckout
-InventoryTracking
-PayPalPro
-ProductAdviser
 ProductOptions
 Quantum
-UPSOnlineTools
-USPS
-WishList
-WholesaleTrading
 "
 
 # LiteCommerce files that must be removed from all distributives
@@ -65,7 +55,7 @@ sites/all/modules/views_datasource
 sites/all/modules/taxonomy_redirect
 sites/all/modules/taxonomy_menu
 sites/default/files
-themes/lccms/templates/overrides/node-marketplace_listing.tpl.php
+themes/lccms
 "
 
 LC_SEO_PHRASES="

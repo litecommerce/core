@@ -141,6 +141,19 @@ class XLite_Tests_AllTests
                 unset($includes[$k]);
             }
 
+            $deploy = (in_array('DEPLOY_DRUPAL', $includes) ? 'Drupal' :( in_array('DEPLOY_STANDALONE', $includes) ? 'Standalone' : null));
+
+            if (!is_null($deploy)) {
+                if (!defined('UNITS_DISABLED')) {
+                    define('UNITS_DISABLED', true);
+                }
+                $k = array_search('DEPLOY_' . strtoupper($deploy), $includes);
+                if (!defined('DIR_TESTS')) {
+                    define('DIR_TESTS', 'Deploy' . DIRECTORY_SEPARATOR . $deploy);
+                }
+                unset($includes[$k]);
+            }
+
             if (in_array('W3C', $includes)) {
                 if (!defined('W3C_VALIDATION')) {
                     define('W3C_VALIDATION', true);
@@ -202,7 +215,12 @@ class XLite_Tests_AllTests
 
         // Web tests
         if (!defined('SELENIUM_DISABLED')) {
-            $classesDir = dirname( __FILE__ ) . DIRECTORY_SEPARATOR . 'Web' . DIRECTORY_SEPARATOR;
+
+            if (!defined('DIR_TESTS')) {
+                define('DIR_TESTS', 'Web');
+            }
+
+            $classesDir = dirname( __FILE__ ) . DIRECTORY_SEPARATOR . constant('DIR_TESTS') . DIRECTORY_SEPARATOR;
             $pattern    = '/^' . str_replace('/', '\/', preg_quote($classesDir)) . '(.*)\.php$/';
 
             $dirIterator = new RecursiveDirectoryIterator($classesDir);
@@ -217,7 +235,8 @@ class XLite_Tests_AllTests
                     && (!$includes || in_array($matches[1], $includes))
                 ) {
 
-                    $class = XLite_Tests_SeleniumTestCase::CLASS_PREFIX
+                    $classPrefix = is_null($deploy) ? XLite_Tests_SeleniumTestCase::CLASS_PREFIX : 'XLite_Deploy_' . $deploy . '_';
+                    $class = $classPrefix
                         . str_replace(DIRECTORY_SEPARATOR, '_', $matches[1]);
 
                     require_once $filePath;
