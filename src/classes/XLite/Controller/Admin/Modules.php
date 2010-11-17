@@ -99,37 +99,6 @@ class Modules extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * Update modules list
-     * TODO: remove as no longer used
-     * 
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function doActionUpdate()
-    {
-        $activeModules = isset(\XLite\Core\Request::getInstance()->active_modules)
-            ? \XLite\Core\Request::getInstance()->active_modules
-            : array();
-
-        $moduleType = isset(\XLite\Core\Request::getInstance()->module_type)
-            ? \XLite\Core\Request::getInstance()->module_type
-            : null;
-
-        $this->set('returnUrl', $this->buildUrl('modules'));
-
-        foreach (\XLite\Core\Database::getRepo('\XLite\Model\Module')->findByType($moduleType) as $module) {
-            $module->setEnabled(in_array($module->getModuleId(), $activeModules));
-            $module->disableDepended();
-            \XLite\Core\Database::getEM()->persist($module);
-        }
-
-        \XLite\Core\Database::getEM()->flush();
-        \XLite::setCleanUpCacheFlag(true);
-    }
-
-    /**
      * Enable module
      *
      * @return void
@@ -145,7 +114,6 @@ class Modules extends \XLite\Controller\Admin\AAdmin
 
         if ($module = \XLite\Core\Database::getRepo('\XLite\Model\Module')->find($id)) {
             $module->setEnabled(true);
-            $module->disableDepended();
             \XLite\Core\Database::getEM()->persist($module);
             \XLite\Core\Database::getEM()->flush();
             \XLite::setCleanUpCacheFlag(true);
@@ -167,10 +135,7 @@ class Modules extends \XLite\Controller\Admin\AAdmin
         $id = \XLite\Core\Request::getInstance()->module_id;
 
         if ($module = \XLite\Core\Database::getRepo('\XLite\Model\Module')->find($id)) {
-            $module->setEnabled(false);
-            $module->disableDepended();
-            \XLite\Core\Database::getEM()->persist($module);
-            \XLite\Core\Database::getEM()->flush();
+            $module->disableModule();
             \XLite::setCleanUpCacheFlag(true);
         }
     }

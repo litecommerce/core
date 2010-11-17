@@ -303,7 +303,7 @@ class Module extends \XLite\RemoteModel\AModel
 
         if ($this->canUpload()) {
             $request = new \XLite\Model\HTTPS();
-            $request->url = sprintf($this->uploadURL(), $this->getName(), $this-uploadCode);
+            $request->url = sprintf($this->uploadURL(), $this->getName(), $this->uploadCode);
             $request->method = 'get';
             if (
                 $request::HTTPS_SUCCESS == $request->request()

@@ -89,6 +89,7 @@ abstract class ModulesManager extends AUtils
 
     /**
      * Return list of modules whitch are not allowed to be enbled at one time
+     * FIXME: needs re-factoring, mutual modules records no longer stored in the DB
      * 
      * @return array
      * @access protected

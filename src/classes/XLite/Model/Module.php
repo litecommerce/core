@@ -152,37 +152,43 @@ class Module extends \XLite\Model\AEntity
 
     /**
      * Get inverted dependencies
-     * TODO:
-     * 
+     *
      * @return array
-     * @access public
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getInvertedDependencies()
+    protected function getDependedModuleIds()
     {
-        //return $this->getRepository()->findAllByDepend($this->getName());
-        return array();
+        $dependencies = array();
+
+        foreach ($this->getRepository()->getActiveModules() as $m) {
+
+            $tmp = $m->getDependencies();
+            if (
+                !empty($tmp)
+                && in_array($this->getName(), $tmp)
+            ) {
+                $dependencies[] = $m->getModuleId();
+                $dependencies = array_merge($dependencies, $m->getDependedModuleIds());
+            }
+        }
+
+        return array_unique($dependencies);
     }
 
     /**
-     * Disable depended modules
-     * 
+     * Disable module
+     *
      * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function disableDepended()
+    public function disableModule()
     {
-        foreach ($this->getInvertedDependencies() as $module) {
-            if ($module->getEnabled()) {
-                $module->setEnabled(false);
-                \XLite\Core\Database::getEM()->persist($module);
-                \XLite\Core\Database::getEM()->flush();
-                $module->disableDepended();
-            }
-        }
+        $disableIds = array_merge(array($this->getModuleId()), $this->getDependedModuleIds());
+        $this->getRepository()->updateInBatchById(array_fill_keys($disableIds, array('enabled' => false)));
     }
 
     /**
