@@ -172,6 +172,7 @@ class FileManager extends \Includes\Utils\AUtils
      */
     public static function unlinkRecursive($dir)
     {
+        
         if (static::isDir($dir)) {
             $filter = new \Includes\Utils\FileFilter($dir, \RecursiveIteratorIterator::CHILD_FIRST);
 
@@ -270,13 +271,13 @@ class FileManager extends \Includes\Utils\AUtils
      * 
      * @param string $path file path
      *  
-     * @return int
+     * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
     public static function delete($path)
     {
-        return unlink($path);
+        return !static::isExists($path) ?: unlink($path);
     }
 }
