@@ -29,7 +29,7 @@
     </target>
 
     <target name="set-properties-common">
-        <property name="version" value="3.x-dev" />
+        <property name="version" value="3.0.0-alpha2" />
 		<property name="apiUrl" value="http://xcart2-530.crtdev.local/~max/xlite/build/api" />
     </target>
 
