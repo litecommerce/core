@@ -38,6 +38,18 @@ namespace XLite\View\Tabs;
  */
 class AdminProfile extends \XLite\View\Tabs\ATabs
 {
+    /**
+     * getTitle
+     *
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getTitle()
+    {
+        return 'Modify profile';
+    }
 
     /**
      * Description of tabs related to user profile section and their targets

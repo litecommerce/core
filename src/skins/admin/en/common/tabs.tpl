@@ -11,6 +11,8 @@
  * @since     3.0.0
  *}
 
+<h1>{getTitle():h}</h1>
+
 <table border="0" width="100%" cellpadding="0" cellspacing="0" valign="top">
 
   <tr>
