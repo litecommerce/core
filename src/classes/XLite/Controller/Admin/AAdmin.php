@@ -511,6 +511,8 @@ EOT;
             array(
                 'XLite\Controller\Admin\Login',
                 'XLite\Controller\Admin\Main',
+                'XLite\Controller\Admin\Category',
+                'XLite\Controller\Admin\Categories',
             )
         );
     }

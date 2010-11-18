@@ -35,21 +35,8 @@ namespace XLite\Controller\Admin;
  * @see        ____class_see____
  * @since      3.0.0
  */
-class Product extends \XLite\Controller\Admin\Catalog
+class Product extends \XLite\Controller\Admin\AAdmin
 {
-    /**
-     * Return current (or default) product object
-     *
-     * @return \XLite\Model\Product
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getModelObject()
-    {
-        return $this->getProduct();
-    }
-
     /**
      * Alias
      *

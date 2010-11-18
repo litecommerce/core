@@ -169,12 +169,12 @@ class Category extends \XLite\Model\Base\I18n
     /**
      * One-to-one relation with category_images table
      * 
-     * @var    \Doctrine\Common\Collections\ArrayCollection
+     * @var    \XLite\Model\Image\Category\Image
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @ManyToOne  (targetEntity="XLite\Model\Image\Category\Image")
+     * @ManyToOne  (targetEntity="XLite\Model\Image\Category\Image", cascade={"all"})
      * @JoinColumn (name="category_id", referencedColumnName="id")
      */
     protected $image;

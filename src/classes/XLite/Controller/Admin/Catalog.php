@@ -38,16 +38,6 @@ namespace XLite\Controller\Admin;
 abstract class Catalog extends \XLite\Controller\Admin\AAdmin
 {
     /**
-     * getModelObject
-     *
-     * @return \XLite\Model\AModel
-     * @access protected
-     * @since  3.0.0
-     */
-    abstract protected function getModelObject();
-
-
-    /**
      * Return path for the current category
      * 
      * @return array
@@ -71,7 +61,7 @@ abstract class Catalog extends \XLite\Controller\Admin\AAdmin
      */
     protected function getCategoryURL(\XLite\Model\Category $category)
     {
-        return $this->buildURL('category', '', array('category_id' => $category->getCategoryId()));
+        return $this->buildURL('categories', '', array('category_id' => $category->getCategoryId()));
     }
 
     /**
@@ -88,7 +78,7 @@ abstract class Catalog extends \XLite\Controller\Admin\AAdmin
     {
         $nodes = array();
 
-        foreach ($category->getSubcategories() as $category) {
+        foreach ($category->getSiblings() as $category) {
             $nodes[] = \XLite\View\Location\Node::create($category->getName(), $this->getCategoryURL($category));
         }
 
@@ -106,6 +96,8 @@ abstract class Catalog extends \XLite\Controller\Admin\AAdmin
     protected function addBaseLocation()
     {
         parent::addBaseLocation();
+
+        $this->addLocationNode('Manage categories', $this->buildURL('categories'));
 
         foreach ($this->getCategoryPath() as $category) {
             $this->addLocationNode($category->getName(), $this->getCategoryURL($category), $this->getLocationNodeSubnodes($category));

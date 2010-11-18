@@ -38,15 +38,46 @@ namespace XLite\Controller\Admin;
 class Category extends \XLite\Controller\Admin\Catalog
 {
     /**
-     * getModelObject
-     *
-     * @return \XLite\Model\AModel
+     * Common method to determine current location 
+     * 
+     * @return string
      * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getModelObject()
+    protected function getLocation()
     {
-        return $this->getCategory();
+        return 'Details';
+    }
+
+    /**
+     * Create/update image
+     *
+     * @param int $categoryId image category ID
+     *
+     * @return \XLite\Model\Image\Category\Image
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function saveImage($categoryId = null)
+    {
+        if (empty($categoryId)) {
+            $categoryId = $this->getCategoryId();
+        }
+
+        $img = \XLite\Core\Database::getRepo('XLite\Model\Image\Category\Image')->findOneById($categoryId);
+
+        if (!$img) {
+            $img = new \XLite\Model\Image\Category\Image(array('id' => $categoryId));
+            \XLite\Core\Database::getEM()->persist($img);
+        }
+
+        if ($img->loadFromRequest('postedData', 'image')) {
+            \XLite\Core\Database::getEM()->flush();
+        }
+
+        return $img;
     }
 
     /**
@@ -63,6 +94,8 @@ class Category extends \XLite\Controller\Admin\Catalog
             $category = \XLite\Core\Database::getRepo('XLite\Model\Category')
                 ->insert(array('parent_id' => $this->getCategoryId()) + $properties);
 
+            $this->saveImage($category->getCategoryId());
+
             $this->setReturnUrl($this->buildURL('categories', '', array('category_id' => $category->getCategoryId())));
         }
     }
@@ -78,6 +111,9 @@ class Category extends \XLite\Controller\Admin\Catalog
     protected function doActionModify()
     {
         if ($properties = $this->validateCategoryData()) {
+
+            $this->saveImage();
+
             \XLite\Core\Database::getRepo('XLite\Model\Category')
                 ->updateById($properties['category_id'], $properties);
 

@@ -82,9 +82,7 @@
 
 <p>
 
-<span IF="!category.hasSubcategories()">There are no categories</span>
-
-<form name="CategoryForm" method="post" action="admin.php" IF="category.hasSubcategories()">
+<form name="CategoryForm" method="post" action="admin.php">
 
   <table border="0" cellpadding="3" cellspacing="1" width="90%">
 
@@ -95,7 +93,8 @@
       </th>
     </tr>
 
-    <tr FOREACH="getCategories(),id,cat" class="{getRowClass(id,##,#TableRow#)}">
+    {if:category.hasSubcategories()}
+    <tr FOREACH="getSubcategories(getCategoryId()),id,cat" class="{getRowClass(id,##,#TableRow#)}">
 
       <td width="100%">
         <a href="admin.php?target=categories&category_id={cat.category_id}" title="Click here to access/add subcategories" onClick="this.blur()"><font class="ItemsList"><u>{cat.name:h}</u></font></a> ({cat.products_count} products){if:!cat.enabled}&nbsp;&nbsp;<font color=red>(disabled)</font>{end:}
@@ -112,10 +111,13 @@
       </td>
 
     </tr>
+    {else:}
+    <tr>
+      <td>There are no categories</td>
+    </tr>
+    {end:}
 
   </table>
-
-  <br />
 
   <input type="hidden" name="target" value="categories" />
   <input type="hidden" name="category_id" value="{category.category_id}" />
@@ -129,7 +131,7 @@
         <input id="add" type="button" value="Add category" onClick="onAddChildClick({getCategoryId()})">
       </td>		
       <td align="right" IF="category.getSubCategoriesCount()">
-        <input id="delete_all_button" type="button" value="Delete all" onClick="onDeleteClick({category.category_id})">
+        <input id="delete_all_button" type="button" value="Delete all" onClick="onDeleteSubcatsClick({category.category_id})">
       </td>		
     </tr>
 

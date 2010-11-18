@@ -63,29 +63,31 @@
   <br /><br />
 </div>
 
-<!-- [breadcrumbs] {{{ -->
 <widget class="\XLite\View\Location" />
-<!-- [/breadcrumbs] }}} -->
+<widget class="\XLite\View\AdvBlock" />
+<widget class="\XLite\View\ModulesModify" />
+<widget class="\XLite\View\Payment\Methods" />
+<widget class="\XLite\View\Payment\Method" />
 
 <widget target="access_denied" template="access_denied.tpl" />
-<widget class="\XLite\View\AdvBlock" />
 <widget template="common/dialog.tpl" head="Customer zone warning" body="customer_zone_warning.tpl" IF="{getCustomerZoneWarning()}" />
 <widget target="main" template="common/dialog.tpl" head="Welcome to the Administrator Zone" body="menu.tpl" />
-<widget class="\XLite\View\ModulesModify" />
 <widget target="module" template="common/dialog.tpl" head="&quot;{page}&quot; add-on settings" body="general_settings.tpl" />
 
 <widget name="categoriesWidget" target="categories" template="common/dialog.tpl" head="Manage categories" body="categories/body.tpl" IF="!mode=#delete#" />
 <widget module="FeaturedProducts" template="common/dialog.tpl" head="Featured products" body="modules/FeaturedProducts/featuredProducts.tpl" IF="{namedWidgets.categoriesWidget.visible}" />
-<widget target="category" class="\XLite\View\Tabber" body="{getPageTemplate()}" switch="page" />
+
+{* Some bug in Flexy *}
+<widget target="category" class="\XLite\View\Tabber" body="{getPageTemplate()}" switch="page" head="{category.getName()}" IF="getCategory()" />
+<widget target="category" class="\XLite\View\Tabber" body="{getPageTemplate()}" switch="page" head="Add new category" IF="!getCategory()" />
+
+
 <widget target="categories" template="common/dialog.tpl" body="categories/delete_confirmation.tpl" head="Confirmation" mode="delete" IF="mode=#delete#" />
 
 <widget target="settings" class="\XLite\View\Tabber" body="general_settings.tpl" switch="page">
 
 <widget template="users/search.tpl" target="users">
 <widget target="recent_login" template="common/dialog.tpl" body="recent_login.tpl" head="Login history">
-
-<widget class="\XLite\View\Payment\Methods" />
-<widget class="\XLite\View\Payment\Method" />
 
 <widget target="product_list" template="product/product_list_form.tpl">
 <widget target="product" class="\XLite\View\Tabber" body="{pageTemplate}" switch="page">

@@ -34,10 +34,11 @@ namespace XLite\Module\FeaturedProducts\Model;
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
+ *
  * @Entity
  * @Table (name="featured_products",
  *         indexes={
- *              @Index(name="category_id", columns={"category_id"})
+ *             @Index(name="category_id", columns={"category_id"})
  *         }
  * )
  */
@@ -56,9 +57,10 @@ class FeaturedProduct extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Id
      * @GeneratedValue (strategy="AUTO")
-     * @Column (type="integer")
+     * @Column         (type="integer")
      */
     protected $id;
 
@@ -69,6 +71,7 @@ class FeaturedProduct extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="integer")
      */
     protected $order_by = 0;
@@ -80,7 +83,8 @@ class FeaturedProduct extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @ManyToOne (targetEntity="XLite\Model\Product", inversedBy="featuredProducts")
+     *
+     * @ManyToOne  (targetEntity="XLite\Model\Product", inversedBy="featuredProducts", cascade={"all"})
      * @JoinColumn (name="product_id", referencedColumnName="product_id")
      */
     protected $product;
@@ -92,7 +96,8 @@ class FeaturedProduct extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @ManyToOne (targetEntity="XLite\Model\Category", inversedBy="featuredProducts")
+     *
+     * @ManyToOne  (targetEntity="XLite\Model\Category", inversedBy="featuredProducts", cascade={"all"})
      * @JoinColumn (name="category_id", referencedColumnName="category_id")
      */
     protected $category;

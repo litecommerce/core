@@ -49,7 +49,7 @@ abstract class Image extends \XLite\Model\AEntity
      *
      * @Id
      * @GeneratedValue (strategy="AUTO")
-     * @Column (type="integer", length="11", nullable=false)
+     * @Column         (type="integer", length="11", nullable=false)
      */
     protected $image_id;
 

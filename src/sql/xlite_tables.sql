@@ -22,7 +22,7 @@ CREATE TABLE xlite_categories (
 DROP TABLE IF EXISTS xlite_category_images;
 CREATE TABLE xlite_category_images (
   image_id int(11) unsigned NOT NULL AUTO_INCREMENT,
-  id int(11) NOT NULL DEFAULT '0',
+  id int(11) unsigned NOT NULL DEFAULT '0',
   path varchar(512) NOT NULL DEFAULT '',
   mime varchar(64) NOT NULL DEFAULT 'image/jpeg',
   width int(11) NOT NULL DEFAULT '0',
@@ -31,20 +31,21 @@ CREATE TABLE xlite_category_images (
   date int(11) NOT NULL DEFAULT '0',
   hash varchar(32) NOT NULL DEFAULT '',
   PRIMARY KEY (image_id),
-  KEY id (id)
+  KEY id (id),
+  CONSTRAINT FOREIGN KEY (`id`) REFERENCES `xlite_categories` (`category_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 DROP TABLE IF EXISTS xlite_category_products;
 CREATE TABLE xlite_category_products (
   id int(11) unsigned NOT NULL AUTO_INCREMENT,
-  product_id int(11) NOT NULL DEFAULT '0',
-  category_id int(11) NOT NULL DEFAULT '0',
+  product_id int(11) unsigned NOT NULL DEFAULT '0',
+  category_id int(11) unsigned NOT NULL DEFAULT '0',
   orderby int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (id),
-  UNIQUE KEY (category_id,product_id),
-  KEY xlite_product_links_product (product_id),
+  UNIQUE KEY pair (category_id,product_id),
   KEY orderby (orderby),
-  KEY xlite_product_links_category (category_id)
+  CONSTRAINT FOREIGN KEY (`product_id`) REFERENCES `xlite_products` (`product_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT FOREIGN KEY (`category_id`) REFERENCES `xlite_categories` (`category_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 DROP TABLE IF EXISTS xlite_category_quick_flags;
@@ -325,7 +326,7 @@ CREATE TABLE xlite_payment_transaction_data (
 
 DROP TABLE IF EXISTS xlite_products;
 CREATE TABLE xlite_products (
-  product_id int(11) NOT NULL auto_increment,
+  product_id int(11) unsigned NOT NULL auto_increment,
   price decimal(12,2) NOT NULL default '0.00',
   sale_price decimal(12,2) NOT NULL default '0.00',
   sku varchar(32) NOT NULL default '',

@@ -16,6 +16,7 @@
   <input type="hidden" name="target" value="categories" />
   <input type="hidden" name="action" value="delete" />
   <input type="hidden" name="category_id" value="{category.category_id}" />
+  <input type="hidden" name="subcats" value="{%\XLite\Core\Request::getInstance()->subcats%}" />
 
   <table border="0">
 
@@ -27,7 +28,7 @@
 
     <tr IF="getRequestParamValue(#subcats#)=#1#">
       <td colspan="3">
-        {foreach:getSubcategories(category.category_id),key,cat}
+        {foreach:getSubtree(category.category_id),key,cat}
         <b>{cat.name}</b><br />
         {end:}
       </td>
@@ -58,7 +59,7 @@
     <tr>	
       <td colspan="3">Are you sure you want to continue?<br><br>
         <input type="submit" value="Yes" class="DialogMainButton" />&nbsp;&nbsp;
-        <input type="button" value="No" onclick="javascript: document.location='admin.php?target=categories&category_id={category_id}'" />
+        <input type="button" value="No" onclick="javascript: document.location='admin.php?target=categories&category_id={category.parent.getCategoryId()}'" />
       </td>
     </tr>
 
