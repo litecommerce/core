@@ -215,6 +215,19 @@ abstract class ATabs extends \XLite\View\AView
     }
 
     /**
+     * getTitle 
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getTitle()
+    {
+        return null;
+    }
+
+    /**
      * Returns a description of the selected tab. If no tab is selected, returns NULL.
      * 
      * @return array

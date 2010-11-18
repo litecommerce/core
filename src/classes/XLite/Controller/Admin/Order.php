@@ -38,6 +38,34 @@ namespace XLite\Controller\Admin;
 class Order extends \XLite\Controller\Admin\AAdmin
 {
     /**
+     * Common method to determine current location
+     *
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getLocation()
+    {
+        return 'Order #' . \XLite\Core\Request::getInstance()->order_id;
+    }
+
+    /**
+     * Add part to the location nodes list
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function addBaseLocation()
+    {
+        parent::addBaseLocation();
+
+        $this->addLocationNode('Search orders', $this->buildURL('orders_list'));
+    }
+
+    /**
      * getRequestData 
      * TODO: to remove
      * 

@@ -515,6 +515,11 @@ EOT;
                 'XLite\Controller\Admin\Categories',
                 'XLite\Controller\Admin\Product',
                 'XLite\Controller\Admin\ProductList',
+                'XLite\Controller\Admin\Profile',
+                'XLite\Controller\Admin\Users',
+                'XLite\Controller\Admin\AddressBook',
+                'XLite\Controller\Admin\Order',
+                'XLite\Controller\Admin\OrderList',
             )
         );
     }

@@ -38,6 +38,34 @@ namespace XLite\Controller\Admin;
 class Profile extends \XLite\Controller\Admin\AAdmin
 {
     /**
+     * Common method to determine current location
+     *
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getLocation()
+    {
+        return $this->getModelForm()->getModelObject()->getLogin();
+    }
+
+    /**
+     * Add part to the location nodes list
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function addBaseLocation()
+    {
+        parent::addBaseLocation();
+
+        $this->addLocationNode('Search profiles', $this->buildURL('users'));
+    }
+
+    /**
      * Class name for the \XLite\View\Model\ form
      * 
      * @return string
