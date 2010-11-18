@@ -87,9 +87,7 @@
 
 	<target name="prepare-db">
 
-        <copy todir="${buildDir}/src/etc">
-            <fileset file="${sourceDir}/.dev/build/config.local.php" />
-        </copy>
+		<copy file="${sourceDir}/.dev/build/config.local-cc.php" tofile="${buildDir}/src/etc/config.local.php" />
         <copy todir="${buildDir}/src">
             <fileset file="${srcDir}/restoredb" />
 		</copy>
