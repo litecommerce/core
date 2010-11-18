@@ -49,16 +49,6 @@ class Category extends \XLite\Model\Category implements \XLite\Base\IDecorator
      */
     protected $featuredProducts;
 
-    /**
-     * Cached featured products list
-     * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected $featuredProductsList = null;
-
 
     /**
      * Constructor
