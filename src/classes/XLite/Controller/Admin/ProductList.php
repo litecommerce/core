@@ -39,14 +39,17 @@ namespace XLite\Controller\Admin;
 class ProductList extends \XLite\Controller\Admin\AAdmin
 {
     /**
-     * params 
-     * 
-     * @var    array
-     * @access public
-     * @see    ____var_see____
+     * Common method to determine current location
+     *
+     * @return string
+     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    public $params = array('target', 'mode');
+    protected function getLocation()
+    {
+        return 'Search product';
+    }
 
     /**
      * doActionUpdate 
@@ -148,5 +151,4 @@ class ProductList extends \XLite\Controller\Admin\AAdmin
             ? $searchParams[$paramName]
             : null;
     }
-
 }

@@ -205,7 +205,7 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      * @since  3.0.0
      *
      * @OneToMany (targetEntity="XLite\Model\Image\Product\Image", mappedBy="product", cascade={"all"})
-     * @OrderBy ({"orderby" = "ASC"})
+     * @OrderBy   ({"orderby" = "ASC"})
      */
     protected $images;
 
