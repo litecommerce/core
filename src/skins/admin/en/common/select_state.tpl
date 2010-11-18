@@ -10,30 +10,13 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<select name="{field}" onchange="{onchange}" id="{fieldId}" class="field-state">
-   <option value="0">Select one..</option>
-   <option value="-1" selected="{state=-1}">Other</option>
-   <option FOREACH="getStates(),v" value="{v.state_id:r}" selected="{v.state_id=state}">{v.state:h}</option>
-</select>
+{if:isCustomState()}
+  <input type="text" name="{field}"{if:fieldId} id="{fieldId}"{end:} class="{getParam(#className#)} field-state {if:isLinked} linked{end:}" value="{getStateValue()}" />
+{else:}
+  <select name="{field}"{if:fieldId} id="{fieldId}"{end:} class="{getParam(#className#)} field-state {if:isLinked} linked{end:}">
+   <option FOREACH="getStates(),v" value="{v.getStateId():r}" selected="{v.getStateId()=state.getStateId()}">{v.state}</option>
+  </select>
+{end:}
 <script IF="isDefineStates()" type="text/javascript">
-var CountriesStates = [];
-{foreach:getCountriesStates(),country_code,val}
-CountriesStates.{country_code} = [
-{foreach:val,state_code,v}
-{ state_code: "{state_code}", state: "{v}" },
-{end:}
-  false
-];
-{end:}
-</script>
-<script IF="isLinked" type="text/javascript">
-$(document).ready(
-  function() {
-    $('.field-state[name="{field}"]').each(
-      function () {
-        new StateSelectorController(this);
-      }
-    );
-  }
-);
+{getJSDataDefinitionBlock():h}
 </script>

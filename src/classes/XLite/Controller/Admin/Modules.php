@@ -57,6 +57,20 @@ class Modules extends \XLite\Controller\Admin\AAdmin
      */
     protected $currentModuleType = null;
 
+
+    /**
+     * Common method to determine current location
+     *
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getLocation()
+    {
+        return 'Manage modules';
+    }
+
     /**
      * Handles the request.
      * Parses the request variables if necessary. Attempts to call the specified action function 

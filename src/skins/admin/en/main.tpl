@@ -84,7 +84,7 @@
 
 <widget target="categories" template="common/dialog.tpl" body="categories/delete_confirmation.tpl" head="Confirmation" mode="delete" IF="mode=#delete#" />
 
-<widget target="settings" class="\XLite\View\Tabber" body="general_settings.tpl" switch="page">
+<widget target="settings" class="\XLite\View\Tabber" body="general_settings.tpl" switch="page" head="General settings" />
 
 <widget template="users/search.tpl" target="users">
 <widget target="recent_login" template="common/dialog.tpl" body="recent_login.tpl" head="Login history">

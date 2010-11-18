@@ -38,16 +38,33 @@ namespace XLite\Controller\Admin;
 class Module extends \XLite\Controller\Admin\AAdmin
 {
     /**
-     * params 
-     * FIXME - must be protected (at first)
-     * FIXME - to remove; see Core/Handler.php (lowest priority task)
-     * 
-     * @var    array
-     * @access public
+     * Common method to determine current location
+     *
+     * @return string
+     * @access protected
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    public $params = array('target', 'page');
-    
+    protected function getLocation()
+    {
+        return \XLite\Core\Request::getInstance()->page;
+    }
+
+    /**
+     * Add part to the location nodes list
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function addBaseLocation()
+    {
+        parent::addBaseLocation();
+
+        $this->addLocationNode('Manage modules', $this->buildURL('modules'));
+    }
+
     /**
      * Return current module options
      * 

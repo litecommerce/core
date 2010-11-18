@@ -520,6 +520,9 @@ EOT;
                 'XLite\Controller\Admin\AddressBook',
                 'XLite\Controller\Admin\Order',
                 'XLite\Controller\Admin\OrderList',
+                'XLite\Controller\Admin\Settings',
+                'XLite\Controller\Admin\Module',
+                'XLite\Controller\Admin\Modules',
             )
         );
     }
