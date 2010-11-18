@@ -1,33 +1,4 @@
 
--- Categories [2]
-
-INSERT INTO xlite_categories VALUES (1,0,1,6,0,1,'',1);
-INSERT INTO xlite_categories VALUES (14015,1,2,3,0,1,'fruit',1);
-INSERT INTO xlite_categories VALUES (14009,1,4,5,0,1,'vegetables',1);
-
-INSERT INTO xlite_category_quick_flags VALUES (1,1,2,2);
-INSERT INTO xlite_category_quick_flags VALUES (2,14015,0,0);
-INSERT INTO xlite_category_quick_flags VALUES (3,14009,0,0);
-
-INSERT INTO xlite_category_images VALUES (1,14015,'demo_c14015.jpeg','image/jpeg',160,92,9201,1278408407,'');
-INSERT INTO xlite_category_images VALUES (2,14009,'demo_c14009.jpeg','image/jpeg',160,127,10863,1278408407,'');
-
-INSERT INTO xlite_category_translations VALUES (1,'en',1,'','','','','');
-INSERT INTO xlite_category_translations VALUES (2,'en',14015,'Fruit','<img src=\"{{WEB_LC_ROOT}}/public/fruits.png\" alt=\"\" /><p>In botany, a fruit is the ripened ovary, together with its seeds, of a flowering plant. In cuisine, when discussing fruit as food, the term usually refers to just those plant fruits that are sweet and fleshy, examples of which would be plum, apple, and orange. However, a great many common vegetables, as well as nuts and grains, are the fruit of the plants they come from. Fruits that might not be considered such in a culinary context include gourds (e.g. squash and pumpkin), maize, tomatoes, and green peppers. These are fruits to a botanist, but are generally treated as vegetables in cooking. Some spices, such as allspice and nutmeg, are fruits. Rarely, culinary \"fruits\" are not fruits in the botanical sense, such as rhubarb in which only the sweet leaf petiole is edible.</p>\n<p>The term false fruit is sometimes applied to a fruit, like the fig (a multiple-accessory fruit) or to a plant structure that resembles a fruit but is not derived from a flower or flowers. Some gymnosperms, such as yew, have fleshy arils that resemble fruits and some junipers have berry-like, fleshy cones.</p>\n<div style=\"padding: 24px 24px 24px 21px; display: block; background-color: #ececec;\">From <a style=\"color: #1e7ec8; text-decoration: underline;\" title=\"\" href=\"http://www.knowledgerush.com\">www.knowledgerush.com</a></div>','','','');
-INSERT INTO xlite_category_translations VALUES (3,'en',14009,'Vegetables','<img src=\"{{WEB_LC_ROOT}}/public/vegetables.png\" alt=\"\" /><p>Vegetable is a nutritional and culinary term denoting any part of a plant that is commonly consumed by humans as food, but is not regarded as a culinary fruit, nut, herb, spice, or grain. In common usage, vegetables include the leaves (e.g. lettuce), stems (asparagus), and roots (carrot) of various plants. But the term can also encompass non-sweet fruits such as seed-pods (beans), cucumbers, squashes, pumpkins, tomatoes, avocadoes, green peppers, etc.; even some seeds (peas and beans) that are easily softened by soaking.</p>\n<div style=\"padding: 24px 24px 24px 21px; display: block; background-color: #ececec;\">From <a style=\"color: #1e7ec8; text-decoration: underline;\" title=\"\" href=\"http://www.knowledgerush.com\">www.knowledgerush.com</a></div>','','','');
-
-INSERT INTO `xlite_category_products` SET product_id = '15090', category_id = '14015', orderby = '0';
-INSERT INTO `xlite_category_products` SET product_id = '16281', category_id = '14009', orderby = '0';
-INSERT INTO `xlite_category_products` SET product_id = '16280', category_id = '14009', orderby = '0';
-INSERT INTO `xlite_category_products` SET product_id = '16282', category_id = '14009', orderby = '0';
-INSERT INTO `xlite_category_products` SET product_id = '15121', category_id = '14015', orderby = '0';
-INSERT INTO `xlite_category_products` SET product_id = '15123', category_id = '14015', orderby = '0';
-INSERT INTO `xlite_category_products` SET product_id = '15068', category_id = '14015', orderby = '0';
-INSERT INTO `xlite_category_products` SET product_id = '15091', category_id = '14015', orderby = '0';
-INSERT INTO `xlite_category_products` SET product_id = '15067', category_id = '14015', orderby = '0';
-
-
-
 -- Products [9]
 
 INSERT INTO `xlite_products` (`product_id`, `price`, `sale_price`, `sku`, `order_by`, `enabled`, `weight`, `tax_class`, `free_shipping`, `clean_url`) VALUES (15090,'1.99','1.99','00000',0,1,'0.32','',0,'');
@@ -59,6 +30,35 @@ INSERT INTO `xlite_product_images` (`id`, `path`, `mime`, `width`, `height`, `si
 INSERT INTO `xlite_product_images` (`id`, `path`, `mime`, `width`, `height`, `size`, `date`, `hash`) VALUES (15068,'demo_p15068.jpeg','image/jpeg',480,480,131972,1280314462,'');
 INSERT INTO `xlite_product_images` (`id`, `path`, `mime`, `width`, `height`, `size`, `date`, `hash`) VALUES (15091,'demo_p15091.jpeg','image/jpeg',480,480,163746,1280314462,'');
 INSERT INTO `xlite_product_images` (`id`, `path`, `mime`, `width`, `height`, `size`, `date`, `hash`) VALUES (15067,'demo_p15067.jpeg','image/jpeg',319,480,99541,1280314462,'');
+
+
+
+-- Categories [2]
+
+INSERT INTO xlite_categories VALUES (1,0,1,6,0,1,'',1);
+INSERT INTO xlite_categories VALUES (14015,1,2,3,0,1,'fruit',1);
+INSERT INTO xlite_categories VALUES (14009,1,4,5,0,1,'vegetables',1);
+
+INSERT INTO xlite_category_quick_flags VALUES (1,1,2,2);
+INSERT INTO xlite_category_quick_flags VALUES (2,14015,0,0);
+INSERT INTO xlite_category_quick_flags VALUES (3,14009,0,0);
+
+INSERT INTO xlite_category_images VALUES (1,14015,'demo_c14015.jpeg','image/jpeg',160,92,9201,1278408407,'');
+INSERT INTO xlite_category_images VALUES (2,14009,'demo_c14009.jpeg','image/jpeg',160,127,10863,1278408407,'');
+
+INSERT INTO xlite_category_translations VALUES (1,'en',1,'','','','','');
+INSERT INTO xlite_category_translations VALUES (2,'en',14015,'Fruit','<img src=\"{{WEB_LC_ROOT}}/public/fruits.png\" alt=\"\" /><p>In botany, a fruit is the ripened ovary, together with its seeds, of a flowering plant. In cuisine, when discussing fruit as food, the term usually refers to just those plant fruits that are sweet and fleshy, examples of which would be plum, apple, and orange. However, a great many common vegetables, as well as nuts and grains, are the fruit of the plants they come from. Fruits that might not be considered such in a culinary context include gourds (e.g. squash and pumpkin), maize, tomatoes, and green peppers. These are fruits to a botanist, but are generally treated as vegetables in cooking. Some spices, such as allspice and nutmeg, are fruits. Rarely, culinary \"fruits\" are not fruits in the botanical sense, such as rhubarb in which only the sweet leaf petiole is edible.</p>\n<p>The term false fruit is sometimes applied to a fruit, like the fig (a multiple-accessory fruit) or to a plant structure that resembles a fruit but is not derived from a flower or flowers. Some gymnosperms, such as yew, have fleshy arils that resemble fruits and some junipers have berry-like, fleshy cones.</p>\n<div style=\"padding: 24px 24px 24px 21px; display: block; background-color: #ececec;\">From <a style=\"color: #1e7ec8; text-decoration: underline;\" title=\"\" href=\"http://www.knowledgerush.com\">www.knowledgerush.com</a></div>','','','');
+INSERT INTO xlite_category_translations VALUES (3,'en',14009,'Vegetables','<img src=\"{{WEB_LC_ROOT}}/public/vegetables.png\" alt=\"\" /><p>Vegetable is a nutritional and culinary term denoting any part of a plant that is commonly consumed by humans as food, but is not regarded as a culinary fruit, nut, herb, spice, or grain. In common usage, vegetables include the leaves (e.g. lettuce), stems (asparagus), and roots (carrot) of various plants. But the term can also encompass non-sweet fruits such as seed-pods (beans), cucumbers, squashes, pumpkins, tomatoes, avocadoes, green peppers, etc.; even some seeds (peas and beans) that are easily softened by soaking.</p>\n<div style=\"padding: 24px 24px 24px 21px; display: block; background-color: #ececec;\">From <a style=\"color: #1e7ec8; text-decoration: underline;\" title=\"\" href=\"http://www.knowledgerush.com\">www.knowledgerush.com</a></div>','','','');
+
+INSERT INTO `xlite_category_products` SET product_id = '15090', category_id = '14015', orderby = '0';
+INSERT INTO `xlite_category_products` SET product_id = '16281', category_id = '14009', orderby = '0';
+INSERT INTO `xlite_category_products` SET product_id = '16280', category_id = '14009', orderby = '0';
+INSERT INTO `xlite_category_products` SET product_id = '16282', category_id = '14009', orderby = '0';
+INSERT INTO `xlite_category_products` SET product_id = '15121', category_id = '14015', orderby = '0';
+INSERT INTO `xlite_category_products` SET product_id = '15123', category_id = '14015', orderby = '0';
+INSERT INTO `xlite_category_products` SET product_id = '15068', category_id = '14015', orderby = '0';
+INSERT INTO `xlite_category_products` SET product_id = '15091', category_id = '14015', orderby = '0';
+INSERT INTO `xlite_category_products` SET product_id = '15067', category_id = '14015', orderby = '0';
 
 
 
