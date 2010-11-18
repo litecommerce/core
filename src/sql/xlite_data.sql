@@ -875,3 +875,8 @@ INSERT INTO xlite_currencies VALUES ('YUM',891,'',2);
 INSERT INTO xlite_currencies VALUES ('ZAR',710,'',2);
 INSERT INTO xlite_currencies VALUES ('ZMK',894,'',0);
 INSERT INTO xlite_currencies VALUES ('ZWD',716,'',2);
+
+-- Insert root category
+
+INSERT INTO xlite_categories VALUES (1,0,1,2,0,1,'',1);
+
