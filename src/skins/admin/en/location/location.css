@@ -11,6 +11,10 @@
  * @since     3.0.0
  */
 
+li.location-node {
+  display: inline;
+}
+
 div.location-node {
   display: inline;
   position: relative;
@@ -35,6 +39,15 @@ ul.location-subnodes {
   z-index: 10000;
   display: inline;
   visibility: hidden;
+  padding: 10px;
+  padding-top: 5px;
+  border: 1px solid silver;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  box-shadow: 1px 1px 5px silver;
+  -webkit-box-shadow: 1px 1px 5px silver;
+  -moz-box-shadow: 1px 1px 5px silver;
 }
 
 ul.location-subnodes li {

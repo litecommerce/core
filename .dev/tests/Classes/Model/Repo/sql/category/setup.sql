@@ -34,18 +34,6 @@ INSERT INTO xlite_category_translations VALUES (6,'en',14018,'','','','','');
 INSERT INTO xlite_category_translations VALUES (7,'en',14019,'','','','','');
 
 
-INSERT INTO `xlite_category_products` SET product_id = '15090', category_id = '14015', orderby = '0';
-INSERT INTO `xlite_category_products` SET product_id = '15090', category_id = '14018', orderby = '0';
-INSERT INTO `xlite_category_products` SET product_id = '15090', category_id = '14017', orderby = '0';
-INSERT INTO `xlite_category_products` SET product_id = '16281', category_id = '14009', orderby = '0';
-INSERT INTO `xlite_category_products` SET product_id = '16280', category_id = '14009', orderby = '0';
-INSERT INTO `xlite_category_products` SET product_id = '16282', category_id = '14009', orderby = '0';
-INSERT INTO `xlite_category_products` SET product_id = '15121', category_id = '14015', orderby = '0';
-INSERT INTO `xlite_category_products` SET product_id = '15123', category_id = '14015', orderby = '0';
-INSERT INTO `xlite_category_products` SET product_id = '15068', category_id = '14015', orderby = '0';
-INSERT INTO `xlite_category_products` SET product_id = '15091', category_id = '14015', orderby = '0';
-INSERT INTO `xlite_category_products` SET product_id = '15067', category_id = '14015', orderby = '0';
-
 INSERT INTO `xlite_products` (`product_id`, `price`, `sale_price`, `sku`, `order_by`, `enabled`, `weight`, `tax_class`, `free_shipping`, `clean_url`) VALUES (15090,'1.99','1.99','00000',0,1,'0.32','',0,'');
 INSERT INTO `xlite_products` (`product_id`, `price`, `sale_price`, `sku`, `order_by`, `enabled`, `weight`, `tax_class`, `free_shipping`, `clean_url`) VALUES (16281,'1.15','1.15','00007',0,1,'0.31','',0,'');
 INSERT INTO `xlite_products` (`product_id`, `price`, `sale_price`, `sku`, `order_by`, `enabled`, `weight`, `tax_class`, `free_shipping`, `clean_url`) VALUES (16280,'3.45','3.45','00006',0,1,'0.55','',0,'');
@@ -66,3 +54,15 @@ INSERT INTO `xlite_product_translations` (`label_id`, `code`, `id`, `name`, `des
 INSERT INTO `xlite_product_translations` (`label_id`, `code`, `id`, `name`, `description`, `brief_description`, `meta_tags`, `meta_desc`, `meta_title`) VALUES (8,'en',15091,'Peach','<h5>Peach</h5>\n<p>The peach (Prunus persica) is known as a species of Prunus native to China that bears an edible juicy fruit also called a peach. It is a deciduous tree growing to 5&ndash;10 m tall, belonging to the subfamily Prunoideae of the family Rosaceae. It is classified with the almond in the subgenus Amygdalus within the genus Prunus, distinguished from the other subgenera by the corrugated seed shell.</p>\n<p>The leaves are lanceolate, 7&ndash;15 cm long (3&ndash;6 in), 2&ndash;3 cm broad, pinnately veined. The flowers are produced in early spring before the leaves; they are solitary or paired, 2.5&ndash;3 cm diameter, pink, with five petals. The fruit has yellow or whitish flesh, a delicate aroma, and a skin that is either velvety (peaches) or smooth (nectarines) in different cultivars. The flesh is very delicate and easily bruised in some cultivars, but is fairly firm in some commercial varieties, especially when green. The single, large seed is red-brown, oval shaped, approximately 1.3&ndash;2 cm long, and is surrounded by a wood-like husk. Peaches, along with cherries, plums and apricots, are stone fruits (drupes). The tree is small, and up to 15 ft tall.</p>\n<p>The scientific name persica, along with the word \"peach\" itself and its cognates in many European languages, derives from an early European belief that peaches were native to Persia (now Iran). The modern botanical consensus is that they originate in China, and were introduced to Persia and the Mediterranean region along the Silk Road before Christian times.[1] Cultivated peaches are divided into clingstones and freestones, depending on whether the flesh sticks to the stone or not; both can have either white or yellow flesh. Peaches with white flesh typically are very sweet with little acidity, while yellow-fleshed peaches typically have an acidic tang coupled with sweetness, though this also varies greatly. Both colours often have some red on their skin. Low-acid white-fleshed peaches are the most popular kinds in China, Japan, and neighbouring Asian countries, while Europeans and North Americans have historically favoured the acidic, yellow-fleshed kinds.</p>\n<p>&nbsp;</p>\n<div style=\"padding: 24px 24px 24px 21px; display: block; background-color: #ececec;\">From <a style=\"color: #1e7ec8; text-decoration: underline;\" title=\"Wikipedia\" href=\"http://en.wikipedia.org\">Wikipedia</a>, the free encyclopedia</div>','','','','');
 INSERT INTO `xlite_product_translations` (`label_id`, `code`, `id`, `name`, `description`, `brief_description`, `meta_tags`, `meta_desc`, `meta_title`) VALUES (9,'en',15067,'Pear','<h5>Pear</h5>\n<p>The pear is an edible pomaceous fruit produced by a tree of genus Pyrus (pronounced /Ã~KË~FpaÃ~IÂªrÃ~Iâ~D¢s/). The pear is classified within Maloideae, a subfamily within Rosaceae. The apple (Malus &times;domestica), which it resembles in floral structure, is also a member of this subfamily.</p>\n<p>The English word pear is probably from Common West Germanic *pera, probably a loanword of Vulgar Latin pira, the plural of pirum, akin to Greek api(r)os, which is likely of Semitic origin. The place name Perry can indicate the historical presence of pear trees. The term \"pyriform\" is sometimes used to describe something which is \"pear-shaped\".!</p>\n<p>&nbsp;</p>\n<div style=\"padding: 24px 24px 24px 21px; display: block; background-color: #ececec;\">From <a style=\"color: #1e7ec8; text-decoration: underline;\" title=\"Wikipedia\" href=\"http://en.wikipedia.org\">Wikipedia</a>, the free encyclopedia</div>','','','','');
 
+
+INSERT INTO `xlite_category_products` SET product_id = '15090', category_id = '14015', orderby = '0';
+INSERT INTO `xlite_category_products` SET product_id = '15090', category_id = '14018', orderby = '0';
+INSERT INTO `xlite_category_products` SET product_id = '15090', category_id = '14017', orderby = '0';
+INSERT INTO `xlite_category_products` SET product_id = '16281', category_id = '14009', orderby = '0';
+INSERT INTO `xlite_category_products` SET product_id = '16280', category_id = '14009', orderby = '0';
+INSERT INTO `xlite_category_products` SET product_id = '16282', category_id = '14009', orderby = '0';
+INSERT INTO `xlite_category_products` SET product_id = '15121', category_id = '14015', orderby = '0';
+INSERT INTO `xlite_category_products` SET product_id = '15123', category_id = '14015', orderby = '0';
+INSERT INTO `xlite_category_products` SET product_id = '15068', category_id = '14015', orderby = '0';
+INSERT INTO `xlite_category_products` SET product_id = '15091', category_id = '14015', orderby = '0';
+INSERT INTO `xlite_category_products` SET product_id = '15067', category_id = '14015', orderby = '0';

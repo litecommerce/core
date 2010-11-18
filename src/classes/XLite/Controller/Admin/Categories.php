@@ -38,18 +38,6 @@ namespace XLite\Controller\Admin;
 class Categories extends \XLite\Controller\Admin\Catalog
 {
     /**
-     * getModelObject
-     *
-     * @return \XLite\Model\AModel
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getModelObject()
-    {
-        return $this->getCategory();
-    }
-
-    /**
      * doActionDelete 
      * 
      * @return void
@@ -60,26 +48,32 @@ class Categories extends \XLite\Controller\Admin\Catalog
     protected function doActionDelete()
     {
         $parentId = $this->getCategory()->getParent()->getCategoryId();
-        $category = \XLite\Core\Database::getRepo('XLite\Model\Category')->getCategory($this->getCategoryId());
-
-        \XLite\Core\Database::getRepo('XLite\Model\Category')
-            ->{'delete' . (((bool) \XLite\Core\Request::getInstance()->subcats) ? 'Subcategories' : '')}($category);
+     
+        \XLite\Core\Database::getRepo('XLite\Model\Category')->deleteCategory(
+            $this->getCategoryId(),
+            (bool) \XLite\Core\Request::getInstance()->subcats
+        );
 
         $this->setReturnUrl($this->buildURL('categories', '', array('category_id' => $parentId)));
     }
 
 
     /**
-     * Get categories list
+     * __call 
      * 
-     * @return array
+     * @param string $method method to call
+     * @param array  $args   call arguments
+     *  
+     * @return mixed
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getCategories()
+    public function __call($method, array $args = array())
     {
-        return $this->getCategory()->getSubcategories();
+        return method_exists($repo = \XLite\Core\Database::getRepo('XLite\Model\Category'), $method)
+            ? call_user_func_array(array($repo, $method), $args)
+            : parent::__call($method, $args);
     }
 
     /**

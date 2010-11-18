@@ -122,6 +122,23 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * Define the Doctrine query
      *
      * @param int $categoryId category Id
+     *
+     * @return \Doctrine\ORM\QueryBuilder
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineSubtreeQuery($categoryId)
+    {
+        return $this->defineFullTreeQuery($categoryId)
+            ->andWhere('c.category_id <> :category_id')
+            ->setParameter('category_id', $categoryId);
+    }
+
+    /**
+     * Define the Doctrine query
+     *
+     * @param int $categoryId category Id
      * 
      * @return \Doctrine\ORM\QueryBuilder
      * @access protected
@@ -196,7 +213,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
     {
         $expr = new \Doctrine\ORM\Query\Expr();
 
-        return $this->createPureQueryBuilder()
+        return $this->createPureQueryBuilder('c', false)
             ->update($this->_entityName, 'c')
             ->set('c.' . $index, 'c.' . $index . ' + :offset')
             ->andWhere($expr->gt('c.' . $index, ':relatedIndex'))
@@ -292,9 +309,9 @@ class Category extends \XLite\Model\Repo\Base\I18n
         }
 
         return array(
-            'lpos' => $parent->getLpos() + 1,
-            'rpos' => $parent->getLpos() + 2,
-            'parent' => $parent
+            'lpos'   => $parent->getLpos() + 1,
+            'rpos'   => $parent->getLpos() + 2,
+            'parent' => $parent,
         ) + $data;
     }
 
@@ -353,10 +370,9 @@ class Category extends \XLite\Model\Repo\Base\I18n
     {
         $entity = null;
 
-        // Parent category is always exists
-        $parent = $this->getCategory($data['parent_id']);
+        // Get parent
+        if ($parent = $this->getCategory($data['parent_id'])) {
 
-        if ($parent) {
             // Update indexes in the nested set
             $this->defineUpdateIndexQuery('lpos', $parent->getLpos())->getQuery()->execute();
             $this->defineUpdateIndexQuery('rpos', $parent->getLpos())->getQuery()->execute();
@@ -407,20 +423,10 @@ class Category extends \XLite\Model\Repo\Base\I18n
      */
     protected function performDelete(\XLite\Model\AEntity $entity)
     {
-        // Recursively delete all childs
-        $this->deleteSubcategories($entity);
-
-        // Index delta
-        $width = $entity->getRpos() - $entity->getLpos() + 1;
-
-        // Update indexes in the nested set
-        $this->defineUpdateIndexQuery('lpos', $entity->getRpos(), -$width)->getQuery()->execute();
-        $this->defineUpdateIndexQuery('rpos', $entity->getRpos(), -$width)->getQuery()->execute();
-
         // Update quick flags
         $this->updateQuickFlags($entity->getParent(), $this->prepareQuickFlags(-1, $entity->getEnabled() ? -1 : 0));
     
-        parent::performDelete($entity);    
+        parent::performDelete($entity);
     }
 
 
@@ -453,20 +459,24 @@ class Category extends \XLite\Model\Repo\Base\I18n
     /**
      * Create a new QueryBuilder instance that is prepopulated for this entity name
      *
-     * @param string $alias Table alias
+     * @param string $alias       Table alias
+     * @param bool   $excludeRoot do not include root category into the search result
      *
      * @return \Doctrine\ORM\QueryBuilder
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function createQueryBuilder($alias = null)
+    public function createQueryBuilder($alias = null, $excludeRoot = true)
     {
         $qb = parent::createQueryBuilder($alias);
 
         $this->addEnabledCondition($qb, $alias);
         $this->addOrderByCondition($qb, $alias);
-        $this->addExcludeRootCondition($qb, $alias);
+
+        if ($excludeRoot) {
+            $this->addExcludeRootCondition($qb, $alias);
+        }
 
         return $qb;
     }
@@ -533,6 +543,23 @@ class Category extends \XLite\Model\Repo\Base\I18n
     public function getSiblings($categoryId)
     {
         return $this->defineSiblingsQuery($categoryId)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * Return categories subtree
+     *
+     * @param int $categoryId Category Id
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getSubtree($categoryId)
+    {
+        return $this->defineSubtreeQuery($categoryId)
             ->getQuery()
             ->getResult();
     }
@@ -612,23 +639,32 @@ class Category extends \XLite\Model\Repo\Base\I18n
     }
 
     /**
-     * Delete subtree
-     *
-     * @param \XLite\Model\AEntity $entity          entity to detach
-     * @param bool                 $isRecursiveCall flag to detect recursion
-     *
+     * Wrapper. Use this function instead of the native "delete...()"
+     * 
+     * @param int  $categoryId  ID of category to delete
+     * @param bool $onlySubtree flag
+     *  
      * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function deleteSubcategories(\XLite\Model\AEntity $entity, $isRecursiveCall = false)
+    public function deleteCategory($categoryId, $onlySubtree = false)
     {
-        foreach ($entity->getSubcategories() as $category) {
-            $category->hasSubcategories() ? $this->deleteSubcategories($category, true) : $this->performDelete($category);
-        }
+        // Find category by ID
+        $entity = $this->getCategory($categoryId);
 
-        !$isRecursiveCall ?: $this->flushChanges();
+        // Save some variables
+        $right = $entity->getRpos() - ($onlySubtree ? 1 : 0);
+        $width = $right - $entity->getLpos() + ($onlySubtree ? 0 : 1);
+
+        $onlySubtree 
+            ? $this->deleteInBatch($this->getSubtree($entity->getCategoryId())) 
+            : $this->delete($entity);
+
+        // Update indexes in the nested set
+        $this->defineUpdateIndexQuery('lpos', $right, -$width)->getQuery()->execute();
+        $this->defineUpdateIndexQuery('rpos', $right, -$width)->getQuery()->execute();
     }
 
 
