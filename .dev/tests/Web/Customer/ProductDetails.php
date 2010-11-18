@@ -46,9 +46,9 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
         // Image block
         if ($product->hasImage()) {
 
-            $image = $product->getImages()->get(0); // the default image
-            $kZoom = \XLite\View\Product\Details\Customer\Image::K_ZOOM;
-            $maxWidth = \XLite\View\Product\Details\Customer\Image::IMG_MAX_WIDTH_PD;
+            $image    = $product->getImages()->get(0); // the default image
+            $kZoom    = 1.3;
+            $maxWidth = 330;
 
             $cloudZoom = $image->getWidth() > $kZoom * $maxWidth;
 
@@ -209,7 +209,11 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
 
     public function testZoomer()
     {
-        $product = $this->getActiveProduct();
+        $product = $this->getActiveProductZoomer();
+
+        if (!$product) {
+            $this->markTestSkipped();
+        }
 
         $this->open('store/product//product_id-' . $product->getProductId());
 
@@ -290,7 +294,11 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
 
     public function testColorBox()
     {
-        $product = $this->getActiveProduct();
+        $product = $this->getActiveProductGallery();
+
+        if (!$product) {
+            $this->markTestSkipped();
+        }
 
         $this->openAndWait('store/product//product_id-' . $product->getProductId());
 
@@ -300,7 +308,7 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
 
         $this->waitForCondition(
             'selenium.browserbot.getCurrentWindow().$("#cboxPhoto").attr("src") == "' . $src . '"',
-            2000,
+            6000,
             'check colorbox start'
         );
 
@@ -474,11 +482,46 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
     {
         return \XLite\Core\Database::getRepo('XLite\Model\Product')
             ->createQueryBuilder()
-            ->innerJoin('p.detailed_images', 'd')
-            ->andWhere('d.is_zoom = :true')
-            ->setParameter('true', true)
             ->setMaxResults(1)
             ->getQuery()
             ->getSingleResult();
     }
+
+    protected function getActiveProductZoomer()
+    {
+        return \XLite\Core\Database::getRepo('XLite\Model\Product')
+            ->createQueryBuilder()
+            ->innerJoin('p.images', 'i')
+            ->andWhere('i.width > :width')
+            ->setParameter('width', 1.3 * 330)
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getSingleResult();
+    }
+
+    protected function getActiveProductGallery()
+    {
+        $res = \XLite\Core\Database::getRepo('XLite\Model\Image\Product\Image')
+            ->createQueryBuilder()
+            ->select(array('COUNT(i.image_id)', 'i.id'))
+            ->groupBy('i.id')
+            ->getQuery()
+            ->getScalarResult();
+
+        $product = null;
+
+        foreach ($res as $v) {
+            $count = array_shift($v);
+
+            if ($count > 1) {
+                $product = \XLite\Core\Database::getRepo('XLite\Model\Product')->find(array_shift($v));
+                break;
+            }
+
+        }
+
+        return $product;
+    }
+
+
 }

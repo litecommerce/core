@@ -99,7 +99,7 @@ class XLite_Web_Customer_Subcategories extends XLite_Web_Customer_ACustomer
                 "css=$titleSelector",
                 "A subcategory doesn't link to a category page ($mode mode)"
             );
-            $title = $this->getJSExpression("$('$titleSelector').attr('title')");
+            $title = $this->getJSExpression("$('$titleSelector').html()");
             $this->assertEquals(
                 $name,
                 $title,

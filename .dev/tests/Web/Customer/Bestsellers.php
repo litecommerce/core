@@ -63,7 +63,7 @@ class XLite_Web_Customer_Bestsellers extends XLite_Web_Customer_ACustomer
             'Check table'
         );
 
-        foreach ($this->findBestsellers() as $product) {
+        foreach ($this->findBestsellers(102) as $product) {
 
             $id = $product->getProductId();
 
