@@ -35,19 +35,6 @@ CREATE TABLE xlite_category_images (
   CONSTRAINT FOREIGN KEY (`id`) REFERENCES `xlite_categories` (`category_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
-DROP TABLE IF EXISTS xlite_category_products;
-CREATE TABLE xlite_category_products (
-  id int(11) unsigned NOT NULL AUTO_INCREMENT,
-  product_id int(11) unsigned NOT NULL DEFAULT '0',
-  category_id int(11) unsigned NOT NULL DEFAULT '0',
-  orderby int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (id),
-  UNIQUE KEY pair (category_id,product_id),
-  KEY orderby (orderby),
-  CONSTRAINT FOREIGN KEY (`product_id`) REFERENCES `xlite_products` (`product_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT FOREIGN KEY (`category_id`) REFERENCES `xlite_categories` (`category_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
-
 DROP TABLE IF EXISTS xlite_category_quick_flags;
 CREATE TABLE xlite_category_quick_flags (
   id int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -346,6 +333,19 @@ CREATE TABLE xlite_products (
   KEY tax_class (tax_class),
   KEY free_shipping (free_shipping),
   KEY clean_url (clean_url)
+) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
+
+DROP TABLE IF EXISTS xlite_category_products;
+CREATE TABLE xlite_category_products (
+  id int(11) unsigned NOT NULL AUTO_INCREMENT,
+  product_id int(11) unsigned NOT NULL DEFAULT '0',
+  category_id int(11) unsigned NOT NULL DEFAULT '0',
+  orderby int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (id),
+  UNIQUE KEY pair (category_id,product_id),
+  KEY orderby (orderby),
+  CONSTRAINT FOREIGN KEY (`product_id`) REFERENCES `xlite_products` (`product_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT FOREIGN KEY (`category_id`) REFERENCES `xlite_categories` (`category_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 DROP TABLE IF EXISTS xlite_product_images;
