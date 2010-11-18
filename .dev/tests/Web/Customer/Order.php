@@ -42,6 +42,9 @@ class XLite_Web_Customer_Order extends XLite_Web_Customer_ACustomer
      */
     protected function buy()
     {
+        $this->skipCoverage();
+
+        // Login
         $this->open('user');
 
         $this->type('css=#edit-name', 'master');
@@ -49,13 +52,12 @@ class XLite_Web_Customer_Order extends XLite_Web_Customer_ACustomer
 
         $this->submitAndWait('css=#user-login');
 
+        // Add-to-cart
         $product = \XLite\Core\Database::getRepo('XLite\Model\Product')
             ->createQueryBuilder()
             ->setMaxResults(1)
             ->getQuery()
             ->getSingleResult();
-
-        $this->skipCoverage();
 
         $this->openAndWait('store/product//product_id-' . $product->getProductId());
 
@@ -67,7 +69,18 @@ class XLite_Web_Customer_Order extends XLite_Web_Customer_ACustomer
             'check content reloading'
         );
 
+        // Checkout
         $this->openAndWait('store/checkout');
+
+        if (0 < intval($this->getJSExpression('$(".current.shipping-step").length'))) {
+            $this->toggleByJquery('ul.shipping-rates li input:eq(0)', true);
+            $this->click('css=.current .button-row button');
+            $this->waitForCondition(
+                'selenium.browserbot.getCurrentWindow().$(".payment-step").hasClass("current") == true',
+                10000,
+                'check swicth to review step'
+            );
+        }
 
         if (0 < intval($this->getJSExpression('$(".current.payment-step").length'))) {
             $this->toggleByJquery('#pmethod6', true);

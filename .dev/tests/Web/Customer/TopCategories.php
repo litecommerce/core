@@ -84,7 +84,7 @@ class XLite_Web_Customer_TopCategories extends XLite_Web_Customer_ACustomer
     {
         $this->setDisplayMode($mode);
 
-        $this->open('store/main');
+        $this->openAndWait('store/main');
         $this->testRootCategories($mode);
 
         $child = $this->getRandomCategory(2);
@@ -96,7 +96,7 @@ class XLite_Web_Customer_TopCategories extends XLite_Web_Customer_ACustomer
         );
 
         $rootName = $root->getName();
-        $rootDepth = $root->getDepth();
+        $rootDepth = $this->getRepo()->getCategoryDepth($root->getCategoryId());
         $rootId = $root->getCategoryId();
 
         // Check whether the random root category is not in the active trail
@@ -107,7 +107,7 @@ class XLite_Web_Customer_TopCategories extends XLite_Web_Customer_ACustomer
 
         if (is_object($child)) {
             $childName = $child->getName();
-            $childDepth = $child->getDepth();
+            $childDepth = $this->getRepo()->getCategoryDepth($child->getCategoryId());
             $childId = $child->getCategoryId();
 
             if ($mode!='tree') {
@@ -121,7 +121,7 @@ class XLite_Web_Customer_TopCategories extends XLite_Web_Customer_ACustomer
 
         // Open the root category page
         $rootURL = $this->getJSExpression('$("'.$this->getLinkSelector($rootName, $rootDepth).'")');
-        $this->open($rootURL);
+        $this->openAndWait($rootURL);
         $this->testRootCategories($mode);
 
         // Check whether the opened root category is in the active trail
@@ -145,7 +145,7 @@ class XLite_Web_Customer_TopCategories extends XLite_Web_Customer_ACustomer
 
                 // Open the child category page
                 $childURL = $this->getJSExpression('$("'.$this->getLinkSelector($childName, $childDepth).'")');
-                $this->open($childURL);
+                $this->openAndWait($childURL);
                 $this->testRootCategories($mode);
 
                 // Check whether the parent root category is still in the active trail
@@ -223,7 +223,7 @@ class XLite_Web_Customer_TopCategories extends XLite_Web_Customer_ACustomer
 
         foreach ($categories as $category) {
             $name = $category->getName();
-            $depth = $category->getDepth();
+            $depth = $this->getRepo()->getCategoryDepth($category->getCategoryId());
 
             $selector = $this->getLinkSelector($name, $depth);
 
@@ -251,7 +251,7 @@ class XLite_Web_Customer_TopCategories extends XLite_Web_Customer_ACustomer
     {
         $category = $this->getCategory($categoryId);
         $name = $category->getName();
-        $depth = $category->getDepth();
+        $depth = $this->getRepo()->getCategoryDepth($category->getCategoryId());
         $selector = $this->getLinkSelector($name, $depth);
         $this->assertJqueryPresent($selector, $message);
     }
@@ -271,7 +271,7 @@ class XLite_Web_Customer_TopCategories extends XLite_Web_Customer_ACustomer
     {
         $category = $this->getCategory($categoryId);
         $name = $category->getName();
-        $depth = $category->getDepth();
+        $depth = $this->getRepo()->getCategoryDepth($category->getCategoryId());
         $selector = $this->getLinkSelector($name, $depth);
         $this->assertJqueryNotPresent($selector, $message);
     }
@@ -291,7 +291,7 @@ class XLite_Web_Customer_TopCategories extends XLite_Web_Customer_ACustomer
     {
         $category = $this->getCategory($categoryId);
         $name = $category->getName();
-        $depth = $category->getDepth();
+        $depth = $this->getRepo()->getCategoryDepth($category->getCategoryId());
         $selector = str_replace('li', 'li.active-trail', $this->getLinkSelector($name, $depth));
         $this->assertJqueryPresent($selector, $message);
     }
@@ -311,7 +311,7 @@ class XLite_Web_Customer_TopCategories extends XLite_Web_Customer_ACustomer
     {
         $category = $this->getCategory($categoryId);
         $name = $category->getName();
-        $depth = $category->getDepth();
+        $depth = $this->getRepo()->getCategoryDepth($category->getCategoryId());
         $selector = str_replace('li', 'li.active-trail', $this->getLinkSelector($name, $depth));
         $this->assertJqueryNotPresent($selector, $message);
     }
@@ -326,7 +326,7 @@ class XLite_Web_Customer_TopCategories extends XLite_Web_Customer_ACustomer
      */
     protected function getWidgetSelector()
     {
-        return "ul.catalog-categories:visible";
+        return 'ul.catalog-categories:visible';
     }
 
     /**
@@ -385,7 +385,7 @@ class XLite_Web_Customer_TopCategories extends XLite_Web_Customer_ACustomer
      */
     protected function getSubcategories($categoryId)
     {
-        return $this->getRepo()->getCategoriesPlainList($categoryId);
+        return $this->getRepo()->getSubcategories($categoryId);
     }
 
     /**
@@ -400,7 +400,16 @@ class XLite_Web_Customer_TopCategories extends XLite_Web_Customer_ACustomer
      */
     protected function getRandomCategory($depth = 1)
     {
-        return $this->getRepo()->findOneByDepth($depth);
+        $result = null;
+
+        foreach ($this->getRepo()->findAll() as $c) {
+            if ($this->getRepo()->getCategoryDepth($c->getCategoryId()) == $depth) {
+                $result = $c;
+                break;
+            }
+        }
+
+        return $result;
     }
 
     /**

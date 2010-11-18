@@ -48,26 +48,32 @@ class XLite_Web_Customer_FeaturedProducts extends XLite_Web_Customer_ACustomer
         );
         
         $this->assertElementPresent(
-            "//div[@class='items-list widgetclass-XLite\\Module\\FeaturedProducts\\View\\FeaturedProducts']",
+            "//h2[text()='Featured products']"
+            . "/following-sibling::div[@class='content']"
+            . "/div[@class='items-list']"
+            . "/div[@class='products']",
             'check featured products block'
         );
 
         $this->assertElementPresent(
-            "//div[@class='items-list XLiteModuleFeaturedProductsViewFeaturedProducts']/table[@class='list-body list-body-grid list-body-grid-3-columns']",
+            "//h2[text()='Featured products']"
+            . "/following-sibling::div[@class='content']"
+            . "/div[@class='items-list']"
+            . "/div[@class='products']"
+            . "/table[@class='products-grid grid-3-columns']",
             'Check table'
         );
 
-        $fps = $this->getFeaturedProducts();
+        foreach ($this->getFeaturedProducts() as $product) {
 
-        foreach ($fps as $product) {
-
-            $url = $product->getImageURL();
+            $id = $product->getProduct()->getProductId();
 
             $this->assertElementPresent(
-                "//img[@src='$url']",
-                'Check ' . $url . ' element'
+                "//h2[text()='Featured products']"
+                . "/following-sibling::div[@class='content']"
+                . "/descendant::div[@class='product productid-$id ui-draggable']",
+                'Check ' . $id . ' element'
             );
-
         }
     }
 
@@ -76,25 +82,15 @@ class XLite_Web_Customer_FeaturedProducts extends XLite_Web_Customer_ACustomer
     {   
         $this->open('toys/');
 
-        $this->assertElementPresent(
-            "//h2[text()='Featured products']",
-            'check featured products title'
-        );  
-    
-        $this->assertElementPresent(
-            "//div[@class='items-list widgetclass-XLite\\Module\\FeaturedProducts\\View\\FeaturedProducts']",
-            'check featured products block'
-        );  
+        foreach ($this->getFeaturedProducts(1004) as $product) {
 
-        $fps = $this->getFeaturedProducts();
-
-        foreach ($fps as $product) {
-
-            $url = $product->getImageURL();
+            $id = $product->getProduct()->getProductId();
 
             $this->assertElementPresent(
-                "//img[@src='$url']",
-                'Check ' . $url . ' element'
+                "//h2[text()='Featured products']"
+                . "/following-sibling::div[@class='content']"
+                . "/descendant::div[@class='product productid-$id ui-draggable']",
+                'Check ' . $id . ' element (category id: 1004)'
             );  
 
         }   
@@ -113,7 +109,8 @@ class XLite_Web_Customer_FeaturedProducts extends XLite_Web_Customer_ACustomer
      */
     protected function getFeaturedProducts($cat = 0)
     {   
-        return \XLite\Core\Database::getRepo('XLite\Model\OrderItem')->getFeaturedProducts($cat);
+        return \XLite\Core\Database::getRepo('XLite\Module\FeaturedProducts\Model\FeaturedProduct')
+            ->getFeaturedProducts($cat);
     }   
 
 }
