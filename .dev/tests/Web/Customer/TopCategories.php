@@ -30,7 +30,17 @@ require_once __DIR__ . '/ACustomer.php';
 
 class XLite_Web_Customer_TopCategories extends XLite_Web_Customer_ACustomer
 {
-    
+    /**
+     * Temporary skipped flag
+     * FIX - fix this test
+     *
+     * @var    boolean
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $temporarySkipped = true;
+   
     /**
      * Test the widget in "list" display mode
      * 
@@ -88,7 +98,9 @@ class XLite_Web_Customer_TopCategories extends XLite_Web_Customer_ACustomer
         $this->testRootCategories($mode);
 
         $child = $this->getRandomCategory(2);
-        $root = is_object($child) ? ($this->getParentCategory($child->getCategoryId())) : $this->getRandomCategory(1);
+        $root = is_object($child)
+            ? $this->getParentCategory($child->getCategoryId())
+            : $this->getRandomCategory(1);
 
         $this->assertTrue(
             is_object($root),

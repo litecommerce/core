@@ -92,6 +92,22 @@ class XLite_Web_Customer_Order extends XLite_Web_Customer_ACustomer
             );
         }
 
+        if (0 < intval($this->getJSExpression('$(".current.review-step").length'))) {
+            $this->click('css=.payment-step .button-row button');
+            $this->waitForCondition(
+                'selenium.browserbot.getCurrentWindow().$(".payment-step").hasClass("current") == true',
+                10000,
+                'check return to payment step'
+            );
+            $this->toggleByJquery('#pmethod6', true);
+            $this->click('css=.current .button-row button');
+            $this->waitForCondition(
+                'selenium.browserbot.getCurrentWindow().$(".review-step").hasClass("current") == true',
+                10000,
+                'check swicth to next step #3'
+            );
+        }
+
         $this->click('//input[@id="place_order_agree"]');
         $this->click('css=.current .button-row button');
         $this->waitForCondition('selenium.browserbot.getCurrentWindow().location.href.search(/checkoutSuccess/) != -1');
