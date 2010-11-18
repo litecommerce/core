@@ -84,7 +84,7 @@ class FeaturedProduct extends \XLite\Model\AEntity
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @ManyToOne  (targetEntity="XLite\Model\Product", inversedBy="featuredProducts", cascade={"all"})
+     * @ManyToOne  (targetEntity="XLite\Model\Product", inversedBy="featuredProducts")
      * @JoinColumn (name="product_id", referencedColumnName="product_id")
      */
     protected $product;
@@ -97,7 +97,7 @@ class FeaturedProduct extends \XLite\Model\AEntity
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @ManyToOne  (targetEntity="XLite\Model\Category", inversedBy="featuredProducts", cascade={"all"})
+     * @ManyToOne  (targetEntity="XLite\Model\Category", inversedBy="featuredProducts")
      * @JoinColumn (name="category_id", referencedColumnName="category_id")
      */
     protected $category;
