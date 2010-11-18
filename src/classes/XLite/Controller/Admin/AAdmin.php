@@ -513,6 +513,8 @@ EOT;
                 'XLite\Controller\Admin\Main',
                 'XLite\Controller\Admin\Category',
                 'XLite\Controller\Admin\Categories',
+                'XLite\Controller\Admin\Product',
+                'XLite\Controller\Admin\ProductList',
             )
         );
     }

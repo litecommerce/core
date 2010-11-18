@@ -38,24 +38,31 @@ namespace XLite\Controller\Admin;
 class Product extends \XLite\Controller\Admin\AAdmin
 {
     /**
-     * Alias
+     * Common method to determine current location
      *
-     * @return \XLite\Model\Product
+     * @return string
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getProduct()
+    protected function getLocation()
     {
-        if (!$this->isNew()) {
-            $result = \XLite\Core\Database::getRepo('\XLite\Model\Product')->find($this->getProductId());
-        }
+        return $this->getProduct()->getName();
+    }
 
-        if (!isset($result)) {
-            $result = new \XLite\Model\Product();
-        }
+    /**
+     * Add part to the location nodes list
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function addBaseLocation()
+    {
+        parent::addBaseLocation();
 
-        return $result;
+        $this->addLocationNode('Search products', $this->buildURL('products'));
     }
 
     /**
@@ -83,7 +90,7 @@ class Product extends \XLite\Controller\Admin\AAdmin
             );
         }
 
-        return array('category_products' => new \Doctrine\Common\Collections\ArrayCollection($data));
+        return array('categoryProducts' => new \Doctrine\Common\Collections\ArrayCollection($data));
     }
 
     /**
@@ -190,7 +197,7 @@ class Product extends \XLite\Controller\Admin\AAdmin
         // Update all data
         \XLite\Core\Database::getRepo('\XLite\Model\Product')->update(
             $product,
-            $this->getCategoryProducts($product)
+            $this->getCategoryProducts($product) + $this->getPostedData()
         );
     }
 
@@ -296,6 +303,27 @@ class Product extends \XLite\Controller\Admin\AAdmin
         );
     }
 
+
+    /**
+     * Alias
+     *
+     * @return \XLite\Model\Product
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getProduct()
+    {
+        if (!$this->isNew()) {
+            $result = \XLite\Core\Database::getRepo('\XLite\Model\Product')->find($this->getProductId());
+        }
+
+        if (!isset($result)) {
+            $result = new \XLite\Model\Product();
+        }
+
+        return $result;
+    }
 
     /**
      * Get product category id
