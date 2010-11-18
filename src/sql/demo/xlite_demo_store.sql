@@ -1,7 +1,7 @@
 
 -- Categories [7]
 
-INSERT INTO `xlite_categories` VALUES (1,0,1,16,0,1,'',1);
+REPLACE INTO `xlite_categories` VALUES (1,0,1,16,0,1,'',1);
 INSERT INTO `xlite_categories` VALUES (1002,1,2,3,0,1,'apparel',1);
 INSERT INTO `xlite_categories` VALUES (3002,1,4,5,0,1,'downloadables',1);
 INSERT INTO `xlite_categories` VALUES (1004,1,6,15,0,1,'toys',1);

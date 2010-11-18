@@ -1057,7 +1057,9 @@ function doInstallDatabase($trigger, &$params, $silentMode = false)
                 }
             }
 
-            $_sql = array_merge($_sql, $lcSettings['sql_files']['demo']);
+            if ($params['demo']) {
+                $_sql = array_merge($_sql, $lcSettings['sql_files']['demo']);
+            }
         }
 
         if (true === $configUpdated) {
