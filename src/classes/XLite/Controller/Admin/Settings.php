@@ -75,6 +75,19 @@ class Settings extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
+     * Common method to determine current location
+     *
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getLocation()
+    {
+        return 'General settings';
+    }
+
+    /**
      * Return list of enabled captcha pages 
      * 
      * @return array
@@ -1045,6 +1058,21 @@ class Settings extends \XLite\Controller\Admin\AAdmin
             return $tz;
         else
             return "Not supported";
+    }
+
+    /**
+     * getStateById 
+     * 
+     * @param mixed $stateId ____param_comment____
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getStateById($stateId)
+    {
+        return \XLite\Core\Database::getRepo('XLite\Model\State')->find($stateId);
     }
 }
 
