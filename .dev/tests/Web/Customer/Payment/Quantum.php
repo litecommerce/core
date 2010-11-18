@@ -52,29 +52,70 @@ class XLite_Web_Customer_Payment_Quantum extends XLite_Web_Customer_ACustomer
 
         $this->type("//input[@id='edit-name']", "master");
         $this->type("//input[@id='edit-pass']", "master");
-        $this->clickAndWait('//input[@id="edit-submit"]');
+        $this->submitAndWait('css=#user-login');
 
-        // Open product page and add-to-cart
-        $product = $this->getActiveProduct();
+        // Add-to-cart
+        $product = \XLite\Core\Database::getRepo('XLite\Model\Product')
+            ->createQueryBuilder()
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getSingleResult();
 
         $this->openAndWait('store/product//product_id-' . $product->getProductId());
-        $this->click('css=button.add2cart');
+
+        $this->click("//button[@class='bright add2cart']");
+
         $this->waitForCondition(
-            "selenium.browserbot.getCurrentWindow().$('.minicart-items-number').html() == '1'",
-            20000
+            'selenium.browserbot.getCurrentWindow().$(".product-details .product-buttons-added .buy-more").length > 0',
+            10000,
+            'check content reloading'
         );
 
-        // Select payment method
+        // Checkout
         $this->openAndWait('store/checkout');
-        $this->click('//input[@id="payment_30"]');
-        $this->submitAndWait('//form[@class="payment-methods"]');
+
+        if (0 < intval($this->getJSExpression('$(".current.shipping-step").length'))) {
+            $this->toggleByJquery('ul.shipping-rates li input:eq(0)', true);
+            $this->click('css=.current .button-row button');
+            $this->waitForCondition(
+                'selenium.browserbot.getCurrentWindow().$(".payment-step").hasClass("current") == true',
+                10000,
+                'check swicth to next step'
+            );
+        }
+
+        if (0 < intval($this->getJSExpression('$(".current.payment-step").length'))) {
+            $this->toggleByJquery('#pmethod30', true);
+            $this->click('css=.current .button-row button');
+            $this->waitForCondition(
+                'selenium.browserbot.getCurrentWindow().$(".review-step").hasClass("current") == true',
+                10000,
+                'check swicth to next step #2'
+            );
+        }
+
+        if (0 < intval($this->getJSExpression('$(".current.review-step").length'))) {
+            $this->click('css=.payment-step .button-row button');
+            $this->waitForCondition(
+                'selenium.browserbot.getCurrentWindow().$(".payment-step").hasClass("current") == true',
+                10000,
+                'check return to payment step'
+            );
+            $this->toggleByJquery('#pmethod30', true);
+            $this->click('css=.current .button-row button');
+            $this->waitForCondition(
+                'selenium.browserbot.getCurrentWindow().$(".review-step").hasClass("current") == true',
+                10000,
+                'check swicth to next step #3'
+            );
+        }
+
+        $this->click('//input[@id="place_order_agree"]');
+        $this->clickAndWait('css=.current .button-row button');
 
         // Go to payment gateway
-        $this->check("//input[@id='agree']");
-        $this->submitAndWait('//form[@class="checkout-details"]');
-
         $this->waitForCondition(
-            'selenium.browserbot.getCurrentWindow().document.getElementsByTagName("form")[0].ccnum',
+            'selenium.browserbot.getCurrentWindow().document.getElementsByTagName("form").length > 0 && selenium.browserbot.getCurrentWindow().document.getElementsByTagName("form")[0].ccnum',
             20000
         );
 

@@ -100,6 +100,16 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
     protected $processW3CHTMLWarnings = true;
 
     /**
+     * Temporary skipped flag
+     * 
+     * @var    boolean
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $temporarySkipped = false;
+
+    /**
      * Base URL
      * 
      * @var    string
@@ -239,6 +249,10 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
             $shortName = lcfirst(substr($this->name, 4));
             if (self::$testsRange && !in_array($shortName, self::$testsRange)) {
                 $this->markTestSkipped();
+
+            } elseif ($this->temporarySkipped) {
+
+                $this->markTestSkipped('Temporary skipped - fix test ASAP!');
 
             } else {
                 parent::runTest();

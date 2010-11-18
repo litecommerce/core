@@ -33,6 +33,17 @@ require_once __DIR__ . '/ACustomer.php';
 
 abstract class XLite_Web_Customer_AProductList extends XLite_Web_Customer_ACustomer
 {
+    /**
+     * Temporary skipped flag
+     * FIX - speed-up test
+     *
+     * @var    boolean
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $temporarySkipped = true;
+
     protected $widgetContainerClass = '.items-list';
     
     protected $widgetClass = '';
