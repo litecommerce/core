@@ -233,7 +233,8 @@ class Order extends \XLite\Model\Repo\ARepo
      */
     protected function defineAllExpiredTemporaryOrdersQuery()
     {
-        return $this->createQueryBuilder(null, false)
+        return $this->_em
+            ->createQueryBuilder(null, false)
             ->andWhere('o.status = :tempStatus AND o.date < :time')
             ->setParameter('tempStatus', \XLite\Model\Order::STATUS_TEMPORARY)
             ->setParameter('time', time() - $this->getOrderTTL());
