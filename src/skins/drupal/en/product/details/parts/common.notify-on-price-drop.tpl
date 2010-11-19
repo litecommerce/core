@@ -12,4 +12,4 @@
  *
  * @ListChild (list="product.details.page.info", weight="42")
  *}
-<div class="product-notify-on-price-drop"><a href="#">Notify me</a> when the price drops</div>
+<!--div class="product-notify-on-price-drop"><a href="#">Notify me</a> when the price drops</div-->

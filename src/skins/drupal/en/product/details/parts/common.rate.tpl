@@ -12,8 +12,8 @@
  *
  * @ListChild (list="product.details.page.info", weight="15")
  *}
-<div class="product-rating">
+<!--div class="product-rating">
   <span class="rating-stars">&#10030;&#10030;&#10030;&#10030;&#10030;</span> 
   <a href="#" class="rating-reviews">2428 reviews</a> 
   <a href="#" class="rating-add-review">Add your own review</a> 
-</div>
+</div-->
