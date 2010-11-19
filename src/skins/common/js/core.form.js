@@ -300,6 +300,11 @@ CommonElement.prototype.bind = function(elm)
   if (this.$element.hasClass('field-state') && this.$element.hasClass('linked')) {
     this.linkWithCountry();
   }
+
+  if (this.$element.hasClass('column-switcher') && 0 < this.$element.parents('th').length) {
+    this.markAsColumnSwitcher();
+  }
+
 }
 
 // Get validators by form element
@@ -548,6 +553,23 @@ CommonElement.prototype.markAsWatcher = function(beforeCallback)
   if ('undefined' != typeof($.fn.mousewheel)) {
     o.$element.mousewheel(delayedUpdate);
   }
+}
+
+// Elemen is column checkboxes switcher
+CommonElement.prototype.markAsColumnSwitcher = function()
+{
+  this.$element.click(
+    function() {
+      var idx = $(this).parents('th').get(0).cellIndex;
+      var newState = this.checked;
+
+      $(this).parents('table').find('tr').each(
+        function() {
+          $(this.cells[idx]).find(':checkbox').get(0).checked = newState;
+        }
+      );
+    }
+  );
 }
 
 // Element is state watcher
