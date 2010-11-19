@@ -13,4 +13,4 @@
  * @ListChild (list="product.details.page.info", weight="18")
  * @ListChild (list="product.details.quicklook.info", weight="18")
  *}
-<div class="product-stock-level">In stock <span>(23 items available)</span></div>
+<!--div class="product-stock-level">In stock <span>(23 items available)</span></div-->
