@@ -30,14 +30,46 @@ require_once __DIR__ . '/../ADeploy.php';
 
 class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
 {
+    /**
+     * Maximum iterations number for 'Database and modules installation' step
+     */
+    const MAX_ITERATIONS_COUNT = 10;
+
+    /**
+     * Test email
+     */
+    const TESTER_EMAIL = 'rnd_tester@cdev.ru';
+
+    /**
+     * Product name (must equals to the name defined in litecommerce.profile)
+     */
+    const PRODUCT_NAME = 'Ecommerce CMS';
+
+    /**
+     * buildDir 
+     * 
+     * @var    mixed
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
     protected $buildDir = null;
     
+    /**
+     * testInstall 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     public function testInstall()
     {
         // Calculate the build directory path
         $currentPath = dirname(realpath(__FILE__));
         $this->buildDir = realpath($currentPath . '/../../../build');
 
+        // Start installation process
         $this->open('install.php');
 
         $this->deleteCookie('lcl', 'domain=.crtdev.local');
@@ -55,7 +87,11 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
         // Fourth step: database an modules installation
         $this->stepFour();
 
-        $this->assertTrue(false, 'Drupal has been successfully deployed');
+        // Fifth step: site configuration
+        $this->stepFive();
+
+        // Sixth step: confirmation page
+        $this->stepSix();
     }
 
     /**
@@ -285,16 +321,189 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function stepFour()
+    protected function stepFour($pass = 1)
     {
+        // Check page title
+        $this->assertTitleEquals('Installing ' . self::PRODUCT_NAME . ' |', sprintf('Checking the page title (pass %d)', $pass));
 
+        // Check page header
+        $this->assertElementPresent(
+            '//h2[text()="Installing ' . self::PRODUCT_NAME . '"]',
+            sprintf('Check that page header equals to text "Installing %s" (pass %d)', self::PRODUCT_NAME, $pass)
+        );
+
+        $this->waitForLocalCondition(
+            '$(".percentage").html() == "100%"',
+            30000,
+            'Waiting for installing all modules'
+        );
+
+        if ($this->isElementPresent('//div[@class="percentage"]')) {
+            $percentage = $this->getText('//div[@class="percentage"]');
+        }
+
+        if ('100%' != $percentage) {
+            
+            if ($pass < self::MAX_ITERATIONS_COUNT) {
+                $this->stepFour($pass + 1);
+            
+            } else {
+                $this->assertTrue(false, sprintf('Maximum iterations count value was exceeded (%d)', $pass));
+            }
+        }
+
+        $this->waitForCondition(
+            'selenium.browserbot.getCurrentWindow().document.getElementsByTagName("h2").length > 0 && selenium.browserbot.getCurrentWindow().document.getElementsByTagName("h2")[0].innerHTML == "Configure site"',
+            10000
+        );
     }
 
-
-    
-    protected function checkHeader()
+    /**
+     * stepFive: configure site
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function stepFive($pass = 1)
     {
+        // Check page title
+        $this->assertTitleEquals('Configure site |', 'Checking the page title');
 
+        // Check page header
+        $this->assertElementPresent(
+            '//h2[text()="Configure site"]',
+            'Check that page header equals to text "Installing ' . self::PRODUCT_NAME . '"'
+        );
+
+        // Check that "Site name" field is presented
+        $this->assertElementPresent(
+            '//form[@id="install-configure-form"]/descendant::input[@id="edit-site-name" and @type="text" and @name="site_name"]',
+            sprintf('Check that "Site name" field is presented (pass %d)', $pass)
+        );
+
+        // Check that "Site e-mail address" field is presented
+        $this->assertElementPresent(
+            '//form[@id="install-configure-form"]/descendant::input[@id="edit-site-mail" and @type="text" and @name="site_mail"]',
+            sprintf('Check that "Site e-mail address" field is presented (pass %d)', $pass)
+        );
+
+        // Check that "Username" field is presented
+        $this->assertElementPresent(
+            '//form[@id="install-configure-form"]/descendant::input[@id="edit-account-name" and @type="text" and @name="account[name]"]',
+            sprintf('Check that "Username" field is presented (pass %d)', $pass)
+        );
+
+        // Check that "E-mail" field is presented
+        $this->assertElementPresent(
+            '//form[@id="install-configure-form"]/descendant::input[@id="edit-account-mail" and @type="text" and @name="account[mail]"]',
+            sprintf('Check that "E-mail address" field is presented (pass %d)', $pass)
+        );
+
+        // Check that "Password" field is presented
+        $this->assertElementPresent(
+            '//form[@id="install-configure-form"]/descendant::input[@id="edit-account-pass-pass1" and @type="password" and @name="account[pass][pass1]"]',
+            sprintf('Check that "Password" field is presented (pass %d)', $pass)
+        );
+
+        // Check that "Confirm password" field is presented
+        $this->assertElementPresent(
+            '//form[@id="install-configure-form"]/descendant::input[@id="edit-account-pass-pass2" and @type="password" and @name="account[pass][pass2]"]',
+            sprintf('Check that "Confirm password" field is presented (pass %d)', $pass)
+        );
+
+        // Check that "Default timezone" field is presented
+        $this->assertElementPresent(
+            '//form[@id="install-configure-form"]/descendant::select[@id="edit-date-default-timezone" and @name="date_default_timezone"]',
+            sprintf('Check that "Default timezone" field is presented (pass %d)', $pass)
+        );
+
+        // Check that "Clean URLs: disabled" field is presented
+        $this->assertElementPresent(
+            '//form[@id="install-configure-form"]/descendant::input[@id="edit-clean-url-0" and @type="radio" and @name="clean_url"]',
+            sprintf('Check that "Clean URLs: disabled" field is presented (pass %d)', $pass)
+        );
+
+        // Check that "Clean URLs: enabled" field is presented
+        $this->assertElementPresent(
+            '//form[@id="install-configure-form"]/descendant::input[@id="edit-clean-url-1" and @type="radio" and @name="clean_url"]',
+            sprintf('Check that "Clean URLs: enabled" field is presented (pass %d)', $pass)
+        );
+
+        // Check that "Check for updates automatically" field is presented
+        $this->assertElementPresent(
+            '//form[@id="install-configure-form"]/descendant::input[@id="edit-update-status-module-1" and @name="update_status_module[1]"]',
+            sprintf('Check that "Check for updates automatically" checkbox is presented (pass %d)', $pass)
+        );
+
+
+        // Check that "Geographic areas" field is presented
+        $this->assertElementPresent(
+            '//form[@id="install-configure-form"]/descendant::select[@id="edit-lc-states" and @name="lc_states"]',
+            sprintf('Check that "Geographic areas" field is presented (pass %d)', $pass)
+        );
+
+        // Check that "Install sample catalog" field is presented
+        $this->assertElementPresent(
+            '//form[@id="install-configure-form"]/descendant::input[@id="edit-lc-install-demo" and @name="lc_install_demo"]',
+            sprintf('Check that "Install sample catalog" checkbox is presented (pass %d)', $pass)
+        );
+
+        // Check that "Save and continue" button is presented
+        $this->assertElementPresent(
+            '//form[@id="install-configure-form"]/descendant::input[@id="edit-submit" and @name="op" and @value="Save and continue"]',
+            sprintf('Check that "Save and Continue" button is presented on "Configure site" step (pass %d)', $pass)
+        );
+
+        // Fill the form fields
+        $this->type('css=#edit-site-name', 'Test ' . self::PRODUCT_NAME);
+        $this->type('css=#edit-site-mail', self::TESTER_EMAIL);
+        $this->type('css=#edit-account-name', 'master');
+        $this->type('css=#edit-account-mail', self::TESTER_EMAIL);
+        $this->type('css=#edit-account-pass-pass1', 'master');
+        $this->type('css=#edit-account-pass-pass2', 'master');
+
+        // Select to install all states
+        $this->select('css=#edit-lc-states', 'value=US-CA-GB');
+
+        // Mark checkboxes
+        $this->uncheck('css=#edit-update-status-module-1');
+        $this->check('css=#edit-lc-install-demo');
+
+        // Mark checkbox "Clean URLs: enabled" if it is allowed
+        if ($this->isElementPresent('//input[@id="edit-clean-url-1" and @type="radio" and @disabled=""]')) {
+            $this->check('css=#edit-clean-url-1');
+        }
+
+        // Submit
+        $this->clickAndWait('css=#edit-submit');
+    }
+
+    /**
+     * stepSix: confirmation page
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function stepSix()
+    {
+         // Check page title
+        $this->assertTitleEquals(self::PRODUCT_NAME . ' installation complete |', 'Checking the page title');
+
+        // Check page header
+        $this->assertElementPresent(
+            '//h2[text()="' . self::PRODUCT_NAME . ' installation complete"]',
+            'Check that page header equals to text "' . self::PRODUCT_NAME . ' installation complete"'
+        );
+
+         // Check that link to the installed store is presented
+        $this->assertElementPresent(
+            '//p[contains(text(),"You may now visit")]/a[text()="your new site"]',
+            'Check that "You may now visit" text is presented'
+        );
     }
 
 }
