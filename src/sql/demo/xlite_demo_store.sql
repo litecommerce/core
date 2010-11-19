@@ -1,10 +1,10 @@
 
 -- Categories [7]
 
-REPLACE INTO `xlite_categories` VALUES (1,0,1,16,0,1,'',1);
-INSERT INTO `xlite_categories` VALUES (1002,1,2,3,0,1,'apparel',1);
-INSERT INTO `xlite_categories` VALUES (3002,1,4,5,0,1,'downloadables',1);
-INSERT INTO `xlite_categories` VALUES (1004,1,6,15,0,1,'toys',1);
+REPLACE INTO `xlite_categories` VALUES (1,0,1,16,0,1,'',0);
+INSERT INTO `xlite_categories` VALUES (1002,1,2,3,0,1,'apparel',0);
+INSERT INTO `xlite_categories` VALUES (3002,1,4,5,0,1,'downloadables',0);
+INSERT INTO `xlite_categories` VALUES (1004,1,6,15,0,1,'toys',0);
 INSERT INTO `xlite_categories` VALUES (1003,1004,7,8,0,1,'cube-goodies',1);
 INSERT INTO `xlite_categories` VALUES (4003,1004,9,10,0,1,'science-toys',1);
 INSERT INTO `xlite_categories` VALUES (4004,1004,11,12,0,1,'puzzles',1);
@@ -28,7 +28,8 @@ INSERT INTO `xlite_category_images` VALUES (106,4002,'demo_store_c4002.jpeg','im
 INSERT INTO `xlite_category_images` VALUES (107,1002,'demo_store_c1002.jpeg','image/jpeg',156,160,11592,1278412215,'');
 
 INSERT INTO `xlite_category_translations` VALUES (1,'en',1,'','','','','');
-INSERT INTO `xlite_category_translations` VALUES (101,'en',3002,'Downloadables','<img src=\"{{WEB_LC_ROOT}}/public/downloadables.png\" alt=\"\" />','','','');
+-- Commented until an e-goods module is implemented
+-- INSERT INTO `xlite_category_translations` VALUES (101,'en',3002,'Downloadables','<img src=\"{{WEB_LC_ROOT}}/public/downloadables.png\" alt=\"\" />','','','');
 INSERT INTO `xlite_category_translations` VALUES (102,'en',1004,'Toys','<img src=\"{{WEB_LC_ROOT}}/public/toys.png\" alt=\"\" />','','','');
 INSERT INTO `xlite_category_translations` VALUES (103,'en',4004,'Puzzles','','','','');
 INSERT INTO `xlite_category_translations` VALUES (104,'en',1003,'Cube Goodies','Category-child','','','');
