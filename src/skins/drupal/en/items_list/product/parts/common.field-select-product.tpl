@@ -12,4 +12,4 @@
  *
  * @ListChild (list="itemsList.product.table.customer.columns", weight="5")
  *}
-<input type="checkbox" name="select_{product.product_id}" value="{product.product_id}" class="selected-productid-{product.product_id}"/>
+<!--input type="checkbox" name="select_{product.product_id}" value="{product.product_id}" class="selected-productid-{product.product_id}" /-->

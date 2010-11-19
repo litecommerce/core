@@ -12,4 +12,4 @@
  *
  * @ListChild (list="itemsList.product.table.customer.columns", weight="30")
  *}
-<input type="text" name="qty[{product.product_id}]" value="" class="product-qty" />
+<!--input type="text" name="qty[{product.product_id}]" value="" class="product-qty" /-->

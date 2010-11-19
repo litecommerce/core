@@ -12,4 +12,4 @@
  *
  * @ListChild (list="itemsList.product.table.customer.captions", weight="30")
  *}
-<th class="caption-product-qty">Qty.</th>
+<th class="caption-product-qty"><!--Qty.--></th>
