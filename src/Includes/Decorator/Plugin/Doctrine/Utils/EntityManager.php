@@ -78,10 +78,22 @@ abstract class EntityManager extends \Includes\Decorator\Plugin\Doctrine\ADoctri
             $config->newDefaultAnnotationDriver(LC_MODEL_CACHE_DIR),
             'XLite\Model'
         );
-        $chain->addDriver(
-            $config->newDefaultAnnotationDriver(LC_CLASSES_CACHE_DIR . 'XLite' . LC_DS . 'Module'),
-            'XLite\Module'
-        );
+
+        $iterator = new \RecursiveDirectoryIterator(LC_CLASSES_CACHE_DIR . 'XLite' . LC_DS . 'Module');
+
+        foreach ($iterator as $dir) {
+
+            if (
+                \Includes\Utils\FileManager::isDir($dir->getPathName())
+                && \Includes\Utils\FileManager::isDir($dir->getPathName() . LC_DS . 'Model')
+            ) {
+                $chain->addDriver(
+                    $config->newDefaultAnnotationDriver($dir->getPathName() . LC_DS . 'Model'),
+                    'XLite\Module\\' . $dir->getBaseName() . '\Model'
+                );
+            }
+
+        }
 
         $config->setMetadataDriverImpl($chain);
     }
