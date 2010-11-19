@@ -301,6 +301,7 @@ class Order extends \XLite\Model\Repo\ARepo
      */
     protected function defineCollectGarbageQuery()
     {
+        // Use pure createQueryBuilder(), without local changes
         return $this->_em
             ->createQueryBuilder()
             ->delete($this->_entityName, 'o')
