@@ -12,4 +12,4 @@
  *
  * @ListChild (list="itemsList.product.table.customer.buttons", weight="50")
  *}
-<widget class="\XLite\View\Button\Submit" style="product-buy-selected" label="Buy selected" />
+<!--widget class="\XLite\View\Button\Submit" style="product-buy-selected" label="Buy selected" /-->

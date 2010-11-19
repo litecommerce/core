@@ -58,6 +58,7 @@ ProductsListView.prototype.postprocess = function(isSuccess, initial)
 
   if (isSuccess) {
 
+    // Column switcher for 'table' display mode
     $('.products-table .column-switcher', this.base).commonController('markAsColumnSwitcher');
 
     // Register "Changing display mode" handler

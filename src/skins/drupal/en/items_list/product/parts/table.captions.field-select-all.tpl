@@ -12,4 +12,4 @@
  *
  * @ListChild (list="itemsList.product.table.customer.captions", weight="5")
  *}
-<th><input type="checkbox" name="select_all" value="all" class="caption-select-all column-switcher" /></th>
+<th><!--input type="checkbox" name="select_all" value="all" class="caption-select-all column-switcher" /--></th>
