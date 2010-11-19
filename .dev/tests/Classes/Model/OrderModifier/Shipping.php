@@ -60,7 +60,17 @@ class XLite_Tests_Model_OrderModifier_Shipping extends XLite_Tests_TestCase
         \XLite\Base::getInstance()->config->Shipping->shipping_enabled = 'Y';
 
         $list = $order->getShippingRates();
-        $order->setSelectedRate($list[0]);
+        $m = null;
+        foreach ($list as $r) {
+            if ($r->getMethod()->getmethodId() == 100) {
+                $m = $r;
+                break;
+            }
+        }
+
+        $this->assertNotNull($m, 'check selected rate');
+
+        $order->setSelectedRate($m);
 
         $order->calculate();
 
