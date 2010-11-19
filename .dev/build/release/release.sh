@@ -382,7 +382,8 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a -d "${OUTPUT_DIR}/${DRUPAL_DI
 
 	if [ -f $LOGO_IMAGE ]; then
 		[ -d ${OUTPUT_DIR}/${DRUPAL_DIRNAME}/profiles/litecommerce ] && cp $LOGO_IMAGE ${OUTPUT_DIR}/${DRUPAL_DIRNAME}/profiles/litecommerce/lc_logo.png
-		cp $LOGO_IMAGE ${OUTPUT_DIR}/${DRUPAL_DIRNAME}/sites/all/themes/lc3/logo.png
+		# Copying logo with version number to the theme is temporary disabled
+		# cp $LOGO_IMAGE ${OUTPUT_DIR}/${DRUPAL_DIRNAME}/sites/all/themes/lc3/logo.png
 	else
 		echo "Warning! Logo image file $LOGO_IMAGE not found"
 	fi
