@@ -503,22 +503,22 @@ class Decorator extends Decorator\ADecorator
 
             $this->moduleDependencies = array();
 
+            if (!class_exists('XLite\Module\AModule', false)) {
+                require_once (LC_MODULES_DIR . 'AModule.php');
+            }
+
             foreach (\Includes\Decorator\Utils\ModulesManager::getActiveModules() as $module) {
 
                 $module = $module['name'];
 
-                // Fetch dependencies from db
-                // FIXME: rework this, dependencies no longer stored in the DB
-                /*
-                $dependencies = \Includes\Utils\Database::fetchColumn(
-                    'SELECT dependencies FROM xlite_modules WHERE name = \'' . addslashes($module) . '\''
-                );
-                */
-                $dependencies = array();
+                if (!class_exists('XLite\Module\\' . $module . '\Main', false)) {
+                    require_once (LC_MODULES_DIR . $module . LC_DS . 'Main.php');
+                }
+                
+                $mainClassName = \Includes\Decorator\Utils\ModulesManager::getClassNameByModuleName($module);
+                $mainClass = new $mainClassName();
 
-                $this->moduleDependencies[$module] = empty($dependencies)
-                    ? array()
-                    : explode(',', $dependencies);
+                $this->moduleDependencies[$module] = $mainClass->getDependencies();
             }
         }
 
