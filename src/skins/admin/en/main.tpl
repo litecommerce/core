@@ -139,7 +139,7 @@
 *}
 <widget target="countries" template="common/dialog.tpl" body="countries.tpl" head="Countries">
 <widget target="states" template="common/dialog.tpl" body="states.tpl" head="States">
-<widget class="\XLite\View\Tabber" target="taxes" body="{pageTemplate}" switch="page">
+<widget class="\XLite\View\Tabber" target="taxes" body="{pageTemplate}" switch="page" head="Taxes" />
 <widget class="\XLite\View\Tabber" target="db" body="{pageTemplate}" switch="page">
 
 <widget target="import_users" template="common/dialog.tpl" body="import_users.tpl" head="Import users">

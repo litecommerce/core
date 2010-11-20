@@ -38,14 +38,17 @@ namespace XLite\Controller\Admin;
 class Memberships extends \XLite\Controller\Admin\AAdmin
 {
     /**
-     * Controller parameters 
-     * 
-     * @var    string
+     * Common method to determine current location
+     *
+     * @return string
      * @access protected
-     * @see    ____var_see____
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    protected $params = array('target', 'language');
+    protected function getLocation()
+    {
+        return 'Memberships';
+    }
 
     /**
      * Update membership list
