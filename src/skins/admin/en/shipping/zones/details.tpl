@@ -235,7 +235,7 @@ Select a country or a state from a list, specify the zone where the country or s
 
     <tr>
       <td colspan="3"><br /><br /><hr />
-        <input type="button" onClick="javascript: onZoneSubmot();" value="Save zone details" />
+        <input type="button" onClick="javascript: onZoneSubmit();" value="Save zone details" />
       </td>
     </tr>
 

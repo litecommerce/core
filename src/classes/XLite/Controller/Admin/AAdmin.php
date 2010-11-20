@@ -523,6 +523,13 @@ EOT;
                 'XLite\Controller\Admin\Settings',
                 'XLite\Controller\Admin\Module',
                 'XLite\Controller\Admin\Modules',
+                'XLite\Controller\Admin\PaymentMethod',
+                'XLite\Controller\Admin\PaymentMethods',
+                'XLite\Controller\Admin\ShippingSettings',
+                'XLite\Controller\Admin\ShippingMethods',
+                'XLite\Controller\Admin\ShippingRates',
+                'XLite\Controller\Admin\ShippingZones',
+                'XLite\Controller\Admin\Aupost',
             )
         );
     }

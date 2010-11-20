@@ -37,6 +37,27 @@ namespace XLite\Controller\Admin;
  */
 class ShippingSettings extends \XLite\Controller\Admin\AAdmin
 {
+    /**
+     * Common method to determine current location
+     *
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getLocation()
+    {
+        return 'Shipping settings';
+    }
+
+    /**
+     * getOptionsCategory 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     protected function getOptionsCategory()
     {
         return 'Shipping';
@@ -97,4 +118,18 @@ class ShippingSettings extends \XLite\Controller\Admin\AAdmin
         }
     }
 
+    /**
+     * getStateById
+     *
+     * @param mixed $stateId ____param_comment____
+     *
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getStateById($stateId)
+    {
+        return \XLite\Core\Database::getRepo('XLite\Model\State')->find($stateId);
+    }
 }
