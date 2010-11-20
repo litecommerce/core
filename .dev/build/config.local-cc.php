@@ -18,7 +18,8 @@
 ;
 [database_details]
 hostspec=localhost
-socket=/tmp/mysql-5.0.51.sock
+;socket=/tmp/mysql-5.0.51.sock
+socket=
 port= 
 database=xcart_xlite_cc
 username=xcart
