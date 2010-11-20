@@ -99,7 +99,7 @@ function openEditLabelDialog(link, id, language, page)
 
 function openLanguageOptions(link, id, language, page)
 {
-  var url = 'admin.php?target=languages&lng_id=' + id + '&widget=\\XLite\\View\\LanguageModify\\Options';
+  var url = 'admin.php?target=languages&lng_id=' + id + '&widget=\\XLite\\View\\LanguagesModify\\Options';
 
   if (language) {
     url += '&language=' + language;

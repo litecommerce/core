@@ -38,7 +38,21 @@ namespace XLite\Controller\Admin;
 class Languages extends \XLite\Controller\Admin\AAdmin
 {
     /**
+     * Common method to determine current location
+     *
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getLocation()
+    {
+        return 'Language labels';
+    }
+
+    /**
      * Controller parameters
+     * FIXME: to remove
      * 
      * @var    string
      * @access protected

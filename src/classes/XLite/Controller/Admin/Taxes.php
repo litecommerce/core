@@ -37,6 +37,19 @@ namespace XLite\Controller\Admin;
  */
 class Taxes extends \XLite\Controller\Admin\AAdmin
 {
+    /**
+     * Common method to determine current location
+     *
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getLocation()
+    {
+        return 'Taxes';
+    }
+
     public $params = array('target', 'page', 'mode', 'ind');
 
     public $page = 'options';
@@ -717,10 +730,9 @@ class Taxes extends \XLite\Controller\Admin\AAdmin
             'cond'   => 'payment method',
             'values' => array(),
         );
-        $pmethod = new \XLite\Model\PaymentMethod();
-        $methods = $pmethod->getActiveMethods();
+        $methods = \XLite\Core\Database::getRepo('\XLite\Model\Payment\Method')->findAllActive();
         foreach ($methods as $method) {
-            $pm['values'][$method->get('name')] = $method->get('name');
+            $pm['values'][$method->getName()] = $method->getName();
         }
 
         // Product classes

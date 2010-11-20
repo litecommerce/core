@@ -530,6 +530,12 @@ EOT;
                 'XLite\Controller\Admin\ShippingRates',
                 'XLite\Controller\Admin\ShippingZones',
                 'XLite\Controller\Admin\Aupost',
+                'XLite\Controller\Admin\Taxes',
+                'XLite\Controller\Admin\States',
+                'XLite\Controller\Admin\Countries',
+                'XLite\Controller\Admin\Memberships',
+                'XLite\Controller\Admin\Languages',
+                'XLite\Controller\Admin\CacheManagement',
             )
         );
     }
