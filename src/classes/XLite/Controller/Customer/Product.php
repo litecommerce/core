@@ -61,6 +61,19 @@ class Product extends \XLite\Controller\Customer\Catalog
         return intval(\XLite\Core\Request::getInstance()->product_id);
     }
 
+    /**
+     * Check for "category_id" param in request
+     *
+     * @return int
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function checkCategory()
+    {
+        return (($id = parent::getCategoryId()) && $this->getRootCategoryId() != $id) ? $id : false;
+    }
+
 
     /**
      * Get product category id
@@ -71,7 +84,7 @@ class Product extends \XLite\Controller\Customer\Catalog
      */
     public function getCategoryId()
     {
-        return parent::getCategoryId() ?: $this->getProduct()->getCategoryId();
+        return $this->checkCategory() ?: $this->getProduct()->getCategoryId();
     }
 
     /**
