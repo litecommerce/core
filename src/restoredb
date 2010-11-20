@@ -66,7 +66,13 @@ require_once './top.inc.php';
 
 set_time_limit(0);
 error_reporting(E_ALL ^ E_NOTICE);
-$config = parse_ini_file('etc/config.local.php');
+
+if (file_exists('etc/config.local.php')) {
+    $config = parse_ini_file('etc/config.local.php');
+
+} else {
+    $config = parse_ini_file('etc/config.php');
+}
 
 $config['hostspec'] .= empty($config['socket'])
 	? (empty($config['port']) ? '' : ':' . $config['port'])
