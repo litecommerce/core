@@ -20,6 +20,7 @@ Usage: $0 [options]
   -d   output directory (optional, script directory by default)
   -f   config file (<script_dir>/config.sh by default)
   -s   safe mode (output directory is not removed and checkout is skipped)
+  -t   generate builds for testing (with additional data)
   -h   this help
 
 Examples:
@@ -84,13 +85,14 @@ START_TIME=`$PHP -qr 'echo mktime();'`
 echo -e "LiteCommerce distributives generator\n"
 
 # Read options
-while getopts "b:cd:f:sh" option; do
+while getopts "b:cd:f:sth" option; do
 	case $option in
 		b) XLITE_BUILD_NUMBER=$OPTARG ;;
 		c) CLEAR_OUTPUT_DIR=1 ;;
 		d) OUTPUT_DIR=$OPTARG ;;
 		f) CONFIG=$OPTARG ;;
 		s) SAFE_MODE=1 ;;
+		t) TEST_MODE=1 ;;
 		h) show_usage $0 ;;
 	esac
 done
@@ -148,6 +150,8 @@ fi
 [ "x${XLITE_BUILD_NUMBER}" = "x" ] && BUILD_SUFFIX='' || BUILD_SUFFIX="-build${XLITE_BUILD_NUMBER}"
 
 [ "x${DEMO_VERSION}" != "x" ] && BUILD_SUFFIX="${BUILD_SUFFIX}-demo"
+
+[ "x${TEST_MODE}" != "x" ] && BUILD_SUFFIX="${BUILD_SUFFIX}-test"
 
 VERSION=${XLITE_VERSION}${BUILD_SUFFIX}
 
@@ -284,6 +288,15 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a -d "${OUTPUT_DIR}/${DRUPAL_DI
 	if [ ! "x${XLITE_FILES_TODELETE}" = "x" ]; then
 
 		for fn in $XLITE_FILES_TODELETE; do
+			rm -rf $fn
+		done
+
+	fi
+
+	# Remove redundant files
+	if [ "x${TEST_MODE}" = "x" -a ! "x${XLITE_FILES_TESTMODE}" = "x" ]; then
+
+		for fn in $XLITE_FILES_TESTMODE; do
 			rm -rf $fn
 		done
 
