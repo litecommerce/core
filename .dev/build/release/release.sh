@@ -89,7 +89,7 @@ while getopts "b:cd:f:sth" option; do
 	case $option in
 		b) XLITE_BUILD_NUMBER=$OPTARG ;;
 		c) CLEAR_OUTPUT_DIR=1 ;;
-		d) OUTPUT_DIR=$OPTARG ;;
+		d) PARAM_OUTPUT_DIR=$OPTARG ;;
 		f) CONFIG=$OPTARG ;;
 		s) SAFE_MODE=1 ;;
 		t) TEST_MODE=1 ;;
@@ -135,6 +135,8 @@ if [ "x${XLITE_MODULES}" = "x" ]; then
 	echo "Failed: LiteCommerce modules is not specified";
 	exit 2
 fi
+
+[ ! "x${PARAM_OUTPUT_DIR}" = "x" ] && OUTPUT_DIR=$PARAM_OUTPUT_DIR
 
 [ "x${OUTPUT_DIR}" = "x" ] && OUTPUT_DIR="${BASE_DIR}/output"
 
