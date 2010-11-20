@@ -235,7 +235,7 @@ class XLite_Tests_AllTests
                     && (!$includes || in_array($matches[1], $includes))
                 ) {
 
-                    $classPrefix = is_null($deploy) ? XLite_Tests_SeleniumTestCase::CLASS_PREFIX : 'XLite_Deploy_' . $deploy . '_';
+                    $classPrefix = !isset($deploy) ? XLite_Tests_SeleniumTestCase::CLASS_PREFIX : 'XLite_Deploy_' . $deploy . '_';
                     $class = $classPrefix
                         . str_replace(DIRECTORY_SEPARATOR, '_', $matches[1]);
 
