@@ -38,14 +38,45 @@ namespace XLite\Controller\Admin;
 class PaymentMethod extends \XLite\Controller\Admin\AAdmin
 {
     /**
-     * Controller parameters
+     * getPaymentMethod 
      * 
-     * @var    string
+     * @return \XLite\Model\Payment\Method
      * @access protected
-     * @see    ____var_see____
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    protected $params = array('target', 'method_id');
+    protected function getPaymentMethod()
+    {
+        return \XLite\Core\Database::getRepo('\XLite\Model\Payment\Method')->find(\XLite\Core\Request::getInstance()->method_id);
+    }
+    
+    /**
+     * Common method to determine current location
+     *
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getLocation()
+    {
+        return $this->getPaymentMethod()->getName();
+    }
+
+    /**
+     * Add part to the location nodes list
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function addBaseLocation()
+    {
+        parent::addBaseLocation();
+
+        $this->addLocationNode('Payment methods', $this->buildURL('payment_methods'));
+    }
 
     /**
      * Update payment method
@@ -58,8 +89,7 @@ class PaymentMethod extends \XLite\Controller\Admin\AAdmin
     protected function doActionUpdate()
     {
         $settings = \XLite\Core\Request::getInstance()->settings;
-
-        $m = \XLite\Core\Database::getRepo('\XLite\Model\Payment\Method')->find(\XLite\Core\Request::getInstance()->method_id);
+        $m = $this->getPaymentMethod();
 
        if (!is_array($settings)) {
 
@@ -75,12 +105,9 @@ class PaymentMethod extends \XLite\Controller\Admin\AAdmin
                 $m->setSetting($name, $value);
             }
 
-            \XLite\Core\Database::getEM()->persist($m);
-            \XLite\Core\Database::getEM()->flush();
+            \XLite\Core\Database::getRepo('\XLite\Model\Payment\Method')->update($m);
 
-            $this->setReturnUrl(
-                $this->buildUrl('payment_methods')
-            );
+            $this->setReturnUrl($this->buildUrl('payment_methods'));
         }
     }
 }

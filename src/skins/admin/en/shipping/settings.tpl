@@ -61,7 +61,7 @@
         {end:}
 
         {if:option.type=#state#"}
-          <widget class="\XLite\View\StateSelect" field="{option.name}" state="{option.value}" fieldId="{option.name}_select" isLinked=1 />
+          <widget class="\XLite\View\StateSelect" field="{option.name}" state="{getStateById(option.value)}" fieldId="{option.name}_select" isLinked=1 />
         {end:}
 
         </td>

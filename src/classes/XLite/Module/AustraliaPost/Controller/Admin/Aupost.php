@@ -38,6 +38,19 @@ namespace XLite\Module\AustraliaPost\Controller\Admin;
 class Aupost extends \XLite\Controller\Admin\ShippingSettings
 {
     /**
+     * Common method to determine current location
+     *
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getLocation()
+    {
+        return 'AustraliaPost settings';
+    }
+
+    /**
      * getOptionsCategory 
      * 
      * @return string

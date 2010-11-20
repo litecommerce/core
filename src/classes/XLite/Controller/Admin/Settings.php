@@ -37,7 +37,6 @@ namespace XLite\Controller\Admin;
  */
 class Settings extends \XLite\Controller\Admin\AAdmin
 {
-
     /**
      * The list of option categories displayed on General settings page 
      * 
