@@ -33,7 +33,18 @@ if (false === defined('PHPUnit_MAIN_METHOD')) {
 // PHPUnit classes
 define('PATH_TESTS', realpath(__DIR__));
 define('PATH_ROOT', realpath(__DIR__ . '/../..'));
-define('PATH_SRC', realpath(PATH_ROOT . '/src'));
+
+// Include local code
+if (file_exists(PATH_TESTS . '/local.php')) {
+    require_once PATH_TESTS . '/local.php';
+}
+
+if (defined('DRUPAL_SITE_PATH') && !defined('LOCAL_TESTS')) {
+    define('PATH_SRC', realpath(DRUPAL_SITE_PATH . '/src/modules/lc_connector/litecommerce'));
+
+} else { 
+    define('PATH_SRC', realpath(PATH_ROOT . '/src'));
+}
 
 set_include_path(
     get_include_path()
@@ -41,11 +52,6 @@ set_include_path(
     . PATH_SEPARATOR . PATH_SRC . '/classes'
     . PATH_SEPARATOR . PATH_SRC . '/var/run/classes'
 );
-
-// Include local code
-if (file_exists(__DIR__ . '/local.php')) {
-    require_once __DIR__ . '/local.php';
-}
 
 require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
@@ -56,6 +62,8 @@ require_once PATH_TESTS . '/PHPUnit/MetricWriter.php';
 require_once PATH_TESTS . '/PHPUnit/SeleniumTestCase.php';
 
 // Start X-Lite core
+
+define('LC_DO_NOT_REBUILD_CACHE', 1);
 
 require_once PATH_SRC . '/top.inc.php';
 
@@ -80,10 +88,12 @@ if (isset($_SERVER['argv']) && preg_match('/--log-xml\s+(\S+)\s/s', implode(' ',
     unset($match);
 }
 
-PHPUnit_Util_Filter::addDirectoryToFilter(PATH_ROOT . '/.dev');
-PHPUnit_Util_Filter::addDirectoryToFilter(PATH_SRC . '/etc');
-PHPUnit_Util_Filter::addDirectoryToWhitelist(PATH_SRC . '/var/run/classes');
-PHPUnit_Util_Filter::addDirectoryToFilter(PATH_SRC . '/var/run/classes/XLite/Model/Proxy');
+if (!defined('INCLUDE_ONLY_TESTS') || !preg_match('/DEPLOY_/', constant('INCLUDE_ONLY_TESTS'))) {
+    PHPUnit_Util_Filter::addDirectoryToFilter(PATH_ROOT . '/.dev');
+    PHPUnit_Util_Filter::addDirectoryToFilter(PATH_SRC . '/etc');
+    PHPUnit_Util_Filter::addDirectoryToWhitelist(PATH_SRC . '/var/run/classes');
+    PHPUnit_Util_Filter::addDirectoryToFilter(PATH_SRC . '/var/run/classes/XLite/Model/Proxy');
+}
 
 /**
  * Class to run all the tests
