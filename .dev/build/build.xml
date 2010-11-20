@@ -199,10 +199,10 @@
 	<target name="create-build">
 		<tar destfile="${buildDir}/litecommerce-${version}.${label}-api.tgz" basedir="${buildDir}/api" compression="gzip" />
         <exec executable="${sourceDir}/.dev/build/release/release.sh" dir="${buildDir}">
-			<arg line="-c -b ${label} -d ${distrDir}_distr" />
+			<arg line="-c -b ${label} -d ${distrDir}" />
         </exec>
 		<copy todir="/u/xcart/lc_night_builds" overwrite="true">
-			<fileset dir="${distrDir}_distr" />
+			<fileset dir="${distrDir}" />
 			<fileset file="${buildDir}/litecommerce-${version}.${label}-api.tgz" />
 		</copy>
     </target>
