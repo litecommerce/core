@@ -3,11 +3,11 @@
 
 	<taskdef name="jmeter" classname="org.programmerplanet.ant.taskdefs.jmeter.JMeterTask" />
 
-	<target name="build" depends="set-properties,clean,update,prepare,php-documentor,analysis,create-build,tests" />
+	<target name="build" depends="set-properties,clean,prepare,phpunit-deployment,php-documentor,analysis,create-build,tests" />
 
-	<target name="cc" depends="set-properties-cc,clean,update,prepare,php-documentor,analysis,comparison,create-build,tests-cc" />
+	<target name="cc" depends="set-properties-cc,clean,prepare,phpunit-deployment,php-documentor,analysis,comparison,create-build,tests-cc" />
 
-	<target name="pure-build" depends="set-properties,clean,update,prepare,php-documentor,create-build" />
+	<target name="pure-build" depends="set-properties,clean,prepare,php-documentor,create-build" />
 
 	<target name="set-properties" depends="set-properties-common">
 		<property name="mode" value="manual" />
@@ -16,6 +16,8 @@
 		<property name="sourceDir" location="${root}" />
 		<property name="jmeterDir" location="${sourceDir}/.dev/lib/jmeter" />
 		<property name="srcDir" location="${sourceDir}/src" />
+		<property name="distrDir" location="${buildDir}/output" />
+		<property name="installDir" location="${buildDir}/src" />
 		<property name="label" value="manual" />
 	</target>
 
@@ -25,7 +27,9 @@
         <property name="buildDir" location="${root}/build" />
         <property name="sourceDir" location="${root}/source" />
 		<property name="jmeterDir" location="/u/xcart/jakarta-jmeter-2.3.4" />
-        <property name="srcDir" location="${sourceDir}/src" />
+		<property name="srcDir" location="${sourceDir}/src" />
+		<property name="distrDir" location="${buildDir}/output" />
+		<property name="installDir" location="${buildDir}/src" />
     </target>
 
     <target name="set-properties-common">
@@ -33,7 +37,8 @@
 		<property name="apiUrl" value="http://xcart2-530.crtdev.local/~max/xlite/build/api" />
     </target>
 
-    <target name="clean">
+	<target name="clean">
+		<chmod dir="${installDir}/sites/default" perm="a+w" type="both" />
         <delete dir="${buildDir}" />
         <mkdir dir="${buildDir}" />
         <mkdir dir="${buildDir}/logs" />
@@ -41,39 +46,33 @@
 		<mkdir dir="${buildDir}/reports" />
     </target>
 
-	<target name="update">
+	<target name="prepare">
 		<exec executable="svn" dir="${sourceDir}/.dev">
 			<arg line="up" />
 		</exec>
-        <exec executable="svn" dir="${srcDir}">
-            <arg line="up" />
-        </exec>
-	</target>
-
-    <target name="prepare">
         <exec executable="${sourceDir}/.dev/build/release/release.sh" dir="${buildDir}">
-            <arg line="-c -b ${label}" />
+			<arg line="-c -b ${label} -d ${distrDir} -t" />
         </exec>
 		<exec executable="/usr/bin/tar" dir="${buildDir}">
-			<arg line="-xzf ${buildDir}/output/litecommerce-${version}-build${label}.tgz" />
+			<arg line="-xzf ${distrDir}/drupal-lc-${version}-build${label}-test.tgz" />
 		</exec>
-		<move file="${buildDir}/litecommerce" tofile="${buildDir}/src" />
+		<move file="${buildDir}/drupal" tofile="${installDir}" />
 		<mkdir dir="${buildDir}/.dev" />
         <copy todir="${buildDir}/.dev">
             <fileset dir="${sourceDir}/.dev" />
         </copy>
-        <exec executable="/usr/local/php-530/bin/php" dir="${buildDir}/src">
+		<exec executable="/usr/local/php-530/bin/php" dir="${installDir}/modules/lc_connector/litecommerce">
             <arg line="${sourceDir}/.dev/build/devcode_postprocess.php" />
         </exec>
 	</target>
 
 	<target name="php-documentor">
 		<!-- PHP Documentor temporary disabled as documentation in PHP files is corrupted
-        <exec executable="/usr/local/php-530/bin/php" dir="${buildDir}/src">
+		<exec executable="/usr/local/php-530/bin/php" dir="${installDir}/modules/lc_connector/litecommerce/classes">
             <arg line="${sourceDir}/.dev/build/phpdoc_postprocess.php ${apiUrl}" />
 		</exec>
 		<exec executable="/u/xcart/phpdoc" dir="${buildDir}">
-			<arg line="-ct type -ue on -t ${buildDir}/api -d ${srcDir}/classes/XLite -it @see -dn LiteCommerce -dc LiteCommerce" />
+			<arg line="-ct type -ue on -t ${buildDir}/api -d ${srcDir}/modules/lc_connector/litecommerce/classes -it @see -dn LiteCommerce -dc LiteCommerce" />
 			<redirector outputproperty="${buildDir}/logs/phpdoc.log">
 				<outputmapper type="merge" to="${buildDir}/logs/phpdoc.log"/>
 			</redirector>
@@ -81,50 +80,50 @@
 		-->
 	</target>
 
-	<target name="tests" depends="plint,php-codesniffer,phpunit,jmeter,pdepend" />
+	<target name="tests" depends="prepare-db,phpunit" />
+	<target name="xtests" depends="prepare-db,plint,php-codesniffer,phpunit,jmeter,pdepend" />
 
 	<target name="tests-cc" depends="prepare-db,plint,php-codesniffer-cc,phpunit-cc,jmeter" />
 
+	<target name="phpunit-deployment">
+		<exec executable="phpunit" dir="${buildDir}" failonerror="on">
+            <arg line="xliteAllTests ${buildDir}/.dev/tests/AllTests.php DEPLOY_DRUPAL" />
+        </exec>
+    </target>
+
+	<!-- Install Drupal+LC -->
+	<target name="phpunit-deployment-cc">
+		<copy file="${sourceDir}/.dev/build/config.local-cc.php" tofile="${sourceDir}/.dev/build/config.local.php" />
+		<copy file="${sourceDir}/.dev/tests/local-cc.php" tofile="${sourceDir}/.dev/tests/local.php" />
+		<exec executable="/u/xcart/bin/phpunit-xlite" dir="${buildDir}" failonerror="on">
+            <arg line="xliteAllTests ${buildDir}/.dev/tests/AllTests.php DEPLOY_DRUPAL" />
+        </exec>
+    </target>
+
 	<target name="prepare-db">
-
-		<copy file="${sourceDir}/.dev/build/config.local-cc.php" tofile="${buildDir}/src/etc/config.local.php" />
-        <copy todir="${buildDir}/src">
-            <fileset file="${srcDir}/restoredb" />
-		</copy>
-		<mkdir dir="${buildDir}/src/sql/demo" />
-		<copy todir="${buildDir}/src/sql/demo">
-			<fileset file="${sourceDir}/src/sql/demo/*.sql" />
-		</copy>
-		<mkdir dir="${buildDir}/src/sql/local" />
-		<copy todir="${buildDir}/src/sql/local">
-			<fileset file="${sourceDir}/src/sql/local/xlite_all_modules.sql" />
-		</copy>
-        <copy todir="${buildDir}/src/skins">
-            <fileset dir="${buildDir}/src/skins_original" />
-        </copy>
-
-		<exec executable="/usr/local/php-530/bin/php" dir="${buildDir}/src" failonerror="on">
-			<arg line="${buildDir}/src/restoredb demo all" />
+		<!-- Replace SQL data by the demo data (for testing) -->
+		<exec executable="/usr/local/php-530/bin/php" dir="${installDir}" failonerror="on">
+			<arg line="${installDir}/modules/lc_connector/litecommerce/restoredb demo all" />
 		</exec>
 		<!-- Rebuild cache: first pass -->
-		<exec executable="/usr/local/php-530/bin/php" dir="${buildDir}/src">
-			<arg line="${buildDir}/src/cart.php" />
+		<exec executable="/usr/local/php-530/bin/php" dir="${installDir}">
+			<arg line="${installDir}/modules/lc_connector/litecommerce/cart.php" />
 		</exec>
 		<!-- Rebuild cache: second pass -->
-        <exec executable="/usr/local/php-530/bin/php" dir="${buildDir}/src">
-			<arg line="${buildDir}/src/cart.php" />
+        <exec executable="/usr/local/php-530/bin/php" dir="${installDir}">
+			<arg line="${installDir}/modules/lc_connector/litecommerce/cart.php" />
         </exec>
 	</target>
 
 	<target name="php-codesniffer">
-		<exec executable="${sourceDir}/.dev/phpcs" dir="${buildDir}/src" output="${buildDir}/reports/checkstyle.txt">
-			<arg line="--report=full --standard=${sourceDir}/.dev/code-sniffs/XLite --ignore=.dev,src/etc,src/var ${buildDir}/src/classes" />
+		<exec executable="${sourceDir}/.dev/phpcs" dir="${installDir}" output="${buildDir}/reports/checkstyle.txt">
+			<arg line="--report=full --standard=${sourceDir}/.dev/code-sniffs/XLite --ignore=.dev,src/etc,src/var ${installDir}/modules/lc_connector/litecommerce/classes" />
 		</exec>
 	</target>
 
     <target name="php-codesniffer-cc">
-        <exec executable="${sourceDir}/.dev/phpcs" dir="${buildDir}/src" output="${buildDir}/logs/checkstyle.xml">
-            <arg line="--report=checkstyle --standard=${sourceDir}/.dev/code-sniffs/XLite --ignore=.dev,src/etc,src/var ${buildDir}/src/classes" />
+        <exec executable="${sourceDir}/.dev/phpcs" dir="${installDir}" output="${buildDir}/logs/checkstyle.xml">
+			<arg line="--report=checkstyle --standard=${sourceDir}/.dev/code-sniffs/XLite --ignore=.dev,src/etc,src/var ${installDir}/modules/lc_connector/litecommerce/classes" />
         </exec>
     </target>
 
@@ -164,12 +163,12 @@
 	</target>
 
 	<target name="plint">
-		<exec executable="${sourceDir}/.dev/phpl.sh" dir="${buildDir}/src" failonerror="true" output="${buildDir}/reports/plint.html" />
+		<exec executable="${sourceDir}/.dev/phpl.sh" dir="${installDir}/modules/lc_connector/litecommerce" failonerror="true" output="${buildDir}/reports/plint.html" />
 	</target>
 
 	<target name="pdepend">
 		<exec executable="/usr/local/php-530/bin/php" dir="${buildDir}">
-			<arg line="${sourceDir}/.dev/pdepend.php --jdepend-chart=${buildDir}/reports/pdepend.svg --overview-pyramid=${buildDir}/reports/pyramid.svg --optimization=best ${buildDir}/src/var/run/classes" />
+			<arg line="${sourceDir}/.dev/pdepend.php --jdepend-chart=${buildDir}/reports/pdepend.svg --overview-pyramid=${buildDir}/reports/pyramid.svg --optimization=best ${installDir}/modules/lc_connector/litecommerce/var/run/classes" />
 		</exec>
 	</target>
 
@@ -198,8 +197,11 @@
 
 	<target name="create-build">
 		<tar destfile="${buildDir}/litecommerce-${version}.${label}-api.tgz" basedir="${buildDir}/api" compression="gzip" />
+        <exec executable="${sourceDir}/.dev/build/release/release.sh" dir="${buildDir}">
+			<arg line="-c -b ${label} -d ${distrDir}_distr" />
+        </exec>
 		<copy todir="/u/xcart/lc_night_builds" overwrite="true">
-			<fileset dir="${buildDir}/output" />
+			<fileset dir="${distrDir}_distr" />
 			<fileset file="${buildDir}/litecommerce-${version}.${label}-api.tgz" />
 		</copy>
     </target>
