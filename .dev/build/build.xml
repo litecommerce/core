@@ -5,7 +5,7 @@
 
 	<target name="build" depends="set-properties,clean,prepare,phpunit-deployment,php-documentor,analysis,create-build,tests" />
 
-	<target name="cc" depends="set-properties-cc,clean,prepare,phpunit-deployment,php-documentor,analysis,comparison,create-build,tests-cc" />
+	<target name="cc" depends="set-properties-cc,clean,prepare,phpunit-deployment-cc,php-documentor,analysis,comparison,create-build,tests-cc" />
 
 	<target name="pure-build" depends="set-properties,clean,prepare,php-documentor,create-build" />
 
@@ -85,13 +85,14 @@
 
 	<target name="tests-cc" depends="prepare-db,plint,php-codesniffer-cc,phpunit-cc,jmeter" />
 
+	<!-- Install Drupal+LC (local) -->
 	<target name="phpunit-deployment">
 		<exec executable="phpunit" dir="${buildDir}" failonerror="on">
             <arg line="xliteAllTests ${buildDir}/.dev/tests/AllTests.php DEPLOY_DRUPAL" />
         </exec>
     </target>
 
-	<!-- Install Drupal+LC -->
+	<!-- Install Drupal+LC (cc) -->
 	<target name="phpunit-deployment-cc">
 		<copy file="${sourceDir}/.dev/build/config.local-cc.php" tofile="${sourceDir}/.dev/build/config.local.php" />
 		<copy file="${sourceDir}/.dev/tests/local-cc.php" tofile="${sourceDir}/.dev/tests/local.php" />
