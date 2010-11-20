@@ -54,7 +54,44 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
      * @since  3.0.0
      */
     protected $buildDir = null;
-    
+
+    /**
+     * setUp 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function emptyDatabase()
+    {
+        $options = $this->getConfigOptions();
+
+        // 'hostspec', 'database', 'username', 'password'
+
+        $dbhost = $options['database_details']['hostspec'] 
+            . (!empty($options['database_details']['socket']) ? ':' . $options['database_details']['socket']
+                : (!empty($options['database_details']['port']) ? ':' . $options['database_details']['port'] : '')
+            );
+            
+        $connect = @mysql_connect(
+            $dbhost,
+            $options['database_details']['username'],
+            $options['database_details']['password']
+        );
+
+        if ($connect) {
+            @mysql_query(sprintf('DROP DATABASE %s', $options['database_details']['database']));
+            
+            if (@mysql_query(sprintf('CREATE DATABASE %s', $options['database_details']['database']))) {
+                $this->assertTrue(false, sprintf('Cannot create database %s', $options['database_details']['database']));
+            }
+        
+        } else {
+            $this->assertTrue(false, 'Wrong database connection parameters!');
+        }
+    }
+
     /**
      * testInstall 
      * 
@@ -65,9 +102,7 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
      */
     public function testInstall()
     {
-        // Calculate the build directory path
-        $currentPath = dirname(realpath(__FILE__));
-        $this->buildDir = realpath($currentPath . '/../../../build');
+        $this->emptyDatabase();
 
         // Start installation process
         $this->open('install.php');
@@ -275,21 +310,7 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
             );
         }
 
-        $configFile = $this->buildDir . '/config.local.php';
-
-        if (!file_exists($configFile)) {
-            $this->assertTrue(false, 'File .dev/build/config.local.php not found');
-        }
-
-        $options = parse_ini_file($configFile, true);
-
-        $checkDbOptions = true;
-
-        foreach (array('hostspec', 'database', 'username', 'password') as $field) {
-            $checkDbOptions = $checkDbOptions && !empty($options['database_details'][$field]);
-        }
-
-        $this->assertTrue($checkDbOptions, 'Database options are wrong in .dev/build/config.local.php');
+        $options = $this->getConfigOptions();
 
         $this->type('css=#edit-db-user', $options['database_details']['username']);
         $this->type('css=#edit-db-pass', $options['database_details']['password']);
@@ -506,4 +527,44 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
         );
     }
 
+    protected function getBuildDir()
+    {
+        if (!isset($this->buildDir)) {
+            // Calculate the build directory path
+            $currentPath = dirname(realpath(__FILE__));
+            $this->buildDir = realpath($currentPath . '/../../../build');
+       }
+
+        return $this->buildDir;
+    }
+
+    /**
+     * getConfigOptions 
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getConfigOptions()
+    {
+
+        $configFile = $this->getBuildDir() . '/config.local.php';
+
+        if (!file_exists($configFile)) {
+            $this->assertTrue(false, 'File .dev/build/config.local.php not found');
+        }
+
+        $options = parse_ini_file($configFile, true);
+
+        $checkDbOptions = true;
+
+        foreach (array('hostspec', 'database', 'username', 'password') as $field) {
+            $checkDbOptions = $checkDbOptions && !empty($options['database_details'][$field]);
+        }
+
+        $this->assertTrue($checkDbOptions, 'Database options are wrong in .dev/build/config.local.php');
+
+        return $options;
+    }
 }
