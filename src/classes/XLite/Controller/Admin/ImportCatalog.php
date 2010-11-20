@@ -71,7 +71,7 @@ class ImportCatalog extends \XLite\Controller\Admin\AAdmin
         
         $name = "";
         if ($this->action == "import_products" || $this->action == "layout") {
-            if (!\Includes\Utils\ArrayManager::isArrayUnique($this->product_layout, $name, array("NULL"))) {
+            if (!\Includes\Utils\ArrayManager::isArrayUnique((array) $this->product_layout, $name, array("NULL"))) {
                 $this->set('valid', false);
                 $this->set('invalid_field_order', true);
                 $this->set('invalid_field_name', $name);
@@ -83,7 +83,7 @@ class ImportCatalog extends \XLite\Controller\Admin\AAdmin
             }
         }
 
-        if ( ($this->action == "import_fields" || $this->action == "fields_layout") && !\Includes\Utils\ArrayManager::isArrayUnique($this->fields_layout, $name, array("NULL")) ) {
+        if ( ($this->action == "import_fields" || $this->action == "fields_layout") && !\Includes\Utils\ArrayManager::isArrayUnique((array) $this->fields_layout, $name, array("NULL")) ) {
             $this->set('valid', false);
             $this->set('invalid_field_order', true);
             $this->set('invalid_field_name', $name);
@@ -115,7 +115,7 @@ class ImportCatalog extends \XLite\Controller\Admin\AAdmin
 
     function action_layout($layout_name = "product_layout")
     {
-        $layout = implode(',', \XLite\Core\Request::getInstance()->$layout_name);
+        $layout = implode(',', (array) \XLite\Core\Request::getInstance()->$layout_name);
         \XLite\Core\Database::getRepo('\XLite\Model\Config')->createOption(
             array(
                 'category' => 'ImportExport',

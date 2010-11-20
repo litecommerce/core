@@ -257,6 +257,7 @@ class CssEditor extends \XLite\Base
 
     /**
      * Restore default CSS file
+     * FIXME - old code
      * 
      * @return void
      * @access public
@@ -265,10 +266,9 @@ class CssEditor extends \XLite\Base
      */
     public function restoreDefault()
     {
+        /*$file = $this->get('cssFile');
+        $orig = preg_replace('/^(skins)/', 'schemas/templates/' . $this->config->Skin->skin'', $file);
 
-        // TODO - rework
-        $file = $this->get('cssFile');
-        $orig = preg_replace('/^(skins)/', 'schemas/templates/' . $this->config->Skin->skin, $file);
         if (!is_readable($orig)) {
             $this->doDie($orig . ': file not found');
         }
@@ -279,7 +279,7 @@ class CssEditor extends \XLite\Base
 
         if (!copyFile($orig, $file)) {
             $this->doDie('unable to copy ' . $orig . ' to ' . $file);
-        }
+        }*/
     }
 
     /**

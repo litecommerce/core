@@ -111,8 +111,10 @@ class UpdateInventory extends \XLite\Controller\Admin\AAdmin
         $options['text_qualifier'] = $this->text_qualifier;
         $options['layout'] = $this->inventory_layout;
         $options['return_error'] = true;
-        $this->inventory->import($options);
-        $this->importError = $this->inventory->importError;
+
+        // FIXME - old code
+        // $this->inventory->import($options);
+        // $this->importError = $this->inventory->importError;
 
         $text = "Import process failed.";
         if (!$this->importError) $text = "Product pricing imported successfully.";

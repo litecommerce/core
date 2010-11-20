@@ -237,7 +237,7 @@ abstract class AAdmin extends \XLite\Controller\AController
 <?php   }
 ?>
     <meta http-equiv="Content-Type" content="text/html; charset=<?php echo $this->get('charset'); ?>">
-    <LINK href="skins/<?php echo $this->xlite->getComplex('layout.skin'); ?>/en/style.css"  rel=stylesheet type=text/css>
+    <LINK href="skins/<?php echo \XLite\Model\Layout::getInstance()->getSkin(); ?>/en/style.css"  rel=stylesheet type=text/css>
 </HEAD>
 <BODY leftmargin="0" topmargin="0" rightmargin="0" bottommargin="0" marginwidth="0" marginheight="0"><?php
         if ($scroll_down) {
@@ -536,6 +536,7 @@ EOT;
                 'XLite\Controller\Admin\Memberships',
                 'XLite\Controller\Admin\Languages',
                 'XLite\Controller\Admin\CacheManagement',
+                'XLite\Controller\Admin\RecentLogin',
             )
         );
     }
