@@ -449,14 +449,14 @@ class Config extends \XLite\Model\Repo\Base\I18n
         }
 
         if (!empty($errorFields)) {
-            throw new Exception(
+            throw new \Exception(
                 'createOptions() failed: The following required fields are missed: ' . 
                 implode(', ', $errorFields)
             );
         }
 
         if (isset($fields['type']) && !$this->isValidOptionType($fields['type'])) {
-            throw new Exception('createOptions() failed: Wrong option type: ' . $type);
+            throw new \Exception('createOptions() failed: Wrong option type: ' . $type);
         }
 
         $option = $this->findOneBy(array('name' => $fields['name'], 'category' => $fields['category']));

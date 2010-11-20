@@ -59,7 +59,9 @@ class OrdersStats extends \XLite\Controller\Admin\Stats
         $order = new \XLite\Model\Order();
         $date = $this->get('monthDate');
         // fetch orders for this month
-        array_map(array($this, "summarize"), $order->findAll("date>=$date"));
+
+        // FIXME - old code
+        array_map(array($this, "summarize"), /*$order->findAll("date>=$date")*/array());
 
         parent::handleRequest();
     }

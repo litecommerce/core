@@ -31,8 +31,6 @@ namespace XLite\Model;
 define('BACKUP_LIMIT_COUNT', 10);
 
 // define DB backup properties
-define('SQL_DUMP_DIR',   'var/backup/');
-define('SQL_DUMP_FILE',  'var/backup/sqldump.sql.php');
 define('SQL_UPLOAD_DIR', 'var/tmp/');
 
 /**

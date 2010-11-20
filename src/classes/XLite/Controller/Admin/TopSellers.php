@@ -64,7 +64,10 @@ class TopSellers extends \XLite\Controller\Admin\Stats
 
         $order = new \XLite\Model\Order();
         $date = $this->get('monthDate');
-        array_map(array($this, "collect"), $order->findAll("(status='P' OR status='C') AND date>=$date"));
+
+        // FIXME - old code
+        array_map(array($this, "collect"), /*$order->findAll("(status='P' OR status='C') AND date>=$date")*/ array());
+
         $this->sort('todayItems');
         $this->sort('weekItems');
         $this->sort('monthItems');

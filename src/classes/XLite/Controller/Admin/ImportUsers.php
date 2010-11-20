@@ -41,8 +41,11 @@ class ImportUsers extends \XLite\Controller\Admin\AAdmin
 
     function init()
     {
-        $p = new \XLite\Model\Profile();
-        $this->import_fields = $p->get('importFields');
+        // FIXME - old code
+        /* $p = new \XLite\Model\Profile();
+        $this->import_fields = $p->get('importFields');*/
+        $this->import_fields = array();
+
         parent::init();
     }
     
@@ -75,7 +78,7 @@ class ImportUsers extends \XLite\Controller\Admin\AAdmin
 
     function change_layout($layout_name = "user_layout")
     {
-        $layout = implode(',', \XLite\Core\Request::getInstance()->$layout_name);
+        $layout = implode(',', (array) \XLite\Core\Request::getInstance()->$layout_name);
         \XLite\Core\Database::getRepo('\XLite\Model\Config')->createOption(
             array(
                 'category' => 'ImportExport',

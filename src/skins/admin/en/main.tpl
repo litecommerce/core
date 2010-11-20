@@ -59,7 +59,7 @@
 {* FIXME - to remove *}
 <div style="width: 100%; text-align: center;" IF="!isTested()">
   <img src="images/icon_warning.gif" />
-  <strong>This controller may not work for current LC version</strong>
+  <strong>This controller is not working properly for current LC version</strong>
   <br /><br />
 </div>
 

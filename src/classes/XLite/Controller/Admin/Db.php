@@ -57,8 +57,8 @@ class Db extends \XLite\Controller\Admin\AAdmin
     public $pageTemplates = array(	"db_backup" 	=> "db/backup.tpl",
                                 "db_restore"	=> "db/restore.tpl");
    	public $upload_max_filesize;
-   	public $sqldump_dir = SQL_DUMP_DIR;
-    public $sqldump_file = SQL_DUMP_FILE;
+   	public $sqldump_dir = 'var/backup/';
+    public $sqldump_file = 'var/backup/sqldump.sql.php';
     
     function handleRequest()
     {

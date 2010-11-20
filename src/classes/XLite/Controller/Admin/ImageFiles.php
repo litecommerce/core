@@ -73,7 +73,9 @@ class ImageFiles extends \XLite\Controller\Admin\AAdmin
     */
     function getImageClasses()
     {
-        return \XLite\Model\Image::getImageClasses();
+        // FIXME - old code
+        return array();
+        // return \XLite\Model\Image::getImageClasses();
     }
     
     function getPageReturnUrl()

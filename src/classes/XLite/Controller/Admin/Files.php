@@ -73,8 +73,8 @@ class Files extends \XLite\Controller\Admin\AAdmin
         }
         if (isset(\XLite\Core\Request::getInstance()->mode) && \XLite\Core\Request::getInstance()->mode == "full") {
             // backup database as well
-            $this->db->backup(SQL_DUMP_FILE, false);
-            $files[] = SQL_DUMP_FILE;
+            $this->db->backup('var/backup/sqldump.sql.php', false);
+            $files[] = 'var/backup/sqldump.sql.php';
         }
         $tar->create($files);
         $tar->_close();

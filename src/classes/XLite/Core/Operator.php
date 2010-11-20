@@ -199,6 +199,7 @@ class Operator extends \XLite\Base\Singleton
 
     /**
      * Get back trace list
+     * FIXME: to revise
      *
      * @param integer $slice Trace slice count
      *
@@ -250,6 +251,7 @@ class Operator extends \XLite\Base\Singleton
 
     /**
      * Get back trace function or method arguments 
+     * FIXME: to revise
      * 
      * @param array $l Back trace record
      *  
@@ -316,5 +318,20 @@ class Operator extends \XLite\Base\Singleton
         return '(' . implode(', ', $args) . ')';
     }
 
+    /**
+     * detectClassName 
+     * FIXME: unknown functionality
+     * 
+     * @param mixed $class ____param_comment____
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function detectClassName($class)
+    {
+        return get_class($class);
+    }
 }
 

@@ -160,7 +160,7 @@ abstract class Autoloader
     public static function addFunction($method)
     {
         if (false !== array_search($method, static::$functions)) {
-            throw new Exception('Autoload function "' . $method . '" is already registered');
+            throw new \Exception('Autoload function "' . $method . '" is already registered');
         }
 
         static::$functions[] = $method;
