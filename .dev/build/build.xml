@@ -60,7 +60,9 @@
 		<mkdir dir="${buildDir}/.dev" />
         <copy todir="${buildDir}/.dev">
             <fileset dir="${sourceDir}/.dev" />
-        </copy>
+		</copy>
+		<copy file="${buildDir}/.dev/build/config.local-cc.php" tofile="${buildDir}/.dev/build/config.local.php" />
+		<copy file="${buildDir}/.dev/tests/local-cc.php" tofile="${buildDir}/.dev/tests/local.php" />
 		<exec executable="/usr/local/php-530/bin/php" dir="${installDir}/modules/lc_connector/litecommerce">
             <arg line="${sourceDir}/.dev/build/devcode_postprocess.php" />
         </exec>
@@ -94,8 +96,6 @@
 
 	<!-- Install Drupal+LC (cc) -->
 	<target name="phpunit-deployment-cc">
-		<copy file="${sourceDir}/.dev/build/config.local-cc.php" tofile="${sourceDir}/.dev/build/config.local.php" />
-		<copy file="${sourceDir}/.dev/tests/local-cc.php" tofile="${sourceDir}/.dev/tests/local.php" />
 		<exec executable="/u/xcart/bin/phpunit-xlite" dir="${buildDir}" failonerror="on">
             <arg line="xliteAllTests ${buildDir}/.dev/tests/AllTests.php DEPLOY_DRUPAL" />
         </exec>
