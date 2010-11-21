@@ -67,6 +67,14 @@ abstract class ADecorator
     const N_INTERFACES    = 'interfaces';
     const N_FILE_PATH     = 'filePath';
 
+    /**
+     * Available hooks 
+     */
+
+    const HOOK_INIT        = 'init';
+    const HOOK_PREPROCESS  = 'preprocess';
+    const HOOK_RUN         = 'run';
+    const HOOK_POSTPROCESS = 'postprocess';
 
     /**
      * Aliases

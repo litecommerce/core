@@ -47,12 +47,6 @@ abstract class PluginManager extends \Includes\Decorator\Utils\AUtils
     const FILE_INI = 'plugins.ini';
 
     /**
-     * Sections in the ".ini" file 
-     */
-
-    const SECTION_PLUGINS = 'plugins_list';
-
-    /**
      * Available status values
      */
 
@@ -130,20 +124,20 @@ abstract class PluginManager extends \Includes\Decorator\Utils\AUtils
      */
     protected static function checkConfigData(array $data)
     {
-        if (empty($data[self::SECTION_PLUGINS])) {
-            throw new \Exception('There is no section "' . self::SECTION_PLUGINS . '" in the "' . self::FILE_INI . '" file');
-        }
+        // TODO: add check (if needed)
     }
 
     /**
      * Return list of registered plugins
      * 
+     * @param string $hook hook name (optional)
+     *  
      * @return array
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected static function getPlugins()
+    protected static function getPlugins($hook = null)
     {
         if (!isset(static::$plugins)) {
 
@@ -154,12 +148,16 @@ abstract class PluginManager extends \Includes\Decorator\Utils\AUtils
                 $data = static::parseConfigFile();
                 static::checkConfigData($data);
 
-                // Set plugins order
-                $plugins = array_filter($data[self::SECTION_PLUGINS]);
-                asort($plugins, SORT_NUMERIC);
+                // Iterate over all sections
+                foreach ($data as $section => $plugins) {
 
-                // Save plugins list
-                static::$plugins = array_fill_keys(array_keys($plugins), null);
+                    // Set plugins order
+                    $plugins = array_filter($plugins);
+                    asort($plugins, SORT_NUMERIC);
+
+                    // Save plugins list
+                    static::$plugins[$section] = array_fill_keys(array_keys($plugins), null);
+                }
 
             } else {
 
@@ -167,7 +165,7 @@ abstract class PluginManager extends \Includes\Decorator\Utils\AUtils
             }
         }
 
-        return static::$plugins;
+        return empty($hook) ? static::$plugins : static::$plugins[$hook];
     }
 
     /**
@@ -210,22 +208,6 @@ abstract class PluginManager extends \Includes\Decorator\Utils\AUtils
     }
 
     /**
-     * Check if plugin has a certain hook handler
-     * 
-     * @param string $plugin plugin name
-     * @param string $hook   hook name
-     *  
-     * @return bool
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected static function checkPluginHook($plugin, $hook)
-    {
-        return method_exists(static::getPluginInstance($plugin), static::getHookHandlerName($hook));
-    }
-
-    /**
      * Run the corresponded hook handler
      *
      * @param string $plugin plugin name
@@ -256,8 +238,8 @@ abstract class PluginManager extends \Includes\Decorator\Utils\AUtils
      */
     public static function invokeHook($hook, array $args = array())
     {
-        foreach (static::getPlugins() as $plugin => $instance) {
-            !static::checkPluginHook($plugin, $hook) ?: static::executeHookHandler($plugin, $hook, $args);
+        foreach (static::getPlugins($hook) as $plugin => $instance) {
+            static::executeHookHandler($plugin, $hook, $args);
         }
     }
 }
