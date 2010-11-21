@@ -50,51 +50,10 @@ class Decorator extends Decorator\ADecorator
     const CLASS_COMMENT_PATTERN = '/(\s+\*\/\s+)(?:abstract +)?class /USsi';
 
     /**
-     * Pattern to get interface DOC block
-     */
-    const INTERFACE_COMMENT_PATTERN = '/(\s+\*\/\s+)interface /USsi';
-
-    /**
      * Suffix for the so called "root" decorator class names
      */
     const ROOT_CLASS_SUFFIX = 'Abstract';
 
-    /**
-     * Identifier to insert into the decorator comments
-     */
-    const DECORATOR_IDENTIFIER = '____DECORATOR____';
-
-    /**
-     * Messages
-     */
-    const CONTROLLER_ERR_MSG        = 'Module "%s" has defined controller class "%s" which does not decorate any other one and has an ambigous name';
-    const UNDEFINED_CLASS_MSG       = 'Decorator: undefined class - "%s"';
-    const CLASS_ALREADY_DEFINED_MSG = 'Class "%s" is already defined in file "%s"';
-
-    /*
-     * The name of file-indicator of successful cache building
-     */
-    const LC_CACHE_BUILD_INDICATOR = '.cache_done';
-
-    /**
-     * Error log filename pattern
-     * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected $errorLogFilename = 'decoration.log.%s.php';
-
-    /**
-     * Class comment attribute error message
-     * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected $errorMsgAttribute = 'The class comment contains no %s attribute or this attribute is empty';
 
     /**
      * Doctrine class attributes 
@@ -112,15 +71,6 @@ class Decorator extends Decorator\ADecorator
         'DiscriminatorMap',
         'ChangeTrackingPolicy',
     );
-
-    /**
-     * Current value of the "max_execution_time" INI setting
-     * 
-     * @var    int
-     * @access protected
-     * @since  3.0
-     */
-    protected $maxExecutionTime = null;
 
     /**
      * Classes info
@@ -159,15 +109,6 @@ class Decorator extends Decorator\ADecorator
     protected $modulePriorities = null;
 
     /**
-     * Modules whitch are not allowed to be enbled at one time
-     * 
-     * @var    array
-     * @access protected
-     * @since  3.0
-     */
-    protected $mutualModules = null;
-
-    /**
      * List of module controllers which names are needed to be normalized
      * 
      * @var    array
@@ -176,73 +117,6 @@ class Decorator extends Decorator\ADecorator
      */
     protected $normalizedControllers = array();
 
-    /**
-     * Cache driver (cache)
-     * 
-     * @var    \Doctrine\Common\Cache\AbstractCache
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected $cacheDriver = null;
-
-    /**
-     * Multilanguages classes
-     * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected $multilangs = array();
-
-    /**
-     * Method name translation records
-     *
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected static $to = array(
-        'Q', 'W', 'E', 'R', 'T',
-        'Y', 'U', 'I', 'O', 'P',
-        'A', 'S', 'D', 'F', 'G',
-        'H', 'J', 'K', 'L', 'Z',
-        'X', 'C', 'V', 'B', 'N',
-        'M',
-    );
-
-    /**
-     * Method name translation patterns
-     * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected static $from = array(
-        '_q', '_w', '_e', '_r', '_t',
-        '_y', '_u', '_i', '_o', '_p',
-        '_a', '_s', '_d', '_f', '_g',
-        '_h', '_j', '_k', '_l', '_z',
-        '_x', '_c', '_v', '_b', '_n',
-        '_m',
-    );
-
-    /**
-     * Return class name by class file path 
-     * 
-     * @param string $path PHP file path
-     *  
-     * @return string
-     * @access protected
-     * @since  3.0
-     */
-    protected function getClassByPath($path)
-    {
-        return str_replace(LC_DS, '_', $path);
-    }
 
     /**
      * Return file path by class name
@@ -303,7 +177,7 @@ class Decorator extends Decorator\ADecorator
                 . trim($info[self::INFO_CLASS_COMMENT]) . "\n"
                 . $matches[1] . 'class ' 
                 . (isset($info[self::INFO_CLASS]) ? preg_replace('/^.+\\\([^\\\]+)$/Ss', '$1', $info[self::INFO_CLASS]) : $matches[3])
-                . (isset($info[self::INFO_EXTENDS]) && $info[self::INFO_EXTENDS] ? ' extends ' . $this->buildFullExtends($info[self::INFO_EXTENDS]) : '')
+                . (isset($info[self::INFO_EXTENDS]) && $info[self::INFO_EXTENDS] ? ' extends ' . $info[self::INFO_EXTENDS] : '')
                 . (isset($matches[6]) ? $matches[6] : '') . "\n" . '{' . "\n" . '}' . "\n";
 
         } else {
@@ -312,7 +186,7 @@ class Decorator extends Decorator\ADecorator
             $replace = "\n" 
                 . (isset($info[self::INFO_CLASS_TYPE]) ? $info[self::INFO_CLASS_TYPE] . ' ' : '$1') . '$2 ' 
                 . (isset($info[self::INFO_CLASS]) ? preg_replace('/^.+\\\([^\\\]+)$/Ss', '$1', $info[self::INFO_CLASS]) : '$3') 
-                . (isset($info[self::INFO_EXTENDS]) && $info[self::INFO_EXTENDS] ? ' extends ' . $this->buildFullExtends($info[self::INFO_EXTENDS]) : '$4') 
+                . (isset($info[self::INFO_EXTENDS]) && $info[self::INFO_EXTENDS] ? ' extends ' . $info[self::INFO_EXTENDS] : '$4') 
                 . '$6' . "\n" . '{';
             $content = preg_replace(self::CLASS_PATTERN, $replace, $content);
 
@@ -345,23 +219,6 @@ class Decorator extends Decorator\ADecorator
         }
 
         return $content;
-    }
-
-    /**
-     * Crop class name by uses namesapce
-     * FIXME - to remove
-     * 
-     * @param string $name      Class name
-     * @param string $namespace Uses namespace
-     *  
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function buildFullExtends($name)
-    {
-        return /*'\\' . */$name;
     }
 
     /**
@@ -447,20 +304,6 @@ class Decorator extends Decorator\ADecorator
     protected function prepareModuleController($class)
     {
         return preg_replace('/\\\XLite\\\(Module\\\[\w]+\\\)Controller(\\\[\w\\\]*)/Ss', '\\\\XLite\\\\Controller$2', $class);
-    }
-
-    /**
-     * Check if current class is multilanguage owner
-     * 
-     * @param string $extends Extends directive
-     *  
-     * @return bool
-     * @access protected
-     * @since  3.0
-     */
-    protected function isMultilang($extends)
-    {
-        return '\XLite\Model\Base\I18n' == $extends;
     }
 
     /**
@@ -619,10 +462,6 @@ class Decorator extends Decorator\ADecorator
                 self::INFO_ENTITY        => !is_null($node->getTag('Entity')),
                 self::INFO_CLASS_COMMENT => ($classComment = $node->__get(self::N_CLASS_COMMENT)),
             );
-
-            if ($this->isMultilang($node->__get(self::N_PARENT_CLASS))) {
-                $this->multilangs[] = $node->__get(self::N_CLASS);
-            }
         }
     }
 
@@ -650,7 +489,13 @@ class Decorator extends Decorator\ADecorator
 
                 // Error - such controller is already defined in LC core or in other module
                 if (!is_null(static::getClassesTree()->find($newClass))) {
-                    echo (sprintf(self::CONTROLLER_ERR_MSG, \Includes\Decorator\Utils\ModulesManager::getModuleNameByClassName($class), $class));
+                    echo (
+                        sprintf(
+                            'Module "%s" has defined controller class "%s" which does not decorate any other one and has an ambigous name',
+                            \Includes\Decorator\Utils\ModulesManager::getModuleNameByClassName($class),
+                            $class
+                        )
+                    );
                     die (1);
                 }
 
@@ -734,7 +579,7 @@ class Decorator extends Decorator\ADecorator
 
             // Wrong class name
             if (!isset(static::$classesInfo[$class][self::INFO_FILE])) {
-                echo (sprintf(self::UNDEFINED_CLASS_MSG, $class));
+                echo (sprintf('Decorator: undefined class - "%s"', $class));
                 die (2);
             }
 
@@ -782,6 +627,9 @@ class Decorator extends Decorator\ADecorator
      */
     public function buildCache()
     {
+        // Invoke plugins
+        \Includes\Decorator\Utils\PluginManager::invokeHook(self::HOOK_INIT);
+
         // Prepare classes list
         $this->createClassTreeFull();
 
@@ -795,130 +643,30 @@ class Decorator extends Decorator\ADecorator
             $this->writeClassFile($class, $info);
         }
 
-        // Clear all cache
-        $this->clearDoctrineCache();
+        // Invoke plugins
+        \Includes\Decorator\Utils\PluginManager::invokeHook(self::HOOK_PREPROCESS);
 
-        // Postbuild multilanguage classes
-        $this->buildMultilangs();
-
-        // Generate models
-        \Includes\Decorator\Utils\PluginManager::invokeHook('preprocess');
-
-        // Run registered plugins
-        \Includes\Decorator\Utils\PluginManager::invokeHook('run');
-
-        // Clear APC
-        if (function_exists('apc_clear_cache')) {
-            apc_clear_cache();
-        }
+        // Invoke plugins
+        \Includes\Decorator\Utils\PluginManager::invokeHook(self::HOOK_RUN);
     }
 
-    /**
-     * Clear cache 
-     * 
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function clearDoctrineCache()
-    {
-        $driver = $this->getDoctrineCacheDriver();
-        if ($driver) {
-            $driver->deleteAll();
-        }
-    }
 
-    /**
-     * Get cache driver 
-     * 
-     * @return \Doctrine\Common\Cache\AbstractCache
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getDoctrineCacheDriver()
-    {
-        if (!isset($this->cacheDriver)) {
-            $this->cacheDriver = \XLite\Core\Database::getCacheDriverByOptions(
-                \Includes\Utils\ConfigParser::getOptions('cache')
-            );
-        }
 
-        return $this->cacheDriver;
-    }
-
-    /**
-     * Add error to special log
-     * 
-     * @param string $filePath Path of invalid file
-     * @param string $error    Error message
-     *  
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function addDecorationError($filePath, $error)
-    {
-        static $path = false;
-
-        if (!$path) {
-            $path = LC_VAR_DIR . 'log' . LC_DS . sprintf($this->errorLogFilename, date('Y-m-d'));
-            if (!file_exists(dirname($path))) {
-                \Includes\Utils\FileManager::mkdirRecursive(dirname($path));
-            }
-
-            if (!file_exists($path) || 16 > filesize($path)) {
-                file_put_contents($path, '<' . '?php die(1); ?' . '>' . "\n");
-            }
-        }
-
-        if (is_array($error)) {
-            $error = implode("\n\t", $error);
-        }
-
-        $msg = date('[H:i:s]') . ' ';
-
-        $info = pathinfo($filePath);
-
-        switch ($info['extension']) {
-            case 'php':
-                $msg .= 'Repository file';
-                break;
-
-            case 'tpl':
-                $msg .= 'Template';
-                break;
-
-            case 'js':
-                $msg .= 'Javascript repository';
-                break;
-
-            case 'css':
-                $msg .= 'CSS styles repository';
-                break;
-
-            default:
-                $msg .= 'File';
-        }
-
-        $msg .= ': ' . $filePath . '; Errors:' . "\n\t" . $error . "\n\n";
-
-        file_put_contents($path, $msg, FILE_APPEND);
-    }
+    // TODO - move into plugins and utils
 
     /**
      * Build multilanguages classes
      * 
+     * @param array $nodes list of mulilang classes
+     *  
      * @return void
-     * @access protected
+     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function buildMultilangs()
+    public static function buildMultilangs(array $nodes)
     {
-        foreach ($this->multilangs as $class) {
+        foreach ($nodes as $class => $data) {
 
             $decorated = isset(static::$classDecorators[$class]);
             $fn = LC_CLASSES_CACHE_DIR . static::$classesInfo[$class]['file'];
@@ -949,7 +697,7 @@ class Decorator extends Decorator\ADecorator
             foreach ($tfiles as $f) {
                 $translationFields = array_merge(
                     $translationFields,
-                    $this->collectModelFields($f)
+                    static::collectModelFields($f)
                 );
             }
 
@@ -982,7 +730,7 @@ class Decorator extends Decorator\ADecorator
      */
     protected \$translations;
 DATA;
-            $this->addPropertyToRepository($fn, $block);
+            static::addPropertyToRepository($fn, $block);
 
             $data = file_get_contents($fn);
 
@@ -1031,7 +779,7 @@ DATA;
                 }
 
                 if ($block) {
-                    $this->addMethodToRepository($fn, $block);
+                    static::addMethodToRepository($fn, $block);
                 }
             }
             
@@ -1051,7 +799,7 @@ DATA;
     protected \$owner;
 
 DATA;
-            $this->addPropertyToRepository($tfn, $block);
+            static::addPropertyToRepository($tfn, $block);
         }
     }
 
@@ -1065,7 +813,7 @@ DATA;
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function collectModelFields($fn)
+    protected static function collectModelFields($fn)
     {
         $data = file_get_contents($fn);
         $result = array();
@@ -1094,7 +842,7 @@ DATA;
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function addPropertyToRepository($fn, $block)
+    protected static function addPropertyToRepository($fn, $block)
     {
         $data = file_get_contents($fn);
 
@@ -1122,7 +870,7 @@ DATA;
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function addMethodToRepository($fn, $block)
+    protected static function addMethodToRepository($fn, $block)
     {
         $data = file_get_contents($fn);
 

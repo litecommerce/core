@@ -31,11 +31,11 @@ namespace Includes\Decorator\Plugin\Doctrine\Utils;
 /**
  * ProxyFactory 
  * 
- * @package    XLite
- * @see        ____class_see____
- * @since      3.0.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
-class ProxyFactory extends \Includes\Decorator\Plugin\Doctrine\ADoctrine
+abstract class ProxyFactory extends \Includes\Decorator\Plugin\Doctrine\ADoctrine
 {
     /**
      * Name of the property containing proxy code template 
