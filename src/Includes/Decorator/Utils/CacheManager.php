@@ -258,8 +258,8 @@ class CacheManager extends \Includes\Decorator\Utils\AUtils
      */
     protected static function buildCacheStepSecond()
     {
-        // Run registered plugins
-        \Includes\Decorator\Utils\PluginManager::invokeHook('postprocess');
+        // Invoke plugins
+        \Includes\Decorator\Utils\PluginManager::invokeHook(self::HOOK_POSTPROCESS);
     }
 
 
