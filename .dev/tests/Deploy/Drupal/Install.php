@@ -94,6 +94,9 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
 
         // Sixth step: confirmation page
         $this->stepSix();
+
+        // Seventh step: re-building cache and checking of the frontpage
+        $this->stepSeven();
     }
 
     /**
@@ -322,7 +325,7 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
 
         $this->waitForLocalCondition(
             '$(".percentage").html() == "100%"',
-            30000,
+            90000,
             'Waiting for installing all modules'
         );
 
@@ -497,6 +500,35 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
         $this->assertElementPresent(
             '//p[contains(text(),"You may now visit")]/a[text()="your new site"]',
             'Check that "You may now visit" text is presented'
+        );
+
+        // Click link to the frontend
+        $this->clickAndWait('//a[text()="your new site"]');
+    }
+
+    /**
+     * stepSeven: re-building cache and checking the frontend page
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function stepSeven()
+    {
+        // Check page title
+        $this->assertTitleEquals('Home | Test ' . self::PRODUCT_NAME, 'Checking the page title');
+
+        // Check if minicart is presented and has correct items value
+        $this->assertElementPresent(
+            '//div[@id="lc-minicart-horizontal"]/div[@class="minicart-items-number" and text()="0"]',
+            'Check for minicart presence'
+        );
+
+        // Check that "Powered by" element is presented
+        $this->assertElementPresent(
+            '//div[@class="powered-by"]/p[contains(text(),"Powered by")]',
+            'Check that "Powered by" element is presented'
         );
     }
 
