@@ -11,11 +11,16 @@
  * @since     3.0.0
  *}
 <script type="text/javascript">
-var confirmUninstallNote = '{t(#Confirm?#)}';
+var confirmNotes = [];
+confirmNotes['uninstall'] = '{t(#Are you sure you want to uninstall this add-on?#)}';
+confirmNotes['enable']    = '{t(#Are you sure you want to enable this add-on?#)}';
+confirmNotes['disable']   = '{t(#Are you sure you want to disable this add-on?#)}';
 <!-- 
-function confirmUninstall()
+function confirmNote(action)
 {
-  return confirm(confirmUninstallNote);
+  return confirmNotes[action]
+    ? confirm(confirmNotes[action])
+    : confirm('{t(#Are you sure?#)}');
 }
 -->
 </script>
