@@ -111,17 +111,7 @@ class CEcardSelect extends \XLite\View\AView
      */
     protected function getDefaultTemplate()
     {
-        if ($this->xlite->GiftCertificates_wysiwyg_work) {
-            $result = 'modules/GiftCertificates/ecards.tpl';
-
-        } elseif (\XLite::isAdminZone()) {
-            $result = 'modules/GiftCertificates/ecard_select.tpl';
-
-        } else {
-            $result = 'modules/GiftCertificates/ecards.tpl';
-        }
-
-        return $result;
+        return 'modules/GiftCertificates/ecard' . (\XLite::isAdminZone() ? '_select' : '') . '.tpl';
     }
 
 }

@@ -7,7 +7,6 @@ They are: </p>
 	<li><a href="../admin.php?target=template_editor" target="right"><strong>Template editor</strong></a>, </li>
 	<li><a href="../admin.php?target=css_edit" target="right"><strong>CSS editor</strong></a>, </li>
 	<li><a href="../admin.php?target=image_edit" target="right"><strong>Image editor</strong></a>, and </li>
-	<li><a href="../admin.php?target=wysiwyg" target="right"><strong>Design import/export</strong></a>.</li>
 </ul>
 
 
@@ -34,15 +33,6 @@ custom colors, text fonts and background colors of various page elements.</p>
 <h2>Image editor</h2>
 <p><a href="../admin.php?target=image_edit" target="right">Image editor</a> tool is used 
 to replace LiteCommerce standard graphic elements with your own graphics. It cannot be used to create/modify image files.</p>
-
-<h2>Design import/export</h2>
-<p><a href="../admin.php?target=wysiwyg" target="right">HTML design import/export</a> feature enables you to export all the 
-design components of your store into HTML format, edit them with an HTML editor of your preference and then import 
-back into your online store. It gives you full control over the design of your online store.</p>
-
-<p><strong>Hint:</strong> If you are accessing your online store from a Windows-based workstation, it is advisable to use 
-LiteCommerce Control Panel tool provided with LiteCommerce software installation to retrieve design HTML pages from your 
-store and publish your new design.</p>
 
 <p>
 <a href="configure.php"><img src="go.gif" width="13" height="13" border="0" align="absmiddle"> Further configuration settings</a>
