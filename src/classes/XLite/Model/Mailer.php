@@ -35,7 +35,7 @@ namespace XLite\Model;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Mailer extends \XLite\View\AView
+class Mailer extends \XLite\Base
 {
     const MAIL_SKIN = 'mail';
     const CRLF = "\r\n";
@@ -150,19 +150,6 @@ class Mailer extends \XLite\View\AView
      */
     protected $errorInfo = null;
 
-
-    /**
-     * Get default template 
-     * 
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getDefaultTemplate()
-    {
-        return $this->template;
-    }
 
     /**
      * Setter
@@ -364,6 +351,18 @@ class Mailer extends \XLite\View\AView
     }
 
     /**
+     * init 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function init()
+    {
+    }
+
+    /**
      * Compile template
      * 
      * @param string  $template     Template path
@@ -387,9 +386,16 @@ class Mailer extends \XLite\View\AView
             $template = '../../' . self::MAIL_SKIN . '/en/' . $template;
         }
 
-        $this->widgetParams[self::PARAM_TEMPLATE]->setValue($template);
+        $this->template = $template;
         $this->init();
-        $text = $this->getContent();
+
+        $original = \XLite\Model\Layout::getInstance()->getLayout($this->template);
+        $compiled = \XLite\Core\FlexyCompiler::getInstance()->prepare($original);
+
+        ob_start();
+        include $compiled;
+        $text = ob_get_contents();
+        ob_end_clean();
 
         // restore old skin
         if ($switchLayout) {
