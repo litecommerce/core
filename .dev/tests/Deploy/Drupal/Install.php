@@ -119,8 +119,6 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
     {
         $this->emptyDatabase();
 
-        die('stop');
-
         // Start installation process
         $this->open('install.php');
 
