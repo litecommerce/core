@@ -1,6 +1,0 @@
-module_id=690
-name=GreetVisitor
-description=This module greets customer by his name when he returns to the site
-enabled=1
-version=2.6
-dependencies=

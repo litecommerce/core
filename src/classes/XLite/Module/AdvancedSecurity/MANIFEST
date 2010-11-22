@@ -1,6 +1,0 @@
-module_id=850
-name=AdvancedSecurity
-description="This module provides strong cryptographic protection for email and sensitive data of LiteCommerce store."
-enabled=1
-version=2.10.RC4
-dependencies=

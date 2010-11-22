@@ -1,6 +1,0 @@
-module_id=2510
-name=Intershipper
-description=Intershipper real-time shipping calculation
-enabled=1
-version=2.4.RC2
-dependencies=

@@ -1,6 +1,0 @@
-module_id=750
-name=FeaturedProducts
-description=This module enables featured products list
-enabled=1
-version=2.8
-dependencies=

@@ -1,6 +1,0 @@
-module_id=1024
-name=SecureTrading
-description=securetrading.com credit card processor
-enabled=1
-version=2.3
-dependencies=

@@ -1,6 +1,0 @@
-module_id=4000
-name=GiftCertificates
-description=Gift certificates
-enabled=1
-version=2.12.RC10
-dependencies=
