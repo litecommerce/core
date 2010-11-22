@@ -266,6 +266,19 @@ abstract class AModule
     }
 
     /**
+     * Page on LiteCommerce site checker
+     *
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function hasExternalPage()
+    {
+        return false;
+    }
+
+    /**
      * Return module name by class name
      * 
      * @return string

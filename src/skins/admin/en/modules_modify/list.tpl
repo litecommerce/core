@@ -89,9 +89,11 @@
         <div class="description">
           {module.getDescription()}
         </div>
-        <div class="module-url">
-          <a href="{module.getExternalPageURL()}" target="_blank">{t(#Visit add-on\'s page#)}</a>
-        </div>
+        {if:module.hasExternalPage()}
+          <div class="module-url">
+            <a href="{module.getExternalPageURL()}" target="_blank">{t(#Visit add-on\'s page#)}</a>
+          </div>
+        {end:}
       </td>
 		</tr>    
 
