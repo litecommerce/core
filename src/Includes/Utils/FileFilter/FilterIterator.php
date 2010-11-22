@@ -49,19 +49,6 @@ class FilterIterator extends \FilterIterator
 
 
     /**
-     * Return info about current file
-     * 
-     * @return RecursiveDirectoryIterator
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getFileInfo()
-    {
-        return $this->getInnerIterator()->current();
-    }
-
-    /**
      * Get file extension 
      * 
      * @return string
@@ -71,7 +58,7 @@ class FilterIterator extends \FilterIterator
      */
     protected function getFileExtension()
     {
-        return strtolower(pathinfo($this->getFileInfo()->getBasename(), PATHINFO_EXTENSION));
+        return strtolower(pathinfo($this->getBasename(), PATHINFO_EXTENSION));
     }
 
     /**
@@ -86,10 +73,7 @@ class FilterIterator extends \FilterIterator
      */
     protected function executeFilterCallback(array $data)
     {
-        return (bool) call_user_func_array(
-            $data[0],
-            array_merge(empty($data[1]) ? array() : $data[1], array($this->getFileInfo()))
-        );
+        return (bool) call_user_func_array($data[0], empty($data[1]) ? array() : $data[1]);
     }
 
 
@@ -103,7 +87,7 @@ class FilterIterator extends \FilterIterator
      */
     protected function filterByTypeDir()
     {
-        return $this->getFileInfo()->isDir();
+        return $this->isDir();
     }
 
     /**
@@ -116,7 +100,7 @@ class FilterIterator extends \FilterIterator
      */
     protected function filterByTypeFile()
     {
-        return $this->getFileInfo()->isFile();
+        return $this->isFile();
     }
 
     /**
@@ -160,10 +144,18 @@ class FilterIterator extends \FilterIterator
      */
     public function accept()
     {
+        // It's the hack (to increase Decorator perfomance) for developers
+        if (LC_DEVELOPER_MODE && (false !== strpos($this->getPathname(), '.svn'))) {
+            return false;
+        }
+
         $result = true;
 
-        foreach ($this->filterCallbacks as $data) {
-            if (!($result = $this->executeFilterCallback($data))) break;
+        if ($this->filterCallbacks) {
+
+            foreach ($this->filterCallbacks as $data) {
+                if (!($result = $this->executeFilterCallback($data))) break;
+            }
         }
 
         return $result;
