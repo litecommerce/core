@@ -144,5 +144,11 @@ memory_limit = "32M"
 [installer_details]
 auth_code = ""
 
+;
+; Some options to optimize the store
+;
+[performance]
+developer_mode = Off
+
 ; WARNING: Do not change the line below
 ; */ ?>

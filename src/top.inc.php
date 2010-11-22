@@ -57,9 +57,6 @@ define('LC_NAMESPACE',      'XLite');
 define('LC_MODEL_NS',       LC_NAMESPACE . '\\' . 'Model');
 define('LC_MODEL_PROXY_NS', LC_MODEL_NS . '\\' . 'Proxy');
 
-// So called "developer" mode. Set it to "false" in production mode!
-define('LC_DEVELOPER_MODE', true);
-
 // DEVCODE - disabled xdebug for Selenium-based tests
 if (
     isset($_COOKIE)
@@ -75,6 +72,9 @@ if (
 // Autoloading routines
 require_once (LC_INCLUDES_DIR . 'Autoloader.php');
 \Includes\Autoloader::registerAll();
+
+// So called "developer" mode. Set it to "false" in production mode!
+define('LC_DEVELOPER_MODE', (bool) \Includes\Utils\ConfigParser::getOptions(array('performance', 'developer_mode')));
 
 // FIXME - to remove
 require_once (LC_INCLUDES_DIR . 'prepend.php');
