@@ -1215,7 +1215,7 @@ class FlexyCompiler extends \XLite\Base\Singleton
         $compiled = LC_COMPILE_DIR . $original . '.php';
         $original = LC_ROOT_DIR . $original;
 
-        if (($this->checkTemplateStatus && !$this->checkTemplateStatus($original, $compiled)) || $force) {
+        if (($this->checkTemplateStatus && !$this->isTemplateValid($original, $compiled)) || $force) {
 
             // Create directory for compiled template (if not exists)
             $dir = dirname($compiled);
@@ -1241,9 +1241,9 @@ class FlexyCompiler extends \XLite\Base\Singleton
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function checkTemplateStatus($original, $compiled)
+    protected function isTemplateValid($original, $compiled)
     {
-        return file_exists($compiled) && (filemtime($compiled) === filemtime($original));
+        return file_exists($compiled) && (filemtime($compiled) == filemtime($original));
     }
 
     /**
@@ -1296,8 +1296,8 @@ class FlexyCompiler extends \XLite\Base\Singleton
         $this->pathPattern = preg_quote(LC_ROOT_DIR, '/') . '(skins' . preg_quote(LC_DS, '/') 
             . '\w+' . preg_quote(LC_DS, '/') . '\w+' . preg_quote(LC_DS, '/') . ').*';
 
-        $this->checkTemplateStatus 
-            = \XLite\Core\Config::getInstance()->Performance->check_templates_status;
+        $this->checkTemplateStatus = LC_DEVELOPER_MODE
+            || \XLite\Core\Config::getInstance()->Performance->check_templates_status;
     }
 }
 

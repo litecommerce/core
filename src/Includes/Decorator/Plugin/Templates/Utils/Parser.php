@@ -38,6 +38,12 @@ namespace Includes\Decorator\Plugin\Templates\Utils;
 abstract class Parser extends \Includes\Decorator\Utils\Base\Parser
 {
     /**
+     * Alias
+     */
+    const N_TEMPLATE_COMMENT = self::N_CLASS_COMMENT;
+
+
+    /**
      * List of parsers
      *
      * NOTE: do not remove this (re)declaration:
@@ -61,7 +67,9 @@ abstract class Parser extends \Includes\Decorator\Utils\Base\Parser
      */
     protected static function getPatternParserMain()
     {
-        return '/\{\*(?:[^\*]|(?:\*+[^\*\}]))*@\w+\s*.*(?:[^\*]|(?:\*+[^\*\}]))*\*+\}/USsi';
+        return '/\{\*(?:[^\*]|(?:\*+[^\*\}]))*@\s*'
+            . (LC_DEVELOPER_MODE ? \Includes\Decorator\Plugin\Templates\ATemplates::TAG_LIST_CHILD : '\w+')
+            . '\s*.*(?:[^\*]|(?:\*+[^\*\}]))*\*+\}/USsi';
     }
 
     /**

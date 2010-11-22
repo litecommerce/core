@@ -47,8 +47,7 @@ abstract class ACustomer extends \XLite\View\Product\Details\ADetails
      */
     protected function isVisible()
     {
-        return parent::isVisible()
-            && $this->getProduct();
+        return parent::isVisible() && $this->getProduct();
     }
 
     /**

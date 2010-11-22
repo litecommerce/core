@@ -79,32 +79,6 @@ class CacheManager extends \Includes\Decorator\Utils\AUtils
 
 
     /**
-     * Query to select the "developer_mode" param mode from config 
-     * 
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected static function getDevmodeQuery()
-    {
-        return 'SELECT value FROM xlite_config WHERE category = \'General\' AND name = \'developer_mode\'';
-    }
-
-    /**
-     * Check if so called "devloper mode" is enabled
-     * 
-     * @return bool
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected static function isDeveloperMode()
-    {
-        return 'Y' === \Includes\Utils\Database::fetchColumn(self::getDevmodeQuery());
-    }
-
-    /**
      * Get plain text notice block
      * 
      * @return string

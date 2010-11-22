@@ -32,7 +32,6 @@ INSERT INTO `xlite_config` VALUES (72,'default_offline_payment','Payments','text
 INSERT INTO `xlite_config` VALUES (74,'default_purchase_limit','General','text',293,'9999');
 INSERT INTO `xlite_config` VALUES (75,'default_select_payment','Payments','text',0,'');
 INSERT INTO `xlite_config` VALUES (76,'default_zipcode','General','text',320,'10000');
-INSERT INTO `xlite_config` VALUES (80,'developer_mode','General','checkbox',105,'');
 INSERT INTO `xlite_config` VALUES (89,'direct_product_url','General','checkbox',255,'N');
 INSERT INTO `xlite_config` VALUES (90,'discounts_after_taxes','Taxes','checkbox',210,'N');
 INSERT INTO `xlite_config` VALUES (91,'display_check_number','General','checkbox',215,'Y');

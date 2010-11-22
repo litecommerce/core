@@ -38,6 +38,13 @@ namespace Includes\Decorator\Plugin\Templates;
 abstract class ATemplates extends \Includes\Decorator\Plugin\APlugin
 {
     /**
+     * Predefined tag names
+     */
+
+    const TAG_LIST_CHILD = 'ListChild';
+
+
+    /**
      * List of .tpl files
      *
      * @var    \Includes\Decorator\Plugin\Templates\Data\Templates\Collection
