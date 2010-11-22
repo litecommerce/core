@@ -313,12 +313,7 @@ function copyRecursive($from, $to, $mode = 0666, $dir_mode = 0777)
                 \Includes\Utils\FileManager::unlinkRecursive($to);
                 $attempts --; 
                 if ($attempts < 0) {
-                    if($_REQUEST['target'] == "wysiwyg") {
-                        echo "<font color='red'>Warning: Can't create directory $to: permission denied</font>";
-                        echo '<br /><br /><a href="admin.php?target=wysiwyg">Click to return to admin interface</a>';
-                    } else {
-                        echo "Can't create directory $to: permission denied";
-                    }
+                    echo "Can't create directory $to: permission denied";
                     die;
                 }
             }

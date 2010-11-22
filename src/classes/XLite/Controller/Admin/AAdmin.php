@@ -331,7 +331,7 @@ EOT;
             $request = \XLite\Core\Request::getInstance();
 
             if (
-                $this->isRuleExists($this->defineSpecialIngnoredTargets())
+                $this->isRuleExists($this->defineSpecialIgnoredTargets())
                 && isset($request->login)
                 && isset($request->password)
                 && \XLite\Core\Auth::getInstance()->isLogged()
@@ -376,19 +376,18 @@ EOT;
     }
 
     /**
-     * Define special ingnored targets 
+     * Define special ignored targets 
      * 
      * @return array
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function defineSpecialIngnoredTargets()
+    protected function defineSpecialIgnoredTargets()
     {
         return array(
             'db'      => array('backup', 'delete'),
             'files'   => array('tar', 'tar_skins', 'untar_skins'),
-            'wysiwyg' => array('export', 'import'),
         );
     }
 
