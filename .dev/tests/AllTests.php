@@ -208,6 +208,28 @@ class XLite_Tests_AllTests
 
         // Classes tests
         if (!defined('UNITS_DISABLED')) {
+
+            // DB backup
+            echo ('DB backup ...');
+            $path = dirname(__FILE__) . '/dump.sql';
+
+            $config = \XLite::getInstance()->getOptions('database_details');
+            $cmd = 'mysqldump --opt -h' . $config['hostspec'];
+            if ($config['port']) {
+                $cmd .= ':' . $config['port'];
+            }
+
+            $cmd .= ' -u' . $config['username'] . ' -p' . $config['password'];
+            if ($config['socket']) {
+                $cmd .= ' -S' . $config['socket'];
+            }
+
+            $cmd .= ' ' . $config['database'] . ' > ' . $path;
+
+            exec($cmd);
+
+            echo ('done' . PHP_EOL);
+
             $classesDir  = dirname( __FILE__ ) . DIRECTORY_SEPARATOR . 'Classes' . DIRECTORY_SEPARATOR;
             $pattern     = '/^' . str_replace('/', '\/', preg_quote($classesDir)) . '(.*)\.php$/';
 
@@ -225,7 +247,7 @@ class XLite_Tests_AllTests
                         . str_replace(DIRECTORY_SEPARATOR, '_', $matches[1]);
 
                     require_once $filePath;
-                    $suite->addTestSuite($class);
+                    $suite->addTest(new XLite_Tests_TestSuite(new ReflectionClass($class)));
 
                     if (isset($includeTests[$matches[1]])) {
                         eval($class . '::$testsRange = array($includeTests[$matches[1]]);');

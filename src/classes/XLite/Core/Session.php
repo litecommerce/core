@@ -219,23 +219,29 @@ class Session extends \XLite\Base\Singleton
         $this->lastFormId = null;
 
         if (!\XLite\Core\Database::getEM()->contains($this->session)) {
-            $this->session = \XLite\Core\Database::getEM()->merge($this->session);
+            try {
+                $this->session = \XLite\Core\Database::getEM()->merge($this->session);
+            } catch (\Doctrine\ORM\EntityNotFoundException $exception) {
+                $this->session = null;
+            }
         }
 
-        $cells = \XLite\Core\Database::getRepo('XLite\Model\SessionCell')->findById($this->session->getId());
-
-        $old = $this->session;
-        $oldId = $this->session->getId();
+        $old = null;
+        if ($this->session) {
+            $old = $this->session;
+            $oldId = $this->session->getId();
+        }
 
         $this->createSession();
 
-        foreach (\XLite\Core\Database::getRepo('XLite\Model\SessionCell')->findById($oldId) as $cell) {
-            $cell->setId($this->session->getId());
+        if ($old) {
+            foreach (\XLite\Core\Database::getRepo('XLite\Model\SessionCell')->findById($oldId) as $cell) {
+                $cell->setId($this->session->getId());
+            }
+
+            \XLite\Core\Database::getEM()->remove($old);
+            \XLite\Core\Database::getEM()->flush();
         }
-
-        \XLite\Core\Database::getEM()->remove($old);
-
-        \XLite\Core\Database::getEM()->flush();
 
         $this->setCookie();
     }
