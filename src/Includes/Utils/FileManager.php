@@ -172,9 +172,9 @@ class FileManager extends \Includes\Utils\AUtils
      */
     public static function unlinkRecursive($dir)
     {
-        
         if (static::isDir($dir)) {
-            $filter = new \Includes\Utils\FileFilter($dir, \RecursiveIteratorIterator::CHILD_FIRST);
+
+            $filter = new \Includes\Utils\FileFilter($dir, null, \RecursiveIteratorIterator::CHILD_FIRST);
 
             foreach ($filter->getIterator() as $file) {
                 $file->isDir() ? rmdir($file->getPathname()) : static::delete($file->getPathname());

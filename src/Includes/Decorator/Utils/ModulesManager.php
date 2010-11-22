@@ -147,21 +147,22 @@ abstract class ModulesManager extends AUtils
     /**
      * Return pattern to file path againist active modules list
      * 
-     * @param string $rootPath name of the root directory
-     * @param string $dir      name of the directory with modules
+     * @param string $rootPath  name of the root directory
+     * @param string $dir       name of the directory with modules
+     * @param string $extension file extension
      *  
      * @return string
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected static function getPathPattern($rootPath, $dir)
+    protected static function getPathPattern($rootPath, $dir, $extension)
     {
         $modulePattern = $dir . LC_DS_QUOTED . ($placeholder = '@') . LC_DS_OPTIONAL;
 
         return '/^' . $rootPath . '(.((?!' . str_replace($placeholder, '\w+', $modulePattern) . ')|'
             . str_replace($placeholder, '(' . implode('|', array_keys(static::getActiveModules())) . ')', $modulePattern)
-            . '))*$/i';
+            . '))*\.' . $extension . '$/i';
     }
 
 
@@ -238,7 +239,7 @@ abstract class ModulesManager extends AUtils
      */
     public static function getPathPatternForPHP()
     {
-        return static::getPathPattern(preg_quote(LC_CLASSES_DIR, '/') . '\w+', 'Module');
+        return static::getPathPattern(preg_quote(LC_CLASSES_DIR, '/') . '\w+', 'Module', 'php');
     }
 
     /**
@@ -251,6 +252,6 @@ abstract class ModulesManager extends AUtils
      */
     public static function getPathPatternForTemplates()
     {
-        return static::getPathPattern(preg_quote(LC_SKINS_DIR, '/') . '\w+' . LC_DS_QUOTED . '\w+', 'modules');
+        return static::getPathPattern(preg_quote(LC_SKINS_DIR, '/') . '\w+' . LC_DS_QUOTED . '\w+', 'modules', 'tpl');
     }
 }

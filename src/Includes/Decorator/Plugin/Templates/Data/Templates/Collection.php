@@ -51,19 +51,17 @@ class Collection extends \Includes\DataStructure\Hierarchical\AHierarchical
     /**
      * Get iterator for class files
      *
-     * @return \Includes\Utils\FileFilter\FilterIterator
+     * @return \Includes\Utils\FileFilter
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getFileIterator()
     {
-        $filter = new \Includes\Utils\FileFilter(LC_SKINS_DIR);
-
-        $filter->filterBy('extension', 'tpl');
-        $filter->filterBy('pattern', \Includes\Decorator\Utils\ModulesManager::getPathPatternForTemplates());
-
-        return $filter->getIterator();
+        return new \Includes\Utils\FileFilter(
+            LC_SKINS_DIR,
+            \Includes\Decorator\Utils\ModulesManager::getPathPatternForTemplates()
+        );
     }
 
     /**
@@ -159,6 +157,6 @@ class Collection extends \Includes\DataStructure\Hierarchical\AHierarchical
     public function __construct()
     {
         // Walk through the .tpl files and collect info
-        $this->create($this->getFileIterator());
+        $this->create($this->getFileIterator()->getIterator());
     }
 }

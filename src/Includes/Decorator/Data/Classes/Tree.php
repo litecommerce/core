@@ -51,19 +51,17 @@ class Tree extends \Includes\DataStructure\Hierarchical\Tree
     /**
      * Get iterator for class files
      * 
-     * @return \Includes\Utils\FileFilter\FilterIterator
+     * @return \Includes\Utils\FileFilter
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getFileIterator()
     {
-        $filter = new \Includes\Utils\FileFilter(LC_CLASSES_DIR);
-
-        $filter->filterBy('extension', 'php');
-        $filter->filterBy('pattern', \Includes\Decorator\Utils\ModulesManager::getPathPatternForPHP());
-
-        return $filter->getIterator();
+        return new \Includes\Utils\FileFilter(
+            LC_CLASSES_DIR,
+            \Includes\Decorator\Utils\ModulesManager::getPathPatternForPHP()
+        );
     }
 
     /**
@@ -148,7 +146,7 @@ class Tree extends \Includes\DataStructure\Hierarchical\Tree
         parent::__construct($nodeClass);
 
         // Walk through the PHP files tree and collect classes info
-        $this->createFromArray($this->getFileIterator());
+        $this->createFromArray($this->getFileIterator()->getIterator());
     }
 }
 
