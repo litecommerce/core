@@ -32,6 +32,8 @@ class XLite_Tests_Core_Session extends XLite_Tests_TestCase
     {
         $session = \XLite\Core\Session::getInstance();
 
+        \XLite\Core\Database::getEM()->clear();
+
         $s = \XLite\Core\Database::getRepo('XLite\Model\Session')->findOneBySid($session->getID());
 
         $this->assertNotNull($s, 'check session');

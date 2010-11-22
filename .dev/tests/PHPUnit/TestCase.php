@@ -247,9 +247,7 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
             }
         }
 
-        // Memory usage
-        $this->start['memory'] = memory_get_usage();
-        $this->end['memory']   = 0;
+        \XLite\Core\Session::getInstance()->restart();
 
         // Print new line between classes
         $currentClass = get_called_class();
@@ -257,6 +255,10 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
             echo PHP_EOL;
             XLite_Tests_TestSuite::$currentClass = $currentClass;
         }
+
+        // Memory usage
+        $this->start['memory'] = memory_get_usage();
+        $this->end['memory']   = 0;
 
         // Timing
         $this->start['time'] = microtime(true);
@@ -511,6 +513,18 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
     protected function query($sql)
     {
         \XLite\Core\Database::getEM()->getConnection()->executeQuery($sql, array());
+    }
+
+    /**
+     * Constructs a test case with the given name.
+     *
+     * @param  string $name
+     * @param  array  $data
+     * @param  string $dataName
+     */
+    public function __construct($name = NULL, array $data = array(), $dataName = '')
+    {
+        parent::__construct($name, $data, $dataName);
     }
 
     /**
