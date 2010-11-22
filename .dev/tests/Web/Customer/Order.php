@@ -129,7 +129,7 @@ class XLite_Web_Customer_Order extends XLite_Web_Customer_ACustomer
         $this->assertEquals('W', $order->getPaymentTransactions()->get(0)->getStatus(), 'check payment transaction status');
         $this->assertFalse($order->isPayed(), 'check order payed status');
 
-        $this->open('user/1/orders/' . $order->getOrderId());
+        $this->openAndWait('user/1/orders/' . $order->getOrderId());
 
         return $order;
     }

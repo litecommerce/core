@@ -164,7 +164,7 @@ class XLite_Web_Customer_ProductDetails extends XLite_Web_Customer_ACustomer
             'check first tabs'
         );
         $this->assertEquals(
-            4,
+            1,
             $this->getJSExpression("$('.product-details .tabs ul li a').length"),
             'check tabs length'
         );
