@@ -444,6 +444,12 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
             sprintf('Check that "Save and Continue" button is presented on "Configure site" step (pass %d)', $pass)
         );
 
+        $this->waitForLocalCondition(
+            '$("#testing").css("display") == "none"',
+            30000,
+            'Waiting for clean URLs testing'
+        );
+
         // Fill the form fields
         $this->type('css=#edit-site-name', 'Test ' . self::PRODUCT_NAME);
         $this->type('css=#edit-site-mail', self::TESTER_EMAIL);
@@ -460,7 +466,7 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
         $this->check('css=#edit-lc-install-demo');
 
         // Mark checkbox "Clean URLs: enabled" if it is allowed
-        if ($this->isElementPresent('//input[@id="edit-clean-url-1" and @type="radio" and @disabled=""]')) {
+        if ($this->isElementPresent('//input[@id="edit-clean-url-1" and @type="radio" and @disabled!="disabled"]')) {
             $this->check('css=#edit-clean-url-1');
         }
 
