@@ -43,19 +43,19 @@
         <div class="version">{t(#Version#)}: {module.getVersion()}</div>
         <div class="actions">
           {if:module.getEnabled()}
-            <a href="{buildUrl(#modules#,#disable#,_ARRAY_(#module_id#^module.getModuleId()))}">{t(#Disable#)}</a>
+            <a href="{buildUrl(#modules#,#disable#,_ARRAY_(#module_id#^module.getModuleId()))}" onclick="javascript: return confirmNote('disable');">{t(#Disable#)}</a>
           {else:}
             {if:!module.canEnable()}
               <span class="disabled">{t(#Enable#)}</span>
             {else:}
-              <a href="{buildUrl(#modules#,#enable#,_ARRAY_(#module_id#^module.getModuleId()))}">{t(#Enable#)}</a>
+              <a href="{buildUrl(#modules#,#enable#,_ARRAY_(#module_id#^module.getModuleId()))}" onclick="javascript: return confirmNote('enable');">{t(#Enable#)}</a>
             {end:}
           {end:}
           {if:module.showSettingsForm()}
             <a href="{module.getSettingsFormLink()}">{t(#Settings#)}</a>
           {end:}
           {if:!module.enabled}
-            <a class="uninstall" href="{buildUrl(#modules#,#uninstall#,_ARRAY_(#module_id#^module.getModuleId()))}" onclick="javascript: return confirmUninstall();">{t(#Uninstall#)}</a>
+            <a class="uninstall" href="{buildUrl(#modules#,#uninstall#,_ARRAY_(#module_id#^module.getModuleId()))}" onclick="javascript: return confirmNote('uninstall');">{t(#Uninstall#)}</a>
           {end:}
 
         </div>
