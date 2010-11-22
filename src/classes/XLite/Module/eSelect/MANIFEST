@@ -1,6 +1,0 @@
-module_id=1360
-name=eSelect
-description=eSelect credit card payment processor
-enabled=1
-version=2.5.RC2
-dependencies=

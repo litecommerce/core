@@ -1,6 +1,0 @@
-module_id=1020
-name=2CheckoutCom
-description=2Checkout.com credit card payment processor gateway
-enabled=1
-version=2.11
-dependencies=
