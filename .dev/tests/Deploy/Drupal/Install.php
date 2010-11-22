@@ -56,58 +56,6 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
     protected $buildDir = null;
 
     /**
-     * setUp 
-     * 
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function emptyDatabase()
-    {
-        $options = $this->getConfigOptions();
-
-        // 'hostspec', 'database', 'username', 'password'
-
-        $dbhost = $options['database_details']['hostspec'] 
-            . (!empty($options['database_details']['socket']) ? ':' . $options['database_details']['socket']
-                : (!empty($options['database_details']['port']) ? ':' . $options['database_details']['port'] : '')
-            );
-            
-        $connect = @mysql_connect(
-            $dbhost,
-            $options['database_details']['username'],
-            $options['database_details']['password']
-        );
-
-        if ($connect) {
-
-            // Drop / create database
-            @mysql_query(sprintf('DROP DATABASE %s', $options['database_details']['database']));
-            @mysql_query(sprintf('CREATE DATABASE %s', $options['database_details']['database']));
-
-            // Try to select database
-            $dbSelected = @mysql_select_db($options['database_details']['database']);
-
-            if ($dbSelected) {
-                // Check that database is empty
-                $res = @mysql_query('SHOW TABLES');
-                if ($res) {
-                    $row = @mysql_result($res, 0);
-                    $dbSelected = empty($row);
-                }
-            }
-
-            if (!$dbSelected) {
-                $this->assertTrue(false, sprintf('Cannot empty database %s', $options['database_details']['database']));
-            }
-        
-        } else {
-            $this->assertTrue(false, 'Wrong database connection parameters!');
-        }
-    }
-
-    /**
      * testInstall 
      * 
      * @return void
@@ -117,7 +65,11 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
      */
     public function testInstall()
     {
+        // Drop/create database
         $this->emptyDatabase();
+
+        // Add RewriteBase value to drupal's .htaccess
+        $this->prepareHtaccess();
 
         // Start installation process
         $this->open('install.php');
@@ -542,6 +494,14 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
         );
     }
 
+    /**
+     * getBuildDir 
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     protected function getBuildDir()
     {
         if (!isset($this->buildDir)) {
@@ -582,4 +542,86 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
 
         return $options;
     }
+
+    /**
+     * emptyDatabase 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function emptyDatabase()
+    {
+        $options = $this->getConfigOptions();
+
+        // Prepare db host
+        $dbhost = $options['database_details']['hostspec'] 
+            . (!empty($options['database_details']['socket']) ? ':' . $options['database_details']['socket']
+                : (!empty($options['database_details']['port']) ? ':' . $options['database_details']['port'] : '')
+            );
+            
+        $connect = @mysql_connect(
+            $dbhost,
+            $options['database_details']['username'],
+            $options['database_details']['password']
+        );
+
+        if ($connect) {
+
+            // Drop / create database
+            @mysql_query(sprintf('DROP DATABASE %s', $options['database_details']['database']));
+            @mysql_query(sprintf('CREATE DATABASE %s', $options['database_details']['database']));
+
+            // Try to select database
+            $dbSelected = @mysql_select_db($options['database_details']['database']);
+
+            if ($dbSelected) {
+                // Check that database is empty
+                $res = @mysql_query('SHOW TABLES');
+                if ($res) {
+                    $row = @mysql_result($res, 0);
+                    $dbSelected = empty($row);
+                }
+            }
+
+            if (!$dbSelected) {
+                $this->assertTrue(false, sprintf('Cannot empty database %s', $options['database_details']['database']));
+            }
+        
+        } else {
+            $this->assertTrue(false, 'Wrong database connection parameters!');
+        }
+    }
+
+    /**
+     * prepareHtaccess: add RewriteBase value for clean URL feature
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function prepareHtaccess()
+    {
+        if (defined('DRUPAL_SITE_PATH')) {
+
+            $fileName = DRUPAL_SITE_PATH . '/src/.htaccess';
+
+            $uri = preg_replace('/\/$/', '', parse_url($this->baseURL, PHP_URL_PATH));
+
+            if (file_exists($fileName)) {
+                $content = file_get_contents($fileName);
+                $content = preg_replace('/(.*RewriteEngine +on)/Ssi', "\\1\n  RewriteBase " . preg_quote($uri), $content);
+                file_put_contents($fileName, $content);
+
+            } else {
+                $this->assertTrue(false, $fileName . ' file not found');
+            }
+
+        } else {
+            $this->assertTrue(false, 'DRUPAL_SITE_PATH constant undefined');
+        }
+    }
+
 }
