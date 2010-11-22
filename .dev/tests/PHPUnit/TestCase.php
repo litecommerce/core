@@ -210,6 +210,8 @@ abstract class XLite_Tests_TestCase extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
+        set_time_limit(0);
+
         $request = $this->getRequest();
 
         // This data will be parsed by Reqest/Router transports
