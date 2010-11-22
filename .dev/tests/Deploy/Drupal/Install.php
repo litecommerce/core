@@ -81,10 +81,25 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
         );
 
         if ($connect) {
+
+            // Drop / create database
             @mysql_query(sprintf('DROP DATABASE %s', $options['database_details']['database']));
-            
-            if (@mysql_query(sprintf('CREATE DATABASE %s', $options['database_details']['database']))) {
-                $this->assertTrue(false, sprintf('Cannot create database %s', $options['database_details']['database']));
+            @mysql_query(sprintf('CREATE DATABASE %s', $options['database_details']['database']));
+
+            // Try to select database
+            $dbSelected = @mysql_select_db($options['database_details']['database']);
+
+            if ($dbSelected) {
+                // Check that database is empty
+                $res = @mysql_query('SHOW TABLES');
+                if ($res) {
+                    $row = @mysql_result($res, 0);
+                    $dbSelected = empty($row);
+                }
+            }
+
+            if (!$dbSelected) {
+                $this->assertTrue(false, sprintf('Cannot empty database %s', $options['database_details']['database']));
             }
         
         } else {
@@ -103,6 +118,8 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
     public function testInstall()
     {
         $this->emptyDatabase();
+
+        die('stop');
 
         // Start installation process
         $this->open('install.php');
