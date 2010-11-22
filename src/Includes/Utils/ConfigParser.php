@@ -98,7 +98,7 @@ class ConfigParser extends AUtils
      */
     protected static function handleFileAbsenceError($file)
     {
-        throw new Exception('Config file "' . $file . '" does not exist or is not readable');
+        throw new \Exception('Config file "' . $file . '" does not exist or is not readable');
     }
 
     /**
@@ -113,7 +113,7 @@ class ConfigParser extends AUtils
      */
     protected static function handleFileWrongFormatError($file)
     {
-        throw new Exception('Unable to parse config file "' . $file . '" (probably it has a wrong format)');
+        throw new \Exception('Unable to parse config file "' . $file . '" (probably it has a wrong format)');
     }
 
     /**
@@ -197,7 +197,7 @@ class ConfigParser extends AUtils
     protected static function getOptionsByNames(array $names, $options)
     {
         $name = array_shift($names);
-        $options = isset($name) ? (isset($options[$name]) ? $options[$name] : null) : $options;
+        $options = empty($name) ? $options : (empty($options[$name]) ? null : $options[$name]);
 
         return empty($names) ? $options : static::getOptionsByNames($names, $options);
     }
