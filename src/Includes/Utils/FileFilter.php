@@ -48,6 +48,16 @@ class FileFilter extends AUtils
     protected $dir;
 
     /**
+     * Patern to filter files by path
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $patern;
+
+    /**
      * Mode 
      * 
      * @var    int
@@ -93,51 +103,28 @@ class FileFilter extends AUtils
     public function getIterator()
     {
         if (!isset($this->iterator)) {
-            $this->iterator = new \Includes\Utils\FileFilter\FilterIterator(static::getUnfilteredIterator());
+            $this->iterator = new \Includes\Utils\FileFilter\FilterIterator(static::getUnfilteredIterator(), $this->pattern);
         }
 
         return $this->iterator;
     }
 
     /**
-     * Return the directory iterator filtered by som criteria
-     *
-     * Predefined callbacks:
-     *
-     * - typeDir
-     * - typeFile
-     * - extension
-     * - pattern
-     *
-     *
-     * @param mixed $callback sort callback/criteria
-     *
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function filterBy($callback)
-    {
-        $args = func_get_args();
-        array_shift($args);
-
-        $this->getIterator()->addFilter($callback, $args);
-    }
-
-    /**
      * Constructor
      * 
-     * @param string $dir directory to iterate over
+     * @param string $dir     directory to iterate over
+     * @param string $pattern pattern to filter files
+     * @param int    $mode    filtering mode
      *  
      * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function __construct($dir, $mode = \RecursiveIteratorIterator::LEAVES_ONLY)
+    public function __construct($dir, $pattern, $mode = \RecursiveIteratorIterator::LEAVES_ONLY)
     {
-        $this->dir  = $dir;
-        $this->mode = $mode;
+        $this->dir     = $dir;
+        $this->pattern = $pattern;
+        $this->mode    = $mode;
     }
 }
