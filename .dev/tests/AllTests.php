@@ -135,6 +135,11 @@ class XLite_Tests_AllTests
         if (defined('INCLUDE_ONLY_TESTS')) {
             $includes = array_map('trim', explode(',', INCLUDE_ONLY_TESTS));
 
+            if (in_array('LOCAL_TESTS', $includes)) {
+                $k = array_search('LOCAL_TESTS', $includes);
+                unset($includes[$k]);
+            }
+
             if (in_array('NOWEB', $includes)) {
                 if (!defined('SELENIUM_DISABLED')) {
                     define('SELENIUM_DISABLED', true);
@@ -151,7 +156,14 @@ class XLite_Tests_AllTests
                 unset($includes[$k]);
             }
 
-            $deploy = (in_array('DEPLOY_DRUPAL', $includes) ? 'Drupal' :( in_array('DEPLOY_STANDALONE', $includes) ? 'Standalone' : null));
+            $deploy = null;
+
+            if (in_array('DEPLOY_DRUPAL', $includes)) {
+                $deploy = 'Drupal';
+
+            } elseif (in_array('DEPLOY_STANDALONE', $includes)) {
+                $deploy = 'Standalone';
+            }
 
             if (!is_null($deploy)) {
                 if (!defined('UNITS_DISABLED')) {
