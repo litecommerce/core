@@ -55,7 +55,7 @@
             <a href="{module.getSettingsFormLink()}">{t(#Settings#)}</a>
           {end:}
           {if:!module.enabled}
-            <a class="uninstall" href="{buildUrl(#admin#,#uninstall#,_ARRAY_(#module_id#^module.getModuleId()))}" onclick="javascript: return confirmUninstall();">{t(#Uninstall#)}</a>
+            <a class="uninstall" href="{buildUrl(#modules#,#uninstall#,_ARRAY_(#module_id#^module.getModuleId()))}" onclick="javascript: return confirmUninstall();">{t(#Uninstall#)}</a>
           {end:}
 
         </div>

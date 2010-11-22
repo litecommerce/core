@@ -174,8 +174,9 @@ class Modules extends \XLite\Controller\Admin\AAdmin
 
         } else {
             $notes = $module->getMainClass()->getPostUninstallationNotes();
-
-            $module->disableDepended();
+            
+            // Disable this and depended modules
+            $module->disableModule();
 
             \XLite::setCleanUpCacheFlag(true);
 
@@ -199,6 +200,8 @@ class Modules extends \XLite\Controller\Admin\AAdmin
                 );
             }
         }
+        
+        $this->set('returnUrl', $this->buildUrl('modules'));
     }
 
 }
