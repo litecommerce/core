@@ -480,16 +480,18 @@ class Module extends \XLite\Model\AEntity
         }
 
         // Run custom uninstall code
-        if (false === $mainClass->uninstallModule($this)) {
+        if (false === $this->getMainClass()->uninstallModule($this)) {
             \XLite\Logger::getInstance()->log(
-                sprintf('\'%s\' module custom deinstallation error', $name),
+                sprintf('\'%s\' module custom deinstallation error', $this->getName()),
                 PEAR_LOG_ERR
             );
             $status = false;
         }
 
         // Remove repository (if needed)
-        return $status && \Includes\Utils\FileManager::unlinkRecursive(LC_MODULES_DIR . $this->getName());
+        \Includes\Utils\FileManager::unlinkRecursive(LC_MODULES_DIR . $this->getName());
+
+        return $status;
     }
 
     /**
