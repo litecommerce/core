@@ -503,7 +503,7 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
         );
 
         // Click link to the frontend
-        $this->clickAndWait('//a[text()="your new site"]');
+        $this->click('//a[text()="your new site"]');
     }
 
     /**
@@ -516,6 +516,9 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
      */
     protected function stepSeven()
     {
+        // Wait while cache re-building process complete and page reloaded
+        $this->waitForPageToLoad(90000);
+
         // Check page title
         $this->assertTitleEquals('Home | Test ' . self::PRODUCT_NAME, 'Checking the page title');
 
