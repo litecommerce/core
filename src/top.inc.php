@@ -57,6 +57,9 @@ define('LC_NAMESPACE',      'XLite');
 define('LC_MODEL_NS',       LC_NAMESPACE . '\\' . 'Model');
 define('LC_MODEL_PROXY_NS', LC_MODEL_NS . '\\' . 'Proxy');
 
+// So called "developer" mode. Set it to "false" in production mode!
+define('LC_DEVELOPER_MODE', true);
+
 // DEVCODE - disabled xdebug for Selenium-based tests
 if (
     isset($_COOKIE)

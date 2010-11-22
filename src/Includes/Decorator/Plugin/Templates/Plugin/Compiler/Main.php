@@ -77,7 +77,7 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
      */
     public function executeHookHandlerRun()
     {
-        $this->createTemplatesCache();
+        LC_DEVELOPER_MODE ?: $this->createTemplatesCache();
     }
 
     /**

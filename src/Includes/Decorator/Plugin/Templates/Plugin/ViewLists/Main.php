@@ -38,12 +38,6 @@ namespace Includes\Decorator\Plugin\Templates\Plugin\ViewLists;
 class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
 {
     /**
-     * Predefined tag names
-     */
-
-    const TAG_LIST_CHILD = 'ListChild';
-
-    /**
      * Parameters for the tags
      */
 

@@ -76,12 +76,6 @@ abstract class ADecorator
     const HOOK_RUN         = 'run';
     const HOOK_POSTPROCESS = 'postprocess';
 
-    /**
-     * Aliases
-     */
-
-    const N_TEMPLATE_COMMENT = self::N_CLASS_COMMENT;
-
 
     /**
      * Classes tree

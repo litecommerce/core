@@ -78,7 +78,6 @@ class Collection extends \Includes\DataStructure\Hierarchical\AHierarchical
      */
     protected function prepareNodeData($fileinfo)
     {
-        // return null;
         return \Includes\Decorator\Plugin\Templates\Utils\Parser::parse($fileinfo);
     }
 
