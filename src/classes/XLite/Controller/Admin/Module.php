@@ -38,6 +38,18 @@ namespace XLite\Controller\Admin;
 class Module extends \XLite\Controller\Admin\AAdmin
 {
     /**
+     * Return current module options
+     * 
+     * @return array 
+     * @access protected
+     * @since  3.0.0
+     */
+    public function getOptions()
+    {
+        return \XLite\Core\Database::getRepo('\XLite\Model\Config')->getByCategory($this->page, true, true);
+    }
+ 
+    /**
      * Common method to determine current location
      *
      * @return string
@@ -63,18 +75,6 @@ class Module extends \XLite\Controller\Admin\AAdmin
         parent::addBaseLocation();
 
         $this->addLocationNode('Manage modules', $this->buildURL('modules'));
-    }
-
-    /**
-     * Return current module options
-     * 
-     * @return array 
-     * @access protected
-     * @since  3.0.0
-     */
-    public function getOptions()
-    {
-        return \XLite\Core\Database::getRepo('\XLite\Model\Config')->getByCategory($this->page, true, true);
     }
 
     /**

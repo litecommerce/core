@@ -38,30 +38,6 @@ namespace XLite\View;
 class ModulesModify extends \XLite\View\Dialog
 {
     /**
-     * Return title
-     *
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getHead()
-    {
-        return 'Manage Add-ons';
-    }
-
-    /**
-     * Return templates directory name
-     *
-     * @return string
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getDir()
-    {
-        return 'modules_modify';
-    }
-
-    /**
      * Return list of targets allowed for this widget
      *
      * @return array
@@ -95,7 +71,9 @@ class ModulesModify extends \XLite\View\Dialog
     }
 
     /**
-     * Get module human-readable status 
+     * Get module human-readable status
+     * TODO: to revise or, possibly, remove later,
+     *       when modules installation procedure is reworked
      * 
      * @param \XLite\Model\Module $module Module
      *  
@@ -150,6 +128,30 @@ class ModulesModify extends \XLite\View\Dialog
     {
         return $module->getEnabled()
             || $module->canEnable();
+    }
+
+    /**
+     * Return title
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getHead()
+    {
+        return 'Manage Add-ons';
+    }
+
+    /**
+     * Return templates directory name
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected function getDir()
+    {
+        return 'modules_modify';
     }
 
 }
