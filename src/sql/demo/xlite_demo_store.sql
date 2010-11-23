@@ -31,7 +31,7 @@ INSERT INTO `xlite_category_images` VALUES (104,1003,'demo_store_c1003.jpeg','im
 INSERT INTO `xlite_category_images` VALUES (105,4003,'demo_store_c4003.jpeg','image/jpeg',160,130,10698,1278412215,'');
 INSERT INTO `xlite_category_images` VALUES (106,4002,'demo_store_c4002.jpeg','image/jpeg',160,156,13711,1278412215,'');
 INSERT INTO `xlite_category_images` VALUES (107,1002,'demo_store_c1002.jpeg','image/jpeg',156,160,11592,1278412215,'');
-INSERT INTO `xlite_category_images` VALUES (108,4005,'demo_store_c4005.jpeg','image/jpeg',115,160,13433,1278412215,'');
+INSERT INTO `xlite_category_images` VALUES (108,4005,'demo_store_c4005.jpg','image/jpeg',115,160,13433,1278412215,'');
 
 INSERT INTO `xlite_category_translations` VALUES (1,'en',1,'','','','','');
 -- Commented until an e-goods module is implemented
