@@ -48,27 +48,20 @@ class Modules extends \XLite\Controller\Admin\AAdmin
     protected $modules = null;
 
     /**
-     * Current module type 
+     * Get modules list
      * 
-     * @var    integer
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected $currentModuleType = null;
-
-
-    /**
-     * Common method to determine current location
-     *
-     * @return string
-     * @access protected
+     * @return array
+     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getLocation()
+    public static function getModules()
     {
-        return 'Manage modules';
+        if (is_null($this->modules)) {
+            $this->modules = \XLite\Core\Database::getRepo('\XLite\Model\Module')->findAllModules();
+        }
+
+        return $this->modules;
     }
 
     /**
@@ -87,29 +80,16 @@ class Modules extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-     * Get modules list
-     * 
-     * @param integer $type Module type
-     *  
-     * @return array
-     * @access public
+     * Common method to determine current location
+     *
+     * @return string
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getModules($type = null)
+    protected function getLocation()
     {
-        if (is_null($this->modules) || $type !== $this->currentModuleType) {
-
-            if (!is_null($type)) {
-                $this->currentModuleType = $type;
-                $this->modules = \XLite\Core\Database::getRepo('\XLite\Model\Module')->findByType($type);
-            } else {
-                $this->modules = \XLite\Core\Database::getRepo('\XLite\Model\Module')->findAllModules();
-            }
-
-        }
-
-        return $this->modules;
+        return 'Manage modules';
     }
 
     /**

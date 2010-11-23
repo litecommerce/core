@@ -206,40 +206,6 @@ class Module extends \XLite\Model\Repo\ARepo
     }
 
     /**
-     * Find by type
-     * TODO: remove
-     * 
-     * @param integer $type Type
-     *  
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function findByType($type)
-    {
-        return $this->defineByTypeQuery($type)->getQuery()->getResult();
-    }
-
-    /**
-     * Define query builder for findByType()
-     * TODO: remove
-     * 
-     * @param integer $type Type
-     *  
-     * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function defineByTypeQuery($type)
-    {
-        return $this->createQueryBuilder()
-            ->andWhere('m.type = :type')
-            ->setParameter('type', $type);
-    }
-
-    /**
      * Find all by names
      * 
      * @param array $names Modules names
@@ -271,48 +237,6 @@ class Module extends \XLite\Model\Repo\ARepo
         $ids = \XLite\Core\Database::buildInCondition($qb, $names, 'name');
 
         return $qb->andWhere('m.name IN (' . implode(', ', $ids) . ')');
-    }
-
-    /**
-     * Find all module by depend module name
-     * TODO: rework
-     * 
-     * @param string $depend Module name
-     *  
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function findAllByDepend($depend)
-    {
-        return $this->defineAllByDependQuery($depend)->getQuery()->getResult();
-    }
-
-    /**
-     * Define query builder for findByType()
-     * TODO: rework
-     *
-     * @param string $depend Depend module name
-     *
-     * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function defineAllByDependQuery($depend)
-    {
-        return $this->createQueryBuilder()
-            ->andWhere(
-                '(m.dependencies LIKE :dbegin OR'
-                . ' m.dependencies LIKE :dmiddle OR'
-                . ' m.dependencies LIKE :dend OR'
-                . ' m.dependencies = :depend)'
-            )
-            ->setParameter('depend', $depend)
-            ->setParameter('dbegin', $depend . ',')
-            ->setParameter('dmiddle', ',' . $depend . ',')
-            ->setParameter('dend', ',' . $depend);
     }
 
     /**
