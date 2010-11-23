@@ -136,6 +136,7 @@ class XLite_Tests_AllTests
 
         $includes = false;
         $includeTests = array();
+        $excludes = array();
         if (defined('INCLUDE_ONLY_TESTS')) {
             $includes = array_map('trim', explode(',', INCLUDE_ONLY_TESTS));
 
@@ -189,6 +190,13 @@ class XLite_Tests_AllTests
             }
 
             foreach ($includes as $k => $v) {
+                if ('-' == substr($v, 0, 1)) {
+                    $excludes[] = substr($v, 1);
+                    unset($includes[$k]);
+                }
+            }
+
+            foreach ($includes as $k => $v) {
                 $tmp = explode(':', $v, 2);
                 $includes[$k] = $tmp[0];
                 if (isset($tmp[1])) {
@@ -199,7 +207,7 @@ class XLite_Tests_AllTests
 
         // Include abstract classes
         $classesDir  = dirname( __FILE__ );
-        $pattern     = '/^' . preg_quote($classesDir, '/') . '.*\/Abstract\.php$/';
+        $pattern     = '/^' . preg_quote($classesDir, '/') . '.*\/(?:\w*Abstract|A[A-Z][a-z]\w*)\.php$/Ss';
 
         $dirIterator = new RecursiveDirectoryIterator($classesDir . DIRECTORY_SEPARATOR);
         $iterator    = new RecursiveIteratorIterator($dirIterator, RecursiveIteratorIterator::CHILD_FIRST);
@@ -210,29 +218,27 @@ class XLite_Tests_AllTests
             }
         }
 
+        // DB backup
+        echo ('DB backup ... ');
+        $path = dirname(__FILE__) . '/dump.sql';
+
+        $config = XLite::getInstance()->getOptions('database_details');
+        $cmd = 'mysqldump --opt -h' . $config['hostspec'];
+        if ($config['port']) {
+            $cmd .= ':' . $config['port'];
+        }
+
+        $cmd .= ' -u' . $config['username'] . ' -p' . $config['password'];
+        if ($config['socket']) {
+            $cmd .= ' -S' . $config['socket'];
+        }
+
+        exec($cmd .= ' ' . $config['database'] . ' > ' . $path);
+
+        echo ('done' . PHP_EOL);
+
         // Classes tests
         if (!defined('UNITS_DISABLED')) {
-
-            // DB backup
-            echo ('DB backup ...');
-            $path = dirname(__FILE__) . '/dump.sql';
-
-            $config = XLite::getInstance()->getOptions('database_details');
-            $cmd = 'mysqldump --opt -h' . $config['hostspec'];
-            if ($config['port']) {
-                $cmd .= ':' . $config['port'];
-            }
-
-            $cmd .= ' -u' . $config['username'] . ' -p' . $config['password'];
-            if ($config['socket']) {
-                $cmd .= ' -S' . $config['socket'];
-            }
-
-            $cmd .= ' ' . $config['database'] . ' > ' . $path;
-
-            exec($cmd);
-
-            echo ('done' . PHP_EOL);
 
             $classesDir  = dirname( __FILE__ ) . DIRECTORY_SEPARATOR . 'Classes' . DIRECTORY_SEPARATOR;
             $pattern     = '/^' . str_replace('/', '\/', preg_quote($classesDir)) . '(.*)\.php$/';
@@ -246,6 +252,7 @@ class XLite_Tests_AllTests
                     && !empty($matches[1])
                     && !preg_match('/\/Abstract.php/Ss', $filePath)
                     && (!$includes || in_array($matches[1], $includes))
+                    && (!$excludes || !in_array($matches[1], $excludes))
                 ) {
                     $class = XLite_Tests_TestCase::CLASS_PREFIX
                         . str_replace(DIRECTORY_SEPARATOR, '_', $matches[1]);
@@ -281,14 +288,16 @@ class XLite_Tests_AllTests
                     && !preg_match('/\/Abstract.php/Ss', $filePath)
                     && !preg_match('/\/A[A-Z]/Ss', $filePath)
                     && (!$includes || in_array($matches[1], $includes))
+                    && (!$excludes || !in_array($matches[1], $excludes))
                 ) {
 
-                    $classPrefix = !isset($deploy) ? XLite_Tests_SeleniumTestCase::CLASS_PREFIX : 'XLite_Deploy_' . $deploy . '_';
-                    $class = $classPrefix
-                        . str_replace(DIRECTORY_SEPARATOR, '_', $matches[1]);
+                    $classPrefix = !isset($deploy)
+                        ? XLite_Tests_SeleniumTestCase::CLASS_PREFIX
+                        : 'XLite_Deploy_' . $deploy . '_';
+                    $class = $classPrefix . str_replace(DIRECTORY_SEPARATOR, '_', $matches[1]);
 
                     require_once $filePath;
-                    $suite->addTestSuite($class);
+                    $suite->addTest(new XLite_Tests_TestSuite(new ReflectionClass($class)));
 
                     if (isset($includeTests[$matches[1]])) {
                         eval($class . '::$testsRange = array($includeTests[$matches[1]]);');
