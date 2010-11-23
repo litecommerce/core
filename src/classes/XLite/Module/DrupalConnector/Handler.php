@@ -185,6 +185,7 @@ class Handler extends \XLite\Core\CMSConnector
     protected function definePortals()
     {
         $this->portals = array(
+            /*
             'user/%/addresses' => array(
                 'menu'   => array(
                     'title'            => 'Addresses',
@@ -197,6 +198,7 @@ class Handler extends \XLite\Core\CMSConnector
                 'prefix' => array($this, 'getAddressesURLPrefix'),
                 'argumentsPreprocessor' => array($this, 'getOrdersArgPreprocess'),
             ),
+            */
             'user/%/orders' => array(
                 'menu'   => array(
                     'title'            => 'Orders history',

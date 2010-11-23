@@ -28,8 +28,8 @@
 
   {end:}
 
-  <div class="goto">
+  <!--div class="goto">
     <a href="{buildURL(#address_book#)}">{t(#Go to the address book#)}</a>
-  </div>
+  </div-->
 
 <widget name="selectAddress" end />
