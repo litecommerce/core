@@ -39,7 +39,7 @@ class XLite_Web_Customer_TopCategories extends XLite_Web_Customer_ACustomer
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $temporarySkipped = true;
+    protected $temporarySkipped = false;
    
     /**
      * Test the widget in "list" display mode
@@ -51,7 +51,7 @@ class XLite_Web_Customer_TopCategories extends XLite_Web_Customer_ACustomer
      */
     public function testListMode()
     {
-        $this->testDisplayMode('list');
+       $this->testDisplayMode('list');
     }
 
     /**
@@ -97,10 +97,10 @@ class XLite_Web_Customer_TopCategories extends XLite_Web_Customer_ACustomer
         $this->openAndWait('store/main');
         $this->testRootCategories($mode);
 
-        $child = $this->getRandomCategory(2);
+        $child = $this->getRandomCategory(1);
         $root = is_object($child)
             ? $this->getParentCategory($child->getCategoryId())
-            : $this->getRandomCategory(1);
+            : $this->getRandomCategory(0);
 
         $this->assertTrue(
             is_object($root),
@@ -117,6 +117,7 @@ class XLite_Web_Customer_TopCategories extends XLite_Web_Customer_ACustomer
             "'$rootName' category is in the active trail on the store home page"
         );
 
+        $childId = false;
         if (is_object($child)) {
             $childName = $child->getName();
             $childDepth = $this->getRepo()->getCategoryDepth($child->getCategoryId());
@@ -354,7 +355,7 @@ class XLite_Web_Customer_TopCategories extends XLite_Web_Customer_ACustomer
      */
     protected function getLinkSelector($name, $depth)
     {
-        return $this->getWidgetSelector() . ' > li' .str_repeat(' > ul > li', ($depth-1)) . " a:contains($name)";
+        return $this->getWidgetSelector() . ' > li' .str_repeat(' > ul > li', ($depth)) . " a:contains($name)";
     }
 
     /**
@@ -421,6 +422,11 @@ class XLite_Web_Customer_TopCategories extends XLite_Web_Customer_ACustomer
             }
         }
 
+        $this->assertTrue(
+            !is_null($result),
+            "Can't find a test category of the $depth depth level"
+        );
+
         return $result;
     }
 
@@ -436,7 +442,8 @@ class XLite_Web_Customer_TopCategories extends XLite_Web_Customer_ACustomer
      */
     protected function getParentCategory($id = 0)
     {
-        return $id ? $this->getRepo()->getParentCategory($id) : null;
+        $parent = $this->getRepo()->getCategory($id)->getParent();
+        return ($parent->getCategoryId() > 1) ? $parent : null;
     }
 
     /**
@@ -455,6 +462,7 @@ class XLite_Web_Customer_TopCategories extends XLite_Web_Customer_ACustomer
         $this->assertFalse(is_null($id), "Can't find the widget in the database");
 
         $r = $this->query("UPDATE drupal_lc_connector_block_settings SET value='$mode' WHERE delta='$id' AND name='displayMode'");
+
     }
 
 
