@@ -702,9 +702,11 @@ class Checkout extends \XLite\Controller\Customer\Cart
      */
     protected function cloneProfile()
     {
-        $profile = $this->getCart()->getProfile()->cloneObject();
+        $origProfile = $this->getCart()->getProfile();
+        $profile = $origProfile->cloneObject();
         $profile->setOrderId($this->getCart()->getOrderId());
         $this->getCart()->setProfile($profile);
+        $this->getCart()->setOrigProfile($origProfile);
     }
 
     /**
