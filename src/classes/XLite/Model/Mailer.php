@@ -436,5 +436,18 @@ class Mailer extends \XLite\Base
     {
         return $this->errorInfo;
     }
+
+    /**
+     * Constructor 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function __construct()
+    {
+        parent::__construct();
+    }
 }
 
