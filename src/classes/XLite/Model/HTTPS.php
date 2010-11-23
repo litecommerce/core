@@ -593,7 +593,7 @@ class HTTPS extends \XLite\Base
 
         $c = curl_init($url);
 
-        $url = new Net_URL2($this->url);
+        $url = new \Net_URL2($this->url);
         if ($url->port != 443 && $url->port != 80) {
             curl_setopt($c, CURLOPT_PORT, $url->port);
         }
@@ -787,7 +787,7 @@ class HTTPS extends \XLite\Base
                 if (isset($this->curlErrors[$this->curlErrorCode])) {
                     $this->error .= ': ' . $this->curlErrors[$this->curlErrorCode];
 
-                    $url = new Net_URL2($this->url);
+                    $url = new \Net_URL2($this->url);
 
                     $this->error = str_replace('PROTO', $url->protocol, $this->error);
                     $this->error = str_replace('FULLURL', $this->url, $this->error);
@@ -954,7 +954,7 @@ class HTTPS extends \XLite\Base
      */
     protected function getOpenSSLCommandLine()
     {
-        $url = new Net_URL2($this->url);
+        $url = new \Net_URL2($this->url);
         if ($url->port == 80) {
             $url->port = 443;
         }
