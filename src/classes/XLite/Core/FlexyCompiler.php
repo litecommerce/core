@@ -89,6 +89,8 @@ class FlexyCompiler extends \XLite\Base\Singleton
 
     public function parse($file)
     {
+        $file = str_replace('/', LC_DS, $file);
+
         $this->init($file);
 
         $this->offset = 0;
