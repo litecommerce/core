@@ -1878,14 +1878,12 @@ function inst_http_request_install($action_str, $url = null)
 function getLiteCommerceUrl()
 {
     $host = 'http://' . $_SERVER['HTTP_HOST'];
-    $len = strlen($host) - 1;
-    $host = ($host{$len} == '/') ? substr($host, 0, $len) : $host;
+    $host = '/' == substr($host, -1) ? substr($host, 0, -1) : $host;
 
-    $uri = (defined('LC_URI') ? constant('LC_URI') : $_SERVER['PHP_SELF']);
+    $uri = defined('LC_URI') ? constant('LC_URI') : $_SERVER['REQUEST_URI'];
 
     $web_dir = preg_replace('/\/install(\.php)*/', '', $uri);
-    $len = strlen($web_dir) - 1;
-    $url = $host . (($web_dir{$len} == '/') ? substr($web_dir, 0, $len) : $web_dir);
+    $url = $host . ('/' == substr($web_dir, -1) ? substr($web_dir, 0, -1) : $web_dir);
 
     return $url;
 }
@@ -2688,7 +2686,7 @@ function module_cfg_install_db(&$params)
         'xlite_web_dir'    => array(
             'title'       => 'LiteCommerce web directory',
             'description' => 'Path to LiteCommerce files within the web space of your web server (E.g.: /shop).',
-            'def_value'   => preg_replace('/\/install(\.php)*/', '', $_SERVER['PHP_SELF']),
+            'def_value'   => preg_replace('/\/install(\.php)*/Ss', '', $_SERVER['REQUEST_URI']),
             'required'    => false
         ),
         'mysqlhost'        => array(
