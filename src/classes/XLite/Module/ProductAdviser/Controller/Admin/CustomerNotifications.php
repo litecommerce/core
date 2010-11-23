@@ -451,7 +451,7 @@ class CustomerNotifications extends \XLite\Controller\Admin\AAdmin
 
             	if (isset($this->action) && $this->action == "prepare_notifications") {
             		for ($i=0; $i<$this->notificationsNumber; $i++) {
-            			$mail = new \XLite\Model\Mailer();
+            			$mail = new \XLite\View\Mailer();
             			$mail->ntf = $this->notifications[$i];
                         $dir = "modules/ProductAdviser/notifications/".$this->notifications[$i]->get('type')."/";
                         $mail->set('subject', $mail->compile($dir.$mail->get('subjectTemplate')));
@@ -590,7 +590,7 @@ class CustomerNotifications extends \XLite\Controller\Admin\AAdmin
                     $notification->set('status', CUSTOMER_REQUEST_SENT);
                     $notification->update();
 
-        			$mail = new \XLite\Model\Mailer();
+        			$mail = new \XLite\View\Mailer();
                     $mail->set('subject', $this->subjects[$ntf_id]);
                     $mail->set('body', $this->bodies[$ntf_id]);
                     $mail->set('ignoreDefaultSubjectBody', true);

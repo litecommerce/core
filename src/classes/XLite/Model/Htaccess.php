@@ -244,7 +244,7 @@ class Htaccess extends \XLite\Model\AModel
 
     function notifyAdmin($errors)
     {
-        $mail = new \XLite\Model\Mailer();
+        $mail = new \XLite\View\Mailer();
         $mail->errors = $errors;
         $mail->adminMail = true;
         $mail->set('charset', $this->xlite->config->Company->locationCountry->charset);

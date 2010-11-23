@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage Model
+ * @subpackage View
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -26,7 +26,7 @@
  * @since      3.0.0
  */
 
-namespace XLite\Model;
+namespace XLite\View;
 
 /**
  * Mailer 
@@ -35,7 +35,7 @@ namespace XLite\Model;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Mailer extends \XLite\Base
+class Mailer extends \XLite\View\AView
 {
     const MAIL_SKIN = 'mail';
     const CRLF = "\r\n";
@@ -150,6 +150,19 @@ class Mailer extends \XLite\Base
      */
     protected $errorInfo = null;
 
+
+    /** 
+      * Get default template  
+      *  
+      * @return string 
+      * @access protected 
+      * @see    ____func_see____ 
+      * @since  3.0.0 
+      */ 
+    protected function getDefaultTemplate() 
+    { 
+        return $this->template; 
+    }
 
     /**
      * Setter
@@ -351,18 +364,6 @@ class Mailer extends \XLite\Base
     }
 
     /**
-     * init 
-     * 
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function init()
-    {
-    }
-
-    /**
      * Compile template
      * 
      * @param string  $template     Template path
@@ -386,16 +387,10 @@ class Mailer extends \XLite\Base
             $template = '../../' . self::MAIL_SKIN . '/en/' . $template;
         }
 
-        $this->template = $template;
-        $this->init();
-
-        $original = \XLite\Model\Layout::getInstance()->getLayout($this->template);
-        $compiled = \XLite\Core\FlexyCompiler::getInstance()->prepare($original);
-
-        ob_start();
-        include $compiled;
-        $text = ob_get_contents();
-        ob_end_clean();
+        $this->widgetParams[self::PARAM_TEMPLATE]->setValue($template); 
+        $this->template = $template; 
+        $this->init(); 
+        $text = $this->getContent();
 
         // restore old skin
         if ($switchLayout) {
@@ -436,18 +431,4 @@ class Mailer extends \XLite\Base
     {
         return $this->errorInfo;
     }
-
-    /**
-     * Constructor 
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
 }
-

@@ -144,6 +144,8 @@ abstract class Handler extends \XLite\Base
      */
     public function __construct(array $params = array())
     {
+        parent::__construct();
+
         $this->setWidgetParams($params);
     }
 

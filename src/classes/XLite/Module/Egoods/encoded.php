@@ -5,7 +5,7 @@ function func_moduleEgoods_send_files($order)
 
     for ($i = 0; $i < count($items); $i++) {
         if ($items[$i]->isEgood()) {
-            $mail = new \XLite\Module\Egoods\Model\Mailer();
+            $mail = new \XLite\Module\Egoods\View\Mailer();
             $items[$i]->storeLinks();
             $mail->item = $items[$i];
             $mail->set('clean_after_send', false);
@@ -86,7 +86,7 @@ function func_moduleEgoods_send_pins($order)
         if ($items[$i]->isPin()) {
             $items[$i]->createPins();
             if ($items[$i]->get('pincodes') != '') {
-                $mail = new \XLite\Module\Egoods\Model\Mailer();
+                $mail = new \XLite\Module\Egoods\View\Mailer();
                 $mail->item = $items[$i];
                 $mail->compose(
                         $order->config->Company->site_administrator,

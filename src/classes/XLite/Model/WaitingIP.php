@@ -75,7 +75,7 @@ class WaitingIP extends \XLite\Model\AModel
 
     function notifyAdmin()
     {
-        $mail = new \XLite\Model\Mailer();
+        $mail = new \XLite\View\Mailer();
         $mail->waiting_ip = $this;
         $mail->adminMail = true;
         $mail->set('charset', $this->xlite->config->Company->locationCountry->charset);

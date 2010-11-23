@@ -122,7 +122,7 @@ class Help extends \XLite\Controller\Customer\ACustomer
     
     function action_contactus()
     {
-        $mailer = new \XLite\Model\Mailer();
+        $mailer = new \XLite\View\Mailer();
         $mailer->mapRequest();
         $st = \XLite\Core\Database::getRepo('XLite\Model\State')->find($_REQUEST['contactus_state']);
         if ($st->get('state_id') == -1) {

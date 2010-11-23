@@ -235,7 +235,7 @@ class Order extends \XLite\Controller\Admin\Order implements \XLite\Base\IDecora
 
     function action_send()
     {
-    	$mail = new \XLite\Model\Mailer();
+    	$mail = new \XLite\View\Mailer();
         $order = $this->get('order');
         $mail->order = $order;
         $mail->compose(
@@ -637,7 +637,7 @@ class Order extends \XLite\Controller\Admin\Order implements \XLite\Base\IDecora
         $emails = $this->config->AOM->order_update_notification;
         if (is_array($emails) && count($emails) > 0) {
             foreach ($emails as $email) {
-                $mail = new \XLite\Model\Mailer();
+                $mail = new \XLite\View\Mailer();
                 $mail->order = $order;
 
                 $to_email = trim($this->config->get("Company.$email"));

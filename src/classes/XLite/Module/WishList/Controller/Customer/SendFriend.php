@@ -115,7 +115,7 @@ class SendFriend extends \XLite\Controller\Customer\Catalog
 
         } else {
 
-            $mailer = new \XLite\Model\Mailer();
+            $mailer = new \XLite\View\Mailer();
             $mailer->sender_name = \XLite\Core\Request::getInstance()->sender_name;
             $mailer->sender_email = \XLite\Core\Request::getInstance()->sender_email;
             $mailer->recipient_email = \XLite\Core\Request::getInstance()->recipient_email;

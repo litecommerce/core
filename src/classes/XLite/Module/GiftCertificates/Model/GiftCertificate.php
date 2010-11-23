@@ -206,7 +206,7 @@ class GiftCertificate extends \XLite\Model\AModel
             && 'E' == $this->get('send_via')
         ) {
             // send GC by e-mail
-            $mail = new \XLite\Model\Mailer();
+            $mail = new \XLite\View\Mailer();
             $mail->gc = $this;
             $mail->compose(
                 $this->config->Company->site_administrator, 
@@ -472,7 +472,7 @@ class GiftCertificate extends \XLite\Model\AModel
                 && 'A' == $this->get('status')
             ) {
                 // send warning notification
-                $mailer = new \XLite\Model\Mailer();
+                $mailer = new \XLite\View\Mailer();
                 $mailer->cert = $this;
                 $mailer->compose(
                     $this->config->Company->site_administrator,

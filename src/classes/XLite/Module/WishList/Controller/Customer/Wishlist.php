@@ -194,7 +194,7 @@ class Wishlist extends \XLite\Controller\Customer\ACustomer
      */
     protected function doActionSend()
     {
-        $mailer = new \XLite\Model\Mailer();
+        $mailer = new \XLite\View\Mailer();
 
         $mailer->wishlist_recipient = \XLite\Core\Request::getInstance()->wishlist_recipient;
         $mailer->items = $this->getItems();

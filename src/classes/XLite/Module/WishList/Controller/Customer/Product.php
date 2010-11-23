@@ -50,7 +50,7 @@ class Product extends \XLite\Controller\Customer\Product implements \XLite\Base\
 
     function action_send_friend() 
     {
-        $Mailer = new \XLite\Model\Mailer();
+        $Mailer = new \XLite\View\Mailer();
         $Mailer->sender_name  = $this->sender_name;
         $Mailer->sender_email = $this->sender_email;
         $Mailer->recipient_email = $this->recipient_email;

@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage Model
+ * @subpackage View
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -26,38 +26,22 @@
  * @since      3.0.0
  */
 
-namespace XLite\Module\GiftCertificates\Model;
+namespace XLite\Module\ProductAdviser\View;
 
 /**
- * Mailer
+ * ____description____
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Mailer extends \XLite\Model\Mailer implements \XLite\Base\IDecorator
+class Mailer extends \XLite\View\Mailer implements \XLite\Base\IDecorator
 {
-    /**
-     * Compile template
-     * 
-     * @param string  $template     Template path
-     * @param boolean $switchLayout Switch laout flag
-     *  
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function compile($template, $switchLayout = true)
+    function set($property, $value)
     {
-        $this->set('mode', 'invoice');
-        $this->set('mailMode', 'GC');
-
-        $text = parent::compile($template, $switchLayout);
-
-        $this->set('mode', null);
-        $this->set('mailMode', null);
-
-        return $text;
+        if (($property == "subject" || $property == "signature" || $property == "body") && $this->get('ignoreDefaultSubjectBody')) {
+            return;
+        }
+        parent::set($property, $value);
     }
 }

@@ -1250,7 +1250,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
             || \XLite\Core\Config::getInstance()->Email->enable_init_order_notif_customer;
 
         if (!in_array($status, $list) && $send) {
-            $mail = new \XLite\Model\Mailer();
+            $mail = new \XLite\View\Mailer();
 
             // for compatibility with dialog.order syntax in mail templates
             $mail->order = $this;
@@ -1311,7 +1311,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
      */
     protected function processProcess()
     {
-        $mail = new \XLite\Model\Mailer();
+        $mail = new \XLite\View\Mailer();
         $mail->order = $this;
         $mail->adminMail = true;
         $mail->set('charset', \XLite\Core\Config::getInstance()->Company->locationCountry->charset);
@@ -1358,7 +1358,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
      */
     protected function processFail()
     {
-        $mail = new \XLite\Model\Mailer();
+        $mail = new \XLite\View\Mailer();
         $mail->order = $this;
         $mail->adminMail = true;
         $mail->set('charset', \XLite\Core\Config::getInstance()->Company->locationCountry->charset);

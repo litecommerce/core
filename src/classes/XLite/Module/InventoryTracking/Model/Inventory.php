@@ -182,7 +182,7 @@ class Inventory extends \XLite\Model\AModel
             $product_id = $pos === false ? $inventory_id : substr($inventory_id, 0, $pos);
 
             // send low limit notification
-            $mailer = new \XLite\Model\Mailer();
+            $mailer = new \XLite\View\Mailer();
             $mailer->set('product', new \XLite\Model\Product($product_id));
             $mailer->set('item', $item);
             $mailer->set('amount', $this->get('amount'));
