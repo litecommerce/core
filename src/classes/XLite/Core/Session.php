@@ -459,7 +459,7 @@ class Session extends \XLite\Base\Singleton
     {
         $url = $this->getCookieURL($secure);
 
-        return $url['host'];
+        return false === strstr($url['host'], '.') ? false : $url['host'];
     }
 
     /**
