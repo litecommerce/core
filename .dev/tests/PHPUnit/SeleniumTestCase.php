@@ -222,7 +222,7 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
      */
     public function __construct($name = NULL, array $data = array(), array $browser = array())
     {
-        $this->browserName = $browser['name'];
+        $this->browserName = isset($browser['name']) ? $browser['name'] : 'unknown';
         $this->coverageScriptUrl = defined('SELENIUM_COVERAGE_URL')
             ? SELENIUM_COVERAGE_URL . '/phpunit_coverage.php'
             : SELENIUM_SOURCE_URL . '/phpunit_coverage.php';

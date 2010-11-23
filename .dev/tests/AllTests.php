@@ -297,7 +297,8 @@ class XLite_Tests_AllTests
                     $class = $classPrefix . str_replace(DIRECTORY_SEPARATOR, '_', $matches[1]);
 
                     require_once $filePath;
-                    $suite->addTest(new XLite_Tests_TestSuite(new ReflectionClass($class)));
+                    //$suite->addTest(new XLite_Tests_TestSuite(new ReflectionClass($class)));
+                    $suite->addTestSuite($class);
 
                     if (isset($includeTests[$matches[1]])) {
                         eval($class . '::$testsRange = array($includeTests[$matches[1]]);');
