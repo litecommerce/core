@@ -2,14 +2,15 @@
 -- Categories [7]
 
 REPLACE INTO `xlite_categories` VALUES (1,0,1,16,0,1,'',0);
-INSERT INTO `xlite_categories` VALUES (1002,1,2,3,0,1,'apparel',0);
+INSERT INTO `xlite_categories` VALUES (1002,1,4,5,0,1,'apparel',0);
+INSERT INTO `xlite_categories` VALUES (1003,1004,9,10,0,1,'cube-goodies',1);
+INSERT INTO `xlite_categories` VALUES (1004,1,8,17,0,1,'toys',0);
 -- Commented until an e-goods module is implemented
--- INSERT INTO `xlite_categories` VALUES (3002,1,4,5,0,1,'downloadables',0);
-INSERT INTO `xlite_categories` VALUES (1004,1,6,15,0,1,'toys',0);
-INSERT INTO `xlite_categories` VALUES (1003,1004,7,8,0,1,'cube-goodies',1);
-INSERT INTO `xlite_categories` VALUES (4003,1004,9,10,0,1,'science-toys',1);
-INSERT INTO `xlite_categories` VALUES (4004,1004,11,12,0,1,'puzzles',1);
-INSERT INTO `xlite_categories` VALUES (4002,1004,13,14,0,1,'rc-toys',1);
+--INSERT INTO `xlite_categories` VALUES (3002,1,6,7,0,1,'downloadables',0);
+INSERT INTO `xlite_categories` VALUES (4002,1004,15,16,0,1,'rc-toys',1);
+INSERT INTO `xlite_categories` VALUES (4003,1004,11,12,0,1,'science-toys',1);
+INSERT INTO `xlite_categories` VALUES (4004,1004,13,14,0,1,'puzzles',1);
+INSERT INTO `xlite_categories` VALUES (4005,1,2,3,0,1,'igoods',1);
 
 INSERT INTO xlite_category_quick_flags VALUES (1,1,3,3);
 INSERT INTO xlite_category_quick_flags VALUES (2,1002,0,0);
@@ -20,6 +21,7 @@ INSERT INTO xlite_category_quick_flags VALUES (5,4004,0,0);
 INSERT INTO xlite_category_quick_flags VALUES (6,1003,0,0);
 INSERT INTO xlite_category_quick_flags VALUES (7,4003,0,0);
 INSERT INTO xlite_category_quick_flags VALUES (8,4002,0,0);
+INSERT INTO xlite_category_quick_flags VALUES (9,4005,0,0);
 
 -- Commented until an e-goods module is implemented
 -- INSERT INTO `xlite_category_images` VALUES (101,3002,'demo_store_c3002.jpeg','image/jpeg',154,160,10267,1278412215,'');
@@ -29,6 +31,7 @@ INSERT INTO `xlite_category_images` VALUES (104,1003,'demo_store_c1003.jpeg','im
 INSERT INTO `xlite_category_images` VALUES (105,4003,'demo_store_c4003.jpeg','image/jpeg',160,130,10698,1278412215,'');
 INSERT INTO `xlite_category_images` VALUES (106,4002,'demo_store_c4002.jpeg','image/jpeg',160,156,13711,1278412215,'');
 INSERT INTO `xlite_category_images` VALUES (107,1002,'demo_store_c1002.jpeg','image/jpeg',156,160,11592,1278412215,'');
+INSERT INTO `xlite_category_images` VALUES (108,4005,'demo_store_c4005.jpeg','image/jpeg',115,160,13433,1278412215,'');
 
 INSERT INTO `xlite_category_translations` VALUES (1,'en',1,'','','','','');
 -- Commented until an e-goods module is implemented
@@ -39,6 +42,7 @@ INSERT INTO `xlite_category_translations` VALUES (104,'en',1003,'Cube Goodies','
 INSERT INTO `xlite_category_translations` VALUES (105,'en',4003,'Science Toys','','','','');
 INSERT INTO `xlite_category_translations` VALUES (106,'en',4002,'RC Toys','','','','');
 INSERT INTO `xlite_category_translations` VALUES (107,'en',1002,'Apparel','<img src=\"{{WEB_LC_ROOT}}/public/apparel.png\" alt=\"\" />','','','');
+INSERT INTO `xlite_category_translations` VALUES (108,'en',4005,'iGoods','','','','');
 
 INSERT INTO `xlite_category_products` SET product_id = '4003', category_id = '1002', orderby = '0';
 INSERT INTO `xlite_category_products` SET product_id = '4004', category_id = '1002', orderby = '0';
@@ -118,6 +122,38 @@ INSERT INTO `xlite_category_products` SET product_id = '4019', category_id = '10
 INSERT INTO `xlite_category_products` SET product_id = '4017', category_id = '1004', orderby = '110';
 INSERT INTO `xlite_category_products` SET product_id = '4041', category_id = '1004', orderby = '120';
 
+INSERT INTO `xlite_category_products` SET product_id = '5000', category_id = '4005', orderby = '0';
+INSERT INTO `xlite_category_products` SET product_id = '5001', category_id = '4005', orderby = '0';
+INSERT INTO `xlite_category_products` SET product_id = '5002', category_id = '4005', orderby = '0';
+INSERT INTO `xlite_category_products` SET product_id = '5003', category_id = '4005', orderby = '0';
+INSERT INTO `xlite_category_products` SET product_id = '5004', category_id = '4005', orderby = '0';
+INSERT INTO `xlite_category_products` SET product_id = '5005', category_id = '4005', orderby = '0';
+INSERT INTO `xlite_category_products` SET product_id = '5006', category_id = '4005', orderby = '0';
+INSERT INTO `xlite_category_products` SET product_id = '5007', category_id = '4005', orderby = '0';
+INSERT INTO `xlite_category_products` SET product_id = '5008', category_id = '4005', orderby = '0';
+INSERT INTO `xlite_category_products` SET product_id = '5009', category_id = '4005', orderby = '0';
+INSERT INTO `xlite_category_products` SET product_id = '5010', category_id = '4005', orderby = '0';
+INSERT INTO `xlite_category_products` SET product_id = '5011', category_id = '4005', orderby = '0';
+INSERT INTO `xlite_category_products` SET product_id = '5012', category_id = '4005', orderby = '0';
+INSERT INTO `xlite_category_products` SET product_id = '5013', category_id = '4005', orderby = '0';
+INSERT INTO `xlite_category_products` SET product_id = '5014', category_id = '4005', orderby = '0';
+INSERT INTO `xlite_category_products` SET product_id = '5015', category_id = '4005', orderby = '0';
+INSERT INTO `xlite_category_products` SET product_id = '5016', category_id = '4005', orderby = '0';
+INSERT INTO `xlite_category_products` SET product_id = '5017', category_id = '4005', orderby = '0';
+INSERT INTO `xlite_category_products` SET product_id = '5018', category_id = '4005', orderby = '0';
+INSERT INTO `xlite_category_products` SET product_id = '5019', category_id = '4005', orderby = '0';
+INSERT INTO `xlite_category_products` SET product_id = '5020', category_id = '4005', orderby = '0';
+INSERT INTO `xlite_category_products` SET product_id = '5021', category_id = '4005', orderby = '0';
+INSERT INTO `xlite_category_products` SET product_id = '5022', category_id = '4005', orderby = '0';
+INSERT INTO `xlite_category_products` SET product_id = '5023', category_id = '4005', orderby = '0';
+INSERT INTO `xlite_category_products` SET product_id = '5024', category_id = '4005', orderby = '0';
+INSERT INTO `xlite_category_products` SET product_id = '5025', category_id = '4005', orderby = '0';
+INSERT INTO `xlite_category_products` SET product_id = '5026', category_id = '4005', orderby = '0';
+INSERT INTO `xlite_category_products` SET product_id = '5027', category_id = '4005', orderby = '0';
+INSERT INTO `xlite_category_products` SET product_id = '5028', category_id = '4005', orderby = '0';
+INSERT INTO `xlite_category_products` SET product_id = '5029', category_id = '4005', orderby = '0';
+INSERT INTO `xlite_category_products` SET product_id = '5030', category_id = '4005', orderby = '0';
+
 
 -- Products [65]
 
@@ -184,6 +220,37 @@ INSERT INTO `xlite_products` (`product_id`, `price`, `sale_price`, `sku`, `order
 INSERT INTO `xlite_products` (`product_id`, `price`, `sale_price`, `sku`, `order_by`, `enabled`, `weight`, `tax_class`, `free_shipping`, `clean_url`) VALUES (4058,'34.95','34.95','00056',0,1,'0.00','',0,'');
 INSERT INTO `xlite_products` (`product_id`, `price`, `sale_price`, `sku`, `order_by`, `enabled`, `weight`, `tax_class`, `free_shipping`, `clean_url`) VALUES (4062,'49.95','49.95','00060',0,1,'0.00','',0,'');
 INSERT INTO `xlite_products` (`product_id`, `price`, `sale_price`, `sku`, `order_by`, `enabled`, `weight`, `tax_class`, `free_shipping`, `clean_url`) VALUES (4063,'5.95','5.95','00061',0,1,'0.00','',0,'');
+INSERT INTO `xlite_products` (`product_id`, `price`, `sale_price`, `sku`, `order_by`, `enabled`, `weight`, `tax_class`, `free_shipping`, `clean_url`) VALUES (5000,'129.95','129.95','00084',0,1,'0.32','',0,'');
+INSERT INTO `xlite_products` (`product_id`, `price`, `sale_price`, `sku`, `order_by`, `enabled`, `weight`, `tax_class`, `free_shipping`, `clean_url`) VALUES (5001,'19.00','19.00','00078',0,1,'0.22','',0,'');
+INSERT INTO `xlite_products` (`product_id`, `price`, `sale_price`, `sku`, `order_by`, `enabled`, `weight`, `tax_class`, `free_shipping`, `clean_url`) VALUES (5002,'29.00','29.00','00081',0,1,'0.32','',0,'');
+INSERT INTO `xlite_products` (`product_id`, `price`, `sale_price`, `sku`, `order_by`, `enabled`, `weight`, `tax_class`, `free_shipping`, `clean_url`) VALUES (5003,'79.00','79.00','00080',0,1,'0.32','',0,'');
+INSERT INTO `xlite_products` (`product_id`, `price`, `sale_price`, `sku`, `order_by`, `enabled`, `weight`, `tax_class`, `free_shipping`, `clean_url`) VALUES (5004,'369.00','369.00','00062',0,1,'1.00','',0,'');
+INSERT INTO `xlite_products` (`product_id`, `price`, `sale_price`, `sku`, `order_by`, `enabled`, `weight`, `tax_class`, `free_shipping`, `clean_url`) VALUES (5005,'199.99','199.99','00035',0,1,'1.00','',0,'');
+INSERT INTO `xlite_products` (`product_id`, `price`, `sale_price`, `sku`, `order_by`, `enabled`, `weight`, `tax_class`, `free_shipping`, `clean_url`) VALUES (5006,'229.00','229.00','00067',0,1,'4.40','',0,'');
+INSERT INTO `xlite_products` (`product_id`, `price`, `sale_price`, `sku`, `order_by`, `enabled`, `weight`, `tax_class`, `free_shipping`, `clean_url`) VALUES (5007,'29.00','29.00','00077',0,1,'0.22','',0,'');
+INSERT INTO `xlite_products` (`product_id`, `price`, `sale_price`, `sku`, `order_by`, `enabled`, `weight`, `tax_class`, `free_shipping`, `clean_url`) VALUES (5008,'69.00','69.00','00075',0,1,'1.00','',0,'');
+INSERT INTO `xlite_products` (`product_id`, `price`, `sale_price`, `sku`, `order_by`, `enabled`, `weight`, `tax_class`, `free_shipping`, `clean_url`) VALUES (5009,'269.95','269.95','00085',0,1,'0.32','',0,'');
+INSERT INTO `xlite_products` (`product_id`, `price`, `sale_price`, `sku`, `order_by`, `enabled`, `weight`, `tax_class`, `free_shipping`, `clean_url`) VALUES (5010,'19.95','19.95','00079',0,1,'0.22','',0,'');
+INSERT INTO `xlite_products` (`product_id`, `price`, `sale_price`, `sku`, `order_by`, `enabled`, `weight`, `tax_class`, `free_shipping`, `clean_url`) VALUES (5011,'49.95','49.95','00066',0,1,'2.00','',0,'');
+INSERT INTO `xlite_products` (`product_id`, `price`, `sale_price`, `sku`, `order_by`, `enabled`, `weight`, `tax_class`, `free_shipping`, `clean_url`) VALUES (5012,'79.95','79.95','00065',0,1,'4.00','',0,'');
+INSERT INTO `xlite_products` (`product_id`, `price`, `sale_price`, `sku`, `order_by`, `enabled`, `weight`, `tax_class`, `free_shipping`, `clean_url`) VALUES (5013,'1199.00','1199.00','00064',0,1,'17.64','',0,'');
+INSERT INTO `xlite_products` (`product_id`, `price`, `sale_price`, `sku`, `order_by`, `enabled`, `weight`, `tax_class`, `free_shipping`, `clean_url`) VALUES (5014,'29.95','29.95','00086',0,1,'0.10','',0,'');
+INSERT INTO `xlite_products` (`product_id`, `price`, `sale_price`, `sku`, `order_by`, `enabled`, `weight`, `tax_class`, `free_shipping`, `clean_url`) VALUES (5015,'34.95','34.95','00090',0,1,'0.10','',0,'');
+INSERT INTO `xlite_products` (`product_id`, `price`, `sale_price`, `sku`, `order_by`, `enabled`, `weight`, `tax_class`, `free_shipping`, `clean_url`) VALUES (5016,'29.95','29.95','00089',0,1,'0.10','',0,'');
+INSERT INTO `xlite_products` (`product_id`, `price`, `sale_price`, `sku`, `order_by`, `enabled`, `weight`, `tax_class`, `free_shipping`, `clean_url`) VALUES (5017,'34.95','34.95','00088',0,1,'0.10','',0,'');
+INSERT INTO `xlite_products` (`product_id`, `price`, `sale_price`, `sku`, `order_by`, `enabled`, `weight`, `tax_class`, `free_shipping`, `clean_url`) VALUES (5018,'199.00','199.00','00063',0,1,'1.06','',0,'');
+INSERT INTO `xlite_products` (`product_id`, `price`, `sale_price`, `sku`, `order_by`, `enabled`, `weight`, `tax_class`, `free_shipping`, `clean_url`) VALUES (5019,'249.00','249.00','00070',0,1,'1.06','',0,'');
+INSERT INTO `xlite_products` (`product_id`, `price`, `sale_price`, `sku`, `order_by`, `enabled`, `weight`, `tax_class`, `free_shipping`, `clean_url`) VALUES (5020,'149.00','149.00','00069',0,1,'1.00','',0,'');
+INSERT INTO `xlite_products` (`product_id`, `price`, `sale_price`, `sku`, `order_by`, `enabled`, `weight`, `tax_class`, `free_shipping`, `clean_url`) VALUES (5021,'29.00','29.00','00087',0,1,'0.10','',0,'');
+INSERT INTO `xlite_products` (`product_id`, `price`, `sale_price`, `sku`, `order_by`, `enabled`, `weight`, `tax_class`, `free_shipping`, `clean_url`) VALUES (5022,'79.00','79.00','00068',0,1,'1.00','',0,'');
+INSERT INTO `xlite_products` (`product_id`, `price`, `sale_price`, `sku`, `order_by`, `enabled`, `weight`, `tax_class`, `free_shipping`, `clean_url`) VALUES (5023,'14.95','14.95','00076',0,1,'1.00','',0,'');
+INSERT INTO `xlite_products` (`product_id`, `price`, `sale_price`, `sku`, `order_by`, `enabled`, `weight`, `tax_class`, `free_shipping`, `clean_url`) VALUES (5024,'999.00','999.00','00071',0,1,'2.27','',0,'');
+INSERT INTO `xlite_products` (`product_id`, `price`, `sale_price`, `sku`, `order_by`, `enabled`, `weight`, `tax_class`, `free_shipping`, `clean_url`) VALUES (5025,'1699.00','1699.00','00072',0,1,'4.40','',0,'');
+INSERT INTO `xlite_products` (`product_id`, `price`, `sale_price`, `sku`, `order_by`, `enabled`, `weight`, `tax_class`, `free_shipping`, `clean_url`) VALUES (5026,'599.00','599.00','00073',0,1,'4.40','',0,'');
+INSERT INTO `xlite_products` (`product_id`, `price`, `sale_price`, `sku`, `order_by`, `enabled`, `weight`, `tax_class`, `free_shipping`, `clean_url`) VALUES (5027,'2499.00','2499.00','00074',0,1,'10.00','',0,'');
+INSERT INTO `xlite_products` (`product_id`, `price`, `sale_price`, `sku`, `order_by`, `enabled`, `weight`, `tax_class`, `free_shipping`, `clean_url`) VALUES (5028,'29.00','29.00','00082',0,1,'4.40','',0,'');
+INSERT INTO `xlite_products` (`product_id`, `price`, `sale_price`, `sku`, `order_by`, `enabled`, `weight`, `tax_class`, `free_shipping`, `clean_url`) VALUES (5029,'29.95','29.95','00091',0,1,'0.10','',0,'');
+INSERT INTO `xlite_products` (`product_id`, `price`, `sale_price`, `sku`, `order_by`, `enabled`, `weight`, `tax_class`, `free_shipping`, `clean_url`) VALUES (5030,'59.95','59.95','00083',0,1,'0.32','',0,'');
 
 INSERT INTO xlite_product_translations VALUES (1,'en',4003,'Planet Express Babydoll','','','','','');
 INSERT INTO xlite_product_translations VALUES (2,'en',4004,'Digital Angel','','','','','');
@@ -248,6 +315,1113 @@ INSERT INTO xlite_product_translations VALUES (60,'en',4060,'Why Should Anyone B
 INSERT INTO xlite_product_translations VALUES (61,'en',4058,'Making the Technical Sale : A Handbook for Technical Sales Professionals [PDF]','<h5>Author: Rick Greenwald</h5>\n<p>The technical sales professional fills a valuable role in the sales cycle of a software product. This book discusses how technical sales is different from general sales, details the full range of skills needed by technical sales professionals, illuminates the typical tasks technical sales professionals handle, and explores the role these people play on the sales team. It covers basics such as presentation skills, working in a team, and time management; specifics such as creating and delivering demos, working with groups of prospects, handling objections, and competitive positioning; and the overall technical sales cycle. Sales and project managers, consultants, and technical sales professionals will benefit from the depth of training offered in this book. <em>--This text refers to an out of print or unavailable edition of this title.</em></p>\n<h6>About the Author</h6>\n<p>James F. Milberry of Easton, Pennsylvania, is principal of Milberry Consulting Group. Before founding his own business, he spent several years as a technical sales force manager, most recently with software providers Revere Inc. and Ingres Corp. He has personally trained more than 700 sales consultants in his career. He is co-author with Richard E. Greenwald of \"The Oracle WebDB Bible.\" <em>--This text refers to an out of print or unavailable edition of this title.</em></p>\n<p>&nbsp;</p>\n<h6>Product Details</h6>\n<ul>\n<li><strong>Format:</strong> Adobe Reader (PDF)</li>\n<li><strong>Printable:</strong> Yes. This title is printable</li>\n<li><strong>Mac OS Compatible:</strong> OS 9.x or later</li>\n<li><strong>Windows Compatible:</strong> Yes</li>\n<li><strong>Handheld Compatible:</strong> Yes. Adobe Reader is available for PalmOS, Pocket PC, and Symbian OS.</li>\n<li><strong>Publisher:</strong> Muska &amp; Lipman (April 1, 2001)</li>\n</ul>\n<div style=\"padding: 24px 24px 24px 21px; display: block; background-color: #ececec;\">This site is a demo site only. This product is not available for sale at our site. <br />But you can buy it at <a href=\"http://www.amazon.com/gp/product/B00005Y1OM?ie=UTF8&amp;tag=ecwid0b-20&amp;linkCode=as2&amp;camp=1789&amp;creative=9325&amp;creativeASIN=B00005Y1OM\">Amazon</a><img style=\"border:none !important; margin:0px !important;\" src=\"http://www.assoc-amazon.com/e/ir?t=ecwid0b-20&amp;l=as2&amp;o=1&amp;a=B00005Y1OM\" border=\"0\" alt=\"\" width=\"1\" height=\"1\" />, this is where we took description from.</div>','','','','');
 INSERT INTO xlite_product_translations VALUES (62,'en',4062,'Windows 2000 Server System Administration Handbook [PDF]','<h5>Author: Syngress</h5>\n<p>A complete overview of the Windows 2000 Server operating system provides key assistance for NT4 professionals in administering and supporting the system. Its detailed coverage will enable administrators to differentiate the features and technology changes from Windows NT 4.0 to Windows 2000. Twelve chapters provide detailed coverage of Active Directory, Microsoft Management Console, and new Windows 2000 hardware support, as well as information on implementing new Windows 2000 security options and upgrading networks to the new platform.</p>\n<h6>Product Details</h6>\n<ul>\n<li><strong>Format:</strong> Adobe Reader (PDF)</li>\n<li><strong>Printable:</strong> Yes. This title is printable</li>\n<li><strong>Mac OS Compatible:</strong> OS 9.x or later</li>\n<li><strong>Windows Compatible:</strong> Yes</li>\n<li><strong>Handheld Compatible:</strong> Yes. Adobe Reader is available for PalmOS, Pocket PC, and Symbian OS.</li>\n<li><strong>Publisher:</strong> Syngress (November 7, 1999)</li>\n</ul>\n<div style=\"padding: 24px 24px 24px 21px; display: block; background-color: #ececec;\">This site is a demo site only. This product is not available for sale at our site. <br />But you can buy it at <a href=\"http://www.amazon.com/gp/product/B000069290?ie=UTF8&amp;tag=ecwid0b-20&amp;linkCode=as2&amp;camp=1789&amp;creative=9325&amp;creativeASIN=B000069290\">Amazon</a><img style=\"border:none !important; margin:0px !important;\" src=\"http://www.assoc-amazon.com/e/ir?t=ecwid0b-20&amp;l=as2&amp;o=1&amp;a=B000069290\" border=\"0\" alt=\"\" width=\"1\" height=\"1\" />, this is where we took description from.</div>','','','','');
 INSERT INTO xlite_product_translations VALUES (63,'en',4063,'IgoUgo Travel Report: Chicago: The Inside Scoop from Experienced Travelers [PDF]','<h5>Author: Dawn Peterson</h5>\n<p>Few cities rival Chicago in the skyline department-anyone who\'s been there will tell you it\'s got some of the world\'s most enthralling architecture-but it doesn\'t rest on its laurels as the birthplace of the skyscraper. The capital of the Midwest also boasts a gamut of top-rated museums, restaurants, and caf&eacute;s, and innumerable bars and nightclubs that pay homage to the city\'s strong jazz and blues heritage. Factor in the city\'s legacy as the training ground for stand-up comics like Jim Belushi and Bill Murray, and its heyday as Al Capone\'s headquarters, and it\'s easy to see why the Windy City makes such an exciting getaway.</p>\n<p><span style=\"text-decoration: underline;\">IgoUgo Travel Report: Chicago</span> is not your average travel guide. Every piece of advice found in these pages comes from regular travelers and locals-not paid professionals or PR people-which means pure, unfiltered opinions on what to see (and what to avoid) during your trip. You\'ll find first-hand details on attractions and day trips, along with restaurant, nightlife, and activity recommendations in all price ranges and for all interests. You\'ll also see our contributors\' original photographs and insider tips on every page-no other travel guide can say that.</p>\n<p>IgoUgo contributors hail from all over the globe and travel just about everywhere in between. These avid travelers share their adventures and snapshots in online journals at IgoUgo.com, the world\'s premier web-based travel community. Our 350,000+ members have written over 300,000 journal entries covering more than 4,000 destinations. IgoUgo\'s emphasis on personal, real-life travel experiences has garnered a Webby Award for \"Top Travel Website\" as well as accolades from <em>Yahoo! Internet Life</em>, which voted it \"Best Travel Community.\"</p>\n<h6>Product Details</h6>\n<ul>\n<li><strong>Format:</strong> Adobe Reader (PDF)</li>\n<li><strong>Printable:</strong> Yes. This title is printable</li>\n<li><strong>Mac OS Compatible:</strong> OS 9.x or later</li>\n<li><strong>Windows Compatible:</strong> Yes</li>\n<li><strong>Handheld Compatible:</strong> Yes. Adobe Reader is available for PalmOS, Pocket PC, and Symbian OS.</li>\n<li><strong>File Size:</strong> 877 KB</li>\n<li><strong>Digital:</strong> 25 pages</li>\n<li><strong>Publisher:</strong> IgoUgo (July 1, 2005)</li>\n</ul>\n<div style=\"padding: 24px 24px 24px 21px; display: block; background-color: #ececec;\">This site is a demo site only. This product is not available for sale at our site. <br />But you can buy it at <a href=\"http://www.amazon.com/gp/product/B000089302?ie=UTF8&amp;tag=ecwid0b-20&amp;linkCode=as2&amp;camp=1789&amp;creative=9325&amp;creativeASIN=B000089302\">Amazon</a><img style=\"border:none !important; margin:0px !important;\" src=\"http://www.assoc-amazon.com/e/ir?t=ecwid0b-20&amp;l=as2&amp;o=1&amp;a=B000089302\" border=\"0\" alt=\"\" width=\"1\" height=\"1\" />, this is where we took description from.</div>','','','','');
+INSERT INTO `xlite_product_translations` VALUES (5000,'en',5000,'Altec Lansing BackBeat 906 Wireless Headphones','<p>For a superior on-the-go listening experience, the BackBeat 906 headphones give you outstanding sound quality and clear, convenient communications thanks to a built-in microphone. Even better, they include a Bluetooth adapter that lets you stream music wirelessly from your iPod or other audio device.</p>
+<ul>
+<li>Enjoy your music without headphone cords</li>
+<li>Built-in mic lets you switch to calls on your iPhone</li>
+<li>Impressively boosted bass</li>
+<li>Adjustable headset for optimal comfort</li>
+</ul>
+<h5>Overview</h5>
+<p>The BackBeat 906 stereo headphones deliver rich, full-spectrum stereo music along with Plantronics dual-mic AudioIQ voice technology for exceptional call clarity. And for the ultimate in wireless convenience, they offer a Bluetooth adapter for your iPod or other audio device.</p>
+<h6>Stay in control</h6>
+<p>Hear the world outside with a quick tap of the OpenMic button on the eartip or enhance your music using bass-boost feature. You can also adjust the volume or change tracks with other eartip controls.</p>
+<h6>Take comfort to the max</h6>
+<p>Personalize your fit with telescoping and swivel adjustments, not to mention the elimination of dangling cords.</p>
+<h6>Features</h6>
+<ul>
+<li>Wirelessly listen to music as you walk, run, work or play</li>
+<li>Separate your voice from the noise using dual-mic AudioIQ technology</li>
+<li>Hear your outside world with a quick press of the OpenMic button</li>
+<li>Enjoy the full dynamic range of your music using bass-boost feature</li>
+<li>Personalize your fit with telescoping and swivel adjustments</li>
+<li>Easily store this flexible design in your pocket or bag</li>
+</ul>
+<h6>Did you notice?</h6>
+<p>Bluetooth adapter lets you listen to music from your iPod without a headphone cord.</p>
+<h6>Apple recommends for...</h6>
+<p>Enjoying the rich stereo sound of the music on your iPod while engaged in activities where headphone cords get in the way.</p>
+<h6>Technical specifications</h6>
+<ul>
+<li>Noise isolation: Contoured, non-occluding eartips</li>
+<li>Input sensitivity: 91 dB SPL/V @ 1 kHz</li>
+<li>Frequency response: 80 Hz - 12 kHz (-10 dB)</li>
+<li>Impedance: 17 Ohms</li>
+<li>Speaker: 14mm with enhanced bass</li>
+<li>Input connector: Stereo Bluetooth adapter with 3.5mm plug</li>
+<li>Weight: 1.2 oz./34.02 g</li>
+</ul>
+<h6>What\'s in the box?</h6>
+<ul>
+<li>Altec Lansing BackBeat 906 Wireless Headphones</li>
+<li>Bluetooth adapter</li>
+<li>AC charger with Micro-USB connectors</li>
+</ul>
+<div style=\"padding: 24px 24px 24px 21px; display: block; background-color: #ececec;\">This site is a demo site only. This product is not available for sale at our site. <br />But you can buy it at <a href=\"http://www.amazon.com/gp/product/B001TK3ACA?ie=UTF8&amp;tag=ecwid0b-20&amp;linkCode=as2&amp;camp=1789&amp;creative=9325&amp;creativeASIN=B001TK3ACA\">Amazon</a><img style=\"border:none !important; margin:0px !important;\" src=\"http://www.assoc-amazon.com/e/ir?t=ecwid0b-20&amp;l=as2&amp;o=1&amp;a=B001TK3ACA\" border=\"0\" alt=\"\" width=\"1\" height=\"1\" /> or <a style=\"color: #1e7ec8; text-decoration: underline;\" title=\"Apple Store\" href=\"http://store.apple.com/us/product/TV703VC/A?fnode=MTY1NDA0Ng&amp;mco=NDM0NjI1Mw\">Apple Store</a> , this is where we took description from.</div>','','','','');
+INSERT INTO `xlite_product_translations` VALUES (5001,'en',5001,'Apple Dock Connector to USB Cable','<p>Use the Dock Connector to USB Cable to charge and sync your iPhone or iPod with your Mac or Windows PC.</p>
+<h5>Overview</h5>
+<p>This USB 2.0 cable connects your iPhone or iPod &mdash; directly or through a Dock &mdash; to your computer\'s USB port for efficient syncing and charging or to the Apple USB Power Adapter for convenient charging from a wall outlet.</p>
+<div style=\"padding: 24px 24px 24px 21px; display: block; background-color: #ececec;\">This site is a demo site only. This product is not available for sale at our site. <br />But you can buy it at <a href=\"http://www.amazon.com/gp/product/B0013K56PK?ie=UTF8&amp;tag=ecwid0b-20&amp;linkCode=as2&amp;camp=1789&amp;creative=9325&amp;creativeASIN=B0013K56PK\">Amazon</a><img style=\"border:none !important; margin:0px !important;\" src=\"http://www.assoc-amazon.com/e/ir?t=ecwid0b-20&amp;l=as2&amp;o=1&amp;a=B0013K56PK\" border=\"0\" alt=\"\" width=\"1\" height=\"1\" /> or <a style=\"color: #1e7ec8; text-decoration: underline;\" title=\"Apple Store\" href=\"http://store.apple.com/us/product/MA591G/A?fnode=MTY1NDA0OQ&amp;mco=NzcxNzE4\">Apple Store</a> , this is where we took description from.</div>','','','','');
+INSERT INTO `xlite_product_translations` VALUES (5002,'en',5002,'Apple Earphones with Remote and Mic','<h5>Overview</h5>
+<p>The Apple Earphones with Remote and Mic take the acclaimed Apple iPod Earphones and add a control capsule, located on the cable of the right earpiece, that includes a microphone and three buttons.</p>
+<p>Here\'s what you can do with this convenient remote:*</p>
+<ul>
+<li>Adjust the volume by pressing the + and - buttons.</li>
+<li>Control music and video playback &mdash; including play/pause and next/previous &mdash; by pressing the center button.</li>
+<li>Record voice memos on supported devices.</li>
+<li>Answer and end calls.</li>
+</ul>
+<h6>What&rsquo;s in the Box</h6>
+<ul>
+<li>Apple Earphones with Remote and Mic</li>
+</ul>
+<h6>Compatibility Information</h6>
+<ul>
+<li>The remote and mic are supported only by iPod nano (4th generation), iPod classic (120GB), iPod touch (2nd generation), and iPhone 3G S. The remote is supported by iPod shuffle (3rd generation). Audio is supported by all iPod models. </li>
+<li>Requires software version 1.0.3 for iPod nano (4th generation), 2.0.1 for iPod classic (120GB), and 2.2 or later for iPod touch (2nd generation). </li>
+</ul>
+<div style=\"padding: 24px 24px 24px 21px; display: block; background-color: #ececec;\">This site is a demo site only. This product is not available for sale at our site. <br />But you can buy it at <a href=\"http://www.amazon.com/gp/product/B001NABJ56?ie=UTF8&amp;tag=ecwid0b-20&amp;linkCode=as2&amp;camp=1789&amp;creative=9325&amp;creativeASIN=B001NABJ56\">Amazon</a><img style=\"border:none !important; margin:0px !important;\" src=\"http://www.assoc-amazon.com/e/ir?t=ecwid0b-20&amp;l=as2&amp;o=1&amp;a=B001NABJ56\" border=\"0\" alt=\"\" width=\"1\" height=\"1\" /> or <a style=\"color: #1e7ec8; text-decoration: underline;\" title=\"Apple Store\" href=\"http://store.apple.com/us/product/MB770G/A?fnode=MTY1NDA3NA&amp;mco=MTgwNDU3Mw\">Apple Store</a> , this is where we took description from.</div>','','','','');
+INSERT INTO `xlite_product_translations` VALUES (5003,'en',5003,'Apple In-Ear Headphones with Remote and Mic','<p>Hear every detail of your music every time you tune in with the Apple In-Ear Headphones with Remote and Mic. They offer pro audio performance and impressive sound isolation, and convenient buttons let you adjust the volume, control music and video playback and even answer or end calls on your iPhone.</p>
+<h5>Overview</h5>
+<h6>Rediscover your music.</h6>
+<p>Put on the Apple In-Ear Headphones, select your favorite track, and hear musical details you never knew existed. It\'s almost like you\'re experiencing your music for the first time.</p>
+<h6>Two drivers in each earpiece.</h6>
+<p>Each earpiece contains two separate high-performance drivers &mdash; a woofer and a tweeter &mdash; resulting in rich, detailed, and accurate sound reproduction and amazing bass response for all types of music.</p>
+<h6>Impressive sound isolation.</h6>
+<p>Choose from three sizes of soft, silicone ear tips for a comfortable, stable fit. When inserted in your ear, they create a seal that blocks outside noise so you can get the most from your music.</p>
+<h6>Take control.</h6>
+<p>The control capsule located on the cable of the right earpiece includes a microphone and three buttons. Here\'s what you can do with this convenient remote:*</p>
+<ul>
+<li>Adjust volume by pressing the + and - buttons.</li>
+<li>Control music and video playback &mdash; including play/pause and next/previous &mdash; by pressing the center button.</li>
+<li>Record voice memos on supported devices.</li>
+<li>Answer and end calls.</li>
+</ul>
+<h6>Steel mesh caps for protection.</h6>
+<p>Stainless steel mesh caps protect the precision acoustic components from dust and debris. You can remove the caps for cleaning or replace them with an extra set that\'s included in the box.</p>
+<h6>What&rsquo;s in the Box</h6>
+<ul>
+<li>Apple In-Ear Headphones with Remote and Mic</li>
+<li>Carrying case</li>
+<li>Three sets of silicone ear tips (small, medium, large)</li>
+<li>Two replacement mesh caps</li>
+</ul>
+<h6>Technical Specifications</h6>
+<ul>
+<li>Frequency response: 5Hz to 21kHz</li>
+<li>Impedance (at 100Hz): 23 ohms</li>
+<li>Sensitivity (at 100Hz): 109 dB SPL/mW</li>
+<li>Drivers: Custom two-way balanced armature (woofer and tweeter in each earpiece)</li>
+</ul>
+<h6>Length and Weight</h6>
+<ul>
+<li>Cable length: 1065 mm from audio jack to splitter; 330 mm to earpiece</li>
+<li>Weight: 0.4 ounce (10.2 grams)</li>
+</ul>
+<h6>Connector</h6>
+<ul>
+<li>Four-conductor 3.5 mm audio jack</li>
+</ul>
+<h6>Compatibility Information</h6>
+<p>The remote and mic are supported only by iPod nano (4th generation), iPod classic (120GB), iPod touch (2nd generation), and iPhone 3G S. The remote is supported by iPod shuffle (3rd generation). Audio is supported by all iPod models.</p>
+<p>Requires software version 1.0.3 for iPod nano (4th generation), 2.0.1 for iPod classic (120GB), and 2.2 or later for iPod touch (2nd generation).</p>
+<div style=\"padding: 24px 24px 24px 21px; display: block; background-color: #ececec;\">This site is a demo site only. This product is not available for sale at our site. <br />But you can buy it at <a href=\"http://www.amazon.com/gp/product/B001NABJ56?ie=UTF8&amp;tag=ecwid0b-20&amp;linkCode=as2&amp;camp=1789&amp;creative=9325&amp;creativeASIN=B001NABJ56\">Amazon</a><img style=\"border:none !important; margin:0px !important;\" src=\"http://www.assoc-amazon.com/e/ir?t=ecwid0b-20&amp;l=as2&amp;o=1&amp;a=B001NABJ56\" border=\"0\" alt=\"\" width=\"1\" height=\"1\" /> or <a style=\"color: #1e7ec8; text-decoration: underline;\" title=\"Apple Store\" href=\"http://store.apple.com/us/product/MA850G/A?fnode=MTY1NDA3NA&amp;mco=MTczMjUyMw\">Apple Store</a> , this is where we took description from.</div>','','','','');
+INSERT INTO `xlite_product_translations` VALUES (5004,'en',5004,'Apple iPod touch 32 GB','<h5>Technical Details</h5>
+<ul>
+<li>This player is the iPod touch, not the Apple iPhone</li>
+<li>32 GB capacity for 7,000 songs, 10,000 photos, or 40 hours of video</li>
+<li>Up to 36 hours of music playback or 6 hours of video playback when fully charged</li>
+<li>3.5-inch widescreen multi-touch display with 480-by-320-pixel resolution</li>
+<li>Supported audio formats: AAC, Protected AAC, MP3, MP3 VBR, Audible, Apple Lossless, AIFF, and WAV; supported video formats: H.264, MPEG-4; supported image file types: JPEG, BMP, GIF, TIFF, PSD (Mac only), and PNG</li>
+</ul>
+<h5>Product Details</h5>
+<ul>
+<li><strong>Product Dimensions: </strong>3 x 1.2 x 5 inches ; 8 ounces </li>
+<li><strong>Shipping Weight:</strong> 1 pounds</li>
+<li><strong>Shipping: </strong>Currently, item can be shipped only within the U.S.</li>
+<li><strong>ASIN:</strong> B001FA1O0E</li>
+<li><strong>Item model number:</strong> MB533LL/A</li>
+</ul>
+<h5>Product Description</h5>
+<p>The iPod touch has always been an amazing iPod. And with its groundbreaking technologies--including a Multi-Touch screen, the accelerometer, and 3D graphics--and access to hundreds of games, iPod touch puts an amazing gaming experience in the palm of your hand. It comes in 8 GB, 16 GB, and 32 GB models with new volume controls and a built-in speaker. Play hours of music. Create a Genius Playlist of songs that go great together. Watch a movie. Surf the web. View rich HTML email. Find your location and get directions with Google Maps. Browse YouTube videos. And shop the App Store for games and applications.</p>
+<p><img src=\"http://app.ecwid.com/image/5641?ownerid=1003\" border=\"0\" alt=\"\" /></p>
+<h6>Music</h6>
+<p>Music on iPod touch not only sounds amazing, it looks amazing, too.</p>
+<p><strong>Touch Your Music</strong><br />Remember what it felt like to flip through your CD or record collection? Cover Flow brings that feeling back. Just turn iPod touch on its side and flick through your music to find the album you want to hear. Tap the cover to flip it over and display a track list. Tap again to start the music. Even view the lyrics while you\'re listening.</p>
+<p><strong>A Musical Genius</strong><br />Say you\'re listening to a song you really like and want to hear other tracks that go great with it. The new Genius feature finds the songs in your library that go great together and makes a Genius Playlist for you. You can listen to the playlist right away, save it for later, or even refresh it and give it another go. Count on Genius to create a mix you wouldn\'t have thought of yourself.</p>
+<p><strong>Fill It Up</strong><br />Fill up your iPod touch with audio and video from your iTunes library. All you have to do is choose the playlists, videos, and other content you want to sync, and iTunes does the rest.</p>
+<h6>Movies and TV Shows</h6>
+<p>Movies and TV shows have never looked this good on a portable device.</p>
+<p><strong>Everything\'s a Must-see</strong><br />Carry hours of video with you, and watch it on a crisp, clear 3.5-inch widescreen color display. Need ideas? From Hollywood blockbusters to independent favorites, there\'s something for everyone at the iTunes Store. Download and watch movies with a few clicks. Prefer TV shows? Buy a single episode or an entire season\'s worth all at once.</p>
+<p><strong>In Control</strong><br />While watching your video, tap the display to bring up the onscreen controls. You can play/pause, view by chapter, and adjust the volume. You also can use the new volume controls on the left side of iPod touch. Want to switch between widescreen and full screen? Simply tap the display twice.</p>
+<p><strong>Sync and Go</strong><br />Need some entertainment for your next flight or road trip? With iTunes on your Mac or PC, you can sit at your computer and choose the movies and TV shows you want to sync to your iPod touch.</p>
+<h6>Games</h6>
+<p>With its groundbreaking technologies, iPod touch puts an amazing gaming experience in the palm of your hand.</p>
+<p><strong>Get in the Game</strong><br />Developers all over the world are creating exciting games unlike anything you\'ve ever seen on an iPod or mobile device. Many games come alive with stunning 3D graphics and immerse you in the action with the advanced technologies in iPod touch. There\'s even a built-in speaker, so you can hear all the action.</p>
+<p><strong>Fingertip Control</strong><br />Many games for iPod touch use Multi-Touch to give you precise, fingertip control over game elements. Use your finger to drag your pieces around the board in chess or dice games. Or pinch to enlarge or shrink your view, rotate your character left or right, or just tap to make a selection.</p>
+<p><strong>Tilt, Turn, and Go</strong><br />The built-in accelerometer actually responds to your movements, so you can tilt and turn your iPod touch to control the action. It\'s perfect for racing games--where your entire iPod touch acts as a steering wheel--and for tap-and-tilt games like Super Monkey Ball, in which your character rolls to your movements.</p>
+<p><strong>The App Store</strong><br />Even if games aren\'t your thing, there\'s an iPod touch application for you. Thousands of applications in almost every category--entertainment, social networking, sports, photography, reference, and travel--are a tap away at the App Store.</p>
+<h6>iTunes Wi-Fi Music Store</h6>
+<p>Discover new music anywhere.</p>
+<p><strong>Buy on the Fly</strong><br />The built-in wireless capability in iPod touch gives you access to the iTunes Wi-Fi Music Store, where you can choose from millions of songs with a tap. Browse New Releases, What\'s Hot, and Genres. Take a look at Top Songs and Top Albums. Or find exactly what you\'re looking for with a quick search. Play a 30-second preview of any song, then tap once to buy it. Your music starts downloading instantly, and you can keep tabs on its progress by tapping the Downloads button.</p>
+<p><strong>Sync it Back</strong><br />When you connect iPod touch to your computer, the music you bought on-the-go syncs to your iTunes library. If you\'ve partially downloaded a song to iPod touch, your computer completes the download automatically.</p>
+<p><strong>iPod touch at Starbucks</strong><br />If you have an iPod touch, an iPhone, or a computer with the latest version of iTunes, you get free Wi-Fi access to the iTunes Store and to Starbucks\' Now Playing content. Stroll into a participating Starbucks, and you\'re connected automatically.</p>
+<h6>Home Screen</h6>
+<p>Get instant access to whatever you need on your iPod touch.</p>
+<p><strong>Customize Your Home Screen</strong><br />Arrange the icons on your Home screen any way you want. Even move them to another Home screen. Create up to nine Home screens for quick access to the games and applications you download from the App Store and to your Safari Web Clips.</p>
+<p><strong>Go Home</strong><br />No matter where you are on iPod touch, you can press the Home button to return to the Home screen. You can go back to what you were doing at any time.</p>
+<p><strong>Add Apps, Web Clips, and More</strong><br />Whenever you download an application from the App Store, a new icon appears on your Home screen. And if you check the same websites every day, just create Web Clips and you can access the sites directly from your Home screen with a single tap. Not happy with how they\'re organized? Reorder them any way you want by dragging them around the screen.</p>
+<p><img src=\"http://app.ecwid.com/image/5647?ownerid=1003\" border=\"0\" alt=\"\" /></p>
+<h6>Safari</h6>
+<p>iPod touch features Safari, the most advanced web browser ever on a portable device.</p>
+<p><strong>Browse Anywhere</strong><br />The iPod touch is the only iPod with 802.11b/g wireless access to the web. Whenever you\'re connected via Wi-Fi, you can access your favorite websites to read news, check scores, pay bills, and go shopping.</p>
+<p><strong>Search and Find</strong><br />iPod touch syncs your bookmarks from your PC or Mac, so you can access favorite sites quickly. It has Google and Yahoo! search built in, so it\'s easy to find what you\'re looking for on the web.</p>
+<p><strong>Zoom with a View</strong><br />Get a closer look at any web page by zooming in and out with a tap or a pinch of the Multi-Touch display. View websites in portrait or landscape. Rotate iPod touch 90 degrees and the website rotates, too.</p>
+<p><strong>Clip it.</strong><br />If you check a website frequently--a favorite newspaper, blog, or sports site--why not create a Home screen icon for it? Make Web Clips with Safari, and your favorite sites are always just a tap away.</p>
+<p><img src=\"http://app.ecwid.com/image/5648?ownerid=1003\" border=\"0\" alt=\"\" /></p>
+<h6>Mail</h6>
+<p>Email on iPod touch looks and works just like email on your computer.</p>
+<p><strong>See it All</strong><br />iPod touch supports rich HTML email, so images and photos appear alongside text. And you see email attachments in their original formats, not stripped-down versions. Rotate, zoom, and pan in more than a dozen standard file and image formats, including PDF; Microsoft Word, Excel, and PowerPoint; and iWork.</p>
+<p><strong>Access it All</strong><br />Access your email from popular providers--including MobileMe, Microsoft Exchange, Yahoo! Mail, Google Gmail, and AOL--and most industry-standard IMAP and POP mail systems.</p>
+<p><strong>Send Fast</strong><br />iPod touch recognizes email addresses in different applications. If you run across an email address on a web page or a map listing, for example, just tap it; iPod touch opens a new message and addresses it for you.</p>
+<p><strong>Type Smart</strong><br />With its built-in dictionary, the intelligent iPod touch keyboard predicts and suggests words as you type, making it fast and easy to write email.</p>
+<p><img src=\"http://app.ecwid.com/image/5649?ownerid=1003\" border=\"0\" alt=\"\" /></p>
+<h6>Maps</h6>
+<p>When you\'re connected via Wi-Fi, you can get directions, find local businesses, and check traffic.</p>
+<p><strong>Find Yourself</strong><br />iPod touch finds your location using known Wi-Fi hotspots. It also finds points of interest by keyword: Search for \"coffee\" and iPod touch shows you every cafe nearby.</p>
+<p><strong>Get Directions</strong><br />Just type in an address and get directions from wherever you are. View a list of turn-by-turn directions, or see a highlighted map route. You also can mark specific locations and find the best route between them.</p>
+<p><strong>Enjoy the View</strong><br />Just like Google Maps on your computer, Maps on iPod touch lets you switch between views of Google map data, satellite images, and a hybrid of both. Multi-Touch makes the difference. Tap to zoom, pan, and change your view on the move.</p>
+<p><strong>See Traffic</strong><br />Maps on iPod touch shows you live traffic information, indicating traffic speed along your route in easy-to-read green, red, and yellow highlights.</p>
+<p><img src=\"http://app.ecwid.com/image/5650?ownerid=1003\" border=\"0\" alt=\"\" /></p>
+<h6>YouTube</h6>
+<p>Love to watch the latest YouTube videos? iPod touch gives you all the fun of the web\'s best videos--pocket-size.</p>
+<p><strong>Share from Anywhere</strong><br />Email your favorite videos to your favorite people. Tap \"Share\" on any YouTube video detail page, and iPod touch creates an email with the video link already in it.</p>
+<p><strong>Watch What You Want</strong><br />Explore Featured, Most Viewed, Most Recent, and Top Rated videos. Or search for the video you want with a keyword search. Once you find what you\'re looking for, bookmark it to watch later.</p>
+<h6>Photos</h6>
+<p>Carry up to 25,000 of your favorite photos everywhere.</p>
+<p><img src=\"http://app.ecwid.com/image/5651?ownerid=1003\" border=\"0\" alt=\"\" /></p>
+<p><strong>Share Photos</strong><br />Show thousands of photos from the palm of your hand. Flick to scroll through thumbnails. Tap to view full screen. Rotate to see a photo in landscape. Pinch to zoom in or out. Play slideshows, complete with music and transitions. Email a photo to a friend, set it as your wallpaper, or share it in a MobileMe Gallery.</p>
+<p><strong>Save Photos</strong><br />If you receive a great image in an email, save it to your photo library on iPod touch. Once there, it acts just like any other photo. You can set it as your wallpaper, share it on the web, or pass it on.</p>
+<p><strong>Sync Photos</strong><br />iPod touch uses iTunes to sync photos you have in iPhoto on a Mac or Adobe Photoshop Elements and Adobe Photoshop Album on a PC. Just choose which photos or albums to sync to your iPod touch, then you can look at them--and share them--anywhere you go.</p>
+<p><img src=\"http://app.ecwid.com/image/5652?ownerid=1003\" border=\"0\" alt=\"\" /></p>
+<h6>Calendar</h6>
+<p>With iPod touch, it\'s easy to make plans and stay on schedule.</p>
+<p><strong>Add Events</strong><br />Keep your schedule at your fingertips with iPod touch. Add events to your calendar. Set a custom alert. Write a note or two. Manage multiple color-coded calendars. And do it all with just a few taps.</p>
+<p><strong>Stay in Sync</strong><br />Connect iPod touch to your computer, and the events that you\'ve created on-the-go automatically sync to Microsoft Outlook on a PC or iCal on a Mac. And all the events you\'ve added on your computer sync to iPod touch.</p>
+<p><strong>Three Ways to View</strong><br />iPod touch gives you three ways to view your calendars. List view shows you all your appointments in the coming days as a comprehensive list, which you can scroll up and down. Day view displays one day\'s worth of appointments visually. And Month view offers an at-a-glance look at an entire month.</p>
+<h6>Contacts</h6>
+<p>Put names, email addresses, phone numbers, and more at your fingertips.</p>
+<p><img src=\"http://app.ecwid.com/image/5653?ownerid=1003\" border=\"0\" alt=\"\" /></p>
+<p><strong>Make Contact</strong><br />Build your contacts list on your Mac with Address Book or on your PC with Microsoft Outlook, then sync everything to your iPod touch using iTunes. You also can add contact information directly to your iPod touch from maps, web pages, and email. Next time you sync, your computer is updated, too.</p>
+<p><strong>Search Contacts</strong><br />If you have a lot of contacts, a quick search shows you a list of matching names. Or you can scroll up and down your entire list to find the right contact. Want to send them an email? Just tap an email address and the Mail application opens automatically.</p>
+<p><strong>Organized by Groups</strong><br />If you keep your contacts organized into groups--such as co-workers, friends, family, and so on--iPod touch will, too. And iPod touch can hold more than just names, email addresses, and phone numbers. You also can track birthdays, websites, nicknames, and notes.</p>
+<h6>Stocks, Weather, and Notes</h6>
+<p>Stay on top of it all.</p>
+<p><strong>Check Stocks</strong><br />Stocks on iPod touch shows you performance information for any stock you choose. When you want more details about a stock\'s performance, tap the Y! for instant access to Yahoo! Finance.</p>
+<p><strong>Get Weather</strong><br />Check worldwide weather at home or away. Add the cities you want, then flick back and forth to get six-day forecasts for each. Tap the Y! to open a Yahoo! city guide that shows you what\'s happening, rain or shine.</p>
+<p><strong>Take Notes</strong><br />Forget the pen and paper. Use Notes on iPod touch to write yourself a quick note and keep important information on hand. There\'s even a built-in email function that lets you send notes to yourself or others.</p>
+<h6>Calculator</h6>
+<p>iPod touch\'s calculator helps you settle the restaurant bill or keep track of your budget.</p>
+<p><strong>Calculate Simply</strong><br />When you tap the Calculator icon, iPod touch shows you a simple application with addition, subtraction, multiplication, division, and memory functions. Use it just as you would a pocket calculator.</p>
+<p><strong>Calculate Scientifically</strong><br />Your simple calculator doubles as a sophisticated scientific calculator. Just rotate it to landscape to access dozens of functions for solving complex science and math problems.</p>
+<p><img src=\"http://app.ecwid.com/image/5654?ownerid=1003\" border=\"0\" alt=\"\" /></p>
+<h6>Nike + iPod</h6>
+<p>Get the most out of your workout.</p>
+<p><strong>Tune Your Run</strong><br />iPod touch now includes built-in Nike + iPod support. Just slip the Nike + iPod Sensor (available separately) into your Nike+ shoe and start your run. The sensor communicates wirelessly with your iPod touch, tracking your time, distance, and calories burned. It even gives you voice feedback on your progress.</p>
+<p><strong>Tune Your Cardio Workout</strong><br />This feature also works with new cardio equipment available in many fitness centers. Just look for treadmills, ellipticals, stair steppers, and stationary bikes that are Nike + iPod compatible.</p>
+<p><strong>Sync with Nikeplus.com</strong><br />When you get back to your computer, sync your iPod touch via iTunes and transfer your exercise data to nikeplus.com, where you can track your workouts, set goals, and challenge friends.</p>
+<h6>Multi-Touch</h6>
+<p>iPod touch features the same revolutionary interface as iPhone.</p>
+<p><strong>Glide, Flick, Pinch</strong><br />Built to take full advantage of the large 3.5-inch display, the Multi-Touch touchscreen interface lets you control everything using only your fingers. So you can glide through albums with Cover Flow, flick through photos and enlarge them with a pinch, zoom in and out on a section of a web page, and control game elements precisely.</p>
+<p><strong>How it Works</strong><br />The Multi-Touch display layers a protective shield over a capacitive panel that senses your touch using electrical fields. It then transmits that information to the LCD screen below it. iPod touch software enables the flick, tap, and pinch.</p>
+<p><strong>Type with the Touchscreen Keyboard</strong><br />iPod touch features an intelligent touchscreen keyboard perfect for browsing the web in Safari, getting directions on a map, searching for videos on YouTube, finding music on the iTunes Wi-Fi Music Store, or adding new contacts. It analyzes keystrokes to suggest words as you type and correct spelling errors automatically. And because it\'s software based, it changes its keys to support typing in multiple languages.</p>
+<h6>Accelerometer</h6>
+<p>iPod touch responds to motion using a built-in accelerometer.</p>
+<p><strong>Responds to Movement</strong><br />iPod touch detects when you rotate it from portrait to landscape, then automatically changes the contents of the display. So you immediately see the entire width of a web page, view a photo in its proper aspect ratio, or control a game using only your movements.</p>
+<p><strong>How it Works</strong><br />The accelerometer inside iPod touch uses three elements: a silicon mass, a set of silicon springs, and an electrical current. The silicon springs measure the position of the silicon mass using the electrical current. Rotating iPod touch causes a fluctuation in the electrical current passing through the silicon springs. The accelerometer registers these fluctuations and tells iPod touch to adjust the display accordingly.</p>
+<p><strong>Perfect for Gaming</strong><br />Accelerometer technology really shines when you play games because it immerses you in the action. It\'s perfect for racing games--where your entire iPod touch acts as a steering wheel--and for tap-and-tilt games like Super Monkey Ball, in which your character responds to your every movement.</p>
+<h6>Wireless</h6>
+<p>Connect iPod touch to the Internet anywhere there\'s a wireless network.</p>
+<p><strong>Connect Automatically</strong><br />iPod touch locates nearby wireless hotspots, including protected networks. If you\'ve never used a particular network, it asks you to enter a password the first time, and it remembers the password from then on. So the next time you\'re within range, it connects automatically.</p>
+<p><strong>Surf\'s Up</strong><br />Now you can send email from a coffee shop. Surf the web at the airport. Shop for games from your couch. Browse, buy, and download music from the iTunes Wi-Fi Music Store at select Starbucks locations or other wireless hotspots in your area.</p>
+<h6>Read Kindle Books on the iPod touch</h6>
+<ul>
+<li>No Kindle required. </li>
+<li>Get the best reading experience available on your iPhone or iPod touch. </li>
+<li>No Kindle required. </li>
+<li>Access your Kindle books even if you don\'t have your Kindle with you. </li>
+<li>Automatically synchronizes your last page read between devices with Amazon Whispersync. </li>
+<li>Adjust the text size, add bookmarks, and view the annotations you created on your Kindle. </li>
+</ul>
+<h6>Shop for Books on the Kindle Store on Your iPod touch</h6>
+<ul>
+<li>Buy a book from the Kindle Store, optimized for Safari, on your iPod touch or iPhone and get it auto-delivered wirelessly. </li>
+<li>Search and browse more than 275,000 books, including more than 107 of 112 <em>New York Times</em> bestsellers. </li>
+<li>Find <em>New York Times</em> bestsellers and new releases for $9.99, unless marked otherwise. </li>
+<li>Get free book samples; read the first chapter for free before you decide to buy. </li>
+<li>Books you purchase also can be read on a Kindle. </li>
+<li>Kindle newspapers, magazines, and blogs are not currently available on the iPod touch or iPhone. </li>
+</ul>
+<h6>What\'s in the Box</h6>
+<p>iPod touch 32 GB, earphones, USB 2.0 cable, dock adapter, polishing cloth, quick start guide</p>
+<div style=\"padding: 24px 24px 24px 21px; display: block; background-color: #ececec;\">This site is a demo site only. This product is not available for sale at our site. <br />But you can buy it at <a href=\"http://www.amazon.com/gp/product/B002M3SOC4?ie=UTF8&amp;tag=ecwid0b-20&amp;linkCode=as2&amp;camp=1789&amp;creative=9325&amp;creativeASIN=B002M3SOC4\">Amazon</a><img style=\"border:none !important; margin:0px !important;\" src=\"http://www.assoc-amazon.com/e/ir?t=ecwid0b-20&amp;l=as2&amp;o=1&amp;a=B002M3SOC4\" border=\"0\" alt=\"\" width=\"1\" height=\"1\" />, this is where we took description from.</div>','','','','');
+INSERT INTO `xlite_product_translations` VALUES (5005,'en',5005,'Apple iPod touch 8 GB','<h5>Technical Details</h5>
+<ul>
+<li>This player is the iPod touch, not the Apple iPhone</li>
+<li>Upgrade your player with the iPhone 2.0 Software Update for iPod touch via iTunes for an additional fee</li>
+<li>8 GB of storage provides approximately 1,750 songs; includes earphones, USB cable, dock adapter/connector, polishing cloth, and stand</li>
+<li>3.5-inch widescreen multi-touch display; battery life provides up to 22 hours of music and up to 5 hours of video</li>
+<li>New applications include email; maps; and widgets for weather, notes, and stocks</li>
+</ul>
+<h5>Product Details</h5>
+<ul>
+<li><strong>Product Dimensions: </strong>3.5 x 1.5 x 5.8 inches ; 2 pounds </li>
+<li><strong>Shipping Weight:</strong> 1 pounds </li>
+<li><strong>Shipping: </strong>Currently, item can be shipped only within the U.S.</li>
+<li><strong>ASIN:</strong> B0012JCYPC</li>
+<li><strong>Item model number:</strong> MA623LL/B</li>
+</ul>
+<h5>Product Description</h5>
+<p>iPod touch has always been an amazing iPod. With great new applications, now iPod touch is even better. Watch a movie you rented from iTunes. View rich HTML email with graphics and photos displayed inline. Open PDF, Microsoft Word, and Microsoft Excel attachments. With Maps, find your location and get directions from there. See where you are on a map, a satellite image, or a combination of both. Make Web Clips for your Home screen so you can visit your favorite websites in just one tap. Fill up to nine Home screen pages with Web Clips and arrange them however you like. Browse YouTube videos, follow your stocks, check the weather, and take notes. With the new iPod touch, tap into even more.</p>
+<p><img src=\"http://app.ecwid.com/image/5619?ownerid=1003\" border=\"0\" alt=\"\" align=\"top\" /></p>
+<h6>Music, Movies, and More</h6>
+<p><br />Flick through album covers and find your music. Download and watch your favorite movies, rentals, TV shows, and more from the iTunes Store. Tap into thousands of photos. All using incredible multi-touch technology on a beautiful 3.5-inch display.</p>
+<p><strong>Music</strong><br />If a picture says a thousand words, think of what all the album art in your collection might say. With Cover Flow on iPod touch, flick through your music to find the album you want to hear. When you do, just tap the cover to flip it over and display a track list. Another tap starts the music. Even view the lyrics while you\'re listening to the track.</p>
+<p><strong>Video</strong><br />The 3.5-inch display gives you video like you\'ve never seen on a portable device. Watch your favorite movie or rental from the iTunes Store. Catch up on TV shows anywhere. Enjoy video podcasts. Play music videos. All using multi-touch technology. With a tap, bring up onscreen controls to play/pause and view by chapter. Turn your iPod touch to switch between widescreen or full screen.</p>
+<p><strong>Photos</strong><br />iPod touch holds up to 20,000 photos you sync via iTunes. Flick to scroll through thumbnails. Tap to view full screen. Rotate for landscape format. Or perform some sleight of hand by opening two fingers to zoom in. You can even play slideshows, complete with music and transitions. Set any photo as your wallpaper to personalize your iPod touch . . . with a touch.</p>
+<p><img src=\"http://app.ecwid.com/image/5620?ownerid=1003\" border=\"0\" alt=\"\" align=\"top\" /></p>
+<p><strong>iTunes Wi-Fi Music Store</strong><br />With iPod touch, discover new music anywhere. Its built-in wireless capability gives you access to the iTunes Wi-Fi Music Store, where you can buy songs with a tap. Browse New Releases, What\'s Hot, Genres, and Top 10 songs. Or find exactly what you\'re looking for with a quick search. Tap a song to preview it, tap Buy to purchase it. Even redeem your iTunes gift cards and gift certificates. All from anywhere you happen to be.</p>
+<p><strong>Starbucks Music</strong><br />You walk into a Starbucks. Order your latte. While you wait, you hear a song wafting from the loudspeakers. You love it. So you get out your iPod touch and buy it over Wi-Fi. Just like that. The iTunes Wi-Fi Music Store on iPod touch tells you what\'s playing in select Starbucks and lets you buy it along with other featured Starbucks content. So you can sip, shop, and listen.</p>
+<p><strong>Home Screen</strong><br />Make the iPod touch Home screen your own. Change what\'s in the Dock. Rearrange the icons. And make room for even more. You can add up to eight Home screen pages and fill them with Web Clips.</p>
+<h6>Internet</h6>
+<p><br />Surf the web. Send email. Get directions and find your location with Maps. Check stocks, weather, and more. iPod touch is not just an amazing iPod. It\'s the Internet in your pocket.</p>
+<p><strong>Safari</strong><br />iPod touch is the only iPod with wireless access to the web. Safari is built in, so you see websites the way they were designed to be seen. Search the web using the touchscreen keyboard. Zoom in and out by tapping the multi-touch display. Switch between portrait or landscape view, depending on how you hold your iPod touch. Sync your bookmarks. Better yet, add them to your Home screen. iPod touch can automatically create a Web Clip on your Home screen from any of your favorite websites. So just one tap takes you directly there.</p>
+<p><strong>YouTube</strong><br />Got a bit of a YouTube addiction? iPod touch feeds it from anywhere with a special YouTube player built right in. Watch featured videos, check out the most viewed, search for something specific, then bookmark your favorites for future reference. It\'s all the fun of YouTube--pocket-size.</p>
+<p><strong>Mail</strong><br />iPod touch is the first iPod with Mail. And it\'s the best email you\'ve ever seen on a handheld device. This mail application lets you view rich HTML email with graphics and photos displayed inline, as well as PDF, Microsoft Word, and Microsoft Excel attachments.</p>
+<p><strong>Maps</strong><br />Get directions and check traffic with Google Maps. Even find yourself, wherever you are. Using some local Wi-Fi networks (if Wi-Fi is turned on), iPod touch finds your approximate location and gives directions from there. Mark specific locations, find the best route between them, and search for points of interest along the way. With a hybrid map and satellite view, you can see major street names on top of satellite images.</p>
+<p><strong>Widgets</strong><br />Widgets are small, incredibly handy applications you can use every day. Three of the most useful widgets now live front and center on your Home screen:</p>
+<table border=\"0\">
+<tbody>
+<tr>
+<td><img src=\"http://app.ecwid.com/image/5623?ownerid=1003\" alt=\"\" /><br /><strong>Weather</strong><br />Get a five-day weather forecast, including highs and lows, for cities around the world. Save your favorite locations so you can check the weather anytime.</td>
+<td><img src=\"http://app.ecwid.com/image/5624?ownerid=1003\" alt=\"\" /><br /><strong>Notes</strong><br />Take notes, make a to-do list, or jot down a reminder using the easy-to-use touch keypad. Then save or email them.</td>
+<td><img src=\"http://app.ecwid.com/image/5625?ownerid=1003\" alt=\"\" /><br /><strong>Stocks</strong><br />Check your stocks and track the market over one day, one week, one month, three months, six months, one year, or two years.</td>
+</tr>
+</tbody>
+</table>
+<h6>High Technology</h6>
+<p><br />iPod touch features the same revolutionary interface as iPhone, the most advanced software ever engineered, and state-of-the-art technology. With the multi-touch display, you can control everything using only your fingers. If you rotate your iPod touch from portrait to landscape, the accelerometer automatically changes the way the content is displayed. And with wireless technology, you can connect to the Internet from any Wi-Fi network, anywhere you are.</p>
+<p><strong>Multi-touch</strong><br />iPod touch features the same revolutionary interface as iPhone. Built to take full advantage of the large 3.5-inch display, the multi-touch interface lets you control everything using only your fingers. So you can glide through albums with Cover Flow, flick through photos and enlarge them with a pinch, or zoom in and out on a section of a web page. And iPod touch features a touchscreen QWERTY keyboard perfect for browsing the web in Safari, getting directions on a map, searching for videos on YouTube, finding music on the iTunes Wi-Fi Music Store, or adding new contacts.</p>
+<p><strong>Ambient Light Sensor</strong><br />The iPod touch display has an ambient light sensor that automatically adjusts brightness to suit the ambient light in your surroundings. The result? A better experience for you and battery-saving efficiency for iPod touch.</p>
+<p><strong>Wireless</strong><br />Connect to the Internet anywhere there\'s a Wi-Fi network. Send email from a coffee shop. Surf the web at the airport. Browse, buy, and download music from the iTunes Wi-Fi Music Store at select Starbucks locations or other wireless hot spots in your area. iPod touch finds wireless networks and connects you to the Internet.</p>
+<p>&nbsp;</p>
+<p><strong>Accelerometer</strong><br />An accelerometer detects when you rotate iPod touch from portrait to landscape, then automatically changes the contents of the display, so you immediately see the entire width of a web page, your music in Cover Flow, or a photo in its proper aspect ratio.</p>
+<p><img src=\"http://app.ecwid.com/image/5629?ownerid=1003\" border=\"0\" alt=\"\" /></p>
+<h6>Read Kindle Books on the iPod touch</h6>
+<ul>
+<li>No Kindle required. </li>
+<li>Get the best reading experience available on your iPhone or iPod touch. </li>
+<li>No Kindle required. </li>
+<li>Access your Kindle books even if you don\'t have your Kindle with you. </li>
+<li>Automatically synchronizes your last page read between devices with Amazon Whispersync. </li>
+<li>Adjust the text size, add bookmarks, and view the annotations you created on your Kindle. </li>
+</ul>
+<p><strong>Shop for Books on the Kindle Store on Your iPod touch</strong></p>
+<ul>
+<li>Buy a book from the Kindle Store, optimized for Safari, on your iPod touch or iPhone and get it auto-delivered wirelessly. </li>
+<li>Search and browse more than 275,000 books, including more than 107 of 112 <em>New York Times</em> bestsellers. </li>
+<li>Find <em>New York Times</em> bestsellers and new releases for $9.99, unless marked otherwise. </li>
+<li>Get free book samples; read the first chapter for free before you decide to buy. </li>
+<li>Books you purchase also can be read on a Kindle. </li>
+<li>Kindle newspapers, magazines, and blogs are not currently available on the iPod touch or iPhone.</li>
+</ul>
+<h6>What\'s in the Box</h6>
+<p><br />8 GB iPod touch, earphones, USB 2.0 cable, dock adapter, polishing cloth, stand, quick start guide.</p>
+<div style=\"display: block; padding: 24px 24px 24px 21px; background-color: #ececec;\">This site is a demo site only. This product is not available for sale at our site. <br />But you can buy it at <a href=\"http://www.amazon.com/gp/product/B002M3SOBU?ie=UTF8&amp;tag=ecwid0b-20&amp;linkCode=as2&amp;camp=1789&amp;creative=9325&amp;creativeASIN=B002M3SOBU\">Amazon</a><img style=\"border:none !important; margin:0px !important;\" src=\"http://www.assoc-amazon.com/e/ir?t=ecwid0b-20&amp;l=as2&amp;o=1&amp;a=B002M3SOBU\" border=\"0\" alt=\"\" width=\"1\" height=\"1\" />, this is where we took description from.</div>','','','','');
+INSERT INTO `xlite_product_translations` VALUES (5006,'en',5006,'Apple TV','<h5>HD movie rentals, HD TV shows, and more. Coming to a widescreen TV near you.</h5>
+<p>Mac + PC 802.11n; <br />Wi-Fi wireless; <br /><br /><strong>40GB</strong> hard drive for up to 50 hours of video; <br />OR <br /><strong>160GB</strong> hard drive for up to 200 hours of video Apple Remote</p>
+<h6>HD movie rentals from your living room.</h6>
+<p>With a few clicks of your remote, you can rent high-definition movies from the same place you watch them: your widescreen TV.</p>
+<h6>The best TV shows in HD.</h6>
+<p>Buy your favorite TV shows from leading networks &mdash; commercial free &mdash; and watch them in stunning HD anytime you want. It&rsquo;s &agrave; la carte high definition TV.</p>
+<h6>All your music and photos, all in one place.</h6>
+<p>With Apple TV, your home entertainment system becomes the best place to shop the iTunes Store, play your music, and show off digital photos in gorgeous slideshows set to your favorite songs.</p>
+<h6>What&rsquo;s in the box</h6>
+<ul>
+<li>Apple TV</li>
+<li>Apple Remote</li>
+<li>Power cord</li>
+<li>Printed documentation</li>
+</ul>
+<h6>Requirements</h6>
+<ul>
+<li>Widescreen (16 by 9) enhanced-definition or high-definition television with an HDMI, DVI, or component video input port</li>
+<li>Wired or wireless network</li>
+<li>iTunes Store account</li>
+<li>Broadband Internet connection (fees may apply)</li>
+</ul>
+<div style=\"padding: 24px 24px 24px 21px; display: block; background-color: #ececec;\">This site is a demo site only. This product is not available for sale at our site. <br />But you can buy it at <a href=\"http://www.amazon.com/gp/product/B000RQHAUA?ie=UTF8&amp;tag=ecwid0b-20&amp;linkCode=as2&amp;camp=1789&amp;creative=9325&amp;creativeASIN=B000RQHAUA\">Amazon</a><img style=\"border:none !important; margin:0px !important;\" src=\"http://www.assoc-amazon.com/e/ir?t=ecwid0b-20&amp;l=as2&amp;o=1&amp;a=B000RQHAUA\" border=\"0\" alt=\"\" width=\"1\" height=\"1\" /> or <a style=\"color: #1e7ec8; text-decoration: underline;\" title=\"Apple Store\" href=\"http://store.apple.com/us/browse/home/shop_ipod/family/apple_tv?mco=MTI3Njk\">Apple Store</a> , this is where we took description from.</div>','','','','');
+INSERT INTO `xlite_product_translations` VALUES (5007,'en',5007,'Apple USB Power Adapter','<p>Use this ultracompact and convenient USB-based adapter to charge your iPhone or iPod at home, on the road, or whenever it\'s not connected to a computer.</p>
+<h5>Overview</h5>
+<p>Featuring a new, ultracompact design, this power adapter offers fast, efficient charging at home, in the office, or on the go. It works with any iPhone and all iPod models with a dock connector.</p>
+<h6>What&rsquo;s in the Box</h6>
+<ul>
+<li>Apple USB Power Adapter</li>
+<li>Apple Dock Connector to USB Cable</li>
+</ul>
+<p>Important note: This USB Power Adapter has fixed prongs for use in the U.S., Canada, Japan, Taiwan, and parts of Latin Americ</p>
+<div style=\"padding: 24px 24px 24px 21px; display: block; background-color: #ececec;\">This site is a demo site only. This product is not available for sale at our site. <br />But you can buy it at <a href=\"http://www.amazon.com/gp/product/B001GQ3DP6?ie=UTF8&amp;tag=ecwid0b-20&amp;linkCode=as2&amp;camp=1789&amp;creative=9325&amp;creativeASIN=B001GQ3DP6\">Amazon</a><img style=\"border:none !important; margin:0px !important;\" src=\"http://www.assoc-amazon.com/e/ir?t=ecwid0b-20&amp;l=as2&amp;o=1&amp;a=B001GQ3DP6\" border=\"0\" alt=\"\" width=\"1\" height=\"1\" /> or <a style=\"color: #1e7ec8; text-decoration: underline;\" title=\"Apple Store\" href=\"http://store.apple.com/us/product/MB352LL/B?fnode=MTY1NDA4NA&amp;mco=MTY1OTg1Nw\">Apple Store</a> , this is where we took description from.</div>','','','','');
+INSERT INTO `xlite_product_translations` VALUES (5008,'en',5008,'Apple Wireless Mighty Mouse','<p>Now you can get the world-famous Mighty Mouse without the tail. With its Bluetooth technology, the wireless Mighty Mouse gives you complete freedom of movement with no cable clutter. It features the popular Scroll Ball that lets you move anywhere inside a document, without lifting a finger. And its laser tracking technology allows it to work on more surfaces with greater precision.</p>
+<h6>Bluetooth technology, ultimate portability</h6>
+<p>With its secure, reliable Bluetooth technology, wireless Mighty Mouse goes wherever you do. Pair it with any Bluetooth-enabled Mac to work untethered and uncluttered at your desk or on the go, and it operates with either one or two AA batteries &mdash; no bulky dock required.</p>
+<h6>Laser tracking engine</h6>
+<p>The wireless Mighty Mouse features a laser tracking engine that\'s up to 20 times more sensitive to surface details than traditional optical technology. That means it can track with precision on more surfaces than ever &mdash; even smooth or polished surfaces &mdash; with no mouse pad required.</p>
+<h6>Innovative Scroll Ball and button</h6>
+<p>Perfectly positioned to roll smoothly under just one finger, Mighty Mouse\'s Scroll Ball offers full 360-degree scrolling capability &mdash; up/down, left/right and diagonally. You can scroll long web pages, pan full-size images, maneuver around large spreadsheets, control a video timeline and more. And you can even click the Scroll Ball to access your favorite Mac OS X features such as Dashboard, Spotlight or Expos&eacute;.</p>
+<h6>Touch-sensitive top shell</h6>
+<p>It looks and feels like a sleek one-button mouse, but Mighty Mouse\'s smooth top shell hides a powerful secret: touch-sensitive technology under the shell detects which part of the mouse you\'re clicking, so you can both left-click and right-click. And if you prefer the simplicity of a classic one-button mouse, Mighty Mouse is up to the task. Just use the Mac OS X system preference pane to configure it how you want.</p>
+<h6>Force-sensing side buttons</h6>
+<p>When you give Mighty Mouse a squeeze, force-sensing side buttons can be configured to activate Mac OS X features such as Dashboard, Expos&eacute; or a whole host of other customizable features.</p>
+<h6>Customizable</h6>
+<p>Through the power of Mac OS X Tiger, Mighty Mouse gives you fingertip access to the special features you love. Simply use the system preference panel to configure Mighty Mouse in the way that makes you most powerful. Control the Scroll Ball\'s tracking, zoom and click functions, as well as the right, left and side click functions. And you even can set up different mouse profiles for every user account on your Mac.</p>
+<h6>What\'s in the Box</h6>
+<ul>
+<li>Wireless Mighty Mouse</li>
+<li>Two AA batteries</li>
+<li>Printed and electronic documentation</li>
+</ul>
+<h6>System Requirements</h6>
+<ul>
+<li>A Bluetooth-enabled Macintosh computer</li>
+<li>Mac OS X v10.4.8 or later</li>
+<li>Existing keyboard and mouse for setup</li>
+</ul>
+<div style=\"padding: 24px 24px 24px 21px; display: block; background-color: #ececec;\">This site is a demo site only. This product is not available for sale at our site. <br />But you can buy it at <a href=\"http://www.amazon.com/gp/product/B000B6D39I?ie=UTF8&amp;tag=ecwid0b-20&amp;linkCode=as2&amp;camp=1789&amp;creative=9325&amp;creativeASIN=B000B6D39I\">Amazon</a><img style=\"border:none !important; margin:0px !important;\" src=\"http://www.assoc-amazon.com/e/ir?t=ecwid0b-20&amp;l=as2&amp;o=1&amp;a=B000B6D39I\" border=\"0\" alt=\"\" width=\"1\" height=\"1\" /> or <a style=\"color: #1e7ec8; text-decoration: underline;\" title=\"Apple Store\" href=\"http://store.apple.com/us/product/MB111LL/A/Wireless-Mighty-Mouse?fnode=MTY1NDA1Mg&amp;mco=NzQxNTc\">Apple Store</a> , this is where we took description from.</div>','','','','');
+INSERT INTO `xlite_product_translations` VALUES (5009,'en',5009,'Bose QuietComfort® 2 Acoustic Noise Cancelling Headphones','<p>Bose QuietComfort 2 Acoustic Noise Cancelling Headphones combine the exceptional noise reduction technology of the original QuietComfort headphones with dramatically improved audio performance and enhanced convenience. Supports all iPod models.</p>
+<ul>
+<li>World-class audio with acclaimed noise-reducing technology</li>
+<li>Comfortable around-ear style</li>
+<li>AAA battery included</li>
+<li>Fold-flat design for easy storage in the slim carrying case</li>
+</ul>
+<h5>Overview</h5>
+<p>Experience the innovative combination of Bose\'s best noise reduction technology and best headphone audio performance with the QuietComfort&reg; 2 Acoustic Noise Cancelling headphones.</p>
+<p>These premium headphones dramatically reduce unwanted noise, and advances in Bose&reg; technology make what you want to hear sound even better. Their ergonomic design allows for a comfortable fit and the fold-flat feature makes storage of these lightweight headphones even easier. Use them at home, in the office, on airplane flights, trains and buses--anywhere you enjoy listening to music.</p>
+<h4>Features</h4>
+<ul>
+<li>Acclaimed noise reduction technology. Patented Bose noise reduction technology helps fade background distractions so you can enjoy more of your music.</li>
+<li>Improved audio performance. TriPort&reg; (acoustic) headphone structure allows deeper, richer lows from a small headphone design. Proprietary Bose&reg; technology produces a richness of audio performance remarkable for headphones this small.</li>
+<li>Comfortable fit. Their lightweight ergonomic design offers a fit so comfortable you may forget you\'re wearing them.</li>
+<li>Enhanced styling for added convenience. They fold flat for easy storage in the slim carrying case. A single detachable audio cable gives you easy access to portable MP3-CD-DVD players, home stereos, laptop computers and in-flight entertainment systems.</li>
+<li>Low battery life indicator with flashing light to give ample notification of remaining battery power, letting you know when remaining battery life is approximately five hours. One AAA battery affords 40 hours of normal use.</li>
+</ul>
+<h4>Specifications</h4>
+<ul>
+<li>Dimensions (HxW): Overall: 7.75 x 6.5 in./19.7 x 16.5 cm; Ear cushion outside: 3.8 x 3.0 in./9.7 x 7.6 cm</li>
+<li>Weight (with cables): 6.9 oz./195.6 g</li>
+</ul>
+<h4>In the box</h4>
+<ul>
+<li>Bose&reg; QuietComfort&reg; 2 headhpones</li>
+<li>Dual plug adapter</li>
+<li>1/4-inch stereo phone adapter</li>
+<li>5-foot extension cord</li>
+<li>Portable carry case</li>
+<li>One AAA battery</li>
+</ul>
+<div style=\"padding: 24px 24px 24px 21px; display: block; background-color: #ececec;\">This site is a demo site only. This product is not available for sale at our site. <br />But you can buy it at <a href=\"http://www.amazon.com/gp/product/B000AP05BO?ie=UTF8&amp;tag=ecwid0b-20&amp;linkCode=as2&amp;camp=1789&amp;creative=9325&amp;creativeASIN=B000AP05BO\">Amazon</a><img height=\"1\" width=\"1\" border=\"0\" src=\"http://www.assoc-amazon.com/e/ir?t=ecwid0b-20&amp;l=as2&amp;o=1&amp;a=B000AP05BO\" style=\"border: none !important; margin: 0px !important;\" /> or <a href=\"http://store.apple.com/us/product/T6832?mco=MjM1NDg\" title=\"Apple Store\" style=\"color: #1e7ec8; text-decoration: underline;\">Apple Store</a> , this is where we took description from.</div>','','','','');
+INSERT INTO `xlite_product_translations` VALUES (5010,'en',5010,'Griffin PowerJolt Car Charger for iPhone or iPod (Black)','<p>Keep your iPhone or iPod fully charged on the road with the PowerJolt charger.</p>
+<h5>Overview</h5>
+<p>With its new low-profile design, PowerJolt is the easiest and most versatile way to power and charge your iPhone or iPod. Just plug PowerJolt into your cigarette lighter or 12V accessory socket and charge your device\'s battery during use.</p>
+<h6>Features</h6>
+<ul>
+<li>Enjoy full use of your iPhone or iPod during car trips, and arrive with your battery fully charged</li>
+<li>Amber/green charging status light</li>
+<li>Detachable dock connector to USB Type A cable that you can also use to connect your iPhone or iPod to your computer</li>
+<li>Easily replaceable 2 Amp automotive blade-type fuse to protect against spikes and surges</li>
+<li>Works with iPhone, iPod models that feature full-size dock connector, and iPod shuffle (1st generation)</li>
+</ul>
+<h6>Specifications</h6>
+<ul>
+<li>Dimensions (LxWxH): 1.5 x 0.8 x 3.5 in./3.8 x 2.0 x 8.9 cm</li>
+<li>Weight: 2.3 oz./65.2 g</li>
+</ul>
+<h6>What\'s In the box</h6>
+<ul>
+<li>PowerJolt car charger</li>
+<li>USB Type A to dock connector cable</li>
+</ul>
+<div style=\"padding: 24px 24px 24px 21px; display: block; background-color: #ececec;\">This site is a demo site only. This product is not available for sale at our site. <br />But you can buy it at <a href=\"http://www.amazon.com/gp/product/B000Y3YUOA?ie=UTF8&amp;tag=ecwid0b-20&amp;linkCode=as2&amp;camp=1789&amp;creative=9325&amp;creativeASIN=B000Y3YUOA\">Amazon</a><img style=\"border:none !important; margin:0px !important;\" src=\"http://www.assoc-amazon.com/e/ir?t=ecwid0b-20&amp;l=as2&amp;o=1&amp;a=B000Y3YUOA\" border=\"0\" alt=\"\" width=\"1\" height=\"1\" /> or <a style=\"color: #1e7ec8; text-decoration: underline;\" title=\"Apple Store\" href=\"http://store.apple.com/us/product/TS267LL/A?fnode=MTY1NDA2MQ&amp;mco=MTQyMjk5NQ\">Apple Store</a> , this is where we took description from.</div>','','','','');
+INSERT INTO `xlite_product_translations` VALUES (5011,'en',5011,'iHome iHM77 Stereo Mini Speakers','<p>Delivering sound beyond its size, the iHM77 is the perfect stereo speaker system for your MacBook, iPod, iPhone or any other notebook.</p>
+<ul>
+<li>Perfect for enhancing the movie/music experience on notebooks</li>
+<li>Plays all iPod/iPhone models and other audio devices with 3.5 mm audio jack</li>
+<li>Custom-tuned vacuum bass design for sizeable sound</li>
+<li>Each speaker has a built-in amplifier powered by rechargeable battery</li>
+</ul>
+<h5>Overview</h5>
+<p>The iHM77 speakers attach to each other magnetically in a capsule shape for the ultimate in portability. They separate and extend for surprisingly big stereo sound that must be heard to be believed. The iHM77 includes two amplified speakers with built-in rechargeable batteries, vacuum bass expansion, and USB charging, along with a protective carrying case.</p>
+<h6>Features</h6>
+<ul>
+<li>Plays all iPod/iPhone models and other audio devices with 3.5 mm audio jack</li>
+<li>Perfect for enhancing the movie/music experience on notebooks</li>
+<li>Custom-tuned vacuum bass design for low frequency response and sound beyond size</li>
+<li>Each speaker contains built-in amplifier powered by rechargeable battery</li>
+<li>Two collapsible speakers attach magnetically for ultimate portability</li>
+<li>Long-lasting built-in li-ion rechargeable batteries</li>
+<li>Cable for charging speakers and audio output</li>
+<li>Rubberized paint texture for amazing look and soft feel</li>
+<li>Convenient protective carry case and cord wrap</li>
+</ul>
+<h6>Specifications</h6>
+<ul>
+<li>Impedance: 4 Ohms</li>
+<li>Power: 1.75W x 2</li>
+<li>Frequency response: 218Hz-20kHz</li>
+<li>Signal-to-noise ratio: 52dB</li>
+<li>Dimensions for each speaker (WxHxD): 1.42 x 1.42 x 0.63 in./3.6 x 3.6 x 1.6 cm</li>
+<li>Weight: 0.56 oz./16.0 g</li>
+</ul>
+<h6>What&rsquo;s in the Box</h6>
+<ul>
+<li>iHome iHM77 speakers</li>
+<li>Cable for charging/listening</li>
+<li>Carrying case</li>
+</ul>
+<h6>Warranty</h6>
+<p>90-day limited</p>
+<p><small>Mfr. Part No.: iHM77SC</small></p>
+<div style=\"padding: 24px 24px 24px 21px; display: block; background-color: #ececec;\">This site is a demo site only. This product is not available for sale at our site. <br />But you can buy it at <a href=\"http://www.amazon.com/gp/product/B001JI820M?ie=UTF8&amp;tag=ecwid0b-20&amp;linkCode=as2&amp;camp=1789&amp;creative=9325&amp;creativeASIN=B001JI820M\">Amazon</a><img style=\"border:none !important; margin:0px !important;\" src=\"http://www.assoc-amazon.com/e/ir?t=ecwid0b-20&amp;l=as2&amp;o=1&amp;a=B001JI820M\" border=\"0\" alt=\"\" width=\"1\" height=\"1\" /> or <a style=\"color: #1e7ec8; text-decoration: underline;\" title=\"Apple Store\" href=\"http://store.apple.com/us/product/TU902VC/A?fnode=MTY1NDA5Mg&amp;mco=NjUzMzIzMg\">Apple Store</a> , this is where we took description from.</div>','','','','');
+INSERT INTO `xlite_product_translations` VALUES (5012,'en',5012,'iHome iP41 Rotating Alarm Clock for iPhone or iPod','<p>Easily watch videos in landscape mode on your iPhone or iPod simply by rotating the iHome iP41. Also wake and sleep to the music on your iPhone or iPod. You can rest assured you\'ll get great sound.</p>
+<ul>
+<li>Charge and play your iPhone or iPod</li>
+<li>Wake and sleep to iPod or iPhone</li>
+<li>Watch videos on your iPhone or iPod</li>
+</ul>
+<h5>Overview</h5>
+<p>Dock your iPhone or iPod and listen to the sound of your favorite music&mdash;beautifully reproduced by the iP41\'s Reson8 speaker technology and EXB expanded bass circuitry.</p>
+<h6>Wake and sleep to your music or videos</h6>
+<p>Now you can wake to a choice of music or videos on your iPhone or iPod. If you want to see the video in full screen mode, just rotate the iP41 onto its side.</p>
+<h6>Features</h6>
+<ul>
+<li>Innovative design works upright or on its side</li>
+<li>Wake or sleep to iPhone or iPod</li>
+<li>Reson8 speaker technology for great sound in a compact unit</li>
+<li>Universal dock charges your iPhone or iPod while it plays</li>
+<li>EXB sound circuitry for extra bass power</li>
+<li>DST switch for fast changes at start and end of Daylight Saving Time</li>
+<li>Line-in jack to listen to other audio devices</li>
+<li>Sleek space-saving design</li>
+<li>Alarm reset turns off alarm and automatically rests it for same time the next day</li>
+<li>Optional remote (sold separately) controls unit, navigates iPhone and iPod music functions</li>
+</ul>
+<h6>Did you notice?</h6>
+<p>When you change the orientation of the overall unit, the LCD clock display also shifts so it\'s still easily readable.</p>
+<h6>Apple Recommends for...</h6>
+<p>Anyone who wants to occasionally watch a widescreen video on their iPhone or iPod while it\'s in the dock.</p>
+<h6>Technical specifications</h6>
+<ul>
+<li>Dimensions (HxWxD): 6.29 x 6.45 x 3.34 in./16.0 x 16.4 x 8.5 cm</li>
+<li>Weight: 1.5 lb./0.68 kg</li>
+</ul>
+<h6>What\'s in the box?</h6>
+<ul>
+<li>iHome iP41 Rotating Alarm Clock</li>
+<li>Dock inserts to fit iPhone and specific iPod models</li>
+<li>AC adapter</li>
+<li>iPod nano and iPhone support cradles</li>
+</ul>
+<h6>Warranty</h6>
+<p>One-year limited. (For details, please visit, www.iHomeaudio.com.)</p>
+<p><small>Mfr. Part No.: iP41BC</small></p>
+<div style=\"padding: 24px 24px 24px 21px; display: block; background-color: #ececec;\">This site is a demo site only. This product is not available for sale at our site. <br />But you can buy it at <a href=\"http://www.amazon.com/gp/product/B001RYK2Q0?ie=UTF8&amp;tag=ecwid0b-20&amp;linkCode=as2&amp;camp=1789&amp;creative=9325&amp;creativeASIN=B001RYK2Q0\">Amazon</a><img style=\"border:none !important; margin:0px !important;\" src=\"http://www.assoc-amazon.com/e/ir?t=ecwid0b-20&amp;l=as2&amp;o=1&amp;a=B001RYK2Q0\" border=\"0\" alt=\"\" width=\"1\" height=\"1\" /> or <a style=\"color: #1e7ec8; text-decoration: underline;\" title=\"Apple Store\" href=\"http://store.apple.com/us/product/TW030VC/A?fnode=MTY1NDA5Mg&amp;mco=NjM0MTk2Nw\">Apple Store</a> , this is where we took description from.</div>','','','','');
+INSERT INTO `xlite_product_translations` VALUES (5013,'en',5013,'iMac','<table class=\"mac\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">
+<tbody>
+<tr class=\"dark head\">
+<td>&nbsp;</td>
+<td>20-inch&nbsp;:&nbsp;2.66GHz</td>
+<td>24-inch&nbsp;:&nbsp;2.66GHz</td>
+<td>24-inch&nbsp;:&nbsp;2.93GHz</td>
+<td>24-inch&nbsp;:&nbsp;3.06GHz</td>
+</tr>
+<tr>
+<td class=\"left\">Price</td>
+<td><strong>$1,199.00 </strong></td>
+<td><strong>$1,499.00 </strong></td>
+<td><strong>$1,799.00 </strong></td>
+<td><strong>$2,199.00 </strong></td>
+</tr>
+<tr class=\"dark\">
+<td class=\"left\">Processor</td>
+<td colspan=\"2\">
+<ul>
+<li>2.66GHz Intel Core 2 Duo</li>
+<li>1066MHz frontside bus</li>
+<li>6MB shared L2 cache</li>
+</ul>
+</td>
+<td>
+<ul>
+<li>2.93GHz Intel Core 2 Duo</li>
+<li>1066MHz frontside bus</li>
+<li>6MB shared L2 cache</li>
+<li>Option: 3.06GHz Intel Core 2 Duo</li>
+</ul>
+</td>
+<td>
+<ul>
+<li>3.06GHz Intel Core 2 Duo</li>
+<li>1066MHz frontside bus</li>
+<li>6MB shared L2 cache</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td class=\"left\">Display</td>
+<td>
+<ul>
+<li>20-inch (viewable) glossy widescreen</li>
+<li>1680 by 1050 pixels</li>
+</ul>
+</td>
+<td colspan=\"3\">
+<ul>
+<li>24-inch (viewable) glossy widescreen</li>
+<li>1920 by 1200 pixels</li>
+</ul>
+</td>
+</tr>
+<tr class=\"dark\">
+<td class=\"left\">Memory</td>
+<td>
+<ul>
+<li>2GB (two 1GB SO-DIMMs) of 1066MHz DDR3 SDRAM</li>
+<li>Option: Up to 8GB</li>
+</ul>
+</td>
+<td colspan=\"3\">
+<ul>
+<li>4GB (two 2GB SO-DIMMs) of 1066MHz DDR3 SDRAM</li>
+<li>Option: Up to 8GB</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td class=\"left\">Hard&nbsp;drive</td>
+<td>
+<ul>
+<li>320GB Serial ATA, 7200 rpm</li>
+<li>Option: Up to 1TB</li>
+</ul>
+</td>
+<td colspan=\"2\">
+<ul>
+<li>640GB Serial ATA, 7200 rpm</li>
+<li>Option: Up to 1TB</li>
+</ul>
+</td>
+<td>
+<ul>
+<li>1TB Serial ATA, 7200 rpm</li>
+</ul>
+</td>
+</tr>
+<tr class=\"dark\">
+<td class=\"left\">Optical&nbsp;drive</td>
+<td colspan=\"4\">
+<ul>
+<li>8x double-layer SuperDrive (DVD&plusmn;R DL/DVD&plusmn;RW/CD-RW) </li>
+</ul>
+</td>
+</tr>
+<tr>
+<td class=\"left\">Graphics</td>
+<td colspan=\"2\">
+<ul>
+<li>NVIDIA GeForce 9400M with 256MB of shared DDR3 memory</li>
+</ul>
+</td>
+<td>
+<ul>
+<li>NVIDIA GeForce GT 120 with 256MB of GDDR3 memory</li>
+<li>Options: NVIDIA GeForce GT 130 or ATI Radeon HD 4850 with 512MB of GDDR3 memory</li>
+</ul>
+</td>
+<td>
+<ul>
+<li>NVIDIA GeForce GT 130 with 512MB of GDDR3 memory</li>
+<li>Option: ATI Radeon HD 4850 with 512MB of GDDR3 memory</li>
+</ul>
+</td>
+</tr>
+<tr class=\"dark\">
+<td class=\"left\">Video</td>
+<td colspan=\"4\">
+<ul>
+<li>Built-in iSight camera</li>
+<li>Mini DisplayPort output with support for DVI, dual-link DVI, and VGA video (requires adapters, sold separately)</li>
+<li>Simultaneously supports full native resolution on the built-in display and up to 2560 by 1600 pixels on an external display</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td class=\"left\">Expansion</td>
+<td colspan=\"4\">
+<ul>
+<li>Four USB 2.0 ports on iMac; two USB 2.0 ports on keyboard</li>
+<li>One FireWire 800 port</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<h5>The all-in-one for everyone.</h5>
+<ul>
+<li><strong>A stunning display.</strong> <br />Your photos and movies will look bigger and more beautiful than ever on the 24-inch iMac&rsquo;s amazingly slim, glossy widescreen display. </li>
+<li><strong>Ultrafast NVIDIA graphics.</strong><br />With advanced graphics performance, you have all the speed and power you need for the latest 3D games and graphics-intensive applications. </li>
+<li><strong>Slim, all-in-one design.</strong><br />Elegant, simple, and stunning, iMac packs all its components &mdash; from the processor to the iSight camera &mdash; into an astoundingly thin, anodized aluminum frame. </li>
+</ul>
+<ul>
+<li><strong>iLife &rsquo;09 included.</strong><br />iMac is made to create &mdash; it includes the latest versions of iPhoto, iMovie, GarageBand, iDVD, and iWeb. So make a movie or photo book, build a blog, compose a song, and more. iMac is ready when you are. </li>
+<li><strong>iMac takes it all on.</strong><br />Offering an Intel Core 2 Duo processor at speeds up to 3.06GHz, twice the standard memory, and hard drive capacity up to 1TB, iMac is faster and more productive than ever. </li>
+</ul>
+<h6>What&rsquo;s in the Box</h6>
+<ul>
+<li>iMac</li>
+<li>Apple Keyboard</li>
+<li>Mighty Mouse</li>
+<li>Power adapter and cord</li>
+<li>Install/restore DVDs</li>
+<li>Printed and electronic documentation</li>
+</ul>
+<h6>Included Software</h6>
+<p><strong>Mac OS X v10.5 Leopard</strong></p>
+<ul>
+<li>Time Machine</li>
+<li>Mail</li>
+<li>iChat</li>
+<li>Safari</li>
+<li>Photo Booth</li>
+<li>Front Row</li>
+<li>Boot Camp</li>
+</ul>
+<p><strong>iLife &rsquo;09 Suite</strong></p>
+<ul>
+<li>iPhoto</li>
+<li>iMovie</li>
+<li>GarageBand</li>
+<li>iWeb</li>
+<li>iDVD</li>
+</ul>
+<div style=\"padding: 24px 24px 24px 21px; display: block; background-color: #ececec;\">This site is a demo site only. This product is not available for sale at our site. <br />But you can buy it at <a href=\"http://www.amazon.com/gp/product/B001U0OGZ4?ie=UTF8&amp;tag=ecwid0b-20&amp;linkCode=as2&amp;camp=1789&amp;creative=9325&amp;creativeASIN=B001U0OGZ4\">Amazon</a><img style=\"border:none !important; margin:0px !important;\" src=\"http://www.assoc-amazon.com/e/ir?t=ecwid0b-20&amp;l=as2&amp;o=1&amp;a=B001U0OGZ4\" border=\"0\" alt=\"\" width=\"1\" height=\"1\" /> or <a style=\"color: #1e7ec8; text-decoration: underline;\" title=\"Apple Store\" href=\"http://store.apple.com/us/tab?node=home/shop_mac/family/imac&amp;tcid=tg_tabcontroller&amp;tab=1\">Apple Store</a> , this is where we took description from.</div>','','','','');
+INSERT INTO `xlite_product_translations` VALUES (5014,'en',5014,'Incase Protective Cover for iPod touch (2nd Gen.)','<p>Protect your 2nd-generation iPod touch and complement its stylish look with this custom-molded protective cover. Its rubber exterior hugs your iPod touch and allows full functionality.</p>
+<ul>
+<li>Direct access to touchscreen</li>
+<li>Gloss patterned motif</li>
+<li>Form-fitting for protection</li>
+</ul>
+<h5>Overview</h5>
+<p>Designed with easy-access and functionality in mind, the Protective Cover provides direct access to all iPod touch device features, including widescreen display and dock connector. The cover is constructed of form-fitting, injection molded material and features a custom topographic pattern exterior that keeps the iPod touch protected without adding bulk.</p>
+<h6>Features</h6>
+<ul>
+<li>Excellent iPod touch protection </li>
+<li>Easy access to all control and dock connector </li>
+<li>Form-fitting construction </li>
+<li>Allows charging while in case </li>
+<li>Custom topographic pattern exterior</li>
+</ul>
+<div style=\"padding: 24px 24px 24px 21px; display: block; background-color: #ececec;\">This site is a demo site only. This product is not available for sale at our site. <br />But you can buy it at <a href=\"http://www.amazon.com/gp/product/B002BDNZQU?ie=UTF8&amp;tag=ecwid0b-20&amp;linkCode=as2&amp;camp=1789&amp;creative=9325&amp;creativeASIN=B002BDNZQU\">Amazon</a><img style=\"border:none !important; margin:0px !important;\" src=\"http://www.assoc-amazon.com/e/ir?t=ecwid0b-20&amp;l=as2&amp;o=1&amp;a=B002BDNZQU\" border=\"0\" alt=\"\" width=\"1\" height=\"1\" /> or <a style=\"color: #1e7ec8; text-decoration: underline;\" title=\"Apple Store\" href=\"http://store.apple.com/us/product/TU162ZM/A?fnode=MTY1NDA4Mg&amp;mco=MjQyMDQyOA\">Apple Store</a> , this is where we took description from.</div>','','','','');
+INSERT INTO `xlite_product_translations` VALUES (5015,'en',5015,'Incase Sports Armband for 120GB iPod classic','<p>Perfect for an active lifestyle, the Incase Sports Armband is crafted for complete functionality and protection of your iPod classic. Its clear cover gives you full access to the iPod screen and controls.</p>
+<h5>Overview</h5>
+<p>Constructed of lightweight, washable neoprene and reflective materials, the adjustable Incase Sports Armband is the functional and secure way to carry the iPod classic during your run or workout. The heavy-duty Velcro adjustment provides for a universal fit, while the clear cover allows convenient access to widescreen and touch controls.</p>
+<h6>Features</h6>
+<ul>
+<li>Complete iPod protection</li>
+<li>Form-fitting, washable neoprene construction</li>
+<li>Reflective material for enhanced visibility in dark environments</li>
+<li>Velcro adjustment for universal fit</li>
+<li>Easy access to headphone jack, hold switch, and dock connector</li>
+</ul>
+<div style=\"padding: 24px 24px 24px 21px; display: block; background-color: #ececec;\">This site is a demo site only. This product is not available for sale at our site. <br />But you can buy it at <a href=\"http://www.amazon.com/gp/product/B0023G9OII?ie=UTF8&amp;tag=ecwid0b-20&amp;linkCode=as2&amp;camp=1789&amp;creative=9325&amp;creativeASIN=B0023G9OII\">Amazon</a><img style=\"border:none !important; margin:0px !important;\" src=\"http://www.assoc-amazon.com/e/ir?t=ecwid0b-20&amp;l=as2&amp;o=1&amp;a=B0023G9OII\" border=\"0\" alt=\"\" width=\"1\" height=\"1\" /> or <a style=\"color: #1e7ec8; text-decoration: underline;\" title=\"Apple Store\" href=\"http://store.apple.com/us/product/TU319ZM/A?fnode=MTY1NDA4Mg&amp;mco=MjMzNDU1OQ\">Apple Store</a> , this is where we took description from.</div>','','','','');
+INSERT INTO `xlite_product_translations` VALUES (5016,'en',5016,'Incase Sports Armband for iPod nano (4th Gen.)','<p>Perfect for your active lifestyle, the Sports Armband is crafted for complete functionality and protection of your iPod nano. Offering a clear cover for complete access to the iPod screen and controls, this armband gives you a high-performance case that also delivers high functionality.</p>
+<ul>
+<li>Form-fitting neoprene construction</li>
+<li>Quick and easy access to your iPod nano</li>
+<li>Direct access to all iPod nano features, including click wheel, heaphone jack, and dock connector</li>
+</ul>
+<h5>Overview</h5>
+<p>Constructed of lightweight, washable neoprene and reflective materials, the adjustable Incase Sports Armband is the functional and secure way to carry the iPod nano during your run or workout. The heavy-duty Velcro adjustment provides for a universal fit, while the clear cover allows convenient access to all the controls.</p>
+<h6>Features</h6>
+<ul>
+<li>Complete iPod protection</li>
+<li>Form-fitting, washable neoprene construction</li>
+<li>Reflective material for enhanced visibility in dark environments</li>
+<li>Velcro adjustment for universal fit</li>
+<li>Easy access to headphone jack, hold switch, and dock connector</li>
+</ul>
+<div style=\"padding: 24px 24px 24px 21px; display: block; background-color: #ececec;\">This site is a demo site only. This product is not available for sale at our site. <br />But you can buy it at <a href=\"http://www.amazon.com/gp/product/B001TABJZK?ie=UTF8&amp;tag=ecwid0b-20&amp;linkCode=as2&amp;camp=1789&amp;creative=9325&amp;creativeASIN=B001TABJZK\">Amazon</a><img style=\"border:none !important; margin:0px !important;\" src=\"http://www.assoc-amazon.com/e/ir?t=ecwid0b-20&amp;l=as2&amp;o=1&amp;a=B001TABJZK\" border=\"0\" alt=\"\" width=\"1\" height=\"1\" /> or <a style=\"color: #1e7ec8; text-decoration: underline;\" title=\"Apple Store\" href=\"http://store.apple.com/us/product/TU197ZM/A?fnode=MTY1NDA4Mg&amp;mco=MjkwODQ3OQ\">Apple Store</a> , this is where we took description from.</div>','','','','');
+INSERT INTO `xlite_product_translations` VALUES (5017,'en',5017,'Incase Sports Armband for iPod touch 2nd Generation','<p>Perfect for an active lifestyle, the Incase Sports Armband is crafted for complete functionality and protection of your iPod touch. Its clear cover gives you full access to the iPod screen and controls.</p>
+<h5>Overview</h5>
+<p>Constructed of lightweight, washable neoprene and reflective materials, the adjustable Incase Sports Armband is the functional and secure way to carry the iPod touch during your run or workout. The heavy-duty Velcro adjustment provides for a universal fit, while the clear cover allows convenient access to the widescreen display and all controls.</p>
+<h6>Features</h6>
+<ul>
+<li>Complete iPod protection </li>
+<li>Form-fitting, washable neoprene construction </li>
+<li>Reflective material for enhanced visibility in dark environments </li>
+<li>Velcro adjustment for universal fit </li>
+<li>Easy access to headphone jack, hold switch, and dock connector</li>
+</ul>
+<div style=\"padding: 24px 24px 24px 21px; display: block; background-color: #ececec;\">This site is a demo site only. This product is not available for sale at our site. <br /> But you can buy it at <a style=\"color: #1e7ec8; text-decoration: underline;\" title=\"Apple Store\" href=\"http://store.apple.com/us/product/TU160ZM/A?fnode=MTY1NDA4Mg&amp;mco=MjIwMTg0MA\">Apple Store</a> , this is where we took description from.</div>','','','','');
+INSERT INTO `xlite_product_translations` VALUES (5018,'en',5018,'iPhone 3GS','<h5>Technical Specification</h5>
+<h6>Size and weight</h6>
+<ul>
+<li>Height: <strong>4.5</strong> inches (115.5 mm)</li>
+<li>Width: <strong>2.4</strong> inches (62.1 mm)</li>
+<li>Depth: <strong>0.48</strong> inch (12.3 mm)</li>
+<li>Weight: <strong>4.8</strong> ounces (135 grams)</li>
+</ul>
+<h6>Camera, photos, and video</h6>
+<ul>
+<li>3 megapixels</li>
+<li>Autofocus</li>
+<li>Tap to focus</li>
+<li>Video recording, VGA up to 30 fps with audio</li>
+<li>Photo and video geotagging</li>
+<li>iPhone and third-party application integration</li>
+</ul>
+<h6>Display</h6>
+<ul>
+<li>3.5-inch (diagonal) widescreen Multi-Touch display</li>
+<li>480-by-320-pixel resolution at 163 ppi</li>
+<li>Fingerprint-resistant oleophobic coating</li>
+<li>Support for display of multiple languages and characters simultaneously</li>
+</ul>
+<h6>Cellular and wireless</h6>
+<ul>
+<li>UMTS/HSDPA (850, 1900, 2100 MHz)</li>
+<li>GSM/EDGE (850, 900, 1800, 1900 MHz)</li>
+<li>Wi-Fi (802.11b/g)</li>
+<li>Bluetooth 2.1 + EDR</li>
+</ul>
+<h6>Location</h6>
+<ul>
+<li>Assisted GPS</li>
+<li>Digital compass</li>
+<li>Wi-Fi</li>
+<li>Cellular</li>
+</ul>
+<h6>Power and battery</h6>
+<ul>
+<li>Built-in rechargeable lithium-ion battery</li>
+<li>Charging via USB to computer system or power adapter</li>
+<li><dl><dt>Talk time:</dt><dd>Up to 12 hours on 2G</dd><dd>Up to 5 hours on 3G</dd></dl></li>
+<li>Standby time: Up to 300 hours</li>
+<li>Internet use: <br />Up to 5 hours on 3G <br />Up to 9 hours on Wi-Fi </li>
+<li>Video playback: Up to 10 hours</li>
+<li>Audio playback: Up to 30 hours</li>
+</ul>
+<h6>New features</h6>
+<ul>
+<li>Improved performance</li>
+<li>Built-in video camera with editing</li>
+<li>Voice Control</li>
+<li>Compass</li>
+<li>Cut, Copy, and Paste</li>
+<li>MMS</li>
+<li>Spotlight Search</li>
+<li>Landscape Keyboard</li>
+<li>Voice Memos</li>
+</ul>
+<h6>In the box</h6>
+<ul>
+<li>iPhone 3GS</li>
+<li>Apple Earphones with Remote and Mic</li>
+<li>Dock Connector to USB Cable</li>
+<li>USB Power Adapter</li>
+<li>Documentation</li>
+<li>SIM eject tool</li>
+</ul>
+<p>
+<object width=\"660\" height=\"500\" data=\"http://3dbin.com/ps/phntqbif\" type=\"application/x-shockwave-flash\">
+<param name=\"allowscriptaccess\" value=\"always\" />
+<param name=\"src\" value=\"http://3dbin.com/ps/phntqbif\" />
+</object>
+</p>
+<div style=\"padding: 24px 24px 24px 21px; display: block; background-color: #ececec;\">This site is a demo site only. This product is not available for sale at our site. <br />But you can buy it at <a style=\"color: #1e7ec8; text-decoration: underline;\" title=\"Apple Store\" href=\"http://store.apple.com/us/browse/home/shop_iphone/family/iphone?mco=MTE2OTU\">Apple Store</a> , this is where we took description from.</div>','','','','');
+INSERT INTO `xlite_product_translations` VALUES (5019,'en',5019,'iPod classic','<h5>One size fits all. The new iPod classic.</h5>
+<h6>One word: Capacity.</h6>
+<p>With 120GB of storage and up to 36 hours music playback, iPod classic lets you enjoy up to 30,000 songs or 150 hours of video &mdash; or a combination &mdash; wherever you go.</p>
+<h6>A Genius in the house.</h6>
+<p>With just a few clicks, the new Genius feature creates a playlist of tracks in your library that go great together.</p>
+<h6>Enjoy the view.</h6>
+<p>With Cover Flow, you can browse through your music collection by flipping through album art. Select an album to turn it over and see the track list.</p>
+<h6>Classic beauty.</h6>
+<p>Beautiful, durable, and sleek, iPod classic features an anodized aluminum and polished stainless steel enclosure with rounded edges. Choose quintessential silver or striking new black.</p>
+<div style=\"padding: 24px 24px 24px 21px; display: block; background-color: #ececec;\">This site is a demo site only. This product is not available for sale at our site. <br />But you can buy it at <a href=\"http://www.amazon.com/gp/product/B001F7AHXW?ie=UTF8&amp;tag=ecwid0b-20&amp;linkCode=as2&amp;camp=1789&amp;creative=9325&amp;creativeASIN=B001F7AHXW\">Amazon</a><img style=\"border:none !important; margin:0px !important;\" src=\"http://www.assoc-amazon.com/e/ir?t=ecwid0b-20&amp;l=as2&amp;o=1&amp;a=B001F7AHXW\" border=\"0\" alt=\"\" width=\"1\" height=\"1\" /> or <a style=\"color: #1e7ec8; text-decoration: underline;\" title=\"Apple Store\" href=\"http://store.apple.com/us/browse/home/shop_ipod/family/ipod_classic?mco=MTI4MDI\">Apple Store</a>, this is where we took description from.</div>','','','','');
+INSERT INTO `xlite_product_translations` VALUES (5020,'en',5020,'iPod nano','<h5>nano-chromatic. The all-new iPod nano.</h5>
+<h6>Meet a musical Genius.</h6>
+<p>With just a few clicks, the new Genius feature finds the songs on your iPod nano that go great together and makes a Genius Playlist for you.</p>
+<h6>Rock and roll over.</h6>
+<p>Thanks to the built-in accelerometer, you can rotate iPod nano to flip through album art with Cover Flow. Watch movies and TV shows in widescreen. And view photos in either portrait or landscape.</p>
+<h6>Shake to shuffle.</h6>
+<p>Just give iPod nano a shake and it shuffles to a different song in your music library.</p>
+<h6>Curved ahead of the curve.</h6>
+<p>iPod nano now comes in nine vibrant colors and a new curved aluminum and glass design. The crisp, bright picture makes watching movies and TV shows amazing.</p>
+<div style=\"padding: 24px 24px 24px 21px; display: block; background-color: #ececec;\">This site is a demo site only. This product is not available for sale at our site. <br />But you can buy it at <a href=\"http://www.amazon.com/gp/product/B001FA1NG4?ie=UTF8&amp;tag=ecwid0b-20&amp;linkCode=as2&amp;camp=1789&amp;creative=9325&amp;creativeASIN=B001FA1NG4\">Amazon</a><img style=\"border:none !important; margin:0px !important;\" src=\"http://www.assoc-amazon.com/e/ir?t=ecwid0b-20&amp;l=as2&amp;o=1&amp;a=B001FA1NG4\" border=\"0\" alt=\"\" width=\"1\" height=\"1\" /> or <a style=\"color: #1e7ec8; text-decoration: underline;\" title=\"Apple Store\" href=\"http://store.apple.com/us/browse/home/shop_ipod/family/ipod_nano?mco=MTE2NTc\">Apple Store</a> , this is where we took description from.</div>','','','','');
+INSERT INTO `xlite_product_translations` VALUES (5021,'en',5021,'iPod nano Armband','<p>Available in gray, the all-new iPod nano Armband is the perfect iPod nano companion for a jog or a workout at the gym.</p>
+<h5>Overview</h5>
+<p>Exercise your right to a great soundtrack with the ultimate workout duo: an iPod nano and a flexible, lightweight armband.</p>
+<p>Simply insert your iPod nano (4th generation) into the pocket, wrap the band around your arm or wrist, and secure it with the adjustable strap. The pocket even has space for the Nike + iPod Sport Kit receiver. Then plug your headphones into the jack and press Play. The 100 percent skip-free playback means you can run, ride, lift, and more without missing a moment of your favorite tunes.</p>
+<h6>What&rsquo;s in the Box</h6>
+<ul>
+<li>iPod nano Armband</li>
+</ul>
+<div style=\"padding: 24px 24px 24px 21px; display: block; background-color: #ececec;\">This site is a demo site only. This product is not available for sale at our site. <br />But you can buy it at <a href=\"http://www.amazon.com/gp/product/B002OHEIK0?ie=UTF8&amp;tag=ecwid0b-20&amp;linkCode=as2&amp;camp=1789&amp;creative=9325&amp;creativeASIN=B002OHEIK0\">Amazon</a><img style=\"border:none !important; margin:0px !important;\" src=\"http://www.assoc-amazon.com/e/ir?t=ecwid0b-20&amp;l=as2&amp;o=1&amp;a=B002OHEIK0\" border=\"0\" alt=\"\" width=\"1\" height=\"1\" /> or <a style=\"color: #1e7ec8; text-decoration: underline;\" title=\"Apple Store\" href=\"http://store.apple.com/us/product/MB769G/A?fnode=MTY1NDA4Mg&amp;mco=MjE0NzkyOA\">Apple Store</a> , this is where we took description from.</div>','','','','');
+INSERT INTO `xlite_product_translations` VALUES (5022,'en',5022,'iPod shuffle','<h5>The first music player that talks to you.</h5>
+<p><strong>4GB</strong></p>
+<ul>
+<li>Small gets smaller.<br />The new iPod shuffle is amazingly small and even easier to use. The controls are now conveniently located on the earbud cord. It&rsquo;s so easy, you can use it with your eyes closed. </li>
+<li>VoiceOver. It speaks for itself.<br />With the press of a button, VoiceOver tells you what song is playing and who\'s performing it. It tells you the names of your playlists, too. </li>
+<li>1000 songs. Multiple playlists.<br />With 4GB of storage, iPod shuffle can now hold up to 1,000 songs.<sup>3</sup> So your music library can go with you. And you can now sync multiple playlists for the perfect mix for any mood. </li>
+</ul>
+<div style=\"padding: 24px 24px 24px 21px; display: block; background-color: #ececec;\">This site is a demo site only. This product is not available for sale at our site. <br />But you can buy it at <a href=\"http://www.amazon.com/gp/product/B002M3SOM4?ie=UTF8&amp;tag=ecwid0b-20&amp;linkCode=as2&amp;camp=1789&amp;creative=9325&amp;creativeASIN=B002M3SOM4\">Amazon</a><img style=\"border:none !important; margin:0px !important;\" src=\"http://www.assoc-amazon.com/e/ir?t=ecwid0b-20&amp;l=as2&amp;o=1&amp;a=B002M3SOM4\" border=\"0\" alt=\"\" width=\"1\" height=\"1\" /> or <a style=\"color: #1e7ec8; text-decoration: underline;\" title=\"Apple Store\" href=\"http://store.apple.com/us/browse/home/shop_ipod/family/ipod_shuffle?mco=MTE2NTQg\">Apple Store</a> , this is where we took description from.</div>','','','','');
+INSERT INTO `xlite_product_translations` VALUES (5023,'en',5023,'Kensington PocketMouse','<h5>Overview</h5>
+<p>Now optical technology goes wherever you do. This mobile optical mouse lets you take precision on the road.</p>
+<ul>
+<li>Ultra-compact mouse is easy to pack and use on the road</li>
+<li>Improved convenience over laptop touchpad or pointing stick</li>
+<li>DiamondEye optical technology tracks on virtually any surface</li>
+<li>Stores easily in its own travel bag, eliminating tangled cords</li>
+<li>USB connection for universal plug-and-play installation</li>
+</ul>
+<h6>System Requirements:</h6>
+<p><strong>Mac:</strong></p>
+<ul>
+<li>Mac OS X, 10.1 or later</li>
+<li>USB Port</li>
+</ul>
+<p><strong>Windows:</strong></p>
+<ul>
+<li>Windows 98, Me, 2000, or XP</li>
+<li>USB port</li>
+</ul>
+<div style=\"padding: 24px 24px 24px 21px; display: block; background-color: #ececec;\">This site is a demo site only. This product is not available for sale at our site. <br />But you can buy it at <a href=\"http://www.amazon.com/gp/product/B00005U23V?ie=UTF8&amp;tag=ecwid0b-20&amp;linkCode=as2&amp;camp=1789&amp;creative=9325&amp;creativeASIN=B00005U23V\">Amazon</a><img style=\"border:none !important; margin:0px !important;\" src=\"http://www.assoc-amazon.com/e/ir?t=ecwid0b-20&amp;l=as2&amp;o=1&amp;a=B00005U23V\" border=\"0\" alt=\"\" width=\"1\" height=\"1\" /> or <a style=\"color: #1e7ec8; text-decoration: underline;\" title=\"Apple Store\" href=\"http://store.apple.com/us/product/TB070LL/A?fnode=MTY1NDA1Mg&amp;mco=MzE3Mzg4NA\">Apple Store</a> , this is where we took description from.</div>','','','','');
+INSERT INTO `xlite_product_translations` VALUES (5024,'en',5024,'MacBook','<p><strong>2.13GHz</strong></p>
+<ul>
+<li>Intel Core 2 Duo </li>
+<li>2GB DDR2 Memory </li>
+<li>160GB hard drive<sup>1</sup> </li>
+<li>NVIDIA GeForce 9400M graphics </li>
+<li>Standard keyboard </li>
+<li>White polycarbonate shell </li>
+<li>13-inch </li>
+</ul>
+<p>With a durable polycarbonate shell and vibrant, glossy display, MacBook is eye-catching all over.</p>
+<p>Powerful NVIDIA graphics provide outstanding performance for 3D games and applications.</p>
+<p>MacBook comes standard with a 160GB hard drive, providing plenty of room for music, photos, videos, and more. Or upgrade to 500GB of storage.</p>
+<p>The highly recyclable, energy-efficient MacBook is designed with the environment in mind.</p>
+<h6>In the box</h6>
+<ul>
+<li>MacBook</li>
+<li>MagSafe Power Adapter, AC wall plug, and power cord</li>
+<li>Lithium-polymer battery</li>
+<li>Display polishing cloth</li>
+<li>Install/restore DVDs</li>
+<li>Printed and electronic documentation</li>
+</ul>
+<h6>Included software</h6>
+<p><strong>Mac OS X Leopard + iLife</strong></p>
+<p>Every Mac comes with the world&rsquo;s most advanced operating system, as well as iPhoto, iMovie, GarageBand, and iWeb so you can do more with your photos, movies, and music.</p>
+<div style=\"padding: 24px 24px 24px 21px; display: block; background-color: #ececec;\">This site is a demo site only. This product is not available for sale at our site. <br />But you can buy it at <a href=\"http://www.amazon.com/gp/product/B001P05NJC?ie=UTF8&amp;tag=ecwid0b-20&amp;linkCode=as2&amp;camp=1789&amp;creative=9325&amp;creativeASIN=B001P05NJC\">Amazon</a><img style=\"border:none !important; margin:0px !important;\" src=\"http://www.assoc-amazon.com/e/ir?t=ecwid0b-20&amp;l=as2&amp;o=1&amp;a=B001P05NJC\" border=\"0\" alt=\"\" width=\"1\" height=\"1\" /> or <a style=\"color: #1e7ec8; text-decoration: underline;\" title=\"Apple Store\" href=\"http://store.apple.com/us/browse/home/shop_mac/family/macbook?mco=MTE2NTQ\">Apple Store</a> , this is where we took description from.</div>','','','','');
+INSERT INTO `xlite_product_translations` VALUES (5025,'en',5025,'MacBook Pro 15-inch','<h6>15-inch: 2.53GHz</h6>
+<ul>
+<li>Intel Core 2 Duo</li>
+<li>4GB Memory</li>
+<li>250GB hard drive</li>
+<li>SD card slot</li>
+<li>Built-in 7-hour battery</li>
+<li>NVIDIA GeForce 9400M graphic</li>
+</ul>
+<h6>15-inch: 2.66GHz</h6>
+<ul>
+<li>Intel Core 2 Duo</li>
+<li>4GB Memory</li>
+<li>320GB hard drive</li>
+<li>SD card slot</li>
+<li>Built-in 7-hour battery</li>
+<li>NVIDIA GeForce 9400M + 9600M GT with 256MB</li>
+</ul>
+<h6>15-inch: 2.8GHz</h6>
+<ul>
+<li>Intel Core 2 Duo</li>
+<li>4GB Memory</li>
+<li>500GB hard drive</li>
+<li>SD card slot</li>
+<li>Built-in 7-hour battery</li>
+<li>NVIDIA GeForce 9400M + 9600M GT with 512MB</li>
+</ul>
+<p>Carved from a single block of aluminum, MacBook Pro is slim, light, and durable enough to take anywhere.</p>
+<p>Every new MacBook Pro features an advanced built-in battery that lasts up to 7 hours (8 hours on the 17-inch model) on a single charge.<sup>2</sup></p>
+<p>High-performance NVIDIA graphics combine with a vivid LED-backlit display to give you a stunning viewing experience.</p>
+<p>Highly recyclable and energy efficient, the new MacBook Pro is designed with the environment in mind.</p>
+<h6>In the box</h6>
+<ul>
+<li>MacBook Pro</li>
+<li>MagSafe Power Adapter, AC wall plug, and power cord</li>
+<li>Install/restore DVDs</li>
+<li>Display polishing cloth</li>
+<li>Printed and electronic documentation</li>
+</ul>
+<h6>Included software</h6>
+<p><strong>Mac OS X Leopard + iLife</strong></p>
+<p>Every Mac comes with the world&rsquo;s most advanced operating system, as well as iPhoto, iMovie, GarageBand, and iWeb so you can do more with your photos, movies, and music.</p>
+<div style=\"padding: 24px 24px 24px 21px; display: block; background-color: #ececec;\">This site is a demo site only. This product is not available for sale at our site. <br />But you can buy it at <a href=\"http://www.amazon.com/gp/product/B002C745OQ?ie=UTF8&amp;tag=ecwid0b-20&amp;linkCode=as2&amp;camp=1789&amp;creative=9325&amp;creativeASIN=B002C745OQ\">Amazon</a><img style=\"border:none !important; margin:0px !important;\" src=\"http://www.assoc-amazon.com/e/ir?t=ecwid0b-20&amp;l=as2&amp;o=1&amp;a=B002C745OQ\" border=\"0\" alt=\"\" width=\"1\" height=\"1\" /> or <a style=\"color: #1e7ec8; text-decoration: underline;\" title=\"Apple Store\" href=\"http://store.apple.com/us/browse/home/shop_mac/family/macbook_pro?mco=MTIyMDI\">Apple Store</a> , this is where we took description from.</div>','','','','');
+INSERT INTO `xlite_product_translations` VALUES (5026,'en',5026,'Mac mini','<h5>2.0GHz: 120GB</h5>
+<ul>
+<li>2.0GHz Intel Core 2 Duo</li>
+<li>1GB memory</li>
+<li>120GB hard drive</li>
+<li>8x double-layer SuperDrive</li>
+<li>NVIDIA GeForce 9400M graphics</li>
+</ul>
+<h5>2.0GHz: 320GB</h5>
+<ul>
+<li>2.0GHz Intel Core 2 Duo</li>
+<li>2GB memory</li>
+<li>320GB hard drive</li>
+<li>8x double-layer SuperDrive</li>
+<li>NVIDIA GeForce 9400M graphics</li>
+</ul>
+<h5>Faster. Greener. Still mini</h5>
+<h6>Up to 5x faster NVIDIA graphics performance.</h6>
+<p>The NVIDIA GeForce 9400M brings up to five times faster graphics performance to Mac mini.2 Perfect for your photos, movies, games, and applications.</p>
+<h6>Faster Intel Core 2 Duo.</h6>
+<p>Now there&rsquo;s even more power inside such a small space. With Intel Core 2 Duo processor speeds starting at 2.0GHz, blazing fast comes standard.</p>
+<h6>Extra small. Extra green.</h6>
+<p>Mac mini uses 45 percent less power than the previous model &mdash; less than 13W while it&rsquo;s idle. This makes Mac mini the most energy-efficient desktop computer in the world.</p>
+<h6>iLife &rsquo;09 included.</h6>
+<p>Mac mini is made to create &mdash; it includes the latest versions of iPhoto, iMovie, GarageBand, iWeb, and iDVD. So make a movie or photo book, build a blog, compose a song, and more.</p>
+<div style=\"padding: 24px 24px 24px 21px; display: block; background-color: #ececec;\">This site is a demo site only. This product is not available for sale at our site. <br />But you can buy it at <a href=\"http://www.amazon.com/gp/product/B001U0OFKU?ie=UTF8&amp;tag=ecwid0b-20&amp;linkCode=as2&amp;camp=1789&amp;creative=9325&amp;creativeASIN=B001U0OFKU\">Amazon</a><img style=\"border:none !important; margin:0px !important;\" src=\"http://www.assoc-amazon.com/e/ir?t=ecwid0b-20&amp;l=as2&amp;o=1&amp;a=B001U0OFKU\" border=\"0\" alt=\"\" width=\"1\" height=\"1\" /> or <a style=\"color: #1e7ec8; text-decoration: underline;\" title=\"Apple Store\" href=\"http://store.apple.com/us/browse/home/shop_mac/family/mac_mini?mco=MTI5MTI\">Apple Store</a> , this is where we took description from.</div>','','','','');
+INSERT INTO `xlite_product_translations` VALUES (5027,'en',5027,'Mac Pro','<h5>Quad-Core</h5>
+<ul>
+<li>One 2.66GHz Quad-Core Intel Xeon \"Nehalem\" processor</li>
+<li>3GB (three 1GB) memory</li>
+<li>640GB hard drive</li>
+<li>18x double-layer SuperDrive</li>
+<li>NVIDIA GeForce GT 120 with 512MB</li>
+</ul>
+<h5>8-Core</h5>
+<ul>
+<li>Two 2.26GHz Quad-Core Intel Xeon \"Nehalem\" processors</li>
+<li>6GB (six 1GB) memory</li>
+<li>640GB hard drive</li>
+<li>18x double-layer SuperDrive</li>
+<li>NVIDIA GeForce GT 120 with 512MB</li>
+</ul>
+<h5>Beauty outside. Beast inside.</h5>
+<h6>Next-generation Intel architecture.</h6>
+<p>Get nearly 2x faster performance with the new Mac Pro, now powered by all-new Quad-Core Intel Xeon &ldquo;Nehalem&rdquo; processors. With a new system architecture, 8MB of fully shared L3 cache, an integrated memory controller, and 1066MHz DDR3 ECC memory, these processors deliver up to 2.4x greater memory bandwidth. And new Turbo Boost technology speeds up the processor when all cores aren&rsquo;t in use.</p>
+<h6>Faster, more flexible graphics.</h6>
+<p>The new Mac Pro features the fastest graphics ever on a Mac. Its standard configuration includes the up to 2.9x faster NVIDIA GeForce GT 120 with 512MB of GDDR3 memory. For even greater performance &mdash; up to 2x more &mdash; upgrade to the ATI Radeon HD 4870.</p>
+<h6>Flexible display options.</h6>
+<p>With a Mini DisplayPort and dual-link DVI port on every graphics card and room for up to four cards, the new Mac Pro provides dozens of display options.</p>
+<h6>Redesigned interior.<br />Easier expansion.</h6>
+<p>A completely redesigned interior makes it even easier to access and upgrade your Mac Pro. Snap in up to 32GB of memory. Pop in up to four PCI Express 2.0 expansion cards. Slide in up to 4TB of storage. Add in the new, easier-to-install Mac Pro RAID Card. All without turning the system over or struggling with tight spaces.</p>
+<div style=\"padding: 24px 24px 24px 21px; display: block; background-color: #ececec;\">This site is a demo site only. This product is not available for sale at our site. <br />But you can buy it at <a href=\"http://www.amazon.com/gp/product/B001KMYT3G?ie=UTF8&amp;tag=ecwid0b-20&amp;linkCode=as2&amp;camp=1789&amp;creative=9325&amp;creativeASIN=B001KMYT3G\">Amazon</a><img style=\"border:none !important; margin:0px !important;\" src=\"http://www.assoc-amazon.com/e/ir?t=ecwid0b-20&amp;l=as2&amp;o=1&amp;a=B001KMYT3G\" border=\"0\" alt=\"\" width=\"1\" height=\"1\" /> or <a style=\"color: #1e7ec8; text-decoration: underline;\" title=\"Apple Store\" href=\"http://store.apple.com/us/browse/home/shop_mac/family/mac_pro?mco=MjI5MDE1\">Apple Store</a> , this is where we took description from.</div>','','','','');
+INSERT INTO `xlite_product_translations` VALUES (5028,'en',5028,'Nike + iPod Sport Kit','<p>Transform your iPod nano, iPod touch (2nd generation), or iPhone 3G S into a personal workout coach with the Nike + iPod Sport Kit. This wireless sensor and receiver combination works exclusively with your Nike+ shoes and iPod nano, iPod touch, or iPhone 3G S to give you real-time feedback during workouts and let you track your performance on your Mac or PC.</p>
+<h5>Overview</h5>
+<p>Thanks to a unique partnership between Nike and Apple, your iPod nano, iPod touch (2nd generation), or iPhone 3G S becomes your coach. Your personal trainer. Your favorite workout companion.</p>
+<h6>Tune</h6>
+<p>Insert the wireless sensor inside the custom, built-in pocket beneath the insole of your Nike+ shoe, then plug the receiver into the Dock connector on your iPod nano. The iPod touch (2nd generation) and iPhone 3G S includes built-in support for the system &mdash; no receiver necessary.</p>
+<h6>Run</h6>
+<p>Now start your workout. As your run or walk, the sensor sends information to your device, tracking your time, distance, pace, and calories burned. If you choose, real-time, spoken feedback can even alert you to milestones throughout your workout.</p>
+<h6>Sync</h6>
+<p>Back at your computer, sync your iPod or iPhone 3G S to transfer your workout data to iTunes and nikeplus.com. There, you can evaluate your performance history, set goals, and even challenge other runners to a virtual race.</p>
+<h6>What\'s in the Box</h6>
+<ul>
+<li>Wireless sensor for Nike+ shoes</li>
+<li>Wireless receiver for iPod nano</li>
+<li>Printed documentation</li>
+</ul>
+<h6>Requirements</h6>
+<ul>
+<li>iPod nano, iPod touch (2nd generation), or iPhone 3G S</li>
+<li>Nike+ shoes</li>
+<li>iPod nano software v1.2</li>
+<li>iTunes 8.2 or later (available via free download)</li>
+<li>A Mac with a USB 2.0 port and Mac OS X version 10.3.9 or later; or a PC with a USB 2.0 port and Windows 2000 (SP4) or XP Home or Professional (SP2)</li>
+<li>Internet access and a free Nike.com account</li>
+</ul>
+<h6>Specifications</h6>
+<p><strong>Sensor</strong></p>
+<ul>
+<li>Size: 1.37 x 0.95 x 0.30 inches</li>
+<li>Weight: 0.23 ounce</li>
+<li>Broadcast frequency: 2.4GHz</li>
+</ul>
+<p><strong>Receiver</strong></p>
+<ul>
+<li>Size: 1.03 x 0.62 x 0.22 inches</li>
+<li>Weight: 0.12 ounce</li>
+</ul>
+<div style=\"padding: 24px 24px 24px 21px; display: block; background-color: #ececec;\">This site is a demo site only. This product is not available for sale at our site. <br />But you can buy it at <a href=\"http://www.amazon.com/gp/product/B000JVFKH8?ie=UTF8&amp;tag=ecwid0b-20&amp;linkCode=as2&amp;camp=1789&amp;creative=9325&amp;creativeASIN=B000JVFKH8\">Amazon</a><img style=\"border:none !important; margin:0px !important;\" src=\"http://www.assoc-amazon.com/e/ir?t=ecwid0b-20&amp;l=as2&amp;o=1&amp;a=B000JVFKH8\" border=\"0\" alt=\"\" width=\"1\" height=\"1\" /> or <a style=\"color: #1e7ec8; text-decoration: underline;\" title=\"Apple Store\" href=\"http://store.apple.com/us/product/MA365LL/D/Nike-iPod-Sport%20Kit?fnode=MTY1NDA3NA&amp;mco=Mjc1MDk\">Apple Store</a> , this is where we took description from.</div>','','','','');
+INSERT INTO `xlite_product_translations` VALUES (5029,'en',5029,'Paul Frank Dots Julius Silicone Case for iPod touch (2nd Gen.)','<p>Safeguard your 2nd generation iPod touch with this form-fitting protective case from Paul Frank. It\'s a durable, stylish rubber surround that keeps your iPod looking as good as new, with a classic Paul Frank design.</p>
+<ul>
+<li>Custom fit for more grip without extra bulk</li>
+<li>Access to all controls, touch screen and dock</li>
+<li>Durable and flexible silicone construction</li>
+</ul>
+<h5>Overview</h5>
+<p>Paul Frank brings you a fashionable way to protect your 2nd generation iPod touch. Made from super-durable silicone, this case hugs your iPod touch and keeps it safe from accidental damage while you\'re listening to your music on the go. Flexible, silicone style</p>
+<p>It allows full functionality, with custom cutouts providing access to all touch controls, headphone jack, dock connector for easy in-case use. It\'s a great way to protect and add the Paul Frank style to your sleek iPod touch without extra bulk.</p>
+<h6>Features</h6>
+<ul>
+<li>Simply slips on for easy use</li>
+<li>Form-fitting for effective grip and protection without adding bulk</li>
+<li>Access to all touch controls and dock connector and headphone jack</li>
+<li>Durable, flexible silicone rubber construction</li>
+<li>Stylish Paul Frank graphics</li>
+</ul>
+<h6>Did you notice?</h6>
+<p>Custom cutouts provide access to all touch controls, dock connector and headphones jack for easy in-case use.</p>
+<h6>Apple Recommends for...</h6>
+<p>Adding the Paul Frank style to your sleek iPod touch to safeguard it from damage, without adding extra bulk.</p>
+<h6>What\'s in the box?</h6>
+<ul>
+<li>Paul Frank Case for iPod touch (2nd Gen.)</li>
+<li>Care instructions</li>
+</ul>
+<div style=\"padding: 24px 24px 24px 21px; display: block; background-color: #ececec;\">This site is a demo site only. This product is not available for sale at our site. <br />But you can buy it at <a href=\"http://www.amazon.com/gp/product/B002629F7Y?ie=UTF8&amp;tag=ecwid0b-20&amp;linkCode=as2&amp;camp=1789&amp;creative=9325&amp;creativeASIN=B002629F7Y\">Amazon</a><img style=\"border:none !important; margin:0px !important;\" src=\"http://www.assoc-amazon.com/e/ir?t=ecwid0b-20&amp;l=as2&amp;o=1&amp;a=B002629F7Y\" border=\"0\" alt=\"\" width=\"1\" height=\"1\" /> or <a style=\"color: #1e7ec8; text-decoration: underline;\" title=\"Apple Store\" href=\"http://store.apple.com/us/product/TV756LL/A?fnode=MTY1NDA4Mg&amp;mco=NDQ5MDk3OQ\">Apple Store</a> , this is where we took description from.</div>','','','','');
+INSERT INTO `xlite_product_translations` VALUES (5030,'en',5030,'Sennheiser PMX 80 Sport II Headphones for iPhone and iPod','<p>Sleek and sporty, the PMX 80 Sport II headphones are rugged enough to withstand your toughest workout. They&rsquo;re the perfect choice if you prefer a neckband-style fit.</p>
+<h5>Overview</h5>
+<p>The PMX 80 Sport II headphones give you the optimum fit and comfort of an ergonomic neckband and vertical transducer system. Their sweat-proof materials are built to handle indoor and outdoor sports with ease.</p>
+<h6>Features</h6>
+<ul>
+<li>Ergonomic neckband system for the best possible fit</li>
+<li>Powerful neodymium magnets for balanced, detailed sound reproduction</li>
+<li>Sennheiser Basswind System delivers powerful bass response</li>
+<li>Meticulous construction for serious durability</li>
+<li>Reflective neckband to ensure extra visibility and safety outdoors</li>
+<li>Sweat- and water-resistant materials</li>
+<li>Washable under running water</li>
+<li>Single-sided cable clip</li>
+</ul>
+<h6>Specifications</h6>
+<ul>
+<li>Nominal impedance: 64 Ohm</li>
+<li>Jack plug: 0.14 in./3.5 mm stereo, right angled</li>
+<li>Transducer principle (Headphones): Dynamic</li>
+<li>Frequency response (headphones): 19Hz to 21 kHz</li>
+<li>Mac spl: 121 dB (1kHz/1Vrms)</li>
+<li>Thd: &lt;0.1%</li>
+<li>Weight (without cable): Approx. 0.56 oz./16.0 g</li>
+</ul>
+<h6>What&rsquo;s in the Box</h6>
+<ul>
+<li>PMX 80 II Sport headphones</li>
+<li>Cable clip</li>
+</ul>
+<div style=\"padding: 24px 24px 24px 21px; display: block; background-color: #ececec;\">This site is a demo site only. This product is not available for sale at our site. <br />But you can buy it at <a href=\"http://www.amazon.com/gp/product/B001GT185K?ie=UTF8&amp;tag=ecwid0b-20&amp;linkCode=as2&amp;camp=1789&amp;creative=9325&amp;creativeASIN=B001GT185K\">Amazon</a><img style=\"border:none !important; margin:0px !important;\" src=\"http://www.assoc-amazon.com/e/ir?t=ecwid0b-20&amp;l=as2&amp;o=1&amp;a=B001GT185K\" border=\"0\" alt=\"\" width=\"1\" height=\"1\" /> or <a style=\"color: #1e7ec8; text-decoration: underline;\" title=\"Apple Store\" href=\"http://store.apple.com/us/product/TU136ZM/A?fnode=MTY1NDA0Ng&amp;mco=MjM0NDUyOQ\">Apple Store</a> , this is where we took description from.</div>','','','','');
 
 --INSERT INTO xlite_inventories SET `inventory_id` = '4003', `amount` = '496', `enabled` = '1', `low_avail_limit` = '0';
 INSERT INTO xlite_option_groups SET group_id = 4000, `product_id` = 4003, `view_type` = 'r', enabled = 1;
@@ -623,3 +1797,34 @@ INSERT INTO `xlite_product_images` VALUES (NULL,4024,'demo_store_d4024_2.jpeg','
 INSERT INTO `xlite_product_images` VALUES (NULL,4024,'demo_store_d4024_3.jpeg','image/jpeg',400,395,31686,0,'','Close Up',2);
 INSERT INTO `xlite_product_images` VALUES (NULL,4024,'demo_store_d4024_4.jpeg','image/jpeg',400,402,60090,0,'','Jedi Gettin\' Tough',3);
 INSERT INTO `xlite_product_images` VALUES (NULL,4024,'demo_store_d4024_5.jpeg','image/jpeg',400,421,26850,0,'','Stuffed Backpack',4);
+INSERT INTO `xlite_product_images` VALUES (NULL,5000,'demo_store_d5000.jpg','image/jpeg',326,326,0,'1280310731','','',-10);
+INSERT INTO `xlite_product_images` VALUES (NULL,5001,'demo_store_d5001.jpg','image/jpeg',185,210,0,'1280310731','','',-10);
+INSERT INTO `xlite_product_images` VALUES (NULL,5002,'demo_store_d5002.jpg','image/jpeg',326,360,0,'1280310731','','',-10);
+INSERT INTO `xlite_product_images` VALUES (NULL,5003,'demo_store_d5003.jpg','image/jpeg',326,360,0,'1280310731','','',-10);
+INSERT INTO `xlite_product_images` VALUES (NULL,5004,'demo_store_d5004.jpg','image/jpeg',245,395,0,'1280310731','','',-10);
+INSERT INTO `xlite_product_images` VALUES (NULL,5005,'demo_store_d5005.jpg','image/jpeg',500,500,0,'1280310731','','',-10);
+INSERT INTO `xlite_product_images` VALUES (NULL,5006,'demo_store_d5006.jpg','image/jpeg',370,200,0,'1280310731','','',-10);
+INSERT INTO `xlite_product_images` VALUES (NULL,5007,'demo_store_d5007.jpg','image/jpeg',326,326,0,'1280310731','','',-10);
+INSERT INTO `xlite_product_images` VALUES (NULL,5008,'demo_store_d5008.jpg','image/jpeg',326,326,0,'1280310731','','',-10);
+INSERT INTO `xlite_product_images` VALUES (NULL,5009,'demo_store_d5009.jpg','image/jpeg',326,402,0,'1280310731','','',-10);
+INSERT INTO `xlite_product_images` VALUES (NULL,5010,'demo_store_d5010.jpg','image/jpeg',326,326,0,'1280310731','','',-10);
+INSERT INTO `xlite_product_images` VALUES (NULL,5011,'demo_store_d5011.jpg','image/jpeg',326,326,0,'1280310731','','',-10);
+INSERT INTO `xlite_product_images` VALUES (NULL,5012,'demo_store_d5012.jpg','image/jpeg',326,326,0,'1280310731','','',-10);
+INSERT INTO `xlite_product_images` VALUES (NULL,5013,'demo_store_d5013.jpg','image/jpeg',499,500,0,'1280310731','','',-10);
+INSERT INTO `xlite_product_images` VALUES (NULL,5014,'demo_store_d5014.jpg','image/jpeg',326,350,0,'1280310731','','',-10);
+INSERT INTO `xlite_product_images` VALUES (NULL,5015,'demo_store_d5015.jpg','image/jpeg',326,350,0,'1280310731','','',-10);
+INSERT INTO `xlite_product_images` VALUES (NULL,5016,'demo_store_d5016.jpg','image/jpeg',326,350,0,'1280310731','','',-10);
+INSERT INTO `xlite_product_images` VALUES (NULL,5017,'demo_store_d5017.jpg','image/jpeg',326,350,0,'1280310731','','',-10);
+INSERT INTO `xlite_product_images` VALUES (NULL,5018,'demo_store_d5018.jpg','image/jpeg',500,477,0,'1280310731','','',-10);
+INSERT INTO `xlite_product_images` VALUES (NULL,5019,'demo_store_d5019.jpg','image/jpeg',442,500,0,'1280310731','','',-10);
+INSERT INTO `xlite_product_images` VALUES (NULL,5020,'demo_store_d5020.jpg','image/jpeg',442,500,0,'1280310731','','',-10);
+INSERT INTO `xlite_product_images` VALUES (NULL,5021,'demo_store_d5021.jpg','image/jpeg',326,350,0,'1280310731','','',-10);
+INSERT INTO `xlite_product_images` VALUES (NULL,5022,'demo_store_d5022.jpg','image/jpeg',500,450,0,'1280310731','','',-10);
+INSERT INTO `xlite_product_images` VALUES (NULL,5023,'demo_store_d5023.jpg','image/jpeg',326,326,0,'1280310731','','',-10);
+INSERT INTO `xlite_product_images` VALUES (NULL,5024,'demo_store_d5024.jpg','image/jpeg',500,325,0,'1280310731','','',-10);
+INSERT INTO `xlite_product_images` VALUES (NULL,5025,'demo_store_d5025.jpg','image/jpeg',500,290,0,'1280310731','','',-10);
+INSERT INTO `xlite_product_images` VALUES (NULL,5026,'demo_store_d5026.jpg','image/jpeg',500,375,0,'1280310731','','',-10);
+INSERT INTO `xlite_product_images` VALUES (NULL,5027,'demo_store_d5027.jpg','image/jpeg',350,300,0,'1280310731','','',-10);
+INSERT INTO `xlite_product_images` VALUES (NULL,5028,'demo_store_d5028.jpg','image/jpeg',326,360,0,'1280310731','','',-10);
+INSERT INTO `xlite_product_images` VALUES (NULL,5029,'demo_store_d5029.jpg','image/jpeg',326,326,0,'1280310731','','',-10);
+INSERT INTO `xlite_product_images` VALUES (NULL,5030,'demo_store_d5030.jpg','image/jpeg',326,326,0,'1280310731','','',-10);
