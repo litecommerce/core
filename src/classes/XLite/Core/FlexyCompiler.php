@@ -1258,7 +1258,7 @@ class FlexyCompiler extends \XLite\Base\Singleton
      */
     protected function getImagesURL($file)
     {
-        return preg_match('/' . $this->pathPattern . '/', $file, $matches) ? $matches[1] : '';
+        return preg_match('/' . $this->pathPattern . '/', $file, $matches) ? str_replace(LC_DS, '/', $matches[1]) : '';
     }
 
     /**
