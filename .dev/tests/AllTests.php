@@ -25,6 +25,10 @@
  * @see        ____file_see____
  * @since      3.0.0
  */
+if (0 > version_compare(phpversion(), '5.3.0')) {
+    echo ('PHP version must be 5.3.0 or later' . PHP_EOL);
+    die(1);
+}
 
 if (false === defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'XLite_Tests_AllTests::main');
@@ -213,7 +217,7 @@ class XLite_Tests_AllTests
             echo ('DB backup ...');
             $path = dirname(__FILE__) . '/dump.sql';
 
-            $config = \XLite::getInstance()->getOptions('database_details');
+            $config = XLite::getInstance()->getOptions('database_details');
             $cmd = 'mysqldump --opt -h' . $config['hostspec'];
             if ($config['port']) {
                 $cmd .= ':' . $config['port'];
