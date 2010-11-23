@@ -48,7 +48,7 @@ class XLite_Web_Customer_CategoryPage extends XLite_Web_Customer_ACustomer
             }
             $url = $this->getCategoryURL($category->getCategoryId());
             $this->openAndWait($url);
-            $this->testCategoryPage($category);
+            $this->doCategoryPageTesting($category);
         }
 
     }
@@ -62,7 +62,7 @@ class XLite_Web_Customer_CategoryPage extends XLite_Web_Customer_ACustomer
      * @access protected
      * @since  3.0.0
      */
-    protected function testCategoryPage($category)
+    protected function doCategoryPageTesting($category)
     {
 
         // Title
