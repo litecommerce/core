@@ -133,6 +133,7 @@ class OrderItemsShort extends \XLite\View\AView
 
                 // order id based
                 $order = new \XLite\Model\Order($this->getRequestParamValue(self::PARAM_ORDER_ID));
+
                 if ($order->isExists()) {
                     $this->order = $order;
                 }

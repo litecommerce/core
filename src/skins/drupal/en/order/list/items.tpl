@@ -10,16 +10,24 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<table cellspacing="0" class="form-table">
+<table cellspacing="0" class="order-list-items">
   <tr FOREACH="getItems(),i,item">
-    <td class="name"><a href="{item.getURL()}">{item.name}</a></td>
-    <td class="price">{price_format(item,#price#):h}</td>
-    <td class="qty">qty:</td>
-    <td class="quantity">{item.amount}</td>
-    <td IF="i=#0#" class="total">Grand total: <strong>{price_format(getOrder(),#total#):h}</strong></td>
-    <td IF="i=#1#&isMoreLinkVisible()" class="more"><a href="{buildURL(#order#,##,_ARRAY_(#order_id#^order.order_id))}" class="dynamic dynamic-{getMoreLinkClassName()}"><span>{order.getItemsCount()} items</span><img src="images/spacer.gif" alt="" /></a></td>
+
+    <td class="image">
+      <widget class="\XLite\View\Image" image="{item.getImage()}" alt="{item.getName()}" maxWidth="40" maxHeight="40" centerImage="0" />
+    </td>
+
+    <td>
+      <ul class="name-qty">
+        <li class="name"><a href="{item.getURL()}">{item.name}</a></li>
+        <li class="qty">{t(#Qty#)}: <span class="quantity">{item.amount}</span></li>
+      </ul>
+    </td>
+
   </tr>
+
 </table>
+
 <script type="text/javascript">
 $(document).ready(
   function() {

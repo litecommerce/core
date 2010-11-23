@@ -11,7 +11,4 @@
  * @since     3.0.0
  * @ListChild (list="orders.search.base", weight="10")
  *}
-
 <h2 class="order-search-title"><span>{getTotalCount()}</span> orders</h2>
-
-<a IF="getTotalCount()" href="javascript:void(0);" class="dynamic search-orders dynamic-close"><span>Search orders</span><img src="images/spacer.gif" alt="" /></a>

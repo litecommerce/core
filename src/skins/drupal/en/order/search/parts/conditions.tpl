@@ -11,8 +11,12 @@
  * @since     3.0.0
  * @ListChild (list="orders.search.base", weight="20")
  *}
+<div class="search-orders-conditions">
+<a IF="getTotalCount()" href="javascript:void(0);" onclick="javascript:core.toggleText(this,'Hide filter options','#advanced_search_order_options');">Show filter options</a>
 <widget class="\XLite\View\Form\Order\Search" name="order_search_form" />
-  <table cellspacing="0" class="form-table search-orders">
+  <table cellspacing="0" class="form-table search-orders" id="advanced_search_order_options" style="display:none;">
     {displayViewListContent(#orders.search.conditions#)}
   </table>
 <widget name="order_search_form" end />
+{displayViewListContent(#orders.search.panel#)}
+</div>

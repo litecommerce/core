@@ -1,0 +1,150 @@
+/* vim: set ts=2 sw=2 sts=2 et: */
+
+/**
+ * Orders search widget styles
+ *  
+ * @author    Creative Development LLC <info@cdev.ru> 
+ * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+ * @version   SVN: $Id$
+ * @link      http://www.litecommerce.com/
+ * @since     3.0.0
+ */
+
+h2.order-search-title,
+  .search-orders-conditions,
+  .orders-list
+{
+  width: 593px;
+}
+
+h2.order-search-title {
+  margin-bottom: 19px;
+}
+
+.search-orders-conditions {
+  padding: 15px 0 12px 21px;
+  background-color: #f7f7f7;
+  width: 572px;
+  margin-bottom: 20px;
+}
+
+.search-orders {
+  padding: 1px;
+}
+
+.order-body-item .title {
+  background-color: #f7f7f7;
+  height: 80px;
+}
+
+.order-body-items-list,
+  .order-body-item .title
+{
+  width: 100%;
+  line-height: 1em;
+  border: solid 1px #dfdfdf;
+}
+
+.order-body-items-list {
+  border-top: none;
+}
+
+table.order-list-items,
+  table.order-list-items td
+{
+  border: none 0px;
+  vertical-align: top;
+  margin: 0px;
+}
+
+ul.order-body-item-spec, 
+  ul.order-body-item-spec2
+{
+  margin: 0px;
+}
+
+ul.order-body-item-spec li,
+  ul.order-body-item-spec2 li
+{
+  list-style: none;
+  float: left;
+  background: none;
+  padding: 0px;
+  margin: 0px;
+}
+
+ul.order-body-item-spec,
+  ul.order-body-item-spec2
+{
+  clear: both;
+}
+
+div.order-body-items-list {
+  clear: both;
+}
+
+.orders-list ul.list li {
+  background: none;
+  padding: 0px;
+  margin-bottom: 32px;
+}
+
+.orders-list ul.list li ul li {
+  margin: 0px;
+}
+
+ul.order-body-item-spec li.date {
+  padding: 14px 0px 0px 15px;
+  font-size: 18px;
+  color: #1862a4;
+}
+
+ul.order-body-item-spec li.details {
+  padding: 5px 0px 0px 11px;
+}
+
+ul.order-body-item-spec li.order-shipping-status {
+  float: right;
+  padding: 14px 20px 0 0px;
+  color: #257d16;
+  font-size: 18px;
+}
+
+ul.order-body-item-spec2 li,
+  .order-list-items ul.name-qty li
+{
+  color: #8f8f8f;
+}
+
+ul.order-body-item-spec2 li span,
+  .order-list-items ul.name-qty li span
+{
+  color: #4d4d4d;
+}
+
+ul.order-body-item-spec2 li.orderid {
+  padding: 0 47px 0 15px;
+}
+
+.orders-panel {
+  float: right;
+}
+
+.order-list-items ul.name-qty {
+  margin: 0px;
+}
+
+.order-list-items td {
+  padding: 15px 0 10px 0; 
+}
+
+.order-list-items td.image {
+  padding-left: 20px;
+  width: 60px;
+}
+
+
+
+
+
