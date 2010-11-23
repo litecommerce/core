@@ -279,7 +279,7 @@ class Order extends \XLite\Model\Order implements \XLite\Base\IDecorator
         $this->internalStatusChanged($oldStatus, $status);
 
         if (!$this->_disable_all_notifications) {
-            $mail = new \XLite\Model\Mailer();
+            $mail = new \XLite\View\Mailer();
             $mail->order = $this;
          
             if ($orderStatus->get('email')) {

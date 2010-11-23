@@ -235,7 +235,7 @@ class Layout extends \XLite\Base\Singleton
      */
     public function setMailSkin()
     {
-        $this->setSkin(\XLite\Model\Mailer::MAIL_SKIN);
+        $this->setSkin(\XLite\View\Mailer::MAIL_SKIN);
     }
 
     /**

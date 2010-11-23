@@ -79,7 +79,7 @@ class Profile extends \XLite\Model\Profile implements \XLite\Base\IDecorator
         }
 
         if ($readStatus && ($this->get('membership_exp_date') > 0) && (time() > $this->get('membership_exp_date')) ) {
-            $mail = new \XLite\Model\Mailer();
+            $mail = new \XLite\View\Mailer();
             $mail->profile = $this;
 
             // Notify customer
@@ -173,7 +173,7 @@ class Profile extends \XLite\Model\Profile implements \XLite\Base\IDecorator
 
     function membershipChanged($oldMembership, $newMembership)
     {
-        $mail = new \XLite\Model\Mailer();
+        $mail = new \XLite\View\Mailer();
         $mail->profile = $this;
         $mail->oldMembership = $oldMembership;
         $mail->newMembership = $newMembership;

@@ -62,7 +62,7 @@ class Auth extends \XLite\Core\Auth implements \XLite\Base\IDecorator
             $this->pendPartner($profile);
         }
         $profile->update();
-        $mailer = new \XLite\Model\Mailer();
+        $mailer = new \XLite\View\Mailer();
         $mailer->profile = $profile;
         // mailto customer with a new signup notification
         $mailer->compose($this->config->Company->site_administrator,
@@ -90,7 +90,7 @@ class Auth extends \XLite\Core\Auth implements \XLite\Base\IDecorator
         $profile->set('access_level', $this->get('declinedPartnerAccessLevel'));
         $profile->update();
         // sent notification to customer
-        $mailer = new \XLite\Model\Mailer();
+        $mailer = new \XLite\View\Mailer();
         $mailer->profile = $profile;
         $mailer->compose(
                 $this->config->Company->site_administrator,
@@ -106,7 +106,7 @@ class Auth extends \XLite\Core\Auth implements \XLite\Base\IDecorator
             $profile->set('access_level', $this->get('pendingPartnerAccessLevel'));
         }
         // mailto customer with a new signup notification
-        $mailer = new \XLite\Model\Mailer();
+        $mailer = new \XLite\View\Mailer();
         $mailer->profile = $profile;
         $mailer->compose($this->config->Company->site_administrator,
                 $profile->get('login'),
@@ -123,7 +123,7 @@ class Auth extends \XLite\Core\Auth implements \XLite\Base\IDecorator
         }
         $profile->set('plan', $profile->get('pending_plan'));
         // mailto customer with a new signup notification
-        $mailer = new \XLite\Model\Mailer();
+        $mailer = new \XLite\View\Mailer();
         $mailer->profile = $profile;
         $mailer->compose($this->config->Company->site_administrator,
                 $profile->get('login'),

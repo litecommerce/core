@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage Model
+ * @subpackage View
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -26,7 +26,7 @@
  * @since      3.0.0
  */
 
-namespace XLite\Module\Egoods\Model;
+namespace XLite\Module\Egoods\View;
 
 /**
  * ____description____
@@ -35,7 +35,7 @@ namespace XLite\Module\Egoods\Model;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Mailer extends \XLite\Model\Mailer
+class Mailer extends \XLite\View\Mailer
 {
     public $clean_after_send = true;
 

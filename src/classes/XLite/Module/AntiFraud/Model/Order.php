@@ -178,7 +178,7 @@ class Order extends \XLite\Model\Order implements \XLite\Base\IDecorator
     		
             if ($result['available_request'] == $result['used_request']) {
                 $result['error'] = 'LICENSE_KEY_EXPIRED';
-    			$mailer = new \XLite\Model\Mailer();
+    			$mailer = new \XLite\View\Mailer();
     			$mailer->compose($this->config->Company->orders_department,
     							 $this->config->Company->site_administrator, 
     							 "modules/AntiFraud/license_expired");

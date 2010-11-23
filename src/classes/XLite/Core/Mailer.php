@@ -40,7 +40,7 @@ class Mailer extends \XLite\Base\Singleton
     /**
      * Mailer instance
      * 
-     * @var    \XLite\Model\Mailer
+     * @var    \XLite\View\Mailer
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
@@ -50,7 +50,7 @@ class Mailer extends \XLite\Base\Singleton
     /**
      * Returns mailer instance
      * 
-     * @return \XLite\Model\Mailer
+     * @return \XLite\View\Mailer
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -58,7 +58,7 @@ class Mailer extends \XLite\Base\Singleton
     protected static function getMailer()
     {
         if (!isset(self::$mailer)) {
-            self::$mailer = new \XLite\Model\Mailer();
+            self::$mailer = new \XLite\View\Mailer();
         }
 
         return self::$mailer;

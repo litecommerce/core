@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage Model
+ * @subpackage View
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -26,22 +26,30 @@
  * @since      3.0.0
  */
 
-namespace XLite\Module\ProductAdviser\Model;
+namespace XLite\Module\Demo\View;
 
-/**
- * ____description____
- * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
- */
-class Mailer extends \XLite\Model\Mailer implements \XLite\Base\IDecorator
+class Mailer extends \XLite\View\Mailer implements \XLite\Base\IDecorator
 {
-    function set($property, $value)
+    /**
+     * Send message
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function send()
     {
-        if (($property == "subject" || $property == "signature" || $property == "body") && $this->get('ignoreDefaultSubjectBody')) {
-            return;
+        \XLite\Module\Demo\Main::doForbidOperation('Sending mail is disabled in demo mode');
+
+        if (isset($this->templatesSkin)) {
+
+            // Restore layout
+            $layout = \XLite\Model\Layout::getInstance();
+            $layout->set('skin', $this->templatesSkin);
+            $this->templatesSkin = null;
         }
-        parent::set($property, $value);
     }
+
 }
+

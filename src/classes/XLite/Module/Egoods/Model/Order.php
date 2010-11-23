@@ -75,7 +75,7 @@ class Order extends \XLite\Model\Order implements \XLite\Base\IDecorator
                 $pin_settings = new \XLite\Module\Egoods\Model\PinSettings($items[$i]->getComplex('product.product_id'));
                 $pin = new \XLite\Module\Egoods\Model\PinCode();
                 if ($pin->getFreePinCount($items[$i]->getComplex('product.product_id'))<= $pin_settings->get('low_available_limit') && $pin_settings->get('low_available_limit')) {
-                    $mail = new \XLite\Module\Egoods\Model\Mailer();
+                    $mail = new \XLite\Module\Egoods\View\Mailer();
                     $mail->item = $items[$i];
                     $product = new \XLite\Model\Product();
                     $product->find("product_id = " . $items[$i]->getComplex('product.product_id'));

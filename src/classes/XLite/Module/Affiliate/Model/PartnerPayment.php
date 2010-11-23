@@ -77,7 +77,7 @@ class PartnerPayment extends \XLite\Model\AModel
     // sends payment nofitication
     function notifyPartner() 
     {
-        $mail = new \XLite\Model\Mailer();
+        $mail = new \XLite\View\Mailer();
         $mail->payment = $this;
         $mail->partner = new \XLite\Model\Profile($this->get('partner_id'));
         $mail->compose(
