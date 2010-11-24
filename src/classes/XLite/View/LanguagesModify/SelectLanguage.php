@@ -153,7 +153,7 @@ class SelectLanguage extends \XLite\View\AView
     /**
      * Get translated language 
      * 
-     * @return \XLite\Model\Language|false
+     * @return \XLite\Model\Language|boolean
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0

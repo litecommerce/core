@@ -31,9 +31,9 @@ namespace XLite\View\Pager\Admin;
 /**
  * AAdmin 
  * 
- * @package    XLite
- * @see        ____class_see____
- * @since      3.0.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
 abstract class AAdmin extends \XLite\View\Pager\APager
 {

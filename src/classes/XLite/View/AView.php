@@ -788,11 +788,11 @@ abstract class AView extends \XLite\Core\Handler
     /**
      * Truncates the baseObject property value to specified length 
      * 
-     * @param mixed  $base       String or object instance to get field value from
-     * @param mixed  $field      String length or field to get value
-     * @param integer    $length     Field length to truncate to OPTIONAL
-     * @param string $etc        String to add to truncated field value OPTIONAL
-     * @param mixed  $breakWords Word wrap flag OPTIONAL
+     * @param mixed   $base       String or object instance to get field value from
+     * @param mixed   $field      String length or field to get value
+     * @param integer $length     Field length to truncate to OPTIONAL
+     * @param string  $etc        String to add to truncated field value OPTIONAL
+     * @param mixed   $breakWords Word wrap flag OPTIONAL
      *  
      * @return string
      * @access protected

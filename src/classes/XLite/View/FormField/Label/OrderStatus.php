@@ -31,9 +31,9 @@ namespace XLite\View\FormField\Label;
 /**
  * OrderStatus
  * 
- * @package    XLite
- * @see        ____class_see____
- * @since      3.0.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
 class OrderStatus extends \XLite\View\FormField\Label
 {

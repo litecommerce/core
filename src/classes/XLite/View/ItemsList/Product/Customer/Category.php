@@ -128,14 +128,16 @@ class Category extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * @param \XLite\Core\CommonCell $cnd       Search condition
      * @param boolean                $countOnly Return items list or only its size OPTIONAL
      *  
-     * @return array|int
+     * @return array|void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getData(\XLite\Core\CommonCell $cnd, $countOnly = false)
     {
-        return ($category = $this->getCategory()) ? $category->getProducts($cnd, $countOnly) : null;
+        $category = $this->getCategory();
+
+        return $category ? $category->getProducts($cnd, $countOnly) : null;
     }
 
 

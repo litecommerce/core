@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage ____sub_package____
+ * @subpackage View
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -69,9 +69,9 @@ class Content extends \XLite\View\AView
     }
 
     /**
-     * echoChunk
+     * Echo chunk
      *
-     * @param string $chunk Text chunk to output
+     * @param string &$chunk Text chunk to output
      *
      * @return void
      * @access protected
@@ -91,7 +91,10 @@ class Content extends \XLite\View\AView
      */
     protected function echoContent()
     {
-        array_map(array($this, 'echoChunk'), str_split(\XLite\View\Controller::$bodyContent, $this->getOutputChunkSize()));
+        array_map(
+            array($this, 'echoChunk'),
+            str_split(\XLite\View\Controller::$bodyContent, $this->getOutputChunkSize())
+        );
     }
 
 

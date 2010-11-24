@@ -32,7 +32,9 @@ namespace XLite\View;
 /**
  * \XLite\View\ProductSelect is a popup product search & select dialog.
  * Syntax:  <widget class="\XLite\View\ProductSelect" formName="offerForm" formField="addBonusProduct">
- * where formName is a 'name' attribute of the form tag, formField is a form field name. A hidden field named $formField.'_id'
+ * where formName is a 'name' attribute of the form tag, formField is a form field name.
+ * A hidden field named $formField.'_id'
+ *
  * will be created to hold the selected product id.
  * Optional parameters are: 
  *    label - the "Select product ..." replacement;
@@ -124,7 +126,8 @@ class ProductSelect extends \XLite\View\AView
                 $this->product = $this->getParam(self::PARAM_PRODUCT);
 
             } else {
-                $this->product = ($productId = $this->get($this->getParam(self::PARAM_FORM_FIELD) . '_id')) ? new \XLite\Model\Product($productId) : null;
+                $productId = $this->get($this->getParam(self::PARAM_FORM_FIELD) . '_id');
+                $this->product = $productId ? new \XLite\Model\Product($productId) : null;
             }
         }
 

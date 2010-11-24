@@ -80,7 +80,7 @@ class Simple extends \XLite\View\AView
      * Check widget visibility
      * 
      * @return boolean
-     * @access public
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */

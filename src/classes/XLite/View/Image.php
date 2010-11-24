@@ -176,7 +176,7 @@ class Image extends \XLite\View\AView
      * Check widget visibility
      * 
      * @return boolean
-     * @access public
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -326,8 +326,11 @@ class Image extends \XLite\View\AView
         $maxw = max(0, $this->getParam(self::PARAM_MAX_WIDTH));
         $maxh = max(0, $this->getParam(self::PARAM_MAX_HEIGHT));
 
-        $funcName = method_exists($this->getParam(self::PARAM_IMAGE), 'getResizedURL') ? 'getResizedURL' : 'getResizedThumbnailURL';
+        $funcName = method_exists($this->getParam(self::PARAM_IMAGE), 'getResizedURL')
+            ? 'getResizedURL'
+            : 'getResizedThumbnailURL';
 
+        // $funcName - getResizedURL or getResizedThumbnailURL
         list(
             $this->properties['width'],
             $this->properties['height'],

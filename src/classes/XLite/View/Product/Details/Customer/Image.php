@@ -130,10 +130,10 @@ class Image extends \XLite\View\Product\Details\Customer\ACustomer
 
             if ($this->getProduct()->hasImage()) {
 
-                foreach($this->getProduct()->getImages() as $img) {
+                foreach ($this->getProduct()->getImages() as $img) {
    
                     if ($img->getWidth() > $this->getParam(self::PARAM_K_ZOOM) * $this->getWidgetMaxWidth()) {
-                        $this->isZoom= true;
+                        $this->isZoom = true;
                         break;
                     } 
                 }
@@ -205,7 +205,7 @@ class Image extends \XLite\View\Product\Details\Customer\ACustomer
      * Return the max image width depending on whether it is a quicklook popup, or not
      * 
      * @return integer 
-     * @access public
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -228,7 +228,7 @@ class Image extends \XLite\View\Product\Details\Customer\ACustomer
         $maxHeight = 0;
 
         if ($this->getProduct()->hasImage()) {
-            foreach($this->getProduct()->getImages() as $img) {
+            foreach ($this->getProduct()->getImages() as $img) {
                 if ($img->getWidth() > $this->getWidgetMaxWidth()) {
                     $maxHeight = max($img->getHeight() * $this->getWidgetMaxWidth() / $img->getWidth(), $maxHeight);
                 } else {

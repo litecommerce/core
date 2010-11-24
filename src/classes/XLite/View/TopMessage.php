@@ -115,10 +115,10 @@ class TopMessage extends \XLite\View\AView
 
 
     /**
-     * isVisible 
+     * Check widget visibility
      * 
      * @return boolean 
-     * @access public
+     * @access protected
      * @since  3.0.0
      */
     protected function isVisible()

@@ -241,13 +241,14 @@ class Search extends \XLite\View\ItemsList\Product\Admin\AAdmin
      * @param \XLite\Core\CommonCell $cnd       Search condition
      * @param boolean                $countOnly Return items list or only its size OPTIONAL
      *
-     * @return array|int
+     * @return array|integer
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getData(\XLite\Core\CommonCell $cnd, $countOnly = false)
     {
-        return \XLite\Core\Database::getRepo('\XLite\Model\Product')->search($cnd, $countOnly);
+        return \XLite\Core\Database::getRepo('\XLite\Model\Product')
+            ->search($cnd, $countOnly);
     }
 }

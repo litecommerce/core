@@ -152,7 +152,11 @@ class CategorySelect extends \XLite\View\AView
 
         $categoryId = $this->getParam(self::PARAM_CURRENT_CATEGORY_ID);
 
-        if (!empty($this->categories) && $categoryId > 0 && $this->getParam(self::PARAM_IGNORE_CURRENT_PATH)) {
+        if (
+            !empty($this->categories)
+            && 0 < $categoryId
+            && $this->getParam(self::PARAM_IGNORE_CURRENT_PATH)
+        ) {
 
             $currentCategory = \XLite\Core\Database::getRepo('\XLite\Model\Category')->getCategory($categoryId);
 
@@ -191,7 +195,7 @@ class CategorySelect extends \XLite\View\AView
      * @param \XLite\Model\Category $category Category
      *  
      * @return boolean
-     * @access public
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -218,7 +222,7 @@ class CategorySelect extends \XLite\View\AView
     protected function getSelectedCategory()
     {
         if (is_null($this->selectedCategory) && !is_null($this->field)) {
-            $this->selectedCategory = $this->get("component." . $this->field);
+            $this->selectedCategory = $this->get('component.' . $this->field);
         }
 
         return $this->selectedCategory;
@@ -228,7 +232,7 @@ class CategorySelect extends \XLite\View\AView
      * setFieldName 
      * TODO: check if we need this function
      * 
-     * @param string $name
+     * @param string $name Field name
      *  
      * @return void
      * @access protected

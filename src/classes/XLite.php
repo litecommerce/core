@@ -180,7 +180,7 @@ class XLite extends \XLite\Base
     /**
      * Return specified (or the whole list) options 
      * 
-     * @param mixed $names List (or single value) of option names
+     * @param mixed $names List (or single value) of option names OPTIONAL
      *  
      * @return mixed
      * @access public
@@ -220,9 +220,9 @@ class XLite extends \XLite\Base
     /**
      * Return full URL for the resource
      * 
-     * @param string $url      Url part to add
-     * @param boolean   $isSecure Use HTTP or HTTPS
-     * @param array  $params   Optional URL params
+     * @param string  $url      Url part to add OPTIONAL
+     * @param boolean $isSecure Use HTTP or HTTPS OPTIONAL
+     * @param array   $params   Optional URL params OPTIONAL
      *  
      * @return string
      * @access public
@@ -287,7 +287,7 @@ class XLite extends \XLite\Base
      * Set controller 
      * FIXME - to delete
      * 
-     * @param mixed $controller Controller
+     * @param mixed $controller Controller OPTIONAL
      *  
      * @return void
      * @access public
@@ -360,7 +360,7 @@ class XLite extends \XLite\Base
     /**
      * Run application
      * 
-     * @param boolean $adminZone Admin interface flag
+     * @param boolean $adminZone Admin interface flag OPTIONAL
      *  
      * @return \XLite\View\AView
      * @access public

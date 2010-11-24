@@ -143,7 +143,9 @@ class SelectAddress extends \XLite\Controller\Customer\Cart
                     }
                     $address->setIsShipping(true);
         
-                    \XLite\Core\Event::updateCart(array('shippingAddress' => true));
+                    $event = array(
+                        'shippingAddress' => true,
+                    );
 
                 } else {
                     $old = $this->getCart()->getProfile()->getBillingAddress();
@@ -151,14 +153,14 @@ class SelectAddress extends \XLite\Controller\Customer\Cart
                         $old->setIsBilling(false);
                     }
                     $address->setIsBilling(true);
-                    \XLite\Core\Event::updateCart(
-                        array(
-                            'billingAddress' => array(
-                                'same' => $address->getIsShipping(),
-                            ),
-                        )
+                    $event = array(
+                        'billingAddress' => array(
+                            'same' => $address->getIsShipping(),
+                        ),
                     );
                 }
+
+                \XLite\Core\Event::updateCart($event);
 
                 \XLite\Core\Database::getEM()->flush();
 

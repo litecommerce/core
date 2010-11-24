@@ -64,7 +64,7 @@ class AdvBlock extends \XLite\View\AView
      * Check widget visibility
      * 
      * @return boolean
-     * @access public
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -72,11 +72,12 @@ class AdvBlock extends \XLite\View\AView
     {
         // TODO - remove is stable version
         return false;
-
+        /*
         return parent::isVisible()
             && \XLite::isAdminZone()
             && $this->auth->isLogged()
             && ($this->forceShow || !$this->session->get('advertise_show'));
+        */
     }
 
     /**

@@ -60,7 +60,7 @@ class Tree extends \Includes\DataStructure\Hierarchical\Tree
      */
     protected function prepareNodeData($data)
     {
-        var_dump($data);die;
+        //var_dump($data);die;
 
         return $data;
     }

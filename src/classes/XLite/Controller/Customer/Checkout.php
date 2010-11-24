@@ -37,6 +37,14 @@ namespace XLite\Controller\Customer;
  */
 class Checkout extends \XLite\Controller\Customer\Cart
 {
+    /**
+     * Request data 
+     * 
+     * @var    mixed
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
     protected $requestData;
 
     /**

@@ -33,7 +33,6 @@ namespace XLite\View;
  * 
  * @package XLite
  * @see     ____class_see____
- * @see        ____class_see____
  * @since   3.0.0
  */
 class DatePicker extends \XLite\View\FormField

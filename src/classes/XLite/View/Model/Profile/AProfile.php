@@ -205,7 +205,7 @@ abstract class AProfile extends \XLite\View\Model\AModel
     /**
      * Pass the DOM IDs of the "State" selectbox to the "CountrySelector" widget
      * 
-     * @param array  &$fields widgets list
+     * @param array  &$fields Widgets list
      * @param string $section Current section
      *  
      * @return void
@@ -522,7 +522,7 @@ abstract class AProfile extends \XLite\View\Model\AModel
     /**
      * getRequestProfileId 
      * 
-     * @return int|void
+     * @return integer|void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

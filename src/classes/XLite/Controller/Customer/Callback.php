@@ -90,7 +90,9 @@ class Callback extends \XLite\Controller\Customer\ACustomer
             $this->doDie('The transaction ID variable \'' . $txnIdName . '\' is not found in request');
         }
 
-        $txn = \XLite\Core\Database::getRepo('XLite\Model\Payment\Transaction')->find(\XLite\Core\Request::getInstance()->$txnIdName);
+        $txn = \XLite\Core\Database::getRepo('XLite\Model\Payment\Transaction')
+            ->find(\XLite\Core\Request::getInstance()->$txnIdName);
+
         if (!$txn) {
 
             $methods = \XLite\Core\Database::getRepo('XLite\Model\Payment\Method')->findAllActive();

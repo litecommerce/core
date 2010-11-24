@@ -122,10 +122,12 @@ class Order extends \XLite\Controller\Customer\ACustomer
      */
     protected function checkOrderAccess()
     {
+        $auth = \XLite\Core\Auth::getInstance();
+
         return $this->session->last_order_id == \XLite\Core\Request::getInstance()->order_id
             || (
-                \XLite\Core\Auth::getInstance()->isLogged()
-                && \XLite\Core\Auth::getInstance()->getProfile()->getProfileId() == $this->getOrder()->getOrigProfileId()
+                $auth->isLogged()
+                && $auth->getProfile()->getProfileId() == $this->getOrder()->getOrigProfileId()
             );
     }
 

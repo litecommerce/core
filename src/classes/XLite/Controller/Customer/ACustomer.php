@@ -229,8 +229,8 @@ abstract class ACustomer extends \XLite\Controller\AController
      * Get the full URL of the page
      * Example: getShopUrl('cart.php') = "http://domain/dir/cart.php 
      * 
-     * @param string $url    Relative URL  
-     * @param boolean   $secure Flag to use HTTPS OPTIONAL
+     * @param string  $url    Relative URL  
+     * @param boolean $secure Flag to use HTTPS OPTIONAL
      *  
      * @return string
      * @access public

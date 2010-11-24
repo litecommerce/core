@@ -41,7 +41,7 @@ class Category extends \XLite\Controller\Customer\Catalog
      * Check whether the category title is visible in the content area
      * 
      * @return boolean
-     * @access protected
+     * @access public
      * @since  3.0.0
      */
     public function isTitleVisible()

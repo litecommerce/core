@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage ____sub_package____
+ * @subpackage View
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -45,8 +45,15 @@ class ImageUpload extends \XLite\View\AView
     const PARAM_FORM_NAME = 'formName';
     const PARAM_OBJECT = 'object';
 
+    /**
+     * Show delete control
+     * 
+     * @var    boolean
+     * @access public
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
     public $showDelete = true;
-
 
     /**
      * Return widget default template
@@ -90,12 +97,14 @@ class ImageUpload extends \XLite\View\AView
     protected function hasImage()
     {
         $field = $this->getParam(self::PARAM_FIELD);
-        $method = "has$field";
+        $method = 'has' . $field;
         $object = $this->getParam(self::PARAM_OBJECT);
 
         $result = false;
 
         if (is_object($object) && method_exists($object, $method)) {
+
+            // $method asembled 'has' + $field
             $result = $object->$method();
         }
 
@@ -106,13 +115,13 @@ class ImageUpload extends \XLite\View\AView
      * Check if image is on file system 
      * 
      * @return void
-     * @access public
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
     protected function isFS()
     {
-        return ('F' == $this->getParam(self::PARAM_OBJECT)->get($this->getParam(self::PARAM_FIELD))->getDefaultSource());
+        return 'F' == $this->getParam(self::PARAM_OBJECT)->get($this->getParam(self::PARAM_FIELD))->getDefaultSource();
     }
 }
 

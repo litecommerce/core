@@ -31,9 +31,9 @@ namespace XLite\View\Pager\Customer\Order;
 /**
  * Pager for the orders search page
  * 
- * @package    XLite
- * @see        ____class_see____
- * @since      3.0.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
 class Search extends \XLite\View\Pager\Customer\Order\AOrder
 {

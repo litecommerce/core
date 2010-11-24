@@ -139,13 +139,12 @@ abstract class AItemsList extends \XLite\View\Container
      * @param \XLite\Core\CommonCell $cnd       Search condition
      * @param boolean                $countOnly Return items list or only its size OPTIONAL
      *
-     * @return array|int
+     * @return array|integer
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
     abstract protected function getData(\XLite\Core\CommonCell $cnd, $countOnly = false);
-
 
     /**
      * Return number of items in products list
