@@ -56,9 +56,20 @@ class ConfigParser extends AUtils
      * @since  3.0.0
      */
     protected static $mutators = array(
-        'setWedDirWOSlash'
+        'setWebDirWOSlash'
     );
 
+    /**
+     * List of additional source files for options gathering
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected static $configFiles = array(
+        'config.local.php'
+    );
 
     /**
      * Return path to the main config file
@@ -71,19 +82,6 @@ class ConfigParser extends AUtils
     protected static function getMainFile()
     {
         return LC_CONFIG_DIR . 'config.php';
-    }
-
-    /**
-     * Return path to the local config file
-     *
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected static function getLocalFile()
-    {
-        return LC_CONFIG_DIR . 'config.local.php';
     }
 
     /**
@@ -178,9 +176,9 @@ class ConfigParser extends AUtils
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected static function parseLocalFile()
+    protected static function parseLocalFile($fileName)
     {
-        return static::parseCommon(static::getLocalFile());
+        return static::parseCommon(LC_CONFIG_DIR . LC_DS . $fileName);
     }
 
     /**
@@ -224,7 +222,7 @@ class ConfigParser extends AUtils
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected static function setWedDirWOSlash()
+    protected static function setWebDirWOSlash()
     {
         static::$options['host_details']['web_dir_wo_slash'] 
             = \Includes\Utils\URLManager::trimTrailingSlashes(static::$options['host_details']['web_dir']);
@@ -244,10 +242,34 @@ class ConfigParser extends AUtils
     public static function getOptions($names = null)
     {
         if (!isset(static::$options)) {
-            static::$options = array_replace_recursive(static::parseMainFile(), static::parseLocalFile());
+
+            static::$options = static::parseMainFile();
+
+            for ($i = 0; $i < count(static::$configFiles); $i++) {
+                static::$options = array_replace_recursive(static::$options, static::parseLocalFile(static::$configFiles[$i]));
+            }
+
             static::executeMutators();
         }
 
         return static::getOptionsByNames(is_array($names) ? $names : array($names), static::$options);
+    }
+
+    /**
+     * Register additional config file 
+     * 
+     * @param string $fileName Config file name
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function registerConfigFile($fileName)
+    {
+        if (false === array_search($fileName, static::$configFiles)) {
+            static::$configFiles[] = $fileName;
+            static::$options = null;
+        }
     }
 }

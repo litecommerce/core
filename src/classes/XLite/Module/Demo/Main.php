@@ -82,8 +82,11 @@ class Main extends \XLite\Module\AModule
      */
     public function init()
     {
+        if (\XLite::getInstance()->isAdminZone()) {
+            \Includes\Utils\ConfigParser::registerConfigFile('config.demo.php');
+        }
+        
         parent::init();
-
     }
 
     /**

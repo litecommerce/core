@@ -32,16 +32,20 @@ class Modules extends \XLite\Controller\Admin\Modules
 implements \XLite\Base\IDecorator
 {
     /**
-     * Update modules list
+     * checkAccess
      * 
-     * @return void
+     * @return bool
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function doActionUpdate()
+    protected function checkAccess()
     {
-        \XLite\Module\Demo\Main::doForbidAction();
+        if (\XLite\Core\Request::getInstance()->action) {
+            \XLite\Module\Demo\Main::doForbidAction();
+        }
+
+        return parent::checkAccess(); 
     }
 }
 
