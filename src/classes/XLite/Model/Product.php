@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage ____sub_package____
+ * @subpackage Model
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -31,20 +31,20 @@ namespace XLite\Model;
 /**
  * The "product" model class
  * 
- * @package    XLite
- * @see        ____class_see____
- * @since      3.0.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  * 
  * @Entity (repositoryClass="\XLite\Model\Repo\Product")
  * @Table  (name="products",
  *          indexes={
- *              @Index(name="price", columns={"price"}),
- *              @Index(name="sku", columns={"sku"}),
- *              @Index(name="enabled", columns={"enabled"}),
-*               @Index(name="weight", columns={"weight"}),
- *              @Index(name="tax_class", columns={"tax_class"}),
- *              @Index(name="free_shipping", columns={"free_shipping"}),
- *              @Index(name="clean_url", columns={"clean_url"})
+ *              @Index (name="price", columns={"price"}),
+ *              @Index (name="sku", columns={"sku"}),
+ *              @Index (name="enabled", columns={"enabled"}),
+ *              @Index (name="weight", columns={"weight"}),
+ *              @Index (name="tax_class", columns={"tax_class"}),
+ *              @Index (name="free_shipping", columns={"free_shipping"}),
+ *              @Index (name="clean_url", columns={"clean_url"})
  *          }
  * )
  */
@@ -328,7 +328,11 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      */
     protected function findLinkByCategoryId($categoryId)
     {
-        return \Includes\Utils\Doctrine\Entity::searchInArray($this->getCategoryProducts()->toArray(), 'category_id', $categoryId);
+        return \Includes\Utils\Doctrine\Entity::searchInArray(
+            $this->getCategoryProducts()->toArray(),
+            'category_id',
+            $categoryId
+        );
     }
 
     /**
