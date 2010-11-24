@@ -71,7 +71,7 @@ class Content extends \XLite\View\AView
     /**
      * echoChunk
      *
-     * @param string $chunk text chunk to output
+     * @param string $chunk Text chunk to output
      *
      * @return void
      * @access protected

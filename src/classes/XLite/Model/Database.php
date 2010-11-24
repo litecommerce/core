@@ -256,7 +256,7 @@ class Database extends \XLite\Base
     /**
      * Returns the SQL Database table name for specified alias
      * 
-     * @param string $alias sql table alias
+     * @param string $alias Sql table alias
      *  
      * @return string
      * @access public

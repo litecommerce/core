@@ -230,7 +230,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
     /**
      * checkSideBarParams
      *
-     * @param array $params params to check
+     * @param array $params Params to check
      *
      * @return boolean 
      * @access protected
@@ -323,7 +323,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
     /**
      * isDisplayModeSelected
      *
-     * @param string $displayMode value to check
+     * @param string $displayMode Value to check
      *
      * @return boolean 
      * @access protected
@@ -601,7 +601,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
     /**
      * Initialize widget (set attributes)
      *
-     * @param array $params widget params
+     * @param array $params Widget params
      *
      * @return void
      * @access public

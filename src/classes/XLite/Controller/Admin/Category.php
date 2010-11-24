@@ -53,7 +53,7 @@ class Category extends \XLite\Controller\Admin\Catalog
     /**
      * Create/update image
      *
-     * @param integer $categoryId image category ID
+     * @param integer $categoryId Image category ID
      *
      * @return \XLite\Model\Image\Category\Image
      * @access protected

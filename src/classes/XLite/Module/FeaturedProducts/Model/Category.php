@@ -53,7 +53,7 @@ class Category extends \XLite\Model\Category implements \XLite\Base\IDecorator
     /**
      * Constructor
      *
-     * @param array $data entity properties
+     * @param array $data Entity properties
      *
      * @return void
      * @access public

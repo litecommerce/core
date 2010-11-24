@@ -184,7 +184,7 @@ abstract class ARequestHandler extends \XLite\View\AView
     /**
      * Fetch param value from current session
      *
-     * @param string $param parameter name
+     * @param string $param Parameter name
      *
      * @return mixed
      * @access protected
@@ -289,7 +289,7 @@ abstract class ARequestHandler extends \XLite\View\AView
     /**
      * Set widget params
      *
-     * @param array $params handler params
+     * @param array $params Handler params
      *
      * @return void
      * @access public

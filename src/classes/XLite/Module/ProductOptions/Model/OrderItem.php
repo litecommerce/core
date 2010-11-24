@@ -251,7 +251,7 @@ class OrderItem extends \XLite\Model\OrderItem implements \XLite\Base\IDecorator
     /**
      * Constructor
      *
-     * @param array $data entity properties
+     * @param array $data Entity properties
      *
      * @return void
      * @access public

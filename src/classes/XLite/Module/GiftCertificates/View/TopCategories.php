@@ -40,9 +40,9 @@ class TopCategories extends \XLite\View\TopCategories implements \XLite\Base\IDe
     /**
      * Assemble item CSS class name 
      * 
-     * @param integer              $index    item number
-     * @param intr                 $count    items count
-     * @param \XLite\Model\Category $category current category
+     * @param integer              $index    Item number
+     * @param intr                 $count    Items count
+     * @param \XLite\Model\Category $category Current category
      *  
      * @return string
      * @access public
@@ -59,9 +59,9 @@ class TopCategories extends \XLite\View\TopCategories implements \XLite\Base\IDe
     /**
      * Assemble list item link class name
      *
-     * @param integer              $i        item number
-     * @param integer              $count    items count
-     * @param \XLite\Model\Category $category current category
+     * @param integer              $i        Item number
+     * @param integer              $count    Items count
+     * @param \XLite\Model\Category $category Current category
      *
      * @return string
      * @access public

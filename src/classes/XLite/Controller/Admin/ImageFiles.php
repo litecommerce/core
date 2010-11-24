@@ -67,7 +67,7 @@ class ImageFiles extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-    * Returns image types formatted as array of class Image
+    * Returns image types formatted as array(class) Image
     * with an additional field $image->imageClass - a string which displays
     * the image class.
     */

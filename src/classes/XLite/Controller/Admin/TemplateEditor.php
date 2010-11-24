@@ -76,7 +76,7 @@ class TemplateEditor extends \XLite\Controller\Admin\AAdmin
     /**
      * getExtraPageContent 
      * 
-     * @return string|null
+     * @return string|void
      * @access public
      * @since  3.0.0
      */

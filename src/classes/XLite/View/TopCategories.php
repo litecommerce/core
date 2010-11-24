@@ -210,9 +210,9 @@ class TopCategories extends \XLite\View\SideBarBox
     /**
      * Assemble item CSS class name 
      * 
-     * @param integer               $index    item number
-     * @param integer               $count    items count
-     * @param \XLite\Model\Category $category current category
+     * @param integer               $index    Item number
+     * @param integer               $count    Items count
+     * @param \XLite\Model\Category $category Current category
      *  
      * @return string
      * @access protected
@@ -255,9 +255,9 @@ class TopCategories extends \XLite\View\SideBarBox
     /**
      * Assemble list item link class name
      *
-     * @param integer               $i        item number
-     * @param integer               $count    items count
-     * @param \XLite\Model\Category $category current category
+     * @param integer               $i        Item number
+     * @param integer               $count    Items count
+     * @param \XLite\Model\Category $category Current category
      *
      * @return string
      * @access protected
@@ -273,9 +273,9 @@ class TopCategories extends \XLite\View\SideBarBox
     /**
      * Assemble list item link class name
      *
-     * @param integer           $i        item number
-     * @param integer           $count    items count
-     * @param \XLite\View\AView $category current category FIXME! this variable is not used 
+     * @param integer           $i        Item number
+     * @param integer           $count    Items count
+     * @param \XLite\View\AView $category Current category FIXME! this variable is not used 
      *
      * @return string
      * @access protected

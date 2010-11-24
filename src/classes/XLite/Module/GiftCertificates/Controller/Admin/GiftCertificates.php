@@ -40,7 +40,7 @@ class GiftCertificates extends \XLite\Controller\Admin\AAdmin
     /**
      * Gift certificates list
      * 
-     * @var    array of \XLite\Module\GiftCertificates\Model\GiftCertificate
+     * @var    array(\XLite\Module\GiftCertificates\Model\GiftCertificate)
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
@@ -50,7 +50,7 @@ class GiftCertificates extends \XLite\Controller\Admin\AAdmin
     /**
      * Get gift certificates 
      * 
-     * @return array of \XLite\Module\GiftCertificates\Model\GiftCertificate
+     * @return array(\XLite\Module\GiftCertificates\Model\GiftCertificate)
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

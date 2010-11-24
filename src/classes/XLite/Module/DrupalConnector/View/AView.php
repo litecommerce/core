@@ -50,7 +50,7 @@ abstract class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
     /**
      * prepareBasePath 
      * 
-     * @param string $path path to prepare
+     * @param string $path Path to prepare
      *  
      * @return array
      * @access protected
@@ -100,7 +100,7 @@ abstract class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
     /**
      * Add the relative part to the resources' URLs 
      * 
-     * @param array $data data to prepare
+     * @param array $data Data to prepare
      *  
      * @return array
      * @access protected
@@ -134,7 +134,7 @@ abstract class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
     /** 
      * Modify resources list
      * 
-     * @param mixed $data data to prepare
+     * @param mixed $data Data to prepare
      *  
      * @return array
      * @access protected

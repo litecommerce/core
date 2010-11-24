@@ -65,7 +65,7 @@ class Categories extends \XLite\View\FormField\Select\Multiple
     /**
      * isCategorySelected 
      * 
-     * @param integer $categoryId cateory ID to check
+     * @param integer $categoryId Cateory ID to check
      *  
      * @return boolean 
      * @access protected
@@ -80,8 +80,8 @@ class Categories extends \XLite\View\FormField\Select\Multiple
     /**
      * getIndentation 
      * 
-     * @param \XLite\Model\Category $category   category model object
-     * @param integer               $multiplier level's multiplier
+     * @param \XLite\Model\Category $category   Category model object
+     * @param integer               $multiplier Level's multiplier
      *  
      * @return integer 
      * @access protected

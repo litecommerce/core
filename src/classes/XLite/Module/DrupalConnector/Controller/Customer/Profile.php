@@ -88,7 +88,7 @@ class Profile extends \XLite\Controller\Customer\Profile implements \XLite\Base\
     /**
      * Return part of the register form
      * 
-     * @param string $type part(s) identifier
+     * @param string $type Part(s) identifier
      *  
      * @return \XLite\View\Model\Profile\AProfile
      * @access protected

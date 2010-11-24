@@ -40,8 +40,8 @@ class Config extends \XLite\Model\Repo\Config implements \XLite\Base\IDecorator
     /**
      * Initializes a new EntityRepository object
      * 
-     * @param \Doctrine\ORM\EntityManager         $em    the EntityManager to use
-     * @param \Doctrine\ORM\Mapping\ClassMetadata $class the class descriptor
+     * @param \Doctrine\ORM\EntityManager         $em    The EntityManager to use
+     * @param \Doctrine\ORM\Mapping\ClassMetadata $class The class descriptor
      *  
      * @return void
      * @access public

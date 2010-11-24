@@ -41,7 +41,7 @@ class Password extends \XLite\View\FormField\Input\AInput
     /**
      * setCommonAttributes 
      * 
-     * @param array $attrs field attributes to prepare
+     * @param array $attrs Field attributes to prepare
      *  
      * @return void
      * @access protected

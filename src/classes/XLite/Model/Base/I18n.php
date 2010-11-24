@@ -62,7 +62,7 @@ abstract class I18n extends \XLite\Model\AEntity
     /**
      * Constructor
      *
-     * @param array $data entity properties
+     * @param array $data Entity properties
      *
      * @return void
      * @access public

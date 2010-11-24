@@ -192,7 +192,7 @@ class Language extends \XLite\Model\Repo\Base\I18n
      * 
      * @param string $code Code
      *  
-     * @return \XLite\Model\Language or null
+     * @return \XLite\Model\Language|void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

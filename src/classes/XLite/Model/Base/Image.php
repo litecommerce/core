@@ -338,7 +338,7 @@ abstract class Image extends \XLite\Model\AEntity
     /**
      * Get image URL for customer front-end
      * 
-     * @return string or null
+     * @return string|void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

@@ -93,7 +93,7 @@ class RSA {
         return $n;
     }
     /**
-    * @return An associative array containing n, v and e. 
+    * @return An Associative array containing n, v and e. 
     * Encryption key is (n, v), decryption key is (n, e).
     */
     function genKey($bits, $randomText)

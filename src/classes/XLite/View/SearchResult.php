@@ -126,8 +126,8 @@ class SearchResult extends \XLite\View\ItemsList\Product\AProduct
     /**
      * Return products list
      * 
-     * @param \XLite\Core\CommonCell $cnd       search condition
-     * @param boolean                $countOnly return items list or only its size
+     * @param \XLite\Core\CommonCell $cnd       Search condition
+     * @param boolean                $countOnly Return items list or only its size
      *  
      * @return array|int
      * @access protected

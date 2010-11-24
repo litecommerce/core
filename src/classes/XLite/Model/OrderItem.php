@@ -186,7 +186,7 @@ class OrderItem extends \XLite\Model\Base\ModifierOwner
     /**
      * Get object 
      * 
-     * @return \XLite\Model\Base\IOrderItem or null
+     * @return \XLite\Model\Base\IOrderItem|void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -279,7 +279,7 @@ class OrderItem extends \XLite\Model\Base\ModifierOwner
     /**
      * Save some fields from product
      * 
-     * @param \XLite\Model\Product $product product to set
+     * @param \XLite\Model\Product $product Product to set
      *  
      * @return void
      * @access public
@@ -549,7 +549,7 @@ class OrderItem extends \XLite\Model\Base\ModifierOwner
     /**
      * Constructor
      *
-     * @param array $data entity properties
+     * @param array $data Entity properties
      *
      * @return void
      * @access public

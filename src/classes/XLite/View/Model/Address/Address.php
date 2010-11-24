@@ -206,7 +206,7 @@ class Address extends \XLite\View\Model\AModel
     /**
      * Retrieve property from the model object
      *
-     * @param string $name field/property name
+     * @param string $name Field/property name
      *
      * @return mixed
      * @access protected
@@ -342,7 +342,7 @@ class Address extends \XLite\View\Model\AModel
     /**
      * getRequestAddressId 
      * 
-     * @return int|null
+     * @return int|void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -355,7 +355,7 @@ class Address extends \XLite\View\Model\AModel
     /**
      * getRequestProfileId 
      * 
-     * @return int|null
+     * @return int|void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

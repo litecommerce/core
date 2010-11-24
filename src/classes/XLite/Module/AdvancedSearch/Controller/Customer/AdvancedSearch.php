@@ -127,7 +127,7 @@ class AdvancedSearch extends \XLite\Controller\Customer\ACustomer
     /**
      * Get products list
      * 
-     * @return array of \XLite\Model\Product
+     * @return array(\XLite\Model\Product)
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

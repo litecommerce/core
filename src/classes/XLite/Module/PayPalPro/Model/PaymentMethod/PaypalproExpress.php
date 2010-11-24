@@ -93,7 +93,7 @@ class PaypalproExpress extends \XLite\Model\PaymentMethod\CreditCard
     /**
      * Getter
      * 
-     * @param string $name property name
+     * @param string $name Property name
      *  
      * @return mixed
      * @access public

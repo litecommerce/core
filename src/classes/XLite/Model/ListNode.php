@@ -68,7 +68,7 @@ class ListNode extends \XLite\Base\SuperClass
     /**
      * Set node identifier
      *
-     * @param string $key node key
+     * @param string $key Node key
      *
      * @return void
      * @access public
@@ -106,7 +106,7 @@ class ListNode extends \XLite\Base\SuperClass
     /**
      * Set link to previous list element
      *
-     * @param \Xlite\Model\ListNode $node node link to set
+     * @param \Xlite\Model\ListNode $node Node link to set
      *
      * @return void
      * @access public
@@ -120,7 +120,7 @@ class ListNode extends \XLite\Base\SuperClass
     /**
      * Set link to next list element
      *
-     * @param \Xlite\Model\ListNode $node node link to set
+     * @param \Xlite\Model\ListNode $node Node link to set
      *
      * @return void
      * @access public
@@ -146,7 +146,7 @@ class ListNode extends \XLite\Base\SuperClass
     /**
      * Callback to search node by its identifier
      *
-     * @param string $key node key
+     * @param string $key Node key
      *
      * @return boolean 
      * @access public

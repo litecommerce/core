@@ -78,7 +78,7 @@ class Cart extends \XLite\Controller\Customer\ACustomer
     /**
      * Get (and create) current cart item 
      * 
-     * @param \XLite\Model\Product $product product to add
+     * @param \XLite\Model\Product $product Product to add
      *  
      * @return void
      * @access protected

@@ -61,7 +61,7 @@ class Request extends \XLite\Base\Singleton
      * Strip possible SQL injections
      * TODO - improve or remove (if the PDO will be used) this function
      * 
-     * @param string $value value to check
+     * @param string $value Value to check
      *  
      * @return string
      * @access protected
@@ -89,7 +89,7 @@ class Request extends \XLite\Base\Singleton
     /**
      * Sanitize single value
      * 
-     * @param string $value value to sanitize
+     * @param string $value Value to sanitize
      *  
      * @return string
      * @access protected
@@ -103,7 +103,7 @@ class Request extends \XLite\Base\Singleton
     /**
      * Sanitize passed data 
      * 
-     * @param mixed $data data to sanitize
+     * @param mixed $data Data to sanitize
      *  
      * @return mixed
      * @access protected
@@ -117,7 +117,7 @@ class Request extends \XLite\Base\Singleton
     /**
      * Wrapper for sanitize()
      *
-     * @param mixed $data data to sanitize
+     * @param mixed $data Data to sanitize
      *
      * @return mixed
      * @access protected
@@ -153,7 +153,7 @@ class Request extends \XLite\Base\Singleton
     /**
      * Map request data
      * 
-     * @param array $data custom data (optional)
+     * @param array $data Custom data (optional)
      *  
      * @return void
      * @access public
@@ -277,7 +277,7 @@ class Request extends \XLite\Base\Singleton
     /**
      * Getter
      * 
-     * @param string $name property name
+     * @param string $name Property name
      *  
      * @return mixed
      * @access public
@@ -292,8 +292,8 @@ class Request extends \XLite\Base\Singleton
     /**
      * Setter 
      * 
-     * @param string $name  property name
-     * @param mixed  $value property value
+     * @param string $name  Property name
+     * @param mixed  $value Property value
      *  
      * @return void
      * @access public
@@ -307,7 +307,7 @@ class Request extends \XLite\Base\Singleton
     /**
      * Check property accessability
      *
-     * @param string $name property name
+     * @param string $name Property name
      *
      * @return boolean 
      * @access public

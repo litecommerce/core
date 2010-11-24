@@ -91,7 +91,7 @@ class ChangeOptions extends \XLite\Controller\Customer\ACustomer
     /**
      * Perform some actions before redirect
      * 
-     * @param string $action current action
+     * @param string $action Current action
      *  
      * @return void
      * @access protected

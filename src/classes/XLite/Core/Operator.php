@@ -67,7 +67,7 @@ class Operator extends \XLite\Base\Singleton
      * setHeaderLocation
      * 
      * @param string  $location URL
-     * @param integer $code     operation code
+     * @param integer $code     Operation code
      *  
      * @return void
      * @access protected
@@ -107,8 +107,8 @@ class Operator extends \XLite\Base\Singleton
      * Redirect 
      * 
      * @param string  $location URL
-     * @param boolean $force    check or not redirect conditions
-     * @param integer $code     operation code
+     * @param boolean $force    Check or not redirect conditions
+     * @param integer $code     Operation code
      *  
      * @return void
      * @access public
@@ -126,7 +126,7 @@ class Operator extends \XLite\Base\Singleton
     /**
      * Check if class exists 
      * 
-     * @param string $name name of class to check
+     * @param string $name Name of class to check
      *  
      * @return void
      * @access public
@@ -144,7 +144,7 @@ class Operator extends \XLite\Base\Singleton
      * 
      * @param string $url URL
      *  
-     * @return string or null
+     * @return string|void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

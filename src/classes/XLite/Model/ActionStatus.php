@@ -89,7 +89,7 @@ class ActionStatus extends \XLite\Base
     /**
      * checkStatus 
      * 
-     * @param mixed $status value to check
+     * @param mixed $status Value to check
      *  
      * @return boolean 
      * @access protected
@@ -164,9 +164,9 @@ class ActionStatus extends \XLite\Base
     /**
      * __construct 
      * 
-     * @param integer    $status  action status
-     * @param string $message status info
-     * @param integer    $code    code
+     * @param integer    $status  Action status
+     * @param string $message Status info
+     * @param integer    $code    Code
      *  
      * @return void
      * @access public

@@ -53,7 +53,7 @@ class ACustomer extends \XLite\Controller\Customer\ACustomer implements \XLite\B
     /**
      * Return Drupal URL
      * 
-     * @return string|null
+     * @return string|void
      * @access protected
      * @since  3.0.0
      */

@@ -97,7 +97,7 @@ interface IPatcher
     /**
      * Get patches 
      * 
-     * @return array of array
+     * @return array(array)
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

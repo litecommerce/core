@@ -140,7 +140,7 @@ class Membership extends \XLite\Model\Repo\Base\I18n
      * @param string  $name       Name
      * @param boolean $onlyActive Search only in active mebmerships
      *  
-     * @return \XLite\Model\Membership or null
+     * @return \XLite\Model\Membership|void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

@@ -134,7 +134,7 @@ class Country extends \XLite\View\FormField\Select\Regular
     /**
      * Save current form reference and sections list, and initialize the cache
      *
-     * @param array $params widget params
+     * @param array $params Widget params
      *
      * @return void
      * @access public

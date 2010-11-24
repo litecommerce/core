@@ -175,9 +175,9 @@ class ImportCatalog extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-    * @param integer $i          field number
-    * @param string  $value      current value
-    * @param boolean $default    default state
+    * @param integer $i          Field number
+    * @param string  $value      Current value
+    * @param boolean $default    Default state
     */
     function isOrderFieldSelected($id, $value, $default)
     {

@@ -100,7 +100,7 @@ class Profile extends \XLite\Model\Repo\ARepo
     /**
      * Check if param can be used for search
      * 
-     * @param string $param name of param to check
+     * @param string $param Name of param to check
      *  
      * @return boolean 
      * @access protected
@@ -115,9 +115,9 @@ class Profile extends \XLite\Model\Repo\ARepo
     /**
      * Call corresponded method to handle a search condition
      * 
-     * @param mixed                      $value        condition data
-     * @param string                     $key          condition name
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder query builder to prepare
+     * @param mixed                      $value        Condition data
+     * @param string                     $key          Condition name
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
      *  
      * @return void
      * @access protected
@@ -648,7 +648,7 @@ class Profile extends \XLite\Model\Repo\ARepo
     /**
      * Search profile by login 
      * 
-     * @param string $login user's login
+     * @param string $login User's login
      *  
      * @return \XLite\Model\Profile
      * @access public

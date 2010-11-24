@@ -311,8 +311,8 @@ class Category extends \XLite\Model\Base\I18n
     /**
      * Return products list
      * 
-     * @param \XLite\Core\CommonCell $cnd       search condition
-     * @param boolean                $countOnly return items list or only its size
+     * @param \XLite\Core\CommonCell $cnd       Search condition
+     * @param boolean                $countOnly Return items list or only its size
      *  
      * @return array|integer
      * @access public
@@ -334,7 +334,7 @@ class Category extends \XLite\Model\Base\I18n
     /**
      * Constructor
      *
-     * @param array $data entity properties
+     * @param array $data Entity properties
      *
      * @return void
      * @access public

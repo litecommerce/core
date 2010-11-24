@@ -74,7 +74,7 @@ class Converter extends \XLite\Base\Singleton
     /**
      * Convert a string like "test_foo_bar" into the camel case (like "TestFooBar")
      * 
-     * @param string $string string to convert
+     * @param string $string String to convert
      *  
      * @return string
      * @access public
@@ -88,7 +88,7 @@ class Converter extends \XLite\Base\Singleton
     /**
      * Convert a string like "testFooBar" into the underline style (like "test_foo_bar")
      * 
-     * @param string $string string to convert
+     * @param string $string String to convert
      *  
      * @return string
      * @access public
@@ -117,7 +117,7 @@ class Converter extends \XLite\Base\Singleton
     /**
      * Compose controller class name using target
      * 
-     * @param string $target current target
+     * @param string $target Current target
      *  
      * @return string
      * @access public
@@ -170,9 +170,9 @@ class Converter extends \XLite\Base\Singleton
     /**
      * Compose full URL from target, action and additional params
      *
-     * @param string $target page identifier
-     * @param string $action action to perform
-     * @param array  $params additional params
+     * @param string $target Page identifier
+     * @param string $action Action to perform
+     * @param array  $params Additional params
      *
      * @return string
      * @access public
@@ -186,8 +186,8 @@ class Converter extends \XLite\Base\Singleton
     /**
      * Return array schema 
      * 
-     * @param array $keys   keys list
-     * @param array $values values list
+     * @param array $keys   Keys list
+     * @param array $values Values list
      *  
      * @return array
      * @access public
@@ -201,8 +201,8 @@ class Converter extends \XLite\Base\Singleton
     /**
      * Convert to one-dimensional array 
      * 
-     * @param array  $data    array to flat
-     * @param string $currKey parameter for recursive calls
+     * @param array  $data    Array to flat
+     * @param string $currKey Parameter for recursive calls
      *  
      * @return array
      * @access public
@@ -277,7 +277,7 @@ class Converter extends \XLite\Base\Singleton
      * @param integer                 $width  New width
      * @param integer                 $height New height
      *  
-     * @return string or false
+     * @return string|false
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -493,7 +493,7 @@ class Converter extends \XLite\Base\Singleton
     /**
      * Return class name without backslashes
      * 
-     * @param \XLite_Base $obj object to get class name from
+     * @param \XLite_Base $obj Object to get class name from
      *  
      * @return string
      * @access public

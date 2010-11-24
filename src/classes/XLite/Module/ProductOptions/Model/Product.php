@@ -108,7 +108,7 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
      * 
      * @param array $options Request-based selected options
      *  
-     * @return array or null
+     * @return array|void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -245,7 +245,7 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
     /**
      * Constructor
      *
-     * @param array $data entity properties
+     * @param array $data Entity properties
      *
      * @return void
      * @access public

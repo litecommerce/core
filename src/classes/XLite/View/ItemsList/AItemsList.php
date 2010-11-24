@@ -136,8 +136,8 @@ abstract class AItemsList extends \XLite\View\Container
     /**
      * Return products list
      *
-     * @param \XLite\Core\CommonCell $cnd       search condition
-     * @param boolean                $countOnly return items list or only its size
+     * @param \XLite\Core\CommonCell $cnd       Search condition
+     * @param boolean                $countOnly Return items list or only its size
      *
      * @return array|int
      * @access protected
@@ -408,7 +408,7 @@ abstract class AItemsList extends \XLite\View\Container
     /**
      * getJSArray
      *
-     * @param array $params params to use
+     * @param array $params Params to use
      *
      * @return string
      * @access protected
@@ -512,7 +512,7 @@ abstract class AItemsList extends \XLite\View\Container
     /**
      * isSortByModeSelected
      *
-     * @param string $sortByMode value to check
+     * @param string $sortByMode Value to check
      *
      * @return boolean 
      * @access protected
@@ -632,7 +632,7 @@ abstract class AItemsList extends \XLite\View\Container
     /**
      * Initialize widget (set attributes)
      *
-     * @param array $params widget params
+     * @param array $params Widget params
      *
      * @return void
      * @access public
@@ -650,7 +650,7 @@ abstract class AItemsList extends \XLite\View\Container
     /**
      * getActionURL
      *
-     * @param array $params params to modify
+     * @param array $params Params to modify
      *
      * @return string
      * @access public

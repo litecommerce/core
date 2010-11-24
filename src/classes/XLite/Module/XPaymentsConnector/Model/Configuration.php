@@ -95,7 +95,7 @@ class Configuration extends \XLite\Model\AModel
     /**
      * Returns the specified property of this object. Read the object data from dataase if necessary 
      * 
-     * @param string $property field name
+     * @param string $property Field name
      *  
      * @return mixed
      * @access public

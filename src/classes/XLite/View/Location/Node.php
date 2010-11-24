@@ -88,9 +88,9 @@ class Node extends \XLite\View\AView
     /**
      * Static method to create nodes in controller classes
      * 
-     * @param string $name     node title
-     * @param string $link     node link
-     * @param array  $subnodes node subnodes
+     * @param string $name     Node title
+     * @param string $link     Node link
+     * @param array  $subnodes Node subnodes
      *
      * @return static
      * @access protected

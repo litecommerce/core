@@ -257,7 +257,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
     /**
      * Return list of all aloowed order statuses
      * 
-     * @param string $status status to get
+     * @param string $status Status to get
      *  
      * @return array | string
      * @access public
@@ -319,7 +319,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
     /**
      * Get 'Add item' error code
      * 
-     * @return string or null
+     * @return string|void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -334,7 +334,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * 
      * @param \XLite\Model\OrderItem $item Another item
      *  
-     * @return \XLite\Model\OrderItem or null
+     * @return \XLite\Model\OrderItem|void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -358,9 +358,9 @@ class Order extends \XLite\Model\Base\ModifierOwner
     /**
      * Get item from order by item  id
      * 
-     * @param integer $itemId item id
+     * @param integer $itemId Item id
      *  
-     * @return \XLite\Model\OrderItem or null
+     * @return \XLite\Model\OrderItem|void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -382,7 +382,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
     /**
      * Create new cart item 
      * 
-     * @param \XLite\Model\OrderItem $item new item
+     * @param \XLite\Model\OrderItem $item New item
      *  
      * @return void
      * @access protected
@@ -808,7 +808,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
     /**
      * Get first open (not payed) payment transaction 
      * 
-     * @return \XLite\Model\Payment\Transaction or null
+     * @return \XLite\Model\Payment\Transaction|void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -1489,7 +1489,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
     /**
      * Constructor
      *
-     * @param array $data entity properties
+     * @param array $data Entity properties
      *
      * @return void
      * @access public

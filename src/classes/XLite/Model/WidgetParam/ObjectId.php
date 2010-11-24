@@ -50,7 +50,7 @@ abstract class ObjectId extends \XLite\Model\WidgetParam\Int
     /**
      * getIdValidCondition 
      * 
-     * @param mixed $value value to check
+     * @param mixed $value Value to check
      *  
      * @return array
      * @access protected
@@ -67,7 +67,7 @@ abstract class ObjectId extends \XLite\Model\WidgetParam\Int
     /**
      * getObjectExistsCondition 
      * 
-     * @param mixed $value value to check
+     * @param mixed $value Value to check
      *  
      * @return array
      * @access protected
@@ -84,7 +84,7 @@ abstract class ObjectId extends \XLite\Model\WidgetParam\Int
     /**
      * Return object ID
      * 
-     * @param integer $id object ID
+     * @param integer $id Object ID
      *  
      * @return integer 
      * @access protected
@@ -98,7 +98,7 @@ abstract class ObjectId extends \XLite\Model\WidgetParam\Int
     /**
      * Return list of conditions to check
      *
-     * @param mixed $value value to validate
+     * @param mixed $value Value to validate
      *
      * @return void
      * @access protected
@@ -117,7 +117,7 @@ abstract class ObjectId extends \XLite\Model\WidgetParam\Int
     /**
      * Return object with passed/predefined ID
      *
-     * @param integer $id object ID
+     * @param integer $id Object ID
      *
      * @return \XLite\Model\AEntity
      * @access public

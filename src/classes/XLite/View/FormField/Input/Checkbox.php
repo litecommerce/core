@@ -77,7 +77,7 @@ class Checkbox extends \XLite\View\FormField\Input\AInput
     /**
      * prepareAttributes
      *
-     * @param array $attrs field attributes to prepare
+     * @param array $attrs Field attributes to prepare
      *
      * @return array
      * @access protected

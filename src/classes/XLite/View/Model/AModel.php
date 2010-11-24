@@ -193,7 +193,7 @@ abstract class AModel extends \XLite\View\Dialog
     protected $schemaHidden = array();
 
     /**
-     * The list of fields (fiel names) that must be excluded from the array of data for mapping to the object
+     * The list of fields (fiel names) that must be excluded from the array(data) for mapping to the object
      * 
      * @var    array
      * @access protected
@@ -275,7 +275,7 @@ abstract class AModel extends \XLite\View\Dialog
     /**
      * getFormDir
      *
-     * @param string $template template file basename
+     * @param string $template Template file basename
      *
      * @return string
      * @access protected
@@ -290,7 +290,7 @@ abstract class AModel extends \XLite\View\Dialog
     /**
      * Return form templates directory name
      *
-     * @param string $template template file base name
+     * @param string $template Template file base name
      *
      * @return void
      * @access protected
@@ -305,7 +305,7 @@ abstract class AModel extends \XLite\View\Dialog
     /**
      * Return list of form fields for certain section
      *
-     * @param string $section section name
+     * @param string $section Section name
      *
      * @return array
      * @access protected
@@ -393,7 +393,7 @@ abstract class AModel extends \XLite\View\Dialog
     /**
      * Add (if required) an additional part to the form name
      *
-     * @param string $name name to prepare
+     * @param string $name Name to prepare
      *
      * @return string
      * @access protected
@@ -407,8 +407,8 @@ abstract class AModel extends \XLite\View\Dialog
     /**
      * Perform some operations when creating fiels list by schema
      *
-     * @param string $name node name
-     * @param array  $data field description
+     * @param string $name Node name
+     * @param array  $data Field description
      *
      * @return array
      * @access protected
@@ -426,7 +426,7 @@ abstract class AModel extends \XLite\View\Dialog
     /**
      * Populate model object properties by the passed data
      *
-     * @param array $data data to set
+     * @param array $data Data to set
      *
      * @return void
      * @access protected
@@ -440,7 +440,7 @@ abstract class AModel extends \XLite\View\Dialog
     /**
      * Transform multi-dimensional data array into the "flat" one
      *
-     * @param array $data data to save
+     * @param array $data Data to save
      *
      * @return array
      * @access protected
@@ -466,7 +466,7 @@ abstract class AModel extends \XLite\View\Dialog
     /**
      * Return saved data for current form (all or certain field(s))
      *
-     * @param string $field data field to return
+     * @param string $field Data field to return
      *
      * @return array
      * @access protected
@@ -489,7 +489,7 @@ abstract class AModel extends \XLite\View\Dialog
     /**
      * Save form fields in session
      *
-     * @param mixed $data data to save
+     * @param mixed $data Data to save
      *
      * @return void
      * @access protected
@@ -646,8 +646,8 @@ abstract class AModel extends \XLite\View\Dialog
      * getFieldBySchema
      * TODO - should use the Factory class
      *
-     * @param string $name field name
-     * @param array  $data field description
+     * @param string $name Field name
+     * @param array  $data Field description
      *
      * @return \XLite\View\FormField\AFormField
      * @access protected
@@ -671,7 +671,7 @@ abstract class AModel extends \XLite\View\Dialog
     /**
      * Return list of form fields objects by schema
      *
-     * @param array $schema field descriptions
+     * @param array $schema Field descriptions
      *
      * @return array
      * @access protected
@@ -723,7 +723,7 @@ abstract class AModel extends \XLite\View\Dialog
     /**
      * Wrapper for the "getFieldsBySchema()" method
      *
-     * @param string $name schema short name
+     * @param string $name Schema short name
      *
      * @return array
      * @access protected
@@ -740,7 +740,7 @@ abstract class AModel extends \XLite\View\Dialog
     /**
      * Return list of form fields
      *
-     * @param boolean $onlyNames flag; return objects or only the indexes
+     * @param boolean $onlyNames Flag; return objects or only the indexes
      *
      * @return array
      * @access protected
@@ -760,9 +760,9 @@ abstract class AModel extends \XLite\View\Dialog
     /**
      * Return certain form field
      *
-     * @param string $section        section where the field located
-     * @param string $name           field name
-     * @param boolean   $preprocessName flag; prepare field name or not
+     * @param string $section        Section where the field located
+     * @param string $name           Field name
+     * @param boolean   $preprocessName Flag; prepare field name or not
      *
      * @return \XLite\View\FormField\AFormField
      * @access protected
@@ -804,7 +804,7 @@ abstract class AModel extends \XLite\View\Dialog
     /**
      * Display section header or not
      *
-     * @param string $section name of section to check
+     * @param string $section Name of section to check
      *
      * @return boolean 
      * @access protected
@@ -819,7 +819,7 @@ abstract class AModel extends \XLite\View\Dialog
     /**
      * prepareRequestData
      *
-     * @param array $data request data
+     * @param array $data Request data
      *
      * @return array
      * @access protected
@@ -834,8 +834,8 @@ abstract class AModel extends \XLite\View\Dialog
     /**
      * Prepare and save passed data
      *
-     * @param array       $data passed data
-     * @param string|null $name index in request data array (optional)
+     * @param array       $data Passed data
+     * @param string|null $name Index in request data array (optional)
      *
      * @return void
      * @access protected
@@ -859,9 +859,9 @@ abstract class AModel extends \XLite\View\Dialog
     }
 
     /**
-     * Return an assotiative array of the section field values
+     * Return an assotiative array(the) section field values
      *
-     * @param string $section section name
+     * @param string $section Section name
      *
      * @return array
      * @access protected
@@ -896,8 +896,8 @@ abstract class AModel extends \XLite\View\Dialog
     /**
      * Prepare error message before display
      *
-     * @param string $message message itself
-     * @param array  $data    current section data
+     * @param string $message Message itself
+     * @param array  $data    Current section data
      *
      * @return string
      * @access protected
@@ -920,7 +920,7 @@ abstract class AModel extends \XLite\View\Dialog
     /**
      * Check if field is valid and (if needed) set an error message
      *
-     * @param array $data current section data
+     * @param array $data Current section data
      *
      * @return void
      * @access protected
@@ -958,9 +958,9 @@ abstract class AModel extends \XLite\View\Dialog
     /**
      * addErrorMessage
      *
-     * @param string $name    error name
-     * @param string $message error message
-     * @param array  $data    section data (optional)
+     * @param string $name    Error name
+     * @param string $message Error message
+     * @param array  $data    Section data (optional)
      *
      * @return void
      * @access protected
@@ -1001,7 +1001,7 @@ abstract class AModel extends \XLite\View\Dialog
     /**
      * Call the corresponded method for current action
      *
-     * @param string $action action name
+     * @param string $action Action name
      *
      * @return boolean 
      * @access protected
@@ -1090,7 +1090,7 @@ abstract class AModel extends \XLite\View\Dialog
     /**
      * Retrieve property from the request or from  model object
      *
-     * @param string $name field/property name
+     * @param string $name Field/property name
      *
      * @return mixed
      * @access public
@@ -1114,7 +1114,7 @@ abstract class AModel extends \XLite\View\Dialog
     /**
      * Retrieve property from the model object
      * 
-     * @param mixed $name field/property name
+     * @param mixed $name Field/property name
      *  
      * @return mixed
      * @access protected
@@ -1163,8 +1163,8 @@ abstract class AModel extends \XLite\View\Dialog
     /**
      * Perform some action for the model object
      *
-     * @param string $action action to perform
-     * @param array  $data   form data
+     * @param string $action Action to perform
+     * @param array  $data   Form data
      *
      * @return boolean 
      * @access public
@@ -1282,7 +1282,7 @@ abstract class AModel extends \XLite\View\Dialog
     /**
      * getRequestData
      *
-     * @param string $name index in the request data
+     * @param string $name Index in the request data
      *
      * @return mixed
      * @access public
@@ -1303,8 +1303,8 @@ abstract class AModel extends \XLite\View\Dialog
     /**
      * setRequestData
      *
-     * @param string $name  index in the request data
-     * @param mixed  $value value to set
+     * @param string $name  Index in the request data
+     * @param mixed  $value Value to set
      *
      * @return void
      * @access public
@@ -1331,8 +1331,8 @@ abstract class AModel extends \XLite\View\Dialog
     /**
      * Save current form reference and sections list, and initialize the cache
      *
-     * @param array $params   widget params
-     * @param array $sections sections list
+     * @param array $params   Widget params
+     * @param array $sections Sections list
      *
      * @return void
      * @access public

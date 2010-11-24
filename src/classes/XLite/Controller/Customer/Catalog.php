@@ -63,7 +63,7 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
     /**
      * Return link to category page
      *
-     * @param \XLite\Model\Category $category category model object to use
+     * @param \XLite\Model\Category $category Category model object to use
      *
      * @return string
      * @access protected
@@ -77,7 +77,7 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
     /**
      * Prepare subnodes for the location path node
      *
-     * @param \XLite\Model\Category $category node category
+     * @param \XLite\Model\Category $category Node category
      *
      * @return array
      * @access protected

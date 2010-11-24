@@ -176,7 +176,7 @@ class OrderSearch extends \XLite\View\Dialog
     /**
      * Get orders 
      * 
-     * @return array of \XLite\Model\Order
+     * @return array(\XLite\Model\Order)
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

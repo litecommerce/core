@@ -50,7 +50,7 @@ class CachingFactory extends \XLite\Model\Factory
     /**
      * Get handler object (or pseudo-constant)
      * 
-     * @param mixed $handler variable to prepare
+     * @param mixed $handler Variable to prepare
      *  
      * @return mixed
      * @access protected
@@ -66,10 +66,10 @@ class CachingFactory extends \XLite\Model\Factory
     /**
      * Cache and return a result of object method call 
      * 
-     * @param string  $signature  result key in cache
-     * @param mixed   $handler    callback object
-     * @param string  $method     method to call
-     * @param array   $args       callback arguments
+     * @param string  $signature  Result key in cache
+     * @param mixed   $handler    Callback object
+     * @param string  $method     Method to call
+     * @param array   $args       Callback arguments
      * @param boolean $clearCache Clear cache flag
      *  
      * @return mixed
@@ -88,9 +88,9 @@ class CachingFactory extends \XLite\Model\Factory
     /**
      * cache and return object instance 
      * 
-     * @param string $signature result key in cache
-     * @param string $class     object class name
-     * @param array  $args      constructor arguments
+     * @param string $signature Result key in cache
+     * @param string $class     Object class name
+     * @param array  $args      Constructor arguments
      *  
      * @return \XLite\Base
      * @access public

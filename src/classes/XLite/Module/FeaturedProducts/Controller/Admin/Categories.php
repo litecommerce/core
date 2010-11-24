@@ -198,7 +198,7 @@ class Categories extends \XLite\Controller\Admin\Categories implements \XLite\Ba
     /**
      * Get featured products list
      *
-     * @return array of \XLite\Module\FeaturedProducts\Model\FeaturedProduct objects
+     * @return array(\XLite\Module\FeaturedProducts\Model\FeaturedProduct) Objects
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

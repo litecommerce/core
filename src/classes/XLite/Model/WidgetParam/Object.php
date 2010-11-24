@@ -49,7 +49,7 @@ class Object extends \XLite\Model\WidgetParam\AWidgetParam
     /**
      * Return list of conditions to check
      *
-     * @param mixed $value value to validate
+     * @param mixed $value Value to validate
      *
      * @return void
      * @access protected
@@ -72,10 +72,10 @@ class Object extends \XLite\Model\WidgetParam\AWidgetParam
     /**
      * Constructor
      *
-     * @param mixed  $label     param label (text)
-     * @param mixed  $value     default value
-     * @param mixed  $isSetting display this setting in CMS or not
-     * @param string $class     object class
+     * @param mixed  $label     Param label (text)
+     * @param mixed  $value     Default value
+     * @param mixed  $isSetting Display this setting in CMS or not
+     * @param string $class     Object class
      *
      * @return void
      * @access public

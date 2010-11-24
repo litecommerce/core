@@ -62,7 +62,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
     /**
      * Define the Doctrine query
      *
-     * @param integer $categoryId category Id
+     * @param integer $categoryId Category Id
      * 
      * @return \Doctrine\ORM\QueryBuilder
      * @access protected
@@ -84,7 +84,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
     /**
      * Define the Doctrine query
      *
-     * @param integer $categoryId category Id
+     * @param integer $categoryId Category Id
      *
      * @return \Doctrine\ORM\QueryBuilder
      * @access protected
@@ -101,7 +101,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
     /**
      * Define the Doctrine query
      *
-     * @param integer $categoryId category Id
+     * @param integer $categoryId Category Id
      *
      * @return \Doctrine\ORM\QueryBuilder
      * @access protected
@@ -121,7 +121,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
     /**
      * Define the Doctrine query
      *
-     * @param integer $categoryId category Id
+     * @param integer $categoryId Category Id
      *
      * @return \Doctrine\ORM\QueryBuilder
      * @access protected
@@ -138,7 +138,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
     /**
      * Define the Doctrine query
      *
-     * @param integer $categoryId category Id
+     * @param integer $categoryId Category Id
      * 
      * @return \Doctrine\ORM\QueryBuilder
      * @access protected
@@ -170,7 +170,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
     /**
      * Define the Doctrine query
      *
-     * @param integer $categoryId category Id
+     * @param integer $categoryId Category Id
      * 
      * @return \Doctrine\ORM\QueryBuilder
      * @access protected
@@ -187,7 +187,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
     /**
      * Define the Doctrine query
      *
-     * @param integer $productId product Id
+     * @param integer $productId Product Id
      * 
      * @return \Doctrine\ORM\QueryBuilder
      * @access protected
@@ -206,9 +206,9 @@ class Category extends \XLite\Model\Repo\Base\I18n
     /**
      * Define the Doctrine query
      *
-     * @param string  $index        field name
-     * @param integer $relatedIndex related index value
-     * @param integer $offset       increment
+     * @param string  $index        Field name
+     * @param integer $relatedIndex Related index value
+     * @param integer $offset       Increment
      *
      * @return \Doctrine\ORM\QueryBuilder
      * @access protected
@@ -230,8 +230,8 @@ class Category extends \XLite\Model\Repo\Base\I18n
     /**
      * Adds additional condition to the query for checking if category is enabled
      *
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder query builder object
-     * @param string                     $alias        entity alias
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder object
+     * @param string                     $alias        Entity alias
      *
      * @return void
      * @access protected
@@ -250,8 +250,8 @@ class Category extends \XLite\Model\Repo\Base\I18n
     /**
      * Adds additional condition to the query to order categories
      *
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder query builder object
-     * @param string                     $alias        entity alias
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder object
+     * @param string                     $alias        Entity alias
      *
      * @return void
      * @access protected
@@ -267,8 +267,8 @@ class Category extends \XLite\Model\Repo\Base\I18n
     /**
      * Adds additional condition to the query to order categories
      *
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder query builder object
-     * @param string                     $alias        entity alias
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder object
+     * @param string                     $alias        Entity alias
      *
      * @return void
      * @access protected
@@ -300,8 +300,8 @@ class Category extends \XLite\Model\Repo\Base\I18n
     /**
      * Prepare data for a new category node
      *
-     * @param array                 $data   category properties
-     * @param \XLite\Model\Category $parent parent category object
+     * @param array                 $data   Category properties
+     * @param \XLite\Model\Category $parent Parent category object
      *
      * @return array
      * @access protected
@@ -324,8 +324,8 @@ class Category extends \XLite\Model\Repo\Base\I18n
     /**
      * Prepare data for a the "updateQuickFlags()" method
      *
-     * @param integer $scAll     the "subcategories_count_all" flag value
-     * @param integer $scEnabled the "subcategories_count_enabled" flag value
+     * @param integer $scAll     The "subcategories_count_all" flag value
+     * @param integer $scEnabled The "subcategories_count_enabled" flag value
      *  
      * @return array
      * @access protected
@@ -343,8 +343,8 @@ class Category extends \XLite\Model\Repo\Base\I18n
     /**
      * Update quick flags for a category
      * 
-     * @param \XLite\Model\Category $entity category
-     * @param array                 $flags  flags to set
+     * @param \XLite\Model\Category $entity Category
+     * @param array                 $flags  Flags to set
      *  
      * @return void
      * @access protected
@@ -366,7 +366,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
     /**
      * Insert single entity
      *
-     * @param array $data data to save
+     * @param array $data Data to save
      *
      * @return void
      * @access protected
@@ -401,8 +401,8 @@ class Category extends \XLite\Model\Repo\Base\I18n
     /**
      * Update single entity
      *
-     * @param \XLite\Model\AEntity $entity entity to use
-     * @param array                $data   data to save
+     * @param \XLite\Model\AEntity $entity Entity to use
+     * @param array                $data   Data to save
      *
      * @return void
      * @access protected
@@ -423,7 +423,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
     /**
      * Delete single entity
      *
-     * @param \XLite\Model\AEntity $entity entity to detach
+     * @param \XLite\Model\AEntity $entity Entity to detach
      *
      * @return void
      * @access protected
@@ -469,7 +469,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * Create a new QueryBuilder instance that is prepopulated for this entity name
      *
      * @param string  $alias       Table alias
-     * @param boolean $excludeRoot do not include root category into the search result
+     * @param boolean $excludeRoot Do not include root category into the search result
      *
      * @return \Doctrine\ORM\QueryBuilder
      * @access public
@@ -493,7 +493,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
     /**
      * find() with cache
      * 
-     * @param integer $categoryId category ID
+     * @param integer $categoryId Category ID
      *  
      * @return \XLite\Model\Category
      * @access public
@@ -610,7 +610,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
     /**
      * Get categories list by product ID
      * 
-     * @param integer $productId product ID
+     * @param integer $productId Product ID
      *  
      * @return \Doctrine\ORM\PersistentCollection
      * @access public
@@ -628,7 +628,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * Create new DB entry.
      * This function is used to create new QuickFlags entry
      * 
-     * @param array $data entity properties
+     * @param array $data Entity properties
      *  
      * @return \XLite\Model\Category
      * @access public
@@ -651,7 +651,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * Wrapper. Use this function instead of the native "delete...()"
      * 
      * @param integer $categoryId  ID of category to delete
-     * @param boolean $onlySubtree flag
+     * @param boolean $onlySubtree Flag
      *  
      * @return void
      * @access public
@@ -682,11 +682,11 @@ class Category extends \XLite\Model\Repo\Base\I18n
      *
      * NOTE: function is public since it's needed to the Product model repository
      *
-     * @param \Doctrine\ORM\QueryBuilder $qb         query builder to modify
-     * @param integer                    $categoryId current category ID
-     * @param string                     $field      name of the field to use
-     * @param integer                    $lpos       left position
-     * @param integer                    $rpos       right position
+     * @param \Doctrine\ORM\QueryBuilder $qb         Query builder to modify
+     * @param integer                    $categoryId Current category ID
+     * @param string                     $field      Name of the field to use
+     * @param integer                    $lpos       Left position
+     * @param integer                    $rpos       Right position
      *
      * @return void
      * @access public

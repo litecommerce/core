@@ -206,7 +206,7 @@ abstract class AProfile extends \XLite\View\Model\AModel
      * Pass the DOM IDs of the "State" selectbox to the "CountrySelector" widget
      * 
      * @param array  &$fields widgets list
-     * @param string $section current section
+     * @param string $section Current section
      *  
      * @return void
      * @access protected
@@ -224,7 +224,7 @@ abstract class AProfile extends \XLite\View\Model\AModel
     /**
      * Retrieve property from the model object
      *
-     * @param string $name field/property name
+     * @param string $name Field/property name
      *
      * @return mixed
      * @access protected
@@ -285,7 +285,7 @@ abstract class AProfile extends \XLite\View\Model\AModel
     /**
      * Modify address field schema for certain address type (billing or shipping) 
      * 
-     * @param string $type address type
+     * @param string $type Address type
      *  
      * @return array
      * @access protected
@@ -349,7 +349,7 @@ abstract class AProfile extends \XLite\View\Model\AModel
     /**
      * prepareRequestData
      *
-     * @param array $data request data
+     * @param array $data Request data
      *
      * @return array
      * @access protected
@@ -434,7 +434,7 @@ abstract class AProfile extends \XLite\View\Model\AModel
     /**
      * Populate model object properties by the passed data
      *
-     * @param array $data data to set
+     * @param array $data Data to set
      *
      * @return void
      * @access protected
@@ -522,7 +522,7 @@ abstract class AProfile extends \XLite\View\Model\AModel
     /**
      * getRequestProfileId 
      * 
-     * @return int|null
+     * @return int|void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -563,8 +563,8 @@ abstract class AProfile extends \XLite\View\Model\AModel
     /**
      * Save current form reference and sections list, and initialize the cache
      *
-     * @param array $params   widget params
-     * @param array $sections sections list
+     * @param array $params   Widget params
+     * @param array $sections Sections list
      *
      * @return void
      * @access public

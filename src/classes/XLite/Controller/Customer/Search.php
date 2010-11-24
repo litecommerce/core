@@ -107,7 +107,7 @@ class Search extends \XLite\Controller\Customer\ACustomer
     /** 
      * Get search condition parameter by name TODO refactor with XLite\Controller\Admin\ProductList::getCondition()
      * 
-     * @param string $paramName name of parameter 
+     * @param string $paramName Name of parameter 
      *  
      * @return mixed
      * @access public

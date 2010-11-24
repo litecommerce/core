@@ -89,7 +89,7 @@ class Order extends \XLite\Model\Repo\ARepo
     /**
      * Check if param can be used for search
      * 
-     * @param string $param name of param to check
+     * @param string $param Name of param to check
      *  
      * @return boolean 
      * @access protected
@@ -104,8 +104,8 @@ class Order extends \XLite\Model\Repo\ARepo
     /**
      * Prepare certain search condition
      *
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder query builder to prepare
-     * @param integer                    $value        condition data
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
+     * @param integer                    $value        Condition data
      *
      * @return void
      * @access protected
@@ -123,8 +123,8 @@ class Order extends \XLite\Model\Repo\ARepo
     /**
      * Prepare certain search condition
      *
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder query builder to prepare
-     * @param integer                    $value        condition data
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
+     * @param integer                    $value        Condition data
      *
      * @return void
      * @access protected
@@ -142,8 +142,8 @@ class Order extends \XLite\Model\Repo\ARepo
     /**
      * Prepare certain search condition
      *
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder query builder to prepare
-     * @param string                     $value        condition data
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
+     * @param string                     $value        Condition data
      *
      * @return void
      * @access protected
@@ -164,8 +164,8 @@ class Order extends \XLite\Model\Repo\ARepo
     /**
      * Prepare certain search condition
      *
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder query builder to prepare
-     * @param string                     $value        condition data
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
+     * @param string                     $value        Condition data
      *
      * @return void
      * @access protected
@@ -186,8 +186,8 @@ class Order extends \XLite\Model\Repo\ARepo
     /**
      * Prepare certain search condition
      *
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder query builder to prepare
-     * @param array                      $value        condition data
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
+     * @param array                      $value        Condition data
      *
      * @return void
      * @access protected
@@ -308,8 +308,8 @@ class Order extends \XLite\Model\Repo\ARepo
     /**
      * Prepare certain search condition
      *
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder query builder to prepare
-     * @param array                      $value        condition data
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
+     * @param array                      $value        Condition data
      *
      * @return void
      * @access protected
@@ -327,8 +327,8 @@ class Order extends \XLite\Model\Repo\ARepo
     /**
      * Prepare certain search condition
      *
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder query builder to prepare
-     * @param array                      $value        condition data
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
+     * @param array                      $value        Condition data
      *
      * @return void
      * @access protected
@@ -344,9 +344,9 @@ class Order extends \XLite\Model\Repo\ARepo
     /**
      * Call corresponded method to handle a serch condition
      * 
-     * @param mixed                      $value        condition data
-     * @param string                     $key          condition name
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder query builder to prepare
+     * @param mixed                      $value        Condition data
+     * @param string                     $key          Condition name
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
      *  
      * @return void
      * @access protected
@@ -369,10 +369,10 @@ class Order extends \XLite\Model\Repo\ARepo
     /**
      * Common search
      * 
-     * @param \XLite\Core\CommonCell $cnd       search condition
-     * @param boolean                $countOnly return items list or only its size
+     * @param \XLite\Core\CommonCell $cnd       Search condition
+     * @param boolean                $countOnly Return items list or only its size
      *  
-     * @return \Doctrine\ORM\PersistentCollection or int
+     * @return \Doctrine\ORM\PersistentCollection|int
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

@@ -78,7 +78,7 @@ class Upload extends \XLite\Base
 
     /**
     * Move uploaded file.
-    * @param string $name target file
+    * @param string $name Target file
     * @return true - OK, false - error occured.
     */
     function move($file)

@@ -280,7 +280,7 @@ EOT;
      * 
      * @param \XLite\Model\Order $order Order
      *  
-     * @return array of \XLite\Model\ShippingRate
+     * @return array(\XLite\Model\ShippingRate)
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -786,7 +786,7 @@ EOT;
      * @param string $destination   Destination code
      * @param string $originCountry Origination country code
      *  
-     * @return array of \XLite\Model\ShippingRate
+     * @return array(\XLite\Model\ShippingRate)
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0

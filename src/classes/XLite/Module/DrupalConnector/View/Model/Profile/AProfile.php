@@ -84,8 +84,8 @@ abstract class AProfile extends \XLite\View\Model\Profile\AProfile implements \X
     /**
      * Save current form reference and sections list, and initialize the cache
      *
-     * @param array $params   widget params
-     * @param array $sections sections list
+     * @param array $params   Widget params
+     * @param array $sections Sections list
      *
      * @return void
      * @access public

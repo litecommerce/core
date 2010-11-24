@@ -40,9 +40,9 @@ abstract class Handler extends \XLite\Core\Handler implements \XLite\Base\IDecor
     /**
      * Compose URL from target, action and additional params
      *
-     * @param string $target page identifier
-     * @param string $action action to perform
-     * @param array  $params additional params
+     * @param string $target Page identifier
+     * @param string $action Action to perform
+     * @param array  $params Additional params
      *
      * @return string
      * @access public
@@ -58,9 +58,9 @@ abstract class Handler extends \XLite\Core\Handler implements \XLite\Base\IDecor
     /**
      * Compose URL from target, action and additional params
      *
-     * @param string $target page identifier
-     * @param string $action action to perform
-     * @param array  $params additional params
+     * @param string $target Page identifier
+     * @param string $action Action to perform
+     * @param array  $params Additional params
      *
      * @return string
      * @access public

@@ -180,7 +180,7 @@ class PaymentMethod extends \XLite\Model\AModel
     /**
      * Define available methods range 
      * 
-     * @param string $id method identifier
+     * @param string $id Method identifier
      *  
      * @return void
      * @access public
@@ -204,8 +204,8 @@ class PaymentMethod extends \XLite\Model\AModel
      * $pm = new \XLite\Model\PaymentMethod();
      * $pm->getActiveMethods();
      *
-     * @param string $name  method name
-     * @param string $class method class
+     * @param string $name  Method name
+     * @param string $class Method class
      *  
      * @return void
      * @access public
@@ -221,7 +221,7 @@ class PaymentMethod extends \XLite\Model\AModel
     /**
      * Check if method is already registered 
      * 
-     * @param string $name method name
+     * @param string $name Method name
      *  
      * @return boolean 
      * @access public
@@ -260,7 +260,7 @@ class PaymentMethod extends \XLite\Model\AModel
     /**
      * Getter
      * 
-     * @param string $name property name
+     * @param string $name Property name
      *  
      * @return mixed
      * @access public
@@ -288,8 +288,8 @@ class PaymentMethod extends \XLite\Model\AModel
     /**
      * Setter
      * 
-     * @param string $name property name
-     * @param mixed  $val  property value
+     * @param string $name Property name
+     * @param mixed  $val  Property value
      *  
      * @return void
      * @access public
@@ -308,7 +308,7 @@ class PaymentMethod extends \XLite\Model\AModel
     /**
      * Return payment method object by it's name
      * 
-     * @param string $name payment method name
+     * @param string $name Payment method name
      *  
      * @return \XLite\Model\PaymentMethod
      * @access public

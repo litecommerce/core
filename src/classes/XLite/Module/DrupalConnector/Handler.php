@@ -345,7 +345,7 @@ class Handler extends \XLite\Core\CMSConnector
      * 
      * @param string $target Target code
      *  
-     * @return string or false
+     * @return string|false
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0

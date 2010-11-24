@@ -159,7 +159,7 @@ class OrderItemsShort extends \XLite\View\AView
     /**
      * Get order items 
      * 
-     * @return array of \XLite\Model\OrderItem
+     * @return array(\XLite\Model\OrderItem)
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

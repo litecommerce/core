@@ -51,7 +51,7 @@ class Tree extends \Includes\DataStructure\Hierarchical\Tree
     /**
      * Check and prepare current element data
      * 
-     * @param mixed $data data to prepare
+     * @param mixed $data Data to prepare
      *  
      * @return array
      * @access protected
@@ -69,8 +69,8 @@ class Tree extends \Includes\DataStructure\Hierarchical\Tree
     /**
      * Constructor
      *
-     * @param string $nodeClass  node class name
-     * @param array  $categories plain list of categories
+     * @param string $nodeClass  Node class name
+     * @param array  $categories Plain list of categories
      *  
      * @return void
      * @access public

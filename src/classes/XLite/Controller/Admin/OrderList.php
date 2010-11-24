@@ -81,7 +81,7 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
      * getDateValue 
      * FIXME - to remove
      * 
-     * @param string $fieldName field name (prefix)
+     * @param string $fieldName Field name (prefix)
      *  
      * @return integer 
      * @access protected

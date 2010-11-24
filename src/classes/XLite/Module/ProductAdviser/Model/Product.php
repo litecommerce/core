@@ -44,7 +44,7 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
     /**
      * Get the list of related products
      * 
-     * @return array of \XLite\Model\Product objects
+     * @return array(\XLite\Model\Product) Objects
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -98,7 +98,7 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
     /**
      * Get the list of recommended products (products that are also buy with current product)
      * 
-     * @return array of \XLite\Model\Product objects
+     * @return array(\XLite\Model\Product) Objects
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

@@ -71,7 +71,7 @@ class Offline extends \XLite\Model\Shipping
      * 
      * @param \XLite\Model\Order $order Order
      *  
-     * @return array of \XLite\Model\ShippingRate
+     * @return array(\XLite\Model\ShippingRate)
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

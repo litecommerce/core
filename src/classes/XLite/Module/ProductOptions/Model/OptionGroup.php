@@ -261,7 +261,7 @@ class OptionGroup extends \XLite\Model\Base\I18n
      * 
      * @param integer $startIdx Start scan index
      *  
-     * @return \XLite\Module\ProductOptions\Model\Options or null
+     * @return \XLite\Module\ProductOptions\Model\Options|void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -305,7 +305,7 @@ class OptionGroup extends \XLite\Model\Base\I18n
     /**
      * Constructor
      *
-     * @param array $data entity properties
+     * @param array $data Entity properties
      *
      * @return void
      * @access public

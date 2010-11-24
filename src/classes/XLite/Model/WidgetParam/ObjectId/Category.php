@@ -62,7 +62,7 @@ class Category extends \XLite\Model\WidgetParam\ObjectId
     /**
      * getIdValidCondition 
      * 
-     * @param mixed $value value to check
+     * @param mixed $value Value to check
      *  
      * @return array
      * @access protected
@@ -85,7 +85,7 @@ class Category extends \XLite\Model\WidgetParam\ObjectId
     /**
      * getObjectExistsCondition 
      * 
-     * @param mixed $value value to check
+     * @param mixed $value Value to check
      *  
      * @return array
      * @access protected
@@ -104,10 +104,10 @@ class Category extends \XLite\Model\WidgetParam\ObjectId
     /**
      * Constructor
      * 
-     * @param string  $label         param label (text)
-     * @param mixed   $value         default value
-     * @param boolean $isSetting     display this setting in CMS or not
-     * @param boolean $rootIsAllowed root category id (0) is allowed or not
+     * @param string  $label         Param label (text)
+     * @param mixed   $value         Default value
+     * @param boolean $isSetting     Display this setting in CMS or not
+     * @param boolean $rootIsAllowed Root category id (0) is allowed or not
      *  
      * @return void
      * @access public

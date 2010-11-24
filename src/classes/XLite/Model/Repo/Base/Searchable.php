@@ -43,9 +43,9 @@ abstract class Searchable extends \XLite\Base\SuperClass
     /**
      * Prepare the "LIMIT" SQL condition
      * 
-     * @param integer                $start first item index
-     * @param integer                $count items per frame
-     * @param \XLite\Core\CommonCell $cnd   condition object to use
+     * @param integer                $start First item index
+     * @param integer                $count Items per frame
+     * @param \XLite\Core\CommonCell $cnd   Condition object to use
      *  
      * @return \XLite\Core\CommonCell
      * @access public

@@ -43,7 +43,7 @@ class Factory extends \XLite\Base
      * Check if class is a singleton 
      * FIXME - must be revised or removed
      * 
-     * @param ReflectionClass $handler class descriptor
+     * @param ReflectionClass $handler Class descriptor
      *  
      * @return void
      * @access protected
@@ -57,7 +57,7 @@ class Factory extends \XLite\Base
     /**
      * Return a singleton refernce
      *
-     * @param string $class class name
+     * @param string $class Class name
      *
      * @return \XLite\Base
      * @access protected
@@ -71,8 +71,8 @@ class Factory extends \XLite\Base
     /**
      * Create new object
      * 
-     * @param ReflectionClass $handler class descriptor
-     * @param array           $args    constructor params
+     * @param ReflectionClass $handler Class descriptor
+     * @param array           $args    Constructor params
      *  
      * @return \XLite\Base
      * @access protected
@@ -87,7 +87,7 @@ class Factory extends \XLite\Base
     /**
      * Create object instance 
      * 
-     * @param string $name class name
+     * @param string $name Class name
      *  
      * @return \XLite\Base
      * @access public
@@ -101,8 +101,8 @@ class Factory extends \XLite\Base
     /**
      * Create object instance and pass arguments to it contructor (if needed)
      * 
-     * @param string $class class name
-     * @param array  $args  constructor arguments
+     * @param string $class Class name
+     * @param array  $args  Constructor arguments
      *  
      * @return \XLite\Base
      * @access public

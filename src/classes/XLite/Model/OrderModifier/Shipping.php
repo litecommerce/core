@@ -115,7 +115,7 @@ class Shipping extends \XLite\Model\Order implements \XLite\Base\IDecorator
     /**
      * Calculate shipping rates 
      * 
-     * @return array of \XLite\Model\Shipping\Rate
+     * @return array(\XLite\Model\Shipping\Rate)
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -169,7 +169,7 @@ class Shipping extends \XLite\Model\Order implements \XLite\Base\IDecorator
      * Get shipping rates 
      * TODO: add checking if rates should be recalculated else get rates from cache
      * 
-     * @return array of \XLite\Model\Shipping\Rate
+     * @return array(\XLite\Model\Shipping\Rate)
      * @access public
      * @since  3.0.0
      */

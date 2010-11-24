@@ -176,7 +176,7 @@ Please correct errors above and click reload or click the button below to force 
     * If $re is specified, it contains a regular expression to search for.
     * If found, than the file has already been patched. patchFile returns
     * ALREADY_PATCHED in this case.
-    * $patch as an array of patches. Each element is
+    * $patch as an array(patches.) Each element is
     * in form of array(COMMAND, ARGUMENT)
     *  COMMAND is:
     *    "replace" - takes two arguments: line to search and line to replace with

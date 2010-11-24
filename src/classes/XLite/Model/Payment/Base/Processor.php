@@ -90,7 +90,7 @@ abstract class Processor extends \XLite\Base
     /**
      * Get input template 
      * 
-     * @return string or null
+     * @return string|void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

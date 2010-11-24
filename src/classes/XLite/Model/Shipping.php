@@ -170,7 +170,7 @@ class Shipping extends \XLite\Base\Singleton
     /**
      * Return shipping rates
      * 
-     * @param \XLite\Model\Order $order order object
+     * @param \XLite\Model\Order $order Order object
      *  
      * @return void
      * @access public

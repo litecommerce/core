@@ -72,8 +72,8 @@ class Collection extends \XLite\Base\SuperClass
     /**
      * Search list element using a callback function
      *
-     * @param string $method some public method of the XLite_Model_ListNode class
-     * @param array  $args   callback arguments
+     * @param string $method Some public method of the XLite_Model_ListNode class
+     * @param array  $args   Callback arguments
      *
      * @return \XLite\Model\ListNode
      * @access public
@@ -93,7 +93,7 @@ class Collection extends \XLite\Base\SuperClass
     /**
      * Search list element by its key
      *
-     * @param string $key node identifier
+     * @param string $key Node identifier
      *
      * @return \XLite\Model\ListNode
      * @access public
@@ -107,8 +107,8 @@ class Collection extends \XLite\Base\SuperClass
     /**
      * Insert new node before a certain node
      *
-     * @param string                $key  node key to search
-     * @param \Xlite\Model\ListNode $node new node to insert
+     * @param string                $key  Node key to search
+     * @param \Xlite\Model\ListNode $node New node to insert
      *
      * @return void
      * @access public
@@ -134,8 +134,8 @@ class Collection extends \XLite\Base\SuperClass
     /**
      * Insert new node after a certain node
      *
-     * @param string                $key  node key to search
-     * @param \Xlite\Model\ListNode $node new node to insert
+     * @param string                $key  Node key to search
+     * @param \Xlite\Model\ListNode $node New node to insert
      *
      * @return void
      * @access public
@@ -161,7 +161,7 @@ class Collection extends \XLite\Base\SuperClass
     /**
      * Add new node to the end of list
      *
-     * @param \Xlite\Model\ListNode $node node to add
+     * @param \Xlite\Model\ListNode $node Node to add
      *
      * @return void
      * @access public

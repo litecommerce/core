@@ -48,9 +48,9 @@ class Converter extends \XLite\Core\Converter implements \XLite\Base\IDecorator
     /**
      * Compose URL from target, action and additional params
      *
-     * @param string $target    page identifier
-     * @param string $action    action to perform
-     * @param array  $params    additional params
+     * @param string $target    Page identifier
+     * @param string $action    Action to perform
+     * @param array  $params    Additional params
      * @param string $interface Interface script
      *
      * @return string
@@ -122,9 +122,9 @@ class Converter extends \XLite\Core\Converter implements \XLite\Base\IDecorator
     /**
      * Compose URL from target, action and additional params
      *
-     * @param string $target page identifier
-     * @param string $action action to perform
-     * @param array  $params additional params
+     * @param string $target Page identifier
+     * @param string $action Action to perform
+     * @param array  $params Additional params
      *
      * @return string
      * @access public

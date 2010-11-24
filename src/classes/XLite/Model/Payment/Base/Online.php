@@ -57,7 +57,7 @@ abstract class Online extends \XLite\Model\Payment\Base\Processor
     /**
      * Get callback reqeust owner transaction or null
      * 
-     * @return \XLite\Model\Payment\Transaction or null
+     * @return \XLite\Model\Payment\Transaction|void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

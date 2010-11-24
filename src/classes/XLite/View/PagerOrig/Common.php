@@ -60,7 +60,7 @@ class Common extends \XLite\View\PagerOrig
     /**
      * Build page URL by page ID
      *
-     * @param integer $pageId page ID
+     * @param integer $pageId Page ID
      *
      * @return string
      * @access protected
@@ -100,7 +100,7 @@ class Common extends \XLite\View\PagerOrig
     /**
      * isFurthermostPage 
      * 
-     * @param string $type link type (first / previous / next / last)
+     * @param string $type Link type (first / previous / next / last)
      *  
      * @return boolean 
      * @access protected
@@ -117,7 +117,7 @@ class Common extends \XLite\View\PagerOrig
     /**
      * getPageIndexNotations 
      * 
-     * @param mixed $index page notation
+     * @param mixed $index Page notation
      *  
      * @return integer 
      * @access protected
@@ -138,7 +138,7 @@ class Common extends \XLite\View\PagerOrig
     /**
      * getLinkClassName 
      * 
-     * @param mixed $index page notation
+     * @param mixed $index Page notation
      *  
      * @return string
      * @access protected
@@ -152,7 +152,7 @@ class Common extends \XLite\View\PagerOrig
     /**
      * Get border link class name
      *
-     * @param string $type link type (first / previous / next / last)
+     * @param string $type Link type (first / previous / next / last)
      *
      * @return string
      * @access protected
@@ -166,7 +166,7 @@ class Common extends \XLite\View\PagerOrig
     /**
      * getPageClassName 
      * 
-     * @param integer $pageId current page ID
+     * @param integer $pageId Current page ID
      *  
      * @return string
      * @access protected

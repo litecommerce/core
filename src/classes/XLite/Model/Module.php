@@ -485,8 +485,8 @@ class Module extends \XLite\Model\AEntity
     /**
      * It's possible to call methods of certain module directly
      * 
-     * @param string $method method name
-     * @param array  $args   call arguments
+     * @param string $method Method name
+     * @param array  $args   Call arguments
      *  
      * @return mixed
      * @access public

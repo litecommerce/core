@@ -61,8 +61,8 @@ class Categories extends \XLite\Controller\Admin\Catalog
     /**
      * __call 
      * 
-     * @param string $method method to call
-     * @param array  $args   call arguments
+     * @param string $method Method to call
+     * @param array  $args   Call arguments
      *  
      * @return mixed
      * @access public
