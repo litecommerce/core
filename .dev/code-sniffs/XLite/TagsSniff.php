@@ -728,6 +728,15 @@ class XLite_TagsSniff extends XLite_ReqCodesSniff implements PHP_CodeSniffer_Sni
             }
 		}
 
+		// Check comment case
+        if (
+			$this->commentParser->getReturn()->getComment()
+			&& preg_match('/^[a-z]/Ss', trim($this->commentParser->getReturn()->getComment()))
+		) {
+        	$error = 'Комментарий аннотации возврата метода начинается с маленькой буквы';
+            $this->currentFile->addError($this->getReqPrefix('?') . $error, $commentStart + $this->commentParser->getReturn()->getLine());
+		}
+
         if ($isSpecialMethod === false && $methodName !== $className) {
             // Report missing return tag.
             if ($this->commentParser->getReturn() === null) {
@@ -867,6 +876,11 @@ class XLite_TagsSniff extends XLite_ReqCodesSniff implements PHP_CodeSniffer_Sni
                 if ($paramComment === '') {
                     $error = 'Missing comment for param "'.$paramName.'" at position '.$pos;
                     $this->currentFile->addError($this->getReqPrefix('REQ.PHP.4.1.26') . $error, $errorPos);
+
+				} elseif (preg_match('/^[a-z]/Ss', trim($paramComment))) {
+                    $error = 'Комментарий параметра "' . $paramName . '" начинается с маленькой буквы';
+                    $this->currentFile->addError($this->getReqPrefix('?') . $error, $errorPos);
+
 				}
 
 				$this->checkForDefaultValue($paramName, 'param', $errorPos);
