@@ -35,10 +35,8 @@ namespace XLite\Module\Demo\View;
  * @see     ____class_see____
  * @since   3.0.0
  */
-abstract class AView extends \XLite\View\AView
-implements \XLite\Base\IDecorator
+abstract class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
 {
-
     /**
      * Compile and display a template
      *
@@ -46,13 +44,13 @@ implements \XLite\Base\IDecorator
      * @access protected
      * @since  3.0.0
      */
-    protected function includeCompiledFile()
+    protected function includeCompiledFile($original = null)
     {
-        if (preg_match('/admin\/en\/main\.tpl$/Ss', $this->getTemplateFile())) {
+        if (preg_match('/' . preg_quote('admin' . LC_DS . 'en' . LC_DS . 'main.tpl', '/') . '$/Ss', $this->getTemplateFile($original))) {
             echo (self::getAdditionalHeader());
         }
 
-        parent::includeCompiledFile();
+        parent::includeCompiledFile($original);
     }
 
     /**

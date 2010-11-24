@@ -35,8 +35,7 @@ namespace XLite\Module\Demo\Controller\Admin;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Login extends \XLite\Controller\Admin\Login
-implements \XLite\Base\IDecorator
+class Login extends \XLite\Controller\Admin\Login implements \XLite\Base\IDecorator
 {
 	/**
 	 * Demo admin login 
