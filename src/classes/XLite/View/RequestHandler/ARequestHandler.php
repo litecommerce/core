@@ -212,7 +212,7 @@ abstract class ARequestHandler extends \XLite\View\AView
     /**
      * Set param values using the request or session
      *
-     * @param array &$params param values to modify
+     * @param array &$params Param values to modify
      *
      * @return void
      * @access protected
@@ -222,6 +222,7 @@ abstract class ARequestHandler extends \XLite\View\AView
     protected function setWidgetRequestParamValues(array &$params)
     {
         foreach ($this->getRequestParams() as $name) {
+
             // First, check the request
             $value = \XLite\Core\Request::getInstance()->$name;
 

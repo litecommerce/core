@@ -31,9 +31,9 @@ namespace XLite\View\ItemsList\Order\Admin;
 /**
  * Search 
  * 
- * @package    XLite
- * @see        ____class_see____
- * @since      3.0.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
 class Search extends \XLite\View\ItemsList\Order\Admin\AAdmin
 {
@@ -152,11 +152,11 @@ class Search extends \XLite\View\ItemsList\Order\Admin\AAdmin
      * getSearchParams 
      * 
      * @return array
-     * @access protected
+     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    static public function getSearchParams()
+    public static function getSearchParams()
     {
         return array(
             \XLite\Model\Repo\Order::P_ORDER_ID => self::PARAM_ORDER_ID,
@@ -233,7 +233,7 @@ class Search extends \XLite\View\ItemsList\Order\Admin\AAdmin
      * @param \XLite\Core\CommonCell $cnd       Search condition
      * @param boolean                $countOnly Return items list or only its size OPTIONAL
      *
-     * @return array|int
+     * @return array|integer
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0

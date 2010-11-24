@@ -435,8 +435,8 @@ abstract class ATabs extends \XLite\View\AView
     /**
      * Checks whether a title is wider than the specified percent of total length of all titles
      * 
-     * @param string $pageIdx       Page identificator (key in the $pages array)
-     * @param integer    $widthPercents Percent value OPTIONAL
+     * @param string  $pageIdx       Page identificator (key in the $pages array)
+     * @param integer $widthPercents Percent value OPTIONAL
      *  
      * @return boolean
      * @access protected
@@ -445,11 +445,10 @@ abstract class ATabs extends \XLite\View\AView
      */
     protected function isTitleWider($pageIdx, $widthPercents = 100)
     {
-        if (!isset($pageIdx) || count($this->tabsInfo) == 0 || !isset($this->tabsInfo[$pageIdx])) {
-            return false;
-        } else {
-            return ($this->tabsInfo[$pageIdx]['titlesFullness'] > $widthPercents) ? true : false;
-        }
+        return isset($pageIdx)
+            && 0 < count($this->tabsInfo)
+            && isset($this->tabsInfo[$pageIdx])
+            && $this->tabsInfo[$pageIdx]['titlesFullness'] > $widthPercents;
     }
 
 }

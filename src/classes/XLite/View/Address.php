@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage ____sub_package____
+ * @subpackage View
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -31,10 +31,9 @@ namespace XLite\View;
 /**
  * \XLite\View\AddressBook 
  * 
- * @package    XLite
- * @subpackage ____sub_package____
- * @see        ____class_see____
- * @since      3.0.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
 class Address extends \XLite\View\Dialog
 {
@@ -46,9 +45,9 @@ class Address extends \XLite\View\Dialog
     const PARAM_ADDRESS         = 'address';
     const PARAM_DISPLAY_WRAPPER = 'displayWrapper';
 
-   /**
-    * Allowed display modes
-    */
+    /**
+     * Allowed display modes
+     */
 
     const DISPLAY_MODE_TEXT = 'text';
     const DISPLAY_MODE_FORM = 'form';
@@ -113,13 +112,13 @@ class Address extends \XLite\View\Dialog
             self::SCHEMA_LABEL    => 'Country',
             self::SCHEMA_REQUIRED => true,
         ),
-/*  TODO: move to the shipping module where this field is required       
+        /*  TODO: move to the shipping module where this field is required       
         'address_type' => array(
             self::SCHEMA_CLASS    => '\XLite\View\FormField\Select\AddressType',
             self::SCHEMA_LABEL    => 'Address type',
             self::SCHEMA_REQUIRED => true,
         ),
- */
+        */
         'phone' => array(
             self::SCHEMA_CLASS    => '\XLite\View\FormField\Input\Text',
             self::SCHEMA_LABEL    => 'Phone',
@@ -193,9 +192,10 @@ class Address extends \XLite\View\Dialog
     /**
      * getFieldValue 
      * 
-     * @param string $fieldName Field name
+     * @param string  $fieldName    Field name
+     * @param boolean $processValue Process value flag
      *  
-     * @return void
+     * @return string
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -209,17 +209,21 @@ class Address extends \XLite\View\Dialog
         $methodName = 'get' . \XLite\Core\Converter::getInstance()->convertToCamelCase($fieldName);
 
         if (method_exists($address, $methodName)) {
+
+            // $methodName assembled from 'get' + camelized $fieldName
             $result = $address->$methodName();
 
             if (false !== $processValue) {
                 switch($fieldName) {
-                    case 'state_id': {
+                    case 'state_id':
                         $result = $address->getState()->getState();
                         break;
-                    }
-                    case 'country_code': {
+
+                    case 'country_code':
                         $result = $address->getCountry()->getCountry();
-                    }
+                        break;
+
+                    default:
                 }
             }
         }

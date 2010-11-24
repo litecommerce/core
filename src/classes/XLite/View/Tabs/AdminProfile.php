@@ -39,21 +39,18 @@ namespace XLite\View\Tabs;
 class AdminProfile extends \XLite\View\Tabs\ATabs
 {
     /**
-     * getTitle
+     * User profile object
      *
-     * @return string
+     * @var    \XLite\Model\Profile
      * @access protected
-     * @see    ____func_see____
+     * @see    ____var_see____
      * @since  3.0.0
      */
-    protected function getTitle()
-    {
-        return 'Modify profile';
-    }
+    protected $profile;
 
     /**
      * Description of tabs related to user profile section and their targets
-     * 
+     *
      * @var    array
      * @access protected
      * @see    ____var_see____
@@ -71,14 +68,17 @@ class AdminProfile extends \XLite\View\Tabs\ATabs
     );
 
     /**
-     * User profile object
-     * 
-     * @var    \XLite\Model\Profile
+     * getTitle
+     *
+     * @return string
      * @access protected
-     * @see    ____var_see____
+     * @see    ____func_see____
      * @since  3.0.0
      */
-    protected $profile = null;
+    protected function getTitle()
+    {
+        return 'Modify profile';
+    }
 
     /**
      * Returns an URL to a tab

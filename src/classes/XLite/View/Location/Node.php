@@ -92,13 +92,19 @@ class Node extends \XLite\View\AView
      * @param string $link     Node link OPTIONAL
      * @param array  $subnodes Node subnodes
      *
-     * @return static
-     * @access protected
+     * @return object
+     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
     public static function create($name, $link = null, array $subnodes = null)
     {
-        return new static(array(self::PARAM_NAME => $name, self::PARAM_LINK => $link, self::PARAM_SUBNODES => $subnodes));
+        return new static(
+            array(
+                self::PARAM_NAME     => $name,
+                self::PARAM_LINK     => $link,
+                self::PARAM_SUBNODES => $subnodes,
+            )
+        );
     }
 }

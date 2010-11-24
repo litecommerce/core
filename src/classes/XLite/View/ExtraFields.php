@@ -111,35 +111,35 @@ class ExtraFields extends \XLite\View\AView
 
             $this->extraFields = $this->getParam(self::PARAM_PRODUCT)->getExtraFields();
 
-    	    /* TODO - rework
+            /* TODO - rework
             if ($this->config->General->enable_extra_fields_inherit == "Y") {
-    	        $isAdminZone = $this->xlite->get('adminZone');
-        	    $this->xlite->set('adminZone', true);
+                $isAdminZone = $this->xlite->get('adminZone');
+                $this->xlite->set('adminZone', true);
             }
-    	    */
+            */
 
             $product_categories = $this->getParam(self::PARAM_PRODUCT)->getCategories();
 
-    	    /* TODO - rework
+            /* TODO - rework
             if ($this->config->General->enable_extra_fields_inherit == "Y") {
-    	        $this->xlite->set('adminZone', $isAdminZone);
-        	}
+                $this->xlite->set('adminZone', $isAdminZone);
+            }
             */
 
-        	$extraFields_root = array();
+            $extraFields_root = array();
             $ids = array();
             foreach ($product_categories as $cat) {
                 $ids[] = $cat->getCategoryId();
             }
 
             foreach ($this->extraFields as $idx => $extraField) {
-            	$extraFields_categories = $extraField->getCategories();
+                $extraFields_categories = $extraField->getCategories();
                 if (count($extraFields_categories) > 0) {
                     if (count(array_intersect($ids, $extraFields_categories)) == 0) {
-                    	unset($this->extraFields[$idx]);
+                        unset($this->extraFields[$idx]);
 
                     } elseif ($extraField->get('product_id') == 0) {
-                    	$extraFields_root[$extraField->get('field_id')] = $idx;
+                        $extraFields_root[$extraField->get('field_id')] = $idx;
                     }
                 }
             }

@@ -235,12 +235,13 @@ class TopCategories extends \XLite\View\SideBarBox
             $classes[] = 'first';
         }
 
+        $listParam = array(
+            'rootId'     => $this->getParam('rootId'),
+            'is_subtree' => $this->getParam('is_subtree'),
+        );
         if (
             ($count - 1) == $index
-            && $this->isViewListVisible(
-                'topCategories.childs',
-                array('rootId' => $this->getParam('rootId'), 'is_subtree' => $this->getParam('is_subtree'))
-            )
+            && $this->isViewListVisible('topCategories.childs', $listParam)
         ) {
             $classes[] = 'last';
         }
@@ -273,9 +274,9 @@ class TopCategories extends \XLite\View\SideBarBox
     /**
      * Assemble list item link class name
      *
-     * @param integer           $i        Item number
-     * @param integer           $count    Items count
-     * @param \XLite\View\AView $category Current category FIXME! this variable is not used 
+     * @param integer           $i      Item number
+     * @param integer           $count  Items count
+     * @param \XLite\View\AView $widget Current category FIXME! this variable is not used 
      *
      * @return string
      * @access protected

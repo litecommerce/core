@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage ____sub_package____
+ * @subpackage View
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -171,6 +171,7 @@ class Country extends \XLite\View\FormField\Select\Regular
      * NOTE: this function is public since it's called from the View_Model_Profile_AProfile class
      * 
      * @param string $selectorId DOM Id of the "States" selectbox
+     * @param string $inputId    DOM Id of the "States" inputbox
      *  
      * @return void
      * @access public

@@ -276,17 +276,30 @@ class AdminMain extends \XLite\View\Model\AModel
         return $result;
     }
 
+    /**
+     * Check profile data 
+     * 
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     protected function checkProfileData()
     {
         $result = $this->checkPassword();
 
         if ($result) {
             // Check if profile with specified login is already exists
-            $sameProfile = \XLite\Core\Database::getRepo('XLite\Model\Profile')->findUserWithSameLogin($this->getModelObject());
+            $sameProfile = \XLite\Core\Database::getRepo('XLite\Model\Profile')
+                ->findUserWithSameLogin($this->getModelObject());
             
             if (isset($sameProfile)) {
                 $formFields = $this->getFormFields();
-                $this->addErrorMessage('login', 'User with specified email is already registered', $formFields[self::SECTION_MAIN]);
+                $this->addErrorMessage(
+                    'login',
+                    'User with specified email is already registered',
+                    $formFields[self::SECTION_MAIN]
+                );
                 $result = false;
             }
         }
@@ -295,7 +308,7 @@ class AdminMain extends \XLite\View\Model\AModel
     }
 
     /**
-      Return list of the class-specific sections 
+     * Return list of the class-specific sections 
      * 
      * @return array
      * @access protected
@@ -536,7 +549,7 @@ class AdminMain extends \XLite\View\Model\AModel
     /**
      * getRequestProfileId 
      * 
-     * @return int|void
+     * @return integer|void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

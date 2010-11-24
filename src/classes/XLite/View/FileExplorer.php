@@ -129,63 +129,75 @@ class FileExplorer extends \XLite\View\ColumnList
      */
     protected function getData()
     {
-        // search for cached result
+        $result = null;
+
         if (!is_null($this->children)) {
-            return $this->children;
-        }
 
-        // if dialog DSN is specified, use it to get the list of files to edit
-        if (!is_null($this->getParam(self::PARAM_DSN))) {
-            return $this->get($this->getParam(self::PARAM_DSN));
-        }
+            // search for cached result
+            $result = $this->children;
 
-        // check for zone otherwise
-        $modifier = $this->getParam(self::PARAM_MODIFIER);
-        if (is_null($modifier)) {
-            return array();
-        }
-        $zone = isset(\XLite\Core\Request::getInstance()->$modifier) ? \XLite\Core\Request::getInstance()->$modifier : "default";
-        $path = $this->getPath($zone);
+        } elseif (!is_null($this->getParam(self::PARAM_DSN))) {
 
-        // check for node
-        if (isset(\XLite\Core\Request::getInstance()->node)) {
-            $path = \XLite\Core\Request::getInstance()->node;
-        }
+            // if dialog DSN is specified, use it to get the list of files to edit
+            $result = $this->get($this->getParam(self::PARAM_DSN));
 
-        $childrenDirs = array();
-        $childrenFiles = array();
+        } elseif (is_null($this->getParam(self::PARAM_MODIFIER))) {
 
-        if ($handle = @opendir($path)) {
-            while (false !== ($file = readdir($handle))) {
-                if ($file{0} != '.') {
-                    if (is_file($path . '/'. $file)) {
-                        $childrenFiles[] = $file;
-                    } else {
-                        $childrenDirs[] = $file;
+            // check for zone otherwise
+            $result = array();
+
+        } else {
+            $modifier = $this->getParam(self::PARAM_MODIFIER);
+
+            $zone = isset(\XLite\Core\Request::getInstance()->$modifier)
+                ? \XLite\Core\Request::getInstance()->$modifier
+                : 'default';
+            $path = $this->getPath($zone);
+
+            // check for node
+            if (isset(\XLite\Core\Request::getInstance()->node)) {
+                $path = \XLite\Core\Request::getInstance()->node;
+            }
+
+            $childrenDirs = array();
+            $childrenFiles = array();
+
+            $handle = @opendir($path);
+            if ($handle) {
+                while (false !== ($file = readdir($handle))) {
+                    if ($file{0} != '.') {
+                        if (is_file($path . '/' . $file)) {
+                            $childrenFiles[] = $file;
+
+                        } else {
+                            $childrenDirs[] = $file;
+                        }
                     }
                 }
+                closedir($handle);
             }
-            closedir($handle);
+
+            array_multisort($childrenDirs);
+            $this->dir_count = count($childrenDirs);
+            array_multisort($childrenFiles);
+            $children = array_merge($childrenDirs, $childrenFiles);
+
+            for ($i = 0; count($children) > $i; $i++) {
+                $children[$i] = new \XLite\Model\FileNode($path . '/' . $children[$i]);
+            }
+
+            if (preg_match('/^(.*\/.*\/.*)\/[^\/]+$/', $path, $matches)) {
+                $parNode = new \XLite\Model\FileNode($matches[1]);
+                $parNode->name = '..';
+                array_unshift($children, $parNode);
+            }
+
+            $this->children = $children;
+
+            $result = $this->children;
         }
 
-        array_multisort($childrenDirs);
-        $this->dir_count = count($childrenDirs);
-        array_multisort($childrenFiles);
-        $children = array_merge($childrenDirs, $childrenFiles);
-
-        for ($i=0; $i<count($children); $i++) {
-            $children[$i] = new \XLite\Model\FileNode($path . '/'. $children[$i]);
-        }
-
-        if (preg_match('/^(.*\/.*\/.*)\/[^\/]+$/', $path, $matches)) {
-            $par_node = new \XLite\Model\FileNode($matches[1]);
-            $par_node->name = '..';
-            array_unshift($children, $par_node);
-        }
-
-        $this->children = $children;
-
-        return $this->children;
+        return $result;
     }
 }
 

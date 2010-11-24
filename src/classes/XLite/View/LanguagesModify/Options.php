@@ -86,7 +86,7 @@ class Options extends \XLite\View\AView
     /**
      * Get language
      * 
-     * @return \XLite\Model\Language|false
+     * @return \XLite\Model\Language|boolean
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

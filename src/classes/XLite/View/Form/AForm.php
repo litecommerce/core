@@ -146,7 +146,7 @@ abstract class AForm extends \XLite\View\AView
     /**
      * Check and (if needed) set the return URL parameter
      * 
-     * @param array &$params form params
+     * @param array &$params Form params
      *  
      * @return void
      * @access protected

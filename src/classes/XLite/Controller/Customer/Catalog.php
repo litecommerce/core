@@ -108,7 +108,11 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
         parent::addBaseLocation();
 
         foreach ($this->getCategoryPath() as $category) {
-            $this->addLocationNode($category->getName(), $this->getCategoryURL($category), $this->getLocationNodeSubnodes($category));
+            $this->addLocationNode(
+                $category->getName(),
+                $this->getCategoryURL($category),
+                $this->getLocationNodeSubnodes($category)
+            );
         }
     }
 

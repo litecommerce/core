@@ -87,7 +87,7 @@ class EditLabel extends \XLite\View\AView
     /**
      * Get label 
      * 
-     * @return \XLite\Model\LanguageLabel|false
+     * @return \XLite\Model\LanguageLabel|boolean
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

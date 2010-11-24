@@ -77,7 +77,7 @@ class Model extends \XLite\View\Order\Details\Base\AModel
     /**
      * Format order date
      * 
-     * @param array &$data widget params
+     * @param array &$data Widget params
      *  
      * @return void
      * @access protected

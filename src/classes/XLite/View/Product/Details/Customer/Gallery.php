@@ -70,7 +70,7 @@ class Gallery extends \XLite\View\Product\Details\Customer\ACustomer
     /**
      * Check visibility
      * 
-     * @return bolean
+     * @return boolean
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0

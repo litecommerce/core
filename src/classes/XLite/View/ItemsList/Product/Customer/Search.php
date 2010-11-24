@@ -122,7 +122,7 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
     /**
      * Search widget must be visible always.
      * 
-     * @return boolen
+     * @return boolean
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -302,7 +302,7 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * @param \XLite\Core\CommonCell $cnd       Search condition
      * @param boolean                $countOnly Return items list or only its size OPTIONAL
      *
-     * @return array|int
+     * @return array|integer
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0

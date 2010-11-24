@@ -760,9 +760,9 @@ abstract class AModel extends \XLite\View\Dialog
     /**
      * Return certain form field
      *
-     * @param string $section        Section where the field located
-     * @param string $name           Field name
-     * @param boolean   $preprocessName Flag; prepare field name or not OPTIONAL
+     * @param string  $section        Section where the field located
+     * @param string  $name           Field name
+     * @param boolean $preprocessName Flag; prepare field name or not OPTIONAL
      *
      * @return \XLite\View\FormField\AFormField
      * @access protected

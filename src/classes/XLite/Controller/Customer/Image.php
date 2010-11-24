@@ -41,11 +41,11 @@ class Image extends \XLite\Controller\Customer\ACustomer
      * Controller parameters 
      * 
      * @var    array
-     * @access public
+     * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      */
-    public $params = array('target', 'action', 'id');
+    protected $params = array('target', 'action', 'id');
 
     /**
      * Handles the request. Parses the request variables if necessary. Attempts to call the specified action function

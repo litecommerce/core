@@ -493,9 +493,15 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
                 $isDisabled = $isSpecialItem && $isCurrent;
                 $isActive   = !$isSelected && !$isOmitedItems && !$isDisabled;
 
-                $this->pages[$k]['text'] = ($isItem || ('first-page' === $type) || ('last-page' === $type))
-                        ? ($num + 1) 
-                        : ($isOmitedItems ? '...' : '&nbsp;');
+                if ($isItem || ('first-page' === $type) || ('last-page' === $type)) {
+                    $this->pages[$k]['text'] = $num + 1;
+
+                } elseif ($isOmitedItems) {
+                    $this->pages[$k]['text'] = '...';
+
+                } else {
+                    $this->pages[$k]['text'] = '&nbsp;';
+                }
 
                 $this->pages[$k]['page'] = is_null($num) 
                     ? null 

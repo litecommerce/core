@@ -79,7 +79,7 @@ class SaveMark extends \XLite\View\AView
      * Check if widget is visible
      *
      * @return boolean 
-     * @access public
+     * @access protected
      * @since  3.0.0
      */
     protected function isVisible()

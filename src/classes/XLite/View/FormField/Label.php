@@ -31,9 +31,9 @@ namespace XLite\View\FormField;
 /**
  * Label 
  * 
- * @package    XLite
- * @see        ____class_see____
- * @since      3.0.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
 class Label extends \XLite\View\FormField\Label\ALabel
 {

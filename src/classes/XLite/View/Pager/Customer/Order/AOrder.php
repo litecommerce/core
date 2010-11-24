@@ -31,9 +31,9 @@ namespace XLite\View\Pager\Customer\Order;
 /**
  * Abstract pager class for the OrdersList widget
  * 
- * @package    XLite
- * @see        ____class_see____
- * @since      3.0.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
 abstract class AOrder extends \XLite\View\Pager\Customer\ACustomer
 {

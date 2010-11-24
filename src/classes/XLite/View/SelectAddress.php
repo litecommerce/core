@@ -119,8 +119,10 @@ class SelectAddress extends \XLite\View\Dialog
      */
     public function isSelectedAddress(\XLite\Model\Address $address)
     {
-        return ($address->getIsShipping() && \XLite\Model\Address::SHIPPING == \XLite\Core\Request::getInstance()->atype)
-            || ($address->getIsBilling() && \XLite\Model\Address::BILLING == \XLite\Core\Request::getInstance()->atype);
+        $atype = \XLite\Core\Request::getInstance()->atype;
+
+        return ($address->getIsShipping() && \XLite\Model\Address::SHIPPING == $atype)
+            || ($address->getIsBilling() && \XLite\Model\Address::BILLING == $atype);
     }
 
     /**

@@ -80,7 +80,8 @@ class ShippingEstimate extends \XLite\Controller\Customer\ACustomer
             $state->setState(\XLite\Core\Request::getInstance()->state);
 
         } else {
-            $state = \XLite\Core\Database::getRepo('XLite\Model\State')->find(\XLite\Core\Request::getInstance()->state);
+            $state = \XLite\Core\Database::getRepo('XLite\Model\State')
+                ->find(\XLite\Core\Request::getInstance()->state);
         
         }
 

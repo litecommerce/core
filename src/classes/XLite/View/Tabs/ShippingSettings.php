@@ -357,15 +357,15 @@ class ShippingSettings extends \XLite\View\Tabs\ATabs
      * Service method for usage in the markups list template
      * Returns true if current markup number is lesser than count of markups of current method
      * 
-     * @param integer   $id    Current index of markup
-     * @param array $array Array of markups
+     * @param integer $id    Current index of markup
+     * @param array   $array Array of markups
      *  
      * @return boolean 
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function isShowMarkupsSeparator($id, $array)
+    public function isShowMarkupsSeparator($id, array $array)
     {
         return (count($array) - 1 > $id);
     }

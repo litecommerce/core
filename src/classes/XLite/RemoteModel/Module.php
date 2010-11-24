@@ -332,7 +332,7 @@ class Module extends \XLite\RemoteModel\AModel
     {
         $result = false;
 
-        if (!$this->getModel() || $overrideExists)  {
+        if (!$this->getModel() || $overrideExists) {
             $path = $this->upload();
             if ($path) {
                 $newPath = LC_CLASSES_DIR . $this->getName() . '.phar';

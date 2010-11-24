@@ -72,24 +72,6 @@ class Checkout extends \XLite\View\Dialog
     }
 
     /**
-     * Get a list of CSS files required to display the widget properly
-     * FIXME - decompose these files
-     *
-     * @return array
-     * @access public
-     * @since  3.0.0
-     */
-    public function getCSSFiles()
-    {
-        $list = parent::getCSSFiles();
-
-//        $list[] = 'shopping_cart/cart.css';
-//        $list[] = 'checkout/checkout.css';
-
-        return $list;
-    }
-
-    /**
      * Get a list of JS files required to display the widget properly
      * FIXME - decompose these files
      *
@@ -101,9 +83,7 @@ class Checkout extends \XLite\View\Dialog
     {
         $list = parent::getJSFiles();
 
-//        $list[] = 'checkout/check_cc.js';
         $list[] = 'checkout/controller.js';
-//        $list[] = 'shopping_cart/delivery.js';
 
         return $list;
     }

@@ -342,7 +342,7 @@ class Address extends \XLite\View\Model\AModel
     /**
      * getRequestAddressId 
      * 
-     * @return int|void
+     * @return integer|void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -355,7 +355,7 @@ class Address extends \XLite\View\Model\AModel
     /**
      * getRequestProfileId 
      * 
-     * @return int|void
+     * @return integer|void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
