@@ -41,7 +41,7 @@ class Transaction extends \XLite\Model\Repo\ARepo
      * Find transaction by data record and order id
      * 
      * @param array   $params  Parameters_
-     * @param integer $orderId Order id
+     * @param integer $orderId Order id OPTIONAL
      *  
      * @return \XLite\Model\Payment\Transaction
      * @access public

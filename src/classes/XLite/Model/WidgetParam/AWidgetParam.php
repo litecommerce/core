@@ -125,8 +125,8 @@ abstract class AWidgetParam extends \XLite\Base\SuperClass
      * Constructor
      * 
      * @param mixed $label     Param label (text)
-     * @param mixed $value     Default value
-     * @param mixed $isSetting Display this setting in CMS or not
+     * @param mixed $value     Default value OPTIONAL
+     * @param mixed $isSetting Display this setting in CMS or not OPTIONAL
      *  
      * @return void
      * @access public

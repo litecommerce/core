@@ -42,7 +42,7 @@ implements \XLite\Base\IDecorator
      * Constructs a new database object. The options argument list is a primary key value.
      * If it is specified, the object is created as isPersistent, otherwise - !isPersistent
      * 
-     * @param integer $id Order id
+     * @param integer $id Order id OPTIONAL
      *
      * @return void
      * @access public

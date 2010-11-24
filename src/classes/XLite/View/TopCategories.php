@@ -107,7 +107,7 @@ class TopCategories extends \XLite\View\SideBarBox
     /**
      * Return subcategories list
      *
-     * @param integer $categoryId Category id
+     * @param integer $categoryId Category id OPTIONAL
      * 
      * @return array
      * @access protected

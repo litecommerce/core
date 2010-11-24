@@ -148,7 +148,7 @@ class XPayment extends \XLite\Model\PaymentMethod\CreditCardWebBased
     /**
      * Constructor
      * 
-     * @param mixed $param Parameter
+     * @param mixed $param Parameter OPTIONAL
      *  
      * @return void
      * @access public
@@ -196,7 +196,7 @@ class XPayment extends \XLite\Model\PaymentMethod\CreditCardWebBased
      * Handle request
      *
      * @param \XLite\Model\Cart $cart Cart
-     * @param string           $type Call type
+     * @param string           $type Call type OPTIONAL
      *
      * @return integer Operation status
      * @access public
@@ -736,7 +736,7 @@ class XPayment extends \XLite\Model\PaymentMethod\CreditCardWebBased
      * Convert hash to XML 
      * 
      * @param array   $data  Hash
-     * @param integer $level Parentness level
+     * @param integer $level Parentness level OPTIONAL
      *  
      * @return string
      * @access protected
@@ -783,8 +783,8 @@ class XPayment extends \XLite\Model\PaymentMethod\CreditCardWebBased
      * 
      * @param mixed   $data  Data
      * @param string  $name  Tag name
-     * @param integer $level Parentness level
-     * @param string  $type  Tag type
+     * @param integer $level Parentness level OPTIONAL
+     * @param string  $type  Tag type OPTIONAL
      *  
      * @return string
      * @access protected

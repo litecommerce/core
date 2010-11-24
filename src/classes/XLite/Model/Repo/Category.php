@@ -208,7 +208,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
      *
      * @param string  $index        Field name
      * @param integer $relatedIndex Related index value
-     * @param integer $offset       Increment
+     * @param integer $offset       Increment OPTIONAL
      *
      * @return \Doctrine\ORM\QueryBuilder
      * @access protected
@@ -231,7 +231,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * Adds additional condition to the query for checking if category is enabled
      *
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder object
-     * @param string                     $alias        Entity alias
+     * @param string                     $alias        Entity alias OPTIONAL
      *
      * @return void
      * @access protected
@@ -251,7 +251,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * Adds additional condition to the query to order categories
      *
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder object
-     * @param string                     $alias        Entity alias
+     * @param string                     $alias        Entity alias OPTIONAL
      *
      * @return void
      * @access protected
@@ -268,7 +268,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * Adds additional condition to the query to order categories
      *
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder object
-     * @param string                     $alias        Entity alias
+     * @param string                     $alias        Entity alias OPTIONAL
      *
      * @return void
      * @access protected
@@ -468,8 +468,8 @@ class Category extends \XLite\Model\Repo\Base\I18n
     /**
      * Create a new QueryBuilder instance that is prepopulated for this entity name
      *
-     * @param string  $alias       Table alias
-     * @param boolean $excludeRoot Do not include root category into the search result
+     * @param string  $alias       Table alias OPTIONAL
+     * @param boolean $excludeRoot Do not include root category into the search result OPTIONAL
      *
      * @return \Doctrine\ORM\QueryBuilder
      * @access public
@@ -508,7 +508,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
     /**
      * Return full list of categories
      *
-     * @param integer $rootId ID of the subtree root
+     * @param integer $rootId ID of the subtree root OPTIONAL
      *
      * @return array
      * @access public
@@ -651,7 +651,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * Wrapper. Use this function instead of the native "delete...()"
      * 
      * @param integer $categoryId  ID of category to delete
-     * @param boolean $onlySubtree Flag
+     * @param boolean $onlySubtree Flag OPTIONAL
      *  
      * @return void
      * @access public
@@ -684,9 +684,9 @@ class Category extends \XLite\Model\Repo\Base\I18n
      *
      * @param \Doctrine\ORM\QueryBuilder $qb         Query builder to modify
      * @param integer                    $categoryId Current category ID
-     * @param string                     $field      Name of the field to use
-     * @param integer                    $lpos       Left position
-     * @param integer                    $rpos       Right position
+     * @param string                     $field      Name of the field to use OPTIONAL
+     * @param integer                    $lpos       Left position OPTIONAL
+     * @param integer                    $rpos       Right position OPTIONAL
      *
      * @return void
      * @access public

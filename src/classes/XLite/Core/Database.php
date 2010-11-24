@@ -448,7 +448,7 @@ class Database extends \XLite\Base\Singleton
      * Prepare array for IN () DQL function
      * 
      * @param array  $data   Hash array
-     * @param string $prefix Placeholder prefix
+     * @param string $prefix Placeholder prefix OPTIONAL
      *  
      * @return array (keys for IN () function & parameters hash array)
      * @access public
@@ -474,7 +474,7 @@ class Database extends \XLite\Base\Singleton
      * 
      * @param \Doctrine\ORM\QueryBuilder $qb     Query builder
      * @param array                      $data   Hash array
-     * @param string                     $prefix Placeholder prefix
+     * @param string                     $prefix Placeholder prefix OPTIONAL
      *  
      * @return array Keys for IN () function
      * @access public

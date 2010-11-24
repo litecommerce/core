@@ -48,10 +48,10 @@ class Converter extends \XLite\Core\Converter implements \XLite\Base\IDecorator
     /**
      * Compose URL from target, action and additional params
      *
-     * @param string $target    Page identifier
-     * @param string $action    Action to perform
+     * @param string $target    Page identifier OPTIONAL
+     * @param string $action    Action to perform OPTIONAL
      * @param array  $params    Additional params
-     * @param string $interface Interface script
+     * @param string $interface Interface script OPTIONAL
      *
      * @return string
      * @access public
@@ -92,8 +92,8 @@ class Converter extends \XLite\Core\Converter implements \XLite\Base\IDecorator
     /**
      * Build Drupal path string
      * 
-     * @param string $target Target
-     * @param string $action Action
+     * @param string $target Target OPTIONAL
+     * @param string $action Action OPTIONAL
      * @param array  $params Parameters list
      *  
      * @return string
@@ -122,8 +122,8 @@ class Converter extends \XLite\Core\Converter implements \XLite\Base\IDecorator
     /**
      * Compose URL from target, action and additional params
      *
-     * @param string $target Page identifier
-     * @param string $action Action to perform
+     * @param string $target Page identifier OPTIONAL
+     * @param string $action Action to perform OPTIONAL
      * @param array  $params Additional params
      *
      * @return string

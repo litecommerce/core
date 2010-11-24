@@ -105,9 +105,9 @@ class Category extends \XLite\Model\WidgetParam\ObjectId
      * Constructor
      * 
      * @param string  $label         Param label (text)
-     * @param mixed   $value         Default value
-     * @param boolean $isSetting     Display this setting in CMS or not
-     * @param boolean $rootIsAllowed Root category id (0) is allowed or not
+     * @param mixed   $value         Default value OPTIONAL
+     * @param boolean $isSetting     Display this setting in CMS or not OPTIONAL
+     * @param boolean $rootIsAllowed Root category id (0) is allowed or not OPTIONAL
      *  
      * @return void
      * @access public

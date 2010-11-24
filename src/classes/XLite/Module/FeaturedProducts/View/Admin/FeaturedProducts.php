@@ -238,7 +238,7 @@ class FeaturedProducts extends \XLite\View\ItemsList\Product\Admin\AAdmin
      * Return products list
      *
      * @param \XLite\Core\CommonCell $cnd       Search condition
-     * @param boolean                $countOnly Return items list or only its size
+     * @param boolean                $countOnly Return items list or only its size OPTIONAL
      *
      * @return array|int
      * @access protected

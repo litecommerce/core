@@ -312,7 +312,7 @@ class Category extends \XLite\Model\Base\I18n
      * Return products list
      * 
      * @param \XLite\Core\CommonCell $cnd       Search condition
-     * @param boolean                $countOnly Return items list or only its size
+     * @param boolean                $countOnly Return items list or only its size OPTIONAL
      *  
      * @return array|integer
      * @access public

@@ -41,7 +41,7 @@ class Module extends \XLite\Module\AModule implements \XLite\Base\IDecorator
      * Easy way to register payment method
      * 
      * @param string $name  Payment method name
-     * @param string $class Payment method class name
+     * @param string $class Payment method class name OPTIONAL
      *  
      * @return void
      * @access protected

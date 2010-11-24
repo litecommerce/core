@@ -204,8 +204,8 @@ class Image extends \XLite\Model\AModel
     /**
      * Constructor
      * 
-     * @param string  $class Image class
-     * @param integer $id    Image unique id
+     * @param string  $class Image class OPTIONAL
+     * @param integer $id    Image unique id OPTIONAL
      *  
      * @return void
      * @access public

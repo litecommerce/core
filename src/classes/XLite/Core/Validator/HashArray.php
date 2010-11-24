@@ -65,7 +65,7 @@ class HashArray extends \XLite\Core\Validator\AValidator
      * 
      * @param mixed                            $name      Cell name or pair validator
      * @param \XLite\Core\Validator\AValidator $validator Cell validator
-     * @param string                           $mode      Pair validation mode
+     * @param string                           $mode      Pair validation mode OPTIONAL
      *
      * @return \XLite\Core\Validator\AValidator
      * @access public

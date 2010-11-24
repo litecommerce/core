@@ -92,7 +92,7 @@ abstract class I18n extends \XLite\Model\AEntity
     /**
      * Get translation 
      * 
-     * @param string $code Language code
+     * @param string $code Language code OPTIONAL
      *  
      * @return \XLite\Model\Base\Translation
      * @access public
@@ -130,7 +130,7 @@ abstract class I18n extends \XLite\Model\AEntity
     /**
      * Get translation in safe mode
      * 
-     * @param string $code Language code
+     * @param string $code Language code OPTIONAL
      *  
      * @return \XLite\Model\Base\Translation
      * @access public
@@ -191,7 +191,7 @@ abstract class I18n extends \XLite\Model\AEntity
     /**
      * Set edit language code 
      * 
-     * @param string $code Language code
+     * @param string $code Language code OPTIONAL
      *  
      * @return void
      * @access public
@@ -206,7 +206,7 @@ abstract class I18n extends \XLite\Model\AEntity
     /**
      * Check - has object translation or not
      * 
-     * @param string $code Language code
+     * @param string $code Language code OPTIONAL
      *  
      * @return boolean
      * @access public

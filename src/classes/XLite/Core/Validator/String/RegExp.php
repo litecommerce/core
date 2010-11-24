@@ -50,8 +50,8 @@ class RegExp extends \XLite\Core\Validator\String
     /**
      * Constructor
      *
-     * @param boolean $nonEmpty Non-empty flag
-     * @param string  $regExp   Regular expression
+     * @param boolean $nonEmpty Non-empty flag OPTIONAL
+     * @param string  $regExp   Regular expression OPTIONAL
      *
      * @return void
      * @access public

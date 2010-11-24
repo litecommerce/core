@@ -126,7 +126,7 @@ class SessionCell extends \XLite\Model\AEntity
      * NOTE: customize this method instead of the "getValue()" one
      * 
      * @param mixed  $value Value to prepare
-     * @param string $type  Field type
+     * @param string $type  Field type OPTIONAL
      *  
      * @return mixed
      * @access public
@@ -174,7 +174,7 @@ class SessionCell extends \XLite\Model\AEntity
      * NOTE: customize this method instead of the "getValue()" one
      *
      * @param mixed  $value Value to prepare
-     * @param string $type  Field type
+     * @param string $type  Field type OPTIONAL
      *
      * @return mixed
      * @access public

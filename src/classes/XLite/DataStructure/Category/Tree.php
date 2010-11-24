@@ -69,7 +69,7 @@ class Tree extends \Includes\DataStructure\Hierarchical\Tree
     /**
      * Constructor
      *
-     * @param string $nodeClass  Node class name
+     * @param string $nodeClass  Node class name OPTIONAL
      * @param array  $categories Plain list of categories
      *  
      * @return void

@@ -259,7 +259,7 @@ class OptionGroup extends \XLite\Model\Base\I18n
     /**
      * Get default option 
      * 
-     * @param integer $startIdx Start scan index
+     * @param integer $startIdx Start scan index OPTIONAL
      *  
      * @return \XLite\Module\ProductOptions\Model\Options|void
      * @access public
@@ -276,7 +276,7 @@ class OptionGroup extends \XLite\Model\Base\I18n
     /**
      * Get default plain value (option id or text or null)
      * 
-     * @param integer $startIdx Start scan index
+     * @param integer $startIdx Start scan index OPTIONAL
      * 
      * @return string
      * @access public

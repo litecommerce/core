@@ -520,7 +520,7 @@ class AdminMain extends \XLite\View\Model\AModel
     /**
      * Return current profile ID
      *
-     * @param boolean $checkMode Check mode or not
+     * @param boolean $checkMode Check mode or not OPTIONAL
      *
      * @return integer 
      * @access public

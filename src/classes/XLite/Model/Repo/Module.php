@@ -170,7 +170,7 @@ class Module extends \XLite\Model\Repo\ARepo
     /**
      * Find all enabled (or disabled) modules
      * 
-     * @param boolean $enabled Enabled flag
+     * @param boolean $enabled Enabled flag OPTIONAL
      *  
      * @return array
      * @access public

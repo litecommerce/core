@@ -61,7 +61,7 @@ class Country extends \XLite\Model\Country implements \XLite\Base\IDecorator
     /**
      * Check - is risk country or not
      * 
-     * @param integer $check Check value
+     * @param integer $check Check value OPTIONAL
      *  
      * @return integer|boolean
      * @access public

@@ -554,7 +554,7 @@ class AModel extends \XLite\Base
     /**
      * Process the import error
      * 
-     * @param boolean $returnError Trigger for stopping script or returning false
+     * @param boolean $returnError Trigger for stopping script or returning false OPTIONAL
      *  
      * @return boolean 
      * @access protected
@@ -669,7 +669,7 @@ class AModel extends \XLite\Base
     /**
      * getImportFields 
      * 
-     * @param array $layout The list of fields for importing
+     * @param array $layout The list of fields for importing OPTIONAL
      *  
      * @return array
      * @access public
@@ -857,10 +857,10 @@ class AModel extends \XLite\Base
     /**
      * Builds the SQL SELECT statement for this object 
      * 
-     * @param mixed $where   "where" condition
-     * @param mixed $orderby "orderby" condition
-     * @param mixed $groupby "groupby" condition
-     * @param mixed $limit   "limit" condition
+     * @param mixed $where   "where" condition OPTIONAL
+     * @param mixed $orderby "orderby" condition OPTIONAL
+     * @param mixed $groupby "groupby" condition OPTIONAL
+     * @param mixed $limit   "limit" condition OPTIONAL
      *  
      * @return string
      * @access protected
@@ -1055,7 +1055,7 @@ class AModel extends \XLite\Base
      * Sets the specified property value
      *
      * @param string $property Field name
-     * @param mixed  $value    Field value
+     * @param mixed  $value    Field value OPTIONAL
      *
      * @return void
      * @access public
@@ -1117,7 +1117,7 @@ class AModel extends \XLite\Base
      * Attempts to find the database record for this object and fill the object properties with data found
      * 
      * @param mixed $where "where" condition
-     * @param mixed $order "orderby" condition
+     * @param mixed $order "orderby" condition OPTIONAL
      *  
      * @return boolean 
      * @access public
@@ -1141,10 +1141,10 @@ class AModel extends \XLite\Base
     /**
      * Attempts to read All database records for this class 
      * 
-     * @param mixed $where   "where" condition
-     * @param mixed $orderby "orderby" condition
-     * @param mixed $groupby "groupby" condition
-     * @param mixed $limit   "limit" condition
+     * @param mixed $where   "where" condition OPTIONAL
+     * @param mixed $orderby "orderby" condition OPTIONAL
+     * @param mixed $groupby "groupby" condition OPTIONAL
+     * @param mixed $limit   "limit" condition OPTIONAL
      *  
      * @return array
      * @access public

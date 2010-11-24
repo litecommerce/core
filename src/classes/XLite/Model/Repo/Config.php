@@ -166,7 +166,7 @@ class Config extends \XLite\Model\Repo\Base\I18n
     /**
      * Create a new QueryBuilder instance that is prepopulated for this entity name
      *
-     * @param string $alias Table alias
+     * @param string $alias Table alias OPTIONAL
      *
      * @return \Doctrine\ORM\QueryBuilder
      * @access public
@@ -258,7 +258,7 @@ class Config extends \XLite\Model\Repo\Base\I18n
     /**
      * Get the list of all options
      * 
-     * @param boolean $force Do not use cache
+     * @param boolean $force Do not use cache OPTIONAL
      * 
      * @return array
      * @access public

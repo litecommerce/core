@@ -260,7 +260,7 @@ class Paypalpro extends \XLite\Model\PaymentMethod\CreditCardWebBased
      * Handle request
      *
      * @param \XLite\Model\Cart $cart Cart
-     * @param string           $type Call type
+     * @param string           $type Call type OPTIONAL
      *
      * @return integer Operation status
      * @access public
@@ -452,7 +452,7 @@ class Paypalpro extends \XLite\Model\PaymentMethod\CreditCardWebBased
      * Get phone part
      * 
      * @param \XLite\Model\Cart $cart Cart
-     * @param string           $type Phone part
+     * @param string           $type Phone part OPTIONAL
      *  
      * @return string
      * @access protected

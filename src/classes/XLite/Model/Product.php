@@ -338,7 +338,7 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     /**
      * Return certain Product <--> Category association
      * 
-     * @param integer|null $categoryId Category ID
+     * @param integer|null $categoryId Category ID OPTIONAL
      *  
      * @return \XLite\Model\CategoryProducts
      * @access protected
@@ -427,7 +427,7 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     /**
      * Return random product category 
      *
-     * @param integer|null $categoryId Category ID
+     * @param integer|null $categoryId Category ID OPTIONAL
      * 
      * @return \XLite\Model\Category
      * @access public
@@ -448,7 +448,7 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     /**
      * Return random product category ID
      *
-     * @param integer|null $categoryId Category ID
+     * @param integer|null $categoryId Category ID OPTIONAL
      *
      * @return integer 
      * @access public
@@ -517,7 +517,7 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     /**
      * Return product position in category
      *
-     * @param integer|null $categoryId Category ID
+     * @param integer|null $categoryId Category ID OPTIONAL
      * 
      * @return integer 
      * @access public

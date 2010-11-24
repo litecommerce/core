@@ -257,7 +257,7 @@ class Module extends \XLite\RemoteModel\AModel
     /**
      * Get model 
      * 
-     * @param boolean $overrideCache Ovveride internal cache
+     * @param boolean $overrideCache Ovveride internal cache OPTIONAL
      *  
      * @return \XLite\Model\Module
      * @access public
@@ -321,7 +321,7 @@ class Module extends \XLite\RemoteModel\AModel
     /**
      * Install (with upload) module
      * 
-     * @param boolean $overrideExists Ovverride exist module
+     * @param boolean $overrideExists Ovverride exist module OPTIONAL
      *  
      * @return boolean
      * @access public

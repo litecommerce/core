@@ -275,7 +275,7 @@ abstract class AModel extends \XLite\View\Dialog
     /**
      * getFormDir
      *
-     * @param string $template Template file basename
+     * @param string $template Template file basename OPTIONAL
      *
      * @return string
      * @access protected
@@ -466,7 +466,7 @@ abstract class AModel extends \XLite\View\Dialog
     /**
      * Return saved data for current form (all or certain field(s))
      *
-     * @param string $field Data field to return
+     * @param string $field Data field to return OPTIONAL
      *
      * @return array
      * @access protected
@@ -740,7 +740,7 @@ abstract class AModel extends \XLite\View\Dialog
     /**
      * Return list of form fields
      *
-     * @param boolean $onlyNames Flag; return objects or only the indexes
+     * @param boolean $onlyNames Flag; return objects or only the indexes OPTIONAL
      *
      * @return array
      * @access protected
@@ -762,7 +762,7 @@ abstract class AModel extends \XLite\View\Dialog
      *
      * @param string $section        Section where the field located
      * @param string $name           Field name
-     * @param boolean   $preprocessName Flag; prepare field name or not
+     * @param boolean   $preprocessName Flag; prepare field name or not OPTIONAL
      *
      * @return \XLite\View\FormField\AFormField
      * @access protected
@@ -835,7 +835,7 @@ abstract class AModel extends \XLite\View\Dialog
      * Prepare and save passed data
      *
      * @param array       $data Passed data
-     * @param string|null $name Index in request data array (optional)
+     * @param string|null $name Index in request data array (optional) OPTIONAL
      *
      * @return void
      * @access protected
@@ -1001,7 +1001,7 @@ abstract class AModel extends \XLite\View\Dialog
     /**
      * Call the corresponded method for current action
      *
-     * @param string $action Action name
+     * @param string $action Action name OPTIONAL
      *
      * @return boolean 
      * @access protected
@@ -1282,7 +1282,7 @@ abstract class AModel extends \XLite\View\Dialog
     /**
      * getRequestData
      *
-     * @param string $name Index in the request data
+     * @param string $name Index in the request data OPTIONAL
      *
      * @return mixed
      * @access public

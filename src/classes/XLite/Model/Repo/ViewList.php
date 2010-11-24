@@ -75,7 +75,7 @@ class ViewList extends \XLite\Model\Repo\ARepo
      *
      * @param string $class List class-owner name
      * @param string $list  List name
-     * @param string $zone  Current interface name
+     * @param string $zone  Current interface name OPTIONAL
      * 
      * @return array
      * @access public

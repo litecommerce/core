@@ -80,8 +80,8 @@ class Set extends \XLite\Model\WidgetParam\String
      * Constructor
      * 
      * @param mixed $label     Param label (text)
-     * @param mixed $value     Default value
-     * @param mixed $isSetting Display this setting in CMS or not
+     * @param mixed $value     Default value OPTIONAL
+     * @param mixed $isSetting Display this setting in CMS or not OPTIONAL
      * @param array $options   Options list
      *  
      * @return void

@@ -315,7 +315,7 @@ class GiftCertificate extends \XLite\Model\AModel
     /**
      * Get border height (footer or header)
      * 
-     * @param boolean $bottom Bottom border flag
+     * @param boolean $bottom Bottom border flag OPTIONAL
      *  
      * @return integer
      * @access public

@@ -59,7 +59,7 @@ class Order extends \XLite\Model\Order implements \XLite\Base\IDecorator
     /**
      * Constructor
      * 
-     * @param mixed $id Unique id
+     * @param mixed $id Unique id OPTIONAL
      *  
      * @return void
      * @access public
@@ -171,7 +171,7 @@ class Order extends \XLite\Model\Order implements \XLite\Base\IDecorator
     /**
      * Get shipping rates by carrier 
      * 
-     * @param string $carrier Carrier
+     * @param string $carrier Carrier OPTIONAL
      *  
      * @return array
      * @access public

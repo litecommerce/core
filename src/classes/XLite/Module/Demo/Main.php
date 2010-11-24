@@ -92,8 +92,8 @@ abstract class Main extends \XLite\Module\AModule
     /**
      * Forbid action processing
      * 
-     * @param string $message Action message
-     * @param string $url     Redirect URL
+     * @param string $message Action message OPTIONAL
+     * @param string $url     Redirect URL OPTIONAL
      *  
      * @return void
      * @access public
@@ -115,7 +115,7 @@ abstract class Main extends \XLite\Module\AModule
     /**
      * Forbid operation processing
      * 
-     * @param string $message Message
+     * @param string $message Message OPTIONAL
      *  
      * @return void
      * @access public

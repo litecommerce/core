@@ -143,7 +143,7 @@ class PaymentReturn extends \XLite\Controller\Customer\ACustomer
      * Do HTML-based redirect 
      * 
      * @param string $url  URL
-     * @param integer    $time Redirect delay
+     * @param integer    $time Redirect delay OPTIONAL
      *  
      * @return void
      * @access protected

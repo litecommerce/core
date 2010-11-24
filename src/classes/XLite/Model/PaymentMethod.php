@@ -153,7 +153,7 @@ class PaymentMethod extends \XLite\Model\AModel
     /**
      * Get payment method handler object
      * 
-     * @param string $name Payment method name
+     * @param string $name Payment method name OPTIONAL
      *  
      * @return \XLite\Model\PaymentMethod
      * @access protected
@@ -180,7 +180,7 @@ class PaymentMethod extends \XLite\Model\AModel
     /**
      * Define available methods range 
      * 
-     * @param string $id Method identifier
+     * @param string $id Method identifier OPTIONAL
      *  
      * @return void
      * @access public

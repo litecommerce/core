@@ -213,7 +213,7 @@ class FileCache extends \Doctrine\Common\Cache\AbstractCache
      * 
      * @param string  $id       Cell id
      * @param mixed   $data     Cell data
-     * @param integer $lifeTime Cell TTL
+     * @param integer $lifeTime Cell TTL OPTIONAL
      *  
      * @return boolean
      * @access protected

@@ -218,7 +218,7 @@ class Mailer extends \XLite\View\AView
      * @param string $from          The sender email address
      * @param string $to            The email address to send mail to
      * @param string $dir           The directiry there mail parts template located
-     * @param array  $customHeaders The headers you want to add/replace to.
+     * @param array  $customHeaders The headers you want to add/replace to. OPTIONAL
      *  
      * @return void
      * @access public
@@ -367,7 +367,7 @@ class Mailer extends \XLite\View\AView
      * Compile template
      * 
      * @param string  $template     Template path
-     * @param boolean $switchLayout Switch laout flag
+     * @param boolean $switchLayout Switch laout flag OPTIONAL
      *  
      * @return string
      * @access protected

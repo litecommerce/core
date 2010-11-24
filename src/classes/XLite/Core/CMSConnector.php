@@ -316,7 +316,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
     /**
      * Return application instance 
      * 
-     * @param string $applicationId Cache key
+     * @param string $applicationId Cache key OPTIONAL
      *  
      * @return \XLite
      * @access public
@@ -333,7 +333,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
     /**
      * Return viewer for current page
      *
-     * @param string $applicationId Cache key
+     * @param string $applicationId Cache key OPTIONAL
      *
      * @return \XLite\View\Controller
      * @access public
@@ -349,7 +349,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
     /**
      * Get controller 
      *
-     * @param string $applicationId Cache key
+     * @param string $applicationId Cache key OPTIONAL
      * 
      * @return \XLite\Controller\AController
      * @access public
@@ -366,7 +366,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
     /**
      * Run controller 
      *
-     * @param string $applicationId Cache key
+     * @param string $applicationId Cache key OPTIONAL
      *  
      * @return void
      * @access public
@@ -385,7 +385,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
      * 
      * @param string  $class  Widget class name
      * @param array   $params Widget params
-     * @param integer $delta  Drupal-specific param - so called "delta"
+     * @param integer $delta  Drupal-specific param - so called "delta" OPTIONAL
      *  
      * @return \XLite\Core\WidgetDataTransport
      * @access public

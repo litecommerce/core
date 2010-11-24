@@ -156,7 +156,7 @@ abstract class AView extends \XLite\Core\Handler
      * Prepare resources list
      * 
      * @param array   $data     Data to prepare
-     * @param boolean $isCommon Flag to determine how to prepare URL
+     * @param boolean $isCommon Flag to determine how to prepare URL OPTIONAL
      *  
      * @return array
      * @access protected
@@ -187,7 +187,7 @@ abstract class AView extends \XLite\Core\Handler
     /**
      * Return full template file name
      *
-     * @param string $template Template file name (optional)
+     * @param string $template Template file name (optional) OPTIONAL
      *  
      * @return string
      * @access protected
@@ -202,7 +202,7 @@ abstract class AView extends \XLite\Core\Handler
     /**
      * Return instance of the child widget 
      * 
-     * @param string $class Child widget class
+     * @param string $class Child widget class OPTIONAL
      *  
      * @return \XLite\View\AView
      * @access protected
@@ -440,8 +440,8 @@ abstract class AView extends \XLite\Core\Handler
      * Return widget object
      *
      * @param array  $params Widget params
-     * @param string $class  Widget class
-     * @param string $name   Widget class
+     * @param string $class  Widget class OPTIONAL
+     * @param string $name   Widget class OPTIONAL
      *
      * @return \XLite\View\AView
      * @access public
@@ -755,7 +755,7 @@ abstract class AView extends \XLite\Core\Handler
      * 
      * @param mixed $val1 Value 1
      * @param mixed $val2 Value 2
-     * @param mixed $val3 Value 3
+     * @param mixed $val3 Value 3 OPTIONAL
      *  
      * @return boolean 
      * @access protected
@@ -790,9 +790,9 @@ abstract class AView extends \XLite\Core\Handler
      * 
      * @param mixed  $base       String or object instance to get field value from
      * @param mixed  $field      String length or field to get value
-     * @param integer    $length     Field length to truncate to
-     * @param string $etc        String to add to truncated field value
-     * @param mixed  $breakWords Word wrap flag
+     * @param integer    $length     Field length to truncate to OPTIONAL
+     * @param string $etc        String to add to truncated field value OPTIONAL
+     * @param mixed  $breakWords Word wrap flag OPTIONAL
      *  
      * @return string
      * @access protected
@@ -833,8 +833,8 @@ abstract class AView extends \XLite\Core\Handler
      * Format date
      * 
      * @param mixed  $base   String or object instance to get field value from
-     * @param string $field  Field to get value
-     * @param string $format Date format
+     * @param string $field  Field to get value OPTIONAL
+     * @param string $format Date format OPTIONAL
      *  
      * @return string
      * @access protected
@@ -859,8 +859,8 @@ abstract class AView extends \XLite\Core\Handler
      * Format timestamp
      *
      * @param mixed  $base   String or object instance to get field value from
-     * @param string $field  Field to get value
-     * @param string $format Date format
+     * @param string $field  Field to get value OPTIONAL
+     * @param string $format Date format OPTIONAL
      *
      * @return string
      * @access protected
@@ -880,9 +880,9 @@ abstract class AView extends \XLite\Core\Handler
      * FIXME - to revise
      * 
      * @param mixed  $base          String or object instance to get field value from
-     * @param string $field         Field to get value
-     * @param mixed  $thousandDelim Thousands separator
-     * @param mixed  $decimalDelim  Separator for the decimal point
+     * @param string $field         Field to get value OPTIONAL
+     * @param mixed  $thousandDelim Thousands separator OPTIONAL
+     * @param mixed  $decimalDelim  Separator for the decimal point OPTIONAL
      *  
      * @return void
      * @access protected
@@ -944,7 +944,7 @@ abstract class AView extends \XLite\Core\Handler
      * Add slashes 
      * 
      * @param mixed  $base  String or object instance to get field value from
-     * @param string $field Field to get value
+     * @param string $field Field to get value OPTIONAL
      *  
      * @return void
      * @access protected
@@ -999,7 +999,7 @@ abstract class AView extends \XLite\Core\Handler
      * Increment
      * 
      * @param integer $value Value to increment
-     * @param integer $inc   Increment
+     * @param integer $inc   Increment OPTIONAL
      *  
      * @return integer
      * @access protected
@@ -1028,7 +1028,7 @@ abstract class AView extends \XLite\Core\Handler
      * 
      * @param integer    $row          Row index
      * @param string $oddCSSClass  First CSS class
-     * @param string $evenCSSClass Second CSS class
+     * @param string $evenCSSClass Second CSS class OPTIONAL
      *  
      * @return string
      * @access protected
@@ -1117,7 +1117,7 @@ abstract class AView extends \XLite\Core\Handler
      * 
      * @param array &$list      list to modify
      * @param array $properties Node properties
-     * @param integer   $weight     Node position
+     * @param integer   $weight     Node position OPTIONAL
      *  
      * @return void
      * @access protected
@@ -1309,7 +1309,7 @@ abstract class AView extends \XLite\Core\Handler
      * @param string $content        Content
      * @param string $query          XPath query
      * @param string $list           List name
-     * @param string $insertPosition Insert position code
+     * @param string $insertPosition Insert position code OPTIONAL
      *  
      * @return string
      * @access protected
@@ -1392,7 +1392,7 @@ abstract class AView extends \XLite\Core\Handler
      * @param string $content Content
      * @param string $pattern Pattern (PCRE)
      * @param string $list    List name
-     * @param string $replace Replace pattern
+     * @param string $replace Replace pattern OPTIONAL
      *  
      * @return string
      * @access protected
@@ -1489,7 +1489,7 @@ abstract class AView extends \XLite\Core\Handler
      * getNamePostedData 
      * 
      * @param string $field Field name
-     * @param integer    $id    Model object ID
+     * @param integer    $id    Model object ID OPTIONAL
      *  
      * @return string
      * @access protected

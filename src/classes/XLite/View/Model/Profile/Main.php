@@ -343,7 +343,7 @@ class Main extends \XLite\View\Model\Profile\AProfile
     /**
      * Return current profile ID
      *
-     * @param boolean $checkMode Check mode or not
+     * @param boolean $checkMode Check mode or not OPTIONAL
      *
      * @return integer 
      * @access public

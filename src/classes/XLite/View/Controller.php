@@ -190,7 +190,7 @@ class Controller extends \XLite\View\AView
      * __construct 
      * 
      * @param array  $params          Widget params
-     * @param string $contentTemplate Central area template
+     * @param string $contentTemplate Central area template OPTIONAL
      *  
      * @return void
      * @access public

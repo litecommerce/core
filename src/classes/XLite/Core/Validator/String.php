@@ -50,7 +50,7 @@ class String extends \XLite\Core\Validator\Scalar
     /**
      * Constructor
      * 
-     * @param boolean $nonEmpty Non-empty flag
+     * @param boolean $nonEmpty Non-empty flag OPTIONAL
      *  
      * @return void
      * @access public
@@ -65,7 +65,7 @@ class String extends \XLite\Core\Validator\Scalar
     /**
      * Mark validator as requried non-empty 
      * 
-     * @param boolean $nonEmpty Flag
+     * @param boolean $nonEmpty Flag OPTIONAL
      *  
      * @return void
      * @access public

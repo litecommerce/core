@@ -40,7 +40,7 @@ abstract class Session extends \XLite\Core\Session implements \XLite\Base\IDecor
     /**
      * Get URL path for Set-Cookie
      *
-     * @param boolean $secure Secure protocol or not
+     * @param boolean $secure Secure protocol or not OPTIONAL
      *
      * @return string
      * @access protected
@@ -57,7 +57,7 @@ abstract class Session extends \XLite\Core\Session implements \XLite\Base\IDecor
     /**
      * Get parsed URL for Set-Cookie
      *
-     * @param boolean $secure Secure protocol or not
+     * @param boolean $secure Secure protocol or not OPTIONAL
      *
      * @return array
      * @access protected

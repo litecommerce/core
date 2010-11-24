@@ -131,7 +131,7 @@ class Search extends \XLite\Controller\Customer\ACustomer
      * Return 'checked' attribute for parameter.
      * 
      * @param string $paramName Name of parameter
-     * @param mixed  $value     Value to check with
+     * @param mixed  $value     Value to check with OPTIONAL
      *  
      * @return string
      * @access public

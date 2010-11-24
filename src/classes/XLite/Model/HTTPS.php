@@ -393,7 +393,7 @@ class HTTPS extends \XLite\Base
      * Add header 
      * 
      * @param string $name  Header name
-     * @param string $value Header value
+     * @param string $value Header value OPTIONAL
      *  
      * @return void
      * @access public
@@ -413,7 +413,7 @@ class HTTPS extends \XLite\Base
     /**
      * Get headers 
      * 
-     * @param boolean $slashed Slashed flag
+     * @param boolean $slashed Slashed flag OPTIONAL
      *  
      * @return array
      * @access protected
@@ -438,7 +438,7 @@ class HTTPS extends \XLite\Base
     /**
      * Do request 
      *
-     * @param string $software HTTPS engine name
+     * @param string $software HTTPS engine name OPTIONAL
      * 
      * @return mixed
      * @access public
@@ -1103,7 +1103,7 @@ class HTTPS extends \XLite\Base
     /**
      * Get temporary file path
      * 
-     * @param string $name File prefix
+     * @param string $name File prefix OPTIONAL
      *  
      * @return string
      * @access protected

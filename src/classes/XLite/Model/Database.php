@@ -228,7 +228,7 @@ class Database extends \XLite\Base
     /**
      * SQL error report
      * 
-     * @param string $query SQL query
+     * @param string $query SQL query OPTIONAL
      *  
      * @return void
      * @access protected

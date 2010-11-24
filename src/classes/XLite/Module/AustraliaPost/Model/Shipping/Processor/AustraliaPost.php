@@ -257,7 +257,7 @@ class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor implement
      * Returns shipping rates 
      * 
      * @param mixed $data        Can be either \XLite\Model\Order instance or an array
-     * @param boolean  $ignoreCache Flag: if true then do not get rates from cache
+     * @param boolean  $ignoreCache Flag: if true then do not get rates from cache OPTIONAL
      *  
      * @return array
      * @access public

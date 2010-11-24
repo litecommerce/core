@@ -439,7 +439,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
     /**
      * getDirPermissionStr 
      * 
-     * @param string $dir ____param_comment____
+     * @param string $dir ____param_comment____ OPTIONAL
      *  
      * @return void
      * @access public
@@ -478,7 +478,7 @@ class Settings extends \XLite\Controller\Admin\AAdmin
     /**
      * getFilePermissionStr 
      * 
-     * @param string $file ____param_comment____
+     * @param string $file ____param_comment____ OPTIONAL
      *  
      * @return void
      * @access public

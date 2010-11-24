@@ -257,7 +257,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
     /**
      * Return list of all aloowed order statuses
      * 
-     * @param string $status Status to get
+     * @param string $status Status to get OPTIONAL
      *  
      * @return array | string
      * @access public
@@ -718,7 +718,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * Set payment method 
      * 
      * @param \XLite\Model\Payment\Method $paymentMethod Payment method
-     * @param float                       $value         Payment transaction value
+     * @param float                       $value         Payment transaction value OPTIONAL
      *  
      * @return void
      * @access public
@@ -770,8 +770,8 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * Add payment transaction 
      * 
      * @param \XLite\Model\Payment\Method $method   Payment method
-     * @param float                       $value    Value
-     * @param string                      $currency Currency code
+     * @param float                       $value    Value OPTIONAL
+     * @param string                      $currency Currency code OPTIONAL
      *  
      * @return void
      * @access protected
@@ -1094,7 +1094,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * 
      * @param string $name  Cell code
      * @param mixed  $value Cell value
-     * @param string $label Cell label
+     * @param string $label Cell label OPTIONAL
      *  
      * @return void
      * @access public

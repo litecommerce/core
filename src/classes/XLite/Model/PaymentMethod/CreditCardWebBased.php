@@ -86,7 +86,7 @@ abstract class CreditCardWebBased extends \XLite\Model\PaymentMethod\CreditCard
      * Handle request
      *
      * @param \XLite\Model\Cart $cart Cart
-     * @param string            $type Call type
+     * @param string            $type Call type OPTIONAL
      *
      * @return integer Operation status
      * @access public
@@ -105,7 +105,7 @@ abstract class CreditCardWebBased extends \XLite\Model\PaymentMethod\CreditCard
     /**
      * Get default return URL 
      *
-     * @param string $fieldName Order id field name
+     * @param string $fieldName Order id field name OPTIONAL
      * 
      * @return string
      * @access public

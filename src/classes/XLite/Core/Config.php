@@ -50,7 +50,7 @@ class Config extends \XLite\Base\Singleton
     /**
      * Read config options
      * 
-     * @param mixed $force ____param_comment____
+     * @param mixed $force ____param_comment____ OPTIONAL
      *  
      * @return void
      * @access public

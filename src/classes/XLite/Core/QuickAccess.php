@@ -142,7 +142,7 @@ class QuickAccess
      *
      * @param string $name      Label name
      * @param array  $arguments Substitution arguments
-     * @param string $code      Language code
+     * @param string $code      Language code OPTIONAL
      *
      * @return string
      * @access protected

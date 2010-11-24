@@ -70,7 +70,7 @@ class CachingFactory extends \XLite\Model\Factory
      * @param mixed   $handler    Callback object
      * @param string  $method     Method to call
      * @param array   $args       Callback arguments
-     * @param boolean $clearCache Clear cache flag
+     * @param boolean $clearCache Clear cache flag OPTIONAL
      *  
      * @return mixed
      * @access public

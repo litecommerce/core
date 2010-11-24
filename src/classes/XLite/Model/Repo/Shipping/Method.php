@@ -42,7 +42,7 @@ class Method extends \XLite\Model\Repo\ARepo
      * Adds additional condition to the query for checking if method is enabled
      * 
      * @param \Doctrine\ORM\QueryBuilder $qb    Query builder object
-     * @param string                     $alias Entity alias
+     * @param string                     $alias Entity alias OPTIONAL
      *  
      * @return \Doctrine\ORM\QueryBuilder
      * @access protected

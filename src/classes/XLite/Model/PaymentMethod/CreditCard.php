@@ -126,7 +126,7 @@ class CreditCard extends \XLite\Model\PaymentMethod
      * Handle request 
      * 
      * @param \XLite\Model\Cart $cart Cart
-     * @param string            $type Call type
+     * @param string            $type Call type OPTIONAL
      *  
      * @return integer Operation status
      * @access public

@@ -71,7 +71,7 @@ class ShippingRates extends \XLite\Controller\Admin\AAdmin
      * Validates and prepares posted data for markup objects
      * 
      * @param array $data  Array of posted data
-     * @param boolean  $isNew If true then prepares data for creating a new markup 
+     * @param boolean  $isNew If true then prepares data for creating a new markup  OPTIONAL
      *  
      * @return array
      * @access protected

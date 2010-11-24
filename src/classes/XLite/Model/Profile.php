@@ -385,7 +385,7 @@ class Profile extends \XLite\Model\AEntity
     /**
      * Returns address by its type (shipping or billing)
      * 
-     * @param string $atype Address type: b - billing, s - shipping
+     * @param string $atype Address type: b - billing, s - shipping OPTIONAL
      *  
      * @return \XLite\Model\Address
      * @access protected
