@@ -185,7 +185,7 @@ abstract class AModule
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function check()
+    public static function check()
     {
         return true;
     }
