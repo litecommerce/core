@@ -225,7 +225,7 @@ class XLite_Tests_AllTests
             unlink($path);
         }
 
-        if (!$deploy) {
+        if (!isset($deploy) || !$deploy) {
             $config = XLite::getInstance()->getOptions('database_details');
             $cmd = 'mysqldump --opt -h' . $config['hostspec'];
             if ($config['port']) {
