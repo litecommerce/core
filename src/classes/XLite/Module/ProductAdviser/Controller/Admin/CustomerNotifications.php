@@ -143,7 +143,7 @@ class CustomerNotifications extends \XLite\Controller\Admin\AAdmin
     /**
      * getAllParams 
      * 
-     * @param mixed $exeptions ____param_comment____
+     * @param mixed $exeptions ____param_comment____ OPTIONAL
      *  
      * @return void
      * @access public
@@ -200,7 +200,7 @@ class CustomerNotifications extends \XLite\Controller\Admin\AAdmin
      * 
      * @param mixed $name    ____param_comment____
      * @param mixed $value   ____param_comment____
-     * @param mixed $udecode ____param_comment____
+     * @param mixed $udecode ____param_comment____ OPTIONAL
      *  
      * @return boolean 
      * @access protected
@@ -229,7 +229,7 @@ class CustomerNotifications extends \XLite\Controller\Admin\AAdmin
      * 
      * @param mixed $name       ____param_comment____
      * @param mixed $value      ____param_comment____
-     * @param mixed $from_array ____param_comment____
+     * @param mixed $from_array ____param_comment____ OPTIONAL
      *  
      * @return boolean 
      * @access protected

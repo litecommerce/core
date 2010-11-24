@@ -351,7 +351,7 @@ class Module extends \XLite\Model\AEntity
     /**
      * Create module 
      * 
-     * @param string $name Name
+     * @param string $name Name OPTIONAL
      *  
      * @return void
      * @access public

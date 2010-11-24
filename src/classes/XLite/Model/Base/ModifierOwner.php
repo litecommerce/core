@@ -233,7 +233,7 @@ abstract class ModifierOwner extends \XLite\Model\AEntity
      * 
      * @param string $code    Modifier code
      * @param float  $value   Value
-     * @param string $subcode Saved modifier code
+     * @param string $subcode Saved modifier code OPTIONAL
      *  
      * @return boolean
      * @access protected

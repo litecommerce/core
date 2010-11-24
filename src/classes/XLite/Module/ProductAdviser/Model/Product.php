@@ -396,9 +396,9 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
     /**
      * getCategory 
      * 
-     * @param string $where    ____param_comment____
-     * @param string $orderby  ____param_comment____
-     * @param boolean   $useCache ____param_comment____
+     * @param string $where    ____param_comment____ OPTIONAL
+     * @param string $orderby  ____param_comment____ OPTIONAL
+     * @param boolean   $useCache ____param_comment____ OPTIONAL
      *  
      * @return void
      * @access public

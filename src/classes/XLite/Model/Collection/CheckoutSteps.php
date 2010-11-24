@@ -92,7 +92,7 @@ class CheckoutSteps extends \XLite\Model\Collection
      * getStep 
      * 
      * @param boolean $isActual Flag to determine step type
-     * @param string  $method   Name of the callback function used to prepare step object
+     * @param string  $method   Name of the callback function used to prepare step object OPTIONAL
      *  
      * @return \XLite\Model\ListNode\CheckoutStep
      * @access protected

@@ -208,7 +208,7 @@ class Auth extends \XLite\Base
      * 
      * @param string $login      User's login
      * @param string $password   User's password
-     * @param string $secureHash Secret token
+     * @param string $secureHash Secret token OPTIONAL
      *  
      * @return \XLite\Model\Profile|integer
      * @access public
@@ -280,7 +280,7 @@ class Auth extends \XLite\Base
     /**
      * Get profile registered in session
      * 
-     * @param integer $profileId Profile Id
+     * @param integer $profileId Profile Id OPTIONAL
      *  
      * @return \XLite\Model\Profile
      * @access public

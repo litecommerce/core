@@ -57,7 +57,7 @@ abstract class APair extends \XLite\Core\Validator\AValidator
     /**
      * Constructor
      * 
-     * @param string $mode Validation mode
+     * @param string $mode Validation mode OPTIONAL
      *  
      * @return void
      * @access public

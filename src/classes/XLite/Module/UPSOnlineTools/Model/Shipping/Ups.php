@@ -75,7 +75,7 @@ class Ups extends \XLite\Model\Shipping\Online
     /**
      * Constructor
      * 
-     * @param mixed $param Parameters
+     * @param mixed $param Parameters OPTIONAL
      *  
      * @return void
      * @access public
@@ -1189,7 +1189,7 @@ EOT;
      * @param string  $request  XML string
      * @param string  $func     Postprocessing method name
      * @param string  $tool     UPS tool name
-     * @param boolean $use_auth Authentication flag
+     * @param boolean $use_auth Authentication flag OPTIONAL
      *  
      * @return array 
      * @access protected
@@ -1479,7 +1479,7 @@ EOT;
      * Get UPS container dimensions
      * 
      * @param integer $index      Container code
-     * @param boolean $inches_lbs Use inches / lbs. istead kg. / sm.
+     * @param boolean $inches_lbs Use inches / lbs. istead kg. / sm. OPTIONAL
      *  
      * @return void
      * @access public
@@ -1819,7 +1819,7 @@ EOT;
      * Get XML node value by XPath query
      * 
      * @param string  $query      XPath query
-     * @param DOMNode $parentNode Context node
+     * @param DOMNode $parentNode Context node OPTIONAL
      *  
      * @return mixed
      * @access protected

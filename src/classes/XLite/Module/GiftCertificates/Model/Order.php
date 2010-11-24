@@ -90,7 +90,7 @@ class Order extends \XLite\Model\Order implements \XLite\Base\IDecorator
     /**
      * Constructor
      * 
-     * @param mixed $param Parameter
+     * @param mixed $param Parameter OPTIONAL
      *  
      * @return void
      * @access public

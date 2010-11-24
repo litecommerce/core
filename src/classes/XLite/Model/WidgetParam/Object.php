@@ -73,9 +73,9 @@ class Object extends \XLite\Model\WidgetParam\AWidgetParam
      * Constructor
      *
      * @param mixed  $label     Param label (text)
-     * @param mixed  $value     Default value
-     * @param mixed  $isSetting Display this setting in CMS or not
-     * @param string $class     Object class
+     * @param mixed  $value     Default value OPTIONAL
+     * @param mixed  $isSetting Display this setting in CMS or not OPTIONAL
+     * @param string $class     Object class OPTIONAL
      *
      * @return void
      * @access public

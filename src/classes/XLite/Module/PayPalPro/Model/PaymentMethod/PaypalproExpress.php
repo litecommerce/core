@@ -116,7 +116,7 @@ class PaypalproExpress extends \XLite\Model\PaymentMethod\CreditCard
      * Handle request 
      * 
      * @param \XLite\Model\Cart $cart Cart
-     * @param string           $type Call type
+     * @param string           $type Call type OPTIONAL
      *  
      * @return integer Operation status
      * @access public
@@ -682,7 +682,7 @@ EOT;
      * Get response XML node value 
      * 
      * @param string  $query  XPath query
-     * @param DOMNode $parent Parent query node
+     * @param DOMNode $parent Parent query node OPTIONAL
      *  
      * @return string
      * @access public

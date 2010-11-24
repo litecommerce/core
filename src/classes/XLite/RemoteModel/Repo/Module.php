@@ -72,12 +72,12 @@ class Module extends \XLite\RemoteModel\Repo\ARepo
     /**
      * Find modules 
      * 
-     * @param string  $name       Part of module name or description
-     * @param string  $category   Module category name
-     * @param integer $moduleType Module type (pay / free / all)
-     * @param string  $version    Module version
-     * @param string  $sortType   Sort field name
-     * @param string  $sortOrder  Sort direction
+     * @param string  $name       Part of module name or description OPTIONAL
+     * @param string  $category   Module category name OPTIONAL
+     * @param integer $moduleType Module type (pay / free / all) OPTIONAL
+     * @param string  $version    Module version OPTIONAL
+     * @param string  $sortType   Sort field name OPTIONAL
+     * @param string  $sortOrder  Sort direction OPTIONAL
      *  
      * @return array
      * @access public

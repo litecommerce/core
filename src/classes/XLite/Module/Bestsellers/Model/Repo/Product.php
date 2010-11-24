@@ -40,8 +40,8 @@ class Product extends \XLite\Model\Repo\Product implements \XLite\Base\IDecorato
     /**
      * Defines bestsellers products collection 
      * 
-     * @param integer $count Number of products to get
-     * @param integer $cat   Category identificator
+     * @param integer $count Number of products to get OPTIONAL
+     * @param integer $cat   Category identificator OPTIONAL
      *  
      * @return array
      * @access public

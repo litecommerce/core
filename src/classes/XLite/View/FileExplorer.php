@@ -107,7 +107,7 @@ class FileExplorer extends \XLite\View\ColumnList
     /**
      * getPath 
      * 
-     * @param string $zone ____param_comment____
+     * @param string $zone ____param_comment____ OPTIONAL
      *  
      * @return string
      * @access protected

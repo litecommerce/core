@@ -185,7 +185,7 @@ class Users extends \XLite\Controller\Admin\AAdmin
     /**
      * getSearchParams 
      * 
-     * @param string $paramName Parameter name
+     * @param string $paramName Parameter name OPTIONAL
      *  
      * @return mixed
      * @access public

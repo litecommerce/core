@@ -126,7 +126,7 @@ abstract class AController extends \XLite\Core\Handler
     /**
      * Perform redirect 
      * 
-     * @param string $url Redirect URL
+     * @param string $url Redirect URL OPTIONAL
      *  
      * @return void
      * @access protected
@@ -213,7 +213,7 @@ abstract class AController extends \XLite\Core\Handler
      * Add node to the location line
      * 
      * @param string $name     Node title
-     * @param string $link     Node link
+     * @param string $link     Node link OPTIONAL
      * @param array  $subnodes Node subnodes
      *
      * @return void
@@ -381,7 +381,7 @@ abstract class AController extends \XLite\Core\Handler
      * Example: getShopUrl('cart.php') = "http://domain/dir/cart.php 
      * 
      * @param string $url    Relative URL  
-     * @param boolean   $secure Flag to use HTTPS
+     * @param boolean   $secure Flag to use HTTPS OPTIONAL
      *  
      * @return string
      * @access public
@@ -512,7 +512,7 @@ abstract class AController extends \XLite\Core\Handler
     /**
      * Set internal popup redirect 
      * 
-     * @param boolean $flag Internal redirect status
+     * @param boolean $flag Internal redirect status OPTIONAL
      *  
      * @return void
      * @access protected
@@ -529,7 +529,7 @@ abstract class AController extends \XLite\Core\Handler
     /**
      * Set silence close popup
      * 
-     * @param boolean $flag Silence close status
+     * @param boolean $flag Silence close status OPTIONAL
      *  
      * @return void
      * @access protected
@@ -657,8 +657,8 @@ abstract class AController extends \XLite\Core\Handler
      * setActionStatus 
      * 
      * @param integer    $status  Error/success
-     * @param string $message Status info
-     * @param integer    $code    Status code
+     * @param string $message Status info OPTIONAL
+     * @param integer    $code    Status code OPTIONAL
      *  
      * @return void
      * @access public
@@ -672,8 +672,8 @@ abstract class AController extends \XLite\Core\Handler
     /**
      * setActionError 
      * 
-     * @param string $message Status info 
-     * @param integer    $code    Status code
+     * @param string $message Status info  OPTIONAL
+     * @param integer    $code    Status code OPTIONAL
      *  
      * @return void
      * @access public
@@ -687,8 +687,8 @@ abstract class AController extends \XLite\Core\Handler
     /**
      * setActionSuccess
      *
-     * @param string $message Status info
-     * @param integer    $code    Status code
+     * @param string $message Status info OPTIONAL
+     * @param integer    $code    Status code OPTIONAL
      *
      * @return void
      * @access public
@@ -734,7 +734,7 @@ abstract class AController extends \XLite\Core\Handler
      * TODO - check this method
      * FIXME - backward compatibility
      *
-     * @param string $exeptions Parameter keys string
+     * @param string $exeptions Parameter keys string OPTIONAL
      *
      * @return array
      * @access public
@@ -801,7 +801,7 @@ abstract class AController extends \XLite\Core\Handler
     /**
      * FIXME - backward compatibility; to delete
      * 
-     * @param mixed $request ____param_comment____
+     * @param mixed $request ____param_comment____ OPTIONAL
      *  
      * @return void
      * @access public

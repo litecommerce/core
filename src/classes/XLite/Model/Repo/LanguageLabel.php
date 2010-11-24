@@ -58,7 +58,7 @@ class LanguageLabel extends \XLite\Model\Repo\Base\I18n
     /**
      * Find labels by language code
      *
-     * @param string $code Language code
+     * @param string $code Language code OPTIONAL
      * 
      * @return array
      * @access public
@@ -162,8 +162,8 @@ class LanguageLabel extends \XLite\Model\Repo\Base\I18n
      * Find lables by name pattern with data frame
      * 
      * @param string  $name  Name pattern
-     * @param integer $start Start offset
-     * @param integer $limit Frame length
+     * @param integer $start Start offset OPTIONAL
+     * @param integer $limit Frame length OPTIONAL
      *  
      * @return array
      * @access public

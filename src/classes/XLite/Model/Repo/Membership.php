@@ -138,7 +138,7 @@ class Membership extends \XLite\Model\Repo\Base\I18n
      * Find membership by name (any language)
      * 
      * @param string  $name       Name
-     * @param boolean $onlyActive Search only in active mebmerships
+     * @param boolean $onlyActive Search only in active mebmerships OPTIONAL
      *  
      * @return \XLite\Model\Membership|void
      * @access public

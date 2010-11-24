@@ -112,7 +112,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     /**
      * Get cache cells 
      * 
-     * @param string $key Cell name
+     * @param string $key Cell name OPTIONAL
      *  
      * @return array(cells) / cell data
      * @access protected
@@ -377,7 +377,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     /**
      * Get prefix for cache key
      *
-     * @param string $suffix Cache subsection name
+     * @param string $suffix Cache subsection name OPTIONAL
      * 
      * @return string
      * @access protected
@@ -481,7 +481,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     /**
      * Delete repository cache or cell cache
      * 
-     * @param string $name Cell name
+     * @param string $name Cell name OPTIONAL
      *  
      * @return void
      * @access public
@@ -497,7 +497,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * Assign default orderBy 
      * 
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder
-     * @param string                     $alias        Table short alias in query builder
+     * @param string                     $alias        Table short alias in query builder OPTIONAL
      *  
      * @return \Doctrine\ORM\QueryBuilder
      * @access public
@@ -551,7 +551,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     /**
      * Create a new QueryBuilder instance that is prepopulated for this entity name
      * 
-     * @param string $alias Table alias
+     * @param string $alias Table alias OPTIONAL
      *  
      * @return \Doctrine\ORM\QueryBuilder
      * @access public
@@ -571,7 +571,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * Create a new QueryBuilder instance that is prepopulated for this entity name
      * NOTE: without any relative subqueries!
      * 
-     * @param string $alias Table alias
+     * @param string $alias Table alias OPTIONAL
      *  
      * @return \Doctrine\ORM\QueryBuilder
      * @access public
@@ -672,8 +672,8 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     /**
      * Find data frame 
      * 
-     * @param integer $start Start offset
-     * @param integer $limit Frame length
+     * @param integer $start Start offset OPTIONAL
+     * @param integer $limit Frame length OPTIONAL
      *  
      * @return array
      * @access public
@@ -705,8 +705,8 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * Assign frame to query builder
      * 
      * @param \Doctrine\ORM\QueryBuilder $qb    Query builder
-     * @param integer                    $start Start offset
-     * @param integer                    $limit Frame length
+     * @param integer                    $start Start offset OPTIONAL
+     * @param integer                    $limit Frame length OPTIONAL
      *  
      * @return \Doctrine\ORM\QueryBuilder
      * @access protected

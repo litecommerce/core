@@ -88,7 +88,7 @@ class FormId extends \XLite\Model\Repo\ARepo
      * Count session by public session id 
      * 
      * @param string  $formId    Form id
-     * @param integer $sessionId Session id
+     * @param integer $sessionId Session id OPTIONAL
      *  
      * @return integer
      * @access public
@@ -127,7 +127,7 @@ class FormId extends \XLite\Model\Repo\ARepo
     /**
      * Generate public session id 
      * 
-     * @param integer $sessionId Session id
+     * @param integer $sessionId Session id OPTIONAL
      *
      * @return string
      * @access public
@@ -163,7 +163,7 @@ class FormId extends \XLite\Model\Repo\ARepo
     /**
      * Remove expired form IDs
      * 
-     * @param integer $sessionId Session id OPTIONAL
+     * @param integer $sessionId Session id OPTIONAL OPTIONAL
      * 
      * @return void
      * @access public

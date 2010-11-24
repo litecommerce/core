@@ -41,8 +41,8 @@ abstract class I18n extends \XLite\Model\Repo\ARepo
      * Add language subquery with language code relation
      * 
      * @param \Doctrine\ORM\QueryBuilder $qb    Query builder
-     * @param string                     $alias Main model alias
-     * @param string                     $code  Language code
+     * @param string                     $alias Main model alias OPTIONAL
+     * @param string                     $code  Language code OPTIONAL
      *  
      * @return \Doctrine\ORM\QueryBuilder
      * @access protected
@@ -80,7 +80,7 @@ abstract class I18n extends \XLite\Model\Repo\ARepo
      * Add translations subquery 
      * 
      * @param \Doctrine\ORM\QueryBuilder $qb    Query builder
-     * @param string                     $alias Main model alias
+     * @param string                     $alias Main model alias OPTIONAL
      *  
      * @return \Doctrine\ORM\QueryBuilder
      * @access protected
@@ -110,7 +110,7 @@ abstract class I18n extends \XLite\Model\Repo\ARepo
     /**
      * Create a new QueryBuilder instance that is prepopulated for this entity name
      * 
-     * @param string $alias Table alias
+     * @param string $alias Table alias OPTIONAL
      *  
      * @return \Doctrine\ORM\QueryBuilder
      * @access public

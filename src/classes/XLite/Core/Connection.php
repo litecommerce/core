@@ -44,7 +44,7 @@ class Connection extends \Doctrine\DBAL\Connection
      * 
      * @param string $query  The SQL query to execute
      * @param array  $params The parameters to bind to the query, if any
-     * @param array  $types  The parameters's types
+     * @param array  $types  The parameters's types OPTIONAL
      *  
      * @return \Doctrine\DBAL\Driver\Statement
      * @access public

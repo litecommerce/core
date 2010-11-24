@@ -253,8 +253,8 @@ class Order extends \XLite\Model\Repo\ARepo
     /**
      * Create a new QueryBuilder instance that is prepopulated for this entity name
      *
-     * @param string  $alias      Table alias
-     * @param boolean $placedOnly Use only orders or orders + carts
+     * @param string  $alias      Table alias OPTIONAL
+     * @param boolean $placedOnly Use only orders or orders + carts OPTIONAL
      *
      * @return \Doctrine\ORM\QueryBuilder
      * @access public
@@ -370,7 +370,7 @@ class Order extends \XLite\Model\Repo\ARepo
      * Common search
      * 
      * @param \XLite\Core\CommonCell $cnd       Search condition
-     * @param boolean                $countOnly Return items list or only its size
+     * @param boolean                $countOnly Return items list or only its size OPTIONAL
      *  
      * @return \Doctrine\ORM\PersistentCollection|int
      * @access public

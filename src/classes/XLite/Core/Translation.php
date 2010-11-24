@@ -92,7 +92,7 @@ class Translation extends \XLite\Base\Singleton implements \XLite\Base\IREST
      * 
      * @param string $name      Label name
      * @param array  $arguments Substitute arguments
-     * @param string $code      Language code
+     * @param string $code      Language code OPTIONAL
      *  
      * @return string
      * @access public
@@ -122,7 +122,7 @@ class Translation extends \XLite\Base\Singleton implements \XLite\Base\IREST
      * 
      * @param string $name      Label name
      * @param array  $arguments Substitute arguments
-     * @param string $code      Language code
+     * @param string $code      Language code OPTIONAL
      *  
      * @return string
      * @access public

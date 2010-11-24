@@ -40,7 +40,7 @@ class Order extends \XLite\Model\Order implements \XLite\Base\IDecorator
     /**
      * Constructor
      * 
-     * @param mixed $id ____param_comment____
+     * @param mixed $id ____param_comment____ OPTIONAL
      *  
      * @return void
      * @access public

@@ -1205,7 +1205,7 @@ class FlexyCompiler extends \XLite\Base\Singleton
      * Compile and save template
      * 
      * @param string  $original Relative file path
-     * @param boolean $force    Flag to force compilation
+     * @param boolean $force    Flag to force compilation OPTIONAL
      *  
      * @return string
      * @access public

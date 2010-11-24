@@ -198,7 +198,7 @@ class Rest extends \XLite\Controller\Customer\ACustomer
      * Get repository by name and type
      * 
      * @param string $name Repository name
-     * @param string $type Operation type name
+     * @param string $type Operation type name OPTIONAL
      *  
      * @return object|void
      * @access protected

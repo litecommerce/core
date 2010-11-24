@@ -95,8 +95,8 @@ class TopMessage extends \XLite\Base\Singleton
      * Add message
      * 
      * @param string  $text    Message text
-     * @param string  $type    Message type
-     * @param boolean $rawText Preprocessing text flag
+     * @param string  $type    Message type OPTIONAL
+     * @param boolean $rawText Preprocessing text flag OPTIONAL
      *  
      * @return boolean
      * @access public
@@ -138,7 +138,7 @@ class TopMessage extends \XLite\Base\Singleton
      * 
      * @param string $text      Label name
      * @param array  $arguments Substitution arguments
-     * @param string $code      Language code
+     * @param string $code      Language code OPTIONAL
      *  
      * @return boolean
      * @access public
@@ -155,7 +155,7 @@ class TopMessage extends \XLite\Base\Singleton
      * 
      * @param string $text      Label name
      * @param array  $arguments Substitution arguments
-     * @param string $code      Language code
+     * @param string $code      Language code OPTIONAL
      *  
      * @return boolean
      * @access public
@@ -172,7 +172,7 @@ class TopMessage extends \XLite\Base\Singleton
      * 
      * @param string $text      Label name
      * @param array  $arguments Substitution arguments
-     * @param string $code      Language code
+     * @param string $code      Language code OPTIONAL
      *  
      * @return boolean
      * @access public
@@ -188,7 +188,7 @@ class TopMessage extends \XLite\Base\Singleton
      * Add messages
      * 
      * @param array  $messages Message texts
-     * @param string $type     Message type
+     * @param string $type     Message type OPTIONAL
      *  
      * @return boolean
      * @access public

@@ -41,7 +41,7 @@ class Mailer extends \XLite\View\Mailer implements \XLite\Base\IDecorator
      * Compile template
      * 
      * @param string  $template     Template path
-     * @param boolean $switchLayout Switch laout flag
+     * @param boolean $switchLayout Switch laout flag OPTIONAL
      *  
      * @return string
      * @access protected

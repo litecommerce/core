@@ -208,7 +208,7 @@ abstract class Processor extends \XLite\Base
      * 
      * @param string $name  Code
      * @param string $value Value
-     * @param string $label Label
+     * @param string $label Label OPTIONAL
      *  
      * @return \XLite\Model\Payment\TransactionData
      * @access protected

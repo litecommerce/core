@@ -199,7 +199,7 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
     /**
      * Get date condition parameter (start or end)
      * 
-     * @param boolean $start Start date flag, otherwise - end date 
+     * @param boolean $start Start date flag, otherwise - end date  OPTIONAL
      *  
      * @return mixed
      * @access public

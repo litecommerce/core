@@ -67,7 +67,7 @@ class Operator extends \XLite\Base\Singleton
      * setHeaderLocation
      * 
      * @param string  $location URL
-     * @param integer $code     Operation code
+     * @param integer $code     Operation code OPTIONAL
      *  
      * @return void
      * @access protected
@@ -107,8 +107,8 @@ class Operator extends \XLite\Base\Singleton
      * Redirect 
      * 
      * @param string  $location URL
-     * @param boolean $force    Check or not redirect conditions
-     * @param integer $code     Operation code
+     * @param boolean $force    Check or not redirect conditions OPTIONAL
+     * @param integer $code     Operation code OPTIONAL
      *  
      * @return void
      * @access public
@@ -172,8 +172,8 @@ class Operator extends \XLite\Base\Singleton
      * Calculate pagination info
      * 
      * @param integer $count Items count
-     * @param integer $page  Current page index
-     * @param integer $limit Page length limit
+     * @param integer $page  Current page index OPTIONAL
+     * @param integer $limit Page length limit OPTIONAL
      *  
      * @return array (pages count + current page number)
      * @access public
@@ -201,7 +201,7 @@ class Operator extends \XLite\Base\Singleton
      * Get back trace list
      * FIXME: to revise
      *
-     * @param integer $slice Trace slice count
+     * @param integer $slice Trace slice count OPTIONAL
      *
      * @return array
      * @access public

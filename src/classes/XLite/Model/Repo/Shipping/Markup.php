@@ -211,8 +211,8 @@ class Markup extends \XLite\Model\Repo\ARepo
     /**
      * findMarkupsByZoneAndMethod 
      * 
-     * @param integer $zoneId   Zone Id
-     * @param integer $methodId Method Id
+     * @param integer $zoneId   Zone Id OPTIONAL
+     * @param integer $methodId Method Id OPTIONAL
      *  
      * @return array
      * @access public

@@ -69,7 +69,7 @@ class State extends \XLite\Model\Repo\ARepo
     /**
      * Get dump 'Other' state 
      *
-     * @param string $customState Custom state name
+     * @param string $customState Custom state name OPTIONAL
      * 
      * @return \XLite\Model\State
      * @access public
@@ -132,7 +132,7 @@ class State extends \XLite\Model\Repo\ARepo
      * Find state by id (dump 'Other' state included) 
      * 
      * @param integer $stateId     State id
-     * @param string  $customState Custom state name if state is dump 'Other' state
+     * @param string  $customState Custom state name if state is dump 'Other' state OPTIONAL
      *  
      * @return \XLite\Model\State
      * @access public

@@ -100,8 +100,8 @@ class Gallery extends \XLite\View\Product\Details\Customer\ACustomer
      * Get image URL (middle-size)
      * 
      * @param \XLite\Model\Base\Image $image  Image
-     * @param integer                 $width  Width limit
-     * @param integer                 $height Height limit
+     * @param integer                 $width  Width limit OPTIONAL
+     * @param integer                 $height Height limit OPTIONAL
      *  
      * @return string
      * @access protected

@@ -360,7 +360,7 @@ abstract class ATabs extends \XLite\View\AView
     /**
      * Returns tabs splitted into multiple chunks
      * 
-     * @param integer $splitParameter Maximum number of characters per a line with tab titles
+     * @param integer $splitParameter Maximum number of characters per a line with tab titles OPTIONAL
      *  
      * @return array
      * @access protected
@@ -436,7 +436,7 @@ abstract class ATabs extends \XLite\View\AView
      * Checks whether a title is wider than the specified percent of total length of all titles
      * 
      * @param string $pageIdx       Page identificator (key in the $pages array)
-     * @param integer    $widthPercents Percent value
+     * @param integer    $widthPercents Percent value OPTIONAL
      *  
      * @return boolean
      * @access protected

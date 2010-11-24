@@ -475,7 +475,7 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
      * Adds additional condition to the query for checking if product is enabled
      *
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder object
-     * @param string                     $alias        Entity alias
+     * @param string                     $alias        Entity alias OPTIONAL
      *
      * @return void
      * @access protected
@@ -495,7 +495,7 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
      * Common search
      * 
      * @param \XLite\Core\CommonCell $cnd       Search condition
-     * @param boolean                $countOnly Return items list or only its size
+     * @param boolean                $countOnly Return items list or only its size OPTIONAL
      *  
      * @return \Doctrine\ORM\PersistentCollection|integer
      * @access public
@@ -525,7 +525,7 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
     /**
      * Create a new QueryBuilder instance that is prepopulated for this entity name
      *
-     * @param string $alias Table alias
+     * @param string $alias Table alias OPTIONAL
      *
      * @return \Doctrine\ORM\QueryBuilder
      * @access public

@@ -427,7 +427,7 @@ class Session extends \XLite\Base\Singleton
     /**
      * Get parsed URL for Set-Cookie
      * 
-     * @param boolean $secure Secure protocol or not
+     * @param boolean $secure Secure protocol or not OPTIONAL
      *  
      * @return array
      * @access protected
@@ -448,7 +448,7 @@ class Session extends \XLite\Base\Singleton
     /**
      * Get host / domain for Set-Cookie
      *
-     * @param boolean $secure Secure protocol or not
+     * @param boolean $secure Secure protocol or not OPTIONAL
      *
      * @return string
      * @access protected
@@ -465,7 +465,7 @@ class Session extends \XLite\Base\Singleton
     /**
      * Get URL path for Set-Cookie
      *
-     * @param boolean $secure Secure protocol or not
+     * @param boolean $secure Secure protocol or not OPTIONAL
      *
      * @return string
      * @access protected

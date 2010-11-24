@@ -133,10 +133,10 @@ class Converter extends \XLite\Base\Singleton
     /**
      * Compose URL from target, action and additional params
      *
-     * @param string $target    Page identifier
-     * @param string $action    Action to perform
+     * @param string $target    Page identifier OPTIONAL
+     * @param string $action    Action to perform OPTIONAL
      * @param array  $params    Additional params
-     * @param string $interface Interface script
+     * @param string $interface Interface script OPTIONAL
      *
      * @return string
      * @access public
@@ -170,8 +170,8 @@ class Converter extends \XLite\Base\Singleton
     /**
      * Compose full URL from target, action and additional params
      *
-     * @param string $target Page identifier
-     * @param string $action Action to perform
+     * @param string $target Page identifier OPTIONAL
+     * @param string $action Action to perform OPTIONAL
      * @param array  $params Additional params
      *
      * @return string
@@ -202,7 +202,7 @@ class Converter extends \XLite\Base\Singleton
      * Convert to one-dimensional array 
      * 
      * @param array  $data    Array to flat
-     * @param string $currKey Parameter for recursive calls
+     * @param string $currKey Parameter for recursive calls OPTIONAL
      *  
      * @return array
      * @access public
@@ -237,8 +237,8 @@ class Converter extends \XLite\Base\Singleton
      * Resize image by width / height limits
      * 
      * @param \XLite\Model\Base\Image $image  Image
-     * @param integer                 $width  Width limit
-     * @param integer                 $height Height limit
+     * @param integer                 $width  Width limit OPTIONAL
+     * @param integer                 $height Height limit OPTIONAL
      *  
      * @return array (new width + new height + image body)
      * @access public

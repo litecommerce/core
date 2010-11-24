@@ -165,8 +165,8 @@ class ActionStatus extends \XLite\Base
      * __construct 
      * 
      * @param integer    $status  Action status
-     * @param string $message Status info
-     * @param integer    $code    Code
+     * @param string $message Status info OPTIONAL
+     * @param integer    $code    Code OPTIONAL
      *  
      * @return void
      * @access public

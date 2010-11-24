@@ -353,8 +353,8 @@ abstract class Image extends \XLite\Model\AEntity
     /**
      * Get resized image URL 
      * 
-     * @param integer $width  Width limit
-     * @param integer $height Height limit
+     * @param integer $width  Width limit OPTIONAL
+     * @param integer $height Height limit OPTIONAL
      *  
      * @return array (new width + new height + URL)
      * @access public
@@ -400,7 +400,7 @@ abstract class Image extends \XLite\Model\AEntity
      * Load from request 
      * 
      * @param string $key    Key in $_FILES service array
-     * @param string $subkey Optional subkey
+     * @param string $subkey Optional subkey OPTIONAL
      *  
      * @return boolean
      * @access public
@@ -439,7 +439,7 @@ abstract class Image extends \XLite\Model\AEntity
      * Load image from local file 
      * 
      * @param string $path     Absolute path
-     * @param string $basename File name
+     * @param string $basename File name OPTIONAL
      *  
      * @return boolean
      * @access public
@@ -478,7 +478,7 @@ abstract class Image extends \XLite\Model\AEntity
      * Load image from URL 
      * 
      * @param string  $url     URL
-     * @param boolean $copy2fs Copy image to file system or not
+     * @param boolean $copy2fs Copy image to file system or not OPTIONAL
      *  
      * @return boolean
      * @access public

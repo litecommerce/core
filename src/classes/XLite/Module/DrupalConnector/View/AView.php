@@ -119,7 +119,7 @@ abstract class AView extends \XLite\View\AView implements \XLite\Base\IDecorator
      * Prepare resources list
      *
      * @param array   $data     Data to prepare
-     * @param boolean $isCommon Flag to determine how to prepare URL
+     * @param boolean $isCommon Flag to determine how to prepare URL OPTIONAL
      *
      * @return array
      * @access protected

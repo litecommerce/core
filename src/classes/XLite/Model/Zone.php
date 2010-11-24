@@ -105,7 +105,7 @@ class Zone extends \XLite\Model\AEntity
     /**
      * Get zone's countries list
      *
-     * @param boolean $excluded Flag: true - get countries except zone countries
+     * @param boolean $excluded Flag: true - get countries except zone countries OPTIONAL
      *
      * @return array
      * @access public
@@ -138,7 +138,7 @@ class Zone extends \XLite\Model\AEntity
     /**
      * Get zone's states list
      * 
-     * @param boolean $excluded Flag: true - get states except zone states
+     * @param boolean $excluded Flag: true - get states except zone states OPTIONAL
      *
      * @return array
      * @access public

@@ -284,7 +284,7 @@ class Profiler extends \XLite\Base\Singleton implements \Doctrine\DBAL\Logging\S
      * Log same time range
      * 
      * @param string  $timePoint  Time range name
-     * @param boolean $additional Additional metric flag
+     * @param boolean $additional Additional metric flag OPTIONAL
      *  
      * @return void
      * @access public

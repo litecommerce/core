@@ -326,7 +326,7 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
     /**
      * getFrameHalfLength 
      * 
-     * @param boolean $shortPart Which part of frame to return
+     * @param boolean $shortPart Which part of frame to return OPTIONAL
      *  
      * @return integer 
      * @access protected
@@ -672,8 +672,8 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
     /**
      * Return SQL condition with limits
      * 
-     * @param integer                $start Index of the first item on the page
-     * @param integer                $count Number of items per page
+     * @param integer                $start Index of the first item on the page OPTIONAL
+     * @param integer                $count Number of items per page OPTIONAL
      * @param \XLite\Core\CommonCell $cnd   Search condition
      *  
      * @return array|\Doctrine\ORM\PersistentCollection

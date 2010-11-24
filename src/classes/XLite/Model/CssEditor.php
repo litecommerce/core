@@ -67,7 +67,7 @@ class CssEditor extends \XLite\Base
     /**
      * Constructor
      * 
-     * @param mixed $cssFile ____param_comment____
+     * @param mixed $cssFile ____param_comment____ OPTIONAL
      *  
      * @return void
      * @access public

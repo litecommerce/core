@@ -169,7 +169,7 @@ class Logger extends \XLite\Base\Singleton
      * Add log record
      * 
      * @param string $message Message
-     * @param string $level   Level code
+     * @param string $level   Level code OPTIONAL
      *  
      * @return void
      * @access public

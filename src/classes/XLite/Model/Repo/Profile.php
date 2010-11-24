@@ -177,8 +177,8 @@ class Profile extends \XLite\Model\Repo\ARepo
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder QueryBuilder instance
      * @param string                     $value        Searchable value
      * @param string                     $fieldName    Searchable parameter name
-     * @param boolean                    $exactCmp     Flag: use exact comparison (=) or 'LIKE'
-     * @param string                     $alias        Profile entity alias
+     * @param boolean                    $exactCmp     Flag: use exact comparison (=) or 'LIKE' OPTIONAL
+     * @param string                     $alias        Profile entity alias OPTIONAL
      *  
      * @return void
      * @access protected
@@ -617,7 +617,7 @@ class Profile extends \XLite\Model\Repo\ARepo
      * Common search
      * 
      * @param \XLite\Core\CommonCell $cnd       Search condition
-     * @param boolean                $countOnly Flag: return items list or only items count
+     * @param boolean                $countOnly Flag: return items list or only items count OPTIONAL
      *  
      * @return \Doctrine\ORM\PersistentCollection|integer
      * @access public
@@ -667,7 +667,7 @@ class Profile extends \XLite\Model\Repo\ARepo
      *
      * @param string  $login    User's login
      * @param string  $password User's password
-     * @param integer $orderId  Order ID related to the profile
+     * @param integer $orderId  Order ID related to the profile OPTIONAL
      *
      * @return \XLite\Model\Profile
      * @access public

@@ -50,8 +50,8 @@ class Country extends \XLite\Core\Validator\String
     /**
      * Constructor
      *
-     * @param boolean $nonEmpty    Non-empty flag
-     * @param boolean $onlyEnabled Only enabled flag
+     * @param boolean $nonEmpty    Non-empty flag OPTIONAL
+     * @param boolean $onlyEnabled Only enabled flag OPTIONAL
      *
      * @return void
      * @access public

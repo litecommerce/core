@@ -69,7 +69,7 @@ abstract class AValidator
      * 
      * @param string $message   Message
      * @param array  $arguments Language label arguments
-     * @param mixed  $pathItem  Path item key
+     * @param mixed  $pathItem  Path item key OPTIONAL
      *  
      * @return \XLite\Core\Validator\Exception
      * @access protected
