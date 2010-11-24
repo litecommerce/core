@@ -178,6 +178,19 @@ ProductDetailsView.prototype.postprocess = function(isSuccess, initial)
       cloud.CloudZoom();
     }
 
+    // Change Conntinue shopping button for QuickLook mode
+    if (this.base.hasClass('product-quicklook') && 0 < this.base.parents('.blockUI').length) {
+      $('button.continue', this.base)
+        .unbind('click')
+        .removeAttr('onclick');
+      $('button.continue', this.base).click(
+        function() {
+          popup.close();
+          return false;
+        }
+      );
+    }
+
     // Gallery
     if (typeof(window.lightBoxImagesDir) != 'undefined') {
       $('.loupe', this.base).click(
