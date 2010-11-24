@@ -76,7 +76,7 @@ abstract class GetWidget extends \XLite\Controller\AController
     /**
      * checkRequest 
      * 
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0.0
      */
@@ -88,7 +88,7 @@ abstract class GetWidget extends \XLite\Controller\AController
     /**
      * Check if current page is accessible
      * 
-     * @return bool
+     * @return boolean 
      * @access public
      * @since  3.0.0
      */

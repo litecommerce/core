@@ -153,7 +153,7 @@ class NewArrivals extends \XLite\View\ItemsList\Product\Customer\ACustomer
     /**
      * Check if there are product to display 
      * 
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0.0
      */
@@ -166,7 +166,7 @@ class NewArrivals extends \XLite\View\ItemsList\Product\Customer\ACustomer
     /**
      * Check if widget is visible
      *
-     * @return bool
+     * @return boolean 
      * @access public
      * @since  3.0.0
      */
@@ -209,7 +209,7 @@ class NewArrivals extends \XLite\View\ItemsList\Product\Customer\ACustomer
     /**
      * Get Value of 'Show category-specific new arrivals' option
      * 
-     * @return bool
+     * @return boolean 
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -235,7 +235,7 @@ class NewArrivals extends \XLite\View\ItemsList\Product\Customer\ACustomer
     /**
      * Check status of 'More...' link for sidebar list
      * 
-     * @return bool
+     * @return boolean 
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -306,7 +306,7 @@ class NewArrivals extends \XLite\View\ItemsList\Product\Customer\ACustomer
     /**
      * Check if widget displayed as a page content 
      * 
-     * @return bool
+     * @return boolean 
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -323,7 +323,7 @@ class NewArrivals extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * @param \XLite\Model\Product  $product  Product
      * @param \XLite\Model\Category $category Category
      *  
-     * @return bool
+     * @return boolean 
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -355,7 +355,7 @@ class NewArrivals extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * 
      * @param \XLite\Model\Category $_category Category
      *  
-     * @return bool
+     * @return boolean 
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -429,7 +429,7 @@ class NewArrivals extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * @param mixed $category \XLite\Model\Category object
      * @param mixed $ps       \XLite\Model\Product object
      *  
-     * @return bool
+     * @return boolean 
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

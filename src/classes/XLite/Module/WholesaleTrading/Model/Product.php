@@ -52,9 +52,9 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
      * Return value of min/max purchase limit 
      * 
      * @param string $type  "min" or "max"
-     * @param int    $value value to use if the purchase limit is not set
+     * @param integer    $value value to use if the purchase limit is not set
      *  
-     * @return int
+     * @return integer 
      * @access protected
      * @since  3.0.0
      */
@@ -69,7 +69,7 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
     /**
      * Minimal available amount
      *
-     * @return int
+     * @return integer 
      * @access public
      * @since  3.0.0
      */
@@ -81,7 +81,7 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
     /**
      * Maximal available amount
      *
-     * @return int
+     * @return integer 
      * @access public
      * @since  3.0.0
      */

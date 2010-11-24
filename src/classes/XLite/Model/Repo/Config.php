@@ -303,7 +303,7 @@ class Config extends \XLite\Model\Repo\Base\I18n
      * @param string &$name     option name
      * @param mixed  &$value    option value
      *  
-     * @return bool
+     * @return boolean 
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -393,7 +393,7 @@ class Config extends \XLite\Model\Repo\Base\I18n
      * 
      * @param string $optionType Option type
      *  
-     * @return bool
+     * @return boolean 
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0

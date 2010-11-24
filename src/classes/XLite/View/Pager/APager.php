@@ -100,7 +100,7 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
     /**
      * Return number of items per page
      * 
-     * @return int
+     * @return integer 
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -110,7 +110,7 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
     /**
      * Return number of pages to display
      * 
-     * @return int
+     * @return integer 
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -172,7 +172,7 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
     /**
      * getItemsTotal 
      * 
-     * @return int
+     * @return integer 
      * @access protected
      * @since  3.0.0
      */
@@ -200,7 +200,7 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
     /**
      * Return minimal possible items number per page
      *
-     * @return int
+     * @return integer 
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -213,7 +213,7 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
     /**
      * Return maximal possible items number per page
      *
-     * @return int
+     * @return integer 
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -226,7 +226,7 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
     /**
      * getItemsPerPage
      *
-     * @return int
+     * @return integer 
      * @access protected
      * @since  3.0.0
      */
@@ -299,7 +299,7 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
     /**
      * Build page URL by page ID
      *
-     * @param int $pageId page ID
+     * @param integer $pageId page ID
      *
      * @return string
      * @access protected
@@ -313,7 +313,7 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
     /**
      * getFrameLength 
      * 
-     * @return int
+     * @return integer 
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -326,9 +326,9 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
     /**
      * getFrameHalfLength 
      * 
-     * @param bool $shortPart which part of frame to return
+     * @param boolean $shortPart which part of frame to return
      *  
-     * @return int
+     * @return integer 
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -341,7 +341,7 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
     /**
      * getFrameStartPage
      *
-     * @return int
+     * @return integer 
      * @access protected
      * @since  3.0.0
      */
@@ -358,7 +358,7 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
     /**
      * Return ID of the first page
      * 
-     * @return int
+     * @return integer 
      * @access protected
      * @since  3.0.0
      */
@@ -370,7 +370,7 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
     /**
      * Return ID of the previous page
      * 
-     * @return int
+     * @return integer 
      * @access protected
      * @since  3.0.0
      */
@@ -382,7 +382,7 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
     /**
      * Return ID of the last page
      * 
-     * @return int
+     * @return integer 
      * @access protected
      * @since  3.0.0
      */
@@ -536,9 +536,9 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
     /**
      * Check whether the page is currently selected
      * 
-     * @param int $pageId ID of the page to check
+     * @param integer $pageId ID of the page to check
      *  
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0.0
      */
@@ -550,7 +550,7 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
     /**
      * Return ID of the current page
      * 
-     * @return int
+     * @return integer 
      * @access protected
      * @since  3.0.0
      */
@@ -566,7 +566,7 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
     /**
      * Return index of the first item on the current page
      * 
-     * @return int
+     * @return integer 
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -579,7 +579,7 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
     /**
      * Get page begin record number
      *
-     * @return int
+     * @return integer 
      * @access protected
      * @since  3.0.0
      */
@@ -591,7 +591,7 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
     /**
      * Get page end record number
      *
-     * @return int
+     * @return integer 
      * @access protected
      * @since  3.0.0
      */
@@ -603,7 +603,7 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
     /**
      * Check if pages list is visible or not
      *
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0.0
      */
@@ -615,7 +615,7 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
     /**
      * isItemsPerPageVisible
      * 
-     * @return bool
+     * @return boolean 
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -628,7 +628,7 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
     /**
      * isItemsPerPageSelectorVisible
      *
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0.0
      */
@@ -640,7 +640,7 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
     /**
      * isVisible 
      * 
-     * @return bool
+     * @return boolean 
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -672,8 +672,8 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
     /**
      * Return SQL condition with limits
      * 
-     * @param int                    $start index of the first item on the page
-     * @param int                    $count number of items per page
+     * @param integer                $start index of the first item on the page
+     * @param integer                $count number of items per page
      * @param \XLite\Core\CommonCell $cnd   search condition
      *  
      * @return array|\Doctrine\ORM\PersistentCollection

@@ -328,7 +328,7 @@ class Product extends \XLite\Controller\Admin\AAdmin
     /**
      * Get product category id
      *
-     * @return int
+     * @return integer 
      * @access public
      * @since  3.0.0
      */
@@ -348,7 +348,7 @@ class Product extends \XLite\Controller\Admin\AAdmin
      * 
      * NOTE: this function is public since it's neede for widgets
      *
-     * @return int
+     * @return integer 
      * @access public
      * @since  3.0.0
      */
@@ -362,7 +362,7 @@ class Product extends \XLite\Controller\Admin\AAdmin
      *
      * NOTE: this function is public since it's neede for widgets
      * 
-     * @return bool
+     * @return boolean 
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

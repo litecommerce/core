@@ -43,7 +43,7 @@ class Markup extends \XLite\Model\Repo\ARepo
      * 
      * @param \Doctrine\ORM\QueryBuilder $qb     Query builder object
      * @param \XLite\Model\Order         $order  Order object
-     * @param int                        $zoneId Zone Id
+     * @param integer                    $zoneId Zone Id
      *  
      * @return \Doctrine\ORM\QueryBuilder
      * @access protected
@@ -86,7 +86,7 @@ class Markup extends \XLite\Model\Repo\ARepo
      * 
      * @param string             $processor Processor class name
      * @param \XLite\Model\Order $order     Order or cart object
-     * @param int                $zoneId    Zone Id
+     * @param integer            $zoneId    Zone Id
      *  
      * @return \Doctrine\ORM\QueryBuilder
      * @access protected
@@ -114,8 +114,8 @@ class Markup extends \XLite\Model\Repo\ARepo
     /**
      * defineFindMarkupsByZoneAndMethodQuery 
      * 
-     * @param int $zoneId   Zone Id
-     * @param int $methodId Method Id
+     * @param integer $zoneId   Zone Id
+     * @param integer $methodId Method Id
      *  
      * @return \Doctrine\ORM\QueryBuilder
      * @access protected
@@ -211,8 +211,8 @@ class Markup extends \XLite\Model\Repo\ARepo
     /**
      * findMarkupsByZoneAndMethod 
      * 
-     * @param int $zoneId   Zone Id
-     * @param int $methodId Method Id
+     * @param integer $zoneId   Zone Id
+     * @param integer $methodId Method Id
      *  
      * @return array
      * @access public

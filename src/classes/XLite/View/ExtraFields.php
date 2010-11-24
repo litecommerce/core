@@ -87,7 +87,7 @@ class ExtraFields extends \XLite\View\AView
     /**
      * Check widget visibility 
      * 
-     * @return bool
+     * @return boolean 
      * @access public
      * @since  3.0.0
      */

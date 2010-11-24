@@ -58,7 +58,7 @@ class CategorySelect extends \XLite\View\CategorySelect
      * 
      * @param \XLite\Model\Category $category
      *  
-     * @return bool
+     * @return boolean 
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0

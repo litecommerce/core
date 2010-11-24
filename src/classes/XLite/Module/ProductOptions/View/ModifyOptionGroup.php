@@ -96,7 +96,7 @@ class ModifyOptionGroup extends \XLite\View\AView
     /**
      * Check if widget is visible
      *
-     * @return bool
+     * @return boolean 
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0

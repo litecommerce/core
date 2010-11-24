@@ -58,7 +58,7 @@ class WishListProduct extends \XLite\Model\AModel
     /**
      * Search wishlist item by product id 
      * 
-     * @param int $wishlistId ID of current wishlist
+     * @param integer $wishlistId ID of current wishlist
      *  
      * @return self
      * @access public

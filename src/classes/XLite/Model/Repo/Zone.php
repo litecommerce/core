@@ -64,7 +64,7 @@ class Zone extends \XLite\Model\Repo\ARepo
     /**
      * cleanCache 
      * 
-     * @param int $zoneId Zone Id
+     * @param integer $zoneId Zone Id
      *  
      * @return void
      * @access public
@@ -123,7 +123,7 @@ class Zone extends \XLite\Model\Repo\ARepo
     /**
      * getZone 
      * 
-     * @param int $zoneId Zone Id
+     * @param integer $zoneId Zone Id
      *  
      * @return \XLite\Model\Zone
      * @access public

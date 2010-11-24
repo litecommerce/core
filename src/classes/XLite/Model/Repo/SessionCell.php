@@ -57,9 +57,9 @@ class SessionCell extends \XLite\Model\Repo\ARepo
     /**
      * Prepare data for cell insert 
      * 
-     * @param int    $id    session ID
-     * @param string $name  cell name
-     * @param mixed  $value data to store
+     * @param integer $id    session ID
+     * @param string  $name  cell name
+     * @param mixed   $value data to store
      *  
      * @return array
      * @access protected
@@ -96,11 +96,11 @@ class SessionCell extends \XLite\Model\Repo\ARepo
     /**
      * Insert new cell
      *
-     * @param int    $id    session ID
-     * @param string $name  cell name
-     * @param mixed  $value data to store
+     * @param integer $id    session ID
+     * @param string  $name  cell name
+     * @param mixed   $value data to store
      *
-     * @return int
+     * @return integer 
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

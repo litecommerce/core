@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage ____sub_package____
+ * @subpackage Model
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -31,7 +31,7 @@ namespace XLite\Model;
 /**
  * Abstract caching factory 
  * 
- * @package Lite Commerce
+ * @package LiteCommerce
  * @see     ____class_see____
  * @since   3.0.0
  */
@@ -58,17 +58,19 @@ class CachingFactory extends \XLite\Model\Factory
      */
     protected static function prepareHandler($handler)
     {
-       return is_object($handler) ? $handler : (in_array($handler, array('self', 'parent', 'static')) ? $handler : new $handler());
+        return (!is_object($handler) && !in_array($handler, array('self', 'parent', 'static')))
+            ? new $handler()
+            : $handler;
     }
 
     /**
      * Cache and return a result of object method call 
      * 
-     * @param string  $signature result key in cache
-     * @param mixed   $handler   callback object
-     * @param string  $method    method to call
-     * @param array   $args      callback arguments
-     * @param boolean $earCache  Clear cache flag
+     * @param string  $signature  result key in cache
+     * @param mixed   $handler    callback object
+     * @param string  $method     method to call
+     * @param array   $args       callback arguments
+     * @param boolean $clearCache Clear cache flag
      *  
      * @return mixed
      * @access public

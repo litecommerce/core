@@ -140,7 +140,7 @@ class RelatedProducts extends \XLite\View\ItemsList\Product\Customer\ACustomer
     /**
      * Check if widget is visible
      *
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0.0
      */

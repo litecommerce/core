@@ -88,7 +88,7 @@ abstract class AController extends \XLite\Core\Handler
     /**
      * Check if current page is accessible
      *
-     * @return bool
+     * @return boolean 
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
@@ -101,7 +101,7 @@ abstract class AController extends \XLite\Core\Handler
     /**
      * Return default redirect code 
      * 
-     * @return int
+     * @return integer 
      * @access protected
      * @since  3.0.0
      */
@@ -343,7 +343,7 @@ abstract class AController extends \XLite\Core\Handler
     /**
      * isRedirectNeeded
      *
-     * @return bool
+     * @return boolean 
      * @access public
      * @since  3.0.0
      */
@@ -381,7 +381,7 @@ abstract class AController extends \XLite\Core\Handler
      * Example: getShopUrl('cart.php') = "http://domain/dir/cart.php 
      * 
      * @param string $url    relative URL  
-     * @param bool   $secure flag to use HTTPS
+     * @param boolean   $secure flag to use HTTPS
      *  
      * @return string
      * @access public
@@ -644,7 +644,7 @@ abstract class AController extends \XLite\Core\Handler
     /**
      * Check if an error occured
      *
-     * @return bool
+     * @return boolean 
      * @access public
      * @since  3.0.0
      */
@@ -656,9 +656,9 @@ abstract class AController extends \XLite\Core\Handler
     /**
      * setActionStatus 
      * 
-     * @param int    $status  error/success
+     * @param integer    $status  error/success
      * @param string $message status info
-     * @param int    $code    status code
+     * @param integer    $code    status code
      *  
      * @return void
      * @access public
@@ -673,7 +673,7 @@ abstract class AController extends \XLite\Core\Handler
      * setActionError 
      * 
      * @param string $message status info 
-     * @param int    $code    status code
+     * @param integer    $code    status code
      *  
      * @return void
      * @access public
@@ -688,7 +688,7 @@ abstract class AController extends \XLite\Core\Handler
      * setActionSuccess
      *
      * @param string $message status info
-     * @param int    $code    status code
+     * @param integer    $code    status code
      *
      * @return void
      * @access public
@@ -774,7 +774,7 @@ abstract class AController extends \XLite\Core\Handler
      * Check if handler is valid 
      * TODO - check where it's really needed
      * 
-     * @return bool
+     * @return boolean 
      * @access public
      * @since  3.0.0
      */
@@ -1101,7 +1101,7 @@ abstract class AController extends \XLite\Core\Handler
     /**
      * Return the reserved ID of root category
      *
-     * @return int
+     * @return integer 
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -1114,7 +1114,7 @@ abstract class AController extends \XLite\Core\Handler
     /**
      * Return current category Id
      *
-     * @return int
+     * @return integer 
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

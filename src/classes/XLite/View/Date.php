@@ -228,7 +228,7 @@ class Date extends \XLite\View\FormField
     /**
      * Get name of a month
      * 
-     * @param int $monthIndex Number of month (1..12)
+     * @param integer $monthIndex Number of month (1..12)
      *  
      * @return string
      * @access protected

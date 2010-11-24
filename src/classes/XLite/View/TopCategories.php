@@ -125,7 +125,7 @@ class TopCategories extends \XLite\View\SideBarBox
     /**
      * ID of the default root category
      * 
-     * @return int
+     * @return integer 
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0

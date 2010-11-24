@@ -61,7 +61,7 @@ class Profile extends \XLite\Controller\Customer\ACustomer
     /**
      * Check if profile is not exists
      * 
-     * @return bool
+     * @return boolean 
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -74,7 +74,7 @@ class Profile extends \XLite\Controller\Customer\ACustomer
     /**
      * doActionRegister 
      * 
-     * @return bool
+     * @return boolean 
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0

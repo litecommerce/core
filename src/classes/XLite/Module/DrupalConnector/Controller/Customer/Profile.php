@@ -106,7 +106,7 @@ class Profile extends \XLite\Controller\Customer\Profile implements \XLite\Base\
     /**
      * Register the account with the basic data
      * 
-     * @return bool
+     * @return boolean 
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -119,7 +119,7 @@ class Profile extends \XLite\Controller\Customer\Profile implements \XLite\Base\
     /**
      * Update the account with the basic data
      * 
-     * @return bool
+     * @return boolean 
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0

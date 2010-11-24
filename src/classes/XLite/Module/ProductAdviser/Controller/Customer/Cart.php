@@ -182,7 +182,7 @@ class Cart extends \XLite\Controller\Customer\Cart implements \XLite\Base\IDecor
     /**
      * isPriceNotificationEnabled 
      * 
-     * @return bool
+     * @return boolean 
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -196,7 +196,7 @@ class Cart extends \XLite\Controller\Customer\Cart implements \XLite\Base\IDecor
     /**
      * isProductNotificationEnabled 
      * 
-     * @return bool
+     * @return boolean 
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

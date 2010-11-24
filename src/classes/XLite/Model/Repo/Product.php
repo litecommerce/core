@@ -98,7 +98,7 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
      * 
      * @param string $param name of param to check
      *  
-     * @return bool
+     * @return boolean 
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -485,8 +485,7 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
     protected function addEnabledCondition(\Doctrine\ORM\QueryBuilder $queryBuilder, $alias = null)
     {
         if (!\XLite::isAdminZone()) {
-            $queryBuilder
-                ->andWhere(($alias ?: $queryBuilder->getRootAlias()) . '.enabled = :enabled')
+            $queryBuilder->andWhere(($alias ?: $queryBuilder->getRootAlias()) . '.enabled = :enabled')
                 ->setParameter('enabled', true);
         }
     }
@@ -496,9 +495,9 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
      * Common search
      * 
      * @param \XLite\Core\CommonCell $cnd       search condition
-     * @param bool                   $countOnly return items list or only its size
+     * @param boolean                $countOnly return items list or only its size
      *  
-     * @return \Doctrine\ORM\PersistentCollection|int
+     * @return \Doctrine\ORM\PersistentCollection|integer
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -535,7 +534,8 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
      */
     public function createQueryBuilder($alias = null)
     {
-        $this->addEnabledCondition($result = parent::createQueryBuilder($alias), $alias);
+        $result = parent::createQueryBuilder($alias);
+        $this->addEnabledCondition($result, $alias);
 
         if (!\XLite::isAdminZone()) {
             $result->andWhere('p.enabled = :enabled')->setParameter('enabled', true);
@@ -609,6 +609,7 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
         if ($product) {
             foreach ($this->_class->fieldNames as $name) {
                 $mname = 'get' . \XLite\Core\Converter::convertToCamelCase($name);
+                // $maname assebmled from 'get' + \XLite\Core\Converter::convertToCamelCase() method
                 $data[$name] = $product->$mname();
             }
 

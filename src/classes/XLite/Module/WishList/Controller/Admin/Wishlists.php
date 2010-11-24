@@ -203,7 +203,7 @@ class Wishlists extends \XLite\Controller\Admin\AAdmin
     /**
      * Get count of wishlists found
      * 
-     * @return int
+     * @return integer 
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0

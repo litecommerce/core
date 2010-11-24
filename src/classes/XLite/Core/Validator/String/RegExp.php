@@ -37,12 +37,21 @@ namespace XLite\Core\Validator\String;
  */
 class RegExp extends \XLite\Core\Validator\String
 {
+    /**
+     * Regular expression 
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
     protected $regExp;
 
     /**
      * Constructor
      *
      * @param boolean $nonEmpty Non-empty flag
+     * @param string  $regExp   Regular expression
      *
      * @return void
      * @access public

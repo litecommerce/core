@@ -155,7 +155,7 @@ abstract class Image extends \XLite\Model\AEntity
      *
      * @param mixed $value Value
      * 
-     * @return false
+     * @return boolean
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -170,7 +170,7 @@ abstract class Image extends \XLite\Model\AEntity
      *
      * @param mixed $value Value
      *
-     * @return false
+     * @return boolean
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -185,7 +185,7 @@ abstract class Image extends \XLite\Model\AEntity
      *
      * @param mixed $value Value
      *
-     * @return false
+     * @return boolean
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -200,7 +200,7 @@ abstract class Image extends \XLite\Model\AEntity
      *
      * @param mixed $value Value
      *
-     * @return false
+     * @return boolean
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -215,7 +215,7 @@ abstract class Image extends \XLite\Model\AEntity
      *
      * @param mixed $value Value
      *
-     * @return false
+     * @return boolean
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -230,7 +230,7 @@ abstract class Image extends \XLite\Model\AEntity
      *
      * @param mixed $value Value
      *
-     * @return false
+     * @return boolean
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -245,7 +245,7 @@ abstract class Image extends \XLite\Model\AEntity
      *
      * @param mixed $value Value
      *
-     * @return false
+     * @return boolean
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

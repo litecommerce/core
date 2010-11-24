@@ -82,7 +82,7 @@ class ListNode extends \XLite\Base\SuperClass
     /**
      * Return link to previous list element
      *
-     * @return XLite_Model_ListNode|null
+     * @return \XLite\Model\ListNode
      * @access public
      * @since  3.0.0
      */
@@ -94,7 +94,7 @@ class ListNode extends \XLite\Base\SuperClass
     /**
      * Return link to next list element
      *
-     * @return XLite_Model_ListNode|null
+     * @return \XLite\Model\ListNode
      * @access public
      * @since  3.0.0
      */
@@ -148,7 +148,7 @@ class ListNode extends \XLite\Base\SuperClass
      *
      * @param string $key node key
      *
-     * @return bool
+     * @return boolean 
      * @access public
      * @since  3.0.0
      */

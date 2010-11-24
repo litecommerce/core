@@ -201,7 +201,7 @@ abstract class AWidgetParam extends \XLite\Base\SuperClass
     /**
      * setVisibility 
      * 
-     * @param bool $isSetting visibility flag
+     * @param boolean $isSetting visibility flag
      *  
      * @return void
      * @access public

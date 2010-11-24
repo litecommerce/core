@@ -224,7 +224,7 @@ class SendFriend extends \XLite\Controller\Customer\Catalog
     /**
      * Get product category id
      *
-     * @return int
+     * @return integer 
      * @access protected
      * @since  3.0.0
      */

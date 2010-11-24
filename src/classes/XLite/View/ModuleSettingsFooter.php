@@ -118,7 +118,7 @@ class ModuleSettingsFooter extends \XLite\View\AView
     /**
      * Check if widget is visible
      *
-     * @return bool
+     * @return boolean 
      * @access public
      * @since  3.0.0
      */

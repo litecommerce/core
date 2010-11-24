@@ -137,7 +137,7 @@ abstract class AItemsList extends \XLite\View\Container
      * Return products list
      *
      * @param \XLite\Core\CommonCell $cnd       search condition
-     * @param bool                   $countOnly return items list or only its size
+     * @param boolean                $countOnly return items list or only its size
      *
      * @return array|int
      * @access protected
@@ -514,7 +514,7 @@ abstract class AItemsList extends \XLite\View\Container
      *
      * @param string $sortByMode value to check
      *
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0.0
      */
@@ -526,7 +526,7 @@ abstract class AItemsList extends \XLite\View\Container
     /**
      * isSortOrderAsc
      *
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0.0
      */
@@ -550,7 +550,7 @@ abstract class AItemsList extends \XLite\View\Container
     /**
      * Check if widget is visible
      *
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0.0
      */
@@ -562,7 +562,7 @@ abstract class AItemsList extends \XLite\View\Container
     /**
      * isHeaderVisible 
      * 
-     * @return bool
+     * @return boolean 
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0

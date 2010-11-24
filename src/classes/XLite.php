@@ -221,7 +221,7 @@ class XLite extends \XLite\Base
      * Return full URL for the resource
      * 
      * @param string $url      url part to add
-     * @param bool   $isSecure use HTTP or HTTPS
+     * @param boolean   $isSecure use HTTP or HTTPS
      * @param array  $params   optional URL params
      *  
      * @return string
@@ -250,7 +250,7 @@ class XLite extends \XLite\Base
     /**
      * Ability to provoke cache cleanup (or to prevent it)
      * 
-     * @param bool $flag if it's needed to cleanup cache or not
+     * @param boolean $flag if it's needed to cleanup cache or not
      *  
      * @return void
      * @access public
@@ -331,7 +331,7 @@ class XLite extends \XLite\Base
     /**
      * Perform an action and redirect
      * 
-     * @return bool
+     * @return boolean 
      * @access public
      * @since  3.0.0
      */

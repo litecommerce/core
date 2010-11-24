@@ -40,7 +40,7 @@ abstract class Product extends \XLite\View\Product\Details\Customer\ACustomer im
     /**
      * Check - available product for sale or not
      *
-     * @return bool
+     * @return boolean 
      * @access public
      * @since  3.0.0
      */

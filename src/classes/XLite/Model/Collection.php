@@ -59,7 +59,7 @@ class Collection extends \XLite\Base\SuperClass
     /**
      * Check if list is initialized
      *
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0.0
      */
@@ -75,7 +75,7 @@ class Collection extends \XLite\Base\SuperClass
      * @param string $method some public method of the XLite_Model_ListNode class
      * @param array  $args   callback arguments
      *
-     * @return XLite_Model_ListNode
+     * @return \XLite\Model\ListNode
      * @access public
      * @since  3.0.0
      */
@@ -95,7 +95,7 @@ class Collection extends \XLite\Base\SuperClass
      *
      * @param string $key node identifier
      *
-     * @return XLite_Model_ListNode
+     * @return \XLite\Model\ListNode
      * @access public
      * @since  3.0.0
      */
@@ -107,7 +107,7 @@ class Collection extends \XLite\Base\SuperClass
     /**
      * Insert new node before a certain node
      *
-     * @param string               $key  node key to search
+     * @param string                $key  node key to search
      * @param \Xlite\Model\ListNode $node new node to insert
      *
      * @return void
@@ -134,7 +134,7 @@ class Collection extends \XLite\Base\SuperClass
     /**
      * Insert new node after a certain node
      *
-     * @param string               $key  node key to search
+     * @param string                $key  node key to search
      * @param \Xlite\Model\ListNode $node new node to insert
      *
      * @return void

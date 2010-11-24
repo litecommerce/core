@@ -41,7 +41,7 @@ implements \XLite\Base\IDecorator
     /**
      * Build page URL by page ID
      *
-     * @param int $pageId page ID
+     * @param integer $pageId page ID
      *
      * @return string
      * @access protected

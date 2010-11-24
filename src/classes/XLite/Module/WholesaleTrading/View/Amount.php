@@ -91,7 +91,7 @@ class Amount extends \XLite\View\AView
     /**
      * Get maximum quantity
      *
-     * @return int
+     * @return integer 
      * @access protected
      * @since  3.0.0
      */

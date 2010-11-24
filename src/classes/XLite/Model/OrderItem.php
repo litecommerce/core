@@ -320,7 +320,7 @@ class OrderItem extends \XLite\Model\Base\ModifierOwner
     /**
      * Modified setter
      * 
-     * @param int $amount Value to set
+     * @param integer $amount Value to set
      *  
      * @return void
      * @access public
@@ -355,7 +355,7 @@ class OrderItem extends \XLite\Model\Base\ModifierOwner
     /**
      * Check if item has a image
      * 
-     * @return bool
+     * @return boolean 
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -420,7 +420,7 @@ class OrderItem extends \XLite\Model\Base\ModifierOwner
     /**
      * Flag; is this item needs to be shipped
      * 
-     * @return bool
+     * @return boolean 
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -446,7 +446,7 @@ class OrderItem extends \XLite\Model\Base\ModifierOwner
     /**
      * Check if item is valid
      * 
-     * @return bool
+     * @return boolean 
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

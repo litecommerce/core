@@ -1238,7 +1238,7 @@ class FlexyCompiler extends \XLite\Base\Singleton
      * @param string $original original template
      * @param string $compiled compiled one
      *  
-     * @return bool
+     * @return boolean 
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0

@@ -62,7 +62,7 @@ class SelectAddress extends \XLite\Controller\Customer\Cart
     /**
      * Check if current page is accessible
      *
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0.0
      */

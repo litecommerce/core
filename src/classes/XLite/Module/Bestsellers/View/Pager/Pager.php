@@ -40,7 +40,7 @@ class Pager extends \XLite\View\Pager\APager
     /**
      * Return number of items per page
      * 
-     * @return int
+     * @return integer 
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0

@@ -103,7 +103,7 @@ abstract class Handler extends \XLite\Base
     /**
      * isExported 
      * 
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0.0
      */

@@ -82,7 +82,7 @@ class ImageUpload extends \XLite\View\AView
     /**
      * Check if object has image
      * 
-     * @return bool
+     * @return boolean 
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0

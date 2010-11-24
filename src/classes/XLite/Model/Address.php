@@ -441,6 +441,7 @@ class Address extends \XLite\Model\AEntity
 
         foreach ($this->getRequiredFieldsByType($atype) as $name) {
             $method = 'get' . \XLite\Core\Converter::getInstance()->convertToCamelCase($name);
+            // $method assebled from 'get' + \XLite\Core\Converter::getInstance()->convertToCamelCase() method
             if (!$this->$method()) {
                 $result[] = $name;
             }
@@ -464,6 +465,14 @@ class Address extends \XLite\Model\AEntity
         return 0 == count($this->getRequiredEmptyFields($atype));
     }
 
+    /**
+     * Get address fields list
+     * 
+     * @return array(string)
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
     public static function getAddressFields()
     {
         return array(

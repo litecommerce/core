@@ -40,7 +40,7 @@ abstract class AAdmin extends \XLite\View\Form\Login\ALogin
     /**
      * getSecuritySetting 
      * 
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0.0
      */

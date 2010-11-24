@@ -66,7 +66,7 @@ class NotifyMe extends \XLite\View\Dialog
     /**
      * checkAction 
      * 
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0.0
      */

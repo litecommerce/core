@@ -468,7 +468,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
     /**
      * Checks whether the shopping cart/order is empty
      * 
-     * @return bool
+     * @return boolean 
      * @access public
      * @since  3.0.0
      */
@@ -480,7 +480,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
     /**
      * Check order subtotal 
      * 
-     * @return bool
+     * @return boolean 
      * @access public
      * @since  3.0.0
      */
@@ -492,7 +492,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
     /**
      * Check order subtotal 
      * 
-     * @return bool
+     * @return boolean 
      * @access public
      * @since  3.0.0
      */
@@ -504,7 +504,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
     /**
      * Check - is order processed or not
      * 
-     * @return bool
+     * @return boolean 
      * @access public
      * @since  3.0.0
      */
@@ -516,7 +516,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
     /**
      * Check - os order queued or not
      * 
-     * @return bool
+     * @return boolean 
      * @access public
      * @since  3.0.0
      */
@@ -667,7 +667,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
     /**
      * Get payment method 
      * 
-     * @return \XLite\Model\Payment\Method|null
+     * @return \XLite\Model\Payment\Method|void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -692,7 +692,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
     /**
      * Assign last used payment method 
      * 
-     * @return \XLite\Model\Payment\Transaction|null
+     * @return \XLite\Model\Payment\Transaction|void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0

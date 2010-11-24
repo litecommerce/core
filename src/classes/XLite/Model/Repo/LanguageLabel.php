@@ -161,9 +161,9 @@ class LanguageLabel extends \XLite\Model\Repo\Base\I18n
     /**
      * Find lables by name pattern with data frame
      * 
-     * @param string $name  Name pattern
-     * @param int    $start Start offset
-     * @param int    $limit Frame length
+     * @param string  $name  Name pattern
+     * @param integer $start Start offset
+     * @param integer $limit Frame length
      *  
      * @return array
      * @access public
@@ -182,7 +182,7 @@ class LanguageLabel extends \XLite\Model\Repo\Base\I18n
      * @param integer $start Start offset
      * @param integer $limit Frame length
      *  
-     * @return \Doctrine\ORM|QueryBuilder
+     * @return \Doctrine\ORM\QueryBuilder
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0

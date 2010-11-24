@@ -40,7 +40,7 @@ class Main extends \XLite\View\Form\Profile\AProfile
     /**
      * isRegisterMode 
      * 
-     * @return bool
+     * @return boolean 
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0

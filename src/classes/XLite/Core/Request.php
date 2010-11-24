@@ -210,7 +210,7 @@ class Request extends \XLite\Base\Singleton
     /**
      * Check if current request method is "GET" 
      * 
-     * @return bool
+     * @return boolean 
      * @access public
      * @since  3.0.0
      */
@@ -222,7 +222,7 @@ class Request extends \XLite\Base\Singleton
     /**
      * Check if current request method is "POST"
      *
-     * @return bool
+     * @return boolean 
      * @access public
      * @since  3.0.0
      */
@@ -234,7 +234,7 @@ class Request extends \XLite\Base\Singleton
     /**
      * Check - is AJAX request or not
      *
-     * @return bool
+     * @return boolean 
      * @access public
      * @since  3.0.0
      */
@@ -309,7 +309,7 @@ class Request extends \XLite\Base\Singleton
      *
      * @param string $name property name
      *
-     * @return bool
+     * @return boolean 
      * @access public
      * @since  3.0.0
      */

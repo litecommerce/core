@@ -40,7 +40,7 @@ abstract class AAdmin extends \XLite\Controller\AController
     /**
      * Check if current page is accessible
      *
-     * @return bool
+     * @return boolean 
      * @access public
      * @since  3.0.0
      */
@@ -53,7 +53,7 @@ abstract class AAdmin extends \XLite\Controller\AController
     /**
      * Check - form id is valid or not
      * 
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0.0
      */
@@ -106,7 +106,7 @@ abstract class AAdmin extends \XLite\Controller\AController
     /**
      * Check form id
      * 
-     * @return bool
+     * @return boolean 
      * @access public
      * @since  3.0.0
      */
@@ -498,7 +498,7 @@ EOT;
     /**
      * FIXME - to remove
      * 
-     * @return bool
+     * @return boolean 
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

@@ -63,7 +63,7 @@ class AccessLevel extends \XLite\View\FormField\Select\Regular
     /**
      * Check field value validity
      *
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0.0
      */

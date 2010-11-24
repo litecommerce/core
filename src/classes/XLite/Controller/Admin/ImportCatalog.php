@@ -175,7 +175,7 @@ class ImportCatalog extends \XLite\Controller\Admin\AAdmin
     }
 
     /**
-    * @param int     $i          field number
+    * @param integer $i          field number
     * @param string  $value      current value
     * @param boolean $default    default state
     */

@@ -155,7 +155,7 @@ class FeaturedProducts extends \XLite\View\ItemsList\Product\Customer\ACustomer
     /**
      * Check if widget is visible
      *
-     * @return bool
+     * @return boolean 
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0

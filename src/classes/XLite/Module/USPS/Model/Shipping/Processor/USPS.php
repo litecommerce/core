@@ -65,7 +65,7 @@ class USPS extends \XLite\Model\Shipping\Processor\AProcessor implements \XLite\
      * Returns processor's shipping methods rates
      *
      * @param mixed $order       Order object or an array with input data
-     * @param bool  $ignoreCache Flag: if true then do not get rates from cache
+     * @param boolean  $ignoreCache Flag: if true then do not get rates from cache
      *
      * @return array
      * @access public

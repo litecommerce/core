@@ -40,7 +40,7 @@ class TopCategories extends \XLite\View\TopCategories implements \XLite\Base\IDe
     /**
      * Assemble item CSS class name 
      * 
-     * @param int                  $index    item number
+     * @param integer              $index    item number
      * @param intr                 $count    items count
      * @param \XLite\Model\Category $category current category
      *  

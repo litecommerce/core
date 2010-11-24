@@ -107,7 +107,7 @@ class Handler extends \XLite\Core\CMSConnector
     /**
      * areHooksEnabled 
      * 
-     * @return bool
+     * @return boolean 
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

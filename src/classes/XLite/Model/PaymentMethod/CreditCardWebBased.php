@@ -86,7 +86,7 @@ abstract class CreditCardWebBased extends \XLite\Model\PaymentMethod\CreditCard
      * Handle request
      *
      * @param \XLite\Model\Cart $cart Cart
-     * @param string           $type Call type
+     * @param string            $type Call type
      *
      * @return integer Operation status
      * @access public
@@ -146,7 +146,7 @@ abstract class CreditCardWebBased extends \XLite\Model\PaymentMethod\CreditCard
      * Check total (cart total and transaction total from gateway response)
      * 
      * @param \XLite\Model\Cart $cart  Cart
-     * @param float            $total Total from gateway response
+     * @param float             $total Total from gateway response
      *  
      * @return boolean
      * @access protected
@@ -175,8 +175,8 @@ abstract class CreditCardWebBased extends \XLite\Model\PaymentMethod\CreditCard
      * Check currency (payment method curreny and transaction response currency)
      * 
      * @param \XLite\Model\Cart $cart            Cart
-     * @param string           $paymentCurrency Order currency code
-     * @param string           $currency        Transaction response currency code
+     * @param string            $paymentCurrency Order currency code
+     * @param string            $currency        Transaction response currency code
      *  
      * @return boolean
      * @access protected

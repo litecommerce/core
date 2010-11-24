@@ -163,7 +163,7 @@ class AModel extends \XLite\Base
     /**
      * Update or create model object (DB record)
      * 
-     * @return bool
+     * @return boolean 
      * @access public
      * @since  3.0.0
      */
@@ -554,9 +554,9 @@ class AModel extends \XLite\Base
     /**
      * Process the import error
      * 
-     * @param bool $returnError Trigger for stopping script or returning false
+     * @param boolean $returnError Trigger for stopping script or returning false
      *  
-     * @return bool
+     * @return boolean 
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -812,7 +812,7 @@ class AModel extends \XLite\Base
     /**
      * Checks whether the all primary keys for this object are set or not 
      * 
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0
      */
@@ -1069,7 +1069,7 @@ class AModel extends \XLite\Base
     /**
      * Reads the database data for this object. Dies for non-persistens objects (object which are not exist in database) 
      * 
-     * @return bool true if data found / false otherwise
+     * @return boolean true if data found / false otherwise
      * @access public
      * @since  3.0
      */
@@ -1119,7 +1119,7 @@ class AModel extends \XLite\Base
      * @param mixed $where "where" condition
      * @param mixed $order "orderby" condition
      *  
-     * @return bool
+     * @return boolean 
      * @access public
      * @since  3.0
      */

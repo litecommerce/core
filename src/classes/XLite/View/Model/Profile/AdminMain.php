@@ -249,7 +249,7 @@ class AdminMain extends \XLite\View\Model\AModel
      * Check password and its confirmation
      * TODO: simplify
      * 
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0.0
      */
@@ -444,7 +444,7 @@ class AdminMain extends \XLite\View\Model\AModel
     /**
      * Create profile 
      * 
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0.0
      */
@@ -456,7 +456,7 @@ class AdminMain extends \XLite\View\Model\AModel
     /**
      * Update profile 
      * 
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0.0
      */
@@ -468,7 +468,7 @@ class AdminMain extends \XLite\View\Model\AModel
     /**
      * Perform certain action for the model object
      *
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0.0
      */
@@ -480,7 +480,7 @@ class AdminMain extends \XLite\View\Model\AModel
     /**
      * Perform certain action for the model object
      *
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0.0
      */
@@ -507,7 +507,7 @@ class AdminMain extends \XLite\View\Model\AModel
     /**
      * The "mode" parameter used to determine if we create new or modify existing profile
      *
-     * @return bool
+     * @return boolean 
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -520,9 +520,9 @@ class AdminMain extends \XLite\View\Model\AModel
     /**
      * Return current profile ID
      *
-     * @param bool $checkMode Check mode or not
+     * @param boolean $checkMode Check mode or not
      *
-     * @return int
+     * @return integer 
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -549,7 +549,7 @@ class AdminMain extends \XLite\View\Model\AModel
     /**
      * Check for the form errors 
      * 
-     * @return bool
+     * @return boolean 
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

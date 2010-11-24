@@ -439,7 +439,7 @@ class Profile extends \XLite\Model\AEntity
     /**
      * Returns the number of orders places by the user
      * 
-     * @return int
+     * @return integer 
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -460,7 +460,7 @@ class Profile extends \XLite\Model\AEntity
     /**
      * Check if profile is enabled
      * 
-     * @return bool
+     * @return boolean 
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -499,7 +499,7 @@ class Profile extends \XLite\Model\AEntity
     /**
      * Returns true if profile has an administrator access level 
      * 
-     * @return true
+     * @return boolean
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -512,7 +512,7 @@ class Profile extends \XLite\Model\AEntity
     /**
      * Create an entity profile in the database
      * 
-     * @return bool
+     * @return boolean 
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -527,7 +527,7 @@ class Profile extends \XLite\Model\AEntity
     /**
      * Update an entity in the database 
      * 
-     * @return bool
+     * @return boolean 
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -549,7 +549,8 @@ class Profile extends \XLite\Model\AEntity
             // Assign membership if passed membership_id
             if (0 < intval($this->membership_id)) {
 
-                $membership = \XLite\Core\Database::getRepo('XLite\Model\Membership')->find(intval($this->membership_id));
+                $membership = \XLite\Core\Database::getRepo('XLite\Model\Membership')
+                    ->find(intval($this->membership_id));
             }
         
             if (isset($membership)) {
@@ -585,7 +586,7 @@ class Profile extends \XLite\Model\AEntity
     /**
      * Delete an entity profile from the database
      * 
-     * @return bool
+     * @return boolean 
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -662,7 +663,9 @@ class Profile extends \XLite\Model\AEntity
         $billingAddress = $this->getBillingAddress();
         $shippingAddress = $this->getShippingAddress();
 
-        return isset($billingAddress) && isset($shippingAddress) && $billingAddress->getAddressId() == $shippingAddress->getAddressId();
+        return isset($billingAddress)
+            && isset($shippingAddress)
+            && $billingAddress->getAddressId() == $shippingAddress->getAddressId();
     }
 
     /**

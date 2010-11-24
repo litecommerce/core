@@ -91,7 +91,7 @@ class Wishlist extends \XLite\Controller\Customer\ACustomer
      * prepareWishListItem 
      * 
      * @param \XLite\Module\WishList\Model\WishListProduct $product item to prepare
-     * @param bool                                        $status  if item exists or not
+     * @param boolean                                     $status  if item exists or not
      *  
      * @return void
      * @access protected

@@ -289,7 +289,7 @@ abstract class AView extends \XLite\Core\Handler
     /**
      * Check visibility according to the current target
      * 
-     * @return bool
+     * @return boolean 
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -304,7 +304,7 @@ abstract class AView extends \XLite\Core\Handler
     /**
      * Check if current mode is allowable 
      * 
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0.0
      */
@@ -343,7 +343,7 @@ abstract class AView extends \XLite\Core\Handler
     /**
      * Check if widget is visible
      *
-     * @return bool
+     * @return boolean 
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -474,7 +474,7 @@ abstract class AView extends \XLite\Core\Handler
     /**
      * Check if widget is visible
      * 
-     * @return bool
+     * @return boolean 
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -627,7 +627,7 @@ abstract class AView extends \XLite\Core\Handler
      * 
      * @param array $targets list of allowed targets
      *  
-     * @return bool
+     * @return boolean 
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -642,7 +642,7 @@ abstract class AView extends \XLite\Core\Handler
      *
      * @param array $modes list of allowed modes
      *
-     * @return bool
+     * @return boolean 
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -757,7 +757,7 @@ abstract class AView extends \XLite\Core\Handler
      * @param mixed $val2 value 2
      * @param mixed $val3 value 3
      *  
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0.0
      */
@@ -790,7 +790,7 @@ abstract class AView extends \XLite\Core\Handler
      * 
      * @param mixed  $base       string or object instance to get field value from
      * @param mixed  $field      string length or field to get value
-     * @param int    $length     field length to truncate to
+     * @param integer    $length     field length to truncate to
      * @param string $etc        string to add to truncated field value
      * @param mixed  $breakWords word wrap flag
      *  
@@ -960,7 +960,7 @@ abstract class AView extends \XLite\Core\Handler
      * 
      * @param mixed $data data to check
      *  
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0.0
      */
@@ -973,7 +973,7 @@ abstract class AView extends \XLite\Core\Handler
      * Split an array into chunks
      * 
      * @param array $array array to split
-     * @param int   $count chunks count
+     * @param integer   $count chunks count
      *  
      * @return array
      * @access protected
@@ -998,8 +998,8 @@ abstract class AView extends \XLite\Core\Handler
     /**
      * Increment
      * 
-     * @param int $value value to increment
-     * @param int $inc   increment
+     * @param integer $value value to increment
+     * @param integer $inc   increment
      *  
      * @return integer
      * @access protected
@@ -1014,7 +1014,7 @@ abstract class AView extends \XLite\Core\Handler
      * Get random number
      * TODO - rarely used function; probably, should be removed 
      * 
-     * @return int
+     * @return integer 
      * @access protected
      * @since  3.0.0
      */
@@ -1026,7 +1026,7 @@ abstract class AView extends \XLite\Core\Handler
     /**
      * For the "zebra" tables
      * 
-     * @param int    $row          row index
+     * @param integer    $row          row index
      * @param string $oddCSSClass  first CSS class
      * @param string $evenCSSClass second CSS class
      *  
@@ -1044,7 +1044,7 @@ abstract class AView extends \XLite\Core\Handler
      * 
      * @param string $widgetId page identifier
      *  
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0.0
      */
@@ -1117,7 +1117,7 @@ abstract class AView extends \XLite\Core\Handler
      * 
      * @param array &$list      list to modify
      * @param array $properties node properties
-     * @param int   $weight     node position
+     * @param integer   $weight     node position
      *  
      * @return void
      * @access protected
@@ -1489,7 +1489,7 @@ abstract class AView extends \XLite\Core\Handler
      * getNamePostedData 
      * 
      * @param string $field field name
-     * @param int    $id    model object ID
+     * @param integer    $id    model object ID
      *  
      * @return string
      * @access protected
@@ -1504,7 +1504,7 @@ abstract class AView extends \XLite\Core\Handler
     /**
      * getNameToDelete
      *
-     * @param int $id model object ID
+     * @param integer $id model object ID
      *
      * @return string
      * @access protected

@@ -181,7 +181,7 @@ class Profile extends \XLite\Controller\Admin\AAdmin
     /**
      * The "mode" parameter used to determine if we create new or modify existing profile
      *
-     * @return bool
+     * @return boolean 
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

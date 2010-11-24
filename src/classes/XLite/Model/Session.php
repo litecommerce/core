@@ -114,7 +114,7 @@ class Session extends \XLite\Model\AEntity
      *
      * @param string $name cell name
      *
-     * @return \XLite\Model\SessionCell|null
+     * @return \XLite\Model\SessionCell|void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0

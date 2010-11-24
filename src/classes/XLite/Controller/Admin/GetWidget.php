@@ -77,7 +77,7 @@ class GetWidget extends \XLite\Controller\Admin\AAdmin
     /**
      * checkRequest 
      * 
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0.0
      */
@@ -89,7 +89,7 @@ class GetWidget extends \XLite\Controller\Admin\AAdmin
     /**
      * Check if current page is accessible
      * 
-     * @return bool
+     * @return boolean 
      * @access public
      * @since  3.0.0
      */

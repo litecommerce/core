@@ -319,7 +319,7 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     /**
      * Return certain Product <--> Category association
      * 
-     * @param int|null $categoryId category ID
+     * @param integer|null $categoryId category ID
      *  
      * @return \XLite\Model\CategoryProducts
      * @access protected
@@ -338,7 +338,7 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     /**
      * Return certain Product <--> Category association
      * 
-     * @param int|null $categoryId category ID
+     * @param integer|null $categoryId category ID
      *  
      * @return \XLite\Model\CategoryProducts
      * @access protected
@@ -362,7 +362,7 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     /**
      * Check if product is accessible 
      * 
-     * @return bool
+     * @return boolean 
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -401,7 +401,7 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     /**
      * Check if product has image or not
      *
-     * @return bool
+     * @return boolean 
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -427,7 +427,7 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     /**
      * Return random product category 
      *
-     * @param int|null $categoryId category ID
+     * @param integer|null $categoryId category ID
      * 
      * @return \XLite\Model\Category
      * @access public
@@ -448,9 +448,9 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     /**
      * Return random product category ID
      *
-     * @param int|null $categoryId category ID
+     * @param integer|null $categoryId category ID
      *
-     * @return int
+     * @return integer 
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -491,7 +491,7 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     /**
      * Minimal available amount
      *
-     * @return int
+     * @return integer 
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -504,7 +504,7 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     /**
      * Maximal available amount
      *
-     * @return int
+     * @return integer 
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -517,9 +517,9 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
     /**
      * Return product position in category
      *
-     * @param int|null $categoryId category ID
+     * @param integer|null $categoryId category ID
      * 
-     * @return int
+     * @return integer 
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

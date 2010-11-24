@@ -113,7 +113,7 @@ class Minicart extends \XLite\View\SideBarBox
     /**
      * Check whether in cart there are more than 3 items
      *
-     * @return bool
+     * @return boolean 
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0

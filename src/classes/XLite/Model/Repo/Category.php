@@ -62,7 +62,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
     /**
      * Define the Doctrine query
      *
-     * @param int $categoryId category Id
+     * @param integer $categoryId category Id
      * 
      * @return \Doctrine\ORM\QueryBuilder
      * @access protected
@@ -84,7 +84,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
     /**
      * Define the Doctrine query
      *
-     * @param int $categoryId category Id
+     * @param integer $categoryId category Id
      *
      * @return \Doctrine\ORM\QueryBuilder
      * @access protected
@@ -101,7 +101,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
     /**
      * Define the Doctrine query
      *
-     * @param int $categoryId category Id
+     * @param integer $categoryId category Id
      *
      * @return \Doctrine\ORM\QueryBuilder
      * @access protected
@@ -121,7 +121,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
     /**
      * Define the Doctrine query
      *
-     * @param int $categoryId category Id
+     * @param integer $categoryId category Id
      *
      * @return \Doctrine\ORM\QueryBuilder
      * @access protected
@@ -138,7 +138,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
     /**
      * Define the Doctrine query
      *
-     * @param int $categoryId category Id
+     * @param integer $categoryId category Id
      * 
      * @return \Doctrine\ORM\QueryBuilder
      * @access protected
@@ -152,7 +152,13 @@ class Category extends \XLite\Model\Repo\Base\I18n
 
         if ($category) {
             $this->addSubTreeCondition($queryBuilder, $categoryId, 'lpos', 1, $category->getLpos());
-            $this->addSubTreeCondition($queryBuilder, $categoryId, 'rpos', $category->getRpos(), $this->getMaxRightPos());
+            $this->addSubTreeCondition(
+                $queryBuilder,
+                $categoryId,
+                'rpos',
+                $category->getRpos(),
+                $this->getMaxRightPos()
+            );
 
         } else {
             // TODO - add throw exception
@@ -164,7 +170,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
     /**
      * Define the Doctrine query
      *
-     * @param int $categoryId category Id
+     * @param integer $categoryId category Id
      * 
      * @return \Doctrine\ORM\QueryBuilder
      * @access protected
@@ -181,7 +187,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
     /**
      * Define the Doctrine query
      *
-     * @param int $productId product Id
+     * @param integer $productId product Id
      * 
      * @return \Doctrine\ORM\QueryBuilder
      * @access protected
@@ -200,9 +206,9 @@ class Category extends \XLite\Model\Repo\Base\I18n
     /**
      * Define the Doctrine query
      *
-     * @param string $index        field name
-     * @param int    $relatedIndex related index value
-     * @param int    $offset       increment
+     * @param string  $index        field name
+     * @param integer $relatedIndex related index value
+     * @param integer $offset       increment
      *
      * @return \Doctrine\ORM\QueryBuilder
      * @access protected
@@ -235,8 +241,8 @@ class Category extends \XLite\Model\Repo\Base\I18n
     protected function addEnabledCondition(\Doctrine\ORM\QueryBuilder $queryBuilder, $alias = null)
     {
         if ($this->getEnabledCondition()) {
-            $queryBuilder
-                ->andWhere(($alias ?: $this->getDefaultAlias()) . '.enabled = :enabled')
+            $alias = $alias ?: $this->getDefaultAlias();
+            $queryBuilder->andWhere($alias . '.enabled = :enabled')
                 ->setParameter('enabled', true);
         }
     }
@@ -271,15 +277,15 @@ class Category extends \XLite\Model\Repo\Base\I18n
      */
     protected function addExcludeRootCondition(\Doctrine\ORM\QueryBuilder $queryBuilder, $alias = null)
     {
-        $queryBuilder
-            ->andWhere(($alias ?: $this->getDefaultAlias()) . '.category_id <> :rootId')
+        $alias = $alias ?: $this->getDefaultAlias();
+        $queryBuilder->andWhere($alias . '.category_id <> :rootId')
             ->setParameter('rootId', $this->getRootCategoryId());
     }
 
     /**
      * Return maximum index in the "nested set" tree
      * 
-     * @return int
+     * @return integer 
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -318,19 +324,19 @@ class Category extends \XLite\Model\Repo\Base\I18n
     /**
      * Prepare data for a the "updateQuickFlags()" method
      *
-     * @param int $sc_all     the "subcategories_count_all" flag value
-     * @param int $sc_enabled the "subcategories_count_enabled" flag value
+     * @param integer $scAll     the "subcategories_count_all" flag value
+     * @param integer $scEnabled the "subcategories_count_enabled" flag value
      *  
      * @return array
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function prepareQuickFlags($sc_all, $sc_enabled)
+    protected function prepareQuickFlags($scAll, $scEnabled)
     {
         return array(
-            'subcategories_count_all'     => $sc_all,
-            'subcategories_count_enabled' => $sc_enabled,
+            'subcategories_count_all'     => $scAll,
+            'subcategories_count_enabled' => $scEnabled,
         );
     }
 
@@ -341,6 +347,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @param array                 $flags  flags to set
      *  
      * @return void
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
@@ -371,7 +378,8 @@ class Category extends \XLite\Model\Repo\Base\I18n
         $entity = null;
 
         // Get parent
-        if ($parent = $this->getCategory($data['parent_id'])) {
+        $parent = $this->getCategory($data['parent_id']);
+        if ($parent) {
 
             // Update indexes in the nested set
             $this->defineUpdateIndexQuery('lpos', $parent->getLpos())->getQuery()->execute();
@@ -405,7 +413,8 @@ class Category extends \XLite\Model\Repo\Base\I18n
     {
         // Update quick flags (if needed)
         if (isset($data['enabled']) && ($entity->getEnabled() xor ((bool) $data['enabled']))) {
-            $this->updateQuickFlags($entity->getParent(), $this->prepareQuickFlags(0, $entity->getEnabled() ? -1 : 1));
+            $enabled = $entity->getEnabled() ? -1 : 1;
+            $this->updateQuickFlags($entity->getParent(), $this->prepareQuickFlags(0, $enabled));
         }
 
         parent::performUpdate($entity, $data);
@@ -433,7 +442,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
     /**
      * Return the reserved ID of root category
      *
-     * @return int
+     * @return integer 
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -446,7 +455,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
     /**
      * Return the ctegory enabled condition
      * 
-     * @return bool
+     * @return boolean 
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -459,8 +468,8 @@ class Category extends \XLite\Model\Repo\Base\I18n
     /**
      * Create a new QueryBuilder instance that is prepopulated for this entity name
      *
-     * @param string $alias       Table alias
-     * @param bool   $excludeRoot do not include root category into the search result
+     * @param string  $alias       Table alias
+     * @param boolean $excludeRoot do not include root category into the search result
      *
      * @return \Doctrine\ORM\QueryBuilder
      * @access public
@@ -484,7 +493,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
     /**
      * find() with cache
      * 
-     * @param int $categoryId category ID
+     * @param integer $categoryId category ID
      *  
      * @return \XLite\Model\Category
      * @access public
@@ -499,7 +508,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
     /**
      * Return full list of categories
      *
-     * @param int $rootId ID of the subtree root
+     * @param integer $rootId ID of the subtree root
      *
      * @return array
      * @access public
@@ -516,7 +525,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
     /**
      * Return list of subcategories (one level)
      *
-     * @param int $rootId ID of the subtree root
+     * @param integer $rootId ID of the subtree root
      *
      * @return array
      * @access public
@@ -533,7 +542,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
     /**
      * Return list of categories on the same level
      *
-     * @param int $categoryId Category Id
+     * @param integer $categoryId Category Id
      *
      * @return array
      * @access public
@@ -550,7 +559,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
     /**
      * Return categories subtree
      *
-     * @param int $categoryId Category Id
+     * @param integer $categoryId Category Id
      *
      * @return array
      * @access public
@@ -567,7 +576,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
     /**
      * Get categories path from root to the specified category 
      * 
-     * @param int $categoryId Category Id
+     * @param integer $categoryId Category Id
      *  
      * @return array
      * @access public
@@ -584,9 +593,9 @@ class Category extends \XLite\Model\Repo\Base\I18n
     /**
      * Get depth of the category path
      * 
-     * @param int $categoryId Category Id
+     * @param integer $categoryId Category Id
      *  
-     * @return int
+     * @return integer 
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -601,7 +610,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
     /**
      * Get categories list by product ID
      * 
-     * @param int $productId product ID
+     * @param integer $productId product ID
      *  
      * @return \Doctrine\ORM\PersistentCollection
      * @access public
@@ -641,8 +650,8 @@ class Category extends \XLite\Model\Repo\Base\I18n
     /**
      * Wrapper. Use this function instead of the native "delete...()"
      * 
-     * @param int  $categoryId  ID of category to delete
-     * @param bool $onlySubtree flag
+     * @param integer $categoryId  ID of category to delete
+     * @param boolean $onlySubtree flag
      *  
      * @return void
      * @access public
@@ -674,10 +683,10 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * NOTE: function is public since it's needed to the Product model repository
      *
      * @param \Doctrine\ORM\QueryBuilder $qb         query builder to modify
-     * @param int                        $categoryId current category ID
+     * @param integer                    $categoryId current category ID
      * @param string                     $field      name of the field to use
-     * @param int                        $lpos       left position
-     * @param int                        $rpos       right position
+     * @param integer                    $lpos       left position
+     * @param integer                    $rpos       right position
      *
      * @return void
      * @access public

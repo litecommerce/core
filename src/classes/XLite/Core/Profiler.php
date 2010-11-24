@@ -203,7 +203,7 @@ class Profiler extends \XLite\Base\Singleton implements \Doctrine\DBAL\Logging\S
     /**
      * There are some targets which are not require profiler
      * 
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0.0
      */
@@ -243,7 +243,7 @@ class Profiler extends \XLite\Base\Singleton implements \Doctrine\DBAL\Logging\S
     /**
      * getStartupFlag 
      * 
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0.0
      */
@@ -577,8 +577,8 @@ HTML;
     /**
      * Log SQL queries
      * 
-     * @param strin $sql    Query
-     * @param array $params Query arguments
+     * @param string $sql    Query
+     * @param array  $params Query arguments
      *  
      * @return void
      * @access public

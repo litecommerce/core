@@ -185,7 +185,7 @@ class Subcategories extends \XLite\View\Dialog
     /**
      * getColumnsCount 
      * 
-     * @return int
+     * @return integer 
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -215,7 +215,7 @@ class Subcategories extends \XLite\View\Dialog
     /**
      * Check for subcategories
      *
-     * @return bool
+     * @return boolean 
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0

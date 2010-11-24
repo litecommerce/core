@@ -267,7 +267,7 @@ abstract class AEntity
     /**
      * Check if entity is persistent
      * 
-     * @return bool
+     * @return boolean 
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -280,7 +280,7 @@ abstract class AEntity
     /**
      * Update entity
      * 
-     * @return bool
+     * @return boolean 
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -296,7 +296,7 @@ abstract class AEntity
     /**
      * Create entity
      * 
-     * @return bool
+     * @return boolean 
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -309,7 +309,7 @@ abstract class AEntity
     /**
      * Delete entity
      * 
-     * @return bool
+     * @return boolean 
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

@@ -187,7 +187,7 @@ class FormId extends \XLite\Model\Repo\ARepo
      * 
      * @param integer $sessionId Session id
      * 
-     * @return integer|null
+     * @return integer|void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0

@@ -167,7 +167,7 @@ class Address extends \XLite\View\Dialog
     /**
      * useBodyTemplate 
      * 
-     * @return bool 
+     * @return boolean 
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0

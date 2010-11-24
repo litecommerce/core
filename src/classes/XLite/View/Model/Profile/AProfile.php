@@ -509,7 +509,7 @@ abstract class AProfile extends \XLite\View\Model\AModel
     /**
      * Check if billing and shipping addresses are the same
      * 
-     * @return bool
+     * @return boolean 
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -535,7 +535,7 @@ abstract class AProfile extends \XLite\View\Model\AModel
     /**
      * Return current profile ID
      * 
-     * @return int
+     * @return integer 
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

@@ -377,7 +377,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     /**
      * Get prefix for cache key
      *
-     * @param strin $suffix Cache subsection name
+     * @param string $suffix Cache subsection name
      * 
      * @return string
      * @access protected
@@ -672,8 +672,8 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     /**
      * Find data frame 
      * 
-     * @param int $start Start offset
-     * @param int $limit Frame length
+     * @param integer $start Start offset
+     * @param integer $limit Frame length
      *  
      * @return array
      * @access public
@@ -705,8 +705,8 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * Assign frame to query builder
      * 
      * @param \Doctrine\ORM\QueryBuilder $qb    Query builder
-     * @param int                        $start Start offset
-     * @param int                        $limit Frame length
+     * @param integer                    $start Start offset
+     * @param integer                    $limit Frame length
      *  
      * @return \Doctrine\ORM\QueryBuilder
      * @access protected
@@ -813,7 +813,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * Search entity by key.
      * If it's not found, the exception will be thrown
      *
-     * @param int $id entity ID
+     * @param integer $id entity ID
      *
      * @return \XLite\Model\AEntity
      * @access protected

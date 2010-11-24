@@ -174,7 +174,7 @@ class Main extends \XLite\View\Model\Profile\AProfile
      * Check password and its confirmation
      * TODO: simplify
      * 
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0.0
      */
@@ -252,7 +252,7 @@ class Main extends \XLite\View\Model\Profile\AProfile
     /**
      * Create profile 
      * 
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0.0
      */
@@ -267,7 +267,7 @@ class Main extends \XLite\View\Model\Profile\AProfile
     /**
      * Update profile 
      * 
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0.0
      */
@@ -279,7 +279,7 @@ class Main extends \XLite\View\Model\Profile\AProfile
     /**
      * Perform certain action for the model object
      *
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0.0
      */
@@ -294,7 +294,7 @@ class Main extends \XLite\View\Model\Profile\AProfile
     /**
      * Perform certain action for the model object
      *
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0.0
      */
@@ -330,7 +330,7 @@ class Main extends \XLite\View\Model\Profile\AProfile
     /**
      * The "mode" parameter used to determine if we create new or modify existing profile
      *
-     * @return bool
+     * @return boolean 
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -343,9 +343,9 @@ class Main extends \XLite\View\Model\Profile\AProfile
     /**
      * Return current profile ID
      *
-     * @param bool $checkMode check mode or not
+     * @param boolean $checkMode check mode or not
      *
-     * @return int
+     * @return integer 
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -358,7 +358,7 @@ class Main extends \XLite\View\Model\Profile\AProfile
     /**
      * Check for the form errors 
      * 
-     * @return bool
+     * @return boolean 
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
