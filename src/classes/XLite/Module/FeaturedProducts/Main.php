@@ -35,7 +35,7 @@ namespace XLite\Module\FeaturedProducts;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Main extends \XLite\Module\AModule
+abstract class Main extends \XLite\Module\AModule
 {
     const FEATURED_PRODUCTS_TABLE = 'xlite_featured_products';
 
@@ -47,7 +47,7 @@ class Main extends \XLite\Module\AModule
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getModuleType()
+    public static function getModuleType()
     {
         return self::MODULE_GENERAL;
     }
@@ -60,7 +60,7 @@ class Main extends \XLite\Module\AModule
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getVersion()
+    public static function getVersion()
     {
         return '1.0';
     }
@@ -73,7 +73,7 @@ class Main extends \XLite\Module\AModule
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getModuleName()
+    public static function getModuleName()
     {
         return 'Featured Products';
     }
@@ -86,7 +86,7 @@ class Main extends \XLite\Module\AModule
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getDescription()
+    public static function getDescription()
     {
         return 'This module enables featured products list';
     }
@@ -99,7 +99,7 @@ class Main extends \XLite\Module\AModule
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function showSettingsForm()
+    public static function showSettingsForm()
     {
         return true;
     }

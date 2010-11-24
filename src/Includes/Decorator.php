@@ -359,9 +359,8 @@ class Decorator extends Decorator\ADecorator
                 }
                 
                 $mainClassName = \Includes\Decorator\Utils\ModulesManager::getClassNameByModuleName($module);
-                $mainClass = new $mainClassName();
 
-                $this->moduleDependencies[$module] = $mainClass->getDependencies();
+                $this->moduleDependencies[$module] = $mainClassName::getDependencies();
             }
         }
 

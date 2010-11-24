@@ -56,7 +56,7 @@ abstract class AModule
      * @access public
      * @since  3.0
      */
-    public function init()
+    public static function init()
     {
     }
 
@@ -68,9 +68,9 @@ abstract class AModule
      * @see    ____func_see____
      * @since  3.0
      */
-    public function getModuleName()
+    public static function getModuleName()
     {
-        return $this->getModuleCode();
+        return static::getModuleCode();
     }
 
     /**
@@ -81,7 +81,7 @@ abstract class AModule
      * @see    ____func_see____
      * @since  3.0
      */
-    public function getModuleType()
+    public static function getModuleType()
     {
         return self::MODULE_3RD_PARTY;
     }
@@ -94,7 +94,10 @@ abstract class AModule
      * @see    ____func_see____
      * @since  3.0
      */
-    abstract public function getVersion();
+    public static function getVersion()
+    {
+        return '1.0'; 
+    }
 
     /**
      * Return module description 
@@ -104,7 +107,10 @@ abstract class AModule
      * @see    ____func_see____
      * @since  3.0
      */
-    abstract public function getDescription();
+    public static function getDescription()
+    {
+        return '';
+    }
 
     /**
      * Determines if we need to show settings form link
@@ -114,7 +120,7 @@ abstract class AModule
      * @see    ____func_see____
      * @since  3.0
      */
-    public function showSettingsForm()
+    public static function showSettingsForm()
     {
         return false;
     }
@@ -127,7 +133,7 @@ abstract class AModule
      * @see    ____func_see____
      * @since  3.0
      */
-    public function getSettingsForm()
+    public static function getSettingsForm()
     {
         return null;
     }
@@ -140,20 +146,7 @@ abstract class AModule
      * @see    ____func_see____
      * @since  3.0
      */
-    public function getDependencies()
-    {
-        return array();
-    }
-
-    /**
-     * Return list of modules whitch are not allowed to be enbled at one time 
-     * 
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0
-     */
-    public function getMutualModules()
+    public static function getDependencies()
     {
         return array();
     }
@@ -166,7 +159,7 @@ abstract class AModule
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getPostInstallationNotes()
+    public static function getPostInstallationNotes()
     {
         return '';
     }
@@ -179,7 +172,7 @@ abstract class AModule
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getPostUninstallationNotes()
+    public static function getPostUninstallationNotes()
     {
         return '';
     }
@@ -205,7 +198,7 @@ abstract class AModule
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function installModule(\XLite\Model\Module $module)
+    public static function installModule(\XLite\Model\Module $module)
     {
         return true;
     }
@@ -218,7 +211,7 @@ abstract class AModule
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function uninstallModule(\XLite\Model\Module $module)
+    public static function uninstallModule(\XLite\Model\Module $module)
     {
         return true;
     }
@@ -232,7 +225,7 @@ abstract class AModule
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getIcon()
+    public static function getIcon()
     {
         return null;
     }
@@ -245,9 +238,9 @@ abstract class AModule
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function hasIcon()
+    public static function hasIcon()
     {
-        return !is_null($this->getIcon());
+        return !is_null(static::getIcon());
     }
 
     /**
@@ -260,9 +253,9 @@ abstract class AModule
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getExternalPageURL()
+    public static function getExternalPageURL()
     {
-        return '#' . $this->getModuleCode();
+        return '#' . static::getModuleCode();
     }
 
     /**
@@ -273,7 +266,7 @@ abstract class AModule
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function hasExternalPage()
+    public static function hasExternalPage()
     {
         return false;
     }
@@ -286,10 +279,10 @@ abstract class AModule
      * @see    ____func_see____
      * @since  3.0
      */
-    protected function getModuleCode()
+    protected static function getModuleCode()
     {
-        if (!preg_match('/XLite\\\Module\\\(\w+)\\\Main/S', get_class($this), $matches)) {
-            // TODO - throw exception
+        if (!preg_match('/XLite\\\Module\\\(\w+)\\\Main/S', get_called_class(), $matches)) {
+            throw new \Exception('Could not resolve base module code from the class name: ' . get_called_class());
         }
 
         return $matches[1];

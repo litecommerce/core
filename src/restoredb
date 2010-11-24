@@ -100,10 +100,9 @@ require_once 'classes/XLite/Base/IPatcher.php';
 foreach (glob('classes/XLite/Module/*/Main.php') as $f) {
 	require_once $f;
 	$class = str_replace('/', '\\', substr($f, 7, -4));
-	$obj = new $class();
 
 	mysql_query(
-		'REPLACE INTO xlite_modules SET name = \'' . basename(dirname($f)) . '\', installed = 1, last_version = \'' . $obj->getVersion() . '\'', 
+		'REPLACE INTO xlite_modules SET name = \'' . basename(dirname($f)) . '\', installed = 1, last_version = \'' . $class::getVersion() . '\'', 
 		$__connection
 	);
 

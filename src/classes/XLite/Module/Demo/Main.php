@@ -35,7 +35,7 @@ namespace XLite\Module\Demo;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Main extends \XLite\Module\AModule
+abstract class Main extends \XLite\Module\AModule
 {
     /**
      * Module type
@@ -44,7 +44,7 @@ class Main extends \XLite\Module\AModule
      * @access public
      * @since  3.0.0
      */
-    public function getModuleType()
+    public static function getModuleType()
     {
         return self::MODULE_GENERAL;
     }
@@ -56,7 +56,7 @@ class Main extends \XLite\Module\AModule
      * @access public
      * @since  3.0.0
      */
-    public function getVersion()
+    public static function getVersion()
     {
         return '1.0';
     }
@@ -68,7 +68,7 @@ class Main extends \XLite\Module\AModule
      * @access public
      * @since  3.0.0
      */
-    public function getDescription()
+    public static function getDescription()
     {
         return 'Demo mode';
     }
@@ -80,7 +80,7 @@ class Main extends \XLite\Module\AModule
      * @access public
      * @since  3.0.0
      */
-    public function init()
+    public static function init()
     {
         if (\XLite::getInstance()->isAdminZone()) {
             \Includes\Utils\ConfigParser::registerConfigFile('config.demo.php');
@@ -100,7 +100,7 @@ class Main extends \XLite\Module\AModule
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function doForbidAction($message = null, $url = null)
+    public static function doForbidAction($message = null, $url = null)
     {
         self::doForbidOperation($message);
 
@@ -122,7 +122,7 @@ class Main extends \XLite\Module\AModule
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function doForbidOperation($message = null)
+    public static function doForbidOperation($message = null)
     {
         if (!$message) {
             $message = 'You cannot do this in demo mode.';
