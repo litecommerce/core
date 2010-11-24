@@ -103,6 +103,14 @@ class XLite_TagsSniff extends XLite_ReqCodesSniff implements PHP_CodeSniffer_Sni
 
 	protected $docBlock = 'unknown';
 
+    protected $allowedParamTypes = array(
+        'integer', 'float', 'string', 'array', 'mixed', 'boolean', 'null', 'object',
+    );
+
+    protected $allowedReturnTypes = array(
+        'integer', 'float', 'string', 'array', 'mixed', 'boolean', 'void', 'object',
+    );
+
     /**
      * Returns an array of tokens this test wants to listen for.
      *
@@ -200,6 +208,8 @@ class XLite_TagsSniff extends XLite_ReqCodesSniff implements PHP_CodeSniffer_Sni
                 continue;
            	}
 
+			$tagElements = is_array($tagElement) ? $tagElement : array($tagElement);
+
             $errorPos = $commentStart;
             if (is_array($tagElement) === false) {
                 $errorPos = ($commentStart + $tagElement->getLine());
@@ -252,44 +262,29 @@ class XLite_TagsSniff extends XLite_ReqCodesSniff implements PHP_CodeSniffer_Sni
                 $longestTag = $len;
             }
 
-            if (is_array($tagElement) === true) {
-                foreach ($tagElement as $key => $element) {
-                    $indentation[] = array(
-                                      'tag'   => $tag,
-                                      'space' => $this->getIndentation($tag, $element),
-                                      'line'  => $element->getLine(),
-                                      'value' => $this->getTagValue($element),
-                                     );
-                }
-            } else {
-                $indentation[] = array(
-                                  'tag'   => $tag,
-                                  'space' => $this->getIndentation($tag, $tagElement),
-                                  'line'  => $tagElement->getLine(),
-                                  'value' => $this->getTagValue($tagElement),
-                                 );
+            foreach ($tagElements as $key => $element) {
+            	$indentation[] = array(
+                	'tag'   => $tag,
+                    'space' => $this->getIndentation($tag, $element),
+                    'line'  => $element->getLine(),
+                    'value' => $this->getTagValue($element),
+                );
             }
 
-            $method = 'process'.$tagName;
+            $method = 'process' . $tagName;
             if (method_exists($this, $method) === true) {
                 // Process each tag if a method is defined.
-                call_user_func(array($this, $method), $errorPos, $commentEnd);
+                call_user_func(array($this, $method), $errorPos, $commentEnd, $tagElements);
+
             } else {
-                if (is_array($tagElement) === true) {
-                    foreach ($tagElement as $key => $element) {
-						if (method_exists($element, 'process'))
+                foreach ($tagElements as $key => $element) {
+					if (method_exists($element, 'process')) {
                         $element->process(
                             $this->currentFile,
                             $commentStart,
                             $this->docBlock
                         );
                     }
-                } elseif (method_exists($tagElement, 'process')) {
-                     $tagElement->process(
-                         $this->currentFile,
-                         $commentStart,
-                         $this->docBlock
-                     );
                 }
             }
         }//end foreach
@@ -725,6 +720,14 @@ class XLite_TagsSniff extends XLite_ReqCodesSniff implements PHP_CodeSniffer_Sni
         $methodName      = strtolower(ltrim($this->_methodName, '_'));
         $isSpecialMethod = ($this->_methodName === '__construct' || $this->_methodName === '__destruct');
 
+        // Check type
+		if ($this->commentParser->getReturn()) {
+            $r = $this->checkType($this->commentParser->getReturn()->getValue(), $this->allowedReturnTypes, 'return');
+            if (true !== $r) {
+                $this->currentFile->addError($this->getReqPrefix('?') . $r, $commentStart + $this->commentParser->getReturn()->getLine());
+            }
+		}
+
         if ($isSpecialMethod === false && $methodName !== $className) {
             // Report missing return tag.
             if ($this->commentParser->getReturn() === null) {
@@ -748,7 +751,7 @@ class XLite_TagsSniff extends XLite_ReqCodesSniff implements PHP_CodeSniffer_Sni
      *
      * @return void
      */
-    protected function processParams($commentStart)
+    protected function processParams($commentStart, $commentEnd, $tagElements)
     {
         $realParams = $this->currentFile->getMethodParameters($this->_functionToken);
 
@@ -781,6 +784,12 @@ class XLite_TagsSniff extends XLite_ReqCodesSniff implements PHP_CodeSniffer_Sni
 
                 $paramComment = trim($param->getComment());
                 $errorPos     = ($param->getLine() + $commentStart);
+
+				// Check type
+				$r = $this->checkType($param->getType(), $this->allowedParamTypes, 'param');
+				if (true !== $r) {
+	            	$this->currentFile->addError($this->getReqPrefix('?') . $r, $errorPos);
+				}
 
                 // Make sure that there is only one space before the var type.
                 if ($param->getWhitespaceBeforeType() !== ' ') {
@@ -899,6 +908,40 @@ class XLite_TagsSniff extends XLite_ReqCodesSniff implements PHP_CodeSniffer_Sni
         }
 
     }//end processParams()
+
+	protected function checkType($rawType, array $allowedTypes, $tag)
+	{
+        $types = array_map('trim', explode('|', $rawType));
+        if (4 < count($types)) {
+            $this->currentFile->addError($this->getReqPrefix('?') . 'Число вариантов типов @' . $tag . ' больше 4', $errorPos);
+        }
+
+		$result = true;
+
+		foreach ($types as $type) {
+			if ('\\' == substr($type, 0, 1) || in_array($type, $allowedTypes)) {
+    	    	// Class or simple type
+				continue;
+
+        	} elseif (preg_match('/^array\((.+)\)$/Ss', $type, $m)) {
+
+				// Array
+				$r = $this->checkType($m[1], $allowedTypes, $tag);
+				if (true === $r) {
+					continue;
+				}
+
+				$result = $r;
+
+			} else {
+				$result = 'Тип "' . $type . '" запрещен для использования в @' . $tag;
+			}
+
+			break;
+		}
+
+		return $result;
+	}
 
 	function checkAccess($stackPtr, $commentStart, $commentEnd) {
 		$tokens = $this->currentFile->getTokens();
