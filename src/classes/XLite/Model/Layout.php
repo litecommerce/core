@@ -143,7 +143,7 @@ class Layout extends \XLite\Base\Singleton
      */
     public function getShortPath()
     {
-        return $this->skin . '/' . $this->locale . '/';
+        return $this->skin . LC_DS . $this->locale . LC_DS;
     }
 
     /**
@@ -296,7 +296,7 @@ class Layout extends \XLite\Base\Singleton
      */
     protected function setPath()
     {
-        $this->path = self::PATH_SKIN . '/' . $this->skin . '/' . $this->locale . '/';
+        $this->path = self::PATH_SKIN . LC_DS . $this->skin . LC_DS . $this->locale . LC_DS;
     }
 
     /**
