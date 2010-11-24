@@ -30,27 +30,31 @@ class XLite_Tests_Module_FeaturedProducts_Main extends XLite_Tests_TestCase
 {
     public function testGetDescription()
     {
-        $this->assertEquals('This module enables featured products list', $this->getMain()->getDescription(), 'Wrong description');
+        $main = $this->getMain();
+        $this->assertEquals('This module enables featured products list', $main::getDescription(), 'Wrong description');
     }
 
     public function testGetVersion()
     {
-        $this->assertEquals('1.0', $this->getMain()->getVersion(), 'Wrong version');
+        $main = $this->getMain();
+        $this->assertEquals('1.0', $main::getVersion(), 'Wrong version');
     }
 
     public function testShowSettingsForm()
     {
-        $this->assertTrue($this->getMain()->showSettingsForm(), 'Wrong flag to show settings form');
+        $main = $this->getMain();
+        $this->assertTrue($main::showSettingsForm(), 'Wrong flag to show settings form');
     }
 
     public function testGetModuleType()
     {
-        $this->assertEquals(\XLite\Module\FeaturedProducts\Main::MODULE_GENERAL, $this->getMain()->getModuleType(), 'Wrong module type');
+        $main = $this->getMain();
+        $this->assertEquals(\XLite\Module\FeaturedProducts\Main::MODULE_GENERAL, $main::getModuleType(), 'Wrong module type');
     }
 
     protected function getMain()
     {
-        return new \XLite\Module\FeaturedProducts\Main;
+        return '\XLite\Module\FeaturedProducts\Main';
     }
 
 }

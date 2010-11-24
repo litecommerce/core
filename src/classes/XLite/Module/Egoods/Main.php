@@ -35,7 +35,7 @@ namespace XLite\Module\Egoods;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Main extends \XLite\Module\AModule
+abstract class Main extends \XLite\Module\AModule
 {
     /**
      * Module type
@@ -44,7 +44,7 @@ class Main extends \XLite\Module\AModule
      * @access protected
      * @since  3.0
      */
-    public function getModuleType()
+    public static function getModuleType()
     {
         return self::MODULE_GENERAL;
     }
@@ -56,7 +56,7 @@ class Main extends \XLite\Module\AModule
      * @access protected
      * @since  3.0
      */
-    public function getVersion()
+    public static function getVersion()
     {
         return '1.0';
     }
@@ -68,7 +68,7 @@ class Main extends \XLite\Module\AModule
      * @access protected
      * @since  3.0
      */
-    public function getDescription()
+    public static function getDescription()
     {
         return 'Support for downloadable product sales (e-books, audio and video files, software and PIN codes)';
     }
@@ -79,7 +79,7 @@ class Main extends \XLite\Module\AModule
      * @access public
      * @since  3.0
      */
-    public function showSettingsForm()
+    public static function showSettingsForm()
     {
         return true;
     }
@@ -91,7 +91,7 @@ class Main extends \XLite\Module\AModule
      * @access public
      * @since  3.0
      */
-    public function init()
+    public static function init()
     {
         parent::init();
 

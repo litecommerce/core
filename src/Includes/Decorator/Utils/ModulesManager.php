@@ -88,63 +88,6 @@ abstract class ModulesManager extends AUtils
     }
 
     /**
-     * Return list of modules whitch are not allowed to be enbled at one time
-     * FIXME: needs re-factoring, mutual modules records no longer stored in the DB
-     * 
-     * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected static function getMutualModules()
-    {
-        $result = array();
-
-        foreach (static::$activeModules as $module) {
-            if (!empty($module['mutual_modules'])) {
-                $result = array_merge($result, explode(',', $module['mutual_modules']));
-            }
-        }
-
-        return array_unique($result);
-    }
-
-    /**
-     * Check dependencies and disable so called "mutual" modules:
-     * modules which are not be enabled simultaneously
-     * 
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected static function disableMutualModules()
-    {
-        if ($modules = static::getMutualModules()) {
-            static::$activeModules = \Includes\Utils\ArrayManager::filterArrayByKeys(static::$activeModules, $modules);
-
-            \Includes\Utils\Database::execute(
-                'UPDATE xlite_modules SET enabled = \'0\' WHERE name IN '
-                . '(' . implode(',', array_fill(0, count($modules), '?')) . ')',
-                $modules
-            );
-        }
-    }
-
-    /**
-     * Return list of <module_name> => <dependend_module_1>, <dependend_module_2>, ..., <dependend_module_N>
-     *
-     * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected static function getModuleDependencies()
-    {
-        // TODO: check the top-level methods
-    }
-
-    /**
      * Return pattern to file path againist active modules list
      * 
      * @param string $rootPath  name of the root directory
@@ -208,10 +151,11 @@ abstract class ModulesManager extends AUtils
     {
         if (!isset(static::$activeModules)) {
             static::$activeModules = static::getModulesList();
-            static::disableMutualModules();
         }
 
-        return isset($moduleName) ? isset(static::$activeModules[$moduleName]) : static::$activeModules;
+        return isset($moduleName)
+            ? isset(static::$activeModules[$moduleName])
+            : static::$activeModules;
     }
 
     /**

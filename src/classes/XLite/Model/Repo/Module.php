@@ -289,16 +289,18 @@ class Module extends \XLite\Model\Repo\ARepo
         $changed = false;
 
         foreach ($this->getActiveModules() as $name => $module) {
+
             $mainClass = $module->getMainClass();
+
             if (!$mainClass) {
                 $changed = true;
                 $this->uninstallEmergency($module);
 
             } else {
 
-                $module->getMainClass()->init();
+                $mainClass::init();
 
-                if (false === $module->getMainClass()->check()) {
+                if (false === $mainClass::check()) {
                     $changed = true;
                     $this->disableEmergency($module);
                 }

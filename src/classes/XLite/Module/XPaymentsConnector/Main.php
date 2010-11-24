@@ -35,7 +35,7 @@ namespace XLite\Module\XPaymentsConnector;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Main extends \XLite\Module\AModule
+abstract class Main extends \XLite\Module\AModule
 {
     /**
      * Module type
@@ -44,7 +44,7 @@ class Main extends \XLite\Module\AModule
      * @access public
      * @since  3.0.0
      */
-    public function getModuleType()
+    public static function getModuleType()
     {
         return self::MODULE_GENERAL;
     }
@@ -56,7 +56,7 @@ class Main extends \XLite\Module\AModule
      * @access public
      * @since  3.0.0
      */
-    public function getVersion()
+    public static function getVersion()
     {
         return '1.0';
     }
@@ -68,7 +68,7 @@ class Main extends \XLite\Module\AModule
      * @access public
      * @since  3.0.0
      */
-    public function getDescription()
+    public static function getDescription()
     {
         return 'X-Payments connector';
     }
@@ -80,7 +80,7 @@ class Main extends \XLite\Module\AModule
      * @access public
      * @since  3.0.0
      */
-    public function showSettingsForm()
+    public static function showSettingsForm()
     {
         return true;
     }
@@ -92,7 +92,7 @@ class Main extends \XLite\Module\AModule
      * @access public
      * @since  3.0.0
      */
-    public function init()
+    public static function init()
     {
         parent::init();
 
@@ -115,7 +115,7 @@ class Main extends \XLite\Module\AModule
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function isConfigured()
+    public static function isConfigured()
     {
         $failed = false;
 
@@ -150,7 +150,7 @@ class Main extends \XLite\Module\AModule
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function checkRequirements()
+    public static function checkRequirements()
     {
         $code = 0;
 

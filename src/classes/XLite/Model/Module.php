@@ -232,7 +232,7 @@ class Module extends \XLite\Model\AEntity
     {
         if (!isset($this->mainClass) && $this->includeMainClass()) {
             $class = $this->getMainClassName();
-            $this->mainClass = new $class;
+            $this->mainClass = $class;
 
             if (!is_subclass_of($this->mainClass, '\XLite\Module\AModule')) {
                 $this->mainClass = null;
@@ -311,7 +311,8 @@ class Module extends \XLite\Model\AEntity
 
         // Check internal enviroment checker
         if ($status) {
-            $status = $this->getMainClass()->check();
+            $module = $this->getMainClass();
+            $status = $module::check();
         }
 
         return $status;

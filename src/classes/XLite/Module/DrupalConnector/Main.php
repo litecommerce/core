@@ -35,7 +35,7 @@ namespace XLite\Module\DrupalConnector;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Main extends \XLite\Module\AModule
+abstract class Main extends \XLite\Module\AModule
 {
     /**
      * Get module type 
@@ -45,7 +45,7 @@ class Main extends \XLite\Module\AModule
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getModuleType()
+    public static function getModuleType()
     {
         return self::MODULE_CONNECTOR;
     }
@@ -58,7 +58,7 @@ class Main extends \XLite\Module\AModule
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getVersion()
+    public static function getVersion()
     {
         return '1.0';
     }
@@ -71,7 +71,7 @@ class Main extends \XLite\Module\AModule
      * @see    ____func_see____
      * @since  3.0
      */
-    public function getModuleName()
+    public static function getModuleName()
     {
         return 'Drupal Connector';
     }
@@ -84,7 +84,7 @@ class Main extends \XLite\Module\AModule
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getDescription()
+    public static function getDescription()
     {
         return 'Integration with the Drupal CMS';
     }
@@ -97,7 +97,7 @@ class Main extends \XLite\Module\AModule
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function showSettingsForm()
+    public static function showSettingsForm()
     {
         return true;
     }

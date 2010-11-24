@@ -35,7 +35,7 @@ namespace XLite\Module\UPSOnlineTools;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Main extends \XLite\Module\AModule
+abstract class Main extends \XLite\Module\AModule
 {
     const CRYPT_SALT = 85;
     const START_CHAR_CODE = 100;
@@ -48,7 +48,7 @@ class Main extends \XLite\Module\AModule
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getModuleType()
+    public static function getModuleType()
     {
         return self::MODULE_SHIPPING;
     }
@@ -61,7 +61,7 @@ class Main extends \XLite\Module\AModule
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getVersion()
+    public static function getVersion()
     {
         return '1.0';
     }
@@ -74,7 +74,7 @@ class Main extends \XLite\Module\AModule
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getDescription()
+    public static function getDescription()
     {
         return 'This module enables the access to UPS OnLine Tools';
     }
@@ -87,7 +87,7 @@ class Main extends \XLite\Module\AModule
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function showSettingsForm()
+    public static function showSettingsForm()
     {
         return true;
     }
@@ -100,7 +100,7 @@ class Main extends \XLite\Module\AModule
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getSettingsForm()
+    public static function getSettingsForm()
     {
         return \XLite\Core\Converter::buildUrl('ups_online_tool', '', array(), \XLite::ADMIN_SELF);
     }
@@ -113,7 +113,7 @@ class Main extends \XLite\Module\AModule
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function init()
+    public static function init()
     {
         parent::init();
 
@@ -137,7 +137,7 @@ class Main extends \XLite\Module\AModule
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function isGDLibValid()
+    public static function isGDLibValid()
     {
         $functions = array(
             'imagecreate',

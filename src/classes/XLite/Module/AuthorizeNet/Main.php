@@ -35,7 +35,7 @@ namespace XLite\Module\AuthorizeNet;
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Main extends \XLite\Module\AModule
+abstract class Main extends \XLite\Module\AModule
 {
     /**
      * Module type
@@ -44,7 +44,7 @@ class Main extends \XLite\Module\AModule
      * @access public
      * @since  3.0.0
      */
-    public function getModuleType()
+    public static function getModuleType()
     {
         return self::MODULE_PAYMENT;
     }
@@ -56,7 +56,7 @@ class Main extends \XLite\Module\AModule
      * @access public
      * @since  3.0.0
      */
-    public function getVersion()
+    public static function getVersion()
     {
         return '1.0';
     }
@@ -68,7 +68,7 @@ class Main extends \XLite\Module\AModule
      * @access public
      * @since  3.0.0
      */
-    public function getDescription()
+    public static function getDescription()
     {
         return 'Authorize.Net SIM (Server Integration Method) credit card payment processor';
     }
