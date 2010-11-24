@@ -53,7 +53,7 @@ class CommonCell extends \Includes\DataStructure\Cell implements \Iterator
     /**
      * Return the key of the current element
      *
-     * @return scalar
+     * @return mixed
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -92,7 +92,7 @@ class CommonCell extends \Includes\DataStructure\Cell implements \Iterator
     /**
      * Checks if current position is valid
      *
-     * @return bool
+     * @return boolean 
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

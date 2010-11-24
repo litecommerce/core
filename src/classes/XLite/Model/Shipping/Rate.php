@@ -257,7 +257,7 @@ class Rate extends \XLite\Base\SuperClass
     /**
      * getMethodId 
      * 
-     * @return int
+     * @return integer
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

@@ -123,7 +123,7 @@ abstract class ARequestHandler extends \XLite\View\AView
      * 2. Name of the session cell is passed in the request.
      * Then only the corresponded widget will use it
      *
-     * @return bool
+     * @return boolean 
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
@@ -138,7 +138,7 @@ abstract class ARequestHandler extends \XLite\View\AView
     /**
      * Check if we need to manage request params 
      * 
-     * @return bool
+     * @return boolean 
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0

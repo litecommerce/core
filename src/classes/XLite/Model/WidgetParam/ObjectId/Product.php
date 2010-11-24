@@ -40,7 +40,7 @@ class Product extends \XLite\Model\WidgetParam\ObjectId
     /**
      * Return object class name
      *
-     * @var    string
+     * @return string
      * @access protected
      * @since  3.0.0
      */

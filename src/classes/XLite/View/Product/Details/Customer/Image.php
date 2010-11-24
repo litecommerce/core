@@ -204,7 +204,7 @@ class Image extends \XLite\View\Product\Details\Customer\ACustomer
     /**
      * Return the max image width depending on whether it is a quicklook popup, or not
      * 
-     * @return int
+     * @return integer 
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -244,7 +244,7 @@ class Image extends \XLite\View\Product\Details\Customer\ACustomer
      * Return a relative horizontal position of the zoom box 
      * depending on whether it is a quicklook popup, or not
      * 
-     * @return int
+     * @return integer 
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

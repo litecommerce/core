@@ -126,7 +126,7 @@ class Category extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * Return products list
      * 
      * @param \XLite\Core\CommonCell $cnd       search condition
-     * @param bool                   $countOnly return items list or only its size
+     * @param boolean                $countOnly return items list or only its size
      *  
      * @return array|int
      * @access protected

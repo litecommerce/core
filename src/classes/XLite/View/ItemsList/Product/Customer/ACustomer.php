@@ -218,7 +218,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
     /**
      * isSideBarBox
      *
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0.0
      */
@@ -232,7 +232,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      *
      * @param array $params params to check
      *
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0.0
      */
@@ -257,7 +257,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
     /**
      * Check if pager control row is visible or not
      *
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0.0
      */
@@ -271,7 +271,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
     /**
      * isDisplayModeSelectorVisible
      * 
-     * @return bool
+     * @return boolean 
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -284,7 +284,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
     /**
      * isSortBySelectorVisible
      * 
-     * @return bool
+     * @return boolean 
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -297,7 +297,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
     /**
      * isHeaderVisible
      *
-     * @return bool
+     * @return boolean 
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -325,7 +325,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
      *
      * @param string $displayMode value to check
      *
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0.0
      */
@@ -434,7 +434,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
     /**
      * getSidebarMaxItems
      *
-     * @return int
+     * @return integer 
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -472,7 +472,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
     /**
      * Show product description or not
      *
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0.0
      */
@@ -484,7 +484,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
     /**
      * isShowThumbnail
      *
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0.0
      */
@@ -549,7 +549,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
     /**
      * Get table columns count
      *
-     * @return int
+     * @return integer 
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -562,7 +562,7 @@ abstract class ACustomer extends \XLite\View\ItemsList\Product\AProduct
     /**
      * Check status of 'More...' link for sidebar list
      *
-     * @return bool
+     * @return boolean 
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0

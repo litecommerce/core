@@ -109,7 +109,7 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
     /**
      * isFooterVisible
      *
-     * @return bool
+     * @return boolean 
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -300,7 +300,7 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
      * Return products list
      *
      * @param \XLite\Core\CommonCell $cnd       search condition
-     * @param bool                   $countOnly return items list or only its size
+     * @param boolean                $countOnly return items list or only its size
      *
      * @return array|int
      * @access protected

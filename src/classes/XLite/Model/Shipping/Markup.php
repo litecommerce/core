@@ -237,7 +237,7 @@ class Markup extends \XLite\Model\AEntity
     /**
      * setMarkupValue 
      * 
-     * @param int $value Markup value
+     * @param integer $value Markup value
      *  
      * @return void
      * @access public

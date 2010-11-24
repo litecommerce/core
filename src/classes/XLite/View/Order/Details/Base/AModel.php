@@ -83,7 +83,7 @@ abstract class AModel extends \XLite\View\Model\AModel
      * NOTE: this method is public since it's used 
      * by the external widgets (e.g. forms)
      * 
-     * @return int
+     * @return integer 
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

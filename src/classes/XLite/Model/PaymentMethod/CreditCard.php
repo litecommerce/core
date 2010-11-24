@@ -108,7 +108,10 @@ class CreditCard extends \XLite\Model\PaymentMethod
     {
         $info = array();
 
-        if (isset(\XLite\Core\Request::getInstance()->cc_info) && is_array(\XLite\Core\Request::getInstance()->cc_info)) {
+        if (
+            isset(\XLite\Core\Request::getInstance()->cc_info)
+            && is_array(\XLite\Core\Request::getInstance()->cc_info)
+        ) {
             $info = array_map('trim', \XLite\Core\Request::getInstance()->cc_info);
 
             if (isset($info['cc_number'])) {
@@ -123,7 +126,7 @@ class CreditCard extends \XLite\Model\PaymentMethod
      * Handle request 
      * 
      * @param \XLite\Model\Cart $cart Cart
-     * @param string           $type Call type
+     * @param string            $type Call type
      *  
      * @return integer Operation status
      * @access public
@@ -143,7 +146,7 @@ class CreditCard extends \XLite\Model\PaymentMethod
     /**
      * Get card types 
      * 
-     * @return empty array
+     * @return boolean
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

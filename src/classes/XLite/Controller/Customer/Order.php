@@ -103,7 +103,7 @@ class Order extends \XLite\Controller\Customer\ACustomer
     /**
      * Check if current page is accessible
      * 
-     * @return bool
+     * @return boolean 
      * @access public
      * @since  3.0.0
      */

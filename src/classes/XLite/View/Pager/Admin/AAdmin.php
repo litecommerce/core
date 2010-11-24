@@ -40,7 +40,7 @@ abstract class AAdmin extends \XLite\View\Pager\APager
     /**
      * getItemsPerPageDefault
      *
-     * @return int
+     * @return integer 
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -53,7 +53,7 @@ abstract class AAdmin extends \XLite\View\Pager\APager
     /**
      * Return number of pages to display
      *
-     * @return int
+     * @return integer 
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0

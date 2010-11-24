@@ -53,7 +53,7 @@ class Category extends \XLite\Controller\Admin\Catalog
     /**
      * Create/update image
      *
-     * @param int $categoryId image category ID
+     * @param integer $categoryId image category ID
      *
      * @return \XLite\Model\Image\Category\Image
      * @access protected
@@ -190,7 +190,7 @@ class Category extends \XLite\Controller\Admin\Catalog
     /**
      * Validate values passed from the REQUEST for updating/creating category 
      * 
-     * @param bool $isNewObject Flag - is a data for a new category or for updaing existing category
+     * @param boolean $isNewObject Flag - is a data for a new category or for updaing existing category
      *  
      * @return array
      * @access protected

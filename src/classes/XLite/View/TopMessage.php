@@ -117,7 +117,7 @@ class TopMessage extends \XLite\View\AView
     /**
      * isVisible 
      * 
-     * @return bool
+     * @return boolean 
      * @access public
      * @since  3.0.0
      */

@@ -50,7 +50,7 @@ class Product extends \XLite\Model\Product implements \XLite\Base\IDecorator
     /**
      * Maximal available amount
      *
-     * @return int
+     * @return integer 
      * @access public
      * @since  3.0.0
      */

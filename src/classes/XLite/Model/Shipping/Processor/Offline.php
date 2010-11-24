@@ -70,7 +70,7 @@ class Offline extends AProcessor
      * Returns offline shipping rates 
      * 
      * @param \XLite\Model\Order $order       Order object
-     * @param bool               $ignoreCache Flag: if true then do not get rates from cache (not used in offline processor)
+     * @param boolean            $ignoreCache Flag: if true then do not get rates from cache (not used in offline processor)
      *  
      * @return array
      * @access public
@@ -105,7 +105,7 @@ class Offline extends AProcessor
     /**
      * Returns true if shipping methods named may be modified by admin
      * 
-     * @return bool
+     * @return boolean
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

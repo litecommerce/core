@@ -229,7 +229,7 @@ class XML extends \XLite\Base
             // Detect close-tags
             if (0 < $i - $prev) {
                 $ends = substr_count(substr($xml, $prev, $i - $prev), '</');
-                if ($ends > 0) {
+                if (0 < $ends) {
                     $level -= $ends;
                 }
             }
@@ -243,7 +243,7 @@ class XML extends \XLite\Base
             // Add EOL symbol
             $end = strpos(substr($xml, $i + $len), '</' . $tn . '>');
             if (
-                ($end !== false && preg_match('/<[\w\d_\?]+(?: [^>]+)?' . '>/S', substr($xml, $i + $len, $end)))
+                (false !== $end && preg_match('/<[\w\d_\?]+(?: [^>]+)?' . '>/S', substr($xml, $i + $len, $end)))
                 || '?' == substr($tn, 0, 1)
             ) {
                 $xml = substr($xml, 0, $i + $len) . "\n" . substr($xml, $i + $len);

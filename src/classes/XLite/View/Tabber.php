@@ -198,7 +198,7 @@ class Tabber extends \XLite\View\AView
      * Check if title is wider than specified percent of total length of all titles
      * 
      * @param string $page_idx      Page identificator (key in the $pages array)
-     * @param int    $widthPercents Percent value
+     * @param integer    $widthPercents Percent value
      *  
      * @return void
      * @access protected

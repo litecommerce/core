@@ -190,7 +190,7 @@ abstract class ACustomer extends \XLite\Controller\AController
     /**
      * isCartProcessed 
      * 
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0.0
      */
@@ -230,7 +230,7 @@ abstract class ACustomer extends \XLite\Controller\AController
      * Example: getShopUrl('cart.php') = "http://domain/dir/cart.php 
      * 
      * @param string $url    relative URL  
-     * @param bool   $secure flag to use HTTPS
+     * @param boolean   $secure flag to use HTTPS
      *  
      * @return string
      * @access public

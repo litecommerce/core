@@ -131,7 +131,7 @@ abstract class AFormField extends \XLite\View\AView
     /**
      * checkSavedValue 
      * 
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0.0
      */
@@ -143,7 +143,7 @@ abstract class AFormField extends \XLite\View\AView
     /**
      * getValidityFlag 
      * 
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0.0
      */
@@ -214,7 +214,7 @@ abstract class AFormField extends \XLite\View\AView
     /**
      * Check if field is required
      * 
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0.0
      */
@@ -347,7 +347,7 @@ abstract class AFormField extends \XLite\View\AView
     /**
      * Check field value validity
      * 
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0.0
      */
@@ -359,7 +359,7 @@ abstract class AFormField extends \XLite\View\AView
     /**
      * checkFieldValidity 
      * 
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0.0
      */
@@ -383,7 +383,7 @@ abstract class AFormField extends \XLite\View\AView
     /**
      * checkFieldAccessability 
      * 
-     * @return bool
+     * @return boolean 
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -514,7 +514,7 @@ abstract class AFormField extends \XLite\View\AView
     /**
      * Check if widget is visible
      *
-     * @return bool
+     * @return boolean 
      * @access public
      * @since  3.0.0
      */

@@ -168,7 +168,7 @@ class Cart extends \XLite\Model\Order
     /**
      * Checks whether a product is in the cart
      * 
-     * @param int $productId ID of the product to look for
+     * @param integer $productId ID of the product to look for
      *
      * @return boolean
      * @access public

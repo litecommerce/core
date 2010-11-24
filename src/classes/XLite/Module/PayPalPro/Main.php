@@ -40,7 +40,7 @@ class Main extends \XLite\Module\AModule
     /**
      * Module type
      *
-     * @return int
+     * @return integer 
      * @access public
      * @since  3.0
      */
@@ -76,7 +76,7 @@ class Main extends \XLite\Module\AModule
     /**
      * Determines if we need to show settings form link
      *
-     * @return bool
+     * @return boolean 
      * @access public
      * @since  3.0
      */

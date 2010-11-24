@@ -226,7 +226,7 @@ abstract class AModel extends \XLite\View\Dialog
     /**
      * Check if current form is accessible
      *
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0.0
      */
@@ -740,7 +740,7 @@ abstract class AModel extends \XLite\View\Dialog
     /**
      * Return list of form fields
      *
-     * @param bool $onlyNames flag; return objects or only the indexes
+     * @param boolean $onlyNames flag; return objects or only the indexes
      *
      * @return array
      * @access protected
@@ -762,7 +762,7 @@ abstract class AModel extends \XLite\View\Dialog
      *
      * @param string $section        section where the field located
      * @param string $name           field name
-     * @param bool   $preprocessName flag; prepare field name or not
+     * @param boolean   $preprocessName flag; prepare field name or not
      *
      * @return \XLite\View\FormField\AFormField
      * @access protected
@@ -806,7 +806,7 @@ abstract class AModel extends \XLite\View\Dialog
      *
      * @param string $section name of section to check
      *
-     * @return bool
+     * @return boolean 
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -1003,7 +1003,7 @@ abstract class AModel extends \XLite\View\Dialog
      *
      * @param string $action action name
      *
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0.0
      */
@@ -1019,7 +1019,7 @@ abstract class AModel extends \XLite\View\Dialog
     /**
      * Perform certain action for the model object
      *
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0.0
      */
@@ -1031,7 +1031,7 @@ abstract class AModel extends \XLite\View\Dialog
     /**
      * Perform certain action for the model object
      *
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0.0
      */
@@ -1043,7 +1043,7 @@ abstract class AModel extends \XLite\View\Dialog
     /**
      * Perform certain action for the model object
      *
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0.0
      */
@@ -1064,7 +1064,7 @@ abstract class AModel extends \XLite\View\Dialog
     /**
      * Perform certain action for the model object
      *
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0.0
      */
@@ -1138,7 +1138,7 @@ abstract class AModel extends \XLite\View\Dialog
     /**
      * Check for the form errors
      *
-     * @return bool
+     * @return boolean 
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -1151,7 +1151,7 @@ abstract class AModel extends \XLite\View\Dialog
     /**
      * Check if widget is visible
      *
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0.0
      */
@@ -1166,7 +1166,7 @@ abstract class AModel extends \XLite\View\Dialog
      * @param string $action action to perform
      * @param array  $data   form data
      *
-     * @return bool
+     * @return boolean 
      * @access public
      * @since  3.0.0
      */

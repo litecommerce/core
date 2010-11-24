@@ -89,7 +89,7 @@ class Single extends \XLite\View\Form\Product\Modify\AModify
     /**
      * Ability to add the 'enctype="multipart/form-data"' form attribute
      * 
-     * @return bool
+     * @return boolean 
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0

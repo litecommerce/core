@@ -83,7 +83,7 @@ class Sagepaydirect extends \XLite\Controller\Customer\Checkout
             $this->session->set('last_order_id', $oid);
             $this->session->set('order_id', $oid);
         
-
+        }
     }
 
 }

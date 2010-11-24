@@ -53,7 +53,7 @@ class Operator extends \XLite\Base\Singleton
     /**
      * Check if we need to perform a redirect or not 
      * 
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0.0
      */
@@ -66,8 +66,8 @@ class Operator extends \XLite\Base\Singleton
     /**
      * setHeaderLocation
      * 
-     * @param string $location URL
-     * @param int    $code     operation code
+     * @param string  $location URL
+     * @param integer $code     operation code
      *  
      * @return void
      * @access protected
@@ -106,9 +106,9 @@ class Operator extends \XLite\Base\Singleton
     /**
      * Redirect 
      * 
-     * @param string $location URL
-     * @param bool   $force    check or not redirect conditions
-     * @param int    $code     operation code
+     * @param string  $location URL
+     * @param boolean $force    check or not redirect conditions
+     * @param integer $code     operation code
      *  
      * @return void
      * @access public
@@ -204,7 +204,7 @@ class Operator extends \XLite\Base\Singleton
      * @param integer $slice Trace slice count
      *
      * @return array
-     * @access protected
+     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */

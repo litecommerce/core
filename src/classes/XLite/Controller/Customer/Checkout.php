@@ -42,7 +42,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
     /**
      * Check for order min/max total 
      * 
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0.0
      */
@@ -55,7 +55,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
      * isRegistrationNeeded 
      * (CHECKOUT_MODE_REGISTER step check)
      * 
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0.0
      */
@@ -67,7 +67,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
     /**
      * Check if order total is zero
      * 
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0.0
      */
@@ -79,7 +79,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
     /**
      * Check if we are ready to select payment method
      * 
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0.0
      */
@@ -91,7 +91,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
     /**
      * Check if we are ready to select shipping method
      * 
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0.0
      */

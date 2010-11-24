@@ -107,7 +107,7 @@ class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor implement
      * doQuery 
      * 
      * @param mixed $data        Can be either \XLite\Model\Order instance or an array
-     * @param bool  $ignoreCache Flag: if true then do not get rates from cache
+     * @param boolean  $ignoreCache Flag: if true then do not get rates from cache
      *  
      * @return void
      * @access protected
@@ -257,7 +257,7 @@ class AustraliaPost extends \XLite\Model\Shipping\Processor\AProcessor implement
      * Returns shipping rates 
      * 
      * @param mixed $data        Can be either \XLite\Model\Order instance or an array
-     * @param bool  $ignoreCache Flag: if true then do not get rates from cache
+     * @param boolean  $ignoreCache Flag: if true then do not get rates from cache
      *  
      * @return array
      * @access public

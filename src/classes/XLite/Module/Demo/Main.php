@@ -40,7 +40,7 @@ class Main extends \XLite\Module\AModule
     /**
      * Module type
      *
-     * @return int
+     * @return integer 
      * @access public
      * @since  3.0.0
      */

@@ -37,8 +37,8 @@ namespace XLite\Model;
  * @Entity
  * @Table (name="product_translations",
  *         indexes={
- *              @Index(name="code_id", columns={"code", "id"}),
- *              @Index(name="id", columns={"id"})
+ *              @Index (name="code_id", columns={"code", "id"}),
+ *              @Index (name="id", columns={"id"})
  *         }
  * )
  */

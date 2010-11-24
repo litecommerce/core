@@ -76,7 +76,7 @@ abstract class AModule
     /**
      * Return module type 
      * 
-     * @return int
+     * @return integer 
      * @access public
      * @see    ____func_see____
      * @since  3.0
@@ -109,7 +109,7 @@ abstract class AModule
     /**
      * Determines if we need to show settings form link
      * 
-     * @return bool
+     * @return boolean 
      * @access public
      * @see    ____func_see____
      * @since  3.0

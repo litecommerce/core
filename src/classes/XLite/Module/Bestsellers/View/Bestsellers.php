@@ -186,7 +186,7 @@ class Bestsellers extends \XLite\View\ItemsList\Product\Customer\ACustomer
     /**
      * Return category Id to use
      * 
-     * @return int
+     * @return integer 
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0

@@ -40,7 +40,7 @@ abstract class ObjectId extends \XLite\Model\WidgetParam\Int
     /**
      * Return object class name 
      * 
-     * @var    string
+     * @return string
      * @access protected
      * @since  3.0.0
      */
@@ -84,9 +84,9 @@ abstract class ObjectId extends \XLite\Model\WidgetParam\Int
     /**
      * Return object ID
      * 
-     * @param int $id object ID
+     * @param integer $id object ID
      *  
-     * @return int
+     * @return integer 
      * @access protected
      * @since  3.0.0
      */
@@ -117,7 +117,7 @@ abstract class ObjectId extends \XLite\Model\WidgetParam\Int
     /**
      * Return object with passed/predefined ID
      *
-     * @param int $id object ID
+     * @param integer $id object ID
      *
      * @return \XLite\Model\AEntity
      * @access public

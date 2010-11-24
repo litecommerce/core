@@ -139,7 +139,7 @@ class ShippingSettings extends \XLite\View\Tabs\ATabs
     /**
      * Check if zone details page should be displayed
      * 
-     * @return bool
+     * @return boolean 
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -198,7 +198,7 @@ class ShippingSettings extends \XLite\View\Tabs\ATabs
     /**
      * isZonesDefined 
      * 
-     * @return bool
+     * @return boolean 
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -357,10 +357,10 @@ class ShippingSettings extends \XLite\View\Tabs\ATabs
      * Service method for usage in the markups list template
      * Returns true if current markup number is lesser than count of markups of current method
      * 
-     * @param int   $id    Current index of markup
+     * @param integer   $id    Current index of markup
      * @param array $array Array of markups
      *  
-     * @return bool
+     * @return boolean 
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

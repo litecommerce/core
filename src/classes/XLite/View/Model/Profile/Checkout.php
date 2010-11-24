@@ -142,7 +142,7 @@ class Checkout extends \XLite\View\Model\Profile\Main
      * @param string      $password   account password
      * @param string|null $secureHash secret hash string (if needed)
      *
-     * @return bool
+     * @return boolean 
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -175,7 +175,7 @@ class Checkout extends \XLite\View\Model\Profile\Main
      * Check if current user trying to register as anonymous
      * FIXME: adapt this for the standalone LC
      *
-     * @return bool
+     * @return boolean 
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -205,7 +205,7 @@ class Checkout extends \XLite\View\Model\Profile\Main
     /**
      * isPassedEmailDifferent
      *
-     * @return bool
+     * @return boolean 
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -220,7 +220,7 @@ class Checkout extends \XLite\View\Model\Profile\Main
     /**
      * Perform certain action for the model object
      *
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0.0
      */
@@ -255,9 +255,9 @@ class Checkout extends \XLite\View\Model\Profile\Main
     /**
      * Return current profile ID
      *
-     * @param bool $checkMode check mode or not
+     * @param boolean $checkMode check mode or not
      *
-     * @return int
+     * @return integer 
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

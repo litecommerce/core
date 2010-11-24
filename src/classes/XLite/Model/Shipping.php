@@ -87,7 +87,7 @@ class Shipping extends \XLite\Base\Singleton
      * @param \XLite\Model\Shipping\Processor\AProcessor $a First processor
      * @param \XLite\Model\Shipping\Processor\AProcessor $b Second processor
      *  
-     * @return int
+     * @return integer 
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0

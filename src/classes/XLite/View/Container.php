@@ -62,7 +62,7 @@ abstract class Container extends \XLite\View\RequestHandler\ARequestHandler
     /**
      * isWrapper 
      * 
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0.0
      */
@@ -110,7 +110,7 @@ abstract class Container extends \XLite\View\RequestHandler\ARequestHandler
     /**
      * Determines if need to display only a widget body
      * 
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0.0
      */

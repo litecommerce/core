@@ -38,7 +38,7 @@ namespace XLite\Model;
  * @Entity (repositoryClass="\XLite\Model\Repo\ViewList")
  * @Table  (name="view_lists",
  *          indexes={
- *              @index(name="clzw", columns={"class", "list", "zone", "weight"})
+ *              @Index (name="clzw", columns={"class", "list", "zone", "weight"})
  *          }
  * )
  */

@@ -40,7 +40,7 @@ abstract class AForm extends \XLite\View\Form\AForm implements \XLite\Base\IDeco
     /**
      * Chech if widget is exported into Drupal and current form has its method = "GET"
      * 
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0.0
      */

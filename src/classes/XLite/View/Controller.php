@@ -98,7 +98,7 @@ class Controller extends \XLite\View\AView
     /**
      * isSilent 
      * 
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0.0
      */
@@ -110,7 +110,7 @@ class Controller extends \XLite\View\AView
     /**
      * isDumpStarted 
      * 
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0.0
      */
@@ -146,7 +146,7 @@ class Controller extends \XLite\View\AView
     /**
      * useDefaultDisplayMode 
      * 
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0.0
      */

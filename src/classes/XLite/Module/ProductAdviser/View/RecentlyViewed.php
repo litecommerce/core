@@ -154,7 +154,7 @@ class RecentlyViewed extends \XLite\View\ItemsList\Product\Customer\ACustomer
     /**
      * Check if there are product to display
      *
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0.0
      */
@@ -181,7 +181,7 @@ class RecentlyViewed extends \XLite\View\ItemsList\Product\Customer\ACustomer
     /**
      * Check if widget is visible
      *
-     * @return bool
+     * @return boolean 
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

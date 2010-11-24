@@ -218,7 +218,7 @@ class Users extends \XLite\Controller\Admin\AAdmin
     /**
      * isAdvancedOptionSelected 
      * 
-     * @return bool
+     * @return boolean 
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -268,7 +268,7 @@ class Users extends \XLite\Controller\Admin\AAdmin
     /**
      * Get count of users found
      * 
-     * @return int
+     * @return integer 
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

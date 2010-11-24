@@ -84,7 +84,7 @@ class AddToWishlist extends \XLite\View\Button\Regular
     /**
      * Check if widget is visible
      *
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0.0
      */

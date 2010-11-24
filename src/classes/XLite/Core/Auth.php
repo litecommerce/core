@@ -67,7 +67,7 @@ class Auth extends \XLite\Base
      * 
      * @param \XLite\Model\Profile $profile Profile object
      *  
-     * @return bool
+     * @return boolean 
      * @access public
      * @since  3.0.0
      */
@@ -111,7 +111,7 @@ class Auth extends \XLite\Base
      * 
      * @param \XLite\Model\Profile $profile Profile to check
      *  
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0.0
      */
@@ -168,7 +168,7 @@ class Auth extends \XLite\Base
      * 
      * @param string $hashString String to check
      *  
-     * @return bool
+     * @return boolean 
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -210,7 +210,7 @@ class Auth extends \XLite\Base
      * @param string $password   User's password
      * @param string $secureHash Secret token
      *  
-     * @return \XLite\Model\Profile|int
+     * @return \XLite\Model\Profile|integer
      * @access public
      * @since  3.0.0
      */
@@ -268,7 +268,7 @@ class Auth extends \XLite\Base
     /**
      * Checks whether user is logged 
      * 
-     * @return bool
+     * @return boolean 
      * @access public
      * @since  3.0.0
      */
@@ -280,7 +280,7 @@ class Auth extends \XLite\Base
     /**
      * Get profile registered in session
      * 
-     * @param int $profileId Profile Id
+     * @param integer $profileId Profile Id
      *  
      * @return \XLite\Model\Profile
      * @access public
@@ -314,7 +314,7 @@ class Auth extends \XLite\Base
      * 
      * @param \XLite\Model\Profile $profile profile to check
      *  
-     * @return bool
+     * @return boolean 
      * @access public
      * @since  3.0.0
      */
@@ -328,7 +328,7 @@ class Auth extends \XLite\Base
      * 
      * @param \XLite\Model\Profile $profile user profile
      *  
-     * @return bool
+     * @return boolean 
      * @access public
      * @since  3.0.0
      */
@@ -342,7 +342,7 @@ class Auth extends \XLite\Base
      * 
      * @param string $type Profile type (see getUserTypes() for list of allowed values) 
      *  
-     * @return int
+     * @return integer 
      * @access public
      * @since  3.0.0
      */
@@ -356,7 +356,7 @@ class Auth extends \XLite\Base
     /**
      * Gets the access level for administrator
      * 
-     * @return int
+     * @return integer 
      * @access public
      * @since  3.0.0
      */
@@ -368,7 +368,7 @@ class Auth extends \XLite\Base
     /**
      * Gets the access level for a customer
      * 
-     * @return int
+     * @return integer 
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

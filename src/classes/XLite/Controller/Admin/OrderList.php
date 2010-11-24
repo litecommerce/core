@@ -83,7 +83,7 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
      * 
      * @param string $fieldName field name (prefix)
      *  
-     * @return int
+     * @return integer 
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -199,7 +199,7 @@ class OrderList extends \XLite\Controller\Admin\AAdmin
     /**
      * Get date condition parameter (start or end)
      * 
-     * @param bool $start Start date flag, otherwise - end date 
+     * @param boolean $start Start date flag, otherwise - end date 
      *  
      * @return mixed
      * @access public

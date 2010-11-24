@@ -94,7 +94,7 @@ class Main extends \XLite\Module\AModule
     /**
      * Determines if we need to show settings form link
      *
-     * @return bool
+     * @return boolean 
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

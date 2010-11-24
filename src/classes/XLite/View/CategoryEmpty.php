@@ -65,7 +65,7 @@ class CategoryEmpty extends \XLite\View\Dialog
     /**
      * Check if widget is visible
      *
-     * @return bool
+     * @return boolean 
      * @access public
      * @since  3.0.0
      */

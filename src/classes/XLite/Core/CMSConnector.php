@@ -91,7 +91,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
     /**
      * Get profiled DB condition fields list
      * 
-     * @param int $cmsUserId CMS user Id
+     * @param integer $cmsUserId CMS user Id
      *  
      * @return array
      * @access protected
@@ -109,7 +109,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
      * getProfileWhereCondition 
      * TODO: remove this method
      *
-     * @param int $cmsUserId CMS user Id
+     * @param integer $cmsUserId CMS user Id
      *  
      * @return string
      * @access protected
@@ -125,9 +125,9 @@ abstract class CMSConnector extends \XLite\Base\Singleton
     /**
      * Return ID of LC profile associated with the passed ID of CMS profile
      * 
-     * @param int $cmsUserId CMS profile ID
+     * @param integer $cmsUserId CMS profile ID
      *  
-     * @return int
+     * @return integer 
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -165,10 +165,10 @@ abstract class CMSConnector extends \XLite\Base\Singleton
     /**
      * Get category clean URL by category id
      * 
-     * @param int   $id     category ID
-     * @param array $params URL params
+     * @param integer $id     category ID
+     * @param array   $params URL params
      *  
-     * @return string|null
+     * @return string|void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -186,7 +186,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
     /**
      * Get product Clean URL by product id
      * 
-     * @param int $productId product ID
+     * @param integer $productId product ID
      *  
      * @return string
      * @access protected
@@ -241,7 +241,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
     /**
      * Determines if we export content into a CMS
      *
-     * @return bool
+     * @return boolean 
      * @access public
      * @since  3.0.0
      */
@@ -280,7 +280,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
     /**
      * Check if a widget requested from certain CMS
      *
-     * @return bool
+     * @return boolean 
      * @access public
      * @since  3.0.0
      */
@@ -383,9 +383,9 @@ abstract class CMSConnector extends \XLite\Base\Singleton
     /**
      * Return widget
      * 
-     * @param string $class  widget class name
-     * @param array  $params widget params
-     * @param int    $delta  drupal-specific param - so called "delta"
+     * @param string  $class  widget class name
+     * @param array   $params widget params
+     * @param integer $delta  drupal-specific param - so called "delta"
      *  
      * @return \XLite\Core\WidgetDataTransport
      * @access public
@@ -420,8 +420,8 @@ abstract class CMSConnector extends \XLite\Base\Singleton
     /**
      * Add CMS-specific fields to profile data 
      * 
-     * @param int   $cmsUserId CMS user Id
-     * @param array $data      data to prepare
+     * @param integer $cmsUserId CMS user Id
+     * @param array   $data      data to prepare
      *  
      * @return array
      * @access public
@@ -435,7 +435,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
     /**
      * Check and return (if allowed) current user profile
      * 
-     * @param int $cmsUserId internal user ID in CMS
+     * @param integer $cmsUserId internal user ID in CMS
      *  
      * @return \XLite\Model\Profile
      * @access public

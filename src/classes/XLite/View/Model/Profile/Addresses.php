@@ -70,7 +70,7 @@ class Addresses extends \XLite\View\Model\Profile\AProfile
     /**
      * Check if current form is accessible
      *
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0.0
      */
@@ -114,7 +114,7 @@ class Addresses extends \XLite\View\Model\Profile\AProfile
     /**
      * Determines if need to display only a widget body
      * 
-     * @return bool
+     * @return boolean 
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0

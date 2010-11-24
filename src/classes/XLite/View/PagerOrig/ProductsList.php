@@ -74,7 +74,7 @@ class ProductsList extends \XLite\View\PagerOrig
     /**
      * Build page URL by page ID
      *
-     * @param int $pageId page ID
+     * @param integer $pageId page ID
      *
      * @return string
      * @access protected
@@ -88,7 +88,7 @@ class ProductsList extends \XLite\View\PagerOrig
     /**
      * getFrameStartPage
      *
-     * @return int
+     * @return integer 
      * @access protected
      * @since  3.0.0
      */
@@ -118,7 +118,7 @@ class ProductsList extends \XLite\View\PagerOrig
      * 
      * @param string $type link type (first / previous / next / last)
      *  
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0.0
      */
@@ -135,7 +135,7 @@ class ProductsList extends \XLite\View\PagerOrig
      * 
      * @param mixed $index page notation
      *  
-     * @return int
+     * @return integer 
      * @access protected
      * @since  3.0.0
      */
@@ -156,7 +156,7 @@ class ProductsList extends \XLite\View\PagerOrig
      * 
      * @param mixed $index page notation
      *  
-     * @return int
+     * @return integer 
      * @access protected
      * @since  3.0.0
      */
@@ -182,7 +182,7 @@ class ProductsList extends \XLite\View\PagerOrig
     /**
      * getPageClassName 
      * 
-     * @param int $pageId current page ID
+     * @param integer $pageId current page ID
      *  
      * @return string
      * @access protected
@@ -196,7 +196,7 @@ class ProductsList extends \XLite\View\PagerOrig
     /**
      * Get page begin record number
      *
-     * @return int
+     * @return integer 
      * @access protected
      * @since  3.0.0
      */
@@ -208,7 +208,7 @@ class ProductsList extends \XLite\View\PagerOrig
     /**
      * Get page end record number
      *
-     * @return int
+     * @return integer 
      * @access protected
      * @since  3.0.0
      */

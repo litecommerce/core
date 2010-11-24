@@ -52,7 +52,7 @@ class Product extends \XLite\Controller\Customer\Catalog
     /**
      * Return current product Id
      *
-     * @return int
+     * @return integer 
      * @access protected
      * @since  3.0.0
      */
@@ -64,7 +64,7 @@ class Product extends \XLite\Controller\Customer\Catalog
     /**
      * Check for "category_id" param in request
      *
-     * @return int
+     * @return integer 
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -78,7 +78,7 @@ class Product extends \XLite\Controller\Customer\Catalog
     /**
      * Get product category id
      *
-     * @return int
+     * @return integer 
      * @access public
      * @since  3.0.0
      */

@@ -102,7 +102,7 @@ class Profile extends \XLite\Model\Repo\ARepo
      * 
      * @param string $param name of param to check
      *  
-     * @return bool
+     * @return boolean 
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -177,7 +177,7 @@ class Profile extends \XLite\Model\Repo\ARepo
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder QueryBuilder instance
      * @param string                     $value        Searchable value
      * @param string                     $fieldName    Searchable parameter name
-     * @param bool                       $exactCmp     Flag: use exact comparison (=) or 'LIKE'
+     * @param boolean                    $exactCmp     Flag: use exact comparison (=) or 'LIKE'
      * @param string                     $alias        Profile entity alias
      *  
      * @return void
@@ -617,9 +617,9 @@ class Profile extends \XLite\Model\Repo\ARepo
      * Common search
      * 
      * @param \XLite\Core\CommonCell $cnd       Search condition
-     * @param bool                   $countOnly Flag: return items list or only items count
+     * @param boolean                $countOnly Flag: return items list or only items count
      *  
-     * @return \Doctrine\ORM\PersistentCollection|int
+     * @return \Doctrine\ORM\PersistentCollection|integer
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -665,9 +665,9 @@ class Profile extends \XLite\Model\Repo\ARepo
     /**
      * Search profile by login and password
      *
-     * @param string $login    User's login
-     * @param string $password User's password
-     * @param int    $orderId  Order ID related to the profile
+     * @param string  $login    User's login
+     * @param string  $password User's password
+     * @param integer $orderId  Order ID related to the profile
      *
      * @return \XLite\Model\Profile
      * @access public
@@ -725,7 +725,7 @@ class Profile extends \XLite\Model\Repo\ARepo
     /**
      * Find the count of administrator accounts 
      * 
-     * @return int
+     * @return integer 
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

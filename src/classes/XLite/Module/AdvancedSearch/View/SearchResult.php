@@ -74,7 +74,7 @@ class SearchResult extends \XLite\View\SearchResult implements \XLite\Base\IDeco
     /**
      * Check widget visibility
      *
-     * @return bool
+     * @return boolean 
      * @access public
      * @since  3.0.0
      */

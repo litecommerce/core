@@ -209,7 +209,7 @@ class Category extends \XLite\Model\Base\I18n
     /**
      * Check if category has image 
      * 
-     * @return bool
+     * @return boolean 
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -236,7 +236,7 @@ class Category extends \XLite\Model\Base\I18n
     /**
      * Check if category has subcategories
      * 
-     * @return bool
+     * @return boolean 
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -282,10 +282,15 @@ class Category extends \XLite\Model\Base\I18n
      */
     public function getStringPath()
     {
-        return implode('/', array_map(
-            function (\XLite\Model\Category $category) { return $category->getName(); },
-            $this->getRepository()->getCategoryPath($this->getCategoryId())
-        ));
+        return implode(
+            '/',
+            array_map(
+                function (\XLite\Model\Category $category) {
+                    return $category->getName();
+                },
+                $this->getRepository()->getCategoryPath($this->getCategoryId())
+            )
+        );
     }
 
     /**
@@ -293,7 +298,7 @@ class Category extends \XLite\Model\Base\I18n
      *
      * TODO: check if result of "getProducts()" is cached by Doctrine
      * 
-     * @return int
+     * @return integer 
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -307,9 +312,9 @@ class Category extends \XLite\Model\Base\I18n
      * Return products list
      * 
      * @param \XLite\Core\CommonCell $cnd       search condition
-     * @param bool                   $countOnly return items list or only its size
+     * @param boolean                $countOnly return items list or only its size
      *  
-     * @return array|int
+     * @return array|integer
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

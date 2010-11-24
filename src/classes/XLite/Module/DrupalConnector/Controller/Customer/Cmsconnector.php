@@ -50,7 +50,7 @@ class Cmsconnector extends \XLite\Controller\Customer\ACustomer
     /**
      * Must be accessible
      * 
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0.0
      */

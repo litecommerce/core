@@ -79,7 +79,7 @@ implements \XLite\Base\IDecorator
      * (CHECKOUT_MODE_PAYMENT_METHOD step check) 
      * TODO: isShippingAvailable() is no more exists - rework method
      *
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0.0
      */

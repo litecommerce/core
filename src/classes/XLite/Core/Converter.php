@@ -364,7 +364,7 @@ class Converter extends \XLite\Base\Singleton
 
             // end: Current resizing method: using GD functions
 
-/*
+            /*
             // start: Resizing method using PHPThumb() library
             // http://phpthumb.sourceforge.net/
             // TODO: implement complete integration or remove the code
@@ -378,7 +378,11 @@ class Converter extends \XLite\Base\Singleton
                 $keyname = 'config_' . $key;
                 $pt->setParameter($keyname, $value);
                 if (!eregi('password|mysql', $key)) {
-                    $pt->DebugMessage('setParameter('.$keyname.', '.$pt->phpThumbDebugVarDump($value).')', __FILE__, __LINE__);
+                    $pt->DebugMessage(
+                        'setParameter(' . $keyname . ', ' . $pt->phpThumbDebugVarDump($value) . ')',
+                        __FILE__,
+                        __LINE__
+                    );
                 }
             }
 
@@ -392,7 +396,7 @@ class Converter extends \XLite\Base\Singleton
             $result = $pt->outputImageData;
             
             // end: Resizing method using PHPThumb() library
-*/
+            */
 
         }
 

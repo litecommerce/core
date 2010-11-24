@@ -169,7 +169,7 @@ class Layout extends \XLite\Base\Singleton
      * @param string $originalTemplate Template to override
      * @param string $overrideTemplate Custom template
      *  
-     * @return null
+     * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -200,6 +200,7 @@ class Layout extends \XLite\Base\Singleton
      * @param string $template Template to check
      *  
      * @return boolean
+     * @access public
      * @see    ____func_see____
      * @since  1.0.0
      */
@@ -215,7 +216,7 @@ class Layout extends \XLite\Base\Singleton
     /**
      * Set current skin as the admin one
      * 
-     * @return null
+     * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -228,7 +229,7 @@ class Layout extends \XLite\Base\Singleton
     /**
      * Set current skin as the mail one
      * 
-     * @return null
+     * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -241,7 +242,7 @@ class Layout extends \XLite\Base\Singleton
     /**
      * Set current skin as the customer one
      * 
-     * @return null
+     * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -270,7 +271,7 @@ class Layout extends \XLite\Base\Singleton
     /**
      * Set some class properties
      *
-     * @return null
+     * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -289,7 +290,7 @@ class Layout extends \XLite\Base\Singleton
     /**
      * Set current skin path
      * 
-     * @return null
+     * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -302,7 +303,7 @@ class Layout extends \XLite\Base\Singleton
     /**
      * Constructor
      *
-     * @return null
+     * @return void
      * @access protected
      * @see    ____func_see____
      * @since  1.0.0

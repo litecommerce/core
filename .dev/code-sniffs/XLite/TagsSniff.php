@@ -104,11 +104,11 @@ class XLite_TagsSniff extends XLite_ReqCodesSniff implements PHP_CodeSniffer_Sni
 	protected $docBlock = 'unknown';
 
     protected $allowedParamTypes = array(
-        'integer', 'float', 'string', 'array', 'mixed', 'boolean', 'null', 'object',
+        'integer', 'float', 'string', 'array', 'mixed', 'boolean', 'null', 'object', 'resource',
     );
 
     protected $allowedReturnTypes = array(
-        'integer', 'float', 'string', 'array', 'mixed', 'boolean', 'void', 'object',
+        'integer', 'float', 'string', 'array', 'mixed', 'boolean', 'void', 'object', 'resource',
     );
 
     /**

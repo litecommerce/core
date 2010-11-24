@@ -40,7 +40,7 @@ abstract class AProduct extends \XLite\View\Pager\Admin\AAdmin
     /**
      * Return number of items per page
      *
-     * @return int
+     * @return integer 
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0

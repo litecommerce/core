@@ -110,7 +110,7 @@ class PagerOrig extends \XLite\View\AView
     /**
      * getItemsTotal 
      * 
-     * @return int
+     * @return integer 
      * @access protected
      * @since  3.0.0
      */
@@ -126,7 +126,7 @@ class PagerOrig extends \XLite\View\AView
     /**
      * getItemsPerPage 
      * 
-     * @return int
+     * @return integer 
      * @access protected
      * @since  3.0.0
      */
@@ -216,7 +216,7 @@ class PagerOrig extends \XLite\View\AView
     /**
      * isItemsPerPageSelectorVisible 
      * 
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0.0
      */
@@ -228,7 +228,7 @@ class PagerOrig extends \XLite\View\AView
     /**
      * Return list of page URL params 
      * 
-     * @param int $pageId page ID
+     * @param integer $pageId page ID
      *  
      * @return void
      * @access protected
@@ -242,7 +242,7 @@ class PagerOrig extends \XLite\View\AView
     /**
      * Build page URL by page ID
      *
-     * @param int $pageId page ID
+     * @param integer $pageId page ID
      *
      * @return string
      * @access protected
@@ -287,9 +287,9 @@ class PagerOrig extends \XLite\View\AView
     /**
      * isCurrentPage 
      * 
-     * @param int $pageId current page ID
+     * @param integer $pageId current page ID
      *  
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0.0
      */
@@ -301,7 +301,7 @@ class PagerOrig extends \XLite\View\AView
     /**
      * getPageClassName 
      * 
-     * @param int $pageId current page ID
+     * @param integer $pageId current page ID
      *  
      * @return string
      * @access protected
@@ -348,7 +348,7 @@ class PagerOrig extends \XLite\View\AView
     /**
      * Check if widget is visible
      *
-     * @return bool
+     * @return boolean 
      * @access public
      * @since  3.0.0
      */

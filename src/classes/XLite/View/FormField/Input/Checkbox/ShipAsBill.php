@@ -79,7 +79,7 @@ class ShipAsBill extends \XLite\View\FormField\Input\Checkbox
     /**
      * Determines if checkbox is checked
      *
-     * @return bool
+     * @return boolean 
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0

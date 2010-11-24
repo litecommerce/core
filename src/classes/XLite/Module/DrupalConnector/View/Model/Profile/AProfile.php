@@ -69,7 +69,7 @@ abstract class AProfile extends \XLite\View\Model\Profile\AProfile implements \X
     /**
      * Access denied if user is logged into Drupal but not logged into LC
      *
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0.0
      */

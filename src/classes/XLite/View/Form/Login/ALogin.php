@@ -40,7 +40,7 @@ abstract class ALogin extends \XLite\View\Form\AForm
     /**
      * getSecuritySetting 
      * 
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0.0
      */

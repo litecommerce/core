@@ -368,7 +368,7 @@ class Address extends \XLite\View\Model\AModel
     /**
      * Return current address ID
      * 
-     * @return int
+     * @return integer 
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -381,7 +381,7 @@ class Address extends \XLite\View\Model\AModel
     /**
      * Update profile 
      * 
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0.0
      */

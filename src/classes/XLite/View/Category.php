@@ -58,7 +58,7 @@ class Category extends \XLite\View\AView
     /**
      * Check widget visibility 
      * 
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0.0
      */

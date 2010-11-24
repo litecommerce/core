@@ -402,46 +402,34 @@ class Module extends \XLite\Model\AEntity
             $status = self::INSTALLED_WO_CTRL;
         }
 
+        $errorMessage = null;
+
         switch ($status) {
             case self::INSTALLED:
-                \XLite\Logger::getInstance()->log(
-                    \XLite\Core\Translation::lbl('The X module has been installed successfully', array('module' => $name)),
-                    PEAR_LOG_ERR
-                );
+                $errorMessage = 'The X module has been installed successfully';
                 break;
 
             case self::INSTALLED_WO_SQL:
-                \XLite\Logger::getInstance()->log(
-                    \XLite\Core\Translation::lbl(
-                        'The X module has been installed with errors: the DB has not been modified correctly',
-                        array('module' => $name)
-                    ),
-                    PEAR_LOG_ERR
-                );
+                $errorMessage = 'The X module has been installed with errors: the DB has not been modified correctly';
                 break;
 
             case self::INSTALLED_WO_PHP:
-                \XLite\Logger::getInstance()->log(
-                    \XLite\Core\Translation::lbl(
-                        'The X module has been installed incorrectly. Please see the logs for more information',
-                        array('module' => $name)
-                    ),
-                    PEAR_LOG_ERR
-                );
+                $errorMessage = 'The X module has been installed incorrectly. Please see the logs for more information';
                 break;
 
             case self::INSTALLED_WO_CTRL:
-                \XLite\Logger::getInstance()->log(
-                    \XLite\Core\Translation::lbl(
-                        'The X module has been installed, but the module has a wrong module control class',
-                        array('module' => $name)
-                    ),
-                    PEAR_LOG_ERR
-                );
+                $errorMessage = 'The X module has been installed, but the module has a wrong module control class';
                 break;
 
+            default:
 
+        }
 
+        if ($errorMessage) {
+            \XLite\Logger::getInstance()->log(
+                \XLite\Core\Translation::lbl($errorMessage, array('module' => $name)),
+                PEAR_LOG_ERR
+            );
         }
 
         $module->setInstalled($status);

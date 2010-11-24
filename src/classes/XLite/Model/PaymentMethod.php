@@ -223,7 +223,7 @@ class PaymentMethod extends \XLite\Model\AModel
      * 
      * @param string $name method name
      *  
-     * @return bool
+     * @return boolean 
      * @access public
      * @since  3.0.0
      */
@@ -279,7 +279,7 @@ class PaymentMethod extends \XLite\Model\AModel
                 } */
             }
 
-            return $this->params;
+            $result = $this->params;
         }
 
         return $result;

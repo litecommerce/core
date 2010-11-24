@@ -126,7 +126,7 @@ class Img extends \XLite\View\AView
     /**
      * checkImage 
      * 
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0.0
      */
@@ -138,7 +138,7 @@ class Img extends \XLite\View\AView
     /**
      * checkDefaultImage 
      * 
-     * @return bool
+     * @return boolean 
      * @access protected
      * @since  3.0.0
      */

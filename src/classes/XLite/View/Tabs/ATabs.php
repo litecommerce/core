@@ -123,7 +123,7 @@ abstract class ATabs extends \XLite\View\AView
     /**
      * Checks whether the widget is visible, or not
      *
-     * @return bool
+     * @return boolean 
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -436,7 +436,7 @@ abstract class ATabs extends \XLite\View\AView
      * Checks whether a title is wider than the specified percent of total length of all titles
      * 
      * @param string $pageIdx       Page identificator (key in the $pages array)
-     * @param int    $widthPercents Percent value
+     * @param integer    $widthPercents Percent value
      *  
      * @return boolean
      * @access protected

@@ -64,7 +64,7 @@ class Checkbox extends \XLite\View\FormField\Input\AInput
     /**
      * Determines if checkbox is checked
      * 
-     * @return bool
+     * @return boolean 
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0

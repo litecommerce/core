@@ -59,9 +59,9 @@ class CheckoutStep extends \XLite\Model\ListNode
     /**
      * __construct 
      * 
-     * @param string $key         step mode
-     * @param string $widgetClass step widget class name
-     * @param bool   $isPassed    if step is passed or not
+     * @param string  $key         step mode
+     * @param string  $widgetClass step widget class name
+     * @param boolean $isPassed    if step is passed or not
      *  
      * @return void
      * @access public
@@ -78,7 +78,7 @@ class CheckoutStep extends \XLite\Model\ListNode
     /**
      * isPassed 
      * 
-     * @return bool
+     * @return boolean 
      * @access public
      * @since  3.0.0
      */
@@ -92,7 +92,7 @@ class CheckoutStep extends \XLite\Model\ListNode
      * 
      * @param string $mode current mode
      *  
-     * @return bool
+     * @return boolean 
      * @access public
      * @since  3.0.0
      */
@@ -116,7 +116,7 @@ class CheckoutStep extends \XLite\Model\ListNode
     /**
      * isRegularStep 
      * 
-     * @return bool
+     * @return boolean 
      * @access public
      * @since  3.0.0
      */

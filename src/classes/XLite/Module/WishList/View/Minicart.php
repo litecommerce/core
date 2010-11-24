@@ -41,7 +41,7 @@ implements \XLite\Base\IDecorator
     /**
      * Check whether in Wislist there are more than 3 items
      *
-     * @return bool
+     * @return boolean 
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0

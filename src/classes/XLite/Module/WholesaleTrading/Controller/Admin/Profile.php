@@ -42,7 +42,7 @@ class Profile extends \XLite\Controller\Admin\Profile implements \XLite\Base\IDe
     /**
      * Check if it is need to show wholesaler fields in the profile details form
      * 
-     * @return bool
+     * @return boolean 
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

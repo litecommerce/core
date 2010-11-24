@@ -261,7 +261,7 @@ class Shipping extends \XLite\Model\Order implements \XLite\Base\IDecorator
     /**
      * Service method: check if shipping is visible or not at the moment of saveModifier() call
      * 
-     * @return bool
+     * @return boolean 
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -275,7 +275,7 @@ class Shipping extends \XLite\Model\Order implements \XLite\Base\IDecorator
      * Service method: check if shipping rate selected and should be displayed
      * Method is used by isAvailable() (\XLite\Model\OrderModifier class)
      * 
-     * @return bool
+     * @return boolean 
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -288,7 +288,7 @@ class Shipping extends \XLite\Model\Order implements \XLite\Base\IDecorator
     /**
      * Check if shipping enabled and available for calculation
      * 
-     * @return bool
+     * @return boolean 
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -301,7 +301,7 @@ class Shipping extends \XLite\Model\Order implements \XLite\Base\IDecorator
     /**
      * Check if shipping rate has been selected
      * 
-     * @return bool
+     * @return boolean 
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -314,7 +314,7 @@ class Shipping extends \XLite\Model\Order implements \XLite\Base\IDecorator
     /**
      * Check - shipping is available for this order or not
      * 
-     * @return bool
+     * @return boolean 
      * @access public
      * @since  3.0.0
      */
@@ -406,7 +406,7 @@ class Shipping extends \XLite\Model\Order implements \XLite\Base\IDecorator
     /**
      * Returns true if any of order items are shipped 
      * 
-     * @return bool
+     * @return boolean 
      * @access public
      * @since  3.0.0
      */
