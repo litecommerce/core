@@ -63,7 +63,7 @@ class Country extends \XLite\Model\Country implements \XLite\Base\IDecorator
      * 
      * @param integer $check Check value
      *  
-     * @return integer or boolean
+     * @return integer|boolean
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

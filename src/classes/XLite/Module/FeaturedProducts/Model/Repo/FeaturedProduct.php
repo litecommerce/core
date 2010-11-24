@@ -88,7 +88,7 @@ class FeaturedProduct extends \XLite\Model\Repo\ARepo
      *
      * @param integer $categoryId Category ID
      * 
-     * @return array of \XLite\Module\FeaturedProducts\Model\FeaturedProduct objects
+     * @return array(\XLite\Module\FeaturedProducts\Model\FeaturedProduct) Objects
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

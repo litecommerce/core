@@ -228,7 +228,7 @@ class PagerOrig extends \XLite\View\AView
     /**
      * Return list of page URL params 
      * 
-     * @param integer $pageId page ID
+     * @param integer $pageId Page ID
      *  
      * @return void
      * @access protected
@@ -242,7 +242,7 @@ class PagerOrig extends \XLite\View\AView
     /**
      * Build page URL by page ID
      *
-     * @param integer $pageId page ID
+     * @param integer $pageId Page ID
      *
      * @return string
      * @access protected
@@ -287,7 +287,7 @@ class PagerOrig extends \XLite\View\AView
     /**
      * isCurrentPage 
      * 
-     * @param integer $pageId current page ID
+     * @param integer $pageId Current page ID
      *  
      * @return boolean 
      * @access protected
@@ -301,7 +301,7 @@ class PagerOrig extends \XLite\View\AView
     /**
      * getPageClassName 
      * 
-     * @param integer $pageId current page ID
+     * @param integer $pageId Current page ID
      *  
      * @return string
      * @access protected

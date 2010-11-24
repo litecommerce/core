@@ -71,7 +71,7 @@ class ShippingEstimate extends \XLite\View\AView
     /**
      * Get countries list
      * 
-     * @return array of \XLite\Model\Country
+     * @return array(\XLite\Model\Country)
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

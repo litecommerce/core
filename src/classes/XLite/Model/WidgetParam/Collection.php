@@ -50,7 +50,7 @@ class Collection extends \XLite\Model\WidgetParam\AWidgetParam
     /**
      * Return list of conditions to check
      *
-     * @param mixed $value value to validate
+     * @param mixed $value Value to validate
      *
      * @return void
      * @access protected

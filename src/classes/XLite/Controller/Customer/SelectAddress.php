@@ -172,7 +172,7 @@ class SelectAddress extends \XLite\Controller\Customer\Cart
     /**
      * Get current aAddress id 
      * 
-     * @return integer or null
+     * @return integer|void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

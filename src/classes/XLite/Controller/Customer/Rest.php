@@ -119,7 +119,7 @@ class Rest extends \XLite\Controller\Customer\ACustomer
     /**
      * Perform some actions before redirect
      *
-     * @param string|null $action performed action
+     * @param string|null $action Performed action
      *
      * @return void
      * @access protected
@@ -200,7 +200,7 @@ class Rest extends \XLite\Controller\Customer\ACustomer
      * @param string $name Repository name
      * @param string $type Operation type name
      *  
-     * @return object or null
+     * @return object|void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0

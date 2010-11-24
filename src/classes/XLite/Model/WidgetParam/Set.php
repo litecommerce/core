@@ -59,7 +59,7 @@ class Set extends \XLite\Model\WidgetParam\String
     /**
      * Return list of conditions to check
      *
-     * @param mixed $value value to validate
+     * @param mixed $value Value to validate
      *
      * @return void
      * @access protected
@@ -79,10 +79,10 @@ class Set extends \XLite\Model\WidgetParam\String
     /**
      * Constructor
      * 
-     * @param mixed $label     param label (text)
-     * @param mixed $value     default value
-     * @param mixed $isSetting display this setting in CMS or not
-     * @param array $options   options list
+     * @param mixed $label     Param label (text)
+     * @param mixed $value     Default value
+     * @param mixed $isSetting Display this setting in CMS or not
+     * @param array $options   Options list
      *  
      * @return void
      * @access public

@@ -62,7 +62,7 @@ class Base extends \XLite\Base\Singleton
      * "Magic" getter. It's called when object property is not found
      * FIXME - backward compatibility
      * 
-     * @param string $name property name
+     * @param string $name Property name
      *  
      * @return mixed
      * @access public
@@ -78,8 +78,8 @@ class Base extends \XLite\Base\Singleton
     /**
      * "Magic" caller. It's called when object method is not found
      * 
-     * @param string $method method to call
-     * @param array  $args   call arrguments
+     * @param string $method Method to call
+     * @param array  $args   Call arrguments
      *  
      * @return void
      * @access public
@@ -96,7 +96,7 @@ class Base extends \XLite\Base\Singleton
     /**
      * Returns property value named $name. If no property found, returns null 
      * 
-     * @param string $name property name
+     * @param string $name Property name
      *  
      * @return mixed
      * @access public
@@ -133,8 +133,8 @@ class Base extends \XLite\Base\Singleton
     /**
      * Set object property 
      * 
-     * @param string $name  property name
-     * @param mixed  $value property value
+     * @param string $name  Property name
+     * @param mixed  $value Property value
      *  
      * @return void
      * @access public
@@ -172,7 +172,7 @@ class Base extends \XLite\Base\Singleton
      * Backward compatibility - the ability to use "<arg_1> . <arg_2> . ... . <arg_N>" chains in getters
      * FIXME - must be removed
      * 
-     * @param string $name list of params delimeted by the "." (dot)
+     * @param string $name List of params delimeted by the "." (dot)
      *  
      * @return mixed
      * @access public
@@ -213,8 +213,8 @@ class Base extends \XLite\Base\Singleton
      * Backward compatibility - the ability to use "<arg_1> . <arg_2> . ... . <arg_N>" chains in setters 
      * FIXME - must be removed
      * 
-     * @param string $name  list of params delimeted by the "." (dot)
-     * @param mixed  $value value to set
+     * @param string $name  List of params delimeted by the "." (dot)
+     * @param mixed  $value Value to set
      *  
      * @return void
      * @access public
@@ -256,7 +256,7 @@ class Base extends \XLite\Base\Singleton
      * Backward compatibility - the ability to use "<arg_1> . <arg_2> . ... . <arg_N>" chains in getters
      * FIXME - must be removed
      *
-     * @param string $name list of params delimeted by the "." (dot)
+     * @param string $name List of params delimeted by the "." (dot)
      *
      * @return mixed
      * @access public
@@ -270,7 +270,7 @@ class Base extends \XLite\Base\Singleton
     /**
      * Maps the specified associative array to this object properties 
      * 
-     * @param array $assoc array of properties to set
+     * @param array $assoc Array(properties) to set
      *  
      * @return void
      * @access public

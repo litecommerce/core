@@ -105,7 +105,7 @@ class State extends \XLite\Model\Repo\ARepo
      * 
      * @param integer $stateId State id
      *  
-     * @return string or null
+     * @return string|void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

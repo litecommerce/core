@@ -131,7 +131,7 @@ class Method extends \XLite\Model\Base\I18n
     /**
      * Constructor
      *            
-     * @param array $data entity properties
+     * @param array $data Entity properties
      *                                     
      * @return void                        
      * @access public                      

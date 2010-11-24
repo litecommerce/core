@@ -96,7 +96,7 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
     /**
      * Check if param can be used for search
      * 
-     * @param string $param name of param to check
+     * @param string $param Name of param to check
      *  
      * @return boolean 
      * @access protected
@@ -215,8 +215,8 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
     /**
      * Prepare certain search condition
      *
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder query builder to prepare
-     * @param mixed                      $value        condition data
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
+     * @param mixed                      $value        Condition data
      *
      * @return void
      * @access protected
@@ -232,8 +232,8 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
     /**
      * Prepare certain search condition 
      * 
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder query builder to prepare
-     * @param mixed                      $value        condition data
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
+     * @param mixed                      $value        Condition data
      *  
      * @return void
      * @access protected
@@ -261,8 +261,8 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
     /**
      * Prepare certain search condition 
      * 
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder query builder to prepare
-     * @param string                     $value        condition data
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
+     * @param string                     $value        Condition data
      *  
      * @return void
      * @access protected
@@ -287,10 +287,10 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
     /**
      * Prepare certain search condition (EXACT PHRASE method)
      * 
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder query builder to prepare
-     * @param string                     $value        condition data
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
+     * @param string                     $value        Condition data
      *  
-     * @return \Doctrine\ORM\Query\Expr\Base condition class
+     * @return \Doctrine\ORM\Query\Expr\Base Condition class
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -312,10 +312,10 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
     /**
      * Prepare certain search condition (ALL WORDS method)
      * 
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder query builder to prepare
-     * @param string                     $value        condition data
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
+     * @param string                     $value        Condition data
      *  
-     * @return \Doctrine\ORM\Query\Expr\Base condition class
+     * @return \Doctrine\ORM\Query\Expr\Base Condition class
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -354,10 +354,10 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
     /**
      * Prepare certain search condition for substring (ANY WORDS method)
      * 
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder query builder to prepare
-     * @param string                     $value        condition data
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
+     * @param string                     $value        Condition data
      *  
-     * @return \Doctrine\ORM\Query\Expr\Base condition class
+     * @return \Doctrine\ORM\Query\Expr\Base Condition class
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -386,7 +386,7 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
     /**
      * Return search words for "All" and "Any" INCLUDING parameter
      * 
-     * @param string $value search string
+     * @param string $value Search string
      *  
      * @return void
      * @access protected
@@ -419,8 +419,8 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
     /**
      * Prepare certain search condition
      *
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder query builder to prepare
-     * @param array                      $value        condition data
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
+     * @param array                      $value        Condition data
      *
      * @return void
      * @access protected
@@ -437,8 +437,8 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
     /**
      * Prepare certain search condition
      *
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder query builder to prepare
-     * @param array                      $value        condition data
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
+     * @param array                      $value        Condition data
      *
      * @return void
      * @access protected
@@ -453,9 +453,9 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
     /**
      * Call corresponded method to handle a search condition
      * 
-     * @param mixed                      $value        condition data
-     * @param string                     $key          condition name
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder query builder to prepare
+     * @param mixed                      $value        Condition data
+     * @param string                     $key          Condition name
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
      *  
      * @return void
      * @access protected
@@ -474,8 +474,8 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
     /**
      * Adds additional condition to the query for checking if product is enabled
      *
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder query builder object
-     * @param string                     $alias        entity alias
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder object
+     * @param string                     $alias        Entity alias
      *
      * @return void
      * @access protected
@@ -494,8 +494,8 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
     /**
      * Common search
      * 
-     * @param \XLite\Core\CommonCell $cnd       search condition
-     * @param boolean                $countOnly return items list or only its size
+     * @param \XLite\Core\CommonCell $cnd       Search condition
+     * @param boolean                $countOnly Return items list or only its size
      *  
      * @return \Doctrine\ORM\PersistentCollection|integer
      * @access public

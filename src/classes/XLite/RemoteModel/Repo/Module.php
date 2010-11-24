@@ -132,7 +132,7 @@ class Module extends \XLite\RemoteModel\Repo\ARepo
      * 
      * @param string $name Module name
      *  
-     * @return \XLite\RemoteModel\Module or null
+     * @return \XLite\RemoteModel\Module|void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

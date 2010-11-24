@@ -42,7 +42,7 @@ class CEcardSelect extends \XLite\View\AView
     /**
      * E-cards list
      * 
-     * @var    array of \XLite\Module\GiftCertificates\Model\ECard
+     * @var    array(\XLite\Module\GiftCertificates\Model\ECard)
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
@@ -68,7 +68,7 @@ class CEcardSelect extends \XLite\View\AView
     /**
      * Get e-cards list
      * 
-     * @return array of \XLite\Module\GiftCertificates\Model\ECard
+     * @return array(\XLite\Module\GiftCertificates\Model\ECard)
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

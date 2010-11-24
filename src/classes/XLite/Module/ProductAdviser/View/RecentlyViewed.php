@@ -259,7 +259,7 @@ class RecentlyViewed extends \XLite\View\ItemsList\Product\Customer\ACustomer
     /**
      * Get recently viewed products list
      * 
-     * @return array of \XLite\Model\Product objects
+     * @return array(\XLite\Model\Product) Objects
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0

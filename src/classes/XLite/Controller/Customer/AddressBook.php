@@ -40,7 +40,7 @@ class AddressBook extends \XLite\Controller\Customer\ACustomer
     /**
      * Return class name of the register form 
      * 
-     * @return string|null
+     * @return string|void
      * @access protected
      * @since  3.0.0
      */

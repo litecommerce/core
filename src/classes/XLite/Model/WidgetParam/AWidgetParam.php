@@ -86,7 +86,7 @@ abstract class AWidgetParam extends \XLite\Base\SuperClass
     /**
      * Return list of conditions to check
      * 
-     * @param mixed $value value to validate
+     * @param mixed $value Value to validate
      *  
      * @return array
      * @access protected
@@ -98,7 +98,7 @@ abstract class AWidgetParam extends \XLite\Base\SuperClass
     /**
      * Check passed conditions
      *
-     * @param array $conditions conditions to check
+     * @param array $conditions Conditions to check
      *
      * @return array
      * @access protected
@@ -124,9 +124,9 @@ abstract class AWidgetParam extends \XLite\Base\SuperClass
     /**
      * Constructor
      * 
-     * @param mixed $label     param label (text)
-     * @param mixed $value     default value
-     * @param mixed $isSetting display this setting in CMS or not
+     * @param mixed $label     Param label (text)
+     * @param mixed $value     Default value
+     * @param mixed $isSetting Display this setting in CMS or not
      *  
      * @return void
      * @access public
@@ -143,7 +143,7 @@ abstract class AWidgetParam extends \XLite\Base\SuperClass
     /**
      * Validate passed value
      * 
-     * @param mixed $value value to validate
+     * @param mixed $value Value to validate
      *  
      * @return mixed
      * @access public
@@ -159,7 +159,7 @@ abstract class AWidgetParam extends \XLite\Base\SuperClass
     /**
      * Return protected property 
      * 
-     * @param string $name property name
+     * @param string $name Property name
      *  
      * @return mixed
      * @access public
@@ -173,7 +173,7 @@ abstract class AWidgetParam extends \XLite\Base\SuperClass
     /**
      * Set param value
      * 
-     * @param mixed $value value to set
+     * @param mixed $value Value to set
      *  
      * @return void
      * @access public
@@ -187,7 +187,7 @@ abstract class AWidgetParam extends \XLite\Base\SuperClass
     /**
      * Append data to param value
      * 
-     * @param mixed $value value to append
+     * @param mixed $value Value to append
      *  
      * @return void
      * @access public
@@ -201,7 +201,7 @@ abstract class AWidgetParam extends \XLite\Base\SuperClass
     /**
      * setVisibility 
      * 
-     * @param boolean $isSetting visibility flag
+     * @param boolean $isSetting Visibility flag
      *  
      * @return void
      * @access public

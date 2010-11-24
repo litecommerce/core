@@ -88,7 +88,7 @@ class TopMessage extends \XLite\View\AView
     /**
      * getText 
      * 
-     * @param array $data message
+     * @param array $data Message
      *  
      * @return string
      * @access protected
@@ -102,7 +102,7 @@ class TopMessage extends \XLite\View\AView
     /**
      * getType 
      * 
-     * @param array $data message
+     * @param array $data Message
      *  
      * @return string
      * @access protected

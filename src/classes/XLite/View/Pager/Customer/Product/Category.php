@@ -94,8 +94,8 @@ class Category extends \XLite\View\Pager\Customer\Product\AProduct
     /**
      * Return list of items to display on the current page
      *
-     * @param integer $start index of the first item on the page
-     * @param integer $count number of items per page
+     * @param integer $start Index of the first item on the page
+     * @param integer $count Number of items per page
      *
      * @return array|\Doctrine\ORM\PersistentCollection
      * @access protected

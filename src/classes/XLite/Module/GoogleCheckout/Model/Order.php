@@ -358,7 +358,7 @@ EOT;
     /**
      * Returns property value named $name. If no property found, returns null 
      * 
-     * @param string $name property name
+     * @param string $name Property name
      *  
      * @return mixed
      * @access public
@@ -381,8 +381,8 @@ EOT;
     /**
      * Set object property 
      * 
-     * @param string $name  property name
-     * @param mixed  $value property value
+     * @param string $name  Property name
+     * @param mixed  $value Property value
      *  
      * @return void
      * @access public

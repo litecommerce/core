@@ -114,7 +114,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * 
      * @param string $key Cell name
      *  
-     * @return array of cells / cell data
+     * @return array(cells) / cell data
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -278,7 +278,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * @param string $name   Cache cell name
      * @param array  $params Cache cell parameters
      *  
-     * @return mixed or null
+     * @return mixed|void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -345,7 +345,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * @param array  $cell   Cell
      * @param array  $params Cache parameters
      *  
-     * @return string or null
+     * @return string|void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -778,7 +778,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * 
      * @param mixed $id The identifier.
      *  
-     * @return \XLite\Model\AEntity or null
+     * @return \XLite\Model\AEntity|void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -813,7 +813,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * Search entity by key.
      * If it's not found, the exception will be thrown
      *
-     * @param integer $id entity ID
+     * @param integer $id Entity ID
      *
      * @return \XLite\Model\AEntity
      * @access protected
@@ -859,7 +859,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     /**
      * Insert single entity
      *
-     * @param array $data data to save
+     * @param array $data Data to save
      *
      * @return void
      * @access protected
@@ -877,8 +877,8 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     /**
      * Update single entity
      *
-     * @param \XLite\Model\AEntity $entity entity to use
-     * @param array                $data   data to save
+     * @param \XLite\Model\AEntity $entity Entity to use
+     * @param array                $data   Data to save
      *
      * @return void
      * @access protected
@@ -893,7 +893,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     /**
      * Delete single entity
      *
-     * @param \XLite\Model\AEntity $entity entity to detach
+     * @param \XLite\Model\AEntity $entity Entity to detach
      *
      * @return void
      * @access protected
@@ -909,8 +909,8 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * Perform some common operations to modify records
      * Possible functions "(insert|update|delete)(InBatch)(ById)"
      * 
-     * @param string $method method to call
-     * @param array  $args   call arguments
+     * @param string $method Method to call
+     * @param array  $args   Call arguments
      *  
      * @return mixed
      * @access public

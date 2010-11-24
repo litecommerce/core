@@ -247,8 +247,8 @@ class CategorySelect extends \XLite\View\AView
     /**
      * getIndentation 
      * 
-     * @param \XLite\Model\Category $category   category model object
-     * @param integer               $multiplier level's multiplier
+     * @param \XLite\Model\Category $category   Category model object
+     * @param integer               $multiplier Level's multiplier
      *  
      * @return integer 
      * @access protected

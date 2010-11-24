@@ -354,7 +354,7 @@ class Order extends \XLite\Model\Order implements \XLite\Base\IDecorator
 
     /**
     * Find special offers that were applied to this order.
-    * @return array of SpecialOffer with bonus information
+    * @return array(SpecialOffer) With bonus information
     */
     function getAppliedBonuses($where = null)
     {

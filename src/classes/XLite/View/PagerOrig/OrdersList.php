@@ -40,7 +40,7 @@ class OrdersList extends \XLite\View\PagerOrig\Common
     /**
      * Return list of page URL params
      *
-     * @param integer $pageId page ID
+     * @param integer $pageId Page ID
      *
      * @return void
      * @access protected

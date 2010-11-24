@@ -64,7 +64,7 @@ class Session extends \XLite\Model\Repo\ARepo
     /**
      * Find cell by session id and name
      * 
-     * @return \XLite\Model\SessionCell or null
+     * @return \XLite\Model\SessionCell|void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

@@ -446,8 +446,8 @@ EOT;
     /**
      * getRequestDataByPrefix 
      * 
-     * @param string $prefix index in the request array
-     * @param string $field  name of the field to retrieve
+     * @param string $prefix Index in the request array
+     * @param string $field  Name of the field to retrieve
      *  
      * @return array
      * @access protected
@@ -468,7 +468,7 @@ EOT;
     /**
      * getPostedData 
      * 
-     * @param string $field name of the field to retrieve
+     * @param string $field Name of the field to retrieve
      *  
      * @return void
      * @access protected

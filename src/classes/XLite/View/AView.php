@@ -187,7 +187,7 @@ abstract class AView extends \XLite\Core\Handler
     /**
      * Return full template file name
      *
-     * @param string $template template file name (optional)
+     * @param string $template Template file name (optional)
      *  
      * @return string
      * @access protected
@@ -202,7 +202,7 @@ abstract class AView extends \XLite\Core\Handler
     /**
      * Return instance of the child widget 
      * 
-     * @param string $class child widget class
+     * @param string $class Child widget class
      *  
      * @return \XLite\View\AView
      * @access protected
@@ -245,8 +245,8 @@ abstract class AView extends \XLite\Core\Handler
     /**
      * Common layout for the widget resources 
      * 
-     * @param array $jsResources  list of JS resources
-     * @param array $cssResources list of CSS resources
+     * @param array $jsResources  List of JS resources
+     * @param array $cssResources List of CSS resources
      *  
      * @return array
      * @access protected
@@ -260,8 +260,8 @@ abstract class AView extends \XLite\Core\Handler
     /**
      * Register resources of certain type 
      * 
-     * @param string $type      resources type
-     * @param array  $resources resources to register
+     * @param string $type      Resources type
+     * @param array  $resources Resources to register
      *  
      * @return void
      * @access protected
@@ -405,7 +405,7 @@ abstract class AView extends \XLite\Core\Handler
     /**
      * FIXME - must be removed
      * 
-     * @param string $name param name
+     * @param string $name Param name
      *  
      * @return void
      * @access protected
@@ -439,9 +439,9 @@ abstract class AView extends \XLite\Core\Handler
     /**
      * Return widget object
      *
-     * @param array  $params widget params
-     * @param string $class  widget class
-     * @param string $name   widget class
+     * @param array  $params Widget params
+     * @param string $class  Widget class
+     * @param string $name   Widget class
      *
      * @return \XLite\View\AView
      * @access public
@@ -625,7 +625,7 @@ abstract class AView extends \XLite\Core\Handler
     /**
      * Check for current target
      * 
-     * @param array $targets list of allowed targets
+     * @param array $targets List of allowed targets
      *  
      * @return boolean 
      * @access public
@@ -640,7 +640,7 @@ abstract class AView extends \XLite\Core\Handler
     /**
      * Check for current mode
      *
-     * @param array $modes list of allowed modes
+     * @param array $modes List of allowed modes
      *
      * @return boolean 
      * @access public
@@ -668,7 +668,7 @@ abstract class AView extends \XLite\Core\Handler
     /**
      * FIXME - backward compatibility
      *
-     * @param string $name property name
+     * @param string $name Property name
      *
      * @return mixed
      * @access public
@@ -684,7 +684,7 @@ abstract class AView extends \XLite\Core\Handler
     /**
      * Use current controller context
      * 
-     * @param string $name property name
+     * @param string $name Property name
      *  
      * @return mixed
      * @access public
@@ -704,8 +704,8 @@ abstract class AView extends \XLite\Core\Handler
     /**
      * Use current controller context
      * 
-     * @param string $method method name
-     * @param array  $args   call arguments
+     * @param string $method Method name
+     * @param array  $args   Call arguments
      *  
      * @return mixed
      * @access public
@@ -753,9 +753,9 @@ abstract class AView extends \XLite\Core\Handler
     /**
      * Compares two values 
      * 
-     * @param mixed $val1 value 1
-     * @param mixed $val2 value 2
-     * @param mixed $val3 value 3
+     * @param mixed $val1 Value 1
+     * @param mixed $val2 Value 2
+     * @param mixed $val3 Value 3
      *  
      * @return boolean 
      * @access protected
@@ -788,11 +788,11 @@ abstract class AView extends \XLite\Core\Handler
     /**
      * Truncates the baseObject property value to specified length 
      * 
-     * @param mixed  $base       string or object instance to get field value from
-     * @param mixed  $field      string length or field to get value
-     * @param integer    $length     field length to truncate to
-     * @param string $etc        string to add to truncated field value
-     * @param mixed  $breakWords word wrap flag
+     * @param mixed  $base       String or object instance to get field value from
+     * @param mixed  $field      String length or field to get value
+     * @param integer    $length     Field length to truncate to
+     * @param string $etc        String to add to truncated field value
+     * @param mixed  $breakWords Word wrap flag
      *  
      * @return string
      * @access protected
@@ -832,9 +832,9 @@ abstract class AView extends \XLite\Core\Handler
     /**
      * Format date
      * 
-     * @param mixed  $base   string or object instance to get field value from
-     * @param string $field  field to get value
-     * @param string $format date format
+     * @param mixed  $base   String or object instance to get field value from
+     * @param string $field  Field to get value
+     * @param string $format Date format
      *  
      * @return string
      * @access protected
@@ -858,9 +858,9 @@ abstract class AView extends \XLite\Core\Handler
     /**
      * Format timestamp
      *
-     * @param mixed  $base   string or object instance to get field value from
-     * @param string $field  field to get value
-     * @param string $format date format
+     * @param mixed  $base   String or object instance to get field value from
+     * @param string $field  Field to get value
+     * @param string $format Date format
      *
      * @return string
      * @access protected
@@ -879,10 +879,10 @@ abstract class AView extends \XLite\Core\Handler
      * Format price 
      * FIXME - to revise
      * 
-     * @param mixed  $base          string or object instance to get field value from
-     * @param string $field         field to get value
-     * @param mixed  $thousandDelim thousands separator
-     * @param mixed  $decimalDelim  separator for the decimal point
+     * @param mixed  $base          String or object instance to get field value from
+     * @param string $field         Field to get value
+     * @param mixed  $thousandDelim Thousands separator
+     * @param mixed  $decimalDelim  Separator for the decimal point
      *  
      * @return void
      * @access protected
@@ -943,8 +943,8 @@ abstract class AView extends \XLite\Core\Handler
     /**
      * Add slashes 
      * 
-     * @param mixed  $base  string or object instance to get field value from
-     * @param string $field field to get value
+     * @param mixed  $base  String or object instance to get field value from
+     * @param string $field Field to get value
      *  
      * @return void
      * @access protected
@@ -958,7 +958,7 @@ abstract class AView extends \XLite\Core\Handler
     /**
      * Check if data is empty 
      * 
-     * @param mixed $data data to check
+     * @param mixed $data Data to check
      *  
      * @return boolean 
      * @access protected
@@ -972,8 +972,8 @@ abstract class AView extends \XLite\Core\Handler
     /**
      * Split an array into chunks
      * 
-     * @param array $array array to split
-     * @param integer   $count chunks count
+     * @param array $array Array to split
+     * @param integer   $count Chunks count
      *  
      * @return array
      * @access protected
@@ -998,8 +998,8 @@ abstract class AView extends \XLite\Core\Handler
     /**
      * Increment
      * 
-     * @param integer $value value to increment
-     * @param integer $inc   increment
+     * @param integer $value Value to increment
+     * @param integer $inc   Increment
      *  
      * @return integer
      * @access protected
@@ -1026,9 +1026,9 @@ abstract class AView extends \XLite\Core\Handler
     /**
      * For the "zebra" tables
      * 
-     * @param integer    $row          row index
-     * @param string $oddCSSClass  first CSS class
-     * @param string $evenCSSClass second CSS class
+     * @param integer    $row          Row index
+     * @param string $oddCSSClass  First CSS class
+     * @param string $evenCSSClass Second CSS class
      *  
      * @return string
      * @access protected
@@ -1042,7 +1042,7 @@ abstract class AView extends \XLite\Core\Handler
     /**
      * Check if captcha required on the current page
      * 
-     * @param string $widgetId page identifier
+     * @param string $widgetId Page identifier
      *  
      * @return boolean 
      * @access protected
@@ -1116,8 +1116,8 @@ abstract class AView extends \XLite\Core\Handler
      * addViewListChild 
      * 
      * @param array &$list      list to modify
-     * @param array $properties node properties
-     * @param integer   $weight     node position
+     * @param array $properties Node properties
+     * @param integer   $weight     Node position
      *  
      * @return void
      * @access protected
@@ -1286,7 +1286,7 @@ abstract class AView extends \XLite\Core\Handler
      * 
      * @param string $list List name
      *  
-     * @return DOMNamedNodeMap or null
+     * @return DOMNamedNodeMap|void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -1488,8 +1488,8 @@ abstract class AView extends \XLite\Core\Handler
     /**
      * getNamePostedData 
      * 
-     * @param string $field field name
-     * @param integer    $id    model object ID
+     * @param string $field Field name
+     * @param integer    $id    Model object ID
      *  
      * @return string
      * @access protected
@@ -1504,7 +1504,7 @@ abstract class AView extends \XLite\Core\Handler
     /**
      * getNameToDelete
      *
-     * @param integer $id model object ID
+     * @param integer $id Model object ID
      *
      * @return string
      * @access protected
@@ -1536,7 +1536,7 @@ abstract class AView extends \XLite\Core\Handler
     /**
      * Display plain array as JS array
      * 
-     * @param array $data plain array
+     * @param array $data Plain array
      *  
      * @return void
      * @access public

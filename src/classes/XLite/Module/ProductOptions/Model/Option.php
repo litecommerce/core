@@ -120,7 +120,7 @@ class Option extends \XLite\Model\Base\I18n
      * 
      * @param string $type Type
      *  
-     * @return \XLite\Module\ProductOptions\Model\OptionSurcharge or null
+     * @return \XLite\Module\ProductOptions\Model\OptionSurcharge|void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -196,7 +196,7 @@ class Option extends \XLite\Model\Base\I18n
     /**
      * Constructor
      *
-     * @param array $data entity properties
+     * @param array $data Entity properties
      *
      * @return void
      * @access public

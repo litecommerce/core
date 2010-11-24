@@ -125,7 +125,7 @@ class OptionGroup extends \XLite\Model\Repo\Base\I18n
      * @param integer $groupId   Option group id
      * @param integer $productId Product id
      *  
-     * @return \XLite\Module\ProductOptions\Model\OptionGroup or null
+     * @return \XLite\Module\ProductOptions\Model\OptionGroup|void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

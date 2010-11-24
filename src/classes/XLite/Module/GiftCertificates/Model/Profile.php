@@ -50,7 +50,7 @@ class Profile extends \XLite\Model\Profile implements \XLite\Base\IDecorator
     /**
      * Get active gift certificates 
      * 
-     * @return array of \XLite\Module\GiftCertificates\Model\GiftCertificate
+     * @return array(\XLite\Module\GiftCertificates\Model\GiftCertificate)
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

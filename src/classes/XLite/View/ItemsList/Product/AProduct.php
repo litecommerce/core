@@ -177,7 +177,7 @@ abstract class AProduct extends \XLite\View\ItemsList\AItemsList
     /**
      * Define and set widget attributes; initialize widget
      *
-     * @param array $params widget params
+     * @param array $params Widget params
      *
      * @return void
      * @access public

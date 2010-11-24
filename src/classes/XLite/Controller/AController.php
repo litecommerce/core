@@ -126,7 +126,7 @@ abstract class AController extends \XLite\Core\Handler
     /**
      * Perform redirect 
      * 
-     * @param string $url redirect URL
+     * @param string $url Redirect URL
      *  
      * @return void
      * @access protected
@@ -212,9 +212,9 @@ abstract class AController extends \XLite\Core\Handler
     /**
      * Add node to the location line
      * 
-     * @param string $name     node title
-     * @param string $link     node link
-     * @param array  $subnodes node subnodes
+     * @param string $name     Node title
+     * @param string $link     Node link
+     * @param array  $subnodes Node subnodes
      *
      * @return void
      * @access protected
@@ -284,7 +284,7 @@ abstract class AController extends \XLite\Core\Handler
     /**
      * Class name for the \XLite\View\Model\ form (optional)
      * 
-     * @return string|null
+     * @return string|void
      * @access protected
      * @since  3.0.0
      */
@@ -296,9 +296,9 @@ abstract class AController extends \XLite\Core\Handler
     /**
      * Return model form object
      * 
-     * @param array $params form constructor params
+     * @param array $params Form constructor params
      *  
-     * @return \XLite\View\Model\AModel|null
+     * @return \XLite\View\Model\AModel|void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -322,7 +322,7 @@ abstract class AController extends \XLite\Core\Handler
     /**
      * Perform some actions before redirect
      *
-     * @param string|null $action performed action
+     * @param string|null $action Performed action
      *
      * @return void
      * @access protected
@@ -380,8 +380,8 @@ abstract class AController extends \XLite\Core\Handler
      * Get the full URL of the page
      * Example: getShopUrl('cart.php') = "http://domain/dir/cart.php 
      * 
-     * @param string $url    relative URL  
-     * @param boolean   $secure flag to use HTTPS
+     * @param string $url    Relative URL  
+     * @param boolean   $secure Flag to use HTTPS
      *  
      * @return string
      * @access public
@@ -442,7 +442,7 @@ abstract class AController extends \XLite\Core\Handler
     /**
      * Get current URL with additional params
      * 
-     * @param array $params query params to use
+     * @param array $params Query params to use
      *  
      * @return string
      * @access public
@@ -656,9 +656,9 @@ abstract class AController extends \XLite\Core\Handler
     /**
      * setActionStatus 
      * 
-     * @param integer    $status  error/success
-     * @param string $message status info
-     * @param integer    $code    status code
+     * @param integer    $status  Error/success
+     * @param string $message Status info
+     * @param integer    $code    Status code
      *  
      * @return void
      * @access public
@@ -672,8 +672,8 @@ abstract class AController extends \XLite\Core\Handler
     /**
      * setActionError 
      * 
-     * @param string $message status info 
-     * @param integer    $code    status code
+     * @param string $message Status info 
+     * @param integer    $code    Status code
      *  
      * @return void
      * @access public
@@ -687,8 +687,8 @@ abstract class AController extends \XLite\Core\Handler
     /**
      * setActionSuccess
      *
-     * @param string $message status info
-     * @param integer    $code    status code
+     * @param string $message Status info
+     * @param integer    $code    Status code
      *
      * @return void
      * @access public
@@ -931,7 +931,7 @@ abstract class AController extends \XLite\Core\Handler
     }
 
     /**
-     * Return the array of pages for tabber
+     * Return the array(pages) for tabber
      * FIXME - move to the Controller/Admin/Abstract.php:
      * tabber is not used in customer area
      * 

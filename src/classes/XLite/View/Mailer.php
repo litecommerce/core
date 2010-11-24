@@ -422,7 +422,7 @@ class Mailer extends \XLite\View\AView
     /**
      * Return decription of the last occured error
      * 
-     * @return string|null
+     * @return string|void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

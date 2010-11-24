@@ -61,7 +61,7 @@ class Search extends \XLite\View\OrderList\AOrderList
     /**
      * Get orders 
      * 
-     * @return array of \XLite\Model\Order
+     * @return array(\XLite\Model\Order)
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

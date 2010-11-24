@@ -94,7 +94,7 @@ class Regular extends \XLite\View\Button\AButton
     /**
      * JavaScript: compose the associative array definition by PHP array
      *
-     * @param array $params values to compose
+     * @param array $params Values to compose
      *
      * @return string
      * @access protected

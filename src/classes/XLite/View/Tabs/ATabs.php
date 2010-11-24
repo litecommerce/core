@@ -40,7 +40,7 @@ abstract class ATabs extends \XLite\View\AView
 {
 
     /**
-     * Information on tab widgets and their targets defined as an array of tab descriptions:
+     * Information on tab widgets and their targets defined as an array(tab) descriptions:
      *
      *      array(
      *          $target => array(
@@ -182,7 +182,7 @@ abstract class ATabs extends \XLite\View\AView
 
     
     /**
-     * Returns an array of tab descriptions
+     * Returns an array(tab) descriptions
      * 
      * @return array
      * @access protected

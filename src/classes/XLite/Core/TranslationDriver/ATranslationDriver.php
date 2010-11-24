@@ -43,7 +43,7 @@ abstract class ATranslationDriver extends \XLite\Base
      * @param string $name Label name
      * @param string $code Language code
      *  
-     * @return string or null
+     * @return string|void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

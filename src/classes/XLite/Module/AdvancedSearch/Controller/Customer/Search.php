@@ -40,7 +40,7 @@ class Search extends \XLite\Controller\Customer\Search implements \XLite\Base\ID
     /**
      * Get products list
      * 
-     * @return array of \XLite\Model\Product
+     * @return array(\XLite\Model\Product)
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

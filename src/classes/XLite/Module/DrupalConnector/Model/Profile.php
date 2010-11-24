@@ -58,7 +58,7 @@ class Profile extends \XLite\Model\Profile implements \XLite\Base\IDecorator
     /**
      * Get CMS profile 
      * 
-     * @return object or null
+     * @return object|void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

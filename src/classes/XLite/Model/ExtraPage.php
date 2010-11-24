@@ -87,7 +87,7 @@ class ExtraPage extends \XLite\Base
     }
 
     /**
-    * Returns an array of ExtraPage.
+    * Returns an array(ExtraPage.)
     */
     function getPages()
     {

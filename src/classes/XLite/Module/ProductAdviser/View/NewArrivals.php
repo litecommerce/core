@@ -459,7 +459,7 @@ class NewArrivals extends \XLite\View\ItemsList\Product\Customer\ACustomer
     /**
      * Get the list of new arrival products
      * 
-     * @return array of \XLite\Model\Product objects
+     * @return array(\XLite\Model\Product) Objects
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

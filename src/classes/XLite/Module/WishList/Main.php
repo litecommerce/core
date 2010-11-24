@@ -90,7 +90,7 @@ class Main extends \XLite\Module\AModule
      * Modify view lists 
      * FIXME - to remove
      * 
-     * @param array $data annotation data
+     * @param array $data Annotation data
      *  
      * @return void
      * @access public

@@ -56,7 +56,7 @@ abstract class SuperClass
      * Stop script execution
      * FIXME - must be static
      *
-     * @param string $message text to display
+     * @param string $message Text to display
      *
      * @return void
      * @access protected
@@ -81,9 +81,9 @@ abstract class SuperClass
     /**
      * Language label translation short method
      *
-     * @param string $name      label name
-     * @param array  $arguments substitution arguments
-     * @param string $code      language code
+     * @param string $name      Label name
+     * @param array  $arguments Substitution arguments
+     * @param string $code      Language code
      *
      * @return string
      * @access protected

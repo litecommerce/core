@@ -68,7 +68,7 @@ class Product extends \XLite\Controller\Admin\AAdmin
     /**
      * Return list of the CategoryProduct entities
      *
-     * @param \XLite\Model\Product $product current product
+     * @param \XLite\Model\Product $product Current product
      *
      * @return array
      * @access protected

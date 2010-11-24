@@ -370,7 +370,7 @@ class HTTPS extends \XLite\Base
     /**
      * Getter
      *
-     * @param string $name property name
+     * @param string $name Property name
      *
      * @return mixed
      * @access public
@@ -1126,7 +1126,7 @@ class HTTPS extends \XLite\Base
 /**
  * cURL header callback
  * 
- * @param mixed  $curl   cURL request resource or \XLite\Model\HTTPS object
+ * @param mixed  $curl   CURL request resource or \XLite\Model\HTTPS object
  * @param string $header Headers string
  *  
  * @return integer

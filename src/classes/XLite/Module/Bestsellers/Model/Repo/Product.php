@@ -40,8 +40,8 @@ class Product extends \XLite\Model\Repo\Product implements \XLite\Base\IDecorato
     /**
      * Defines bestsellers products collection 
      * 
-     * @param integer $count number of products to get
-     * @param integer $cat   category identificator
+     * @param integer $count Number of products to get
+     * @param integer $cat   Category identificator
      *  
      * @return array
      * @access public
@@ -56,8 +56,8 @@ class Product extends \XLite\Model\Repo\Product implements \XLite\Base\IDecorato
     /**
      * Prepares query builder object to get bestsell products
      * 
-     * @param integer $count number of products to get
-     * @param integer $cat   category identificator
+     * @param integer $count Number of products to get
+     * @param integer $cat   Category identificator
      * 
      * @return \Doctrine\ORM\QueryBuilder Query builder object
      * @access protected

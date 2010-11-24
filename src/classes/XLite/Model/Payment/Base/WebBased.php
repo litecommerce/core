@@ -128,7 +128,7 @@ HTML;
     /**
      * Get input template
      *
-     * @return string or null
+     * @return string|void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -141,7 +141,7 @@ HTML;
     /**
      * Get return request owner transaction or null
      * 
-     * @return \XLite\Model\Payment\Transaction or null
+     * @return \XLite\Model\Payment\Transaction|void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

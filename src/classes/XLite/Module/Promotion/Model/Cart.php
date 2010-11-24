@@ -369,7 +369,7 @@ class Cart extends \XLite\Model\Cart implements \XLite\Base\IDecorator
     */
     function getBonusList()
     {
-        $bonusList = array(); // array of BonusPrice, which is product-price pair
+        $bonusList = array(); // array(BonusPrice,) which is product-price pair
         // take bonuses into account
         $applied = $this->getAppliedBonuses();
         for ($i=0; $i<count($applied); $i++) {

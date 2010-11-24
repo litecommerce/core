@@ -165,7 +165,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
     /**
      * Get category clean URL by category id
      * 
-     * @param integer $id     category ID
+     * @param integer $id     Category ID
      * @param array   $params URL params
      *  
      * @return string|void
@@ -186,7 +186,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
     /**
      * Get product Clean URL by product id
      * 
-     * @param integer $productId product ID
+     * @param integer $productId Product ID
      *  
      * @return string
      * @access protected
@@ -253,7 +253,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
     /**
      * Save passed params in the requester 
      * 
-     * @param array $request params to map
+     * @param array $request Params to map
      *  
      * @return void
      * @access public
@@ -316,7 +316,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
     /**
      * Return application instance 
      * 
-     * @param string $applicationId cache key
+     * @param string $applicationId Cache key
      *  
      * @return \XLite
      * @access public
@@ -333,7 +333,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
     /**
      * Return viewer for current page
      *
-     * @param string $applicationId cache key
+     * @param string $applicationId Cache key
      *
      * @return \XLite\View\Controller
      * @access public
@@ -349,7 +349,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
     /**
      * Get controller 
      *
-     * @param string $applicationId cache key
+     * @param string $applicationId Cache key
      * 
      * @return \XLite\Controller\AController
      * @access public
@@ -366,7 +366,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
     /**
      * Run controller 
      *
-     * @param string $applicationId cache key
+     * @param string $applicationId Cache key
      *  
      * @return void
      * @access public
@@ -383,9 +383,9 @@ abstract class CMSConnector extends \XLite\Base\Singleton
     /**
      * Return widget
      * 
-     * @param string  $class  widget class name
-     * @param array   $params widget params
-     * @param integer $delta  drupal-specific param - so called "delta"
+     * @param string  $class  Widget class name
+     * @param array   $params Widget params
+     * @param integer $delta  Drupal-specific param - so called "delta"
      *  
      * @return \XLite\Core\WidgetDataTransport
      * @access public
@@ -401,8 +401,8 @@ abstract class CMSConnector extends \XLite\Base\Singleton
     /**
      * Return controller for current page
      *
-     * @param string $target controller target
-     * @param array  $params controller params
+     * @param string $target Controller target
+     * @param array  $params Controller params
      *
      * @return \XLite\Core\WidgetDataTransport
      * @access public
@@ -421,7 +421,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
      * Add CMS-specific fields to profile data 
      * 
      * @param integer $cmsUserId CMS user Id
-     * @param array   $data      data to prepare
+     * @param array   $data      Data to prepare
      *  
      * @return array
      * @access public
@@ -435,7 +435,7 @@ abstract class CMSConnector extends \XLite\Base\Singleton
     /**
      * Check and return (if allowed) current user profile
      * 
-     * @param integer $cmsUserId internal user ID in CMS
+     * @param integer $cmsUserId Internal user ID in CMS
      *  
      * @return \XLite\Model\Profile
      * @access public

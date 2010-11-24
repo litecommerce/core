@@ -90,8 +90,8 @@ class Wishlist extends \XLite\Controller\Customer\ACustomer
     /**
      * prepareWishListItem 
      * 
-     * @param \XLite\Module\WishList\Model\WishListProduct $product item to prepare
-     * @param boolean                                     $status  if item exists or not
+     * @param \XLite\Module\WishList\Model\WishListProduct $product Item to prepare
+     * @param boolean                                     $status  If item exists or not
      *  
      * @return void
      * @access protected
@@ -391,7 +391,7 @@ class Wishlist extends \XLite\Controller\Customer\ACustomer
      * Return product link for email
      * NOTE: function must be public since it's used in templates
      *
-     * @param \XLite\Module\WishList\Model\WishListProduct $product return product link for email
+     * @param \XLite\Module\WishList\Model\WishListProduct $product Return product link for email
      *
      * @return string
      * @access public

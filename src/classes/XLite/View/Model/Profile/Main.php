@@ -155,7 +155,7 @@ class Main extends \XLite\View\Model\Profile\AProfile
     /**
      * Populate model object properties by the passed data
      * 
-     * @param array $data data to set
+     * @param array $data Data to set
      *  
      * @return void
      * @access protected
@@ -219,7 +219,7 @@ class Main extends \XLite\View\Model\Profile\AProfile
     /**
      * Return error message for the "validateInput" action
      * 
-     * @param string $login profile login
+     * @param string $login Profile login
      *  
      * @return string
      * @access protected
@@ -343,7 +343,7 @@ class Main extends \XLite\View\Model\Profile\AProfile
     /**
      * Return current profile ID
      *
-     * @param boolean $checkMode check mode or not
+     * @param boolean $checkMode Check mode or not
      *
      * @return integer 
      * @access public
@@ -386,8 +386,8 @@ class Main extends \XLite\View\Model\Profile\AProfile
     /**
      * Save current form reference and initialize the cache
      *
-     * @param array $params   widget params
-     * @param array $sections sections list
+     * @param array $params   Widget params
+     * @param array $sections Sections list
      *
      * @return void
      * @access public

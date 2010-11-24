@@ -230,7 +230,7 @@ class AdminMain extends \XLite\View\Model\AModel
     /**
      * Populate model object properties by the passed data
      * 
-     * @param array $data data to set
+     * @param array $data Data to set
      *  
      * @return void
      * @access protected
@@ -360,7 +360,7 @@ class AdminMain extends \XLite\View\Model\AModel
     /**
      * Return error message for the "validateInput" action
      * 
-     * @param string $login profile login
+     * @param string $login Profile login
      *  
      * @return string
      * @access protected
@@ -536,7 +536,7 @@ class AdminMain extends \XLite\View\Model\AModel
     /**
      * getRequestProfileId 
      * 
-     * @return int|null
+     * @return int|void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -624,8 +624,8 @@ class AdminMain extends \XLite\View\Model\AModel
     /**
      * Save current form reference and initialize the cache
      *
-     * @param array $params   widget params
-     * @param array $sections sections list
+     * @param array $params   Widget params
+     * @param array $sections Sections list
      *
      * @return void
      * @access public

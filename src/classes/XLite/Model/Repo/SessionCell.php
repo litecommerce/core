@@ -40,7 +40,7 @@ class SessionCell extends \XLite\Model\Repo\ARepo
     /**
      * Return data to indentify cell in SQL queries
      *
-     * @param \XLite\Model\SessionCell $cell cell to use
+     * @param \XLite\Model\SessionCell $cell Cell to use
      *
      * @return array
      * @access protected
@@ -57,9 +57,9 @@ class SessionCell extends \XLite\Model\Repo\ARepo
     /**
      * Prepare data for cell insert 
      * 
-     * @param integer $id    session ID
-     * @param string  $name  cell name
-     * @param mixed   $value data to store
+     * @param integer $id    Session ID
+     * @param string  $name  Cell name
+     * @param mixed   $value Data to store
      *  
      * @return array
      * @access protected
@@ -77,8 +77,8 @@ class SessionCell extends \XLite\Model\Repo\ARepo
     /**
      * Prepare data for cell update
      *
-     * @param mixed                    $value data to store
-     * @param \XLite\Model\SessionCell $cell  cell to update
+     * @param mixed                    $value Data to store
+     * @param \XLite\Model\SessionCell $cell  Cell to update
      *
      * @return array
      * @access protected
@@ -96,9 +96,9 @@ class SessionCell extends \XLite\Model\Repo\ARepo
     /**
      * Insert new cell
      *
-     * @param integer $id    session ID
-     * @param string  $name  cell name
-     * @param mixed   $value data to store
+     * @param integer $id    Session ID
+     * @param string  $name  Cell name
+     * @param mixed   $value Data to store
      *
      * @return integer 
      * @access public
@@ -118,8 +118,8 @@ class SessionCell extends \XLite\Model\Repo\ARepo
     /**
      * Update existsing cell
      *
-     * @param \XLite\Model\SessionCell $cell  cell to update
-     * @param mixed                    $value value to set
+     * @param \XLite\Model\SessionCell $cell  Cell to update
+     * @param mixed                    $value Value to set
      *
      * @return void
      * @access public
@@ -138,7 +138,7 @@ class SessionCell extends \XLite\Model\Repo\ARepo
     /**
      * Remove cell
      *
-     * @param \XLite\Model\SessionCell $cell cell to delete
+     * @param \XLite\Model\SessionCell $cell Cell to delete
      *
      * @return void
      * @access public

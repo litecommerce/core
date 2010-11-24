@@ -52,7 +52,7 @@ class Checkout extends \XLite\View\Model\Profile\Main
     /**
      * Prepare the "Personal info" section for checkout
      *
-     * @param array $sections passed list of sections
+     * @param array $sections Passed list of sections
      *
      * @return void
      * @access protected
@@ -89,7 +89,7 @@ class Checkout extends \XLite\View\Model\Profile\Main
     /**
      * setPasswords 
      * 
-     * @param string $password password to set
+     * @param string $password Password to set
      *  
      * @return void
      * @access protected
@@ -139,8 +139,8 @@ class Checkout extends \XLite\View\Model\Profile\Main
     /**
      * Log into LiteCommerce
      *
-     * @param string      $password   account password
-     * @param string|null $secureHash secret hash string (if needed)
+     * @param string      $password   Account password
+     * @param string|null $secureHash Secret hash string (if needed)
      *
      * @return boolean 
      * @access protected
@@ -255,7 +255,7 @@ class Checkout extends \XLite\View\Model\Profile\Main
     /**
      * Return current profile ID
      *
-     * @param boolean $checkMode check mode or not
+     * @param boolean $checkMode Check mode or not
      *
      * @return integer 
      * @access public

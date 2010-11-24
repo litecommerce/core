@@ -88,7 +88,7 @@ class SearchResult extends \XLite\View\SearchResult implements \XLite\Base\IDeco
     /**
      * getSearchParamValue
      * 
-     * @param string $name param name
+     * @param string $name Param name
      *  
      * @return mixed
      * @access protected

@@ -40,7 +40,7 @@ abstract class AOrderList extends \XLite\View\Dialog
     /**
      * Orders list (cache)
      * 
-     * @var    array of \XLite\Model\Order
+     * @var    array(\XLite\Model\Order)
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
@@ -158,7 +158,7 @@ abstract class AOrderList extends \XLite\View\Dialog
     /**
      * Get orders 
      * 
-     * @return array of \XLite\Model\Order
+     * @return array(\XLite\Model\Order)
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

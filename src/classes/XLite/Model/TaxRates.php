@@ -42,7 +42,7 @@ class TaxRates extends \XLite\Base
     public $_rates;
 
     /**
-    * "default tax schema name" => array of rate rules
+    * "default tax schema name" => array(rate) rules
     */    
     public $_predefinedSchemas = array();
     public $_taxValues = array();
@@ -1011,8 +1011,8 @@ array("condition" => "state=District of Columbia", "action" => array(
 
     /**
     * Check expression
-    * @param string $exp    expression
-    * @param array  $errors invalid tax names
+    * @param string $exp    Expression
+    * @param array  $errors Invalid tax names
     * @return true - expression ok
     */
     function checkExpressionSyntax($exp, &$errors, $tax_name = 'Tax')

@@ -175,7 +175,7 @@ abstract class AFormField extends \XLite\View\AView
     /**
      * setCommonAttributes 
      * 
-     * @param array $attrs field attributes to prepare
+     * @param array $attrs Field attributes to prepare
      *  
      * @return void
      * @access protected
@@ -196,7 +196,7 @@ abstract class AFormField extends \XLite\View\AView
     /**
      * prepareAttributes 
      * 
-     * @param array $attrs field attributes to prepare
+     * @param array $attrs Field attributes to prepare
      *  
      * @return array
      * @access protected
@@ -396,8 +396,8 @@ abstract class AFormField extends \XLite\View\AView
     /**
      * callFormMethod 
      * 
-     * @param string $method class method to call
-     * @param array  $args   call arguments
+     * @param string $method Class method to call
+     * @param array  $args   Call arguments
      *  
      * @return mixed
      * @access protected
@@ -448,7 +448,7 @@ abstract class AFormField extends \XLite\View\AView
     /**
      * setValue 
      * 
-     * @param mixed $value value to set
+     * @param mixed $value Value to set
      *  
      * @return void
      * @access public
@@ -526,7 +526,7 @@ abstract class AFormField extends \XLite\View\AView
     /**
      * Save current form reference and sections list, and initialize the cache
      *
-     * @param array $params widget params
+     * @param array $params Widget params
      *
      * @return void
      * @access public

@@ -476,7 +476,7 @@ class Database extends \XLite\Base\Singleton
      * @param array                      $data   Hash array
      * @param string                     $prefix Placeholder prefix
      *  
-     * @return array keys for IN () function
+     * @return array Keys for IN () function
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

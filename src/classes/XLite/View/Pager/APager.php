@@ -299,7 +299,7 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
     /**
      * Build page URL by page ID
      *
-     * @param integer $pageId page ID
+     * @param integer $pageId Page ID
      *
      * @return string
      * @access protected
@@ -326,7 +326,7 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
     /**
      * getFrameHalfLength 
      * 
-     * @param boolean $shortPart which part of frame to return
+     * @param boolean $shortPart Which part of frame to return
      *  
      * @return integer 
      * @access protected
@@ -672,9 +672,9 @@ abstract class APager extends \XLite\View\RequestHandler\ARequestHandler
     /**
      * Return SQL condition with limits
      * 
-     * @param integer                $start index of the first item on the page
-     * @param integer                $count number of items per page
-     * @param \XLite\Core\CommonCell $cnd   search condition
+     * @param integer                $start Index of the first item on the page
+     * @param integer                $count Number of items per page
+     * @param \XLite\Core\CommonCell $cnd   Search condition
      *  
      * @return array|\Doctrine\ORM\PersistentCollection
      * @access public

@@ -315,7 +315,7 @@ class Dialog extends \XLite\View\Dialog
     /**
      * Get translate language 
      * 
-     * @return \XLite\Model\Language or null
+     * @return \XLite\Model\Language|void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

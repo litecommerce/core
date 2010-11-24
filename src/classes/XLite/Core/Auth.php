@@ -312,7 +312,7 @@ class Auth extends \XLite\Base
     /**
      * Check if passed profile is currently logged in
      * 
-     * @param \XLite\Model\Profile $profile profile to check
+     * @param \XLite\Model\Profile $profile Profile to check
      *  
      * @return boolean 
      * @access public
@@ -326,7 +326,7 @@ class Auth extends \XLite\Base
     /**
      * Checks whether the currently logged user is an administrator
      * 
-     * @param \XLite\Model\Profile $profile user profile
+     * @param \XLite\Model\Profile $profile User profile
      *  
      * @return boolean 
      * @access public
@@ -421,7 +421,7 @@ class Auth extends \XLite\Base
      * Save the secret token in session.
      * See "checkSecureHash()" method
      * 
-     * @param string $hashString hash string to save
+     * @param string $hashString Hash string to save
      *  
      * @return void
      * @access public

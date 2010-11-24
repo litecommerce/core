@@ -40,7 +40,7 @@ class GiftCertificateEcards extends \XLite\Controller\Admin\AAdmin
     /**
      * Get e-cards 
      * 
-     * @return array of \XLite\Module\GiftCertificates\Model\ECard
+     * @return array(\XLite\Module\GiftCertificates\Model\ECard)
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

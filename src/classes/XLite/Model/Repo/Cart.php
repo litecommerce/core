@@ -59,7 +59,7 @@ class Cart extends \XLite\Model\Repo\ARepo
      * 
      * @param integer $orderId Order id
      *  
-     * @return \Doctrine\DBAL\Statement or null
+     * @return \Doctrine\DBAL\Statement|void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0

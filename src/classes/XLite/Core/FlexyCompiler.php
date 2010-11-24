@@ -1204,8 +1204,8 @@ class FlexyCompiler extends \XLite\Base\Singleton
     /**
      * Compile and save template
      * 
-     * @param string  $original relative file path
-     * @param boolean $force    flag to force compilation
+     * @param string  $original Relative file path
+     * @param boolean $force    Flag to force compilation
      *  
      * @return string
      * @access public
@@ -1235,8 +1235,8 @@ class FlexyCompiler extends \XLite\Base\Singleton
     /**
      * Check if template is up-to-date
      * 
-     * @param string $original original template
-     * @param string $compiled compiled one
+     * @param string $original Original template
+     * @param string $compiled Compiled one
      *  
      * @return boolean 
      * @access protected
@@ -1251,7 +1251,7 @@ class FlexyCompiler extends \XLite\Base\Singleton
     /**
      * Return URL for the images directory 
      * 
-     * @param string $file current template
+     * @param string $file Current template
      *  
      * @return string
      * @access protected
@@ -1266,7 +1266,7 @@ class FlexyCompiler extends \XLite\Base\Singleton
     /**
      * Set new file for compile 
      * 
-     * @param string $file template to compile
+     * @param string $file Template to compile
      *  
      * @return void
      * @access protected

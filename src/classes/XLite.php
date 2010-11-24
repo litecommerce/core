@@ -180,7 +180,7 @@ class XLite extends \XLite\Base
     /**
      * Return specified (or the whole list) options 
      * 
-     * @param mixed $names list (or single value) of option names
+     * @param mixed $names List (or single value) of option names
      *  
      * @return mixed
      * @access public
@@ -220,9 +220,9 @@ class XLite extends \XLite\Base
     /**
      * Return full URL for the resource
      * 
-     * @param string $url      url part to add
-     * @param boolean   $isSecure use HTTP or HTTPS
-     * @param array  $params   optional URL params
+     * @param string $url      Url part to add
+     * @param boolean   $isSecure Use HTTP or HTTPS
+     * @param array  $params   Optional URL params
      *  
      * @return string
      * @access public
@@ -250,7 +250,7 @@ class XLite extends \XLite\Base
     /**
      * Ability to provoke cache cleanup (or to prevent it)
      * 
-     * @param boolean $flag if it's needed to cleanup cache or not
+     * @param boolean $flag If it's needed to cleanup cache or not
      *  
      * @return void
      * @access public
@@ -343,7 +343,7 @@ class XLite extends \XLite\Base
     /**
      * Return viewer object
      * 
-     * @return \XLite\View\Controller|null
+     * @return \XLite\View\Controller|void
      * @access public
      * @since  3.0.0
      */

@@ -50,7 +50,7 @@ class WidgetDataTransport extends \XLite\Base
     /**
      * Save passed handler
      * 
-     * @param mixed $handler passed handler
+     * @param mixed $handler Passed handler
      *  
      * @return void
      * @access public
@@ -64,8 +64,8 @@ class WidgetDataTransport extends \XLite\Base
     /**
      * Call handler methods
      * 
-     * @param string $method method to call
-     * @param array  $args   call arguments
+     * @param string $method Method to call
+     * @param array  $args   Call arguments
      *  
      * @return mixed
      * @access public

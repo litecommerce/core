@@ -298,7 +298,7 @@ abstract class AModule
     /**
      * Easy way to register payment method
      * 
-     * @param string $name payment method name
+     * @param string $name Payment method name
      *  
      * @return void
      * @access protected
@@ -316,7 +316,7 @@ abstract class AModule
     /**
      * Easy way to register shipping module 
      * 
-     * @param string $name shipping module name
+     * @param string $name Shipping module name
      *  
      * @return void
      * @access protected

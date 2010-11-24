@@ -87,7 +87,7 @@ abstract class Handler extends \XLite\Base
     /**
      * Return widget param value 
      * 
-     * @param string $param param to fetch
+     * @param string $param Param to fetch
      *  
      * @return mixed
      * @access protected
@@ -115,7 +115,7 @@ abstract class Handler extends \XLite\Base
     /**
      * getParamsHash 
      * 
-     * @param array $params list of params to use
+     * @param array $params List of params to use
      *  
      * @return array
      * @access protected
@@ -136,7 +136,7 @@ abstract class Handler extends \XLite\Base
     /**
      * Define and set handler attributes; initialize handler 
      * 
-     * @param array $params handler params
+     * @param array $params Handler params
      *  
      * @return void
      * @access public
@@ -163,7 +163,7 @@ abstract class Handler extends \XLite\Base
     /**
      * Set widget params
      *
-     * @param array $params handler params
+     * @param array $params Handler params
      *
      * @return void
      * @access public
@@ -189,7 +189,7 @@ abstract class Handler extends \XLite\Base
     /**
      * Return widget parameters list (or a single object)
      * 
-     * @param string $param param name
+     * @param string $param Param name
      *  
      * @return array
      * @access public
@@ -239,9 +239,9 @@ abstract class Handler extends \XLite\Base
     /**
      * Check passed attributes
      *
-     * @param array $attrs attributes to check
+     * @param array $attrs Attributes to check
      *
-     * @return array errors list
+     * @return array Errors list
      * @access public
      * @since  1.0.0
      */
@@ -271,9 +271,9 @@ abstract class Handler extends \XLite\Base
     /**
      * Compose URL from target, action and additional params
      *
-     * @param string $target page identifier
-     * @param string $action action to perform
-     * @param array  $params additional params
+     * @param string $target Page identifier
+     * @param string $action Action to perform
+     * @param array  $params Additional params
      *
      * @return string
      * @access public
@@ -288,9 +288,9 @@ abstract class Handler extends \XLite\Base
      * Compose URL path from target, action and additional params
      * FIXME - this method must be removed
      *
-     * @param string $target page identifier
-     * @param string $action action to perform
-     * @param array  $params additional params
+     * @param string $target Page identifier
+     * @param string $action Action to perform
+     * @param array  $params Additional params
      *
      * @return string
      * @access public
@@ -308,9 +308,9 @@ abstract class Handler extends \XLite\Base
      * Compose URL query arguments from target, action and additional params
      * FIXME - this method must be removed
      *
-     * @param string $target page identifier
-     * @param string $action action to perform
-     * @param array  $params additional params
+     * @param string $target Page identifier
+     * @param string $action Action to perform
+     * @param array  $params Additional params
      *
      * @return array
      * @access public

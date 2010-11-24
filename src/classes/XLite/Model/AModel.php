@@ -782,8 +782,8 @@ class AModel extends \XLite\Base
     /**
      * Creates an associative array with index = object primary key 
      * 
-     * @param array  $objects array of objects
-     * @param string $field   field to use as an index
+     * @param array  $objects Array(objects)
+     * @param string $field   Field to use as an index
      *  
      * @return array
      * @access protected
@@ -828,7 +828,7 @@ class AModel extends \XLite\Base
     /**
      * Updates the object properties with specified array values. Sets persistent and read flags 
      * 
-     * @param array $properties property values array
+     * @param array $properties Property values array
      *  
      * @return void
      * @access protected
@@ -843,7 +843,7 @@ class AModel extends \XLite\Base
     /**
      * Compose the "WHERE" condition for SQL queries
      * 
-     * @param string $where condition
+     * @param string $where Condition
      *  
      * @return string
      * @access protected
@@ -912,8 +912,8 @@ class AModel extends \XLite\Base
     /**
      * Perform some action on the object properties
      * 
-     * @param array  $properties values list
-     * @param string $method     method to execute
+     * @param array  $properties Values list
+     * @param string $method     Method to execute
      *  
      * @return void
      * @access protected
@@ -971,7 +971,7 @@ class AModel extends \XLite\Base
     /**
      * Sets the properties for this object from the specified array 
      * 
-     * @param array $properties the associative array with properties
+     * @param array $properties The associative array with properties
      *  
      * @return void
      * @access public
@@ -986,7 +986,7 @@ class AModel extends \XLite\Base
     /**
      * Unsets the properties for this object from the specified array
      *
-     * @param array $properties the associative array with properties
+     * @param array $properties The associative array with properties
      *
      * @return void
      * @access public
@@ -1001,7 +1001,7 @@ class AModel extends \XLite\Base
     /**
      * Returns the specified property of this object. Read the object data from dataase if necessary 
      * 
-     * @param string $property field name
+     * @param string $property Field name
      *  
      * @return mixed
      * @access public
@@ -1026,8 +1026,8 @@ class AModel extends \XLite\Base
     /**
      * Sets the specified property value 
      * 
-     * @param string $property field name
-     * @param mixed  $value    field value
+     * @param string $property Field name
+     * @param mixed  $value    Field value
      *  
      * @return void
      * @access public
@@ -1054,8 +1054,8 @@ class AModel extends \XLite\Base
     /**
      * Sets the specified property value
      *
-     * @param string $property field name
-     * @param mixed  $value    field value
+     * @param string $property Field name
+     * @param mixed  $value    Field value
      *
      * @return void
      * @access public
@@ -1069,7 +1069,7 @@ class AModel extends \XLite\Base
     /**
      * Reads the database data for this object. Dies for non-persistens objects (object which are not exist in database) 
      * 
-     * @return boolean true if data found / false otherwise
+     * @return boolean True if data found / false otherwise
      * @access public
      * @since  3.0
      */

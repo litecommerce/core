@@ -299,8 +299,8 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
     /**
      * Return products list
      *
-     * @param \XLite\Core\CommonCell $cnd       search condition
-     * @param boolean                $countOnly return items list or only its size
+     * @param \XLite\Core\CommonCell $cnd       Search condition
+     * @param boolean                $countOnly Return items list or only its size
      *
      * @return array|int
      * @access protected
@@ -318,7 +318,7 @@ class Search extends \XLite\View\ItemsList\Product\Customer\ACustomer
     /**
      * Prepare search condition before search
      * 
-     * @param \XLite\Core\CommonCell $cnd search condition
+     * @param \XLite\Core\CommonCell $cnd Search condition
      *  
      * @return \XLite\Core\CommonCell
      * @access protected

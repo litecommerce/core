@@ -189,8 +189,8 @@ class Controller extends \XLite\View\AView
     /**
      * __construct 
      * 
-     * @param array  $params          widget params
-     * @param string $contentTemplate central area template
+     * @param array  $params          Widget params
+     * @param string $contentTemplate Central area template
      *  
      * @return void
      * @access public

@@ -112,7 +112,7 @@ class Session extends \XLite\Model\AEntity
     /**
      * Get session cell by name
      *
-     * @param string $name cell name
+     * @param string $name Cell name
      *
      * @return \XLite\Model\SessionCell|void
      * @access protected
@@ -134,7 +134,7 @@ class Session extends \XLite\Model\AEntity
     /**
      * Invalidate cached entity 
      * 
-     * @param string $name cell name
+     * @param string $name Cell name
      *  
      * @return void
      * @access protected
@@ -152,8 +152,8 @@ class Session extends \XLite\Model\AEntity
     /**
      * Set session cell value
      *
-     * @param string $name  cell name
-     * @param mixed  $value value to set
+     * @param string $name  Cell name
+     * @param mixed  $value Value to set
      *
      * @return void
      * @access protected

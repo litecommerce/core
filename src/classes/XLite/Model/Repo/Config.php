@@ -82,8 +82,8 @@ class Config extends \XLite\Model\Repo\Base\I18n
     /**
      * Remove option from the "black list" 
      * 
-     * @param string $category option category
-     * @param string $name     option name
+     * @param string $category Option category
+     * @param string $name     Option name
      *  
      * @return void
      * @access protected
@@ -98,8 +98,8 @@ class Config extends \XLite\Model\Repo\Base\I18n
     /**
      * Add option to the "black list" 
      * 
-     * @param string $category option category
-     * @param string $name     option name
+     * @param string $category Option category
+     * @param string $name     Option name
      *  
      * @return void
      * @access protected
@@ -146,7 +146,7 @@ class Config extends \XLite\Model\Repo\Base\I18n
     /**
      * Add "filter" condition to the query builder
      * 
-     * @param \Doctrine\ORM\QueryBuilder $qb current query builder
+     * @param \Doctrine\ORM\QueryBuilder $qb Current query builder
      *  
      * @return \Doctrine\ORM\QueryBuilder
      * @access protected

@@ -105,7 +105,7 @@ class SessionCell extends \XLite\Model\AEntity
     /**
      * Automatically get variable type
      *
-     * @param mixed $value variable to check
+     * @param mixed $value Variable to check
      *
      * @return string
      * @access public
@@ -125,8 +125,8 @@ class SessionCell extends \XLite\Model\AEntity
      * NOTE: this function is designed as "static public" to use in repository
      * NOTE: customize this method instead of the "getValue()" one
      * 
-     * @param mixed  $value value to prepare
-     * @param string $type  field type
+     * @param mixed  $value Value to prepare
+     * @param string $type  Field type
      *  
      * @return mixed
      * @access public
@@ -173,8 +173,8 @@ class SessionCell extends \XLite\Model\AEntity
      * NOTE: this function is designed as "static public" to use in repository
      * NOTE: customize this method instead of the "getValue()" one
      *
-     * @param mixed  $value value to prepare
-     * @param string $type  field type
+     * @param mixed  $value Value to prepare
+     * @param string $type  Field type
      *
      * @return mixed
      * @access public
@@ -238,7 +238,7 @@ class SessionCell extends \XLite\Model\AEntity
     /**
      * Disallowed method
      * 
-     * @param string $type type to set
+     * @param string $type Type to set
      *  
      * @return void
      * @access public

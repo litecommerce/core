@@ -119,7 +119,7 @@ interface IOrderItem
     /**
      * getImage 
      * 
-     * @return \XLite\Model\Base\Image or null
+     * @return \XLite\Model\Base\Image|void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0

@@ -175,7 +175,7 @@ class Usps extends \XLite\Model\Shipping\Online
      * 
      * @param \XLite\Model\Order $order Order
      *  
-     * @return array of \XLite\Model\ShippingRate
+     * @return array(\XLite\Model\ShippingRate)
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -210,7 +210,7 @@ class Usps extends \XLite\Model\Shipping\Online
      * 
      * @param \XLite\Model\Order $order Order
      *  
-     * @return array of \XLite\Model\ShippingRate
+     * @return array(\XLite\Model\ShippingRate)
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -322,7 +322,7 @@ class Usps extends \XLite\Model\Shipping\Online
      * @param string  $zipDestination Destination zipcode
      * @param obhect  $options        Options
      *  
-     * @return array of \XLite\Model\ShippingRate
+     * @return array(\XLite\Model\ShippingRate)
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -464,7 +464,7 @@ EOT;
      * 
      * @param \XLite\Model\Order $order Order
      *  
-     * @return array of \XLite\Model\ShippingRate
+     * @return array(\XLite\Model\ShippingRate)
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -518,7 +518,7 @@ EOT;
      * @param string  $destinationCountry Destination country code
      * @param object  $options            Options
      *  
-     * @return array of \XLite\Model\ShippingRate
+     * @return array(\XLite\Model\ShippingRate)
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -573,7 +573,7 @@ EOT;
      * @param string $response    Response
      * @param string $destination Destination code (L or I)
      *  
-     * @return array of \XLite\Model\ShippingRate
+     * @return array(\XLite\Model\ShippingRate)
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
