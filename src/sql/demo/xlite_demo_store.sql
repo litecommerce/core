@@ -10,7 +10,7 @@ INSERT INTO `xlite_categories` VALUES (1004,1,8,17,0,1,'toys',0);
 INSERT INTO `xlite_categories` VALUES (4002,1004,15,16,0,1,'rc-toys',1);
 INSERT INTO `xlite_categories` VALUES (4003,1004,11,12,0,1,'science-toys',1);
 INSERT INTO `xlite_categories` VALUES (4004,1004,13,14,0,1,'puzzles',1);
-INSERT INTO `xlite_categories` VALUES (4005,1,2,3,0,1,'igoods',1);
+INSERT INTO `xlite_categories` VALUES (4005,1,2,3,0,1,'igoods',0);
 
 INSERT INTO xlite_category_quick_flags VALUES (1,1,3,3);
 INSERT INTO xlite_category_quick_flags VALUES (2,1002,0,0);
@@ -42,7 +42,7 @@ INSERT INTO `xlite_category_translations` VALUES (104,'en',1003,'Cube Goodies','
 INSERT INTO `xlite_category_translations` VALUES (105,'en',4003,'Science Toys','','','','');
 INSERT INTO `xlite_category_translations` VALUES (106,'en',4002,'RC Toys','','','','');
 INSERT INTO `xlite_category_translations` VALUES (107,'en',1002,'Apparel','<img src=\"{{WEB_LC_ROOT}}/public/apparel.png\" alt=\"\" />','','','');
-INSERT INTO `xlite_category_translations` VALUES (108,'en',4005,'iGoods','','','','');
+INSERT INTO `xlite_category_translations` VALUES (108,'en',4005,'iGoods','<img src=\"{{WEB_LC_ROOT}}/public/igoods.png\" alt=\"\" />','','','');
 
 INSERT INTO `xlite_category_products` SET product_id = '4003', category_id = '1002', orderby = '0';
 INSERT INTO `xlite_category_products` SET product_id = '4004', category_id = '1002', orderby = '0';
