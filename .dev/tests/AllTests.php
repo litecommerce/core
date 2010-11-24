@@ -221,21 +221,28 @@ class XLite_Tests_AllTests
         // DB backup
         echo ('DB backup ... ');
         $path = dirname(__FILE__) . '/dump.sql';
-
-        $config = XLite::getInstance()->getOptions('database_details');
-        $cmd = 'mysqldump --opt -h' . $config['hostspec'];
-        if ($config['port']) {
-            $cmd .= ':' . $config['port'];
+        if (file_exists($path)) {
+            unlink($path);
         }
 
-        $cmd .= ' -u' . $config['username'] . ' -p' . $config['password'];
-        if ($config['socket']) {
-            $cmd .= ' -S' . $config['socket'];
+        if (!$deploy) {
+            $config = XLite::getInstance()->getOptions('database_details');
+            $cmd = 'mysqldump --opt -h' . $config['hostspec'];
+            if ($config['port']) {
+                $cmd .= ':' . $config['port'];
+            }
+
+            $cmd .= ' -u' . $config['username'] . ' -p' . $config['password'];
+            if ($config['socket']) {
+                $cmd .= ' -S' . $config['socket'];
+            }
+
+            exec($cmd .= ' ' . $config['database'] . ' > ' . $path);
+
+            echo ('done' . PHP_EOL);
+        } else {
+            echo ('ignored' . PHP_EOL);
         }
-
-        exec($cmd .= ' ' . $config['database'] . ' > ' . $path);
-
-        echo ('done' . PHP_EOL);
 
         // Classes tests
         if (!defined('UNITS_DISABLED')) {
