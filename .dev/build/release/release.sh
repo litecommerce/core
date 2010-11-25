@@ -332,7 +332,7 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a -d "${OUTPUT_DIR}/${DRUPAL_DI
 		rm -rf skins/mail/en/modules/${dn}
 	done
 
-	[ "x${DEMO_VERSION}" = "x" ] && find ./images/* -type f -name "demo_store_*" -exec rm -rf {} \;
+	[ "x${DEMO_VERSION}" = "x" -a "x${TEST_MODE}" = "x" ] && find ./images/* -type f -name "demo_store_*" -exec rm -rf {} \;
 
 	mv skins skins_original
 
