@@ -4,7 +4,6 @@ INSERT INTO `xlite_config` VALUES (4,'add_on_mode_page','General','select',125,'
 INSERT INTO `xlite_config` VALUES (5,'admin_ip_protection','Security','checkbox',100,'N');
 INSERT INTO `xlite_config` VALUES (6,'admin_presentation','General','separator',400,'');
 INSERT INTO `xlite_config` VALUES (9,'admin_security','Security','checkbox',10,'N');
-INSERT INTO `xlite_config` VALUES (10,'admin_zone_sbbe_enabled','General','checkbox',490,'Y');
 INSERT INTO `xlite_config` VALUES (12,'allow_admin_ip','SecurityIP','',40,'');
 INSERT INTO `xlite_config` VALUES (27,'buynow_button_enabled','General','checkbox',240,'Y');
 --INSERT INTO `xlite_config` VALUES (29,'callback_code','Shipping','text',0,'');

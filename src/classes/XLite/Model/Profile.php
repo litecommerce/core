@@ -247,18 +247,6 @@ class Profile extends \XLite\Model\AEntity
     protected $language = '';
 
     /**
-     * Sidebar boxes (stores info about opened and closed sidebar boxes in admin area)
-     *
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     *
-     * @Column (type="text")
-     */
-    protected $sidebar_boxes = '';
-
-    /**
      * Last selected shipping id 
      * 
      * @var    integer
