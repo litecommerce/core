@@ -1,4 +1,4 @@
--- Product options
+--  Product options
 INSERT INTO xlite_option_groups SET group_id = 1, `product_id` = 15090, `view_type` = 'r', enabled = 1;
 INSERT INTO xlite_options SET option_id = 1, group_id = 1, enabled = 1;
 INSERT INTO xlite_options SET option_id = 2, group_id = 1, enabled = 1;
@@ -8,7 +8,7 @@ INSERT INTO xlite_option_groups SET group_id = 2, `product_id` = 15090, `view_ty
 INSERT INTO xlite_options SET option_id = 4, group_id = 2, enabled = 1;
 INSERT INTO xlite_options SET option_id = 5, group_id = 2, enabled = 1;
 
---INSERT INTO xlite_inventories SET `inventory_id` = '15121', `amount` = '2000', `enabled` = '1', `low_avail_limit` = '50';
+-- INSERT INTO xlite_inventories SET `inventory_id` = '15121', `amount` = '2000', `enabled` = '1', `low_avail_limit` = '50';
 INSERT INTO xlite_option_groups SET group_id = 3, `product_id` = 15121, `view_type` = 'r', enabled = 1;
 INSERT INTO xlite_options SET option_id = 6, group_id = 3, enabled = 1;
 INSERT INTO xlite_options SET option_id = 7, group_id = 3, enabled = 1;
@@ -23,18 +23,18 @@ INSERT INTO xlite_options SET option_id = 10, group_id = 5, enabled = 1;
 INSERT INTO xlite_options SET option_id = 11, group_id = 5, enabled = 1;
 INSERT INTO xlite_options SET option_id = 12, group_id = 5, enabled = 1;
 
---INSERT INTO xlite_inventories SET `inventory_id` = '15091', `amount` = '1000', `enabled` = '1', `low_avail_limit` = '50';
+-- INSERT INTO xlite_inventories SET `inventory_id` = '15091', `amount` = '1000', `enabled` = '1', `low_avail_limit` = '50';
 INSERT INTO xlite_option_groups SET group_id = 6, `product_id` = 15091, `view_type` = 'r', enabled = 1;
 INSERT INTO xlite_options SET option_id = 13, group_id = 6, enabled = 1;
 INSERT INTO xlite_options SET option_id = 14, group_id = 6, enabled = 1;
 INSERT INTO xlite_options SET option_id = 15, group_id = 6, enabled = 1;
 
---INSERT INTO xlite_inventories SET `inventory_id` = '15067', `amount` = '500', `enabled` = '1', `low_avail_limit` = '0';
+-- INSERT INTO xlite_inventories SET `inventory_id` = '15067', `amount` = '500', `enabled` = '1', `low_avail_limit` = '0';
 INSERT INTO xlite_option_groups SET group_id = 7, `product_id` = 15067, `view_type` = 'r', enabled = 1;
 INSERT INTO xlite_options SET option_id = 16, group_id = 7, enabled = 1;
 INSERT INTO xlite_options SET option_id = 17, group_id = 7, enabled = 1;
 
--- Product options translations
+--  Product options translations
 INSERT INTO xlite_option_group_translations (id, code, name) VALUES (1, 'en', 'Color');
 INSERT INTO xlite_option_translations (id, code, name) VALUES (1, 'en', 'Red');
 INSERT INTO xlite_option_translations (id, code, name) VALUES (2, 'en', 'Green');
