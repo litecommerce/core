@@ -1,5 +1,5 @@
--- Update config table
--- shop_close
+--  Update config table
+--  shop_close
 UPDATE xlite_config_translations SET option_name = 'Check this to temporary close the shop (not available in Demo store)' WHERE id = 234;
 
 UPDATE xlite_config SET value = 'Y' WHERE name = 'customer_security';
@@ -10,10 +10,10 @@ UPDATE xlite_config SET value = 'a:3:{i:1;a:3:{s:7:\"orderby\";s:2:\"10\";s:10:\
 
 UPDATE xlite_modules SET enabled = '0';
 
--- Test gift certificate
---INSERT INTO xlite_giftcerts VALUES ('TESTGIFT',1,'Mr. Guest Guest','123','E','demo@litecommerce.com','','','','','0','','','','','','50.00','50.00','A',1270203328,1332411328,0,'','','no_border',NULL);
+--  Test gift certificate
+-- INSERT INTO xlite_giftcerts VALUES ('TESTGIFT',1,'Mr. Guest Guest','123','E','demo@litecommerce.com','','','','','0','','','','','','50.00','50.00','A',1270203328,1332411328,0,'','','no_border',NULL);
 
--- Zones [5] (do not change zones as it is used in the unit-tests)
+--  Zones [5] (do not change zones as it is used in the unit-tests)
 
 INSERT INTO xlite_zones VALUES (10,'United States area',0);
 INSERT INTO xlite_zone_elements VALUES (1,10,'US','C');
@@ -39,7 +39,7 @@ INSERT INTO xlite_zone_elements VALUES (14,40,'ES','C');
 
 INSERT INTO xlite_zones VALUES (50,'Atlantida',0);
 
--- Shipping methods [2]
+--  Shipping methods [2]
 
 INSERT INTO xlite_shipping_methods (method_id, processor, carrier, code, enabled, position) VALUES (100, 'offline', '', '', 1, 10);
 INSERT INTO xlite_shipping_method_translations (code, id, name) VALUES ('en', 100, 'Courier');

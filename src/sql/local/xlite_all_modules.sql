@@ -1,21 +1,21 @@
 UPDATE xlite_modules SET enabled = 0;
 UPDATE xlite_modules SET enabled = 1 WHERE name IN (
---'AdvancedSearch',
+-- 'AdvancedSearch',
 'AustraliaPost',
 'AuthorizeNet',
 'Bestsellers',
 'DrupalConnector',
 'Quantum',
 'FeaturedProducts',
---'GiftCertificates',
---'GoogleCheckout',
---'InventoryTracking',
---'PayPalPro',
---'ProductAdviser',
+-- 'GiftCertificates',
+-- 'GoogleCheckout',
+-- 'InventoryTracking',
+-- 'PayPalPro',
+-- 'ProductAdviser',
 'ProductOptions'
---'UPSOnlineTools',
---'USPS',
---'WishList',
---'WholesaleTrading',
---'XPaymentsConnector'
+-- 'UPSOnlineTools',
+-- 'USPS',
+-- 'WishList',
+-- 'WholesaleTrading',
+-- 'XPaymentsConnector'
 );
