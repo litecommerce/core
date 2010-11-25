@@ -1,12 +1,12 @@
 
--- Categories [7]
+--  Categories [7]
 
 REPLACE INTO `xlite_categories` VALUES (1,0,1,16,0,1,'',0);
 INSERT INTO `xlite_categories` VALUES (1002,1,4,5,0,1,'apparel',0);
 INSERT INTO `xlite_categories` VALUES (1003,1004,9,10,0,1,'cube-goodies',1);
 INSERT INTO `xlite_categories` VALUES (1004,1,8,17,0,1,'toys',0);
--- Commented until an e-goods module is implemented
---INSERT INTO `xlite_categories` VALUES (3002,1,6,7,0,1,'downloadables',0);
+--  Commented until an e-goods module is implemented
+-- INSERT INTO `xlite_categories` VALUES (3002,1,6,7,0,1,'downloadables',0);
 INSERT INTO `xlite_categories` VALUES (4002,1004,15,16,0,1,'rc-toys',1);
 INSERT INTO `xlite_categories` VALUES (4003,1004,11,12,0,1,'science-toys',1);
 INSERT INTO `xlite_categories` VALUES (4004,1004,13,14,0,1,'puzzles',1);
@@ -14,8 +14,8 @@ INSERT INTO `xlite_categories` VALUES (4005,1,2,3,0,1,'igoods',0);
 
 INSERT INTO xlite_category_quick_flags VALUES (1,1,3,3);
 INSERT INTO xlite_category_quick_flags VALUES (2,1002,0,0);
--- Commented until an e-goods module is implemented
--- INSERT INTO xlite_category_quick_flags VALUES (3,3002,0,0);
+--  Commented until an e-goods module is implemented
+--  INSERT INTO xlite_category_quick_flags VALUES (3,3002,0,0);
 INSERT INTO xlite_category_quick_flags VALUES (4,1004,4,4);
 INSERT INTO xlite_category_quick_flags VALUES (5,4004,0,0);
 INSERT INTO xlite_category_quick_flags VALUES (6,1003,0,0);
@@ -23,8 +23,8 @@ INSERT INTO xlite_category_quick_flags VALUES (7,4003,0,0);
 INSERT INTO xlite_category_quick_flags VALUES (8,4002,0,0);
 INSERT INTO xlite_category_quick_flags VALUES (9,4005,0,0);
 
--- Commented until an e-goods module is implemented
--- INSERT INTO `xlite_category_images` VALUES (101,3002,'demo_store_c3002.jpeg','image/jpeg',154,160,10267,1278412215,'');
+--  Commented until an e-goods module is implemented
+--  INSERT INTO `xlite_category_images` VALUES (101,3002,'demo_store_c3002.jpeg','image/jpeg',154,160,10267,1278412215,'');
 INSERT INTO `xlite_category_images` VALUES (102,1004,'demo_store_c1004.jpeg','image/jpeg',140,160,12860,1278412215,'');
 INSERT INTO `xlite_category_images` VALUES (103,4004,'demo_store_c4004.jpeg','image/jpeg',156,160,16022,1278412215,'');
 INSERT INTO `xlite_category_images` VALUES (104,1003,'demo_store_c1003.jpeg','image/jpeg',150,160,12662,1278412215,'');
@@ -34,8 +34,8 @@ INSERT INTO `xlite_category_images` VALUES (107,1002,'demo_store_c1002.jpeg','im
 INSERT INTO `xlite_category_images` VALUES (108,4005,'demo_store_c4005.jpg','image/jpeg',115,160,13433,1278412215,'');
 
 INSERT INTO `xlite_category_translations` VALUES (1,'en',1,'','','','','');
--- Commented until an e-goods module is implemented
--- INSERT INTO `xlite_category_translations` VALUES (101,'en',3002,'Downloadables','<img src=\"{{WEB_LC_ROOT}}/public/downloadables.png\" alt=\"\" />','','','');
+--  Commented until an e-goods module is implemented
+--  INSERT INTO `xlite_category_translations` VALUES (101,'en',3002,'Downloadables','<img src=\"{{WEB_LC_ROOT}}/public/downloadables.png\" alt=\"\" />','','','');
 INSERT INTO `xlite_category_translations` VALUES (102,'en',1004,'Toys','<img src=\"{{WEB_LC_ROOT}}/public/toys.png\" alt=\"\" />','','','');
 INSERT INTO `xlite_category_translations` VALUES (103,'en',4004,'Puzzles','','','','');
 INSERT INTO `xlite_category_translations` VALUES (104,'en',1003,'Cube Goodies','Category-child','','','');
@@ -50,15 +50,15 @@ INSERT INTO `xlite_category_products` SET product_id = '4009', category_id = '10
 INSERT INTO `xlite_category_products` SET product_id = '4030', category_id = '1003', orderby = '0';
 INSERT INTO `xlite_category_products` SET product_id = '4031', category_id = '1003', orderby = '0';
 INSERT INTO `xlite_category_products` SET product_id = '4013', category_id = '1003', orderby = '0';
--- Commented until an e-goods module is implemented
--- INSERT INTO `xlite_category_products` SET product_id = '4059', category_id = '3002', orderby = '0';
--- INSERT INTO `xlite_category_products` SET product_id = '4057', category_id = '3002', orderby = '0';
--- INSERT INTO `xlite_category_products` SET product_id = '4036', category_id = '3002', orderby = '0';
--- INSERT INTO `xlite_category_products` SET product_id = '4061', category_id = '3002', orderby = '0';
--- INSERT INTO `xlite_category_products` SET product_id = '4060', category_id = '3002', orderby = '0';
--- INSERT INTO `xlite_category_products` SET product_id = '4058', category_id = '3002', orderby = '0';
--- INSERT INTO `xlite_category_products` SET product_id = '4062', category_id = '3002', orderby = '0';
--- INSERT INTO `xlite_category_products` SET product_id = '4063', category_id = '3002', orderby = '0';
+--  Commented until an e-goods module is implemented
+--  INSERT INTO `xlite_category_products` SET product_id = '4059', category_id = '3002', orderby = '0';
+--  INSERT INTO `xlite_category_products` SET product_id = '4057', category_id = '3002', orderby = '0';
+--  INSERT INTO `xlite_category_products` SET product_id = '4036', category_id = '3002', orderby = '0';
+--  INSERT INTO `xlite_category_products` SET product_id = '4061', category_id = '3002', orderby = '0';
+--  INSERT INTO `xlite_category_products` SET product_id = '4060', category_id = '3002', orderby = '0';
+--  INSERT INTO `xlite_category_products` SET product_id = '4058', category_id = '3002', orderby = '0';
+--  INSERT INTO `xlite_category_products` SET product_id = '4062', category_id = '3002', orderby = '0';
+--  INSERT INTO `xlite_category_products` SET product_id = '4063', category_id = '3002', orderby = '0';
 INSERT INTO `xlite_category_products` SET product_id = '4016', category_id = '1003', orderby = '0';
 INSERT INTO `xlite_category_products` SET product_id = '4022', category_id = '1003', orderby = '0';
 INSERT INTO `xlite_category_products` SET product_id = '4021', category_id = '1003', orderby = '0';
@@ -155,7 +155,7 @@ INSERT INTO `xlite_category_products` SET product_id = '5029', category_id = '40
 INSERT INTO `xlite_category_products` SET product_id = '5030', category_id = '4005', orderby = '0';
 
 
--- Products [65]
+--  Products [65]
 
 INSERT INTO `xlite_products` (`product_id`, `price`, `sale_price`, `sku`, `order_by`, `enabled`, `weight`, `tax_class`, `free_shipping`, `clean_url`) VALUES (4003,'19.99','19.99','00001',0,1,'0.32','',0,'');
 INSERT INTO `xlite_products` (`product_id`, `price`, `sale_price`, `sku`, `order_by`, `enabled`, `weight`, `tax_class`, `free_shipping`, `clean_url`) VALUES (4004,'18.99','18.99','00002',0,1,'0.32','',0,'');
@@ -1423,7 +1423,7 @@ INSERT INTO `xlite_product_translations` VALUES (5030,'en',5030,'Sennheiser PMX 
 </ul>
 <div style=\"padding: 24px 24px 24px 21px; display: block; background-color: #ececec;\">This site is a demo site only. This product is not available for sale at our site. <br />But you can buy it at <a href=\"http://www.amazon.com/gp/product/B001GT185K?ie=UTF8&amp;tag=ecwid0b-20&amp;linkCode=as2&amp;camp=1789&amp;creative=9325&amp;creativeASIN=B001GT185K\">Amazon</a><img style=\"border:none !important; margin:0px !important;\" src=\"http://www.assoc-amazon.com/e/ir?t=ecwid0b-20&amp;l=as2&amp;o=1&amp;a=B001GT185K\" border=\"0\" alt=\"\" width=\"1\" height=\"1\" /> or <a style=\"color: #1e7ec8; text-decoration: underline;\" title=\"Apple Store\" href=\"http://store.apple.com/us/product/TU136ZM/A?fnode=MTY1NDA0Ng&amp;mco=MjM0NDUyOQ\">Apple Store</a> , this is where we took description from.</div>','','','','');
 
---INSERT INTO xlite_inventories SET `inventory_id` = '4003', `amount` = '496', `enabled` = '1', `low_avail_limit` = '0';
+-- INSERT INTO xlite_inventories SET `inventory_id` = '4003', `amount` = '496', `enabled` = '1', `low_avail_limit` = '0';
 INSERT INTO xlite_option_groups SET group_id = 4000, `product_id` = 4003, `view_type` = 'r', enabled = 1;
 INSERT INTO xlite_option_group_translations (id, code, name) VALUES (4000, 'en', 'Size');
 INSERT INTO xlite_options SET option_id = 4000, group_id = 4000, enabled = 1;
@@ -1435,7 +1435,7 @@ INSERT INTO xlite_option_translations (id, code, name) VALUES (4002, 'en', 'L');
 INSERT INTO xlite_options SET option_id = 4003, group_id = 4000, enabled = 1;
 INSERT INTO xlite_option_translations (id, code, name) VALUES (4003, 'en', 'XL');
 
---INSERT INTO xlite_inventories SET `inventory_id` = '4004', `amount` = '965', `enabled` = '1', `low_avail_limit` = '50';
+-- INSERT INTO xlite_inventories SET `inventory_id` = '4004', `amount` = '965', `enabled` = '1', `low_avail_limit` = '50';
 INSERT INTO xlite_option_groups SET group_id = 4001, `product_id` = 4004, `view_type` = 'r', enabled = 1;
 INSERT INTO xlite_option_group_translations (id, code, name) VALUES (4001, 'en', 'Size');
 INSERT INTO xlite_options SET option_id = 4004, group_id = 4001, enabled = 1;
@@ -1449,7 +1449,7 @@ INSERT INTO xlite_option_translations (id, code, name) VALUES (4007, 'en', 'XL')
 INSERT INTO xlite_options SET option_id = 4008, group_id = 4001, enabled = 1;
 INSERT INTO xlite_option_translations (id, code, name) VALUES (4008, 'en', 'XXL');
 
---INSERT INTO xlite_inventories SET `inventory_id` = '4009', `amount` = '172', `enabled` = '1', `low_avail_limit` = '150';
+-- INSERT INTO xlite_inventories SET `inventory_id` = '4009', `amount` = '172', `enabled` = '1', `low_avail_limit` = '150';
 INSERT INTO xlite_option_groups SET group_id = 4002, `product_id` = 4009, `view_type` = 'r', enabled = 1;
 INSERT INTO xlite_option_group_translations (id, code, name) VALUES (4002, 'en', 'Size');
 INSERT INTO xlite_options SET option_id = 4009, group_id = 4002, enabled = 1;
@@ -1536,7 +1536,7 @@ INSERT INTO xlite_options SET option_id = 4038, group_id = 4008, enabled = 1;
 INSERT INTO xlite_option_translations (id, code, name) VALUES (4038, 'en', 'XXXL');
 INSERT INTO xlite_option_surcharges SET option_id = 4038, `type` = 'price', modifier = 2,  modifier_type = '$';
 
---INSERT INTO xlite_inventories SET `inventory_id` = '4006', `amount` = '1994', `enabled` = '1', `low_avail_limit` = '50';
+-- INSERT INTO xlite_inventories SET `inventory_id` = '4006', `amount` = '1994', `enabled` = '1', `low_avail_limit` = '50';
 INSERT INTO xlite_option_groups SET group_id = 4009, `product_id` = 4006, `view_type` = 'r', enabled = 1;
 INSERT INTO xlite_option_group_translations (id, code, name) VALUES (4009, 'en', 'Size');
 INSERT INTO xlite_options SET option_id = 4039, group_id = 4009, enabled = 1;
@@ -1645,7 +1645,7 @@ INSERT INTO xlite_option_translations (id, code, name) VALUES (4072, 'en', 'Oil 
 INSERT INTO xlite_options SET option_id = 4073, group_id = 4018, enabled = 1;
 INSERT INTO xlite_option_translations (id, code, name) VALUES (4073, 'en', 'Twilight');
 
--- Featured products
+--  Featured products
 INSERT INTO xlite_featured_products VALUES (1,4006,1,10);
 INSERT INTO xlite_featured_products VALUES (2,3002,1,20);
 INSERT INTO xlite_featured_products VALUES (3,4059,1,30);
@@ -1657,7 +1657,7 @@ INSERT INTO xlite_featured_products VALUES (8,4012,1004,30);
 
 UPDATE xlite_categories SET show_title = '0' WHERE category_id = '1004';
 
--- PRODUCT IMAGES
+--  PRODUCT IMAGES
 
 INSERT INTO `xlite_product_images` VALUES (NULL,4003,'demo_store_p4003.jpeg','image/jpeg',500,494,29749,1280310731,'','',-10);
 INSERT INTO `xlite_product_images` VALUES (NULL,4059,'demo_store_p4059.jpeg','image/jpeg',240,240,57186,1280310731,'','',-10);
