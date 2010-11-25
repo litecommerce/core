@@ -154,7 +154,7 @@ abstract class AEntity
      * 
      * @param string $name Property name
      *  
-     * @return string|false
+     * @return string
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
