@@ -25,8 +25,10 @@ function confirmNote(action)
 -->
 </script>
 
+<!--
 <widget class="\XLite\View\Button\Submit" label="{t(#Add new add-ons#)}" />
 <br /><br />
+-->
 
 {* Display add-ons list *}
 <widget template="modules_modify/list.tpl" />
