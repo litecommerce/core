@@ -78,6 +78,16 @@ class Database extends \XLite\Base\Singleton
     protected static $cacheDriver = null;
 
     /**
+     * Cache drivers query 
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected static $cacheDriversQuery = array('apc', 'xcache', 'memcache');
+
+    /**
      * Constructor
      * 
      * @return void
@@ -250,6 +260,19 @@ class Database extends \XLite\Base\Singleton
             $options = array('type' => null);
         }
 
+        // Auto-detection
+        if ('auto' == $options['type']) {
+            foreach (static::$cacheDriversQuery as $type) {
+                $method = 'detectCacheDriver' . ucfirst($type);
+
+                // $method assembled from 'detectCacheDriver' + $type
+                if (static::$method()) {
+                    $options['type'] = $type;
+                    break;
+                }
+            }
+        }
+
         if ('apc' == $options['type']) {
 
             // APC
@@ -296,6 +319,45 @@ class Database extends \XLite\Base\Singleton
         }
 
         return $cache;
+    }
+
+    /**
+     * Detect APC cache driver
+     * 
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function detectCacheDriverApc()
+    {
+        return function_exists('apc_cache_info');
+    }
+
+    /**
+     * Detect XCache cache driver
+     * 
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function detectCacheDriverXcache()
+    {
+        return function_exists('xcache_get');
+    }
+
+    /**
+     * Detect Memcache cache driver
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function detectCacheDriverMemcache()
+    {
+        return function_exists('memcache_connect');
     }
 
     /**
