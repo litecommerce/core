@@ -69,33 +69,33 @@ class XLite_Web_Customer_Breadcrumbs extends XLite_Web_Customer_ACustomer
 
         // The "Home" link
         $this->assertElementPresent(
-            $this->mainBlockLocator . '/span/a[@class="home-link"]/img',
+            $this->mainBlockLocator . '/a[@class="home-link"]/img',
             'check first breadcrumb (must be "Home")'
         );
 
         // Second node: "Toys" (link, expandable)
         $this->assertElementPresent(
-            $this->mainBlockLocator . '/span/div[@class="location-node expandable"]'
+            $this->mainBlockLocator . '/div[@class="location-node expandable"]'
             . '/a[@class="location-title" and text()="Toys"]',
             'check second breadcrumb (must be "Toys", link, expandable)'
         );
 
         // Third node: "Puzzles" (link, not expandable)
         $this->assertElementPresent(
-            $this->mainBlockLocator . '/span/div[@class="location-node expandable"]'
+            $this->mainBlockLocator . '/div[@class="location-node expandable"]'
             . '/a[@class="location-title" and text()="Puzzles"]',
             'check third breadcrumb (must be "Puzzles", link, expandable)'
         );
 
         // Forth node: "Pyramid Brain Twist" (text)
         $this->assertElementPresent(
-            $this->mainBlockLocator . '/span/div[@class="location-node" and contains(text(),"Pyramid Brain Twist")]',
+            $this->mainBlockLocator . '/div[@class="location-node" and contains(text(),"Pyramid Brain Twist")]',
             'check forth breadcrumb (must be "Pyramid Brain Twist", text)'
         );
 
         // Subnodes popup
         $this->assertElementPresent(
-            $this->mainBlockLocator . '/span/div[@class="location-node expandable"]'
+            $this->mainBlockLocator . '/div[@class="location-node expandable"]'
             . '/ul[@class="location-subnodes"]',
             'check the subnodes popup'
         );
@@ -115,14 +115,14 @@ class XLite_Web_Customer_Breadcrumbs extends XLite_Web_Customer_ACustomer
         $this->open('store/product//product_id-4045/category_id-4004');
 
         $this->assertNotVisible(
-            $this->mainBlockLocator . '/span/div[@class="location-node expandable"]'
+            $this->mainBlockLocator . '/div[@class="location-node expandable"]'
             . '/ul[@class="location-subnodes"]',
             'subnodes popup must not be visible when mouse is out of the "Toys" title'
         );
 
         // Expand the popup
         $this->mouseOver(
-            $this->mainBlockLocator . '/span/div[@class="location-node expandable"]'
+            $this->mainBlockLocator . '/div[@class="location-node expandable"]'
         );
 
         // Check popup visibility
