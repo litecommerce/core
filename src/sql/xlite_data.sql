@@ -6,8 +6,8 @@ INSERT INTO `xlite_config` VALUES (6,'admin_presentation','General','separator',
 INSERT INTO `xlite_config` VALUES (9,'admin_security','Security','checkbox',10,'N');
 INSERT INTO `xlite_config` VALUES (12,'allow_admin_ip','SecurityIP','',40,'');
 INSERT INTO `xlite_config` VALUES (27,'buynow_button_enabled','General','checkbox',240,'Y');
---INSERT INTO `xlite_config` VALUES (29,'callback_code','Shipping','text',0,'');
---INSERT INTO `xlite_config` VALUES (30,'callback_status','Shipping','text',0,'');
+-- INSERT INTO `xlite_config` VALUES (29,'callback_code','Shipping','text',0,'');
+-- INSERT INTO `xlite_config` VALUES (30,'callback_status','Shipping','text',0,'');
 INSERT INTO `xlite_config` VALUES (31,'captcha_length','Captcha','text',20,'5');
 INSERT INTO `xlite_config` VALUES (32,'captcha_protection','Captcha','separator',0,'');
 INSERT INTO `xlite_config` VALUES (33,'captcha_protection_system','Security','checkbox',110,'N');
@@ -76,7 +76,7 @@ INSERT INTO `xlite_config` VALUES (214,'proxy','Security','text',25,'');
 INSERT INTO `xlite_config` VALUES (216,'recent_orders','General','text',440,'10');
 INSERT INTO `xlite_config` VALUES (217,'redirect_to_cart','General','checkbox',300,'Y');
 INSERT INTO `xlite_config` VALUES (228,'safe_mode','General','checkbox',130,'N');
---INSERT INTO `xlite_config` VALUES (233,'shipping_code','Shipping','text',0,'1702936249');
+-- INSERT INTO `xlite_config` VALUES (233,'shipping_code','Shipping','text',0,'1702936249');
 INSERT INTO `xlite_config` VALUES (234,'shop_closed','General','checkbox',110,'N');
 INSERT INTO `xlite_config` VALUES (236,'show_cc_info','Email','checkbox',40,'N');
 INSERT INTO `xlite_config` VALUES (237,'show_thumbnails','General','checkbox',230,'Y');
@@ -121,7 +121,7 @@ INSERT INTO `xlite_config` VALUES (77,'def_calc_shippings_taxes','Shipping','che
 
 INSERT INTO `xlite_config` VALUES (350,'check_templates_status','Performance','checkbox',10,'Y');
 
--- ********************************************************************************************************************
+--  ********************************************************************************************************************
 
 
 
@@ -159,7 +159,7 @@ INSERT INTO xlite_countries VALUES ('British Indian Ocean Territory','IO','','is
 INSERT INTO xlite_countries VALUES ('British Virgin Islands','VG','','iso-8859-1',1,'N');
 INSERT INTO xlite_countries VALUES ('Brunei Darussalam','BN','','iso-8859-1',1,'N');
 INSERT INTO xlite_countries VALUES ('Bulgaria','BG','Bulgarian','iso-8859-1',1,'Y');
--- UPDATE xlite_countries SET eu_member='Y' WHERE code='BG';
+--  UPDATE xlite_countries SET eu_member='Y' WHERE code='BG';
 INSERT INTO xlite_countries VALUES ('Burkina Faso','BF','','iso-8859-1',1,'N');
 INSERT INTO xlite_countries VALUES ('Burundi','BI','','iso-8859-1',1,'N');
 INSERT INTO xlite_countries VALUES ('Cambodia','KH','','iso-8859-1',1,'N');
@@ -182,7 +182,7 @@ INSERT INTO xlite_countries VALUES ('Cote D\'ivoire','CI','','iso-8859-1',1,'N')
 INSERT INTO xlite_countries VALUES ('Croatia','HR','Croatian','iso-8859-1',1,'N');
 INSERT INTO xlite_countries VALUES ('Cuba','CU','','iso-8859-1',1,'N');
 INSERT INTO xlite_countries VALUES ('Cyprus','CY','Greek','iso-8859-1',1,'Y');
--- UPDATE xlite_countries SET eu_member='Y' WHERE code='CY';
+--  UPDATE xlite_countries SET eu_member='Y' WHERE code='CY';
 INSERT INTO xlite_countries VALUES ('Czech Republic','CZ','Czech','iso-8859-1',1,'N');
 INSERT INTO xlite_countries VALUES ('Czechoslovakia','CS','','iso-8859-1',1,'N');
 INSERT INTO xlite_countries VALUES ('Denmark','DK','Danish','iso-8859-1',1,'Y');
@@ -196,7 +196,7 @@ INSERT INTO xlite_countries VALUES ('El Salvador','SV','','iso-8859-1',1,'N');
 INSERT INTO xlite_countries VALUES ('Equatorial Guinea','GQ','','iso-8859-1',1,'N');
 INSERT INTO xlite_countries VALUES ('Eritrea','ER','','iso-8859-1',1,'N');
 INSERT INTO xlite_countries VALUES ('Estonia','EE','Estonian','iso-8859-1',1,'Y');
--- UPDATE xlite_countries SET eu_member='Y' WHERE code='EE';
+--  UPDATE xlite_countries SET eu_member='Y' WHERE code='EE';
 INSERT INTO xlite_countries VALUES ('Ethiopia','ET','Amharic','iso-8859-1',1,'N');
 INSERT INTO xlite_countries VALUES ('Falkland Islands (Malvinas)','FK','','iso-8859-1',1,'N');
 INSERT INTO xlite_countries VALUES ('Faroe Islands','FO','','iso-8859-1',1,'N');
@@ -227,7 +227,7 @@ INSERT INTO xlite_countries VALUES ('Heard and McDonald Islands','HM','','iso-88
 INSERT INTO xlite_countries VALUES ('Honduras','HN','','iso-8859-1',1,'N');
 INSERT INTO xlite_countries VALUES ('Hong Kong','HK','Mandarin','iso-8859-1',1,'N');
 INSERT INTO xlite_countries VALUES ('Hungary','HU','Hungarian','iso-8859-1',1,'Y');
--- UPDATE xlite_countries SET eu_member='Y' WHERE code='HU';
+--  UPDATE xlite_countries SET eu_member='Y' WHERE code='HU';
 INSERT INTO xlite_countries VALUES ('Iceland','IS','Icelandic','iso-8859-1',1,'N');
 INSERT INTO xlite_countries VALUES ('India','IN','','iso-8859-1',1,'N');
 INSERT INTO xlite_countries VALUES ('Indonesia','ID','Indonesian','iso-8859-1',1,'N');
@@ -248,14 +248,14 @@ INSERT INTO xlite_countries VALUES ('Kuwait','KW','','iso-8859-1',1,'N');
 INSERT INTO xlite_countries VALUES ('Kyrgyzstan','KG','','iso-8859-1',1,'N');
 INSERT INTO xlite_countries VALUES ('Laos','LA','','iso-8859-1',1,'N');
 INSERT INTO xlite_countries VALUES ('Latvia','LV','Latvian','iso-8859-1',1,'Y');
--- UPDATE xlite_countries SET eu_member='Y' WHERE code='LV';
+--  UPDATE xlite_countries SET eu_member='Y' WHERE code='LV';
 INSERT INTO xlite_countries VALUES ('Lebanon','LB','','iso-8859-1',1,'N');
 INSERT INTO xlite_countries VALUES ('Lesotho','LS','Sesotho','iso-8859-1',1,'N');
 INSERT INTO xlite_countries VALUES ('Liberia','LR','','iso-8859-1',1,'N');
 INSERT INTO xlite_countries VALUES ('Libyan Arab Jamahiriya','LY','','iso-8859-1',1,'N');
 INSERT INTO xlite_countries VALUES ('Liechtenstein','LI','','iso-8859-1',1,'N');
 INSERT INTO xlite_countries VALUES ('Lithuania','LT','Lithuanian','iso-8859-1',1,'Y');
--- UPDATE xlite_countries SET eu_member='Y' WHERE code='LT';
+--  UPDATE xlite_countries SET eu_member='Y' WHERE code='LT';
 INSERT INTO xlite_countries VALUES ('Luxembourg','LU','','iso-8859-1',1,'Y');
 INSERT INTO xlite_countries VALUES ('Macau','MO','','iso-8859-1',1,'N');
 INSERT INTO xlite_countries VALUES ('Macedonia','MK','Macedonian','iso-8859-1',1,'N');
@@ -265,7 +265,7 @@ INSERT INTO xlite_countries VALUES ('Malaysia','MY','Malay','iso-8859-1',1,'N');
 INSERT INTO xlite_countries VALUES ('Maldives','MV','','iso-8859-1',1,'N');
 INSERT INTO xlite_countries VALUES ('Mali','ML','','iso-8859-1',1,'N');
 INSERT INTO xlite_countries VALUES ('Malta','MT','Maltese','iso-8859-1',1,'Y');
--- UPDATE xlite_countries SET eu_member='Y' WHERE code='MT';
+--  UPDATE xlite_countries SET eu_member='Y' WHERE code='MT';
 INSERT INTO xlite_countries VALUES ('Marshall Islands','MH','','iso-8859-1',1,'N');
 INSERT INTO xlite_countries VALUES ('Martinique','MQ','','iso-8859-1',1,'N');
 INSERT INTO xlite_countries VALUES ('Mauritania','MR','','iso-8859-1',1,'N');
@@ -275,7 +275,7 @@ INSERT INTO xlite_countries VALUES ('Mexico','MX','','iso-8859-1',1,'N');
 INSERT INTO xlite_countries VALUES ('Micronesia','FM','','iso-8859-1',1,'N');
 INSERT INTO xlite_countries VALUES ('Moldova, Republic of','MD','','iso-8859-1',1,'N');
 INSERT INTO xlite_countries VALUES ('Monaco','MC','','iso-8859-1',1,'Y');
--- UPDATE xlite_countries SET eu_member='Y' WHERE code='MC';
+--  UPDATE xlite_countries SET eu_member='Y' WHERE code='MC';
 INSERT INTO xlite_countries VALUES ('Mongolia','MN','','iso-8859-1',1,'N');
 INSERT INTO xlite_countries VALUES ('Montserrat','MS','','iso-8859-1',1,'N');
 INSERT INTO xlite_countries VALUES ('Morocco','MA','','iso-8859-1',1,'N');
@@ -305,13 +305,13 @@ INSERT INTO xlite_countries VALUES ('Peru','PE','','iso-8859-1',1,'N');
 INSERT INTO xlite_countries VALUES ('Philippines','PH','Filipino','iso-8859-1',1,'N');
 INSERT INTO xlite_countries VALUES ('Pitcairn','PN','','iso-8859-1',1,'N');
 INSERT INTO xlite_countries VALUES ('Poland','PL','Polish','iso-8859-1',1,'Y');
--- UPDATE xlite_countries SET eu_member='Y' WHERE code='PL';
+--  UPDATE xlite_countries SET eu_member='Y' WHERE code='PL';
 INSERT INTO xlite_countries VALUES ('Portugal','PT','Portuguese','iso-8859-1',1,'Y');
 INSERT INTO xlite_countries VALUES ('Puerto Rico','PR','','iso-8859-1',1,'N');
 INSERT INTO xlite_countries VALUES ('Qatar','QA','','iso-8859-1',1,'N');
 INSERT INTO xlite_countries VALUES ('Reunion','RE','','iso-8859-1',1,'N');
 INSERT INTO xlite_countries VALUES ('Romania','RO','Romanian','iso-8859-1',1,'Y');
--- UPDATE xlite_countries SET eu_member='Y' WHERE code='RO';
+--  UPDATE xlite_countries SET eu_member='Y' WHERE code='RO';
 INSERT INTO xlite_countries VALUES ('Russian Federation','RU','Russian','Windows-1251',1,'N');
 INSERT INTO xlite_countries VALUES ('Rwanda','RW','','iso-8859-1',1,'N');
 INSERT INTO xlite_countries VALUES ('Saint Lucia','LC','','iso-8859-1',1,'N');
@@ -324,9 +324,9 @@ INSERT INTO xlite_countries VALUES ('Seychelles','SC','','iso-8859-1',1,'N');
 INSERT INTO xlite_countries VALUES ('Sierra Leone','SL','','iso-8859-1',1,'N');
 INSERT INTO xlite_countries VALUES ('Singapore','SG','','iso-8859-1',1,'N');
 INSERT INTO xlite_countries VALUES ('Slovakia','SK','Slovak','iso-8859-1',1,'Y');
--- UPDATE xlite_countries SET eu_member='Y' WHERE code='SK';
+--  UPDATE xlite_countries SET eu_member='Y' WHERE code='SK';
 INSERT INTO xlite_countries VALUES ('Slovenia','SI','Slovene','iso-8859-1',1,'Y');
--- UPDATE xlite_countries SET eu_member='Y' WHERE code='SI';
+--  UPDATE xlite_countries SET eu_member='Y' WHERE code='SI';
 INSERT INTO xlite_countries VALUES ('Solomon Islands','SB','','iso-8859-1',1,'N');
 INSERT INTO xlite_countries VALUES ('Somalia','SO','Somali','iso-8859-1',1,'N');
 INSERT INTO xlite_countries VALUES ('South Africa','ZA','Afrikaans','iso-8859-1',1,'N');
@@ -375,7 +375,7 @@ INSERT INTO xlite_countries VALUES ('Serbia and Montenegro','YU','','iso-8859-1'
 INSERT INTO xlite_countries VALUES ('Zambia','ZM','','iso-8859-1',1,'N');
 INSERT INTO xlite_countries VALUES ('Zimbabwe','ZW','','iso-8859-1',1,'N');
 
--- Payment methods
+--  Payment methods
 INSERT INTO xlite_payment_methods VALUES (1,'CreditCard','Model\\Payment\\Processor\\CreditCard',10,1);
 INSERT INTO xlite_payment_methods VALUES (2,'PurchaseOrder','Model\\Payment\\Processor\\PurchaseOrder',20,1);
 INSERT INTO xlite_payment_methods VALUES (3,'PhoneOrdering','Model\\Payment\\Processor\\Offline',30,1);
@@ -385,7 +385,7 @@ INSERT INTO xlite_payment_methods VALUES (6,'Echeck','Model\\Payment\\Processor\
 INSERT INTO xlite_payment_methods VALUES (7,'COD','Model\\Payment\\Processor\\Offline',70,1);
 
 
--- Languages
+--  Languages
 INSERT INTO xlite_languages (lng_id, code, code3) VALUES (1,'aa','aar');
 INSERT INTO xlite_languages (lng_id, code, code3) VALUES (2,'ab','abk');
 INSERT INTO xlite_languages (lng_id, code, code3) VALUES (3,'af','afr');
@@ -569,12 +569,12 @@ INSERT INTO xlite_languages (lng_id, code, code3) VALUES (180,'yo','yor');
 INSERT INTO xlite_languages (lng_id, code, code3) VALUES (181,'za','zha');
 INSERT INTO xlite_languages (lng_id, code, code3) VALUES (182,'zu','zul');
 
--- Memberships
+--  Memberships
 INSERT INTO xlite_memberships VALUES (1, 10, 1);
 INSERT INTO xlite_memberships VALUES (2, 20, 1);
 INSERT INTO xlite_memberships VALUES (3, 30, 1);
 
--- Language labels
+--  Language labels
 INSERT INTO xlite_language_labels (label_id, name) VALUES (1, 'Weight');
 INSERT INTO xlite_language_labels (label_id, name) VALUES (2, 'Add to cart');
 INSERT INTO xlite_language_labels (label_id, name) VALUES (3, 'Description');
@@ -697,7 +697,7 @@ INSERT INTO xlite_language_labels (label_id, name) VALUES (119, 'This field is r
 
 INSERT INTO xlite_zones VALUES (1,'Default zone (all addresses)',1);
 
--- Currencies
+--  Currencies
 INSERT INTO xlite_currencies VALUES ('ADP',20,'',2);
 INSERT INTO xlite_currencies VALUES ('AED',784,'',2);
 INSERT INTO xlite_currencies VALUES ('AFA',4,'',2);
@@ -874,7 +874,7 @@ INSERT INTO xlite_currencies VALUES ('ZAR',710,'',2);
 INSERT INTO xlite_currencies VALUES ('ZMK',894,'',0);
 INSERT INTO xlite_currencies VALUES ('ZWD',716,'',2);
 
--- Insert root category
+--  Insert root category
 
 INSERT INTO xlite_categories VALUES (1,0,1,2,0,1,'',1);
 
