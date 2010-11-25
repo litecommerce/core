@@ -114,7 +114,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * 
      * @param string $key Cell name OPTIONAL
      *  
-     * @return array(cells) / cell data
+     * @return array
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -456,7 +456,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
             ) {
                 $params = array();
                 foreach ($cell[self::ATTRS_CACHE_CELL] as $key) {
-                    $params[$key] = $entity->$key;
+                    $params[$key] = $entity->{'get' . \XLite\Core\Converter::convertToCamelCase($key)}();
                 }
 
             } else {

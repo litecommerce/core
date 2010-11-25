@@ -607,7 +607,7 @@ class Session extends \XLite\Base\Singleton
             $languages = array_merge($languages, preg_replace('/^([a-z]{2}).+$/Ss', '$1', $tmp));
         }
 
-        $languages[] = \XLite\Core\Config::getInstance()->General->defaultLanguage->code;
+        $languages[] = \XLite\Core\Config::getInstance()->General->defaultLanguage->getCode();
 
         // Process query
         $idx = 999999;

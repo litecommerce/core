@@ -239,8 +239,8 @@ class Language extends \XLite\Model\Repo\Base\I18n
     public function getLanguagesQuery()
     {
         $query = array(
-            \XLite\Core\Config::getInstance()->General->defaultLanguage->code,
-            $this->getDefaultLanguage()->code,
+            \XLite\Core\Config::getInstance()->General->defaultLanguage->getCode(),
+            $this->getDefaultLanguage()->getCode(),
         );
 
         return array_unique($query);

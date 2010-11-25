@@ -86,7 +86,7 @@ abstract class I18n extends \XLite\Model\AEntity
      */
     protected function getDefaultLanguageCode()
     {
-        return \XLite\Core\Session::getInstance()->getLanguage()->code;
+        return \XLite\Core\Session::getInstance()->getLanguage()->getCode();
     }
 
     /**
@@ -221,8 +221,8 @@ abstract class I18n extends \XLite\Model\AEntity
 
         $result = false;
 
-        foreach ($this->translations as $t) {
-            if ($t->code == $code) {
+        foreach ($this->getTranslations() as $t) {
+            if ($t->getCode() == $code) {
                 $result = true;
                 break;
             }
@@ -243,8 +243,8 @@ abstract class I18n extends \XLite\Model\AEntity
     {
         $codes = array();
 
-        foreach ($this->translations as $t) {
-            $codes[] = $t->code;
+        foreach ($this->getTranslations() as $t) {
+            $codes[] = $t->getCode();
         }
 
         return $codes;
@@ -282,7 +282,7 @@ abstract class I18n extends \XLite\Model\AEntity
     {
         parent::detach();
 
-        foreach ($this->translations as $t) {
+        foreach ($this->getTranslations() as $t) {
             $t->detach();
         }
     }

@@ -299,9 +299,9 @@ class Config extends \XLite\Model\Repo\Base\I18n
     /**
      * Check (and modify) option name and value
      * 
-     * @param string &$category option category
-     * @param string &$name     option name
-     * @param mixed  &$value    option value
+     * @param string &$category Option category
+     * @param string &$name     Option name
+     * @param mixed  &$value    Option value
      *  
      * @return boolean 
      * @access protected
@@ -330,10 +330,10 @@ class Config extends \XLite\Model\Repo\Base\I18n
 
         foreach ($data as $option) {
         
-            $category = $option->category;
-            $name     = $option->name;
-            $type     = $option->type;
-            $value    = $option->value;
+            $category = $option->getCategory();
+            $name     = $option->getName();
+            $type     = $option->getType();
+            $value    = $option->getValue();
 
             if (!isset($config->$category)) {
                 $config->$category = new \XLite\Core\CommonCell();

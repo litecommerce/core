@@ -972,8 +972,8 @@ abstract class AView extends \XLite\Core\Handler
     /**
      * Split an array into chunks
      * 
-     * @param array $array Array to split
-     * @param integer   $count Chunks count
+     * @param array   $array Array to split
+     * @param integer $count Chunks count
      *  
      * @return array
      * @access protected
@@ -1026,9 +1026,9 @@ abstract class AView extends \XLite\Core\Handler
     /**
      * For the "zebra" tables
      * 
-     * @param integer    $row          Row index
-     * @param string $oddCSSClass  First CSS class
-     * @param string $evenCSSClass Second CSS class OPTIONAL
+     * @param integer $row          Row index
+     * @param string  $oddCSSClass  First CSS class
+     * @param string  $evenCSSClass Second CSS class OPTIONAL
      *  
      * @return string
      * @access protected
@@ -1115,9 +1115,9 @@ abstract class AView extends \XLite\Core\Handler
     /**
      * addViewListChild 
      * 
-     * @param array &$list      list to modify
-     * @param array $properties Node properties
-     * @param integer   $weight     Node position OPTIONAL
+     * @param array   &$list      List to modify
+     * @param array   $properties Node properties
+     * @param integer $weight     Node position OPTIONAL
      *  
      * @return void
      * @access protected
@@ -1127,7 +1127,11 @@ abstract class AView extends \XLite\Core\Handler
     protected function addViewListChild(array &$list, array $properties, $weight = 0) 
     {
         // Search node to insert after
-        while ((list($key, $node) = each($list)) && ($node->getWeight() <= $weight));
+        foreach ($list as $key => $node) {
+            if ($node->getWeight() > $weight) {
+                break;
+            }
+        }
 
         // Prepare properties
         $properties['tpl']    = static::$layout->getShortPath() . $properties['tpl'];
@@ -1156,13 +1160,13 @@ abstract class AView extends \XLite\Core\Handler
 
         foreach ($this->getViewListChildren($list) as $widget) {
 
-            if ($widget->tpl && isset($hash[$widget->tpl])) {
+            if ($widget->getTpl() && isset($hash[$widget->getTpl()])) {
                 continue;
             }
 
             $w = false;
 
-            if ($widget->child) {
+            if ($widget->getChild()) {
 
                 // List child is widget
                 $w = $this->getWidget(
@@ -1170,25 +1174,28 @@ abstract class AView extends \XLite\Core\Handler
                         'viewListClass' => $this->getViewListClass(),
                         'viewListName'  => $list,
                     ),
-                    $widget->child
+                    $widget->getChild()
                 );
 
-            } elseif ($widget->tpl && 0 === strncmp(static::$layout->getShortPath(), $widget->tpl, $pathLength)) {
+            } elseif (
+                $widget->getTpl()
+                && 0 === strncmp(static::$layout->getShortPath(), $widget->getTpl(), $pathLength)
+            ) {
 
                 // List child is template
                 $w = $this->getWidget(
                     array(
                         'viewListClass' => $this->getViewListClass(),
                         'viewListName'  => $list,
-                        'template'      => substr($widget->tpl, $pathLength),
+                        'template'      => substr($widget->getTpl(), $pathLength),
                     )
                 );
             }
 
             if ($w) {
                 $widgets[] = $w;
-                if ($widget->tpl) {
-                    $hash[$widget->tpl] = true;
+                if ($widget->getTpl()) {
+                    $hash[$widget->getTpl()] = true;
                 }
             }
         }
@@ -1245,17 +1252,17 @@ abstract class AView extends \XLite\Core\Handler
      * 
      * @param string $content Content
      *  
-     * @return DOMXPath
+     * @return \DOMXPath
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
     protected function getXpathByContent($content)
     {
-        $dom = new DOMDocument();
+        $dom = new \DOMDocument();
         $dom->formatOutput = true;
         
-        return @$dom->loadHTML($content) ? new DOMXPath($dom) : null;
+        return @$dom->loadHTML($content) ? new \DOMXPath($dom) : null;
     }
 
     /**
@@ -1286,7 +1293,7 @@ abstract class AView extends \XLite\Core\Handler
      * 
      * @param string $list List name
      *  
-     * @return DOMNamedNodeMap|void
+     * @return \DOMNamedNodeMap|void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -1334,9 +1341,9 @@ abstract class AView extends \XLite\Core\Handler
     /**
      * Apply XPath-based patches 
      * 
-     * @param DOMNamedNodeMap $places         Patch placeholders
-     * @param DOMNamedNodeMap $patches        Patches
-     * @param string          $baseInsertType Patch insert type
+     * @param \DOMNamedNodeMap $places         Patch placeholders
+     * @param \DOMNamedNodeMap $patches        Patches
+     * @param string           $baseInsertType Patch insert type
      *  
      * @return void
      * @access protected
@@ -1488,8 +1495,8 @@ abstract class AView extends \XLite\Core\Handler
     /**
      * getNamePostedData 
      * 
-     * @param string $field Field name
-     * @param integer    $id    Model object ID OPTIONAL
+     * @param string  $field Field name
+     * @param integer $id    Model object ID OPTIONAL
      *  
      * @return string
      * @access protected

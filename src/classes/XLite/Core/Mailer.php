@@ -80,7 +80,10 @@ class Mailer extends \XLite\Base\Singleton
 
         // Prepare mailer
         $mailer->profile = $profile;
-        $mailer->set('charset', \XLite\Base::getInstance()->config->Company->locationCountry->charset);
+        $mailer->set(
+            'charset',
+            \XLite\Base::getInstance()->config->Company->locationCountry->getCharset()
+        );
 
         $mailer->compose(
             \XLite\Base::getInstance()->config->Company->site_administrator,
@@ -107,7 +110,7 @@ class Mailer extends \XLite\Base\Singleton
 
         // Prepare mailer
         $mailer->profile = $profile;
-        $mailer->set('charset', \XLite\Base::getInstance()->config->Company->locationCountry->charset);
+        $mailer->set('charset', \XLite\Base::getInstance()->config->Company->locationCountry->getCharset());
 
         $mailer->compose(
             \XLite\Base::getInstance()->config->Company->site_administrator,
@@ -134,7 +137,7 @@ class Mailer extends \XLite\Base\Singleton
 
         // Prepare mailer
         $mailer->profile = $profile;
-        $mailer->set('charset', \XLite\Base::getInstance()->config->Company->locationCountry->charset);
+        $mailer->set('charset', \XLite\Base::getInstance()->config->Company->locationCountry->getCharset());
 
         $mailer->compose(
             \XLite\Base::getInstance()->config->Company->site_administrator,
@@ -161,7 +164,7 @@ class Mailer extends \XLite\Base\Singleton
 
         // Prepare mailer
         $mailer->profile = $profile;
-        $mailer->set('charset', \XLite\Base::getInstance()->config->Company->locationCountry->charset);
+        $mailer->set('charset', \XLite\Base::getInstance()->config->Company->locationCountry->getCharset());
 
         $mailer->compose(
             \XLite\Base::getInstance()->config->Company->site_administrator,
@@ -188,7 +191,7 @@ class Mailer extends \XLite\Base\Singleton
 
         // Prepare mailer
         $mailer->userLogin = $userLogin;
-        $mailer->set('charset', \XLite\Base::getInstance()->config->Company->locationCountry->charset);
+        $mailer->set('charset', \XLite\Base::getInstance()->config->Company->locationCountry->getCharset());
 
         $mailer->compose(
             \XLite\Base::getInstance()->config->Company->site_administrator,
@@ -222,7 +225,7 @@ class Mailer extends \XLite\Base\Singleton
             'HTTP_X_FORWARDED_FOR', 
             isset($_SERVER['HTTP_X_FORWARDED_FOR']) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : 'unknown'
         );
-        $mailer->set('charset', \XLite\Base::getInstance()->config->Company->locationCountry->charset);
+        $mailer->set('charset', \XLite\Base::getInstance()->config->Company->locationCountry->getCharset());
 
         $mailer->compose(
             \XLite\Base::getInstance()->config->Company->site_administrator,
@@ -255,7 +258,7 @@ class Mailer extends \XLite\Base\Singleton
             $userPassword
         );
         
-        $mailer->set('charset', \XLite\Base::getInstance()->config->Company->locationCountry->charset);
+        $mailer->set('charset', \XLite\Base::getInstance()->config->Company->locationCountry->getCharset());
         
         $mailer->compose(
             \XLite\Base::getInstance()->config->Company->users_department,
@@ -283,7 +286,7 @@ class Mailer extends \XLite\Base\Singleton
         
         $mailer->set('email', $userLogin);
         $mailer->set('new_password', $userPassword);
-        $mailer->set('charset', \XLite\Base::getInstance()->config->Company->locationCountry->charset);
+        $mailer->set('charset', \XLite\Base::getInstance()->config->Company->locationCountry->getCharset());
         $mailer->compose(
             $this->config->Company->users_department,
             $userLogin,
