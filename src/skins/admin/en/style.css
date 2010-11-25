@@ -96,6 +96,10 @@ ul,
   background: #fff url(images/sidebartitle_back.gif) repeat-x left bottom;
   color: #000;
   font-weight: bold;
+  font-size: 14px;
+  font-weight: bold;
+  height: 30px;
+  padding-left: 5px;
 }
 .SidebarBox a {
   color: #000;
