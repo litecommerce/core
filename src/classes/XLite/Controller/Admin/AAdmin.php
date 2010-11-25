@@ -413,21 +413,6 @@ EOT;
 
     }
 
-    // FIXME - check if it's needed
-    function getSidebarBoxStatus($boxHead = null)
-    {
-        $dialog = new \XLite\Controller\Admin\Sbjs();
-        $dialog->sidebar_box_id = $this->strMD5($boxHead);
-
-        return $dialog->getSidebarBoxStatus();
-    }
-
-    // FIXME - move it to the appropriate class (or remove)
-    function strMD5($string)
-    {
-        return strtoupper(md5(strval($string)));
-    }
-
     /**
      * Sanitize Clean URL 
      * 

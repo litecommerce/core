@@ -111,38 +111,13 @@ class Login extends \XLite\Controller\Admin\AAdmin
         }
 
         $this->setReturnUrl($returnUrl);
-
-        $this->initSBStatuses();
     }
 
     function action_logoff()
     {
         $this->auth->logoff();
-        $this->clearSBStatuses();
     }
 
-    protected function initSBStatuses()
-    {
-        if ($this->auth->isLogged()) {
-            $profile = $this->auth->getProfile();
-            $sidebar_box_statuses = $profile->getSidebarBoxes();
-
-            if (strlen($sidebar_box_statuses) > 0) {
-                $sidebar_box_statuses = unserialize($sidebar_box_statuses);
-                $this->session->sidebar_box_statuses = $sidebar_box_statuses;
-
-            } else {
-                $profile->setSidebarBoxes(serialize($this->session->get('sidebar_box_statuses')));
-                $profile->update();
-            }
-        }
-    }
-    
-    function clearSBStatuses()
-    {
-        unset($this->session->sidebar_box_statuses);
-    }
-    
     function getSecure()
     {
         return $this->session->get('no_https') ? false : $this->config->Security->admin_security;
