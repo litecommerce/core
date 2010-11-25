@@ -32,7 +32,7 @@ table_prefix = "xlite_"
 ; ----------------------
 ;
 [cache]
-; Type of cache used. Can take memcache, apc, xcache, file values.
+; Type of cache used. Can take auto, memcache, apc, xcache, file values.
 type=file
 ; Cache namespace
 namespace=XLite
