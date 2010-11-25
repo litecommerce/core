@@ -2,15 +2,15 @@
 --  Categories [7]
 
 REPLACE INTO `xlite_categories` VALUES (1,0,1,16,0,1,'',0);
+INSERT INTO `xlite_categories` VALUES (4005,1,2,3,0,1,'igoods',0);
 INSERT INTO `xlite_categories` VALUES (1002,1,4,5,0,1,'apparel',0);
-INSERT INTO `xlite_categories` VALUES (1003,1004,9,10,0,1,'cube-goodies',1);
-INSERT INTO `xlite_categories` VALUES (1004,1,8,17,0,1,'toys',0);
---  Commented until an e-goods module is implemented
--- INSERT INTO `xlite_categories` VALUES (3002,1,6,7,0,1,'downloadables',0);
-INSERT INTO `xlite_categories` VALUES (4002,1004,15,16,0,1,'rc-toys',1);
+INSERT INTO `xlite_categories` VALUES (1004,1,6,15,0,1,'toys',0);
+INSERT INTO `xlite_categories` VALUES (1003,1004,7,8,0,1,'cube-goodies',1);
+INSERT INTO `xlite_categories` VALUES (4002,1004,9,10,0,1,'rc-toys',1);
 INSERT INTO `xlite_categories` VALUES (4003,1004,11,12,0,1,'science-toys',1);
 INSERT INTO `xlite_categories` VALUES (4004,1004,13,14,0,1,'puzzles',1);
-INSERT INTO `xlite_categories` VALUES (4005,1,2,3,0,1,'igoods',0);
+--  Commented until an e-goods module is implemented
+-- INSERT INTO `xlite_categories` VALUES (3002,1,6,7,0,1,'downloadables',0);
 
 INSERT INTO xlite_category_quick_flags VALUES (1,1,3,3);
 INSERT INTO xlite_category_quick_flags VALUES (2,1002,0,0);
