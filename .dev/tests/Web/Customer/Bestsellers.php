@@ -79,7 +79,7 @@ class XLite_Web_Customer_Bestsellers extends XLite_Web_Customer_ACustomer
 
     public function testCatPage()
     {   
-        $this->open('downloadables/');
+        $this->open('apparel/');
 
         $this->assertElementPresent(
             "//h2[text()='Bestsellers']",
@@ -93,7 +93,7 @@ class XLite_Web_Customer_Bestsellers extends XLite_Web_Customer_ACustomer
             'check bestsellers block'
         );  
 
-        foreach ($this->findBestsellers(0, 3002) as $product) {
+        foreach ($this->findBestsellers(0, 1002) as $product) {
 
             $id = $product->getProductId();
 
@@ -101,7 +101,7 @@ class XLite_Web_Customer_Bestsellers extends XLite_Web_Customer_ACustomer
                 "//h2[text()='Bestsellers']"
                 . "/following-sibling::div[@class='content']"
                 . "/descendant::div[@class='product productid-$id ui-draggable']",
-                'Check ' . $id . ' element in category 3002'
+                'Check ' . $id . ' element in category 1002'
             );
 
         }
