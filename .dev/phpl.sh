@@ -1,7 +1,6 @@
 #!/bin/sh
 
 PHP_BIN="/usr/local/php-530/bin/php";
-#PHP_BIN="/usr/local/php-444/bin/php";
 
 log=`find . -type f -name '*.php' -exec $PHP_BIN -l '{}' ';' | grep -v 'No syntax '`;
 
