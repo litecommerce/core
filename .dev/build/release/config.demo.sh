@@ -16,6 +16,30 @@ XLITE_MODULES=${XLITE_MODULES}"
 Demo
 "
 
+# The list of modules which should never be included into the demo version
+XLITE_EXCLUDE_MODULES="
+AustraliaPost
+"
+
+TMP_XLITE_MODULES=""
+
+for i in $XLITE_MODULES; do
+
+	found=""
+
+	for j in $XLITE_EXCLUDE_MODULES; do
+		if [ ! $i = $j ]; then
+			found="found"
+			break
+		fi
+	done
+
+	[ ! "x${found}" = "x" ] && TMP_XLITE_MODULES=$TMP_XLITE_MODULES" "$i
+
+done
+
+XLITE_MODULES=$TMP_XLITE_MODULES
+
 # LiteCommerce files that must be removed from all distributives
 XLITE_FILES_TODELETE="
 install.php
