@@ -145,7 +145,6 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
         'pending_membership_id' => 33,
         'order_id'              => 44444,
         'language'              => 'ru',
-        'sidebar_boxes'         => 'sidebar_boxes test',
     );
 
     /**
