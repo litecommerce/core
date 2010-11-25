@@ -65,7 +65,7 @@ class XLite_Tests_Model_Product extends XLite_Tests_Model_AProduct
 		$entity = new \XLite\Model\Product($dataToSet);
 
 		foreach ($dataToCheck as $key => $value) {
-			$this->assertEquals($value, $entity->$key, 'Field "' . $key . '" does not match');
+			$this->assertEquals($value, $entity->{'get' . \XLite\Core\Converter::convertToCamelCase($key)}(), 'Field "' . $key . '" does not match');
 		}
 	}
 

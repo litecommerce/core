@@ -347,7 +347,7 @@ class XLite_Tests_Model_Repo_Category extends XLite_Tests_TestCase
 
             $this->assertEquals(
                 $value,
-                $entity->$name,
+                $entity->{'get' . \XLite\Core\Converter::convertToCamelCase($name)}(),
                 'The "' . $name . '" property of the created entity must be equal to "' . $value . '"'
             );
         }
