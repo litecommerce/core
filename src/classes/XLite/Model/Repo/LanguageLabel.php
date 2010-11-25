@@ -68,7 +68,7 @@ class LanguageLabel extends \XLite\Model\Repo\Base\I18n
     public function findLabelsByCode($code = null)
     {
         if (is_null($code)) {
-            $code = \XLite\Core\Session::getInstance()->getLanguage()->code;
+            $code = \XLite\Core\Session::getInstance()->getLanguage()->getCode();
         }
 
         $data = $this->getFromCache('all_by_code', array('code' => $code));
@@ -112,7 +112,7 @@ class LanguageLabel extends \XLite\Model\Repo\Base\I18n
         $result = array();
 
         foreach ($data as $row) {
-            $result[$row->name] = $row->getTranslation($code)->label;
+            $result[$row->getName()] = $row->getTranslation($code)->getLabel();
         }
         ksort($result);
 

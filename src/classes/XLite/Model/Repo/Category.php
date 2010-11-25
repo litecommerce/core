@@ -354,7 +354,9 @@ class Category extends \XLite\Model\Repo\Base\I18n
     protected function updateQuickFlags(\XLite\Model\Category $entity, array $flags)
     {
         foreach ($flags as $name => $delta) {
-            $entity->getQuickFlags()->$name += $delta;
+            $name = \XLite\Core\Converter::convertToCamelCase($name);
+            $value = $entity->getQuickFlags()->{'get' . $name}();
+            $entity->getQuickFlags()->{'set' . $name}($value + $delta);
         }
 
         // Do not change to $this->update() or $this->performUpdate():

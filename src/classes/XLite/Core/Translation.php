@@ -81,7 +81,7 @@ class Translation extends \XLite\Base\Singleton implements \XLite\Base\IREST
     public static function getCurrentLanguageCode($force = false)
     {
         if (!isset(self::$currentLanguageCode) || $force) {
-            self::$currentLanguageCode = \XLite\Core\Session::getInstance()->getLanguage()->code;
+            self::$currentLanguageCode = \XLite\Core\Session::getInstance()->getLanguage()->getCode();
         }
 
         return self::$currentLanguageCode;
@@ -132,7 +132,7 @@ class Translation extends \XLite\Base\Singleton implements \XLite\Base\IREST
     public function translate($name, array $arguments = array(), $code = null)
     {
         if (!isset($code)) {
-            $code = \XLite\Core\Session::getInstance()->getLanguage()->code;
+            $code = \XLite\Core\Session::getInstance()->getLanguage()->getCode();
         }
 
         $translated = $this::getInstance()->getDriver()->translate($name, $code);

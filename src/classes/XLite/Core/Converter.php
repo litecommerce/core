@@ -248,8 +248,8 @@ class Converter extends \XLite\Base\Singleton
     public static function resizeImageSoft(\XLite\Model\Base\Image $image, $width = null, $height = null)
     {
         list($newWidth, $newHeight) = self::getCroppedDimensions(
-            $image->width,
-            $image->height,
+            $image->getWidth(),
+            $image->getHeight(),
             $width,
             $height
         );
@@ -258,7 +258,7 @@ class Converter extends \XLite\Base\Singleton
 
         if (
             self::isGDEnabled()
-            && ($newWidth != $image->width || $newHeight != $image->height)
+            && ($newWidth != $image->getWidth() || $newHeight != $image->getHeight())
         ) {
             $image = self::resizeImage($image, $newWidth, $newHeight);
 
@@ -277,7 +277,7 @@ class Converter extends \XLite\Base\Singleton
      * @param integer                 $width  New width
      * @param integer                 $height New height
      *  
-     * @return string|false
+     * @return string|boolean
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
@@ -295,11 +295,11 @@ class Converter extends \XLite\Base\Singleton
             'image/bmp'  => 'wbmp',
         );
 
-        $type = $image->mime;
+        $type = $image->getMime();
 
         $result = false;
 
-        if (isset($types[$type]) && $image->body) {
+        if (isset($types[$type]) && $image->getBody()) {
 
             $type = $types[$type];
 
@@ -308,7 +308,7 @@ class Converter extends \XLite\Base\Singleton
             $func = 'imagecreatefrom' . $type;
             if (function_exists($func)) {
 
-                $data = $image->body;
+                $data = $image->getBody();
 
                 $fn = tempnam(LC_TMP_DIR, 'image');
 
@@ -334,8 +334,8 @@ class Converter extends \XLite\Base\Singleton
                         0,
                         $width,
                         $height,
-                        $image->width,
-                        $image->height
+                        $image->getWidth(),
+                        $image->getHeight()
                     );
                     imagedestroy($imageResource);
 

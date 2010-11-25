@@ -278,7 +278,7 @@ class Logger extends \XLite\Base\Singleton
      */
     protected function getBackTrace()
     {
-        return \XLite\Core\Operator::getInstance()->getBackTrace(3);
+        return \XLite\Core\Operator::getInstance()->getBackTrace(2);
     }
 
     /**

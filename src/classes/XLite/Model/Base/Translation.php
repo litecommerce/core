@@ -75,6 +75,6 @@ abstract class Translation extends \XLite\Model\AEntity
         parent::checkCache();
 
         // Check translation owner cache
-        $this->owner->checkCache();
+        $this->getOwner()->checkCache();
     }
 }

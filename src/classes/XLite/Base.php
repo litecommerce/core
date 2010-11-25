@@ -187,10 +187,10 @@ class Base extends \XLite\Base\Singleton
                 if ($obj instanceof \stdClass) {
                     $obj = isset($obj->$part) ? $obj->$part : null;
 
-                } elseif (
-                    $obj instanceof \XLite\Model\AEntity
-                    || $obj instanceof \XLite\Core\CommonCell
-                ) {
+                } elseif ($obj instanceof \XLite\Model\AEntity) {
+                    $obj = $obj->{'get' . \XLite\Core\Converter::convertToCamelCase($part)}();
+
+                } elseif ($obj instanceof \XLite\Core\CommonCell) {
                     $obj = $obj->$part;
 
                 } else {

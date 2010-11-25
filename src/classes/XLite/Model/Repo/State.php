@@ -119,7 +119,7 @@ class State extends \XLite\Model\Repo\ARepo
                 ->setParameter('id', $stateId)
                 ->getQuery()
                 ->getSingleResult()
-                ->code;
+                ->getCode();
 
         } catch (\Doctrine\ORM\NoResultException $exception) {
             $code = null;
