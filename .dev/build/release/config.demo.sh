@@ -24,6 +24,9 @@ sql/xlite_lng_de.sql
 sql/local
 "
 
+# LiteCommerce files that are required for night builds - this var must be empty
+XLITE_FILES_TESTMODE=""
+
 # Drupal files that must be removed from all distributives
 DRUPAL_FILES_TODELETE="
 profiles/default
