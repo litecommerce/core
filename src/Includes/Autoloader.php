@@ -66,6 +66,9 @@ abstract class Autoloader
 
         $loader = new \Doctrine\Common\ClassLoader('Doctrine', LC_LIB_DIR);
         $loader->register();
+
+        $loader = new \Doctrine\Common\ClassLoader('Symfony', LC_LIB_DIR);
+        $loader->register();
     }
 
     /**
