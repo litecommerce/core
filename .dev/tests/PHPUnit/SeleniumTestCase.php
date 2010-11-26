@@ -353,6 +353,11 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
         $this->baseURL = SELENIUM_SOURCE_URL . '/src/';
 
         $this->setBrowserUrl($this->baseURL);
+
+        // Clear and restart (if need) entity manager
+        \XLite\Core\Database::getEM()->clear();
+
+        \XLite\Core\Session::getInstance()->restart();
     }
 
     /**
