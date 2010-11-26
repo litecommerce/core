@@ -71,7 +71,9 @@ class Product extends \XLite\Controller\Customer\Catalog
      */
     public function checkCategory()
     {
-        return (($id = parent::getCategoryId()) && $this->getRootCategoryId() != $id) ? $id : false;
+        $id = parent::getCategoryId();
+
+        return ($id && $this->getRootCategoryId() != $id) ? $id : false;
     }
 
 
@@ -84,7 +86,12 @@ class Product extends \XLite\Controller\Customer\Catalog
      */
     public function getCategoryId()
     {
-        return $this->checkCategory() ?: $this->getProduct()->getCategoryId();
+        $categoryId = $this->checkCategory();
+        if (!$categoryId && $this->getProduct()) {
+            $categoryId = $this->getProduct()->getCategoryId();
+        }
+
+        return $categoryId;
     }
 
     /**
@@ -96,7 +103,7 @@ class Product extends \XLite\Controller\Customer\Catalog
      */
     public function getDescription()
     {
-        return ($descr = parent::getDescription()) ?: $this->getProduct()->getBriefDescription();
+        return parent::getDescription() ?: $this->getProduct()->getBriefDescription();
     }
 
     /**
@@ -109,14 +116,10 @@ class Product extends \XLite\Controller\Customer\Catalog
     public function handleRequest()
     {
         if (is_null($this->getProduct())) {
-            if (is_null($this->getCategory())) {
-                $this->setReturnUrl($this->buildURL());
-
-            } else {
-                $this->setReturnUrl(
-                    $this->buildURL('category', '', array('category_id' => $this->getCategoryId()))
-                );
-            }
+            $url = is_null($this->getCategory())
+                ? $this->buildURL()
+                : $this->buildURL('category', '', array('category_id' => $this->getCategoryId()));
+            $this->setReturnUrl($url);
 
         } else {
             parent::handleRequest();
