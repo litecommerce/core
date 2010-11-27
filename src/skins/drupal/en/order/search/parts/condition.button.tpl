@@ -1,7 +1,7 @@
 {* vim: set ts=2 sw=2 sts=2 et: *}
 
 {**
- * Orders search Order ID condition
+ * Orders search buttons
  *
  * @author    Creative Development LLC <info@cdev.ru>
  * @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
@@ -9,12 +9,15 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- * @ListChild (list="orders.search.conditions", weight="30")
+ * @ListChild (list="orders.search.conditions", weight="40")
  *}
-<tr class="status">
-  <td class="title">{t(#Status#)}:</td>
-  <td height="10">
-    <widget class="\XLite\View\StatusSelect" field="status" value="{getCondition(#status#)}" allOption />
+<tr class="buttons">
+  <td class="clear-all">
+
+  {* TODO Restore
+  <a href="javascript:void(0);" onclick="javascript:">{t(#Clear all fields#)}</a>
+  *}
+
   </td>
-  <td>&nbsp;</td>
+  <td class="button-cell"><widget class="\XLite\View\Button\Submit" label="Apply filters" /></td>
 </tr>

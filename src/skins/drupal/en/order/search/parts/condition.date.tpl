@@ -9,14 +9,27 @@
  * @version   SVN: $Id$
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
- * @ListChild (list="orders.search.conditions", weight="30")
+ * @ListChild (list="orders.search.conditions", weight="20")
  *}
-<tr>
-  <td>Date (range):</td>
+<tr class="date">
+  <td class="title">{t(#Date range#)}:</td>
   <td>
+
     <widget class="\XLite\View\DatePicker" field="startDate" value="{getCondition(#startDate#)}" />
     &ndash;
     <widget class="\XLite\View\DatePicker" field="endDate" value="{getCondition(#endDate#)}" />
+
+    <br />
+
+{* TODO Restore
+
+    <ul class="date-buttons">
+      <li><a href="javascript:void(0);" onclick="javascript:">{t(#This week#)}</a></li>
+      <li><a href="javascript:void(0);" onclick="javascript:">{t(#This month#)}</a></li>
+      <li><a href="javascript:void(0);" onclick="javascript:">{t(#This year#)}</a></li>
+    </ul>
+
+*}
+
   </td>
-  <td class="button-cell"><widget class="\XLite\View\Button\Submit" label="Search orders" /></td>
 </tr>
