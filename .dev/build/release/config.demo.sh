@@ -19,6 +19,7 @@ Demo
 # The list of modules which should never be included into the demo version
 XLITE_EXCLUDE_MODULES="
 AustraliaPost
+Quantum
 "
 
 TMP_XLITE_MODULES=""

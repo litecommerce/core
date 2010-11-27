@@ -363,6 +363,8 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a -d "${OUTPUT_DIR}/${DRUPAL_DI
 
 	sed -i "" "/'DrupalConnector', \/\/ Allows to use Drupal CMS as a storefront/d" ${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}/Includes/install/install_settings.php
 
+	$PHP ${BASE_DIR}/../devcode_postprocess.php silentMode=1
+
 	# Prepare permisions
 	find . -type d -exec chmod 755 {} \;
 	find . -type f -exec chmod 644 {} \;
