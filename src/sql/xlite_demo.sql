@@ -62,6 +62,13 @@ INSERT INTO `xlite_category_products` SET product_id = '15067', category_id = '1
 
 
 
+-- Featured products 
+
+INSERT INTO `xlite_featured_products` (`id`, `product_id`, `category_id`, `order_by`) VALUES (1,15067,1,20);
+INSERT INTO `xlite_featured_products` (`id`, `product_id`, `category_id`, `order_by`) VALUES (2,15091,1,10);
+INSERT INTO `xlite_featured_products` (`id`, `product_id`, `category_id`, `order_by`) VALUES (3,16280,1,30);
+
+
 -- Shipping methods [2]
 
 INSERT INTO xlite_shipping_methods (method_id, processor, carrier, code, enabled, position) VALUES (100, 'offline', '', '', 1, 10);
