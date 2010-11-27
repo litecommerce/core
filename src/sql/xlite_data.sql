@@ -103,7 +103,7 @@ INSERT INTO `xlite_config` VALUES (268,'use_billing_info','Taxes','checkbox',10,
 INSERT INTO `xlite_config` VALUES (269,'use_smtp','Email','checkbox',110,'N');
 INSERT INTO `xlite_config` VALUES (270,'use_smtp_auth','Email','checkbox',140,'N');
 INSERT INTO `xlite_config` VALUES (271,'valid_email_domains','Email','text',30,'com;net;edu;mil;gov;org;biz');
-INSERT INTO `xlite_config` VALUES (273,'version','Version','',0,'3.x-dev');
+INSERT INTO `xlite_config` VALUES (273,'version','Version','',0,'3.0.0-alpha2');
 INSERT INTO `xlite_config` VALUES (275,'weight_symbol','General','text',620,'lbs');
 INSERT INTO `xlite_config` VALUES (276,'weight_unit','General','select',610,'lbs');
 INSERT INTO `xlite_config` VALUES (299,'you_save','General','select',296,'Y');
