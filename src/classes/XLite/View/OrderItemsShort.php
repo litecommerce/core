@@ -209,7 +209,8 @@ class OrderItemsShort extends \XLite\View\AView
     {
         $list = parent::getJSFiles();
 
-        $list[] = 'order/list/items.js';
+        // TODO restore
+        // $list[] = 'order/list/items.js';
 
         return $list;
     }

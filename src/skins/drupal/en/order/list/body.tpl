@@ -14,6 +14,8 @@
 
   {displayViewListContent(#orders.childs#)}
 
+{* TODO Restore
+
 <script type="text/javascript">
 $(document).ready(
   function() {
@@ -25,4 +27,6 @@ $(document).ready(
   }
 );
 </script>
+*}
+
 </div>

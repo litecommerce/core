@@ -22,15 +22,77 @@ h2.order-search-title {
   margin-bottom: 19px;
 }
 
-.search-orders-conditions {
-  padding: 15px 0 12px 21px;
-  background-color: #f7f7f7;
+.search-orders-box {
   width: 572px;
-  margin-bottom: 20px;
+}
+
+.search-orders-conditions,
+  #advanced_search_order_options
+{
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 15px 0 12px 21px;
+}
+
+.search-orders-conditions {
+  margin-bottom: 0px;
+}
+
+#advanced_search_order_options {
+  margin-top: 10px;
+}
+
+.search-orders-conditions,
+  #advanced_search_order_options,
+  #advanced_search_order_options td,
+  #advanced_search_order_options table
+{
+  background-color: #f7f7f7;
+  border: none;
+}
+
+#advanced_search_order_options td {
+  padding: 4px 0px 22px 0px;
+}
+
+#advanced_search_order_options td.title {
+  color: #7490af;
+  font-size: 16px;
+}
+
+.orders-list {
+  margin-top: 20px;
 }
 
 .search-orders {
   padding: 1px;
+}
+
+.search-orders tr.products input {
+  width: 350px;
+}
+
+.search-orders input.date-picker {
+  width: 100px;
+}
+
+.search-orders .buttons .clear-all a {
+  font-size: 14px;
+}
+
+.search-orders .buttons td {
+  padding-top: 0px;
+}
+
+.search-orders .buttons .button-cell button {
+  height: 35px; 
+  margin-top: 0px;
+  margin-left: 100px;
+}
+
+.search-orders .buttons .button-cell button span {
+  font-size: 14px;
+  padding: 8px;
 }
 
 .order-body-item .title {
@@ -69,8 +131,6 @@ ul.order-body-item-spec li,
 {
   list-style: none;
   float: left;
-  background: none;
-  padding: 0px;
   margin: 0px;
 }
 
@@ -144,7 +204,17 @@ ul.order-body-item-spec2 li.orderid {
   width: 60px;
 }
 
+ul.date-buttons li {
+  list-style: none;
+  float: left;
+  margin: 0px;
+  padding: 4px 16px 0 0;
+  background: none;
+}
 
-
+ul.date-buttons {
+  margin: 0px;
+  padding: 0px;
+}
 
 

@@ -270,7 +270,8 @@ class OrderSearch extends \XLite\View\Dialog
     {
         $list = parent::getJSFiles();
 
-        $list[] = 'order/search/search.js';
+        // TODO JS search 
+        // $list[] = 'order/search/search.js';
 
         return $list;
     }
