@@ -205,6 +205,10 @@ class XLite_Tests_AllTests
             }
         }
 
+        if (isset($deploy) && !defined('DEPLOYMENT_TEST')) {
+            define('DEPLOYMENT_TEST', true);
+        }
+
         // Include abstract classes
         $classesDir  = dirname( __FILE__ );
         $pattern     = '/^' . preg_quote($classesDir, '/') . '.*\/(?:\w*Abstract|A[A-Z][a-z]\w*)\.php$/Ss';

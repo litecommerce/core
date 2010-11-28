@@ -354,10 +354,13 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
 
         $this->setBrowserUrl($this->baseURL);
 
-        // Clear and restart (if need) entity manager
-        \XLite\Core\Database::getEM()->clear();
+        if (!defined('DEPLOYMENT_TEST')) {
 
-        \XLite\Core\Session::getInstance()->restart();
+            // Clear and restart (if need) entity manager
+            \XLite\Core\Database::getEM()->clear();
+
+            \XLite\Core\Session::getInstance()->restart();
+        }
     }
 
     /**
