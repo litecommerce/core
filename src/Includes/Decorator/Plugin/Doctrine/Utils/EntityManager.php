@@ -79,7 +79,10 @@ abstract class EntityManager extends \Includes\Decorator\Plugin\Doctrine\ADoctri
             'XLite\Model'
         );
 
-        $iterator = new \RecursiveDirectoryIterator(LC_CLASSES_CACHE_DIR . 'XLite' . LC_DS . 'Module');
+        $iterator = new \RecursiveDirectoryIterator(
+            LC_CLASSES_CACHE_DIR . 'XLite' . LC_DS . 'Module',
+            \FilesystemIterator::SKIP_DOTS
+        );
 
         foreach ($iterator as $dir) {
 
