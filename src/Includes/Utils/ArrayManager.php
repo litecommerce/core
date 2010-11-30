@@ -86,4 +86,28 @@ class ArrayManager extends AUtils
             array($data, array_fill_keys($keys, true))
         );
     }
+
+    /**
+     * Search entity in array by a field value
+     *
+     * @param array  $array     array to search
+     * @param string $fieldName field to search by
+     * @param mixed  $value     value to use for comparison
+     *
+     * @return mixed
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function searchInObjectsArray(array $array, $fieldName, $value)
+    {
+        $list = array_filter(
+            $array,
+            function ($var) use ($fieldName, $value) {
+                return $var->$fieldName == $value;
+            }
+        );
+
+        return empty($list) ? null : reset($list);
+    }
 }

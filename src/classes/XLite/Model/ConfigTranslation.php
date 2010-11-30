@@ -34,8 +34,9 @@ namespace XLite\Model;
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
+ *
  * @Entity
- * @Table (name="config_translations")
+ * @Table  (name="config_translations")
  */
 class ConfigTranslation extends \XLite\Model\Base\Translation
 {
@@ -46,6 +47,7 @@ class ConfigTranslation extends \XLite\Model\Base\Translation
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="string", length="255", nullable=false)
      */
     protected $option_name;
@@ -57,9 +59,8 @@ class ConfigTranslation extends \XLite\Model\Base\Translation
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="string", length="255", nullable=false)
      */
     protected $option_comment;
-
 }
-

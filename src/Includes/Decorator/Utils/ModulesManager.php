@@ -153,9 +153,7 @@ abstract class ModulesManager extends AUtils
             static::$activeModules = static::getModulesList();
         }
 
-        return isset($moduleName)
-            ? isset(static::$activeModules[$moduleName])
-            : static::$activeModules;
+        return isset($moduleName) ? isset(static::$activeModules[$moduleName]) : static::$activeModules;
     }
 
     /**
@@ -197,5 +195,17 @@ abstract class ModulesManager extends AUtils
     public static function getPathPatternForTemplates()
     {
         return static::getPathPattern(preg_quote(LC_SKINS_DIR, '/') . '\w+' . LC_DS_QUOTED . '\w+', 'modules', 'tpl');
+    }
+
+    /**
+     * Arrange modules base on their dependencies
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getModulePriorities()
+    {
     }
 }

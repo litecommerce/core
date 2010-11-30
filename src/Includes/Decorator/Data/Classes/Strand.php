@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage DataStructure
+ * @subpackage Includes
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -26,27 +26,29 @@
  * @since      3.0.0
  */
 
-namespace XLite\DataStructure\Category;
+namespace Includes\Decorator\Data\Classes;
 
 /**
- * Node 
+ * Strand 
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Node extends \Includes\DataStructure\Node\Tree
+class Strand extends \Includes\Decorator\Data\Classes\Base\ATree
 {
     /**
-     * Return name of the key field
-     * 
-     * @return string
-     * @access protected
+     * Constructor
+     *
+     * @param string $nodeClass node class name
+     *  
+     * @return void
+     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected static function getKeyField()
+    public function __construct($nodeClass = null, array $nodes)
     {
-        return 'category_id';
+        parent::__construct($nodeClass);
     }
 }

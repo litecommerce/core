@@ -52,14 +52,14 @@ class Main extends \Includes\Decorator\Plugin\Doctrine\Plugin\APlugin
 
 
     /**
-     * Execute "preprocess" hook handler
+     * Execute "run" hook handler
      * 
      * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function executeHookHandlerPreprocess()
+    public function executeHookHandlerRun()
     {
         !($driver = $this->getDoctrineCacheDriver()) ?: $driver->deleteAll();
     }

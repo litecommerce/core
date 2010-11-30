@@ -181,7 +181,7 @@ class XLite_Web_Customer_SearchProducts extends XLite_Web_Customer_AProductList
         return array();
     }
 
-    protected function setDisplayMode($mode)
+    protected function setDisplayMode($mode = 'list', $columns = null)
     {
         $this->doNotOpenNew = true;
 

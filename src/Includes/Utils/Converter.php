@@ -116,4 +116,33 @@ class Converter extends AUtils
     {
         return sprintf('%.02f', round(doubleval($price), 2));
     }
+
+    /**
+     * Convert a string like "test_foo_bar" into the camel case (like "TestFooBar")
+     *
+     * @param string $string String to convert
+     *
+     * @return string
+     * @access public
+     * @since  3.0
+     */
+    public static function convertToCamelCase($string)
+    {
+        return preg_replace('/(?:\A|_)([a-z])/ie', 'strtoupper(\'\\1\')', $string);
+    }
+
+    /**
+     * Convert a string like "testFooBar" into the underline style (like "test_foo_bar")
+     *
+     * @param string $string String to convert
+     *
+     * @return string
+     * @access public
+     * @since  3.0
+     */
+    public static function convertFromCamelCase($string)
+    {
+        return preg_replace('/(?!:\A)([A-Z])/e', '\'_\' . strtolower(\'\\1\')', $string);
+    }
+
 }

@@ -62,7 +62,10 @@ abstract class Tree extends \Includes\DataStructure\Node\ANode
      * @see    ____func_see____
      * @since  3.0.0
      */
-    abstract protected function getKeyField();
+    protected static function getKeyField()
+    {
+        static::fireError('Abstract function call: ' . __METHOD__);
+    }
 
 
     /**
@@ -79,6 +82,19 @@ abstract class Tree extends \Includes\DataStructure\Node\ANode
     }
 
     /**
+     * Return list of child nodes
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getChildren()
+    {
+        return $this->children;
+    }
+
+    /**
      * Check if this node is the "stub" node
      * 
      * @return bool
@@ -89,6 +105,19 @@ abstract class Tree extends \Includes\DataStructure\Node\ANode
     public function isStub()
     {
         return $this->__isset(self::IS_STUB);
+    }
+
+    /**
+     * Return node name for output
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getReadableName()
+    {
+        return $this->getKey();
     }
 
     /**
@@ -128,19 +157,22 @@ abstract class Tree extends \Includes\DataStructure\Node\ANode
     /**
      * "Re-plant" node: move the sub-tree from root to the already created sub-tree
      *
-     * @param self $parent new parent (root to re-plant to)
-     * @param self $node   new node to retrieve data
+     * @param self  $parent new parent (root to re-plant to)
+     * @param array $data   data for replanted node
      *
      * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function replant(self $parent, self $node)
+    public function replant(self $parent, array $data = array())
     {
         $this->__unset(self::IS_STUB);
+        $this->setData($data);
 
-        $this->setData($node->getData());
+        if ($parent->getKey()) {
+            $this->getParent()->removeChild($this);
+        }
 
         $parent->addChild($this);
     }
@@ -163,6 +195,26 @@ abstract class Tree extends \Includes\DataStructure\Node\ANode
     }
 
     /**
+     * Modify node key value
+     * 
+     * @param string $key new key
+     *  
+     * @return null
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function changeKey($key)
+    {
+        $parent = $this->getParent();
+        $this->getParent()->removeChild($this);
+
+        $this->__set(static::getKeyField(), $key);
+
+        $parent->addChild($this);
+    }
+
+    /**
      * Add stub node to the tree
      *
      * @param string $key new node key
@@ -174,6 +226,6 @@ abstract class Tree extends \Includes\DataStructure\Node\ANode
      */
     public static function createStubNode($key)
     {
-        return new static(array(self::IS_STUB => true));
+        return new static(array(static::getKeyField() => $key, self::IS_STUB => true));
     }
 }

@@ -38,6 +38,12 @@ namespace Includes\Decorator\Data\Classes;
 class Node extends \Includes\DataStructure\Node\Tree
 {
     /**
+     * Interface for decorator classes
+     */
+    const INTERFACE_DECORATOR = '\XLite\Base\IDecorator';
+
+
+    /**
      * Return name of the key field
      *
      * @return string
@@ -45,11 +51,27 @@ class Node extends \Includes\DataStructure\Node\Tree
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getKeyField()
+    protected static function getKeyField()
     {
         return \Includes\Decorator\ADecorator::N_CLASS;
     }
 
+
+    /**
+     * Check if class implements an interface
+     * 
+     * @param self   $node      node to check
+     * @param string $interface interface name
+     *  
+     * @return bool
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function checkForInterface(self $node, $interface = self::INTERFACE_DECORATOR)
+    {
+        return in_array($interface, $node->__get(\Includes\Decorator\ADecorator::N_INTERFACES));
+    }
 
     /**
      * Alias
@@ -82,6 +104,51 @@ class Node extends \Includes\DataStructure\Node\Tree
     }
 
     /**
+     * Return node name for output
+     *
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getReadableName()
+    {
+        $name = str_replace('\\XLite\\', '', parent::getReadableName());
+
+        if ($this->isDecorator()) {
+            $name = '<strong>' . $name . '</strong>';
+        }
+
+        return $name;
+    }
+
+    /**
+     * Check if current node decorates a class
+     * 
+     * @return bool
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isDecorator()
+    {
+        return $this->checkForInterface($this);
+    }
+
+    /**
+     * Return list of classes which are decorate current node
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getDecorators()
+    {
+        return ($nodes = $this->getChildren()) ? array_filter($nodes, array($this, 'checkForInterface')) : array();
+    }
+
+    /**
      * Add child node
      *
      * @param self $node node to add
@@ -95,7 +162,7 @@ class Node extends \Includes\DataStructure\Node\Tree
     {
         // An unexpected logical error (replacement in non-root node)
         if (isset($this->children[$node->getKey()], $this->parent)) {
-            throw new \Exception('Duplicate child class - "' . $node->getKey() . '"');
+            \Includes\Decorator\ADecorator::fireError('Duplicate child class - "' . $node->getKey() . '"');
         }
 
         parent::addChild($node);

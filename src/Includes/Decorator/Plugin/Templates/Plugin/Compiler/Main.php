@@ -68,14 +68,14 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
 
 
     /**
-     * Execute "run" hook handler
+     * Execute "postprocess" hook handler
      * 
      * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function executeHookHandlerRun()
+    public function executeHookHandlerPostprocess()
     {
         LC_DEVELOPER_MODE ?: $this->createTemplatesCache();
     }
