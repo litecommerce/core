@@ -150,5 +150,12 @@ auth_code = ""
 [performance]
 developer_mode = Off
 
+;
+; Other options
+;
+[other]
+; Translation drive code - auto / gettext / db
+translation_driver = auto
+
 ; WARNING: Do not change the line below
 ; */ ?>

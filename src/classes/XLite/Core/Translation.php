@@ -199,17 +199,31 @@ class Translation extends \XLite\Base\Singleton implements \XLite\Base\IREST
     {
         $driver = null;
 
-        foreach ($this->driversQuery as $class) {
-            $driver = new $class();
-            if ($driver->isValid()) {
-                break;
+        $translationDriver = \XLite::getInstance()->getOptions(array('other', 'translation_driver'));
+        if ($translationDriver && 'auto' != $translationDriver) {
+            $class = '\XLite\Core\TranslationDriver\\'
+                . \XLite\Core\Converter::convertToCamelCase($translationDriver);
+            if (in_array($class, $this->driversQuery)) {
+                $driver = new $class();
+                if (!$driver->isValid()) {
+                    $driver = null;
+                }
             }
-            $driver = null;
         }
 
-        if (!isset($driver)) {
-            // TODO - add throw exception
-            $this->doDie('Unable to find a translation driver!');
+        if (!$driver) {
+            foreach ($this->driversQuery as $class) {
+                $driver = new $class();
+                if ($driver->isValid()) {
+                    break;
+                }
+                $driver = null;
+            }
+
+            if (!isset($driver)) {
+                // TODO - add throw exception
+                $this->doDie('Unable to find a translation driver!');
+            }
         }
 
         return $driver;
