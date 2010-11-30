@@ -36,13 +36,13 @@ INSERT INTO `xlite_category_images` VALUES (108,4005,'demo_store_c4005.jpg','ima
 INSERT INTO `xlite_category_translations` VALUES (1,'en',1,'','','','','');
 --  Commented until an e-goods module is implemented
 --  INSERT INTO `xlite_category_translations` VALUES (101,'en',3002,'Downloadables','<img src=\"{{WEB_LC_ROOT}}/public/downloadables.png\" alt=\"\" />','','','');
-INSERT INTO `xlite_category_translations` VALUES (102,'en',1004,'Toys','<img src=\"{{WEB_LC_ROOT}}/public/toys.png\" alt=\"\" />','','','');
+INSERT INTO `xlite_category_translations` VALUES (102,'en',1004,'Toys','<img src=\"{{WEB_LC_ROOT}}/public/toys.png\" alt=\"\" usemap=\"#toys_Map\" /><map name=\"toys_Map\"><area shape=\"poly\" alt=\"\" coords=\"552,219, 544,98, 586,75, 583,46, 593,21, 618,9, 648,26, 655,59, 652,86, 690,98, 690,143, 698,234, 597,245\" href=\"#\"><area shape=\"poly\" alt=\"\" coords=\"441,150, 448,135, 450,124, 440,89, 453,86, 476,114, 480,130, 491,110, 529,126, 515,156, 527,174, 503,213, 530,237, 527,262, 516,277, 473,258, 452,261, 432,280, 397,275, 383,247, 395,218, 421,210, 440,216, 460,196, 466,165, 432,151\" href=\"#\"> <area shape=\"poly\" alt=\"\" coords=\"163,0, 145,20, 130,41, 134,62, 150,77, 169,83, 180,117, 217,169, 278,196, 358,195, 404,175, 407,154, 367,134, 404,88, 430,42, 432,0\" href=\"#\"></map>','','','');
 INSERT INTO `xlite_category_translations` VALUES (103,'en',4004,'Puzzles','','','','');
 INSERT INTO `xlite_category_translations` VALUES (104,'en',1003,'Cube Goodies','Category-child','','','');
 INSERT INTO `xlite_category_translations` VALUES (105,'en',4003,'Science Toys','','','','');
 INSERT INTO `xlite_category_translations` VALUES (106,'en',4002,'RC Toys','','','','');
-INSERT INTO `xlite_category_translations` VALUES (107,'en',1002,'Apparel','<img src=\"{{WEB_LC_ROOT}}/public/apparel.png\" alt=\"\" />','','','');
-INSERT INTO `xlite_category_translations` VALUES (108,'en',4005,'iGoods','<img src=\"{{WEB_LC_ROOT}}/public/igoods.png\" alt=\"\" />','','','');
+INSERT INTO `xlite_category_translations` VALUES (107,'en',1002,'Apparel','<img src=\"{{WEB_LC_ROOT}}/public/apparel.png\" alt=\"\" usemap=\"#apparel_Map\" /><map name=\"apparel_Map\"><area shape=\"poly\" alt=\"\" coords=\"468,291, 472,208, 469,158, 486,100, 528,79, 522,57, 517,34, 525,0, 581,0, 577,78, 598,87, 609,10, 663,22, 677,53, 625,118, 639,150, 630,191, 606,212, 609,291\" href=\"#\"><area shape=\"poly\" alt=\"\" coords=\"308,288, 300,217, 301,147, 273,122, 242,102, 254,57, 289,54, 316,79, 323,105, 360,95, 343,53, 348,18, 377,10, 402,20, 409,56, 401,88, 420,108, 438,115, 449,159, 458,266, 451,291\" href=\"#\"></map>','','','');
+INSERT INTO `xlite_category_translations` VALUES (108,'en',4005,'iGoods','<img src=\"{{WEB_LC_ROOT}}/public/igoods.png\" alt=\"\" usemap=\"#igoods_Map\" /><map name=\"igoods_Map\"><area shape=\"poly\" alt=\"\" coords=\"267,0, 185,32, 174,90, 211,112, 272,170, 358,250, 570,253, 675,258, 660,93, 658,0\" href=\"#\"></map>','','','');
 
 
 --  Products [65]
