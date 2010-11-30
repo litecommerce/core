@@ -58,7 +58,11 @@ class Place extends \XLite\View\Form\Checkout\ACheckout
      */
     protected function getFormAction()
     {
-        return \XLite::getInstance()->getShopUrl(parent::getFormAction(), true);
+        $other = \XLite::getInstance()->getOptions(array('other'));
+
+        return isset($other['ssl_checkout']) && !$other['ssl_checkout']
+            ? parent::getFormAction()
+            : \XLite::getInstance()->getShopUrl(parent::getFormAction(), true);
     }
 }
 
