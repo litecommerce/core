@@ -44,6 +44,10 @@ class Converter extends \XLite\Core\Converter implements \XLite\Base\IDecorator
      */
     const DRUPAL_ROOT_NODE = 'store';
 
+    /**
+     * Special symbol for empty action 
+     */
+    const EMPTY_ACTION = '0';
 
     /**
      * Compose URL from target, action and additional params
@@ -103,6 +107,10 @@ class Converter extends \XLite\Core\Converter implements \XLite\Base\IDecorator
      */
     public static function buildDrupalPath($target = '', $action = '', array $params = array())
     {
+        if (empty($action) && $params) {
+            $action = self::EMPTY_ACTION;
+        }
+
         $parts = array(self::DRUPAL_ROOT_NODE, $target, $action);
 
         if (isset($params['printable']) && $params['printable']) {
