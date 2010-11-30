@@ -134,7 +134,7 @@ OrdersListController.prototype.listChanged = function(xhr, s)
 {
   if (
     xhr.readyState == 4
-    && (xhr.status == 200 || xhr.status == 302 || xhr.status == 278)
+    && (xhr.status == 200 || xhr.status == 302 || parseInt(XMLHttpRequest.getResponseHeader('ajax-response-status')) == 278)
   ) {
     this.loadWidget();
 

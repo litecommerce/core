@@ -135,16 +135,18 @@ popup.postprocessRequest = function(XMLHttpRequest, textStatus, data, isValid)
     return;
   }
 
+  var responseStatus = 4 == XMLHttpRequest.readyState ? parseInt(XMLHttpRequest.getResponseHeader('ajax-response-status')) : 0;
+
   if (4 != XMLHttpRequest.readyState) {
 
     // Connection failed
     this.close();
 
-  } else if (278 == XMLHttpRequest.status) {
+  } else if (278 == responseStatus) {
 
     // Redirect
     this.close();
-    var url = XMLHttpRequest.getResponseHeader('Location');
+    var url = XMLHttpRequest.getResponseHeader('AJAX-Location');
     if (url) {
       self.location = url;
 
@@ -152,10 +154,10 @@ popup.postprocessRequest = function(XMLHttpRequest, textStatus, data, isValid)
       self.location.reload(true);
     }
 
-  } else if (279 == XMLHttpRequest.status) {
+  } else if (279 == responseStatus) {
 
     // Internal redirect
-    var url = XMLHttpRequest.getResponseHeader('Location');
+    var url = XMLHttpRequest.getResponseHeader('AJAX-Location');
     if (url) {
       this.load(url, this.elementId, this.currentUnblockCallback);
 
@@ -163,7 +165,7 @@ popup.postprocessRequest = function(XMLHttpRequest, textStatus, data, isValid)
       self.location.reload(true);
     }
 
-  } else if (277 == XMLHttpRequest.status) {
+  } else if (277 == responseStatus) {
 
     // Close popup in silence
     this.close();

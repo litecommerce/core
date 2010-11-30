@@ -107,7 +107,7 @@ abstract class AController extends \XLite\Core\Handler
      */
     protected function getDefaultRedirectCode()
     {
-        return \XLite\Core\Request::getInstance()->isAJAX() ? 270 : 302;
+        return \XLite\Core\Request::getInstance()->isAJAX() ? 200 : 302;
     }
 
     /**
@@ -490,18 +490,21 @@ abstract class AController extends \XLite\Core\Handler
                 if (!$this->isValid()) {
 
                     // AXAX-based - cancel redirect
-                    $this->getWidgetParams(self::PARAM_REDIRECT_CODE)->setValue(200);
+                    header('ajax-response-status: 0');
                     header('not-valid: 1');
 
                 } elseif ($this->internalRedirect) {
 
                     // Popup internal redirect
-                    $this->getWidgetParams(self::PARAM_REDIRECT_CODE)->setValue(279);
+                    header('ajax-response-status: 279');
 
                 } elseif ($this->silenceClose) {
 
                     // Popup silence close
-                    $this->getWidgetParams(self::PARAM_REDIRECT_CODE)->setValue(277);
+                    header('ajax-response-status: 277');
+
+                } else {
+                    header('ajax-response-status: 270');
                 }
             }
 

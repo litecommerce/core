@@ -192,9 +192,11 @@ window.core = {
   {
     var result = true;
 
-    if (270 == xhr.status && xhr.getResponseHeader('Location') && (!options || !options.rpc)) {
+    var responseStatus = parseInt(xhr.getResponseHeader('ajax-response-status'));
+
+    if (200 == xhr.status && 270 == responseStatus && xhr.getResponseHeader('AJAX-Location') && (!options || !options.rpc)) {
       core.get(
-        xhr.getResponseHeader('Location'),
+        xhr.getResponseHeader('AJAX-Location'),
         callback
       );
 
@@ -207,7 +209,9 @@ window.core = {
   // Process response from server
   processResponse: function(xhr)
   {
-    if (4 == xhr.readyState && (200 == xhr.status || (270 <= xhr.status && 300 > xhr.status))) {
+    var responseStatus = parseInt(xhr.getResponseHeader('ajax-response-status'));
+
+    if (4 == xhr.readyState && (200 == xhr.status && 270 <= responseStatus && 300 > responseStatus)) {
       var list = xhr.getAllResponseHeaders().split(/\n/);
 
       for (var i = 0; i < list.length; i++) {
