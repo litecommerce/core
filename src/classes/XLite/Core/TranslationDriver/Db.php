@@ -62,7 +62,7 @@ class Db extends \XLite\Core\TranslationDriver\ATranslationDriver
     {
         if (!isset($this->translations[$code])) {
             $this->translations[$code] = \XLite\Core\Database::getRepo('XLite\Model\LanguageLabel')
-                >findLabelsByCode($code);
+                ->findLabelsByCode($code);
         }
 
         return isset($this->translations[$code][$name]) ? $this->translations[$code][$name] : null;
