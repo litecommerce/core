@@ -76,6 +76,8 @@ class Operator extends \XLite\Base\Singleton
     protected static function setHeaderLocation($location, $code = 302)
     {
         if (headers_sent()) {
+
+            // HTML meta tags-based redirect
             echo (
                 '<script type="text/javascript">' . "\n"
                 . '<!--' . "\n"
@@ -85,7 +87,14 @@ class Operator extends \XLite\Base\Singleton
                 . '<noscript><a href="' . $location . '">Click here to redirect</a></noscript><br /><br />'
             );
 
+        } elseif (\XLite\Core\Request::getInstance()->isAJAX() && 200 == $code) {
+
+            // AJAX-based redirct
+            header('AJAX-Location: ' . $location, true, $code);
+
         } else {
+
+            // HTTP-based redirect
             header('Location: ' . $location, true, $code);
         }
     }
