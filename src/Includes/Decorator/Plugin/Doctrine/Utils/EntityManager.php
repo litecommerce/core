@@ -47,6 +47,16 @@ abstract class EntityManager extends \Includes\Decorator\Plugin\Doctrine\ADoctri
      */
     protected static $handler;
 
+    /**
+     * Model classes metadata 
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected static $metadata;
+
 
     /**
      * Retur DSN as params array
@@ -185,7 +195,11 @@ abstract class EntityManager extends \Includes\Decorator\Plugin\Doctrine\ADoctri
      */
     public static function getAllMetadata()
     {
-        return static::getMetadataFactory()->getAllMetadata();
+        if (!isset(static::$metadata)) {
+            static::$metadata = static::getMetadataFactory()->getAllMetadata();
+        }
+
+        return static::$metadata;
     }
 
     /**

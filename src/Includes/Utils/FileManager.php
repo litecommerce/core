@@ -243,6 +243,21 @@ class FileManager extends \Includes\Utils\AUtils
     }
 
     /**
+     * Read data from a file
+     *
+     * @param string $path file path
+     *
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function read($path)
+    {
+        return static::isExists($path) ? file_get_contents($path) : null;
+    }
+
+    /**
      * Write data to a file
      * 
      * @param string $path        file path
@@ -264,6 +279,25 @@ class FileManager extends \Includes\Utils\AUtils
         }
 
         return $result;
+    }
+
+    /**
+     * Replace data to a file by pattern
+     *
+     * @param string $path        file path
+     * @param string $data        data to write
+     * @param string $pattern     pattern to use for replacement
+     * @param int    $permissions permisions to set
+     * @param int    $flags       some optional flags
+     *
+     * @return int
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function replace($path, $data, $pattern, $permissions = null, $flags = 0)
+    {
+        return static::write($path, preg_replace($pattern, $data, static::read($path)), $permissions, $flags);
     }
 
     /**

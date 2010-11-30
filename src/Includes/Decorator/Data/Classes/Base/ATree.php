@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage DataStructure
+ * @subpackage Includes
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -26,27 +26,46 @@
  * @since      3.0.0
  */
 
-namespace XLite\DataStructure\Category;
+namespace Includes\Decorator\Data\Classes\Base;
 
 /**
- * Node 
+ * ATree 
  * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
+ * @package    XLite
+ * @see        ____class_see____
+ * @since      3.0.0
  */
-class Node extends \Includes\DataStructure\Node\Tree
+class ATree extends \Includes\DataStructure\Hierarchical\Tree
 {
     /**
-     * Return name of the key field
-     * 
-     * @return string
+     * Name of the node class
+     *
+     * @var    string
      * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $nodeClass = '\Includes\Decorator\Data\Classes\Node';
+
+
+    /**
+     * Change node data and parent
+     *
+     * @param \Includes\DataStructure\Node\Tree $parent node new parent
+     * @param \Includes\DataStructure\Node\Tree $node   node to get data
+     *
+     * @return void
+     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected static function getKeyField()
+    public function replantNode(\Includes\DataStructure\Node\Tree $parent, \Includes\DataStructure\Node\Tree $node)
     {
-        return 'category_id';
+        // Duplacate definition
+        if (($child = $this->find($node->getKey())) && !$child->isStub()) {
+            static::fireError('Duplicate class definition - "' . $child->getKey() . '"');
+        }
+
+        return parent::replantNode($parent, $node);
     }
 }

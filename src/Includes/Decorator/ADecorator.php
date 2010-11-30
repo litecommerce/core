@@ -54,7 +54,6 @@ abstract class ADecorator
     const INFO_ENTITY        = 'entity';
     const INFO_CLASS_COMMENT = 'class_comment';
 
-
     /**
      * Class node field names
      */
@@ -67,15 +66,6 @@ abstract class ADecorator
     const N_INTERFACES    = 'interfaces';
     const N_FILE_PATH     = 'filePath';
 
-    /**
-     * Available hooks 
-     */
-
-    const HOOK_INIT        = 'init';
-    const HOOK_PREPROCESS  = 'preprocess';
-    const HOOK_RUN         = 'run';
-    const HOOK_POSTPROCESS = 'postprocess';
-
 
     /**
      * Classes tree
@@ -86,6 +76,7 @@ abstract class ADecorator
      * @since  3.0.0
      */
     protected static $classesTree;
+
 
     /**
      * Return (and initialize, if needed) classes tree
@@ -99,8 +90,26 @@ abstract class ADecorator
     {
         if (!isset(static::$classesTree)) {
             static::$classesTree = new \Includes\Decorator\Data\Classes\Tree();
+            static::$classesTree->create();
         }
 
         return static::$classesTree;
+    }
+
+
+    /**
+     * Decoration error
+     *
+     * @param string  $message Error message
+     * @param integer $code    Error code
+     *
+     * @return null
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function fireError($message, $code = null)
+    {
+        return \Includes\Decorator\Utils\ErrorHandler::fireError($message, $code);
     }
 }

@@ -16,37 +16,71 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage DataStructure
+ * @subpackage Includes
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
- * @version    SVN: $Id$
+ * @version    SVN: $$
  * @link       http://www.litecommerce.com/
  * @see        ____file_see____
  * @since      3.0.0
  */
 
-namespace XLite\DataStructure\Category;
+namespace Includes;
 
 /**
- * Node 
+ * ErrorHandler 
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Node extends \Includes\DataStructure\Node\Tree
+abstract class ErrorHandler
 {
     /**
-     * Return name of the key field
+     * Shutdown function
      * 
-     * @return string
-     * @access protected
+     * @return void
+     * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected static function getKeyField()
+    public static function shutdown()
     {
-        return 'category_id';
+        static::handleError(error_get_last() ?: array());
+    }
+
+    /**
+     * Error handler
+     *
+     * @param array $error catched error
+     *
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function handleError(array $error)
+    {
+        if (isset($error['type']) && E_ERROR == $error['type']) {
+            // TODO: add error handling here
+        }
+
+        !LC_DEVELOPER_MODE ?: \Includes\Decorator\Utils\CacheManager::checkRebuildIndicatorState();
+    }
+
+    /**
+     * Exception handler
+     * 
+     * @param \Exception $exception catched exception
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function handleException(\Exception $exception)
+    {
+        echo nl2br($exception);
     }
 }

@@ -38,33 +38,6 @@ namespace Includes\Utils\Doctrine;
 class Entity extends \Includes\Utils\AUtils
 {
     /**
-     * Search entity in array by a field value
-     *
-     * @param array  $array     array to search
-     * @param string $fieldName field to search by
-     * @param mixed  $value     value to use for comparison
-     *
-     * @return mixed
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function searchInArray(array $array, $fieldName, $value)
-    {
-        // FIXME - to move into utils
-        $method = 'get' . \XLite\Core\Converter::convertToCamelCase($fieldName);
-
-        $list = array_filter(
-            $array,
-            function (\XLite\Model\AEntity $var) use ($method, $value) {
-                return $var->$method() == $value;
-            }
-        );
-
-        return empty($list) ? null : reset($list);
-    }
-
-    /**
      * Create array with initialized entities
      * 
      * @param string $class name of the entity class

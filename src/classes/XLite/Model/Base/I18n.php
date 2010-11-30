@@ -90,6 +90,34 @@ abstract class I18n extends \XLite\Model\AEntity
     }
 
     /**
+     * Return all translations 
+     * 
+     * @return \Doctrine\Common\Collections\ArrayCollection
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getTranslations()
+    {
+        return $this->translations;
+    }
+
+    /**
+     * Add translation to the list
+     * 
+     * @param \XLite\Model\Base\Translation $translation Translation to add
+     *  
+     * @return null
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function addTranslations(\XLite\Model\Base\Translation $translation)
+    {
+        $this->translations[] = $translation;
+    }
+
+    /**
      * Get translation 
      * 
      * @param string $code Language code OPTIONAL

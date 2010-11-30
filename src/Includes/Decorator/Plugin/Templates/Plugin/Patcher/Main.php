@@ -40,7 +40,6 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
     /**
      * Interface for so called "patcher" classes
      */
-
     const INTERFACE_PATCHER = '\XLite\Base\IPatcher';
 
 

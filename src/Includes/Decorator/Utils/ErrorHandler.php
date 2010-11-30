@@ -35,6 +35,61 @@ namespace Includes\Decorator\Utils;
  * @see        ____class_see____
  * @since      3.0.0
  */
-class ErrorHandler extends AUtils
+abstract class ErrorHandler extends \Includes\Decorator\Utils\AUtils
 {
+    // ------------------------------ Ancillary methods to handle an error -
+
+
+    /**
+     * Throw exception
+     *
+     * @param string  $message Error message
+     * @param integer $code    Error code
+     *
+     * @return null
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function throwException($message, $code)
+    {
+        throw new \Exception($message, $code);
+    }
+
+    /**
+     * Add info to a log file
+     *
+     * @param string  $message Error message
+     * @param integer $code    Error code
+     *
+     * @return null
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function logInfo($message, $code)
+    {
+        // TODO
+    }
+
+
+    // ------------------------------ Public methods -
+
+
+    /**
+     * Decoration error
+     * 
+     * @param string  $message Error message
+     * @param integer $code    Error code
+     *  
+     * @return null
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function fireError($message, $code = null)
+    {
+        static::logInfo($message, $code);
+        static::throwException($message, $code);
+    }
 }

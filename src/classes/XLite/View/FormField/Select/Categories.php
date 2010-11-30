@@ -74,7 +74,11 @@ class Categories extends \XLite\View\FormField\Select\Multiple
      */
     protected function isCategorySelected($categoryId)
     {
-        return (bool) \Includes\Utils\Doctrine\Entity::searchInArray($this->getValue(), 'category_id', $categoryId);
+        return (bool) \Includes\Utils\ArrayManager::searchInObjectsArray(
+            $this->getValue(),
+            'category_id',
+            $categoryId
+        );
     }
 
     /**

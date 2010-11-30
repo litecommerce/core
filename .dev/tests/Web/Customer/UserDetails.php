@@ -30,7 +30,7 @@ require_once __DIR__ . '/ACustomer.php';
 
 class XLite_Web_Customer_userDetails extends XLite_Web_Customer_ACustomer
 {
-    protected function login()
+    protected function login($user = 'master', $password = 'master')
     {
         $this->open('user');
 

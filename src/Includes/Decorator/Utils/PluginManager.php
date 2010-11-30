@@ -161,7 +161,7 @@ abstract class PluginManager extends \Includes\Decorator\Utils\AUtils
 
             } else {
 
-                throw new \Exception('Unable to read config file for the Decorator plugins');
+                static::fireError('Unable to read config file for the Decorator plugins');
             }
         }
 
@@ -183,7 +183,7 @@ abstract class PluginManager extends \Includes\Decorator\Utils\AUtils
         if (!isset(static::$plugins[$name])) {
 
             if (!is_subclass_of($class = static::getPluginClass($name), self::CLASS_BASE)) {
-                throw new \Exception('Plugin "' . $name . '" does not extend the "' . self::CLASS_BASE . '" class');
+                static::fireError('Plugin "' . $name . '" does not extend the "' . self::CLASS_BASE . '" class');
             }
 
             static::$plugins[$name] = \Includes\Pattern\Factory::create($class);

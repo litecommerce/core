@@ -34,8 +34,13 @@ namespace XLite\Model;
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
+ *
  * @Entity (repositoryClass="\XLite\Model\Repo\TemplatePatch")
- * @Table (name="template_patches", indexes={@index(name="zlt", columns={"zone", "lang", "tpl"})})
+ * @Table  (name="template_patches",
+ *          indexes={
+ *              @index(name="zlt", columns={"zone", "lang", "tpl"})
+ *          }
+ * )
  */
 class TemplatePatch extends \XLite\Model\AEntity
 {
@@ -46,9 +51,10 @@ class TemplatePatch extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Id
      * @GeneratedValue (strategy="AUTO")
-     * @Column (type="integer", length="11")
+     * @Column         (type="integer", length="11")
      */
     protected $patch_id;
 
@@ -59,6 +65,7 @@ class TemplatePatch extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="string", length="16")
      */
     protected $zone = 'customer';
@@ -70,6 +77,7 @@ class TemplatePatch extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="string", length="2")
      */
     protected $lang = '';
@@ -81,6 +89,7 @@ class TemplatePatch extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="string", length="64")
      */
     protected $tpl;
@@ -92,6 +101,7 @@ class TemplatePatch extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="string", length="8")
      */
     protected $patch_type = 'custom';
@@ -103,6 +113,7 @@ class TemplatePatch extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="string", length="255")
      */
     protected $xpath_query = '';
@@ -114,6 +125,7 @@ class TemplatePatch extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="string", length="16")
      */
     protected $xpath_insert_type = 'before';
@@ -125,6 +137,7 @@ class TemplatePatch extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="text")
      */
     protected $xpath_block = '';
@@ -136,6 +149,7 @@ class TemplatePatch extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="string", length="255")
      */
     protected $regexp_pattern = '';
@@ -147,6 +161,7 @@ class TemplatePatch extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="text")
      */
     protected $regexp_replace = '';
@@ -158,8 +173,8 @@ class TemplatePatch extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="string", length="128")
      */
     protected $custom_callback = '';
-
 }

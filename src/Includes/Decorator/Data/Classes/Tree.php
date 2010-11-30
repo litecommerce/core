@@ -35,19 +35,8 @@ namespace Includes\Decorator\Data\Classes;
  * @see        ____class_see____
  * @since      3.0.0
  */
-class Tree extends \Includes\DataStructure\Hierarchical\Tree
+class Tree extends \Includes\Decorator\Data\Classes\Base\ATree
 {
-    /**
-     * Name of the node class
-     *
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected $nodeClass = '\Includes\Decorator\Data\Classes\Node';
-
-
     /**
      * Get iterator for class files
      * 
@@ -62,6 +51,24 @@ class Tree extends \Includes\DataStructure\Hierarchical\Tree
             LC_CLASSES_DIR,
             \Includes\Decorator\Utils\ModulesManager::getPathPatternForPHP()
         );
+    }
+
+    /**
+     * Action to perform in "collectGarbage" method
+     *
+     * @param \Includes\DataStructure\Node\Tree $node current node
+     *
+     * @return null
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function performCleanupAction(\Includes\DataStructure\Node\Tree $node)
+    {
+        parent::performCleanupAction($node);
+
+        // TODO: uncomment when new Decorator will be completed
+        // $node->__unset(\Includes\Decorator\ADecorator::N_PARENT_CLASS);
     }
 
     /**
@@ -111,42 +118,15 @@ class Tree extends \Includes\DataStructure\Hierarchical\Tree
 
 
     /**
-     * Change node data and parent
-     *
-     * @param \Includes\DataStructure\Node\Tree $parent node new parent
-     * @param \Includes\DataStructure\Node\Tree $node   node to get data
-     *
-     * @return void
+     * Walk through the PHP files tree and collect classes info
+     * 
+     * @return null
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function replantNode(\Includes\DataStructure\Node\Tree $parent, \Includes\DataStructure\Node\Tree $node)
+    public function create()
     {
-        // Duplacate definition
-        if (($child = $this->find($node->getKey())) && !$child->isStub()) {
-            throw new \Exception('Duplicate class definition - "' . $child->getKey() . '"');
-        }
-
-        return parent::replantNode($parent, $node);
-    }
-
-    /**
-     * Constructor
-     *
-     * @param string $nodeClass node class name
-     *  
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function __construct($nodeClass = null)
-    {
-        parent::__construct($nodeClass);
-
-        // Walk through the PHP files tree and collect classes info
         $this->createFromArray($this->getFileIterator()->getIterator());
     }
 }
-

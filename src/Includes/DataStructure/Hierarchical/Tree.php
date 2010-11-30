@@ -69,6 +69,21 @@ class Tree extends \Includes\DataStructure\Hierarchical\AHierarchical
 
 
     /**
+     * Action to perform in "collectGarbage" method
+     * 
+     * @param \Includes\DataStructure\Node\Tree $node current node
+     *  
+     * @return null
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function performCleanupAction(\Includes\DataStructure\Node\Tree $node)
+    {
+        !$node->isStub() ?: $this->removeNode($node);
+    }
+
+    /**
      * Remove the stub nodes
      *
      * @return void
@@ -79,8 +94,8 @@ class Tree extends \Includes\DataStructure\Hierarchical\AHierarchical
     protected function collectGarbage()
     {
         foreach ($this->getIndex() as $node) {
-            !$node->isStub() ?: $this->removeNode($node);
-        }   
+            $this->performCleanupAction($node);
+        }
     }
 
     /**
@@ -262,11 +277,11 @@ class Tree extends \Includes\DataStructure\Hierarchical\AHierarchical
      */
     public function replantNode(\Includes\DataStructure\Node\Tree $parent, \Includes\DataStructure\Node\Tree $node)
     {
-        // Replace existsting node
+        // Find existsting node
         if ($child = $this->find($node->getKey())) {
 
             // So called "re-plant" operation: change node parent
-            $child->replant($parent, $node);
+            $child->replant($parent, $node->getData());
         }
 
         return $child;
@@ -343,6 +358,33 @@ class Tree extends \Includes\DataStructure\Hierarchical\AHierarchical
 
         // Remove the stub nodes
         $this->collectGarbage();
+    }
+
+    /**
+     * Visualize classes tree 
+     * 
+     * @param \Includes\DataStructure\Node\Tree $root   root node of current level
+     * @param int                               $offset level offset
+     *  
+     * @return null
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function draw(\Includes\DataStructure\Node\Tree $root = null, $offset = 0)
+    {
+        if (!isset($root)) {
+            $root = $this->root;
+        }
+
+        foreach ($root->getChildren() as $child) {
+
+            // Output
+            echo (str_repeat('|__', floor($offset / 2)) . $child->getReadableName() . '<br />');
+
+            // Recursive call: next level
+            $this->draw($child, $offset + 2);
+        }
     }
 
     /**
