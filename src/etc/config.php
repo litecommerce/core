@@ -156,6 +156,8 @@ developer_mode = Off
 [other]
 ; Translation drive code - auto / gettext / db
 translation_driver = auto
+; Use checkout throught SSL connection or not
+ssl_checkout = on
 
 ; WARNING: Do not change the line below
 ; */ ?>
