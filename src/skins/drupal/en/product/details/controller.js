@@ -386,7 +386,12 @@ ProductDetailsView.prototype.postprocessAdd2Cart = function(XMLHttpRequest, text
   this.base.get(0).controller.selfAdded = false;
 
   if (isValid) {
-    this.load();
+    if (popup && popup.elementId == 'product-quicklook') {
+      popup.close();
+
+    } else {
+      this.load();
+    }
 
   } else {
     this.unshade();
