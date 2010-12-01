@@ -38,15 +38,16 @@ namespace XLite\Module\GiftCertificates;
 abstract class Main extends \XLite\Module\AModule
 {
     /**
-     * Module type
+     * Module name
      *
-     * @return integer 
+     * @var    string
      * @access public
-     * @since  3.0.0
+     * @see    ____func_see____
+     * @since  3.0
      */
-    public static function getModuleType()
+    public static function getModuleName()
     {
-        return self::MODULE_GENERAL;
+        return 'Gift Certificates';
     }
 
     /**
@@ -96,12 +97,23 @@ abstract class Main extends \XLite\Module\AModule
     {
         parent::init();
 
-        $this->registerPaymentMethod('gift_certificate');
-
         // TODO - review in next verion
         //\XLite\Model\Image::registerImageClass('ecard_thumbnail', 'e-Card thumbnails', 'ecards', 'thumbnail', 'ecard_id');
         //\XLite\Model\Image::registerImageClass('ecard_image', 'e-Card images', 'ecards', 'image', 'ecard_id');
 
         \XLite::getInstance()->set('GiftCertificatesEnabled', true);
+    }
+
+    /**
+     * Get post-installation user notes
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getPostInstallationNotes()
+    {
+        return '<b>Tip:</b> To manage gift certificates, go to the Management/Gift certificates menu.';
     }
 }

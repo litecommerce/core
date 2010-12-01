@@ -38,15 +38,16 @@ namespace XLite\Module\GreetVisitor;
 abstract class Main extends \XLite\Module\AModule
 {
     /**
-     * Module type
+     * Module name
      *
-     * @var    int
-     * @access protected
+     * @var    string
+     * @access public
+     * @see    ____func_see____
      * @since  3.0
      */
-    public static function getModuleType()
+    public static function getModuleName()
     {
-        return self::MODULE_GENERAL;
+        return 'Greet Visitor';
     }
 
     /**
@@ -73,8 +74,6 @@ abstract class Main extends \XLite\Module\AModule
         return 'This module greets customer by his name when he returns to the site';
     }
 
-    public $isFree = true;
-
     /**
      * Perform some actions at startup
      *
@@ -91,5 +90,18 @@ abstract class Main extends \XLite\Module\AModule
         } else {
             // customer frontend - specific class decorations
         }
+    }
+
+    /**
+     * Get post-installation user notes
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getPostInstallationNotes()
+    {
+        return '<b>Note:</b> You can modify GreetVisitor message from <a href="admin.php?target=template_editor&editor=basic">Basic templates editor</a>';
     }
 }

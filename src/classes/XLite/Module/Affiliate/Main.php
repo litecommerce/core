@@ -38,15 +38,16 @@ namespace XLite\Module\Affiliate;
 abstract class Main extends \XLite\Module\AModule
 {
     /**
-     * Module type
+     * Module name
      *
-     * @var    int
-     * @access protected
+     * @var    string
+     * @access public
+     * @see    ____func_see____
      * @since  3.0
      */
-    public static function getModuleType()
+    public static function getModuleName()
     {
-        return self::MODULE_GENERAL;
+        return 'Affiliate';
     }
 
     /**

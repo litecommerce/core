@@ -38,15 +38,16 @@ namespace XLite\Module\CyberSource;
 abstract class Main extends \XLite\Module\AModule
 {
     /**
-     * Module type
+     * Module name
      *
-     * @var    int
-     * @access protected
+     * @var    string
+     * @access public
+     * @see    ____func_see____
      * @since  3.0
      */
-    public static function getModuleType()
+    public static function getModuleName()
     {
-        return self::MODULE_PAYMENT;
+        return 'CyberSource';
     }
 
     /**
@@ -98,16 +99,15 @@ abstract class Main extends \XLite\Module\AModule
     }
 
     /**
-     * Perform some actions at startup
-     *
-     * @return void
+     * Get post-installation user notes
+     * 
+     * @return string
      * @access public
-     * @since  3.0
+     * @see    ____func_see____
+     * @since  3.0.0
      */
-    public static function init()
+    public static function getPostInstallationNotes()
     {
-        parent::init();
-        
-        $this->registerPaymentMethod('cybersource_cc');
+        return '<b>Note:</b> Please visit the <a href="admin.php?target=payment_method&payment_method=cybersource_cc">Payment method setup page</a> in order to setup your CyberSource merchant account';
     }
 }

@@ -38,15 +38,16 @@ namespace XLite\Module\Promotion;
 abstract class Main extends \XLite\Module\AModule
 {
     /**
-     * Module type
+     * Module name
      *
-     * @var    int
-     * @access protected
+     * @var    string
+     * @access public
+     * @see    ____func_see____
      * @since  3.0
      */
-    public static function getModuleType()
+    public static function getModuleName()
     {
-        return self::MODULE_GENERAL;
+        return 'Promotion Tools';
     }
 
     /**
@@ -101,7 +102,19 @@ abstract class Main extends \XLite\Module\AModule
         $this->addLayout('shopping_cart/totals.tpl', "modules/Promotion/totals.tpl");
         $this->addLayout('shopping_cart/delivery.tpl', "modules/Promotion/delivery.tpl");
         
-        $this->registerPaymentMethod('bonus_points');
         \XLite::getInstance()->set('PromotionEnabled',true);
+    }
+
+    /**
+     * Get post-installation user notes
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getPostInstallationNotes()
+    {
+        return '<b>Tip:</b> To manage special offers, go to the Management/Special offers menu.<br /><b>Tip:</b> To create discount coupons, go to the Management/Discount coupons  menu.';
     }
 }

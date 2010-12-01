@@ -38,15 +38,16 @@ namespace XLite\Module\PayPalPro;
 abstract class Main extends \XLite\Module\AModule
 {
     /**
-     * Module type
+     * Module name
      *
-     * @return integer 
+     * @var    string
      * @access public
+     * @see    ____func_see____
      * @since  3.0
      */
-    public static function getModuleType()
+    public static function getModuleName()
     {
-        return self::MODULE_PAYMENT;
+        return 'PayPal Pro';
     }
 
     /**
@@ -105,6 +106,7 @@ abstract class Main extends \XLite\Module\AModule
     /**
      * Perform some actions at startup
      * FIXME: must be completely revised
+     *        registerPaymentMethod() method no longer exists
      *
      * @return void
      * @access public
@@ -143,5 +145,18 @@ abstract class Main extends \XLite\Module\AModule
                 \XLite\Model\PaymentMethod::factory('paypalpro_express')->get('enabled')
             );
         }
+    }
+
+    /**
+     * Get post-installation user notes
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getPostInstallationNotes()
+    {
+        return '<b>Note:</b> Please visit the <a href="admin.php?target=payment_method&payment_method=paypalpro">Payment method setup page</a> in order to configure PayPal Pro module.';
     }
 }

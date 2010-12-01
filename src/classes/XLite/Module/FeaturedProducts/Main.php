@@ -40,19 +40,6 @@ abstract class Main extends \XLite\Module\AModule
     const FEATURED_PRODUCTS_TABLE = 'xlite_featured_products';
 
     /**
-     * Module type
-     *
-     * @var    int
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function getModuleType()
-    {
-        return self::MODULE_GENERAL;
-    }
-
-    /**
      * Module version
      *
      * @var    string
@@ -102,5 +89,18 @@ abstract class Main extends \XLite\Module\AModule
     public static function showSettingsForm()
     {
         return true;
+    }
+
+    /**
+     * Get post-installation user notes
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getPostInstallationNotes()
+    {
+        return '<b>Tip:</b> To create featured products, go to <a href="admin.php?target=categories&category_id=0">Catalog > Categories</a> menu and add featured product in the bottom form.';
     }
 }

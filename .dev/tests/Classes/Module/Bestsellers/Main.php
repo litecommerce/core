@@ -28,6 +28,12 @@
 
 class XLite_Tests_Module_Bestsellers_Main extends XLite_Tests_TestCase
 {
+    public function testGetModuleName()
+    {
+        $main = $this->getMain();
+        $this->assertEquals('Bestsellers', $main::getModuleName(), 'Wrong module name');
+    }
+
     public function testGetDescription()
     {
         $main = $this->getMain();
@@ -45,12 +51,6 @@ class XLite_Tests_Module_Bestsellers_Main extends XLite_Tests_TestCase
     {
         $main = $this->getMain();
         $this->assertTrue($main::showSettingsForm(), 'Wrong flag to show settings form');
-    }
-
-    public function testGetModuleType()
-    {
-        $main = $this->getMain();
-        $this->assertEquals(\XLite\Module\Bestsellers\Main::MODULE_GENERAL, $main::getModuleType(), 'Wrong module type');
     }
 
     protected function getMain()

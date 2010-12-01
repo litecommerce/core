@@ -38,33 +38,6 @@ namespace XLite\Controller\Admin;
 class Modules extends \XLite\Controller\Admin\AAdmin
 {
     /**
-     * Modules list (cache)
-     * 
-     * @var    array
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected $modules = null;
-
-    /**
-     * Get modules list
-     * 
-     * @return array
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function getModules()
-    {
-        if (is_null($this->modules)) {
-            $this->modules = \XLite\Core\Database::getRepo('\XLite\Model\Module')->findAllModules();
-        }
-
-        return $this->modules;
-    }
-
-    /**
      * Handles the request.
      * Parses the request variables if necessary. Attempts to call the specified action function 
      * 
@@ -89,7 +62,7 @@ class Modules extends \XLite\Controller\Admin\AAdmin
      */
     protected function getLocation()
     {
-        return 'Manage modules';
+        return 'Manage add-ons';
     }
 
     /**
@@ -105,8 +78,9 @@ class Modules extends \XLite\Controller\Admin\AAdmin
         $this->set('returnUrl', $this->buildUrl('modules'));
 
         $id = \XLite\Core\Request::getInstance()->module_id;
+        $module = \XLite\Core\Database::getRepo('\XLite\Model\Module')->find($id);
 
-        if ($module = \XLite\Core\Database::getRepo('\XLite\Model\Module')->find($id)) {
+        if ($module) {
             $module->setEnabled(true);
             \XLite\Core\Database::getEM()->persist($module);
             \XLite\Core\Database::getEM()->flush();
@@ -127,8 +101,9 @@ class Modules extends \XLite\Controller\Admin\AAdmin
         $this->set('returnUrl', $this->buildUrl('modules'));
 
         $id = \XLite\Core\Request::getInstance()->module_id;
+        $module = \XLite\Core\Database::getRepo('\XLite\Model\Module')->find($id);
 
-        if ($module = \XLite\Core\Database::getRepo('\XLite\Model\Module')->find($id)) {
+        if ($module) {
             $module->disableModule();
             \XLite::setCleanUpCacheFlag(true);
         }

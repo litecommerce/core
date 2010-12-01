@@ -38,15 +38,16 @@ namespace XLite\Module\Quantum;
 abstract class Main extends \XLite\Module\AModule
 {
     /**
-     * Module type
+     * Module name
      *
-     * @return integer 
+     * @var    string
      * @access public
-     * @since  3.0.0
+     * @see    ____func_see____
+     * @since  3.0
      */
-    public static function getModuleType()
+    public static function getModuleName()
     {
-        return self::MODULE_PAYMENT;
+        return 'Quantum';
     }
 
     /**
@@ -71,5 +72,17 @@ abstract class Main extends \XLite\Module\AModule
     public static function getDescription()
     {
         return 'QuantumGateway integration (QGWdatabase Engine API)';
+    }
+
+    /**
+     * Determines if we need to show settings form link
+     *
+     * @return boolean 
+     * @access public
+     * @since  3.0
+     */
+    public static function showSettingsForm()
+    {
+        return true;
     }
 }

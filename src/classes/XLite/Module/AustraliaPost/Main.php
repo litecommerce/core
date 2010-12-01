@@ -38,15 +38,16 @@ namespace XLite\Module\AustraliaPost;
 abstract class Main extends \XLite\Module\AModule
 {
     /**
-     * Module type
+     * Module name
      *
-     * @var    int
-     * @access protected
+     * @var    string
+     * @access public
+     * @see    ____func_see____
      * @since  3.0
      */
-    public static function getModuleType()
+    public static function getModuleName()
     {
-        return self::MODULE_SHIPPING;
+        return 'Australia Post';
     }
 
     /**
@@ -72,6 +73,7 @@ abstract class Main extends \XLite\Module\AModule
     {
         return 'This module introduces Australia Post real-time shipping cost calculations';
     }
+
     /**
      * Determines if we need to show settings form link
      *
@@ -93,8 +95,7 @@ abstract class Main extends \XLite\Module\AModule
      */
     public static function getSettingsForm() 
     {
-        return "admin.php?target=aupost";
-
+        return 'admin.php?target=aupost';
     }
 
     /**
@@ -112,5 +113,18 @@ abstract class Main extends \XLite\Module\AModule
         \XLite\Model\Shipping::getInstance()->registerProcessor('\XLite\Module\AustraliaPost\Model\Shipping\Processor\AustraliaPost');
 
         \XLite::getInstance()->set('AustraliaPostEnabled', true);
+    }
+
+    /**
+     * Get post-installation user notes
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getPostInstallationNotes()
+    {
+        return '<b>Note:</b> please visit the <a href="admin.php?target=aupost">Australia Post setup page</a>, also available in your "Shipping settings" menu.';
     }
 }

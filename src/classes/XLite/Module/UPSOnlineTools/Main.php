@@ -37,21 +37,21 @@ namespace XLite\Module\UPSOnlineTools;
  */
 abstract class Main extends \XLite\Module\AModule
 {
-    const CRYPT_SALT = 85;
-    const START_CHAR_CODE = 100;
-
     /**
-     * Module type
+     * Module name
      *
-     * @return integer 
+     * @var    string
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  3.0
      */
-    public static function getModuleType()
+    public static function getModuleName()
     {
-        return self::MODULE_SHIPPING;
+        return 'UPS OnLine Tools';
     }
+
+    const CRYPT_SALT = 85;
+    const START_CHAR_CODE = 100;
 
     /**
      * Module version

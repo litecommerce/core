@@ -38,15 +38,16 @@ namespace XLite\Module\Froogle;
 abstract class Main extends \XLite\Module\AModule
 {
     /**
-     * Module type
+     * Module name
      *
-     * @var    int
-     * @access protected
+     * @var    string
+     * @access public
+     * @see    ____func_see____
      * @since  3.0
      */
-    public static function getModuleType()
+    public static function getModuleName()
     {
-        return self::MODULE_GENERAL;
+        return 'Froogle';
     }
 
     /**
@@ -73,7 +74,6 @@ abstract class Main extends \XLite\Module\AModule
         return 'This module allows you export product information into Froogle format';
     }
 
-    public $isFree = true;
     /**
      * Determines if we need to show settings form link
      *

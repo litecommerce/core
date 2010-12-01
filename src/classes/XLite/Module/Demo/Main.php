@@ -38,15 +38,16 @@ namespace XLite\Module\Demo;
 abstract class Main extends \XLite\Module\AModule
 {
     /**
-     * Module type
+     * Module name
      *
-     * @return integer 
+     * @var    string
      * @access public
-     * @since  3.0.0
+     * @see    ____func_see____
+     * @since  3.0
      */
-    public static function getModuleType()
+    public static function getModuleName()
     {
-        return self::MODULE_GENERAL;
+        return 'Demo mode';
     }
 
     /**

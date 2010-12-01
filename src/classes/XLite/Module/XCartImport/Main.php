@@ -38,15 +38,16 @@ namespace XLite\Module\XCartImport;
 abstract class Main extends \XLite\Module\AModule
 {
     /**
-     * Module type
+     * Module name
      *
-     * @var    int
-     * @access protected
+     * @var    string
+     * @access public
+     * @see    ____func_see____
      * @since  3.0
      */
-    public static function getModuleType()
+    public static function getModuleName()
     {
-        return self::MODULE_GENERAL;
+        return 'X-Cart Import';
     }
 
     /**
@@ -73,5 +74,16 @@ abstract class Main extends \XLite\Module\AModule
         return 'Import data from X-Cart Gold';
     }
 
-    public $isFree = true;
+    /**
+     * Get post-installation user notes
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getPostInstallationNotes()
+    {
+        return '<b>Note:</b> You can access this module from Maintenance menu<p>';
+    }
 }

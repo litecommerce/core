@@ -101,6 +101,40 @@ class Module extends \XLite\Model\Repo\ARepo
     }
 
     /**
+     * Find all disabled modules
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function findInactiveModules()
+    {
+        return $this->findByEnabled(false);
+    }
+
+    /**
+     * Find all upgradable modules
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function findUpgradableModules()
+    {
+        $modules = array();
+
+        foreach ($this->findAllModules() as $m) {
+            if ($m->isUpdateAvailable()) {
+                $modules[] = $m;
+            }
+        }
+
+        return $modules;
+    }
+
+    /**
      * Define query builder for findAllModules()
      * 
      * @return \Doctrine\ORM\QueryBuilder
@@ -134,6 +168,23 @@ class Module extends \XLite\Model\Repo\ARepo
     }
 
     /**
+     * Find all by names
+     * 
+     * @param array $ids Modules ids
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function findAllByModuleIds(array $ids)
+    {
+        return !empty($ids)
+            ? $this->defineAllByModuleIdsQuery($ids)->getQuery()->getResult()
+            : array();
+    }
+
+    /**
      * Define query builder for findAllNames()
      * 
      * @return \Doctrine\ORM\QueryBuilder
@@ -144,6 +195,25 @@ class Module extends \XLite\Model\Repo\ARepo
     protected function defineAllNamesQuery()
     {
         return $this->createQueryBuilder();
+    }
+
+    /**
+     * Define query builder for findAllByNames()
+     *
+     * @param array $ids Module ids
+     *
+     * @return \Doctrine\ORM\QueryBuilder
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineAllByModuleIdsQuery(array $ids)
+    {
+        $qb = $this->createQueryBuilder();
+
+        $ids = \XLite\Core\Database::buildInCondition($qb, $ids, 'module_id');
+
+        return $qb->andWhere('m.module_id IN (' . implode(', ', $ids) . ')');
     }
 
     /**
