@@ -291,11 +291,11 @@ ALoadable.prototype.shade = function()
     );
 
     $('.blockElement')
-      .css({padding: null, border: null, margin: null, textAlign: null, color: null, backgroundColor: null, cursor: null})
+      .css({padding: '', border: '', margin: '', textAlign: '', color: '', backgroundColor: '', cursor: ''})
       .addClass('block-wait');
 
     $('.blockOverlay')
-      .css({padding: null, border: null, margin: null, textAlign: null, color: null, backgroundColor: null, cursor: null});
+      .css({padding: '', border: '', margin: '', textAlign: '', color: '', backgroundColor: '', cursor: ''});
 
     if (this.getShadeBase().height() < $('.blockMsg').outerHeight() + 5) {
       $('.blockMsg').addClass('mini-block-wait');
