@@ -483,10 +483,25 @@ abstract class AController extends \XLite\Core\Handler
             }
 
             $this->actionPostprocess($action);
+
+        } else {
+            $this->doNoAction();
         }
 
         if ($this->isRedirectNeeded()) {
             if (\XLite\Core\Request::getInstance()->isAJAX()) {
+
+                foreach (\XLite\Core\TopMessage::getInstance()->getMessages() as $message) {
+                    $encodedMessage = json_encode(
+                        array(
+                            'type'    => $message[\XLite\Core\TopMessage::FIELD_TYPE],
+                            'message' => $message[\XLite\Core\TopMessage::FIELD_TEXT],
+                        )
+                    );
+                    header('event-message: ' . $encodedMessage);
+                }
+                \XLite\Core\TopMessage::getInstance()->clear();
+
                 if (!$this->isValid()) {
 
                     // AXAX-based - cancel redirect
@@ -510,6 +525,18 @@ abstract class AController extends \XLite\Core\Handler
 
             $this->redirect();
         }
+    }
+
+    /**
+     * Preprocessor for no-action ren
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doNoAction()
+    {
     }
 
     /**

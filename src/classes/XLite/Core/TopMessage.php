@@ -216,7 +216,7 @@ class TopMessage extends \XLite\Base\Singleton
      */
     public function getMessages()
     {
-        $messages = \XLite\Core\Session::getInstance()->get('topMessages');
+        $messages = \XLite\Core\Session::getInstance()->topMessages;
         if (!is_array($messages)) {
             $messages = array();
         }
