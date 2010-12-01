@@ -63,6 +63,15 @@ sites/default/files
 themes/lccms
 "
 
+# Category images in 'public' directory which should be removed
+CATEGORY_IMAGES_LIST="
+apparel.png
+downloadables.png
+igoods.png
+toys.png
+"
+
+
 LC_SEO_PHRASES="
 Powered by LiteCommerce [shopping cart]
 Powered by LiteCommerce [shopping cart]

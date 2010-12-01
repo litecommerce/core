@@ -332,7 +332,14 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a -d "${OUTPUT_DIR}/${DRUPAL_DI
 		rm -rf skins/mail/en/modules/${dn}
 	done
 
-	[ "x${DEMO_VERSION}" = "x" -a "x${TEST_MODE}" = "x" ] && find ./images/* -type f -name "demo_store_*" -exec rm -rf {} \;
+	if [ "x${DEMO_VERSION}" = "x" -a "x${TEST_MODE}" = "x" ]; then
+		find ./images/* -type f -name "demo_store_*" -exec rm -rf {} \;
+		for i in $CATEGORY_IMAGES_LIST; do
+			rm -f ./public/$i
+		done
+	fi
+
+	rm -rf quickstart
 
 	mv skins skins_original
 
