@@ -124,19 +124,19 @@ class Cart extends \XLite\Controller\Customer\ACustomer
 
             $productListUrl = null;
 
-            if (isset($_SERVER['HTTP_REFERER']) && $_SERVER['HTTP_REFERER']) {
-                $productListUrl = $_SERVER['HTTP_REFERER'];
+            if (\XLite\Core\Session::getInstance()->productListURL) {
+                $productListUrl = \XLite\Core\Session::getInstance()->productListURL;
 
-            } elseif ($this->session->get('productListURL')) {
-                $productListUrl = $this->session->get('productListURL');
+            } elseif (isset($_SERVER['HTTP_REFERER']) && $_SERVER['HTTP_REFERER']) {
+                $productListUrl = $_SERVER['HTTP_REFERER'];
 
             } else {
                 $productListUrl = $this->buildUrl('product', '', array('product_id' => $product->getProductId()));
             }
 
             if ($productListUrl) {
-                if ($this->config->General->redirect_to_cart) {
-                    $this->session->set('continueURL', $productListUrl);
+                if (\XLite\Core\Config::getInstance()->General->redirect_to_cart) {
+                    \XLite\Core\Session::getInstance()->continueURL = $productListUrl;
 
                 } else {
                     $this->setReturnUrl($productListUrl);
