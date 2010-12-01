@@ -157,7 +157,9 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
      */
     public function getTitle()
     {
-        return $this->getModelObject()->getName() ?: parent::getTitle();
+        $model = $this->getModelObject();
+
+        return ($model && $model->getName()) ? $model->getName() : parent::getTitle();
     }
 
     /**
@@ -183,7 +185,9 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
      */
     public function getDescription()
     {
-        return $this->getModelObject()->getDescription();
+        $model = $this->getModelObject();
+
+        return $model ? $model->getDescription() : null;
     }
 
     /**
@@ -195,7 +199,9 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
      */
     public function getMetaDescription()
     {
-        return $this->getModelObject()->getMetaDesc() ?: $this->getDescription();
+        $model = $this->getModelObject();
+
+        return $model && $model->getMetaDesc() ? $model->getMetaDesc() : $this->getDescription();
     }
 
     /**
@@ -207,6 +213,8 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
      */
     public function getKeywords()
     {
-        return $this->getModelObject()->getMetaTags();
+        $model = $this->getModelObject();
+
+        return $model ? $model->getMetaTags() : null;
     }
 }

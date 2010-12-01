@@ -73,7 +73,7 @@ class Product extends \XLite\Controller\Customer\Catalog
     {
         $id = parent::getCategoryId();
 
-        return ($id && $this->getRootCategoryId() != $id) ? $id : false;
+        return ($id && $this->getRootCategoryId() != $id) ? $id : \XLite\Model\Repo\Category::CATEGORY_ID_ROOT;
     }
 
 
@@ -103,27 +103,7 @@ class Product extends \XLite\Controller\Customer\Catalog
      */
     public function getDescription()
     {
-        return parent::getDescription() ?: $this->getProduct()->getBriefDescription();
-    }
-
-    /**
-     * handleRequest 
-     * 
-     * @return void
-     * @access public
-     * @since  3.0.0
-     */
-    public function handleRequest()
-    {
-        if (is_null($this->getProduct())) {
-            $url = is_null($this->getCategory())
-                ? $this->buildURL()
-                : $this->buildURL('category', '', array('category_id' => $this->getCategoryId()));
-            $this->setReturnUrl($url);
-
-        } else {
-            parent::handleRequest();
-        }
+        return (parent::getDescription() || !$this->getProduct()) ?: $this->getProduct()->getBriefDescription();
     }
 
     /**
@@ -151,4 +131,19 @@ class Product extends \XLite\Controller\Customer\Catalog
     {
         return \XLite\Core\Database::getRepo('XLite\Model\Product')->find($this->getProductId());
     }
+
+    /**
+     * Check controller visibility
+     *
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isVisible()
+    {
+        return parent::isVisible()
+            && $this->getProduct();
+    }
+
 }

@@ -16,7 +16,7 @@
  * 
  * @category   LiteCommerce
  * @package    XLite
- * @subpackage Controller
+ * @subpackage Core
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -26,53 +26,29 @@
  * @since      3.0.0
  */
 
-namespace XLite\Controller\Customer;
+namespace XLite\Module\DrupalConnector\Core;
 
 /**
- * Category
+ * Application singleton
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Category extends \XLite\Controller\Customer\Catalog
+class Operator extends \XLite\Core\Operator implements \XLite\Base\IDecorator
 {
     /**
-     * Check whether the category title is visible in the content area
-     * 
-     * @return boolean
+     * Display 404 page
+     *
+     * @return void
      * @access public
-     * @since  3.0.0
-     */
-    public function isTitleVisible()
-    {
-        return ($this->getModelObject()->getShowTitle() == 1);
-    }
-
-    /**
-     * getModelObject
-     *
-     * @return \XLite\Model\AModel
-     * @access protected
-     * @since  3.0.0
-     */
-    protected function getModelObject()
-    {
-        return $this->getCategory();
-    }
-
-    /**
-     * Check controller visibility
-     *
-     * @return boolean
-     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function isVisible()
+    public function display404()
     {
-        return parent::isVisible()
-            && !is_null($this->getCategory())
-            && \XLite\Model\Repo\Category::CATEGORY_ID_ROOT != $this->getCategory()->getCategoryId();
+        drupal_not_found();
+
+        parent::display404();
     }
 }

@@ -468,6 +468,10 @@ abstract class AController extends \XLite\Core\Handler
 
             $this->markAsAccessDenied();
 
+        } elseif (!$this->isVisible()) {
+
+            $this->display404();
+
         } elseif (!empty(\XLite\Core\Request::getInstance()->action) && $this->isValid()) {
 
             $action = \XLite\Core\Request::getInstance()->action;
@@ -537,6 +541,39 @@ abstract class AController extends \XLite\Core\Handler
      */
     protected function doNoAction()
     {
+    }
+
+    /**
+     * Check controller visibility
+     * 
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isVisible()
+    {
+        return true;
+    }
+
+    /**
+     * Display 404 page
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function display404()
+    {
+        \XLite::setController(null);
+
+        \XLite\Core\Request::getInstance()->target = \XLite::TARGET_DEFAULT;
+        \XLite\Core\Request::getInstance()->action = '';
+
+        \XLite::getController();
+
+        \XLite\Core\Operator::getInstance()->display404();
     }
 
     /**

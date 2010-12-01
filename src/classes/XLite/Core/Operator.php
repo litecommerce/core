@@ -207,6 +207,22 @@ class Operator extends \XLite\Base\Singleton
     }
 
     /**
+     * Display 404 page
+     *
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function display404()
+    {
+        if (!headers_sent()) {
+            header('HTTP/1.0 404 Not Found');
+        }
+        exit(1);
+    }
+
+    /**
      * Get back trace list
      * FIXME: to revise
      *
