@@ -108,5 +108,18 @@ class Main extends \XLite\Controller\Customer\Category
 
         return $this->extraPage;
     }
+
+    /**
+     * Check controller visibility
+     *
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isVisible()
+    {
+        return \XLite\Model\Repo\Category::CATEGORY_ID_ROOT == $this->getCategory()->getCategoryId();
+    }
 }
 

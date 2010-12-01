@@ -273,7 +273,9 @@ class XLite extends \XLite\Base
         if (!isset(self::$controller)) {
             $class = self::getControllerClass();
             if (!\XLite\Core\Operator::isClassExists($class)) {
-                \XLite::getInstance()->doGlobalDie('Controller class ' . $class . ' not found!');
+                \XLite\Core\Request::getInstance()->target = self::TARGET_DEFAULT;
+                \XLite\Logger::getInstance()->log('Controller class ' . $class . ' not found!', LOG_ERR);
+                \XLite\Core\Operator::getInstance()->display404();
             }
 
             self::$controller = new $class(\XLite\Core\Request::getInstance()->getData());
@@ -325,7 +327,7 @@ class XLite extends \XLite\Base
      */
     public function initModules()
     {
-        \XLite\Core\Database::getRepo('\XLite\Model\Module')->initialize();
+        \XLite\Core\Database::getRepo('XLite\Model\Module')->initialize();
     }
 
     /**
