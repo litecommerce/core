@@ -142,6 +142,25 @@ class Method extends \XLite\Model\Base\I18n
     }
 
     /**
+     * Check - enabeld method or not
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isEnabled()
+    {
+        $modules = \XLite\Core\Database::getRepo('XLite\Model\Module')->getActiveModules();
+        $disabledModule = false;
+        if (preg_match('/^Module\\\([\w_]+)\\\/Ss', $this->getClass(), $match)) {
+            $disabledModule = !isset($modules[$match[1]]);
+        }
+
+        return $this->getEnabled() && !$disabledModule;
+    }
+
+    /**
      * Set class 
      * 
      * @return void
