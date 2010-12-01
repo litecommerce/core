@@ -211,7 +211,7 @@ window.core = {
   {
     var responseStatus = parseInt(xhr.getResponseHeader('ajax-response-status'));
 
-    if (4 == xhr.readyState && (200 == xhr.status && 270 <= responseStatus && 300 > responseStatus)) {
+    if (4 == xhr.readyState && 200 == xhr.status) {
       var list = xhr.getAllResponseHeaders().split(/\n/);
 
       for (var i = 0; i < list.length; i++) {
