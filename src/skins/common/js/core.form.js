@@ -124,7 +124,7 @@ CommonForm.prototype.getAsRPC = false;
 // Get elements jQuery collection
 CommonForm.prototype.getElements = function()
 {
-  return $(this.form.elements);
+  return this.$form.find(':input');
 }
 
 // Bind form elements
