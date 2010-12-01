@@ -63,7 +63,12 @@ class XLite_Sniffs_CSS_LowercaseStyleDefinitionSniff extends XLite_ReqCodesSniff
         $tokens = $phpcsFile->getTokens();
 
         $start  = ($stackPtr + 1);
-        $end    = ($tokens[$stackPtr]['bracket_closer'] - 1);
+
+        if (!isset($tokens[$stackPtr]['bracket_closer'])) {
+            $end = $phpcsFile->findNext(T_CLOSE_CURLY_BRACKET, $stackPtr + 1);
+        } else {
+            $end = $tokens[$stackPtr]['bracket_closer'];
+        }
 
         for ($i = $start; $i <= $end; $i++) {
             if ($tokens[$i]['code'] === T_STRING || $tokens[$i]['code'] === T_STYLE) {
