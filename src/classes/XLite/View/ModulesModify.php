@@ -162,6 +162,7 @@ class ModulesModify extends \XLite\View\Dialog
         return implode('', $statuses);
     }
 
+
     /**
      * Get modules list
      * 
@@ -204,24 +205,6 @@ class ModulesModify extends \XLite\View\Dialog
         return is_null($filter) 
             ? static::$modulesCount
             : static::$modulesCount[$filter];
-    }
-
-
-
-    /**
-     * Check - can module nable or not
-     * 
-     * @param \XLite\Model\Module $module Module
-     *  
-     * @return boolean
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function canEnable(\XLite\Model\Module $module)
-    {
-        return $module->getEnabled()
-            || $module->canEnable();
     }
 
     /**
@@ -273,6 +256,22 @@ class ModulesModify extends \XLite\View\Dialog
     }
 
     /**
+     * Check if the module can be enabled
+     * 
+     * @param \XLite\Model\Module $module Module
+     *  
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function canEnable(\XLite\Model\Module $module)
+    {
+        return $module->getEnabled()
+            || $module->canEnable();
+    }
+
+    /**
      * Return title
      *
      * @return string
@@ -295,5 +294,5 @@ class ModulesModify extends \XLite\View\Dialog
     {
         return 'modules_modify';
     }
-    
+
 }
