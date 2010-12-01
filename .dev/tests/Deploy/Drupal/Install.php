@@ -345,7 +345,7 @@ class XLite_Deploy_Drupal_Install extends XLite_Deploy_ADeploy
 
         $this->waitForCondition(
             'selenium.browserbot.getCurrentWindow().document.getElementsByTagName("h2").length > 0 && selenium.browserbot.getCurrentWindow().document.getElementsByTagName("h2")[0].innerHTML == "Configure site"',
-            10000
+            50000
         );
     }
 
