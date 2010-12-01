@@ -71,19 +71,19 @@ class Main extends \XLite\Controller\Customer\Category
     }
 
     /**
-     * init 
-     * 
+     * Preprocessor for no-action ren
+     *
      * @return void
-     * @access public
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function init(array $params = array())
+    protected function doNoAction()
     {
-        parent::init($params);
+        parent::doNoAction();
 
-        if (!isset(\XLite\Core\Request::getInstance()->action)) {
-            $this->session->set('productListURL', $this->get('url'));
+        if (!\XLite\Core\Request::getInstance()->isAJAX()) {
+            \XLite\Core\Session::getInstance()->productListURL = $this->getUrl();
         }
     }
 

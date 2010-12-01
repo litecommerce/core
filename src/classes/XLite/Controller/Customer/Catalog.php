@@ -61,6 +61,23 @@ abstract class Catalog extends \XLite\Controller\Customer\ACustomer
     }
 
     /**
+     * Preprocessor for no-action ren
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function doNoAction()
+    {
+        parent::doNoAction();
+
+        if (!\XLite\Core\Request::getInstance()->isAJAX()) {
+            \XLite\Core\Session::getInstance()->productListURL = $this->getUrl();
+        }
+    }
+
+    /**
      * Return link to category page
      *
      * @param \XLite\Model\Category $category Category model object to use
