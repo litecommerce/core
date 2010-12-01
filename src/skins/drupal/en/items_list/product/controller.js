@@ -135,8 +135,8 @@ ProductsListView.prototype.postprocess = function(isSuccess, initial)
           .clone()
           .css(
             {
-              'width':   base.outerWidth() + 'px',
-              'height':  base.outerHeight() + 'px'
+              'width':   base.width() + 'px',
+              'height':  base.height() + 'px'
             }
           );
 
