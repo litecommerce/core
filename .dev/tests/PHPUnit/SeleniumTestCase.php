@@ -496,7 +496,7 @@ abstract class XLite_Tests_SeleniumTestCase extends PHPUnit_Extensions_SeleniumT
         );
         $this->waitForCondition(
             'selenium.browserbot.getCurrentWindow().$("' . $jqueryExpression . '").parents().eq(0).find(".single-progress-mark").length == 0',
-            15000,
+            20000,
             'check GONE inline progress mark for ' . $jqueryExpression . ' (' . $message . ')'
         );
     }
