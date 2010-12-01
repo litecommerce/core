@@ -85,9 +85,17 @@ class Method extends \XLite\Model\Repo\Base\I18n
      */
     public function findAllActive()
     {
-        return $this->defineAllActiveQuery()
+        $list = $this->defineAllActiveQuery()
             ->getQuery()
             ->getResult();
+
+        foreach ($list as $k => $v) {
+            if (!$v->isEnabled()) {
+                unset($list[$k]);
+            }
+        }
+
+        return $list;
     }
 
     /**
