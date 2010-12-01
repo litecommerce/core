@@ -194,4 +194,20 @@ class StateSelect extends \XLite\View\FormField
 
         return $code;
     }
+
+    /**
+     * Check - specified state is selected or not
+     *
+     * @param \XLite\Model\State $state Specidied (current) state
+     *
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isStateSelected(\XLite\Model\State $state)
+    {
+        return $state->getStateId() == $this->getParam(self::PARAM_STATE)->getStateId();
+    }
+
 }

@@ -740,7 +740,9 @@ CommonElement.prototype.linkWithCountry = function()
     } else {
 
         // As select box
+        var previousSelected = null;
         if (isElement(this.stateInput, 'select')) {
+          previousSelected = this.stateInput.options[this.stateInput.selectedIndex].value;
           $('option', this.stateInput).remove();
 
         } else {
@@ -751,6 +753,11 @@ CommonElement.prototype.linkWithCountry = function()
         for (var i = 0; i < CountriesStates[this.value].length; i++) {
           var s = CountriesStates[this.value][i];
           this.stateInput.options[i] = new Option(s.state, s.state_code);
+
+          if (previousSelected && previousSelected == s.state_code) {
+            this.stateInput.options[i].selected = true;
+            this.stateInput.selectedIndex = i;
+          }
         }
 
         stateSwitcher.value = '';

@@ -141,6 +141,7 @@ popup.postprocessRequest = function(XMLHttpRequest, textStatus, data, isValid)
 
     // Connection failed
     this.close();
+    // TODO - add top message
 
   } else if (278 == responseStatus) {
 
