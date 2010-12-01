@@ -14,7 +14,7 @@
   <input type="text" name="{field}"{if:fieldId} id="{fieldId}"{end:} class="{getParam(#className#)} field-state {if:isLinked} linked{end:}" value="{getStateValue()}" />
 {else:}
   <select name="{field}"{if:fieldId} id="{fieldId}"{end:} class="{getParam(#className#)} field-state {if:isLinked} linked{end:}">
-   <option FOREACH="getStates(),v" value="{v.getStateId():r}" selected="{v.getStateId()=state.getStateId()}">{v.state}</option>
+   <option FOREACH="getStates(),v" value="{v.getStateId():r}" selected="{isStateSelected(v)}">{v.state}</option>
   </select>
 {end:}
 <script IF="isDefineStates()" type="text/javascript">
