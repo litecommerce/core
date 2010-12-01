@@ -38,15 +38,16 @@ namespace XLite\Module\GoogleCheckout;
 abstract class Main extends \XLite\Module\AModule
 {
     /**
-     * Module type
+     * Module name
      *
-     * @var    int
-     * @access protected
+     * @var    string
+     * @access public
+     * @see    ____func_see____
      * @since  3.0
      */
-    public static function getModuleType()
+    public static function getModuleName()
     {
-        return self::MODULE_GENERAL;
+        return 'Google Checkout';
     }
 
     /**
@@ -94,7 +95,7 @@ abstract class Main extends \XLite\Module\AModule
      */
     public static function getSettingsForm()
     {
-       return "admin.php?target=payment_method&payment_method=google_checkout";
+        return "admin.php?target=payment_method&payment_method=google_checkout";
     }
 
     /**
@@ -108,8 +109,6 @@ abstract class Main extends \XLite\Module\AModule
     public static function init()
     {
         parent::init();
-
-        $this->registerPaymentMethod('google_checkout');
 
         $payment_method = \XLite\Model\PaymentMethod::factory('google_checkout');
         $params = $payment_method->get('params');
@@ -137,5 +136,18 @@ abstract class Main extends \XLite\Module\AModule
         }
 
         \XLite::getInstance()->set('GoogleCheckoutEnabled',true);
+    }
+
+    /**
+     * Get post-installation user notes
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getPostInstallationNotes()
+    {
+        return '<b>Note:</b> Please visit the <a href="admin.php?target=payment_method&payment_method=google_checkout">Payment method setup page</a> in order to setup your Google checkout merchant account';
     }
 }

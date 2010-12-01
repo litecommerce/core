@@ -38,15 +38,16 @@ namespace XLite\Module\AdvancedSecurity;
 abstract class Main extends \XLite\Module\AModule
 {
     /**
-     * Module type
+     * Module name
      *
-     * @var    int
-     * @access protected
+     * @var    string
+     * @access public
+     * @see    ____func_see____
      * @since  3.0
      */
-    public static function getModuleType()
+    public static function getModuleName()
     {
-        return self::MODULE_GENERAL;
+        return 'Advanced Security';
     }
 
     /**
@@ -73,7 +74,6 @@ abstract class Main extends \XLite\Module\AModule
         return 'This module provides strong cryptographic protection for email and sensitive data of LiteCommerce store';
     }
 
-    public $isFree = true;
     /**
      * Determines if we need to show settings form link
      *

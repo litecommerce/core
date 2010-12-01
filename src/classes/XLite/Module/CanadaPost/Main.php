@@ -38,15 +38,16 @@ namespace XLite\Module\CanadaPost;
 abstract class Main extends \XLite\Module\AModule
 {
     /**
-     * Module type
+     * Module name
      *
-     * @var    int
-     * @access protected
+     * @var    string
+     * @access public
+     * @see    ____func_see____
      * @since  3.0
      */
-    public static function getModuleType()
+    public static function getModuleName()
     {
-        return self::MODULE_SHIPPING;
+        return 'Canada Post';
     }
 
     /**
@@ -112,5 +113,18 @@ abstract class Main extends \XLite\Module\AModule
         \XLite\Model\Shipping::getInstance()->registerProcessor('\XLite\Module\CanadaPost\Model\Shipping\Processor\CanadaPost');
 
         \XLite::getInstance()->set('CanadaPostEnabled',true);
+    }
+
+    /**
+     * Get post-installation user notes
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getPostInstallationNotes()
+    {
+        return '<b>Note:</b> please visit the <a href="admin.php?target=cps">Canada Post setup page</a>, also available in your "Shipping settings" menu.';
     }
 }

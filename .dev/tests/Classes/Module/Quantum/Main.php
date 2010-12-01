@@ -15,8 +15,8 @@
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
  * @category   LiteCommerce
- * @package    XLite
- * @subpackage Module
+ * @package    Tests
+ * @subpackage Classes
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -26,39 +26,36 @@
  * @since      3.0.0
  */
 
-namespace XLite\Module\XPaymentsConnector;
-
-/**
- * Module
- * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
- */
-class Module extends \XLite\Module\AModule implements \XLite\Base\IDecorator
+class XLite_Tests_Module_Quantum_Main extends XLite_Tests_TestCase
 {
-    /**
-     * Easy way to register payment method
-     * TODO: to remove? registerPaymentMethod() method is no longer exists
-     * 
-     * @param string $name  Payment method name
-     * @param string $class Payment method class name OPTIONAL
-     *  
-     * @return void
-     * @access protected
-     * @since  3.0
-     */
-    protected function registerPaymentMethod($name, $class = null)
+    public function testGetModuleName()
     {
-        if ($class) {
-            $method = new \XLite\Model\PaymentMethod();
-            $result = $method->registerMethod($name, $class);
+        $main = $this->getMain();
+        $this->assertEquals('Quantum', $main::getModuleName(), 'Wrong module name');
+    }
 
-        } else {
-            $result = parent::registerPaymentMethod($name);
-        }
+    public function testGetDescription()
+    {
+        $main = $this->getMain();
+        $this->assertEquals('QuantumGateway integration (QGWdatabase Engine API)', $main::getDescription(), 'Wrong description');
+    }
 
-        return $result;
+    public function testGetVersion()
+    {
+        $main = $this->getMain();
+        $this->assertEquals('1.0', $main::getVersion(), 'Wrong version');
+    }
+
+    public function testShowSettingsForm()
+    {
+        $main = $this->getMain();
+        $this->assertTrue($main::showSettingsForm(), 'Wrong flag to show settings form');
+    }
+
+    protected function getMain()
+    {
+        return '\XLite\Module\Quantum\Main';
     }
 
 }
+

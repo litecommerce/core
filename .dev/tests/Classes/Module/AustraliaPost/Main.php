@@ -15,8 +15,8 @@
  * to licensing@litecommerce.com so we can send you a copy immediately.
  * 
  * @category   LiteCommerce
- * @package    XLite
- * @subpackage Model
+ * @package    Tests
+ * @subpackage Classes
  * @author     Creative Development LLC <info@cdev.ru> 
  * @copyright  Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
  * @license    http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
@@ -26,51 +26,36 @@
  * @since      3.0.0
  */
 
-namespace XLite\Module\AuthorizeNet;
-
-/**
- * Authorize.Net SIM module
- * 
- * @package XLite
- * @see     ____class_see____
- * @since   3.0.0
- */
-abstract class Main extends \XLite\Module\AModule
+class XLite_Tests_Module_AustraliaPost_Main extends XLite_Tests_TestCase
 {
-    /**
-     * Module name
-     *
-     * @var    string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0
-     */
-    public static function getModuleName()
+    public function testGetModuleName()
     {
-        return 'Authorize.Net SIM';
+        $main = $this->getMain();
+        $this->assertEquals('Australia Post', $main::getModuleName(), 'Wrong module name');
     }
 
-    /**
-     * Module version
-     *
-     * @return string
-     * @access public
-     * @since  3.0.0
-     */
-    public static function getVersion()
+    public function testGetDescription()
     {
-        return '1.0';
+        $main = $this->getMain();
+        $this->assertEquals('This module introduces Australia Post real-time shipping cost calculations', $main::getDescription(), 'Wrong description');
     }
 
-    /**
-     * Module description
-     *
-     * @return string
-     * @access public
-     * @since  3.0.0
-     */
-    public static function getDescription()
+    public function testGetVersion()
     {
-        return 'Authorize.Net SIM (Server Integration Method) credit card payment processor';
+        $main = $this->getMain();
+        $this->assertEquals('1.0', $main::getVersion(), 'Wrong version');
     }
+
+    public function testShowSettingsForm()
+    {
+        $main = $this->getMain();
+        $this->assertTrue($main::showSettingsForm(), 'Wrong flag to show settings form');
+    }
+
+    protected function getMain()
+    {
+        return '\XLite\Module\AustraliaPost\Main';
+    }
+
 }
+

@@ -38,6 +38,54 @@ namespace XLite\View;
 class ModulesModify extends \XLite\View\Dialog
 {
     /**
+     * Filter name definitions
+     */
+    const FILTER_ALL        = 'all';
+    const FILTER_INACTIVE   = 'inactive';
+    const FILTER_UPGRADABLE = 'upgradable';
+
+    /**
+     * Modules list (cache)
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected static $modules = null;
+
+    /**
+     * Currently applie filter (cached)
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected static $filter = null;
+
+    /**
+     * Possible filters (cached)
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected static $filters = null;
+
+    /**
+     * Possible filters (cached)
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected static $modulesCount = null;
+
+
+    /**
      * Return list of targets allowed for this widget
      *
      * @return array
@@ -115,6 +163,52 @@ class ModulesModify extends \XLite\View\Dialog
     }
 
     /**
+     * Get modules list
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function getModules()
+    {
+        if (is_null(static::$modules)) {
+            $method = 'find' . ucwords(static::getFilter()) . 'Modules';
+            static::$modules = \XLite\Core\Database::getRepo('\XLite\Model\Module')->$method();
+        }
+
+        return static::$modules;
+    }
+
+    /**
+     * Get modules count for different filters
+     * 
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function getModulesCount($filter = null)
+    {
+        if (is_null(static::$modulesCount)) {
+
+            $mCount = array();
+
+            foreach (array_keys(static::getFilters()) as $f) {
+                $method = 'find' . ucwords($f) . 'Modules';
+                $mCount[$f] = count(\XLite\Core\Database::getRepo('\XLite\Model\Module')->$method());
+            }
+            static::$modulesCount = $mCount;
+        }
+        
+        return is_null($filter) 
+            ? static::$modulesCount
+            : static::$modulesCount[$filter];
+    }
+
+
+
+    /**
      * Check - can module nable or not
      * 
      * @param \XLite\Model\Module $module Module
@@ -124,10 +218,58 @@ class ModulesModify extends \XLite\View\Dialog
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function canEnable(\XLite\Model\Module $module)
+    protected function canEnable(\XLite\Model\Module $module)
     {
         return $module->getEnabled()
             || $module->canEnable();
+    }
+
+    /**
+     * Return filters array
+     *
+     * @return array
+     * @access protected
+     * @since  3.0.0
+     */
+    protected static function getFilters()
+    {
+        if (is_null(static::$filters)) {
+
+            static::$filters = array(
+                static::FILTER_ALL        => 'All',
+                static::FILTER_INACTIVE   => 'Inactive',
+                static::FILTER_UPGRADABLE => 'Upgradable',
+            );
+        }
+
+        return static::$filters;
+    }
+
+    /**
+     * Return filters array
+     *
+     * @return string
+     * @access protected
+     * @since  3.0.0
+     */
+    protected static function getFilter()
+    {
+        $filter = \XLite\Core\Request::getInstance()->filter;
+
+        if (
+            is_null($filter)
+            || empty($filter)
+            || !in_array($filter, array_keys(static::getFilters()))
+        ) {
+
+            static::$filter = static::FILTER_ALL;
+
+        } else {
+        
+            static::$filter = $filter;
+        }
+
+        return static::$filter;
     }
 
     /**
@@ -153,5 +295,5 @@ class ModulesModify extends \XLite\View\Dialog
     {
         return 'modules_modify';
     }
-
+    
 }

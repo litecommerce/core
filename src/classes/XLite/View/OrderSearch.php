@@ -145,6 +145,7 @@ class OrderSearch extends \XLite\View\Dialog
         return $cnd;
     }
 
+
     /**
      * Get condition 
      * 

@@ -37,18 +37,6 @@ namespace XLite\Module;
  */
 abstract class AModule
 {
-    /**
-     * Module types
-     */
-
-    const MODULE_UNKNOWN   = 0;
-    const MODULE_PAYMENT   = 1;
-    const MODULE_SHIPPING  = 2;
-    const MODULE_SKIN      = 3;
-    const MODULE_CONNECTOR = 4;
-    const MODULE_GENERAL   = 5;
-    const MODULE_3RD_PARTY = 6;
-
    /**
      * Method to initialize concrete module instance
      *
@@ -70,20 +58,7 @@ abstract class AModule
      */
     public static function getModuleName()
     {
-        return static::getModuleCode();
-    }
-
-    /**
-     * Return module type 
-     * 
-     * @return integer 
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0
-     */
-    public static function getModuleType()
-    {
-        return self::MODULE_3RD_PARTY;
+        throw new \Exception('Name is not specified for the ' . $this->getName() . ' add-on');
     }
 
     /**
@@ -96,7 +71,7 @@ abstract class AModule
      */
     public static function getVersion()
     {
-        return '1.0'; 
+        throw new \Exception('Version is not specified for the ' . $this->getName() . ' add-on');
     }
 
     /**
@@ -109,7 +84,7 @@ abstract class AModule
      */
     public static function getDescription()
     {
-        return '';
+        throw new \Exception('Description is not specified for the ' . $this->getName() . ' add-on');
     }
 
     /**
@@ -218,7 +193,7 @@ abstract class AModule
 
     /**
      * Get module icon 
-     * TODO: implement the module icons functionality
+     * TODO: will be taken from remote model
      * 
      * @return \XLite\Model\Image
      * @access public
@@ -231,8 +206,8 @@ abstract class AModule
     }
 
     /**
-     * Check if module has icon 
-     * 
+     * Check if module has icon
+     * TODO: will be taken from remote model
      * @return boolean
      * @access public
      * @see    ____func_see____
@@ -260,6 +235,8 @@ abstract class AModule
 
     /**
      * Page on LiteCommerce site checker
+     * TODO: implement this when modules management is implemented
+     *       on LiteCommerce site
      *
      * @return string
      * @access public
@@ -286,42 +263,6 @@ abstract class AModule
         }
 
         return $matches[1];
-    }
-
-    /**
-     * Easy way to register payment method
-     * 
-     * @param string $name Payment method name
-     *  
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0
-     */
-    protected function registerPaymentMethod($name)
-    {
-        $method = new \XLite\Model\PaymentMethod();
-        $class  = 'Module\\' . $this->getModuleCode() . '\Model\PaymentMethod\\' . \XLite\Core\Converter::convertToCamelCase($name);
-
-        return $method->registerMethod($name, $class);
-    }
-
-    /**
-     * Easy way to register shipping module 
-     * 
-     * @param string $name Shipping module name
-     *  
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0
-     */
-    protected function registerShippingModule($name)
-    {
-        $shipping = new \XLite\Model\Shipping();
-        $class  = 'Module\\' . $this->getModuleCode() . '\Model\Shipping\\' . \XLite\Core\Converter::convertToCamelCase($name);
-
-        return $shipping->registerShippingModule($name, $class);
     }
 
     /**

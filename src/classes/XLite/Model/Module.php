@@ -41,6 +41,7 @@ class Module extends \XLite\Model\AEntity
 {
     /**
      * Installed statuses
+     * TODO: to revise
      */
 
     const NOT_INSTALLED     = 0;
@@ -98,6 +99,7 @@ class Module extends \XLite\Model\AEntity
 
     /**
      * Last version
+     * TODO: to remove, checking will be implemented in a remote model
      * 
      * @var    string
      * @access protected
@@ -109,6 +111,7 @@ class Module extends \XLite\Model\AEntity
 
     /**
      * Last update
+     * TODO: to remove, checking will be implemented in a remote model
      * 
      * @var    integer
      * @access protected
@@ -178,6 +181,56 @@ class Module extends \XLite\Model\AEntity
     }
 
     /**
+     * Get module Main class name 
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getMainClassName()
+    {
+        return '\XLite\Module\\' . $this->getName() . '\Main';
+    }
+
+    /**
+     * Include module Main class 
+     * 
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function includeMainClass()
+    {
+        $class = $this->getMainClassName();
+
+        if (
+            !\XLite\Core\Operator::isClassExists($class)
+            && file_exists(LC_CLASSES_DIR . str_replace('\\', LC_DS, $class) . '.php')
+        ) {
+            include_once LC_CLASSES_DIR . str_replace('\\', LC_DS, $class) . '.php';
+        }
+
+        return \XLite\Core\Operator::isClassExists($class);
+    }
+
+
+
+    /**
+     * Get translated dependencies
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getDependedModules()
+    {
+        return $this->getRepository()->findAllByModuleIds($this->getDependedModuleIds());
+    }
+
+    /**
      * Disable module
      *
      * @return void
@@ -208,19 +261,6 @@ class Module extends \XLite\Model\AEntity
     }
 
     /**
-     * Get module Main class name 
-     * 
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getMainClassName()
-    {
-        return '\XLite\Module\\' . $this->getName() . '\Main';
-    }
-
-    /**
      * Get module Main class
      * 
      * @return \XLite\Module\AModule
@@ -240,28 +280,6 @@ class Module extends \XLite\Model\AEntity
         }
 
         return $this->mainClass;
-    }
-
-    /**
-     * Include module Main class 
-     * 
-     * @return boolean
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function includeMainClass()
-    {
-        $class = $this->getMainClassName();
-
-        if (
-            !\XLite\Core\Operator::isClassExists($class)
-            && file_exists(LC_CLASSES_DIR . str_replace('\\', LC_DS, $class) . '.php')
-        ) {
-            require_once LC_CLASSES_DIR . str_replace('\\', LC_DS, $class) . '.php';
-        }
-
-        return \XLite\Core\Operator::isClassExists($class);
     }
 
     /**
@@ -505,7 +523,7 @@ class Module extends \XLite\Model\AEntity
     /**
      * FIXME - this method is required for Decorator
      * TODO - find a more convinient way to avoid the fatal error
-     * 
+     *
      * @return string
      * @access public
      * @see    ____func_see____
@@ -518,6 +536,7 @@ class Module extends \XLite\Model\AEntity
 
     /**
      * Check if newer version exists
+     * TODO: to be revised, last version will be stored in the remote model
      * 
      * @return boolean
      * @access public

@@ -38,15 +38,16 @@ namespace XLite\Module\Intershipper;
 abstract class Main extends \XLite\Module\AModule
 {
     /**
-     * Module type
+     * Module name
      *
-     * @var    int
-     * @access protected
+     * @var    string
+     * @access public
+     * @see    ____func_see____
      * @since  3.0
      */
-    public static function getModuleType()
+    public static function getModuleName()
     {
-        return self::MODULE_SHIPPING;
+        return 'Intershipper';
     }
 
     /**
@@ -110,5 +111,18 @@ abstract class Main extends \XLite\Module\AModule
         // Register AustraliaPost shipping processor
         \XLite\Model\Shipping::getInstance()->registerProcessor('\XLite\Module\Intershipper\Model\Shipping\Processor\Intershipper');
 
+    }
+
+    /**
+     * Get post-installation user notes
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getPostInstallationNotes()
+    {
+        return '<b>Note:</b> You should purchase an account from <a href="http://www.intershipper.com/">www.intershipper.com</a> to access this service.<br /><br />After that, please setup your Intershipper settings on the <a href="admin.php?target=intershipper">Intershipper setup page</a>, also available in your "Shipping" menu.';
     }
 }

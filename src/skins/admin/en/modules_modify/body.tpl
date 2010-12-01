@@ -10,16 +10,30 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
+
 <script type="text/javascript">
 var confirmNotes = [];
 confirmNotes['uninstall'] = '{t(#Are you sure you want to uninstall this add-on?#)}';
 confirmNotes['enable']    = '{t(#Are you sure you want to enable this add-on?#)}';
 confirmNotes['disable']   = '{t(#Are you sure you want to disable this add-on?#)}';
+
+var dependedAlert = '{t(#The following dependent add-ons will be automatically disabled:#)}';
+var depends = [];
+
 <!-- 
-function confirmNote(action)
+function confirmNote(action, id)
 {
+
+  var extraTxt = '';
+  if (action == 'disable' && id !== undefined && depends[id] && depends[id].length > 0) {
+    extraTxt = "\n" + dependedAlert + "\n";
+    for (i in depends[id]) {
+      extraTxt += depends[id][i] + "\n";
+    }
+  }
+  
   return confirmNotes[action]
-    ? confirm(confirmNotes[action])
+    ? confirm(confirmNotes[action] + extraTxt)
     : confirm('{t(#Are you sure?#)}');
 }
 -->
@@ -29,6 +43,21 @@ function confirmNote(action)
 <widget class="\XLite\View\Button\Submit" label="{t(#Add new add-ons#)}" />
 <br /><br />
 -->
+
+<div class="modules-filters">
+
+  <div class="tags">
+  </div>
+
+  <div class="activity">
+    {foreach:getFilters(),fltr,desc}
+      <a href="{buildUrl(#modules#,##,_ARRAY_(#filter#^fltr))}" class="upgradable{if:fltr=getFilter()} current{end:}">{t(desc)}</a><span>({getModulesCount(fltr)})</span>
+    {end:}
+  </div>
+
+  <div class="clear"></div>
+
+</div>
 
 {* Display add-ons list *}
 <widget template="modules_modify/list.tpl" />

@@ -38,15 +38,16 @@ namespace XLite\Module\ChronoPay;
 abstract class Main extends \XLite\Module\AModule
 {
     /**
-     * Module type
+     * Module name
      *
-     * @var    int
-     * @access protected
+     * @var    string
+     * @access public
+     * @see    ____func_see____
      * @since  3.0
      */
-    public static function getModuleType()
+    public static function getModuleName()
     {
-        return self::MODULE_PAYMENT;
+        return 'ChronoPay';
     }
 
     /**
@@ -94,22 +95,20 @@ abstract class Main extends \XLite\Module\AModule
      */
     public static function getSettingsForm()
     {
-       return 'admin.php?target=payment_method&payment_method=chronopay';
+        return 'admin.php?target=payment_method&payment_method=chronopay';
     }
 
     /**
-     * Perform some actions at startup
-     *
-     * @return void
+     * Get post-installation user notes
+     * 
+     * @return string
      * @access public
-     * @since  3.0
+     * @see    ____func_see____
+     * @since  3.0.0
      */
-    public static function init() 
+    public static function getPostInstallationNotes()
     {
-        parent::init();
-
-        
-        $this->registerPaymentMethod('chronopay');
+        return '<b>Note:</b> Please visit the <a href="admin.php?target=payment_method&payment_method=chronopay">Payment method setup page</a> in order to setup your ChronoPay merchant account';
     }
 
     function uninstall() 

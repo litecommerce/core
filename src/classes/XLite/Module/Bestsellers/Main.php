@@ -37,30 +37,6 @@ namespace XLite\Module\Bestsellers;
  */
 abstract class Main extends \XLite\Module\AModule
 {
-
-    /**
-     * isFree 
-     * 
-     * @var    boolean
-     * @access public
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    public $isFree = true;
-
-    /**
-     * Module type
-     * 
-     * @return integer
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function getModuleType()
-    {
-        return self::MODULE_GENERAL;
-    }
-
     /**
      * Module version
      * 

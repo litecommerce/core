@@ -38,16 +38,16 @@ namespace XLite\Module\USPS;
 abstract class Main extends \XLite\Module\AModule
 {
     /**
-     * Get module type
-     * 
-     * @return integer
+     * Module name
+     *
+     * @var    string
      * @access public
      * @see    ____func_see____
-     * @since  3.0.0
+     * @since  3.0
      */
-    public static function getModuleType()
+    public static function getModuleName()
     {
-        return self::MODULE_SHIPPING;
+        return 'USPS';
     }
 
     /**
@@ -100,6 +100,19 @@ abstract class Main extends \XLite\Module\AModule
     public static function getSettingsForm()
     {
         return \XLite\Core\Converter::buildUrl('usps', '', array(), \XLite::ADMIN_SELF);
+    }
+
+    /**
+     * Get post-installation user notes
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getPostInstallationNotes()
+    {
+        return '<b>Note:</b> please visit the <a href="admin.php?target=usps">USPS setup page</a>, also available in your "Shipping settings" menu.';
     }
 
     /**

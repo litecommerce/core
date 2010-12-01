@@ -38,18 +38,6 @@ namespace XLite\Module\ProductOptions;
 abstract class Main extends \XLite\Module\AModule
 {
     /**
-     * Module type
-     *
-     * @return integer
-     * @access public
-     * @since  3.0
-     */
-    public static function getModuleType()
-    {
-        return self::MODULE_GENERAL;
-    }
-
-    /**
      * Module version
      *
      * @return string

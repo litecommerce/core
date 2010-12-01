@@ -38,19 +38,6 @@ namespace XLite\Module\DrupalConnector;
 abstract class Main extends \XLite\Module\AModule
 {
     /**
-     * Get module type 
-     * 
-     * @return integer
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function getModuleType()
-    {
-        return self::MODULE_CONNECTOR;
-    }
-
-    /**
      * Get version 
      * 
      * @return string

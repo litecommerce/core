@@ -10,14 +10,14 @@
  * @link      http://www.litecommerce.com/
  * @since     3.0.0
  *}
-<form IF="mm.findAllModules()" action="admin.php" method="post" name="modules_form_{key}" class="modules-list">
+<form IF="getModules()" action="admin.php" method="post" name="modules_form_{key}" class="modules-list">
   <input type="hidden" name="target" value="modules">
   <input type="hidden" name="action" value="update">
   <input type="hidden" name="module_type" value="{key}" />
 
   <table cellspacing="0" cellpadding="0" class="data-table modules-list">
 
-		<tr FOREACH="mm.findAllModules(),module_idx,module" class="{if:!module.getEnabled()} disabled{end:}">
+		<tr FOREACH="getModules(),module_idx,module" class="{if:!module.getEnabled()} disabled{end:}">
       <td class="icon" width="90">
         <a name="{module.getName()}"></a>
         <div class="icon-container">
@@ -43,12 +43,12 @@
         <div class="version">{t(#Version#)}: {module.getVersion()}</div>
         <div class="actions">
           {if:module.getEnabled()}
-            <a href="{buildUrl(#modules#,#disable#,_ARRAY_(#module_id#^module.getModuleId()))}" onclick="javascript: return confirmNote('disable');">{t(#Disable#)}</a>
+            <a href="{buildUrl(#modules#,#disable#,_ARRAY_(#module_id#^module.getModuleId()))}" onclick="javascript: return confirmNote('disable', '{module.getModuleId()}');">{t(#Disable#)}</a>
           {else:}
             {if:!module.canEnable()}
               <span class="disabled">{t(#Enable#)}</span>
             {else:}
-              <a href="{buildUrl(#modules#,#enable#,_ARRAY_(#module_id#^module.getModuleId()))}" onclick="javascript: return confirmNote('enable');">{t(#Enable#)}</a>
+              <a href="{buildUrl(#modules#,#enable#,_ARRAY_(#module_id#^module.getModuleId()))}" onclick="javascript: return confirmNote('enable', '{module.getModuleId()}');">{t(#Enable#)}</a>
             {end:}
           {end:}
           {if:module.showSettingsForm()}
@@ -56,7 +56,7 @@
           {end:}
           {if:!module.getEnabled()}
           <!--
-            <a class="uninstall" href="{buildUrl(#modules#,#uninstall#,_ARRAY_(#module_id#^module.getModuleId()))}" onclick="javascript: return confirmNote('uninstall');">{t(#Uninstall#)}</a>
+            <a class="uninstall" href="{buildUrl(#modules#,#uninstall#,_ARRAY_(#module_id#^module.getModuleId()))}" onclick="javascript: return confirmNote('uninstall', '{module.getModuleId()}');">{t(#Uninstall#)}</a>
           -->
           {end:}
 
@@ -77,6 +77,13 @@
           {end:}
         </div>
         {end:}
+
+<script type="text/javascript">
+depends[{module.getModuleId()}] = [];
+{foreach:module.getDependedModules(),k,m}
+depends[{module.getModuleId()}][{k}] = '{m.getModuleName()}';
+{end:}
+</script>
 
         {if:module.isUpdateAvailable()}
           <div class="upgrade-note">

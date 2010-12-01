@@ -136,3 +136,36 @@ table.modules-list div.icon-container div.addon-disabled {
   left: 0;
   background: url(../images/addon_disabled.png) left top no-repeat;
 }
+
+div.modules-filters {
+  margin: 10px 0;
+}
+
+div.modules-filters div.activity {
+  float: right;
+}
+
+div.modules-filters div.activity a:link,
+div.modules-filters div.activity a:visited,
+div.modules-filters div.activity a:hover,
+div.modules-filters div.activity a:active
+{
+  text-decoration: underline;
+  font-size: 14px;
+  font-family: arial,helvetica,sans-serif;
+  margin-right: 3px;
+}
+
+div.modules-filters div.activity span {
+  font-size: 14px;
+  margin-right: 7px;
+  color: #2c5fa6;
+}
+
+div.modules-filters div.activity a.current {
+  font-weight: bold;
+}
+
+div.modules-filters div.tags {
+  float: left;
+}

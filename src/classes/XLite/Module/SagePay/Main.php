@@ -38,15 +38,16 @@ namespace XLite\Module\SagePay;
 abstract class Main extends \XLite\Module\AModule
 {
     /**
-     * Module type
+     * Module name
      *
-     * @var    int
-     * @access protected
+     * @var    string
+     * @access public
+     * @see    ____func_see____
      * @since  3.0
      */
-    public static function getModuleType()
+    public static function getModuleName()
     {
-        return self::MODULE_PAYMENT;
+        return 'SagePay';
     }
 
     /**
@@ -70,7 +71,7 @@ abstract class Main extends \XLite\Module\AModule
      */
     public static function getDescription()
     {
-        return 'VSP Direct and VSP Form credit card payment processor';
+        return 'SagePay VSP Direct and VSP Form credit card payment processor';
     }
 
     /**
@@ -99,6 +100,7 @@ abstract class Main extends \XLite\Module\AModule
 
     /**
      * Perform some actions at startup
+     * FIXME: to revise completely, registerPaymentMethod() method no longer exists
      *
      * @return void
      * @access public
@@ -123,4 +125,18 @@ abstract class Main extends \XLite\Module\AModule
 
         \XLite::getInstance()->set('SagePayEnabled', true);
     }
+
+    /**
+     * Get post-installation user notes
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getPostInstallationNotes()
+    {
+        return '<b>Note:</b> Please visit the <a href="admin.php?target=payment_method&payment_method=sagepayform_cc">Payment method setup page</a> in order to setup your SagePay merchant account';
+    }
+
 }
