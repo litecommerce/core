@@ -135,19 +135,6 @@ class Module extends \XLite\Model\Repo\ARepo
     }
 
     /**
-     * Define query builder for findAllModules()
-     * 
-     * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function defineAllModulesQuery()
-    {
-        return $this->createQueryBuilder();
-    }
-
-    /**
      * Find all modules as names list
      * 
      * @return array
@@ -185,59 +172,6 @@ class Module extends \XLite\Model\Repo\ARepo
     }
 
     /**
-     * Define query builder for findAllNames()
-     * 
-     * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function defineAllNamesQuery()
-    {
-        return $this->createQueryBuilder();
-    }
-
-    /**
-     * Define query builder for findAllByNames()
-     *
-     * @param array $ids Module ids
-     *
-     * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function defineAllByModuleIdsQuery(array $ids)
-    {
-        $qb = $this->createQueryBuilder();
-
-        $ids = \XLite\Core\Database::buildInCondition($qb, $ids, 'module_id');
-
-        return $qb->andWhere('m.module_id IN (' . implode(', ', $ids) . ')');
-    }
-
-    /**
-     * Postprocess all modules names list
-     * 
-     * @param array $data Initial data
-     *  
-     * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function postprocessAllNames(array $data)
-    {
-        $result = array();
-
-        foreach ($data as $module) {
-            $result[] = $module->getName();
-        }
-
-        return array_unique($result);
-    }
-
-    /**
      * Find all enabled (or disabled) modules
      * 
      * @param boolean $enabled Enabled flag OPTIONAL
@@ -259,23 +193,6 @@ class Module extends \XLite\Model\Repo\ARepo
     }
 
     /**
-     * Define query builder for findAllEnabled()
-     *
-     * @param boolean $enabled Enabled flag
-     *
-     * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function defineAllEnabledQuery($enabled)
-    {
-        return $this->createQueryBuilder()
-            ->andWhere('m.enabled = :enabled')
-            ->setParameter('enabled', $enabled);
-    }
-
-    /**
      * Find all by names
      * 
      * @param array $names Modules names
@@ -288,25 +205,6 @@ class Module extends \XLite\Model\Repo\ARepo
     public function findAllByNames(array $names)
     {
         return $this->defineAllByNamesQuery($names)->getQuery()->getResult();
-    }
-
-    /**
-     * Define query builder for findAllByNames()
-     *
-     * @param array $names Modules names
-     *
-     * @return \Doctrine\ORM\QueryBuilder
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function defineAllByNamesQuery(array $names)
-    {
-        $qb = $this->createQueryBuilder();
-
-        $ids = \XLite\Core\Database::buildInCondition($qb, $names, 'name');
-
-        return $qb->andWhere('m.name IN (' . implode(', ', $ids) . ')');
     }
 
     /**
@@ -441,6 +339,109 @@ class Module extends \XLite\Model\Repo\ARepo
                 \XLite::setCleanUpCacheFlag(true);
             }
         }
+    }
+
+
+    /**
+     * Define query builder for findAllModules()
+     * 
+     * @return \Doctrine\ORM\QueryBuilder
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineAllModulesQuery()
+    {
+        return $this->createQueryBuilder();
+    }
+
+    /**
+     * Define query builder for findAllNames()
+     * 
+     * @return \Doctrine\ORM\QueryBuilder
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineAllNamesQuery()
+    {
+        return $this->createQueryBuilder();
+    }
+
+    /**
+     * Define query builder for findAllByNames()
+     *
+     * @param array $ids Module ids
+     *
+     * @return \Doctrine\ORM\QueryBuilder
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineAllByModuleIdsQuery(array $ids)
+    {
+        $qb = $this->createQueryBuilder();
+
+        $ids = \XLite\Core\Database::buildInCondition($qb, $ids, 'module_id');
+
+        return $qb->andWhere('m.module_id IN (' . implode(', ', $ids) . ')');
+    }
+
+    /**
+     * Postprocess all modules names list
+     * 
+     * @param array $data Initial data
+     *  
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function postprocessAllNames(array $data)
+    {
+        $result = array();
+
+        foreach ($data as $module) {
+            $result[] = $module->getName();
+        }
+
+        return array_unique($result);
+    }
+
+    /**
+     * Define query builder for findAllEnabled()
+     *
+     * @param boolean $enabled Enabled flag
+     *
+     * @return \Doctrine\ORM\QueryBuilder
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineAllEnabledQuery($enabled)
+    {
+        return $this->createQueryBuilder()
+            ->andWhere('m.enabled = :enabled')
+            ->setParameter('enabled', $enabled);
+    }
+
+    /**
+     * Define query builder for findAllByNames()
+     *
+     * @param array $names Modules names
+     *
+     * @return \Doctrine\ORM\QueryBuilder
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineAllByNamesQuery(array $names)
+    {
+        $qb = $this->createQueryBuilder();
+
+        $ids = \XLite\Core\Database::buildInCondition($qb, $names, 'name');
+
+        return $qb->andWhere('m.name IN (' . implode(', ', $ids) . ')');
     }
 
     /**

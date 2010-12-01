@@ -131,6 +131,7 @@ class Module extends \XLite\Model\AEntity
      */
     protected $mainClass = null; 
 
+
     /**
      * Set enabled status
      * 
@@ -152,70 +153,6 @@ class Module extends \XLite\Model\AEntity
 
         return $result;
     }
-
-    /**
-     * Get inverted dependencies
-     *
-     * @return array
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getDependedModuleIds()
-    {
-        $dependencies = array();
-
-        foreach ($this->getRepository()->getActiveModules() as $m) {
-
-            $tmp = $m->getDependencies();
-            if (
-                !empty($tmp)
-                && in_array($this->getName(), $tmp)
-            ) {
-                $dependencies[] = $m->getModuleId();
-                $dependencies = array_merge($dependencies, $m->getDependedModuleIds());
-            }
-        }
-
-        return array_unique($dependencies);
-    }
-
-    /**
-     * Get module Main class name 
-     * 
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getMainClassName()
-    {
-        return '\XLite\Module\\' . $this->getName() . '\Main';
-    }
-
-    /**
-     * Include module Main class 
-     * 
-     * @return boolean
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function includeMainClass()
-    {
-        $class = $this->getMainClassName();
-
-        if (
-            !\XLite\Core\Operator::isClassExists($class)
-            && file_exists(LC_CLASSES_DIR . str_replace('\\', LC_DS, $class) . '.php')
-        ) {
-            include_once LC_CLASSES_DIR . str_replace('\\', LC_DS, $class) . '.php';
-        }
-
-        return \XLite\Core\Operator::isClassExists($class);
-    }
-
-
 
     /**
      * Get translated dependencies
@@ -521,20 +458,6 @@ class Module extends \XLite\Model\AEntity
     }
 
     /**
-     * FIXME - this method is required for Decorator
-     * TODO - find a more convinient way to avoid the fatal error
-     *
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
      * Check if newer version exists
      * TODO: to be revised, last version will be stored in the remote model
      * 
@@ -546,6 +469,69 @@ class Module extends \XLite\Model\AEntity
     public function isUpdateAvailable()
     {
         return -1 === version_compare($this->getVersion(), $this->last_version);
+    }
+
+
+    /**
+     * Get inverted dependencies
+     *
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getDependedModuleIds()
+    {
+        $dependencies = array();
+
+        foreach ($this->getRepository()->getActiveModules() as $m) {
+
+            $tmp = $m->getDependencies();
+            if (
+                !empty($tmp)
+                && in_array($this->getName(), $tmp)
+            ) {
+                $dependencies[] = $m->getModuleId();
+                $dependencies = array_merge($dependencies, $m->getDependedModuleIds());
+            }
+        }
+
+        return array_unique($dependencies);
+    }
+
+    /**
+     * Get module Main class name 
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getMainClassName()
+    {
+        return '\XLite\Module\\' . $this->getName() . '\Main';
+    }
+
+    /**
+     * Include module Main class 
+     * 
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function includeMainClass()
+    {
+        $class = $this->getMainClassName();
+
+        if (
+            !\XLite\Core\Operator::isClassExists($class)
+            && file_exists(LC_CLASSES_DIR . str_replace('\\', LC_DS, $class) . '.php')
+        ) {
+            include_once LC_CLASSES_DIR . str_replace('\\', LC_DS, $class) . '.php';
+        }
+
+        return \XLite\Core\Operator::isClassExists($class);
     }
 
 }
