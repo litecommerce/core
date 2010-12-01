@@ -125,7 +125,7 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
             'rnd_tester@cdev.ru'
         );
         $this->waitInlineProgress('#create_profile_email', 'duplicate email');
-        $this->assertInputErrorPresent('#create_profile_email');
+        $this->assertInputErrorPresent('#create_profile_email', 'check duplicate email error');
         $this->assertJqueryPresent('p.username-verified:visible');
 
         // Duplicate username
@@ -589,8 +589,8 @@ class XLite_Web_Customer_Checkout extends XLite_Web_Customer_ACustomer
 
         $this->typeKeys('//input[@id="create_profile_email"]', $username . '@cdev.ru');
 
-        $this->waitInlineProgress('#create_profile_email', 'email');
-        $this->assertInputErrorNotPresent('#create_profile_email');
+        $this->waitInlineProgress('#create_profile_email', 'email inline progress');
+        $this->assertInputErrorNotPresent('#create_profile_email', 'email has not inline error');
 
         $this->toggleByJquery('#create_profile_chk', true);
         $this->waitForCondition(
