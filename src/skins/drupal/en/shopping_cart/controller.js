@@ -72,7 +72,7 @@ CartView.prototype.postprocess = function(isSuccess, initial)
     var o = this;
 
     // Remove item
-    $('.selected-product form input.remove', this.base).parents('form').eq(0)
+    $('.selected-product form input.remove', this.base).parents('form')
       .commonController(
         'enableBackgroundSubmit', 
         function() {
