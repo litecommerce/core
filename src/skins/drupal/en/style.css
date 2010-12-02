@@ -750,10 +750,6 @@ A.GoLink: active {
   background-image: url('images/btn2_bg.gif');
 }
 
-.SearchBoxBG {
-  background-image: url('images/searchbox_bg.gif');
-}
-
 .SidebarBoxLeftBG {
   background-image: url('images/menu_2.gif');
   background-repeat: no-repeat;

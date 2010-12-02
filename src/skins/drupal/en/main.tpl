@@ -127,10 +127,6 @@
 
 <!-- [left] -->
 
-<!-- [search] -->
-<widget template="search_products.tpl" />
-<!-- [/search] -->
-
 <widget class="\XLite\View\TopCategories" />
 {*
 <widget module="Bestsellers" class="\XLite\Module\Bestsellers\View\Bestsellers" widgetType="sidebar" />
