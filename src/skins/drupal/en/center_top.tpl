@@ -60,10 +60,4 @@
 <widget module="ProductAdviser" template="modules/ProductAdviser/center_top.tpl">
 <!-- [/modules] }}} -->
 
-<!-- [search] {{{ -->
-{*
-<widget class="\XLite\View\SearchResult" />
-*}
-<!-- [/search] }}} -->
-
 {displayViewListContent(#center#)}

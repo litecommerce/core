@@ -11,10 +11,28 @@
  * @since     3.0.0
  */
 
-.simple-search-product-form input.form-text {
-  background: transparent url(img/search.png) no-repeat scroll 217px 3px;
-  float: right;
-  font-size: 12px;
+.simple-search-box {
+  border: solid 1px #dfdfdf;
+  height: 24px;
   width: 232px;
+  clear: both;
+  -moz-border-radius: 3px;
 }
 
+.simple-search-box input.form-text {
+  float: left;
+  font-size: 12px;
+  width: 200px;
+  border: none;
+  margin: 2px;
+}
+
+.simple-search-box button.submit-button {
+  background: transparent url(img/search.png) no-repeat;
+  border: none;
+  float: right;
+  padding: 0px;
+  margin: 3px 3px 0px 0px;
+  width: 18px;
+  height: 17px;
+}

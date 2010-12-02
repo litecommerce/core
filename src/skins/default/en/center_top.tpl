@@ -67,12 +67,7 @@
 <widget module="GiftCertificates" class="\XLite\Module\GiftCertificates\View\Ecards" />
 <widget module="GiftCertificates" class="\XLite\Module\GiftCertificates\View\CheckGiftCertificate" />
 <widget module="GiftCertificates" target="gift_certificate_info" template="common/dialog.tpl" body="modules/GiftCertificates/gift_certificate_info.tpl" head="Gift certificate">
-<widget module="AdvancedSearch" class="\XLite\Module\AdvancedSearch\View\AdvancedSearchCenter" />
 <widget module="WishList" target="wishlist,product" mode="MessageSent" template="common/dialog.tpl" body="modules/WishList/message.tpl" head="Message has been sent">
 <widget module="WishList" target="wishlist" head="Wish List" template="common/dialog.tpl" body="modules/WishList/wishlist.tpl">
 <widget module="ProductAdviser" template="modules/ProductAdviser/center_top.tpl" />
 <!-- [/modules] }}} -->
-
-<!-- [search] {{{ -->
-<widget class="\XLite\View\SearchResult" />
-<!-- [/search] }}} -->
