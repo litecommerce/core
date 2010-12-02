@@ -138,8 +138,11 @@ class OrderSearch extends \XLite\View\Dialog
             $this->cnd->status = $this->conditions['status'];
         }   
 
-        if ($this->conditions['startDate'] < $this->conditions['endDate']) {
-            $cnd->date = array($this->conditions['startDate'], $this->conditions['endDate']);
+        $start = isset($this->conditions['startDate']) ? $this->conditions['startDate'] : 0;
+        $end   = isset($this->conditions['endDate']) ? $this->conditions['endDate'] : 0;
+
+        if ($start < $end) {
+            $cnd->date = array($start, $end);
         }
 
         return $cnd;
