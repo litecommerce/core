@@ -59,6 +59,7 @@ function ListView(base)
 
   this.widgetClass  = core.getCommentedData(base, 'widget_class');
   this.widgetTarget = core.getCommentedData(base, 'widget_target');
+  this.widgetParams = core.getCommentedData(base, 'widget_params');
 }
  
 extend(ListView, ALoadable);

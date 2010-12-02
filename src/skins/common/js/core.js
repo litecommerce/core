@@ -387,19 +387,29 @@ window.core = {
   },
 
   // Return value of variable that is given in comment block: e.g. <!-- 'productid': '100001', 'var': 'value', -->"
-  getCommentedData: function(obj, prefix)
+  getCommentedData: function(obj, name)
   {
     var children = $(obj).get(0).childNodes;
-    var re = new RegExp(prefix + '-([^;]+)(;|$)');
+    var re = /DATACELL/;
     var m = false;
     
     for (var i = 0; i < children.length && !m; i++) {
       if (8 === children[i].nodeType && -1 != children[i].data.search(re)) {
-        m = children[i].data.match(re);
+        m = children[i].data.replace(re, '');
+        m = m.replace(/^\n\r/, '').replace(/\r\n$/, '');
+        try {
+          m = eval('(' + m + ')');
+        } catch(e) {
+          m = false;
+        }
       }
     }
 
-    return m ? m[1] : null;
+    if (m && name) {
+      m = 'undefined' == typeof(m[name]) ? null : m[name];
+    }
+
+    return m ? m : null;
   },
 
   // Toggle link text and toggle obj visibility

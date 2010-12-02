@@ -22,6 +22,10 @@ $(document).ready(
 
     URLHandler.getMainParamValue = function(name, params)
     {
+      if ('action' == name && ('undefined' == typeof(params[name]) || !params[name])) {
+        params[name] = '0';
+      }
+
       return 'undefined' == typeof(params[name]) ? '' : params[name];
     }
 
