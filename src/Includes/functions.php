@@ -898,7 +898,7 @@ function isLiteCommerceInstalled($dbUrl = null)
             }
         }
     }
-    
+
     return $checkResult;
 }
 
