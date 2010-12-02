@@ -35,7 +35,7 @@ DROP TABLE IF EXISTS xlite_banners;
 CREATE TABLE xlite_banners (
         banner_id int(11) NOT NULL auto_increment,
         name varchar(255) NOT NULL default '',
-        banner mediumblob NOT NULL,
+        banner text NOT NULL,
         banner_source char(1) NOT NULL default 'D',
         banner_type varchar(32) NOT NULL default 'image/jpeg',
         type varchar(32) NOT NULL default 'image',

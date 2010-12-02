@@ -41,8 +41,8 @@ CREATE TABLE xlite_products_also_buy (
 DROP TABLE IF EXISTS xlite_customers_notifications;
 CREATE TABLE xlite_customers_notifications (
 	notify_id int(11) NOT NULL auto_increment,
-	type enum('product','price') default NULL,
-	status enum('Q','U','S','D') NOT NULL default 'Q',
+	type varchar(8) default NULL,
+	status char(1) NOT NULL default 'Q',
 	notify_key TEXT NOT NULL,
 	date int(11) default '0',
 	profile_id int(11) NOT NULL default '0',
