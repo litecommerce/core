@@ -109,7 +109,20 @@ class Order extends \XLite\Controller\Customer\ACustomer
      */
     public function checkAccess()
     {
-        return parent::checkAccess() && $this->getOrder() && $this->checkOrderAccess();
+        return parent::checkAccess() && $this->checkOrderAccess();
+    }
+
+    /**
+     * Check controller visibility
+     *
+     * @return boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function isVisible()
+    {
+        return !is_null($this->getOrder());
     }
 
     /**
@@ -122,13 +135,16 @@ class Order extends \XLite\Controller\Customer\ACustomer
      */
     protected function checkOrderAccess()
     {
+        $access = false;
         $auth = \XLite\Core\Auth::getInstance();
+        if ($auth->isLogged()) {
+            // Not valid order is processed in isValid() method
+            $access = !$this->getOrder()
+                || $auth->getProfile()->getProfileId() == $this->getOrder()->getOrigProfileId();
+        }
 
-        return $this->session->last_order_id == \XLite\Core\Request::getInstance()->order_id
-            || (
-                $auth->isLogged()
-                && $auth->getProfile()->getProfileId() == $this->getOrder()->getOrigProfileId()
-            );
+        return \XLite\Core\Session::getInstance()->last_order_id == \XLite\Core\Request::getInstance()->order_id
+            || $access;
     }
 
     /**
