@@ -14,11 +14,10 @@
 div.location-node {
   display: inline;
   position: relative;
-  padding-bottom: 2em;
 }
 
 div.location-node:hover ul.location-subnodes {
-  visibility: visible;
+  display: inline;
 }
 
 div.location-node.expandable {
@@ -28,13 +27,12 @@ div.location-node.expandable {
 
 ul.location-subnodes {
   position: absolute;
-  margin-top: 1.8em;
-  margin-left: -1.2em;
+  top: 15px;
+  right: 0px;
   list-style-type: none;
   background-color: #fff;
   z-index: 10000;
-  display: inline;
-  visibility: hidden;
+  display: none;
 }
 
 ul.location-subnodes li {
