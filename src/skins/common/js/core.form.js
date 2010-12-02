@@ -742,8 +742,11 @@ CommonElement.prototype.linkWithCountry = function()
         // As select box
         var previousSelected = null;
         if (isElement(this.stateInput, 'select')) {
-          previousSelected = this.stateInput.options[this.stateInput.selectedIndex].value;
-          $('option', this.stateInput).remove();
+
+          if (this.stateInput.selectedIndex > 1) {
+            previousSelected = this.stateInput.options[this.stateInput.selectedIndex].value;
+            $('option', this.stateInput).remove();
+          }
 
         } else {
           o.lastStateText = this.stateInput.value;
