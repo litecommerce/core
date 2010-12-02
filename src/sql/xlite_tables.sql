@@ -66,7 +66,7 @@ CREATE TABLE xlite_config (
   config_id int NOT NULL auto_increment,
   name varchar(32) NOT NULL default '',
   category varchar(32) NOT NULL default '',
-  type enum('','text','textarea','checkbox','country','state','select','serialized','separator') default NULL,
+  type varchar(16) default NULL,
   orderby int(11) NOT NULL default '0',
   value text NOT NULL,
   PRIMARY KEY  (config_id),
@@ -176,7 +176,7 @@ DROP TABLE IF EXISTS xlite_order_items;
 CREATE TABLE xlite_order_items (
   item_id int(11) NOT NULL auto_increment PRIMARY KEY,
   order_id int(11) NOT NULL default '0',
-  object_id int(11) NOT NULL default '0',
+  object_id int(11) unsigned NOT NULL default '0',
   object_type varchar(16) NOT NULL default 'product',
   name varchar(255) NOT NULL,
   sku varchar(255) NOT NULL default '',
@@ -641,7 +641,7 @@ DROP TABLE IF EXISTS xlite_language_labels;
 CREATE TABLE xlite_language_labels (
   label_id int(11) NOT NULL auto_increment PRIMARY KEY,
   name varchar(255) NOT NULL default '',
-  KEY name (name)
+  UNIQUE KEY name (name)
 ) ENGINE InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
 
 DROP TABLE IF EXISTS xlite_language_label_translations;

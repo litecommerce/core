@@ -32,13 +32,13 @@ CREATE TABLE xlite_giftcerts (
 DROP TABLE IF EXISTS xlite_ecards;
 CREATE TABLE xlite_ecards (
     ecard_id int not null primary key auto_increment,
-    thumbnail mediumblob,
+    thumbnail text,
     thumbnail_source char(1) NOT NULL default 'D',
     thumbnail_type varchar(32) NOT NULL default '',
     thumbnail_width int(11) NOT NULL default 0,
     thumbnail_height int(11) NOT NULL default 0,
     thumbnail_size int(11) NOT NULL default 0,
-    image mediumblob,
+    image text,
     image_source char(1) NOT NULL default 'D',
     image_type varchar(32) NOT NULL default '',
     image_width int(11) NOT NULL default 0,
