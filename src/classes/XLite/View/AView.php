@@ -1552,18 +1552,7 @@ abstract class AView extends \XLite\Core\Handler
      */
     public function displayCommentedData(array $data)
     {
-        echo ('<!--' . "\r\n");
-
-        $result = array();
-
-        foreach ($data as $key => $value) {
-
-            $result[] = $key . '-' . $value . ';';
-
-        }
-
-        echo (implode("\r\n", $result));
-        echo ("\r\n" . '-->' . "\r\n");
+        echo ('<!--' . "\r\n" . 'DATACELL' . "\r\n" . json_encode($data) . "\r\n" . '-->' . "\r\n");
     }
 }
 

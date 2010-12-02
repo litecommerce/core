@@ -54,6 +54,9 @@ ALoadable.prototype.updatePageTitle = false;
 // Widget target
 ALoadable.prototype.widgetTarget = null;
 
+// Widget parameters
+ALoadable.prototype.widgetParams = null;
+
 // Widget class name
 ALoadable.prototype.widgetClass = null;
 
@@ -122,8 +125,15 @@ ALoadable.prototype.getParams = function(params)
 {
   params = params ? params : {};
 
+  // Set widget target and parameters
   if ('undefined' == typeof(params.target) && this.widgetTarget) {
     params.target = this.widgetTarget;
+  }
+
+  if (this.widgetParams) {
+    for (var i in this.widgetParams) {
+      params[i] = this.widgetParams[i];
+    }
   }
 
   // TODO remove if it will be no use!!

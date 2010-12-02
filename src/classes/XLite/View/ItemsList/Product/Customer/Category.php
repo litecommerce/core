@@ -200,4 +200,21 @@ class Category extends \XLite\View\ItemsList\Product\Customer\ACustomer
         return parent::getListCSSClasses() . ' category-products';
     }
 
+    /**
+     * Get widget parameters
+     *
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getWidgetParameters()
+    {
+        $list = parent::getWidgetParameters();
+
+        $list['category_id'] = \XLite\Core\Request::getInstance()->category_id;
+
+        return $list;
+    }
+
 }

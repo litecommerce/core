@@ -47,6 +47,7 @@ abstract class ARequestHandler extends \XLite\View\AView
      */
     const W_CLASS  = 'widget_class';
     const W_TARGET = 'widget_target';
+    const W_PARAMS = 'widget_params';
 
 
     /**
@@ -97,6 +98,19 @@ abstract class ARequestHandler extends \XLite\View\AView
     }
 
     /**
+     * Get widget parameters
+     *
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getWidgetParameters()
+    {
+        return array();
+    }
+
+    /**
      * Return data to send to JS
      * 
      * @return array
@@ -109,6 +123,7 @@ abstract class ARequestHandler extends \XLite\View\AView
         return array(
             self::W_CLASS  => $this->getWidgetClass(),
             self::W_TARGET => $this->getWidgetTarget(),
+            self::W_PARAMS => $this->getWidgetParameters(),
         );
     }
 
