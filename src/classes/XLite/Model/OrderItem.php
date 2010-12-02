@@ -38,8 +38,7 @@ namespace XLite\Model;
  * @Entity (repositoryClass="XLite\Model\Repo\OrderItem")
  * @Table  (name="order_items",
  *          indexes={
- *               @Index (name="orderby", columns={"orderby"}),
- *               @Index (name="product_id", columns={"product_id"}),
+ *               @Index (name="object_id", columns={"object_id"}),
  *               @Index (name="price", columns={"price"}),
  *               @Index (name="amount", columns={"amount"})
  *          }
