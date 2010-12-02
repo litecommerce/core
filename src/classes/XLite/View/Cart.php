@@ -89,7 +89,7 @@ class Cart extends \XLite\View\Dialog
      */
     public function getContinueURL()
     {
-        $url = $this->session->get('continueURL');
+        $url = \XLite\Core\Session::getInstance()->continueURL;
 
         if (!$url && isset($_SERVER['HTTP_REFERER'])) {
             $url = $_SERVER['HTTP_REFERER'];
