@@ -38,6 +38,16 @@ namespace XLite\Controller\Customer;
 class Product extends \XLite\Controller\Customer\Catalog
 {
     /**
+     * Controller parameters list
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $params = array('target', 'product_id');
+
+    /**
      * Common method to determine current location 
      * 
      * @return string

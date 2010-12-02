@@ -38,6 +38,16 @@ namespace XLite\Controller\Customer;
 class Main extends \XLite\Controller\Customer\Category
 {
     /**
+     * Controller parameters list
+     *
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $params = array('target');
+
+    /**
      * handleRequest 
      * 
      * @return void
