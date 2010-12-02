@@ -534,4 +534,18 @@ class Module extends \XLite\Model\AEntity
         return \XLite\Core\Operator::isClassExists($class);
     }
 
+    /**
+     * FIXME - this method is required for Decorator
+     * TODO - find a more convinient way to avoid the fatal error
+     *
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
 }
