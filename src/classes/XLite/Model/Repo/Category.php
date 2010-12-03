@@ -642,9 +642,10 @@ class Category extends \XLite\Model\Repo\Base\I18n
         $entity = parent::insert($data);
 
         // Create new record for the QuickFlags model
-        \XLite\Core\Database::getRepo('\XLite\Model\Category\QuickFlags')->insert(
-            array('category_id' => $entity->getCategoryId())
-        );
+        $quickFlags = new \XLite\Model\Category\QuickFlags();
+        $quickFlags->setCategory($entity);
+        $entity->setQuickFlags($quickFlags);
+        \XLite\Core\Database::getEM()->persist($quickFlags);
 
         return $entity;
     }

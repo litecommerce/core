@@ -40,4 +40,17 @@ namespace XLite\Model\Image\Category;
  */
 class Image extends \XLite\Model\Base\Image
 {
+    /**
+     * Relation to a product entity
+     *
+     * @var    \XLite\Model\Category
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     *
+     * @OneToOne  (targetEntity="XLite\Model\Category", inversedBy="image")
+     * @JoinColumn (name="id", referencedColumnName="category_id")
+     */
+    protected $category;
+
 }

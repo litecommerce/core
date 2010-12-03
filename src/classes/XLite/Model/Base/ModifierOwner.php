@@ -55,7 +55,7 @@ abstract class ModifierOwner extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @Column (type="decimal", precision="4", scale="12")
+     * @Column (type="decimal", precision="14", scale="4")
      */
     protected $total = 0.0000;
 
@@ -66,7 +66,7 @@ abstract class ModifierOwner extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @Column (type="decimal", precision="4", scale="12")
+     * @Column (type="decimal", precision="14", scale="4")
      */
     protected $subtotal = 0.0000;
 

@@ -65,7 +65,7 @@ class Image extends \XLite\Model\Base\Image
     /**
      * Relation to a product entity
      *
-     * @var    \XLite\Model\Order
+     * @var    \XLite\Model\Product
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0

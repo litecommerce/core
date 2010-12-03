@@ -148,8 +148,7 @@ class Category extends \XLite\Model\Base\I18n
      * @see    ____var_see____
      * @since  3.0.0
      * 
-     * @OneToOne   (targetEntity="XLite\Model\Category\QuickFlags", cascade={"all"})
-     * @JoinColumn (name="category_id", referencedColumnName="category_id")
+     * @OneToOne   (targetEntity="XLite\Model\Category\QuickFlags", mappedBy="category", cascade={"all"})
      */
     protected $quickFlags;
 
@@ -174,8 +173,7 @@ class Category extends \XLite\Model\Base\I18n
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @ManyToOne  (targetEntity="XLite\Model\Image\Category\Image", cascade={"all"})
-     * @JoinColumn (name="category_id", referencedColumnName="id")
+     * @OneToOne  (targetEntity="XLite\Model\Image\Category\Image", mappedBy="category", cascade={"all"})
      */
     protected $image;
 

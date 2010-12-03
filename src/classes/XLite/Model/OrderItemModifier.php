@@ -126,7 +126,7 @@ class OrderItemModifier extends \XLite\Model\AEntity
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @Column (type="decimal", precision="4", scale="12")
+     * @Column (type="decimal", precision="14", scale="4")
      */
     protected $surcharge = 0.0000;
 

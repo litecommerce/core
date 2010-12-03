@@ -82,7 +82,7 @@ class Markup extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @Column (type="decimal", precision="2", scale="12")
+     * @Column (type="decimal", precision="14", scale="4")
      */
     protected $min_weight = 0;
 
@@ -93,7 +93,7 @@ class Markup extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @Column (type="decimal", precision="2", scale="12")
+     * @Column (type="decimal", precision="14", scale="4")
      */
     protected $max_weight = 999999999;
 
@@ -104,7 +104,7 @@ class Markup extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @Column (type="decimal", precision="2", scale="12")
+     * @Column (type="decimal", precision="14", scale="4")
      */
     protected $min_total = 0;
 
@@ -115,7 +115,7 @@ class Markup extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @Column (type="decimal", precision="2", scale="12")
+     * @Column (type="decimal", precision="14", scale="4")
      */
     protected $max_total = 999999999;
 
@@ -126,7 +126,7 @@ class Markup extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @Column (type="decimal", precision="2", scale="12")
+     * @Column (type="decimal", precision="14", scale="4")
      */
     protected $min_items = 0;
 
@@ -137,7 +137,7 @@ class Markup extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @Column (type="decimal", precision="2", scale="12")
+     * @Column (type="decimal", precision="14", scale="4")
      */
     protected $max_items = 999999999;
 
@@ -148,7 +148,7 @@ class Markup extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @Column (type="decimal", precision="4", scale="12")
+     * @Column (type="decimal", precision="14", scale="4")
      */
     protected $markup_flat = 0;
 
@@ -159,7 +159,7 @@ class Markup extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @Column (type="decimal", precision="2", scale="12")
+     * @Column (type="decimal", precision="4", scale="2")
      */
     protected $markup_percent = 0;
 
@@ -170,7 +170,7 @@ class Markup extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @Column (type="decimal", precision="4", scale="12")
+     * @Column (type="decimal", precision="14", scale="4")
      */
     protected $markup_per_item = 0;
 
@@ -181,7 +181,7 @@ class Markup extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @Column (type="decimal", precision="4", scale="12")
+     * @Column (type="decimal", precision="14", scale="4")
      */
     protected $markup_per_weight = 0;
 
