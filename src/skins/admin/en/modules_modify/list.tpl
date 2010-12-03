@@ -40,6 +40,7 @@
       </td>
       <td width="40%">
         <div class="name">{module.getModuleName()}</div>
+        <div class="author">{t(#Author#)}: {module.getAuthorName()}</div>
         <div class="version">{t(#Version#)}: {module.getVersion()}</div>
         <div class="actions">
           {if:module.getEnabled()}

@@ -130,7 +130,7 @@
 <tr>
     <td colspan="2">&nbsp;</td>
 </tr>
-<widget module=WholesaleTrading template="modules/WholesaleTrading/wholesaler_details.tpl" profile={profile}>
+<widget module="CDev\WholesaleTrading" template="modules/CDev/WholesaleTrading/wholesaler_details.tpl" profile={profile}>
 </tbody>
 
 </table>

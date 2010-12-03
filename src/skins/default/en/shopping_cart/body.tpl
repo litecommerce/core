@@ -19,7 +19,7 @@
       <widget template="shopping_cart/item.tpl" />
 
       {* TODO: add method to replace the the "shopping_cart/item.tpl" template *}
-      {* <widget module="GiftCertificates" template="modules/GiftCertificates/item.tpl" IF="item.gcid" />*}
+      {* <widget module="CDev\GiftCertificates" template="modules/CDev/GiftCertificates/item.tpl" IF="item.gcid" />*}
   </div>
   <img src="images/spacer.gif" class="DialogBorder" width="100%" height="1" alt="" />
 
@@ -38,8 +38,8 @@
   <img src="images/spacer.gif" class="DialogBorder" width="100%" height="1" alt="" />
 
   <widget template="shopping_cart/buttons.tpl">
-  <widget module="GoogleCheckout" template="modules/GoogleCheckout/shopping_cart/gcheckout_notes.tpl">
+  <widget module="CDev\GoogleCheckout" template="modules/CDev/GoogleCheckout/shopping_cart/gcheckout_notes.tpl">
 
 <widget name="cart_form" end />
 
-<widget module="ProductAdviser" template="modules/ProductAdviser/OutOfStock/notify_form.tpl" IF="{xlite.PA_InventorySupport}">
+<widget module="CDev\ProductAdviser" template="modules/CDev/ProductAdviser/OutOfStock/notify_form.tpl" IF="{xlite.PA_InventorySupport}">

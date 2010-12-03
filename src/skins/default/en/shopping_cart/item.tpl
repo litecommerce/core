@@ -25,7 +25,7 @@
 		  {truncate(item.brief_description,#300#):h}<br />
       <br />
         
-      <widget module="ProductOptions" class="\XLite\Module\ProductOptions\View\SelectedOptions" item="{item}" item_id="{cart_id}" />
+      <widget module="CDev\ProductOptions" class="\XLite\Module\CDev\ProductOptions\View\SelectedOptions" item="{item}" item_id="{cart_id}" />
       <br />	
 		  <span IF="{item.weight}">
 		    Weight: {item.weight} {config.General.weight_symbol}<br />
@@ -41,7 +41,7 @@
       <font class="ProductPriceConverting">&nbsp;=&nbsp;</font>
       <font class="ProductPrice">{price_format(item,#total#):h}</font>
 
-      <widget module="ProductAdviser" template="modules/ProductAdviser/OutOfStock/cart_item.tpl" IF="{xlite.PA_InventorySupport}">
+      <widget module="CDev\ProductAdviser" template="modules/CDev/ProductAdviser/OutOfStock/cart_item.tpl" IF="{xlite.PA_InventorySupport}">
       <br />
       <br />
 
@@ -53,7 +53,7 @@
         </tr>
       </table>
 
-		  <widget module="GoogleCheckout" template="modules/GoogleCheckout/shopping_cart/item.tpl">
+		  <widget module="CDev\GoogleCheckout" template="modules/CDev/GoogleCheckout/shopping_cart/item.tpl">
 
       <span IF="!item.valid">
         <font class="ProductPriceSmall"><br />(!) This product is out of stock or it has been disabled for sale.</font>

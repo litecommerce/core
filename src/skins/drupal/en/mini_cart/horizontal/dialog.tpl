@@ -54,5 +54,5 @@
 </div>
 
 <div IF="xlite.WishListEnabled">
-  <widget module="WishList" template="modules/WishList/mini_cart/body.tpl">
+  <widget module="CDev\WishList" template="modules/CDev/WishList/mini_cart/body.tpl">
 </div>

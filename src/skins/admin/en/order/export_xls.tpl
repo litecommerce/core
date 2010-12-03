@@ -137,7 +137,7 @@
    <Column ss:AutoFitWidth="0" ss:Width="93.75"/>
    <Column ss:AutoFitWidth="0" ss:Width="54.75"/>
    <Column ss:AutoFitWidth="0" ss:Width="144"/>
-<widget module="ProductOptions" template="modules/ProductOptions/order_export_xls/layout.tpl">
+<widget module="CDev\ProductOptions" template="modules/CDev/ProductOptions/order_export_xls/layout.tpl">
    <Row>
     <Cell><Data ss:Type="String">Order id:</Data></Cell>
     <Cell><Data ss:Type="Number">{order.order_id:h}</Data></Cell>
@@ -222,7 +222,7 @@
    <Row ss:StyleID="s28">
     <Cell ss:Index="2"><Data ss:Type="String">SKU</Data></Cell>
     <Cell><Data ss:Type="String">Product</Data></Cell>
-<widget module="ProductOptions" template="modules/ProductOptions/order_export_xls/options_header.tpl">
+<widget module="CDev\ProductOptions" template="modules/CDev/ProductOptions/order_export_xls/options_header.tpl">
     <Cell><Data ss:Type="String">Quantity</Data></Cell>
     <Cell><Data ss:Type="String">Price</Data></Cell>
     <Cell><Data ss:Type="String">Total</Data></Cell>
@@ -230,7 +230,7 @@
    <Row ss:AutoFitHeight="0" ss:Height="12" FOREACH="order.items,item">
     <Cell ss:Index="2"><Data ss:Type="String">{item.sku:t}</Data></Cell>
     <Cell><Data ss:Type="String">{item.name:t}</Data></Cell>
-<widget module="ProductOptions" template="modules/ProductOptions/order_export_xls/options.tpl">
+<widget module="CDev\ProductOptions" template="modules/CDev/ProductOptions/order_export_xls/options.tpl">
     <Cell><Data ss:Type="Number">{item.amount}</Data></Cell>
     <Cell ss:StyleID="s32"><Data ss:Type="Number">{item.price}</Data></Cell>
     <Cell ss:StyleID="s32"><Data ss:Type="Number">{item.total}</Data></Cell>
@@ -247,17 +247,17 @@
     <Cell><Data ss:Type="String">Subtotal:</Data></Cell>
     <Cell ss:StyleID="s32"><Data ss:Type="Number">{order.subtotal}</Data></Cell>
    </Row>
-<widget module="Promotion" template="modules/Promotion/export_xls_discount.tpl">
+<widget module="CDev\Promotion" template="modules/CDev/Promotion/export_xls_discount.tpl">
    <Row>
     <Cell><Data ss:Type="String">Shipping cost:</Data></Cell>
     <Cell ss:StyleID="s32"><Data ss:Type="Number">{order.shipping_cost}</Data></Cell>
    </Row>
-<widget module="Promotion" template="modules/Promotion/export_xls.tpl">
+<widget module="CDev\Promotion" template="modules/CDev/Promotion/export_xls.tpl">
    <Row FOREACH="order.getDisplayTaxes(),tax_name,tax">
     <Cell><Data ss:Type="String">{order.getTaxLabel(tax_name):t}:</Data></Cell>
     <Cell ss:StyleID="s32"><Data ss:Type="Number">{tax}</Data></Cell>
    </Row>
-<widget module="GiftCertificates" template="modules/GiftCertificates/export_xls.tpl">
+<widget module="CDev\GiftCertificates" template="modules/CDev/GiftCertificates/export_xls.tpl">
    <Row>
     <Cell><Data ss:Type="String">Total:</Data></Cell>
     <Cell ss:StyleID="s32"><Data ss:Type="Number">{order.total}</Data></Cell>

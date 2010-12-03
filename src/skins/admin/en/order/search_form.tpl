@@ -36,7 +36,7 @@
         </td>
       </tr>
 
-      <widget module="AntiFraud" template="modules/AntiFraud/orders/search_form.tpl" />
+      <widget module="CDev\AntiFraud" template="modules/CDev/AntiFraud/orders/search_form.tpl" />
 
       <tr>
         <td class="FormButton" nowrap="nowrap" height="10">Order date from:</td>

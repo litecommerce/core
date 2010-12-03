@@ -55,16 +55,16 @@
 <widget template="checkout/credit_card.tpl" IF="{cart.paymentMethod.formTemplate=#checkout/credit_card.tpl#}">
 <widget template="checkout/echeck.tpl" IF="{cart.paymentMethod.formTemplate=#checkout/echeck.tpl#}">
 <widget template="checkout/offline.tpl" IF="{cart.paymentMethod.formTemplate=#checkout/offline.tpl#}">
-<widget module="ePDQ" template="modules/ePDQ/checkout.tpl" IF="{cart.paymentMethod.formTemplate=#modules/ePDQ/checkout.tpl#}">
-<widget module="WorldPay" template="modules/WorldPay/checkout.tpl" IF="{cart.paymentMethod.formTemplate=#modules/WorldPay/checkout.tpl#}">
-<widget module="GiftCertificates" template="modules/GiftCertificates/checkout.tpl" IF="{cart.paymentMethod.formTemplate=#modules/GiftCertificates/checkout.tpl#}">
-<widget module="Promotion" template="modules/Promotion/checkout.tpl" IF="{cart.paymentMethod.formTemplate=#modules/Promotion/checkout.tpl#}">
-<widget module="TwoCheckoutCom" template="modules/TwoCheckoutCom/checkout.tpl" IF="{cart.paymentMethod.formTemplate=#modules/TwoCheckoutCom/checkout.tpl#}">
-<widget module="Nochex" template="modules/Nochex/checkout.tpl" IF="{cart.paymentMethod.formTemplate=#modules/Nochex/checkout.tpl#}">
-<widget module="PayPalPro" template="modules/PayPalPro/standard_checkout.tpl" IF="{cart.paymentMethod.params.solution=#standard#}">
-<widget module="PayPalPro" template="modules/PayPalPro/express_checkout.tpl" IF="{cart.paymentMethod.payment_method=#paypalpro_express#}">
-<widget module="SecureTrading" template="modules/SecureTrading/checkout.tpl" IF="{cart.paymentMethod.formTemplate=#modules/SecureTrading/checkout.tpl#}">
-<widget module="ChronoPay" template="modules/ChronoPay/checkout.tpl" IF="{cart.paymentMethod.formTemplate=#modules/ChronoPay/checkout.tpl#}">
-<widget module="PayFlowLink" template="modules/PayFlowLink/checkout.tpl" IF="{cart.paymentMethod.formTemplate=#modules/PayFlowLink/checkout.tpl#}">
-<widget module="GoogleCheckout" template="modules/GoogleCheckout/google_checkout.tpl" IF="{cart.paymentMethod.payment_method=#google_checkout#}">
+<widget module="CDev\ePDQ" template="modules/CDev/ePDQ/checkout.tpl" IF="{cart.paymentMethod.formTemplate=#modules/ePDQ/checkout.tpl#}">
+<widget module="CDev\WorldPay" template="modules/CDev/WorldPay/checkout.tpl" IF="{cart.paymentMethod.formTemplate=#modules/WorldPay/checkout.tpl#}">
+<widget module="CDev\GiftCertificates" template="modules/CDev/GiftCertificates/checkout.tpl" IF="{cart.paymentMethod.formTemplate=#modules/GiftCertificates/checkout.tpl#}">
+<widget module="CDev\Promotion" template="modules/CDev/Promotion/checkout.tpl" IF="{cart.paymentMethod.formTemplate=#modules/Promotion/checkout.tpl#}">
+<widget module="CDev\TwoCheckoutCom" template="modules/CDev/TwoCheckoutCom/checkout.tpl" IF="{cart.paymentMethod.formTemplate=#modules/TwoCheckoutCom/checkout.tpl#}">
+<widget module="CDev\Nochex" template="modules/CDev/Nochex/checkout.tpl" IF="{cart.paymentMethod.formTemplate=#modules/Nochex/checkout.tpl#}">
+<widget module="CDev\PayPalPro" template="modules/CDev/PayPalPro/standard_checkout.tpl" IF="{cart.paymentMethod.params.solution=#standard#}">
+<widget module="CDev\PayPalPro" template="modules/CDev/PayPalPro/express_checkout.tpl" IF="{cart.paymentMethod.payment_method=#paypalpro_express#}">
+<widget module="CDev\SecureTrading" template="modules/CDev/SecureTrading/checkout.tpl" IF="{cart.paymentMethod.formTemplate=#modules/SecureTrading/checkout.tpl#}">
+<widget module="CDev\ChronoPay" template="modules/CDev/ChronoPay/checkout.tpl" IF="{cart.paymentMethod.formTemplate=#modules/ChronoPay/checkout.tpl#}">
+<widget module="CDev\PayFlowLink" template="modules/CDev/PayFlowLink/checkout.tpl" IF="{cart.paymentMethod.formTemplate=#modules/PayFlowLink/checkout.tpl#}">
+<widget module="CDev\GoogleCheckout" template="modules/CDev/GoogleCheckout/google_checkout.tpl" IF="{cart.paymentMethod.payment_method=#google_checkout#}">
 <!-- PAYMENT METHOD FORM -->

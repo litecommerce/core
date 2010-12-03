@@ -97,7 +97,7 @@ CheckBoxes["{processor.getProcessorId()}"] = new Array();
     </tr>
 
     <tr IF="processor.getProcessorId()=#ups#">
-      <td align="right">&nbsp;<widget module="UPSOnlineTools" template="modules/UPSOnlineTools/settings_link.tpl" /></td>
+      <td align="right">&nbsp;<widget module="CDev\UPSOnlineTools" template="modules/CDev/UPSOnlineTools/settings_link.tpl" /></td>
     </tr>
 
     <tr>
@@ -130,7 +130,7 @@ CheckBoxes["{processor.getProcessorId()}"] = new Array();
             </td>
           </tr>
 
-          <widget module="UPSOnlineTools" template="modules/UPSOnlineTools/settings_disclaimer.tpl" IF="processor.getProcessorId()=#ups#"/>
+          <widget module="CDev\UPSOnlineTools" template="modules/CDev/UPSOnlineTools/settings_disclaimer.tpl" IF="processor.getProcessorId()=#ups#"/>
 
         </table>
 

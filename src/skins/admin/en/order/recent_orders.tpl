@@ -14,7 +14,7 @@
 <tr class="TableHead">
     <th valign="top" nowrap>Order #</th>
     <th valign="top" align=left>Status</th>
-    <widget module="AntiFraud" template="modules/AntiFraud/orders/label.tpl">
+    <widget module="CDev\AntiFraud" template="modules/CDev/AntiFraud/orders/label.tpl">
     <th valign="top" nowrap align=left>Date</th>
     <th valign="top" nowrap align=left>Customer</th>
     <th valign="top" align=center>Total</th>
@@ -23,7 +23,7 @@
 <tr FOREACH="recentOrders,order_idx,order" class="{getRowClass(order_idx,##,#TableRow#)}">
     <td>&nbsp;<a href="admin.php?target=order&order_id={order.order_id}" onClick="this.blur()"><u>{order.order_id}</u></a></td>
     <td><widget template="common/order_status.tpl"></td>
-	<widget module="AntiFraud" template="modules/AntiFraud/orders/factor.tpl">
+	<widget module="CDev\AntiFraud" template="modules/CDev/AntiFraud/orders/factor.tpl">
     <td nowrap><a href="admin.php?target=order&order_id={order.order_id}" onClick="this.blur()">{time_format(order.date)}</a></td>
     <td nowrap>
 		<table border=0 cellpadding=0 cellspacing=0 width=100%>

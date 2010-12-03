@@ -139,7 +139,7 @@ Mandatory fields are marked with an asterisk (<font class="Star">*</font>).
         <widget class="\XLite\View\MembershipSelect" field="pending_membership" value="{pending_membership}" />
         &nbsp;&nbsp;
         {if:xlite.WholesaleTradingEnabled}
-        <widget module="WholesaleTrading" template="modules/WholesaleTrading/profile_grant_membership.tpl" />
+        <widget module="CDev\WholesaleTrading" template="modules/CDev/WholesaleTrading/profile_grant_membership.tpl" />
         {else:}
         <a IF="mode=#modify#" href="javascript: grantMembership()"><img src="images/go.gif" width="13" height="13" border="0" align="absmiddle"> <font class="FormButton">Grant membership</font></a>
         {end:}
@@ -152,12 +152,12 @@ Mandatory fields are marked with an asterisk (<font class="Star">*</font>).
       <td valign=top><font class="Star">*</font></td>
       <td>
         <widget class="\XLite\View\MembershipSelect" field="membership" value="{membership}" />
-        <widget module="WholesaleTrading" template="modules/WholesaleTrading/membership_history/caption.tpl" membership_history="{membership_history}" />
+        <widget module="CDev\WholesaleTrading" template="modules/CDev/WholesaleTrading/membership_history/caption.tpl" membership_history="{membership_history}" />
       </td>
       <td></td>
     </tr>
 
-    <widget module="WholesaleTrading" template="modules/WholesaleTrading/memberships/profile_expiration.tpl" />
+    <widget module="CDev\WholesaleTrading" template="modules/CDev/WholesaleTrading/memberships/profile_expiration.tpl" />
 
     <tr valign="middle">
       <td align="right">Referred by</td>
@@ -440,11 +440,11 @@ Mandatory fields are marked with an asterisk (<font class="Star">*</font>).
 
       {*extraFields*}
 
-    <widget module="Affiliate" template="modules/Affiliate/partner_fields.tpl" name="partnerProfileForm" />
+    <widget module="CDev\Affiliate" template="modules/CDev/Affiliate/partner_fields.tpl" name="partnerProfileForm" />
 
-    <widget module="Promotion" template="modules/Promotion/bonus_points.tpl" />
+    <widget module="CDev\Promotion" template="modules/CDev/Promotion/bonus_points.tpl" />
 
-    <widget module="WholesaleTrading" template="modules/WholesaleTrading/profile_form.tpl" />
+    <widget module="CDev\WholesaleTrading" template="modules/CDev/WholesaleTrading/profile_form.tpl" />
 
   </table>
 
