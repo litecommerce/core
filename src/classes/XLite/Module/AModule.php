@@ -62,6 +62,19 @@ abstract class AModule
     }
 
     /**
+     * Return author full name
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0
+     */
+    public static function getAuthorName()
+    {
+        throw new \Exception('Full name is not specified for the ' . $this->getAuthor() . ' author class');
+    }
+
+    /**
      * Return module version
      * 
      * @return string

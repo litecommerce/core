@@ -1,0 +1,20 @@
+Version 2.5: 
+- [+] 05 Sep 2007, Alien - Improvement (0022000): The module is adapted to commercial design schemes.
+- [+] 28 Aug 2007, Alien - Improvement (0017863): The ability to support separate SKU for each product options combination is added.
+
+Version 2.4: 
+- [!] 08 May 2007, Sheriff - Bug (0017904): The module didn't take into account special behaviour of the PHP5-specific functions. Fixed.
+- [+] 17 Apr 2007, Sheriff - Improvement (0017395): Now module templates are compatible with HTML 4.01 Transitional.
+- [!] 17 Apr 2007, Sheriff - Bug (0019212): There was no link to the 'Modules' section in the 'Advanced search settings' section. Fixed.
+
+Version 2.3: 
+- [!] 13 Dec 2005, Sheriff - Bug (0004998): Search in customer zone did not work correctly with empty substring (extra products were added in the customer zone). Fixed.
+- [!] 21 Nov 2005, Asd - Bug (0004948): When a user tried to search for products with a single quote in the product name, it caused an SQL error. Fixed.
+
+Version 2.2: 
+- [!] 22 Aug 2005, Asd - Bug: The advanced search using "Containing all of these words (AND)" option did not always provide correct results. Fixed.
+
+Version 2.1: 
+- [+] 13 Aug 2005, Asd - Improvement: With AdvancedSearch module installed and enabled, Quick Search area now performs search using advanced functionality introduced by the module.
+- [+] 12 Aug 2005, Asd - Improvement: Capability to search by extra fields and meta tags has been added.
+- [!] 07 Jul 2005, Sheriff - Bug (0003476): When the store administrator used the search page at the customer zone (in the same session) for the first time, default search settings were not displayed. Fixed.
