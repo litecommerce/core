@@ -74,9 +74,9 @@ class Zone extends \XLite\Model\AEntity
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @Column (type="integer", length="1", nullable=false)
+     * @Column (type="boolean", nullable=false)
      */
-    protected $is_default = 0;
+    protected $is_default = false;
 
     /**
      * Zone elements (relation)

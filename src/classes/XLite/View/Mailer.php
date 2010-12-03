@@ -108,7 +108,7 @@ class Mailer extends \XLite\View\AView
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $charset = 'iso-8859-1';
+    protected $charset = 'UTF-8';
 
     /**
      * Saved templates skin

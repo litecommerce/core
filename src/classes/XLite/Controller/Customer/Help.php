@@ -131,7 +131,6 @@ class Help extends \XLite\Controller\Customer\ACustomer
         $mailer->set('state', $st->get('state')); // fetch state name
         $cn = \XLite\Core\Database::getRepo('XLite\Model\Country')->find($_REQUEST['contactus_country']);
         $mailer->set('country', $cn->get('country')); // fetch country name
-        $mailer->set('charset', $cn->get('charset'));
         $mailer->compose($this->get('email'), $this->config->Company->support_department, "contactus");
         $mailer->send();
         $this->set('mode', "contactusMessage");

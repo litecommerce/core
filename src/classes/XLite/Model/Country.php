@@ -66,30 +66,6 @@ class Country extends \XLite\Model\AEntity
     protected $code;
 
     /**
-     * Country language
-     * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     *
-     * @Column (type="string", length="32", nullable=false)
-     */
-    protected $language = '';
-
-    /**
-     * Country languge charset
-     * 
-     * @var    string
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     *
-     * @Column (type="string", length="32", nullable=false)
-     */
-    protected $charset = 'iso-8859-1';
-
-    /**
      * Enabled falg
      * 
      * @var    boolean

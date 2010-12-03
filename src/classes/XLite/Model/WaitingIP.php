@@ -78,7 +78,6 @@ class WaitingIP extends \XLite\Model\AModel
         $mail = new \XLite\View\Mailer();
         $mail->waiting_ip = $this;
         $mail->adminMail = true;
-        $mail->set('charset', $this->xlite->config->Company->locationCountry->charset);
         $mail->compose(
             $this->config->Company->site_administrator,
             $this->config->Company->site_administrator,

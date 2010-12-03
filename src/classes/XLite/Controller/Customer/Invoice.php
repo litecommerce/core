@@ -117,21 +117,6 @@ class Invoice extends \XLite\Controller\Customer\ACustomer
     }
 
     /**
-     * Get controller charset 
-     * 
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getCharset()
-    {
-        $charset = $this->getOrder()->getProfile()->getBillingAddress()->getCountry()->getCharset();
-
-        return $charset ? $charset : parent::getCharset();
-    }
-
-    /**
      * Get secure controller status
      * 
      * @return boolean

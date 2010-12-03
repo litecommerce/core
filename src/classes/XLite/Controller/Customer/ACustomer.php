@@ -279,25 +279,6 @@ abstract class ACustomer extends \XLite\Controller\AController
     }
 
     /**
-     * Get controller charset 
-     * 
-     * @return string
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getCharset()
-    {
-        $charset = false;
-
-        if ($this->getCart() && $this->getCart()->getProfile()) {
-            $charset = $this->getCart()->getProfile()->getBillingAddress()->getCountry()->getCharset();
-        }
-
-        return $charset ? $charset : parent::getCharset();
-    }
-
-    /**
      * Handles the request 
      * 
      * @return void
