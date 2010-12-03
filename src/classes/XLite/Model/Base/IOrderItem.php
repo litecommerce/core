@@ -37,7 +37,7 @@ namespace XLite\Model\Base;
 interface IOrderItem
 {
     /**
-     * getId 
+     * Get unique id 
      * 
      * @return integer
      * @access public
@@ -47,7 +47,7 @@ interface IOrderItem
     public function getId();
 
     /**
-     * getPrice 
+     * Get price 
      * 
      * @return float
      * @access public
@@ -57,7 +57,7 @@ interface IOrderItem
     public function getPrice();
 
     /**
-     * getTaxedPrice 
+     * Get taxed price 
      * 
      * @return float
      * @access public
@@ -67,7 +67,7 @@ interface IOrderItem
     public function getTaxedPrice();
 
     /**
-     * getWeight 
+     * Get weight 
      * 
      * @return float
      * @access public
@@ -77,7 +77,7 @@ interface IOrderItem
     public function getWeight();
 
     /**
-     * getMinPurchaseLimit 
+     * Get purchase limit (minimum)
      * 
      * @return integer
      * @access public
@@ -87,7 +87,7 @@ interface IOrderItem
     public function getMinPurchaseLimit();
 
     /**
-     * getMaxPurchaseLimit 
+     * Get purchase limit (maximum)
      * 
      * @return integer
      * @access public
@@ -97,17 +97,19 @@ interface IOrderItem
     public function getMaxPurchaseLimit();
 
     /**
-     * getName 
+     * Get name 
      * 
      * @return string
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
+    /* TODO - uncomment after http://bt.litecommerce.com/view.php?id=38840
     public function getName();
+    */
 
     /**
-     * getSku 
+     * Get SKU
      * 
      * @return string
      * @access public
@@ -117,7 +119,7 @@ interface IOrderItem
     public function getSku();
 
     /**
-     * getImage 
+     * Get image 
      * 
      * @return \XLite\Model\Base\Image|void
      * @access public
@@ -127,7 +129,7 @@ interface IOrderItem
     public function getImage();
 
     /**
-     * getFreeShipping 
+     * Get free shipping 
      * 
      * @return boolean
      * @access public
@@ -137,7 +139,7 @@ interface IOrderItem
     public function getFreeShipping();
 
     /**
-     * getURL 
+     * Get URL 
      *
      * @return string
      * @access public
