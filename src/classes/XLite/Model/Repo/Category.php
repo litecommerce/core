@@ -223,9 +223,13 @@ class Category extends \XLite\Model\Repo\Base\I18n
             ->update($this->_entityName, 'c')
             ->set('c.' . $index, 'c.' . $index . ' + :offset')
             ->andWhere($expr->gt('c.' . $index, ':relatedIndex'))
-            ->setParameters(array('offset' => $offset, 'relatedIndex' => $relatedIndex));
+            ->setParameters(
+                array(
+                    'offset'       => $offset,
+                    'relatedIndex' => $relatedIndex,
+                )
+            );
     }
-
 
     /**
      * Adds additional condition to the query for checking if category is enabled
@@ -310,15 +314,27 @@ class Category extends \XLite\Model\Repo\Base\I18n
      */
     protected function prepareNewCategoryData(array $data, \XLite\Model\Category $parent = null)
     {
-        if (!isset($parent)) {
+        if (!isset($parent) && isset($data['parent_id']) && $data['parent_id']) {
             $parent = $this->getCategory($data['parent_id']);
         }
 
-        return array(
-            'lpos'   => $parent->getLpos() + 1,
-            'rpos'   => $parent->getLpos() + 2,
-            'parent' => $parent,
-        ) + $data;
+        if (isset($parent)) {
+
+            $data['lpos'] = $parent->getLpos() + 1;
+            $data['rpos'] = $parent->getLpos() + 2;
+            $data['parent'] = $parent;
+
+        } else {
+
+            // TODO - rework - add support last root category
+            $data['lpos'] = 1;
+            $data['rpos'] = 2;
+            $data['parent'] = null;
+            $data['parent_id'] = 0;
+        }
+        
+
+        return $data;
     }
 
     /**
@@ -379,22 +395,32 @@ class Category extends \XLite\Model\Repo\Base\I18n
     {
         $entity = null;
 
-        // Get parent
-        $parent = $this->getCategory($data['parent_id']);
-        if ($parent) {
+        if (!isset($data['parent_id']) || 0 == $data['parent_id']) {
 
-            // Update indexes in the nested set
-            $this->defineUpdateIndexQuery('lpos', $parent->getLpos())->getQuery()->execute();
-            $this->defineUpdateIndexQuery('rpos', $parent->getLpos())->getQuery()->execute();
-
-            // Create record in DB
-            $entity = parent::performInsert($this->prepareNewCategoryData($data, $parent));
-
-            // Update quick flags
-            $this->updateQuickFlags($parent, $this->prepareQuickFlags(1, $entity->getEnabled() ? 1 : -1));
+            // Insert root category
+            $entity = parent::performInsert($this->prepareNewCategoryData($data));
 
         } else {
-            // TODO - add throw excception
+
+            // Get parent for non-root category
+            $parent = $this->getCategory($data['parent_id']);
+            if ($parent) {
+
+                // Update indexes in the nested set
+                $this->defineUpdateIndexQuery('lpos', $parent->getLpos())->getQuery()->execute();
+                $this->defineUpdateIndexQuery('rpos', $parent->getLpos())->getQuery()->execute();
+
+                // Create record in DB
+                $entity = parent::performInsert($this->prepareNewCategoryData($data, $parent));
+
+            } else {
+                // TODO - add throw excception
+            }
+        }
+
+        if ($entity) {
+            // Update quick flags
+            $this->updateQuickFlags($parent, $this->prepareQuickFlags(1, $entity->getEnabled() ? 1 : -1));
         }
 
         return $entity;
