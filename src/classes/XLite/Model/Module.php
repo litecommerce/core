@@ -76,6 +76,17 @@ class Module extends \XLite\Model\AEntity
     protected $name = '';
 
     /**
+     * Author 
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     * @Column (type="string", length="255")
+     */
+    protected $author = '';
+
+    /**
      * Enabled 
      * 
      * @var    boolean
@@ -304,19 +315,22 @@ class Module extends \XLite\Model\AEntity
     }
 
     /**
-     * Create module 
+     * Create module
+     * TODO: to test this, when author code changes are implemented
      * 
-     * @param string $name Name OPTIONAL
+     * @param string $name   Module code (class)
+     * @param string $author Module author (code)
      *  
      * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function create($name = null)
+    public function create($name = null, $author = null)
     {
         // Seet common properties
         $this->setName($name);
+        $this->setAuthor($author);
         $this->setInstalled(self::NOT_INSTALLED);
         $this->setEnabled(false);
 
@@ -528,7 +542,7 @@ class Module extends \XLite\Model\AEntity
      */
     protected function getMainClassName()
     {
-        return '\XLite\Module\\' . $this->getName() . '\Main';
+        return '\XLite\Module\\' . $this->getAuthor() . '\\' . $this->getName() . '\Main';
     }
 
     /**
@@ -562,9 +576,9 @@ class Module extends \XLite\Model\AEntity
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getName()
+    public function getKeyName()
     {
-        return $this->name;
+        return $this->author . '\\' . $this->name;
     }
 
 }

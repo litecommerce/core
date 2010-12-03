@@ -98,12 +98,23 @@ abstract class EntityManager extends \Includes\Decorator\Plugin\Doctrine\ADoctri
 
             if (
                 \Includes\Utils\FileManager::isDir($dir->getPathName())
-                && \Includes\Utils\FileManager::isDir($dir->getPathName() . LC_DS . 'Model')
             ) {
-                $chain->addDriver(
-                    $config->newDefaultAnnotationDriver($dir->getPathName() . LC_DS . 'Model'),
-                    'XLite\Module\\' . $dir->getBaseName() . '\Model'
+                $iterator2 = new \RecursiveDirectoryIterator(
+                    $dir->getPathName(),
+                    \FilesystemIterator::SKIP_DOTS
                 );
+           
+                foreach ($iterator2 as $dir2) {
+                    if (
+                        \Includes\Utils\FileManager::isDir($dir2->getPathName())
+                        && \Includes\Utils\FileManager::isDir($dir2->getPathName() . LC_DS . 'Model')
+                    ) {
+                        $chain->addDriver(
+                            $config->newDefaultAnnotationDriver($dir2->getPathName() . LC_DS . 'Model'),
+                            'XLite\Module\\' . $dir->getBaseName() . '\\' . $dir2->getBaseName() . '\Model'
+                        );
+                    }
+                }
             }
 
         }

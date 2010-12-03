@@ -220,7 +220,7 @@ class Module extends \XLite\Model\Repo\ARepo
         if (!isset($this->modules)) {
             $this->modules = array();
             foreach ($this->findAllEnabled() as $module) {
-                $this->modules[$module->getName()] = $module;
+                $this->modules[$module->getKeyName()] = $module;
             }
         }
 
@@ -230,7 +230,7 @@ class Module extends \XLite\Model\Repo\ARepo
     /**
      * Check - specified module is active or not
      * 
-     * @param string $name Module name
+     * @param string $name Key as: {name}\{author}
      *  
      * @return boolean
      * @access public
@@ -295,15 +295,22 @@ class Module extends \XLite\Model\Repo\ARepo
         $changed = false;
         $needRebuild = false;
 
-        foreach (glob(LC_MODULES_DIR . '*' . LC_DS . 'Main.php') as $f) {
-            $parts = explode(LC_DS, $f);
-            $name = $parts[count($parts) - 2];
-            if (in_array($name, $list)) {
-                unset($list[array_search($name, $list)]);
+        foreach (glob(LC_MODULES_DIR . '*' . LC_DS . '*' . LC_DS . 'Main.php') as $f) {
+
+            $parts  = explode(LC_DS, $f);
+            $name   = $parts[count($parts) - 2];
+            $author = $parts[count($parts) - 3];
+
+            $key = $author . '\\' . $name;
+
+            if (in_array($key, $list)) {
+
+                unset($list[array_search($key, $list)]);
 
             } else {
+
                 $module = new \XLite\Model\Module();
-                $module->create($name);
+                $module->create($name, $author);
                 if ($module::INSTALLED == $module->getInstalled()) {
                     /* FIXME - obsolete code
                     \XLite\Core\TopMessage::getInstance()->add(
@@ -323,8 +330,11 @@ class Module extends \XLite\Model\Repo\ARepo
         }
 
         // Emergency modules uninstall
-        foreach ($list as $name) {
-            $module = $this->findOneByName($name);
+        foreach ($list as $key) {
+
+            list($author, $name) = explode('\\', $key);
+            $module = $this->findOneByAuthorAndName($author, $name);
+
             if ($module) {
                 if ($module->getEnabled()) {
                     $module->disableDepended();
@@ -404,7 +414,7 @@ class Module extends \XLite\Model\Repo\ARepo
         $result = array();
 
         foreach ($data as $module) {
-            $result[] = $module->getName();
+            $result[] = $module->getKeyName();
         }
 
         return array_unique($result);
@@ -461,7 +471,7 @@ class Module extends \XLite\Model\Repo\ARepo
         \XLite\Logger::getInstance()->log(
             \XLite\Core\Translation::lbl(
                 'The X module has been uninstalled in an abnormal way',
-                array('module' => $module->getName())
+                array('module' => $module->getKeyName())
             ),
             PEAR_LOG_ERR
         );
@@ -484,7 +494,7 @@ class Module extends \XLite\Model\Repo\ARepo
         \XLite\Logger::getInstance()->log(
             \XLite\Core\Translation::lbl(
                 'The X module has been disabled in an abnormal way',
-                array('module' => $module->getName())
+                array('module' => $module->getKeyName())
             ),
             PEAR_LOG_ERR
         );

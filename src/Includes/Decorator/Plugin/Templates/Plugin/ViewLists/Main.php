@@ -308,7 +308,7 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
         // Check modules for the list modifiers
         // TODO: check if it's really useful
         foreach (\Includes\Decorator\Utils\ModulesManager::getActiveModules() as $module) {
-            $this->prepareListByModule($data, $module['name']);
+            $this->prepareListByModule($data, $module['author'] . '\\' . $module['name']);
         }
 
         return $data;

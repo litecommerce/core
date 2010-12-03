@@ -88,6 +88,22 @@ abstract class ModulesManager extends AUtils
     }
 
     /**
+     * Fetch list of paths to active modules (with author directory) from DB
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function getModulesPathsList(array $fields = array(), array $conditions = array())
+    {
+        return \Includes\Utils\Database::fetchAll(
+            'SELECT CONCAT(author,\'\\\\' . LC_DS . '\',name), ' . static::getTableName() . '.* FROM ' . static::getTableName() . ' WHERE enabled = \'1\'',
+            \PDO::FETCH_ASSOC | \PDO::FETCH_GROUP | \PDO::FETCH_UNIQUE
+        );
+    }
+
+    /**
      * Return pattern to file path againist active modules list
      * 
      * @param string $rootPath  name of the root directory
@@ -104,7 +120,7 @@ abstract class ModulesManager extends AUtils
         $modulePattern = $dir . LC_DS_QUOTED . ($placeholder = '@') . LC_DS_OPTIONAL;
 
         return '/^' . $rootPath . '(.((?!' . str_replace($placeholder, '\w+', $modulePattern) . ')|'
-            . str_replace($placeholder, '(' . implode('|', array_keys(static::getActiveModules())) . ')', $modulePattern)
+            . str_replace($placeholder, '(' . implode('|', array_keys(static::getModulesPathsList())) . ')', $modulePattern)
             . '))*\.' . $extension . '$/i';
     }
 
