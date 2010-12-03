@@ -129,7 +129,8 @@ class Main extends \XLite\Controller\Customer\Category
      */
     protected function isVisible()
     {
-        return \XLite\Model\Repo\Category::CATEGORY_ID_ROOT == $this->getCategory()->getCategoryId();
+        return $this->getCategory()
+            && \XLite\Model\Repo\Category::CATEGORY_ID_ROOT == $this->getCategory()->getCategoryId();
     }
 }
 

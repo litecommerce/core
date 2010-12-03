@@ -218,7 +218,10 @@ class Operator extends \XLite\Base\Singleton
     {
         if (!headers_sent()) {
             header('HTTP/1.0 404 Not Found');
+            header('Status: 404 Not Found');
         }
+
+        echo ('404 Page not found');
         exit(1);
     }
 
