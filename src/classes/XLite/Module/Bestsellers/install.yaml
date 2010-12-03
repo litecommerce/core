@@ -1,0 +1,35 @@
+# vim: set ts=2 sw=2 sts=2 et:
+#
+# Fixtures
+#
+# @author    Creative Development LLC <info@cdev.ru> 
+# @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+# @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+# @version   SVN: $Id$
+# @link      http://www.litecommerce.com/
+# @since     3.0.0
+XLite\Model\Config:
+  - name: bestsellers_menu
+    category: Bestsellers
+    type: select
+    orderby: 115
+    value: 1
+    translations:
+      - code: en
+        option_name: Display the list of bestsellers in
+  - name: bestsellers_thumbnails
+    category: Bestsellers
+    type: checkbox
+    orderby: 115
+    value: Y
+    translations:
+      - code: en
+        option_name: Show thumbnails in the list
+  - name: number_of_bestsellers
+    category: Bestsellers
+    type: text
+    orderby: 115
+    value: 5
+    translations:
+      - code: en
+        option_name: Number of products in the bestsellers list
