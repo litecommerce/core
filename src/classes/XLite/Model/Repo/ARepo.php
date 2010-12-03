@@ -84,7 +84,7 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $defaultOrderBy = null;
+    protected $defaultOrderBy;
 
     /**
      * Default model alias 
@@ -94,7 +94,17 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $defaultAlias = null;
+    protected $defaultAlias;
+
+    /**
+     * Alternative record identifiers
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $alternativeIdentifier;
 
     /**
      * Define cache cells 
@@ -993,4 +1003,183 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
     {
         return $this->getClassMetadata()->getSingleIdentifierFieldName();
     }
+
+    /**
+     * Find one by record 
+     * 
+     * @param array $data Record
+     *  
+     * @return \XLite\Model\AEntity|void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function findOneByRecord(array $data)
+    {
+        $identifiers = $this->collectIdentifiersByRecord($data);
+
+        return $identifiers ? $this->findOneBy($identifiers) : null;
+    }
+
+    /**
+     * Collect identifiers array by record 
+     * 
+     * @param array $data Record
+     *  
+     * @return array(mixed)|boolean
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function collectIdentifiersByRecord(array $data)
+    {
+        $identifiers = array();
+        $found = false;
+
+        foreach ($this->getClassMetadata()->identifier as $ident) {
+            $found = true;
+            if (!isset($data[$ident])) {
+                $found = false;
+                break;
+            }
+
+            $identifiers[$ident] = $data[$ident];
+        }   
+
+        if (!$found && $this->alternativeIdentifier) {
+
+            // Collect identifiers by alternative unqiue keys
+            $identifiers = array();
+            foreach ($this->alternativeIdentifier as $keys) {
+                foreach ($keys as $key) {
+                    $found = true;
+                    if (!isset($data[$key])) {
+                        $found = false;
+                        break;
+                    }
+
+                    $identifiers[$key] = $data[$key];
+                }
+
+                if ($found) {
+                    break;
+                }
+            }
+        }
+
+        return $found ? $identifiers : false;
+    }
+
+    /**
+     * Load fixtures 
+     * 
+     * @param array  $data              Data
+     * @param array  $parentAddCallback Entity parent callback
+     * @param string $mappedCallback    Entity mapped propery method
+     *  
+     * @return boolean|integer
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function loadFixtures(array $data, $parentAddCallback = null, $mappedCallback = null)
+    {
+        $result = false;
+
+        $class = '\\' . $this->_entityName;
+        $result = 0;  
+        list($regular, $assocs) = $this->getEntityProperties();
+        foreach ($data as $record) {
+            $entity = $this->findOneByRecord($record) ?: new $class();
+
+            foreach ($record as $name => $value) {
+                if (isset($regular[$name])) {
+                    $entity->{$regular[$name]['setter']}($value);
+
+                } elseif (isset($assocs[$name]) && is_array($value)) {
+                    $result += $assocs[$name]['repo']->loadFixtures(
+                        $assocs[$name]['many'] ? $value : array($value),
+                        array($entity, $assocs[$name]['setter']),
+                        $assocs[$name]['mappedSetter']
+                    );
+                }
+            }
+
+            // Add entity to parent
+            if (is_array($parentAddCallback) && 2 == count($parentAddCallback)) {
+                call_user_func($parentAddCallback, $entity);
+            }
+
+            // Add parent to entity
+            if ($mappedCallback && is_array($parentAddCallback) && 0 < count($parentAddCallback)) {
+                $entity->$mappedCallback($parentAddCallback[0]);
+            }
+
+            \XLite\Core\Database::getEM()->persist($entity);
+
+            $result++;
+        }
+
+        return $result;
+    }
+
+    /**
+     * Get entity properties 
+     * 
+     * @return array(array)
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getEntityProperties()
+    {
+        $cmd = $this->getClassMetadata();
+
+        $regular = array();
+        foreach (array_keys($cmd->fieldMappings) as $f) {
+            $fCamelCase = \XLite\Core\Converter::convertToCamelCase($f);
+            $regular[$f] = array(
+                'getter' => 'get' . $fCamelCase,
+                'setter' => 'set' . $fCamelCase,
+            );
+        }
+
+        $assocs = array();
+        foreach ($cmd->associationMappings as $f => $fData) {
+            $isMany = $fData['type'] == \Doctrine\ORM\Mapping\ClassMetadataInfo::ONE_TO_MANY
+                || $fData['type'] == \Doctrine\ORM\Mapping\ClassMetadataInfo::MANY_TO_MANY;
+
+            $fCamelCase = \XLite\Core\Converter::convertToCamelCase($f);
+            $assoc = array(
+                'many'         => $isMany,
+                'getter'       => 'get' . $fCamelCase,
+                'setter'       => ($isMany ? 'add' : 'set') . $fCamelCase,
+                'identifiers'  => array(),
+                'entityName'   => $fData['targetEntity'],
+                'mappedGetter' => null,
+                'mappedSetter' => null,
+                'repo'         => \XLite\Core\Database::getRepo($fData['targetEntity']),
+            );
+
+            $identifiers = \XLite\Core\Database::getEM()->getClassMetadata($fData['targetEntity'])->identifier;
+            foreach ($identifiers as $ident) {
+                $identCamelCase = \XLite\Core\Converter::convertToCamelCase($ident);
+                $assoc['identifiers'][$ident] = array(
+                    'getter' => 'get' . $identCamelCase,
+                    'setter' => 'set' . $identCamelCase,
+                );
+            }
+
+            if ($fData['mappedBy']) {
+                $mappedCamelCase = \XLite\Core\Converter::convertToCamelCase($fData['mappedBy']);
+                $assoc['mappedGetter'] = 'get' . $mappedCamelCase;
+                $assoc['mappedSetter'] = 'set' . $mappedCamelCase;
+            }
+
+            $assocs[$f] = $assoc;
+        }
+
+        return array($regular, $assocs);
+    }
+
 }

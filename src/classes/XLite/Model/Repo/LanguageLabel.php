@@ -38,6 +38,18 @@ namespace XLite\Model\Repo;
 class LanguageLabel extends \XLite\Model\Repo\Base\I18n
 {
     /**
+     * Alternative record identifiers
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $alternativeIdentifier = array(
+        array('name'),
+    );  
+
+    /**
      * Define cache cells 
      * 
      * @return array

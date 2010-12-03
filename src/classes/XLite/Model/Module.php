@@ -326,6 +326,23 @@ class Module extends \XLite\Model\AEntity
 
         if ($mainClass) {
 
+            // Install YAML fixtures
+            $installYAMLPath = LC_MODULES_DIR . $name . LC_DS . 'install.yaml';
+            if (file_exists($installYAMLPath)) {
+                try {
+                    $loadedLines = \XLite\Core\Database::getInstance()
+                        ->loadFixturesFromYaml($installYAMLPath);
+                    if (false === $loadedLines) {
+                        $status = self::INSTALLED_WO_SQL;
+                    }
+    
+                } catch (\Exception $e) {
+                    \XLite\Logger::getInstance()->log($e->getMessage(), LOG_ERR);
+                    $status = self::INSTALLED_WO_SQL;
+                }
+
+            }
+
             // Install SQL dump
             $installSQLPath = LC_MODULES_DIR . $name . LC_DS . 'install.sql';
 
@@ -346,6 +363,7 @@ class Module extends \XLite\Model\AEntity
             }
 
             // Run custom install code
+            /* FIXME - obsolete code 
             if (false === $mainClass->installModule($this)) {
                 \XLite\Logger::getInstance()->log(
                     sprintf('\'%s\' module custom installation error', $name),
@@ -353,6 +371,7 @@ class Module extends \XLite\Model\AEntity
                 );
                 $status = self::INSTALLED_WO_PHP;
             }
+            */
 
         } else {
             $status = self::INSTALLED_WO_CTRL;
@@ -388,8 +407,8 @@ class Module extends \XLite\Model\AEntity
             );
         }
 
-        $module->setInstalled($status);
-        \XLite\Core\Database::getEM()->persist($module);
+        $this->setInstalled($status);
+        \XLite\Core\Database::getEM()->persist($this);
         \XLite\Core\Database::getEM()->flush();
     }
 
