@@ -30,10 +30,20 @@ function LC_PHPSettings()
 	inoremap <C-a> <C-R>=ClassName()<CR>
 endfunction
 
+function LC_YAMLSettings()
+    set sw=2
+    set ts=2
+    set sts=2
+	set et
+
+    nnoremap <C-a> :call YAMLDocFile()<CR>
+endfunction
+
 au Filetype smarty call LC_SmartySettings()
 au Filetype php call LC_PHPSettings()
 au Filetype css call LC_CSSSettings()
 au Filetype javascript call LC_JSSettings()
+au Filetype yaml call LC_YAMLSettings()
 
 
 let g:pdv_cfg_CommentHead_Smarty = "{**"
@@ -108,6 +118,35 @@ func! SmartyDocFile()
 
     " Close the comment block.
     exe l:txtBOL . g:pdv_cfg_CommentTail_Smarty . g:pdv_cfg_EOL
+
+    exe ":0"
+    exe ":delete"
+
+endfunc
+
+func! YAMLDocFile()
+    " Line for the comment to begin
+    let commentline = 1
+
+    let l:indent = matchstr(getline("."), '^\ *')
+	let l:yamlComment = "--- # "
+
+    exe "norm! " . commentline . "G$"
+
+    " Local indent
+    let l:txtBOL = g:pdv_cfg_BOL . indent
+
+    exe l:txtBOL . l:yamlComment . "vim: set ts=2 sw=2 sts=2 et:" . g:pdv_cfg_EOL
+    exe l:txtBOL . l:yamlComment . g:pdv_cfg_EOL
+
+	exe l:txtBOL . l:yamlComment . g:pdv_cfg_FileTitle . g:pdv_cfg_EOL
+    exe l:txtBOL . l:yamlComment . " " . g:pdv_cfg_EOL
+	exe l:txtBOL . l:yamlComment . "@author    " . g:pdv_cfg_Author g:pdv_cfg_EOL
+	exe l:txtBOL . l:yamlComment . "@copyright " . g:pdv_cfg_Copyright . g:pdv_cfg_EOL
+	exe l:txtBOL . l:yamlComment . "@license   " . g:pdv_cfg_License . g:pdv_cfg_EOL
+	exe l:txtBOL . l:yamlComment . "@version   " . g:pdv_cfg_Version . g:pdv_cfg_EOL
+	exe l:txtBOL . l:yamlComment . "@link      " . g:pdv_cfg_Link . g:pdv_cfg_EOL
+	exe l:txtBOL . l:yamlComment . "@since     " . g:pdv_cfg_Since . g:pdv_cfg_EOL
 
     exe ":0"
     exe ":delete"
