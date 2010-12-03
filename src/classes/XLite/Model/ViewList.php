@@ -121,7 +121,7 @@ class ViewList extends \XLite\Model\AEntity
      *
      * @Column (type="string", length="512")
      */
-    protected $child;
+    protected $child = '';
 
     /**
      * Child weight
