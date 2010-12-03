@@ -247,7 +247,6 @@ class Htaccess extends \XLite\Model\AModel
         $mail = new \XLite\View\Mailer();
         $mail->errors = $errors;
         $mail->adminMail = true;
-        $mail->set('charset', $this->xlite->config->Company->locationCountry->charset);
         $mail->compose(
                 $this->config->Company->site_administrator,
                 $this->config->Company->site_administrator,

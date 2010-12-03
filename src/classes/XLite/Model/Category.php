@@ -92,14 +92,13 @@ class Category extends \XLite\Model\Base\I18n
 
     /**
      * Node status
-     * 1 - enabled, 0 - disabled
      * 
      * @var    integer
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @Column (type="integer", length="1", nullable=false)
+     * @Column (type="boolean", nullable=false)
      */
     protected $enabled = true;
 
@@ -129,13 +128,12 @@ class Category extends \XLite\Model\Base\I18n
 
     /**
      * Whether to display the category title, or not
-     * 1 - display, 0 - no
      * 
      * @var    integer
      * @access protected
      * @since  3.0.0
      *
-     * @Column (type="integer", length="1", nullable=false)
+     * @Column (type="boolean", nullable=false)
      */
     protected $show_title = true;
 

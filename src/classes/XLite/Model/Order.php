@@ -1261,7 +1261,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
                 $mail->selectCustomerLayout();
                 $profile = $this->getProfile();
                 if ($profile) {
-                    $mail->set('charset', $profile->getBillingAddress()->getCountry()->getCharset());
                     $mail->compose(
                         \XLite\Core\Config::getInstance()->Company->orders_department,
                         $profile->getLogin(),
@@ -1276,7 +1275,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
 
                 // whether or not to show CC info in mail notification
                 $mail->adminMail = true;
-                $mail->set('charset', \XLite\Core\Config::getInstance()->Company->locationCountry->getCharset());
                 $mail->compose(
                     \XLite\Core\Config::getInstance()->Company->site_administrator,
                     \XLite\Core\Config::getInstance()->Company->orders_department,
@@ -1314,7 +1312,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
         $mail = new \XLite\View\Mailer();
         $mail->order = $this;
         $mail->adminMail = true;
-        $mail->set('charset', \XLite\Core\Config::getInstance()->Company->locationCountry->getCharset());
         $mail->compose(
             \XLite\Core\Config::getInstance()->Company->site_administrator,
             \XLite\Core\Config::getInstance()->Company->orders_department,
@@ -1326,7 +1323,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
         $mail->selectCustomerLayout();
         $profile = $this->getProfile();
         if ($profile) {
-            $mail->set('charset', $profile->getBillingAddress()->getCountry()->getCharset());
             $mail->compose(
                 \XLite\Core\Config::getInstance()->Company->site_administrator,
                 $profile->getLogin(),
@@ -1361,7 +1357,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
         $mail = new \XLite\View\Mailer();
         $mail->order = $this;
         $mail->adminMail = true;
-        $mail->set('charset', \XLite\Core\Config::getInstance()->Company->locationCountry->getCharset());
         $mail->compose(
             \XLite\Core\Config::getInstance()->Company->site_administrator,
             \XLite\Core\Config::getInstance()->Company->orders_department,
@@ -1373,7 +1368,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
         $mail->selectCustomerLayout();
         $profile = $this->getProfile();
         if ($profile) {
-            $mail->set('charset', $profile->getBillingAddress()->getCountry()->getCharset());
             $mail->compose(
                 \XLite\Core\Config::getInstance()->Company->orders_department,
                 $profile->getLogin(),

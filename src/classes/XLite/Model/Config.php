@@ -118,5 +118,5 @@ class Config extends \XLite\Model\Base\I18n
      *
      * @Column (type="text", nullable=false)
      */
-    protected $value;
+    protected $value = '';
 }

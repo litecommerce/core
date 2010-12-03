@@ -109,12 +109,6 @@ class Countries extends \XLite\Controller\Admin\AAdmin
             return;
         }
 
-        if (empty(\XLite\Core\Request::getInstance()->charset)) {
-            $this->set('valid', false);
-            $this->obligatorySetStatus('charset');
-            return;
-        }
-
         $country = new \XLite\Model\Country();
 
         $country->map(\XLite\Core\Request::getInstance()->getData());
