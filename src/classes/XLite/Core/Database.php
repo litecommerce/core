@@ -38,24 +38,17 @@ namespace XLite\Core;
 class Database extends \XLite\Base\Singleton
 {
     /**
-     * Doctrine config object
-     * 
-     * @var    \Doctrine\ORM\Configuration
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * Schema generation modes 
      */
-    protected $doctrineConfig = null;
+    const SCHEMA_CREATE = 'create';
+    const SCHEMA_UPDATE = 'update';
+    const SCHEMA_DELETE = 'delete';
+
 
     /**
-     * connected 
-     * 
-     * @var    bool
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
+     * DB schema file ident
      */
-    protected $connected;
+    const SCHEMA_FILE_IDENT = '  ';
 
     /**
      * Doctrine entity manager 
@@ -88,85 +81,24 @@ class Database extends \XLite\Base\Singleton
     protected static $cacheDriversQuery = array('apc', 'xcache', 'memcache');
 
     /**
-     * Constructor
+     * Doctrine config object
      * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
+     * @var    \Doctrine\ORM\Configuration
+     * @access protected
+     * @see    ____var_see____
      * @since  3.0.0
      */
-    public function __construct()
-    {
-        if (!$this->connected) {
-            $this->connect();
-        }
-    }
+    protected $doctrineConfig = null;
 
     /**
-     * Connect and set-up Doctrine
+     * connected 
      * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
+     * @var    bool
+     * @access protected
+     * @see    ____var_see____
      * @since  3.0.0
      */
-    public function connect()
-    {
-        $this->config = new \Doctrine\ORM\Configuration;
-
-        // Setup cache
-        $this->setDoctrineCache();
-
-        // Set metadata driver
-        $chain = new \Doctrine\ORM\Mapping\Driver\DriverChain();
-        $chain->addDriver(
-            $this->config->newDefaultAnnotationDriver(LC_MODEL_CACHE_DIR),
-            'XLite\Model'
-        );
-        $chain->addDriver(
-            $this->config->newDefaultAnnotationDriver(LC_CLASSES_CACHE_DIR . 'XLite' . LC_DS . 'Module'),
-            'XLite\Module'
-        );
-        $this->config->setMetadataDriverImpl($chain);
-
-        // Set proxy settings
-        $this->config->setProxyDir(LC_PROXY_CACHE_DIR);
-        $this->config->setProxyNamespace(LC_MODEL_PROXY_NS);
-        $this->config->setAutoGenerateProxyClasses(false);
-
-        // Initialize DB connection and entity manager
-        $this->startEntityManager();
-    }
-
-    /**
-     * Start Doctrine entity manager 
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function startEntityManager()
-    {
-        // Initialize DB connection and entity manager
-        self::$em = \Doctrine\ORM\EntityManager::create($this->getDSN(), $this->config);
-
-        if (\XLite\Core\Profiler::getInstance()->enabled) {
-            self::$em->getConnection()->getConfiguration()->setSQLLogger(\XLite\Core\Profiler::getInstance());
-        }
-
-        // Bind events
-        $events = array(\Doctrine\ORM\Events::loadClassMetadata);
-        if (self::$cacheDriver) {
-
-            // Bind cache chekers
-            $events[] = \Doctrine\ORM\Events::postPersist;
-            $events[] = \Doctrine\ORM\Events::postUpdate;
-            $events[] = \Doctrine\ORM\Events::postRemove;
-        }
-
-        self::$em->getEventManager()->addEventListener($events, $this);
-    }
+    protected $connected;
 
     /**
      * Get entity manager 
@@ -225,23 +157,6 @@ class Database extends \XLite\Base\Singleton
     public static function getQB()
     {
         return self::getEntityManager()->createQueryBuilder();
-    }
-
-    /**
-     * Setup doctrine cache 
-     * 
-     * @return void
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function setDoctrineCache()
-    {
-        self::$cacheDriver = self::getCacheDriverByOptions(\XLite::getInstance()->getOptions('cache'));
-
-        $this->config->setMetadataCacheImpl(self::$cacheDriver);
-        $this->config->setQueryCacheImpl(self::$cacheDriver);
-        $this->config->setResultCacheImpl(self::$cacheDriver);
     }
 
     /**
@@ -322,6 +237,485 @@ class Database extends \XLite\Base\Singleton
     }
 
     /**
+     * Constructor
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function __construct()
+    {
+        if (!$this->connected) {
+            $this->connect();
+        }
+    }
+
+    /**
+     * Connect and set-up Doctrine
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function connect()
+    {
+        $this->config = new \Doctrine\ORM\Configuration;
+
+        // Setup cache
+        $this->setDoctrineCache();
+
+        // Set metadata driver
+        $chain = new \Doctrine\ORM\Mapping\Driver\DriverChain();
+        $chain->addDriver(
+            $this->config->newDefaultAnnotationDriver(LC_MODEL_CACHE_DIR),
+            'XLite\Model'
+        );
+        $chain->addDriver(
+            $this->config->newDefaultAnnotationDriver(LC_CLASSES_CACHE_DIR . 'XLite' . LC_DS . 'Module'),
+            'XLite\Module'
+        );
+        $this->config->setMetadataDriverImpl($chain);
+
+        // Set proxy settings
+        $this->config->setProxyDir(LC_PROXY_CACHE_DIR);
+        $this->config->setProxyNamespace(LC_MODEL_PROXY_NS);
+        $this->config->setAutoGenerateProxyClasses(false);
+
+        // Initialize DB connection and entity manager
+        $this->startEntityManager();
+    }
+
+    /**
+     * Start Doctrine entity manager 
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function startEntityManager()
+    {
+        // Initialize DB connection and entity manager
+        /*
+        $connection = \Doctrine\DBAL\DriverManager::getConnection(
+            $this->getDSN(),
+            $this->config,
+            new \Doctrine\Common\EventManager()
+        );
+        */
+        self::$em = \Doctrine\ORM\EntityManager::create($this->getDSN(), $this->config);
+
+        if (\XLite\Core\Profiler::getInstance()->enabled) {
+            self::$em->getConnection()->getConfiguration()->setSQLLogger(\XLite\Core\Profiler::getInstance());
+        }
+
+        // Bind events
+        $events = array(\Doctrine\ORM\Events::loadClassMetadata);
+        if (self::$cacheDriver) {
+
+            // Bind cache chekers
+            $events[] = \Doctrine\ORM\Events::postPersist;
+            $events[] = \Doctrine\ORM\Events::postUpdate;
+            $events[] = \Doctrine\ORM\Events::postRemove;
+        }
+
+        self::$em->getEventManager()->addEventListener($events, $this);
+    }
+
+    /**
+     * Export DB schema 
+     * 
+     * @param string $path Export directory path
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function exportDBSchema($path = null)
+    {
+        if (!$path) {
+            $path = LC_VAR_DIR;
+        }
+
+        $metadata = $this->getAllMetadata();
+
+        $tool = new \Doctrine\ORM\Tools\SchemaTool(self::$em);
+        $tool->createSchema($metadata);
+        file_put_contents($path . LC_DS . 'schema.sql');
+
+        $cme = new \Doctrine\ORM\Tools\Export\ClassMetadataExporter();
+        $exporter = $cme->getExporter('yml', $path);
+        $exporter->setMetadata($metadata);
+        $exporter->export();
+    }
+
+    /**
+     * Check - DB is empty or not
+     * 
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isDBEmpty()
+    {
+        return 0 == count(self::$em->getConnection()->getSchemaManager()->listTableNames());
+    }
+
+    /**
+     * Create / update DB schema 
+     * 
+     * @return integer
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function updateDBSchema()
+    {
+        $schema = $this->isDBEmpty()
+            ? $this->getDBSchema(self::SCHEMA_CREATE)
+            : $this->getDBSchema(self::SCHEMA_UPDATE);
+
+        return $this->executeQueries($schema);
+    }
+
+    /**
+     * Drop DB schema 
+     * 
+     * @return integer
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function dropDBSchema()
+    {
+        return $this->executeQueries($this->getDBSchema(self::SCHEMA_DELETE));
+    }
+
+    /**
+     * Execute queries list
+     * 
+     * @param array $queries Queries list
+     *  
+     * @return integer
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function executeQueries(array $queries)
+    {
+        $i = 0;
+        $connection = self::$em->getConnection();
+        foreach ($queries as $sql) {
+            $connection->executeQuery($sql);
+            $i++;
+        }
+
+        return $i;
+    }
+
+    /**
+     * Get DB schema as file
+     *
+     * @param string $mode Schema generation mode OPTIONAL
+     *
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getDBSchemaAsFile($mode = self::SCHEMA_CREATE)
+    {
+        return implode(';' . PHP_EOL, $this->getDBSchema($mode)) . ';' . PHP_EOL;
+    }
+
+    /**
+     * Get DB schema
+     *
+     * @param string $mode Schema generation mode OPTIONAL
+     * 
+     * @return array(string)
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getDBSchema($mode = self::SCHEMA_CREATE)
+    {
+        $tool = new \Doctrine\ORM\Tools\SchemaTool(self::$em);
+        $schemas = array();
+
+        $rawSchemas = null;
+        $postprocessMethod = null;
+
+        if (self::SCHEMA_CREATE == $mode) {
+            $rawSchemas = $tool->getCreateSchemaSql($this->getAllMetadata());
+            $postprocessMethod = 'postprocessCreateSchema';
+
+        } elseif (self::SCHEMA_UPDATE == $mode) {
+            $rawSchemas = $tool->getUpdateSchemaSql($this->getAllMetadata());
+            $postprocessMethod = 'postprocessUpdateSchema';
+
+        } elseif (self::SCHEMA_DELETE == $mode) {
+            $rawSchemas = $tool->getDropSchemaSql($this->getAllMetadata());
+            $postprocessMethod = 'postprocessDropSchema';
+        }
+
+        if ($rawSchemas) {
+            foreach ($rawSchemas as $schema) {
+
+                // $postprocessMethod detected by $mode
+                $schema = $this->$postprocessMethod($schema);
+
+                if (is_array($schema)) {
+                    $schemas = array_merge($schemas, $schema);
+
+                } else {
+                    $schemas[] = $schema;
+                }
+            }
+        }
+
+        return $schemas;
+    }
+
+    /**
+     * Postprocess creation schema 
+     * 
+     * @param string $schema Schema
+     *  
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function postprocessCreateSchema($schema)
+    {
+        if (preg_match('/^CREATE TABLE /Ss', $schema)) {
+            $schema = $this->postprocessCreateSchemaTable($schema);
+
+        } elseif (preg_match('/^ALTER TABLE /Ss', $schema)) {
+            $schema = $this->postprocessAlterSchemaTable($schema);
+        }
+
+        return $schema;
+    }
+
+    /**
+     * Postprocess table creation schema line
+     *
+     * @param string $schema Schema
+     *
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function postprocessCreateSchemaTable($schema)
+    {
+        preg_match('/CREATE TABLE (\S+) /Ss', $schema, $m);
+        $tableName = $m[1];
+
+        $schema = preg_replace(
+            '/CREATE TABLE (\S+) \((.+)(\) ENGINE = InnoDB)/USse',
+            '\'CREATE TABLE `$1` (\' . PHP_EOL'
+            . ' . \'$2\' . PHP_EOL'
+            . ' . \'$3 DEFAULT CHARACTER SET utf8 COLLATE utf8_bin\'',
+            $schema
+        );
+
+        $schema = explode(PHP_EOL, $schema);
+
+        $str = $schema[1];
+
+        $str = preg_replace('/numeric\((\d+), (\d+)\)/Ssi', 'NUMERIC($1,$2)', $str);
+        $str = preg_replace('/ index (\S+) \(([\w_, ]+)\)/Ssie', '\' INDEX $1 (\' . str_replace(\', \', \',\', \'$2\') . \')\'', $str);
+
+        $id = null;
+        if (preg_match('/PRIMARY KEY *\(([^)]+)\)/Ssi', $str, $m)) {
+            $id = trim($m[1]);
+        }
+
+        if ($id) {
+            $str = preg_replace('/UNIQUE INDEX \S+ \(' . $id . '\),/Ssi', '', $str);
+            $str = str_replace(PHP_EOL . PHP_EOL, PHP_EOL, $str);
+        }
+
+        $str = preg_replace('/PRIMARY KEY\(([^)]+)\)/Ssi', 'PRIMARY KEY ($1)', $str);
+
+        $parts = array_map('trim', explode(', ', $str));
+        foreach ($parts as $k => $v) {
+            $v = preg_replace('/^((?:UNIQUE )?INDEX) (\S+) \(/Ss', '$1 `$2` (', $v);
+
+            $v = preg_replace('/^(INDEX \S+ \()([^,)]+)/Ss', '$1`$2`', $v);
+            $v = preg_replace('/^(INDEX \S+ \(.+,)([^`,)]+)/Ss', '$1`$2`', $v);
+
+            $v = preg_replace('/^(PRIMARY KEY \()([^,)]+)/Ss', '$1`$2`', $v);
+            $v = preg_replace('/^(PRIMARY KEY \(.+,)([^`,)]+)/Ss', '$1`$2`', $v);
+
+            $v = self::SCHEMA_FILE_IDENT . preg_replace('/^([a-z][\w\d_]+) ([A-Z]+)/Ss', '`$1` $2', $v);
+
+            $parts[$k] = $v;
+        }
+
+        $schema[1] = implode(',' . PHP_EOL, $parts);
+
+        return array(
+            'DROP TABLE IF EXISTS `' . $tableName . '`',
+            implode(PHP_EOL, $schema),
+        );
+    }
+
+    /**
+     * Postprocess table altering schema line
+     *
+     * @param string $schema Schema
+     *
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function postprocessAlterSchemaTable($schema)
+    {
+        $schema = preg_replace('/ALTER TABLE (\S+) /USs', 'ALTER TABLE `$1` ', $schema);
+
+        $schema = preg_replace('/( FOREIGN KEY \()([^,)]+)/Ss', '$1`$2`', $schema);
+        $schema = preg_replace('/( FOREIGN KEY \(.+,)([^`,)]+)/Ss', '$1`$2`', $schema);
+
+        $schema = preg_replace('/ REFERENCES (\S+) *\(([^,)]+)/Ss', ' REFERENCES `$1` (`$2`', $schema);
+        $schema = preg_replace('/( REFERENCES \S+ \(.+,)([^`,)]+)/Ss', '$1`$2`', $schema);
+
+        return $schema;
+    }
+
+    /**
+     * Postprocess update schema
+     *
+     * @param string $schema Schema
+     *
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function postprocessUpdateSchema($schema)
+    {
+        if (preg_match('/^ALTER TABLE /Ss', $schema)) {
+            $schema = preg_replace('/^ALTER TABLE (\S+) /Ss', 'ALTER TABLE `$1` ', $schema);
+            $schema = preg_replace('/ DROP ([a-z][^\s,`]+)(,)? /Ss', ' DROP `$1`$2 ', $schema);
+            $schema = preg_replace('/ CHANGE ([a-z]\S+) (\S+) /Ss', ' CHANGE `$1` `$2` ', $schema);
+            $schema = preg_replace('/ ADD ([a-z]\S+) /Ss', ' ADD `$1` ', $schema);
+
+            $schema = preg_replace('/( FOREIGN KEY \()([^,)]+)/Ss', '$1`$2`', $schema);
+            $schema = preg_replace('/( FOREIGN KEY \(.+,)([^`,)]+)/Ss', '$1`$2`', $schema);
+
+            $schema = preg_replace('/ REFERENCES (\S+) *\(([^,)]+)/Ss', ' REFERENCES `$1` (`$2`', $schema);
+            $schema = preg_replace('/( REFERENCES \S+ \(.+,)([^`,)]+)/Ss', '$1`$2`', $schema);
+
+        } else {
+
+            $schema = preg_replace('/^DROP TABLE (\S+)/Ss', 'DROP TABLE IF EXISTS `$1`', $schema);
+
+            $schema = preg_replace('/^(CREATE (?:UNIQUE )?INDEX) (\S+) ON ([^\s(]+)/Ss', '$1 `$2` ON `$3`', $schema);
+            $schema = preg_replace('/^(CREATE (?:UNIQUE )?INDEX [^(]+ \()([^,)]+)/Ss', '$1`$2`', $schema);
+            $schema = preg_replace('/^(CREATE (?:UNIQUE )?INDEX [^(]+ \(.+,)([^`,)]+)/Ss', '$1`$2`', $schema);
+
+            $schema = preg_replace('/^DROP INDEX (\S+) ON (\S+)/Ss', 'DROP INDEX `$1` ON `$2`', $schema);
+        }
+
+        return $schema;
+    }
+
+    /**
+     * Postprocess drop schema
+     *
+     * @param string $schema Schema
+     *
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function postprocessDropSchema($schema)
+    {
+        $schema = preg_replace('/^ALTER TABLE (\S+) DROP FOREIGN KEY (\S+)/Ss', 'ALTER TABLE `$1` DROP FOREIGN KEY `$2`', $schema);
+        $schema = preg_replace('/^DROP TABLE (\S+)/Ss', 'DROP TABLE IF EXISTS `$1`', $schema);
+
+        return $schema;
+    }
+
+    /**
+     * Get all metadata 
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getAllMetadata()
+    {
+        $entities = array();
+        foreach (self::$em->getMetadataFactory()->getAllMetadata() as $md) {
+            if (!$md->isMappedSuperclass) {
+                $entities[] = $md;
+            }
+        }
+
+        return $entities;
+    }
+
+    /**
+     * Load fixtures from YAML file 
+     * 
+     * @param string $path YAML file path
+     *  
+     * @return boolean|integer
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function loadFixturesFromYaml($path)
+    {
+        $data = \Symfony\Component\Yaml\Yaml::load($path);
+
+        $result = false;
+
+        if (is_array($data)) {
+            $result = 0;
+            foreach ($data as $entityName => $rows) {
+                $repo = static::getRepo($entityName);
+                if ($repo) {
+                    $result += $repo->loadFixtures($rows);
+                }
+            }
+
+            static::getEntityManager()->flush();
+        }
+
+        return $result;
+    }
+
+    /**
+     * Setup doctrine cache 
+     * 
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function setDoctrineCache()
+    {
+        self::$cacheDriver = self::getCacheDriverByOptions(\XLite::getInstance()->getOptions('cache'));
+
+        $this->config->setMetadataCacheImpl(self::$cacheDriver);
+        $this->config->setQueryCacheImpl(self::$cacheDriver);
+        $this->config->setResultCacheImpl(self::$cacheDriver);
+    }
+
+    /**
      * Detect APC cache driver
      * 
      * @return boolean
@@ -395,6 +789,10 @@ class Database extends \XLite\Base\Singleton
         $dsnList['path'] = 'mysql:' . implode(';', $dsnString);
         $dsnList['user'] = $options['username'];
         $dsnList['password'] = $options['password'];
+
+        if ('pdo_mysql' == $dsnList['driver']) {
+            $dsnList['driverClass'] = '\XLite\Core\PDOMySqlDriver';
+        }
 
         return $dsnList;
     }

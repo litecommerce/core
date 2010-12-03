@@ -57,6 +57,17 @@ class Config extends \XLite\Model\Repo\Base\I18n
      */
     protected $disabledOptions = array();
 
+    /**
+     * Alternative record identifiers
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $alternativeIdentifier = array(
+        array('category', 'name'),
+    );
 
     /**
      * Define cache cells 
