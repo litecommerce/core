@@ -66,8 +66,8 @@
 <widget if="!cart.empty" template="common/tab.tpl" label="Your Cart" href="cart.php?target=cart" active="cart"/>
 </TD>
 <TD>
-<widget module="WishList" IF="{auth.logged&wishlist.products}" template="common/tab.tpl" label="Wish list" href="cart.php?target=wishlist" img="modules/WishList/wish_list_icon.gif" active="wishlist">
-<widget module="WishList" IF="{auth.logged&!wishlist.products}" template="common/tab.tpl" label="Wish list" href="cart.php?target=wishlist" img="modules/WishList/wish_list_icon_empty.gif" active="wishlist">
+<widget module="CDev\WishList" IF="{auth.logged&wishlist.products}" template="common/tab.tpl" label="Wish list" href="cart.php?target=wishlist" img="modules/WishList/wish_list_icon.gif" active="wishlist">
+<widget module="CDev\WishList" IF="{auth.logged&!wishlist.products}" template="common/tab.tpl" label="Wish list" href="cart.php?target=wishlist" img="modules/WishList/wish_list_icon_empty.gif" active="wishlist">
 </TD>
 <TD>
 <widget if="auth.logged" template="common/tab.tpl" label="Your Account" href="cart.php?target=profile&amp;mode=account" active="profile"/>
@@ -77,7 +77,7 @@
 <widget template="common/tab.tpl" label="Contact Us" href="cart.php?target=help&amp;mode=contactus" active="help"/>
 </TD>
 <TD>
-<widget module="Affiliate" template="common/tab.tpl" label="Affiliate" href="cart.php?target=partner_login" active="partner_login"/>
+<widget module="CDev\Affiliate" template="common/tab.tpl" label="Affiliate" href="cart.php?target=partner_login" active="partner_login"/>
 </TD>
 <!-- add_tabs below are reserved for future modules, DO NOT BIND -->
 <TD>
@@ -129,9 +129,9 @@
 <widget template="search_products.tpl">
 <!-- [/search] -->
 <widget class="\XLite\View\TopCategories" />
-<widget module="Bestsellers" class="\XLite\Module\Bestsellers\View\Bestsellers" widgetType="sidebar" />
-<widget module="GiftCertificates" template="common/sidebar_box.tpl" head="Gift certificates" dir="modules/GiftCertificates/menu">
-<widget module="Affiliate" template="common/sidebar_box.tpl" head="Affiliate" dir="modules/Affiliate/menu">
+<widget module="CDev\Bestsellers" class="\XLite\Module\CDev\Bestsellers\View\Bestsellers" widgetType="sidebar" />
+<widget module="CDev\GiftCertificates" template="common/sidebar_box.tpl" head="Gift certificates" dir="modules/GiftCertificates/menu">
+<widget module="CDev\Affiliate" template="common/sidebar_box.tpl" head="Affiliate" dir="modules/Affiliate/menu">
 <widget template="common/sidebar_box.tpl" head="Help" dir="help">
 <!-- [/left] -->
 	<IMG src="images/spacer.gif" width="180" height="1" alt="">
@@ -150,8 +150,8 @@
 <widget template="common/sidebar_box.tpl" dir="login" name="loginWidget" head="Authentication" IF="{!auth.isLogged()}" />
 <widget template="common/sidebar_box.tpl" dir="profile" name="profileWidget" head="Your profile" IF="{auth.isLogged()}" />
 <widget template="common/sidebar_box.tpl" dir="authentication" name="authenticationWidget" head="Authentication" IF="{auth.isLogged()}" />
-<widget module="ProductAdviser" class="\XLite\Module\ProductAdviser\View\NewArrivals" widgetType="sidebar" />
-<widget module="ProductAdviser" class="\XLite\Module\ProductAdviser\View\RecentlyViewed" widgetType="sidebar" />
+<widget module="CDev\ProductAdviser" class="\XLite\Module\CDev\ProductAdviser\View\NewArrivals" widgetType="sidebar" />
+<widget module="CDev\ProductAdviser" class="\XLite\Module\CDev\ProductAdviser\View\RecentlyViewed" widgetType="sidebar" />
 <!-- [/right] -->
     </TD>
     <TD width="4"><IMG src="images/spacer.gif" width="4" height="1" alt=""></TD>

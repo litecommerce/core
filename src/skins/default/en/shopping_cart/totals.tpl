@@ -12,7 +12,7 @@
  *}
 <table align="right">
 
-  <widget module="WholesaleTrading" template="modules/WholesaleTrading/totals.tpl">
+  <widget module="CDev\WholesaleTrading" template="modules/CDev/WholesaleTrading/totals.tpl">
 
   <tr>
     <td><strong>Subtotal:</strong></td>
@@ -40,7 +40,7 @@
   	<td align="right">{price_format(tax):h}</td>
   </tr>
 
-  <widget module="GiftCertificates" template="modules/GiftCertificates/totals.tpl">
+  <widget module="CDev\GiftCertificates" template="modules/CDev/GiftCertificates/totals.tpl">
 
   <tr>
     <td><strong>Order total:</strong></td>

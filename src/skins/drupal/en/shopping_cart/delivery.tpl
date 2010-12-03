@@ -13,7 +13,7 @@
 <div IF="cart.isDeliveryAvailable()" class="delivery-box">
   <h4>{t(#Delivery#)}</h4>
 
-  <widget module="UPSOnlineTools" template="modules/UPSOnlineTools/delivery.tpl" />
+  <widget module="CDev\UPSOnlineTools" template="modules/CDev/UPSOnlineTools/delivery.tpl" />
 
   <ul IF="!xlite.UPSOnlineToolsEnabled" class="deliveries">
     {foreach:cart.getShippingRates(),rate}

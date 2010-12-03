@@ -23,6 +23,6 @@
 {* Close </form> tag *}
 <widget name="orders_form" end />
 
-<widget module="AccountingPackage" template="common/dialog.tpl" head="Export found orders to MYOB Plus" body="modules/AccountingPackage/export_myob_select.tpl" mode="export_myob" />
+<widget module="CDev\AccountingPackage" template="common/dialog.tpl" head="Export found orders to MYOB Plus" body="modules/CDev/AccountingPackage/export_myob_select.tpl" mode="export_myob" />
 
-<widget module="AccountingPackage" template="common/dialog.tpl" head="Export found orders to Peachtree" body="modules/AccountingPackage/export_pt_select.tpl" mode="export_pt" />
+<widget module="CDev\AccountingPackage" template="common/dialog.tpl" head="Export found orders to Peachtree" body="modules/CDev/AccountingPackage/export_pt_select.tpl" mode="export_pt" />

@@ -12,7 +12,7 @@
  *}
 <p IF="cart.isShippingAvailable()&cart.shipped&cart.getShippingRates()" align="right">
 
-  <widget module="UPSOnlineTools" template="modules/UPSOnlineTools/delivery.tpl">
+  <widget module="CDev\UPSOnlineTools" template="modules/CDev/UPSOnlineTools/delivery.tpl">
 
   <span IF="!xlite.UPSOnlineToolsEnabled">
 

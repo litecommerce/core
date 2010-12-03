@@ -20,7 +20,7 @@
 
 <!-- [main] {{{ -->
 <widget target="access_denied" template="access_denied.tpl" />
-<widget module="GreetVisitor" target="main" mode="" template="modules/GreetVisitor/greet_visitor.tpl" IF="{greetVisitor&!page}">
+<widget module="CDev\GreetVisitor" target="main" mode="" template="modules/CDev/GreetVisitor/greet_visitor.tpl" IF="{greetVisitor&!page}">
 <widget class="\XLite\View\Welcome" name="welcome" />
 <widget target="main" template="pages.tpl">
 <!-- [/main] }}} -->
@@ -46,18 +46,18 @@
 <!-- [/profile] }}} -->
 
 <!-- [checkout] {{{ -->
-<widget module="GoogleCheckout" template="common/dialog.tpl" body="modules/GoogleCheckout/google_checkout_dialog.tpl" head="Google Checkout payment module" IF="{target=#googlecheckout#&!valid}" />
+<widget module="CDev\GoogleCheckout" template="common/dialog.tpl" body="modules/CDev/GoogleCheckout/google_checkout_dialog.tpl" head="Google Checkout payment module" IF="{target=#googlecheckout#&!valid}" />
 <!-- [/checkout] }}} -->
 
 <!-- [modules] {{{ -->
-<widget module="GiftCertificates" class="\XLite\Module\GiftCertificates\View\AddGiftCertificate" />
-<widget module="GiftCertificates" class="\XLite\Module\GiftCertificates\View\Ecards" />
-<widget module="GiftCertificates" class="\XLite\Module\GiftCertificates\View\CheckGiftCertificate" />
-<widget module="GiftCertificates" target="gift_certificate_info" template="common/dialog.tpl" body="modules/GiftCertificates/gift_certificate_info.tpl" head="Gift certificate">
-<widget module="WishList" target="wishlist,product" mode="MessageSent" template="common/dialog.tpl" body="modules/WishList/message.tpl" head="Message has been sent">
-<widget module="WishList" class="\XLite\Module\WishList\View\Wishlist" />
-<widget module="WishList" class="\XLite\Module\WishList\View\SendToFriend" />
-<widget module="ProductAdviser" template="modules/ProductAdviser/center_top.tpl">
+<widget module="CDev\GiftCertificates" class="\XLite\Module\CDev\GiftCertificates\View\AddGiftCertificate" />
+<widget module="CDev\GiftCertificates" class="\XLite\Module\CDev\GiftCertificates\View\Ecards" />
+<widget module="CDev\GiftCertificates" class="\XLite\Module\CDev\GiftCertificates\View\CheckGiftCertificate" />
+<widget module="CDev\GiftCertificates" target="gift_certificate_info" template="common/dialog.tpl" body="modules/CDev/GiftCertificates/gift_certificate_info.tpl" head="Gift certificate">
+<widget module="CDev\WishList" target="wishlist,product" mode="MessageSent" template="common/dialog.tpl" body="modules/CDev/WishList/message.tpl" head="Message has been sent">
+<widget module="CDev\WishList" class="\XLite\Module\CDev\WishList\View\Wishlist" />
+<widget module="CDev\WishList" class="\XLite\Module\CDev\WishList\View\SendToFriend" />
+<widget module="CDev\ProductAdviser" template="modules/CDev/ProductAdviser/center_top.tpl">
 <!-- [/modules] }}} -->
 
 {displayViewListContent(#center#)}

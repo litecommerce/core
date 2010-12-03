@@ -15,7 +15,7 @@
 Use this form to update the information stored in your customer profile.<br>
 Note that fields marked with an asterisk <font class="Star">*</font> are mandatory.
 
-<widget module="Promotion" template="modules/Promotion/bonus_points.tpl">
+<widget module="CDev\Promotion" template="modules/CDev/Promotion/bonus_points.tpl">
 <p>
 
 <widget class="\XLite\View\Form\Profile\Main" name="registration_form" />
@@ -304,7 +304,7 @@ Please leave the password fields empty<br> if you don't want to change the passw
     <td>&nbsp;</td>
 </tr>
 
-<widget module="UPSOnlineTools" template="modules/UPSOnlineTools/notice_register.tpl">
+<widget module="CDev\UPSOnlineTools" template="modules/CDev/UPSOnlineTools/notice_register.tpl">
 </tbody>
 
 <tbody IF="showMembership">
@@ -318,7 +318,7 @@ Please leave the password fields empty<br> if you don't want to change the passw
     <td align="right">Current membership</td>
     <td>&nbsp;</td>
     <td>
-	{membership}&nbsp;<widget module="WholesaleTrading" template="modules/WholesaleTrading/membership/exp_date.tpl">
+	{membership}&nbsp;<widget module="CDev\WholesaleTrading" template="modules/CDev/WholesaleTrading/membership/exp_date.tpl">
 	</td>
 </tr>
 <tr valign="middle">
@@ -329,9 +329,9 @@ Please leave the password fields empty<br> if you don't want to change the passw
 </tr>
 </tbody>
 
-<widget module="WholesaleTrading" template="modules/WholesaleTrading/profile_form.tpl">
+<widget module="CDev\WholesaleTrading" template="modules/CDev/WholesaleTrading/profile_form.tpl">
 {*extraFields*}
-<widget module="GiftCertificates" template="modules/GiftCertificates/active_certificates.tpl">
+<widget module="CDev\GiftCertificates" template="modules/CDev/GiftCertificates/active_certificates.tpl">
 
 </table>
 

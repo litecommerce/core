@@ -68,7 +68,7 @@
     <input type="text" name="{getNamePostedData(#price#)}" size="18" value="{product.price}">
   </td>
 </tr>
-<widget module="ProductAdviser" template="modules/ProductAdviser/price_changed.tpl" IF="{priceNotifyPresent}" dialog="{dialog}">
+<widget module="CDev\ProductAdviser" template="modules/CDev/ProductAdviser/price_changed.tpl" IF="{priceNotifyPresent}" dialog="{dialog}">
 
 <tbody IF="{config.General.enable_sale_price}">
 <tr>
@@ -179,11 +179,11 @@
 </tr>*}
 
 {*extraFields*}
-<widget module="GoogleCheckout" template="modules/GoogleCheckout/product/info.tpl">
+<widget module="CDev\GoogleCheckout" template="modules/CDev/GoogleCheckout/product/info.tpl">
 <widget class="\XLite\View\ExtraFields" template="product/extra_fields.tpl" product="{product}">
 
-<widget module="WholesaleTrading" template="modules/WholesaleTrading/memberships/membership_product.tpl">
-<widget module="ProductAdviser" template="modules/ProductAdviser/product.tpl">
+<widget module="CDev\WholesaleTrading" template="modules/CDev/WholesaleTrading/memberships/membership_product.tpl">
+<widget module="CDev\ProductAdviser" template="modules/CDev/ProductAdviser/product.tpl">
 
 {displayViewListContent(#product.modify.childs#)}
 

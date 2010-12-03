@@ -14,7 +14,7 @@
 
 <p>
 <b><a href="admin.php?target=order&mode=invoice&order_id={order.order_id}" target="_blank"><input type="image" src="images/go.gif" width="13" height="13" border="0" align="absmiddle"> Print invoice</a></b>
-<widget module="UPSOnlineTools" template="modules/UPSOnlineTools/show_container_details.tpl">
+<widget module="CDev\UPSOnlineTools" template="modules/CDev/UPSOnlineTools/show_container_details.tpl">
 
 <P>
 <form action="admin.php" method="POST">

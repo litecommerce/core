@@ -33,21 +33,21 @@ function isValid()
           <span>{product.sku}</span>
         </div>
 
-        <widget module="InventoryTracking" template="modules/InventoryTracking/stock_label.tpl" IF="{product.inventory.found}" />
+        <widget module="CDev\InventoryTracking" template="modules/CDev/InventoryTracking/stock_label.tpl" IF="{product.inventory.found}" />
 
         <widget class="\XLite\View\Price" product="{product}" />
 
-        <widget module="WholesaleTrading" class="\XLite\Module\WholesaleTrading\View\Prices" product="{product}" />
+        <widget module="CDev\WholesaleTrading" class="\XLite\Module\CDev\WholesaleTrading\View\Prices" product="{product}" />
 
-        <widget module="ProductAdviser" class="\XLite\Module\ProductAdviser\View\PriceNotifyLink" product="{product}" />
+        <widget module="CDev\ProductAdviser" class="\XLite\Module\CDev\ProductAdviser\View\PriceNotifyLink" product="{product}" />
 
-        <widget module="ProductOptions" class="\XLite\Module\ProductOptions\View\ProductOptions" product="{product}" />
+        <widget module="CDev\ProductOptions" class="\XLite\Module\CDev\ProductOptions\View\ProductOptions" product="{product}" />
 
-        <widget module="WholesaleTrading" class="\XLite\Module\WholesaleTrading\View\Amount" product="{product}" IF="isAvailableForSale()" />
+        <widget module="CDev\WholesaleTrading" class="\XLite\Module\CDev\WholesaleTrading\View\Amount" product="{product}" IF="isAvailableForSale()" />
 
       <div IF="availableForSale" class="buttons-row">
         <widget class="\XLite\View\Button\Submit" label="Add to Cart" />
-        <widget module="WishList" class="\XLite\Module\WishList\View\Button\AddToWishlist" product="{product}" />
+        <widget module="CDev\WishList" class="\XLite\Module\CDev\WishList\View\Button\AddToWishlist" product="{product}" />
       </div>
 
       </td>
@@ -71,7 +71,7 @@ function isValid()
 
         <div class="product-description">{description:h}</div>
 
-        <widget module="WholesaleTrading" class="\XLite\Module\WholesaleTrading\View\ExtendedOptions" product="{product}" />
+        <widget module="CDev\WholesaleTrading" class="\XLite\Module\CDev\WholesaleTrading\View\ExtendedOptions" product="{product}" />
 
       </td>
     </tr>
@@ -80,5 +80,5 @@ function isValid()
 
 <widget name="add_to_cart" end />
 
-<widget module="ProductAdviser" class="\XLite\Module\ProductAdviser\View\NotifyForm" product="{product}" />
-<widget module="ProductAdviser" class="\XLite\Module\ProductAdviser\View\PriceNotifyForm" product="{product}" />
+<widget module="CDev\ProductAdviser" class="\XLite\Module\CDev\ProductAdviser\View\NotifyForm" product="{product}" />
+<widget module="CDev\ProductAdviser" class="\XLite\Module\CDev\ProductAdviser\View\PriceNotifyForm" product="{product}" />

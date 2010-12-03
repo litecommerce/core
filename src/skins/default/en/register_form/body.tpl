@@ -321,7 +321,7 @@ If you are a registered customer, please <a href="{buildURL(#profile#,##,_ARRAY_
     </td>
 </tr>
 
-<widget module="UPSOnlineTools" template="modules/UPSOnlineTools/notice_register.tpl">
+<widget module="CDev\UPSOnlineTools" template="modules/CDev/UPSOnlineTools/notice_register.tpl">
 
 <tbody IF="showMembership">
 <tr>
@@ -339,7 +339,7 @@ If you are a registered customer, please <a href="{buildURL(#profile#,##,_ARRAY_
 </tbody>
 
 {*extraFields*}
-<widget module="WholesaleTrading" template="modules/WholesaleTrading/profile_form.tpl">
+<widget module="CDev\WholesaleTrading" template="modules/CDev/WholesaleTrading/profile_form.tpl">
 
 </table>
 

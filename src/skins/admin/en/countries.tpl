@@ -74,7 +74,7 @@ Use this section to manage the list of existing countries. This list is used in 
 		    <th class="TableHead">Active<br>
 		    	<input id="enable_countries" type="checkbox" onClick="this.blur();setChecked('enable_countries',this.checked);">
 			</th>
-			<widget module="AntiFraud" template="modules/AntiFraud/risk_country/label.tpl">
+			<widget module="CDev\AntiFraud" template="modules/CDev/AntiFraud/risk_country/label.tpl">
 			<th class="TableHead">Delete<br>
 				<input id="delete_countries" type="checkbox" onClick="this.blur();setDelete('countries_form','countries_ids',this.checked);">
 			</th>
@@ -104,7 +104,7 @@ Use this section to manage the list of existing countries. This list is used in 
 		        <script language="Javascript">CountryEnabledCheckBoxes[CountryEnabledCheckBoxes.length]="country_enabled_{country_idx}";</script>
 		        <script language="Javascript" IF="country.enabled">setHeaderChecked("enable_countries");</script>
 		    </td>
-			    <widget module="AntiFraud" template="modules/AntiFraud/risk_country/checkbox.tpl">
+			    <widget module="CDev\AntiFraud" template="modules/CDev/AntiFraud/risk_country/checkbox.tpl">
 			<td align="center">
 				<input id="countries_ids" type="checkbox" name="delete_countries[]" value="{country.code}" onClick="this.blur();">
 			</td>

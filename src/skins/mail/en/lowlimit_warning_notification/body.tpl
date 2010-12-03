@@ -18,7 +18,7 @@
 Product ID# {product.product_id}<br>
 SKU: {product.sku:h}<br>
 Product name: {product.name:h}<br>
-<widget module="ProductOptions" template="modules/ProductOptions/selected_options.tpl" IF="product.productOptions"/>
+<widget module="CDev\ProductOptions" template="modules/CDev/ProductOptions/selected_options.tpl" IF="product.productOptions"/>
 <br>
 {amount} item(s) in stock<br>
 <br>

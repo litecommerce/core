@@ -75,7 +75,7 @@
 <widget target="module" template="common/dialog.tpl" head="&quot;{page}&quot; add-on settings" body="general_settings.tpl" />
 
 <widget name="categoriesWidget" target="categories" template="common/dialog.tpl" head="Manage categories" body="categories/body.tpl" IF="!mode=#delete#" />
-<widget module="FeaturedProducts" template="common/dialog.tpl" head="Featured products" body="modules/FeaturedProducts/featuredProducts.tpl" IF="{namedWidgets.categoriesWidget.visible}" />
+<widget module="CDev\FeaturedProducts" template="common/dialog.tpl" head="Featured products" body="modules/CDev/FeaturedProducts/featuredProducts.tpl" IF="{namedWidgets.categoriesWidget.visible}" />
 
 {* Some bug in Flexy *}
 <widget target="category" class="\XLite\View\Tabber" body="{getPageTemplate()}" switch="page" head="{category.getName()}" IF="getCategory()" />
@@ -98,11 +98,11 @@
 
 <widget class="\XLite\View\Tabs\AdminProfile" />
 
-<widget target="order_list,order,advanced_security" module="AdvancedSecurity" template="modules/AdvancedSecurity/advanced_security.tpl">
-<widget module="AntiFraud" target='order' IF="{mode}" mode="{mode}" template="common/dialog.tpl" body="modules/AntiFraud/tracking/message.tpl" head="AntiFraud Service Notification">
-<widget module="AntiFraud" target='order' template="common/dialog.tpl" body="modules/AntiFraud/order.tpl" head="AntiFraud Service" IF="{order.details.af_result}">
-<widget target="currencies" module="MultiCurrency" template="common/dialog.tpl" body="modules/MultiCurrency/currencies.tpl">
-<widget target="advanced_search" module="AdvancedSearch" template="common/dialog.tpl" body="modules/AdvancedSearch/config.tpl">
+<widget target="order_list,order,advanced_security" module="CDev\AdvancedSecurity" template="modules/CDev/AdvancedSecurity/advanced_security.tpl">
+<widget module="CDev\AntiFraud" target='order' IF="{mode}" mode="{mode}" template="common/dialog.tpl" body="modules/CDev/AntiFraud/tracking/message.tpl" head="AntiFraud Service Notification">
+<widget module="CDev\AntiFraud" target='order' template="common/dialog.tpl" body="modules/CDev/AntiFraud/order.tpl" head="AntiFraud Service" IF="{order.details.af_result}">
+<widget target="currencies" module="MultiCurrency" template="common/dialog.tpl" body="modules/CDev/MultiCurrency/currencies.tpl">
+<widget target="advanced_search" module="AdvancedSearch" template="common/dialog.tpl" body="modules/CDev/AdvancedSearch/config.tpl">
 <widget target="order_list" template="order/search.tpl">
 
 <widget class="\XLite\View\LanguagesModify\Dialog" />
@@ -114,20 +114,20 @@
 {if:!xlite.GoogleCheckoutEnabled}
 <widget target="order" template="common/dialog.tpl" body="order/order.tpl" head="Order # {order.order_id}">
 {else:}
-<widget module="AOM" template="modules/AOM/main.tpl">
+<widget module="CDev\AOM" template="modules/CDev/AOM/main.tpl">
 {end:}*}
 </span>
 <span IF="xlite.AOMEnabled">
-<widget module="AOM" template="modules/AOM/main.tpl">
+<widget module="CDev\AOM" template="modules/CDev/AOM/main.tpl">
 </span>
 
 <widget class="\XLite\View\Tabs\ShippingSettings">
 
 
-<widget module="GoogleCheckout" template="modules/GoogleCheckout/main.tpl">
+<widget module="CDev\GoogleCheckout" template="modules/CDev/GoogleCheckout/main.tpl">
 
 <widget template="stats.tpl">
-<widget module="EcommerceReports" template="modules/EcommerceReports/reports.tpl">
+<widget module="CDev\EcommerceReports" template="modules/CDev/EcommerceReports/reports.tpl">
 
 <widget target="css_edit" template="common/dialog.tpl" body="css_editor/css_edit.tpl" head="CSS Editor">
 <widget target="image_edit" template="common/dialog.tpl" body="image_editor/edit.tpl" head="Image Editor">
@@ -149,34 +149,34 @@
 <widget target="image_files" template="common/dialog.tpl" body="image_files.tpl" head="Image files">
 
 {* Gift Certificates module *}
-<widget module="GiftCertificates" target="gift_certificates" template="common/dialog.tpl" body="modules/GiftCertificates/list.tpl" head="Gift certificates" />
-<widget module="GiftCertificates" target="add_gift_certificate" template="common/dialog.tpl" body="modules/GiftCertificates/add_gift_certificate.tpl" head="Add gift certificate" />
-<widget module="GiftCertificates" target="gift_certificate" template="common/dialog.tpl" body="modules/GiftCertificates/gift_certificate.tpl" head="Gift certificate" />
+<widget module="CDev\GiftCertificates" target="gift_certificates" template="common/dialog.tpl" body="modules/CDev/GiftCertificates/list.tpl" head="Gift certificates" />
+<widget module="CDev\GiftCertificates" target="add_gift_certificate" template="common/dialog.tpl" body="modules/CDev/GiftCertificates/add_gift_certificate.tpl" head="Add gift certificate" />
+<widget module="CDev\GiftCertificates" target="gift_certificate" template="common/dialog.tpl" body="modules/CDev/GiftCertificates/gift_certificate.tpl" head="Gift certificate" />
 {*
-<widget module="GiftCertificates" target="gift_certificate_ecards" template="common/dialog.tpl" body="modules/GiftCertificates/ecards.tpl" head="Gift certificate e-Cards" />
-<widget module="GiftCertificates" target="gift_certificate_ecard" template="common/dialog.tpl" body="modules/GiftCertificates/ecard.tpl" head="Gift certificate e-Card" />
-<widget module="GiftCertificates" target="gift_certificate_select_ecard" template="common/dialog.tpl" body="modules/GiftCertificates/select_ecard.tpl" head="Select e-Card" />
+<widget module="CDev\GiftCertificates" target="gift_certificate_ecards" template="common/dialog.tpl" body="modules/CDev/GiftCertificates/ecards.tpl" head="Gift certificate e-Cards" />
+<widget module="CDev\GiftCertificates" target="gift_certificate_ecard" template="common/dialog.tpl" body="modules/CDev/GiftCertificates/ecard.tpl" head="Gift certificate e-Card" />
+<widget module="CDev\GiftCertificates" target="gift_certificate_select_ecard" template="common/dialog.tpl" body="modules/CDev/GiftCertificates/select_ecard.tpl" head="Select e-Card" />
 *}
 
-<widget module="Promotion" target="SpecialOffers" template="common/dialog.tpl" body="modules/Promotion/special_offers.tpl" head="Special Offers">
-<widget module="Promotion" target="SpecialOffer" mode="" template="common/dialog.tpl" body="modules/Promotion/special_offer1.tpl" head="Special Offer Type">
-<widget module="Promotion" target="SpecialOffer" mode="details" template="common/dialog.tpl" body="modules/Promotion/special_offer2.tpl" head="Special Offer Details">
-<widget module="Promotion" target="DiscountCoupons" template="common/dialog.tpl" body="modules/Promotion/coupons.tpl" head="Discount coupons">
-<widget module="Promotion" template="modules/Promotion/main.tpl">
+<widget module="CDev\Promotion" target="SpecialOffers" template="common/dialog.tpl" body="modules/CDev/Promotion/special_offers.tpl" head="Special Offers">
+<widget module="CDev\Promotion" target="SpecialOffer" mode="" template="common/dialog.tpl" body="modules/CDev/Promotion/special_offer1.tpl" head="Special Offer Type">
+<widget module="CDev\Promotion" target="SpecialOffer" mode="details" template="common/dialog.tpl" body="modules/CDev/Promotion/special_offer2.tpl" head="Special Offer Details">
+<widget module="CDev\Promotion" target="DiscountCoupons" template="common/dialog.tpl" body="modules/CDev/Promotion/coupons.tpl" head="Discount coupons">
+<widget module="CDev\Promotion" template="modules/CDev/Promotion/main.tpl">
 
-<widget module="USPS" target="usps" class="\XLite\View\Tabber" body="{pageTemplate}" switch="target">
-<widget module="USPS" target="usps"  template="common/dialog.tpl" body="modules/USPS/test.tpl" head="USPS Live Test">
-<widget module="Intershipper" target="intershipper" class="\XLite\View\Tabber" body="{pageTemplate}" switch="target">
-<widget module="Intershipper" target="intershipper"  template="common/dialog.tpl" body="modules/Intershipper/test.tpl" head="Intershipper Live Test">
-<widget module="CanadaPost" target="cps" class="\XLite\View\Tabber" body="{pageTemplate}" switch="target">
-<widget module="CanadaPost" target="cps" template="common/dialog.tpl" body="modules/CanadaPost/test.tpl" head="Canada Post Live Test">
-<widget module="XCartImport" target="xcart_import" template="common/dialog.tpl" body="modules/XCartImport/dialog.tpl" head="Import X-Cart data">
-<widget module="Affiliate" template="modules/Affiliate/main.tpl">
-<widget module="UPSOnlineTools" template="modules/UPSOnlineTools/main.tpl">
-<widget module="ProductAdviser" template="modules/ProductAdviser/main.tpl">
-<widget module="WishList" target="wishlists" template="modules/WishList/wishlists.tpl" head="Wish Lists">
-<widget module="WishList" target="wishlist" template="common/dialog.tpl" body="modules/WishList/wishlist.tpl" head="Wish List">
-<widget module="WholesaleTrading" template="modules/WholesaleTrading/main.tpl"> 
+<widget module="CDev\USPS" target="usps" class="\XLite\View\Tabber" body="{pageTemplate}" switch="target">
+<widget module="CDev\USPS" target="usps"  template="common/dialog.tpl" body="modules/CDev/USPS/test.tpl" head="USPS Live Test">
+<widget module="CDev\Intershipper" target="intershipper" class="\XLite\View\Tabber" body="{pageTemplate}" switch="target">
+<widget module="CDev\Intershipper" target="intershipper"  template="common/dialog.tpl" body="modules/CDev/Intershipper/test.tpl" head="Intershipper Live Test">
+<widget module="CDev\CanadaPost" target="cps" class="\XLite\View\Tabber" body="{pageTemplate}" switch="target">
+<widget module="CDev\CanadaPost" target="cps" template="common/dialog.tpl" body="modules/CDev/CanadaPost/test.tpl" head="Canada Post Live Test">
+<widget module="CDev\XCartImport" target="xcart_import" template="common/dialog.tpl" body="modules/CDev/XCartImport/dialog.tpl" head="Import X-Cart data">
+<widget module="CDev\Affiliate" template="modules/CDev/Affiliate/main.tpl">
+<widget module="CDev\UPSOnlineTools" template="modules/CDev/UPSOnlineTools/main.tpl">
+<widget module="CDev\ProductAdviser" template="modules/CDev/ProductAdviser/main.tpl">
+<widget module="CDev\WishList" target="wishlists" template="modules/CDev/WishList/wishlists.tpl" head="Wish Lists">
+<widget module="CDev\WishList" target="wishlist" template="common/dialog.tpl" body="modules/CDev/WishList/wishlist.tpl" head="Wish List">
+<widget module="CDev\WholesaleTrading" template="modules/CDev/WholesaleTrading/main.tpl"> 
 {displayViewListContent(#admin.center#)}
 <!-- [/center] -->
     </td>

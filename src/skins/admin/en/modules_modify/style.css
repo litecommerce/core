@@ -75,6 +75,12 @@ table.modules-list div.version {
   margin-bottom: 10px;
 }
 
+table.modules-list div.author {
+  font-size: 12px;
+  color: #5c88a8;
+  margin-bottom: 10px;
+}
+
 table.modules-list div.actions {
   margin-bottom: 10px;
 }

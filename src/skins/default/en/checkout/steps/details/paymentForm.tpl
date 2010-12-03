@@ -12,6 +12,6 @@
  *}
 <widget template="{cart.paymentMethod.formTemplate}" IF="cart.paymentMethod.formTemplate" />
 
-<widget module="PayPalPro" template="modules/PayPalPro/standard_checkout.tpl" IF="{cart.paymentMethod.params.solution=#standard#}">
-<widget module="PayPalPro" template="modules/PayPalPro/express_checkout.tpl" IF="{cart.paymentMethod.payment_method=#paypalpro_express#}">
-<widget module="GoogleCheckout" template="modules/GoogleCheckout/google_checkout.tpl" IF="{cart.paymentMethod.payment_method=#google_checkout#}">
+<widget module="CDev\PayPalPro" template="modules/CDev/PayPalPro/standard_checkout.tpl" IF="{cart.paymentMethod.params.solution=#standard#}">
+<widget module="CDev\PayPalPro" template="modules/CDev/PayPalPro/express_checkout.tpl" IF="{cart.paymentMethod.payment_method=#paypalpro_express#}">
+<widget module="CDev\GoogleCheckout" template="modules/CDev/GoogleCheckout/google_checkout.tpl" IF="{cart.paymentMethod.payment_method=#google_checkout#}">

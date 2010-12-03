@@ -42,9 +42,9 @@
     		</td>
       </tr>
 
-      <widget module="ProductAdviser" template="modules/ProductAdviser/product_search.tpl">
+      <widget module="CDev\ProductAdviser" template="modules/CDev/ProductAdviser/product_search.tpl">
 
-      <widget module="InventoryTracking" template="modules/InventoryTracking/product_search.tpl">
+      <widget module="CDev\InventoryTracking" template="modules/CDev/InventoryTracking/product_search.tpl">
 
       {displayViewListContent(#product.search.conditions#)}
 
