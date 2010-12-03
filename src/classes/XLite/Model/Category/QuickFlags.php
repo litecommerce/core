@@ -89,4 +89,17 @@ class QuickFlags extends \XLite\Model\AEntity
      * @Column (type="integer", length="11", nullable=false)
      */
     protected $subcategories_count_enabled = 0;
+
+    /**
+     * Relation to a category entity
+     *
+     * @var    \XLite\Model\Category
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     *
+     * @OneToOne  (targetEntity="XLite\Model\Category", inversedBy="quickFlags")
+     * @JoinColumn (name="category_id", referencedColumnName="category_id")
+     */
+    protected $category;
 }

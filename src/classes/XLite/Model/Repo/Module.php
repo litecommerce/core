@@ -305,9 +305,11 @@ class Module extends \XLite\Model\Repo\ARepo
                 $module = new \XLite\Model\Module();
                 $module->create($name);
                 if ($module::INSTALLED == $module->getInstalled()) {
+                    /* FIXME - obsolete code
                     \XLite\Core\TopMessage::getInstance()->add(
                         $module->getMainClass()->getPostInstallationNotes()
                     );
+                    */
 
                 } else {
                     \XLite\Core\TopMessage::getInstance()->addError(

@@ -77,7 +77,7 @@ class OptionSurcharge extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @Column (type="decimal", precision="4", scale="12")
+     * @Column (type="decimal", precision="14", scale="4")
      */
     protected $modifier = 0.0000;
 
