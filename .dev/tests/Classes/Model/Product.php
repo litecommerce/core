@@ -107,10 +107,10 @@ class XLite_Tests_Model_Product extends XLite_Tests_Model_AProduct
         $entity = new \XLite\Model\Product();
 
         $entity->addOptionGroups(
-            new \XLite\Module\ProductOptions\Model\OptionGroup(
+            new XLite\Module\CDev\ProductOptions\Model\OptionGroup(
                 array(
-					'type' => \XLite\Module\ProductOptions\Model\OptionGroup::GROUP_TYPE,
-					'view_type' => \XLite\Module\ProductOptions\Model\OptionGroup::SELECT_VISIBLE,
+					'type' => XLite\Module\CDev\ProductOptions\Model\OptionGroup::GROUP_TYPE,
+					'view_type' => XLite\Module\CDev\ProductOptions\Model\OptionGroup::SELECT_VISIBLE,
 				)
             )
         );
@@ -118,8 +118,8 @@ class XLite_Tests_Model_Product extends XLite_Tests_Model_AProduct
         $result = array_pop($entity->getOptionGroups()->toArray());
 
         // Check keys
-        $this->assertEquals(\XLite\Module\ProductOptions\Model\OptionGroup::GROUP_TYPE, $result->getType(), 'Invalid group type');
-        $this->assertEquals(\XLite\Module\ProductOptions\Model\OptionGroup::SELECT_VISIBLE, $result->getViewType(), 'Invalid view type');
+        $this->assertEquals(XLite\Module\CDev\ProductOptions\Model\OptionGroup::GROUP_TYPE, $result->getType(), 'Invalid group type');
+        $this->assertEquals(XLite\Module\CDev\ProductOptions\Model\OptionGroup::SELECT_VISIBLE, $result->getViewType(), 'Invalid view type');
     }
 
     /**
