@@ -40,7 +40,7 @@ class Main extends \Includes\Decorator\Plugin\APlugin
     /**
      * Pattern to detect/modify module contoller class name
      */
-    const PATTERN = '/\\\XLite\\\(Module\\\[\w]+\\\)Controller(\\\[\w\\\]*)/Ss';
+    const PATTERN = '/\\\XLite\\\(Module\\\[\w]+\\\[\w]+\\\)Controller(\\\[\w\\\]*)/Ss';
 
 
     /**

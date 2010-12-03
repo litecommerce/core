@@ -368,13 +368,14 @@ abstract class Decorator extends Decorator\ADecorator
 
             foreach (\Includes\Decorator\Utils\ModulesManager::getActiveModules() as $module) {
 
+                $author = $module['author'];
                 $module = $module['name'];
 
-                if (!class_exists('XLite\Module\\' . $module . '\Main', false)) {
-                    require_once (LC_MODULES_DIR . $module . LC_DS . 'Main.php');
+                if (!class_exists('XLite\Module\\' . $author . '\'' . $module . '\Main', false)) {
+                    require_once (LC_MODULES_DIR . $author . LC_DS . $module . LC_DS . 'Main.php');
                 }
                 
-                $mainClassName = \Includes\Decorator\Utils\ModulesManager::getClassNameByModuleName($module);
+                $mainClassName = \Includes\Decorator\Utils\ModulesManager::getClassNameByModuleName($author . '\\' . $module);
 
                 static::$moduleDependencies[$module] = $mainClassName::getDependencies();
             }

@@ -163,6 +163,7 @@ DROP TABLE IF EXISTS xlite_modules;
 CREATE TABLE xlite_modules (
   module_id int(6) NOT NULL auto_increment,
   name varchar(64) NOT NULL default '',
+  author varchar(64) NOT NULL default '',
   enabled int(1) unsigned NOT NULL default '0',
   installed int(1) unsigned NOT NULL default 0,
   last_update int(11) default NULL,

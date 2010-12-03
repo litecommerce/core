@@ -62,6 +62,8 @@ OUT;
 chdir(__DIR__);
 
 define('LC_DO_NOT_REBUILD_CACHE', true);
+define('XLITE_INSTALL_MODE', true);
+
 require_once './top.inc.php';
 
 set_time_limit(0);
@@ -97,12 +99,16 @@ require_once 'classes/XLite/Base/IPatcher.php';
 
 // modules
 
-foreach (glob('classes/XLite/Module/*/Main.php') as $f) {
+foreach (glob('classes/XLite/Module/CDev/*/Main.php') as $f) {
+
 	require_once $f;
 	$class = str_replace('/', '\\', substr($f, 7, -4));
 
-	mysql_query(
-		'REPLACE INTO xlite_modules SET name = \'' . basename(dirname($f)) . '\', installed = 1, last_version = \'' . $class::getVersion() . '\'', 
+	mysql_query('REPLACE INTO xlite_modules SET
+author=\'CDev\',
+name = \'' . basename(dirname($f)) . '\',
+installed = 1,
+last_version = \'' . $class::getVersion() . '\'', 
 		$__connection
 	);
 
