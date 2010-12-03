@@ -382,8 +382,14 @@ class XLite extends \XLite\Base
         // Initialize modules
         $this->initModules();
 
-        // Set skin for admin area
-        if (true === self::$adminZone) {
+        if (\XLite\Core\Request::getInstance()->isCLI()) {
+
+            // Set skin for console interface
+            \XLite\Model\Layout::getInstance()->setConsoleSkin();
+
+        } elseif (true === self::$adminZone) {
+
+            // Set skin for admin interface
             \XLite\Model\Layout::getInstance()->setAdminSkin();
         }
 
