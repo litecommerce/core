@@ -1090,13 +1090,23 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
         $result = 0;  
         list($regular, $assocs) = $this->getEntityProperties();
         foreach ($data as $record) {
-            $entity = $this->findOneByRecord($record) ?: new $class();
-
+            $map = array();
             foreach ($record as $name => $value) {
                 if (isset($regular[$name])) {
-                    $entity->{$regular[$name]['setter']}($value);
+                    $map[$name] = $value;
+                }
+            }
 
-                } elseif (isset($assocs[$name]) && is_array($value)) {
+            $entity = $this->findOneByRecord($record);
+            if ($entity) {
+                $this->update($entity, $map);
+
+            } else {
+                $entity = $this->insert($map);
+            }
+
+            foreach ($record as $name => $value) {
+                if (isset($assocs[$name]) && is_array($value)) {
                     $result += $assocs[$name]['repo']->loadFixtures(
                         $assocs[$name]['many'] ? $value : array($value),
                         array($entity, $assocs[$name]['setter']),
@@ -1114,8 +1124,6 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
             if ($mappedCallback && is_array($parentAddCallback) && 0 < count($parentAddCallback)) {
                 $entity->$mappedCallback($parentAddCallback[0]);
             }
-
-            \XLite\Core\Database::getEM()->persist($entity);
 
             $result++;
         }
