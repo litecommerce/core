@@ -1,0 +1,93 @@
+# vim: set ts=2 sw=2 sts=2 et:
+#
+# Fixtures
+#
+# @author    Creative Development LLC <info@cdev.ru>
+# @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+# @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+# @version   SVN: $Id$
+# @link      http://www.litecommerce.com/
+# @since     3.0.0
+XLite\Model\Config:
+  - name: currency_rate
+    category: AustraliaPost
+    value: 1
+    translations:
+      - code: en
+        option_name: Currency rate
+        option_comment: (specify rate X, where 1 AUD = X in shop currency)
+  - name: height
+    category: AustraliaPost
+    value: 10
+    translations:
+      - code: en
+        option_name: Package height (mm)
+  - name: length
+    category: AustraliaPost
+    value: 100
+    translations:
+      - code: en
+        option_name: Package length (mm)
+  - name: width
+    category: AustraliaPost
+    value: 100
+    translations:
+      - code: en
+        option_name: Package width (mm)
+XLite\Model\Shipping\Method:
+  - processor: aupost
+    carrier: aupost
+    code: AIR
+    enabled: 0
+    position: 0
+    translations:
+      - code: en
+        name: Australia Post Air Mail
+  - processor: aupost
+    carrier: aupost
+    code: ECI_D
+    enabled: 0
+    position: 0
+    translations:
+      - code: en
+        name: Australia Post Express Courier International Document
+  - processor: aupost
+    carrier: aupost
+    code: ECI_M
+    enabled: 0
+    position: 0
+    translations:
+      - code: en
+        name: Australia Post Express Courier International Merchandise
+  - processor: aupost
+    carrier: aupost
+    code: EXPRESS
+    enabled: 0
+    position: 0
+    translations:
+      - code: en
+        name: Australia Post Express Parcels
+  - processor: aupost
+    carrier: aupost
+    code: EPI
+    enabled: 0
+    position: 0
+    translations:
+      - code: en
+        name: Australia Post Express Post International
+  - processor: aupost
+    carrier: aupost
+    code: STANDARD
+    enabled: 0
+    position: 0
+    translations:
+      - code: en
+        name: Australia Post Regular Parcels
+  - processor: aupost
+    carrier: aupost
+    code: SEA
+    enabled: 0
+    position: 0
+    translations:
+      - code: en
+        name: Australia Post Sea Mail
