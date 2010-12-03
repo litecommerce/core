@@ -62,5 +62,5 @@ class ConfigTranslation extends \XLite\Model\Base\Translation
      *
      * @Column (type="string", length="255", nullable=false)
      */
-    protected $option_comment;
+    protected $option_comment = '';
 }
