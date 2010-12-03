@@ -415,6 +415,8 @@ INSERT INTO `xlite_config_translations` VALUES (231,'en',316,'Zip/postal code','
 
 INSERT INTO `xlite_config_translations` VALUES (232,'en', 350, 'Check templates status in runtime', '');
 
+INSERT INTO `xlite_config_translations` VALUES (233,'en', 351, 'CLI mode key', '');
+
 
 -- Memberships
 INSERT INTO xlite_membership_translations (id, code, name) VALUES (1, 'en', 'Gold');

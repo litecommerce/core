@@ -37,6 +37,8 @@ namespace XLite\Core;
  */
 class Request extends \XLite\Base\Singleton
 {
+    const METHOD_CLI = 'cli';
+
     /**
      * Cureent request method 
      * 
@@ -146,7 +148,7 @@ class Request extends \XLite\Base\Singleton
      */
     protected function __construct()
     {
-        $this->requestMethod = isset($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : 'cli';
+        $this->requestMethod = isset($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : self::METHOD_CLI;
         $this->mapRequest();
     }
 
@@ -163,7 +165,15 @@ class Request extends \XLite\Base\Singleton
     public function mapRequest(array $data = array())
     {
         if (empty($data)) {
-            $data = $_REQUEST;
+            if ($this->isCLI()) {
+                for ($i = 1; $i < count($_SERVER['argv']); $i++) {
+                    $pair = explode('=', $_SERVER['argv'][$i], 2);
+                    $data[preg_replace('/^-+/Ss', '', $pair[0])] = isset($pair[1]) ? $pair[1] : false;
+                }
+
+            } else {
+                $data = $_REQUEST;
+            }
         }
 
         $this->data = array_replace_recursive($this->data, $this->prepare($data));

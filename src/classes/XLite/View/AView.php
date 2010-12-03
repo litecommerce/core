@@ -1108,8 +1108,31 @@ abstract class AView extends \XLite\Core\Handler
         return \XLite\Core\Database::getRepo('\XLite\Model\ViewList')->findClassList(
             $this->getViewListClass(),
             $list,
-            \XLite::isAdminZone() ? \XLite\Model\ViewList::INTERFACE_ADMIN : \XLite\Model\ViewList::INTERFACE_CUSTOMER
+            $this->detectCurrentViewZone()
         );
+    }
+
+    /**
+     * Detect current view zone 
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function detectCurrentViewZone()
+    {
+        if (\XLite\Core\Request::getInstance()->isCLI()) {
+            $zone = \XLite\Model\ViewList::INTERFACE_CONSOLE;
+
+        } elseif (\XLite::isAdminZone()) {
+            $zone = \XLite\Model\ViewList::INTERFACE_ADMIN;
+    
+        } else {
+            $zone = \XLite\Model\ViewList::INTERFACE_CUSTOMER;
+        }
+
+        return $zone;
     }
 
     /**

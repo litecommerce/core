@@ -41,9 +41,10 @@ class Layout extends \XLite\Base\Singleton
      * Repository paths 
      */
 
-    const PATH_SKIN   = 'skins';
-    const PATH_COMMON = 'common';
-    const PATH_ADMIN  = 'admin';
+    const PATH_SKIN    = 'skins';
+    const PATH_COMMON  = 'common';
+    const PATH_ADMIN   = 'admin';
+    const PATH_CONSOLE = 'console';
 
 
     /**
@@ -227,6 +228,19 @@ class Layout extends \XLite\Base\Singleton
     }
 
     /**
+     * Set current skin as the admin one
+     * 
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setConsoleSkin()
+    {
+        $this->setSkin(self::PATH_CONSOLE);
+    }
+
+    /**
      * Set current skin as the mail one
      * 
      * @return void
@@ -249,6 +263,9 @@ class Layout extends \XLite\Base\Singleton
      */
     public function setCustomerSkin()
     {
+        $this->skin = null;
+        $this->locale = null;
+
         $this->setOptions();
     }
 
@@ -281,7 +298,9 @@ class Layout extends \XLite\Base\Singleton
         $options = \XLite::getInstance()->getOptions('skin_details');
 
         foreach (array('skin', 'locale') as $name) {
-            isset($this->$name) ?: ($this->$name = $options[$name]);
+            if (!isset($this->$name)) {
+                $this->$name = $options[$name];
+            }
         }
 
         $this->setPath();

@@ -125,8 +125,18 @@ class Converter extends \XLite\Base\Singleton
      */
     public static function getControllerClass($target)
     {
+        if (\XLite\Core\Request::getInstance()->isCLI()) {
+            $zone = 'Console';
+
+        } elseif (\XLite::isAdminZone()) {
+            $zone = 'Admin';
+
+        } else {
+            $zone = 'Customer';
+        }
+
         return '\XLite\Controller\\' 
-               . (\XLite::isAdminZone() ? 'Admin' : 'Customer') 
+               . $zone
                . (empty($target) ? '' : '\\' . self::convertToCamelCase($target));
     }
 

@@ -121,6 +121,8 @@ INSERT INTO `xlite_config` VALUES (77,'def_calc_shippings_taxes','Shipping','che
 
 INSERT INTO `xlite_config` VALUES (350,'check_templates_status','Performance','checkbox',10,'Y');
 
+INSERT INTO `xlite_config` VALUES (351,'cli_key','Security','',110,'');
+
 --  ********************************************************************************************************************
 
 

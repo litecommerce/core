@@ -44,6 +44,7 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
     const PARAM_TAG_LIST_CHILD_CLASS      = 'class';
     const PARAM_TAG_LIST_CHILD_LIST       = 'list';
     const PARAM_TAG_LIST_CHILD_WEIGHT     = 'weight';
+    const PARAM_TAG_LIST_CHILD_ZONE       = 'zone';
     const PARAM_TAG_LIST_CHILD_FIRST      = 'first';
     const PARAM_TAG_LIST_CHILD_LAST       = 'last';
     const PARAM_TAG_LIST_CHILD_CONTROLLER = 'controller';
@@ -269,11 +270,23 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
         return $this->getAllListChildTagAttributes(
             $this->getAnnotatedTemplates(),
             function (\Includes\DataStructure\Cell $node) {
+                $tpl = substr($node->{constant(__CLASS__ . '::N_FILE_PATH')}, strlen(LC_SKINS_DIR));
+
+                $zone = substr($tpl, 0, strpos($tpl, LC_DS));
+
+                if ('console' == $zone) {
+                    $zone = \XLite\Model\ViewList::INTERFACE_CONSOLE;
+
+                } elseif ('admin' == $zone) {
+                    $zone = \XLite\Model\ViewList::INTERFACE_ADMIN;
+
+                } else {
+                    $zone = \XLite\Model\ViewList::INTERFACE_CUSTOMER;
+                }
+
                 return array(
-                    'tpl'  => ($tpl = substr($node->{constant(__CLASS__ . '::N_FILE_PATH')}, strlen(LC_SKINS_DIR))),
-                    'zone' => ('admin' === substr($tpl, 0, strpos($tpl, LC_DS)))
-                        ? \XLite\Model\ViewList::INTERFACE_ADMIN
-                        : \XLite\Model\ViewList::INTERFACE_CUSTOMER,
+                    'tpl'  => $tpl,
+                    'zone' => $zone,
                 );
             }
         );

@@ -58,6 +58,7 @@ class ViewList extends \XLite\Model\AEntity
 
     const INTERFACE_CUSTOMER = 'customer';
     const INTERFACE_ADMIN    = 'admin';
+    const INTERFACE_CONSOLE  = 'console';
 
 
     /**
