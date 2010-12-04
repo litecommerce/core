@@ -173,14 +173,14 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
     /**
      * Method to filter classes by the interface
      * 
-     * @param \Includes\Decorator\Data\Classes\Node $node current node
+     * @param \Includes\Decorator\DataStructure\Node\ClassInfo $node current node
      *  
      * @return bool
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function filterByPatcherInterface(\Includes\Decorator\Data\Classes\Node $node)
+    public function filterByPatcherInterface(\Includes\Decorator\DataStructure\Node\ClassInfo $node)
     {
         return in_array(self::INTERFACE_PATCHER, $node->__get(self::N_INTERFACES));
     }

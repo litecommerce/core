@@ -50,15 +50,16 @@ class Tree extends \Includes\DataStructure\Hierarchical\Tree
 
     /**
      * Check and prepare current element data
-     * 
-     * @param mixed $data Data to prepare
-     *  
+     *
+     * @param string|int $key  node key in data array
+     * @param mixed      $data data to prepare
+     *
      * @return array
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function prepareNodeData($data)
+    protected function prepareNodeData($key, $data)
     {
         //var_dump($data);die;
 
@@ -82,6 +83,6 @@ class Tree extends \Includes\DataStructure\Hierarchical\Tree
         parent::__construct($nodeClass);
 
         // Create full categories tree
-        $this->createFromArray($categories);
+        // $this->createFromArray($categories);
     }
 }

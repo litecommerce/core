@@ -31,23 +31,23 @@ namespace Includes\Decorator\Utils;
 /**
  * Verifier 
  * 
- * @package    XLite
- * @see        ____class_see____
- * @since      3.0.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
 abstract class Verifier extends \Includes\Decorator\Utils\Base\Verifier
 {
     /**
      * Check if node is valid
      * 
-     * @param \Includes\Decorator\Data\Classes\Node $node node to check
+     * @param \Includes\Decorator\DataStructure\Node\ClassInfo $node node to check
      *  
      * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function checkNode(\Includes\Decorator\Data\Classes\Node $node)
+    public static function checkNode(\Includes\Decorator\DataStructure\Node\ClassInfo $node)
     {
         // TODO: move the "checkClassCommentAttributes" method here
     }

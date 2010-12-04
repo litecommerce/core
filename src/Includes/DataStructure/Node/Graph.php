@@ -29,51 +29,119 @@
 namespace Includes\DataStructure\Node;
 
 /**
- * Tree 
+ * Graph 
  * 
- * @package    XLite
- * @see        ____class_see____
- * @since      3.0.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
-abstract class Tree extends \Includes\DataStructure\Node\ANode
+abstract class Graph extends \Includes\DataStructure\Node\ANode
 {
     /**
      * Link to the parent element
      *
-     * @var    self
+     * @var    array
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $parent;
+    protected $parents = array();
 
 
     /**
-     * Return parent node
+     * Perform some action for all parents
+     * 
+     * @param string $method name of method to exec
+     *  
+     * @return null
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function invokeAllParents($method)
+    {
+        foreach ($this->getParents() as $parent) {
+            $parent->$method($this);
+        }
+    }
+
+
+    /**
+     * Check parent by key
      *
-     * @return self
+     * @param string $key node key
+     *
+     * @return bool
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getParent()
+    public function checkIfParentExists($key)
     {
-        return $this->parent;
+        return isset($this->children[$key]);
     }
 
     /**
-     * (Un)Set reference to parent node
+     * Return parent nodes
      *
-     * @param self $parent parent node ref
+     * @param string $key key to search node
+     *  
+     * @return array|self
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getParents($key = null)
+    {
+        // Tree integrity violation
+        if (isset($key) && !$this->checkIfParentExists($key)) {
+            \Includes\ErrorHandler::fireError('Node "' . $this->getKey() . '" has no parent "' . $key . '"');
+        }
+
+        return isset($key) ? $this->parents[$key] : $this->parents;
+    }
+
+    /**
+     * Set reference to parent node
+     *
+     * @param self $node parent node ref
      *
      * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function setParent(self $parent = null)
+    public function addParent(self $node)
     {
-        $this->parent = $parent;
+        $this->parents[$node->getKey()] = $node;
+    }
+
+    /**
+     * Unset reference to parent node
+     *
+     * @param self $node parent node ref
+     *
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function removeParent(self $node)
+    {
+        unset($this->parents[$node->getKey()]);
+    }
+
+    /**
+     * Clear all parents refs
+     * 
+     * @return null
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function removeParents()
+    {
+        $this->parents = array();
     }
 
     /**
@@ -88,7 +156,7 @@ abstract class Tree extends \Includes\DataStructure\Node\ANode
      */
     public function addChild(self $node)
     {
-        $node->setParent($this);
+        $node->addParent($this);
 
         parent::addChild($node);
     }
@@ -105,10 +173,11 @@ abstract class Tree extends \Includes\DataStructure\Node\ANode
      */
     public function removeChild(self $node)
     {
-        $node->setParent(null);
+        $node->removeParent($this);
 
         parent::removeChild($node);
     }
+    
 
     /**
      * Change key for current node
@@ -124,7 +193,7 @@ abstract class Tree extends \Includes\DataStructure\Node\ANode
     {
         parent::changeKey($key);
 
-        $this->getParent()->addChild($this);
+        $this->invokeAllParents('addChild');
     }
 
     /**
@@ -140,7 +209,7 @@ abstract class Tree extends \Includes\DataStructure\Node\ANode
      */
     public function replant(self $parent, array $data = array())
     {
-        !$parent->getKey() ?: $this->getParent()->removeChild($this);
+        !$parent->getKey() ?: $this->remove();
 
         parent::replant($parent, $data);
     }
@@ -155,6 +224,6 @@ abstract class Tree extends \Includes\DataStructure\Node\ANode
      */
     public function remove()
     {
-        $this->getParent()->removeChild($this);
+        $this->invokeAllParents('removeChild');
     }
 }

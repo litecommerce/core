@@ -70,7 +70,7 @@ abstract class ADecorator
     /**
      * Classes tree
      *
-     * @var    \Includes\Decorator\Data\Classes\Tree
+     * @var    \Includes\Decorator\DataStructure\Hierarchical\ClassesTree
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
@@ -81,7 +81,7 @@ abstract class ADecorator
     /**
      * Return (and initialize, if needed) classes tree
      *
-     * @return \Includes\Decorator\Data\Classes\Tree
+     * @return \Includes\Decorator\DataStructure\Hierarchical\ClassesTree
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -89,27 +89,9 @@ abstract class ADecorator
     protected static function getClassesTree()
     {
         if (!isset(static::$classesTree)) {
-            static::$classesTree = new \Includes\Decorator\Data\Classes\Tree();
-            static::$classesTree->create();
+            static::$classesTree = \Includes\Decorator\Utils\DataCollector::createClassesTree();
         }
 
         return static::$classesTree;
-    }
-
-
-    /**
-     * Decoration error
-     *
-     * @param string  $message Error message
-     * @param integer $code    Error code
-     *
-     * @return null
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function fireError($message, $code = null)
-    {
-        return \Includes\Decorator\Utils\ErrorHandler::fireError($message, $code);
     }
 }

@@ -29,13 +29,13 @@
 namespace Includes\Decorator\Plugin\Templates\Data\Templates;
 
 /**
- * List 
+ * Collection 
  * 
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
  */
-class Collection extends \Includes\DataStructure\Hierarchical\AHierarchical
+class Collection
 {
     /**
      * Templates list cache

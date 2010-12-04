@@ -26,16 +26,16 @@
  * @since      3.0.0
  */
 
-namespace Includes\Decorator\Data\Classes;
+namespace Includes\Decorator\DataStructure\Node;
 
 /**
- * Node 
+ * ClassInfo 
  * 
- * @package    XLite
- * @see        ____class_see____
- * @since      3.0.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
-class Node extends \Includes\DataStructure\Node\Tree
+class ClassInfo extends \Includes\DataStructure\Node\Graph
 {
     /**
      * Interface for decorator classes
@@ -51,11 +51,10 @@ class Node extends \Includes\DataStructure\Node\Tree
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected static function getKeyField()
+    protected function getKeyField()
     {
         return \Includes\Decorator\ADecorator::N_CLASS;
     }
-
 
     /**
      * Check if class implements an interface
@@ -161,8 +160,8 @@ class Node extends \Includes\DataStructure\Node\Tree
     public function addChild(self $node)
     {
         // An unexpected logical error (replacement in non-root node)
-        if (isset($this->children[$node->getKey()], $this->parent)) {
-            \Includes\Decorator\ADecorator::fireError('Duplicate child class - "' . $node->getKey() . '"');
+        if ($this->checkIfChildExists($node->getClass()) && $this->getParents()) {
+            \Includes\Decorator\ADecorator::fireError('Duplicate child class - "' . $node->getClass() . '"');
         }
 
         parent::addChild($node);

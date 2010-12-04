@@ -386,16 +386,16 @@ CODE;
     /**
      * Method to filter multilang classes
      *
-     * @param \Includes\Decorator\Data\Classes\Node $node current node
+     * @param \Includes\Decorator\DataStructure\Node\ClassInfo $node current node
      *
      * @return bool
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function filterByMultilangParent(\Includes\Decorator\Data\Classes\Node $node)
+    public function filterByMultilangParent(\Includes\Decorator\DataStructure\Node\ClassInfo $node)
     {
-        return '\XLite\Model\Base\I18n' === $node->__get(self::N_PARENT_CLASS);
+        return in_array('\XLite\Model\Base\I18n', $node->__get(self::N_PARENT_CLASS));
     }
 
     /**

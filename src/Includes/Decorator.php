@@ -52,9 +52,9 @@ abstract class Decorator extends Decorator\ADecorator
     {
         /* foreach (static::getClassesTree()->getIndex() as $node) {
             !($decorators = $node->getDecorators()) ?: \Includes\Decorator\Utils\Operator::decorate($node, $decorators);
-        }
+        }*/
 
-        var_dump(static::getClassesTree()->draw());die;*/
+//        static::getClassesTree()->draw();die;
 
         // Prepare classes list
         static::createClassTreeFull();
@@ -468,12 +468,16 @@ abstract class Decorator extends Decorator\ADecorator
     {
         foreach (static::getClassesTree()->getIndex() as $node) {
 
+            // FIXME
+            $parent = $node->__get(self::N_PARENT_CLASS);
+            $parent = array_shift($parent);
+
             // Save data
             static::$classesInfo[$node->__get(self::N_CLASS)] = array(
                 self::INFO_FILE          => $node->__get(self::N_FILE_PATH),
                 self::INFO_CLASS_ORIG    => $node->__get(self::N_CLASS),
-                self::INFO_EXTENDS       => $node->__get(self::N_PARENT_CLASS),
-                self::INFO_EXTENDS_ORIG  => $node->__get(self::N_PARENT_CLASS),
+                self::INFO_EXTENDS       => $parent,
+                self::INFO_EXTENDS_ORIG  => $parent,
                 self::INFO_IS_DECORATOR  => in_array('\XLite\Base\IDecorator', $node->__get(self::N_INTERFACES)),
                 self::INFO_ENTITY        => !is_null($node->getTag('Entity')),
                 self::INFO_CLASS_COMMENT => ($classComment = $node->__get(self::N_CLASS_COMMENT)),

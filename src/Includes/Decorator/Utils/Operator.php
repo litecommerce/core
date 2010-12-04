@@ -56,15 +56,15 @@ abstract class Operator extends \Includes\Decorator\Utils\Base\Operator
     /**
      * Decorate class
      * 
-     * @param \Includes\Decorator\Data\Classes\Node $parent     class to decorate
-     * @param array                                 $decorators list of decorators (classes)
+     * @param \Includes\Decorator\DataStructure\Node\ClassInfo $parent     class to decorate
+     * @param array                                            $decorators list of decorators (classes)
      *  
      * @return null
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function decorate(\Includes\Decorator\Data\Classes\Node $parent, array $decorators)
+    public static function decorate(\Includes\Decorator\DataStructure\Node\ClassInfo $parent, array $decorators)
     {
     }
 }
