@@ -17,7 +17,7 @@ div.location-node {
 }
 
 div.location-node:hover ul.location-subnodes {
-  display: inline;
+  visibility: visible;
 }
 
 div.location-node.expandable {
@@ -32,7 +32,8 @@ ul.location-subnodes {
   list-style-type: none;
   background-color: #fff;
   z-index: 10000;
-  display: none;
+  display: inline;
+  visibility: hidden;
 }
 
 ul.location-subnodes li {
