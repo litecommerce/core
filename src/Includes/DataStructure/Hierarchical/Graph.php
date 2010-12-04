@@ -26,16 +26,16 @@
  * @since      3.0.0
  */
 
-namespace Includes\Decorator\Data\Classes\Base;
+namespace Includes\DataStructure\Hierarchical;
 
 /**
- * ATree 
+ * Graph 
  * 
- * @package    XLite
- * @see        ____class_see____
- * @since      3.0.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
-class ATree extends \Includes\DataStructure\Hierarchical\Tree
+class Graph extends \Includes\DataStructure\Hierarchical\AHierarchical
 {
     /**
      * Name of the node class
@@ -45,27 +45,5 @@ class ATree extends \Includes\DataStructure\Hierarchical\Tree
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $nodeClass = '\Includes\Decorator\Data\Classes\Node';
-
-
-    /**
-     * Change node data and parent
-     *
-     * @param \Includes\DataStructure\Node\Tree $parent node new parent
-     * @param \Includes\DataStructure\Node\Tree $node   node to get data
-     *
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function replantNode(\Includes\DataStructure\Node\Tree $parent, \Includes\DataStructure\Node\Tree $node)
-    {
-        // Duplacate definition
-        if (($child = $this->find($node->getKey())) && !$child->isStub()) {
-            static::fireError('Duplicate class definition - "' . $child->getKey() . '"');
-        }
-
-        return parent::replantNode($parent, $node);
-    }
+    protected $nodeClass = '\Includes\DataStructure\Node\Graph';
 }

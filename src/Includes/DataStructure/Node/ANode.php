@@ -31,49 +31,112 @@ namespace Includes\DataStructure\Node;
 /**
  * ANode 
  * 
- * @package    XLite
- * @see        ____class_see____
- * @since      3.0.0
+ * @package XLite
+ * @see     ____class_see____
+ * @since   3.0.0
  */
 abstract class ANode extends \Includes\DataStructure\Cell
 {
     /**
-     * Link to the parent element
+     * Flag for so called "stub" nodes
+     */
+    const IS_STUB = 'isStub';
+
+
+    /**
+     * Child nodes list
      *
-     * @var    self
+     * @var    array
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      */
-    protected $parent;
+    protected $children = array();
 
 
     /**
-     * Return node parent 
-     * 
-     * @return self
-     * @access public
+     * Return name of the key field
+     *
+     * @return string
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getParent()
+    abstract protected function getKeyField();
+
+
+    /**
+     * Check child by key
+     * 
+     * @param string $key node key
+     *  
+     * @return bool
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function checkIfChildExists($key)
     {
-        return $this->parent;
+        return isset($this->children[$key]);
     }
 
     /**
-     * (Un)Set reference to parent node
+     * Get node key
      *
-     * @param self $parent parent node ref
-     *
-     * @return void
+     * @return string|int
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function setParent(self $parent = null)
+    public function getKey()
     {
-        $this->parent = $parent;
+        return $this->__get($this->getKeyField());
+    }
+
+    /**
+     * Return list of child nodes
+     *
+     * @param string $key node key
+     *
+     * @return array|self
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getChildren($key = null)
+    {
+        // Tree integrity violation
+        if (isset($key) && !$this->checkIfChildExists($key)) {
+            \Includes\ErrorHandler::fireError('Node "' . $this->getKey() . '" has no child "' . $key . '"');
+        }
+
+        return isset($key) ? $this->children[$key] : $this->children;
+    }
+
+    /**
+     * Check if this node is the "stub" node
+     *
+     * @return bool
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isStub()
+    {
+        return $this->__isset(self::IS_STUB);
+    }
+
+    /**
+     * Return node name for output
+     *
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getReadableName()
+    {
+        return $this->getKey();
     }
 
     /**
@@ -88,7 +151,7 @@ abstract class ANode extends \Includes\DataStructure\Cell
      */
     public function addChild(self $node)
     {
-        $node->setParent($this);
+        $this->children[$node->getKey()] = $node;
     }
 
     /**
@@ -103,6 +166,69 @@ abstract class ANode extends \Includes\DataStructure\Cell
      */
     public function removeChild(self $node)
     {
-        $node->setParent();
+        unset($this->children[$node->getKey()]);
+    }
+
+    /**
+     * Change key for current node
+     * 
+     * @param string $key key to set
+     *  
+     * @return null
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function changeKey($key)
+    {
+        $this->remove();
+
+        $this->__set($this->getKeyField(), $key);
+    }
+
+    /**
+     * "Re-plant" node: move the sub-tree from root to the already created sub-tree
+     *
+     * @param self  $parent new parent (root to re-plant to)
+     * @param array $data   data for replanted node
+     *
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function replant(self $parent, array $data = array())
+    {
+        $this->__unset(self::IS_STUB);
+        $this->setData($data);
+
+        $parent->addChild($this);
+    }
+
+    /**
+     * Remove node
+     *
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function remove()
+    {
+    }
+
+    /**
+     * Add stub node to the tree
+     *
+     * @param string $key new node key
+     *
+     * @return self
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function createStubNode($key)
+    {
+        return new static(array($this->getKeyField() => $key, self::IS_STUB => true));
     }
 }

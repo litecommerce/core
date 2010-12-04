@@ -45,7 +45,7 @@ class Node extends \Includes\DataStructure\Node\Tree
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected static function getKeyField()
+    protected function getKeyField()
     {
         return 'category_id';
     }

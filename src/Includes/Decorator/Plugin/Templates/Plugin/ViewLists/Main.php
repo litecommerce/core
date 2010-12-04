@@ -69,14 +69,14 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
     /**
      * Common function to filter classes and templates
      * 
-     * @param \Includes\DataStructure\Hierarchical\AHierarchical $set set of entities
+     * @param mixed $set set of entities
      *  
      * @return array
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getAnnotatedEntites(\Includes\DataStructure\Hierarchical\AHierarchical $set)
+    protected function getAnnotatedEntites($set)
     {
         return $set->findByCallback(array($this, 'filterByListChildTag'));
     }
@@ -212,7 +212,8 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
     /**
      * Return all defined "ListChild" tag attributes
      *
-     * @param \Includes\Decorator\Data\Classes\Node $node class tree node
+     * @param array $nodes    list of nodes
+     * @param array $callback callback to prepare additional data
      *  
      * @return array
      * @access protected

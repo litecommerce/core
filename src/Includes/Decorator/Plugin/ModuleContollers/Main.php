@@ -59,13 +59,13 @@ class Main extends \Includes\Decorator\Plugin\APlugin
     /**
      * Remove the module-related part from module controller class
      *
-     * @param \Includes\Decorator\Data\Classes\Node $node node to prepare
+     * @param \Includes\Decorator\DataStructure\Node\ClassInfo $node node to prepare
      *
      * @return string
      * @access protected
      * @since  3.0
      */
-    protected function prepareModuleControllerClass(\Includes\Decorator\Data\Classes\Node $node)
+    protected function prepareModuleControllerClass(\Includes\Decorator\DataStructure\Node\ClassInfo $node)
     {
         return preg_replace(self::PATTERN, '\\\\XLite\\\\Controller$2', $node->getClass());
     }
@@ -82,7 +82,7 @@ class Main extends \Includes\Decorator\Plugin\APlugin
     public function executeHookHandlerPreprocess()
     {
         foreach ($this->getModuleControllersList() as $node) {
-            $node->changeKey($this->prepareModuleControllerClass($node));
+            static::getClassesTree()->changeNodeKey($node, $this->prepareModuleControllerClass($node));
         }
     }
 
@@ -90,14 +90,14 @@ class Main extends \Includes\Decorator\Plugin\APlugin
     /**
      * Method to check class nodes in tree
      * 
-     * @param \Includes\Decorator\Data\Classes\Node $node node to check
+     * @param \Includes\Decorator\DataStructure\Node\ClassInfo $node node to check
      *  
      * @return bool
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function isModuleController(\Includes\Decorator\Data\Classes\Node $node)
+    public function isModuleController(\Includes\Decorator\DataStructure\Node\ClassInfo $node)
     {
         return !$node->isDecorator() && preg_match(self::PATTERN, $node->getClass());
     }

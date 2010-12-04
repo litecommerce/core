@@ -37,4 +37,383 @@ namespace Includes\DataStructure\Hierarchical;
  */
 abstract class AHierarchical
 {
+    /**
+     * Base class for tree nodes 
+     */
+    const NODE_CLASS_BASE = '\Includes\DataStructure\Node\ANode';
+
+
+    /**
+     * Tree root
+     *
+     * @var    \Includes\DataStructure\Node\ANode
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $root;
+
+    /**
+     * Tree index
+     *
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $index = array();
+
+    /**
+     * Name of the node class (abstract property)
+     *
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $nodeClass;
+
+
+    /**
+     * Action to perform in "collectGarbage" method
+     *
+     * @param \Includes\DataStructure\Node\ANode $node current node
+     *
+     * @return null
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function performCleanupAction(\Includes\DataStructure\Node\ANode $node)
+    {
+        !$node->isStub() ?: $this->removeNode($node);
+    }
+
+    /**
+     * Remove the stub nodes
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function collectGarbage()
+    {
+        foreach ($this->getIndex() as $node) {
+            $this->performCleanupAction($node);
+        }
+    }
+
+    /**
+     * Check and prepare current element data
+     *
+     * @param string|int $key  node key in data array
+     * @param mixed      $data data to prepare
+     *
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function prepareNodeData($key, $data)
+    {
+        return $data;
+    }
+
+    /**
+     * Check constrains
+     *
+     * @param \Includes\DataStructure\Node\ANode $node node to check
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function checkAddedNode(\Includes\DataStructure\Node\ANode $node)
+    {
+    }
+
+
+    /**
+     * Add child node and index it
+     *
+     * @param \Includes\DataStructure\Node\ANode $parent parent node
+     * @param \Includes\DataStructure\Node\ANode $node   child node to add
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function addChildNode(\Includes\DataStructure\Node\ANode $parent, \Includes\DataStructure\Node\ANode $node)
+    {
+        $parent->addChild($node);
+        $this->index[$node->getKey()] = $node;
+    }
+
+    /**
+     * Remove node and clear index
+     *
+     * @param \Includes\DataStructure\Node\ANode $parent parent node
+     * @param \Includes\DataStructure\Node\ANode $node   child node to add
+     *
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function removeChildNode(\Includes\DataStructure\Node\ANode $parent, \Includes\DataStructure\Node\ANode $node)
+    {
+        $parent->removeChild($node);
+        unset($this->index[$node->getKey()]);
+    }
+
+    /**
+     * So called "re-plant" operation: move subtree to a new parent
+     *
+     * @param \Includes\DataStructure\Node\ANode $parent new parent node
+     * @param \Includes\DataStructure\Node\ANode $node   node to move
+     *
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function replantNode(\Includes\DataStructure\Node\ANode $parent, \Includes\DataStructure\Node\ANode $node)
+    {
+        // Find existsting node
+        if ($child = $this->find($node->getKey())) {
+
+            // So called "re-plant" operation: change node parent
+            $child->replant($parent, $node->getData());
+        }
+
+        return $child;
+    }
+
+    /**
+     * Create new node
+     *
+     * @param array $node node data
+     *
+     * @return \Includes\DataStructure\Node\ANode
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function createNode(array $data = array())
+    {
+        return new $this->nodeClass($data);
+    }
+
+    /**
+     * Create so called "stub" node
+     * 
+     * @param string $key node key
+     *  
+     * @return \Includes\DataStructure\Node\ANode
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function createStubNode($key)
+    {
+        return $this->getRoot()->createStubNode($key);
+    }
+
+    /**
+     * Change key for node
+     * 
+     * @param \Includes\DataStructure\Node\ANode $node node to change key
+     * @param string                             $key  new key
+     *  
+     * @return null
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function changeNodeKey(\Includes\DataStructure\Node\ANode $node, $key)
+    {
+        if ($this->find($key)) {
+            \Includes\ErrorHandler::fireError('Duplicate key: "' . $key . '"');
+        }
+
+        $node->changeKey($key);
+    }
+
+    /**
+     * Add node to the tree
+     *
+     * @param \Includes\DataStructure\Node\ANode $node node to add
+     *
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function addNode(\Includes\DataStructure\Node\ANode $node)
+    {
+        \Includes\ErrorHandler::fireError('Abstract method call: "' . __METHOD__ . '"');
+    }
+
+    /**
+     * Remove node
+     *
+     * @param \Includes\DataStructure\Node\ANode $node node to remove
+     *
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function removeNode(\Includes\DataStructure\Node\ANode $node)
+    {
+        $node->remove();
+        unset($this->index[$node->getKey()]);
+
+        // Overkill
+        $node = null;
+        unset($node);
+    }
+
+    /**
+     * Find node by key
+     *
+     * @param string|int $key key to search
+     *
+     * @return \Includes\DataStructure\Node\ANode|null
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function find($key)
+    {
+        return isset($this->index[$key]) ? $this->index[$key] : null;
+    }
+
+    /**
+     * Find nodes using a callback function
+     *
+     * @param mixed $callback callback to execute
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function findByCallback($callback)
+    {
+        return array_filter($this->getIndex(), $callback);
+    }
+
+    /**
+     * Return tree index
+     *
+     * @return array
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getIndex()
+    {
+        return $this->index;
+    }
+
+    /**
+     * Return root node
+     *
+     * @return \Includes\DataStructure\Node\ANode
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getRoot()
+    {
+        return $this->root;
+    }
+
+    /**
+     * Visualize tree
+     *
+     * @param \Includes\DataStructure\Node\ANode $root   root node of current level
+     * @param int                               $offset level offset
+     *
+     * @return null
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function draw(\Includes\DataStructure\Node\ANode $root = null, $offset = 0)
+    {
+        if (!isset($root)) {
+            $root = $this->root;
+        }
+
+        foreach ($root->getChildren() as $child) {
+
+            // Output
+            echo (str_repeat('|__', floor($offset / 2)) . $child->getReadableName() . '<br />');
+
+            // Recursive call: next level
+            $this->draw($child, $offset + 2);
+        }
+    }
+
+    /**
+     * Create the tree using a plain array
+     *
+     * @param array|Iterator $dataset plain array
+     *
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function createFromArray($dataset)
+    {
+        // Iterate over the passed array
+        foreach ($dataset as $key => $data) {
+
+            // Check and prepare current element data
+            if ($data = $this->prepareNodeData($key, $data)) {
+
+                // Add node to the tree
+                $this->addNode($node = $this->createNode($data));
+
+                // Check constrains
+                $this->checkAddedNode($node);
+            }
+        }
+
+        // Remove the stub nodes
+        $this->collectGarbage();
+    }
+
+    /**
+     * Constructor
+     *
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function __construct($nodeClass = null)
+    {
+        if ($nodeClass = $nodeClass ?: $this->nodeClass) {
+
+            // Check if node class is allowed
+            if (!is_subclass_of($nodeClass, self::NODE_CLASS_BASE)) {
+                \Includes\ErrorHandler::fireError('"' . $nodeClass . '": invalid class for node tree');
+            }
+
+        } else {
+
+            // Nor defined neither passed
+            \Includes\ErrorHandler::fireError('Class for tree nodes is not defined');
+        }
+
+        $this->nodeClass = $nodeClass;
+        $this->root = $this->createNode();
+    }
 }

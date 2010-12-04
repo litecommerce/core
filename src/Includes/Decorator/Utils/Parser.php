@@ -113,6 +113,7 @@ abstract class Parser extends \Includes\Decorator\Utils\Base\Parser
     {
         $namespace  = static::getField($data, self::N_NAMESPACE);
         $class      = static::getField($data, self::N_CLASS);
+        $parent     = static::getField($data, self::N_PARENT_CLASS);
         $interfaces = static::getField($data, self::N_INTERFACES);
         $filePath   = static::getField($data, self::N_FILE_PATH);
 
@@ -120,6 +121,9 @@ abstract class Parser extends \Includes\Decorator\Utils\Base\Parser
         if ($namespace && '\\' !== substr($class, 0, 1)) {
             $data[self::N_CLASS] = '\\' . $namespace . '\\' . $class;
         }
+
+        // Prepare for the "MultipleInheritance" plugin
+        $data[self::N_PARENT_CLASS] = (array) $parent;
 
         // Get implemented interfaces
         $data[self::N_INTERFACES] = $interfaces ? explode(',', str_replace(' ', '', trim($interfaces))) : array();

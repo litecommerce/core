@@ -38,6 +38,39 @@ namespace Includes;
 abstract class ErrorHandler
 {
     /**
+     * Throw exception
+     *
+     * @param string  $message Error message
+     * @param integer $code    Error code
+     *
+     * @return null
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function throwException($message, $code)
+    {
+        throw new \Exception($message, $code);
+    }
+
+    /**
+     * Add info to a log file
+     *
+     * @param string  $message Error message
+     * @param integer $code    Error code
+     *
+     * @return null
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function logInfo($message, $code)
+    {
+        // TODO
+    }
+
+
+    /**
      * Shutdown function
      * 
      * @return void
@@ -82,5 +115,22 @@ abstract class ErrorHandler
     public static function handleException(\Exception $exception)
     {
         echo nl2br($exception);
+    }
+
+    /**
+     * Decoration error
+     *
+     * @param string  $message Error message
+     * @param integer $code    Error code
+     *
+     * @return null
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function fireError($message, $code = null)
+    {
+        static::logInfo($message, $code);
+        static::throwException($message, $code);
     }
 }
