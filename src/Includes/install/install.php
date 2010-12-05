@@ -997,29 +997,45 @@ function doInstallDatabase($trigger, &$params, $silentMode = false)
 
             $_sql = $lcSettings['sql_files']['base'];
 
-            $modulesDir = opendir(constant('LC_ROOT_DIR') . 'classes/XLite/Module');
             $modulesFound = array();
 
-            while (($dir = readdir($modulesDir)) !== false) {
+            $lcModuleDir = constant('LC_ROOT_DIR') . 'classes' . LC_DS . 'XLite' . LC_DS . 'Module';
 
-                if ($dir{0} != '.' && is_dir(constant('LC_ROOT_DIR') . 'classes/XLite/Module/' . $dir)) {
-                    $modulesFound[] = $dir;
+            $authorsDir = scandir($lcModuleDir);
+
+            if (!empty($authorsDir) ) {
+
+                foreach ($authorsDir as $authorDir) {
+
+                    if ($authorDir{0} != '.' && is_dir($lcModuleDir . LC_DS . $authorDir)) {
+
+                        $modulesDir = opendir($lcModuleDir . LC_DS . $authorDir);
+
+                        while (($dir = readdir($modulesDir)) !== false) {
+
+                            if ($dir{0} != '.' && is_dir($lcModuleDir . LC_DS . $authorDir . LC_DS . $dir)) {
+                                $modulesFound[] = $authorDir . LC_DS . $dir;
+                            }
+                        }
+
+                        closedir($modulesDir);
+                    }
                 }
             }
-
-            closedir($modulesDir);
 
             sort($modulesFound, SORT_STRING);
 
             foreach ($modulesFound as $dir) {
 
-                include_once constant('LC_ROOT_DIR') . 'classes/XLite/Module/' . $dir . '/Main.php';
+                include_once $lcModuleDir . LC_DS . $dir . LC_DS . 'Main.php';
 
-                $class = '\\XLite\\Module\\' . $dir . '\\Main';
+                list($author, $moduleName) = explode(LC_DS, $dir);
 
-                $_queries[] = 'REPLACE INTO xlite_modules SET name = \'' . $dir . '\', enabled = \'' . intval(in_array($dir, $lcSettings['enable_modules'])). '.\', installed = 1, last_version = \'' . call_user_func(array($class, 'getVersion')) . '\'';
+                $class = '\\XLite\\Module\\' . $author . '\\' . $moduleName . '\\Main';
 
-                $_moduleSqlFile = 'classes/XLite/Module/' . $dir . '/install.sql';
+                $_queries[] = 'REPLACE INTO xlite_modules SET author = \'' . $author . '\', name = \'' . $moduleName . '\', enabled = \'' . intval(in_array($author . '\\' . $moduleName, $lcSettings['enable_modules'])). '.\', installed = 1, last_version = \'' . call_user_func(array($class, 'getVersion')) . '\'';
+
+                $_moduleSqlFile = 'classes' . LC_DS . 'XLite' . LC_DS . 'Module' . LC_DS . $dir . LC_DS . 'install.sql';
 
                 if (file_exists(constant('LC_ROOT_DIR') . $_moduleSqlFile)) {
                     $_sql[] = $_moduleSqlFile;
