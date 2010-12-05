@@ -197,24 +197,6 @@ abstract class Graph extends \Includes\DataStructure\Node\ANode
     }
 
     /**
-     * "Re-plant" node: move the sub-tree from root to the already created sub-tree
-     *
-     * @param self  $parent new parent (root to re-plant to)
-     * @param array $data   data for replanted node
-     *
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function replant(self $parent, array $data = array())
-    {
-        !$parent->getKey() ?: $this->remove();
-
-        parent::replant($parent, $data);
-    }
-
-    /**
      * Remove node
      *
      * @return void

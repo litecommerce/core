@@ -182,7 +182,6 @@ abstract class ANode extends \Includes\DataStructure\Cell
     public function changeKey($key)
     {
         $this->remove();
-
         $this->__set($this->getKeyField(), $key);
     }
 
@@ -202,6 +201,7 @@ abstract class ANode extends \Includes\DataStructure\Cell
         $this->__unset(self::IS_STUB);
         $this->setData($data);
 
+        $this->remove();
         $parent->addChild($this);
     }
 

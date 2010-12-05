@@ -77,6 +77,19 @@ abstract class DataCollector extends \Includes\Decorator\Utils\AUtils
     }
 
     /**
+     * Return list of active modules
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function getActiveModulesList()
+    {
+        return \Includes\Decorator\Utils\ModulesManager::getActiveModules();
+    }
+
+    /**
      * Generate classes tree (graph in common case)
      *
      * NOTE: do NOT call this function directly. Use wrapper in ADecorator instead
@@ -92,5 +105,21 @@ abstract class DataCollector extends \Includes\Decorator\Utils\AUtils
         $tree->createFromArray(static::getFileIterator()->getIterator());
 
         return $tree;
+    }
+
+    /**
+     * Return module dependencies graph
+     * 
+     * @return null
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getModulesGraph()
+    {
+        $graph = new \Includes\Decorator\DataStructure\Hierarchical\ModulesGraph();
+        $graph->createFromArray(static::getActiveModulesList());
+
+        return $graph;
     }
 }
