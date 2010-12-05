@@ -98,31 +98,18 @@ class ClassesTree extends \Includes\DataStructure\Hierarchical\Graph
         // $node->__unset(\Includes\Decorator\ADecorator::N_PARENT_CLASS);
     }
 
-
     /**
-     * Add node to the tree
+     * Stub function to use in "addNode()"
      *
-     * @param \Includes\DataStructure\Node\ANode $node node to add
+     * @param \Includes\DataStructure\Node\ANode $node node to get info
      *
-     * @return void
-     * @access public
+     * @return array
+     * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function addNode(\Includes\DataStructure\Node\ANode $node)
+    protected function getNodeParents(\Includes\DataStructure\Node\ANode $node)
     {
-        // If there are no classes set a stub
-        foreach (($node->__get(\Includes\Decorator\ADecorator::N_PARENT_CLASS) ?: array(null)) as $class) {
-
-            // Check if parent class was already added to the tree
-            if (!($parent = $class ? $this->find($class) : null)) {
-
-                // Create stub node for parent if it not exists
-                $this->addChildNode($this->getRoot(), $parent = $this->createStubNode($class));
-            }
-
-            // Add or replace node
-            $this->replantNode($parent, $node) ?: $this->addChildNode($parent, $node);
-        }
+        return array_merge(parent::getNodeParents($node), $node->__get(\Includes\Decorator\ADecorator::N_PARENT_CLASS));
     }
 }

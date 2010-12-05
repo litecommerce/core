@@ -50,11 +50,13 @@ abstract class Decorator extends Decorator\ADecorator
      */
     public static function buildCache()
     {
+        // var_dump(\Includes\Decorator\Utils\DataCollector::getModulesGraph()->draw());die;
+
         /* foreach (static::getClassesTree()->getIndex() as $node) {
             !($decorators = $node->getDecorators()) ?: \Includes\Decorator\Utils\Operator::decorate($node, $decorators);
         }*/
 
-//        static::getClassesTree()->draw();die;
+        // static::getClassesTree()->draw();die;
 
         // Prepare classes list
         static::createClassTreeFull();
@@ -375,7 +377,7 @@ abstract class Decorator extends Decorator\ADecorator
                     require_once (LC_MODULES_DIR . $author . LC_DS . $module . LC_DS . 'Main.php');
                 }
                 
-                $mainClassName = \Includes\Decorator\Utils\ModulesManager::getClassNameByModuleName($author . '\\' . $module);
+                $mainClassName = \Includes\Decorator\Utils\ModulesManager::getClassNameByModuleName($module, $author);
 
                 static::$moduleDependencies[$module] = $mainClassName::getDependencies();
             }
@@ -470,7 +472,7 @@ abstract class Decorator extends Decorator\ADecorator
 
             // FIXME
             $parent = $node->__get(self::N_PARENT_CLASS);
-            $parent = array_shift($parent);
+            $parent = empty($parent) ? null : array_shift($parent);
 
             // Save data
             static::$classesInfo[$node->__get(self::N_CLASS)] = array(

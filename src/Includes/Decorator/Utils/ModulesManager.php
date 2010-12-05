@@ -124,19 +124,35 @@ abstract class ModulesManager extends AUtils
             . '))*\.' . $extension . '$/i';
     }
 
+    /**
+     * Add the "class" property to each element of active modules list
+     * 
+     * @return null
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function setModuleClassNames()
+    {
+        foreach (static::$activeModules as &$info) {
+            $info['class'] = static::getClassNameByModuleName($info['name'], $info['author']);
+        }
+    }
+
 
     /**
      * Get class name by module name
      *
-     * @param string $moduleName module name to use
+     * @param string $name   module name
+     * @param string $author module author
      *
      * @return string
      * @access public
      * @since  3.0
      */
-    public static function getClassNameByModuleName($moduleName)
+    public static function getClassNameByModuleName($name, $author)
     {
-        return '\XLite\Module\\' . $moduleName . '\Main';
+        return '\XLite\Module\\' . $author . '\\' . $name . '\Main';
     }
 
     /**
@@ -167,6 +183,7 @@ abstract class ModulesManager extends AUtils
     {
         if (!isset(static::$activeModules)) {
             static::$activeModules = static::getModulesList();
+            static::setModuleClassNames();
         }
 
         return isset($moduleName) ? isset(static::$activeModules[$moduleName]) : static::$activeModules;

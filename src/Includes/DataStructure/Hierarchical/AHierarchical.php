@@ -134,6 +134,36 @@ abstract class AHierarchical
     {
     }
 
+    /**
+     * Stub function to use in "addNode()"
+     * 
+     * @param \Includes\DataStructure\Node\ANode $node node to get info
+     *  
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getNodeParents(\Includes\DataStructure\Node\ANode $node)
+    {
+        return array();
+    }
+
+    /**
+     * Ancillary method to use in "addNode()"
+     * 
+     * @param mixed $data data to parse
+     *  
+     * @return mixed
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function parseNodeData($data)
+    {
+        return $data;
+    }
+
 
     /**
      * Add child node and index it
@@ -187,9 +217,12 @@ abstract class AHierarchical
 
             // So called "re-plant" operation: change node parent
             $child->replant($parent, $node->getData());
-        }
 
-        return $child;
+        } else {
+
+            // Node not found - add new
+            $this->addChildNode($parent, $node);
+        }
     }
 
     /**
@@ -240,21 +273,6 @@ abstract class AHierarchical
         }
 
         $node->changeKey($key);
-    }
-
-    /**
-     * Add node to the tree
-     *
-     * @param \Includes\DataStructure\Node\ANode $node node to add
-     *
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function addNode(\Includes\DataStructure\Node\ANode $node)
-    {
-        \Includes\ErrorHandler::fireError('Abstract method call: "' . __METHOD__ . '"');
     }
 
     /**
@@ -347,7 +365,7 @@ abstract class AHierarchical
     public function draw(\Includes\DataStructure\Node\ANode $root = null, $offset = 0)
     {
         if (!isset($root)) {
-            $root = $this->root;
+            $root = $this->getRoot();
         }
 
         foreach ($root->getChildren() as $child) {
@@ -357,6 +375,43 @@ abstract class AHierarchical
 
             // Recursive call: next level
             $this->draw($child, $offset + 2);
+        }
+    }
+
+    /**
+     * Common method to add node to the structure
+     *
+     * @param \Includes\DataStructure\Node\ANode $node node to add
+     *
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function addNode(\Includes\DataStructure\Node\ANode $node)
+    {
+        // Check if node has parents
+        if ($parents = $this->getNodeParents($node)) {
+
+            // Link node to all parent nodes
+            // FIXME: divide code between Tree and Graph
+            foreach ((array) $parents as $data) {
+
+                // Check if parent class was already added to the tree
+                if (!($parent = $this->find($key = $this->parseNodeData($data)))) {
+
+                    // Create stub node for parent if it not exists
+                    $this->addChildNode($this->getRoot(), $parent = $this->createStubNode($key));
+                }
+
+                // Re-plant current node
+                $this->replantNode($parent, $node);
+            }
+
+        } else {
+
+            // Root class
+            $this->replantNode($this->getRoot(), $node);
         }
     }
 
