@@ -129,18 +129,18 @@ $lcSettings = array(
 
     // The list of modules that must be enabled by installation script
     'enable_modules' => array(
-        'DrupalConnector', // Allows to use Drupal CMS as a storefront
+        'CDev\\DrupalConnector', // Allows to use Drupal CMS as a storefront
 //        'AdvancedSearch',
-        'AustraliaPost',
-        'AuthorizeNet',
-        'Bestsellers',
+        'CDev\\AustraliaPost',
+        'CDev\\AuthorizeNet',
+        'CDev\\Bestsellers',
 //        'DetailedImages',
-        'FeaturedProducts',
+        'CDev\\FeaturedProducts',
 //        'GiftCertificates',
 //        'InventoryTracking',
 //        'ProductAdviser',
-        'ProductOptions',
-        'Quantum',
+        'CDev\\ProductOptions',
+        'CDev\\Quantum',
 //        'WholesaleTrading',
 //        'WishList'
     )

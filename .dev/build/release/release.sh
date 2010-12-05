@@ -304,32 +304,34 @@ if [ -d "${OUTPUT_DIR}/${LITECOMMERCE_DIRNAME}" -a -d "${OUTPUT_DIR}/${DRUPAL_DI
 
 	fi
 
-	# Generate the list of modules that must be removed
-	MODULES_TODELETE=""
-	LIST_FOR_SEARCH=`ls classes/XLite/Module | grep -v '\.php'`" "`ls skins/admin/en/modules`" "`ls skins/default/en/modules`" "`ls skins/drupal/en/modules`" "`ls skins/mail/en/modules`" "`ls skins/admin/en/images/modules`
-	for i in ${LIST_FOR_SEARCH}; do
-		found=0
-		for j in ${XLITE_MODULES}; do
-			if [ $i = $j -a ! $i = '.' -a ! $i = '..' ]; then
-				found=1
-				break
-			fi
-		done
-		if [ $found = 0 ]; then
-			MODULES_TODELETE=$MODULES_TODELETE" "$i
-		fi
+	modules_list_regexp=""
+	for j in ${XLITE_MODULES}; do
+		modules_list_regexp=$modules_list_regexp"|"$j
 	done
 
-	# Remove the redundant modules
-	for dn in $MODULES_TODELETE; do
-		rm -rf classes/XLite/Module/${dn}
-		rm -rf skins/admin/en/modules/${dn}
-		rm -rf skins/admin/en/images/modules/${dn}
-		rm -rf skins/default/en/modules/${dn}
-		rm -rf skins/default/en/images/modules/${dn}
-		rm -rf skins/drupal/en/modules/${dn}
-		rm -rf skins/drupal/en/images/modules/${dn}
-		rm -rf skins/mail/en/modules/${dn}
+	modules_list_regexp=`echo $modules_list_regexp | sed 's/^|//'`
+
+	MODULE_DIRS="
+		classes/XLite/Module
+		skins/admin/en/modules
+		skins/admin/en/images/modules
+		skins/default/en/modules
+		skins/default/en/images/modules
+		skins/drupal/en/modules
+		skins/drupal/en/images/modules
+		skins/mail/en/modules
+		"
+
+	for i in ${MODULE_DIRS}; do
+
+		find -E $i -depth 2 -type d ! -regex ".*/($modules_list_regexp)" -exec echo {} >> ${OUTPUT_DIR}/modules2remove \;
+
+		find $i -depth 1 -type d -empty -exec echo {} >> ${OUTPUT_DIR}/modules2remove \;
+	
+	done
+
+	for i in `cat ${OUTPUT_DIR}/modules2remove`; do
+		rm -rf $i
 	done
 
 	if [ "x${DEMO_VERSION}" = "x" -a "x${TEST_MODE}" = "x" ]; then
