@@ -311,7 +311,7 @@ INSERT INTO `xlite_config_translations` VALUES (3,'en',4,'Checkout desk operatio
 INSERT INTO `xlite_config_translations` VALUES (4,'en',5,'Enable admin IP protection system','');
 INSERT INTO `xlite_config_translations` VALUES (5,'en',6,'Administrator Zone settings','');
 INSERT INTO `xlite_config_translations` VALUES (8,'en',9,'Use HTTPS in the Administrator Zone','');
-INSERT INTO `xlite_config_translations` VALUES (9,'en',10,'Enable folding sidebar menus','');
+-- INSERT INTO `xlite_config_translations` VALUES (9,'en',10,'Enable folding sidebar menus','');
 INSERT INTO `xlite_config_translations` VALUES (11,'en',12,'Allow admin IP','');
 INSERT INTO `xlite_config_translations` VALUES (24,'en',27,'Enable \"Buy Now\" button in the product list','');
 INSERT INTO `xlite_config_translations` VALUES (25,'en',31,'Length of string','');
@@ -337,7 +337,7 @@ INSERT INTO `xlite_config_translations` VALUES (60,'en',74,'Default purchase lim
 INSERT INTO `xlite_config_translations` VALUES (61,'en',75,'Default payment method','');
 INSERT INTO `xlite_config_translations` VALUES (62,'en',76,'Default zip/postal code in the registration form','');
 INSERT INTO `xlite_config_translations` VALUES (63,'en',77,'Display shipping rates to unregistered customers<br>(presuming that a customer comes from the default country)','');
-INSERT INTO `xlite_config_translations` VALUES (64,'en',80,'Developer\'s mode (force to re-generate cache)','');
+-- INSERT INTO `xlite_config_translations` VALUES (64,'en',80,'Developer\'s mode (force to re-generate cache)','');
 INSERT INTO `xlite_config_translations` VALUES (67,'en',89,'Allow direct URL access to products from disabled categories','');
 INSERT INTO `xlite_config_translations` VALUES (68,'en',90,'Discounts charged after taxes application','');
 INSERT INTO `xlite_config_translations` VALUES (69,'en',91,'Display check number for eCheck payment method','');
