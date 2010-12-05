@@ -27,13 +27,13 @@ DRUPAL_DIRNAME="drupal"
 
 # LiteCommerce modules for including to the distributives
 XLITE_MODULES="
-AustraliaPost
-AuthorizeNet
-Bestsellers
-DrupalConnector
-FeaturedProducts
-ProductOptions
-Quantum
+CDev/AustraliaPost
+CDev/AuthorizeNet
+CDev/Bestsellers
+CDev/DrupalConnector
+CDev/FeaturedProducts
+CDev/ProductOptions
+CDev/Quantum
 "
 
 # LiteCommerce files that must be removed from all distributives

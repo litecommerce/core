@@ -13,13 +13,14 @@ DRUPAL_DIRNAME="drupal_demo"
 
 # LiteCommerce modules for including to the distributives
 XLITE_MODULES=${XLITE_MODULES}"
-Demo
+CDev/Demo
 "
 
 # The list of modules which should never be included into the demo version
 XLITE_EXCLUDE_MODULES="
-AustraliaPost
-Quantum
+CDev/AustraliaPost
+CDev/AuthorizeNet
+CDev/Quantum
 "
 
 TMP_XLITE_MODULES=""
@@ -29,13 +30,13 @@ for i in $XLITE_MODULES; do
 	found=""
 
 	for j in $XLITE_EXCLUDE_MODULES; do
-		if [ ! $i = $j ]; then
+		if [ $i = $j ]; then
 			found="found"
 			break
 		fi
 	done
 
-	[ ! "x${found}" = "x" ] && TMP_XLITE_MODULES=$TMP_XLITE_MODULES" "$i
+	[ "x${found}" = "x" ] && TMP_XLITE_MODULES=$TMP_XLITE_MODULES" "$i
 
 done
 
