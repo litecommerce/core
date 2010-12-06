@@ -2,13 +2,13 @@
 --  shop_close
 UPDATE xlite_config_translations SET option_name = 'Check this to temporary close the shop (not available in Demo store)' WHERE id = 234;
 
-UPDATE xlite_config SET value = 'Y' WHERE name = 'customer_security';
-UPDATE xlite_config SET value = 'Y' WHERE name = 'enable_sale_price';
-UPDATE xlite_config SET value = 'Y' WHERE name = 'you_save';
+UPDATE xlite_config SET value = 'Y' WHERE name = 'customer_security' AND category = 'Security';
+UPDATE xlite_config SET value = 'Y' WHERE name = 'enable_sale_price' AND category = 'General';
+UPDATE xlite_config SET value = 'Y' WHERE name = 'you_save' AND category = 'General';
 
-UPDATE xlite_config SET value = 'a:3:{i:1;a:3:{s:7:\"orderby\";s:2:\"10\";s:10:\"membership\";s:4:\"Gold\";s:13:\"membership_id\";i:1;}i:2;a:3:{s:7:\"orderby\";s:2:\"20\";s:10:\"membership\";s:8:\"Platinum\";s:13:\"membership_id\";i:2;}i:3;a:3:{s:7:\"orderby\";s:2:\"30\";s:10:\"membership\";s:10:\"Wholesaler\";s:13:\"membership_id\";i:3;}}' WHERE name = 'membershipsCollection';
+UPDATE xlite_config SET value = 'a:3:{i:1;a:3:{s:7:\"orderby\";s:2:\"10\";s:10:\"membership\";s:4:\"Gold\";s:13:\"membership_id\";i:1;}i:2;a:3:{s:7:\"orderby\";s:2:\"20\";s:10:\"membership\";s:8:\"Platinum\";s:13:\"membership_id\";i:2;}i:3;a:3:{s:7:\"orderby\";s:2:\"30\";s:10:\"membership\";s:10:\"Wholesaler\";s:13:\"membership_id\";i:3;}}' WHERE name = 'membershipsCollection' AND category = 'Memberships';
 
-UPDATE xlite_modules SET enabled = '0';
+UPDATE xlite_modules SET enabled = 0;
 
 --  Test gift certificate
 -- INSERT INTO xlite_giftcerts VALUES ('TESTGIFT',1,'Mr. Guest Guest','123','E','demo@litecommerce.com','','','','','0','','','','','','50.00','50.00','A',1270203328,1332411328,0,'','','no_border',NULL);
