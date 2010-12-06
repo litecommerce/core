@@ -30,7 +30,7 @@ class XLite_Tests_Module_CDev_Quantum_Model_Payment_Processor_Quantum extends XL
 {
     protected $testMethod = array(
         'service_name' => 'test',
-        'class'        => 'Module\Quantum\Model\Payment\Processor\Quantum',
+        'class'        => 'Module\CDev\Quantum\Model\Payment\Processor\Quantum',
         'orderby'      => 100,
         'enabled'      => true,
         'name'         => 'Test',
@@ -136,7 +136,7 @@ HTML;
         $order = $this->getTestOrder();
         $p = $order->getPaymentMethod()->getProcessor();
 
-        $this->assertEquals('modules/Quantum/config.tpl', $p->getSettingsWidget(), 'check settings widget');
+        $this->assertEquals('modules/CDev/Quantum/config.tpl', $p->getSettingsWidget(), 'check settings widget');
     }
 
     public function testIsConfigured()

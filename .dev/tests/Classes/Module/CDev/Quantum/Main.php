@@ -54,7 +54,7 @@ class XLite_Tests_Module_CDev_Quantum_Main extends XLite_Tests_TestCase
 
     protected function getMain()
     {
-        return 'XLite\Module\Quantum\Main';
+        return 'XLite\Module\CDev\Quantum\Main';
     }
 
 }
