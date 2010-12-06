@@ -129,7 +129,7 @@ func! YAMLDocFile()
     let commentline = 1
 
     let l:indent = matchstr(getline("."), '^\ *')
-	let l:yamlComment = "--- # "
+	let l:yamlComment = "# "
 
     exe "norm! " . commentline . "G$"
 
