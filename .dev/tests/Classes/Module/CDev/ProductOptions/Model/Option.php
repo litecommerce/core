@@ -135,7 +135,7 @@ class XLite_Tests_Module_CDev_ProductOptions_Model_Option extends XLite_Tests_Te
         \XLite\Core\Database::getEM()->persist($group);
         \XLite\Core\Database::getEM()->flush();
 
-        $group = \XLite\Core\Database::getRepo('XLite\Module\ProductOptions\Model\Option')
+        $group = \XLite\Core\Database::getRepo('XLite\Module\CDev\ProductOptions\Model\Option')
             ->find($id);
 
         $this->assertNull($group, 'Check removed option');
@@ -323,7 +323,7 @@ class XLite_Tests_Module_CDev_ProductOptions_Model_Option extends XLite_Tests_Te
         $e = new XLite\Module\CDev\ProductOptions\Model\OptionException();
         $e->setOption($option);
         $e->setExceptionId(
-            \XLite\Core\Database::getRepo('XLite\Module\ProductOptions\Model\OptionException')
+            \XLite\Core\Database::getRepo('XLite\Module\CDev\ProductOptions\Model\OptionException')
             ->getNextExceptionId()
         );
 

@@ -89,7 +89,7 @@ class XLite_Tests_Module_CDev_ProductOptions_Model_OptionGroup extends XLite_Tes
 
         $this->assertEquals($group::TEXT_TYPE, $group->getType(), 'Check new type');
 
-        $group = \XLite\Core\Database::getRepo('XLite\Module\ProductOptions\Model\OptionGroup')
+        $group = \XLite\Core\Database::getRepo('XLite\Module\CDev\ProductOptions\Model\OptionGroup')
             ->find($group->getGroupId());
 
         $list = $group->getOptions();
@@ -115,7 +115,7 @@ class XLite_Tests_Module_CDev_ProductOptions_Model_OptionGroup extends XLite_Tes
         \XLite\Core\Database::getEM()->remove($group);
         \XLite\Core\Database::getEM()->flush();
 
-        $group = \XLite\Core\Database::getRepo('XLite\Module\ProductOptions\Model\OptionGroup')
+        $group = \XLite\Core\Database::getRepo('XLite\Module\CDev\ProductOptions\Model\OptionGroup')
             ->find($id);
 
         $this->assertNull($group, 'Check removed group');

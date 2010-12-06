@@ -95,7 +95,7 @@ class XLite_Tests_Module_CDev_ProductOptions_Model_Repo_OptionException extends 
     {
         $this->getTestGroups();
 
-        $repo = \XLite\Core\Database::getRepo('XLite\Module\ProductOptions\Model\OptionException');
+        $repo = \XLite\Core\Database::getRepo('XLite\Module\CDev\ProductOptions\Model\OptionException');
 
         $ids = array(
             $this->getProduct()->getOptionGroups()->get(0)->getOptions()->get(0)->getOptionId(),
@@ -104,7 +104,7 @@ class XLite_Tests_Module_CDev_ProductOptions_Model_Repo_OptionException extends 
 
         $this->assertFalse($repo->checkOptions($ids), 'check options (failed)');
 
-        $eid = \XLite\Core\Database::getRepo('XLite\Module\ProductOptions\Model\OptionException')->getNextExceptionId();
+        $eid = \XLite\Core\Database::getRepo('XLite\Module\CDev\ProductOptions\Model\OptionException')->getNextExceptionId();
         $e = new XLite\Module\CDev\ProductOptions\Model\OptionException();
         $e->setOption(
             $this->getProduct()->getOptionGroups()->get(0)->getOptions()->get(2)
@@ -134,7 +134,7 @@ class XLite_Tests_Module_CDev_ProductOptions_Model_Repo_OptionException extends 
     {
         $this->getTestGroups();
 
-        $repo = \XLite\Core\Database::getRepo('XLite\Module\ProductOptions\Model\OptionException');
+        $repo = \XLite\Core\Database::getRepo('XLite\Module\CDev\ProductOptions\Model\OptionException');
 
         $e = $this->getProduct()->getOptionGroups()->get(0)->getOptions()->get(1)->getExceptions()->get(0);
 
@@ -163,7 +163,7 @@ class XLite_Tests_Module_CDev_ProductOptions_Model_Repo_OptionException extends 
     {
         $this->getTestGroups();
 
-        $repo = \XLite\Core\Database::getRepo('XLite\Module\ProductOptions\Model\OptionException');
+        $repo = \XLite\Core\Database::getRepo('XLite\Module\CDev\ProductOptions\Model\OptionException');
 
         $e = $this->getProduct()->getOptionGroups()->get(0)->getOptions()->get(1)->getExceptions()->get(0);
 
@@ -190,7 +190,7 @@ class XLite_Tests_Module_CDev_ProductOptions_Model_Repo_OptionException extends 
     {
         $this->getTestGroups();
 
-        $repo = \XLite\Core\Database::getRepo('XLite\Module\ProductOptions\Model\OptionException');
+        $repo = \XLite\Core\Database::getRepo('XLite\Module\CDev\ProductOptions\Model\OptionException');
 
         $e = $this->getProduct()->getOptionGroups()->get(0)->getOptions()->get(1)->getExceptions()->get(0);
         $e2 = $this->getProduct()->getOptionGroups()->get(0)->getOptions()->get(0)->getExceptions()->get(0);
@@ -267,7 +267,7 @@ class XLite_Tests_Module_CDev_ProductOptions_Model_Repo_OptionException extends 
             \XLite\Core\Database::getEM()->persist($group);
         }
 
-        $eid = \XLite\Core\Database::getRepo('XLite\Module\ProductOptions\Model\OptionException')->getNextExceptionId();
+        $eid = \XLite\Core\Database::getRepo('XLite\Module\CDev\ProductOptions\Model\OptionException')->getNextExceptionId();
         $e = new XLite\Module\CDev\ProductOptions\Model\OptionException();
         $e->setOption(
             $this->getProduct()->getOptionGroups()->get(0)->getOptions()->get(0)
@@ -283,7 +283,7 @@ class XLite_Tests_Module_CDev_ProductOptions_Model_Repo_OptionException extends 
 
         \XLite\Core\Database::getEM()->flush();
 
-        $eid = \XLite\Core\Database::getRepo('XLite\Module\ProductOptions\Model\OptionException')->getNextExceptionId();
+        $eid = \XLite\Core\Database::getRepo('XLite\Module\CDev\ProductOptions\Model\OptionException')->getNextExceptionId();
         $e = new XLite\Module\CDev\ProductOptions\Model\OptionException();
         $e->setOption(
             $this->getProduct()->getOptionGroups()->get(0)->getOptions()->get(1)

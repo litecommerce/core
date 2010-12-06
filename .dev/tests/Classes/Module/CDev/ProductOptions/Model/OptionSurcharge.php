@@ -241,7 +241,7 @@ class XLite_Tests_Module_CDev_ProductOptions_Model_OptionSurcharge extends XLite
         $e = new XLite\Module\CDev\ProductOptions\Model\OptionException();
         $e->setOption($option);
         $e->setExceptionId(
-            \XLite\Core\Database::getRepo('XLite\Module\ProductOptions\Model\OptionException')
+            \XLite\Core\Database::getRepo('XLite\Module\CDev\ProductOptions\Model\OptionException')
             ->getNextExceptionId()
         );
 
