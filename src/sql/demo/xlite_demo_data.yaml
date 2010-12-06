@@ -1,0 +1,27 @@
+# vim: set ts=2 sw=2 sts=2 et:
+# 
+# Demo data
+#  
+# @author    Creative Development LLC <info@cdev.ru> 
+# @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+# @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+# @version   SVN: $Id$
+# @link      http://www.litecommerce.com/
+# @since     3.0.0
+# TODO - untranslated - UPDATE xlite_modules SET enabled = 0;
+XLite\Model\Config:
+  - { name: shop_closed, category: General, translations: [{ code: en, option_name: 'Check this to temporary close the shop (not available in Demo store)' }] }
+  - { name: customer_security, category: Security, value: Y }
+  - { name: enable_sale_price, category: General, value: Y }
+  - { name: you_save, category: General, value: Y }
+  - { name: membershipsCollection, category: Memberships, value: 'a:3:{i:1;a:3:{s:7:"orderby";s:2:"10";s:10:"membership";s:4:"Gold";s:13:"membership_id";i:1;}i:2;a:3:{s:7:"orderby";s:2:"20";s:10:"membership";s:8:"Platinum";s:13:"membership_id";i:2;}i:3;a:3:{s:7:"orderby";s:2:"30";s:10:"membership";s:10:"Wholesaler";s:13:"membership_id";i:3;}}' }
+XLite\Model\Shipping\Method:
+  - { processor: offline, enabled: true, position: 10, translations: [{ code: en, name: Courier }], shipping_markups: [{ zone: { zone_name: 'United States area' }, min_weight: 0, max_weight: 999999, min_total: 0, max_total: 999999, min_items: 0, max_items: 999999, markup_flat: 2.45, markup_percent: 1.5, markup_per_item: 0, markup_per_weight: 0 }, { zone: { zone_name: 'New York area' }, min_weight: 0, max_weight: 999999, min_total: 0, max_total: 999999, min_items: 0, max_items: 999999, markup_flat: 2.5, markup_percent: 1.5, markup_per_item: 0, markup_per_weight: 0 }, { zone: { zone_name: 'Default zone (all addresses)' }, min_weight: 0, max_weight: 999999, min_total: 0, max_total: 999999, min_items: 0, max_items: 999999, markup_flat: 5.5, markup_percent: 1.75, markup_per_item: 0, markup_per_weight: 0 }] }
+  - { processor: offline, enabled: true, position: 20, translations: [{ code: en, name: 'Local shipping' }], shipping_markups: [{ zone: { zone_name: 'United States area' }, min_weight: 0, max_weight: 999999, min_total: 0, max_total: 999999, min_items: 0, max_items: 999999, markup_flat: 3.45, markup_percent: 1.75, markup_per_item: 0, markup_per_weight: 0 }, { zone: { zone_name: 'New York area' }, min_weight: 0, max_weight: 999999, min_total: 0, max_total: 999999, min_items: 0, max_items: 999999, markup_flat: 3.5, markup_percent: 1.75, markup_per_item: 0, markup_per_weight: 0 }, { zone: { zone_name: 'Default zone (all addresses)' }, min_weight: 0, max_weight: 999999, min_total: 0, max_total: 999999, min_items: 0, max_items: 999999, markup_flat: 6.5, markup_percent: 1.85, markup_per_item: 0, markup_per_weight: 0 }] }
+XLite\Model\Zone:
+  - { zone_name: 'United States area', zone_elements: [{ element_value: US, element_type: C }] }
+  - { zone_name: 'New York area', zone_elements: [{ element_value: US, element_type: C }, { element_value: US_NY, element_type: S }, { element_value: 'New York', element_type: T }, { element_value: NY, element_type: T }, { element_value: 101%, element_type: Z }, { element_value: 102%, element_type: Z }] }
+  - { zone_name: 'California area', zone_elements: [{ element_value: US, element_type: C }, { element_value: US_CA, element_type: S }, { element_value: 9%, element_type: Z }] }
+  - { zone_name: Europe, zone_elements: [{ element_value: DE, element_type: C }, { element_value: GB, element_type: C }, { element_value: FR, element_type: C }, { element_value: ES, element_type: C }] }
+  - { zone_name: Atlantida }
+  - { zone_name: 'Default zone (all addresses)' }
