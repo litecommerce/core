@@ -231,7 +231,7 @@ class XLite_Tests_Module_CDev_ProductOptions_Model_OptionException extends XLite
             $this->getProduct()->getOptionGroups()->get(1)->getOptions()->get(1)
         );
         $e->setExceptionId(
-            \XLite\Core\Database::getRepo('XLite\Module\ProductOptions\Model\OptionException')
+            \XLite\Core\Database::getRepo('XLite\Module\CDev\ProductOptions\Model\OptionException')
             ->getNextExceptionId()
         );
 
@@ -248,7 +248,7 @@ class XLite_Tests_Module_CDev_ProductOptions_Model_OptionException extends XLite
             $this->getProduct()->getOptionGroups()->get(1)->getOptions()->get(1)
         );
         $e->setExceptionId(
-            \XLite\Core\Database::getRepo('XLite\Module\ProductOptions\Model\OptionException')
+            \XLite\Core\Database::getRepo('XLite\Module\CDev\ProductOptions\Model\OptionException')
             ->getNextExceptionId()
         );
 

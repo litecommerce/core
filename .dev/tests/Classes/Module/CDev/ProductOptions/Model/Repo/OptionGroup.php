@@ -58,7 +58,7 @@ class XLite_Tests_Module_CDev_ProductOptions_Model_Repo_OptionGroup extends XLit
     {
         $group = $this->getTestGroup();
 
-        $groups = \XLite\Core\Database::getRepo('XLite\Module\ProductOptions\Model\OptionGroup')
+        $groups = \XLite\Core\Database::getRepo('XLite\Module\CDev\ProductOptions\Model\OptionGroup')
             ->findActiveByProductId($group->getProduct()->getProductId());
 
         $this->assertEquals(1, count($groups), 'check groups count');
@@ -69,7 +69,7 @@ class XLite_Tests_Module_CDev_ProductOptions_Model_Repo_OptionGroup extends XLit
         \XLite\Core\Database::getEM()->persist($group);
         \XLite\Core\Database::getEM()->flush();
 
-        $groups = \XLite\Core\Database::getRepo('XLite\Module\ProductOptions\Model\OptionGroup')
+        $groups = \XLite\Core\Database::getRepo('XLite\Module\CDev\ProductOptions\Model\OptionGroup')
             ->findActiveByProductId($group->getProduct()->getProductId());
 
         $this->assertEquals(0, count($groups), 'check groups count again');
@@ -79,7 +79,7 @@ class XLite_Tests_Module_CDev_ProductOptions_Model_Repo_OptionGroup extends XLit
         \XLite\Core\Database::getEM()->persist($group);
         \XLite\Core\Database::getEM()->flush();
 
-        $groups = \XLite\Core\Database::getRepo('XLite\Module\ProductOptions\Model\OptionGroup')
+        $groups = \XLite\Core\Database::getRepo('XLite\Module\CDev\ProductOptions\Model\OptionGroup')
             ->findActiveByProductId($group->getProduct()->getProductId());
 
         $this->assertEquals(1, count($groups), 'check groups count #3');
@@ -90,7 +90,7 @@ class XLite_Tests_Module_CDev_ProductOptions_Model_Repo_OptionGroup extends XLit
         $group->getOptions()->clear();
         \XLite\Core\Database::getEM()->flush();
 
-        $groups = \XLite\Core\Database::getRepo('XLite\Module\ProductOptions\Model\OptionGroup')
+        $groups = \XLite\Core\Database::getRepo('XLite\Module\CDev\ProductOptions\Model\OptionGroup')
             ->findActiveByProductId($group->getProduct()->getProductId());
 
         $this->assertEquals(0, count($groups), 'check groups count #4');
@@ -101,7 +101,7 @@ class XLite_Tests_Module_CDev_ProductOptions_Model_Repo_OptionGroup extends XLit
         $group = $this->getTestGroup();
 
         $pid = $group->getProduct()->getProductId();
-        $g = \XLite\Core\Database::getRepo('XLite\Module\ProductOptions\Model\OptionGroup')
+        $g = \XLite\Core\Database::getRepo('XLite\Module\CDev\ProductOptions\Model\OptionGroup')
             ->findOneByGroupIdAndProductId($group->getGroupId(), $pid);
 
         $this->assertNotNull($g, 'check new group');
@@ -117,7 +117,7 @@ class XLite_Tests_Module_CDev_ProductOptions_Model_Repo_OptionGroup extends XLit
         \XLite\Core\Database::getEM()->persist($group);
         \XLite\Core\Database::getEM()->flush();
 
-        $g = \XLite\Core\Database::getRepo('XLite\Module\ProductOptions\Model\OptionGroup')
+        $g = \XLite\Core\Database::getRepo('XLite\Module\CDev\ProductOptions\Model\OptionGroup')
             ->findOneByGroupIdAndProductId($group->getGroupId(), $pid);
 
         $this->assertNull($g, 'check empty group');
@@ -125,7 +125,7 @@ class XLite_Tests_Module_CDev_ProductOptions_Model_Repo_OptionGroup extends XLit
 
     public function testGetOptionGroupTypes()
     {
-        $data = \XLite\Core\Database::getRepo('XLite\Module\ProductOptions\Model\OptionGroup')
+        $data = \XLite\Core\Database::getRepo('XLite\Module\CDev\ProductOptions\Model\OptionGroup')
             ->getOptionGroupTypes();
 
         $etalon = array(
