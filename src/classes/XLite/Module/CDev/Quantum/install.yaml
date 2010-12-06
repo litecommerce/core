@@ -10,7 +10,7 @@
 # @since     3.0.0
 XLite\Model\Payment\Method:
   - service_name: QuantumGateway
-    class: Module\Quantum\Model\Payment\Processor\Quantum
+    class: Module\CDev\Quantum\Model\Payment\Processor\Quantum
     translations:
       - code: en
         name: QuantumGateway

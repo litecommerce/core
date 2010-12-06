@@ -1,4 +1,4 @@
-INSERT INTO xlite_payment_methods (method_id, service_name, class) VALUES (30, 'QuantumGateway','Module\\Quantum\\Model\\Payment\\Processor\\Quantum');
+INSERT INTO xlite_payment_methods (method_id, service_name, class) VALUES (30, 'QuantumGateway','Module\\CDev\\Quantum\\Model\\Payment\\Processor\\Quantum');
 
 INSERT INTO xlite_payment_method_translations (id, code, name) VALUES (30, 'en', 'QuantumGateway');
 

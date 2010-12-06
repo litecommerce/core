@@ -1,4 +1,4 @@
-INSERT INTO xlite_payment_methods (method_id, service_name, class) VALUES (10, 'AuthorizeNet SIM','Module\\AuthorizeNet\\Model\\Payment\\Processor\\AuthorizeNetSIM');
+INSERT INTO xlite_payment_methods (method_id, service_name, class) VALUES (10, 'AuthorizeNet SIM','Module\\CDev\\AuthorizeNet\\Model\\Payment\\Processor\\AuthorizeNetSIM');
 
 INSERT INTO xlite_payment_method_translations (id, code, name) VALUES (10, 'en', 'Authorize.Net SIM');
 
