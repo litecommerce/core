@@ -1,0 +1,852 @@
+XLite\Model\Config:
+  - { name: active_captcha_pages, category: Captcha, type: serialized, orderby: 30, translations: [{ code: en, option_name: active_captcha_pages, option_comment: '' }] }
+  - { name: add_on_mode, category: General, type: checkbox, orderby: 120, value: N, translations: [{ code: en, option_name: 'Checkout desk operation mode', option_comment: '' }] }
+  - { name: add_on_mode_page, category: General, type: select, orderby: 125, value: 'cart.php?target=cart', translations: [{ code: en, option_name: 'Checkout desk operation mode main page', option_comment: '' }] }
+  - { name: admin_ip_protection, category: Security, type: checkbox, orderby: 100, value: N, translations: [{ code: en, option_name: 'Enable admin IP protection system', option_comment: '' }] }
+  - { name: admin_presentation, category: General, type: separator, orderby: 400, translations: [{ code: en, option_name: 'Administrator Zone settings', option_comment: '' }] }
+  - { name: admin_security, category: Security, type: checkbox, orderby: 10, value: N, translations: [{ code: en, option_name: 'Use HTTPS in the Administrator Zone', option_comment: '' }] }
+  - { name: allow_admin_ip, category: SecurityIP, orderby: 40, translations: [{ code: en, option_name: 'Allow admin IP', option_comment: '' }] }
+  - { name: buynow_button_enabled, category: General, type: checkbox, orderby: 240, value: Y, translations: [{ code: en, option_name: 'Enable "Buy Now" button in the product list', option_comment: '' }] }
+  - { name: captcha_length, category: Captcha, type: text, orderby: 20, value: '5', translations: [{ code: en, option_name: 'Length of string', option_comment: '' }] }
+  - { name: captcha_protection, category: Captcha, type: separator, translations: [{ code: en, option_name: 'Image generator options', option_comment: '' }] }
+  - { name: captcha_protection_system, category: Security, type: checkbox, orderby: 110, value: N, translations: [{ code: en, option_name: 'Enable Captcha protection system', option_comment: '' }] }
+  - { name: captcha_separator_pages, category: Captcha, type: separator, orderby: 30, translations: [{ code: en, option_name: 'Where to display', option_comment: '' }] }
+  - { name: captcha_type, category: Captcha, type: select, orderby: 10, value: all, translations: [{ code: en, option_name: 'Type of string that should be used for the image', option_comment: '' }] }
+  - { name: clear_cc_info, category: General, type: select, orderby: 500, value: N, translations: [{ code: en, option_name: 'Clear credit cards info from the database on order status change', option_comment: '' }] }
+  - { name: company_address, category: Company, type: separator, orderby: 385, translations: [{ code: en, option_name: Address, option_comment: '' }] }
+  - { name: company_contacts, category: Company, type: separator, orderby: 455, translations: [{ code: en, option_name: Contacts, option_comment: '' }] }
+  - { name: company_fax, category: Company, type: text, orderby: 420, value: '(555) 555-5555', translations: [{ code: en, option_name: Fax, option_comment: '' }] }
+  - { name: company_identity, category: Company, type: separator, orderby: 350, translations: [{ code: en, option_name: Identity, option_comment: '' }] }
+  - { name: company_name, category: Company, type: text, orderby: 360, value: '*Your company name*', translations: [{ code: en, option_name: 'Company name', option_comment: '' }] }
+  - { name: company_phone, category: Company, type: text, orderby: 410, value: '(555) 555-5555', translations: [{ code: en, option_name: Phone, option_comment: '' }] }
+  - { name: company_website, category: Company, type: text, orderby: 370, value: 'http://', translations: [{ code: en, option_name: 'Company website', option_comment: '' }] }
+  - { name: customer_presentation, category: General, type: separator, orderby: 200, translations: [{ code: en, option_name: 'Customer Zone settings', option_comment: '' }] }
+  - { name: customer_security, category: Security, type: checkbox, value: Y, translations: [{ code: en, option_name: 'Use HTTPS in the Customer Zone (for logi', option_comment: 'heckout and profile pages)' }] }
+  - { name: date_format, category: General, type: select, orderby: 660, value: '%b %', translations: [{ code: en, option_name: 'Date format', option_comment: '' }] }
+  - { name: decimal_delim, category: General, type: select, orderby: 650, value: ., translations: [{ code: en, option_name: 'Currency decimal delimiter', option_comment: '' }] }
+  - { name: defaultSources, category: Images, type: serialized }
+  - { name: default_country, category: General, type: country, orderby: 310, value: US, translations: [{ code: en, option_name: 'Default country in the registration form', option_comment: '' }] }
+  - { name: default_offline_payment, category: Payments, type: text, translations: [{ code: en, option_name: 'Payment method to be assumed in case of zero order totals', option_comment: '' }] }
+  - { name: default_purchase_limit, category: General, type: text, orderby: 293, value: '9999', translations: [{ code: en, option_name: 'Default purchase limit', option_comment: '' }] }
+  - { name: default_select_payment, category: Payments, type: text, translations: [{ code: en, option_name: 'Default payment method', option_comment: '' }] }
+  - { name: default_zipcode, category: General, type: text, orderby: 320, value: '10000', translations: [{ code: en, option_name: 'Default zip/postal code in the registration form', option_comment: '' }] }
+  - { name: direct_product_url, category: General, type: checkbox, orderby: 255, value: N, translations: [{ code: en, option_name: 'Allow direct URL access to products from disabled categories', option_comment: '' }] }
+  - { name: discounts_after_taxes, category: Taxes, type: checkbox, orderby: 210, value: N, translations: [{ code: en, option_name: 'Discounts charged after taxes application', option_comment: '' }] }
+  - { name: display_check_number, category: General, type: checkbox, orderby: 215, value: Y, translations: [{ code: en, option_name: 'Display check number for eCheck payment method', option_comment: '' }] }
+  - { name: enable_anon_checkout, category: General, type: checkbox, orderby: 270, value: Y, translations: [{ code: en, option_name: 'Enable anonymous checkout', option_comment: '' }] }
+  - { name: enable_categories_extra_fields, category: General, type: checkbox, orderby: 470, value: Y, translations: [{ code: en, option_name: 'Enable extra fields in the category management dialogue', option_comment: '' }] }
+  - { name: enable_credit_card_validation, category: General, type: checkbox, orderby: 210, value: Y, translations: [{ code: en, option_name: 'Validate credit cards', option_comment: '' }] }
+  - { name: enable_extra_fields_inherit, category: General, type: checkbox, orderby: 480, value: Y, translations: [{ code: en, option_name: 'Enable products to inherit extra fields from disabled categories', option_comment: '' }] }
+  - { name: enable_init_order_notif, category: Email, type: checkbox, orderby: 10, value: N, translations: [{ code: en, option_name: 'E-mail order details to the sales department after order placement', option_comment: '' }] }
+  - { name: enable_init_order_notif_customer, category: Email, type: checkbox, value: N, translations: [{ code: en, option_name: 'E-mail order details to customers after order placement', option_comment: '' }] }
+  - { name: enable_sale_price, category: General, type: checkbox, orderby: 295, value: Y, translations: [{ code: en, option_name: 'Enable "Market price" feature', option_comment: '' }] }
+  - { name: form_id_protection, category: Security, type: checkbox, orderby: 90, value: Y, translations: [{ code: en, option_name: 'Enable admin forms protection system', option_comment: '' }] }
+  - { name: full_customer_security, category: Security, type: checkbox, orderby: 5, value: N, translations: [{ code: en, option_name: 'Customer Zone fully on HTTPS', option_comment: '' }] }
+  - { name: htaccess_protection, category: Security, type: checkbox, orderby: 110, value: Y, translations: [{ code: en, option_name: 'Enable .htaccess verification system', option_comment: '' }] }
+  - { name: httpsClient, category: Security, type: select, orderby: 20, value: autodetect, translations: [{ code: en, option_name: 'HTTPS client to use (for integration with secure payment/shipping services)', option_comment: '' }] }
+  - { name: include_tax_message, category: Taxes, type: text, translations: [{ code: en, option_name: 'Includes tax message', option_comment: '' }] }
+  - { name: last_date, category: Htaccess, value: '0' }
+  - { name: license, category: License, type: text }
+  - { name: location_address, category: Company, type: text, orderby: 390, value: '*Your company address*', translations: [{ code: en, option_name: 'Street address', option_comment: '' }] }
+  - { name: location_city, category: Company, type: text, orderby: 400, value: '*You company city*', translations: [{ code: en, option_name: City, option_comment: '' }] }
+  - { name: location_country, category: Company, type: country, orderby: 450, value: US, translations: [{ code: en, option_name: Country, option_comment: '' }] }
+  - { name: location_custom_state, category: Company, type: text, orderby: 435, translations: [{ code: en, option_name: 'Other state (specify)', option_comment: '' }] }
+  - { name: location_state, category: Company, type: state, orderby: 430, value: '17', translations: [{ code: en, option_name: State, option_comment: '' }] }
+  - { name: location_zipcode, category: Company, type: text, orderby: 440, value: '50001', translations: [{ code: en, option_name: 'Zip/postal code', option_comment: '' }] }
+  - { name: login_lifetime, category: General, type: text, orderby: 450, value: '3', translations: [{ code: en, option_name: 'Days to store last login data', option_comment: '' }] }
+  - { name: logoff_clear_cart, category: Security, type: checkbox, orderby: 10, value: N, translations: [{ code: en, option_name: 'Clear cart on customer logoff', option_comment: '' }] }
+  - { name: maximal_order_amount, category: General, type: text, orderby: 290, value: '99999', translations: [{ code: en, option_name: 'Maximum allowed order total', option_comment: '' }] }
+  - { name: memberships, category: Memberships, type: serialized, value: 'a:0:{}', translations: [{ code: en, option_name: 'Membership levels', option_comment: '' }] }
+  - { name: membershipsCollection, category: Memberships, type: serialized, value: 'a:3:{i:1;a:3:{s:7:"orderby";s:2:"10";s:10:"membership";s:4:"Gold";s:13:"membership_id";i:1;}i:2;a:3:{s:7:"orderby";s:2:"20";s:10:"membership";s:8:"Platinum";s:13:"membership_id";i:2;}i:3;a:3:{s:7:"orderby";s:2:"30";s:10:"membership";s:10:"Wholesaler";s:13:"membership_id";i:3;}}', translations: [{ code: en, option_name: 'Membership levels', option_comment: '' }] }
+  - { name: minimal_order_amount, category: General, type: text, orderby: 280, value: '10', translations: [{ code: en, option_name: 'Minimum allowed order total', option_comment: '' }] }
+  - { name: operation_presentation, category: General, type: separator, orderby: 100, translations: [{ code: en, option_name: 'Maintenance and operation', option_comment: '' }] }
+  - { name: orders_department, category: Company, type: text, orderby: 480, value: bit-bucket@x-cart.com, translations: [{ code: en, option_name: 'Sales department e-mail', option_comment: '' }] }
+  - { name: orders_per_page, category: General, type: text, orderby: 430, value: '30', translations: [{ code: en, option_name: 'Orders per page', option_comment: '' }] }
+  - { name: order_starting_number, category: General, type: text, orderby: 460, value: '1', translations: [{ code: en, option_name: 'Initial order number', option_comment: '' }] }
+  - { name: params, category: XCartImport, type: serialized, value: 'a:0:{}' }
+  - { name: partner_product_banner, category: Miscellaneous, type: serialized, value: 'a:11:{s:11:"link_target";s:4:"_top";s:5:"image";s:9:"thumbnail";s:6:"border";i:1;s:12:"product_name";i:1;s:11:"description";s:0:"";s:7:"message";s:8:"Buy new!";s:16:"background_color";s:6:"ffffff";s:10:"text_color";s:6:"000000";s:10:"link_color";s:6:"6633ff";s:5:"width";i:120;s:6:"height";i:240;}' }
+  - { name: partner_profile, category: Miscellaneous, type: serialized, value: 'a:8:{s:17:"billing_firstname";s:2:"on";s:16:"billing_lastname";s:2:"on";s:13:"billing_phone";s:2:"on";s:15:"billing_address";s:2:"on";s:12:"billing_city";s:2:"on";s:13:"billing_state";s:2:"on";s:15:"billing_country";s:2:"on";s:15:"billing_zipcode";s:2:"on";}' }
+  - { name: prices_include_tax, category: Taxes, type: checkbox, orderby: 200, value: N, translations: [{ code: en, option_name: 'Prices include tax', option_comment: '' }] }
+  - { name: price_format, category: General, type: text, orderby: 630, value: '$ %s', translations: [{ code: en, option_name: 'Currency format', option_comment: '' }] }
+  - { name: products_per_page, category: General, type: text, orderby: 250, value: '10', translations: [{ code: en, option_name: 'Products per category listing page', option_comment: '' }] }
+  - { name: products_per_page_admin, category: General, type: text, orderby: 410, value: '10', translations: [{ code: en, option_name: 'Products per page', option_comment: '' }] }
+  - { name: product_layout, category: ImportExport, type: UL, value: sk }
+  - { name: proxy, category: Security, type: text, orderby: 25, translations: [{ code: en, option_name: 'HTTPS proxy', option_comment: '' }] }
+  - { name: recent_orders, category: General, type: text, orderby: 440, value: '10', translations: [{ code: en, option_name: 'Amount of orders in the recent orders list', option_comment: '' }] }
+  - { name: redirect_to_cart, category: General, type: checkbox, orderby: 300, value: Y, translations: [{ code: en, option_name: 'Redirect customer to cart when adding a product', option_comment: '' }] }
+  - { name: safe_mode, category: General, type: checkbox, orderby: 130, value: N, translations: [{ code: en, option_name: 'Safe mode (do not initialize modules)', option_comment: '' }] }
+  - { name: shop_closed, category: General, type: checkbox, orderby: 110, value: N, translations: [{ code: en, option_name: 'Check this to temporary close the shop', option_comment: '' }] }
+  - { name: show_cc_info, category: Email, type: checkbox, orderby: 40, value: N, translations: [{ code: en, option_name: 'Include order details (credit card or eCheck information) into admin order notification message', option_comment: '' }] }
+  - { name: show_thumbnails, category: General, type: checkbox, orderby: 230, value: Y, translations: [{ code: en, option_name: 'Show thumbnails in product list', option_comment: '' }] }
+  - { name: site_administrator, category: Company, type: text, orderby: 460, value: bit-bucket@x-cart.com, translations: [{ code: en, option_name: 'Site administrator e-mail', option_comment: '' }] }
+  - { name: smtp_password, category: Email, type: text, orderby: 160, translations: [{ code: en, option_name: Password, option_comment: '' }] }
+  - { name: smtp_security, category: Email, type: select, orderby: 170, value: no, translations: [{ code: en, option_name: 'Secure connection', option_comment: '' }] }
+  - { name: smtp_server, category: Email, type: separator, orderby: 100, translations: [{ code: en, option_name: 'SMTP server', option_comment: '' }] }
+  - { name: smtp_server_port, category: Email, type: text, orderby: 130, value: '25', translations: [{ code: en, option_name: 'SMTP port', option_comment: '' }] }
+  - { name: smtp_server_url, category: Email, type: text, orderby: 120, translations: [{ code: en, option_name: 'SMTP server', option_comment: '' }] }
+  - { name: smtp_username, category: Email, type: text, orderby: 150, translations: [{ code: en, option_name: Username, option_comment: '' }] }
+  - { name: start_year, category: Company, type: text, orderby: 380, value: '2009', translations: [{ code: en, option_name: 'Year when store started its operation', option_comment: '' }] }
+  - { name: subcategories_look, category: General, type: select, orderby: 220, value: icons, translations: [{ code: en, option_name: 'Category listings format', option_comment: '' }] }
+  - { name: support_department, category: Company, type: text, orderby: 490, value: bit-bucket@x-cart.com, translations: [{ code: en, option_name: 'HelpDesk/Support service e-mail', option_comment: '' }] }
+  - { name: taxes, category: Taxes, type: text, value: 'a:1:{i:0;a:2:{s:4:"name";s:3:"Tax";s:13:"display_label";s:3:"Tax";}}' }
+  - { name: tax_rates, category: Taxes, orderby: 20, value: 'a:3:{i:0;s:6:"Tax:=0";i:1;a:2:{s:9:"condition";s:30:"product class=shipping service";s:6:"action";s:6:"Tax:=0";}i:2;a:2:{s:9:"condition";s:22:"product class=Tax free";s:6:"action";s:6:"Tax:=0";}}', translations: [{ code: en, option_name: 'Tax rates', option_comment: '' }] }
+  - { name: thousand_delim, category: General, type: select, orderby: 640, translations: [{ code: en, option_name: 'Currency thousands delimiter', option_comment: '' }] }
+  - { name: time_format, category: General, type: select, orderby: 670, value: '%H:%M', translations: [{ code: en, option_name: 'Time format', option_comment: '' }] }
+  - { name: time_zone, category: General, type: select, orderby: 680, translations: [{ code: en, option_name: 'Time zone', option_comment: '' }] }
+  - { name: unit_presentation, category: General, type: separator, orderby: 600, translations: [{ code: en, option_name: 'Units of measurement', option_comment: '' }] }
+  - { name: users_department, category: Company, type: text, orderby: 470, value: bit-bucket@x-cart.com, translations: [{ code: en, option_name: 'Customer relations e-mail', option_comment: '' }] }
+  - { name: users_per_page, category: General, type: text, orderby: 420, value: '30', translations: [{ code: en, option_name: 'Users per page', option_comment: '' }] }
+  - { name: user_layout, category: ImportExport, type: UL, value: logi }
+  - { name: use_billing_info, category: Taxes, type: checkbox, orderby: 10, value: N, translations: [{ code: en, option_name: 'Use billing info to calculate taxes', option_comment: '' }] }
+  - { name: use_smtp, category: Email, type: checkbox, orderby: 110, value: N, translations: [{ code: en, option_name: 'Use SMTP server', option_comment: '' }] }
+  - { name: use_smtp_auth, category: Email, type: checkbox, orderby: 140, value: N, translations: [{ code: en, option_name: 'Use authentication', option_comment: '' }] }
+  - { name: valid_email_domains, category: Email, type: text, orderby: 30, value: com;net;edu;mil;gov;org;biz, translations: [{ code: en, option_name: 'Valid domain names for email', option_comment: '' }] }
+  - { name: version, category: Version, value: 3.0.0-alpha2 }
+  - { name: weight_symbol, category: General, type: text, orderby: 620, value: lbs, translations: [{ code: en, option_name: 'Weight symbol', option_comment: '' }] }
+  - { name: weight_unit, category: General, type: select, orderby: 610, value: lbs, translations: [{ code: en, option_name: 'Weight unit', option_comment: '' }] }
+  - { name: you_save, category: General, type: select, orderby: 296, value: Y, translations: [{ code: en, option_name: 'Enable "save" label (for Market Price)', option_comment: '' }] }
+  - { name: default_language, category: General, orderby: 330, value: en }
+  - { name: anonymous, category: Shipping, type: separator, orderby: 30, translations: [{ code: en, option_name: 'Default customer shipping address', option_comment: '' }] }
+  - { name: anonymous_address, category: Shipping, type: text, orderby: 40, translations: [{ code: en, option_name: 'Address line', option_comment: '' }] }
+  - { name: anonymous_city, category: Shipping, type: text, orderby: 50, translations: [{ code: en, option_name: City, option_comment: '' }] }
+  - { name: anonymous_country, category: Shipping, type: country, orderby: 90, value: US, translations: [{ code: en, option_name: Country, option_comment: '' }] }
+  - { name: anonymous_custom_state, category: Shipping, type: text, orderby: 70, translations: [{ code: en, option_name: 'Other state (specify)', option_comment: '' }] }
+  - { name: anonymous_state, category: Shipping, type: state, orderby: 60, value: '34', translations: [{ code: en, option_name: State, option_comment: '' }] }
+  - { name: anonymous_zipcode, category: Shipping, type: text, orderby: 80, value: '10001', translations: [{ code: en, option_name: 'Zip/postal code', option_comment: '' }] }
+  - { name: shipping_enabled, category: Shipping, orderby: 10, value: Y }
+  - { name: def_calc_shippings_taxes, category: Shipping, type: checkbox, orderby: 20, value: N, translations: [{ code: en, option_name: 'Display shipping rates to unregistered customers<br>(presuming that a customer comes from the default country)', option_comment: '' }] }
+  - { name: check_templates_status, category: Performance, type: checkbox, orderby: 10, value: Y, translations: [{ code: en, option_name: 'Check templates status in runtime', option_comment: '' }] }
+  - { name: cli_key, category: Security, orderby: 110, translations: [{ code: en, option_name: 'CLI mode key', option_comment: '' }] }
+XLite\Model\Category:
+  - { parent_id: 0 }
+XLite\Model\Currency:
+  - { currency_id: 20, code: ADP, e: 2, translations: [{ code: en, name: 'Andorran Pesseta' }] }
+  - { currency_id: 784, code: AED, e: 2, translations: [{ code: en, name: 'UAE Dirtham' }] }
+  - { currency_id: 4, code: AFA, e: 2, translations: [{ code: en, name: Afghani }] }
+  - { currency_id: 8, code: ALL, e: 2, translations: [{ code: en, name: Lek }] }
+  - { currency_id: 51, code: AMD, translations: [{ code: en, name: 'Armenian Dram' }] }
+  - { currency_id: 532, code: ANG, e: 2, translations: [{ code: en, name: 'Netherlands Antillian Guilder' }] }
+  - { currency_id: 24, code: AON, e: 2, translations: [{ code: en, name: Kwanza }] }
+  - { currency_id: 32, code: ARS, e: 2, translations: [{ code: en, name: 'Argentine Peso' }] }
+  - { currency_id: 40, code: ATS, e: 2, translations: [{ code: en, name: 'Austrian Shilling' }] }
+  - { currency_id: 36, code: AUD, e: 2, translations: [{ code: en, name: 'Australian Dollar' }] }
+  - { currency_id: 533, code: AWG, e: 2, translations: [{ code: en, name: 'Aruban Guilder' }] }
+  - { currency_id: 31, code: AZM, e: 2, translations: [{ code: en, name: 'Azerbaijanian Manat' }] }
+  - { currency_id: 977, code: BAM, e: 2, translations: [{ code: en, name: 'Convertible Marks' }] }
+  - { currency_id: 52, code: BBD, e: 2, translations: [{ code: en, name: 'Barbados Dollar' }] }
+  - { currency_id: 50, code: BDT, e: 2, translations: [{ code: en, name: 'Bangladesh Taka' }] }
+  - { currency_id: 56, code: BEF, e: 2, translations: [{ code: en, name: 'Belgium Franc' }] }
+  - { currency_id: 100, code: BGL, e: 2, translations: [{ code: en, name: 'Bulgarian Lev' }] }
+  - { currency_id: 48, code: BHD, e: 3, translations: [{ code: en, name: 'Bahraini dinar' }] }
+  - { currency_id: 108, code: BIF, translations: [{ code: en, name: 'Burundi Franc' }] }
+  - { currency_id: 60, code: BMD, e: 2, translations: [{ code: en, name: 'Bermudian Dollar' }] }
+  - { currency_id: 96, code: BND, e: 2, translations: [{ code: en, name: 'Brunei Dollar' }] }
+  - { currency_id: 68, code: BOB, e: 2, translations: [{ code: en, name: Boliviano }] }
+  - { currency_id: 986, code: BRL, e: 2, translations: [{ code: en, name: 'Brazilian Real' }] }
+  - { currency_id: 64, code: BTN, e: 2, translations: [{ code: en, name: Ngultrum }] }
+  - { currency_id: 72, code: BWP, e: 2, translations: [{ code: en, name: 'Botswana Pula' }] }
+  - { currency_id: 974, code: BYR, translations: [{ code: en, name: 'Belarussian Rouble' }] }
+  - { currency_id: 84, code: BZD, e: 2, translations: [{ code: en, name: 'Belize Dollar' }] }
+  - { currency_id: 124, code: CAD, e: 2, translations: [{ code: en, name: 'Canadian Dollar' }] }
+  - { currency_id: 976, code: CDF, e: 2, translations: [{ code: en, name: 'Franc Congolais' }] }
+  - { currency_id: 756, code: CHF, e: 2, translations: [{ code: en, name: 'Swiss Franc' }] }
+  - { currency_id: 152, code: CLP, translations: [{ code: en, name: 'Chilean Peso' }] }
+  - { currency_id: 156, code: CNY, e: 1, translations: [{ code: en, name: 'Chinese Renminbi Yuan' }] }
+  - { currency_id: 170, code: COP, translations: [{ code: en, name: 'Colombian Peso' }] }
+  - { currency_id: 188, code: CRC, e: 2, translations: [{ code: en, name: 'Cost Rican Colon' }] }
+  - { currency_id: 192, code: CUP, e: 2, translations: [{ code: en, name: 'Cuban Peso' }] }
+  - { currency_id: 132, code: CVE, e: 2, translations: [{ code: en, name: 'Cape Verde Escudo' }] }
+  - { currency_id: 196, code: CYP, e: 2, translations: [{ code: en, name: 'Cypprus Pound' }] }
+  - { currency_id: 203, code: CZK, e: 2, translations: [{ code: en, name: 'Czech Koruna' }] }
+  - { currency_id: 276, code: DEM, e: 2, translations: [{ code: en, name: 'Deutsche Mark' }] }
+  - { currency_id: 262, code: DJF, translations: [{ code: en, name: 'Djibouti Franc' }] }
+  - { currency_id: 208, code: DKK, e: 2, translations: [{ code: en, name: 'Danish Krone' }] }
+  - { currency_id: 214, code: DOP, e: 2, translations: [{ code: en, name: 'Dominican Peso' }] }
+  - { currency_id: 12, code: DZD, e: 2, translations: [{ code: en, name: 'Algerian Dinar' }] }
+  - { currency_id: 233, code: EEK, e: 2, translations: [{ code: en, name: Kroon }] }
+  - { currency_id: 818, code: EGP, e: 2, translations: [{ code: en, name: 'Egyptian Pound' }] }
+  - { currency_id: 232, code: ERN, e: 2, translations: [{ code: en, name: Nakfa }] }
+  - { currency_id: 230, code: ETB, e: 2, translations: [{ code: en, name: 'Ethiopian Birr' }] }
+  - { currency_id: 978, code: EUR, e: 2, translations: [{ code: en, name: EURO }] }
+  - { currency_id: 246, code: FIM, e: 2, translations: [{ code: en, name: 'Finnish Markka' }] }
+  - { currency_id: 242, code: FJD, e: 2, translations: [{ code: en, name: 'Fiji Dollar' }] }
+  - { currency_id: 238, code: FKP, e: 2, translations: [{ code: en, name: 'Falkland Islands Pound' }] }
+  - { currency_id: 250, code: FRF, e: 2, translations: [{ code: en, name: 'French Franc' }] }
+  - { currency_id: 826, code: GBP, symbol: £, e: 2, translations: [{ code: en, name: 'Pound Sterling' }] }
+  - { currency_id: 981, code: GEL, e: 2, translations: [{ code: en, name: Lari }] }
+  - { currency_id: 288, code: GHC, e: 2, translations: [{ code: en, name: 'Ghana Cedi' }] }
+  - { currency_id: 292, code: GIP, e: 2, translations: [{ code: en, name: 'Gilbraltar Pound' }] }
+  - { currency_id: 270, code: GMD, e: 2, translations: [{ code: en, name: Dalasi }] }
+  - { currency_id: 324, code: GNF, translations: [{ code: en, name: 'Guinea Franc' }] }
+  - { currency_id: 320, code: GTQ, e: 2, translations: [{ code: en, name: Quetzal }] }
+  - { currency_id: 624, code: GWP, e: 2, translations: [{ code: en, name: 'Guinea-Bissau Peso' }] }
+  - { currency_id: 328, code: GYD, e: 2, translations: [{ code: en, name: 'Guyana Dollar' }] }
+  - { currency_id: 344, code: HKD, e: 2, translations: [{ code: en, name: 'Hong Kong Dollar' }] }
+  - { currency_id: 340, code: HNL, e: 2, translations: [{ code: en, name: Lempira }] }
+  - { currency_id: 191, code: HRK, e: 2, translations: [{ code: en, name: 'Croatian Kuna' }] }
+  - { currency_id: 332, code: HTG, e: 2, translations: [{ code: en, name: Gourde }] }
+  - { currency_id: 348, code: HUF, e: 2, translations: [{ code: en, name: 'Hungary Forint' }] }
+  - { currency_id: 360, code: IDR, translations: [{ code: en, name: 'Indonesian Rupiah' }] }
+  - { currency_id: 372, code: IEP, e: 2, translations: [{ code: en, name: 'Irish Punt' }] }
+  - { currency_id: 376, code: ILS, e: 2, translations: [{ code: en, name: 'New Israeli Sheqel' }] }
+  - { currency_id: 356, code: INR, e: 2, translations: [{ code: en, name: 'Indian Ruppe' }] }
+  - { currency_id: 368, code: IQD, translations: [{ code: en, name: 'Iraqi Dinar' }] }
+  - { currency_id: 364, code: IRR, translations: [{ code: en, name: 'Iranian Rial' }] }
+  - { currency_id: 352, code: ISK, translations: [{ code: en, name: 'Iceland Krona' }] }
+  - { currency_id: 380, code: ITL, e: 2, translations: [{ code: en, name: 'Italian Lira' }] }
+  - { currency_id: 388, code: JMD, e: 2, translations: [{ code: en, name: 'Jamaican Dollar' }] }
+  - { currency_id: 400, code: JOD, e: 3, translations: [{ code: en, name: 'Jordanian Dinar' }] }
+  - { currency_id: 392, code: JPY, translations: [{ code: en, name: 'Japanese Yen' }] }
+  - { currency_id: 404, code: KES, e: 2, translations: [{ code: en, name: 'Kenyan Shilling' }] }
+  - { currency_id: 417, code: KGS, e: 2, translations: [{ code: en, name: Son }] }
+  - { currency_id: 174, code: KMF, translations: [{ code: en, name: 'Comoro Franc' }] }
+  - { currency_id: 408, code: KPW, translations: [{ code: en, name: 'North Korean Won' }] }
+  - { currency_id: 410, code: KRW, translations: [{ code: en, name: 'South Korean Won' }] }
+  - { currency_id: 414, code: KWD, e: 3, translations: [{ code: en, name: 'Kuwaiti Dinar' }] }
+  - { currency_id: 136, code: KYD, e: 2, translations: [{ code: en, name: 'Cayman Islands Dollar' }] }
+  - { currency_id: 398, code: KZT, e: 2, translations: [{ code: en, name: Tenge }] }
+  - { currency_id: 418, code: LAK, translations: [{ code: en, name: Kip }] }
+  - { currency_id: 422, code: LBP, translations: [{ code: en, name: 'Lebanese Pound' }] }
+  - { currency_id: 144, code: LKR, e: 2, translations: [{ code: en, name: 'Sri Lanka Rupee' }] }
+  - { currency_id: 430, code: LRD, e: 2, translations: [{ code: en, name: 'Liberian Dollar' }] }
+  - { currency_id: 426, code: LSL, e: 2, translations: [{ code: en, name: Loti }] }
+  - { currency_id: 440, code: LTL, e: 2, translations: [{ code: en, name: 'Lithuanian Litus' }] }
+  - { currency_id: 442, code: LUF, e: 2, translations: [{ code: en, name: 'Luxembourg Franc' }] }
+  - { currency_id: 428, code: LVL, e: 2, translations: [{ code: en, name: 'Latvian Lats' }] }
+  - { currency_id: 434, code: LYD, e: 3, translations: [{ code: en, name: 'Libyan Dinar' }] }
+  - { currency_id: 504, code: MAD, e: 2, translations: [{ code: en, name: 'Moroccan Dirtham' }] }
+  - { currency_id: 498, code: MDL, e: 2, translations: [{ code: en, name: 'Moldovan Leu' }] }
+  - { currency_id: 450, code: MGF, e: 2, translations: [{ code: en, name: 'Malagasy Franc' }] }
+  - { currency_id: 807, code: MKD, e: 2, translations: [{ code: en, name: Denar }] }
+  - { currency_id: 104, code: MMK, translations: [{ code: en, name: Kyat }] }
+  - { currency_id: 496, code: MNT, e: 2, translations: [{ code: en, name: Tugrik }] }
+  - { currency_id: 446, code: MOP, e: 1, translations: [{ code: en, name: Pataca }] }
+  - { currency_id: 478, code: MRO, translations: [{ code: en, name: Ouguiya }] }
+  - { currency_id: 470, code: MTL, e: 2, translations: [{ code: en, name: 'Maltese Lira' }] }
+  - { currency_id: 480, code: MUR, e: 2, translations: [{ code: en, name: 'Mauritius Rupee' }] }
+  - { currency_id: 462, code: MVR, e: 2, translations: [{ code: en, name: Rufiyaa }] }
+  - { currency_id: 454, code: MWK, e: 2, translations: [{ code: en, name: 'Malawian kwacha' }] }
+  - { currency_id: 484, code: MXN, e: 2, translations: [{ code: en, name: 'Mexican Peso' }] }
+  - { currency_id: 458, code: MYR, e: 2, translations: [{ code: en, name: 'Malasian Ringgit' }] }
+  - { currency_id: 508, code: MZM, e: 2, translations: [{ code: en, name: 'Mozambique Metical' }] }
+  - { currency_id: 516, code: NAD, e: 2, translations: [{ code: en, name: 'Namibia Dollar' }] }
+  - { currency_id: 566, code: NGN, e: 2, translations: [{ code: en, name: Naira }] }
+  - { currency_id: 558, code: NIO, e: 2, translations: [{ code: en, name: 'Cordoba Oro' }] }
+  - { currency_id: 528, code: NLG, e: 2, translations: [{ code: en, name: 'Dutch Guilder' }] }
+  - { currency_id: 578, code: NOK, e: 2, translations: [{ code: en, name: 'Norwegian Krone' }] }
+  - { currency_id: 524, code: NPR, e: 2, translations: [{ code: en, name: 'Nepalese Rupee' }] }
+  - { currency_id: 554, code: NZD, e: 2, translations: [{ code: en, name: 'New Zealand Dollar' }] }
+  - { currency_id: 512, code: OMR, e: 3, translations: [{ code: en, name: 'Rial Omani' }] }
+  - { currency_id: 590, code: PAB, e: 2, translations: [{ code: en, name: Balboa }] }
+  - { currency_id: 604, code: PEN, e: 2, translations: [{ code: en, name: 'Nuevo Sol' }] }
+  - { currency_id: 598, code: PGK, e: 2, translations: [{ code: en, name: Kina }] }
+  - { currency_id: 608, code: PHP, e: 2, translations: [{ code: en, name: 'Philippine Peso' }] }
+  - { currency_id: 586, code: PKR, e: 2, translations: [{ code: en, name: 'Pakistan Rupee' }] }
+  - { currency_id: 985, code: PLN, e: 2, translations: [{ code: en, name: 'Polish Zloty' }] }
+  - { currency_id: 620, code: PTE, e: 2, translations: [{ code: en, name: 'Portuguese Escudo' }] }
+  - { currency_id: 600, code: PYG, translations: [{ code: en, name: Guarani }] }
+  - { currency_id: 634, code: QAR, e: 2, translations: [{ code: en, name: 'Qatari Rial' }] }
+  - { currency_id: 642, code: ROL, e: 2, translations: [{ code: en, name: Leu }] }
+  - { currency_id: 941, code: RSD, e: 2, translations: [{ code: en, name: 'Serbian Dinar' }] }
+  - { currency_id: 810, code: RUR, e: 2, translations: [{ code: en, name: 'Russian Ruble' }] }
+  - { currency_id: 646, code: RWF, translations: [{ code: en, name: 'Rwanda Franc' }] }
+  - { currency_id: 682, code: SAR, e: 2, translations: [{ code: en, name: 'Saudi Riyal' }] }
+  - { currency_id: 90, code: SBD, e: 2, translations: [{ code: en, name: 'Solomon Islands Dollar' }] }
+  - { currency_id: 690, code: SCR, e: 2, translations: [{ code: en, name: 'Seychelles Rupee' }] }
+  - { currency_id: 736, code: SDD, e: 2, translations: [{ code: en, name: 'Sudanese Dinar' }] }
+  - { currency_id: 752, code: SEK, e: 2, translations: [{ code: en, name: 'Swedish Krona' }] }
+  - { currency_id: 702, code: SGD, e: 2, translations: [{ code: en, name: 'Singapore Dollar' }] }
+  - { currency_id: 654, code: SHP, e: 2, translations: [{ code: en, name: 'Saint Helena Pound' }] }
+  - { currency_id: 116, code: SHR, e: 2, translations: [{ code: en, name: Riel }] }
+  - { currency_id: 705, code: SIT, e: 2, translations: [{ code: en, name: Tolar }] }
+  - { currency_id: 703, code: SKK, e: 2, translations: [{ code: en, name: 'Slovak Koruna' }] }
+  - { currency_id: 694, code: SLL, translations: [{ code: en, name: Leone }] }
+  - { currency_id: 706, code: SOS, e: 2, translations: [{ code: en, name: 'Somali Shilling' }] }
+  - { currency_id: 740, code: SRG, e: 2, translations: [{ code: en, name: 'Suriname Guilder' }] }
+  - { currency_id: 678, code: STD, translations: [{ code: en, name: Dobra }] }
+  - { currency_id: 222, code: SVC, e: 2, translations: [{ code: en, name: 'El Salvador Colon' }] }
+  - { currency_id: 760, code: SYP, e: 2, translations: [{ code: en, name: 'Syrian Pound' }] }
+  - { currency_id: 748, code: SZL, e: 2, translations: [{ code: en, name: Lilangeni }] }
+  - { currency_id: 764, code: THB, e: 2, translations: [{ code: en, name: 'Thailand Baht' }] }
+  - { currency_id: 972, code: TJS, e: 2, translations: [{ code: en, name: Somoni }] }
+  - { currency_id: 795, code: TMM, e: 2, translations: [{ code: en, name: Manat }] }
+  - { currency_id: 788, code: TND, e: 3, translations: [{ code: en, name: 'Tunisian Dinar' }] }
+  - { currency_id: 776, code: TOP, e: 2, translations: [{ code: en, name: 'Pa''anga' }] }
+  - { currency_id: 626, code: TPE, e: 2, translations: [{ code: en, name: 'Timor Escudo' }] }
+  - { currency_id: 792, code: TRL, e: 2, translations: [{ code: en, name: 'Turkish Lira' }] }
+  - { currency_id: 780, code: TTD, e: 2, translations: [{ code: en, name: 'Trinidad and Tobago Dollar' }] }
+  - { currency_id: 901, code: TWD, e: 1, translations: [{ code: en, name: 'New Taiwan Dollar' }] }
+  - { currency_id: 834, code: TZS, e: 2, translations: [{ code: en, name: 'Tanzanian Shilling' }] }
+  - { currency_id: 980, code: UAH, e: 2, translations: [{ code: en, name: Hryvnia }] }
+  - { currency_id: 800, code: UGX, translations: [{ code: en, name: 'Uganda Shilling' }] }
+  - { currency_id: 840, code: USD, symbol: $, e: 2, translations: [{ code: en, name: 'US Dollar' }] }
+  - { currency_id: 858, code: UYU, e: 2, translations: [{ code: en, name: 'Peso Uruguayo' }] }
+  - { currency_id: 860, code: UZS, e: 2, translations: [{ code: en, name: 'Uzbekistan som' }] }
+  - { currency_id: 862, code: VEB, e: 2, translations: [{ code: en, name: Bolivar }] }
+  - { currency_id: 704, code: VND, translations: [{ code: en, name: 'Vietnamese Dong' }] }
+  - { currency_id: 548, code: VUV, translations: [{ code: en, name: Vatu }] }
+  - { currency_id: 882, code: WST, e: 2, translations: [{ code: en, name: Tala }] }
+  - { currency_id: 950, code: XAF, translations: [{ code: en, name: 'CFA Franc BEAC' }] }
+  - { currency_id: 951, code: XCD, e: 2, translations: [{ code: en, name: 'East Caribbean Dollar' }] }
+  - { currency_id: 952, code: XOF, translations: [{ code: en, name: 'CFA Franc BCEAO' }] }
+  - { currency_id: 953, code: XPF, translations: [{ code: en, name: 'CFP Franc' }] }
+  - { currency_id: 886, code: YER, translations: [{ code: en, name: 'Yemeni Rial' }] }
+  - { currency_id: 891, code: YUM, e: 2, translations: [{ code: en, name: 'Yugoslavian Dinar' }] }
+  - { currency_id: 710, code: ZAR, e: 2, translations: [{ code: en, name: 'South Africa Rand' }] }
+  - { currency_id: 894, code: ZMK, translations: [{ code: en, name: 'Zambian kwacha' }] }
+  - { currency_id: 716, code: ZWD, e: 2, translations: [{ code: en, name: 'Zimbabwe Dollar' }] }
+XLite\Model\LanguageLabel:
+  - { name: Weight, translations: [{ code: en, label: Weight }, { code: de, label: Gewicht }] }
+  - { name: 'Add to cart', translations: [{ code: en, label: 'Add to Cart' }] }
+  - { name: Description, translations: [{ code: en, label: Description }] }
+  - { name: SKU, translations: [{ code: en, label: SKU }] }
+  - { name: 'Previous product', translations: [{ code: en, label: 'Previous product' }] }
+  - { name: 'Next product', translations: [{ code: en, label: 'Next product' }] }
+  - { name: 'Clear cart', translations: [{ code: en, label: 'Clear cart' }] }
+  - { name: 'Continue shopping', translations: [{ code: en, label: 'Continue shopping' }] }
+  - { name: Submit, translations: [{ code: en, label: Submit }] }
+  - { name: Delivery, translations: [{ code: en, label: Delivery }] }
+  - { name: 'This product is out of stock or it has been disabled for sale', translations: [{ code: en, label: '(!) This product is out of stock or it has been disabled for sale.' }] }
+  - { name: Update, translations: [{ code: en, label: Update }] }
+  - { name: 'Grand total', translations: [{ code: en, label: 'Grand total' }] }
+  - { name: 'Shipping cost', translations: [{ code: en, label: 'Shipping cost' }] }
+  - { name: Free, translations: [{ code: en, label: Free }] }
+  - { name: Subtotal, translations: [{ code: en, label: Subtotal }] }
+  - { name: Tax, translations: [{ code: en, label: Tax }] }
+  - { name: n/a, translations: [{ code: en, label: n/a }] }
+  - { name: 'Your shopping cart is empty', translations: [{ code: en, label: 'Your shopping cart is empty' }] }
+  - { name: 'Delete item', translations: [{ code: en, label: 'Delete item' }] }
+  - { name: Continue..., translations: [{ code: en, label: Continue... }] }
+  - { name: 'The language you want to add has not been found', translations: [{ code: en, label: 'The language you want to add has not been found' }] }
+  - { name: 'The language you want to add has already been added', translations: [{ code: en, label: 'The language you want to add has already been added' }] }
+  - { name: 'The X language has been added successfully', translations: [{ code: en, label: 'The {{language}} language has been added successfully' }] }
+  - { name: 'The language you want to delete has not been found', translations: [{ code: en, label: 'The language you want to delete has not been found' }] }
+  - { name: 'The language you want to delete is the default application language and cannot be deleted', translations: [{ code: en, label: 'The language you want to delete is the default application language and cannot be deleted' }] }
+  - { name: 'The language you want to delete is the default interface language and cannot be deleted', translations: [{ code: en, label: 'The language you want to delete is the default interface language and cannot be deleted' }] }
+  - { name: 'The X language has been deleted successfully', translations: [{ code: en, label: 'The {{language}} language has been deleted successfully' }] }
+  - { name: 'The language has not been found', translations: [{ code: en, label: 'The language has not been found' }] }
+  - { name: 'The default interface language cannot be disabled', translations: [{ code: en, label: 'The default interface language cannot be disabled' }] }
+  - { name: 'The X language has been disabled successfully', translations: [{ code: en, label: 'The {{language}} language has been disabled successfully' }] }
+  - { name: 'The X language has been enabled successfully', translations: [{ code: en, label: 'The {{language}} language has been enabled successfully' }] }
+  - { name: 'Text labels have been updated successfully', translations: [{ code: en, label: 'Text labels have been updated successfully' }] }
+  - { name: 'Text labels have not been updated successfully: the translation language has not been specified', translations: [{ code: en, label: 'Text labels have not been updated successfully: the translation language has not been specified' }] }
+  - { name: 'Text labels have not been updated successfully: the default application language has been set as the translation language', translations: [{ code: en, label: 'Text labels have not been updated successfully: the default application language has been set as the translation language' }] }
+  - { name: 'Text labels have not been updated successfully: the translation language has not been found', translations: [{ code: en, label: 'Text labels have not been updated successfully: the translation language has not been found' }] }
+  - { name: 'Text labels have been deleted', translations: [{ code: en, label: 'Text labels have been deleted' }] }
+  - { name: 'Text labels have not been deleted: no text labels have been found or specified', translations: [{ code: en, label: 'Text labels have not been deleted: no text labels have been found or specified' }] }
+  - { name: 'The text label has been deleted', translations: [{ code: en, label: 'The text label has been deleted' }] }
+  - { name: 'The text label has not been deleted: it has been either not found or not specified', translations: [{ code: en, label: 'The text label has not been deleted: it has been either not found or not specified' }] }
+  - { name: 'The text label has not been adde', translations: [{ code: en, label: 'The text label has not been adde' }] }
+  - { name: 'The text label has not been adde', translations: [{ code: en, label: 'The text label has not been adde' }] }
+  - { name: 'The text label has not been adde', translations: [{ code: en, label: 'The text label has not been adde' }] }
+  - { name: 'The text label has not been adde', translations: [{ code: en, label: 'The text label has not been adde' }] }
+  - { name: 'The text label has been added successfully', translations: [{ code: en, label: 'The text label has been added successfully' }] }
+  - { name: 'The text label has not been modifie', translations: [{ code: en, label: 'The text label has not been modifie' }] }
+  - { name: 'The text label has not been modifie', translations: [{ code: en, label: 'The text label has not been modifie' }] }
+  - { name: 'The text label has been modified successfully', translations: [{ code: en, label: 'The text label has been modified successfully' }] }
+  - { name: 'The edited language has not been found', translations: [{ code: en, label: 'The edited language has not been found' }] }
+  - { name: 'The name of the edited language in the default application language has not been specified', translations: [{ code: en, label: 'The name of the edited language in the default application language has not been specified' }] }
+  - { name: 'The language data has been saved', translations: [{ code: en, label: 'The language data has been saved' }] }
+  - { name: Search, translations: [{ code: en, label: Search }, { code: de, label: Suche }] }
+  - { name: 'Show all labels', translations: [{ code: en, label: 'Show all labels' }] }
+  - { name: 'N items found', translations: [{ code: en, label: '{{n}} items found' }] }
+  - { name: 'Language options', translations: [{ code: en, label: 'Language options' }] }
+  - { name: 'X labels', translations: [{ code: en, label: '{{language}} labels' }] }
+  - { name: 'translate to', translations: [{ code: en, label: 'translate to' }] }
+  - { name: 'Select language', translations: [{ code: en, label: 'Select language' }] }
+  - { name: 'No other languages defined', translations: [{ code: en, label: 'No other languages defined' }] }
+  - { name: 'Add new label', translations: [{ code: en, label: 'Add new label' }] }
+  - { name: 'Add language', translations: [{ code: en, label: 'Add language' }] }
+  - { name: 'N items', translations: [{ code: en, label: '{{n}} items' }] }
+  - { name: 'Select language to edit', translations: [{ code: en, label: 'Select language to edit' }] }
+  - { name: 'Add new language', translations: [{ code: en, label: 'Add new language' }] }
+  - { name: Save, translations: [{ code: en, label: Save }] }
+  - { name: 'Please specify text labels for each language', translations: [{ code: en, label: 'Please specify text labels for each language. If you do not specify a value for some languag' }] }
+  - { name: 'Label name', translations: [{ code: en, label: 'Label name' }] }
+  - { name: required, translations: [{ code: en, label: required }] }
+  - { name: 'Confirm deletion', translations: [{ code: en, label: 'Confirm deletion' }] }
+  - { name: 'You are going to delete X language', translations: [{ code: en, label: 'You are going to delete {{language}} language. This operation is irreversable. Are you sure you want to continue?' }] }
+  - { name: Delete, translations: [{ code: en, label: Delete }] }
+  - { name: Cancel, translations: [{ code: en, label: Cancel }] }
+  - { name: 'X Language (Code: Y)', translations: [{ code: en, label: '{{language}} Language (Code: {{code}})' }] }
+  - { name: 'Language name in X', translations: [{ code: en, label: 'Language name in {{language}}' }] }
+  - { name: 'Native language name', translations: [{ code: en, label: 'Native language name' }] }
+  - { name: Disable, translations: [{ code: en, label: Disable }] }
+  - { name: Enable, translations: [{ code: en, label: Enable }] }
+  - { name: 'Default for customer zone and can not disabled or deleted', translations: [{ code: en, label: 'Default for customer zone and can not disabled or deleted' }] }
+  - { name: 'Set this language as default for customer zone', translations: [{ code: en, label: 'Set this language as default for customer zone' }] }
+  - { name: 'Disabled language can not be set as default for customer zone', translations: [{ code: en, label: 'Disabled language can not be set as default for customer zone' }] }
+  - { name: 'Delete Language', translations: [{ code: en, label: 'Delete Language' }] }
+  - { name: 'Edit label', translations: [{ code: en, label: 'Edit label' }] }
+  - { name: 'Please specify a pattern to find the required labels', translations: [{ code: en, label: 'Please specify a pattern to find the required labels' }] }
+  - { name: 'The language is enabled', translations: [{ code: en, label: 'The language is <span>enabled</span>' }] }
+  - { name: 'The language is disabled', translations: [{ code: en, label: 'The language is <span>disabled</span>' }] }
+  - { name: 'The module to uninstall has not been found', translations: [{ code: en, label: 'The module to uninstall has not been found' }] }
+  - { name: 'The module has been uninstalled successfully', translations: [{ code: en, label: 'The module has been uninstalled successfully' }] }
+  - { name: 'The module has been partially uninstalled', translations: [{ code: en, label: 'The module has been partially uninstalled' }] }
+  - { name: 'The X module has been installed successfully', translations: [{ code: en, label: 'The {{module}} module has been installed successfully' }] }
+  - { name: 'The X module has been installed with errors: the DB has not been modified correctly', translations: [{ code: en, label: 'The {{module}} module has been installed with errors: the DB has not been modified correctly' }] }
+  - { name: 'The X module has been installed incorrectly. Please see the logs for more information', translations: [{ code: en, label: 'The {{module}} module has been installed incorrectly. Please see the logs for more information' }] }
+  - { name: 'The X module has been installe', translations: [{ code: en, label: 'The {{module}} module has been installe' }] }
+  - { name: 'The X module has been uninstalled in an abnormal way', translations: [{ code: en, label: 'The {{module}} module has been uninstalled in an abnormal way' }] }
+  - { name: 'The modules have been updated', translations: [{ code: en, label: 'The modules have been updated' }] }
+  - { name: 'The X module has been disabled in an abnormal way', translations: [{ code: en, label: 'The {{module}} module has been disabled in an abnormal way' }] }
+  - { name: 'Congratulations! Your order has been successfully placed', translations: [{ code: en, label: 'Congratulations! Your order has been successfully placed.<br />Thank you for using our store. An order notification has been sent to your e-mail address.<br />Your order will be processed according to the delivery details.' }] }
+  - { name: 'X items in bag', translations: [{ code: en, label: '{{count}} items in bag' }] }
+  - { name: 'Other items', translations: [{ code: en, label: 'Other items' }] }
+  - { name: 'The selected shipping method has been deleted successfully', translations: [{ code: en, label: 'The selected shipping method has been deleted successfully' }] }
+  - { name: 'Shipping methods have been updated', translations: [{ code: en, label: 'Shipping methods have been updated' }] }
+  - { name: 'Shipping method has been added', translations: [{ code: en, label: 'Shipping methods has been added' }] }
+  - { name: 'The selected zones have been deleted successfully', translations: [{ code: en, label: 'The selected zones have been deleted successfully' }] }
+  - { name: 'Zone details have been updated successfully', translations: [{ code: en, label: 'Zone details have been updated successfully' }] }
+  - { name: 'New zone has been created successfully', translations: [{ code: en, label: 'New zone has been created successfully' }] }
+  - { name: 'This product has been added to your bag', translations: [{ code: en, label: 'This product has been added to <a href="{{href}}">your bag</a>' }] }
+  - { name: 'Your shopping bag - X items', translations: [{ code: en, label: 'Your shopping bag &mdash; {{count}} items' }] }
+  - { name: Greeting, translations: [{ code: en, label: Greeting }] }
+  - { name: 'X items', translations: [{ code: en, label: '{{count}} items' }] }
+  - { name: 'This email address is used for an existing account. Enter another email address or sign in', translations: [{ code: en, label: 'This email address is used for an existing account. Enter another email address or <a href="{{URL}}" class="log-in">sign in</a>' }] }
+  - { name: 'This user name is used for an existing account. Enter another user name or sign in', translations: [{ code: en, label: 'This user names is used for an existing account. Enter another user name or <a href="{{URL}}" class="log-in">sign in</a>' }] }
+  - { name: 'I accept Terms and Conditions', translations: [{ code: en, label: 'I accept <a href="{{URL}}">Terms &amp; Conditions</a>' }] }
+  - { name: 'Place order X', translations: [{ code: en, label: 'Place order: {{total}}' }] }
+  - { name: 'Enter a correct email', translations: [{ code: en, label: 'Enter a correct email' }] }
+  - { name: 'Enter an integer', translations: [{ code: en, label: 'Enter an integer' }] }
+  - { name: 'Enter a number', translations: [{ code: en, label: 'Enter a number' }] }
+  - { name: 'Zero cannot be used', translations: [{ code: en, label: 'Zero cannot be used' }] }
+  - { name: 'Enter a positive number', translations: [{ code: en, label: 'Enter a positive number' }] }
+  - { name: 'Enter a negative number', translations: [{ code: en, label: 'Enter a negative number' }] }
+  - { name: 'This field is required', translations: [{ code: en, label: 'This field is required' }] }
+XLite\Model\Membership:
+  - { orderby: 10, translations: [{ code: en, name: Gold }] }
+  - { orderby: 20, translations: [{ code: en, name: Platinum }] }
+  - { orderby: 30, translations: [{ code: en, name: Wholesaler }] }
+XLite\Model\Language:
+  - { code: aa, code3: aar, translations: [{ code: en, name: Afar }] }
+  - { code: ab, code3: abk, translations: [{ code: en, name: Abkhazian }] }
+  - { code: af, code3: afr, translations: [{ code: en, name: Afrikaans }] }
+  - { code: ak, code3: aka, translations: [{ code: en, name: Akan }] }
+  - { code: sq, code3: alb, translations: [{ code: en, name: Albanian }] }
+  - { code: am, code3: amh, translations: [{ code: en, name: Amharic }] }
+  - { code: ar, code3: ara, translations: [{ code: en, name: Arabic }] }
+  - { code: an, code3: arg, translations: [{ code: en, name: Aragonese }] }
+  - { code: hy, code3: arm, translations: [{ code: en, name: Armenian }] }
+  - { code: as, code3: asm, translations: [{ code: en, name: Assamese }] }
+  - { code: av, code3: ava, translations: [{ code: en, name: Avaric }] }
+  - { code: ae, code3: ave, translations: [{ code: en, name: Avestan }] }
+  - { code: ay, code3: aym, translations: [{ code: en, name: Aymara }] }
+  - { code: az, code3: aze, translations: [{ code: en, name: Azerbaijani }] }
+  - { code: ba, code3: bak, translations: [{ code: en, name: Bashkir }] }
+  - { code: bm, code3: bam, translations: [{ code: en, name: Bambara }] }
+  - { code: eu, code3: baq, translations: [{ code: en, name: Basque }] }
+  - { code: be, code3: bel, translations: [{ code: en, name: Belarusian }] }
+  - { code: bn, code3: ben, translations: [{ code: en, name: Bengali }] }
+  - { code: bh, code3: bih, translations: [{ code: en, name: Bihari }] }
+  - { code: bi, code3: bis, translations: [{ code: en, name: Bislama }] }
+  - { code: bs, code3: bos, translations: [{ code: en, name: Bosnian }] }
+  - { code: br, code3: bre, translations: [{ code: en, name: Breton }] }
+  - { code: bg, code3: bul, translations: [{ code: en, name: Bulgarian }] }
+  - { code: my, code3: bur, translations: [{ code: en, name: Burmese }] }
+  - { code: ca, code3: cat, translations: [{ code: en, name: Catalan }] }
+  - { code: ch, code3: cha, translations: [{ code: en, name: Chamorro }] }
+  - { code: ce, code3: che, translations: [{ code: en, name: Chechen }] }
+  - { code: zh, code3: chi, translations: [{ code: en, name: Chinese }] }
+  - { code: cu, code3: chu, translations: [{ code: en, name: 'Church Slavic' }] }
+  - { code: cv, code3: chv, translations: [{ code: en, name: Chuvash }] }
+  - { code: kw, code3: cor, translations: [{ code: en, name: Cornish }] }
+  - { code: co, code3: cos, translations: [{ code: en, name: Corsican }] }
+  - { code: cr, code3: cre, translations: [{ code: en, name: Cree }] }
+  - { code: cs, code3: cze, translations: [{ code: en, name: Czech }] }
+  - { code: da, code3: dan, translations: [{ code: en, name: Danish }] }
+  - { code: dv, code3: div, translations: [{ code: en, name: Divehi }] }
+  - { code: nl, code3: dut, translations: [{ code: en, name: Dutch }] }
+  - { code: dz, code3: dzo, translations: [{ code: en, name: Dzongkha }] }
+  - { code: en, code3: eng, translations: [{ code: en, name: English }] }
+  - { code: eo, code3: epo, translations: [{ code: en, name: Esperanto }] }
+  - { code: et, code3: est, translations: [{ code: en, name: Estonian }] }
+  - { code: ee, code3: ewe, translations: [{ code: en, name: Ewe }] }
+  - { code: fo, code3: fao, translations: [{ code: en, name: Faroese }] }
+  - { code: fj, code3: fij, translations: [{ code: en, name: Fijian }] }
+  - { code: fi, code3: fin, translations: [{ code: en, name: Finnish }] }
+  - { code: fr, code3: fre, translations: [{ code: en, name: French }] }
+  - { code: fy, code3: fry, translations: [{ code: en, name: 'Western Frisian' }] }
+  - { code: ff, code3: ful, translations: [{ code: en, name: Fulah }] }
+  - { code: ka, code3: geo, translations: [{ code: en, name: Georgian }] }
+  - { code: de, code3: ger, translations: [{ code: en, name: German }] }
+  - { code: gd, code3: gla, translations: [{ code: en, name: Gaelic }] }
+  - { code: ga, code3: gle, translations: [{ code: en, name: Irish }] }
+  - { code: gl, code3: glg, translations: [{ code: en, name: Galician }] }
+  - { code: gv, code3: glv, translations: [{ code: en, name: Manx }] }
+  - { code: el, code3: gre, translations: [{ code: en, name: Greek }] }
+  - { code: gn, code3: grn, translations: [{ code: en, name: Guarani }] }
+  - { code: gu, code3: guj, translations: [{ code: en, name: Gujarati }] }
+  - { code: ht, code3: hat, translations: [{ code: en, name: Haitian }] }
+  - { code: ha, code3: hau, translations: [{ code: en, name: Hausa }] }
+  - { code: he, code3: heb, translations: [{ code: en, name: Hebrew }] }
+  - { code: hz, code3: her, translations: [{ code: en, name: Herero }] }
+  - { code: hi, code3: hin, translations: [{ code: en, name: Hindi }] }
+  - { code: ho, code3: hmo, translations: [{ code: en, name: 'Hiri Motu' }] }
+  - { code: hr, code3: hrv, translations: [{ code: en, name: Croatian }] }
+  - { code: hu, code3: hun, translations: [{ code: en, name: Hungarian }] }
+  - { code: ig, code3: ibo, translations: [{ code: en, name: Igbo }] }
+  - { code: is, code3: ice, translations: [{ code: en, name: Icelandic }] }
+  - { code: io, code3: ido, translations: [{ code: en, name: Ido }] }
+  - { code: ii, code3: iii, translations: [{ code: en, name: 'Sichuan Yi' }] }
+  - { code: iu, code3: iku, translations: [{ code: en, name: Inuktitut }] }
+  - { code: ie, code3: ile, translations: [{ code: en, name: Interlingue }] }
+  - { code: ia, code3: ina, translations: [{ code: en, name: Interlingua }] }
+  - { code: id, code3: ind, translations: [{ code: en, name: Indonesian }] }
+  - { code: ik, code3: ipk, translations: [{ code: en, name: Inupiaq }] }
+  - { code: it, code3: ita, translations: [{ code: en, name: Italian }] }
+  - { code: jv, code3: jav, translations: [{ code: en, name: Javanese }] }
+  - { code: ja, code3: jpn, translations: [{ code: en, name: Japanese }] }
+  - { code: kl, code3: kal, translations: [{ code: en, name: Kalaallisut }] }
+  - { code: kn, code3: kan, translations: [{ code: en, name: Kannada }] }
+  - { code: ks, code3: kas, translations: [{ code: en, name: Kashmiri }] }
+  - { code: kr, code3: kau, translations: [{ code: en, name: Kanuri }] }
+  - { code: kk, code3: kaz, translations: [{ code: en, name: Kazakh }] }
+  - { code: km, code3: khm, translations: [{ code: en, name: 'Central Khmer' }] }
+  - { code: ki, code3: kik, translations: [{ code: en, name: Kikuyu }] }
+  - { code: rw, code3: kin, translations: [{ code: en, name: Kinyarwanda }] }
+  - { code: ky, code3: kir, translations: [{ code: en, name: Kirghiz }] }
+  - { code: kv, code3: kom, translations: [{ code: en, name: Komi }] }
+  - { code: kg, code3: kon, translations: [{ code: en, name: Kongo }] }
+  - { code: ko, code3: kor, translations: [{ code: en, name: Korean }] }
+  - { code: kj, code3: kua, translations: [{ code: en, name: Kuanyama }] }
+  - { code: ku, code3: kur, translations: [{ code: en, name: Kurdish }] }
+  - { code: lo, code3: lao, translations: [{ code: en, name: Lao }] }
+  - { code: la, code3: lat, translations: [{ code: en, name: Latin }] }
+  - { code: lv, code3: lav, translations: [{ code: en, name: Latvian }] }
+  - { code: li, code3: lim, translations: [{ code: en, name: Limburgan }] }
+  - { code: ln, code3: lin, translations: [{ code: en, name: Lingala }] }
+  - { code: lt, code3: lit, translations: [{ code: en, name: Lithuanian }] }
+  - { code: lb, code3: ltz, translations: [{ code: en, name: Luxembourgish }] }
+  - { code: lu, code3: lub, translations: [{ code: en, name: Luba-Katanga }] }
+  - { code: lg, code3: lug, translations: [{ code: en, name: Ganda }] }
+  - { code: mk, code3: mac, translations: [{ code: en, name: Macedonian }] }
+  - { code: mh, code3: mah, translations: [{ code: en, name: Marshallese }] }
+  - { code: ml, code3: mal, translations: [{ code: en, name: Malayalam }] }
+  - { code: mi, code3: mao, translations: [{ code: en, name: Maori }] }
+  - { code: mr, code3: mar, translations: [{ code: en, name: Marathi }] }
+  - { code: ms, code3: may, translations: [{ code: en, name: Malay }] }
+  - { code: mg, code3: mlg, translations: [{ code: en, name: Malagasy }] }
+  - { code: mt, code3: mlt, translations: [{ code: en, name: Maltese }] }
+  - { code: mn, code3: mon, translations: [{ code: en, name: Mongolian }] }
+  - { code: na, code3: nau, translations: [{ code: en, name: Nauru }] }
+  - { code: nv, code3: nav, translations: [{ code: en, name: Navajo }] }
+  - { code: nr, code3: nbl, translations: [{ code: en, name: Ndebel }] }
+  - { code: nd, code3: nde, translations: [{ code: en, name: Ndebel }] }
+  - { code: ng, code3: ndo, translations: [{ code: en, name: Ndonga }] }
+  - { code: ne, code3: nep, translations: [{ code: en, name: Nepali }] }
+  - { code: no, code3: nor, translations: [{ code: en, name: Norwegian }] }
+  - { code: ny, code3: nya, translations: [{ code: en, name: Chichewa }] }
+  - { code: oc, code3: oci, translations: [{ code: en, name: Occitan }] }
+  - { code: oj, code3: oji, translations: [{ code: en, name: Ojibwa }] }
+  - { code: or, code3: ori, translations: [{ code: en, name: Oriya }] }
+  - { code: om, code3: orm, translations: [{ code: en, name: Oromo }] }
+  - { code: os, code3: oss, translations: [{ code: en, name: Ossetian }] }
+  - { code: pa, code3: pan, translations: [{ code: en, name: Panjabi }] }
+  - { code: fa, code3: per, translations: [{ code: en, name: Persian }] }
+  - { code: pi, code3: pli, translations: [{ code: en, name: Pali }] }
+  - { code: pl, code3: pol, translations: [{ code: en, name: Polish }] }
+  - { code: pt, code3: por, translations: [{ code: en, name: Portuguese }] }
+  - { code: ps, code3: pus, translations: [{ code: en, name: Pushto }] }
+  - { code: qu, code3: que, translations: [{ code: en, name: Quechua }] }
+  - { code: rm, code3: roh, translations: [{ code: en, name: Romansh }] }
+  - { code: ro, code3: rum, translations: [{ code: en, name: Romanian }] }
+  - { code: rn, code3: run, translations: [{ code: en, name: Rundi }] }
+  - { code: ru, code3: rus, translations: [{ code: en, name: Russian }] }
+  - { code: sg, code3: sag, translations: [{ code: en, name: Sango }] }
+  - { code: sa, code3: san, translations: [{ code: en, name: Sanskrit }] }
+  - { code: si, code3: sin, translations: [{ code: en, name: Sinhala }] }
+  - { code: sk, code3: slo, translations: [{ code: en, name: Slovak }] }
+  - { code: sl, code3: slv, translations: [{ code: en, name: Slovenian }] }
+  - { code: se, code3: sme, translations: [{ code: en, name: 'Northern Sami' }] }
+  - { code: sm, code3: smo, translations: [{ code: en, name: Samoan }] }
+  - { code: sn, code3: sna, translations: [{ code: en, name: Shona }] }
+  - { code: sd, code3: snd, translations: [{ code: en, name: Sindhi }] }
+  - { code: so, code3: som, translations: [{ code: en, name: Somali }] }
+  - { code: st, code3: sot, translations: [{ code: en, name: Soth }] }
+  - { code: es, code3: spa, translations: [{ code: en, name: Spanish }] }
+  - { code: sc, code3: srd, translations: [{ code: en, name: Sardinian }] }
+  - { code: sr, code3: srp, translations: [{ code: en, name: Serbian }] }
+  - { code: ss, code3: ssw, translations: [{ code: en, name: Swati }] }
+  - { code: su, code3: sun, translations: [{ code: en, name: Sundanese }] }
+  - { code: sw, code3: swa, translations: [{ code: en, name: Swahili }] }
+  - { code: sv, code3: swe, translations: [{ code: en, name: Swedish }] }
+  - { code: ty, code3: tah, translations: [{ code: en, name: Tahitian }] }
+  - { code: ta, code3: tam, translations: [{ code: en, name: Tamil }] }
+  - { code: tt, code3: tat, translations: [{ code: en, name: Tatar }] }
+  - { code: te, code3: tel, translations: [{ code: en, name: Telugu }] }
+  - { code: tg, code3: tgk, translations: [{ code: en, name: Tajik }] }
+  - { code: tl, code3: tgl, translations: [{ code: en, name: Tagalog }] }
+  - { code: th, code3: tha, translations: [{ code: en, name: Thai }] }
+  - { code: bo, code3: tib, translations: [{ code: en, name: Tibetan }] }
+  - { code: ti, code3: tir, translations: [{ code: en, name: Tigrinya }] }
+  - { code: to, code3: ton, translations: [{ code: en, name: Tonga }] }
+  - { code: tn, code3: tsn, translations: [{ code: en, name: Tswana }] }
+  - { code: ts, code3: tso, translations: [{ code: en, name: Tsonga }] }
+  - { code: tk, code3: tuk, translations: [{ code: en, name: Turkmen }] }
+  - { code: tr, code3: tur, translations: [{ code: en, name: Turkish }] }
+  - { code: tw, code3: twi, translations: [{ code: en, name: Twi }] }
+  - { code: ug, code3: uig, translations: [{ code: en, name: Uighur }] }
+  - { code: uk, code3: ukr, translations: [{ code: en, name: Ukrainian }] }
+  - { code: ur, code3: urd, translations: [{ code: en, name: Urdu }] }
+  - { code: uz, code3: uzb, translations: [{ code: en, name: Uzbek }] }
+  - { code: ve, code3: ven, translations: [{ code: en, name: Venda }] }
+  - { code: vi, code3: vie, translations: [{ code: en, name: Vietnamese }] }
+  - { code: vo, code3: vol, translations: [{ code: en, name: 'Volap&uuml;k' }] }
+  - { code: cy, code3: wel, translations: [{ code: en, name: Welsh }] }
+  - { code: wa, code3: wln, translations: [{ code: en, name: Walloon }] }
+  - { code: wo, code3: wol, translations: [{ code: en, name: Wolof }] }
+  - { code: xh, code3: xho, translations: [{ code: en, name: Xhosa }] }
+  - { code: yi, code3: yid, translations: [{ code: en, name: Yiddish }] }
+  - { code: yo, code3: yor, translations: [{ code: en, name: Yoruba }] }
+  - { code: za, code3: zha, translations: [{ code: en, name: Zhuang }] }
+  - { code: zu, code3: zul, translations: [{ code: en, name: Zulu }] }
+XLite\Model\Payment\Method:
+  - { service_name: CreditCard, class: Model\Payment\Processor\CreditCard, orderby: 10, translations: [{ code: en, name: 'Credit Card', description: Vis }] }
+  - { service_name: PurchaseOrder, class: Model\Payment\Processor\PurchaseOrder, orderby: 20, translations: [{ code: en, name: 'Purchase Order', description: '' }] }
+  - { service_name: PhoneOrdering, class: Model\Payment\Processor\Offline, orderby: 30, translations: [{ code: en, name: 'Phone Ordering', description: 'Phone: (555) 555-5555' }] }
+  - { service_name: FaxOrdering, class: Model\Payment\Processor\Offline, orderby: 40, translations: [{ code: en, name: 'Fax Ordering', description: 'Fax: (555) 555-5555' }] }
+  - { service_name: MoneyOrdering, class: Model\Payment\Processor\Offline, orderby: 50, translations: [{ code: en, name: 'Money Order', description: 'US Banks Only' }] }
+  - { service_name: Echeck, class: Model\Payment\Processor\Check, orderby: 60, translations: [{ code: en, name: Check, description: 'Check payment' }] }
+  - { service_name: COD, class: Model\Payment\Processor\Offline, orderby: 70, translations: [{ code: en, name: COD, description: 'Cash On Delivery' }] }
+XLite\Model\Country:
+  - { country: Afghanistan, code: AF, enabled: false }
+  - { country: Albania, code: AL }
+  - { country: Algeria, code: DZ }
+  - { country: 'American Samoa', code: AS }
+  - { country: Andorra, code: AD }
+  - { country: Angola, code: AO }
+  - { country: Anguilla, code: AI }
+  - { country: Antarctica, code: AQ }
+  - { country: 'Antigua and Barbuda', code: AG }
+  - { country: Argentina, code: AR }
+  - { country: Armenia, code: AM }
+  - { country: Aruba, code: AW }
+  - { country: Australia, code: AU }
+  - { country: Austria, code: AT, eu_member: true }
+  - { country: Azerbaijan, code: AZ }
+  - { country: Bahamas, code: BS }
+  - { country: Bahrain, code: BH }
+  - { country: Bangladesh, code: BD }
+  - { country: Barbados, code: BB }
+  - { country: Belarus, code: BY }
+  - { country: Belgium, code: BE, eu_member: true }
+  - { country: Belize, code: BZ }
+  - { country: Benin, code: BJ }
+  - { country: Bermuda, code: BM }
+  - { country: Bhutan, code: BT }
+  - { country: Bolivia, code: BO }
+  - { country: 'Bosnia and Herzegowina', code: BA }
+  - { country: Botswana, code: BW }
+  - { country: 'Bouvet Island', code: BV }
+  - { country: Brazil, code: BR }
+  - { country: 'British Indian Ocean Territory', code: IO }
+  - { country: 'British Virgin Islands', code: VG }
+  - { country: 'Brunei Darussalam', code: BN }
+  - { country: Bulgaria, code: BG, eu_member: true }
+  - { country: 'Burkina Faso', code: BF }
+  - { country: Burundi, code: BI }
+  - { country: Cambodia, code: KH }
+  - { country: Cameroon, code: CM }
+  - { country: Canada, code: CA }
+  - { country: 'Cape Verde', code: CV }
+  - { country: 'Cayman Islands', code: KY }
+  - { country: 'Central African Republic', code: CF }
+  - { country: Chad, code: TD }
+  - { country: Chile, code: CL }
+  - { country: China, code: CN }
+  - { country: 'Christmas Island', code: CX }
+  - { country: 'Cocos (Keeling) Islands', code: CC }
+  - { country: Colombia, code: CO }
+  - { country: Comoros, code: KM }
+  - { country: Cong, code: 'emocratic Republic of', enabled: false }
+  - { country: 'Cook Islands', code: CK }
+  - { country: 'Costa Rica', code: CR }
+  - { country: 'Cote D''ivoire', code: CI }
+  - { country: Croatia, code: HR }
+  - { country: Cuba, code: CU }
+  - { country: Cyprus, code: CY, eu_member: true }
+  - { country: 'Czech Republic', code: CZ }
+  - { country: Czechoslovakia, code: CS }
+  - { country: Denmark, code: DK, eu_member: true }
+  - { country: Djibouti, code: DJ }
+  - { country: Dominica, code: DM }
+  - { country: 'Dominican Republic', code: DO }
+  - { country: 'East Timor', code: TP }
+  - { country: Ecuador, code: EC }
+  - { country: Egypt, code: EG }
+  - { country: 'El Salvador', code: SV }
+  - { country: 'Equatorial Guinea', code: GQ }
+  - { country: Eritrea, code: ER }
+  - { country: Estonia, code: EE, eu_member: true }
+  - { country: Ethiopia, code: ET }
+  - { country: 'Falkland Islands (Malvinas)', code: FK }
+  - { country: 'Faroe Islands', code: FO }
+  - { country: Fiji, code: FJ }
+  - { country: Finland, code: FI, enabled: false }
+  - { country: France, code: FR, eu_member: true }
+  - { country: Franc, code: etropolitan, enabled: false }
+  - { country: 'French Guiana', code: GF }
+  - { country: 'French Polynesia', code: PF }
+  - { country: 'French Southern Territories', code: TF }
+  - { country: Gabon, code: GA }
+  - { country: Gambia, code: GM }
+  - { country: Georgia, code: GE }
+  - { country: Germany, code: DE, eu_member: true }
+  - { country: Ghana, code: GH }
+  - { country: Gibraltar, code: GI }
+  - { country: Greece, code: GR, eu_member: true }
+  - { country: Greenland, code: GL }
+  - { country: Grenada, code: GD }
+  - { country: Guadeloupe, code: GP }
+  - { country: Guam, code: GU }
+  - { country: Guatemala, code: GT }
+  - { country: Guinea, code: GN }
+  - { country: Guinea-Bissau, code: GW }
+  - { country: Guyana, code: GY }
+  - { country: Haiti, code: HT }
+  - { country: 'Heard and McDonald Islands', code: HM }
+  - { country: Honduras, code: HN }
+  - { country: 'Hong Kong', code: HK }
+  - { country: Hungary, code: HU, eu_member: true }
+  - { country: Iceland, code: IS }
+  - { country: India, code: IN }
+  - { country: Indonesia, code: ID }
+  - { country: Iraq, code: IQ }
+  - { country: Ireland, code: IE, eu_member: true }
+  - { country: 'Islamic Republic of Iran', code: IR }
+  - { country: Israel, code: IL }
+  - { country: Italy, code: IT, eu_member: true }
+  - { country: Jamaica, code: JM }
+  - { country: Japan, code: JP }
+  - { country: Jordan, code: JO }
+  - { country: Kazakhstan, code: KZ }
+  - { country: Kenya, code: KE }
+  - { country: Kiribati, code: KI }
+  - { country: Korea, code: KP }
+  - { country: Kore, code: 'epublic of', enabled: false }
+  - { country: Kuwait, code: KW }
+  - { country: Kyrgyzstan, code: KG }
+  - { country: Laos, code: LA }
+  - { country: Latvia, code: LV, eu_member: true }
+  - { country: Lebanon, code: LB }
+  - { country: Lesotho, code: LS }
+  - { country: Liberia, code: LR }
+  - { country: 'Libyan Arab Jamahiriya', code: LY }
+  - { country: Liechtenstein, code: LI }
+  - { country: Lithuania, code: LT, eu_member: true }
+  - { country: Luxembourg, code: LU, eu_member: true }
+  - { country: Macau, code: MO }
+  - { country: Macedonia, code: MK }
+  - { country: Madagascar, code: MG }
+  - { country: Malawi, code: MW }
+  - { country: Malaysia, code: MY }
+  - { country: Maldives, code: MV }
+  - { country: Mali, code: ML }
+  - { country: Malta, code: MT, eu_member: true }
+  - { country: 'Marshall Islands', code: MH }
+  - { country: Martinique, code: MQ }
+  - { country: Mauritania, code: MR }
+  - { country: Mauritius, code: MU }
+  - { country: Mayotte, code: YT }
+  - { country: Mexico, code: MX }
+  - { country: Micronesia, code: FM }
+  - { country: Moldov, code: 'epublic of', enabled: false }
+  - { country: Monaco, code: MC, eu_member: true }
+  - { country: Mongolia, code: MN }
+  - { country: Montserrat, code: MS }
+  - { country: Morocco, code: MA }
+  - { country: Mozambique, code: MZ }
+  - { country: Myanmar, code: MM }
+  - { country: Namibia, code: NA }
+  - { country: Nauru, code: NR }
+  - { country: Nepal, code: NP }
+  - { country: Netherlands, code: NL, eu_member: true }
+  - { country: 'Netherlands Antilles', code: AN }
+  - { country: 'New Caledonia', code: NC }
+  - { country: 'New Zealand', code: NZ }
+  - { country: Nicaragua, code: NI }
+  - { country: Niger, code: NE }
+  - { country: Nigeria, code: NG }
+  - { country: Niue, code: NU }
+  - { country: 'Norfolk Island', code: NF }
+  - { country: 'Northern Mariana Islands', code: MP }
+  - { country: Norway, code: NO }
+  - { country: Oman, code: OM }
+  - { country: Pakistan, code: PK }
+  - { country: Palau, code: PW }
+  - { country: Panama, code: PA }
+  - { country: 'Papua New Guinea', code: PG }
+  - { country: Paraguay, code: PY }
+  - { country: Peru, code: PE }
+  - { country: Philippines, code: PH }
+  - { country: Pitcairn, code: PN }
+  - { country: Poland, code: PL, eu_member: true }
+  - { country: Portugal, code: PT, eu_member: true }
+  - { country: 'Puerto Rico', code: PR }
+  - { country: Qatar, code: QA }
+  - { country: Reunion, code: RE }
+  - { country: Romania, code: RO, eu_member: true }
+  - { country: 'Russian Federation', code: RU }
+  - { country: Rwanda, code: RW }
+  - { country: 'Saint Lucia', code: LC }
+  - { country: Samoa, code: WS }
+  - { country: 'San Marino', code: SM }
+  - { country: 'Sao Tome and Principe', code: ST }
+  - { country: 'Saudi Arabia', code: SA }
+  - { country: Senegal, code: SN }
+  - { country: Seychelles, code: SC }
+  - { country: 'Sierra Leone', code: SL }
+  - { country: Singapore, code: SG }
+  - { country: Slovakia, code: SK, eu_member: true }
+  - { country: Slovenia, code: SI, eu_member: true }
+  - { country: 'Solomon Islands', code: SB }
+  - { country: Somalia, code: SO }
+  - { country: 'South Africa', code: ZA }
+  - { country: Spain, code: ES, eu_member: true }
+  - { country: 'Sri Lanka', code: LK }
+  - { country: 'St. Helena', code: SH }
+  - { country: 'St. Kitts And Nevis', code: KN }
+  - { country: 'St. Pierre and Miquelon', code: PM }
+  - { country: 'St. Vincent And The Greadines', code: VC }
+  - { country: Sudan, code: SD }
+  - { country: Suriname, code: SR }
+  - { country: 'Svalbard and Jan Mayen Islands', code: SJ }
+  - { country: Swaziland, code: SZ }
+  - { country: Sweden, code: SE, eu_member: true }
+  - { country: Switzerland, code: CH }
+  - { country: 'Syrian Arab Republic', code: SY }
+  - { country: Taiwan, code: TW }
+  - { country: Tajikistan, code: TJ }
+  - { country: Tanzani, code: 'nited Republic of', enabled: false }
+  - { country: Thailand, code: TH }
+  - { country: Togo, code: TG }
+  - { country: Tokelau, code: TK }
+  - { country: Tonga, code: TO }
+  - { country: 'Trinidad and Tobago', code: TT }
+  - { country: Tunisia, code: TN }
+  - { country: Turkey, code: TR }
+  - { country: Turkmenistan, code: TM }
+  - { country: 'Turks and Caicos Islands', code: TC }
+  - { country: Tuvalu, code: TV }
+  - { country: Uganda, code: UG }
+  - { country: Ukraine, code: UA }
+  - { country: 'United Arab Emirates', code: AE }
+  - { country: 'United Kingdom (Great Britain)', code: GB, eu_member: true }
+  - { country: 'United States', code: US }
+  - { country: 'United States Virgin Islands', code: VI }
+  - { country: Uruguay, code: UY }
+  - { country: Uzbekistan, code: UZ }
+  - { country: Vanuatu, code: VU }
+  - { country: 'Vatican City State', code: VA }
+  - { country: Venezuela, code: VE }
+  - { country: 'Viet Nam', code: VN }
+  - { country: 'Wallis And Futuna Islands', code: WF }
+  - { country: 'Western Sahara', code: EH }
+  - { country: Yemen, code: YE }
+  - { country: 'Serbia and Montenegro', code: YU }
+  - { country: Zambia, code: ZM }
+  - { country: Zimbabwe, code: ZW }
+XLite\Model\Zone:
+  - { zone_name: 'Default zone (all addresses)', is_default: true }
