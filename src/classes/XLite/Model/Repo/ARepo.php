@@ -1046,7 +1046,31 @@ abstract class ARepo extends \Doctrine\ORM\EntityRepository
             $identifiers[$ident] = $data[$ident];
         }   
 
-        if (!$found && $this->alternativeIdentifier) {
+        if (!$found) {
+            $identifiers = $this->collectAlternativeIdentifiersByRecord($data);
+            if ($identifiers) {
+                $found = true;
+            }
+        }
+
+        return $found ? $identifiers : false;
+    }
+
+    /**
+     * Collect alternative identifiers by record 
+     * 
+     * @param array $data Record
+     *  
+     * @return boolean|array(mixed)
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function collectAlternativeIdentifiersByRecord(array $data)
+    {
+        $found = false;
+
+        if ($this->alternativeIdentifier) {
 
             // Collect identifiers by alternative unqiue keys
             $identifiers = array();

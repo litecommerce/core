@@ -201,6 +201,51 @@ class OptionGroup extends \XLite\Model\Repo\Base\I18n
         );
     }
 
+    /**
+     * Find one by record 
+     * 
+     * @param array $data Record
+     *  
+     * @return \XLite\Model\AEntity|void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function findOneByRecord(array $data)
+    {
+        $entity = parent::findOneByRecord($data);
+        if (
+            !$entity
+            && isset($data['name'])
+            && $data['name']
+            && isset($data['sku'])
+            && $data['sku']
+        ) {
+            $entity = $this->defineOneBySkuAndNameQuery($data['sku'], $data['name'])->getQuery()->getSingleResult();
+        }
+
+        return $entity;
+    }
+
+    /**
+     * Define find query (by Product SKU and group name)
+     * 
+     * @param string $sku  Product SKU
+     * @param string $name Option group name (any language)
+     *  
+     * @return \XLite\Module\CDev\ProductOptions\Model\OptionGroup|void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineOneBySkuAndNameQuery($sku, $name)
+    {
+        return $this->createQueryBuilder()
+            ->innerJoin('p.product', 'product')
+            ->andWhere('product.sku = :sku AND translations.name = :name')
+            ->setParameter('sku', $sku)
+            ->setParameter('name', $name);
+    }
 
 }
 
