@@ -235,7 +235,8 @@ class Profile extends \XLite\Model\Repo\ARepo
      */
     protected function prepareCndOrderId(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
-        $queryBuilder->andWhere('p.order_id = :orderId')
+        $queryBuilder->innerJoin('p.order', 'order')
+            ->andWhere('order.order_id = :orderId')
             ->setParameter('orderId', $value);
     }
 
@@ -735,6 +736,35 @@ class Profile extends \XLite\Model\Repo\ARepo
         $result = $this->defineFindCountOfAdminAccountsQuery()->getQuery()->getSingleScalarResult();
     
         return intval($result);
+    }
+
+    /**
+     * Collect alternative identifiers by record 
+     * 
+     * @param array $data Record
+     *  
+     * @return boolean|array(mixed)
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function collectAlternativeIdentifiersByRecord(array $data)
+    {
+        $indetifiers = parent::collectAlternativeIdentifiersByRecord($data);
+        if (
+            !$indetifiers
+            && isset($data['login'])
+            && $data['login']
+            && isset($data['order_id'])
+            && !$data['order_id']
+        ) {
+            $indetifiers = array(
+                'login' => $data['login'],
+                'order' => null,
+            );
+        }
+
+        return $indetifiers;
     }
 
 }

@@ -38,6 +38,18 @@ namespace XLite\Model\Repo;
 class Zone extends \XLite\Model\Repo\ARepo
 {
     /**
+     * Alternative record identifiers
+     *
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $alternativeIdentifier = array(
+        array('zone_name'),
+    );
+
+    /**
      * Define cache cells 
      * 
      * @return array

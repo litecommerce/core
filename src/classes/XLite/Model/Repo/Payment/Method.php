@@ -48,6 +48,18 @@ class Method extends \XLite\Model\Repo\Base\I18n
     protected $defaultOrderBy = 'orderby';
 
     /**
+     * Alternative record identifiers
+     *
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $alternativeIdentifier = array(
+        array('service_name'),
+    );
+
+    /**
      * Find all methods
      * 
      * @return \Doctrine\Common\Collection\Colelction

@@ -46,4 +46,58 @@ class Option extends \XLite\Model\Repo\Base\I18n
      * @since  3.0.0
      */
     protected $defaultOrderBy = 'orderby';
+
+    /**
+     * Find one by record 
+     * 
+     * @param array $data Record
+     *  
+     * @return \XLite\Model\AEntity|void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function findOneByRecord(array $data)
+    {
+        $entity = parent::findOneByRecord($data);
+        if (
+            !$entity
+            && isset($data['name'])
+            && $data['name']
+            && isset($data['group'])
+            && $data['group']
+            && isset($data['sku'])
+            && $data['sku']
+        ) {
+            $entity = $this->defineOneBySkuAndNameQuery($data['sku'], $data['group'], $data['name'])
+                ->getQuery()
+                ->getSingleResult();
+        }
+
+        return $entity;
+    }
+
+    /**
+     * Define find query (by Product SKU and Option group name and option name)
+     * 
+     * @param string $sku   Product SKU
+     * @param string $group Option group name (any language)
+     * @param string $name  Option name (any language)
+     *  
+     * @return \XLite\Module\CDev\ProductOptions\Model\Option|void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineOneBySkuAndNameQuery($sku, $group, $name)
+    {
+        return $this->createQueryBuilder()
+            ->innerJoin('p.group', 'group')
+            ->innerJoin('group.product', 'product')
+            ->innerJoin('group.translations', 'gtranslations')
+            ->andWhere('product.sku = :sku AND gtranslations.name = :group AND translations.name = :name')
+            ->setParameter('sku', $sku)
+            ->setParameter('group', $group)
+            ->setParameter('name', $name);
+    }
 }

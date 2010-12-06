@@ -75,6 +75,18 @@ class Product extends \XLite\Model\Repo\Base\I18n implements \XLite\Base\IREST
     protected $currentSearchCnd = null;
 
     /**
+     * Alternative record identifiers
+     *
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $alternativeIdentifier = array(
+        array('sku'),
+    );
+
+    /**
      * Return list of handling search params 
      * 
      * @return array
