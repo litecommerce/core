@@ -127,7 +127,7 @@ function func_define($name, $value) {
 
 function get_php_execution_mode() {
     
-    $options = XLite::getInstance()->getOptions();
+    $options = \Includes\Utils\ConfigParser::getOptions(); //XLite::getInstance()->getOptions();
 
     return isset($options['filesystem_permissions']['permission_mode'])
         ? $options['filesystem_permissions']['permission_mode']
@@ -142,10 +142,10 @@ function get_filesystem_permissions($mode, $file = null) {
     // try to setup values from config
     if (
         (!isset($mode0777) || !isset($mode0755) || !isset($mode0666) || !isset($mode0644))
-        && XLite::getInstance()->getOptions('filesystem_permissions')
+        && \Includes\Utils\ConfigParser::getOptions('filesystem_permissions')
     ) {
 
-        $options = XLite::getInstance()->getOptions('filesystem_permissions');
+        $options = \Includes\Utils\ConfigParser::getOptions('filesystem_permissions');
         $phpExecutionMode = get_php_execution_mode();
 
         // 0777
@@ -361,7 +361,7 @@ function func_parse_host($host)
 function func_parse_url($url)
 {
    
-    $options = XLite::getInstance()->getOptions();
+    $options = \Includes\Utils\ConfigParser::getOptions();
  
     $parts_default = array(
         'scheme'   => 'http',
@@ -549,7 +549,7 @@ function func_lock($lockname, $ttl = 15, $cycle_limit = 0)
 {
     global $_lock_hash;
 
-    $options = XLite::getInstance()->getOptions(); 
+    $options = \Includes\Utils\ConfigParser::getOptions(); 
 
     if (empty($lockname)) {
         return false;
@@ -616,7 +616,7 @@ function func_lock($lockname, $ttl = 15, $cycle_limit = 0)
 function func_unlock($lockname) {
     global $_lock_hash;       
 
-    $options = XLite::getInstance()->getOptions(); 
+    $options = \Includes\Utils\ConfigParser::getOptions(); 
 
     if (empty($lockname) || empty($_lock_hash[$lockname])) {
         return false;
@@ -661,7 +661,7 @@ function func_unlock($lockname) {
 function func_is_locked($lockname, $ttl = 15) {
     global $_lock_hash;        
 
-    $options = XLite::getInstance()->getOptions();
+    $options = \Includes\Utils\ConfigParser::getOptions();
 
     if (empty($lockname)) {
         return false;
@@ -856,7 +856,7 @@ function isLiteCommerceInstalled($dbUrl = null)
     if ($checkResult) {
 
         // Get database options from config.php
-        $configData = XLite::getInstance()->getOptions('database_details');
+        $configData = \Includes\Utils\ConfigParser::getOptions('database_details');
 
         if (is_array($configData)) {
 
