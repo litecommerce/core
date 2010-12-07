@@ -342,12 +342,12 @@ class PostgreSqlPlatform extends AbstractPlatform
         $sql = array();
 
         foreach ($diff->addedColumns as $column) {
-            $query = 'ADD ' . $this->getColumnDeclarationSQL($column->getName(), $column->toArray());
+            $query = 'ADD ' . $this->getColumnDeclarationSQL($column->getQuotedName($this), $column->toArray());
             $sql[] = 'ALTER TABLE ' . $diff->name . ' ' . $query;
         }
 
         foreach ($diff->removedColumns as $column) {
-            $query = 'DROP ' . $column->getName();
+            $query = 'DROP ' . $column->getQuotedName($this);
             $sql[] = 'ALTER TABLE ' . $diff->name . ' ' . $query;
         }
 
@@ -388,7 +388,7 @@ class PostgreSqlPlatform extends AbstractPlatform
         }
 
         foreach ($diff->renamedColumns as $oldColumnName => $column) {
-            $sql[] = 'ALTER TABLE ' . $diff->name . ' RENAME COLUMN ' . $oldColumnName . ' TO ' . $column->getName();
+            $sql[] = 'ALTER TABLE ' . $diff->name . ' RENAME COLUMN ' . $oldColumnName . ' TO ' . $column->getQuotedName($this);
         }
 
         if ($diff->newName !== false) {
@@ -408,7 +408,7 @@ class PostgreSqlPlatform extends AbstractPlatform
      */
     public function getCreateSequenceSQL(\Doctrine\DBAL\Schema\Sequence $sequence)
     {
-        return 'CREATE SEQUENCE ' . $sequence->getName() .
+        return 'CREATE SEQUENCE ' . $sequence->getQuotedName($this) .
                ' INCREMENT BY ' . $sequence->getAllocationSize() .
                ' MINVALUE ' . $sequence->getInitialValue() .
                ' START ' . $sequence->getInitialValue();
@@ -422,7 +422,7 @@ class PostgreSqlPlatform extends AbstractPlatform
     public function getDropSequenceSQL($sequence)
     {
         if ($sequence instanceof \Doctrine\DBAL\Schema\Sequence) {
-            $sequence = $sequence->getName();
+            $sequence = $sequence->getQuotedName($this);
         }
         return 'DROP SEQUENCE ' . $sequence;
     }
@@ -595,7 +595,7 @@ class PostgreSqlPlatform extends AbstractPlatform
     {
         if ( ! isset($field['length'])) {
             if (array_key_exists('default', $field)) {
-                $field['length'] = $this->getVarcharMaxLength();
+                $field['length'] = $this->getVarcharDefaultLength();
             } else {
                 $field['length'] = false;
             }
@@ -670,41 +670,41 @@ class PostgreSqlPlatform extends AbstractPlatform
     protected function initializeDoctrineTypeMappings()
     {
         $this->doctrineTypeMapping = array(
-            'smallint' => 'smallint',
-            'int2' => 'smallint',
-            'serial' => 'integer',
-            'serial4' => 'integer',
-            'int' => 'integer',
-            'int4' => 'integer',
-            'integer' => 'integer',
-            'bigserial' => 'bigint',
-            'serial8' => 'bigint',
-            'bigint' => 'bigint',
-            'int8' => 'bigint',
-            'bool' => 'boolean',
-            'boolean' => 'boolean',
-            'text' => 'text',
-            'varchar' => 'string',
-            'interval' => 'string',
-            '_varchar' => 'string',
-            'char' => 'string',
-            'bpchar' => 'string',
-            'date' => 'date',
-            'datetime' => 'datetime',
-            'timestamp' => 'datetime',
-            'timestamptz' => 'datetimetz',
-            'time' => 'time',
-            'timetz' => 'time',
-            'float' => 'decimal',
-            'float4' => 'decimal',
-            'float8' => 'decimal',
-            'double' => 'decimal',
-            'double precision' => 'decimal',
-            'real' => 'decimal',
-            'decimal' => 'decimal',
-            'money' => 'decimal',
-            'numeric' => 'decimal',
-            'year' => 'date',
+            'smallint'      => 'smallint',
+            'int2'          => 'smallint',
+            'serial'        => 'integer',
+            'serial4'       => 'integer',
+            'int'           => 'integer',
+            'int4'          => 'integer',
+            'integer'       => 'integer',
+            'bigserial'     => 'bigint',
+            'serial8'       => 'bigint',
+            'bigint'        => 'bigint',
+            'int8'          => 'bigint',
+            'bool'          => 'boolean',
+            'boolean'       => 'boolean',
+            'text'          => 'text',
+            'varchar'       => 'string',
+            'interval'      => 'string',
+            '_varchar'      => 'string',
+            'char'          => 'string',
+            'bpchar'        => 'string',
+            'date'          => 'date',
+            'datetime'      => 'datetime',
+            'timestamp'     => 'datetime',
+            'timestamptz'   => 'datetimetz',
+            'time'          => 'time',
+            'timetz'        => 'time',
+            'float'         => 'float',
+            'float4'        => 'float',
+            'float8'        => 'float',
+            'double'        => 'float',
+            'double precision' => 'float',
+            'real'          => 'float',
+            'decimal'       => 'decimal',
+            'money'         => 'decimal',
+            'numeric'       => 'decimal',
+            'year'          => 'date',
         );
     }
 }
