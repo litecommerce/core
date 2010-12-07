@@ -193,8 +193,8 @@ CREATE TABLE xlite_order_items (
 DROP TABLE IF EXISTS xlite_orders;
 CREATE TABLE xlite_orders (
   order_id int(11) NOT NULL auto_increment PRIMARY KEY,
-  profile_id int(11) NOT NULL default '0',
-  orig_profile_id int(11) NOT NULL default '0',
+  profile_id int(11) default '0',
+  orig_profile_id int(11) default '0',
   total decimal(16,4) NOT NULL default '0.00',
   subtotal decimal(16,4) NOT NULL default '0.00',
   tracking varchar(32) default NULL,
@@ -428,7 +428,7 @@ CREATE TABLE xlite_profiles (
   referer varchar(255) NOT NULL default '',
   membership_id int(11) default NULL,
   pending_membership_id int(11) default NULL,
-  order_id int(11) NOT NULL default '0',
+  order_id int(11) default NULL,
   language varchar(2) NOT NUll default 'en',
   last_shipping_id int(11) default NULL,
   last_payment_id int(11) default NULL,

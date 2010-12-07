@@ -258,6 +258,7 @@ class XLite_Tests_Module_CDev_AustraliaPost_Model_Shipping_Processor_AustraliaPo
     {
         $order = new \XLite\Model\Order();
 
+        $profile = null;
         if ($realProfile) {
             $list = \XLite\Core\Database::getRepo('XLite\Model\Profile')->findAll();
             $profile = array_shift($list);
@@ -265,7 +266,9 @@ class XLite_Tests_Module_CDev_AustraliaPost_Model_Shipping_Processor_AustraliaPo
         }
 
         $order->setCurrency(\XLite\Core\Database::getRepo('XLite\Model\Currency')->find(840));
-        $order->setProfileId(isset($profile) ? $profile->getProfileId() : 0);
+        if ($profile) {
+            $order->setProfile($profile);
+        }
 
         $productIds = array(3002, 4004, 4005, 4006, 4007, 4008);
 

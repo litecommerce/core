@@ -116,7 +116,6 @@ class XLite_Tests_Model_OrderDetail extends XLite_Tests_TestCase
 
         $order->map($this->testOrder);
         $order->setCurrency(\XLite\Core\Database::getRepo('XLite\Model\Currency')->find(840));
-        $order->setProfileId(0);
 
         $order->setDetail('t1', '123');
         $order->setDetail('t2', '456', 'test');

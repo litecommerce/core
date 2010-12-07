@@ -65,19 +65,13 @@ class XLite_Tests_Model_Order extends XLite_Tests_TestCase
             'check payment method'
         );
 
-        $this->assertEquals(
-            $order->getProfileId(),
-            $order->getProfile()->getProfileId(),
-            'check profile id'
-        );
-        $this->assertNotEquals(
-            $order->getOrigProfileId(),
-            $order->getProfile()->getProfileId(),
-            'check orig profile id'
-        );
+        $this->assertFalse(is_null($order->getProfile()), 'check profile');
+
+        $this->assertFalse(is_null($order->getProfile()->getOrder()), 'check profile\'s order');
+
         $this->assertEquals(
             $order->getOrderId(),
-            $order->getProfile()->getOrderId(),
+            $order->getProfile()->getOrder()->getOrderId(),
             'check profile\'s order id'
         );
 
@@ -176,7 +170,7 @@ class XLite_Tests_Model_Order extends XLite_Tests_TestCase
         $order = \XLite\Core\Database::getRepo('XLite\Model\Order')
             ->find($id);
 
-        $this->assertNull($order, 'check removed order');
+        $this->assertTrue(is_null($order), 'check removed order');
     }
 
     public function testGetAllowedStatuses()
@@ -217,7 +211,6 @@ class XLite_Tests_Model_Order extends XLite_Tests_TestCase
 
         $order->map($this->testOrder);
         $order->setCurrency(\XLite\Core\Database::getRepo('XLite\Model\Currency')->find(840));
-        $order->setProfileId(0);
 
         $item = new \XLite\Model\OrderItem();
 
@@ -257,7 +250,7 @@ class XLite_Tests_Model_Order extends XLite_Tests_TestCase
     public function testGetAddItemError()
     {
         $order = $this->getTestOrder();
-        $this->assertNull($order->getAddItemError(), 'empty add item error');
+        $this->assertTrue(is_null($order->getAddItemError()), 'empty add item error');
     }
 
 	public function testGetItemByItem()
@@ -281,7 +274,7 @@ class XLite_Tests_Model_Order extends XLite_Tests_TestCase
         $item->setAmount(1);
         $item->setPrice($p->getPrice());
 
-        $this->assertNull($order->getItemByItem($item), 'check not equals items');
+        $this->assertTrue(is_null($order->getItemByItem($item)), 'check not equals items');
 
 		$order->addItem($item);
 
@@ -311,13 +304,13 @@ class XLite_Tests_Model_Order extends XLite_Tests_TestCase
 			'check equals items'
 		);
 
-        $this->assertNull($order->getItemByItemId(-1), 'check not exists item');
+        $this->assertTrue(is_null($order->getItemByItemId(-1)), 'check not exists item');
 
 		$o2 = $this->getTestOrder();
 
 		$id = $o2->getItems()->get(0)->getItemId();
 
-		$this->assertNull($order->getItemByItemId($id), 'check foreign item');
+		$this->assertTrue(is_null($order->getItemByItemId($id)), 'check foreign item');
 	}
 
     public function testNormalizeItems()
@@ -658,19 +651,14 @@ class XLite_Tests_Model_Order extends XLite_Tests_TestCase
 
         $order = \XLite\Core\Database::getRepo('XLite\Model\Order')->find($id);
 
-        $this->assertEquals(
-            $order->getProfileId(),
-            $order->getProfile()->getProfileId(),
-            'check profile id'
-        );
         $this->assertNotEquals(
-            $order->getOrigProfileId(),
+            $order->getOrigProfile()->getProfileId(),
             $order->getProfile()->getProfileId(),
             'check orig profile id'
         );
         $this->assertEquals(
             $order->getOrderId(),
-            $order->getProfile()->getOrderId(),
+            $order->getProfile()->getOrder()->getOrderId(),
             'check profile\'s order id'
         );
     }
@@ -683,12 +671,11 @@ class XLite_Tests_Model_Order extends XLite_Tests_TestCase
 
         $order->setProfile(null);
 
-        $this->assertNull($order->getProfile(), 'check profile');
-        $this->assertEquals(0, $order->getProfileId(), 'check profile id');
+        $this->assertTrue(is_null($order->getProfile()), 'check profile');
 
         $order->setProfile($p);
 
-        $this->assertEquals($p->getProfileId(), $order->getProfileId(), 'check profile id #2');
+        $this->assertEquals($p->getProfileId(), $order->getProfile()->getProfileId(), 'check profile id #2');
     }
 
     public function testGetOrigProfile()
@@ -702,21 +689,17 @@ class XLite_Tests_Model_Order extends XLite_Tests_TestCase
         $order = \XLite\Core\Database::getRepo('XLite\Model\Order')->find($id);
 
         $this->assertNotEquals(
-            $order->getProfileId(),
+            $order->getProfile()->getProfileId(),
             $order->getOrigProfile()->getProfileId(),
             'check profile id'
         );
 
-        $this->assertEquals(
-            0,
-            $order->getOrigProfile()->getOrderId(),
-            'check order id'
-        );
+        $this->assertTrue(is_null($order->getOrigProfile()->getOrder()), 'check order id');
 
         $order->setOrigProfile(null);
 
         $this->assertEquals(
-            $order->getProfileId(),
+            $order->getProfile()->getProfileId(),
             $order->getOrigProfile()->getProfileId(),
             'check empty profile'
         );
@@ -772,12 +755,12 @@ class XLite_Tests_Model_Order extends XLite_Tests_TestCase
 
         $order->setOrigProfile(null);
 
-        $this->assertNotNull($order->getOrigProfile(), 'check profile');
-        $this->assertEquals(0, $order->getOrigProfileId(), 'check profile id');
+        $this->assertFalse(is_null($order->getOrigProfile()), 'check profile');
+        $this->assertEquals($order->getProfile()->getProfileId(), $order->getOrigProfile()->getProfileId(), 'check profile id');
 
         $order->setOrigProfile($p);
 
-        $this->assertEquals($p->getProfileId(), $order->getOrigProfileId(), 'check profile id #2');
+        $this->assertEquals($p->getProfileId(), $order->getOrigProfile()->getProfileId(), 'check profile id #2');
     }
 
     public function testGetEventFingerprint()
@@ -822,24 +805,24 @@ class XLite_Tests_Model_Order extends XLite_Tests_TestCase
     {
         $order = $this->getTestOrder();
 
-        $this->assertNull($order->getDetail('test'), 'check not-set detail');
+        $this->assertTrue(is_null($order->getDetail('test')), 'check not-set detail');
 
         $order->setDetail('test', '123');
 
         $this->assertEquals('test', $order->getDetail('test')->getName(), 'check name');
         $this->assertEquals('123', $order->getDetail('test')->getValue(), 'check value');
-        $this->assertNull($order->getDetail('test')->getLabel(), 'check label');
+        $this->assertTrue(is_null($order->getDetail('test')->getLabel()), 'check label');
 
         $order->getDetails()->removeElement($order->getDetail('test'));
 
-        $this->assertNull($order->getDetail('test'), 'check not-set detail #2');
+        $this->assertTrue(is_null($order->getDetail('test')), 'check not-set detail #2');
     }
 
     public function testSetDetail()
     {
         $order = $this->getTestOrder();
 
-        $this->assertNull($order->getDetail('test'), 'check not-set detail');
+        $this->assertTrue(is_null($order->getDetail('test')), 'check not-set detail');
 
         $order->setDetail('test', '123');
 
@@ -851,13 +834,13 @@ class XLite_Tests_Model_Order extends XLite_Tests_TestCase
 
         $order->getDetails()->removeElement($order->getDetail('test'));
 
-        $this->assertNull($order->getDetail('test'), 'check not-set detail #2');
+        $this->assertTrue(is_null($order->getDetail('test')), 'check not-set detail #2');
 
         $order->setDetail('test', '123');
 
         $this->assertEquals('test', $order->getDetail('test')->getName(), 'check name #2');
         $this->assertEquals('123', $order->getDetail('test')->getValue(), 'check value #2');
-        $this->assertNull($order->getDetail('test')->getLabel(), 'check label');
+        $this->assertTrue(is_null($order->getDetail('test')->getLabel()), 'check label');
 
         $order->setDetail('test', '999', 'lll');
 
@@ -975,12 +958,11 @@ class XLite_Tests_Model_Order extends XLite_Tests_TestCase
         $order = new \XLite\Model\Order();
 
         $profiles = \XLite\Core\Database::getRepo('XLite\Model\Profile')->findAll();
-        $profile = array_shift($profiles);
+        $order->setProfileCopy(array_shift($profiles));
         unset($profiles);
 
         $order->map($this->testOrder);
         $order->setCurrency(\XLite\Core\Database::getRepo('XLite\Model\Currency')->find(840));
-        $order->setProfileId(0);
 
         \XLite\Core\Database::getEM()->persist($order);
         \XLite\Core\Database::getEM()->flush();
@@ -998,7 +980,6 @@ class XLite_Tests_Model_Order extends XLite_Tests_TestCase
         \XLite\Core\Database::getEM()->persist($order);
         \XLite\Core\Database::getEM()->flush();
 
-        $order->setProfileCopy($profile);
         $order->calculate();
 
         \XLite\Core\Database::getEM()->persist($order);

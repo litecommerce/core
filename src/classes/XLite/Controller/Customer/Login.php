@@ -140,7 +140,7 @@ class Login extends \XLite\Controller\Customer\ACustomer
             $this->set('returnUrl', $url);
         }
 
-        $this->getCart()->setProfileId($this->profile->getProfileId());
+        $this->getCart()->setProfile($this->profile);
 
         $this->updateCart();
     }

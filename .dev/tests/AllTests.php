@@ -34,6 +34,8 @@ if (false === defined('PHPUnit_MAIN_METHOD')) {
     define('PHPUnit_MAIN_METHOD', 'XLite_Tests_AllTests::main');
 }
 
+ini_set('memory_limit', '256M');
+
 // PHPUnit classes
 define('PATH_TESTS', realpath(__DIR__));
 define('PATH_ROOT', realpath(__DIR__ . '/../..'));

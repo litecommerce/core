@@ -127,7 +127,6 @@ class XLite_Tests_Model_Payment_MethodSetting extends XLite_Tests_TestCase
         unset($list);
 
         $order->setCurrency(\XLite\Core\Database::getRepo('XLite\Model\Currency')->find(840));
-        $order->setProfileId(0);
 
         \XLite\Core\Database::getEM()->persist($order);
         \XLite\Core\Database::getEM()->flush();

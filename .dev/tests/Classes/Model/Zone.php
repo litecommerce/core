@@ -357,10 +357,10 @@ class XLite_Tests_Model_Zone extends XLite_Tests_TestCase
     public function testGetIsDefault()
     {
         $zone = \XLite\Core\Database::getRepo('XLite\Model\Zone')->findZone(20);
-        $this->assertEquals(0, $zone->getIsDefault(), 'Zone #20 must not to be a default');
+        $this->assertFalse($zone->getIsDefault(), 'Zone #20 must not to be a default');
 
         $zone = \XLite\Core\Database::getRepo('XLite\Model\Zone')->findZone(1);
-        $this->assertEquals(1, $zone->GetIsDefault(), 'Zone #1 must be a default');
+        $this->assertTrue($zone->GetIsDefault(), 'Zone #1 must be a default');
     }
 
     /**

@@ -48,6 +48,7 @@ class Order extends \XLite\Model\Repo\ARepo
 
     const P_ORDER_ID   = 'orderId';
     const P_PROFILE_ID = 'profileId';
+    const P_PROFILE    = 'profile';
     const P_EMAIL      = 'email';
     const P_STATUS     = 'status';
     const P_DATE       = 'date';
@@ -78,6 +79,7 @@ class Order extends \XLite\Model\Repo\ARepo
         return array(
             self::P_ORDER_ID,
             self::P_PROFILE_ID,
+            self::P_PROFILE,
             self::P_EMAIL,
             self::P_STATUS,
             self::P_DATE,
@@ -124,6 +126,25 @@ class Order extends \XLite\Model\Repo\ARepo
      * Prepare certain search condition
      *
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
+     * @param \XLite\Model\Profile       $value        Profile
+     *
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function prepareCndProfile(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
+    {
+        if (!empty($value)) {
+            $queryBuilder->andWhere('o.orig_profile = :orig_profile')
+                ->setParameter('orig_profile', $value);
+        }
+    }
+
+    /**
+     * Prepare certain search condition
+     *
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder Query builder to prepare
      * @param integer                    $value        Condition data
      *
      * @return void
@@ -134,8 +155,9 @@ class Order extends \XLite\Model\Repo\ARepo
     protected function prepareCndProfileId(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
         if (!empty($value)) {
-            $queryBuilder->andWhere('o.orig_profile_id = :profile_id')
-                ->setParameter('profile_id', $value);
+            $value = \XLite\Core\Database::getRepo('XLite\Model\Profile')->find($value);
+            $queryBuilder->andWhere('o.orig_profile = :orig_profile')
+                ->setParameter('orig_profile', $value);
         }
     }
 

@@ -118,12 +118,11 @@ class XLite_Tests_Model_OrderModifier_Tax extends XLite_Tests_TestCase
         $order = new \XLite\Model\Order();
 
         $profiles = \XLite\Core\Database::getRepo('XLite\Model\Profile')->findAll();
-        $profile = array_shift($profiles);
+        $order->setProfileCopy(array_shift($profiles));
         unset($profiles);
 
         $order->map($this->testOrder);
         $order->setCurrency(\XLite\Core\Database::getRepo('XLite\Model\Currency')->find(840));
-        $order->setProfileId(0);
 
         $item = new \XLite\Model\OrderItem();
 
@@ -136,7 +135,6 @@ class XLite_Tests_Model_OrderModifier_Tax extends XLite_Tests_TestCase
         \XLite\Core\Database::getEM()->persist($order);
         \XLite\Core\Database::getEM()->flush();
 
-        $order->setProfileCopy($profile);
         $order->calculate();
 
         \XLite\Core\Database::getEM()->persist($order);

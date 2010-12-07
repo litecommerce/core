@@ -387,22 +387,25 @@ class XLite_Tests_Model_Repo_Profile extends XLite_Tests_TestCase
         $this->assertTrue($profile instanceof \XLite\Model\Profile, 'check that profile is an object');
 
         $this->assertEquals('rnd_tester02@rrf.ru', $profile->getLogin(), 'check the login');
-        $this->assertEquals(0, $profile->getOrderId(), 'check the order_id (0)');
+        $this->assertTrue(is_null($profile->getOrder()), 'check the order_id (0)');
 
         // Test #2
-        $profile = \XLite\Core\Database::getRepo('XLite\Model\Profile')->findByLoginPassword('rnd_tester02@rrf.ru', md5('wrong password'));
+        $profile = \XLite\Core\Database::getRepo('XLite\Model\Profile')
+            ->findByLoginPassword('rnd_tester02@rrf.ru', md5('wrong password'));
 
-        $this->assertNull($profile, 'check that profile is null');
+        $this->assertTrue(is_null($profile), 'check that profile is null #2');
 
         // Test #3
-        $profile = \XLite\Core\Database::getRepo('XLite\Model\Profile')->findByLoginPassword('wrong login', md5('guest'));
+        $profile = \XLite\Core\Database::getRepo('XLite\Model\Profile')
+            ->findByLoginPassword('wrong login', md5('guest'));
 
-        $this->assertNull($profile, 'check that profile is null');
+        $this->assertTrue(is_null($profile), 'check that profile is null #3');
 
         // Test #4: user is disabled
-        $profile = \XLite\Core\Database::getRepo('XLite\Model\Profile')->findByLoginPassword('rnd_tester03@rrf.ru', md5('guest'));
+        $profile = \XLite\Core\Database::getRepo('XLite\Model\Profile')
+            ->findByLoginPassword('rnd_tester03@rrf.ru', md5('guest'));
 
-        $this->assertNull($profile, 'check that profile is null');
+        $this->assertTrue(is_null($profile), 'check that profile is null #4');
     }
 
     /**
@@ -437,6 +440,10 @@ class XLite_Tests_Model_Repo_Profile extends XLite_Tests_TestCase
     {
         $profile = \XLite\Core\Database::getRepo('XLite\Model\Profile')->findByLogin('rnd_tester02@rrf.ru');
 
+        if (!$profile) {
+            $this->fail('Profile \'rnd_tester02@rrf.ru\' is not found');
+        }
+
         // Test #1
         $profile2 = \XLite\Core\Database::getRepo('XLite\Model\Profile')->findUserWithSameLogin($profile);
 
@@ -462,7 +469,7 @@ class XLite_Tests_Model_Repo_Profile extends XLite_Tests_TestCase
     public function testFindCountOfAdminAccounts()
     {
         $adminsCount = \XLite\Core\Database::getRepo('XLite\Model\Profile')->findCountOfAdminAccounts();
-    
+ 
         $this->assertEquals(2, $adminsCount, 'Checking the count of administrator accounts');
     }
 

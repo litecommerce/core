@@ -146,7 +146,7 @@ class Category extends \XLite\Model\Base\I18n
      * @see    ____var_see____
      * @since  3.0.0
      * 
-     * @OneToOne   (targetEntity="XLite\Model\Category\QuickFlags", mappedBy="category", cascade={"all"})
+     * @OneToOne (targetEntity="XLite\Model\Category\QuickFlags", mappedBy="category", cascade={"all"})
      */
     protected $quickFlags;
 

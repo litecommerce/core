@@ -124,16 +124,11 @@ class XLite_Tests_Model_Shipping_Processor_Offline extends XLite_Tests_TestCase
 
         if ($profile) {
             $list = \XLite\Core\Database::getRepo('XLite\Model\Profile')->findAll();
-            $profile = array_shift($list);
-            $profileId = $profile->getProfileId();
+            $order->setProfile(array_shift($list));
             unset($list);
-
-        } else {
-            $profileId = 0;
         }
 
         $order->setCurrency(\XLite\Core\Database::getRepo('XLite\Model\Currency')->find(840));
-        $order->setProfileId($profileId);
         $order->setSubTotal(17.99);
 
         return $order;

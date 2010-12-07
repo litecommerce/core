@@ -99,9 +99,9 @@ class Method extends \XLite\Model\Base\I18n
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @Column (type="integer", length="1", nullable=false)
+     * @Column (type="boolean", nullable=false)
      */
-    protected $enabled = '0';
+    protected $enabled = false;
 
     /**
      * A position of the method among other registered methods
