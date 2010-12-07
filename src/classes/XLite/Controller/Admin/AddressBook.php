@@ -47,7 +47,7 @@ class AddressBook extends \XLite\Controller\Admin\AAdmin
      */
     protected function getLocation()
     {
-        return $this->getModelForm()->getModelObject()->getProfile()->getLogin();
+        return ($profile = $this->getModelForm()->getModelObject()->getProfile()) ? $profile->getLogin() : null
     }
 
     /**
