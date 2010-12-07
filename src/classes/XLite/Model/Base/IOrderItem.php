@@ -104,9 +104,7 @@ interface IOrderItem
      * @see    ____func_see____
      * @since  3.0.0
      */
-    /* TODO - uncomment after http://bt.litecommerce.com/view.php?id=38840
     public function getName();
-    */
 
     /**
      * Get SKU
