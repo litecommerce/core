@@ -232,21 +232,6 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
     }
 
     /**
-     * Check if cache rebuild is needed
-     * 
-     * @param string $step current step name
-     *  
-     * @return boolean
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected static function isRebuildNeeded($step)
-    {
-        return !\Includes\Utils\FileManager::isExists(static::getCacheStateIndicatorFileName($step));
-    }
-
-    /**
      * Step started
      *
      * @param string $step current step
@@ -292,6 +277,20 @@ abstract class CacheManager extends \Includes\Decorator\Utils\AUtils
         \Includes\Utils\Operator::refresh();
     }
 
+    /**
+     * Check if cache rebuild is needed
+     * 
+     * @param string $step current step name
+     *  
+     * @return boolean
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function isRebuildNeeded($step = self::STEP_FIRST)
+    {
+        return !\Includes\Utils\FileManager::isExists(static::getCacheStateIndicatorFileName($step));
+    }
 
     /**
      * Run handler for the current step

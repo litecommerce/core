@@ -53,6 +53,16 @@ abstract class Autoloader
 
 
     /**
+     * The directory where LC classes are located
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected static $lcAutoloadDir = LC_CLASSES_CACHE_DIR;
+
+    /**
      * Register the autoload function for the Doctrine library
      * 
      * @return void
@@ -100,7 +110,7 @@ abstract class Autoloader
          * May be that issue is related: http://bugs.php.net/50731
          */
         if (0 === strpos($class = ltrim($class, '\\'), $namespace)) {
-            require_once ($dir . str_replace('\\', LC_DS, $class) . '.php');
+            include_once ($dir . str_replace('\\', LC_DS, $class) . '.php');
         }
     }
 
@@ -117,7 +127,7 @@ abstract class Autoloader
      */
     public static function __lc_autoload($class)
     {
-        self::autoloadCommon('XLite', $class, LC_AUTOLOAD_DIR);
+        self::autoloadCommon('XLite', $class, static::$lcAutoloadDir);
     }
 
     /**
@@ -133,21 +143,6 @@ abstract class Autoloader
     public static function __lc_autoload_includes($class)
     {
         self::autoloadCommon('Includes', $class, LC_ROOT_DIR);
-    }
-
-    /**
-     * Autoloader for the installation script
-     * 
-     * @param string $class name of the class to load
-     *  
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public static function __lc_autoload_install($class)
-    {
-        self::autoloadCommon('XLite', $class, LC_CLASSES_DIR);
     }
 
     /**
@@ -167,6 +162,8 @@ abstract class Autoloader
         }
 
         static::$functions[] = $method;
+
+        spl_autoload_register(array('static', $method));
     }
 
     /**
@@ -184,5 +181,20 @@ abstract class Autoloader
         }
 
         static::registerDoctrineAutoloader();
+    }
+
+    /**
+     * Switch autoload directory from var/run/classes/ to classes/
+     * 
+     * @param string $dir New autoload directory
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function switchLcAutoloadDir()
+    {
+        static::$lcAutoloadDir = LC_CLASSES_DIR;
     }
 }

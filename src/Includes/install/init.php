@@ -40,7 +40,11 @@ if (!defined('XLITE_INSTALL_MODE')) {
 }
 
 require_once realpath(dirname(__FILE__) . '/../..') . '/top.inc.php';
-\Includes\Autoloader::addFunction('__lc_autoload_install');
+
+// Switch classes autoloader to the orig classes dir instead of compiled classes storage if cache isn't built yet
+if (\Includes\Decorator\Utils\CacheManager::isRebuildNeeded()) {
+    \Includes\Autoloader::switchLcAutoloadDir();
+}
 
 require_once constant('LC_ROOT_DIR') . 'Includes/install/install_settings.php';
 
