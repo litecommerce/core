@@ -302,7 +302,7 @@ class XLite_Tests_Model_OrderItem extends XLite_Tests_TestCase
         $item = $order->getItems()->get(0);
 
         $this->assertEquals(
-            (bool)$this->getProduct()->getImage()->getImageId(),
+            (bool)$this->getProduct()->getImage(),
             $item->hasImage(),
             'check thumbnail'
         );
@@ -462,7 +462,6 @@ class XLite_Tests_Model_OrderItem extends XLite_Tests_TestCase
 
         $order->map($this->testOrder);
         $order->setCurrency(\XLite\Core\Database::getRepo('XLite\Model\Currency')->find(840));
-        $order->setProfileId(0);
 
         $item = new \XLite\Model\OrderItem();
 

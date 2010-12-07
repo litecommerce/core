@@ -51,7 +51,6 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
             'access_level'  => 0,
             'referer'       => 'some referer',
             'membership_id' => 0,
-            'order_id'      => 1,
         ),
     );
 
@@ -143,7 +142,6 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
         'referer'               => 'referer test',
         'membership_id'         => 44,
         'pending_membership_id' => 33,
-        'order_id'              => 44444,
         'language'              => 'ru',
     );
 
@@ -429,7 +427,7 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
         $this->assertEquals($profile->getReferer(), $clonedProfile->getReferer(), 'referer comparison');
         $this->assertEquals($profile->getMembershipId(), $clonedProfile->getMembershipId(), 'membership_id comparison');
         $this->assertEquals($profile->getPendingMembershipId(), $clonedProfile->getPendingMembershipId(), 'pending_membership_id comparison');
-        $this->assertEquals($profile->getOrderId(), $clonedProfile->getOrderId(), 'order_id comparison');
+        $this->assertEquals($profile->getOrder(), $clonedProfile->getOrder(), 'order_id comparison');
         $this->assertEquals($profile->getLanguage(), $clonedProfile->getLanguage(), 'language comparison');
 
         $membership1 = $profile->getMembership();

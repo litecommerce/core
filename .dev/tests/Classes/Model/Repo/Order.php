@@ -156,7 +156,7 @@ class XLite_Tests_Model_Repo_Order extends XLite_Tests_TestCase
         // By profile id
         \XLite\Core\Database::getEM()->clear();
         $cnd = new \XLite\Core\CommonCell();
-        $cnd->{$repo::P_PROFILE_ID} = $o1->getOrigProfileId();
+        $cnd->{$repo::P_PROFILE_ID} = $o1->getOrigProfile()->getProfileId();
 
         $list = $repo->search($cnd);
 
@@ -255,7 +255,6 @@ class XLite_Tests_Model_Repo_Order extends XLite_Tests_TestCase
 
         $order->map($this->testOrder);
         $order->setCurrency(\XLite\Core\Database::getRepo('XLite\Model\Currency')->find(840));
-        $order->setProfileId(0);
 
         \XLite\Core\Database::getEM()->persist($order);
         \XLite\Core\Database::getEM()->flush();

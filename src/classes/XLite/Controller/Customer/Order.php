@@ -140,7 +140,7 @@ class Order extends \XLite\Controller\Customer\ACustomer
         if ($auth->isLogged()) {
             // Not valid order is processed in isValid() method
             $access = !$this->getOrder()
-                || $auth->getProfile()->getProfileId() == $this->getOrder()->getOrigProfileId();
+                || $auth->getProfile()->getProfileId() == $this->getOrder()->getOrigProfile()->getProfileId();
         }
 
         return \XLite\Core\Session::getInstance()->last_order_id == \XLite\Core\Request::getInstance()->order_id

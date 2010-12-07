@@ -97,7 +97,7 @@ class XLite_Tests_Core_Auth extends XLite_Tests_TestCase
 
         // Test #5
         $result = \XLite\Core\Auth::getInstance()->login('rnd_tester@rrf.ru', 'guest');
-    
+
         $this->assertTrue($result instanceof \XLite\Model\Profile, 'Test #5');
         $this->assertEquals(2, $result->getProfileId(), 'Test #5: checking profile_id');
 
@@ -131,7 +131,10 @@ class XLite_Tests_Core_Auth extends XLite_Tests_TestCase
         $profile = \XLite\Core\Database::getRepo('XLite\Model\Profile')->find(2); // Same profile
 
         $profile->setPassword('testpassword'); // Unencrypted password
-        $profile->update();
+        if ($profile->getOrder()) {
+            $profile->getOrder()->setProfile(null);
+        }
+        \XLite\Core\Database::getEM()->flush();
 
         $result = \XLite\Core\Auth::getInstance()->login('rnd_tester@rrf.ru', 'testpassword', $hashString); // Login by email/hash
     

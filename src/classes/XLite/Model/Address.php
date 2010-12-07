@@ -78,7 +78,7 @@ class Address extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @Column (type="integer", length="1")
+     * @Column (type="boolean")
      */
     protected $is_billing = 0;
 
@@ -89,7 +89,7 @@ class Address extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
-     * @Column (type="integer", length="1")
+     * @Column (type="boolean")
      */
     protected $is_shipping = 0;
 

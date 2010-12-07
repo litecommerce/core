@@ -12,4 +12,4 @@
  * @ListChild (list="itemsList.order.admin.search.columns", weight="60")
  *}
 
-<td class="customer"><a class="customer" href="{buildURL(#profile#,##,_ARRAY_(#user_id#^order.getOrigProfileId()))}">{order.profile.billing_address.title:h} {order.profile.billing_address.firstname:h} {order.profile.billing_address.lastname:h}</a></td>
+<td class="customer"><a class="customer" href="{buildURL(#profile#,##,_ARRAY_(#user_id#^order.orig_profile.getProfileId()))}">{order.profile.billing_address.title:h} {order.profile.billing_address.firstname:h} {order.profile.billing_address.lastname:h}</a></td>

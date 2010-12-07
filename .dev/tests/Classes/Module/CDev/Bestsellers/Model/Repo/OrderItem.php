@@ -202,7 +202,6 @@ class XLite_Tests_Module_CDev_Bestsellers_Model_Repo_OrderItem extends XLite_Tes
 
         $order->map($this->testOrder);
         $order->setCurrency(\XLite\Core\Database::getRepo('XLite\Model\Currency')->find(840));
-        $order->setProfileId(0);
 
         if (!is_null($status)) {
 

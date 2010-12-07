@@ -223,16 +223,17 @@ class Profile extends \XLite\Model\AEntity
     protected $pending_membership_id = null;
 
     /**
-     * Order Id
+     * Relation to a order
      *
-     * @var    int
+     * @var    \XLite\Model\Order
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @Column (type="integer", length="11")
+     * @OneToOne  (targetEntity="XLite\Model\Order", inversedBy="profile")
+     * @JoinColumn (name="order_id", referencedColumnName="order_id")
      */
-    protected $order_id = 0;
+    protected $order;
 
     /**
      * Language code
@@ -437,7 +438,7 @@ class Profile extends \XLite\Model\AEntity
         if (!isset($this->orders_count)) {
     
             $cnd = new \XLite\Core\CommonCell();
-            $cnd->profileId = $this->profile_id;
+            $cnd->profile = $this;
 
             $this->orders_count = \XLite\Core\Database::getRepo('XLite\Model\Order')->search($cnd, true);
         }
@@ -731,5 +732,20 @@ class Profile extends \XLite\Model\AEntity
         $this->addresses = new \Doctrine\Common\Collections\ArrayCollection();
 
         parent::__construct($data);
+    }
+
+    /**
+     * Set order 
+     * 
+     * @param \XLite\Model\Order $order Order
+     *  
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setOrder(\XLite\Model\Order $order = null)
+    {
+        $this->order = $order;
     }
 }

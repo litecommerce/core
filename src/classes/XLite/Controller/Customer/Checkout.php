@@ -174,14 +174,6 @@ class Checkout extends \XLite\Controller\Customer\Cart
 
             } elseif (false !== $this->valid) {
 
-                if (
-                    $this->getCart()->getOrigProfile()
-                    && $this->getCart()->getOrigProfile()->getOrderId() != $this->getCart()->getOrderId()
-                ) {
-                    // Original profile is not anonymous
-                    $this->getCart()->setOrigProfile(null);
-                }
-
                 $profile = $this->getCartProfile();
 
                 $profile->setLogin($login);
@@ -626,14 +618,14 @@ class Checkout extends \XLite\Controller\Customer\Cart
      */
     protected function processSucceed()
     {
-        $isAnonymous = 0 < $this->getCart()->getProfile()->getOrderId();
+        if ($this->isAnonymous()) {
+            if (\XLite\Core\Session::getInstance()->order_create_profile) {
 
-        if ($isAnonymous && \XLite\Core\Session::getInstance()->order_create_profile) {
+                // Create profile based on anonymous order profile
+                $this->saveAnonymousProfile();
+            }
 
-            // Create profile based on anonymous order profile
-            $this->saveAnonymousProfile();
-
-        } elseif (!$isAnonymous) {
+        } else {
 
             // Clone profile
             $this->cloneProfile();
@@ -692,7 +684,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
     protected function saveAnonymousProfile()
     {
         $profile = $this->getCart()->getProfile()->cloneObject();
-        $profile->setOrderId(0);
+        $profile->setOrder(null);
 
         \XLite\Core\Database::getEM()->persist($profile);
         \XLite\Core\Database::getEM()->flush();
@@ -711,10 +703,9 @@ class Checkout extends \XLite\Controller\Customer\Cart
     protected function cloneProfile()
     {
         $origProfile = $this->getCart()->getProfile();
-        $profile = $origProfile->cloneObject();
-        $profile->setOrderId($this->getCart()->getOrderId());
-        $this->getCart()->setProfile($profile);
+        $this->getCart()->setProfile($origProfile->cloneObject());
         $this->getCart()->setOrigProfile($origProfile);
+        $origProfile->setOrder(null);
     }
 
     /**
@@ -727,8 +718,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
      */
     public function isAnonymous()
     {
-        return !$this->getCart()->getProfile()
-            || $this->getCart()->getOrigProfile()->getOrderId() == $this->getCart()->getOrderId();
+        return !$this->getCart()->getProfile() || $this->getCart()->getProfile()->getOrder();
     }
 
 }

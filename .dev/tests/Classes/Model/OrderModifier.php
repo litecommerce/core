@@ -173,7 +173,7 @@ class XLite_Tests_Model_OrderModifier extends XLite_Tests_TestCase
         unset($list);
 
         $order->setCurrency(\XLite\Core\Database::getRepo('XLite\Model\Currency')->find(840));
-        $order->setProfileId($profile->getProfileId());
+        $order->setProfile($profile);
 
         $productIds = array(4059, 4004, 4005, 4006, 4007, 4008);
 

@@ -235,9 +235,13 @@ class Profile extends \XLite\Model\Repo\ARepo
      */
     protected function prepareCndOrderId(\Doctrine\ORM\QueryBuilder $queryBuilder, $value)
     {
-        $queryBuilder->innerJoin('p.order', 'order')
-            ->andWhere('order.order_id = :orderId')
-            ->setParameter('orderId', $value);
+        if ($value) {
+            $queryBuilder->innerJoin('p.order', 'porder')
+                ->andWhere('porder.order_id = :orderId')
+                ->setParameter('orderId', $value);
+        } else {
+            $queryBuilder->andWhere('p.order is null');
+        }
     }
 
     /**
@@ -570,7 +574,7 @@ class Profile extends \XLite\Model\Repo\ARepo
     }
 
     /**
-     * defineFindUserWithSameLoginQuery 
+     * Define query for findUserWithSameLogin() method
      * 
      * @param \XLite\Model\Profile $profile Profile object
      *  
@@ -581,18 +585,23 @@ class Profile extends \XLite\Model\Repo\ARepo
      */
     protected function defineFindUserWithSameLoginQuery(\XLite\Model\Profile $profile) 
     {
-        return $this->createQueryBuilder('p')
+        $qb = $this->createQueryBuilder()
             ->andWhere('p.login = :login')
             ->andWhere('p.profile_id != :profileId')
-            ->andWhere('p.order_id = :orderId')
-            ->setMaxResults(1)
-            ->setParameters(
-                array(
-                    'login'     => $profile->getLogin(),
-                    'profileId' => $profile->getProfileId() ?: 0,
-                    'orderId'   => $profile->getOrderId() ?: 0
-                )
-            );
+            ->setParameter('login', $profile->getLogin())
+            ->setParameter('profileId', $profile->getProfileId() ?: 0)
+            ->setMaxResults(1);
+
+        if ($profile->getOrder()) {
+            $qb->innerJoin('p.order', 'porder')
+                ->andWhere('porder.order_id = :orderId')
+                ->setParameter('orderId', $profile->getOrder()->getOrderId());
+
+        } else {
+            $qb->andWhere('p.order is null');
+        }
+
+        return $qb;
     }
 
     /**
@@ -609,10 +618,58 @@ class Profile extends \XLite\Model\Repo\ARepo
             ->select('COUNT(p.profile_id)')
             ->andWhere('p.access_level >= :adminAccessLevel')
             ->andWhere('p.status = :status')
-            ->andWhere('p.order_id = 0')
+            ->andWhere('p.order is null')
             ->setParameter('adminAccessLevel', \XLite\Base::getInstance()->auth->getAdminAccessLevel())
             ->setParameter('status', 'E');
     }
+
+    /**
+     * Find profile by CMS identifiers 
+     * 
+     * @param array $fields CMS identifiers
+     *  
+     * @return \XLite\Model\Profile|void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function findOneByCMSId(array $fields)
+    {
+        try {
+            $profile = $this->defineFindOneByCMSIdQuery($fields)
+                ->getQuery()
+                ->getSingleResult();
+
+        } catch (\Doctrine\ORM\NoResultException $exception) {
+            $profile = null;
+        }
+
+        return $profile;
+
+    }
+
+    /**
+     * Define query for findOneByCMSId() 
+     * 
+     * @return \Doctrine\ORM\PersistentCollection
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineFindOneByCMSIdQuery(array $fields)
+    {
+        $qb = $this->createQueryBuilder()
+            ->andWhere('p.order is null')
+            ->setMaxResults(1);
+
+        foreach ($fields as $name => $value) {
+            $qb->andWhere('p.' . $name . ' = :' . $name)
+                ->setParameter($name, $value);
+        }
+
+        return $qb;
+    }
+
 
     /**
      * Common search
@@ -658,32 +715,70 @@ class Profile extends \XLite\Model\Repo\ARepo
      */
     public function findByLogin($login)
     {
-        $result = $this->findOneBy(array('login' => $login, 'order_id' => 0));
-    
-        return $result;
+        return $this->findByLoginPassword($login);
     }
 
     /**
      * Search profile by login and password
      *
      * @param string  $login    User's login
-     * @param string  $password User's password
+     * @param string  $password User's password OPTIONAL
      * @param integer $orderId  Order ID related to the profile OPTIONAL
      *
      * @return \XLite\Model\Profile
      * @access public
      * @since  3.0.0
      */
-    public function findByLoginPassword($login, $password, $orderId = 0)
+    public function findByLoginPassword($login, $password = null, $orderId = 0)
     {
-        $whereArray = array(
-            'login'    => $login,
-            'password' => $password,
-            'status'   => 'E',
-            'order_id' => $orderId,
-        );
+        try {
+            $profile = $this->defineFindByLoginPasswordQuery($login, $password, $orderId)
+                ->getQuery()
+                ->getSingleResult();
 
-        return $this->findOneBy($whereArray);
+        } catch (\Doctrine\ORM\NoResultException $exception) {
+            $profile = null;
+        }
+
+        return $profile;
+    }
+
+    /**
+     * Define query for findByLoginPassword() method
+     *
+     * @param string  $login    User's login
+     * @param string  $password User's password
+     * @param integer $orderId  Order ID related to the profile OPTIONAL
+     *
+     * @return \Doctrine\ORM\QueryBuilder
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function defineFindByLoginPasswordQuery($login, $password, $orderId)
+    {
+        $qb = $this->createQueryBuilder()
+            ->andWhere('p.login = :login')
+            ->andWhere('p.status = :status')
+            ->setParameter('login', $login)
+            ->setParameter('status', 'E')
+            ->setMaxResults(1);
+
+        if (isset($password)) {
+            $qb->andWhere('p.password = :password')
+                ->setParameter('password', $password);
+        }
+
+        if ($orderId) {
+            $qb->innerJoin('p.order', 'porder')
+                ->andWhere('porder.order_id = :orderId')
+                ->setParameter('orderId', $orderId);
+
+        } else {
+            $qb->andWhere('p.order is null');
+        }
+
+        return $qb;
     }
 
     /**
@@ -700,27 +795,27 @@ class Profile extends \XLite\Model\Repo\ARepo
     }
 
     /**
-     * findUserWithSameLogin 
+     * Find user with same login 
      * 
      * @param \XLite\Model\Profile $profile Profile object
      *  
-     * @return \XLite\Model\Profile 
+     * @return \XLite\Model\Profile|void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
     public function findUserWithSameLogin(\XLite\Model\Profile $profile) 
     {
-        $result = $this->defineFindUserWithSameLoginQuery($profile)->getQuery()->getResult();
+        try {
+            $profile = $this->defineFindUserWithSameLoginQuery($profile)
+                ->getQuery()
+                ->getSingleResult();
 
-        if (!empty($result)) {
-            $result = array_shift($result);
-        
-        } else {
-            $result = null;
+        } catch (\Doctrine\ORM\NoResultException $exception) {
+            $profile = null;
         }
 
-        return $result;
+        return $profile;
     }
 
     /**

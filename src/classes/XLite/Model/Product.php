@@ -120,9 +120,9 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @Column (type="decimal", precision=14, scale=2)
+     * @Column (type="decimal", precision=14, scale=4)
      */
-    protected $weight;
+    protected $weight = 0.0000;
 
     /**
      * Product tax class
@@ -134,7 +134,7 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      *
      * @Column (type="string", length="32", nullable=false)
      */
-    protected $tax_class;
+    protected $tax_class = '';
 
     /**
      * Is free shipping available for the product
@@ -158,7 +158,7 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      *
      * @Column (type="string", length="255", nullable=false)
      */
-    protected $clean_url;
+    protected $clean_url = '';
 
     /**
      * Custom javascript code

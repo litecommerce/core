@@ -76,7 +76,6 @@ class Cart extends \XLite\Model\Order
             if (!isset($cart)) {
                 $cart = new $className();
                 $cart->setStatus(self::STATUS_TEMPORARY);
-                $cart->setProfileId(0);
 
                 \XLite\Core\Database::getEM()->persist($cart);
                 // TODO - rework
@@ -88,19 +87,18 @@ class Cart extends \XLite\Model\Order
             $auth = \XLite\Core\Auth::getInstance();
 
             if ($auth->isLogged()) {
-                if ($auth->getProfile()->getProfileId() != $cart->getProfileId()) {
+                if (!$cart->getProfile() || $auth->getProfile()->getProfileId() != $cart->getProfile()->getProfileId()) {
                     $cart->setProfile($auth->getProfile());
                     $cart->setOrigProfile($auth->getProfile());
                     $cart->calculate();
                 }
 
-            } elseif ($cart->getProfileId()) {
+            } elseif ($cart->getProfile() && $cart->getProfile()->getProfileId()) {
 
                 $cart->setProfile(null);
                 $cart->calculate();
             }
 
-            \XLite\Core\Database::getEM()->persist($cart);
             \XLite\Core\Database::getEM()->flush();
 
             \XLite\Core\Session::getInstance()->order_id = $cart->getOrderId();
@@ -223,10 +221,10 @@ class Cart extends \XLite\Model\Order
             $this->setDate(time());
 
             $profile = \XLite\Core\Auth::getInstance()->getProfile();
-            if ($profile->getOrderId()) {
+            if ($profile->getOrder()) {
                 // anonymous checkout:
                 // use the current profile as order profile
-                $this->setProfileId($this->getProfile()->getProfileId());
+                $this->setProfile($profile);
             }
         }
     }

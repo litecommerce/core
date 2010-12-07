@@ -114,18 +114,14 @@ class XLite_Tests_Model_Repo_Shipping_Markup extends XLite_Tests_TestCase
     {
         $order = new \XLite\Model\Order();
 
+        
         if ($profile) {
             $profiles = \XLite\Core\Database::getRepo('XLite\Model\Profile')->findAll();
-            $profile = array_shift($profiles);
-            $profileId = $profile->getProfileId();
+            $order->setProfile(array_shift($profiles));
             unset($profiles);
-
-        } else {
-            $profileId = 0;
         }
 
         $order->setCurrency(\XLite\Core\Database::getRepo('XLite\Model\Currency')->find(840));
-        $order->setProfileId($profileId);
         $order->setSubTotal(17.99);
 
         return $order;

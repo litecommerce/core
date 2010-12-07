@@ -78,28 +78,29 @@ class Order extends \XLite\Model\Base\ModifierOwner
     protected $order_id;
 
     /**
-     * Order profile unique id
+     * Order profile
      * 
-     * @var    integer
+     * @var    \XLite\Model\Profile
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @Column (type="integer")
+     * @OneToOne  (targetEntity="XLite\Model\Profile", mappedBy="order", cascade={"all"})
      */
-    protected $profile_id;
+    protected $profile;
 
     /**
-     * Original profile id
+     * Original profile
      * 
-     * @var    integer
+     * @var    \XLite\Model\Profile
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @Column (type="integer")
+     * @OneToOne  (targetEntity="XLite\Model\Profile")
+     * @JoinColumn (name="orig_profile_id", referencedColumnName="profile_id")
      */
-    protected $orig_profile_id = 0;
+    protected $orig_profile;
 
     /**
      * Shipping method unique id 
@@ -246,13 +247,25 @@ class Order extends \XLite\Model\Base\ModifierOwner
      */
     protected $addItemError;
 
-    ///////////////////////////// OBSOLETE PROPERTIES //////////////////////
-
+    /**
+     * Flag - status is changed or not
+     * 
+     * @var    boolean
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
     protected $statusChanged = false;
+
+    /**
+     * Previous order status
+     * 
+     * @var    string
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
     protected $oldStatus;
-    protected $paymentMethodModel;
-    protected $profile;
-    protected $origProfile;
 
     /**
      * Return list of all aloowed order statuses
@@ -896,42 +909,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
     }
 
     /**
-     * Get order profile 
-     * 
-     * @return \XLite\Model\Profile
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function getProfile() 
-    {
-        if (!isset($this->profile)) {
-            $pid = $this->getProfileId();
-            if ($pid) {
-                $this->profile = \XLite\Core\Database::getRepo('XLite\Model\Profile')->find($pid);
-            }
-        }
-
-        return $this->profile;
-    }
-
-    /**
-     * Set profile 
-     * 
-     * @param mixed $profile Profile
-     *  
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function setProfile($profile) 
-    {
-        $this->profile = $profile;
-        $this->setProfileId(isset($profile) ? $profile->getProfileId() : 0);
-    }
-    
-    /**
      * Get original profile 
      * 
      * @return \XLite\Model\Profile
@@ -941,52 +918,61 @@ class Order extends \XLite\Model\Base\ModifierOwner
      */
     public function getOrigProfile() 
     {
-        if (!isset($this->origProfile)) {
-            $pid = $this->getOrigProfileId();
-            if ($pid) {
-                $this->origProfile = \XLite\Core\Database::getRepo('XLite\Model\Profile')->find($pid);
-            }
-        }
-
-        return $this->origProfile
-            ? $this->origProfile
-            : $this->getProfile();
+        return $this->orig_profile ?: $this->getProfile();
     }
 
     /**
-     * Set original profile 
+     * Set profile 
      * 
-     * @param mixed $profile Profile
+     * @param \XLite\Model\Profile $profile Profile
      *  
      * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function setOrigProfile($profile) 
+    public function setProfile(\XLite\Model\Profile $profile = null)
     {
-        $this->origProfile = $profile;
-        $this->setOrigProfileId(isset($profile) ? $profile->getProfileId() : 0);
+        if (!isset($profile) && $this->profile) {
+            $this->profile->setOrder(null);
+        }
+
+        $this->profile = $profile;
+        if (isset($profile)) {
+            $profile->setOrder($this);
+        }
+    }
+
+    /**
+     * Set original profile
+     *
+     * @param \XLite\Model\Profile $profile Profile
+     *
+     * @return void
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function setOrigProfile(\XLite\Model\Profile $profile = null)
+    {
+        $this->orig_profile = $profile;
     }
 
     /**
      * Set profile copy 
      * 
-     * @param \XLite\Model\Profile $prof Profile
+     * @param \XLite\Model\Profile $profile Profile
      *  
      * @return void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function setProfileCopy(\XLite\Model\Profile $prof) 
+    public function setProfileCopy(\XLite\Model\Profile $profile) 
     {
-        $this->setOrigProfile($prof);
+        $this->setOrigProfile($profile);
 
-        $p = $prof->cloneObject();
-        $p->setOrderId($this->getOrderId());
-        $p->update();
-
+        $p = $profile->cloneObject();
         $this->setProfile($p);
     }
 
@@ -1140,10 +1126,10 @@ class Order extends \XLite\Model\Base\ModifierOwner
     }
 
     /**
-     * statusChanged 
+     * Postprocess status changes
      * 
-     * @param mixed $oldStatus ____param_comment____
-     * @param mixed $newStatus ____param_comment____
+     * @param string $oldStatus Old status
+     * @param string $newStatus New status
      *  
      * @return void
      * @access protected
