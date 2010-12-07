@@ -543,7 +543,7 @@ class AdminMain extends \XLite\View\Model\AModel
     public function getProfileId($checkMode = true)
     {
         return ($this->isRegisterMode() && $checkMode) ?:
-            ($this->getRequestProfileId()) ?: \XLite\Model\Session::getInstance()->get('profile_id');
+            ($this->getRequestProfileId()) ?: \XLite\Core\Session::getInstance()->get('profile_id');
     }
 
     /**
