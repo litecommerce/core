@@ -34,8 +34,9 @@ namespace XLite\Model;
  * @package XLite
  * @see     ____class_see____
  * @since   3.0.0
+ *
  * @Entity (repositoryClass="\XLite\Model\Repo\Module")
- * @Table (name="modules")
+ * @Table  (name="modules")
  */
 class Module extends \XLite\Model\AEntity
 {
@@ -58,6 +59,7 @@ class Module extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Id
      * @GeneratedValue (strategy="AUTO")
      * @Column (type="integer")
@@ -71,6 +73,7 @@ class Module extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="string", length="64")
      */
     protected $name = '';
@@ -82,6 +85,7 @@ class Module extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="string", length="255")
      */
     protected $author = '';
@@ -93,6 +97,7 @@ class Module extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="boolean")
      */
     protected $enabled = false;
@@ -104,6 +109,7 @@ class Module extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="integer")
      */
     protected $installed = self::NOT_INSTALLED;
@@ -116,6 +122,7 @@ class Module extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="string", length="32")
      */
     protected $last_version = '';
@@ -128,6 +135,7 @@ class Module extends \XLite\Model\AEntity
      * @access protected
      * @see    ____var_see____
      * @since  3.0.0
+     *
      * @Column (type="integer", length="11")
      */
     protected $last_update = 0;
