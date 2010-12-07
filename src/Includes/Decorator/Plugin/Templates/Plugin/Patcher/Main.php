@@ -182,7 +182,7 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
      */
     public function filterByPatcherInterface(\Includes\Decorator\DataStructure\Node\ClassInfo $node)
     {
-        return in_array(self::INTERFACE_PATCHER, $node->__get(self::N_INTERFACES));
+        return $node->isImplements(self::INTERFACE_PATCHER);
     }
 
     /**

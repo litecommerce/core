@@ -36,7 +36,7 @@ namespace XLite\Model\Shipping\Processor;
  * @see        ____class_see____
  * @since      3.0.0
  */
-class Offline extends AProcessor
+class Offline extends \XLite\Model\Shipping\Processor\AProcessor
 {
     /*
      * Default base rate

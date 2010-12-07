@@ -51,7 +51,7 @@ class ClassInfo extends \Includes\DataStructure\Node\Graph
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getKeyField()
+    protected static function getKeyField()
     {
         return \Includes\Decorator\ADecorator::N_CLASS;
     }
@@ -69,8 +69,9 @@ class ClassInfo extends \Includes\DataStructure\Node\Graph
      */
     protected function checkForInterface(self $node, $interface = self::INTERFACE_DECORATOR)
     {
-        return in_array($interface, $node->__get(\Includes\Decorator\ADecorator::N_INTERFACES));
+        return in_array($interface, (array) $node->__get(\Includes\Decorator\ADecorator::N_INTERFACES));
     }
+
 
     /**
      * Alias
@@ -103,6 +104,36 @@ class ClassInfo extends \Includes\DataStructure\Node\Graph
     }
 
     /**
+     * Check if current node implements an interface
+     * 
+     * @param string $interface interface name
+     *  
+     * @return bool
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isImplements($interface)
+    {
+        return $this->checkForInterface($this, $interface);
+    }
+
+    /**
+     * Check if current node extends a class
+     * 
+     * @param string $class class name
+     *  
+     * @return bool
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function isExtends($class)
+    {
+        return in_array($class, (array) $this->__get(\Includes\Decorator\ADecorator::N_PARENT_CLASS));
+    }
+
+    /**
      * Return node name for output
      *
      * @return string
@@ -131,7 +162,7 @@ class ClassInfo extends \Includes\DataStructure\Node\Graph
      */
     public function isDecorator()
     {
-        return $this->checkForInterface($this);
+        return $this->isImplements(self::INTERFACE_DECORATOR);
     }
 
     /**

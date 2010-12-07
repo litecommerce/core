@@ -204,7 +204,7 @@ class Module extends \XLite\Model\AEntity
         $link = $this->__call('getSettingsForm');
 
         return is_null($link)
-            ? \XLite\Core\Converter::buildURL('module', '', array('page' => $this->getName()), 'admin.php')
+            ? \XLite\Core\Converter::buildURL('module', '', array('page' => $this->getActualName()), 'admin.php')
             : $link;
     }
 
@@ -296,7 +296,7 @@ class Module extends \XLite\Model\AEntity
     {
         $class = $this->getMainClassName();
 
-        $path = LC_CLASSES_DIR . $this->getName() . LC_DS;
+        $path = LC_CLASSES_DIR . $this->getPath() . LC_DS;
         $iterator = new \RecursiveDirectoryIterator($path);
         $iterator = new \RecursiveIteratorIterator($iterator, \RecursiveIteratorIterator::CHILD_FIRST);
 
@@ -439,7 +439,7 @@ class Module extends \XLite\Model\AEntity
         $status = true;
 
         // Uninstall SQL
-        $installSQLPath = LC_MODULES_DIR . $this->getName() . LC_DS . 'uninstall.sql';
+        $installSQLPath = LC_MODULES_DIR . $this->getPath() . LC_DS . 'uninstall.sql';
         if (file_exists($installSQLPath)) {
             try {
                 \XLite\Core\Database::getInstance()->importSQLFromFile($installSQLPath);
@@ -459,14 +459,14 @@ class Module extends \XLite\Model\AEntity
         // Run custom uninstall code
         if (false === $this->getMainClass()->uninstallModule($this)) {
             \XLite\Logger::getInstance()->log(
-                sprintf('\'%s\' module custom deinstallation error', $this->getName()),
+                sprintf('\'%s\' module custom deinstallation error', $this->getActualName()),
                 PEAR_LOG_ERR
             );
             $status = false;
         }
 
         // Remove repository (if needed)
-        \Includes\Utils\FileManager::unlinkRecursive(LC_MODULES_DIR . $this->getName());
+        \Includes\Utils\FileManager::unlinkRecursive(LC_MODULES_DIR . $this->getPath());
 
         return $status;
     }
@@ -504,6 +504,22 @@ class Module extends \XLite\Model\AEntity
         return -1 === version_compare($this->getVersion(), $this->last_version);
     }
 
+    /**
+     * getDependencies 
+     * 
+     * @return array
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function getDependencies()
+    {
+        return array_map(
+            array('\Includes\Decorator\Utils\ModulesManager', 'composeDependency'),
+            call_user_func(array($this->getMainClass(), __FUNCTION__))
+        );
+    }
+
 
     /**
      * Get inverted dependencies
@@ -522,7 +538,7 @@ class Module extends \XLite\Model\AEntity
             $tmp = $m->getDependencies();
             if (
                 !empty($tmp)
-                && in_array($this->getName(), $tmp)
+                && in_array($this->getActualName(), $tmp)
             ) {
                 $dependencies[] = $m->getModuleId();
                 $dependencies = array_merge($dependencies, $m->getDependedModuleIds());
@@ -542,7 +558,7 @@ class Module extends \XLite\Model\AEntity
      */
     protected function getMainClassName()
     {
-        return '\XLite\Module\\' . $this->getAuthor() . '\\' . $this->getName() . '\Main';
+        return '\XLite\Module\\' . $this->getActualName() . '\Main';
     }
 
     /**
@@ -568,17 +584,28 @@ class Module extends \XLite\Model\AEntity
     }
 
     /**
-     * FIXME - this method is required for Decorator
-     * TODO - find a more convinient way to avoid the fatal error
-     *
+     * Compose module actual name
+     * 
      * @return string
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function getKeyName()
+    public function getActualName()
     {
-        return $this->author . '\\' . $this->name;
+        return \Includes\Decorator\Utils\ModulesManager::getActualName($this->getAuthor(), $this->getName());
     }
 
+    /**
+     * Return relative module path
+     * 
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getPath()
+    {
+        return str_replace('\\', LC_DS, $this->getActualName());
+    }
 }

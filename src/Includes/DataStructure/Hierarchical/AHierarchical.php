@@ -86,7 +86,7 @@ abstract class AHierarchical
      */
     protected function performCleanupAction(\Includes\DataStructure\Node\ANode $node)
     {
-        !$node->isStub() ?: $this->removeNode($node);
+         // !$node->isStub() ?: $this->removeNode($node);
     }
 
     /**
@@ -99,9 +99,9 @@ abstract class AHierarchical
      */
     protected function collectGarbage()
     {
-        foreach ($this->getIndex() as $node) {
+        /* foreach ($this->getIndex() as $node) {
             $this->performCleanupAction($node);
-        }
+        } */
     }
 
     /**
@@ -152,16 +152,16 @@ abstract class AHierarchical
     /**
      * Ancillary method to use in "addNode()"
      * 
-     * @param mixed $data data to parse
+     * @param mixed $key some data to use as key
      *  
      * @return mixed
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function parseNodeData($data)
+    protected function getNodeLogicalParentKey($key)
     {
-        return $data;
+        return $key;
     }
 
 
@@ -241,21 +241,6 @@ abstract class AHierarchical
     }
 
     /**
-     * Create so called "stub" node
-     * 
-     * @param string $key node key
-     *  
-     * @return \Includes\DataStructure\Node\ANode
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function createStubNode($key)
-    {
-        return $this->getRoot()->createStubNode($key);
-    }
-
-    /**
      * Change key for node
      * 
      * @param \Includes\DataStructure\Node\ANode $node node to change key
@@ -280,19 +265,24 @@ abstract class AHierarchical
      *
      * @param \Includes\DataStructure\Node\ANode $node node to remove
      *
-     * @return void
+     * @return array
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
     public function removeNode(\Includes\DataStructure\Node\ANode $node)
     {
+        $keys = array($node->getKey());
+
+        foreach ($node->getChildren() as $child) {
+            $keys = array_merge($keys, $this->removeNode($child));
+        }
+
         $node->remove();
         unset($this->index[$node->getKey()]);
-
-        // Overkill
-        $node = null;
         unset($node);
+
+        return $keys;
     }
 
     /**
@@ -394,18 +384,21 @@ abstract class AHierarchical
         if ($parents = $this->getNodeParents($node)) {
 
             // Link node to all parent nodes
-            // FIXME: divide code between Tree and Graph
-            foreach ((array) $parents as $data) {
+            foreach ((array) $parents as $key) {
 
-                // Check if parent class was already added to the tree
-                if (!($parent = $this->find($key = $this->parseNodeData($data)))) {
+                // Check if it's allowed to add this node
+                if ($key = $this->getNodeLogicalParentKey($key)) {
+            
+                     // Check if parent class was already added to the tree
+                    if (!($parent = $this->find($key))) {
 
-                    // Create stub node for parent if it not exists
-                    $this->addChildNode($this->getRoot(), $parent = $this->createStubNode($key));
+                        // Create stub node for parent if it not exists
+                        $this->addChildNode($this->getRoot(), $parent = $node::createStubNode($key));
+                    }
+
+                    // Re-plant current node
+                    $this->replantNode($parent, $node);
                 }
-
-                // Re-plant current node
-                $this->replantNode($parent, $node);
             }
 
         } else {
@@ -443,6 +436,47 @@ abstract class AHierarchical
 
         // Remove the stub nodes
         $this->collectGarbage();
+
+        // Check if graph is correct
+        $this->checkIntegrity();
+    }
+
+    /**
+     * Check tree integrity
+     * 
+     * @param \Includes\DataStructure\Node\ANode $root      root node for current step
+     * @param array                              $checklist list of nodes which are not still checked
+     *  
+     * @return null
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function checkIntegrity(\Includes\DataStructure\Node\ANode $root = null, array &$checklist = null)
+    {
+        // Get default values
+        isset($root) ?: ($root = $this->getRoot());
+        isset($checklist) ?: ($checklist = array_fill_keys(array_keys($this->getIndex()), true));
+
+        // Scan child nodes
+        foreach ($root->getChildren() as $node) {
+
+            // By some reason node was not added to the index
+            if (!isset($checklist[$node->getKey()])) {
+                \Includes\ErrorHandler::fireError(
+                    'Node "' . $node->getKey() . '" is not indexed or included into a hamilton cycle'
+                );
+            }
+
+            // Recursive call
+            unset($checklist[$node->getKey()]);
+            $this->checkIntegrity($node, $checklist);
+        }
+
+        // There are nodes not connected to the root one
+        if (!$root->getKey() && !empty($checklist)) {
+            \Includes\ErrorHandler::fireError('Non-linked nodes: "' . implode('", "', array_keys($checklist)) . '"');
+        }
     }
 
     /**

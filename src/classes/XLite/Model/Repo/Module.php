@@ -209,6 +209,7 @@ class Module extends \XLite\Model\Repo\ARepo
 
     /**
      * Get enabled modules list
+     * FIXME - remove cycle
      * 
      * @return array
      * @access public
@@ -220,7 +221,7 @@ class Module extends \XLite\Model\Repo\ARepo
         if (!isset($this->modules)) {
             $this->modules = array();
             foreach ($this->findAllEnabled() as $module) {
-                $this->modules[$module->getKeyName()] = $module;
+                $this->modules[$module->getActualName()] = $module;
             }
         }
 
@@ -414,7 +415,7 @@ class Module extends \XLite\Model\Repo\ARepo
         $result = array();
 
         foreach ($data as $module) {
-            $result[] = $module->getKeyName();
+            $result[] = $module->getActualName();
         }
 
         return array_unique($result);
@@ -471,7 +472,7 @@ class Module extends \XLite\Model\Repo\ARepo
         \XLite\Logger::getInstance()->log(
             \XLite\Core\Translation::lbl(
                 'The X module has been uninstalled in an abnormal way',
-                array('module' => $module->getKeyName())
+                array('module' => $module->getActualName())
             ),
             PEAR_LOG_ERR
         );
@@ -494,7 +495,7 @@ class Module extends \XLite\Model\Repo\ARepo
         \XLite\Logger::getInstance()->log(
             \XLite\Core\Translation::lbl(
                 'The X module has been disabled in an abnormal way',
-                array('module' => $module->getKeyName())
+                array('module' => $module->getActualName())
             ),
             PEAR_LOG_ERR
         );

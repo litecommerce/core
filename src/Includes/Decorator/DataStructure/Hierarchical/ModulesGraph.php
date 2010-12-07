@@ -38,12 +38,6 @@ namespace Includes\Decorator\DataStructure\Hierarchical;
 class ModulesGraph extends \Includes\DataStructure\Hierarchical\Graph
 {
     /**
-     * Node key field 
-     */
-    const KEY_FIELD = \Includes\Decorator\DataStructure\Node\Module::MODULE_CLASS;
-
-
-    /**
      * Name of the node class
      *
      * @var    string
@@ -56,22 +50,6 @@ class ModulesGraph extends \Includes\DataStructure\Hierarchical\Graph
 
     /**
      * Get module class name
-     * 
-     * @param string $name   module name
-     * @param string $author module author
-     *  
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function getModuleClassByName($name, $author)
-    {
-        return \Includes\Decorator\Utils\ModulesManager::getClassNameByModuleName($name, $author);
-    }
-
-    /**
-     * Get module class name
      *
      * @param \Includes\DataStructure\Node\ANode $node node to get info
      *
@@ -80,9 +58,9 @@ class ModulesGraph extends \Includes\DataStructure\Hierarchical\Graph
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getModuleClassByNode(\Includes\DataStructure\Node\ANode $node)
+    protected function getModuleClass(\Includes\DataStructure\Node\ANode $node)
     {
-        return $this->getModuleClassByName($node->name, $node->author);
+        return \Includes\Decorator\Utils\ModulesManager::getClassNameByModuleName($node->getKey());
     }
 
     /**
@@ -97,8 +75,13 @@ class ModulesGraph extends \Includes\DataStructure\Hierarchical\Graph
      */
     protected function includeModuleFiles(\Includes\DataStructure\Node\ANode $node)
     {
-        require_once LC_MODULES_DIR . 'AModule.php';
-        require_once LC_CLASSES_DIR . str_replace('\\', LC_DS, static::getModuleClassByNode($node)) . '.php';
+        if (!\Includes\Utils\Operator::checkIfClassExists('\XLite\Module\AModule')) {
+            require_once LC_MODULES_DIR . 'AModule.php';
+        }
+
+        if (!\Includes\Utils\Operator::checkIfClassExists($class = $this->getModuleClass($node))) {
+            require_once LC_CLASSES_DIR . str_replace('\\', LC_DS, $class) . '.php';
+        }
     }
 
     /**
@@ -115,24 +98,7 @@ class ModulesGraph extends \Includes\DataStructure\Hierarchical\Graph
     {
         $this->includeModuleFiles($node);
 
-        return call_user_func(array($this->getModuleClassByNode($node), 'getDependencies'));
-    }
-
-    /**
-     * Prepare element from the "ActiveModules" array
-     * 
-     * @param array $dependency data to parse
-     *  
-     * @return string
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected function parseDependency(array $dependency)
-    {
-        list($author, $name) = $dependency;
-
-        return $this->getModuleClassByName($name, $author);
+        return call_user_func(array($this->getModuleClass($node), 'getDependencies'));
     }
 
     /**
@@ -153,15 +119,43 @@ class ModulesGraph extends \Includes\DataStructure\Hierarchical\Graph
     /**
      * Ancillary method to use in "addNode()"
      *
-     * @param mixed $data data to parse
+     * @param mixed $key some data to use as key
      *
      * @return mixed
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function parseNodeData($data)
+    protected function getNodeLogicalParentKey($key)
     {
-        return $this->parseDependency($data);
+        return \Includes\Decorator\Utils\ModulesManager::composeDependency($key);
+    }
+
+
+    /**
+     * Check tree integrity
+     *
+     * @param \Includes\DataStructure\Node\ANode $root      root node for current step
+     * @param array                              $checklist list of nodes which are not still checked
+     *
+     * @return null
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function checkIntegrity(\Includes\DataStructure\Node\ANode $root = null, array &$checklist = null)
+    {
+        if (isset($root) && !\Includes\Decorator\Utils\ModulesManager::isActiveModule($root->getKey())) {
+
+            // Unset inactive modules
+            foreach ($this->removeNode($root) as $key) {
+                \Includes\Decorator\Utils\ModulesManager::disableModule($key);
+                unset($checklist[$key]);
+            }
+            
+        } else {
+
+            parent::checkIntegrity($root, $checklist);
+        }
     }
 }

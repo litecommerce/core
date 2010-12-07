@@ -38,9 +38,9 @@ namespace Includes\Decorator\DataStructure\Node;
 class Module extends \Includes\DataStructure\Node\Graph
 {
     /**
-     * Module class field
+     * Module name field
      */
-    const MODULE_CLASS = 'class';
+    const ACTUAL_NAME = 'actualName';
 
 
     /**
@@ -51,8 +51,8 @@ class Module extends \Includes\DataStructure\Node\Graph
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function getKeyField()
+    protected static function getKeyField()
     {
-        return self::MODULE_CLASS;
+        return self::ACTUAL_NAME;
     }
 }

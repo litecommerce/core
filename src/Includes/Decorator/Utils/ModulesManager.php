@@ -28,7 +28,9 @@
 
 namespace Includes\Decorator\Utils;
 
-// FIXME - must be moved into the class
+/**
+ * Some useful constants 
+ */
 define('LC_DS_QUOTED', preg_quote(LC_DS, '/'));
 define('LC_DS_OPTIONAL', '(' . LC_DS_QUOTED . '|$)');
 
@@ -44,7 +46,7 @@ abstract class ModulesManager extends AUtils
     /**
      * Pattern to get module name by class name
      */
-    const CLASS_NAME_PATTERN = '/\\\XLite\\\Module\\\(\w+)(\\\|$)/USs';
+    const CLASS_NAME_PATTERN = '/\\\XLite\\\Module\\\(\w+\\\\\w+)(\\\|$)/USs';
 
 
     /**
@@ -72,6 +74,19 @@ abstract class ModulesManager extends AUtils
     }
 
     /**
+     * Part of SQL query to fetch composed module name
+     * 
+     * @return string
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function getModuleNameField()
+    {
+        return 'CONCAT(author,\'\\\\\',name) AS ' . \Includes\Decorator\DataStructure\Node\Module::ACTUAL_NAME . ', ';
+    }
+
+    /**
      * Fetch list of active modules from DB
      * 
      * @return array
@@ -82,24 +97,27 @@ abstract class ModulesManager extends AUtils
     protected static function getModulesList(array $fields = array(), array $conditions = array())
     {
         return \Includes\Utils\Database::fetchAll(
-            'SELECT name, ' . static::getTableName() . '.* FROM ' . static::getTableName() . ' WHERE enabled = \'1\'',
+            'SELECT ' . static::getModuleNameField() . static::getModuleNameField()
+            . static::getTableName() . '.* FROM ' . static::getTableName() . ' WHERE enabled = \'1\'',
             \PDO::FETCH_ASSOC | \PDO::FETCH_GROUP | \PDO::FETCH_UNIQUE
         );
     }
 
     /**
-     * Fetch list of paths to active modules (with author directory) from DB
+     * Return list of relative module paths
      * 
      * @return array
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected static function getModulesPathsList(array $fields = array(), array $conditions = array())
+    protected static function getModuleQuotedPaths()
     {
-        return \Includes\Utils\Database::fetchAll(
-            'SELECT CONCAT(author,\'\\\\' . LC_DS . '\',name), ' . static::getTableName() . '.* FROM ' . static::getTableName() . ' WHERE enabled = \'1\'',
-            \PDO::FETCH_ASSOC | \PDO::FETCH_GROUP | \PDO::FETCH_UNIQUE
+        return array_map(
+            function ($name) {
+                return str_replace('\\', LC_DS_QUOTED, $name);
+            },
+            array_keys(static::getModulesGraph()->getIndex())
         );
     }
 
@@ -120,39 +138,23 @@ abstract class ModulesManager extends AUtils
         $modulePattern = $dir . LC_DS_QUOTED . ($placeholder = '@') . LC_DS_OPTIONAL;
 
         return '/^' . $rootPath . '(.((?!' . str_replace($placeholder, '\w+', $modulePattern) . ')|'
-            . str_replace($placeholder, '(' . implode('|', array_keys(static::getModulesPathsList())) . ')', $modulePattern)
+            . str_replace($placeholder, '(' . implode('|', static::getModuleQuotedPaths()) . ')', $modulePattern) 
             . '))*\.' . $extension . '$/i';
-    }
-
-    /**
-     * Add the "class" property to each element of active modules list
-     * 
-     * @return null
-     * @access protected
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    protected static function setModuleClassNames()
-    {
-        foreach (static::$activeModules as &$info) {
-            $info['class'] = static::getClassNameByModuleName($info['name'], $info['author']);
-        }
     }
 
 
     /**
      * Get class name by module name
      *
-     * @param string $name   module name
-     * @param string $author module author
+     * @param string $moduleName module actual name
      *
      * @return string
      * @access public
      * @since  3.0
      */
-    public static function getClassNameByModuleName($name, $author)
+    public static function getClassNameByModuleName($moduleName)
     {
-        return '\XLite\Module\\' . $author . '\\' . $name . '\Main';
+        return '\XLite\Module\\' . $moduleName . '\Main';
     }
 
     /**
@@ -166,7 +168,7 @@ abstract class ModulesManager extends AUtils
      */
     public static function getModuleNameByClassName($className)
     {
-        return (preg_match(self::CLASS_NAME_PATTERN, $className, $matches) && 'AModule' !== $matches[1]) ? $matches[1] : null;
+        return preg_match(self::CLASS_NAME_PATTERN, $className, $matches) ? $matches[1] : null;
     }
 
     /**
@@ -183,10 +185,9 @@ abstract class ModulesManager extends AUtils
     {
         if (!isset(static::$activeModules)) {
             static::$activeModules = static::getModulesList();
-            static::setModuleClassNames();
         }
 
-        return isset($moduleName) ? isset(static::$activeModules[$moduleName]) : static::$activeModules;
+        return isset($moduleName) ? @static::$activeModules[$moduleName] : static::$activeModules;
     }
 
     /**
@@ -201,7 +202,33 @@ abstract class ModulesManager extends AUtils
      */
     public static function isActiveModule($moduleName)
     {
-        return !isset($moduleName) || static::getActiveModules($moduleName);
+        return !isset($moduleName) || (bool) static::getActiveModules($moduleName);
+    }
+
+    /**
+     * Set module enabled fleg fo "false"
+     *
+     * @param string $key module actual name (key)
+     * 
+     * @return null
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function disableModule($key)
+    {
+        // Check if module exists and enabled
+        if ($module = static::getActiveModules($key)) {
+
+            // Set flag in DB
+            \Includes\Utils\Database::execute(
+                'UPDATE ' . static::getTableName() . ' SET enabled = ? WHERE module_id = ?',
+                array(0, $module['module_id'])
+            );
+
+            // Remove from local cache
+            static::$activeModules[$key];
+        }
     }
 
     /**
@@ -231,14 +258,46 @@ abstract class ModulesManager extends AUtils
     }
 
     /**
-     * Arrange modules base on their dependencies
+     * Compose module actual name
+     * 
+     * @param string $author module author
+     * @param string $name   module name
+     *  
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getActualName($author, $name)
+    {
+        return $author . '\\' . $name;
+    }
+
+    /**
+     * Get name of dependent module by author and name
+     * 
+     * @param array $dependency dependency description
+     *  
+     * @return string
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function composeDependency(array $dependency)
+    {
+        return call_user_func_array(array('static', 'getActualName'), $dependency);
+    }
+
+    /**
+     * Return list of actually enabled modules
      * 
      * @return array
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public static function getModulePriorities()
+    public static function getActuallyEnabledModules()
     {
+        return array_keys(static::getModulesGraph()->getIndex());
     }
 }

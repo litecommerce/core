@@ -54,6 +54,24 @@ abstract class Operator extends \Includes\Decorator\Utils\Base\Operator
     }
 
     /**
+     * Return weight of the class by checking module dependencies
+     * FIXME: must be protected
+     * 
+     * @param string $name class name
+     *  
+     * @return array|int
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function getClassWeight($name)
+    {
+        return ($module = \Includes\Decorator\Utils\ModulesManager::getModuleNameByClassName($name))
+            ? static::getModulesGraph()->getCriticalPaths($module) 
+            : 0;
+    }
+
+    /**
      * Decorate class
      * 
      * @param \Includes\Decorator\DataStructure\Node\ClassInfo $parent     class to decorate

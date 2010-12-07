@@ -62,7 +62,10 @@ abstract class ANode extends \Includes\DataStructure\Cell
      * @see    ____func_see____
      * @since  3.0.0
      */
-    abstract protected function getKeyField();
+    protected static function getKeyField()
+    {
+        \Includes\ErrorHandler::fireError('Abstract method call: ' . __METHOD__);
+    }
 
 
     /**
@@ -198,10 +201,11 @@ abstract class ANode extends \Includes\DataStructure\Cell
      */
     public function replant(self $parent, array $data = array())
     {
+        $this->remove();
+
         $this->__unset(self::IS_STUB);
         $this->setData($data);
 
-        $this->remove();
         $parent->addChild($this);
     }
 
@@ -218,7 +222,7 @@ abstract class ANode extends \Includes\DataStructure\Cell
     }
 
     /**
-     * Add stub node to the tree
+     * Create new node
      *
      * @param string $key new node key
      *
@@ -227,8 +231,8 @@ abstract class ANode extends \Includes\DataStructure\Cell
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function createStubNode($key)
+    public static function createStubNode($key)
     {
-        return new static(array($this->getKeyField() => $key, self::IS_STUB => true));
+        return new static(array(static::getKeyField() => $key, self::IS_STUB => true));
     }
 }
