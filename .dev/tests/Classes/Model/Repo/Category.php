@@ -366,7 +366,13 @@ class XLite_Tests_Model_Repo_Category extends XLite_Tests_TestCase
         $categoryId = 14015;
         $entity = $this->getRepo()->getCategory($categoryId);
 
-        $this->getRepo()->deleteSubcategories($entity);
+        $this->assertEquals(
+            3,
+            $entity->getSubcategoriesCount(),
+            'Subcategories number in the "Fruit" category subtree (ID ' . $categoryId . ') must be "3"'
+        );
+
+        $this->getRepo()->deleteCategory($categoryId, true);
 
         $this->assertEquals(
             0,
