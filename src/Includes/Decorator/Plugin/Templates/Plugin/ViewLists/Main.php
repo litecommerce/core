@@ -171,18 +171,17 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
     /**
      * Check for so called list "preprocessors" in module
      *
-     * @param array  &$data  data to use
-     * @param string $name   module name
-     * @param string $author module author
+     * @param array  &$data data to use
+     * @param string $name  module name
      *
      * @return void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
      */
-    protected function prepareListByModule(array &$data, $name, $author)
+    protected function prepareListByModule(array &$data, $name)
     {
-        $class  = \Includes\Decorator\Utils\ModulesManager::getClassNameByModuleName($name, $author);
+        $class  = \Includes\Decorator\Utils\ModulesManager::getClassNameByModuleName($name);
         $method = 'modifyViewLists';
 
         if (method_exists($class, $method)) {
@@ -309,8 +308,8 @@ class Main extends \Includes\Decorator\Plugin\Templates\Plugin\APlugin
 
         // Check modules for the list modifiers
         // TODO: check if it's really useful
-        foreach (\Includes\Decorator\Utils\ModulesManager::getActiveModules() as $module) {
-            $this->prepareListByModule($data, $module['name'], $module['author']);
+        foreach (\Includes\Decorator\Utils\ModulesManager::getActuallyEnabledModules() as $name) {
+            $this->prepareListByModule($data, $name);
         }
 
         return $data;

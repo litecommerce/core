@@ -395,7 +395,7 @@ CODE;
      */
     public function filterByMultilangParent(\Includes\Decorator\DataStructure\Node\ClassInfo $node)
     {
-        return in_array('\XLite\Model\Base\I18n', $node->__get(self::N_PARENT_CLASS));
+        return $node->isExtends('\XLite\Model\Base\I18n');
     }
 
     /**

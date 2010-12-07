@@ -77,6 +77,16 @@ abstract class ADecorator
      */
     protected static $classesTree;
 
+    /**
+     * Modules graph
+     * 
+     * @var    \Includes\Decorator\DataStructure\Hierarchical\ModulesGraph
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected static $modulesGraph;
+
 
     /**
      * Return (and initialize, if needed) classes tree
@@ -93,5 +103,22 @@ abstract class ADecorator
         }
 
         return static::$classesTree;
+    }
+
+    /**
+     * Return modules graph
+     * 
+     * @return \Includes\Decorator\DataStructure\Hierarchical\ModulesGraph
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected static function getModulesGraph()
+    {
+        if (!isset(static::$modulesGraph)) {
+            static::$modulesGraph = \Includes\Decorator\Utils\DataCollector::getModulesGraph();
+        }
+
+        return static::$modulesGraph;
     }
 }

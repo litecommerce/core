@@ -168,4 +168,20 @@ class Operator extends AUtils
 
         return $result;
     }
+
+    /**
+     * Check if class is already declared.
+     * NOTE: this function do not use autoload
+     * 
+     * @param string $name class name
+     *  
+     * @return null
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public static function checkIfClassExists($name)
+    {
+        return class_exists($name, false);
+    }
 }

@@ -46,4 +46,55 @@ class Graph extends \Includes\DataStructure\Hierarchical\AHierarchical
      * @since  3.0.0
      */
     protected $nodeClass = '\Includes\DataStructure\Node\Graph';
+
+    /**
+     * List of critical path legths for all nodes
+     * 
+     * @var    array
+     * @access protected
+     * @see    ____var_see____
+     * @since  3.0.0
+     */
+    protected $criticalPaths;
+
+
+    /**
+     * Method to get length of node critical path
+     * 
+     * @param \Includes\DataStructure\Node\Graph $node node to get info
+     *  
+     * @return int
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCriticalPath(\Includes\DataStructure\Node\Graph $node)
+    {
+        $length = 1;
+
+        foreach ($node->getParents() as $parent) {
+            $length += $parent->getKey() ? $this->{__FUNCTION__}($parent) : 0;
+        }
+
+        return $length;
+    }
+
+    /**
+     * Method to get critical path legths for all nodes
+     * 
+     * @param string $key node key
+     *  
+     * @return array|int
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getCriticalPaths($key = null)
+    {
+        if (!isset($this->criticalPaths)) {
+            $this->criticalPaths = array_map(array($this, 'getCriticalPath'), $this->getIndex());
+        }
+
+        return isset($key) ? @$this->criticalPaths[$key] : $this->criticalPaths;
+    }
 }

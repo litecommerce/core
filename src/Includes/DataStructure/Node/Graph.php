@@ -177,7 +177,6 @@ abstract class Graph extends \Includes\DataStructure\Node\ANode
 
         parent::removeChild($node);
     }
-    
 
     /**
      * Change key for current node

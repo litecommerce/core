@@ -50,14 +50,6 @@ abstract class Decorator extends Decorator\ADecorator
      */
     public static function buildCache()
     {
-        // var_dump(\Includes\Decorator\Utils\DataCollector::getModulesGraph()->draw());die;
-
-        /* foreach (static::getClassesTree()->getIndex() as $node) {
-            !($decorators = $node->getDecorators()) ?: \Includes\Decorator\Utils\Operator::decorate($node, $decorators);
-        }*/
-
-        // static::getClassesTree()->draw();die;
-
         // Prepare classes list
         static::createClassTreeFull();
 
@@ -150,24 +142,6 @@ abstract class Decorator extends Decorator\ADecorator
      */
     protected static $classDecorators = array();
 
-    /**
-     * List of module dependencies 
-     * 
-     * @var    array
-     * @access protected
-     * @since  3.0
-     */
-    protected static $moduleDependencies = null;
-
-    /**
-     * List of active modules and their priority values 
-     * 
-     * @var    array
-     * @access protected
-     * @since  3.0
-     */
-    protected static $modulePriorities = null;
-
 
     /**
      * Return file path by class name
@@ -181,26 +155,6 @@ abstract class Decorator extends Decorator\ADecorator
     protected static function getFileByClass($class)
     {
         return str_replace('\\', LC_DS, ltrim($class, '\\')) . '.php';
-    }
-
-    /**
-     * Return text for unresolved dependencies error
-     * 
-     * @param array $dependencies list of unresolved dependencies
-     *  
-     * @return string
-     * @access protected
-     * @since  3.0
-     */
-    protected static function getDependenciesErrorText(array $dependencies)
-    {
-        $text = 'Class decorator is unable to resolve the following dependencies:<br /><br />' . "\n\n";
-
-        foreach ($dependencies as $module => $dependedModules) {
-            $text .= '<strong>' . $module . '</strong>: ' . implode(', ', $dependedModules) . '<br />' . "\n";
-        }
-
-        return $text;
     }
 
     /**
@@ -352,113 +306,6 @@ abstract class Decorator extends Decorator\ADecorator
     }
 
     /**
-     * Return list of <module_name> => <dependend_module_1>, <dependend_module_2>, ..., <dependend_module_N>
-     * 
-     * @return array
-     * @access protected
-     * @since  3.0
-     */
-    protected static function getModuleDependencies()
-    {
-        if (!isset(static::$moduleDependencies)) {
-
-            static::$moduleDependencies = array();
-
-            if (!class_exists('XLite\Module\AModule', false)) {
-                require_once (LC_MODULES_DIR . 'AModule.php');
-            }
-
-            foreach (\Includes\Decorator\Utils\ModulesManager::getActiveModules() as $module) {
-
-                $author = $module['author'];
-                $module = $module['name'];
-
-                if (!class_exists('XLite\Module\\' . $author . '\'' . $module . '\Main', false)) {
-                    require_once (LC_MODULES_DIR . $author . LC_DS . $module . LC_DS . 'Main.php');
-                }
-                
-                $mainClassName = \Includes\Decorator\Utils\ModulesManager::getClassNameByModuleName($module, $author);
-
-                static::$moduleDependencies[$module] = $mainClassName::getDependencies();
-            }
-        }
-
-        return static::$moduleDependencies;
-    }
-
-    /**
-     * Recursive function to build modules chain base on their dependencies 
-     * 
-     * @param array $dependencies      dependencies for all modules
-     * @param array $levelDependencies available modules for current recursion level
-     * @param int   $level             recursion level
-     *  
-     * @return array
-     * @access protected
-     * @since  3.0
-     */
-    protected static function calculateModulePriorities(array $dependencies, array $levelDependencies = array(), $level = 0)
-    {
-        $priorities = array();
-        $subLevelDependencies = $levelDependencies;
-
-        // This flag determines if there were any changes on current recursion level
-        $isChanged = empty($dependencies);
-
-        foreach ($dependencies as $module => $dependendModules) {
-
-            // Module priority is equals to current level if all module dependencies are already checked
-            if (array() === array_diff($dependendModules, $levelDependencies)) {
-
-                // Set priority
-                $priorities[$module] = $level;
-
-                // Exclude module from calculation
-                unset($dependencies[$module]);
-
-                // Add it to next-level dependencies
-                $subLevelDependencies[] = $module;
-
-                // Set flag
-                $isChanged = true;
-            }
-        }
-
-        // There are unresolved dependencies
-        if (!$isChanged) {
-            echo (static::getDependenciesErrorText($dependencies));
-            die (3);
-        }
-
-        $added = empty($dependencies)
-            ? array()
-            : static::calculateModulePriorities($dependencies, $subLevelDependencies, $level + 1);
-
-        // Recursive call
-        return array_merge($priorities, $added);
-    }
-
-    /**
-     * Return priority for certain module 
-     * 
-     * @param string $moduleName module name
-     *  
-     * @return int
-     * @access protected
-     * @since  3.0
-     */
-    protected static function getModulePriority($moduleName)
-    {
-        if (!isset(static::$modulePriorities)) {
-            static::$modulePriorities = static::calculateModulePriorities(static::getModuleDependencies());
-        }
-
-        return isset(static::$modulePriorities[$moduleName])
-            ? static::$modulePriorities[$moduleName]
-            : 0;
-    }
-
-    /**
      * Walk through the PHP files tree and collect classes info 
      * 
      * @return void
@@ -469,6 +316,8 @@ abstract class Decorator extends Decorator\ADecorator
     protected static function createClassTreeFull()
     {
         foreach (static::getClassesTree()->getIndex() as $node) {
+
+            if ($node->isStub()) continue;
 
             // FIXME
             $parent = $node->__get(self::N_PARENT_CLASS);
@@ -506,9 +355,8 @@ abstract class Decorator extends Decorator\ADecorator
                 }
 
                 // Save class name and its priority (equals to module priority)
-                static::$classDecorators[$info[self::INFO_EXTENDS]][$class] = static::getModulePriority(
-                    \Includes\Decorator\Utils\ModulesManager::getModuleNameByClassName($class)
-                );
+                static::$classDecorators[$info[self::INFO_EXTENDS]][$class] = 
+                    \Includes\Decorator\Utils\Operator::getClassWeight($class);
             }
 
             // These fields are not needed
@@ -588,29 +436,6 @@ abstract class Decorator extends Decorator\ADecorator
         file_put_contents($fileName, static::parseClassFile($info, $fn, $class));
         chmod($fileName, 0644);
     }
-
-    /**
-     * Check and (if needed) rebuild cache
-     * 
-     * @return void
-     * @access public
-     * @since  3.0
-     */
-    /*public static function buildCache()
-    {
-        // Prepare classes list
-        static::createClassTreeFull();
-
-        static::normalizeModuleControllerNames();
-        static::createDecoratorTree();
-        static::mergeClassAndDecoratorTrees();
-
-        // Write file to the cache directory
-        foreach (static::$classesInfo as $class => $info) {
-            static::writeClassFile($class, $info);
-        }
-    }*/
-
 
     /**
      * Get final class by class-decorator

@@ -143,6 +143,7 @@ class Method extends \XLite\Model\Base\I18n
 
     /**
      * Check - enabeld method or not
+     * FIXME - must be removed
      * 
      * @return boolean
      * @access public
