@@ -362,7 +362,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * 
      * @param mixed $categoryId Category ID
      *  
-     * @return integer|null
+     * @return integer|void
      * @access protected
      * @see    ____func_see____
      * @since  3.0.0
@@ -738,9 +738,16 @@ class Category extends \XLite\Model\Repo\Base\I18n
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function addSubTreeCondition(\Doctrine\ORM\QueryBuilder $qb, $categoryId, $field = 'lpos', $lpos = null, $rpos = null)
-    {
-        if ($category = $this->getCategory($categoryId)) {
+    public function addSubTreeCondition(
+        \Doctrine\ORM\QueryBuilder $qb,
+        $categoryId,
+        $field = 'lpos',
+        $lpos = null,
+        $rpos = null
+    ) {
+        $category = $this->getCategory($categoryId);
+
+        if ($category) {
 
             $lpos = $lpos ?: $category->getLpos();
             $rpos = $rpos ?: $category->getRpos();
