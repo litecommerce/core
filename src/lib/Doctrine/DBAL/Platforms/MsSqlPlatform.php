@@ -1,4 +1,5 @@
 <?php
+
 /*
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
@@ -21,7 +22,7 @@ namespace Doctrine\DBAL\Platforms;
 
 use Doctrine\DBAL\Schema\TableDiff;
 use Doctrine\DBAL\DBALException;
-use Doctrine\DBAL\Schema\Index;
+use Doctrine\DBAL\Schema\Index, Doctrine\DBAL\Schema\Table;
 
 /**
  * The MsSqlPlatform provides the behavior, features and SQL dialect of the
@@ -35,6 +36,7 @@ use Doctrine\DBAL\Schema\Index;
  */
 class MsSqlPlatform extends AbstractPlatform
 {
+
     /**
      * Whether the platform prefers identity columns for ID generation.
      * MsSql prefers "autoincrement" identity columns since sequences can only
@@ -61,12 +63,11 @@ class MsSqlPlatform extends AbstractPlatform
     }
 
     /**
-     * Whether the platform supports savepoints. MsSql does not.
+     * Whether the platform supports releasing savepoints.
      *
      * @return boolean
-     * @override
      */
-    public function supportsSavepoints()
+    public function supportsReleaseSavepoints()
     {
         return false;
     }
@@ -98,9 +99,9 @@ class MsSqlPlatform extends AbstractPlatform
     /**
      * @override
      */
-    public function quoteIdentifier($str)
+	public function supportsCreateDropDatabase()
     {
-        return '[' . $str . ']';
+        return false;
     }
 
     /**
@@ -109,56 +110,177 @@ class MsSqlPlatform extends AbstractPlatform
     public function getDropForeignKeySQL($foreignKey, $table)
     {
         if ($foreignKey instanceof \Doctrine\DBAL\Schema\ForeignKeyConstraint) {
-            $foreignKey = $foreignKey->getName();
+            $foreignKey = $foreignKey->getQuotedName($this);
         }
 
         if ($table instanceof \Doctrine\DBAL\Schema\Table) {
-            $table = $table->getName();
+            $table = $table->getQuotedName($this);
         }
 
         return 'ALTER TABLE ' . $table . ' DROP CONSTRAINT ' . $foreignKey;
     }
 
     /**
-     * Gets the sql statements for altering an existing table.
-     *
-     * The method returns an array of sql statements, since some platforms need several statements.
-     *
-     * @param TableDiff $diff
-     * @return array
+     * @override
+     */
+    public function getDropIndexSQL($index, $table=null)
+    {
+        if ($index instanceof \Doctrine\DBAL\Schema\Index) {
+            $index_ = $index;
+            $index = $index->getQuotedName($this);
+        } else if (!is_string($index)) {
+            throw new \InvalidArgumentException('AbstractPlatform::getDropIndexSQL() expects $index parameter to be string or \Doctrine\DBAL\Schema\Index.');
+        }
+
+        if (!isset($table)) {
+            return 'DROP INDEX ' . $index;
+        } else {
+            if ($table instanceof \Doctrine\DBAL\Schema\Table) {
+                $table = $table->getQuotedName($this);
+            }
+
+            return "IF EXISTS (SELECT * FROM sysobjects WHERE name = '$index')
+						ALTER TABLE " . $table . " DROP CONSTRAINT " . $index . "
+					ELSE
+						DROP INDEX " . $index . " ON " . $table;
+        }
+    }
+
+    /**
+     * @override
+     */
+    protected function _getCreateTableSQL($tableName, array $columns, array $options = array())
+    {
+		// @todo does other code breaks because of this?
+		// foce primary keys to be not null
+		foreach ($columns as &$column) {
+			if (isset($column['primary']) && $column['primary']) {
+				$column['notnull'] = true;
+			}
+		}
+	
+        $columnListSql = $this->getColumnDeclarationListSQL($columns);
+
+        if (isset($options['uniqueConstraints']) && !empty($options['uniqueConstraints'])) {
+            foreach ($options['uniqueConstraints'] as $name => $definition) {
+                $columnListSql .= ', ' . $this->getUniqueConstraintDeclarationSQL($name, $definition);
+            }
+        }
+
+        if (isset($options['primary']) && !empty($options['primary'])) {
+            $columnListSql .= ', PRIMARY KEY(' . implode(', ', array_unique(array_values($options['primary']))) . ')';
+        }
+
+        $query = 'CREATE TABLE ' . $tableName . ' (' . $columnListSql;
+
+        $check = $this->getCheckDeclarationSQL($columns);
+        if (!empty($check)) {
+            $query .= ', ' . $check;
+        }
+        $query .= ')';
+
+        $sql[] = $query;
+
+        if (isset($options['indexes']) && !empty($options['indexes'])) {
+            foreach ($options['indexes'] AS $index) {
+                $sql[] = $this->getCreateIndexSQL($index, $tableName);
+            }
+        }
+
+        if (isset($options['foreignKeys'])) {
+            foreach ((array) $options['foreignKeys'] AS $definition) {
+                $sql[] = $this->getCreateForeignKeySQL($definition, $tableName);
+            }
+        }
+
+        return $sql;
+    }
+	
+	/**
+     * @override
+     */
+	public function getUniqueConstraintDeclarationSQL($name, Index $index)
+    {
+        $constraint = parent::getUniqueConstraintDeclarationSQL($name, $index);
+		
+		$constraint = $this->_appendUniqueConstraintDefinition($constraint, $index);
+		
+		return $constraint;
+    }
+	
+	/**
+     * @override
+     */
+	public function getCreateIndexSQL(Index $index, $table)
+    {	
+		$constraint = parent::getCreateIndexSQL($index, $table);
+		
+		if ($index->isUnique()) {
+			$constraint = $this->_appendUniqueConstraintDefinition($constraint, $index);
+		}
+		
+		return $constraint;
+	}
+	
+	/**
+     * Extend unique key constraint with required filters
+	 *
+	 * @param string $sql
+	 * @param Index $index
+	 * @return string
+     */
+	private function _appendUniqueConstraintDefinition($sql, Index $index)
+	{
+		$fields = array();
+        foreach ($index->getColumns() as $field => $definition) {
+            if (!is_array($definition)) {
+                $field = $definition;
+            }
+			
+			$fields[] = $field . ' IS NOT NULL';
+        }
+	
+		return $sql . ' WHERE ' . implode(' AND ', $fields);
+	}
+
+    /**
+     * @override
      */
     public function getAlterTableSQL(TableDiff $diff)
     {
         $queryParts = array();
         if ($diff->newName !== false) {
-            $queryParts[] =  'RENAME TO ' . $diff->newName;
+            $queryParts[] = 'RENAME TO ' . $diff->newName;
         }
 
         foreach ($diff->addedColumns AS $fieldName => $column) {
-            $queryParts[] = 'ADD ' . $this->getColumnDeclarationSQL($column->getName(), $column->toArray());
+            $queryParts[] = 'ADD ' . $this->getColumnDeclarationSQL($column->getQuotedName($this), $column->toArray());
         }
 
         foreach ($diff->removedColumns AS $column) {
-            $queryParts[] =  'DROP ' . $column->getName();
+            $queryParts[] = 'DROP COLUMN ' . $column->getQuotedName($this);
         }
 
         foreach ($diff->changedColumns AS $columnDiff) {
             /* @var $columnDiff Doctrine\DBAL\Schema\ColumnDiff */
             $column = $columnDiff->column;
-            $queryParts[] =  'CHANGE ' . ($columnDiff->oldColumnName) . ' '
-                    . $this->getColumnDeclarationSQL($column->getName(), $column->toArray());
+            $queryParts[] = 'CHANGE ' . ($columnDiff->oldColumnName) . ' '
+                    . $this->getColumnDeclarationSQL($column->getQuotedName($this), $column->toArray());
         }
 
         foreach ($diff->renamedColumns AS $oldColumnName => $column) {
-            $queryParts[] =  'CHANGE ' . $oldColumnName . ' '
-                    . $this->getColumnDeclarationSQL($column->getName(), $column->toArray());
+            $queryParts[] = 'CHANGE ' . $oldColumnName . ' '
+                    . $this->getColumnDeclarationSQL($column->getQuotedName($this), $column->toArray());
         }
 
         $sql = array();
-        if (count($queryParts) > 0) {
-            $sql[] = 'ALTER TABLE ' . $diff->name . ' ' . implode(", ", $queryParts);
+
+        foreach ($queryParts as $query) {
+            $sql[] = 'ALTER TABLE ' . $diff->name . ' ' . $query;
         }
+
         $sql = array_merge($sql, $this->_getAlterTableIndexForeignKeySQL($diff));
+
         return $sql;
     }
 
@@ -224,6 +346,30 @@ class MsSqlPlatform extends AbstractPlatform
     }
 
     /**
+     * @override
+     */
+    public function getCreateViewSQL($name, $sql)
+    {
+        return 'CREATE VIEW ' . $name . ' AS ' . $sql;
+    }
+
+    /**
+     * @override
+     */
+    public function getListViewsSQL($database)
+    {
+        return "SELECT name FROM sysobjects WHERE type = 'V' ORDER BY name";
+    }
+
+    /**
+     * @override
+     */
+    public function getDropViewSQL($name)
+    {
+        return 'DROP VIEW ' . $name;
+    }
+
+    /**
      * Returns the regular expression operator.
      *
      * @return string
@@ -253,7 +399,7 @@ class MsSqlPlatform extends AbstractPlatform
         if ($startPos == false) {
             return 'CHARINDEX(' . $substr . ', ' . $str . ')';
         } else {
-            return 'CHARINDEX(' . $substr . ', ' . $str . ', '.$startPos.')';
+            return 'CHARINDEX(' . $substr . ', ' . $str . ', ' . $startPos . ')';
         }
     }
 
@@ -270,19 +416,38 @@ class MsSqlPlatform extends AbstractPlatform
      */
     public function getTrimExpression($str, $pos = self::TRIM_UNSPECIFIED, $char = false)
     {
-        // @todo
         $trimFn = '';
-        $trimChar = ($char != false) ? (', ' . $char) : '';
 
-        if ($pos == self::TRIM_LEADING) {
-            $trimFn = 'LTRIM';
-        } else if($pos == self::TRIM_TRAILING) {
-            $trimFn = 'RTRIM';
-        } else {
-            return 'LTRIM(RTRIM(' . $str . '))';
-        }
+		if (!$char) {
+			if ($pos == self::TRIM_LEADING) {
+				$trimFn = 'LTRIM';
+			} else if ($pos == self::TRIM_TRAILING) {
+				$trimFn = 'RTRIM';
+			} else {
+				return 'LTRIM(RTRIM(' . $str . '))';
+			}
 
-        return $trimFn . '(' . $str . ')';
+			return $trimFn . '(' . $str . ')';
+		} else {
+			/** Original query used to get those expressions
+				declare @c varchar(100) = 'xxxBarxxx', @trim_char char(1) = 'x';
+				declare @pat varchar(10) = '%[^' + @trim_char + ']%';
+				select @c as string
+					 , @trim_char as trim_char
+					 , stuff(@c, 1, patindex(@pat, @c) - 1, null) as trim_leading
+					 , reverse(stuff(reverse(@c), 1, patindex(@pat, reverse(@c)) - 1, null)) as trim_trailing
+					 , reverse(stuff(reverse(stuff(@c, 1, patindex(@pat, @c) - 1, null)), 1, patindex(@pat, reverse(stuff(@c, 1, patindex(@pat, @c) - 1, null))) - 1, null)) as trim_both;
+			 */
+			$pattern = "'%[^' + $char + ']%'";
+			
+			if ($pos == self::TRIM_LEADING) {
+				return 'stuff(' . $str . ', 1, patindex(' . $pattern .', ' . $str . ') - 1, null)';
+			} else if ($pos == self::TRIM_TRAILING) {
+				return 'reverse(stuff(reverse(' . $str . '), 1, patindex(' . $pattern .', reverse(' . $str . ')) - 1, null))';
+			} else {
+				return 'reverse(stuff(reverse(stuff(' . $str . ', 1, patindex(' . $pattern .', ' . $str . ') - 1, null)), 1, patindex(' . $pattern .', reverse(stuff(' . $str . ', 1, patindex(' . $pattern .', ' . $str . ') - 1, null))) - 1, null))';
+			}
+		}
     }
 
     /**
@@ -294,12 +459,17 @@ class MsSqlPlatform extends AbstractPlatform
         return '(' . implode(' + ', $args) . ')';
     }
 
+    public function getListDatabasesSQL()
+    {
+        return 'SELECT * FROM SYS.DATABASES';
+    }
+
     /**
      * @override
      */
     public function getSubstringExpression($value, $from, $len = null)
     {
-        if ( ! is_null($len)) {
+        if (!is_null($len)) {
             return 'SUBSTRING(' . $value . ', ' . $from . ', ' . $len . ')';
         }
         return 'SUBSTRING(' . $value . ', ' . $from . ', LEN(' . $value . ') - ' . $from . ' + 1)';
@@ -348,9 +518,9 @@ class MsSqlPlatform extends AbstractPlatform
     /** @override */
     public function getVarcharTypeDeclarationSQL(array $field)
     {
-        if ( ! isset($field['length'])) {
+        if (!isset($field['length'])) {
             if (array_key_exists('default', $field)) {
-                $field['length'] = $this->getVarcharMaxLength();
+                $field['length'] = $this->getVarcharDefaultLength();
             } else {
                 $field['length'] = false;
             }
@@ -359,8 +529,7 @@ class MsSqlPlatform extends AbstractPlatform
         $length = ($field['length'] <= $this->getVarcharMaxLength()) ? $field['length'] : false;
         $fixed = (isset($field['fixed'])) ? $field['fixed'] : false;
 
-        return $fixed ? ($length ? 'CHAR(' . $length . ')' : 'CHAR(255)')
-                : ($length ? 'VARCHAR(' . $length . ')' : 'TEXT');
+        return $fixed ? ($length ? 'NCHAR(' . $length . ')' : 'CHAR(255)') : ($length ? 'NVARCHAR(' . $length . ')' : 'NTEXT');
     }
 
     /** @override */
@@ -375,7 +544,7 @@ class MsSqlPlatform extends AbstractPlatform
     protected function _getCommonIntegerTypeDeclarationSQL(array $columnDef)
     {
         $autoinc = '';
-        if ( ! empty($columnDef['autoincrement'])) {
+        if (!empty($columnDef['autoincrement'])) {
             $autoinc = ' IDENTITY';
         }
         $unsigned = (isset($columnDef['unsigned']) && $columnDef['unsigned']) ? ' UNSIGNED' : '';
@@ -405,7 +574,7 @@ class MsSqlPlatform extends AbstractPlatform
      */
     public function getTimeTypeDeclarationSQL(array $fieldDeclaration)
     {
-        return 'TIME';
+        return 'TIME(0)';
     }
 
     /**
@@ -435,69 +604,27 @@ class MsSqlPlatform extends AbstractPlatform
                 throw new Doctrine_Connection_Exception("LIMIT argument offset=$offset is not valid");
             }
 
-            $orderby = stristr($query, 'ORDER BY');
+            if ($offset == 0) {
+                $query = preg_replace('/^SELECT\s/i', 'SELECT TOP ' . $count . ' ', $query);
+            } else {
+                $orderby = stristr($query, 'ORDER BY');
 
-            if ($orderby !== false) {
-                // Ticket #1835: Fix for ORDER BY alias
-                // Ticket #2050: Fix for multiple ORDER BY clause
-                $order = str_ireplace('ORDER BY', '', $orderby);
-                $orders = explode(',', $order);
-
-                for ($i = 0; $i < count($orders); $i++) {
-                    $sorts[$i] = (stripos($orders[$i], ' DESC') !== false) ? 'DESC' : 'ASC';
-                    $orders[$i] = trim(preg_replace('/\s+(ASC|DESC)$/i', '', $orders[$i]));
-
-                    // find alias in query string
-                    $helperString = stristr($query, $orders[$i]);
-
-                    $fromClausePos = strpos($helperString, ' FROM ');
-                    $fieldsString = substr($helperString, 0, $fromClausePos + 1);
-
-                    $fieldArray = explode(',', $fieldsString);
-                    $fieldArray = array_shift($fieldArray);
-                    $aux2 = preg_split('/ as /i', $fieldArray);
-
-                    $aliases[$i] = trim(end($aux2));
+                if (!$orderby) {
+                    $over = 'ORDER BY (SELECT 0)';
+                } else {
+                    $over = preg_replace('/\"[^,]*\".\"([^,]*)\"/i', '"inner_tbl"."$1"', $orderby);
                 }
-            }
 
-            // Ticket #1259: Fix for limit-subquery in MSSQL
-            $selectRegExp = 'SELECT\s+';
-            $selectReplace = 'SELECT ';
+                // Remove ORDER BY clause from $query
+                $query = preg_replace('/\s+ORDER BY(.*)/', '', $query);
 
-            if (preg_match('/^SELECT(\s+)DISTINCT/i', $query)) {
-                $selectRegExp .= 'DISTINCT\s+';
-                $selectReplace .= 'DISTINCT ';
-            }
+                // Add ORDER BY clause as an argument for ROW_NUMBER()
+                $query = "SELECT ROW_NUMBER() OVER ($over) AS \"doctrine_rownum\", * FROM ($query) AS inner_tbl";
 
-            $query = preg_replace('/^'.$selectRegExp.'/i', $selectReplace . 'TOP ' . ($count + $offset) . ' ', $query);
-            $query = 'SELECT * FROM (SELECT TOP ' . $count . ' * FROM (' . $query . ') AS ' . 'inner_tbl';
+                $start = $offset + 1;
+                $end = $offset + $count;
 
-            if ($orderby !== false) {
-                $query .= ' ORDER BY ';
-
-                for ($i = 0, $l = count($orders); $i < $l; $i++) {
-                    if ($i > 0) { // not first order clause
-                        $query .= ', ';
-                    }
-
-                    $query .= 'inner_tbl' . '.' . $aliases[$i] . ' ';
-                    $query .= (stripos($sorts[$i], 'ASC') !== false) ? 'DESC' : 'ASC';
-                }
-            }
-
-            $query .= ') AS ' . 'outer_tbl';
-
-            if ($orderby !== false) {
-                $query .= ' ORDER BY ';
-
-                for ($i = 0, $l = count($orders); $i < $l; $i++) {
-                    if ($i > 0) { // not first order clause
-                        $query .= ', ';
-                    }
-
-                    $query .= 'outer_tbl' . '.' . $aliases[$i] . ' ' . $sorts[$i];
-                }
+                $query = "WITH outer_tbl AS ($query) SELECT * FROM outer_tbl WHERE \"doctrine_rownum\" BETWEEN $start AND $end";
             }
         }
 
@@ -516,9 +643,9 @@ class MsSqlPlatform extends AbstractPlatform
                 }
             }
         } else {
-           if (is_bool($item) || is_numeric($item)) {
-               $item = ($item) ? 'TRUE' : 'FALSE';
-           }
+            if (is_bool($item) || is_numeric($item)) {
+                $item = ($item) ? 'TRUE' : 'FALSE';
+            }
         }
         return $item;
     }
@@ -550,10 +677,9 @@ class MsSqlPlatform extends AbstractPlatform
     /**
      * @override
      */
-    public function getIndexDeclarationSQL($name, Index $index)
+    public function getDateTimeTzFormatString()
     {
-        // @todo
-        return $this->getUniqueConstraintDeclarationSQL($name, $index);
+        return $this->getDateTimeFormatString();
     }
 
     /**
@@ -566,8 +692,97 @@ class MsSqlPlatform extends AbstractPlatform
         return 'mssql';
     }
 
+    /**
+     * @override
+     */
     protected function initializeDoctrineTypeMappings()
     {
-        
+        $this->doctrineTypeMapping = array(
+            'bigint'            => 'bigint',
+            'numeric'           => 'decimal',
+            'bit'               => 'boolean',
+            'smallint'          => 'smallint',
+            'decimal'           => 'decimal',
+            'smallmoney'        => 'integer',
+            'int'               => 'integer',
+            'tinyint'           => 'smallint',
+            'money'             => 'integer',
+            'float'             => 'float',
+            'real'              => 'float',
+            'double'            => 'float',
+            'double precision'  => 'float',
+            'date'              => 'date',
+            'datetimeoffset'    => 'datetimetz',
+            'datetime2'         => 'datetime',
+            'smalldatetime'     => 'datetime',
+            'datetime'          => 'datetime',
+            'time'              => 'time',
+            'char'              => 'string',
+            'varchar'           => 'string',
+            'text'              => 'text',
+            'nchar'             => 'string',
+            'nvarchar'          => 'string',
+            'ntext'             => 'text',
+            'binary'            => 'text',
+            'varbinary'         => 'text',
+            'image'             => 'text',
+        );
+    }
+
+    /**
+     * Generate SQL to create a new savepoint
+     *
+     * @param string $savepoint
+     * @return string
+     */
+    public function createSavePoint($savepoint)
+    {
+        return 'SAVE TRANSACTION ' . $savepoint;
+    }
+
+    /**
+     * Generate SQL to release a savepoint
+     *
+     * @param string $savepoint
+     * @return string
+     */
+    public function releaseSavePoint($savepoint)
+    {
+        return '';
+    }
+
+    /**
+     * Generate SQL to rollback a savepoint
+     *
+     * @param string $savepoint
+     * @return string
+     */
+    public function rollbackSavePoint($savepoint)
+    {
+        return 'ROLLBACK TRANSACTION ' . $savepoint;
+    }
+	
+	/**
+     * @override
+     */
+	public function appendLockHint($fromClause, $lockMode)
+    {
+		// @todo coorect
+		if ($lockMode == \Doctrine\DBAL\LockMode::PESSIMISTIC_READ) {
+            return $fromClause . ' WITH (tablockx)';
+        } else if ($lockMode == \Doctrine\DBAL\LockMode::PESSIMISTIC_WRITE) {
+            return $fromClause . ' WITH (tablockx)';
+        }
+		else {
+			return $fromClause;
+		}
+    }
+
+    /**
+     * @override
+     */
+    public function getForUpdateSQL()
+    {
+        return ' ';
     }
 }

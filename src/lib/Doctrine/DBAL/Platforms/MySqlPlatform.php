@@ -156,7 +156,7 @@ class MySqlPlatform extends AbstractPlatform
     {
         if ( ! isset($field['length'])) {
             if (array_key_exists('default', $field)) {
-                $field['length'] = $this->getVarcharMaxLength();
+                $field['length'] = $this->getVarcharDefaultLength();
             } else {
                 $field['length'] = false;
             }
@@ -257,17 +257,6 @@ class MySqlPlatform extends AbstractPlatform
     public function supportsIdentityColumns()
     {
         return true;
-    }
-    
-    /**
-     * Whether the platform supports savepoints. MySql does not.
-     *
-     * @return boolean
-     * @override
-     */
-    public function supportsSavepoints()
-    {
-        return false;
     }
 
     public function getShowDatabasesSQL()
@@ -421,23 +410,23 @@ class MySqlPlatform extends AbstractPlatform
         }
 
         foreach ($diff->addedColumns AS $fieldName => $column) {
-            $queryParts[] = 'ADD ' . $this->getColumnDeclarationSQL($column->getName(), $column->toArray());
+            $queryParts[] = 'ADD ' . $this->getColumnDeclarationSQL($column->getQuotedName($this), $column->toArray());
         }
 
         foreach ($diff->removedColumns AS $column) {
-            $queryParts[] =  'DROP ' . $column->getName();
+            $queryParts[] =  'DROP ' . $column->getQuotedName($this);
         }
 
         foreach ($diff->changedColumns AS $columnDiff) {
             /* @var $columnDiff Doctrine\DBAL\Schema\ColumnDiff */
             $column = $columnDiff->column;
             $queryParts[] =  'CHANGE ' . ($columnDiff->oldColumnName) . ' '
-                    . $this->getColumnDeclarationSQL($column->getName(), $column->toArray());
+                    . $this->getColumnDeclarationSQL($column->getQuotedName($this), $column->toArray());
         }
 
         foreach ($diff->renamedColumns AS $oldColumnName => $column) {
             $queryParts[] =  'CHANGE ' . $oldColumnName . ' '
-                    . $this->getColumnDeclarationSQL($column->getName(), $column->toArray());
+                    . $this->getColumnDeclarationSQL($column->getQuotedName($this), $column->toArray());
         }
 
         $sql = array();
@@ -531,13 +520,13 @@ class MySqlPlatform extends AbstractPlatform
     public function getDropIndexSQL($index, $table=null)
     {
         if($index instanceof \Doctrine\DBAL\Schema\Index) {
-            $index = $index->getName();
+            $index = $index->getQuotedName($this);
         } else if(!is_string($index)) {
             throw new \InvalidArgumentException('MysqlPlatform::getDropIndexSQL() expects $index parameter to be string or \Doctrine\DBAL\Schema\Index.');
         }
         
         if($table instanceof \Doctrine\DBAL\Schema\Table) {
-            $table = $table->getName();
+            $table = $table->getQuotedName($this);
         } else if(!is_string($table)) {
             throw new \InvalidArgumentException('MysqlPlatform::getDropIndexSQL() expects $table parameter to be string or \Doctrine\DBAL\Schema\Table.');
         }
@@ -554,7 +543,7 @@ class MySqlPlatform extends AbstractPlatform
     public function getDropTableSQL($table)
     {
         if ($table instanceof \Doctrine\DBAL\Schema\Table) {
-            $table = $table->getName();
+            $table = $table->getQuotedName($this);
         } else if(!is_string($table)) {
             throw new \InvalidArgumentException('MysqlPlatform::getDropTableSQL() expects $table parameter to be string or \Doctrine\DBAL\Schema\Table.');
         }
@@ -575,11 +564,6 @@ class MySqlPlatform extends AbstractPlatform
     public function getName()
     {
         return 'mysql';
-    }
-
-    public function createsExplicitIndexForForeignKeys()
-    {
-        return true;
     }
 
     public function getReadLockSQL()
@@ -607,9 +591,9 @@ class MySqlPlatform extends AbstractPlatform
             'datetime'      => 'datetime',
             'timestamp'     => 'datetime',
             'time'          => 'time',
-            'float'         => 'decimal',
-            'double'        => 'decimal',
-            'real'          => 'decimal',
+            'float'         => 'float',
+            'double'        => 'float',
+            'real'          => 'float',
             'decimal'       => 'decimal',
             'numeric'       => 'decimal',
             'year'          => 'date',

@@ -83,7 +83,7 @@ class DropSchemaSqlCollector implements Visitor
      */
     public function acceptTable(Table $table)
     {
-        $this->_tables[] = $this->_platform->getDropTableSQL($table->getName());
+        $this->_tables[] = $this->_platform->getDropTableSQL($table->getQuotedName($this->_platform));
     }
 
     /**
@@ -104,7 +104,7 @@ class DropSchemaSqlCollector implements Visitor
             throw SchemaException::namedForeignKeyRequired($localTable, $fkConstraint);
         }
 
-        $this->_constraints[] = $this->_platform->getDropForeignKeySQL($fkConstraint->getName(), $localTable->getName());
+        $this->_constraints[] = $this->_platform->getDropForeignKeySQL($fkConstraint->getQuotedName($this->_platform), $localTable->getQuotedName($this->_platform));
     }
 
     /**
@@ -121,7 +121,7 @@ class DropSchemaSqlCollector implements Visitor
      */
     public function acceptSequence(Sequence $sequence)
     {
-        $this->_sequences[] = $this->_platform->getDropSequenceSQL($sequence->getName());
+        $this->_sequences[] = $this->_platform->getDropSequenceSQL($sequence->getQuotedName($this->_platform));
     }
 
     /**
@@ -137,10 +137,6 @@ class DropSchemaSqlCollector implements Visitor
      */
     public function getQueries()
     {
-        return array_merge(
-            $this->_constraints,
-            $this->_sequences,
-            $this->_tables
-        );
+        return array_merge($this->_constraints, $this->_tables, $this->_sequences);
     }
 }

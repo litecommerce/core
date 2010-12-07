@@ -86,6 +86,74 @@ abstract class AbstractPlatform
     public function __construct() {}
 
     /**
+     * Gets the SQL snippet that declares a boolean column.
+     *
+     * @param array $columnDef
+     * @return string
+     */
+    abstract public function getBooleanTypeDeclarationSQL(array $columnDef);
+
+    /**
+     * Gets the SQL snippet that declares a 4 byte integer column.
+     *
+     * @param array $columnDef
+     * @return string
+     */
+    abstract public function getIntegerTypeDeclarationSQL(array $columnDef);
+
+    /**
+     * Gets the SQL snippet that declares an 8 byte integer column.
+     *
+     * @param array $columnDef
+     * @return string
+     */
+    abstract public function getBigIntTypeDeclarationSQL(array $columnDef);
+
+    /**
+     * Gets the SQL snippet that declares a 2 byte integer column.
+     *
+     * @param array $columnDef
+     * @return string
+     */
+    abstract public function getSmallIntTypeDeclarationSQL(array $columnDef);
+
+    /**
+     * Gets the SQL snippet that declares common properties of an integer column.
+     *
+     * @param array $columnDef
+     * @return string
+     */
+    abstract protected function _getCommonIntegerTypeDeclarationSQL(array $columnDef);
+
+    /**
+     * Lazy load Doctrine Type Mappings
+     *
+     * @return void
+     */
+    abstract protected function initializeDoctrineTypeMappings();
+
+    /**
+     * Gets the SQL snippet used to declare a VARCHAR column type.
+     *
+     * @param array $field
+     */
+    abstract public function getVarcharTypeDeclarationSQL(array $field);
+
+    /**
+     * Gets the SQL snippet used to declare a CLOB column type.
+     *
+     * @param array $field
+     */
+    abstract public function getClobTypeDeclarationSQL(array $field);
+
+    /**
+     * Gets the name of the platform.
+     *
+     * @return string
+     */
+    abstract public function getName();
+
+    /**
      * Register a doctrine type to be used in conjunction with a column type of this platform.
      *
      * @param string $dbType
@@ -142,13 +210,6 @@ abstract class AbstractPlatform
     }
 
     /**
-     * Lazy load Doctrine Type Mappings
-     *
-     * @return void
-     */
-    abstract protected function initializeDoctrineTypeMappings();
-
-    /**
      * Gets the character used for identifier quoting.
      *
      * @return string
@@ -184,6 +245,16 @@ abstract class AbstractPlatform
      * @return integer
      */
     public function getVarcharMaxLength()
+    {
+        return 4000;
+    }
+
+    /**
+     * Gets the default length of a varchar field.
+     *
+     * @return integer
+     */
+    public function getVarcharDefaultLength()
     {
         return 255;
     }
@@ -611,7 +682,7 @@ abstract class AbstractPlatform
     public function getDropTableSQL($table)
     {
         if ($table instanceof \Doctrine\DBAL\Schema\Table) {
-            $table = $table->getName();
+            $table = $table->getQuotedName($this);
         }
 
         return 'DROP TABLE ' . $table;
@@ -627,7 +698,7 @@ abstract class AbstractPlatform
     public function getDropIndexSQL($index, $table=null)
     {
         if($index instanceof \Doctrine\DBAL\Schema\Index) {
-            $index = $index->getName();
+            $index = $index->getQuotedName($this);
         } else if(!is_string($index)) {
             throw new \InvalidArgumentException('AbstractPlatform::getDropIndexSQL() expects $index parameter to be string or \Doctrine\DBAL\Schema\Index.');
         }
@@ -645,11 +716,11 @@ abstract class AbstractPlatform
     public function getDropConstraintSQL($constraint, $table)
     {
         if ($constraint instanceof \Doctrine\DBAL\Schema\Constraint) {
-            $constraint = $constraint->getName();
+            $constraint = $constraint->getQuotedName($this);
         }
 
         if ($table instanceof \Doctrine\DBAL\Schema\Table) {
-            $table = $table->getName();
+            $table = $table->getQuotedName($this);
         }
 
         return 'ALTER TABLE ' . $table . ' DROP CONSTRAINT ' . $constraint;
@@ -663,11 +734,11 @@ abstract class AbstractPlatform
     public function getDropForeignKeySQL($foreignKey, $table)
     {
         if ($foreignKey instanceof \Doctrine\DBAL\Schema\ForeignKeyConstraint) {
-            $foreignKey = $foreignKey->getName();
+            $foreignKey = $foreignKey->getQuotedName($this);
         }
 
         if ($table instanceof \Doctrine\DBAL\Schema\Table) {
-            $table = $table->getName();
+            $table = $table->getQuotedName($this);
         }
 
         return 'ALTER TABLE ' . $table . ' DROP FOREIGN KEY ' . $foreignKey;
@@ -691,7 +762,7 @@ abstract class AbstractPlatform
             throw DBALException::noColumnsSpecifiedForTable($table->getName());
         }
 
-        $tableName = $table->getName();
+        $tableName = $table->getQuotedName($this);
         $options = $table->getOptions();
         $options['uniqueConstraints'] = array();
         $options['indexes'] = array();
@@ -712,7 +783,7 @@ abstract class AbstractPlatform
         foreach ($table->getColumns() AS $column) {
             /* @var \Doctrine\DBAL\Schema\Column $column */
             $columnData = array();
-            $columnData['name'] = $column->getName();
+            $columnData['name'] = $column->getQuotedName($this);
             $columnData['type'] = $column->getType();
             $columnData['length'] = $column->getLength();
             $columnData['notnull'] = $column->getNotNull();
@@ -815,10 +886,10 @@ abstract class AbstractPlatform
     public function getCreateConstraintSQL(\Doctrine\DBAL\Schema\Constraint $constraint, $table)
     {
         if ($table instanceof \Doctrine\DBAL\Schema\Table) {
-            $table = $table->getName();
+            $table = $table->getQuotedName($this);
         }
 
-        $query = 'ALTER TABLE ' . $table . ' ADD CONSTRAINT ' . $constraint->getName();
+        $query = 'ALTER TABLE ' . $table . ' ADD CONSTRAINT ' . $constraint->getQuotedName($this);
 
         $columns = array();
         foreach ($constraint->getColumns() as $column) {
@@ -862,9 +933,9 @@ abstract class AbstractPlatform
     public function getCreateIndexSQL(Index $index, $table)
     {
         if ($table instanceof Table) {
-            $table = $table->getName();
+            $table = $table->getQuotedName($this);
         }
-        $name = $index->getName();
+        $name = $index->getQuotedName($this);
         $columns = $index->getColumns();
 
         if (count($columns) == 0) {
@@ -911,7 +982,7 @@ abstract class AbstractPlatform
     public function getCreateForeignKeySQL(ForeignKeyConstraint $foreignKey, $table)
     {
         if ($table instanceof \Doctrine\DBAL\Schema\Table) {
-            $table = $table->getName();
+            $table = $table->getQuotedName($this);
         }
 
         $query = 'ALTER TABLE ' . $table . ' ADD ' . $this->getForeignKeyDeclarationSQL($foreignKey);
@@ -1089,46 +1160,6 @@ abstract class AbstractPlatform
         
         return 'NUMERIC(' . $columnDef['precision'] . ', ' . $columnDef['scale'] . ')';
     }
-
-    /**
-     * Gets the SQL snippet that declares a boolean column.
-     *
-     * @param array $columnDef
-     * @return string
-     */
-    abstract public function getBooleanTypeDeclarationSQL(array $columnDef);
-
-    /**
-     * Gets the SQL snippet that declares a 4 byte integer column.
-     *
-     * @param array $columnDef
-     * @return string
-     */
-    abstract public function getIntegerTypeDeclarationSQL(array $columnDef);
-
-    /**
-     * Gets the SQL snippet that declares an 8 byte integer column.
-     *
-     * @param array $columnDef
-     * @return string
-     */
-    abstract public function getBigIntTypeDeclarationSQL(array $columnDef);
-
-    /**
-     * Gets the SQL snippet that declares a 2 byte integer column.
-     *
-     * @param array $columnDef
-     * @return string
-     */
-    abstract public function getSmallIntTypeDeclarationSQL(array $columnDef);
-
-    /**
-     * Gets the SQL snippet that declares common properties of an integer column.
-     *
-     * @param array $columnDef
-     * @return string
-     */
-    abstract protected function _getCommonIntegerTypeDeclarationSQL(array $columnDef);
 
     /**
      * Obtain DBMS specific SQL code portion needed to set a default value
@@ -1402,7 +1433,7 @@ abstract class AbstractPlatform
     {
         $sql = '';
         if (strlen($foreignKey->getName())) {
-            $sql .= 'CONSTRAINT ' . $foreignKey->getName() . ' ';
+            $sql .= 'CONSTRAINT ' . $foreignKey->getQuotedName($this) . ' ';
         }
         $sql .= 'FOREIGN KEY (';
 
@@ -1703,6 +1734,11 @@ abstract class AbstractPlatform
         throw DBALException::notSupported(__METHOD__);
     }
 
+    public function getFloatDeclarationSQL(array $fieldDeclaration)
+    {
+        return 'DOUBLE PRECISION';
+    }
+
     /**
      * Gets the default transaction isolation level of the platform.
      *
@@ -1774,6 +1810,16 @@ abstract class AbstractPlatform
     }
 
     /**
+     * Whether the platform supports releasing savepoints.
+     *
+     * @return boolean
+     */
+    public function supportsReleaseSavepoints()
+    {
+        return $this->supportsSavepoints();
+    }
+
+    /**
      * Whether the platform supports primary key constraints.
      *
      * @return boolean
@@ -1821,14 +1867,6 @@ abstract class AbstractPlatform
     public function supportsCreateDropDatabase()
     {
         return true;
-    }
-
-    /**
-     * @return bool
-     */
-    public function createsExplicitIndexForForeignKeys()
-    {
-        return false;
     }
 
     /**
@@ -1903,27 +1941,6 @@ abstract class AbstractPlatform
 
         return $query;
     }
-
-    /**
-     * Gets the SQL snippet used to declare a VARCHAR column type.
-     *
-     * @param array $field
-     */
-    abstract public function getVarcharTypeDeclarationSQL(array $field);
-    
-    /**
-     * Gets the SQL snippet used to declare a CLOB column type.
-     *
-     * @param array $field
-     */
-    abstract public function getClobTypeDeclarationSQL(array $field);
-
-    /**
-     * Gets the name of the platform.
-     *
-     * @return string
-     */
-    abstract public function getName();
     
     /**
      * Gets the character casing of a column in an SQL result set of this platform.
@@ -1993,5 +2010,38 @@ abstract class AbstractPlatform
     public function getDummySelectSQL()
     {
         return 'SELECT 1';
+    }
+
+    /**
+     * Generate SQL to create a new savepoint
+     *
+     * @param string $savepoint
+     * @return string
+     */
+    public function createSavePoint($savepoint)
+    {
+        return 'SAVEPOINT ' . $savepoint;
+    }
+
+    /**
+     * Generate SQL to release a savepoint
+     *
+     * @param string $savepoint
+     * @return string
+     */
+    public function releaseSavePoint($savepoint)
+    {
+        return 'RELEASE SAVEPOINT ' . $savepoint;
+    }
+
+    /**
+     * Generate SQL to rollback a savepoint
+     *
+     * @param string $savepoint
+     * @return string
+     */
+    public function rollbackSavePoint($savepoint)
+    {
+        return 'ROLLBACK TO SAVEPOINT ' . $savepoint;
     }
 }
