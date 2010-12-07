@@ -393,7 +393,8 @@ class XLite_Tests_Model_Repo_Category extends XLite_Tests_TestCase
     {
         $qb = $this->getRepo()->createQueryBuilder();
 
-        $this->getRepo()->addSubTreeCondition($result = clone $qb, 14015);
+        $result = clone $qb;
+        $this->getRepo()->addSubTreeCondition($result, 14015);
         $expr = new Doctrine\ORM\Query\Expr\Andx(array('c.category_id <> :rootId', 'c.lpos BETWEEN 2 AND 9'));
 
         $this->assertEquals(
@@ -402,7 +403,7 @@ class XLite_Tests_Model_Repo_Category extends XLite_Tests_TestCase
             'Added subtree condition has a wrong set of tokens (case 1)'
         );
 
-        $this->getRepo()->addSubTreeCondition($result = clone $qb, 14015, 'rpos', 10, 20);
+        $this->getRepo()->addSubTreeCondition($result, 14015, 'rpos', 10, 20);
         $expr->add('c.rpos BETWEEN 10 AND 20');
 
         $this->assertEquals(
