@@ -109,7 +109,7 @@ class XLite_Web_Customer_FeaturedProducts extends XLite_Web_Customer_ACustomer
      */
     protected function getFeaturedProducts($cat = 0)
     {   
-        return \XLite\Core\Database::getRepo('XLite\Module\FeaturedProducts\Model\FeaturedProduct')
+        return \XLite\Core\Database::getRepo('XLite\Module\CDev\FeaturedProducts\Model\FeaturedProduct')
             ->getFeaturedProducts($cat);
     }   
 
