@@ -268,12 +268,10 @@ class Product extends \XLite\Model\Base\I18n implements \XLite\Model\Base\IOrder
      * @see    ____func_see____
      * @since  3.0.0
      */
-    /* TODO - uncomment after http://bt.litecommerce.com/view.php?id=38840
     public function getName()
     {
         return $this->getSoftTranslation()->getName();
     }
-    */
 
     /**
      * Get SKU 
