@@ -355,6 +355,22 @@ class Category extends \XLite\Model\Repo\Base\I18n
             'subcategories_count_enabled' => $scEnabled,
         );
     }
+    
+    /**
+     * Prepare passed ID
+     * NOTE: see E:0038835 (external BT)
+     * 
+     * @param mixed $categoryId Category ID
+     *  
+     * @return integer|null
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function prepareCategoryId($categoryId)
+    {
+        return (is_int($categoryId) && 0 < $categoryId) ? $categoryId : null;
+    }
 
     /**
      * Update quick flags for a category
@@ -530,7 +546,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
      */
     public function getCategory($categoryId)
     {
-        return $this->find(intval($categoryId));
+        return $this->find($this->prepareCategoryId($categoryId));
     }
 
     /**
@@ -724,9 +740,8 @@ class Category extends \XLite\Model\Repo\Base\I18n
      */
     public function addSubTreeCondition(\Doctrine\ORM\QueryBuilder $qb, $categoryId, $field = 'lpos', $lpos = null, $rpos = null)
     {
-        $category = $this->getCategory($categoryId);
+        if ($category = $this->getCategory($categoryId)) {
 
-        if ($category) {
             $lpos = $lpos ?: $category->getLpos();
             $rpos = $rpos ?: $category->getRpos();
 
