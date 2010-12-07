@@ -369,7 +369,7 @@ class Category extends \XLite\Model\Repo\Base\I18n
      */
     protected function prepareCategoryId($categoryId)
     {
-        return (is_int($categoryId) && 0 < $categoryId) ? $categoryId : null;
+        return (0 < ($categoryId = intval($categoryId))) ? $categoryId : null;
     }
 
     /**
