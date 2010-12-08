@@ -61,17 +61,6 @@ class Address extends \XLite\Model\AEntity
     protected $address_id;
 
     /**
-     * Profile Id
-     * 
-     * @var    integer
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     * @Column (type="integer", length="11")
-     */
-    protected $profile_id;
-
-    /**
      * Flag: is it a billing address
      * 
      * @var    integer
@@ -222,7 +211,7 @@ class Address extends \XLite\Model\AEntity
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @ManyToOne (targetEntity="XLite\Model\Profile")
+     * @ManyToOne (targetEntity="XLite\Model\Profile", inversedBy="addresses")
      * @JoinColumn (name="profile_id", referencedColumnName="profile_id")
      */
     protected $profile;

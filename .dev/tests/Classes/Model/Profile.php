@@ -416,6 +416,7 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
 
         $this->assertTrue($clonedProfile instanceof \XLite\Model\Profile, 'Cloned profile expected to be an object');
 
+        $this->assertTrue(0 < $clonedProfile->getProfileId(), 'profile_id validation');
         $this->assertNotEquals($profile->getProfileId(), $clonedProfile->getProfileId(), 'profile_id comparison');
         $this->assertEquals($profile->getLogin(), $clonedProfile->getLogin(), 'login comparison');
         $this->assertEquals($profile->getPassword(), $clonedProfile->getPassword(), 'password comparison');
@@ -444,7 +445,7 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
         $address2 = $clonedProfile->getBillingAddress();
 
         $this->assertNotEquals($address1->getAddressId(), $address2->getAddressId(), 'address_id comparison');
-        $this->assertNotEquals($address1->getProfileId(), $address2->getProfileId(), 'profile_id comparison');
+        $this->assertNotEquals($address1->getProfile()->getProfileId(), $address2->getProfile()->getProfileId(), 'address\'s profile_id comparison');
         $this->assertEquals($address1->getIsBilling(), $address2->getIsBilling(), 'is_billing comparison');
         $this->assertEquals($address1->getIsShipping(), $address2->getIsShipping(), 'is_shipping comparison');
         $this->assertEquals($address1->getFirstname(), $address2->getFirstname(), 'firstname comparison');

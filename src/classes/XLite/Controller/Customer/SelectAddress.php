@@ -70,7 +70,7 @@ class SelectAddress extends \XLite\Controller\Customer\Cart
     {
         return parent::checkAccess()
             && $this->getCart()->getOrigProfile()
-            && !$this->getCart()->getOrigProfile()->getOrderId();
+            && !$this->getCart()->getOrigProfile()->getOrder();
     }
     /**
      * Get page title

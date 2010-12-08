@@ -85,7 +85,8 @@ class Order extends \XLite\Model\Base\ModifierOwner
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @OneToOne  (targetEntity="XLite\Model\Profile", mappedBy="order", cascade={"all"})
+     * @OneToOne  (targetEntity="XLite\Model\Profile", cascade={"all"})
+     * @JoinColumn (name="profile_id", referencedColumnName="profile_id")
      */
     protected $profile;
 
@@ -938,9 +939,6 @@ class Order extends \XLite\Model\Base\ModifierOwner
         }
 
         $this->profile = $profile;
-        if (isset($profile)) {
-            $profile->setOrder($this);
-        }
     }
 
     /**
@@ -970,10 +968,13 @@ class Order extends \XLite\Model\Base\ModifierOwner
      */
     public function setProfileCopy(\XLite\Model\Profile $profile) 
     {
+        // Set profile as original profile
         $this->setOrigProfile($profile);
 
+        // Clone profile and set as order profile
         $p = $profile->cloneObject();
         $this->setProfile($p);
+        $p->setOrder($this);
     }
 
     /**

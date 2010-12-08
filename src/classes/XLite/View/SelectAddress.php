@@ -137,7 +137,7 @@ class SelectAddress extends \XLite\View\Dialog
     {
         return parent::isVisible()
             && $this->getCart()->getOrigProfile()
-            && !$this->getCart()->getOrigProfile()->getOrderId();
+            && !$this->getCart()->getOrigProfile()->getOrder();
     }
 
     /**

@@ -656,6 +656,11 @@ class XLite_Tests_Model_Order extends XLite_Tests_TestCase
             $order->getProfile()->getProfileId(),
             'check orig profile id'
         );
+        $this->assertFalse(
+            is_null($order->getProfile()->getOrder()),
+            'check profile\'s order'
+        );
+
         $this->assertEquals(
             $order->getOrderId(),
             $order->getProfile()->getOrder()->getOrderId(),
@@ -957,15 +962,15 @@ class XLite_Tests_Model_Order extends XLite_Tests_TestCase
     {
         $order = new \XLite\Model\Order();
 
-        $profiles = \XLite\Core\Database::getRepo('XLite\Model\Profile')->findAll();
-        $order->setProfileCopy(array_shift($profiles));
-        unset($profiles);
-
         $order->map($this->testOrder);
         $order->setCurrency(\XLite\Core\Database::getRepo('XLite\Model\Currency')->find(840));
 
         \XLite\Core\Database::getEM()->persist($order);
         \XLite\Core\Database::getEM()->flush();
+
+        $profiles = \XLite\Core\Database::getRepo('XLite\Model\Profile')->findAll();
+        $order->setProfileCopy(array_shift($profiles));
+        unset($profiles);
 
         $order->setPaymentMethod(\XLite\Core\Database::getRepo('XLite\Model\Payment\Method')->find(2));
 
@@ -977,12 +982,10 @@ class XLite_Tests_Model_Order extends XLite_Tests_TestCase
 
         $order->addItem($item);
 
-        \XLite\Core\Database::getEM()->persist($order);
         \XLite\Core\Database::getEM()->flush();
 
         $order->calculate();
 
-        \XLite\Core\Database::getEM()->persist($order);
         \XLite\Core\Database::getEM()->flush();
 
         return $order;

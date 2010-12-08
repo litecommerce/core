@@ -28,7 +28,6 @@ class XLite_Tests_Model_Address extends XLite_Tests_TestCase
      * @since  3.0.0
      */
     protected $addressFields = array(
-        'profile_id'   => 999999,
         'is_billing'   => 2,
         'is_shipping'  => 3,
         'address_type' => 'W',

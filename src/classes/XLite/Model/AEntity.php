@@ -323,4 +323,28 @@ abstract class AEntity
         return true;
     }
 
+    /**
+     * Clone 
+     * 
+     * @return \XLite\Model\AEntity
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function cloneEntity()
+    {
+        $class = $this instanceof \Doctrine\ORM\Proxy\Proxy ? $this->_entityClass : get_called_class();
+
+        $entity = new $class();
+
+        $cmd = \XLite\Core\Database::getEM()->getClassMetadata($class);
+        $map = array();
+        foreach (array_keys($cmd->fieldMappings) as $f) {
+            $map[$f] = $this->$f;
+        }
+
+        $entity->map($map);
+
+        return $entity;
+    }
 }

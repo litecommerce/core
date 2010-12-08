@@ -336,7 +336,7 @@ class XLite_Tests_Model_Repo_Profile extends XLite_Tests_TestCase
                     $this->assertTrue($profile instanceof \XLite\Model\Profile, 'Checking that search items are profile instances' . $testIdStr);
                     
                     if (!isset($data['result']['doNotCount'])) {
-                        $this->assertTrue(in_array($profile->getProfileId(), $data['result']['ids']), 'Checking that correct items are found' . $testIdStr);
+                        $this->assertTrue(in_array($profile->getProfileId(), $data['result']['ids']), 'Checking that correct items are found' . $testIdStr . ' (profileId: ' . $profile->getProfileId() . ')');
                     }
                 }
             }
