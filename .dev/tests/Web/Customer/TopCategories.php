@@ -31,17 +31,6 @@ require_once __DIR__ . '/ACustomer.php';
 class XLite_Web_Customer_TopCategories extends XLite_Web_Customer_ACustomer
 {
     /**
-     * Temporary skipped flag
-     * FIX - fix this test
-     *
-     * @var    boolean
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected $temporarySkipped = false;
-   
-    /**
      * Test the widget in "list" display mode
      * 
      * @return void
