@@ -39,13 +39,18 @@ class XLite_Web_Customer_Payment_Quantum extends XLite_Web_Customer_ACustomer
 {
     public function testPay()
     {
+        $pmethod = \XLite\Core\Database::getRepo('XLite\Model\Payment\Method')->find(30);
+        if (!$pmethod) {
+            $this->fail('Quantum payment method is not found');
+        }
+
         // Set test settings
-        \XLite\Core\Database::getEM()->getConnection()->executeQuery('UPDATE xlite_payment_methods SET enabled = 1 WHERE method_id = 30', array());
-        \XLite\Core\Database::getEM()->getConnection()->executeQuery('UPDATE xlite_payment_method_settings SET value = "xcart_arch" WHERE method_id = 30 AND name = "login"', array());
+        $pmethod->setEnabled(true);
+        $pmethod->getSettingEntity('login')->setValue('xcart_arch');
+        \XLite\Core\Database::getEM()->flush();
 
         // Set no-xdebug-coverage flag
-        $this->open('');
-        $this->createCookie('no_xdebug_coverage=1');
+        $this->skipCoverage();
 
         // Log-in
         $this->open('user');
