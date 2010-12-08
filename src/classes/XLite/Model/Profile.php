@@ -658,16 +658,16 @@ class Profile extends \XLite\Model\AEntity
     }
 
     /**
-     * Clone current profile object
-     * 
-     * @return \XLite\Model\Profile
+     * Clone
+     *
+     * @return \XLite\Model\AEntity
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function cloneObject() 
+    public function cloneEntity()
     {
-        $newProfile = $this->cloneEntity();
+        $newProfile = parent::cloneEntity();
 
         if (!$newProfile->update(true) || !$newProfile->getProfileId()) {
             // TODO - add throw exception

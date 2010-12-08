@@ -102,7 +102,7 @@ class XLite_Tests_Core_Auth extends XLite_Tests_TestCase
         $this->assertEquals(2, $result->getProfileId(), 'Test #5: checking profile_id');
 
         // Test #6
-        $newProfile = $result->cloneObject();
+        $newProfile = $result->cloneEntity();
         $newProfile->setLogin('rnd_tester02@rrf.ru');
         $newProfile->disable();
         $newProfile->update();

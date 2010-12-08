@@ -972,7 +972,7 @@ class Order extends \XLite\Model\Base\ModifierOwner
         $this->setOrigProfile($profile);
 
         // Clone profile and set as order profile
-        $p = $profile->cloneObject();
+        $p = $profile->cloneEntity();
         $this->setProfile($p);
         $p->setOrder($this);
     }
