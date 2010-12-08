@@ -37,17 +37,6 @@ require_once __DIR__ . '/../ACustomer.php';
  */
 class XLite_Web_Customer_Payment_Quantum extends XLite_Web_Customer_ACustomer
 {
-    /**
-     * Temporary skipped flag
-     * FIXME - test account is obsolete
-     *
-     * @var    boolean
-     * @access protected
-     * @see    ____var_see____
-     * @since  3.0.0
-     */
-    protected $temporarySkipped = true;
-
     public function testPay()
     {
         // Set test settings
