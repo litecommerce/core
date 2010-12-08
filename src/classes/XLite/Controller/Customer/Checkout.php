@@ -686,7 +686,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
     protected function saveAnonymousProfile()
     {
         // Create cloned profile
-        $profile = $this->getCart()->getProfile()->cloneObject();
+        $profile = $this->getCart()->getProfile()->cloneEntity();
 
         // Set cloned profile as original profile
 //        $profile->setOrder(null);
@@ -704,7 +704,7 @@ class Checkout extends \XLite\Controller\Customer\Cart
     protected function cloneProfile()
     {
         $origProfile = $this->getCart()->getProfile();
-        $profile = $origProfile->cloneObject();
+        $profile = $origProfile->cloneEntity();
 
         // Assign cloned order's profile
         $this->getCart()->setProfile($profile);

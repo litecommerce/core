@@ -408,11 +408,11 @@ class XLite_Tests_Model_Profile extends XLite_Tests_TestCase
      * @see    ____func_see____
      * @since  3.0.0
      */
-    public function testCloneObject()
+    public function testCloneEntity()
     {
         $profile = $this->getTestProfile(1, 1);
 
-        $clonedProfile = $profile->cloneObject();
+        $clonedProfile = $profile->cloneEntity();
 
         $this->assertTrue($clonedProfile instanceof \XLite\Model\Profile, 'Cloned profile expected to be an object');
 
