@@ -154,7 +154,7 @@ class Method extends \XLite\Model\Base\I18n
     {
         $modules = \XLite\Core\Database::getRepo('XLite\Model\Module')->getActiveModules();
         $disabledModule = false;
-        if (preg_match('/^Module\\\([\w_]+)\\\/Ss', $this->getClass(), $match)) {
+        if (preg_match('/^Module\\\([\w_]+\\\[\w_]+)\\\/Ss', $this->getClass(), $match)) {
             $disabledModule = !isset($modules[$match[1]]);
         }
 
@@ -179,18 +179,35 @@ class Method extends \XLite\Model\Base\I18n
      * 
      * @param string $name Name
      *  
-     * @return mixed
+     * @return string|void
      * @access public
      * @see    ____func_see____
      * @since  3.0.0
      */
     public function getSetting($name)
     {
+        $entity = $this->getSettingEntity($name);
+
+        return $entity ? $entity->getValue() : null;
+    }
+
+    /**
+     * Get setting by name
+     * 
+     * @param string $name Name
+     *  
+     * @return \XLite\Model\Payment\MethodSetting
+     * @access public
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    public function getSettingEntity($name)
+    {
         $result = null;
 
         foreach ($this->getSettings() as $setting) {
             if ($setting->getName() == $name) {
-                $result = $setting->getValue();
+                $result = $setting;
                 break;
             }
         }
