@@ -230,7 +230,7 @@ class Profile extends \XLite\Model\AEntity
      * @see    ____var_see____
      * @since  3.0.0
      *
-     * @OneToOne  (targetEntity="XLite\Model\Order", inversedBy="profile")
+     * @OneToOne  (targetEntity="XLite\Model\Order")
      * @JoinColumn (name="order_id", referencedColumnName="order_id")
      */
     protected $order;
@@ -667,33 +667,28 @@ class Profile extends \XLite\Model\AEntity
      */
     public function cloneObject() 
     {
-        $newProfile = clone $this;
+        $newProfile = $this->cloneEntity();
 
-        $newProfile->setProfileId(null);
-
-        $newProfile->resetAddresses();
-
-        $newProfile->update(true);
+        if (!$newProfile->update(true) || !$newProfile->getProfileId()) {
+            // TODO - add throw exception
+            \XLite::getInstance()->doGlobalDie('Can not clone profile');
+        }
 
         $billingAddress = $this->getBillingAddress();
 
         if (isset($billingAddress)) {
             
-            $newBillingAddress = clone $billingAddress;
-            $newBillingAddress->setAddressId(null);
+            $newBillingAddress = $billingAddress->cloneEntity();
             $newBillingAddress->setProfile($newProfile);
-            $newBillingAddress->setProfileId($newProfile->getProfileId());
             $newBillingAddress->update();
 
             $newProfile->addAddresses($newBillingAddress);
         }
 
-        if (!$this->isSameAddress()) {
+        if (!$this->isSameAddress() && $this->getShippingAddress()) {
             
-            $newShippingAddress = clone $this->getShippingAddress();
-            $newShippingAddress->setAddressId(null);
+            $newShippingAddress = $this->getShippingAddress()->cloneEntity();
             $newShippingAddress->setProfile($newProfile);
-            $newShippingAddress->setProfileId($newProfile->getProfileId());
             $newShippingAddress->update();
 
             $newProfile->addAddresses($newShippingAddress);
@@ -702,19 +697,6 @@ class Profile extends \XLite\Model\AEntity
         $newProfile->update(true);
 
         return $newProfile;
-    }
-
-    /**
-     * Reset addresses
-     * 
-     * @return void
-     * @access public
-     * @see    ____func_see____
-     * @since  3.0.0
-     */
-    public function resetAddresses()
-    {
-        $this->addresses = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**

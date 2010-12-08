@@ -862,4 +862,28 @@ class Profile extends \XLite\Model\Repo\ARepo
         return $indetifiers;
     }
 
+    /**
+     * Link loaded entity to parent object
+     * 
+     * @param \XLite\Model\AEntity $entity            Loaded entity
+     * @param array                $parentAddCallback Entity parent callback OPTIONAL
+     * @param string               $mappedCallback    Entity mapped propery method OPTIONAL
+     *  
+     * @return void
+     * @access protected
+     * @see    ____func_see____
+     * @since  3.0.0
+     */
+    protected function linkLoadedEntity(\XLite\Model\AEntity $entity, array $parentAddCallback, $mappedCallback)
+    {
+        if ($parentAddCallback[0] instanceof \XLite\Model\Order && !$mappedCallback) {
+            $mappedCallback = 'setOrder';
+
+        }
+
+        parent::linkLoadedEntity($entity, $parentAddCallback, $mappedCallback);
+    }
+
+
+
 }
