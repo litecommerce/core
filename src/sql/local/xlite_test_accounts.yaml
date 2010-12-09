@@ -1,0 +1,41 @@
+# vim: set ts=2 sw=2 sts=2 et:
+# 
+# Test accounts
+#  
+# @author    Creative Development LLC <info@cdev.ru> 
+# @copyright Copyright (c) 2010 Creative Development LLC <info@cdev.ru>. All rights reserved
+# @license   http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+# @version   SVN: $Id$
+# @link      http://www.litecommerce.com/
+# @since     3.0.0
+XLite\Model\Config:
+# UPS Online Tools
+  - name: UPS_accesskey
+    category: UPSOnlineTools
+    value: ogqjninmqonpqsqhqnqjnnojoipipgokpe
+  - name: UPS_password
+    category: UPSOnlineTools
+    value: fiefeherephderekegeken
+  - name: UPS_username
+    category: UPSOnlineTools
+    value: jpinhliriqhmikhmfififkgi
+XLite\Model\Payment\Method:
+#
+# AuthorizeNet test account
+#
+  - service_name: 'AuthorizeNet SIM'
+    enabled: 1
+    settings:
+      - name: login
+        value: 4y5BfuW7jm
+      - name: key
+        value: 4cAmW927n8uLf5J8
+#
+# Quantum test account
+#
+  - service_name: Quantum
+    enabled: 1
+    settings:
+      - name: login
+        value: xcart_arch
+
