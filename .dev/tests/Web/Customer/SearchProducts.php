@@ -35,6 +35,7 @@ class XLite_Web_Customer_SearchProducts extends XLite_Web_Customer_AProductList
     const SUBSTRING = "//table[@class='search-form-main-part']/tbody/tr/td/input[@type='text' and @name='substring']";
 
     const LESS_SEARCH_OPTIONS = "//td[@class='less-search-options-cell']/a[text()='Less search options']";
+    const MORE_SEARCH_OPTIONS = "//td[@class='less-search-options-cell']/a[text()='More search options']";
 
     const ADV_BOX = "//table[@id='advanced_search_options' and @class='advanced-search-options']";
 
@@ -42,7 +43,7 @@ class XLite_Web_Customer_SearchProducts extends XLite_Web_Customer_AProductList
 
     const OPTION_CATEGORY_TOYS = "Toys";
 
-    const OPTION_CATEGORY_DOWNLOADABLES = "Downloadables";
+    const OPTION_CATEGORY_IGOODS = "iGoods";
 
 
     protected $widgetContainerClass = '.items-list.products-search-result';
@@ -85,7 +86,7 @@ class XLite_Web_Customer_SearchProducts extends XLite_Web_Customer_AProductList
         );
 
         $this->assertElementPresent(
-            "//div[@class='simple-search-product-form']/form/input[@type='text' and @name='substring' and @class='form-text']",
+            "//div[@class='simple-search-product-form']/form/div[@class='simple-search-box']/input[@type='text' and @name='substring' and @class='form-text']",
             "No appropriate input box in simple search form"
         );
     }
@@ -104,21 +105,21 @@ class XLite_Web_Customer_SearchProducts extends XLite_Web_Customer_AProductList
 
         $this->waitForAjaxProgress();
 
-        $this->checkCounter(2);
+        $this->checkCounter(5);
 
         // Check Advanced box hide/show
-        $this->click(self::LESS_SEARCH_OPTIONS);
+        $this->click(self::MORE_SEARCH_OPTIONS);
         $this->assertVisible(self::ADV_BOX, 'Hidden advanced box');
 
         $this->click(self::LESS_SEARCH_OPTIONS);
         $this->assertNotVisible(self::ADV_BOX, 'Visible advanced box');
 
-        $this->click(self::LESS_SEARCH_OPTIONS);
+        $this->click(self::MORE_SEARCH_OPTIONS);
 
         // Check including options
         $this->type(self::SUBSTRING, 'search mom');
 
-        $this->checkIncluding('any', 6);
+        $this->checkIncluding('any', 12);
         $this->checkIncluding('all', 1);
         $this->checkIncluding('phrase', 0);
 
@@ -136,8 +137,8 @@ class XLite_Web_Customer_SearchProducts extends XLite_Web_Customer_AProductList
 
         $this->checkCounter(2);
 
-        // Check 'Downloadables' category search
-        $this->select(self::SELECT_CATEGORY, self::OPTION_CATEGORY_DOWNLOADABLES);
+        // Check 'iGoods' category search
+        $this->select(self::SELECT_CATEGORY, self::OPTION_CATEGORY_IGOODS);
 
         $this->click(self::SUBMIT_BUTTON);
 
@@ -164,16 +165,23 @@ class XLite_Web_Customer_SearchProducts extends XLite_Web_Customer_AProductList
             '"Search found" string is wrong. must be ' . $count
         );
 
-        $this->assertElementPresent(
-            "//div[@class='items-list products-search-result']/div[@class='list-pager']/div[@class='pager-items-total']/span[@class='records-count' and text()='$count']",
-            'Records counter is wrong - must be ' . $count
-        );
+        if ($count > 0) {
+            $this->assertElementPresent(
+                "//div[@class='items-list products-search-result']/div[@class='list-pager']/div[@class='pager-items-total']/span[@class='records-count' and text()='$count']",
+                'Records counter is wrong - must be ' . $count
+            );
+        } else {
+            $this->assertElementNotPresent(
+                "//div[@class='items-list products-search-result']/div[@class='list-pager']/div[@class='pager-items-total']/span[@class='records-count']",
+                'There must be no pager if count is zero'
+            );
+        }
     }
 
 
     protected function countAllTestProducts()
     {
-        return \XLite\Core\Database::getRepo('XLite\Model\Product')->search(null, true);
+        return \XLite\Core\Database::getRepo('XLite\Model\Product')->search(new \XLite\Core\CommonCell(), true);
     }
 
     protected function getAllTestProducts()
