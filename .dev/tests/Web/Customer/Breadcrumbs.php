@@ -59,7 +59,7 @@ class XLite_Web_Customer_Breadcrumbs extends XLite_Web_Customer_ACustomer
     public function testLocationLine()
     {
         $this->skipCoverage();
-        $this->open('store/product//product_id-4045/category_id-4004');
+        $this->open('store/product/0/product_id-4045/category_id-4004');
 
         // Main block
         $this->assertElementPresent(
@@ -89,7 +89,7 @@ class XLite_Web_Customer_Breadcrumbs extends XLite_Web_Customer_ACustomer
 
         // Forth node: "Pyramid Brain Twist" (text)
         $this->assertElementPresent(
-            $this->mainBlockLocator . '/span[contains(text(),"Pyramid Brain Twist")]',
+            $this->mainBlockLocator . '/div[contains(text(),"Pyramid Brain Twist")]',
             'check forth breadcrumb (must be "Pyramid Brain Twist", text)'
         );
 
@@ -112,7 +112,7 @@ class XLite_Web_Customer_Breadcrumbs extends XLite_Web_Customer_ACustomer
     public function testPopupInAction()
     {
         $this->skipCoverage();
-        $this->open('store/product//product_id-4045/category_id-4004');
+        $this->open('store/product/0/product_id-4045/category_id-4004');
 
         $this->assertNotVisible(
             $this->mainBlockLocator . '/div[@class="location-node expandable"]'
