@@ -44,7 +44,7 @@ class XLite_Web_Customer_CategoryProducts extends XLite_Web_Customer_AProductLis
 
     protected function countAllTestProducts()
     {
-        return $this->getTestCategory()->getProductsNumber();
+        return $this->getTestCategory()->getProductsCount();
     }
 
     protected function getAllTestProducts()
@@ -74,7 +74,7 @@ class XLite_Web_Customer_CategoryProducts extends XLite_Web_Customer_AProductLis
         $max = 0;
 
         foreach ($categories as $one) {
-            $count = $one->getProductsNumber();
+            $count = $one->getProductsCount();
             if ($count && ($count > $max) && ($count < 10)) {
                 $category = $one;
                 $max = $count;
