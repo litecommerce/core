@@ -407,9 +407,9 @@ class Module extends \XLite\Model\Repo\ARepo
     {
         $qb = $this->createQueryBuilder();
 
-        $ids = \XLite\Core\Database::buildInCondition($qb, $ids, 'module_id');
+        $ids = \XLite\Core\Database::buildInCondition($qb, $ids, 'moduleId');
 
-        return $qb->andWhere('m.module_id IN (' . implode(', ', $ids) . ')');
+        return $qb->andWhere('m.moduleId IN (' . implode(', ', $ids) . ')');
     }
 
     /**
