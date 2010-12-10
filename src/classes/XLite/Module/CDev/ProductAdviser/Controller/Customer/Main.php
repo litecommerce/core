@@ -47,7 +47,7 @@ class Main extends \XLite\Controller\Customer\Main implements \XLite\Base\IDecor
      */
     public static function getAuthorName()
     {
-        return 'Creative Development LLC <info@cdev.ru>';
+        return 'Creative Development LLC';
     }
 
     public $priceNotified = array();
