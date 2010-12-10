@@ -39,20 +39,11 @@ if (!defined('XLITE_INSTALL_MODE')) {
     die('Incorrect call of the script. Stopping.');
 }
 
-require_once realpath(dirname(__FILE__) . '/../..') . '/top.inc.php';
-
-// Switch classes autoloader to the orig classes dir instead of compiled classes storage if cache isn't built yet
-if (\Includes\Decorator\Utils\CacheManager::isRebuildNeeded()) {
-    \Includes\Autoloader::switchLcAutoloadDir();
-}
-
-require_once constant('LC_ROOT_DIR') . 'Includes/install/install_settings.php';
-
 if (version_compare(phpversion(), '5.3.0') >= 0) {
     error_reporting(E_ALL ^ E_DEPRECATED);
 
 } else {
-    error_reporting(E_ALL);
+    die('LiteCommerce cannot start on PHP version earlier than 5.3.0 (' . phpversion(). ' is currently used)');
 }
 
 ini_set('display_errors', true);
@@ -61,6 +52,10 @@ ini_set('display_startup_errors', true);
 @set_time_limit(300);
 
 umask(0);
+
+require_once realpath(dirname(__FILE__) . '/../..') . '/top.inc.php';
+
+require_once constant('LC_ROOT_DIR') . 'Includes/install/install_settings.php';
 
 // suphp mode
 define('LC_SUPHP_MODE', get_php_execution_mode());

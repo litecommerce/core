@@ -43,8 +43,8 @@ if (!(basename(__FILE__) === 'install.php')) { // it is not install.php file
 define ('XLITE_INSTALL_MODE', 1);
 define('LC_DO_NOT_REBUILD_CACHE', true);
 
-if (version_compare(phpversion(), '5.0.0') < 0) {
-    die('LiteCommerce cannot start on PHP version earlier than 5.0.0 (' . phpversion(). ' is currently used)');
+if (version_compare(phpversion(), '5.3.0') < 0) {
+    die('LiteCommerce cannot start on PHP version earlier than 5.3.0 (' . phpversion(). ' is currently used)');
 }
 
 // Init installation process
